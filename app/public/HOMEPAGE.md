@@ -1,6 +1,6 @@
 # Fenster Glazing Homepage
 
-Last updated: 2026-07-03
+Last updated: 2026-07-06
 
 This file is the dedicated source of truth for the homepage only.
 
@@ -34,6 +34,14 @@ Main interactions:
 Optimised hero video:
 
 `wp-content\themes\fenster\assets\videos\home\fenster-home-hero.mp4`
+
+## Important Updates
+
+- The first-visit loading screen has been removed because it delayed lead capture and hurt perceived speed.
+- The homepage SEO title/meta is overridden for launch: `Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing` with a complete local-service meta description.
+- The interactive product theatre to instant-pricing bridge has been spacing-fixed so the quote card no longer overlaps the preceding product selector area.
+- The repo is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`; homepage deploys should come through the theme, not by copying the whole WordPress install.
+- `/commercial-areas/` must stay out of the public header and sitemap. The homepage should route customers to products, instant quote, contact, trust and curated local links only.
 
 ## Current Boundary Note
 
@@ -264,6 +272,7 @@ The live default WindowCAD iframe is displayed in the pricing bridge:
 - the wrapper uses `data-lenis-prevent`,
 - the section keeps a primary `Get an instant quote` CTA to `/online-quote/`,
 - an `Open in new tab` CTA points directly to the WindowCAD URL.
+- mobile lead paths should avoid extra quote-tool options where possible; use one clear same-tab action rather than presenting expand/new-tab choices.
 
 Do not:
 

@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-Last updated: 2026-07-03
+Last updated: 2026-07-06
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -11,6 +11,14 @@ Use:
 - `STYLE.md` for site-wide visual styling, continuous background rules, section rhythm and mobile design expectations.
 - `HOMEPAGE.md` for homepage-specific design and implementation context.
 - `PROGRESS.md` for dated progress reports.
+
+## Important Updates
+
+- GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
+- Deployment should update `wp-content\themes\fenster` from the repo while leaving production `wp-config.php`, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
+- Launch SEO hardening is complete for the current technical blockers: homepage title/meta override, generated route 301 normalisation, generated breadcrumb schema, public cache headers, sitemap scrub to 427 URLs, `/commercial-areas/` removed from the header, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
+- The residential location matrix has unique generated metadata across the 13 town x 21 product pages. Commercial county metadata is profile-specific, and Isle of Wight commercial glazing has been removed/410'd as inaccessible coverage.
+- Mobile launch fixes are complete for the About process cards, Contact page CTA cards and quote-tool controls. Mobile quote embeds use one same-tab `Open quote tool` action; desktop keeps `Expand view` and `Open in new tab`.
 
 ## Current Goal Of The Site
 
@@ -163,7 +171,8 @@ Current accepted behaviour:
 - The embed sits after the main product journey sections, including trust/accreditations, so scroll-following product video sections are not disturbed.
 - The embed is intentionally compact, not a full-height page takeover.
 - Product embed iframes auto-load on page load.
-- The quote card includes `Expand view` and `Open in new tab` controls.
+- Desktop quote cards include `Expand view` and `Open in new tab` controls.
+- Mobile quote cards hide those desktop controls and show one same-tab `Open quote tool` action.
 - The iframe wrapper uses `data-lenis-prevent` so users can interact with the embedded quote tool while Lenis/smooth scrolling is enabled.
 
 Mapped product collections include:

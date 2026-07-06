@@ -1,10 +1,18 @@
 # Fenster Glazing — Master Site Audit
 
 Audit date: 2026-07-03
-Last updated: 2026-07-06 (launch SEO hardening: cache headers, URL normalisation, sitemap scrub, breadcrumbs, homepage meta, nav/footer cleanup)
+Last updated: 2026-07-06 (GitHub upload, launch SEO hardening, mobile contact/about/quote polish, docs refresh)
 Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
 
 **How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
+
+## Important Updates (2026-07-06)
+
+- GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is scoped to the custom theme and launch docs, excluding WordPress core, uploads, `wp-config.php`, local backups/config, `node_modules` and `wp-content\fenster-reference`.
+- Deployment should update/swap `wp-content\themes\fenster` from the repo while leaving the production database, uploads, plugins and config intact. The reference scrape archive must not be deployed.
+- Launch SEO hardening has moved the site materially closer to live-ready: homepage title/meta fixed, generated routes normalise with 301s, generated deep routes output breadcrumb schema, generated pages/sitemaps use short public cache headers, and the sitemap is scrubbed to 427 URLs.
+- Navigation/indexation cleanup is complete for known launch debris: `/commercial-areas/` is out of the header/sitemap, thin utility/scrape pages are `noindex,follow`, `/areas-we-cover/` and `/terms-conditions/` are visible in the footer, and inaccessible Isle of Wight commercial coverage is 410'd.
+- Mobile conversion polish is complete for the reported launch blockers: About process cards have padding, Contact CTA cards are readable with no text/action overlap, and mobile quote embeds show a single same-tab `Open quote tool` action.
 
 ## Remediation Status (2026-07-03)
 
@@ -33,6 +41,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Commercial county title tags and meta descriptions now use each county profile's town examples and project context rather than one near-duplicate metadata sentence.
 - Residential location matrix metadata has been de-duplicated: all 273 town x product pages now generate unique meta descriptions from town and product profiles; a local crawl confirmed 273 unique descriptions, zero duplicate groups and zero fetch errors.
 - The launch SEO hardening pass removed the public `/commercial-areas/` header shortcut, added footer links to `/areas-we-cover/` and `/terms-conditions/`, replaced the inherited homepage title/meta, added breadcrumb schema on generated deep pages, normalised generated URL casing/trailing slashes with 301s, set public cache headers for generated pages/sitemaps, and removed thin utility pages from the sitemap via `noindex,follow`. Local verification shows 427 sitemap URLs after the scrub.
+- Mobile launch polish fixed the About process-card padding, Contact page CTA readability/overlap, and mobile quote-tool action model. Mobile quote embeds now use one same-tab `Open quote tool` action instead of showing desktop expand/new-tab controls.
 
 ---
 
@@ -283,6 +292,8 @@ Every `<img>` in the theme is a bare `src` — no `srcset`, no `sizes`, no `widt
 12. **No breadcrumbs** on deep pages (product → location pages especially) — users landing on `/casement-windows-toddington/` have no path back up.
 13. **Enquiry admin quality-of-life**: enquiries save as private posts with meta columns (good). There's no email-failure alerting though — if SMTP breaks silently, leads pile up unseen in wp-admin. Consider a daily "unsent enquiries" check or at least an admin notice when `_fenster_email_sent = 0` rows exist.
 
+> **Update 2026-07-06:** reported mobile UX blockers on About and Contact are fixed. Keep them as regression checks: process cards need internal padding, Contact CTA cards need readable image overlays with no label/title/copy/action overlap, and mobile quote embeds should use one same-tab action.
+
 ---
 
 ## 7. Accessibility
@@ -342,6 +353,7 @@ Issues:
 14. Caching plan compatible with the nonce'd form (see 3.2) + a CDN for the video. **Launch baseline done with short public cache headers; deeper nonce refactor can follow.**
 15. Reconcile review counts and claims; link review cards to real profiles. (3.9)
 16. Decide the commercial-county footprint honestly. (3.4) **Started: Isle of Wight removed/410; broader county footprint still needs owner decision.**
+17. Deploy from the scoped GitHub theme repo, not by copying the full local WordPress install. **Ready as a theme swap/update path; production uploads/database/config stay in place.**
 
 ---
 

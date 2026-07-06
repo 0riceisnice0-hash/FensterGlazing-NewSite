@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-07-03
+Last updated: 2026-07-06
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -13,6 +13,14 @@ It should not contain dated progress reports, long handover summaries or homepag
 - `STYLE.md` for site-wide visual styling, background, section rhythm and design rules.
 - `HOMEPAGE.md` for homepage-specific architecture and design.
 - `PROGRESS.md` for dated work logs and completed changes.
+
+## Important Updates
+
+- GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.
+- Production deploys should swap/update the theme at `wp-content\themes\fenster` only. Keep the production database, uploads, plugins and `wp-config.php` in place unless the owner explicitly asks for a full WordPress migration.
+- Launch SEO hardening has been completed for the main technical blockers: homepage title/meta override, generated URL trailing-slash/lowercase 301s, public cache headers for logged-out generated pages and sitemaps, generated breadcrumb schema, sitemap scrub to 427 URLs, `/commercial-areas/` removed from public navigation, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
+- Thin utility/scrape pages such as `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `brochures`, `apecs-terms-conditions` and `fenster-partners` are intentionally `noindex,follow` and absent from the sitemap.
+- Mobile launch fixes are in place for the About process cards, Contact hub cards and quote-tool controls. Do not restore the old mobile quote controls that showed both `Expand view` and `Open in new tab`; mobile should show one same-tab `Open quote tool` action.
 
 ## Project Basics
 
@@ -101,10 +109,11 @@ PHP lint example:
 
 - Do not render raw imported SEO tags blindly.
 - Skip imported OpenGraph, Twitter and JSON-LD values that are placeholders, JSON blobs, old designer-tool schema, `test.fensterglazing.com` references or other scraped development-domain debris.
-- Imported `schema_json_ld` from the scrape is never rendered. It contains old designer-tool VideoObject markup and unsubstantiated aggregateRating values. Structured data is generated fresh instead: `fenster_render_site_schema()` in `inc\generated-pages.php` outputs a LocalBusiness block site-wide, and product journey pages output `FAQPage` JSON-LD built from the same FAQs shown on the page. Do not add aggregateRating/Review schema unless a verifiable review feed exists.
-- Debris routes are handled centrally in `inc\generated-pages.php`: `fenster_gone_slugs()` (410), `fenster_redirect_target()` (301, including all `*-designer` pages and duplicate town slugs) and `fenster_slug_is_noindex()` (ad landers plus `category/`, `tag/`, `author/`, `blog/page/` archives). Add new debris to these lists rather than only excluding it from the sitemap; sitemap exclusion alone does not stop indexing.
+- Imported `schema_json_ld` from the scrape is never rendered. It contains old designer-tool VideoObject markup and unsubstantiated aggregateRating values. Structured data is generated fresh instead: `fenster_render_site_schema()` in `inc\generated-pages.php` outputs a LocalBusiness block site-wide, product journey pages output `FAQPage` JSON-LD built from the same FAQs shown on the page, and generated deep routes output `BreadcrumbList` JSON-LD. Do not add aggregateRating/Review schema unless a verifiable review feed exists.
+- Debris routes are handled centrally in `inc\generated-pages.php`: `fenster_gone_slugs()` (410), `fenster_redirect_target()` (301, including all `*-designer` pages and duplicate town slugs) and `fenster_slug_is_noindex()` (ad landers, thin utility/scrape shells plus `category/`, `tag/`, `author/`, `blog/page/` archives). Add new debris to these lists rather than only excluding it from the sitemap; sitemap exclusion alone does not stop indexing.
 - Core `wp-sitemap.xml` is intentionally disabled; robots.txt advertises the theme sitemap at `/sitemap.xml`. Do not re-enable core sitemaps.
 - Alias pages must render their own canonical URL rather than inherited source-page social URLs.
+- Generated routes should 301 to the lowercase, trailing-slash canonical URL.
 - Do not restore `/wcad-thank-you/` from imported data. It was removed because it only exposed stale social/filler copy.
 - `/terms-conditions/` is intentionally a hardcoded virtual utility page in `inc\generated-pages.php`.
 
@@ -133,7 +142,8 @@ PHP lint example:
 - Do not place large iframe embeds before scroll-following or cinematic product sections; they can break scroll measurement and pacing.
 - Product quote embeds should stay compact and sit after the main product journey/trust/accreditation content.
 - Product quote embeds auto-load the iframe on page load; do not restore the old `Load tool` gate.
-- Embedded quote tools must include both `Expand view` and `Open in new tab` actions.
+- Embedded quote tools include both `Expand view` and `Open in new tab` actions on desktop/tablet layouts.
+- On mobile, hide the desktop quote controls and show one same-tab `Open quote tool` action. The owner rejected the mobile new-tab/expand controls because they add friction and confuse the lead path.
 - The iframe wrapper should use `data-lenis-prevent` so the embedded tool remains usable with smooth scrolling.
 - Product pages should not render the imported mini-gallery from scraped `images` data. That export contains old stock/placeholder images, so product pages should use curated hero/feature media and link to focused specification hubs instead.
 - Colour choices live in the `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` virtual routes using `inc\site-data.php` under `colour_options`; do not rebuild huge inline colour grids on every product page.

@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-07-03
+Last updated: 2026-07-06
 
 This file is the source of truth for how the site should look and feel.
 
@@ -12,6 +12,14 @@ Use:
 - `HANDOVER.md` for the current site architecture and route/template context.
 - `HOMEPAGE.md` for homepage-only layout, order and interaction details.
 - `PROGRESS.md` for dated work logs.
+
+## Important Updates
+
+- Launch SEO/deploy state is documented in `AI.md`, `HANDOVER.md`, `AUDIT.md` and `PROGRESS.md`; visual work should not undo those constraints while polishing pages.
+- Mobile Contact hub cards now require readable overlay contrast, contained heading/copy sizing and no overlapping labels or buttons.
+- Mobile About process cards require proper internal padding and bordered containment; text must not hit the card edge.
+- Quote-tool embeds should stay premium and calm: desktop can show `Expand view` and `Open in new tab`, but mobile should show one clear same-tab `Open quote tool` action.
+- The loading screen has been removed for lead performance. Do not add another blocking entrance animation before the page content.
 
 ## Design North Star
 
@@ -147,6 +155,8 @@ Mobile is designed, not squeezed.
 - Use native horizontal scroll-snap for mobile rails where appropriate.
 - Check `390 x 844` and `768 x 1024` for important visual work.
 - No mobile work is complete with horizontal overflow, clipped text, stranded controls, unusable tap targets or distorted media.
+- Mobile CTA cards and overlay cards must keep labels, headings, body copy and arrow/action controls in separate readable zones.
+- Mobile compact process/list cards need at least comfortable internal padding, especially when borders are visible.
 
 ## Homepage Background Rule
 
