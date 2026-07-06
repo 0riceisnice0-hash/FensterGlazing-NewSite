@@ -16138,38 +16138,40 @@ h3 {
 
   .fg-aw-story {
     min-height: 0;
-    height: calc(var(--fg-aw-panel-count, 6) * 108svh);
+    height: calc(var(--fg-aw-panel-count, 6) * 104svh);
   }
 
   .fg-aw-story__stage {
     top: var(--site-header-main-height);
-    height: min(680px, calc(100svh - var(--site-header-main-height)));
-    min-height: 560px;
+    height: calc(100svh - var(--site-header-main-height));
+    min-height: 590px;
+    background: #001a22;
   }
 
   .fg-aw-story__canvas,
   .fg-aw-story__fallback,
   .fg-aw-story__shade,
   .fg-aw-story__grain {
-    inset: 0 0 auto;
+    inset: 0;
     width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
+    height: 100%;
+    aspect-ratio: auto;
   }
 
   .fg-aw-story__fallback {
+    object-fit: cover;
     object-position: 46% center;
   }
 
   .fg-aw-story__shade {
     background:
-      linear-gradient(180deg, rgba(0, 29, 38, 0.06) 0%, rgba(0, 29, 38, 0.08) 52%, rgba(0, 29, 38, 0.88) 100%),
-      linear-gradient(90deg, rgba(0, 29, 38, 0.16), rgba(0, 45, 58, 0.02) 72%);
+      linear-gradient(180deg, rgba(0, 29, 38, 0.1) 0%, rgba(0, 29, 38, 0.16) 38%, rgba(0, 29, 38, 0.92) 100%),
+      linear-gradient(90deg, rgba(0, 29, 38, 0.26), rgba(0, 45, 58, 0.04) 72%);
   }
 
   .fg-aw-story__panel {
     top: auto;
-    bottom: 2.65rem;
+    bottom: 2.35rem;
     width: min(620px, calc(100% - 2rem));
     transform: translate3d(0, 34px, 0);
   }
@@ -16179,18 +16181,22 @@ h3 {
   }
 
   .fg-aw-story__panel:not(:first-child) {
-    top: calc(100vw + 0.5rem);
-    bottom: auto;
+    top: auto;
+    bottom: 2.35rem;
   }
 
   .fg-aw-story__panel h1,
   .fg-aw-story__panel h2 {
-    font-size: clamp(2.25rem, 9vw, 3.8rem);
+    max-width: 12ch;
+    font-size: clamp(2.05rem, 8.4vw, 3.25rem);
+    line-height: 0.98;
   }
 
   .fg-aw-story__panel > p:not(.eyebrow) {
+    max-width: 32ch;
     margin-bottom: 1rem;
     font-size: 1rem;
+    line-height: 1.42;
   }
 
   .fg-aw-story__panel:first-child .button-row {
@@ -16198,7 +16204,7 @@ h3 {
   }
 
   .fg-aw-story__progress {
-    bottom: 1rem;
+    bottom: 0.85rem;
   }
 
   .fg-aw-story__scroll-cue {
