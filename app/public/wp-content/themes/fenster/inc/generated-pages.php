@@ -909,6 +909,10 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'colour-options', 'upvc-colours', 'aluminium-colours', 'areas-we-cover', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
+        if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
+            continue;
+        }
+
         $virtual_page = fenster_get_generated_page($virtual_slug);
         $virtual_loc = fenster_generated_url((string) ($virtual_page['seo']['canonical'] ?? ''));
         if ($virtual_loc && ! isset($seen[$virtual_loc])) {
