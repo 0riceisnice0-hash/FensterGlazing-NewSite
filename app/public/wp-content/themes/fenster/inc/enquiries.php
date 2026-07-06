@@ -214,8 +214,7 @@ function fenster_process_enquiry(): array|WP_Error
     }
 
     $honeypot = sanitize_text_field(wp_unslash($_POST['company_website'] ?? ''));
-    $started_at = absint($_POST['fenster_started_at'] ?? 0);
-    if ($honeypot !== '' || ($started_at > 0 && time() - $started_at < 2)) {
+    if ($honeypot !== '') {
         return ['status' => 'success', 'message' => 'Thanks — your enquiry has been received.', 'spam' => true];
     }
 
