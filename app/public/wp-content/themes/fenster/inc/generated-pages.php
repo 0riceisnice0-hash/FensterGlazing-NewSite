@@ -354,6 +354,35 @@ function fenster_get_generated_page(?string $slug = null): ?array
         return $page_cache[$slug] = $page;
     }
 
+    $launch_seo_overrides = [
+        'contact' => [
+            'title_tag' => 'Contact Fenster Glazing | Milton Keynes Showroom & Quotes',
+            'meta_description' => 'Contact Fenster Glazing in Milton Keynes for window, door, bifold, roof lantern and glazing enquiries, showroom visits and survey-led quotations.',
+        ],
+        'online-quote' => [
+            'title_tag' => 'Online Window and Door Quote | Fenster Glazing',
+            'meta_description' => 'Start an online quote for Fenster Glazing windows, doors, bifolds and roof lanterns, then our team can confirm survey details and next steps.',
+        ],
+    ];
+
+    if (isset($launch_seo_overrides[$slug])) {
+        $index = fenster_generated_pages_index();
+        $page = $index[$slug] ?? [
+            'slug' => $slug,
+            'title' => ucwords(str_replace('-', ' ', $slug)),
+            'url' => home_url('/' . $slug . '/'),
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+        $page['seo']['title_tag'] = $launch_seo_overrides[$slug]['title_tag'];
+        $page['seo']['meta_description'] = $launch_seo_overrides[$slug]['meta_description'];
+        $page['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
+        $page['seo']['robots'] = 'max-image-preview:large';
+
+        return $page_cache[$slug] = $page;
+    }
+
     if ($slug === 'areas-we-cover') {
         return $page_cache[$slug] = [
             'slug' => 'areas-we-cover',
