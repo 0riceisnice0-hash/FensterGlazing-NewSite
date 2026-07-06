@@ -131,17 +131,6 @@ $process = [
             </div>
         </section>
 
-        <section class="fg-about-area-cta">
-            <div class="container fg-about-area-cta__inner">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Where we work', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Fenster serves Milton Keynes and surrounding towns.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Check the main areas we cover for windows, doors, replacement glass and glazing projects.', 'fenster'); ?></p>
-                </div>
-                <a class="button" href="<?php echo esc_url(home_url('/areas-we-cover/')); ?>"><?php esc_html_e('View areas we cover', 'fenster'); ?></a>
-            </div>
-        </section>
-
         <section class="fg-about-people">
             <div class="container fg-about-people__grid">
                 <figure class="fg-about-people__media">
