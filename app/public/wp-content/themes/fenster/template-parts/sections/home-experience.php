@@ -345,7 +345,7 @@ $location_links = [
     <section class="fg-home-seo-mesh">
         <div class="container">
             <div class="fg-home-section-head">
-                <p class="eyebrow"><?php esc_html_e('Areas we cover', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Local installations', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Double glazing across Milton Keynes and nearby towns.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('A few of our main local service areas. Contact Fenster if your town is not listed.', 'fenster'); ?></p>
             </div>
