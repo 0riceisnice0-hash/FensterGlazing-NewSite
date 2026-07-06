@@ -11572,6 +11572,89 @@ h3 {
   display: none;
 }
 
+.fg-enquiry-form__audience {
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fg-enquiry-form__audience legend {
+  display: block;
+  color: #ffffff;
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.fg-enquiry-form__audience p {
+  max-width: 50ch;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.64);
+  line-height: 1.5;
+}
+
+.fg-enquiry-form__audience-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.fg-enquiry-form__audience-options button {
+  display: grid;
+  gap: 0.35rem;
+  min-height: 128px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04)),
+    rgba(0, 45, 58, 0.28);
+  color: #ffffff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.fg-enquiry-form__audience-options button:hover,
+.fg-enquiry-form__audience-options button:focus-visible,
+.fg-enquiry-form__audience-options button.is-active {
+  border-color: rgba(118, 214, 159, 0.78);
+  background:
+    linear-gradient(145deg, rgba(46, 172, 102, 0.24), rgba(255, 255, 255, 0.08)),
+    rgba(0, 45, 58, 0.34);
+  outline: 0;
+  transform: translateY(-2px);
+}
+
+.fg-enquiry-form__audience-options span {
+  font-size: 1.1rem;
+  font-weight: 850;
+}
+
+.fg-enquiry-form__audience-options small {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.fg-enquiry-form__body {
+  display: grid;
+  gap: 1rem;
+}
+
+.js .fg-enquiry-form--audience-gated:not(.is-audience-selected) .fg-enquiry-form__body {
+  display: none;
+}
+
+.js .fg-enquiry-form--audience-gated.is-audience-selected .fg-enquiry-form__audience {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
 .fg-enquiry-form.is-stepped .fg-enquiry-form__step-controls {
   display: grid;
   grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
@@ -20843,4 +20926,66 @@ html.fg-blinds-reveal-locked {
 .fg-review-showcase__read {
   text-decoration-thickness: max(1px, 0.08em);
   text-underline-offset: 0.18em;
+}
+
+/* Final shared polish for the 2026-07-06 product/form/footer test batch. */
+.site-footer__trust img {
+  width: auto;
+  max-width: 118px;
+  max-height: 46px;
+  object-fit: contain;
+}
+
+.site-footer__trust-mark {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid rgba(214, 172, 67, 0.55);
+  border-radius: 6px;
+  background: #ffffff;
+  color: #6b4a00;
+  font-size: 0.7rem;
+  font-weight: 900;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fg-product-intel__badges {
+  gap: 0.45rem;
+}
+
+.fg-product-intel__badge--system,
+.fg-product-intel__badge--technology {
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+}
+
+.fg-product-intel__badge--system img,
+.fg-product-intel__badge--technology img {
+  max-width: 116px;
+  height: 34px;
+}
+
+.fg-colour-carousel__slide i {
+  border: 1px solid rgba(0, 45, 58, 0.1);
+  background: var(--swatch, #ffffff);
+  box-shadow: inset 0 0 0 10px rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 640px) {
+  .fg-enquiry-form__audience-options {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-enquiry-form__audience-options button {
+    min-height: 108px;
+  }
+
+  .site-footer__trust-mark {
+    min-height: 42px;
+  }
 }

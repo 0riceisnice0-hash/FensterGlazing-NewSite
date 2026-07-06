@@ -86,7 +86,8 @@ $case_cards = [
 
 $partners = [
     ['label' => 'Sheerline', 'type' => 'Aluminium systems', 'copy' => 'Slim aluminium windows, doors and glazed openings for cleaner sightlines.', 'src' => FENSTER_THEME_URI . '/assets/partners/sheerline.png'],
-    ['label' => 'Liniar', 'type' => 'uPVC frames', 'copy' => 'Efficient uPVC window and door systems for everyday home upgrades.', 'src' => ''],
+    ['label' => 'Liniar', 'type' => 'uPVC frames', 'copy' => 'EnergyPlus uPVC window and door systems for everyday home upgrades.', 'src' => FENSTER_THEME_URI . '/assets/partners/liniar-logo.png'],
+    ['label' => 'Roseview', 'type' => 'Sliding sash windows', 'copy' => 'Sash-specific systems for heritage-style windows with proper period detail.', 'src' => FENSTER_THEME_URI . '/assets/partners/roseview-logo-new.png'],
     ['label' => 'Distinction Doors', 'type' => 'Composite doors', 'copy' => 'Entrance door slabs and styles for secure, practical kerb appeal.', 'src' => FENSTER_THEME_URI . '/assets/partners/distinction-doors.png'],
 ];
 

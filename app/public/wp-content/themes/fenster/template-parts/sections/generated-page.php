@@ -198,6 +198,7 @@ $is_product = ! $is_quote_tool && (
 $is_door_product = $is_product && (str_contains($slug, 'door') || str_contains($slug, 'bifold') || str_contains($slug, 'patio') || $slug === 'slide-fold-doors');
 $use_product_journey = $is_product && ! $is_home && ! $is_case_study && ! $is_team && ! $is_about_page && ! $is_contact && ! $is_product_selector_hub && ! $is_commercial_hub && ! $is_commercial_county && ! $is_location_service && ! $is_colour_options;
 $is_pet_flap_page = $slug === 'cat-and-dog-flaps';
+$is_secondary_glazing_page = $slug === 'secondary-glazing';
 $product_usps = fenster_data('product_usps.' . $slug, []);
 $product_usps = is_array($product_usps) ? array_slice($product_usps, 0, 4) : [];
 $product_content = fenster_data('product_content.' . $slug, []);
@@ -322,7 +323,6 @@ if ($slug === 'sliding-sash-windows') {
         ],
     ];
 }
-$integral_blinds_reveal_video = $is_integral_blinds ? fenster_integral_blinds_reveal_url() : '';
 $aluminium_windows_story_poster = $is_aluminium_windows ? fenster_aluminium_windows_story_asset_url('website-header-specifiers-poster.jpg') : '';
 $aluminium_windows_story_desktop_frames = $is_aluminium_windows ? fenster_aluminium_windows_story_asset_url('frames-desktop/frame-001.webp') : '';
 $aluminium_windows_story_mobile_frames = $is_aluminium_windows ? fenster_aluminium_windows_story_asset_url('frames-mobile/frame-001.webp') : '';
@@ -818,7 +818,7 @@ if ($is_commercial) {
         ['step' => '01', 'title' => 'Conversation', 'copy' => 'Fenster starts by understanding the property, the people involved and what needs to change.'],
         ['step' => '02', 'title' => 'Survey', 'copy' => 'The team checks details properly so the recommendation is based on real site conditions.'],
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Experienced installers manage the work with care for the property and the finished detail.'],
-        ['step' => '04', 'title' => 'Aftercare', 'copy' => 'Fenster supports customers after installation with guarantee guidance and practical advice.'],
+        ['step' => '04', 'title' => 'Aftercare', 'copy' => 'Fenster supports the installation after completion with guarantee guidance and practical advice.'],
     ];
 } elseif ($is_pet_flap_page) {
     $product_order_steps = [
@@ -2134,24 +2134,6 @@ if ($is_commercial_hub) {
     </section>
     <?php endif; ?>
 
-    <?php if ($is_integral_blinds && $integral_blinds_reveal_video) : ?>
-        <div class="fg-integral-blinds-reveal" data-fg-integral-blinds-reveal aria-hidden="true">
-            <canvas class="fg-integral-blinds-reveal__canvas" data-fg-integral-blinds-canvas aria-hidden="true"></canvas>
-            <video
-                class="fg-integral-blinds-reveal__video"
-                data-fg-integral-blinds-video
-                data-src="<?php echo esc_url($integral_blinds_reveal_video); ?>"
-                preload="none"
-                muted
-                playsinline
-            ></video>
-            <div class="fg-integral-blinds-reveal__cue">
-                <span><?php esc_html_e('Scroll to open the blinds', 'fenster'); ?></span>
-                <i></i>
-            </div>
-        </div>
-    <?php endif; ?>
-
     <?php if ($is_home) : ?>
         <section class="fg-home-proof">
             <div class="container fg-home-proof__grid">
@@ -2221,7 +2203,7 @@ if ($is_commercial_hub) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Instant quote lab', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Use the visualiser when the site is on the live Fenster domain.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('The preview shows the product selector journey. On the live domain, this route can hand customers into the WindowCAD retail designer for product selection and instant pricing.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('The preview shows the product selector journey. On the live domain, this route opens the WindowCAD retail designer for product selection and instant pricing.', 'fenster'); ?></p>
                     <div class="button-row">
                         <a class="button" href="<?php echo esc_url($instant_quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Launch instant quote', 'fenster'); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('View quote page', 'fenster'); ?></a>
@@ -2563,7 +2545,7 @@ if ($is_commercial_hub) {
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
                         <div class="fg-product-intel__intro">
-                            <p class="eyebrow"><?php echo esc_html((string) ($product_hub['eyebrow'] ?? 'Product information hub')); ?></p>
+                            <p class="eyebrow"><?php echo esc_html((string) ($product_hub['eyebrow'] ?? 'Product guide')); ?></p>
                             <h2><?php echo esc_html((string) ($product_hub['heading'] ?? 'The details worth checking before you choose.')); ?></h2>
                             <p><?php echo esc_html((string) ($product_hub['copy'] ?? 'Fenster confirms the final product specification after survey so each window, door or glazing unit is matched to the property.')); ?></p>
 
@@ -2654,6 +2636,7 @@ if ($is_commercial_hub) {
                                     <?php
                                     $spec_label = trim((string) ($spec['label'] ?? 'Specification'));
                                     $spec_value = trim((string) ($spec['value'] ?? ''));
+                                    $spec_copy = trim((string) ($spec['copy'] ?? ''));
                                     $tab_id = 'fg-product-intel-tab-' . $slug . '-' . $index;
                                     $panel_id = 'fg-product-intel-panel-' . $slug . '-' . $index;
                                     ?>
@@ -2669,7 +2652,11 @@ if ($is_commercial_hub) {
                                         <?php if ($spec_value !== '') : ?>
                                             <h3><?php echo esc_html($spec_value); ?></h3>
                                         <?php endif; ?>
-                                        <p><?php esc_html_e('Fenster checks this during the survey and quotation stage so the final specification suits the property, budget, opening style and performance target.', 'fenster'); ?></p>
+                                        <?php if ($spec_copy !== '') : ?>
+                                            <p><?php echo esc_html($spec_copy); ?></p>
+                                        <?php else : ?>
+                                            <p><?php esc_html_e('This detail is confirmed during survey, with the final choice matched to the property, opening and day-to-day use.', 'fenster'); ?></p>
+                                        <?php endif; ?>
                                     </article>
                                 <?php endforeach; ?>
                             </div>
@@ -2775,7 +2762,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page) : ?>
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">
@@ -3214,7 +3201,7 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
-    <?php if (! $use_product_journey) : ?>
+    <?php if (! $use_product_journey && ! $is_product) : ?>
         <section class="fg-cta-strip">
             <div class="container fg-cta-strip__inner">
                 <div>

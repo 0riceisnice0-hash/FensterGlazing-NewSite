@@ -7,12 +7,12 @@
 
 $brand = fenster_data('brand', []);
 $footer_products = [
-    ['label' => 'Windows', 'url' => home_url('/windows-milton-keynes/')],
-    ['label' => 'Doors', 'url' => home_url('/doors-milton-keynes/')],
-    ['label' => 'Bifold Doors', 'url' => home_url('/aluminium-bifold-doors/')],
-    ['label' => 'Roof Lanterns', 'url' => home_url('/roof-lanterns/')],
-    ['label' => 'Replacement Glass', 'url' => home_url('/double-glazing-replacement/')],
-    ['label' => 'Commercial Glazing', 'url' => home_url('/commercial-glazing/')],
+    ['label' => 'Windows and doors', 'url' => home_url('/windows-milton-keynes/')],
+    ['label' => 'Aluminium glazing', 'url' => home_url('/aluminium-windows/')],
+    ['label' => 'Bifolds and sliders', 'url' => home_url('/aluminium-bifold-doors/')],
+    ['label' => 'Roof lanterns and glass', 'url' => home_url('/roof-lanterns/')],
+    ['label' => 'Repairs and replacement units', 'url' => home_url('/double-glazing-replacement/')],
+    ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
 ];
 $footer_company = [
     ['label' => 'About Fenster', 'url' => home_url('/about/')],
@@ -32,11 +32,15 @@ $footer_company = [
             <div class="site-footer__trust" aria-label="<?php esc_attr_e('Accreditations', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/cpa.png'); ?>" alt="<?php esc_attr_e('Consumer Protection Association', 'fenster'); ?>">
+                <span class="site-footer__trust-mark"><?php esc_html_e('Constructionline Gold', 'fenster'); ?></span>
+                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/cropped-ssip.png'); ?>" alt="<?php esc_attr_e('SSIP accredited', 'fenster'); ?>">
+                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
+                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>">
             </div>
         </div>
 
         <div class="site-footer__nav">
-            <h2><?php esc_html_e('Products', 'fenster'); ?></h2>
+            <h2><?php esc_html_e('What we do', 'fenster'); ?></h2>
             <?php foreach ($footer_products as $item) : ?>
                 <a href="<?php echo esc_url($item['url']); ?>"><?php echo esc_html($item['label']); ?></a>
             <?php endforeach; ?>

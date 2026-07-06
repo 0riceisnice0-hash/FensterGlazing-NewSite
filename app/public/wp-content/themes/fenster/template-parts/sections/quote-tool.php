@@ -26,9 +26,9 @@ $hero_copy = $is_visualiser
     ? 'Explore product styles, colours and glazing choices, then send Fenster the details so the team can check the specification with you.'
     : 'Use the product selector as a starting point, then Fenster can confirm the details, survey requirements and next steps with you.';
 $steps = [
-    ['title' => 'Choose products', 'copy' => 'Pick the window, door or glazing option you want to explore.'],
-    ['title' => 'Add useful details', 'copy' => 'Sizes, photos, colours and property notes help the team give better guidance.'],
-    ['title' => 'Confirm with Fenster', 'copy' => 'Fenster checks survey, specification, manufacture and installation details before anything is ordered.'],
+    ['title' => 'Choose a product', 'copy' => 'Pick the window, door or glazing option you want to price.'],
+    ['title' => 'Get your quote', 'copy' => 'Use the online tool to choose sizes, layouts, colours and options.'],
+    ['title' => 'Fenster gets in touch', 'copy' => 'The team checks the details, survey needs and next steps before anything is ordered.'],
 ];
 ?>
 

@@ -41,7 +41,7 @@ $hub_routes = [
         'title' => 'Talk to the showroom team.',
         'copy' => 'Visit Milton Keynes, call the desk, or send an enquiry if you want help choosing products, glass, colours or repair options.',
         'meta' => 'Best for advice',
-        'url' => '#contact-showroom',
+        'url' => '#contact-form',
     ],
 ];
 

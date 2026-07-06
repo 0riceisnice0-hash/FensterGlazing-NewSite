@@ -295,6 +295,10 @@ enquiryForms.forEach((form) => {
   const submitButton = form.querySelector('button[type="submit"]');
   const submitLabel = submitButton?.querySelector('span');
   const originalLabel = submitLabel?.textContent || 'Send enquiry';
+  const audienceGate = form.querySelector('[data-fg-audience-gate]');
+  const audienceBody = form.querySelector('[data-fg-audience-body]');
+  const audienceChoices = [...form.querySelectorAll('[data-fg-audience-choice]')];
+  const projectTypeField = form.querySelector('[data-fg-project-type]');
   const steps = [...form.querySelectorAll('[data-fg-enquiry-step]')];
   const progress = form.querySelector('[data-fg-enquiry-progress]');
   const progressBar = progress?.querySelector('span');
@@ -308,6 +312,28 @@ enquiryForms.forEach((form) => {
   const validationFields = [
     ...form.querySelectorAll('input[name="email"], input[name="phone"], input[name="location"]'),
   ];
+
+  if (audienceGate && audienceBody && audienceChoices.length && projectTypeField) {
+    form.classList.add('fg-enquiry-form--audience-gated');
+
+    const chooseAudience = (choice) => {
+      audienceChoices.forEach((button) => {
+        const active = button === choice;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      const projectType = choice.dataset.projectType || choice.textContent?.trim() || projectTypeField.value;
+      projectTypeField.value = projectType;
+      form.classList.add('is-audience-selected');
+      audienceBody.removeAttribute('hidden');
+      audienceBody.querySelector('input, select, textarea')?.focus?.({ preventScroll: true });
+    };
+
+    audienceChoices.forEach((choice) => {
+      choice.addEventListener('click', () => chooseAudience(choice));
+    });
+  }
 
   const validateContactField = (field) => {
     field.setCustomValidity('');

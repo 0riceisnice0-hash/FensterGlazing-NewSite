@@ -174,10 +174,6 @@ function fenster_product_scroll_videos(): array
             ['file' => 'bifold-video.mp4', 'type' => 'video/mp4'],
         ],
         'heritage-aluminium-doors' => [
-            ['file' => 'heritage.webm', 'type' => 'video/webm'],
-            ['file' => 'heritage.mp4', 'type' => 'video/mp4'],
-        ],
-        'aluminium-doors' => [
             ['file' => 'classic-door-turntable.webm', 'type' => 'video/webm'],
             ['file' => 'classic-door-turntable.mp4', 'type' => 'video/mp4'],
         ],

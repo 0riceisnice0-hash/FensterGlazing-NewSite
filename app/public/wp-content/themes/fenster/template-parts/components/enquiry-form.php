@@ -111,17 +111,26 @@ $notices = [
             </div>
         </div>
     <?php else : ?>
+    <input type="hidden" name="project_type" value="<?php echo esc_attr((string) $args['project_type']); ?>" data-fg-project-type>
+    <fieldset class="fg-enquiry-form__audience" data-fg-audience-gate>
+        <legend><?php esc_html_e('Who is this for?', 'fenster'); ?></legend>
+        <p><?php esc_html_e('Choose the route that fits your enquiry so Fenster can send it to the right team.', 'fenster'); ?></p>
+        <div class="fg-enquiry-form__audience-options">
+            <button type="button" data-fg-audience-choice data-project-type="Residential windows and doors" aria-pressed="false">
+                <span><?php esc_html_e('Homeowner', 'fenster'); ?></span>
+                <small><?php esc_html_e('Windows, doors, glass, repairs or home improvements.', 'fenster'); ?></small>
+            </button>
+            <button type="button" data-fg-audience-choice data-project-type="Commercial glazing" aria-pressed="false">
+                <span><?php esc_html_e('Business', 'fenster'); ?></span>
+                <small><?php esc_html_e('Commercial sites, schools, offices, shopfronts or tenders.', 'fenster'); ?></small>
+            </button>
+        </div>
+    </fieldset>
+
+    <div class="fg-enquiry-form__body" data-fg-audience-body>
     <fieldset class="fg-enquiry-form__step">
-        <legend><?php esc_html_e('What can we help with?', 'fenster'); ?></legend>
+        <legend><?php esc_html_e('Project timing', 'fenster'); ?></legend>
         <div class="fg-enquiry-form__row">
-            <label>
-                <span><?php esc_html_e('What can we help with?', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span>
-                <select name="project_type" required>
-                    <?php foreach ($project_options as $option) : ?>
-                        <option <?php selected((string) $args['project_type'], (string) $option); ?>><?php echo esc_html((string) $option); ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </label>
             <label>
                 <span><?php esc_html_e('When are you hoping to start?', 'fenster'); ?></span>
                 <select name="timescale">
@@ -218,8 +227,9 @@ $notices = [
                 <i aria-hidden="true">-&gt;</i>
             </button>
             <small><?php esc_html_e('Your enquiry is securely saved before email delivery.', 'fenster'); ?></small>
-        </div>
+            </div>
     </fieldset>
+    </div>
     <?php endif; ?>
 
     <div class="fg-enquiry-form__trap" aria-hidden="true">
