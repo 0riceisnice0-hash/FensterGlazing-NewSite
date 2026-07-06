@@ -15,10 +15,15 @@ Use:
 ## Important Updates
 
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
-- Deployment should update `wp-content\themes\fenster` from the repo while leaving production `wp-config.php`, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
+- Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
+- Deployment should update the `fenster` theme from the GitHub repo while leaving production `.env`, Bedrock config, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
+- Test is already running the new `fenster` theme. The live site has not been switched yet. Live activation needs an owner-approved backup first, then the same theme copy used on test, then a short post-live check.
+- Do not use SiteGround clone/staging tools for this project. The safe model is local -> GitHub -> test -> verify -> backup -> live. This avoids editing test and live at the same time and avoids accidental database URL rewrites.
+- Generated pages are theme-owned for SEO. Yoast/Rank Math public head output is suppressed on generated pages to prevent duplicate metadata and stale imported schema/social tags. Do not reset Rank Math for launch; use it only later if there is a clear admin-tool reason.
 - Launch SEO hardening is complete for the current technical blockers: homepage title/meta override, generated route 301 normalisation, generated breadcrumb schema, public cache headers, sitemap scrub to 427 URLs, `/commercial-areas/` removed from the header, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
 - The residential location matrix has unique generated metadata across the 13 town x 21 product pages. Commercial county metadata is profile-specific, and Isle of Wight commercial glazing has been removed/410'd as inaccessible coverage.
 - Mobile launch fixes are complete for the About process cards, Contact page CTA cards and quote-tool controls. Mobile quote embeds use one same-tab `Open quote tool` action; desktop keeps `Expand view` and `Open in new tab`.
+- Test enquiry delivery has been verified end-to-end: valid submissions save as private `fenster_enquiry` posts and send HTML emails to `info@fensterglazing.com`, with customer confirmations.
 
 ## Current Goal Of The Site
 
@@ -44,6 +49,29 @@ PHP lint:
 ```powershell
 & 'C:\Users\zacpl\AppData\Roaming\Local\lightning-services\php-8.2.29+0\bin\win64\php.exe' -l '<changed php file>'
 ```
+
+## SiteGround Launch Workflow
+
+Current server reality:
+
+- SSH host: `ssh.fensterglazing.com`, port `18765`, user `u453-m73mh4m4wev2`.
+- Repo cache on server: `~/repos/FensterGlazing-NewSite`.
+- Test root: `~/www/test.fensterglazing.com/public_html`.
+- Live root: `~/www/fensterglazing.com/public_html`.
+- Bedrock theme folder on both: `web/app/themes/fenster`.
+
+Accepted deploy model:
+
+1. Make code changes locally in `C:\Users\zacpl\Local Sites\fenster-glazing`.
+2. Run the relevant build/lint checks.
+3. Commit and push to GitHub.
+4. Pull/reset the server repo cache to GitHub `main`.
+5. Rsync only `app/public/wp-content/themes/fenster/` into the test Bedrock theme folder.
+6. Verify test visually and technically.
+7. Before live, take a fresh SiteGround backup and get explicit owner approval.
+8. Rsync the same theme folder into the live Bedrock theme folder, activate/keep `fenster`, clear cache, and verify key routes/forms.
+
+For future live changes, use the same route. Do not edit live files directly except for a genuine emergency, and if that happens, copy the emergency fix back into GitHub immediately.
 
 ## Main Theme Map
 

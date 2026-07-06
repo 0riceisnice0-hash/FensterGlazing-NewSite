@@ -40,6 +40,7 @@ Optimised hero video:
 - The first-visit loading screen has been removed because it delayed lead capture and hurt perceived speed.
 - The homepage SEO title/meta is overridden for launch: `Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing` with a complete local-service meta description.
 - The interactive product theatre to instant-pricing bridge has been spacing-fixed so the quote card no longer overlaps the preceding product selector area.
+- WindowCAD quote embeds are intentionally scaled down on launch so the visible first view is usable now that the live/test domain can render the iframe.
 - The repo is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`; homepage deploys should come through the theme, not by copying the whole WordPress install.
 - `/commercial-areas/` must stay out of the public header and sitemap. The homepage should route customers to products, instant quote, contact, trust and curated local links only.
 

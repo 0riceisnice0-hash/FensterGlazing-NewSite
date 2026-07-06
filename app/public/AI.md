@@ -17,10 +17,14 @@ It should not contain dated progress reports, long handover summaries or homepag
 ## Important Updates
 
 - GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.
-- Production deploys should swap/update the theme at `wp-content\themes\fenster` only. Keep the production database, uploads, plugins and `wp-config.php` in place unless the owner explicitly asks for a full WordPress migration.
+- SiteGround test/live are still Bedrock installs. Local source is standard WordPress at `wp-content\themes\fenster`, but server deploy target is `web/app/themes/fenster`. The verified test deploy path is: GitHub repo cache at `~/repos/FensterGlazing-NewSite`, then rsync `app/public/wp-content/themes/fenster/` into `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/`.
+- Production deploys should swap/update the theme only. Keep the production database, uploads, plugins, `.env`, Bedrock config and `wp-config.php` equivalent in place unless the owner explicitly asks for a full WordPress migration.
+- Do not use SiteGround clone/staging tools for this account. Previous cloning/search-replace behaviour caused live/test URL drift. Use the theme-only deploy workflow: local change, build/lint, commit/push, deploy to test, verify, back up live, then deploy the same theme to live.
+- On generated pages the theme owns public SEO output. Yoast and Rank Math head output is intentionally suppressed to prevent duplicate titles, stale schema and old imported social tags. Do not reset Rank Math before launch; Google Site Kit/Search Console and Microsoft Clarity can be configured after launch for tracking.
 - Launch SEO hardening has been completed for the main technical blockers: homepage title/meta override, generated URL trailing-slash/lowercase 301s, public cache headers for logged-out generated pages and sitemaps, generated breadcrumb schema, sitemap scrub to 427 URLs, `/commercial-areas/` removed from public navigation, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
 - Thin utility/scrape pages such as `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `brochures`, `apecs-terms-conditions` and `fenster-partners` are intentionally `noindex,follow` and absent from the sitemap.
 - Mobile launch fixes are in place for the About process cards, Contact hub cards and quote-tool controls. Do not restore the old mobile quote controls that showed both `Expand view` and `Open in new tab`; mobile should show one same-tab `Open quote tool` action.
+- The test site has verified working enquiry delivery to `info@fensterglazing.com`; valid forms are saved privately as `fenster_enquiry` posts before email delivery.
 
 ## Project Basics
 
@@ -90,6 +94,7 @@ PHP lint example:
 - Submissions are handled in `inc\enquiries.php`.
 - Valid enquiries are saved as private `fenster_enquiry` posts before email delivery is attempted.
 - Default office recipient is `info@fensterglazing.com`, unless overridden by a supported config constant.
+- Email templates must keep the Fenster logo visible in common email clients. The current launch email uses a light header with the white-background brand asset; do not place that asset back onto a dark header.
 - Mobile forms must be one column, full width, with `16px` input text and comfortable touch targets.
 - Form-section headings are content headings, not heroes. Keep shared enquiry h2 sizes moderate across the site.
 
@@ -108,6 +113,7 @@ PHP lint example:
 ## Generated SEO Rule
 
 - Do not render raw imported SEO tags blindly.
+- Generated pages suppress Yoast/Rank Math public head output. Keep theme-owned titles, descriptions, canonicals, robots, social meta, LocalBusiness schema, FAQ schema, breadcrumb schema and sitemaps as the source of truth unless the architecture deliberately changes.
 - Skip imported OpenGraph, Twitter and JSON-LD values that are placeholders, JSON blobs, old designer-tool schema, `test.fensterglazing.com` references or other scraped development-domain debris.
 - Imported `schema_json_ld` from the scrape is never rendered. It contains old designer-tool VideoObject markup and unsubstantiated aggregateRating values. Structured data is generated fresh instead: `fenster_render_site_schema()` in `inc\generated-pages.php` outputs a LocalBusiness block site-wide, product journey pages output `FAQPage` JSON-LD built from the same FAQs shown on the page, and generated deep routes output `BreadcrumbList` JSON-LD. Do not add aggregateRating/Review schema unless a verifiable review feed exists.
 - Debris routes are handled centrally in `inc\generated-pages.php`: `fenster_gone_slugs()` (410), `fenster_redirect_target()` (301, including all `*-designer` pages and duplicate town slugs) and `fenster_slug_is_noindex()` (ad landers, thin utility/scrape shells plus `category/`, `tag/`, `author/`, `blog/page/` archives). Add new debris to these lists rather than only excluding it from the sitemap; sitemap exclusion alone does not stop indexing.

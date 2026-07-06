@@ -20,6 +20,7 @@ Use:
 - Mobile About process cards require proper internal padding and bordered containment; text must not hit the card edge.
 - Quote-tool embeds should stay premium and calm: desktop can show `Expand view` and `Open in new tab`, but mobile should show one clear same-tab `Open quote tool` action.
 - The loading screen has been removed for lead performance. Do not add another blocking entrance animation before the page content.
+- Enquiry email HTML is part of the customer experience. Keep it simple, table-based and email-client-safe; the launch template uses a light header so the Fenster logo remains visible.
 
 ## Design North Star
 

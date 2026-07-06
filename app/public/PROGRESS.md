@@ -2,6 +2,19 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - SiteGround Test Deploy, SEO Ownership And Forms
+
+- Verified the real SiteGround structure: both test and live are Bedrock installs, so the server theme path is `web/app/themes/fenster` even though local development uses `wp-content/themes/fenster`.
+- Deployed the GitHub theme to `https://test.fensterglazing.com` from the server repo cache at `~/repos/FensterGlazing-NewSite`, then activated the `fenster` theme on test. Live has not been switched.
+- Disabled the test-only `mousewheel-smooth-scroll` plugin because it conflicted with the theme's Lenis scrolling and caused jumpy scroll behaviour. Do not run another smooth-scroll plugin alongside the theme.
+- Fixed Bedrock theme asset URLs so generated `/wp-content/themes/fenster/...` references map to the real theme URI under `/app/themes/fenster/...`; this restored imported images and theme-owned media on test.
+- Added the aluminium windows story-frame folders to git so the scroll video on `/aluminium-windows/` works on test instead of only locally.
+- Suppressed Yoast and Rank Math public head output on generated pages, then added theme-owned title/social meta handling so public SEO tags come from the theme rather than stale plugin/imported data.
+- Tightened contact and online-quote titles, zoomed the WindowCAD iframe down for a usable first view, and verified key routes/assets returned 200 on test.
+- Verified enquiry delivery on test: valid AJAX form submissions save as private `fenster_enquiry` posts, send an office HTML email to `info@fensterglazing.com`, and send the customer confirmation. Test enquiry ID `8781` confirmed email delivery.
+- Polished the enquiry email HTML header so the Fenster logo sits on a light header and remains visible in email clients.
+- Documented the future workflow as local code change -> GitHub -> test deploy -> verify -> fresh live backup -> live deploy, avoiding direct live editing and SiteGround clone/staging tools.
+
 ## 2026-07-06 - Launch Documentation, GitHub And Mobile Polish
 
 - Pushed the scoped project to GitHub at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`, keeping the repo focused on the custom theme and docs rather than WordPress core, uploads, `wp-config.php`, local backups or the `wp-content\fenster-reference` archive.

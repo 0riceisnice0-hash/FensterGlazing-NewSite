@@ -1,7 +1,7 @@
 # Fenster Glazing — Master Site Audit
 
 Audit date: 2026-07-03
-Last updated: 2026-07-06 (GitHub upload, launch SEO hardening, mobile contact/about/quote polish, docs refresh)
+Last updated: 2026-07-06 (GitHub upload, SiteGround test deploy, launch SEO hardening, forms verified, docs refresh)
 Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
 
 **How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
@@ -9,10 +9,13 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 ## Important Updates (2026-07-06)
 
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is scoped to the custom theme and launch docs, excluding WordPress core, uploads, `wp-config.php`, local backups/config, `node_modules` and `wp-content\fenster-reference`.
-- Deployment should update/swap `wp-content\themes\fenster` from the repo while leaving the production database, uploads, plugins and config intact. The reference scrape archive must not be deployed.
+- SiteGround test/live are verified Bedrock installs. Deployment should update/swap only the `fenster` theme at `web/app/themes/fenster` from the repo while leaving the production database, uploads, plugins, `.env` and config intact. The reference scrape archive must not be deployed.
+- The test site is running the new `fenster` theme. Live has not been switched yet. Before live deployment, take a fresh SiteGround backup and get explicit owner approval.
+- Theme-owned SEO is now the launch source of truth on generated pages. Yoast/Rank Math head output is suppressed there to avoid duplicate titles, stale schema and broken imported social metadata; do not reset Rank Math before launch.
 - Launch SEO hardening has moved the site materially closer to live-ready: homepage title/meta fixed, generated routes normalise with 301s, generated deep routes output breadcrumb schema, generated pages/sitemaps use short public cache headers, and the sitemap is scrubbed to 427 URLs.
 - Navigation/indexation cleanup is complete for known launch debris: `/commercial-areas/` is out of the header/sitemap, thin utility/scrape pages are `noindex,follow`, `/areas-we-cover/` and `/terms-conditions/` are visible in the footer, and inaccessible Isle of Wight commercial coverage is 410'd.
 - Mobile conversion polish is complete for the reported launch blockers: About process cards have padding, Contact CTA cards are readable with no text/action overlap, and mobile quote embeds show a single same-tab `Open quote tool` action.
+- Test form delivery is verified end-to-end: enquiries save privately in WordPress and send HTML emails to `info@fensterglazing.com` with customer confirmations.
 
 ## Remediation Status (2026-07-03)
 
@@ -26,6 +29,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 | 2.6 | Duplicate competing town pages | ✅ Fixed — 301s to the canonical matrix slugs |
 | 2.7 | No analytics / conversion tracking | ⏳ Open — awaiting GA4/GTM ID, Google Ads link and consent-banner decision from the owner |
 | 2.8 | No git history | ✅ Fixed — initial scoped GitHub push completed; theme/docs are versioned without WordPress core, uploads, reference archives or local config |
+| 2.9 | Form delivery unproven on host | ✅ Fixed — test submission saved enquiry ID `8781` and sent office/customer emails via SiteGround |
 
 ### Post-Audit Product-Page Progress
 
@@ -42,6 +46,38 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Residential location matrix metadata has been de-duplicated: all 273 town x product pages now generate unique meta descriptions from town and product profiles; a local crawl confirmed 273 unique descriptions, zero duplicate groups and zero fetch errors.
 - The launch SEO hardening pass removed the public `/commercial-areas/` header shortcut, added footer links to `/areas-we-cover/` and `/terms-conditions/`, replaced the inherited homepage title/meta, added breadcrumb schema on generated deep pages, normalised generated URL casing/trailing slashes with 301s, set public cache headers for generated pages/sitemaps, and removed thin utility pages from the sitemap via `noindex,follow`. Local verification shows 427 sitemap URLs after the scrub.
 - Mobile launch polish fixed the About process-card padding, Contact page CTA readability/overlap, and mobile quote-tool action model. Mobile quote embeds now use one same-tab `Open quote tool` action instead of showing desktop expand/new-tab controls.
+- SiteGround test deployment proved the launch path: the server repo cache pulls from GitHub, then the theme folder is copied into the Bedrock `web/app/themes/fenster` directory. Bedrock asset URL handling, aluminium story frames, WindowCAD iframe scale, and form email delivery have all been verified on test.
+
+## Pre-Launch Re-Audit (2026-07-06)
+
+A full re-crawl of every sitemap URL (427/427 fetched) plus a hardening verification pass, run before go-live.
+
+### Verified clean
+
+- **Zero duplicate title tags** across all 427 indexable pages; zero missing titles, zero over-length titles.
+- **Zero duplicate meta descriptions** in the matrix/county sets (one 3-page group remains — see finding R2).
+- **Exactly one H1 on every page**, no missing H1s.
+- **Canonical tags present and self-consistent on all 427 pages** (path matches URL, production host, trailing slash).
+- **Structured data on every page and all of it valid JSON**: LocalBusiness + BreadcrumbList on 426 pages, plus FAQPage on the 35 product pages; homepage correctly carries LocalBusiness only.
+- **No noindex pages inside the sitemap**; ad landers, thin utility shells and archives all carry `noindex,follow` and are excluded.
+- **No broken internal content links** found across the full crawl (only WP head plumbing endpoints flagged — see R3).
+- **No images missing alt text** flagged anywhere in the crawl.
+- All 2026-07-06 hardening claims verified live: homepage title/meta override, trailing-slash and case-insensitive 301s, cache headers on pages (`max-age=600, s-maxage=3600`) and sitemaps, splash loader fully gone, `/commercial-areas/` noindexed and out of the header, Isle of Wight 410, all earlier 301/410/noindex rules still holding, 404s return 404.
+
+### New findings — high priority (fix before launch)
+
+- **R1 — Social share metadata is stale/broken sitewide.** The homepage still emits imported `og:title`/`og:description`/`twitter:*` that contradict the new title ("Fenster Glazing - Double glazing Installers, Buckinghamshire" and the truncated "…From energy-efficient uPVC" text). Worse, imported `twitter:image`/`og:image` URLs across the site point at the **old host's `/app/uploads/...` tree, which 404s on this build** (verified), and 203 of 427 pages have no `og:image` at all. Any page shared on Facebook/WhatsApp/X shows wrong text and a broken/missing image. Fix: derive `og:title`/`og:description` from the page's live title/meta when imported values are stale or missing, drop imported image URLs that point at `/app/uploads/`, and add a sitewide default social image served from the theme.
+- **R2 — Colour hub triplication.** `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` serve the identical 632-word hub under three self-canonicalised URLs with one shared meta description — textbook duplicate content. Fix: canonicalise (or 301) the two material URLs to `/colour-options/`, or give each a genuinely distinct page.
+- **R3 — WordPress attack/leak surface.** `/wp-json/wp/v2/users` publicly lists the admin login username ("zac"); XML-RPC is enabled with a discovery link in every head; RSD (`EditURI`) link and a `generator` meta exposing the WordPress version are also emitted. Combined, this hands brute-force tooling both the username and the endpoint. Fix: restrict the users REST endpoint for unauthenticated requests, disable XML-RPC, remove RSD/shortlink/generator output.
+- **R4 — `<html lang="en-US">` on a UK business.** Set Settings → General → Site Language to English (UK) so `lang="en-GB"` is emitted (affects search locale signals and screen-reader pronunciation).
+- **R5 — Host-level launch config (cannot be done locally).** HTTPS certificate, one canonical host with 301s (http→https, www→non-www), SMTP + SPF/DKIM/DMARC for enquiry deliverability, GA4/consent (still open from 2.7), Search Console + GBP verification at go-live.
+
+### New findings — medium priority
+
+- **R6 — 338 meta descriptions exceed ~175 characters** (matrix pages run 235–280 chars; several counties and articles too). Unique and well-written, but Google truncates around 155–165 chars, so the templates' calls-to-action get cut off. Trim the matrix/county description templates to ~150–160 chars.
+- **R7 — Head bloat/cleanup**: wp-emoji scripts, `rel="shortlink"`, RSS feed links and oEmbed discovery still load on every page; removable for a leaner head and marginally faster first paint.
+- **R8 — Homepage weight ~11.7 MB** (9.4 MB hero video + ~2.3 MB other assets). Acceptable for launch given `preload="metadata"`, but a ~720p mobile rendition and responsive images remain the biggest post-launch performance win (see Section 4).
+- **R9 — Thin-ish indexable pages**: the case-study pages run 390–600 words. Real content, fine to launch, but enriching them (more photos, scope details, town names) strengthens the local-proof cluster.
 
 ---
 
