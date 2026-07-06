@@ -72,22 +72,38 @@ function fenster_enquiry_recipient(): string
     return (string) apply_filters('fenster_enquiry_recipient', 'info@fensterglazing.com');
 }
 
+function fenster_mail_config_value(string $key, string $default = ''): string
+{
+    if (defined($key)) {
+        return (string) constant($key);
+    }
+
+    $value = getenv($key);
+    if (is_string($value) && trim($value) !== '') {
+        return $value;
+    }
+
+    return $default;
+}
+
 add_action('phpmailer_init', 'fenster_configure_smtp');
 function fenster_configure_smtp(PHPMailer\PHPMailer\PHPMailer $mailer): void
 {
-    if (! defined('FENSTER_SMTP_HOST') || trim((string) FENSTER_SMTP_HOST) === '') {
+    $host = fenster_mail_config_value('FENSTER_SMTP_HOST');
+    if ($host === '') {
         return;
     }
 
     $mailer->isSMTP();
-    $mailer->Host = (string) FENSTER_SMTP_HOST;
-    $mailer->Port = defined('FENSTER_SMTP_PORT') ? (int) FENSTER_SMTP_PORT : 587;
-    $mailer->SMTPAuth = defined('FENSTER_SMTP_USERNAME') && (string) FENSTER_SMTP_USERNAME !== '';
-    $mailer->Username = defined('FENSTER_SMTP_USERNAME') ? (string) FENSTER_SMTP_USERNAME : '';
-    $mailer->Password = defined('FENSTER_SMTP_PASSWORD') ? (string) FENSTER_SMTP_PASSWORD : '';
-    $mailer->SMTPSecure = defined('FENSTER_SMTP_SECURE') ? (string) FENSTER_SMTP_SECURE : 'tls';
-    $mailer->From = 'info@fensterglazing.com';
-    $mailer->FromName = 'Fenster Glazing';
+    $mailer->Host = $host;
+    $mailer->Port = (int) fenster_mail_config_value('FENSTER_SMTP_PORT', '587');
+    $mailer->Username = fenster_mail_config_value('FENSTER_SMTP_USERNAME');
+    $mailer->Password = fenster_mail_config_value('FENSTER_SMTP_PASSWORD');
+    $mailer->SMTPAuth = $mailer->Username !== '';
+    $mailer->SMTPSecure = fenster_mail_config_value('FENSTER_SMTP_SECURE', 'tls');
+    $mailer->From = fenster_mail_config_value('FENSTER_MAIL_FROM', 'info@fensterglazing.com');
+    $mailer->FromName = fenster_mail_config_value('FENSTER_MAIL_FROM_NAME', 'Fenster Glazing');
+    $mailer->Sender = $mailer->From;
 }
 
 function fenster_enquiry_redirect(string $status, string $fallback = ''): void

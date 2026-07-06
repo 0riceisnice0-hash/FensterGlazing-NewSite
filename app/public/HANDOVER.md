@@ -24,6 +24,7 @@ Use:
 - The residential location matrix has unique generated metadata across the 13 town x 21 product pages. Commercial county metadata is profile-specific, and Isle of Wight commercial glazing has been removed/410'd as inaccessible coverage.
 - Mobile launch fixes are complete for the About process cards, Contact page CTA cards and quote-tool controls. Mobile quote embeds use one same-tab `Open quote tool` action; desktop keeps `Expand view` and `Open in new tab`.
 - Test enquiry delivery has been verified end-to-end: valid submissions save as private `fenster_enquiry` posts and send HTML emails to `info@fensterglazing.com`, with customer confirmations.
+- Live mail deliverability needs authenticated SMTP. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings or silently drop same-domain office notifications. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
 
 ## Current Goal Of The Site
 
