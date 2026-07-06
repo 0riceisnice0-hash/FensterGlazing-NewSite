@@ -47,6 +47,8 @@ function fenster_strip_ungated_tracking_output(string $html): string
         '/<!-- Meta Pixel Event Code -->.*?<!-- End Meta Pixel Event Code -->\\s*/is',
         '/<div id=[\'"]fb-pxl-ajax-code[\'"]><\\/div>/i',
         '/<script\\b[^>]*>\\s*\\(function\\(c,\\s*l,\\s*a,\\s*r,\\s*i,\\s*t,\\s*y\\).*?clarity\\.ms\\/tag\\/.*?<\\/script>\\s*/is',
+        '/<script\\b[^>]*>\\s*var url = window\\.location\\.origin \\+ [\'"]\\?ob=open-bridge[\'"];.*?fbq\\([\'"]init[\'"].*?<\\/script>\\s*/is',
+        '/<script\\b[^>]*>\\s*fbq\\([\'"]track[\'"],\\s*[\'"]PageView[\'"].*?<\\/script>\\s*/is',
     ];
 
     return (string) preg_replace($patterns, '', $html);
