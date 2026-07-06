@@ -19,6 +19,7 @@ Use:
 - Mobile Contact hub cards now require readable overlay contrast, contained heading/copy sizing and no overlapping labels or buttons.
 - Mobile About process cards require proper internal padding and bordered containment; text must not hit the card edge.
 - Quote-tool embeds should stay premium and calm: desktop can show `Expand view` and `Open in new tab`, but mobile should show one clear same-tab `Open quote tool` action.
+- Product mobile QA now has specific priority issues: no generated product section may create horizontal body scroll; common-choice/product-view controls must show clearly when more options exist; colour hub hero imagery can be removed on mobile if it weakens the page; sash comparison/model sections need a designed mobile layout, not squeezed desktop tables/images.
 - The loading screen has been removed for lead performance. Do not add another blocking entrance animation before the page content.
 - Enquiry email HTML is part of the customer experience. Keep it simple, table-based and email-client-safe; the launch template uses a light header so the Fenster logo remains visible.
 
@@ -135,6 +136,7 @@ There is one shared live customer form:
 - Drag interactions should control the component's animation state directly; avoid dragging an entire stage sideways and snapping it back.
 - Hero imagery for colour hubs should be controlled and legible. Use complete swatch/sample images or intentional crops that do not chop off important content.
 - Avoid random overlapping or rotated card piles in hero visuals.
+- If colour hub hero imagery looks weak or awkward on mobile, hide it and let the page start with clean copy and controls.
 
 ## Product Detail Pages
 
@@ -144,6 +146,8 @@ There is one shared live customer form:
 - Detail image panels that pair with copy cards should match the height of the copy card on desktop, with sensible static stacking on mobile.
 - Sash furniture cards should use clean product-object imagery, equal-height range cards and local white/soft panels against the continuous page canvas.
 - Do not use white or invisible logos inside white badges. If a copied supplier logo disappears, switch to a visible local variant and keep it routed through the theme asset system.
+- Supplier/proof logos in product hubs must feel balanced on mobile. Do not let one or two partner logos dominate smaller accreditations unless there is a deliberate hierarchy.
+- Product choice controls on mobile must make the full option count obvious. A user should not have to guess that there are more than two choices.
 
 ## Mobile Design
 
@@ -154,8 +158,10 @@ Mobile is designed, not squeezed.
 - A sticky, cinematic or multi-column desktop section needs a simpler mobile equivalent.
 - Mobile can simplify a feature, but must not remove the user's ability to understand or act.
 - Use native horizontal scroll-snap for mobile rails where appropriate.
+- Horizontal component scrolling needs an obvious affordance: attached dots, count text, clipped next item, arrows, tabs or clear label text.
 - Check `390 x 844` and `768 x 1024` for important visual work.
 - No mobile work is complete with horizontal overflow, clipped text, stranded controls, unusable tap targets or distorted media.
+- Horizontal body scrolling is a blocker. If any card rail, comparison table, image, iframe or control causes the whole page to scroll sideways at 390px, fix the component before shipping.
 - Mobile CTA cards and overlay cards must keep labels, headings, body copy and arrow/action controls in separate readable zones.
 - Mobile compact process/list cards need at least comfortable internal padding, especially when borders are visible.
 

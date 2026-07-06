@@ -1,7 +1,7 @@
 # Fenster Glazing — Master Site Audit
 
 Audit date: 2026-07-03
-Last updated: 2026-07-06 (GitHub upload, live theme deploy, launch SEO hardening, office forms verified, docs refresh)
+Last updated: 2026-07-06 (GitHub upload, live theme deploy, launch SEO hardening, office forms verified, mobile product QA notes)
 Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
 
 **How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
@@ -19,6 +19,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Optional enquiry file uploads are supported for photos, drawings, schedules and documents; uploads are attached to the private enquiry and office email.
 - Residential case studies are intentionally inaccessible for launch: `/case-studies/` and known residential child routes return 410 and are excluded from the sitemap until the content is rebuilt. Commercial project records remain reachable for `/commercial-projects/`.
 - The privacy-glass route is now `/obscured-glass/`; `/obscure-glass/` redirects there.
+- Phone QA has identified mobile product-template issues to fix next: product common-choice controls can overflow the viewport on `/casement-windows/`, colour hub hero imagery should be removed/simplified on mobile, `/sliding-sash-windows/` model/spec/detail sections need a mobile redesign, product hub supplier logos are visually oversized, and multi-option product controls need clearer discoverability.
 
 ## Remediation Status (2026-07-03)
 
@@ -74,13 +75,16 @@ A full re-crawl of every sitemap URL (427/427 fetched) plus a hardening verifica
 - **R3 — WordPress attack/leak surface.** `/wp-json/wp/v2/users` publicly lists the admin login username ("zac"); XML-RPC is enabled with a discovery link in every head; RSD (`EditURI`) link and a `generator` meta exposing the WordPress version are also emitted. Combined, this hands brute-force tooling both the username and the endpoint. Fix: restrict the users REST endpoint for unauthenticated requests, disable XML-RPC, remove RSD/shortlink/generator output.
 - **R4 — `<html lang="en-US">` on a UK business.** Set Settings → General → Site Language to English (UK) so `lang="en-GB"` is emitted (affects search locale signals and screen-reader pronunciation).
 - **R5 — Host-level launch config (cannot be done locally).** HTTPS certificate, one canonical host with 301s (http→https, www→non-www), SMTP + SPF/DKIM/DMARC for enquiry deliverability, GA4/consent (still open from 2.7), Search Console + GBP verification at go-live.
+- **R6 — Mobile product-template overflow and discoverability.** On phone QA, `/casement-windows/` still has a broken "common choices" / product-view control area that overflows horizontally and lets the whole page scroll sideways. The same product-view pattern is not intuitive enough that there are more than two options. Fix: make the control rail/card layout viewport-contained, remove any `100vw`/wide grid assumptions causing body overflow, add attached dots/count/labels or a clearer segmented/list model, and verify no horizontal page scroll at 390px.
+- **R7 — Mobile colour hub hero image.** The `/colour-options/` style page is good after the hero, but the hero image is poor on mobile. Fix: hide or replace the hero media on mobile and let the page start with clean copy/controls rather than a weak cropped visual.
+- **R8 — Mobile sash page layout.** `/sliding-sash-windows/` starts well, but the Ultimate Rose / Heritage Rose / Charisma Rose stats, corner detail, slide-aligned comparison and large detail imagery are poorly laid out on phone. Fix: redesign the sash model/spec/detail sections specifically for mobile, using contained cards, horizontal tables only where clearly scrollable, smaller fixed-aspect imagery and no layout-induced sideways page scroll.
 
 ### New findings — medium priority
 
-- **R6 — 338 meta descriptions exceed ~175 characters** (matrix pages run 235–280 chars; several counties and articles too). Unique and well-written, but Google truncates around 155–165 chars, so the templates' calls-to-action get cut off. Trim the matrix/county description templates to ~150–160 chars.
-- **R7 — Head bloat/cleanup**: wp-emoji scripts, `rel="shortlink"`, RSS feed links and oEmbed discovery still load on every page; removable for a leaner head and marginally faster first paint.
-- **R8 — Homepage weight ~11.7 MB** (9.4 MB hero video + ~2.3 MB other assets). Acceptable for launch given `preload="metadata"`, but a ~720p mobile rendition and responsive images remain the biggest post-launch performance win (see Section 4).
-- **R9 — Thin-ish indexable pages**: the case-study pages run 390–600 words. Real content, fine to launch, but enriching them (more photos, scope details, town names) strengthens the local-proof cluster.
+- **R9 — 338 meta descriptions exceed ~175 characters** (matrix pages run 235–280 chars; several counties and articles too). Unique and well-written, but Google truncates around 155–165 chars, so the templates' calls-to-action get cut off. Trim the matrix/county description templates to ~150–160 chars.
+- **R10 — Head bloat/cleanup**: wp-emoji scripts, `rel="shortlink"`, RSS feed links and oEmbed discovery still load on every page; removable for a leaner head and marginally faster first paint.
+- **R11 — Homepage weight ~11.7 MB** (9.4 MB hero video + ~2.3 MB other assets). Acceptable for launch given `preload="metadata"`, but a ~720p mobile rendition and responsive images remain the biggest post-launch performance win (see Section 4).
+- **R12 — Thin-ish indexable pages**: the case-study pages run 390–600 words. Real content, fine to launch, but enriching them (more photos, scope details, town names) strengthens the local-proof cluster.
 
 ---
 

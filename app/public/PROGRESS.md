@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Live Phone QA Notes
+
+- Captured owner phone QA findings for the next mobile polish pass.
+- Product pages such as `/casement-windows/` are broadly strong at the top, but need spacing and mobile component polish around the "Why choose this product" to product hub transition.
+- Product hub logo sizing needs balancing on mobile: Liniar and Energy Plus currently feel oversized compared with A+ rated and PAS 24 proof badges.
+- The common-choice/product-view control area is a priority bug: it can overflow its frame and create full-page horizontal scrolling on mobile.
+- Product-view controls need clearer discoverability when more than two options exist.
+- `/colour-options/` should remove or simplify the hero image on mobile; the rest of the page is acceptable.
+- `/sliding-sash-windows/` needs mobile-specific redesign work for the Roseview model stats, corner detail, slide-aligned comparisons and large detail imagery.
+- No code changes were made in this entry; this is documentation of live phone QA findings.
+
 ## 2026-07-06 - SiteGround Test Deploy, SEO Ownership And Forms
 
 - Verified the real SiteGround structure: both test and live are Bedrock installs, so the server theme path is `web/app/themes/fenster` even though local development uses `wp-content/themes/fenster`.

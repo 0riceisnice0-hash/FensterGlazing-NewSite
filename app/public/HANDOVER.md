@@ -28,6 +28,7 @@ Use:
 - Enquiry forms support optional file uploads (`attachments[]`) for photos, drawings, schedules and documents. Files are stored against the private enquiry and attached to the office email.
 - Live mail deliverability still needs authenticated SMTP for future customer-facing sends. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
 - Residential case studies are intentionally hidden for launch. `/case-studies/` and the known residential child case-study routes return 410 and should stay out of menus/sitemaps until that content is rebuilt. Commercial project records under the old case-study URL family remain reachable because `/commercial-projects/` uses them as proof.
+- Current phone QA backlog is product-template/mobile focused: `/casement-windows/` has common-choice/product-view overflow that creates sideways page scroll; `/colour-options/` should drop/simplify the hero image on mobile; `/sliding-sash-windows/` needs a mobile redesign for Roseview model stats, corner details and comparison imagery; product hub logos need calmer sizing; product controls need to make extra options obvious.
 
 ## Current Goal Of The Site
 
@@ -177,6 +178,13 @@ Current product page model:
 - Shared enquiry form.
 - Context-aware related products/service areas.
 
+Current mobile QA notes from live phone review:
+
+- On `/casement-windows/`, the top product page content is broadly good, but there is too much vertical space between "Why choose this product" and the product information hub.
+- Product hub logos such as Liniar and Energy Plus appear much larger than the A+ rated and PAS 24 proof options. Keep supplier/proof badge sizing visually balanced on mobile.
+- The common-choice/product-view control section can break out of its frame and cause full-page horizontal scrolling. This is a priority fix before deeper polish.
+- Product-view controls are not intuitive enough when there are more than two options. Add clearer affordance such as dots, count text, visible partial next card, labelled tabs, or a better stacked mobile model.
+
 The old product-page mini-gallery above the colour choices has been removed. It was fed by imported `images` arrays from `data\pages.json`, including old copied stock uploads such as `stock-04.jpg` and `stock-05.jpg`. Product pages should not revive that scraped gallery rail; use curated hero/feature media and the specification hubs instead.
 
 Product USP rules:
@@ -261,6 +269,7 @@ Current accepted behaviour:
 - The generic S2 window handle section is intentionally removed from this page.
 - Sash furniture renders from `inc\site-data.php` under `sash_furniture`: Globe furniture for Ultimate Rose, Acorn furniture for Heritage/Charisma Rose, Shark Fin Limit Stop and D Handle extras, plus the Roseview under/over 700mm furniture-count rule.
 - Runtime assets are local theme copies from the Roseview scrape. Do not reference the scrape export or `wp-content\fenster-reference` for this page.
+- Mobile QA: the top of the page is acceptable, but the Roseview model stats/cards for Ultimate Rose, Heritage Rose and Charisma Rose, the corner-detail section, slide-aligned comparisons and large detail images are not good enough on phone. Treat the sash model/detail area as a mobile redesign, not just a small spacing tweak.
 
 Recent verification:
 
@@ -313,6 +322,7 @@ Current accepted behaviour:
 - Current uPVC visible colour names include `Smooth White` with `No foil`, `Anthracite Grey` instead of `7016 Grey`, `Gale Grey Finesse (Anthracite Smooth)` and `Silver Grey` instead of `7155 Grey`.
 - Removed uPVC colours should stay out of the customer carousel unless the owner reverses the decision: Anteak, Bright Oak, Swamp Oak, Nussbaum, Windsor, Balmoral, Bronze, Champagne Smooth, Pebble Grey, 7030 Grey, 7039 Grey, 7044 Grey, Black Ultimatt, VLF Black, Burgundy, Flemish Gold, Claystone, Sage, Sheffield Oak Alpine, Turner Oak Malt and Trompet.
 - The colour hub hero visual should stay clean and controlled. The accepted direction is a simple sample-board/grid using complete swatch images; avoid random overlapping piles, rotated card stacks and cropped-off swatch content.
+- Mobile QA: remove or hide the colour hub hero image on mobile if the crop/visual weakens the page. The page content after the hero is acceptable; the mobile first impression should be clean, not image-led.
 
 ### Door Handle Section
 
