@@ -116,7 +116,7 @@ $inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inl
             </div>
             <?php
             get_template_part('template-parts/components/enquiry-form', null, [
-                'class' => 'fg-form',
+                'class' => 'fg-form fg-article-form',
                 'source' => 'Article: ' . $title,
                 'button_label' => 'Send enquiry',
                 'compact' => true,
