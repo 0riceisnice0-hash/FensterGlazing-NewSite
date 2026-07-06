@@ -21,7 +21,8 @@ Use:
 - Test and live are both running the new `fenster` theme. Keep using the same workflow for changes: local edit -> GitHub -> test deploy -> verify -> fresh live backup -> live deploy -> short post-live check.
 - Do not use SiteGround clone/staging tools for this project. The safe model is local -> GitHub -> test -> verify -> backup -> live. This avoids editing test and live at the same time and avoids accidental database URL rewrites.
 - Generated pages are theme-owned for SEO. Yoast/Rank Math public head output is suppressed on generated pages to prevent duplicate metadata and stale imported schema/social tags. Do not reset Rank Math for launch; use it only later if there is a clear admin-tool reason.
-- Launch SEO hardening is complete for the current technical blockers: homepage title/meta override, generated route 301 normalisation, generated breadcrumb schema, public cache headers, sitemap scrub to 427 URLs, `/commercial-areas/` removed from the header, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
+- Launch SEO hardening is complete for the current technical blockers: homepage title/meta override, generated route 301 normalisation, generated breadcrumb schema, public cache headers, sitemap scrub to 421 currently verified canonical URLs, `/commercial-areas/` removed from the header, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
+- The stale pre-launch audit was rechecked on live on 2026-07-06. Current verified state: social metadata is theme-owned and clean, `lang="en-GB"` is active, `/upvc-colours/` and `/aluminium-colours/` redirect to `/colour-options/`, public REST user enumeration returns 401, WordPress generator/RSD/oEmbed/wp-json/shortlink head links are stripped, and the theme sitemap is served before Rank Math with 421 canonical URLs.
 - The residential location matrix has unique generated metadata across the 13 town x 21 product pages. Commercial county metadata is profile-specific, and Isle of Wight commercial glazing has been removed/410'd as inaccessible coverage.
 - Mobile launch fixes are complete for the About process cards, Contact page CTA cards and quote-tool controls. Mobile quote embeds use one same-tab `Open quote tool` action; desktop keeps `Expand view` and `Open in new tab`.
 - Test and live enquiry delivery have been verified: valid submissions save as private `fenster_enquiry` posts and send office HTML emails to `info@fensterglazing.com`.
@@ -159,7 +160,7 @@ Utility and special routes:
 - `/why-trust-fenster/` is a hardcoded virtual trust page in `inc\generated-pages.php`. It renders through `template-parts\sections\trust-page.php`, reuses the shared review showcase and is promoted by a small centred link beneath the homepage trust cards.
 - `/obscured-glass/` is a hardcoded virtual product-adjacent page in `inc\generated-pages.php`. It is intentionally not in the menu; product journey pages link to it from the `Gallery and choices` / finish options card.
 - `/obscure-glass/` 301 redirects to `/obscured-glass/`; use "obscured glass" in visible copy, while the legacy asset/data key and folder remain `obscure_glass` / `assets\images\products\obscure-glass`.
-- `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` are hardcoded virtual product-adjacent pages in `inc\generated-pages.php`. They are intentionally specification hubs rather than menu-level product pages; product journey pages link to the colour hub from the specification choices section.
+- `/colour-options/` is the canonical hardcoded virtual colour hub in `inc\generated-pages.php`. `/upvc-colours/` and `/aluminium-colours/` now 301 to `/colour-options/` to avoid duplicate content; the material sections remain as anchors/sections inside the colour hub.
 - `/commercial-glazing-buckinghamshire/` is a hardcoded virtual commercial page in `inc\generated-pages.php`.
 - `/commercial-projects/` is a hardcoded virtual commercial page in `inc\generated-pages.php`.
 - `/privacy-policy/` and `/cookie-policy/` come from generated/imported page data and render through the generated simple utility layout.
@@ -302,8 +303,8 @@ Current accepted behaviour:
 Routes:
 
 - `/colour-options/`
-- `/upvc-colours/`
-- `/aluminium-colours/`
+- `/upvc-colours/` redirects to `/colour-options/`
+- `/aluminium-colours/` redirects to `/colour-options/`
 
 Current accepted behaviour:
 
@@ -311,7 +312,7 @@ Current accepted behaviour:
 - Product journey pages link to `/colour-options/` from the `Specification choices` section.
 - Colour data lives in `inc\site-data.php` under `colour_options`.
 - `/colour-options/` shows both uPVC and aluminium colour sections on one customer-facing hub. The old top uPVC/aluminium tab buttons were removed because they implied separate journeys when everything is on the same page.
-- `/upvc-colours/` and `/aluminium-colours/` still render the same hub route/template with the relevant anchor/material context available.
+- `/upvc-colours/` and `/aluminium-colours/` no longer render duplicate pages. They redirect to `/colour-options/`; use colour-hub section anchors/material controls for specific uPVC or aluminium context.
 - The colour pages are straightforward customer-facing reference hubs; do not put the circular choice dial on these pages.
 - The circular choice dial belongs on generated product pages in the `Specification choices` section, where it links to colours, privacy glass and handles or quote options.
 - Mobile uses the same colour data in a single-column layout.

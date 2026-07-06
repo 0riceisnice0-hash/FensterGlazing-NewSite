@@ -130,3 +130,6 @@ Live must not become the source of truth.
 - Residential case studies are intentionally 410/inaccessible for launch.
 - `/obscured-glass/` is canonical; `/obscure-glass/` redirects there.
 - Product mobile QA fixes from commit `c21bd46` are deployed live.
+- `/upvc-colours/` and `/aluminium-colours/` redirect to canonical `/colour-options/`.
+- The theme serves `/sitemap.xml` and `/page-sitemap.xml` before Rank Math can output its own XML; live verification after the hardening pass showed 421 canonical sitemap URLs.
+- `inc/security.php` owns public WordPress hardening: REST user enumeration is blocked, XML-RPC is disabled through the WordPress filter, `X-Pingback` is removed, and WordPress generator/RSD/shortlink/REST/oEmbed/emoji head output is stripped.

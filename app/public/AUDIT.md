@@ -12,7 +12,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - SiteGround test/live are verified Bedrock installs. Deployment should update/swap only the `fenster` theme at `web/app/themes/fenster` from the repo while leaving the production database, uploads, plugins, `.env` and config intact. The reference scrape archive must not be deployed.
 - The test and live sites are running the new `fenster` theme. Future changes should still go local -> GitHub -> test -> verify -> backup -> live.
 - Theme-owned SEO is now the launch source of truth on generated pages. Yoast/Rank Math head output is suppressed there to avoid duplicate titles, stale schema and broken imported social metadata; do not reset Rank Math before launch.
-- Launch SEO hardening has moved the site materially closer to live-ready: homepage title/meta fixed, generated routes normalise with 301s, generated deep routes output breadcrumb schema, generated pages/sitemaps use short public cache headers, and the sitemap is scrubbed to 427 URLs.
+- Launch SEO hardening has moved the site materially closer to live-ready: homepage title/meta fixed, generated routes normalise with 301s, generated deep routes output breadcrumb schema, generated pages/sitemaps use short public cache headers, and the live theme sitemap currently exposes 421 canonical URLs.
 - Navigation/indexation cleanup is complete for known launch debris: `/commercial-areas/` is out of the header/sitemap, thin utility/scrape pages are `noindex,follow`, `/areas-we-cover/` and `/terms-conditions/` are visible in the footer, and inaccessible Isle of Wight commercial coverage is 410'd.
 - Mobile conversion polish is complete for the reported launch blockers: About process cards have padding, Contact CTA cards are readable with no text/action overlap, and mobile quote embeds show a single same-tab `Open quote tool` action.
 - Form delivery is verified end-to-end on live: enquiries save privately in WordPress and send office HTML emails to `info@fensterglazing.com`. Customer confirmations are paused unless SMTP is configured, and the customer-facing form copy no longer promises one.
@@ -20,6 +20,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Residential case studies are intentionally inaccessible for launch: `/case-studies/` and known residential child routes return 410 and are excluded from the sitemap until the content is rebuilt. Commercial project records remain reachable for `/commercial-projects/`.
 - The privacy-glass route is now `/obscured-glass/`; `/obscure-glass/` redirects there.
 - Phone QA product-template fixes are now deployed: product common-choice controls are viewport-contained on mobile, the product hub tab rail has a swipe affordance, supplier/proof logos are constrained, `/colour-options/` hides the hero visual on mobile, and `/sliding-sash-windows/` has tighter mobile model/spec/detail image layouts.
+- The stale pre-launch re-audit findings were rechecked live on 2026-07-06. Social share metadata and `lang="en-GB"` were already clean. Confirmed remaining theme-level issues have been fixed: `/upvc-colours/` and `/aluminium-colours/` now 301 to `/colour-options/`, the public REST users endpoint returns 401, WordPress generator/RSD/oEmbed/wp-json head links are removed, and the theme sitemap is served before Rank Math with redirected colour URLs excluded.
 
 ## Remediation Status (2026-07-03)
 
@@ -28,7 +29,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 | 2.1 | JSON-LD schema never renders | ✅ Fixed — generated LocalBusiness site-wide + FAQPage on product pages; junk imported schema intentionally dropped |
 | 2.2 | 2.4 GB `fenster-reference` runtime dependency | ✅ Fixed — 356 used images migrated to `assets/images/imported/` (~245 MB), all references rewritten, poster re-encoded 2.9 MB → 175 KB |
 | 2.3 | robots.txt / sitemap plumbing | ✅ Fixed — core sitemaps disabled, robots.txt advertises `/sitemap.xml` |
-| 2.4 | Test/debris pages indexable | ✅ Fixed — 410s, 301s and noindex applied; sitemap scrubbed 486 → 427 URLs |
+| 2.4 | Test/debris pages indexable | ✅ Fixed — 410s, 301s and noindex applied; current live theme sitemap exposes 421 canonical URLs |
 | 2.5 | Blog articles render as broken product pages | ✅ Fixed — explicit route whitelists + new `generated-article.php` template |
 | 2.6 | Duplicate competing town pages | ✅ Fixed — 301s to the canonical matrix slugs |
 | 2.7 | No analytics / conversion tracking | ⏳ Open — awaiting GA4/GTM ID, Google Ads link and consent-banner decision from the owner |
@@ -48,14 +49,14 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Commercial county coverage has been pruned for credibility: `/commercial-glazing-isle-of-wight/` was removed from the generated county set, added to the central 410 Gone list, and confirmed absent from the sitemap.
 - Commercial county title tags and meta descriptions now use each county profile's town examples and project context rather than one near-duplicate metadata sentence.
 - Residential location matrix metadata has been de-duplicated: all 273 town x product pages now generate unique meta descriptions from town and product profiles; a local crawl confirmed 273 unique descriptions, zero duplicate groups and zero fetch errors.
-- The launch SEO hardening pass removed the public `/commercial-areas/` header shortcut, added footer links to `/areas-we-cover/` and `/terms-conditions/`, replaced the inherited homepage title/meta, added breadcrumb schema on generated deep pages, normalised generated URL casing/trailing slashes with 301s, set public cache headers for generated pages/sitemaps, and removed thin utility pages from the sitemap via `noindex,follow`. Local verification shows 427 sitemap URLs after the scrub.
+- The launch SEO hardening pass removed the public `/commercial-areas/` header shortcut, added footer links to `/areas-we-cover/` and `/terms-conditions/`, replaced the inherited homepage title/meta, added breadcrumb schema on generated deep pages, normalised generated URL casing/trailing slashes with 301s, set public cache headers for generated pages/sitemaps, and removed thin utility pages from the sitemap via `noindex,follow`. Live verification after the stale-audit recheck shows 421 canonical sitemap URLs.
 - Mobile launch polish fixed the About process-card padding, Contact page CTA readability/overlap, and mobile quote-tool action model. Mobile quote embeds now use one same-tab `Open quote tool` action instead of showing desktop expand/new-tab controls.
 - Mobile product-template polish fixed the reported `/casement-windows/` product hub overflow, balanced product-hub badge sizing, added clearer multi-option discovery, hid the weak colour-hub hero visual on mobile, and tightened Roseview sash comparison/detail layouts for phones.
 - SiteGround test deployment proved the launch path: the server repo cache pulls from GitHub, then the theme folder is copied into the Bedrock `web/app/themes/fenster` directory. Bedrock asset URL handling, aluminium story frames, WindowCAD iframe scale, and form email delivery have all been verified on test.
 
 ## Pre-Launch Re-Audit (2026-07-06)
 
-A full re-crawl of every sitemap URL (427/427 fetched) plus a hardening verification pass, run before go-live.
+Original snapshot: a full re-crawl of every sitemap URL (427/427 fetched) plus a hardening verification pass, run before go-live. This section has since been updated with live 2026-07-06 rechecks; the current live theme sitemap contains 421 canonical URLs after redirected duplicate colour URLs were removed.
 
 ### Verified clean
 
@@ -71,10 +72,10 @@ A full re-crawl of every sitemap URL (427/427 fetched) plus a hardening verifica
 
 ### New findings — high priority (fix before launch)
 
-- **R1 — Social share metadata is stale/broken sitewide.** The homepage still emits imported `og:title`/`og:description`/`twitter:*` that contradict the new title ("Fenster Glazing - Double glazing Installers, Buckinghamshire" and the truncated "…From energy-efficient uPVC" text). Worse, imported `twitter:image`/`og:image` URLs across the site point at the **old host's `/app/uploads/...` tree, which 404s on this build** (verified), and 203 of 427 pages have no `og:image` at all. Any page shared on Facebook/WhatsApp/X shows wrong text and a broken/missing image. Fix: derive `og:title`/`og:description` from the page's live title/meta when imported values are stale or missing, drop imported image URLs that point at `/app/uploads/`, and add a sitewide default social image served from the theme.
-- **R2 — Colour hub triplication.** `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` serve the identical 632-word hub under three self-canonicalised URLs with one shared meta description — textbook duplicate content. Fix: canonicalise (or 301) the two material URLs to `/colour-options/`, or give each a genuinely distinct page.
-- **R3 — WordPress attack/leak surface.** `/wp-json/wp/v2/users` publicly lists the admin login username ("zac"); XML-RPC is enabled with a discovery link in every head; RSD (`EditURI`) link and a `generator` meta exposing the WordPress version are also emitted. Combined, this hands brute-force tooling both the username and the endpoint. Fix: restrict the users REST endpoint for unauthenticated requests, disable XML-RPC, remove RSD/shortlink/generator output.
-- **R4 — `<html lang="en-US">` on a UK business.** Set Settings → General → Site Language to English (UK) so `lang="en-GB"` is emitted (affects search locale signals and screen-reader pronunciation).
+- **R1 — Social share metadata is stale/broken sitewide — ✅ Already fixed when rechecked 2026-07-06.** The old audit finding was not current on live. Homepage and product routes now emit theme-owned OG/Twitter title and image tags, with `og:image`/`twitter:image` pointing at the local theme showroom image rather than old `/app/uploads/` URLs.
+- **R2 — Colour hub triplication — ✅ Fixed 2026-07-06.** Live verification confirmed this was still true before the fix. `/upvc-colours/` and `/aluminium-colours/` now 301 to `/colour-options/`, and `page-sitemap.xml` includes only the canonical `/colour-options/` URL.
+- **R3 — WordPress attack/leak surface — ✅ Fixed 2026-07-06.** Live verification confirmed public user enumeration and WordPress head leaks were still real. The theme now blocks unauthenticated `/wp-json/wp/v2/users` and user REST search with 401, disables XML-RPC via `xmlrpc_enabled`, removes `X-Pingback`, and removes WordPress generator, RSD, shortlink, REST discovery, oEmbed discovery and emoji head output. The remaining visible `generator` tag is from Google Site Kit, not WordPress core.
+- **R4 — `<html lang="en-US">` on a UK business — ✅ Already fixed when rechecked 2026-07-06.** Live output now emits `lang="en-GB"` and `WPLANG` is `en_GB`.
 - **R5 — Host-level launch config (cannot be done locally).** HTTPS certificate, one canonical host with 301s (http→https, www→non-www), SMTP + SPF/DKIM/DMARC for enquiry deliverability, GA4/consent (still open from 2.7), Search Console + GBP verification at go-live.
 - **R6 — Mobile product-template overflow and discoverability — ✅ Fixed 2026-07-06.** The mobile product hub now constrains the tab rail and common-choice strip to the viewport, stacks common choices, balances product-hub badge sizes and adds a "Swipe to see all product checks" affordance when more than two product checks exist. Regression check: confirm no horizontal body scroll at 390px on `/casement-windows/` and sibling product routes.
 - **R7 — Mobile colour hub hero image — ✅ Fixed 2026-07-06.** `/colour-options/` now hides the hero sample-board visual on mobile, letting the page start with cleaner copy and controls.
@@ -83,7 +84,7 @@ A full re-crawl of every sitemap URL (427/427 fetched) plus a hardening verifica
 ### New findings — medium priority
 
 - **R9 — 338 meta descriptions exceed ~175 characters** (matrix pages run 235–280 chars; several counties and articles too). Unique and well-written, but Google truncates around 155–165 chars, so the templates' calls-to-action get cut off. Trim the matrix/county description templates to ~150–160 chars.
-- **R10 — Head bloat/cleanup**: wp-emoji scripts, `rel="shortlink"`, RSS feed links and oEmbed discovery still load on every page; removable for a leaner head and marginally faster first paint.
+- **R10 — Head bloat/cleanup — partly fixed 2026-07-06**: wp-emoji scripts/styles, `rel="shortlink"`, REST discovery, RSD and oEmbed discovery are removed by the theme hardening layer. Feed links and plugin-owned tags such as Google Site Kit remain.
 - **R11 — Homepage weight ~11.7 MB** (9.4 MB hero video + ~2.3 MB other assets). Acceptable for launch given `preload="metadata"`, but a ~720p mobile rendition and responsive images remain the biggest post-launch performance win (see Section 4).
 - **R12 — Thin-ish indexable pages**: the case-study pages run 390–600 words. Real content, fine to launch, but enriching them (more photos, scope details, town names) strengthens the local-proof cluster.
 
@@ -228,7 +229,7 @@ Recommendation: keep the 13-town residential matrix (it's local and defensible) 
 ### 3.5 Sitemap contents need a scrub
 The custom sitemap (486 URLs) currently includes: `*-designer` scrape pages (thin; only `/door-designer/` carries noindex), `apecs-terms-conditions`, `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `enquire-now`, `instant-pricing`, blog pagination/category/tag/author URLs, and the duplicate town slugs from 2.6. A sitemap should be your curated "index this" list — right now it's telling Google to index the debris too.
 
-> **Update 2026-07-06:** fixed for the known launch debris. The thin utility/scrape-shell pages now carry `noindex,follow` and are excluded from `page-sitemap.xml`; verified absent: `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `commercial-areas`, and `commercial-glazing-isle-of-wight`. Sitemap count is now 427 URLs.
+> **Update 2026-07-06:** fixed for the known launch debris. The thin utility/scrape-shell pages now carry `noindex,follow` and are excluded from `page-sitemap.xml`; verified absent: `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `commercial-areas`, and `commercial-glazing-isle-of-wight`. Current live sitemap count after colour duplicate redirects is 421 canonical URLs.
 
 ### 3.6 Quote-page cannibalisation
 `/online-quote/`, `/instant-pricing/`, `/enquire-now/`, `/3d-visualiser/`, `/instant-pricing-meta-ads/`, `/pricing-gads/` all serve near-identical quote-tool experiences and all are indexable. Keep `/online-quote/` as the canonical quote page; noindex or 301 the rest (keep ad landers only if live campaigns need them, with `noindex`).

@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Stale Audit Recheck And SEO Hardening
+
+- Rechecked the outdated pre-launch audit claims against live output instead of trusting the old crawl notes.
+- Verified social share metadata is already clean on live: homepage and product routes emit current theme-owned OG/Twitter title/image tags using the local showroom image.
+- Verified live language output is already `lang="en-GB"` and WordPress `WPLANG` is `en_GB`.
+- Fixed the confirmed colour-hub duplicate issue: `/upvc-colours/` and `/aluminium-colours/` now 301 to `/colour-options/`.
+- Added `inc/security.php` to harden public WordPress output: unauthenticated REST user enumeration returns 401, XML-RPC is disabled via WordPress filter, `X-Pingback` is removed, and WordPress generator/RSD/shortlink/REST/oEmbed/emoji head output is stripped.
+- Restored theme sitemap ownership before Rank Math can serve XML, so `/sitemap.xml` points at the theme `page-sitemap.xml`; live verification showed 421 canonical URLs, `/colour-options/` included, and redirected colour URLs excluded.
+- PHP lint passed for changed files, changes were pushed to GitHub and deployed live through the theme-only SiteGround workflow.
+
 ## 2026-07-06 - Mobile Product Template Fixes
 
 - Fixed the owner phone QA issues from the product template pass and deployed them live in commit `c21bd46`.
