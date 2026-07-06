@@ -16,6 +16,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 
 ## Important Updates
 
+- Latest live commit at the time of this update is `aff62a0` (`Fix article CTA form layout`). The current recent live sequence is `5696140` commercial hub v2, `7c973b5` performance deferral of heavy media/quote embeds, then `aff62a0` article/blog CTA form layout. New agents should check `git log --oneline -8` before assuming this is still the latest.
 - GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.
 - SiteGround test/live are still Bedrock installs. Local source is standard WordPress at `wp-content\themes\fenster`, but server deploy target is `web/app/themes/fenster`. The verified test deploy path is: GitHub repo cache at `~/repos/FensterGlazing-NewSite`, then rsync `app/public/wp-content/themes/fenster/` into `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Production deploys should swap/update the theme only. Keep the production database, uploads, plugins, `.env`, Bedrock config and `wp-config.php` equivalent in place unless the owner explicitly asks for a full WordPress migration.
@@ -26,6 +27,8 @@ It should not contain dated progress reports, long handover summaries or homepag
 - Mobile launch fixes are in place for the About process cards, Contact hub cards and quote-tool controls. Do not restore the old mobile quote controls that showed both `Expand view` and `Open in new tab`; mobile should show one same-tab `Open quote tool` action.
 - Mobile product-template fixes are in place for the first live phone QA pass. Product information hubs must stay viewport-contained on mobile, common choices should stack, supplier/proof badges should stay visually balanced, and multi-option tab rails need a clear swipe/count affordance.
 - The test site has verified working enquiry delivery to `info@fensterglazing.com`; valid forms are saved privately as `fenster_enquiry` posts before email delivery.
+- Performance has been improved without lowering visual quality by deferring heavy embeds/media instead of removing premium assets: homepage hero video loads after idle, quote iframes use deferred `data-quote-iframe-src` loading, product theatre non-primary media lazy-loads, and quote embeds load near viewport or on interaction. Do not undo this by making every iframe/video eager again.
+- Microsoft Clarity is installed/being evaluated, but recordings can show a bare HTML-looking page when Clarity cannot fetch CSS/assets from cache/WAF/CSP timing. Treat Clarity as useful for behaviour, not as the sole visual QA tool. Confirm layout issues in a real browser/phone before changing the theme.
 
 ## Project Basics
 
@@ -99,6 +102,7 @@ PHP lint example:
 - Email templates must keep the Fenster logo visible in common email clients. The current launch email uses a light header with the white-background brand asset; do not place that asset back onto a dark header.
 - Mobile forms must be one column, full width, with `16px` input text and comfortable touch targets.
 - Form-section headings are content headings, not heroes. Keep shared enquiry h2 sizes moderate across the site.
+- Article/blog CTA forms use the shared component with the extra `fg-article-form` class from `template-parts\sections\generated-article.php`. Keep that page-specific styling so labels/inputs stay readable inside article CTA cards.
 
 ## Related Links Rule
 

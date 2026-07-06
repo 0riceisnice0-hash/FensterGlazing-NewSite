@@ -15,6 +15,7 @@ Use:
 
 ## Important Updates
 
+- Latest known live commit after this handover update: `aff62a0` (`Fix article CTA form layout`). Recent live commits to understand before continuing: `5696140` (`Rework commercial glazing hub`), `7c973b5` (`Defer heavy media and quote embeds`), `aff62a0` (`Fix article CTA form layout`).
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Deployment should update the `fenster` theme from the GitHub repo while leaving production `.env`, Bedrock config, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
@@ -31,6 +32,10 @@ Use:
 - Live mail deliverability still needs authenticated SMTP for future customer-facing sends. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
 - Residential case studies are intentionally hidden for launch. `/case-studies/` and the known residential child case-study routes return 410 and should stay out of menus/sitemaps until that content is rebuilt. Commercial project records under the old case-study URL family remain reachable because `/commercial-projects/` uses them as proof.
 - The first product-template/mobile phone QA pass is deployed on live: `/casement-windows/` style product hubs now constrain common choices and product tabs to the viewport, product hub logos are calmer on mobile, the tab rail shows a swipe affordance, `/colour-options/` hides the hero visual on mobile, and `/sliding-sash-windows/` has tighter Roseview model/spec/detail layouts for phones.
+- Commercial hub v2 is deployed on live. The main commercial page was simplified and rebuilt for clearer lead generation: project proof now uses commercial-project imagery, the product/services imagery was corrected from theme assets rather than scrape-reference paths, the useless tiny parallax motion was removed, the "where this fits" section was made more practical, and the commercial form area was restyled so inputs are visible and the copy is not oversized.
+- Performance baseline was improved on live without degrading the premium visuals. Heavy media and quote iframes are deferred: the homepage hero video waits for idle, quote iframes load near viewport or on click, product theatre media avoids eager-loading everything, and quote-tool pages keep a usable placeholder/action state until the iframe loads. Future performance work should continue this approach before compressing/removing signature visuals.
+- Imported blog/guide articles use `template-parts\sections\generated-article.php`. The article CTA form now has article-specific styling through `fg-article-form`, fixing the previous white-on-white labels/input contrast problem shown on generated article pages.
+- Microsoft Clarity is not the visual source of truth. It may show an unstyled/bare HTML replay if its recorder cannot fetch CSS/assets correctly. Use Clarity for behaviour patterns, but verify visual defects in an actual browser or phone before changing code.
 
 ## Current Goal Of The Site
 
@@ -81,6 +86,8 @@ Accepted deploy model:
 8. Rsync the same theme folder into the live Bedrock theme folder, activate/keep `fenster`, clear cache, and verify key routes/forms.
 
 For future live changes, use the same route. Do not edit live files directly except for a genuine emergency, and if that happens, copy the emergency fix back into GitHub immediately.
+
+During the final launch-polish phase the owner has approved small direct live hotfixes after local build/lint and GitHub push when the change is urgent. Even then, GitHub remains the source of truth: commit first, push, deploy the theme-only rsync to live, flush cache, and verify the changed route.
 
 ## Main Theme Map
 
@@ -398,7 +405,7 @@ Current behaviour:
 - Some old stepped-form CSS/JS selectors may still exist as inactive scaffolding, but the shared PHP component does not currently render the stepped data attributes or step controls.
 - Valid leads are saved as private `fenster_enquiry` posts.
 - Office notification email is branded HTML.
-- Customer acknowledgement is sent.
+- Customer acknowledgements are paused until authenticated SMTP is configured. Do not restore public form copy that promises a confirmation email.
 - Default verified recipient is `info@fensterglazing.com`.
 - Live delivery still requires production SMTP/DNS configuration.
 
@@ -486,6 +493,10 @@ Commercial county landing pages are generated from `fenster_commercial_county_pr
 
 Current accepted behaviour:
 
+- `/commercial-glazing/` is now a stronger v2 commercial landing page, not just a generated service shell. Keep it simple, proof-led and conversion-led: clear project proof, practical service cards, fewer decorative effects, and an obvious commercial enquiry form.
+- Do not restore the removed tiny parallax drift in the "How enquiries move" area. It added motion without meaning.
+- Commercial project proof should use images from the commercial projects/assets already in the theme. Do not point runtime markup at `wp-content\fenster-reference` or unrelated residential/product stock.
+- Commercial form fields must remain visibly bordered/readable. The left-side form copy should be supporting copy, not huge hero-scale text that makes the task feel awkward.
 - The route pattern is `/commercial-glazing-{county}/`.
 - The set covers the commercial county routes Fenster is prepared to review, excluding ferry/island-access areas that are not credible normal coverage, such as Isle of Wight.
 - County pages are SEO-indexable and included in the generated page sitemap.
@@ -542,6 +553,26 @@ Important optimised assets:
 Scrape-derived imagery used by templates and `data\pages.json` lives in `assets\images\imported`. The `wp-content\fenster-reference` folder is a local-only archive: nothing at runtime references it and it must not be deployed.
 
 Do not replace optimised production assets with huge reference originals.
+
+## Performance Baseline
+
+Current live performance strategy is "defer, right-size and lazy-load" rather than stripping out all premium media.
+
+Already deployed:
+
+- First-visit loading screen removed.
+- Homepage hero video is deferred until idle and is not a blocking first paint dependency.
+- Homepage/product/quote WindowCAD iframes use deferred source loading and near-viewport or interaction triggers.
+- Product theatre and heavier image/video sections avoid eagerly loading every asset up front.
+- Public generated pages/sitemaps use short cache headers for logged-out visitors.
+
+Next high-value performance work:
+
+- Create a 720p/mobile rendition of the homepage hero video and use responsive source/media loading.
+- Convert heavy photo PNGs and partner/logo PNGs where suitable to WebP/AVIF or smaller optimised PNGs.
+- Add `width`, `height`, `srcset` and `sizes` helpers for hardcoded images.
+- Convert Gibson OTF fonts to WOFF2 and preload only the critical weights.
+- Continue memoising/generated-data work carefully; do not break SEO routing to chase a tiny benchmark gain.
 
 ## Current QA Expectations
 

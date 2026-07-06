@@ -7,6 +7,7 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
+- Latest known deployed live commit after this update: `aff62a0` (`Fix article CTA form layout`). Check `git log --oneline -8` before assuming this is still current.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
@@ -44,6 +45,8 @@ Do not replace the whole WordPress install. Do not upload WordPress core. Do not
 10. Flush cache and verify the changed pages.
 
 If a change touches forms, SEO output, redirects, sitemaps, generated routing, enquiry email, or global header/footer behaviour, treat it as higher risk and verify more pages.
+
+Direct-to-live hotfixes are acceptable only when the owner explicitly asks to move fast or the change is small/urgent. Even then, do not edit live files by hand: local edit, build/lint, commit, push, deploy the theme-only live rsync, flush cache, then verify.
 
 ## Commands Codex Has Been Using
 
@@ -124,6 +127,7 @@ Live must not become the source of truth.
 ## Current Launch Notes
 
 - Live and test are both running the new `fenster` theme.
+- Recent live change sequence to understand before continuing: `5696140` commercial hub v2, `7c973b5` heavy media/quote iframe deferral, `aff62a0` article CTA form layout.
 - Enquiries save as private `fenster_enquiry` posts and send office HTML email to `info@fensterglazing.com`.
 - Customer confirmation emails are paused until authenticated SMTP is configured.
 - Optional enquiry file uploads are supported and attached to office emails.
@@ -133,3 +137,5 @@ Live must not become the source of truth.
 - `/upvc-colours/` and `/aluminium-colours/` redirect to canonical `/colour-options/`.
 - The theme serves `/sitemap.xml` and `/page-sitemap.xml` before Rank Math can output its own XML; live verification after the hardening pass showed 421 canonical sitemap URLs.
 - `inc/security.php` owns public WordPress hardening: REST user enumeration is blocked, XML-RPC is disabled through the WordPress filter, `X-Pingback` is removed, and WordPress generator/RSD/shortlink/REST/oEmbed/emoji head output is stripped.
+- Performance hotfix `7c973b5` defers heavy media and quote embeds without removing premium visuals. Do not make the homepage hero video or WindowCAD iframes eager again unless there is a measured reason.
+- Microsoft Clarity may show unstyled/bare-HTML recordings if its playback cannot fetch CSS/assets correctly. Use real browser/phone checks for visual QA; use Clarity mainly for behaviour, clicks, scroll and friction patterns.

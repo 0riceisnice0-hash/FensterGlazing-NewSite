@@ -3,6 +3,8 @@
 
 !.gitattributes
 !.gitignore
+!AI.md
+!HANDOVER.md
 !app/
 app/*
 !app/public/

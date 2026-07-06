@@ -15,6 +15,9 @@ Use:
 
 ## Important Updates
 
+- The article/blog CTA form layout has been fixed with a page-specific `fg-article-form` wrapper. Do not let shared form styles render white-on-white or low-contrast labels inside article CTA panels again.
+- The commercial glazing hub has been simplified into a proof-led conversion page. Commercial pages should avoid decorative micro-parallax, oversized form headings and vague "where this fits" card grids that do not help a buyer submit an enquiry.
+- Performance polish should preserve the premium feel by deferring heavy media/embeds and right-sizing assets before removing visual proof.
 - Launch SEO/deploy state is documented in `AI.md`, `HANDOVER.md`, `AUDIT.md` and `PROGRESS.md`; visual work should not undo those constraints while polishing pages.
 - Mobile Contact hub cards now require readable overlay contrast, contained heading/copy sizing and no overlapping labels or buttons.
 - Mobile About process cards require proper internal padding and bordered containment; text must not hit the card edge.
@@ -126,6 +129,16 @@ There is one shared live customer form:
 - Mobile forms must be one column.
 - Mobile inputs, selects and textareas must use at least `16px` text.
 - Tap targets should be at least `44px` high.
+- When the shared form is placed inside a strong visual panel, add a context class and make the contrast explicit. Labels, required markers, helper text, consent copy and privacy links must remain readable before and after focus.
+
+## Commercial Pages
+
+- Commercial pages should feel practical, sober and proof-led.
+- Use real project and building imagery where possible.
+- Keep commercial service cards scannable and customer-facing.
+- Remove motion that does not help comprehension or conversion.
+- Form sections should make the enquiry task obvious: moderate supporting copy, visible fields, clear file-upload language and a strong submit button.
+- Do not expose internal area-review language or commercial county plumbing as customer-facing navigation.
 
 ## Colour And Specification Hubs
 

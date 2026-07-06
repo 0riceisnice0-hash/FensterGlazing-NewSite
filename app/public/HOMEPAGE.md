@@ -38,6 +38,7 @@ Optimised hero video:
 ## Important Updates
 
 - The first-visit loading screen has been removed because it delayed lead capture and hurt perceived speed.
+- The homepage hero video now defers until page idle, preserving the premium video first impression without making it block the page load. Do not revert the hero video to unconditional eager loading.
 - The homepage SEO title/meta is overridden for launch: `Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing` with a complete local-service meta description.
 - The interactive product theatre to instant-pricing bridge has been spacing-fixed so the quote card no longer overlaps the preceding product selector area.
 - WindowCAD quote embeds are intentionally scaled down on launch so the visible first view is usable now that the live/test domain can render the iframe.
@@ -274,6 +275,7 @@ The live default WindowCAD iframe is displayed in the pricing bridge:
 - the section keeps a primary `Get an instant quote` CTA to `/online-quote/`,
 - an `Open in new tab` CTA points directly to the WindowCAD URL.
 - mobile lead paths should avoid extra quote-tool options where possible; use one clear same-tab action rather than presenting expand/new-tab choices.
+- the iframe source may be deferred behind `data-quote-iframe-src`; this is intentional performance work and should be preserved.
 
 Do not:
 

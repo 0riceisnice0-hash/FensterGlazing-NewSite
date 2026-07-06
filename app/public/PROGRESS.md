@@ -2,6 +2,33 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Article CTA Form Layout Fix
+
+- Fixed generated article/blog CTA form layout and contrast in commit `aff62a0`.
+- Added the `fg-article-form` class to the shared enquiry form when rendered from `template-parts\sections\generated-article.php`.
+- Added article-specific CTA/form styling so the left copy panel has deliberate contrast and the right form has readable labels, visible input borders, sane textarea height and a mobile one-column layout.
+- Rebuilt compiled CSS, pushed to GitHub, deployed to live with the theme-only SiteGround workflow and flushed the WordPress cache.
+- Server verification passed: `generated-article.php` had no PHP syntax errors and live CSS/template contained the new article form selectors.
+
+## 2026-07-06 - Performance Deferral Pass
+
+- Improved live loading behaviour in commit `7c973b5` without removing the premium video/quote experience.
+- Deferred the homepage hero video until page idle so it is not a blocking first-load dependency.
+- Deferred homepage/product/quote WindowCAD iframe source loading through `data-quote-iframe-src`, with near-viewport and click/interaction triggers.
+- Kept quote tool placeholders/actions usable while the iframe loads.
+- Reduced eager media pressure in the homepage product theatre and heavy generated product sections.
+- Rebuilt CSS/JS, pushed to GitHub and deployed live.
+
+## 2026-07-06 - Commercial Glazing Hub V2
+
+- Reworked the main `/commercial-glazing/` page in commit `5696140` to be simpler, proof-led and more conversion-focused.
+- Corrected project proof imagery to use commercial-project/theme assets rather than wrong generic images.
+- Reworked commercial glazing products/services imagery from available Fenster/theme assets and kept runtime references out of `wp-content\fenster-reference`.
+- Removed the tiny decorative parallax drift in the "How enquiries move" area.
+- Tightened and simplified awkward page sections such as "Where this fits" so the page is less padded and more practical.
+- Restyled the commercial enquiry section so the form inputs are visible and the copy does not use oversized hero text.
+- Rebuilt compiled CSS, pushed to GitHub and deployed live.
+
 ## 2026-07-06 - Stale Audit Recheck And SEO Hardening
 
 - Rechecked the outdated pre-launch audit claims against live output instead of trusting the old crawl notes.

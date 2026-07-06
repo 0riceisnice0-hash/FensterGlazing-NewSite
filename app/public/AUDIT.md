@@ -2,12 +2,13 @@
 
 Audit date: 2026-07-03
 Last updated: 2026-07-06 (GitHub upload, live theme deploy, launch SEO hardening, office forms verified, mobile product QA fixes)
-Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
+Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local/live site output, SEO surface, performance, UX, conversion path.
 
 **How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
 
 ## Important Updates (2026-07-06)
 
+- Latest known live commit after this update is `aff62a0` (`Fix article CTA form layout`). Recent live fixes not in the original audit: `5696140` commercial hub v2, `7c973b5` heavy media/quote iframe deferral, `aff62a0` article CTA form contrast/layout.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is scoped to the custom theme and launch docs, excluding WordPress core, uploads, `wp-config.php`, local backups/config, `node_modules` and `wp-content\fenster-reference`.
 - SiteGround test/live are verified Bedrock installs. Deployment should update/swap only the `fenster` theme at `web/app/themes/fenster` from the repo while leaving the production database, uploads, plugins, `.env` and config intact. The reference scrape archive must not be deployed.
 - The test and live sites are running the new `fenster` theme. Future changes should still go local -> GitHub -> test -> verify -> backup -> live.
@@ -21,6 +22,9 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - The privacy-glass route is now `/obscured-glass/`; `/obscure-glass/` redirects there.
 - Phone QA product-template fixes are now deployed: product common-choice controls are viewport-contained on mobile, the product hub tab rail has a swipe affordance, supplier/proof logos are constrained, `/colour-options/` hides the hero visual on mobile, and `/sliding-sash-windows/` has tighter mobile model/spec/detail image layouts.
 - The stale pre-launch re-audit findings were rechecked live on 2026-07-06. Social share metadata and `lang="en-GB"` were already clean. Confirmed remaining theme-level issues have been fixed: `/upvc-colours/` and `/aluminium-colours/` now 301 to `/colour-options/`, the public REST users endpoint returns 401, WordPress generator/RSD/oEmbed/wp-json head links are removed, and the theme sitemap is served before Rank Math with redirected colour URLs excluded.
+- Performance has had a safe launch pass: the loader is gone, homepage hero video is deferred until idle, WindowCAD iframes defer until near viewport/interaction, and heavier media is less eager. The main remaining performance work is responsive/right-sized media, WOFF2 fonts, image dimensions/srcsets and further asset optimisation.
+- Commercial hub v2 is live and should be treated as the current baseline for `/commercial-glazing/`: corrected project proof imagery, better product/service imagery, no decorative micro-parallax, clearer sections and a readable commercial enquiry form.
+- Article/blog generated pages now have a readable CTA form layout through `fg-article-form`, resolving the white-on-white form issue in generated article CTA cards.
 
 ## Remediation Status (2026-07-03)
 
@@ -86,6 +90,7 @@ Original snapshot: a full re-crawl of every sitemap URL (427/427 fetched) plus a
 - **R9 — 338 meta descriptions exceed ~175 characters** (matrix pages run 235–280 chars; several counties and articles too). Unique and well-written, but Google truncates around 155–165 chars, so the templates' calls-to-action get cut off. Trim the matrix/county description templates to ~150–160 chars.
 - **R10 — Head bloat/cleanup — partly fixed 2026-07-06**: wp-emoji scripts/styles, `rel="shortlink"`, REST discovery, RSD and oEmbed discovery are removed by the theme hardening layer. Feed links and plugin-owned tags such as Google Site Kit remain.
 - **R11 — Homepage weight ~11.7 MB** (9.4 MB hero video + ~2.3 MB other assets). Acceptable for launch given `preload="metadata"`, but a ~720p mobile rendition and responsive images remain the biggest post-launch performance win (see Section 4).
+- **R11 update 2026-07-06:** partly improved. The hero video now defers until idle and quote iframes defer until near viewport/interaction, so first-load pressure is lower without losing the premium media. Still open: 720p/mobile video rendition, responsive images, image dimensions, WOFF2 fonts and asset optimisation.
 - **R12 — Thin-ish indexable pages**: the case-study pages run 390–600 words. Real content, fine to launch, but enriching them (more photos, scope details, town names) strengthens the local-proof cluster.
 
 ---
