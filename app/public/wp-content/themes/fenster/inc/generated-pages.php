@@ -806,6 +806,7 @@ function fenster_maybe_render_generated_page(): void
     exit;
 }
 
+add_action('parse_request', 'fenster_maybe_render_generated_sitemap', 0);
 add_action('template_redirect', 'fenster_maybe_render_generated_sitemap', -1);
 function fenster_maybe_render_generated_sitemap(): void
 {
