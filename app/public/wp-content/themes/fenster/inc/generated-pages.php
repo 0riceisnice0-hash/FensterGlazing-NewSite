@@ -930,6 +930,19 @@ function fenster_generated_document_title(string $title): string
     return $title;
 }
 
+add_filter('wpseo_frontend_presenters', 'fenster_disable_plugin_seo_head', PHP_INT_MAX);
+add_filter('wpseo_frontend_presenter_classes', 'fenster_disable_plugin_seo_head', PHP_INT_MAX);
+add_filter('rank_math/frontend/disable_integration', 'fenster_disable_rank_math_frontend', PHP_INT_MAX);
+function fenster_disable_plugin_seo_head(array $presenters): array
+{
+    return fenster_get_generated_page() ? [] : $presenters;
+}
+
+function fenster_disable_rank_math_frontend(bool $disabled): bool
+{
+    return fenster_get_generated_page() ? true : $disabled;
+}
+
 add_action('wp_head', 'fenster_render_generated_seo', 1);
 function fenster_render_generated_seo(): void
 {
@@ -940,6 +953,9 @@ function fenster_render_generated_seo(): void
 
     $seo = $page['seo'];
     $canonical = (string) ($seo['canonical'] ?? '');
+    $social_title = (string) ($seo['title_tag'] ?? $page['title'] ?? get_bloginfo('name'));
+    $social_description = (string) ($seo['meta_description'] ?? '');
+    $default_social_image = FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png';
     $is_bad_seo_content = static function (string $content): bool {
         $trimmed = trim($content);
 
@@ -977,6 +993,22 @@ function fenster_render_generated_seo(): void
         printf("<link rel=\"canonical\" href=\"%s\">\n", esc_url($canonical));
     }
 
+    printf("<meta property=\"og:title\" content=\"%s\">\n", esc_attr($social_title));
+    if (! $is_bad_seo_content($social_description)) {
+        printf("<meta property=\"og:description\" content=\"%s\">\n", esc_attr($social_description));
+    }
+    if ($canonical !== '') {
+        printf("<meta property=\"og:url\" content=\"%s\">\n", esc_url($canonical));
+    }
+    echo "<meta property=\"og:type\" content=\"website\">\n";
+    printf("<meta property=\"og:image\" content=\"%s\">\n", esc_url($default_social_image));
+    echo "<meta name=\"twitter:card\" content=\"summary_large_image\">\n";
+    printf("<meta name=\"twitter:title\" content=\"%s\">\n", esc_attr($social_title));
+    if (! $is_bad_seo_content($social_description)) {
+        printf("<meta name=\"twitter:description\" content=\"%s\">\n", esc_attr($social_description));
+    }
+    printf("<meta name=\"twitter:image\" content=\"%s\">\n", esc_url($default_social_image));
+
     foreach (($seo['open_graph'] ?? []) as $tag) {
         if (empty($tag['key']) || empty($tag['content'])) {
             continue;
@@ -984,6 +1016,10 @@ function fenster_render_generated_seo(): void
 
         $key = (string) $tag['key'];
         $content = (string) $tag['content'];
+
+        if (in_array($key, ['og:title', 'og:description', 'og:url', 'og:type', 'og:image'], true)) {
+            continue;
+        }
 
         if ($key === 'og:url' && $canonical !== '') {
             $content = $canonical;
@@ -1011,6 +1047,10 @@ function fenster_render_generated_seo(): void
 
         $key = (string) $tag['key'];
         $content = (string) $tag['content'];
+
+        if (in_array($key, ['twitter:card', 'twitter:title', 'twitter:description', 'twitter:image'], true)) {
+            continue;
+        }
 
         if ($is_bad_seo_content($content)) {
             continue;
