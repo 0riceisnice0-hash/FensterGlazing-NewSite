@@ -103,6 +103,11 @@ body {
   line-height: 1.6;
 }
 
+.fg-quote-touch-lock,
+.fg-quote-touch-lock body {
+  overscroll-behavior: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1658,6 +1663,7 @@ h3 {
   border: 1px solid rgba(0, 45, 58, 0.14);
   border-radius: 8px;
   background: #ffffff;
+  overscroll-behavior: contain;
 }
 
 .fg-product-quote-embed__placeholder {
@@ -1692,6 +1698,7 @@ h3 {
   background: #ffffff;
   transform: scale(var(--fg-quote-tool-scale));
   transform-origin: top left;
+  overscroll-behavior: contain;
 }
 
 .lenis.lenis-smooth .fg-product-quote-embed__frame iframe {
@@ -14122,6 +14129,7 @@ h3 {
 .fg-home-quote-station__preview {
   height: clamp(460px, 58vh, 680px);
   --fg-quote-tool-scale: 0.82;
+  overscroll-behavior: contain;
 }
 
 .fg-home-quote-station figure img,
@@ -14140,6 +14148,7 @@ h3 {
   background: #ffffff;
   transform: scale(var(--fg-quote-tool-scale));
   transform-origin: top left;
+  overscroll-behavior: contain;
 }
 
 .lenis.lenis-smooth .fg-home-quote-station__preview iframe {
@@ -14523,6 +14532,7 @@ h3 {
   border: 1px solid rgba(0, 45, 58, 0.14);
   border-radius: 8px;
   background: #ffffff;
+  overscroll-behavior: contain;
 }
 
 .fg-quote-hero__embed-frame iframe {
@@ -14533,6 +14543,7 @@ h3 {
   background: #ffffff;
   transform: scale(var(--fg-quote-tool-scale));
   transform-origin: top left;
+  overscroll-behavior: contain;
 }
 
 .lenis.lenis-smooth .fg-quote-hero__embed-frame iframe {

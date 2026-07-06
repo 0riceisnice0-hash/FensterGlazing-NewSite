@@ -1340,6 +1340,64 @@ const loadQuoteFrame = (frameWrap) => {
   frameWrap.classList.add('is-loaded');
 };
 
+const quoteTouchQuery = window.matchMedia('(max-width: 860px)');
+let quoteTouchLockTimer = 0;
+let quoteTouchScrollY = 0;
+
+const unlockQuotePageScroll = () => {
+  if (!document.documentElement.classList.contains('fg-quote-touch-lock')) return;
+
+  document.documentElement.classList.remove('fg-quote-touch-lock');
+  document.body.style.removeProperty('position');
+  document.body.style.removeProperty('top');
+  document.body.style.removeProperty('left');
+  document.body.style.removeProperty('right');
+  document.body.style.removeProperty('width');
+  window.scrollTo(0, quoteTouchScrollY);
+  window.fensterLenis?.start?.();
+};
+
+const lockQuotePageScroll = () => {
+  if (!quoteTouchQuery.matches) return;
+
+  window.clearTimeout(quoteTouchLockTimer);
+  quoteTouchScrollY = window.scrollY || window.pageYOffset || 0;
+
+  if (!document.documentElement.classList.contains('fg-quote-touch-lock')) {
+    window.fensterLenis?.stop?.();
+    document.documentElement.classList.add('fg-quote-touch-lock');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${quoteTouchScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }
+
+  quoteTouchLockTimer = window.setTimeout(unlockQuotePageScroll, 2400);
+};
+
+document.querySelectorAll('[data-quote-frame-wrap]').forEach((frameWrap) => {
+  frameWrap.addEventListener('touchstart', lockQuotePageScroll, { passive: true });
+  frameWrap.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'touch') {
+      lockQuotePageScroll();
+    }
+  });
+});
+
+['touchend', 'touchcancel', 'pointerup', 'pointercancel'].forEach((eventName) => {
+  window.addEventListener(eventName, () => {
+    window.clearTimeout(quoteTouchLockTimer);
+    quoteTouchLockTimer = window.setTimeout(unlockQuotePageScroll, 180);
+  }, { passive: true });
+});
+
+quoteTouchQuery.addEventListener?.('change', () => {
+  if (!quoteTouchQuery.matches) {
+    unlockQuotePageScroll();
+  }
+});
+
 document.querySelectorAll('[data-load-quote]').forEach((quoteLoadButton) => {
   quoteLoadButton.addEventListener('click', () => {
     const quoteCard = quoteLoadButton.closest('[data-quote-card]') || quoteLoadButton.closest('section') || document;
