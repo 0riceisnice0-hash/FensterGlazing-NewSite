@@ -213,11 +213,6 @@ function fenster_process_enquiry(): array|WP_Error
         return fenster_enquiry_error('invalid', 'The form session expired. Please refresh the page and try again.');
     }
 
-    $honeypot = sanitize_text_field(wp_unslash($_POST['company_website'] ?? ''));
-    if ($honeypot !== '') {
-        return ['status' => 'success', 'message' => 'Thanks — your enquiry has been received.', 'spam' => true];
-    }
-
     $data = [
         'name' => sanitize_text_field(wp_unslash($_POST['name'] ?? '')),
         'email' => sanitize_email(wp_unslash($_POST['email'] ?? '')),
