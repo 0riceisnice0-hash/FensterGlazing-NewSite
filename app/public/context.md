@@ -276,6 +276,27 @@ Remaining conversion-tracking work:
 - Add online quote / WindowCAD open tracking.
 - Make sure events respect consent state.
 
+## 10.1 AdminBase And WindowCAD Lead Relay
+
+The old `wraith` theme had an AdminBase relay that was lost when the new `fenster` theme went live.
+
+Current restored model:
+
+- File: `inc/adminbase.php`
+- Included by: `functions.php`
+- WindowCAD endpoint: `/wp-json/fenster/v1/windowcad`
+- AdminBase endpoint: `https://webleads.abinitiosoftware.co.uk/api/LeadDetails`
+- Normal site enquiries also relay to AdminBase through the `fenster_enquiry_created` hook.
+- WindowCAD leads are also saved privately as `fenster_enquiry` posts before/alongside the AdminBase relay.
+
+Credential rule:
+
+- Do not commit AdminBase credentials to GitHub.
+- The theme reads them from constants, environment variables or WordPress options.
+- Live/test credentials are operational server config, not theme source.
+
+The WindowCAD payload from the old site used `json.infoProperties`. The new theme preserves that expected shape and maps customer name, email, phone, postcode and address into the AdminBase form fields.
+
 ## 10. Forms And Enquiries
 
 There should be exactly one customer-facing form component:

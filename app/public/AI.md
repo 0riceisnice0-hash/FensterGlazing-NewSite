@@ -104,6 +104,7 @@ PHP lint example:
 - Mobile forms must be one column, full width, with `16px` input text and comfortable touch targets.
 - Form-section headings are content headings, not heroes. Keep shared enquiry h2 sizes moderate across the site.
 - Article/blog CTA forms use the shared component with the extra `fg-article-form` class from `template-parts\sections\generated-article.php`. Keep that page-specific styling so labels/inputs stay readable inside article CTA cards.
+- AdminBase lead relay lives in `inc\adminbase.php`. It restores the old `wraith` WindowCAD endpoint at `/wp-json/fenster/v1/windowcad` and relays normal saved enquiries through the `fenster_enquiry_created` hook. Do not commit AdminBase credentials; configure them through constants, environment variables or WordPress options.
 
 ## Related Links Rule
 

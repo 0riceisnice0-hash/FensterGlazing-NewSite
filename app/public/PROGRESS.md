@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - WindowCAD/AdminBase Relay Restored
+
+- Tracked the missing integration to the inactive live `wraith` theme over SSH.
+- Found the old `/wp-json/fenster/v1/windowcad` REST endpoint in `wraith/app/setup.php`, which flattened WindowCAD `json.infoProperties` and posted leads to AdminBase.
+- Added `wp-content/themes/fenster/inc/adminbase.php` and included it from `functions.php`.
+- Restored the WindowCAD REST endpoint, private WordPress enquiry saving for WindowCAD submissions, AdminBase relay metadata, and normal enquiry relay through `fenster_enquiry_created`.
+- Kept AdminBase credentials out of the repo; the new theme reads constants, environment variables or WordPress options.
+
 ## 2026-07-06 - Redirect, Duplicate Host And Consent Fixes
 
 - Removed the live `/terms-conditions/` redirect that sent footer legal links to `/privacy-policy//`; the server now returns the Terms page directly.
