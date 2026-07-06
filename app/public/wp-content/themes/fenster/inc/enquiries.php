@@ -287,12 +287,14 @@ function fenster_process_enquiry(): array|WP_Error
     $recipient = fenster_enquiry_recipient();
     $office_headers = [
         'Content-Type: text/html; charset=UTF-8',
-        'From: Fenster Website <info@fensterglazing.com>',
-        sprintf('Reply-To: %s <%s>', $data['name'], $data['email']),
+        'From: Fenster Lead Alerts <info@fensterglazing.com>',
+        'Reply-To: Fenster Glazing <info@fensterglazing.com>',
+        'X-Fenster-Enquiry-ID: ' . (int) $enquiry_id,
     ];
+    $office_subject = sprintf('LEAD ALERT - %s - %s', $data['project_type'], $data['name']);
     $office_sent = wp_mail(
         $recipient,
-        sprintf('New project enquiry: %s — %s', $data['project_type'], $data['name']),
+        $office_subject,
         fenster_enquiry_office_email($data, (int) $enquiry_id),
         $office_headers
     );
