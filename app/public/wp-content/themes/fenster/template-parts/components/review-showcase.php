@@ -29,10 +29,10 @@ if (empty($reviews)) {
     <div class="container">
         <header class="fg-review-showcase__summary">
             <strong><?php esc_html_e('EXCELLENT', 'fenster'); ?></strong>
-            <span class="fg-review-showcase__summary-stars" aria-label="<?php esc_attr_e('5 out of 5 stars', 'fenster'); ?>"></span>
-            <div class="fg-review-showcase__sources" aria-label="<?php esc_attr_e('Review sources', 'fenster'); ?>">
+            <span class="fg-review-showcase__summary-stars" role="img" aria-label="<?php esc_attr_e('5 out of 5 stars', 'fenster'); ?>"></span>
+            <div class="fg-review-showcase__sources" role="group" aria-label="<?php esc_attr_e('Review sources', 'fenster'); ?>">
                 <span class="fg-review-showcase__source-pill">
-                    <span class="fg-review-showcase__google" aria-label="<?php esc_attr_e('Google', 'fenster'); ?>">
+                    <span class="fg-review-showcase__google" role="img" aria-label="<?php esc_attr_e('Google', 'fenster'); ?>">
                         <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
                     </span>
                     <b><?php esc_html_e('130 reviews', 'fenster'); ?></b>
@@ -67,7 +67,7 @@ if (empty($reviews)) {
                                 <span><?php esc_html_e('Trustpilot', 'fenster'); ?></span>
                             <?php endif; ?>
                         </span>
-                        <span class="fg-review-showcase__stars" aria-label="<?php echo esc_attr(sprintf('%d out of 5 stars', max(0, min(5, (int) ($review['rating'] ?? 5))))); ?>"></span>
+                        <span class="fg-review-showcase__stars" role="img" aria-label="<?php echo esc_attr(sprintf('%d out of 5 stars', max(0, min(5, (int) ($review['rating'] ?? 5))))); ?>"></span>
                         <p><?php echo esc_html((string) ($review['quote'] ?? '')); ?></p>
                         <span class="fg-review-showcase__read"><?php esc_html_e('Read more', 'fenster'); ?></span>
                     </a>

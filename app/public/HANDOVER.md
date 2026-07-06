@@ -34,6 +34,7 @@ Use:
 - The first product-template/mobile phone QA pass is deployed on live: `/casement-windows/` style product hubs now constrain common choices and product tabs to the viewport, product hub logos are calmer on mobile, the tab rail shows a swipe affordance, `/colour-options/` hides the hero visual on mobile, and `/sliding-sash-windows/` has tighter Roseview model/spec/detail layouts for phones.
 - Commercial hub v2 is deployed on live. The main commercial page was simplified and rebuilt for clearer lead generation: project proof now uses commercial-project imagery, the product/services imagery was corrected from theme assets rather than scrape-reference paths, the useless tiny parallax motion was removed, the "where this fits" section was made more practical, and the commercial form area was restyled so inputs are visible and the copy is not oversized.
 - Performance baseline was improved on live without degrading the premium visuals. Heavy media and quote iframes are deferred: the homepage hero video waits for idle, quote iframes load near viewport or on click, product theatre media avoids eager-loading everything, and quote-tool pages keep a usable placeholder/action state until the iframe loads. Future performance work should continue this approach before compressing/removing signature visuals.
+- A Lighthouse-focused performance pass has added critical first-viewport CSS, async activation of the main stylesheet, WOFF2 Gibson fonts, Regular/SemiBold font preloads, a homepage hero-poster preload, image dimension helpers, and mobile/constrained-connection interaction gating for the homepage hero video. The mobile/slow-network first impression should be the lightweight poster, not the 9.36 MB video download.
 - Imported blog/guide articles use `template-parts\sections\generated-article.php`. The article CTA form now has article-specific styling through `fg-article-form`, fixing the previous white-on-white labels/input contrast problem shown on generated article pages.
 - Microsoft Clarity is not the visual source of truth. It may show an unstyled/bare HTML replay if its recorder cannot fetch CSS/assets correctly. Use Clarity for behaviour patterns, but verify visual defects in an actual browser or phone before changing code.
 
@@ -561,17 +562,22 @@ Current live performance strategy is "defer, right-size and lazy-load" rather th
 Already deployed:
 
 - First-visit loading screen removed.
-- Homepage hero video is deferred until idle and is not a blocking first paint dependency.
+- Homepage hero video is deferred until idle on normal desktop connections and is interaction-gated on mobile, reduced-motion and constrained-connection sessions.
+- Homepage hero poster is preloaded and should remain the intentional first visual for slow/mobile page loads.
+- Gibson fonts now have WOFF2 versions; Regular and SemiBold are preloaded as critical weights, with OTF kept only as fallback.
+- The main stylesheet is loaded through a preload/activate pattern with critical first-viewport CSS in the head. Re-test the first viewport if this mechanism changes.
 - Homepage/product/quote WindowCAD iframes use deferred source loading and near-viewport or interaction triggers.
 - Product theatre and heavier image/video sections avoid eagerly loading every asset up front.
 - Public generated pages/sitemaps use short cache headers for logged-out visitors.
+- Theme image helpers can emit explicit width/height attributes from local files; use `fenster_image_attr_string()` for new local theme image markup where practical.
+- Long-lived cache headers for static CSS, JS, fonts, images and video still need to be applied at SiteGround/CDN level because `app/public/.htaccess` is ignored by the scoped GitHub theme repo.
 
 Next high-value performance work:
 
 - Create a 720p/mobile rendition of the homepage hero video and use responsive source/media loading.
 - Convert heavy photo PNGs and partner/logo PNGs where suitable to WebP/AVIF or smaller optimised PNGs.
 - Add `width`, `height`, `srcset` and `sizes` helpers for hardcoded images.
-- Convert Gibson OTF fonts to WOFF2 and preload only the critical weights.
+- Continue adding explicit dimensions/srcsets/sizes to lower-priority hardcoded images beyond the already covered header/homepage/generated hero surfaces.
 - Continue memoising/generated-data work carefully; do not break SEO routing to chase a tiny benchmark gain.
 
 ## Current QA Expectations

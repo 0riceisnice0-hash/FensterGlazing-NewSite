@@ -36,6 +36,7 @@ $instant_quote_preview = (string) $args['instant_quote_preview'];
 $related_links = is_array($args['related_links']) ? $args['related_links'] : [];
 $sick_video = (string) $args['sick_video'];
 $trust_items = is_array($args['trust_items']) ? $args['trust_items'] : [];
+$hero_poster = $asset_base . 'home-hero-poster.jpg';
 
 $trust_messages = [
     ['title' => '200+ five-star reviews', 'copy' => 'Rated by customers across Google.', 'item' => $trust_items[0] ?? null],
@@ -104,7 +105,7 @@ $location_links = [
 <article class="generated-page generated-page--home-lab">
     <section class="fg-home-hero" data-fg-home-hero aria-label="<?php esc_attr_e('Fenster Glazing homepage hero', 'fenster'); ?>">
         <?php if ($sick_video !== '') : ?>
-            <video class="fg-home-hero__video" autoplay muted loop playsinline preload="none" poster="<?php echo esc_url(fenster_generated_url($asset_base . 'home-hero-poster.jpg')); ?>" data-fg-lazy-video>
+            <video class="fg-home-hero__video" autoplay muted loop playsinline preload="none" poster="<?php echo esc_url(fenster_generated_url($hero_poster)); ?>" data-fg-lazy-video data-fg-video-slow-mode="interaction">
                 <source data-src="<?php echo esc_url($sick_video); ?>" type="video/mp4">
             </video>
         <?php endif; ?>
@@ -128,7 +129,7 @@ $location_links = [
             <?php foreach ($trust_messages as $trust) : ?>
                 <?php if (is_array($trust['item'])) : ?>
                     <article class="fg-home-trust-card">
-                        <img src="<?php echo esc_url($trust['item']['src']); ?>" alt="<?php echo esc_attr($trust['item']['alt']); ?>" loading="lazy">
+                        <img <?php echo fenster_image_attr_string((string) $trust['item']['src'], ['alt' => (string) $trust['item']['alt'], 'loading' => 'lazy']); ?>>
                         <div>
                             <strong><?php echo esc_html($trust['title']); ?></strong>
                             <span><?php echo esc_html($trust['copy']); ?></span>
@@ -175,14 +176,13 @@ $location_links = [
                         href="<?php echo esc_url($product_routes[0]['url']); ?>"
                         aria-label="<?php echo esc_attr('Explore ' . $product_routes[0]['label']); ?>">
                         <?php foreach ($product_routes as $index => $route) : ?>
-                            <img
-                                class="<?php echo esc_attr($index === 0 ? 'is-active' : ''); ?>"
-                                data-fg-product-visual="<?php echo esc_attr((string) $index); ?>"
-                                src="<?php echo esc_url(fenster_generated_url($route['image'])); ?>"
-                                alt=""
-                                loading="<?php echo esc_attr($index === 0 ? 'eager' : 'lazy'); ?>"
-                                decoding="async"
-                                fetchpriority="<?php echo esc_attr($index === 0 ? 'high' : 'auto'); ?>">
+                            <img <?php echo fenster_image_attr_string((string) $route['image'], [
+                                'class' => $index === 0 ? 'is-active' : '',
+                                'data-fg-product-visual' => (string) $index,
+                                'alt' => '',
+                                'loading' => $index === 0 ? 'eager' : 'lazy',
+                                'fetchpriority' => $index === 0 ? 'high' : 'auto',
+                            ]); ?>>
                         <?php endforeach; ?>
                         <div class="fg-home-product-theatre__wipe" aria-hidden="true"></div>
                         <div class="fg-home-product-theatre__reflection" aria-hidden="true"></div>
@@ -225,10 +225,10 @@ $location_links = [
                 role="group"
                 aria-roledescription="<?php esc_attr_e('carousel', 'fenster'); ?>"
                 aria-label="<?php esc_attr_e('Fenster product range', 'fenster'); ?>">
-                <div class="fg-home-product-theatre__mobile-track" aria-label="<?php esc_attr_e('Swipe through Fenster products', 'fenster'); ?>">
+                <div class="fg-home-product-theatre__mobile-track" role="group" aria-label="<?php esc_attr_e('Swipe through Fenster products', 'fenster'); ?>">
                     <?php foreach ($product_routes as $index => $route) : ?>
                         <a class="fg-home-product-theatre__mobile-card" href="<?php echo esc_url($route['url']); ?>">
-                            <img src="<?php echo esc_url(fenster_generated_url($route['image'])); ?>" alt="<?php echo esc_attr($route['label']); ?>" loading="<?php echo esc_attr($index === 0 ? 'eager' : 'lazy'); ?>" decoding="async" fetchpriority="<?php echo esc_attr($index === 0 ? 'high' : 'auto'); ?>">
+                            <img <?php echo fenster_image_attr_string((string) $route['image'], ['alt' => (string) $route['label'], 'loading' => $index === 0 ? 'eager' : 'lazy', 'fetchpriority' => $index === 0 ? 'high' : 'auto']); ?>>
                             <div>
                                 <span><?php echo esc_html($route['best_for']); ?></span>
                                 <strong><?php echo esc_html($route['label']); ?></strong>
@@ -295,7 +295,7 @@ $location_links = [
                     <article class="fg-home-partner-card">
                         <div>
                             <?php if ($partner['src'] !== '') : ?>
-                                <img src="<?php echo esc_url($partner['src']); ?>" alt="<?php echo esc_attr($partner['label']); ?>" loading="lazy">
+                                <img <?php echo fenster_image_attr_string((string) $partner['src'], ['alt' => (string) $partner['label'], 'loading' => 'lazy']); ?>>
                             <?php else : ?>
                                 <strong><?php echo esc_html($partner['label']); ?></strong>
                             <?php endif; ?>

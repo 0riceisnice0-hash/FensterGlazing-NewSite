@@ -28,6 +28,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 - Mobile product-template fixes are in place for the first live phone QA pass. Product information hubs must stay viewport-contained on mobile, common choices should stack, supplier/proof badges should stay visually balanced, and multi-option tab rails need a clear swipe/count affordance.
 - The test site has verified working enquiry delivery to `info@fensterglazing.com`; valid forms are saved privately as `fenster_enquiry` posts before email delivery.
 - Performance has been improved without lowering visual quality by deferring heavy embeds/media instead of removing premium assets: homepage hero video loads after idle, quote iframes use deferred `data-quote-iframe-src` loading, product theatre non-primary media lazy-loads, and quote embeds load near viewport or on interaction. Do not undo this by making every iframe/video eager again.
+- The Lighthouse performance pass added critical first-viewport CSS, async activation of the main stylesheet, WOFF2 Gibson fonts with critical font preloads, a homepage hero-poster preload, mobile/constrained-connection hero-video interaction gating, image dimension helpers and below-fold homepage `content-visibility`. Keep the poster as the mobile/slow-network first visual and do not make the 9.36 MB homepage video part of the initial mobile payload again.
 - Microsoft Clarity is installed/being evaluated, but recordings can show a bare HTML-looking page when Clarity cannot fetch CSS/assets from cache/WAF/CSP timing. Treat Clarity as useful for behaviour, not as the sole visual QA tool. Confirm layout issues in a real browser/phone before changing the theme.
 
 ## Project Basics
@@ -310,9 +311,11 @@ These rules apply to every new section, page change, form, carousel, product pag
 ## Asset And Cache Rules
 
 - Scrape-derived imagery lives in `wp-content\themes\fenster\assets\images\imported`. Never reference `wp-content\fenster-reference` from theme code or `data\pages.json`; that folder is a local-only archive and is not deployed.
+- Use `fenster_image_attr_string()` for theme images where practical so rendered images get explicit width/height attributes from local files. Prioritise hero, header, above-the-fold and generated-template images before lower-risk decorative images.
 - Local BrowserSync can serve stale built CSS if edits are not rebuilt.
 - If a browser check contradicts source code, verify the compiled asset timestamp and reload after build.
 - Do not replace optimised video assets with huge reference originals.
+- Static asset cache lifetimes are a host/CDN concern for deployed Bedrock assets because the local `app/public/.htaccess` is ignored by the scoped theme repo. SiteGround/CDN should serve theme CSS, JS, WOFF2, images and videos with long-lived immutable cache headers while HTML/generated pages keep short public cache headers.
 - Optimised homepage hero video:
   - `assets\videos\home\fenster-home-hero.mp4`
 - Integral Blinds reveal video:

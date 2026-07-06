@@ -38,7 +38,8 @@ Optimised hero video:
 ## Important Updates
 
 - The first-visit loading screen has been removed because it delayed lead capture and hurt perceived speed.
-- The homepage hero video now defers until page idle, preserving the premium video first impression without making it block the page load. Do not revert the hero video to unconditional eager loading.
+- The homepage hero poster is preloaded and is the intended first visual on slow/mobile loads. The hero video now defers until page idle on normal desktop connections, but mobile, reduced-motion and constrained-connection sessions wait for user interaction before the 9.36 MB video source is attached. Do not revert the hero video to unconditional eager loading.
+- The homepage uses critical first-viewport CSS plus an async main stylesheet preload/activation pattern. Re-check the first viewport after any change to this loading model.
 - The homepage SEO title/meta is overridden for launch: `Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing` with a complete local-service meta description.
 - The interactive product theatre to instant-pricing bridge has been spacing-fixed so the quote card no longer overlaps the preceding product selector area.
 - WindowCAD quote embeds are intentionally scaled down on launch so the visible first view is usable now that the live/test domain can render the iframe.
@@ -105,6 +106,7 @@ Do not restore:
 - a large instant-pricing screenshot panel over the hero,
 - a full-viewport hero height,
 - scroll-linked transforms on the playing video.
+- eager mobile loading of the full 9.36 MB hero video.
 
 ### Hero Video Performance
 
@@ -129,6 +131,12 @@ Current live file:
 - 30 fps.
 
 Do not replace it with the 95 MB reference source.
+
+The poster is:
+
+`wp-content\themes\fenster\assets\images\imported\home-hero-poster.jpg`
+
+Keep it lightweight and preloaded. On mobile/slow-network Lighthouse-style runs, the poster should satisfy the first visual while the video source remains in `data-src` until interaction.
 
 ## Trust Cards
 

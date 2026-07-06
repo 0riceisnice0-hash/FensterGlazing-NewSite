@@ -13,7 +13,7 @@ $brand = fenster_data('brand', []);
             <?php if (has_custom_logo()) : ?>
                 <?php the_custom_logo(); ?>
             <?php else : ?>
-                <img class="site-brand__logo" src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/brand/18931 Fenster Glazing Logo - White Background.png'); ?>" alt="<?php echo esc_attr($brand['name']); ?>">
+                <img class="site-brand__logo" <?php echo fenster_image_attr_string(FENSTER_THEME_URI . '/assets/brand/18931 Fenster Glazing Logo - White Background.png', ['alt' => (string) $brand['name'], 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
             <?php endif; ?>
         </a>
 

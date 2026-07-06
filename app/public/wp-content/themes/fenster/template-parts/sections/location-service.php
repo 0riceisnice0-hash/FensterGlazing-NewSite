@@ -796,7 +796,7 @@ $product_links = [
 <article class="fg-location-page generated-page generated-page--location">
     <section class="fg-location-hero">
         <?php if ($hero_media_src !== '') : ?>
-            <img class="fg-location-hero__image" src="<?php echo esc_url(fenster_generated_url($hero_media_src)); ?>" alt="<?php echo esc_attr($service_label . ' in ' . $location_name); ?>" loading="eager" data-fg-depth="0.05">
+            <img <?php echo fenster_image_attr_string($hero_media_src, ['class' => 'fg-location-hero__image', 'alt' => $service_label . ' in ' . $location_name, 'loading' => 'eager', 'fetchpriority' => 'high', 'data-fg-depth' => '0.05']); ?>>
         <?php endif; ?>
         <div class="fg-location-hero__shade"></div>
         <div class="container fg-location-hero__grid">

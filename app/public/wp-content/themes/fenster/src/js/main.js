@@ -990,6 +990,16 @@ const runWhenIdle = (callback, timeout = 1200) => {
 };
 
 document.querySelectorAll('video[data-fg-lazy-video]').forEach((video) => {
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const smallViewport = window.matchMedia('(max-width: 860px)').matches;
+  const constrainedConnection = Boolean(
+    connection?.saveData ||
+    ['slow-2g', '2g', '3g'].includes(connection?.effectiveType || '')
+  );
+  const interactionOnly = video.dataset.fgVideoSlowMode === 'interaction' &&
+    (smallViewport || constrainedConnection || prefersReducedMotion);
+
   const loadVideo = () => {
     if (video.dataset.loaded === 'true') return;
 
@@ -1001,6 +1011,14 @@ document.querySelectorAll('video[data-fg-lazy-video]').forEach((video) => {
     video.load();
     video.play?.().catch(() => {});
   };
+
+  if (interactionOnly) {
+    const loadOnInteraction = () => loadVideo();
+    ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
+      window.addEventListener(eventName, loadOnInteraction, { once: true, passive: true });
+    });
+    return;
+  }
 
   window.addEventListener('load', () => runWhenIdle(loadVideo, 1800), { once: true });
 });

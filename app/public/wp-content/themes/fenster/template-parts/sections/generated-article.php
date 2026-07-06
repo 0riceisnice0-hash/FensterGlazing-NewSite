@@ -69,7 +69,7 @@ $inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inl
             </div>
             <?php if (is_array($hero_image)) : ?>
                 <figure class="fg-article-hero__media">
-                    <img src="<?php echo esc_url(fenster_generated_url((string) $hero_image['src'])); ?>" alt="<?php echo esc_attr((string) ($hero_image['alt'] ?? $title)); ?>" loading="eager">
+                    <img <?php echo fenster_image_attr_string((string) $hero_image['src'], ['alt' => (string) ($hero_image['alt'] ?? $title), 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
                 </figure>
             <?php endif; ?>
         </div>
@@ -94,7 +94,7 @@ $inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inl
                     <?php if ($should_place_image) : ?>
                         <?php $inline_image = $inline_images[$inline_image_index]; ?>
                         <figure class="fg-article-body__figure">
-                            <img src="<?php echo esc_url(fenster_generated_url((string) $inline_image['src'])); ?>" alt="<?php echo esc_attr((string) ($inline_image['alt'] ?? $title)); ?>" loading="lazy">
+                            <img <?php echo fenster_image_attr_string((string) $inline_image['src'], ['alt' => (string) ($inline_image['alt'] ?? $title), 'loading' => 'lazy']); ?>>
                         </figure>
                         <?php $inline_image_index++; ?>
                     <?php endif; ?>

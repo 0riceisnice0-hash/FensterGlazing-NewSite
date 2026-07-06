@@ -2,6 +2,18 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Lighthouse Performance Wave 1 And 2
+
+- Added a performance pass in response to the mobile Lighthouse report showing 62 Performance, 4.3s FCP and 14.5s LCP on slow 4G.
+- Added critical first-viewport CSS and changed the main stylesheet link to preload/activate asynchronously with a noscript fallback, reducing render-blocking pressure while keeping the hero/header styled.
+- Added WOFF2 versions of the Gibson fonts and updated `@font-face` declarations to prefer WOFF2 with OTF fallback; Regular and SemiBold are preloaded as critical weights.
+- Added a homepage hero-poster preload and changed the homepage hero video lazy loader so mobile, reduced-motion and constrained-connection sessions keep the 9.36 MB video out of the initial load until interaction.
+- Added `fenster_image_attr_string()` and related helpers in `inc\assets.php` so local theme images can render explicit width/height attributes; applied it to the header logo, homepage product/trust/partner images, and key generated/article/location hero images.
+- Added below-fold homepage `content-visibility` guardrails for the quote, partner, review, enquiry and local-link sections.
+- Improved review carousel ARIA by giving decorative star/Google label spans explicit image/group roles, and increased mobile product dots/review carousel buttons to 44 px tap targets.
+- Verification: `npm.cmd run build` passed; PHP lint passed for all touched PHP files; browser check on the local homepage confirmed poster/font preloads, explicit image dimensions, no desktop/mobile horizontal overflow, mobile hero video source still deferred after 2.5s, 44 px mobile dots and no console errors.
+- Static cache headers still need a server/SiteGround step because `app/public/.htaccess` is ignored by the GitHub theme repo. Add long-lived `Cache-Control: public, max-age=31536000, immutable` for theme CSS, JS, fonts, images and video at host/CDN level.
+
 ## 2026-07-06 - Article CTA Form Layout Fix
 
 - Fixed generated article/blog CTA form layout and contrast in commit `aff62a0`.

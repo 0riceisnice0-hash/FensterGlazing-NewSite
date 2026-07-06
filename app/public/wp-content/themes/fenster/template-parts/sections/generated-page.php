@@ -2031,7 +2031,7 @@ if ($is_commercial_hub) {
                 <source src="<?php echo esc_url($sick_video); ?>" type="video/mp4">
             </video>
         <?php elseif ($hero_media_src) : ?>
-            <img class="fg-hero__image" src="<?php echo esc_url(fenster_generated_url($hero_media_src)); ?>" alt="<?php echo esc_attr($title); ?>" loading="eager">
+            <img <?php echo fenster_image_attr_string($hero_media_src, ['class' => 'fg-hero__image', 'alt' => $title, 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
         <?php endif; ?>
         <div class="fg-hero__shade"></div>
         <div class="container fg-hero__inner <?php echo esc_attr($is_home ? 'fg-hero__inner--quote' : ''); ?>">

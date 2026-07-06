@@ -1,6 +1,8 @@
 @font-face {
   font-family: "Gibson";
-  src: url("../fonts/Gibson-Light.otf") format("opentype");
+  src:
+    url("../fonts/Gibson-Light.woff2") format("woff2"),
+    url("../fonts/Gibson-Light.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -8,7 +10,9 @@
 
 @font-face {
   font-family: "Gibson";
-  src: url("../fonts/Gibson-Regular.otf") format("opentype");
+  src:
+    url("../fonts/Gibson-Regular.woff2") format("woff2"),
+    url("../fonts/Gibson-Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -16,7 +20,9 @@
 
 @font-face {
   font-family: "Gibson";
-  src: url("../fonts/Gibson-SemiBold.otf") format("opentype");
+  src:
+    url("../fonts/Gibson-SemiBold.woff2") format("woff2"),
+    url("../fonts/Gibson-SemiBold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -24,7 +30,9 @@
 
 @font-face {
   font-family: "Gibson";
-  src: url("../fonts/Gibson-Bold.otf") format("opentype");
+  src:
+    url("../fonts/Gibson-Bold.woff2") format("woff2"),
+    url("../fonts/Gibson-Bold.otf") format("opentype");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -20604,4 +20612,30 @@ html.fg-blinds-reveal-locked {
   .fg-areas-page__hero h1 {
     font-size: clamp(2rem, 8.5vw, 2.85rem);
   }
+}
+
+/* Final performance and accessibility guardrails. */
+@supports (content-visibility: auto) {
+  .fg-home-quote-station,
+  .fg-home-partner-strip,
+  .fg-review-showcase--home,
+  .fg-home-showroom,
+  .fg-home-seo-mesh {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
+  }
+}
+
+.fg-review-showcase__button,
+.fg-home-product-theatre__mobile-dots button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.fg-home-proof-wall__link a,
+.fg-home-seo-mesh__links a,
+.fg-home-showroom__links a,
+.fg-review-showcase__read {
+  text-decoration-thickness: max(1px, 0.08em);
+  text-underline-offset: 0.18em;
 }
