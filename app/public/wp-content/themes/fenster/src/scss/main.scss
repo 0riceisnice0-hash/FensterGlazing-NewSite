@@ -1654,6 +1654,7 @@ h3 {
   overflow: hidden;
   height: clamp(360px, 44vh, 520px);
   min-height: 0;
+  --fg-quote-tool-scale: 0.82;
   border: 1px solid rgba(0, 45, 58, 0.14);
   border-radius: 8px;
   background: #ffffff;
@@ -1685,10 +1686,12 @@ h3 {
 
 .fg-product-quote-embed__frame iframe {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: calc(100% / var(--fg-quote-tool-scale));
+  height: calc(100% / var(--fg-quote-tool-scale));
   border: 0;
   background: #ffffff;
+  transform: scale(var(--fg-quote-tool-scale));
+  transform-origin: top left;
 }
 
 .lenis.lenis-smooth .fg-product-quote-embed__frame iframe {
@@ -14113,6 +14116,7 @@ h3 {
 
 .fg-home-quote-station__preview {
   height: clamp(460px, 58vh, 680px);
+  --fg-quote-tool-scale: 0.82;
 }
 
 .fg-home-quote-station figure img,
@@ -14125,10 +14129,12 @@ h3 {
 
 .fg-home-quote-station__preview iframe {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: calc(100% / var(--fg-quote-tool-scale));
+  height: calc(100% / var(--fg-quote-tool-scale));
   border: 0;
   background: #ffffff;
+  transform: scale(var(--fg-quote-tool-scale));
+  transform-origin: top left;
 }
 
 .lenis.lenis-smooth .fg-home-quote-station__preview iframe {
@@ -14508,6 +14514,7 @@ h3 {
   overflow: hidden;
   height: clamp(420px, 62vh, 680px);
   min-height: 0;
+  --fg-quote-tool-scale: 0.82;
   border: 1px solid rgba(0, 45, 58, 0.14);
   border-radius: 8px;
   background: #ffffff;
@@ -14515,10 +14522,12 @@ h3 {
 
 .fg-quote-hero__embed-frame iframe {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: calc(100% / var(--fg-quote-tool-scale));
+  height: calc(100% / var(--fg-quote-tool-scale));
   border: 0;
   background: #ffffff;
+  transform: scale(var(--fg-quote-tool-scale));
+  transform-origin: top left;
 }
 
 .lenis.lenis-smooth .fg-quote-hero__embed-frame iframe {
@@ -20125,6 +20134,12 @@ html.fg-blinds-reveal-locked {
 
   .fg-quote-hero__embed-frame {
     height: min(520px, 64vh);
+    --fg-quote-tool-scale: 0.7;
+  }
+
+  .fg-home-quote-station__preview,
+  .fg-product-quote-embed__frame {
+    --fg-quote-tool-scale: 0.72;
   }
 }
 
