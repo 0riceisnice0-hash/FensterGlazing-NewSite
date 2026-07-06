@@ -21198,3 +21198,147 @@ html.fg-blinds-reveal-locked {
     min-height: 42px;
   }
 }
+
+/* Enquiry gate final override: keep the first step compact and form-like. */
+.fg-enquiry-form__audience {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.42fr) minmax(0, 1fr);
+  gap: clamp(0.9rem, 2vw, 1.2rem);
+  align-items: stretch;
+  padding: clamp(0.85rem, 2vw, 1rem);
+  overflow: visible;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  background: #ffffff;
+  color: var(--color-steel);
+  box-shadow: 0 18px 48px rgba(0, 45, 58, 0.1);
+}
+
+.fg-enquiry-form__audience::after {
+  display: none;
+}
+
+.fg-enquiry-form__audience legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.fg-enquiry-form__audience-copy {
+  display: grid;
+  align-content: center;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: clamp(1rem, 2.4vw, 1.35rem);
+  border-radius: 8px;
+  background: linear-gradient(145deg, rgba(0, 45, 58, 0.96), rgba(0, 69, 76, 0.9)), var(--color-steel);
+  color: #ffffff;
+}
+
+.fg-enquiry-form__audience-copy .fg-enquiry-form__audience-kicker {
+  padding: 0.28rem 0.55rem;
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+}
+
+.fg-enquiry-form__audience-copy strong {
+  display: block;
+  max-width: 12ch;
+  color: #ffffff;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.fg-enquiry-form__audience-copy p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.96rem;
+  line-height: 1.46;
+}
+
+.fg-enquiry-form__audience-options {
+  align-self: stretch;
+}
+
+.fg-enquiry-form__audience-options button {
+  align-content: start;
+  min-height: 100%;
+  padding: 1rem 3.4rem 1rem 1rem;
+  border-color: rgba(0, 45, 58, 0.12);
+  background: var(--color-soft);
+  color: var(--color-steel);
+  box-shadow: none;
+}
+
+.fg-enquiry-form__audience-options button::after {
+  content: "->";
+  width: 2.2rem;
+  height: 2.2rem;
+  background: #ffffff;
+  color: var(--color-accent-dark);
+  font-size: 0.9rem;
+  box-shadow: 0 8px 24px rgba(0, 45, 58, 0.1);
+}
+
+.fg-enquiry-form__audience-options b {
+  position: static;
+  color: var(--color-accent-dark);
+  line-height: 1;
+  letter-spacing: 0.1em;
+}
+
+.fg-enquiry-form__audience-options button:hover,
+.fg-enquiry-form__audience-options button:focus-visible,
+.fg-enquiry-form__audience-options button.is-active {
+  border-color: rgba(46, 172, 102, 0.52);
+  background: #ffffff;
+  box-shadow: 0 16px 34px rgba(0, 45, 58, 0.12);
+  transform: translateY(-1px);
+}
+
+.fg-enquiry-form__audience-options button:hover::after,
+.fg-enquiry-form__audience-options button:focus-visible::after,
+.fg-enquiry-form__audience-options button.is-active::after {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.fg-enquiry-form__audience-options span {
+  max-width: 12ch;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  line-height: 1.05;
+}
+
+.fg-enquiry-form__audience-options small {
+  max-width: 30ch;
+  color: var(--color-muted);
+}
+
+.fg-enquiry-form__audience-options i {
+  margin-top: 0.25rem;
+  padding-top: 0;
+  border-top: 0;
+  color: var(--color-accent-dark);
+}
+
+@media (max-width: 760px) {
+  .fg-enquiry-form__audience {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-enquiry-form__audience-copy strong {
+    max-width: 18ch;
+  }
+}
+
+@media (max-width: 640px) {
+  .fg-enquiry-form__audience-options button {
+    min-height: 0;
+  }
+}
