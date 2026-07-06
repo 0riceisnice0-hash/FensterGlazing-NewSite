@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Redirect, Duplicate Host And Consent Fixes
+
+- Removed the live `/terms-conditions/` redirect that sent footer legal links to `/privacy-policy//`; the server now returns the Terms page directly.
+- Deleted the legacy redirect row hijacking `/aluminium-bifold-doors-northampton/`; the generated Northampton bifold route now returns directly.
+- Added a live server redirect from `www.fensterglazing.com` to the apex host before the Bedrock internal rewrite.
+- Password-protected `test.fensterglazing.com` with Basic Auth (`fenster` / `Fenster`) so it is no longer a public crawlable duplicate.
+- Added theme-owned cookie consent controls that suppress automatic GTM, Clarity and Meta Pixel output until a visitor accepts optional cookies.
+
 ## 2026-07-06 - Deploy Policy Clarification
 
 - Updated `AI.md`, `HANDOVER.md` and `LIVECHANGES.md` with the owner's deployment preference: small, scoped, low-risk changes can go directly from local checks/GitHub to live, while bigger layout/template/routing/form/SEO changes should still use test first and then live verification.

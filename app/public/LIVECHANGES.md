@@ -139,3 +139,5 @@ Live must not become the source of truth.
 - `inc/security.php` owns public WordPress hardening: REST user enumeration is blocked, XML-RPC is disabled through the WordPress filter, `X-Pingback` is removed, and WordPress generator/RSD/shortlink/REST/oEmbed/emoji head output is stripped.
 - Performance hotfix `7c973b5` defers heavy media and quote embeds without removing premium visuals. Do not make the homepage hero video or WindowCAD iframes eager again unless there is a measured reason.
 - Microsoft Clarity may show unstyled/bare-HTML recordings if its playback cannot fetch CSS/assets correctly. Use real browser/phone checks for visual QA; use Clarity mainly for behaviour, clicks, scroll and friction patterns.
+- Public tracking is gated by the theme consent layer in `inc\consent.php`. Do not re-add raw GTM, Clarity or Meta Pixel snippets in Insert Headers/Footers or plugin settings unless they remain blocked until consent.
+- `test.fensterglazing.com` is intentionally Basic Auth protected to avoid a crawlable duplicate. Username: `fenster`; password: `Fenster`.

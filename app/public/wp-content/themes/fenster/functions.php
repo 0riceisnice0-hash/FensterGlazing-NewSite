@@ -20,6 +20,7 @@ $fenster_required_files = [
     'inc/product-hub-data.php',
     'inc/setup.php',
     'inc/security.php',
+    'inc/consent.php',
     'inc/assets.php',
     'inc/template-tags.php',
     'inc/enquiries.php',
