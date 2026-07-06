@@ -185,9 +185,34 @@ function fenster_windowcad_payload_fields(WP_REST_Request $request): array
     return $fields;
 }
 
+function fenster_windowcad_log(string $message, array $context = []): void
+{
+    $safe_context = $context;
+    if (isset($safe_context['fields']) && is_array($safe_context['fields'])) {
+        $safe_context['fields'] = array_keys($safe_context['fields']);
+    }
+
+    error_log('Fenster WindowCAD: ' . $message . ' ' . wp_json_encode($safe_context));
+}
+
 function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_Response|WP_Error
 {
     $fields = fenster_windowcad_payload_fields($request);
+    fenster_windowcad_log('submission received', [
+        'content_type' => (string) $request->get_header('content-type'),
+        'body_length' => strlen((string) $request->get_body()),
+        'fields' => $fields,
+    ]);
+
+    if (empty($fields)) {
+        fenster_windowcad_log('empty payload rejected');
+
+        return new WP_REST_Response([
+            'status' => 'error',
+            'message' => 'WindowCAD payload did not include infoProperties.',
+        ], 422);
+    }
+
     $full_name = sanitize_text_field((string) ($fields['Name'] ?? $fields['Customer name'] ?? ''));
     [$first_name, $last_name] = fenster_adminbase_surname_parts($full_name);
     [$house_number, $street] = fenster_adminbase_address_parts((string) ($fields['Address'] ?? ''));
@@ -251,7 +276,10 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     }
 
     if (is_wp_error($result)) {
-        error_log('Fenster AdminBase WindowCAD error: ' . $result->get_error_message());
+        fenster_windowcad_log('adminbase relay failed', [
+            'error' => $result->get_error_message(),
+            'enquiry_id' => is_wp_error($enquiry_id) ? 0 : (int) $enquiry_id,
+        ]);
 
         return new WP_REST_Response([
             'status' => 'error',
@@ -259,6 +287,11 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             'enquiry_id' => is_wp_error($enquiry_id) ? 0 : (int) $enquiry_id,
         ], 500);
     }
+
+    fenster_windowcad_log('adminbase relay succeeded', [
+        'status' => (string) ($result['status'] ?? ''),
+        'enquiry_id' => is_wp_error($enquiry_id) ? 0 : (int) $enquiry_id,
+    ]);
 
     return new WP_REST_Response([
         'status' => 'success',
