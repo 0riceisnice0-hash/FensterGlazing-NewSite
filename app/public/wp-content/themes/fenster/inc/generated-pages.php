@@ -943,6 +943,17 @@ function fenster_disable_rank_math_frontend(bool $disabled): bool
     return fenster_get_generated_page() ? true : $disabled;
 }
 
+add_action('wp_head', 'fenster_prepare_generated_seo_head', 0);
+function fenster_prepare_generated_seo_head(): void
+{
+    if (! fenster_get_generated_page()) {
+        return;
+    }
+
+    remove_action('wp_head', '_wp_render_title_tag', 1);
+    remove_action('wp_head', 'rel_canonical');
+}
+
 add_action('wp_head', 'fenster_render_generated_seo', 1);
 function fenster_render_generated_seo(): void
 {
@@ -978,6 +989,10 @@ function fenster_render_generated_seo(): void
 
         return (bool) preg_match('/\.(avif|gif|jpe?g|png|webp)$/i', $path);
     };
+
+    if (! $is_bad_seo_content($social_title)) {
+        printf("\n<title>%s</title>\n", esc_html($social_title));
+    }
 
     if (! empty($seo['meta_description'])) {
         printf("\n<meta name=\"description\" content=\"%s\">\n", esc_attr($seo['meta_description']));
