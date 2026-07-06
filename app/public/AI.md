@@ -66,6 +66,7 @@ PHP lint example:
 - `AUDIT.md` is for the master audit, remediation table, open launch issues and prioritised backlog from the 2026-07-03 site audit.
 - `STYLE.md` is for site-wide styling, visual direction, gradient/background rules, section rhythm, cards, typography and mobile design expectations.
 - `HOMEPAGE.md` is only for homepage-specific information.
+- `LIVECHANGES.md` is for SSH, test/live deploys, cache flushing, live safety rules and what not to touch.
 - `PROGRESS.md` is for dated progress reports and change history.
 - When a task changes the accepted model of the site, update the relevant source-of-truth doc.
 - Do not paste temporary experiments into the permanent docs. Document the final accepted model and any important rejected approach only when it prevents future regressions.
