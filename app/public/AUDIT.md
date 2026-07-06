@@ -1,0 +1,358 @@
+# Fenster Glazing — Master Site Audit
+
+Audit date: 2026-07-03
+Last updated: 2026-07-03 (launch-readiness pass: loader removed, commercial/residential SEO metadata tightened)
+Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
+
+**How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
+
+## Remediation Status (2026-07-03)
+
+| # | Blocker | Status |
+|---|---|---|
+| 2.1 | JSON-LD schema never renders | ✅ Fixed — generated LocalBusiness site-wide + FAQPage on product pages; junk imported schema intentionally dropped |
+| 2.2 | 2.4 GB `fenster-reference` runtime dependency | ✅ Fixed — 356 used images migrated to `assets/images/imported/` (~245 MB), all references rewritten, poster re-encoded 2.9 MB → 175 KB |
+| 2.3 | robots.txt / sitemap plumbing | ✅ Fixed — core sitemaps disabled, robots.txt advertises `/sitemap.xml` |
+| 2.4 | Test/debris pages indexable | ✅ Fixed — 410s, 301s and noindex applied; sitemap scrubbed 486 → 436 URLs |
+| 2.5 | Blog articles render as broken product pages | ✅ Fixed — explicit route whitelists + new `generated-article.php` template |
+| 2.6 | Duplicate competing town pages | ✅ Fixed — 301s to the canonical matrix slugs |
+| 2.7 | No analytics / conversion tracking | ⏳ Open — awaiting GA4/GTM ID, Google Ads link and consent-banner decision from the owner |
+| 2.8 | No git history | ⏳ Open — still needs an initial commit and a private remote |
+
+### Post-Audit Product-Page Progress
+
+- `/sliding-sash-windows/` has been upgraded from a generic product journey into a Roseview-specific sash page: Ultimate Rose, Heritage Rose and Charisma Rose comparison, meeting-rail and joint detail sections, and Roseview sash furniture.
+- The inherited Liniar product-hub badge was removed from the sash route and replaced with a local Roseview logo from `assets/partners/roseview-logo-new.png`.
+- Roseview furniture assets were copied locally into `assets/images/products/sash-roseview`; runtime code should not depend on the Roseview scrape export.
+- The generic window-handle section no longer renders on the sash page; sash furniture now covers Globe, Acorn, Shark Fin Limit Stop, D Handle and the under/over 700mm furniture-count rule.
+
+### Post-Audit Launch-Readiness Progress
+
+- The forced first-visit splash/loading screen has been removed from live header markup, source JS and source SCSS; compiled CSS/JS were rebuilt and live files no longer contain loader hooks.
+- Commercial county coverage has been pruned for credibility: `/commercial-glazing-isle-of-wight/` was removed from the generated county set, added to the central 410 Gone list, and confirmed absent from the sitemap.
+- Commercial county title tags and meta descriptions now use each county profile's town examples and project context rather than one near-duplicate metadata sentence.
+- Residential location matrix metadata has been de-duplicated: all 273 town x product pages now generate unique meta descriptions from town and product profiles; a local crawl confirmed 273 unique descriptions, zero duplicate groups and zero fetch errors.
+
+---
+
+## 1. Executive Summary
+
+The site is in genuinely good shape in many areas: the theme is clean, hand-built, escape-hardened PHP with no plugin bloat; the enquiry system is robust (AJAX + no-JS fallback, honeypot, saved-before-email leads); the interactive features (product theatre, obscure glass visualiser, colour coverflow, sash comparison) are well-engineered with reduced-motion and mobile fallbacks; and the documentation discipline (AI.md/HANDOVER.md/etc.) is far above average.
+
+But the audit found **five launch-blocking problems** and a long tail of SEO/content issues that would materially cap lead generation:
+
+1. **Structured data is completely broken** — a filter bug means zero JSON-LD renders anywhere on the site. No LocalBusiness, no FAQ, no Review schema. For a local lead-gen business this is leaving rich results and map-pack signals on the table.
+2. **The live site depends on a 2.4 GB scrape folder** (`wp-content/fenster-reference/`) for the homepage hero poster, homepage product images, hub heroes, commercial imagery and roof-lantern media. Deploy without it and the homepage breaks; deploy with it and 2.4 GB of raw scrape ships to production.
+3. **robots.txt points Google at the wrong sitemap.** The custom sitemap (486 URLs) exists but nothing advertises it; robots.txt advertises the default `wp-sitemap.xml`, which is missing every generated page and exposes an author/user sitemap.
+4. **~40 blog/guide articles render as broken product pages** — headings like "Why choose Are My Windows Energy-Efficient??", product CTAs and fake FAQs stapled onto informational articles. Their article content is effectively destroyed.
+5. **There is no analytics or conversion tracking at all.** You cannot maximise leads you cannot measure.
+
+Also notable: **the git repository has no commits** — the entire build is untracked working files. One bad disk or accidental delete loses everything.
+
+---
+
+## 2. Critical Issues (fix before launch)
+
+### 2.1 JSON-LD schema never renders (site-wide SEO bug) — ✅ FIXED 2026-07-03
+
+> **Resolution:** imported schema is now intentionally never rendered (sampling showed it was old designer-tool VideoObject markup and an unsubstantiated 4.8/81 aggregateRating with `test.fensterglazing.com` URLs — a manual-action risk). Instead, `fenster_render_site_schema()` outputs a generated `HomeAndConstructionBusiness` LocalBusiness block (real NAP, hours, areaServed) on every page, and product journey pages output `FAQPage` JSON-LD built from the FAQs shown on the page. Verified rendering site-wide.
+`inc/generated-pages.php` — `fenster_render_generated_seo()`.
+The `$is_bad_seo_content` closure (line ~709) rejects any string starting with `{` or `[` (meant to catch JSON blobs leaking into meta tags). But the same closure is applied to the `schema_json_ld` entries at line ~792 — and **valid JSON-LD always starts with `{`**, so every schema is skipped. The `json_decode`/re-encode code below it is dead. Verified live: `grep ld+json` returns 0 on every page.
+
+Impact: no LocalBusiness, Organization, Product, FAQPage, BreadcrumbList or Review markup anywhere. For local "double glazing milton keynes"-type queries this is a significant rankings/rich-result handicap.
+
+Fix direction: use a separate, schema-appropriate validity check for JSON-LD (parse it; reject only if it fails to parse or contains `test.fensterglazing.com` etc.). Then go further — the imported schema is old scrape anyway; the bigger win is generating fresh schema from theme data:
+- `LocalBusiness` (name, address, phone, hours, geo, review aggregate) on every page.
+- `FAQPage` on product pages (the FAQs already exist in `product_content`).
+- `Product`/`Service` with `areaServed` on product and location pages.
+- `BreadcrumbList` site-wide.
+
+### 2.2 The 2.4 GB `fenster-reference` scrape folder is a hard runtime dependency — ✅ FIXED 2026-07-03
+
+> **Resolution:** the 356 images actually referenced by templates and `pages.json` (~245 MB of the 2.4 GB) were copied to `assets/images/imported/`; all 2,577 `pages.json` references and eight PHP files were rewritten; the 2.9 MB PNG hero poster was re-encoded to a 175 KB JPEG; the dead bifold scroll-video branch that referenced reference-folder media was removed. Nothing at runtime touches `fenster-reference` any more — it must not be deployed.
+`template-parts/sections/generated-page.php` line ~424 sets
+`$asset_base = '/wp-content/fenster-reference/fenster_full_site_export_20260605_125010/assets/images/'`
+and it feeds: the homepage hero poster (`1-3.png`, **2.9 MB PNG**), all five homepage product-theatre images, the windows/doors hub heroes, commercial hub and project images, the roof-lanterns hero + gallery (in `inc/site-data.php` `product_media`), the home category tiles, case cards in `home-experience.php`, and two videos (`Bifold-Video.mp4`, WindowCAD rebrand video).
+
+Impact:
+- If the folder isn't deployed, the homepage and several key pages lose all imagery.
+- If it is deployed, 2.4 GB of raw scrape (including old-site exports, generated JSON maps, Yoast backups and assets you may not have licences to republish) sits publicly accessible and crawlable on production.
+- The filenames/paths leak implementation history (`fenster_full_site_export_20260605_125010`).
+
+Fix direction: copy the ~20 images the site actually uses into `assets/images/` (optimised, renamed, WebP), update the references, and keep `fenster-reference` out of production entirely. The docs already did this for product galleries — the homepage, hubs, commercial pages and roof lanterns were missed.
+
+### 2.3 robots.txt / sitemap plumbing is wrong — ✅ FIXED 2026-07-03
+
+> **Resolution:** core sitemaps disabled via `wp_sitemaps_enabled`; the robots filter now strips stale Sitemap lines and appends `home_url('/sitemap.xml')`; the sitemap index loc uses `home_url()` so staging and production are both correct. Verified: robots.txt advertises the theme sitemap, `wp-sitemap.xml` returns 404.
+- `fenster_generated_robots_txt()` only appends the custom sitemap line "if no Sitemap: line exists" — but WordPress core already adds `Sitemap: .../wp-sitemap.xml`, so the custom line **never** gets added. Verified: local robots.txt advertises only `wp-sitemap.xml`.
+- `wp-sitemap.xml` (still enabled) contains none of the 486 generated URLs, and includes a **users sitemap** (author enumeration — mild security/privacy leak) plus posts/pages/taxonomy stubs that don't match the real site.
+- The custom sitemap hardcodes `https://fensterglazing.com/...` URLs (correct for production, wrong on any staging domain).
+- Sitemap `lastmod` for the index uses "now" on every request — meaningless signal.
+
+Fix direction: disable core sitemaps (`wp_sitemaps_enabled` filter), make the robots filter replace/append correctly, and submit `sitemap.xml` in Search Console at launch.
+
+### 2.4 Test pages, PPC leftovers and scrape debris are live and indexable — ✅ FIXED 2026-07-03
+
+> **Resolution:** central debris handling added to `inc/generated-pages.php` — test pages (`nick-test-baboon`, `our-new-website`, `case-studies/test`, `case-studies/template-new`) return **410 Gone**; duplicate/renamed slugs, `enquire-now`, `instant-pricing` and all `*-designer` pages **301** to their real targets; the four ad landers stay live for campaigns but carry **noindex,follow**, as do all `category/`, `tag/`, `author/` and `blog/page/` shells. The sitemap skips every gone/redirected/noindex route (486 → 436 URLs). Thin utility shells (gallery/downloads/videos/customer-portal/refer-a-friend) remain live and are still worth a content rebuild-or-remove pass (Section 5).
+All of these return HTTP 200, have **self-referencing canonical tags**, no `noindex`, and render publicly:
+
+- `/nick-test-baboon/` (title: "Construction: Linkedin") — a test post.
+- `/our-new-website/`, `/case-studies/test/`, `/case-studies/template-new/`
+- Old ad landers: `/ppc-landing-page-composite-doors/`, `/pricing-gads/`, `/instant-pricing-meta-ads/`, `/roof-lanterns-landing-page/`, `/enquire-now/`, `/instant-pricing/`
+- Slug debris: `/commercial-glazing-london-2/` (the `-2` duplicate), `/healthcare_safeguarding_in_construction/` (underscores)
+- Thin archive shells rendered as generated pages: `/category/*`, `/tag/*`, `/author/adam/`, `/author/chris/page/2`, `/blog/page/2` etc.
+- Scrape-shell utility pages with near-empty or nonsense bodies: `/gallery/`, `/downloads/`, `/videos/`, `/customer-portal/` (promises an order-tracking portal that doesn't exist), `/refer-a-friend/`, `/brochures/`, `/apecs-terms-conditions/`, `/fenster-partners/`.
+
+Being excluded from the sitemap does **not** stop Google indexing them — most were indexed on the old site and every one is telling Google "index me" via canonical. This is a large volume of thin/duplicate/test content dragging down sitewide quality signals.
+
+Fix direction: triage `data/pages.json` into keep / 301-redirect / 410-gone. Test pages and `-2`/underscore debris → 410 or 301 to the real page. Ad landers → `noindex` (if the campaigns still point there) or 301. Category/tag/author/pagination → 301 to `/blog/` or the closest hub, or `noindex,follow`. Thin utility shells → rebuild with real content or 301 to relevant pages.
+
+### 2.5 Blog/guide articles render as broken product pages — ✅ FIXED 2026-07-03
+
+> **Resolution:** the slug-substring heuristic was replaced with explicit `$product_route_slugs` / `$commercial_route_slugs` whitelists, and a new `template-parts/sections/generated-article.php` template renders guides as readable articles (moderate hero, full article body with the real scraped headings restored, inline images, compact enquiry CTA, related links). Verified across the affected articles; product/location/commercial/hub/utility pages confirmed unchanged. Remaining nicety: a quick visual QA of the article layout at 390/768/1440.
+`generated-page.php` line ~172: `$is_product` is a slug-keyword heuristic (`str_contains($slug, 'window') || 'door' || 'glazing'...`). Every article whose slug mentions windows/doors/glazing gets the **full product journey template**. Verified live:
+
+- `/are-my-windows-energy-efficient/` → H2: "Why choose Are My Windows Energy-Efficient??" (double question mark)
+- `/soundproof-windows/` → "Why choose How to Soundproof Your Windows: The Ultimate DIY Guide?"
+- `/what-is-a-door-lintel/`, `/how-to-clean-your-upvc-windows-at-home/`, `/window-maintenance/`, `/door-maintenance/` and ~35 more — same pattern.
+
+The article body is chopped into "benefit" cards and fake FAQs, product CTAs ("Instant pricing", "Start a product enquiry") are attached to how-to guides, and the actual long-form article content largely disappears. These pages carry the site's informational keyword footprint — as rendered they will lose those rankings and look broken to any visitor arriving from search.
+
+Fix direction: maintain an explicit product-route whitelist (they're already enumerated in `$window_routes`/`$door_routes`/`$other_service_routes`) instead of the substring heuristic, and route everything else with sections through an article layout (`generated-simple` extended with proper article typography, author/date if available, and a soft CTA).
+
+### 2.6 Duplicate competing town pages — ✅ FIXED 2026-07-03
+Both slugs were live, each canonicalising to itself:
+- `/dunstable-casement-windows/` **and** `/casement-windows-dunstable/`
+- `/bow-and-bay-windows-northampton/` **and** `/bow-bay-windows-northampton/`
+- `/tilt-and-turn-windows-northampton/` (imported) vs the matrix `tilt-turn-windows-*` naming
+
+> **Resolution:** the imported variants now 301 to the matrix slugs (verified, targets return 200) and are excluded from the sitemap.
+
+### 2.7 No analytics, no conversion tracking, no consent tooling
+Verified: zero references to GA4/GTM/Meta/Clarity anywhere. There is also no thank-you URL (success is shown in-place via AJAX), so even after adding GA there is no conversion endpoint — you'd need to fire an event from the form success handler in `src/js/main.js` (there's a natural hook: the `fetch` success block, or the existing `fenster_enquiry_created` action server-side).
+
+For "max leads" this is the single biggest operational gap: no call tracking, no form-source attribution reporting (source **is** captured per-enquiry in the CPT — good), no idea which of the 486 pages produce enquiries.
+
+Fix direction: GA4 via GTM + a `generate_lead` event on form success + WindowCAD outbound-click events + a consent banner (required under PECR/UK GDPR once tracking cookies exist — the cookie policy page already exists but there is no consent mechanism).
+
+### 2.8 No version control history
+`git status` shows the entire project untracked — **zero commits**. Combined with an empty `wp-content/uploads` and everything hardcoded in the theme, the theme *is* the site. An accidental delete, disk failure or bad AI pass has no undo. Commit now, push to a private remote, and commit at every milestone.
+
+---
+
+## 3. High-Priority SEO Issues
+
+### 3.1 Forced 1.85-second splash loader
+`header.php` + `main.js`: every first pageview per browser session sits behind a branded loader for a minimum of 1850 ms (`minimumLoaderMs = 1850`), even if the page is ready sooner. Every new visitor — i.e. every potential lead clicking a Google result or ad — waits ~2 s before seeing anything. This also inflates LCP (Core Web Vitals is a ranking input) because the real content paints late. Recommendation: remove it, or cap it at ~300–400 ms as a fade only, or show it only while fonts/hero actually load.
+
+> **Update 2026-07-03:** fixed. The loader markup/session script was removed from `header.php`; the loader controller was removed from `src/js/main.js`; the loader SCSS was removed from `src/scss/main.scss`; compiled assets were rebuilt and checked for remaining live loader hooks.
+
+### 3.2 Every page sends no-cache headers
+`fenster_maybe_render_generated_page()` calls `nocache_headers()` on every generated route (which is nearly every page). Combined with:
+- the 4.6 MB `data/pages.json` being `json_decode`d **on every request** (static cache is per-request only),
+- form nonces embedded in every page (which is presumably why caching was disabled),
+
+…the site cannot use page caching or a CDN effectively, and TTFB on shared hosting will suffer under crawl + traffic load. Fix direction: drop `nocache_headers()`, fetch the nonce via a small AJAX call (or accept nonce-less submissions for logged-out users with honeypot + time-trap as the spam gate, which is a standard pattern), and cache `pages.json` parsing in a transient/opcache-friendly PHP export.
+
+### 3.3 No trailing-slash canonicalisation
+`/casement-windows` and `/casement-windows/` both return 200 (the router exits before `redirect_canonical` runs at `template_redirect` priority 10 — the generated renderer runs at priority 0). Canonical tags mitigate, but a proper 301 to the trailing-slash form is cleaner. Same applies to uppercase paths (`/Casement-Windows/` → 404 rather than redirect).
+
+### 3.4 Doorway-page risk on the generated matrices
+- **273 town×product pages** (13 towns × 21 products) with templated copy and identical meta-description patterns.
+- **48 commercial county pages covering all of England** — Cornwall, Cumbria, Tyne & Wear — for a Milton Keynes company. Beyond the Google doorway-page policy risk, this is a credibility problem: a facilities manager in Truro who calls and learns the firm is 300 miles away is a wasted lead; a competitor can screenshot "Commercial Glazing Cornwall" as evidence of spammy SEO.
+
+Recommendation: keep the 13-town residential matrix (it's local and defensible) but invest in making town pages genuinely distinct (local landmarks, real jobs completed in that town, town-specific reviews). For the counties, either genuinely commit to national commercial delivery (and say so credibly with case studies per region) or cut the set back to the realistic delivery radius. At minimum, monitor Search Console for a quality reassessment after launch.
+
+> **Update 2026-07-03:** partially improved. The residential matrix no longer has duplicate meta descriptions: all 273 generated town/product pages now use town and product profile data, and a local crawl confirmed 273 unique meta descriptions. Commercial county metadata has also been made profile-specific, and the clearly impractical Isle of Wight page was removed and marked 410. The broader commercial footprint still needs an owner decision on true delivery radius before launch.
+
+### 3.5 Sitemap contents need a scrub
+The custom sitemap (486 URLs) currently includes: `*-designer` scrape pages (thin; only `/door-designer/` carries noindex), `apecs-terms-conditions`, `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `enquire-now`, `instant-pricing`, blog pagination/category/tag/author URLs, and the duplicate town slugs from 2.6. A sitemap should be your curated "index this" list — right now it's telling Google to index the debris too.
+
+### 3.6 Quote-page cannibalisation
+`/online-quote/`, `/instant-pricing/`, `/enquire-now/`, `/3d-visualiser/`, `/instant-pricing-meta-ads/`, `/pricing-gads/` all serve near-identical quote-tool experiences and all are indexable. Keep `/online-quote/` as the canonical quote page; noindex or 301 the rest (keep ad landers only if live campaigns need them, with `noindex`).
+
+### 3.7 Meta titles/descriptions
+- Homepage description is a truncated scrape: "…From energy-efficient uPVC" (cut mid-sentence). Verified in rendered head.
+- Homepage title "Fenster Glazing - Double glazing Installers, Buckinghamshire" — leads with brand instead of the money keyword; inconsistent capitalisation. Suggest: "Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing".
+- Imported titles are inconsistent in pattern (`– Fenster Glazing` vs `| Fenster Glazing` vs none). Worth a one-pass normalisation of `seo.title_tag`/`meta_description` across `pages.json` for the ~60 pages that matter most.
+- Matrix meta descriptions are one identical template ("…specified and installed by Fenster Glazing with survey-led advice, secure products and guarantee-backed fitting.") × 273.
+
+> **Update 2026-07-03:** matrix metadata issue fixed for generated residential location pages. The 273 residential town/product pages now render unique title/meta combinations built from town and product profile data. Commercial county metadata was also changed to use profile-specific town/context data. Homepage/imported-page title and description normalisation remains open.
+
+### 3.8 The noindex dev page is in the public header
+"Areas" in the main nav points to `/commercial-areas/`, a self-described "temporary review index … so the full England county set can be checked quickly during development". Real customers see a dev tool in prime navigation space; it also mass-links the 48 county pages sitewide. Remove it from `primary_nav_fallback` in `inc/site-data.php` before launch (the docs already flag it as temporary).
+
+### 3.9 Review counts and claims are inconsistent and hardcoded
+- Homepage trust card: "200+ five-star reviews (Google)".
+- Review widget: "Google — 130 reviews" and "Trustpilot — 226 reviews", hardcoded in `review-showcase.php`.
+- Homepage proof band: "1,000+ installations completed".
+
+Two different Google review counts on the same page is a trust wobble, and hardcoded numbers rot. Also, review cards link to a Google **search results** URL (`google.com/search?q=Fenster+Glazing+...reviews`) rather than the Google Business Profile review panel — a weaker, flakier destination. Under the UK DMCC fake-reviews rules (in force since April 2025) you should also be able to substantiate the "EXCELLENT" aggregate. Recommendation: single source of truth for counts (update quarterly or pull via API later, as HANDOVER already plans), link to the real GBP/Trustpilot profile URLs, and align the trust-card copy with the widget.
+
+### 3.10 Internal linking gaps
+- `/why-trust-fenster/` is well-built but only linked from a small homepage link + footer.
+- `/areas-we-cover/` is only linked from the About page — yet it's the hub that distributes equity to all 273 town pages. Add it to the footer.
+- `/terms-conditions/` exists but isn't linked anywhere visible (footer has only Privacy/Cookie). Consumer-facing terms should be findable.
+- Breadcrumbs don't exist anywhere — cheap win for both UX and schema.
+
+---
+
+## 4. Performance
+
+### 4.1 Homepage weight (measured)
+| Asset | Size | Note |
+|---|---|---|
+| Hero video | 9.36 MB | already optimised vs the 95 MB source, but still heavy on mobile data; consider a 720p mobile rendition or `media`-gated source |
+| Hero poster `1-3.png` | **2.9 MB PNG** | loads before/behind the video; should be a ~80 KB WebP |
+| 5 theatre images (fenster-reference JPEGs) | ~1.65 MB | all `loading="eager"`, duplicated in desktop + mobile DOM |
+| WindowCAD iframe | third-party app | `loading="lazy"` on homepage (good), `eager` on /online-quote/ |
+| main.css | 340 KB (55 KB gz) | single bundle on all pages |
+| Fonts | 4 × ~100 KB OTF | should be woff2 (~50–60% smaller), consider preloading Regular + Bold |
+
+A realistic first mobile load is well over 12 MB. For a lead site competing on Core Web Vitals, target < 2 MB above-the-fold before the video streams in.
+
+### 4.2 No responsive images anywhere
+Every `<img>` in the theme is a bare `src` — no `srcset`, no `sizes`, no `width`/`height` attributes (CLS risk). The 16-tile product galleries load full-size JPEGs into ~300 px cells. Since images are hardcoded, adding a small helper that emits `srcset` from pre-generated size variants would be the highest-leverage performance fix after the reference-folder cleanup.
+
+### 4.3 Unoptimised individual assets spotted
+- `assets/partners/liniar-energyplus.png` — 900 KB
+- `assets/quote/instant-quote-screenshot.png` — 309 KB
+- `assets/trust/google-5-stars.png` — 105 KB (it's a tiny logo strip)
+- `assets/images/about/fenster-showroom.png` — PNG for a photo; should be JPEG/WebP
+- Several obscure-glass WebPs are 300–400 KB each (texture files can be much smaller).
+
+### 4.4 Server-side
+- 4.6 MB JSON decode per request (see 3.2).
+- `fenster_get_generated_page()` is called at least 4× per request (router, title filter, SEO head, preload hook) with no memoisation of the *result* — cheap fix: static-cache per slug.
+- `fenster_preload_product_scroll_video()` ends in an unconditional `return;` after computing `$video`/`$type` — dead tail; the video preload it was written for never happens.
+
+---
+
+## 5. Content Quality & Placeholder Content
+
+- **Blog articles destroyed by the product template** — see 2.5; this is also a content problem, since the actual article copy no longer renders meaningfully.
+- **Customer portal page** promises "use our online order tracking portal" with no portal, and its intro paragraph renders twice. Either integrate the real portal link or remove the page.
+- **Gallery / Downloads / Videos / Brochures** are scrape shells whose "content" is largely leftover CSS/meta text. Rebuild or remove.
+- **`/refer-a-friend/`** — check whether the scheme still exists; if yes, it deserves a proper page (referral schemes are cheap lead sources), if no, remove.
+- **Repeated boilerplate**: the product gallery paragraph ("This X gallery brings together verified product imagery, close-up frame details…") is byte-identical on 25+ pages, and the review-showcase heading block repeats sitewide. Fine functionally, but it dilutes uniqueness on pages that are already template-heavy.
+- **Fallback FAQ answers** reference things that may not be on the page ("Popular colours are shown on this page") when they fire on non-product routes.
+- **Review dates render in mixed formats** — ISO (`2025-06-12`) for Google, human (`4 Nov 2025`) for Trustpilot. Normalise to one human format.
+- **"Phone lines open 24/7"** in the footer hours vs Mon–Fri 8.30–5 — verify this is a real answering service before shipping the claim.
+- **Trust claims to substantiate before launch**: "200+ five-star reviews", "1,000+ installations", "£5,000 security guarantee" (composite doors), "10 year insurance-backed guarantee" on repairs (10-year guarantee on *repairs* is unusual — confirm).
+- **Alias pages** (`aluminium-flush-windows`, `aluminium-sliding-doors`) reuse the source page's scraped sections — spot-check that no source-product-specific copy (e.g. patio-door wording on the sliding-doors alias) leaks through.
+- **`/wcad-thank-you/` was removed** — verify the WindowCAD account isn't still configured to redirect completed quotes there, or paying users will finish a quote on a 404. If it is, either re-point WindowCAD or create a proper thank-you page (which you want anyway for conversion tracking).
+
+---
+
+## 6. UX & Design Review
+
+### What works well
+- The product theatre, obscure-glass split visualiser, colour coverflow and sash model comparison are genuinely differentiating for this sector — most competitor sites are static brochureware.
+- One shared form with in-place AJAX success, clear validation messages and a no-JS fallback is exactly right.
+- Mobile discipline (860 px breakpoint, single-column forms, 16 px inputs, 44 px targets, scroll-snap rails with attached dots) is consistently applied.
+- The continuous gradient canvas gives the site a coherent feel; contact and trust pages read as designed pages, not templates.
+- Phone number persistent in the header; tel: links everywhere they should be.
+
+### Issues and opportunities
+1. **The splash loader** (3.1) — the single worst first-impression decision on the site.
+2. **"Areas" dev link in the header** (3.8).
+3. **Blog articles look broken** (2.5) — a real user landing on "How to clean your uPVC windows" gets a sales page for a product called "How To Clean Your UPVC Windows At Home".
+4. **Strict postcode gate on every form.** The postcode field rejects anything that isn't a valid UK postcode. Homeowners are fine; commercial enquirers (the `show_company` variant also requires it) often enquire for a site whose postcode they don't have to hand. Consider relaxing to "postcode or town" for the commercial form — a lost lead costs more than a vaguer location.
+5. **No secondary contact channels.** No WhatsApp link, no callback-request micro-form, no live chat. In this sector, WhatsApp photo-of-my-window enquiries convert well and cost nothing to add as a `wa.me` link.
+6. **Review "Read more" links go to a Google search page** (3.9) — take users to the actual profile.
+7. **Terms & Conditions missing from the footer**; no social profile links anywhere (if the business has active profiles, footer links are standard trust furniture).
+8. **Submit button arrow is ASCII** (`-&gt;` in an `<i>` tag) — renders as "->". Tiny, but it's on every form.
+9. **The office-dog "Legend" background** in the obscure-glass visualiser is charming, but the toggle label "Show Legend background" is meaningless to a visitor who doesn't know Legend is a dog. Caption it ("Meet Legend, our showroom dog") and it becomes a personality moment instead of a confusion.
+10. **Hyphen-replacement script** (`preventHyphenatedWordSplits`) rewrites every text node to use U+2011 non-breaking hyphens. Copy-pasted text (addresses, product names) carries non-standard characters, and it's a blunt instrument for what CSS `hyphens`/`overflow-wrap` handles. Low priority, but worth knowing it's there.
+11. **Duplicate H2 on product pages** — the USP strip's H2 repeats the H1 (`Composite Doors` twice). Make the strip heading a styled `<p>` or differentiate the text.
+12. **No breadcrumbs** on deep pages (product → location pages especially) — users landing on `/casement-windows-toddington/` have no path back up.
+13. **Enquiry admin quality-of-life**: enquiries save as private posts with meta columns (good). There's no email-failure alerting though — if SMTP breaks silently, leads pile up unseen in wp-admin. Consider a daily "unsent enquiries" check or at least an admin notice when `_fenster_email_sent = 0` rows exist.
+
+---
+
+## 7. Accessibility
+
+Overall better than average: skip-link present, real buttons, aria-pressed/aria-current maintained by JS, reduced-motion respected across every effect, accessible labels on carousels and dots.
+
+Remaining items:
+- Obscure-glass and window-selector options activate on **focus** — keyboard users tabbing through change state as they pass. Use selection-on-Enter/Space (activation on focus is a known WCAG pattern smell).
+- The integral-blinds reveal hijacks wheel/keyboard/touch scrolling until complete; Escape/skip is not offered. Reduced-motion users skip it, but a keyboard user without that setting must scroll through ~1.55 viewport-heights of video. Offer a "Skip" affordance.
+- Review-showcase star ratings are CSS-only with aria-labels (fine), but the "EXCELLENT" summary block has no machine-readable rating.
+- Form error feedback focuses correctly and uses role=alert (good). The success state replaces the form — ensure focus moves to the feedback (there is `tabindex="-1"` on the feedback div; verify `.focus()` is called — it isn't in the JS success path).
+- Decorative theatre images use `alt=""` correctly, but the stage is a link whose only text is the aria-label — fine, keep it synced (it is).
+
+---
+
+## 8. Code Quality & Architecture
+
+Strengths: consistent escaping (`esc_html`/`esc_url`/`esc_attr` everywhere checked), nonce + honeypot + time-trap on the form, no SQL, no file uploads, sane CPT for enquiries, `filemtime` cache-busting, no plugin dependencies.
+
+Issues:
+1. **`generated-page.php` is 3,179 lines** doing routing, data-shaping and markup for ~12 page types. It contains ~250 lines of *unreachable* legacy homepage markup (the `$is_home` branches after line 1934 — the real homepage returns at line 1208) including the old `fg-home-hero-3d` canvas and a section that literally says "Use the visualiser when the site is on the live Fenster domain". Dead weight and a trap for future AI passes (the docs warn about exactly this).
+2. **~620 lines of `if (false)` Three.js code** in `src/js/main.js` (esbuild strips it from the bundle — verified compiled JS has no `THREE`), plus the inactive `[data-fg-home-product-story]` controller and stepped-form logic whose markup no longer renders. Delete; the docs already declare them dead.
+3. **`$sick_video`** as the hero-video variable name — rename before someone ships it in a class name.
+4. **Slug heuristics** (`$is_product`, `$is_commercial` via `str_contains`) are the root cause of 2.5 and will keep misfiring as pages are added. Explicit route lists exist already — use them.
+5. **`fenster_get_generated_page()` result isn't memoised** despite 4+ calls per request; `pages.json` (4.6 MB) is decoded per request.
+6. **Hardcoded production URLs** in canonical/sitemap generation (`https://fensterglazing.com/...`) — intentional, but centralise into one constant so staging can override.
+7. **Duplicate docs**: `AI.md`/`HANDOVER.md` exist at both the repo root and `app/public/` — two copies will drift. Pick one location.
+8. Duplicate partner logo files (`liniar.png` = `liniar-logo.png`, byte-identical).
+
+---
+
+## 9. Email / Enquiry Deliverability
+
+- No SMTP constants are defined in `wp-config.php` locally — on production, `wp_mail()` will fall back to PHP `mail()`, which lands in spam or fails silently on most hosts. The constants system exists (`FENSTER_SMTP_*`); it must actually be configured at launch.
+- All mail sends `From: info@fensterglazing.com` — the sending host must be authorised in the domain's **SPF**, and **DKIM/DMARC** should be set up, or both office notifications *and* customer confirmations will spam-folder. The customer confirmation going to spam looks worse than not sending one.
+- The office email's "View saved enquiry" button links to wp-admin — correct, but make sure the office staff have accounts.
+- Leads are saved before email (excellent). Add the unsent-lead alerting from 6.13.
+- GDPR: enquiries store personal data indefinitely as private posts. The privacy policy should state retention, and a periodic purge (e.g. 24 months) is worth scheduling.
+
+---
+
+## 10. Launch Checklist (beyond the fixes above)
+
+1. Commit everything to git; push to a private remote. (2.8)
+2. Decide the `fenster-reference` strategy; migrate needed assets into the theme. (2.2) **Done for runtime references; keep the reference export out of production.**
+3. Build the 301 redirect map: old-site URLs → new slugs, debris → targets, duplicate town slugs → matrix slugs, `-designer` pages → parent products. **Partially done in central route handling; full old-site redirect import still needs review.**
+4. Fix schema rendering + add LocalBusiness/FAQ/Breadcrumb schema. (2.1) **LocalBusiness + product FAQPage done; Breadcrumb schema still open.**
+5. Fix robots/sitemap plumbing; disable core sitemaps; scrub sitemap contents. (2.3, 3.5) **Core plumbing done; ongoing sitemap curation continues as pages are removed or rebuilt.**
+6. Fix blog-article routing. (2.5) **Done.**
+7. Remove "Areas" nav item and noindex-or-remove `/commercial-areas/`. (3.8)
+8. GA4 + GTM + consent banner + form-success conversion event + WindowCAD click events. (2.7)
+9. Configure SMTP + SPF/DKIM/DMARC; send test enquiries end-to-end. (9)
+10. Remove/shorten the splash loader. (3.1) **Done; loader removed.**
+11. Image pass: hero poster, theatre images, partner PNGs, srcset/width/height. (4)
+12. Verify WindowCAD post-quote redirect doesn't point at the deleted `/wcad-thank-you/`. (5)
+13. Set up Google Business Profile ↔ site consistency (NAP matches footer exactly) and Search Console + Bing Webmaster at launch.
+14. Caching plan compatible with the nonce'd form (see 3.2) + a CDN for the video.
+15. Reconcile review counts and claims; link review cards to real profiles. (3.9)
+16. Decide the commercial-county footprint honestly. (3.4) **Started: Isle of Wight removed/410; broader county footprint still needs owner decision.**
+
+---
+
+## 11. Prioritised Action Plan
+
+**Week 1 — stop the bleeding (all cheap, high impact):**
+git init+commit · schema filter bug · robots/sitemap fix · remove Areas nav · noindex/410 debris pages · fix duplicate town slugs · remove splash loader · homepage meta title/description · GA4+consent+lead event.
+
+**Week 2 — content integrity:**
+blog-article routing fix · migrate fenster-reference assets into theme (optimised) · thin-page triage (gallery/downloads/videos/portal/refer-a-friend) · review-count reconciliation · terms link in footer · WindowCAD thank-you check.
+
+**Week 3–4 — performance & depth:**
+responsive images + width/height · woff2 fonts · caching strategy (nonce refactor) · pages.json parse caching · LocalBusiness/FAQ schema build-out · breadcrumbs · town-page uniqueness pass · commercial-county decision · dead-code deletion (Three.js block, legacy home branches, product-story, stepped form).
+
+**Ongoing:**
+Search Console monitoring after the index reshuffle · quarterly review-count updates until an API feed exists · enquiry-delivery monitoring · substantiation file for marketing claims.
+
+---
+
+## 12. What's Genuinely Good (don't break these)
+
+- One shared enquiry form + handler with save-before-send and spam traps.
+- Route-checked related links (no scrape debris in link panels — verified on sampled pages; zero broken internal links found on the homepage).
+- Reduced-motion and mobile fallbacks on every cinematic feature.
+- Curated product USP/content data with a "don't invent specs" rule that's actually followed.
+- Documentation system that lets any new contributor (human or AI) get oriented in minutes.
+- Clean, plugin-free codebase with consistent escaping and a coherent design language.
+
+The bones of this site are better than most agency builds. The gap between "impressive local build" and "lead-generating machine" is almost entirely in Section 2 and 3 — indexation hygiene, the schema bug, measurement, and the launch plumbing.

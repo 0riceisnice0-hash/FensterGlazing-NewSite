@@ -1,0 +1,318 @@
+# Fenster Glazing AI Coding Rules
+
+Last updated: 2026-07-03
+
+This file is the rulebook for AI agents working on the Fenster Glazing codebase.
+
+It should contain durable coding standards, implementation rules, QA expectations and “do not do this again” guidance.
+
+It should not contain dated progress reports, long handover summaries or homepage-specific design notes. Put those in:
+
+- `HANDOVER.md` for current site context.
+- `AUDIT.md` for the 2026-07-03 master site audit, remediation status and remaining launch backlog.
+- `STYLE.md` for site-wide visual styling, background, section rhythm and design rules.
+- `HOMEPAGE.md` for homepage-specific architecture and design.
+- `PROGRESS.md` for dated work logs and completed changes.
+
+## Project Basics
+
+- Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
+- Active theme: `wp-content\themes\fenster`
+- Main SCSS source: `wp-content\themes\fenster\src\scss\main.scss`
+- Main JS source: `wp-content\themes\fenster\src\js\main.js`
+- Compiled CSS: `wp-content\themes\fenster\assets\css\main.css`
+- Compiled JS: `wp-content\themes\fenster\assets\js\main.js`
+- Generated/source page data: `wp-content\themes\fenster\data\pages.json`
+
+Build from the theme directory:
+
+```powershell
+npm.cmd run build
+```
+
+PHP lint example:
+
+```powershell
+& 'C:\Users\zacpl\AppData\Roaming\Local\lightning-services\php-8.2.29+0\bin\win64\php.exe' -l 'C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster\template-parts\sections\generated-page.php'
+```
+
+## Editing Rules
+
+- Edit source files, not compiled assets directly.
+- After SCSS or JS changes, run `npm.cmd run build`.
+- Lint any changed PHP template or PHP include.
+- Preserve user changes in the working tree. Do not reset, checkout or delete unrelated work.
+- Do not rebuild the site around ACF, Elementor or editable admin fields unless the owner explicitly changes direction.
+- The theme is intentionally code-driven and hardcoded where appropriate.
+- Do not add new one-off helper systems when an existing shared component or data source already owns the behaviour.
+
+## Documentation Rules
+
+- `AI.md` is for rules about how to work on the codebase.
+- `HANDOVER.md` is for the current site state and architecture an AI needs to get caught up.
+- `AUDIT.md` is for the master audit, remediation table, open launch issues and prioritised backlog from the 2026-07-03 site audit.
+- `STYLE.md` is for site-wide styling, visual direction, gradient/background rules, section rhythm, cards, typography and mobile design expectations.
+- `HOMEPAGE.md` is only for homepage-specific information.
+- `PROGRESS.md` is for dated progress reports and change history.
+- When a task changes the accepted model of the site, update the relevant source-of-truth doc.
+- Do not paste temporary experiments into the permanent docs. Document the final accepted model and any important rejected approach only when it prevents future regressions.
+
+## Styling Source Of Truth
+
+- Before changing any page layout, section styling, hero, card, form, background, responsive behaviour or visual component, read `STYLE.md`.
+- The continuous page background rule in `STYLE.md` is site-wide: do not repaint the same page gradient on every section or wrapper.
+- The moderate heading rule in `STYLE.md` is site-wide: do not default page H1/H2/H3 text to hero scale. For normal content/trust/proof/utility pages, keep page H1s capped around `clamp(2.1rem, 3.6vw, 3.6rem)` and let H2/H3 share a smaller supporting scale around `clamp(1.45rem, 2.2vw, 2rem)`.
+- Page-specific docs can add detail, but they do not override the site-wide design contract unless the owner explicitly asks for a new direction.
+
+## Three.js / Canvas Rule
+
+- Three.js is not an active dependency in the live theme.
+- `wp-content\themes\fenster\package.json` currently ships `lenis` as the only runtime dependency; there is no `three` package.
+- Do not assume the old homepage 3D/canvas experiment is live. The remaining `fg-home-hero-3d`, `data-fg-home-3d` and `THREE.*` references are inactive legacy source/style hooks and are not present in the compiled JS.
+- Do not reintroduce Three.js, a WebGL hero or a canvas product scene unless the owner explicitly asks for that feature.
+- If 3D is deliberately reintroduced, add the dependency/import/enqueue intentionally, provide mobile and reduced-motion fallbacks, and verify the canvas is nonblank in desktop and mobile browser QA.
+
+## Shared Form Rule
+
+- The live theme must have exactly one customer-facing form definition:
+  - `template-parts\components\enquiry-form.php`
+- Do not add raw standalone `<form>` markup to templates.
+- If a new form context is needed, extend the shared component arguments and shared handler.
+- All forms should use the AJAX enhancement in `src\js\main.js`, with the no-JavaScript fallback preserved.
+- Submissions are handled in `inc\enquiries.php`.
+- Valid enquiries are saved as private `fenster_enquiry` posts before email delivery is attempted.
+- Default office recipient is `info@fensterglazing.com`, unless overridden by a supported config constant.
+- Mobile forms must be one column, full width, with `16px` input text and comfortable touch targets.
+- Form-section headings are content headings, not heroes. Keep shared enquiry h2 sizes moderate across the site.
+
+## Related Links Rule
+
+- Do not restore the old generic related-link merge.
+- Do not render raw scraped footer/legal/promo links as related products or service areas.
+- Related links must be context-aware and route-checked before rendering.
+- Valid related links should come from:
+  - the current product family,
+  - matching location routes,
+  - relevant residential/commercial route groups,
+  - page-topic matches.
+- Self-links, nonexistent routes, files, external promo/legal links and pagination debris must not appear.
+
+## Generated SEO Rule
+
+- Do not render raw imported SEO tags blindly.
+- Skip imported OpenGraph, Twitter and JSON-LD values that are placeholders, JSON blobs, old designer-tool schema, `test.fensterglazing.com` references or other scraped development-domain debris.
+- Imported `schema_json_ld` from the scrape is never rendered. It contains old designer-tool VideoObject markup and unsubstantiated aggregateRating values. Structured data is generated fresh instead: `fenster_render_site_schema()` in `inc\generated-pages.php` outputs a LocalBusiness block site-wide, and product journey pages output `FAQPage` JSON-LD built from the same FAQs shown on the page. Do not add aggregateRating/Review schema unless a verifiable review feed exists.
+- Debris routes are handled centrally in `inc\generated-pages.php`: `fenster_gone_slugs()` (410), `fenster_redirect_target()` (301, including all `*-designer` pages and duplicate town slugs) and `fenster_slug_is_noindex()` (ad landers plus `category/`, `tag/`, `author/`, `blog/page/` archives). Add new debris to these lists rather than only excluding it from the sitemap; sitemap exclusion alone does not stop indexing.
+- Core `wp-sitemap.xml` is intentionally disabled; robots.txt advertises the theme sitemap at `/sitemap.xml`. Do not re-enable core sitemaps.
+- Alias pages must render their own canonical URL rather than inherited source-page social URLs.
+- Do not restore `/wcad-thank-you/` from imported data. It was removed because it only exposed stale social/filler copy.
+- `/terms-conditions/` is intentionally a hardcoded virtual utility page in `inc\generated-pages.php`.
+
+## Page Classification Rule
+
+- Product/commercial routing in `template-parts\sections\generated-page.php` uses explicit slug whitelists (`$product_route_slugs`, `$commercial_route_slugs`), not slug-substring matching. Substring heuristics previously forced ~40 blog articles through the product journey with broken headings.
+- Imported blog posts and guides render through `template-parts\sections\generated-article.php`. New informational pages should default there; add a slug to the whitelists only when it is genuinely a product/commercial route.
+
+## Product Data Rule
+
+- Product USP/specification data belongs in `inc\site-data.php` under `product_usps`.
+- Product visible copy overrides for generated product pages belong in `inc\site-data.php` under `product_content`.
+- Manufacturer-backed product hub system/badge/spec data belongs in `inc\product-hub-data.php`.
+- Use `product_content` when scraped content is correct in broad source data but the generated template would otherwise surface aliases, brochure prompts, FAQ intro text, footer/social debris or generic fallback copy.
+- Product pages should render the shared four-tile `Key specifications` strip.
+- Do not invent product values such as U-values.
+- Products with supplied U-values show them first.
+- Colour choice should be second where supplied.
+- Composite Doors and Integral Blinds currently do not have supplied U-values.
+- Integral Blinds controls must be described as `Magnetic or electric`.
+
+## Product Quote Embed Rule
+
+- Product-specific WindowCAD quote URLs are mapped in `template-parts\sections\generated-page.php`.
+- Product page instant quote links should jump to `#fenster-product-quote` when a product-specific collection exists.
+- Do not place large iframe embeds before scroll-following or cinematic product sections; they can break scroll measurement and pacing.
+- Product quote embeds should stay compact and sit after the main product journey/trust/accreditation content.
+- Product quote embeds auto-load the iframe on page load; do not restore the old `Load tool` gate.
+- Embedded quote tools must include both `Expand view` and `Open in new tab` actions.
+- The iframe wrapper should use `data-lenis-prevent` so the embedded tool remains usable with smooth scrolling.
+- Product pages should not render the imported mini-gallery from scraped `images` data. That export contains old stock/placeholder images, so product pages should use curated hero/feature media and link to focused specification hubs instead.
+- Colour choices live in the `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` virtual routes using `inc\site-data.php` under `colour_options`; do not rebuild huge inline colour grids on every product page.
+- Product-page specification cards should link to colour options, obscure glass and relevant hardware choices rather than making the product template carry every possible finish.
+- Product hub system logos must use local theme assets and be rendered through `fenster_generated_url()`. Do not point product hubs at `wp-content\fenster-reference` or raw scrape URLs.
+- `/sliding-sash-windows/` is a Roseview product route, not a Liniar route. Its product hub system is `Roseview`, its local logo is `assets\partners\roseview-logo-new.png`, and its model badges are `Ultimate Rose`, `Heritage Rose` and `Charisma Rose`.
+
+## Colour Hub Rule
+
+- Colour data belongs in `inc\site-data.php` under `colour_options`.
+- The colour hub routes are `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/`.
+- The colour hub is customer-facing. Do not expose supplier names, scrape folder names, manufacturer scrape labels, internal provenance or applicability dumps unless the owner explicitly asks for public supplier branding.
+- Use simple visible labels: `uPVC colours`, `Aluminium colours`, finish names and short customer-useful details only.
+- The uPVC colour carousel uses optimised swatch assets from `assets\images\products\colours\liniar-swatches`.
+- The door render assets under `assets\images\products\colours\liniar-door` are reserved for later door-page use, not the colour hub.
+- The accepted carousel interaction is a coverflow-style carousel with buttons, keyboard support and draggable scrub behaviour. Dragging should scrub the coverflow state itself; do not translate the whole carousel stage sideways.
+- Dragging can move through multiple colours, then release snaps to the nearest colour. Keep the drag sensitivity calm enough for mobile.
+- The colour hub hero visual should be simple and controlled. Do not create overlapping random card piles or crop swatch images so their content is chopped off.
+- Do not add uPVC/aluminium tab buttons that imply separate pages when the page already shows both sections.
+
+## Window Handle Section Rule
+
+- Window handle data belongs in `inc\site-data.php` under `window_handles`.
+- The shared handle section renders from `template-parts\sections\generated-page.php`.
+- Handle finish images live under `wp-content\themes\fenster\assets\images\products\handles`.
+- The handle section appears on selected window routes only and intentionally excludes Tilt & Turn Windows.
+- The generic window handle section must not render on `/sliding-sash-windows/`.
+- The accepted handle section model is a compact finish selector with three feature tiles and a static technical specification card.
+- Do not restore the handle accordion, egress conversion copy, monkey-tail copy, spindle length row or retrofit-ready card unless the owner explicitly asks for them.
+
+## Sliding Sash Roseview Rule
+
+- `/sliding-sash-windows/` has dedicated Roseview content in `template-parts\sections\generated-page.php`, with local assets under `assets\images\products\sash-roseview`.
+- Keep the Roseview model comparison for Ultimate Rose, Heritage Rose and Charisma Rose. Do not replace it with generic uPVC window content.
+- Sash furniture data belongs in `inc\site-data.php` under `sash_furniture`. It covers Globe furniture for Ultimate Rose, Acorn furniture for Heritage/Charisma Rose, extra Shark Fin/D Handle options and the Roseview under/over 700mm furniture-count rule.
+- Use local copied Roseview scrape assets only. The source scrape can inform copy/assets, but runtime code must not depend on the scrape export folder.
+- The visible sash detail sections should stay sash-specific: meeting rails, mechanical/welded joints, sash furniture and Roseview model differences. Remove or rewrite generic non-sash hardware/specification content if it appears on this page.
+
+## Door Handle Section Rule
+
+- Door handle data belongs in `inc\site-data.php` under `door_handles`.
+- Door handle crop assets live under `wp-content\themes\fenster\assets\images\products\door-handles`.
+- The door handle section renders from `template-parts\sections\generated-page.php` on selected door routes.
+- The accepted model uses the same compact selector pattern as window handles: finish swatches, active handle image/copy, three feature tiles and a static compatibility note.
+- Do not replace the cropped handle assets with the original nine-handle sheet in templates.
+
+## Mobile Design And Implementation Rules
+
+These rules apply to every new section, page change, form, carousel, product page and responsive interaction.
+
+### Mobile Is Designed, Not Squashed
+
+- Design mobile at the same time as desktop.
+- Do not finish desktop first and then compress it until it fits.
+- Use a real mobile content order: title, key image/content, primary action, supporting content, secondary detail.
+- If a desktop feature is sticky, cinematic, hover-led or multi-column, define its mobile equivalent deliberately.
+- Mobile can simplify an interaction, but it must not remove the user's ability to understand or act.
+- Do not duplicate content/data just to make a mobile version. Render desktop and mobile from the same data source where possible.
+
+### Breakpoints
+
+- Primary mobile breakpoint: `860px` and below.
+- Header, navigation, homepage mobile replacements and JavaScript interaction boundaries must all use the same `860px` breakpoint unless a different breakpoint is documented.
+- Test tablet-width edge cases, especially `768 x 1024`.
+- Use `390 x 844` as the default phone QA viewport unless the owner supplies a different screenshot size.
+
+### Layout Shape
+
+- Mobile sections should normally be single-column.
+- Use two-column mobile layouts only for compact, scannable content such as trust logos, small spec tiles or short link grids.
+- Product specification strips can use compact `2 x 2` grids for four short tiles.
+- Forms must be one column on mobile.
+- Avoid cramped side-by-side CTAs unless both labels remain readable and tap targets stay comfortable.
+
+### Spacing And Rhythm
+
+- Judge spacing by visible content edges, not just section padding.
+- Do not use one global mobile padding value everywhere.
+- Compact utility sections need less vertical space than major narrative sections.
+- Controls belong visually to the component they operate.
+- Carousel dots, progress bars and button trays must not look stranded between sections.
+- Do not fix spacing problems with negative margins unless there is a documented, measured reason.
+- If a gap looks wrong in a screenshot, measure the actual rendered elements before changing padding.
+
+### Tap Targets And Text
+
+- Interactive targets should be at least `44px` high.
+- Inputs, selects and textareas must use at least `16px` text on mobile to prevent iOS zoom.
+- Buttons may use short labels where needed, but the action must remain clear.
+- Links in cards, menus and rails must be directly tappable.
+- Touch interactions must not depend on hover.
+- Mobile menus must use consistent row alignment and the same navigation source as desktop.
+
+### Media
+
+- Never distort images or videos to fill a gap.
+- Use `object-fit` and intentional crop positions rather than stretching.
+- Mobile hero images need a clear focal point and must not be buried under oversized buttons.
+- Autoplay, scroll-controlled or cinematic desktop media needs reduced-motion and mobile fallbacks.
+- Heavy effects that are desktop-only must not attach their source or initialise on mobile.
+
+### Carousels And Horizontal Scrollers
+
+- Use native horizontal scroll-snap for mobile rails.
+- Show a partial next card where helpful so users understand the section scrolls sideways.
+- Dots or picker controls must live inside the carousel wrapper.
+- Dots must be native buttons with accessible labels.
+- Cards must be direct links where the whole card is visually presented as clickable.
+- Confirm the rail does not create page-level horizontal overflow.
+
+### Mobile QA
+
+- Build compiled assets after SCSS or JS changes.
+- Reload the local page after build.
+- Check at minimum:
+  - `390 x 844`,
+  - `768 x 1024`,
+  - `1440 x 900` to confirm desktop was not harmed.
+- At mobile sizes, check:
+  - first viewport,
+  - every major section transition,
+  - carousel/rail controls,
+  - menu open and closed,
+  - forms and success states,
+  - horizontal overflow.
+- A compressed full-page screenshot is not enough for important transitions.
+- No mobile work is complete if there is horizontal overflow, clipped text, distorted media, stranded controls, unusable tap targets or console errors.
+
+## Responsive Page-Build Protocol
+
+- Define the component before styling it.
+- Decide which visual parts belong together: heading, copy, image, controls, progress indicator, cards, form and following section.
+- Decide desktop and mobile behaviour at the same time.
+- Separate internal component spacing, component inset and section transition spacing.
+- Do not solve one type of spacing by changing another.
+- For sticky or viewport-height sections, calculate available stage height from the outside in.
+- Treat scroll-runway height separately from visible stage layout.
+- Measure visible content boundaries, not just CSS boxes.
+- If the screenshot looks wrong but computed values look right, the screenshot wins.
+- Change one layout responsibility at a time.
+- Rebuild and inspect before stacking unrelated margin/padding fixes.
+
+## Desktop Section Rhythm Rules
+
+- Desktop spacing must be evaluated between meaningful content boundaries, not only section boxes.
+- Do not give every desktop section identical top and bottom padding.
+- Major narrative handoffs generally sit around `72–80px`.
+- Compact utility/logo transitions generally sit around `48–64px`.
+- Preserve deliberate overlaps such as the homepage theatre-to-instant-quote bridge.
+
+## Asset And Cache Rules
+
+- Scrape-derived imagery lives in `wp-content\themes\fenster\assets\images\imported`. Never reference `wp-content\fenster-reference` from theme code or `data\pages.json`; that folder is a local-only archive and is not deployed.
+- Local BrowserSync can serve stale built CSS if edits are not rebuilt.
+- If a browser check contradicts source code, verify the compiled asset timestamp and reload after build.
+- Do not replace optimised video assets with huge reference originals.
+- Optimised homepage hero video:
+  - `assets\videos\home\fenster-home-hero.mp4`
+- Integral Blinds reveal video:
+  - `assets\videos\product-scroll\integral-blinds-chroma.mp4`
+
+## Accessibility Rules
+
+- Interactive controls should be real buttons or links.
+- Cards that visually act as links should be direct links.
+- Updating visual states should also update accessible labels where relevant.
+- Do not rely on hover-only controls.
+- Respect `prefers-reduced-motion`.
+- Reduced-motion users should receive static or simplified content, not broken content.
+
+## Verification Gate
+
+A change is not complete until the relevant checks pass:
+
+- Build passes when SCSS/JS changed.
+- PHP lint passes when PHP changed.
+- Desktop was not harmed by mobile changes.
+- Mobile has no horizontal overflow.
+- Console has no relevant errors.
+- Forms still submit in place.
+- Shared components remain shared.
+- Documentation is updated in the correct file.

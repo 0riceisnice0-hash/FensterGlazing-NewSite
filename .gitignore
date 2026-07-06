@@ -1,0 +1,36 @@
+# Track the custom Fenster theme and project docs, not the whole Local/WordPress install.
+*
+
+!.gitattributes
+!.gitignore
+!app/
+app/*
+!app/public/
+app/public/*
+!app/public/*.md
+!app/public/wp-content/
+app/public/wp-content/*
+!app/public/wp-content/themes/
+app/public/wp-content/themes/*
+!app/public/wp-content/themes/fenster/
+!app/public/wp-content/themes/fenster/**
+
+# Heavy/generated/local-only theme content.
+app/public/wp-content/themes/fenster/node_modules/
+app/public/wp-content/themes/fenster/backups/
+app/public/wp-content/themes/fenster/.sass-cache/
+app/public/wp-content/themes/fenster/assets/videos/aluminium-windows-story/frames-*/
+
+# Never deploy or version local scrape/reference/source archives.
+app/public/wp-content/fenster-reference/
+source-assets/
+
+# WordPress/local/runtime state.
+app/public/wp-content/uploads/
+app/public/wp-content/cache/
+app/public/wp-content/upgrade/
+app/public/wp-content/debug.log
+app/public/wp-config.php
+conf/
+logs/
+.claude/
