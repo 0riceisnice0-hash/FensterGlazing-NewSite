@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Test Domain Deindex Hardening
+
+- Rechecked `test.fensterglazing.com` after it appeared in Google results despite Basic Auth.
+- Confirmed the test homepage and `robots.txt` were returning `401` without an `X-Robots-Tag`, which could leave stale URL-only search results.
+- Updated both the Bedrock root and `/web` test `.htaccess` files on the server so normal test URLs stay password protected but return a custom `401` response with `X-Robots-Tag: noindex, nofollow, noarchive`.
+- Added public `robots.txt` files on test with `Allow: /` so crawlers are not blocked from revisiting already-known URLs and seeing the noindex/401 response.
+
 ## 2026-07-06 - WindowCAD/AdminBase Relay Restored
 
 - Tracked the missing integration to the inactive live `wraith` theme over SSH.
