@@ -1639,6 +1639,10 @@ h3 {
   justify-content: flex-end;
 }
 
+.fg-product-quote-embed__mobile-open {
+  display: none;
+}
+
 .fg-product-quote-embed__actions .button {
   min-height: 42px;
   padding: 0.62rem 0.85rem;
@@ -14490,6 +14494,10 @@ h3 {
   font-size: 0.86rem;
 }
 
+.fg-quote-hero__mobile-open {
+  display: none;
+}
+
 .fg-quote-hero__embed-actions .button--light {
   border-color: var(--color-line);
   background: var(--color-soft);
@@ -20011,6 +20019,112 @@ html.fg-blinds-reveal-locked {
 
   .fg-contact-page .fg-contact-hub-card strong {
     font-size: clamp(2rem, 9vw, 3rem);
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-contact-page .fg-contact-hub-card {
+    min-height: 224px;
+    align-content: end;
+    gap: 0.55rem;
+    padding: 1.2rem;
+  }
+
+  .fg-contact-page .fg-contact-hub-card span {
+    position: static;
+    max-width: calc(100% - 3.6rem);
+    font-size: 0.68rem;
+    line-height: 1.1;
+  }
+
+  .fg-contact-page .fg-contact-hub-card strong {
+    max-width: 12ch;
+    font-size: clamp(1.85rem, 8.6vw, 2.55rem);
+    line-height: 0.98;
+  }
+
+  .fg-contact-page .fg-contact-hub-card small {
+    max-width: 27ch;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.96rem;
+    line-height: 1.38;
+  }
+
+  .fg-contact-page .fg-contact-hub-card em {
+    margin-top: 0.2rem;
+    padding-top: 0.55rem;
+    font-size: 0.68rem;
+  }
+
+  .fg-contact-page .fg-contact-hub-card::after {
+    top: 0.95rem;
+    right: 0.95rem;
+    width: 2.65rem;
+    height: 2.65rem;
+    font-size: 1.35rem;
+  }
+
+  .fg-contact-page .fg-contact-hub-card--quote::before {
+    background:
+      linear-gradient(0deg, rgba(0, 45, 58, 0.88), rgba(0, 45, 58, 0.64)),
+      url("../quote/instant-quote-screenshot.png") center / cover,
+      var(--color-accent);
+  }
+
+  .fg-contact-page .fg-contact-hub-card--showroom::before {
+    background:
+      linear-gradient(0deg, rgba(0, 28, 36, 0.9), rgba(0, 45, 58, 0.56)),
+      url("../images/about/fenster-showroom.png") center / cover,
+      var(--color-steel);
+  }
+
+  .fg-about-process .container {
+    padding-inline: 1rem;
+  }
+
+  .fg-about-process__grid {
+    gap: 0;
+    overflow: hidden;
+    border: 1px solid rgba(0, 45, 58, 0.12);
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  .fg-about-process__grid article {
+    padding: 1.2rem 1rem;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .fg-about-process__grid article + article {
+    border-top: 1px solid rgba(0, 45, 58, 0.12);
+  }
+
+  .fg-about-process__grid h3 {
+    font-size: 1.25rem;
+  }
+
+  .fg-about-process__grid p {
+    max-width: none;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .fg-quote-hero__embed-actions [data-fullscreen-quote],
+  .fg-quote-hero__embed-actions .button[target="_blank"],
+  .fg-product-quote-embed__actions [data-fullscreen-quote],
+  .fg-product-quote-embed__actions .button[target="_blank"] {
+    display: none;
+  }
+
+  .fg-quote-hero__mobile-open,
+  .fg-product-quote-embed__mobile-open {
+    display: inline-flex;
+  }
+
+  .fg-quote-hero__embed-frame {
+    height: min(520px, 64vh);
   }
 }
 

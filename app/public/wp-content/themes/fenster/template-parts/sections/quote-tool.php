@@ -50,6 +50,7 @@ $steps = [
                     <div class="fg-quote-hero__embed-actions">
                         <button class="button button--light" type="button" data-fullscreen-quote><?php esc_html_e('Expand view', 'fenster'); ?></button>
                         <a class="button" href="<?php echo esc_url($instant_quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
+                        <a class="button fg-quote-hero__mobile-open" href="<?php echo esc_url($instant_quote_url); ?>"><?php esc_html_e('Open quote tool', 'fenster'); ?></a>
                     </div>
                 </div>
                 <div class="fg-quote-hero__embed-frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($instant_quote_url); ?>">

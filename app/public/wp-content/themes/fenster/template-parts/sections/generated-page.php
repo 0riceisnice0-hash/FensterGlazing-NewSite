@@ -3164,6 +3164,7 @@ if ($is_commercial_hub) {
                         <div class="fg-product-quote-embed__actions">
                             <button class="button button--light" type="button" data-fullscreen-quote><?php esc_html_e('Expand view', 'fenster'); ?></button>
                             <a class="button" href="<?php echo esc_url($product_quote_embed_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
+                            <a class="button fg-product-quote-embed__mobile-open" href="<?php echo esc_url($product_quote_embed_url); ?>"><?php esc_html_e('Open quote tool', 'fenster'); ?></a>
                         </div>
                     </div>
                     <div class="fg-product-quote-embed__frame is-loaded" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($product_quote_embed_url); ?>">
