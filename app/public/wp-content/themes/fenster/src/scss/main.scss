@@ -77,8 +77,16 @@
 }
 
 html {
+  max-width: 100%;
+  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--site-header-main-height) + 16px);
+}
+
+@supports not (overflow: clip) {
+  html {
+    overflow-x: hidden;
+  }
 }
 
 html.lenis,
@@ -103,12 +111,43 @@ html.lenis body {
 }
 
 body {
+  max-width: 100%;
   margin: 0;
+  overflow-x: clip;
   color: var(--color-ink);
   background: var(--fg-page-gradient);
   background-attachment: fixed;
   font-family: "Gibson", Arial, Helvetica, sans-serif;
   line-height: 1.6;
+}
+
+@supports not (overflow: clip) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+.site-header,
+.site-main,
+.site-footer {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  .site-header,
+  .site-main,
+  .site-footer {
+    overflow-x: hidden;
+  }
 }
 
 .fg-quote-touch-lock,
@@ -17767,9 +17806,9 @@ h3 {
 
   .site-footer__about {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.7rem 1rem;
-    align-items: center;
+    align-items: start;
   }
 
   .site-footer__logo {
@@ -17785,17 +17824,26 @@ h3 {
   }
 
   .site-footer__trust {
-    grid-column: 2;
-    grid-row: 1;
-    flex-wrap: nowrap;
-    gap: 0.35rem;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+    width: 100%;
     margin: 0;
   }
 
   .site-footer__trust img {
-    width: 52px;
-    height: 38px;
+    width: 100%;
+    max-width: none;
+    height: 40px;
+    min-width: 0;
     padding: 0.25rem;
+  }
+
+  .site-footer__trust-mark {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
   }
 
   .site-footer h2 {
@@ -21159,6 +21207,20 @@ html.fg-blinds-reveal-locked {
   line-height: 1.05;
   text-align: center;
   text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .site-footer__trust img {
+    width: 100%;
+    max-width: none;
+    height: 40px;
+  }
+
+  .site-footer__trust-mark {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+  }
 }
 
 .fg-product-intel__badges {
