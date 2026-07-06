@@ -330,9 +330,32 @@ function fenster_current_generated_slug(): string
 function fenster_get_generated_page(?string $slug = null): ?array
 {
     $slug = $slug ?: fenster_current_generated_slug();
+    static $page_cache = [];
+
+    if (array_key_exists($slug, $page_cache)) {
+        return $page_cache[$slug];
+    }
+
+    if ($slug === 'home') {
+        $index = fenster_generated_pages_index();
+        $page = $index['home'] ?? [
+            'slug' => 'home',
+            'title' => 'Fenster Glazing',
+            'url' => home_url('/'),
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+        $page['seo']['title_tag'] = 'Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing';
+        $page['seo']['meta_description'] = 'Fenster Glazing supplies and installs double glazing, windows, doors, bifolds and roof lanterns across Milton Keynes, Bedfordshire and Buckinghamshire.';
+        $page['seo']['canonical'] = 'https://fensterglazing.com/';
+        $page['seo']['robots'] = 'max-image-preview:large';
+
+        return $page_cache[$slug] = $page;
+    }
 
     if ($slug === 'areas-we-cover') {
-        return [
+        return $page_cache[$slug] = [
             'slug' => 'areas-we-cover',
             'title' => 'Areas We Cover',
             'url' => home_url('/areas-we-cover/'),
@@ -349,7 +372,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
     }
 
     if ($slug === 'terms-conditions') {
-        return [
+        return $page_cache[$slug] = [
             'slug' => 'terms-conditions',
             'title' => 'Terms and Conditions',
             'url' => home_url('/terms-conditions/'),
@@ -421,7 +444,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
     }
 
     if ($slug === 'why-trust-fenster') {
-        return [
+        return $page_cache[$slug] = [
             'slug' => 'why-trust-fenster',
             'title' => 'Why Trust Fenster Glazing',
             'url' => home_url('/why-trust-fenster/'),
@@ -438,7 +461,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
     }
 
     if ($slug === 'obscure-glass') {
-        return [
+        return $page_cache[$slug] = [
             'slug' => 'obscure-glass',
             'title' => 'Obscure Glass',
             'url' => home_url('/obscure-glass/'),
@@ -459,7 +482,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
             ? 'uPVC Colours'
             : ($slug === 'aluminium-colours' ? 'Aluminium Colours' : 'Colour Options');
 
-        return [
+        return $page_cache[$slug] = [
             'slug' => $slug,
             'title' => $title,
             'url' => home_url('/' . $slug . '/'),
@@ -476,7 +499,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
     }
 
     if ($slug === 'commercial-areas') {
-        return [
+        return $page_cache[$slug] = [
             'slug' => 'commercial-areas',
             'title' => 'Commercial Areas',
             'url' => home_url('/commercial-areas/'),
@@ -494,11 +517,11 @@ function fenster_get_generated_page(?string $slug = null): ?array
 
     $commercial_county_page = fenster_commercial_county_page($slug);
     if (is_array($commercial_county_page)) {
-        return $commercial_county_page;
+        return $page_cache[$slug] = $commercial_county_page;
     }
 
     if ($slug === 'commercial-projects') {
-        return [
+        return $page_cache[$slug] = [
             'slug' => 'commercial-projects',
             'title' => 'Commercial Projects',
             'url' => home_url('/commercial-projects/'),
@@ -517,7 +540,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
     $index = fenster_generated_pages_index();
     $location_matrix_page = fenster_location_matrix_page($slug, $index);
     if (is_array($location_matrix_page)) {
-        return $location_matrix_page;
+        return $page_cache[$slug] = $location_matrix_page;
     }
 
     $product_aliases = [
@@ -545,11 +568,11 @@ function fenster_get_generated_page(?string $slug = null): ?array
             $source['seo']['meta_description'] = $alias['description'];
             $source['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
 
-            return $source;
+            return $page_cache[$slug] = $source;
         }
     }
 
-    return $index[$slug] ?? null;
+    return $page_cache[$slug] = ($index[$slug] ?? null);
 }
 
 function fenster_generated_url(string $url): string
@@ -631,10 +654,18 @@ function fenster_redirect_target(string $slug): string
 function fenster_slug_is_noindex(string $slug): bool
 {
     $noindex_slugs = [
+        'apecs-terms-conditions' => true,
+        'brochures' => true,
+        'customer-portal' => true,
+        'downloads' => true,
+        'fenster-partners' => true,
+        'gallery' => true,
         'instant-pricing-meta-ads' => true,
         'pricing-gads' => true,
         'ppc-landing-page-composite-doors' => true,
+        'refer-a-friend' => true,
         'roof-lanterns-landing-page' => true,
+        'videos' => true,
     ];
 
     if (isset($noindex_slugs[$slug])) {
@@ -650,6 +681,24 @@ function fenster_slug_is_noindex(string $slug): bool
     return false;
 }
 
+function fenster_send_public_cache_headers(int $browser_max_age = 600, int $shared_max_age = 3600): void
+{
+    if (is_user_logged_in()) {
+        return;
+    }
+
+    header_remove('Cache-Control');
+    header_remove('Pragma');
+    header_remove('Expires');
+    header(
+        sprintf(
+            'Cache-Control: public, max-age=%d, s-maxage=%d, stale-while-revalidate=86400',
+            max(0, $browser_max_age),
+            max(0, $shared_max_age)
+        )
+    );
+}
+
 add_action('template_redirect', 'fenster_maybe_render_generated_page', 0);
 function fenster_maybe_render_generated_page(): void
 {
@@ -658,6 +707,16 @@ function fenster_maybe_render_generated_page(): void
     }
 
     $slug = fenster_current_generated_slug();
+    $path = trim((string) wp_parse_url(add_query_arg([]), PHP_URL_PATH), '/');
+    $query = (string) wp_parse_url(add_query_arg([]), PHP_URL_QUERY);
+    $is_file_request = (bool) preg_match('/\.[a-z0-9]{2,8}$/i', $path);
+    $lower_slug = strtolower($slug);
+
+    if ($slug !== $lower_slug && (fenster_redirect_target($lower_slug) !== '' || isset(fenster_gone_slugs()[$lower_slug]) || fenster_get_generated_page($lower_slug))) {
+        $target = home_url('/' . $lower_slug . '/');
+        wp_safe_redirect($query !== '' ? $target . '?' . $query : $target, 301);
+        exit;
+    }
 
     $redirect_target = fenster_redirect_target($slug);
     if ($redirect_target !== '') {
@@ -681,6 +740,12 @@ function fenster_maybe_render_generated_page(): void
         return;
     }
 
+    if ($slug !== 'home' && ! $is_file_request && ! str_ends_with((string) wp_parse_url(add_query_arg([]), PHP_URL_PATH), '/')) {
+        $target = home_url('/' . $slug . '/');
+        wp_safe_redirect($query !== '' ? $target . '?' . $query : $target, 301);
+        exit;
+    }
+
     global $wp_query;
     if ($wp_query instanceof WP_Query) {
         $wp_query->is_404 = false;
@@ -689,7 +754,7 @@ function fenster_maybe_render_generated_page(): void
     }
 
     status_header(200);
-    nocache_headers();
+    fenster_send_public_cache_headers();
 
     remove_action('wp_head', 'rel_canonical');
 
@@ -711,6 +776,7 @@ function fenster_maybe_render_generated_sitemap(): void
 
     status_header(200);
     header('Content-Type: application/xml; charset=' . get_bloginfo('charset'));
+    fenster_send_public_cache_headers(3600, 21600);
 
     if (in_array($path, ['sitemap.xml', 'sitemap_index.xml'], true)) {
         echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -763,7 +829,7 @@ function fenster_maybe_render_generated_sitemap(): void
             continue;
         }
 
-        $loc = $page['seo']['canonical'] ?? $page['url'] ?? '';
+        $loc = fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? ''));
         if (! $loc || isset($seen[$loc])) {
             continue;
         }
@@ -776,7 +842,7 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     foreach ($location_matrix_pages as $page) {
-        $loc = $page['seo']['canonical'] ?? $page['url'] ?? '';
+        $loc = fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? ''));
         if (! $loc || isset($seen[$loc])) {
             continue;
         }
@@ -789,7 +855,7 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     foreach ($commercial_county_pages as $page) {
-        $loc = $page['seo']['canonical'] ?? $page['url'] ?? '';
+        $loc = fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? ''));
         if (! $loc || isset($seen[$loc])) {
             continue;
         }
@@ -803,7 +869,7 @@ function fenster_maybe_render_generated_sitemap(): void
 
     foreach (['terms-conditions', 'why-trust-fenster', 'obscure-glass', 'colour-options', 'upvc-colours', 'aluminium-colours', 'areas-we-cover', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
         $virtual_page = fenster_get_generated_page($virtual_slug);
-        $virtual_loc = $virtual_page['seo']['canonical'] ?? '';
+        $virtual_loc = fenster_generated_url((string) ($virtual_page['seo']['canonical'] ?? ''));
         if ($virtual_loc && ! isset($seen[$virtual_loc])) {
             $seen[$virtual_loc] = true;
             echo "  <url>\n";
@@ -966,8 +1032,9 @@ add_action('wp_head', 'fenster_render_site_schema', 2);
 function fenster_render_site_schema(): void
 {
     $brand = fenster_data('brand', []);
+    $page = fenster_get_generated_page();
 
-    $schema = [
+    $business_schema = [
         '@context' => 'https://schema.org',
         '@type' => 'HomeAndConstructionBusiness',
         '@id' => home_url('/#business'),
@@ -1000,6 +1067,59 @@ function fenster_render_site_schema(): void
 
     printf(
         "<script type=\"application/ld+json\">%s</script>\n",
-        wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        wp_json_encode($business_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    );
+
+    if (! is_array($page)) {
+        return;
+    }
+
+    $slug = (string) ($page['slug'] ?? '');
+    if ($slug === 'home') {
+        return;
+    }
+
+    $breadcrumb_items = [
+        [
+            '@type' => 'ListItem',
+            'position' => 1,
+            'name' => 'Home',
+            'item' => home_url('/'),
+        ],
+    ];
+
+    if (str_starts_with($slug, 'commercial-glazing-') && $slug !== 'commercial-glazing') {
+        $breadcrumb_items[] = [
+            '@type' => 'ListItem',
+            'position' => 2,
+            'name' => 'Commercial Glazing',
+            'item' => home_url('/commercial-glazing/'),
+        ];
+    } elseif (fenster_location_matrix_page($slug)) {
+        $breadcrumb_items[] = [
+            '@type' => 'ListItem',
+            'position' => 2,
+            'name' => 'Areas We Cover',
+            'item' => home_url('/areas-we-cover/'),
+        ];
+    }
+
+    $breadcrumb_items[] = [
+        '@type' => 'ListItem',
+        'position' => count($breadcrumb_items) + 1,
+        'name' => (string) ($page['title'] ?? get_bloginfo('name')),
+        'item' => fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? home_url('/' . $slug . '/'))),
+    ];
+
+    $breadcrumb_schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        '@id' => fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? home_url('/' . $slug . '/'))) . '#breadcrumb',
+        'itemListElement' => $breadcrumb_items,
+    ];
+
+    printf(
+        "<script type=\"application/ld+json\">%s</script>\n",
+        wp_json_encode($breadcrumb_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
     );
 }

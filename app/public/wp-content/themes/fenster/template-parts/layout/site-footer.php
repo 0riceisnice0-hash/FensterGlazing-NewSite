@@ -17,6 +17,7 @@ $footer_products = [
 $footer_company = [
     ['label' => 'About Fenster', 'url' => home_url('/about/')],
     ['label' => 'Why Trust Fenster', 'url' => home_url('/why-trust-fenster/')],
+    ['label' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
     ['label' => 'Meet the Team', 'url' => home_url('/meet-the-team/')],
     ['label' => 'Case Studies', 'url' => home_url('/case-studies/')],
     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
@@ -69,5 +70,6 @@ $footer_company = [
         <p>&copy; <?php echo esc_html(date('Y')); ?> <?php echo esc_html($brand['name']); ?>. <?php esc_html_e('Made in house by', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/meet-the-team/#zac-bartley')); ?>"><?php esc_html_e('Zac', 'fenster'); ?></a>.</p>
         <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>"><?php esc_html_e('Privacy Policy', 'fenster'); ?></a>
         <a href="<?php echo esc_url(home_url('/cookie-policy/')); ?>"><?php esc_html_e('Cookie Policy', 'fenster'); ?></a>
+        <a href="<?php echo esc_url(home_url('/terms-conditions/')); ?>"><?php esc_html_e('Terms & Conditions', 'fenster'); ?></a>
     </div>
 </footer>

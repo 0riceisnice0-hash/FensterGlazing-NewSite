@@ -98,7 +98,7 @@ Imported SEO data is filtered before rendering. The head output should not inclu
 
 Structured data is generated, not imported: a site-wide LocalBusiness block from `fenster_render_site_schema()` and per-product `FAQPage` JSON-LD in the product journey template. Imported `schema_json_ld` is never rendered.
 
-Debris routes are handled centrally in `inc\generated-pages.php`: test pages return 410, duplicate town slugs and all `*-designer` pages 301 to their real targets, and ad landers plus `category/`, `tag/`, `author/` and `blog/page/` archives carry `noindex,follow`. The custom sitemap at `/sitemap.xml` (advertised in robots.txt; core `wp-sitemap.xml` is disabled) skips all of those routes.
+Debris routes are handled centrally in `inc\generated-pages.php`: test pages return 410, duplicate town slugs and all `*-designer` pages 301 to their real targets, and ad landers, thin utility/scrape shells, `category/`, `tag/`, `author/` and `blog/page/` archives carry `noindex,follow`. The custom sitemap at `/sitemap.xml` (advertised in robots.txt; core `wp-sitemap.xml` is disabled) skips all of those routes.
 
 Imported blog posts and guides render through `template-parts\sections\generated-article.php` (readable article layout with a compact enquiry CTA). Product/commercial routing uses explicit slug whitelists in `template-parts\sections\generated-page.php`, not slug-substring matching.
 
@@ -118,7 +118,7 @@ Utility and special routes:
 - `/commercial-glazing-buckinghamshire/` is a hardcoded virtual commercial page in `inc\generated-pages.php`.
 - `/commercial-projects/` is a hardcoded virtual commercial page in `inc\generated-pages.php`.
 - `/privacy-policy/` and `/cookie-policy/` come from generated/imported page data and render through the generated simple utility layout.
-- `/areas-we-cover/` is a customer-facing local coverage page. It is not linked from the header menu; the About page includes a small CTA to it. It groups generated area routes by town for customers who want to check local services.
+- `/areas-we-cover/` is a customer-facing local coverage page. It is not linked from the header menu; the About page and footer link to it. It groups generated area routes by town for customers who want to check local services.
 - `/wcad-thank-you/` has been removed from `data\pages.json` and excluded from the custom sitemap. Do not restore it unless a fresh thank-you journey is explicitly requested.
 
 ## Product Page Template
@@ -435,7 +435,7 @@ Current accepted behaviour:
 - County pages are SEO-indexable and included in the generated page sitemap.
 - Each county page has unique county-specific H1/title/meta/town/context copy built from its profile data.
 - Each county page has the shared enquiry form in the hero and a clearly visible phone CTA.
-- `/commercial-areas/` is a temporary noindex developer review page linked from the header as `Areas`.
+- `/commercial-areas/` is a temporary noindex developer review page. It must stay out of the public header and sitemap.
 - Do not add individual county SEO pages to the normal Commercial dropdown; keep the dropdown focused on the commercial hub and commercial projects.
 
 ## Location Pages

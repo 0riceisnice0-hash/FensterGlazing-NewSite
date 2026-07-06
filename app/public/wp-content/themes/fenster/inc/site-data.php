@@ -190,7 +190,6 @@ function fenster_site_data(): array
             ],
             ['label' => 'About Us', 'url' => home_url('/about/')],
             ['label' => 'Contact', 'url' => home_url('/contact/')],
-            ['label' => 'Areas', 'url' => home_url('/commercial-areas/')],
             ['label' => 'Instant Quote', 'url' => home_url('/online-quote/'), 'classes' => ['site-nav__quote']],
         ],
         'product_usps' => [

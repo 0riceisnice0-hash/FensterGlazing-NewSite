@@ -1,7 +1,7 @@
 # Fenster Glazing — Master Site Audit
 
 Audit date: 2026-07-03
-Last updated: 2026-07-03 (launch-readiness pass: loader removed, commercial/residential SEO metadata tightened)
+Last updated: 2026-07-06 (launch SEO hardening: cache headers, URL normalisation, sitemap scrub, breadcrumbs, homepage meta, nav/footer cleanup)
 Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
 
 **How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
@@ -13,11 +13,11 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 | 2.1 | JSON-LD schema never renders | ✅ Fixed — generated LocalBusiness site-wide + FAQPage on product pages; junk imported schema intentionally dropped |
 | 2.2 | 2.4 GB `fenster-reference` runtime dependency | ✅ Fixed — 356 used images migrated to `assets/images/imported/` (~245 MB), all references rewritten, poster re-encoded 2.9 MB → 175 KB |
 | 2.3 | robots.txt / sitemap plumbing | ✅ Fixed — core sitemaps disabled, robots.txt advertises `/sitemap.xml` |
-| 2.4 | Test/debris pages indexable | ✅ Fixed — 410s, 301s and noindex applied; sitemap scrubbed 486 → 436 URLs |
+| 2.4 | Test/debris pages indexable | ✅ Fixed — 410s, 301s and noindex applied; sitemap scrubbed 486 → 427 URLs |
 | 2.5 | Blog articles render as broken product pages | ✅ Fixed — explicit route whitelists + new `generated-article.php` template |
 | 2.6 | Duplicate competing town pages | ✅ Fixed — 301s to the canonical matrix slugs |
 | 2.7 | No analytics / conversion tracking | ⏳ Open — awaiting GA4/GTM ID, Google Ads link and consent-banner decision from the owner |
-| 2.8 | No git history | ⏳ Open — still needs an initial commit and a private remote |
+| 2.8 | No git history | ✅ Fixed — initial scoped GitHub push completed; theme/docs are versioned without WordPress core, uploads, reference archives or local config |
 
 ### Post-Audit Product-Page Progress
 
@@ -32,6 +32,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Commercial county coverage has been pruned for credibility: `/commercial-glazing-isle-of-wight/` was removed from the generated county set, added to the central 410 Gone list, and confirmed absent from the sitemap.
 - Commercial county title tags and meta descriptions now use each county profile's town examples and project context rather than one near-duplicate metadata sentence.
 - Residential location matrix metadata has been de-duplicated: all 273 town x product pages now generate unique meta descriptions from town and product profiles; a local crawl confirmed 273 unique descriptions, zero duplicate groups and zero fetch errors.
+- The launch SEO hardening pass removed the public `/commercial-areas/` header shortcut, added footer links to `/areas-we-cover/` and `/terms-conditions/`, replaced the inherited homepage title/meta, added breadcrumb schema on generated deep pages, normalised generated URL casing/trailing slashes with 301s, set public cache headers for generated pages/sitemaps, and removed thin utility pages from the sitemap via `noindex,follow`. Local verification shows 427 sitemap URLs after the scrub.
 
 ---
 
@@ -93,7 +94,7 @@ Fix direction: disable core sitemaps (`wp_sitemaps_enabled` filter), make the ro
 
 ### 2.4 Test pages, PPC leftovers and scrape debris are live and indexable — ✅ FIXED 2026-07-03
 
-> **Resolution:** central debris handling added to `inc/generated-pages.php` — test pages (`nick-test-baboon`, `our-new-website`, `case-studies/test`, `case-studies/template-new`) return **410 Gone**; duplicate/renamed slugs, `enquire-now`, `instant-pricing` and all `*-designer` pages **301** to their real targets; the four ad landers stay live for campaigns but carry **noindex,follow**, as do all `category/`, `tag/`, `author/` and `blog/page/` shells. The sitemap skips every gone/redirected/noindex route (486 → 436 URLs). Thin utility shells (gallery/downloads/videos/customer-portal/refer-a-friend) remain live and are still worth a content rebuild-or-remove pass (Section 5).
+> **Resolution:** central debris handling added to `inc/generated-pages.php` — test pages (`nick-test-baboon`, `our-new-website`, `case-studies/test`, `case-studies/template-new`) return **410 Gone**; duplicate/renamed slugs, `enquire-now`, `instant-pricing` and all `*-designer` pages **301** to their real targets; the four ad landers stay live for campaigns but carry **noindex,follow**, as do all `category/`, `tag/`, `author/` and `blog/page/` shells. The sitemap skips every gone/redirected/noindex route and known thin utility shells such as gallery, downloads, videos, customer portal, brochures and refer-a-friend (486 → 427 URLs).
 All of these return HTTP 200, have **self-referencing canonical tags**, no `noindex`, and render publicly:
 
 - `/nick-test-baboon/` (title: "Construction: Linkedin") — a test post.
@@ -138,6 +139,8 @@ Fix direction: GA4 via GTM + a `generate_lead` event on form success + WindowCAD
 ### 2.8 No version control history
 `git status` shows the entire project untracked — **zero commits**. Combined with an empty `wp-content/uploads` and everything hardcoded in the theme, the theme *is* the site. An accidental delete, disk failure or bad AI pass has no undo. Commit now, push to a private remote, and commit at every milestone.
 
+> **Update 2026-07-06:** fixed. The project was committed and pushed to `0riceisnice0-hash/FensterGlazing-NewSite`, scoped to the custom theme and launch docs while excluding WordPress core, uploads, `wp-config.php`, `node_modules`, backups, logs, Local config and reference archives.
+
 ---
 
 ## 3. High-Priority SEO Issues
@@ -154,8 +157,12 @@ Fix direction: GA4 via GTM + a `generate_lead` event on form success + WindowCAD
 
 …the site cannot use page caching or a CDN effectively, and TTFB on shared hosting will suffer under crawl + traffic load. Fix direction: drop `nocache_headers()`, fetch the nonce via a small AJAX call (or accept nonce-less submissions for logged-out users with honeypot + time-trap as the spam gate, which is a standard pattern), and cache `pages.json` parsing in a transient/opcache-friendly PHP export.
 
+> **Update 2026-07-06:** mostly fixed for launch. Generated 200 pages and XML sitemaps now replace WordPress' default no-cache headers with short public cache headers for logged-out visitors, while 410/debris responses remain uncached. `fenster_get_generated_page()` also memoises route results per request. A deeper nonce refactor and persistent PHP/export cache can wait until after launch.
+
 ### 3.3 No trailing-slash canonicalisation
 `/casement-windows` and `/casement-windows/` both return 200 (the router exits before `redirect_canonical` runs at `template_redirect` priority 10 — the generated renderer runs at priority 0). Canonical tags mitigate, but a proper 301 to the trailing-slash form is cleaner. Same applies to uppercase paths (`/Casement-Windows/` → 404 rather than redirect).
+
+> **Update 2026-07-06:** fixed for generated routes. `/casement-windows` now 301s to `/casement-windows/`, and `/Casement-Windows/` now 301s to the lowercase canonical URL.
 
 ### 3.4 Doorway-page risk on the generated matrices
 - **273 town×product pages** (13 towns × 21 products) with templated copy and identical meta-description patterns.
@@ -168,6 +175,8 @@ Recommendation: keep the 13-town residential matrix (it's local and defensible) 
 ### 3.5 Sitemap contents need a scrub
 The custom sitemap (486 URLs) currently includes: `*-designer` scrape pages (thin; only `/door-designer/` carries noindex), `apecs-terms-conditions`, `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `enquire-now`, `instant-pricing`, blog pagination/category/tag/author URLs, and the duplicate town slugs from 2.6. A sitemap should be your curated "index this" list — right now it's telling Google to index the debris too.
 
+> **Update 2026-07-06:** fixed for the known launch debris. The thin utility/scrape-shell pages now carry `noindex,follow` and are excluded from `page-sitemap.xml`; verified absent: `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `commercial-areas`, and `commercial-glazing-isle-of-wight`. Sitemap count is now 427 URLs.
+
 ### 3.6 Quote-page cannibalisation
 `/online-quote/`, `/instant-pricing/`, `/enquire-now/`, `/3d-visualiser/`, `/instant-pricing-meta-ads/`, `/pricing-gads/` all serve near-identical quote-tool experiences and all are indexable. Keep `/online-quote/` as the canonical quote page; noindex or 301 the rest (keep ad landers only if live campaigns need them, with `noindex`).
 
@@ -179,8 +188,12 @@ The custom sitemap (486 URLs) currently includes: `*-designer` scrape pages (thi
 
 > **Update 2026-07-03:** matrix metadata issue fixed for generated residential location pages. The 273 residential town/product pages now render unique title/meta combinations built from town and product profile data. Commercial county metadata was also changed to use profile-specific town/context data. Homepage/imported-page title and description normalisation remains open.
 
+> **Update 2026-07-06:** homepage metadata fixed for launch. Rendered homepage title is now `Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing`, with a complete local-service meta description.
+
 ### 3.8 The noindex dev page is in the public header
 "Areas" in the main nav points to `/commercial-areas/`, a self-described "temporary review index … so the full England county set can be checked quickly during development". Real customers see a dev tool in prime navigation space; it also mass-links the 48 county pages sitewide. Remove it from `primary_nav_fallback` in `inc/site-data.php` before launch (the docs already flag it as temporary).
+
+> **Update 2026-07-06:** fixed. The header no longer links to `/commercial-areas/`; the route remains `noindex,follow` and is absent from the sitemap.
 
 ### 3.9 Review counts and claims are inconsistent and hardcoded
 - Homepage trust card: "200+ five-star reviews (Google)".
@@ -194,6 +207,8 @@ Two different Google review counts on the same page is a trust wobble, and hardc
 - `/areas-we-cover/` is only linked from the About page — yet it's the hub that distributes equity to all 273 town pages. Add it to the footer.
 - `/terms-conditions/` exists but isn't linked anywhere visible (footer has only Privacy/Cookie). Consumer-facing terms should be findable.
 - Breadcrumbs don't exist anywhere — cheap win for both UX and schema.
+
+> **Update 2026-07-06:** `/areas-we-cover/` is now linked from the footer company column, `/terms-conditions/` is linked from the footer legal row, and generated deep routes now output `BreadcrumbList` JSON-LD.
 
 ---
 
@@ -311,20 +326,20 @@ Issues:
 
 ## 10. Launch Checklist (beyond the fixes above)
 
-1. Commit everything to git; push to a private remote. (2.8)
+1. Commit everything to git; push to a private remote. (2.8) **Done; scoped GitHub repo is live.**
 2. Decide the `fenster-reference` strategy; migrate needed assets into the theme. (2.2) **Done for runtime references; keep the reference export out of production.**
 3. Build the 301 redirect map: old-site URLs → new slugs, debris → targets, duplicate town slugs → matrix slugs, `-designer` pages → parent products. **Partially done in central route handling; full old-site redirect import still needs review.**
-4. Fix schema rendering + add LocalBusiness/FAQ/Breadcrumb schema. (2.1) **LocalBusiness + product FAQPage done; Breadcrumb schema still open.**
-5. Fix robots/sitemap plumbing; disable core sitemaps; scrub sitemap contents. (2.3, 3.5) **Core plumbing done; ongoing sitemap curation continues as pages are removed or rebuilt.**
+4. Fix schema rendering + add LocalBusiness/FAQ/Breadcrumb schema. (2.1) **LocalBusiness + product FAQPage + generated BreadcrumbList done.**
+5. Fix robots/sitemap plumbing; disable core sitemaps; scrub sitemap contents. (2.3, 3.5) **Core plumbing and known launch-debris sitemap scrub done; ongoing curation continues as pages are removed or rebuilt.**
 6. Fix blog-article routing. (2.5) **Done.**
-7. Remove "Areas" nav item and noindex-or-remove `/commercial-areas/`. (3.8)
+7. Remove "Areas" nav item and noindex-or-remove `/commercial-areas/`. (3.8) **Done; route remains noindex and absent from sitemap.**
 8. GA4 + GTM + consent banner + form-success conversion event + WindowCAD click events. (2.7)
 9. Configure SMTP + SPF/DKIM/DMARC; send test enquiries end-to-end. (9)
 10. Remove/shorten the splash loader. (3.1) **Done; loader removed.**
 11. Image pass: hero poster, theatre images, partner PNGs, srcset/width/height. (4)
 12. Verify WindowCAD post-quote redirect doesn't point at the deleted `/wcad-thank-you/`. (5)
 13. Set up Google Business Profile ↔ site consistency (NAP matches footer exactly) and Search Console + Bing Webmaster at launch.
-14. Caching plan compatible with the nonce'd form (see 3.2) + a CDN for the video.
+14. Caching plan compatible with the nonce'd form (see 3.2) + a CDN for the video. **Launch baseline done with short public cache headers; deeper nonce refactor can follow.**
 15. Reconcile review counts and claims; link review cards to real profiles. (3.9)
 16. Decide the commercial-county footprint honestly. (3.4) **Started: Isle of Wight removed/410; broader county footprint still needs owner decision.**
 
