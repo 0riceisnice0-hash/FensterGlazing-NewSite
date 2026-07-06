@@ -19,7 +19,6 @@ app/public/wp-content/themes/*
 app/public/wp-content/themes/fenster/node_modules/
 app/public/wp-content/themes/fenster/backups/
 app/public/wp-content/themes/fenster/.sass-cache/
-app/public/wp-content/themes/fenster/assets/videos/aluminium-windows-story/frames-*/
 
 # Never deploy or version local scrape/reference/source archives.
 app/public/wp-content/fenster-reference/
