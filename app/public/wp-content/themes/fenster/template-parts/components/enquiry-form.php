@@ -47,6 +47,7 @@ $notices = [
     class="<?php echo esc_attr((string) $args['class']); ?> fg-enquiry-form"
     action="<?php echo esc_url(admin_url('admin-post.php')); ?>"
     method="post"
+    enctype="multipart/form-data"
     data-fg-enquiry-form
     data-ajax-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">
     <div class="fg-enquiry-form__feedback" data-fg-enquiry-feedback tabindex="-1" hidden></div>
@@ -79,6 +80,11 @@ $notices = [
             <label class="fg-enquiry-form__message fg-enquiry-form__compact-wide">
                 <span><?php esc_html_e('Project details', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span>
                 <textarea name="message" rows="4" required placeholder="<?php esc_attr_e('What would you like to change? Approximate sizes, number of items, access notes or anything else useful.', 'fenster'); ?>"></textarea>
+            </label>
+            <label class="fg-enquiry-form__compact-wide">
+                <span><?php esc_html_e('Photos or files', 'fenster'); ?></span>
+                <input type="file" name="attachments[]" accept=".jpg,.jpeg,.png,.webp,.heic,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt" multiple>
+                <small><?php esc_html_e('Optional. Add photos, drawings, schedules or documents up to 8MB each.', 'fenster'); ?></small>
             </label>
 
             <label class="fg-enquiry-form__consent fg-enquiry-form__compact-wide">
@@ -182,7 +188,13 @@ $notices = [
         <label class="fg-enquiry-form__message">
             <span><?php esc_html_e('Tell us about your project', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span>
             <textarea name="message" rows="5" required placeholder="<?php esc_attr_e('What would you like to change? Approximate sizes, number of items, access notes or anything else useful.', 'fenster'); ?>"></textarea>
-            <small><?php esc_html_e('You can reply to our confirmation email with photos, drawings or schedules.', 'fenster'); ?></small>
+            <small><?php esc_html_e('Add photos, drawings or schedules below if they help explain the project.', 'fenster'); ?></small>
+        </label>
+
+        <label>
+            <span><?php esc_html_e('Photos or files', 'fenster'); ?></span>
+            <input type="file" name="attachments[]" accept=".jpg,.jpeg,.png,.webp,.heic,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt" multiple>
+            <small><?php esc_html_e('Optional. Add photos, drawings, schedules or documents up to 8MB each.', 'fenster'); ?></small>
         </label>
 
         <label class="fg-enquiry-form__consent">

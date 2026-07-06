@@ -746,7 +746,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
   const activate = (button) => {
     const texture = button.dataset.texture || '';
-    const name = button.dataset.name || 'Obscure glass';
+    const name = button.dataset.name || 'Obscured glass';
     const key = button.dataset.key || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const privacy = button.dataset.privacy || '0';
     const copy = button.dataset.copy || '';
@@ -770,7 +770,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
   buttons.forEach((button) => {
     button.addEventListener('click', () => activate(button));
-    button.addEventListener('focus', () => activate(button));
+    button.addEventListener('keydown', (event) => {
+      if (!['Enter', ' '].includes(event.key)) return;
+      event.preventDefault();
+      activate(button);
+    });
   });
 
   splitControl?.addEventListener('input', () => {
@@ -2679,3 +2683,4 @@ if (false) {
   updateStudioProgress();
   renderStudio();
 }
+

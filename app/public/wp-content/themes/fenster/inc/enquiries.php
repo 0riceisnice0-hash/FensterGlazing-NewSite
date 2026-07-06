@@ -156,7 +156,97 @@ function fenster_enquiry_email_row(string $label, string $value, string $href = 
     );
 }
 
-function fenster_enquiry_office_email(array $data, int $enquiry_id): string
+function fenster_enquiry_files_from_request(string $field = 'attachments'): array
+{
+    if (empty($_FILES[$field]) || ! is_array($_FILES[$field])) {
+        return [];
+    }
+
+    $files = $_FILES[$field];
+    $normalised = [];
+    $names = is_array($files['name'] ?? null) ? $files['name'] : [];
+
+    foreach ($names as $index => $name) {
+        $error = (int) ($files['error'][$index] ?? UPLOAD_ERR_NO_FILE);
+        if ($error === UPLOAD_ERR_NO_FILE || $name === '') {
+            continue;
+        }
+
+        $normalised[] = [
+            'name' => $name,
+            'type' => (string) ($files['type'][$index] ?? ''),
+            'tmp_name' => (string) ($files['tmp_name'][$index] ?? ''),
+            'error' => $error,
+            'size' => (int) ($files['size'][$index] ?? 0),
+        ];
+    }
+
+    return $normalised;
+}
+
+function fenster_process_enquiry_uploads(int $enquiry_id): array
+{
+    $incoming_files = fenster_enquiry_files_from_request();
+    if (empty($incoming_files)) {
+        return [];
+    }
+
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+
+    $allowed_mimes = [
+        'jpg|jpeg|jpe' => 'image/jpeg',
+        'png' => 'image/png',
+        'webp' => 'image/webp',
+        'heic' => 'image/heic',
+        'pdf' => 'application/pdf',
+        'doc' => 'application/msword',
+        'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'xls' => 'application/vnd.ms-excel',
+        'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'csv' => 'text/csv',
+        'txt' => 'text/plain',
+    ];
+    $uploaded = [];
+
+    foreach (array_slice($incoming_files, 0, 5) as $file) {
+        if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK || (int) ($file['size'] ?? 0) > 8 * MB_IN_BYTES) {
+            continue;
+        }
+
+        $handled = wp_handle_upload($file, [
+            'test_form' => false,
+            'mimes' => $allowed_mimes,
+        ]);
+        if (! is_array($handled) || ! empty($handled['error']) || empty($handled['file'])) {
+            continue;
+        }
+
+        $attachment_id = wp_insert_attachment([
+            'post_mime_type' => (string) ($handled['type'] ?? ''),
+            'post_title' => sanitize_file_name(pathinfo((string) $handled['file'], PATHINFO_FILENAME)),
+            'post_content' => '',
+            'post_status' => 'private',
+            'post_parent' => $enquiry_id,
+        ], (string) $handled['file'], $enquiry_id);
+
+        if (! is_wp_error($attachment_id)) {
+            wp_update_attachment_metadata((int) $attachment_id, wp_generate_attachment_metadata((int) $attachment_id, (string) $handled['file']));
+        }
+
+        $uploaded[] = [
+            'id' => is_wp_error($attachment_id) ? 0 : (int) $attachment_id,
+            'name' => basename((string) $handled['file']),
+            'url' => (string) ($handled['url'] ?? ''),
+            'path' => (string) $handled['file'],
+        ];
+    }
+
+    return $uploaded;
+}
+
+function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attachments = []): string
 {
     $logo = FENSTER_THEME_URI . '/assets/brand/18931%20Fenster%20Glazing%20Logo%20-%20White%20Background.png';
     $admin_url = admin_url('post.php?post=' . $enquiry_id . '&action=edit');
@@ -170,6 +260,7 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id): string
         fenster_enquiry_email_row('Project', $data['project_type']),
         fenster_enquiry_email_row('Timescale', $data['timescale'] !== '' ? $data['timescale'] : 'Not specified'),
         fenster_enquiry_email_row('Source', $data['source']),
+        fenster_enquiry_email_row('Files', ! empty($attachments) ? implode(', ', array_map(static fn (array $file): string => (string) ($file['name'] ?? ''), $attachments)) : ''),
     ]);
 
     return '<!doctype html>
@@ -196,7 +287,7 @@ function fenster_enquiry_customer_email(array $data): string
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:28px 12px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border-radius:16px;overflow:hidden;">
 <tr><td style="padding:22px 28px;background:#ffffff;border-bottom:1px solid #dce7e5;"><img src="' . esc_url($logo) . '" width="170" alt="Fenster Glazing" style="display:block;max-width:170px;height:auto;"></td></tr>
-<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of the Fenster team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have photos, drawings or schedules, reply to this email and attach them.</p><div style="padding:18px;border-radius:10px;background:#f3f8f7;color:#06212a;font-size:15px;line-height:1.6;">' . nl2br(esc_html($data['message'])) . '</div></td></tr>
+<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of the Fenster team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have extra photos, drawings or schedules, send them to info@fensterglazing.com.</p><div style="padding:18px;border-radius:10px;background:#f3f8f7;color:#06212a;font-size:15px;line-height:1.6;">' . nl2br(esc_html($data['message'])) . '</div></td></tr>
 <tr><td style="padding:20px 28px;background:#f3f8f7;color:#60727a;font-size:13px;line-height:1.6;"><strong style="color:#06212a;">Fenster Glazing</strong><br>01908 429200 · info@fensterglazing.com</td></tr>
 </table></td></tr></table></body></html>';
 }
@@ -315,6 +406,11 @@ function fenster_process_enquiry(): array|WP_Error
         update_post_meta($enquiry_id, $key, $value);
     }
 
+    $attachments = fenster_process_enquiry_uploads((int) $enquiry_id);
+    if (! empty($attachments)) {
+        update_post_meta($enquiry_id, '_fenster_attachments', wp_json_encode($attachments));
+    }
+
     $recipient = fenster_enquiry_recipient();
     $office_headers = [
         'Content-Type: text/html; charset=UTF-8',
@@ -323,8 +419,9 @@ function fenster_process_enquiry(): array|WP_Error
     $office_sent = wp_mail(
         $recipient,
         fenster_enquiry_office_subject($data),
-        fenster_enquiry_office_email($data, (int) $enquiry_id),
-        $office_headers
+        fenster_enquiry_office_email($data, (int) $enquiry_id, $attachments),
+        $office_headers,
+        array_values(array_filter(array_column($attachments, 'path')))
     );
     update_post_meta($enquiry_id, '_fenster_email_sent', $office_sent ? '1' : '0');
     update_post_meta($enquiry_id, '_fenster_email_recipient', $recipient);

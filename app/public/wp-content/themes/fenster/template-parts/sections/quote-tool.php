@@ -89,7 +89,7 @@ $steps = [
             <div>
                 <p class="eyebrow"><?php esc_html_e('Send the basics', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Tell Fenster what you are looking for.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Share the useful details and Fenster will receive the enquiry directly. You can reply with drawings, schedules or photos once the team responds.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Share the useful details and Fenster will receive the enquiry directly. You can attach drawings, schedules or photos to the form if they help.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
                     <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>

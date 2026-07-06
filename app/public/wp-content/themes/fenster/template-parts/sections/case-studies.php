@@ -451,8 +451,8 @@ if ($is_archive) :
     $archive_intro = $is_commercial_archive
         ? 'Completed commercial glazing work. Scope, location, systems and site requirements.'
         : 'Explore home glazing projects where Fenster balanced comfort, character, product choice and careful installation.';
-    $archive_secondary_url = $is_commercial_archive ? home_url('/case-studies/') : home_url('/commercial-projects/');
-    $archive_secondary_label = $is_commercial_archive ? 'View residential work' : 'View commercial projects';
+    $archive_secondary_url = $is_commercial_archive ? '' : home_url('/commercial-projects/');
+    $archive_secondary_label = $is_commercial_archive ? '' : 'View commercial projects';
     ?>
     <article class="fg-case-page fg-case-page--archive <?php echo esc_attr($is_commercial_archive ? 'fg-case-page--commercial' : ''); ?>">
         <section class="fg-case-hero">
@@ -475,7 +475,9 @@ if ($is_archive) :
                 </div>
                 <div class="button-row">
                     <a class="button" href="#fenster-projects"><?php esc_html_e('Explore projects', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url($archive_secondary_url); ?>"><?php echo esc_html($archive_secondary_label); ?></a>
+                    <?php if ($archive_secondary_url !== '') : ?>
+                        <a class="button button--light" href="<?php echo esc_url($archive_secondary_url); ?>"><?php echo esc_html($archive_secondary_label); ?></a>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>

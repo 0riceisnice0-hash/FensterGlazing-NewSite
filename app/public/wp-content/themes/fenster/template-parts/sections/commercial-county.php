@@ -130,7 +130,7 @@ $faqs = [
                 <div class="fg-county-hero__form-head">
                     <span><?php esc_html_e('Fast project response', 'fenster'); ?></span>
                     <h2><?php echo esc_html('Tell us about your ' . $county_name . ' site.'); ?></h2>
-                    <p><?php esc_html_e('Send the basics now. You can reply with drawings, schedules or photos after the confirmation email.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Send the basics now. You can attach drawings, schedules or photos to the form.', 'fenster'); ?></p>
                 </div>
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [

@@ -169,11 +169,6 @@ function fenster_site_data(): array
                 ],
                 'ctas' => [
                     [
-                        'label' => 'Residential case studies',
-                        'url' => home_url('/case-studies/'),
-                        'copy' => 'See completed home glazing transformations.',
-                    ],
-                    [
                         'label' => 'Get an instant quote',
                         'url' => home_url('/online-quote/'),
                         'copy' => 'Price windows and doors through the online quote tool.',
@@ -801,7 +796,7 @@ function fenster_site_data(): array
                     ['title' => 'Window and door options', 'copy' => 'Choose from uPVC, aluminium, flush, sash, heritage, French, patio and entrance door styles with advice on what suits each opening.'],
                     ['title' => 'Security-led specification', 'copy' => 'Frame strength, glazing choice, locking and hardware are considered together so the finished installation feels secure as well as warmer.'],
                     ['title' => 'Made-to-measure survey', 'copy' => 'Every opening is measured and checked before manufacture, including frame condition, thresholds, drainage, access and finishing details.'],
-                    ['title' => 'Coordinated finishes', 'copy' => 'Fenster can help coordinate frame colours, handles, obscure glass and door hardware so the full project looks deliberate.'],
+                    ['title' => 'Coordinated finishes', 'copy' => 'Fenster can help coordinate frame colours, handles, obscured glass and door hardware so the full project looks deliberate.'],
                 ],
                 'faqs' => [
                     ['question' => 'What does double glazing help with?', 'answer' => 'It can improve thermal comfort, reduce draughts, soften outside noise and improve security when specified with suitable frames, glass and locking.'],
@@ -842,7 +837,7 @@ function fenster_site_data(): array
                     ['question' => 'Are flush casement windows good for period homes?', 'answer' => 'Often, yes. Their timber-style proportions, foiled finishes and optional heritage details can suit older homes while reducing maintenance.'],
                     ['question' => 'Do flush casement windows need repainting?', 'answer' => 'No. uPVC flush casements are low maintenance and only need normal cleaning and occasional hardware care.'],
                     ['question' => 'Can they be used in bays or larger layouts?', 'answer' => 'Yes. Flush casement styles can often be used in bay and bow arrangements, subject to survey and structural suitability.'],
-                    ['question' => 'Can I choose handles and colours?', 'answer' => 'Yes. Fenster can help coordinate frame colour, handle finish, obscure glass and any heritage-style detailing.'],
+                    ['question' => 'Can I choose handles and colours?', 'answer' => 'Yes. Fenster can help coordinate frame colour, handle finish, obscured glass and any heritage-style detailing.'],
                 ],
             ],
             'sliding-sash-windows' => [
@@ -903,7 +898,7 @@ function fenster_site_data(): array
                     ['title' => 'Bow or bay configuration', 'copy' => 'Bow windows usually create a softer curve, while bay windows form a more angular projection with a stronger architectural shape.'],
                     ['title' => 'Choice of window styles', 'copy' => 'Casement, flush casement and other suitable uPVC window styles can be combined depending on the look and ventilation required.'],
                     ['title' => 'Survey-led structure check', 'copy' => 'Fenster checks existing supports, angles, cills, roof details and installation conditions before specifying replacement bow or bay windows.'],
-                    ['title' => 'Coordinated colours and handles', 'copy' => 'Frame finish, handle colour, obscure glass and trickle ventilation can be coordinated with the rest of the home.'],
+                    ['title' => 'Coordinated colours and handles', 'copy' => 'Frame finish, handle colour, obscured glass and trickle ventilation can be coordinated with the rest of the home.'],
                 ],
                 'faqs' => [
                     ['question' => 'What is the difference between bow and bay windows?', 'answer' => 'A bow usually uses several windows to create a curved appearance, while a bay projects more angularly from the property.'],
@@ -1351,7 +1346,7 @@ function fenster_site_data(): array
             'technical_intro' => 'Door handle availability depends on the chosen door system, lock set and colour package, so Fenster confirms the final compatible hardware at specification stage.',
         ],
         'obscure_glass' => [
-            'intro' => 'Obscure glass adds privacy while still letting daylight through. Use the preview to compare how the same real image changes behind each texture before choosing door glass, bathroom glass, side panels or replacement units.',
+            'intro' => 'Obscured glass adds privacy while still letting daylight through. Use the preview to compare how the same real image changes behind each texture before choosing door glass, bathroom glass, side panels or replacement units.',
             'legend_image' => '/wp-content/themes/fenster/assets/team/legend-colour.webp',
             'house_image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/birkacre-house.webp',
             'textures' => [
@@ -1433,7 +1428,7 @@ function fenster_site_data(): array
             'title' => 'Fenster Glazing',
             'intro' => 'Windows, doors, bifolds and glazing systems installed across Milton Keynes, Bedfordshire, Buckinghamshire and the surrounding areas.',
             'primary_cta' => ['label' => 'Start an enquiry', 'url' => home_url('/contact/')],
-            'secondary_cta' => ['label' => 'View case studies', 'url' => home_url('/case-studies/')],
+            'secondary_cta' => ['label' => 'View commercial projects', 'url' => home_url('/commercial-projects/')],
             'services' => [
                 'Aluminium Windows',
                 'Aluminium Doors',

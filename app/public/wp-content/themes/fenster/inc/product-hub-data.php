@@ -69,7 +69,7 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'Security', 'value' => 'Locking handle and multi-point locking around the sash'],
                 ['label' => 'Best for', 'value' => 'Upper floors, restricted outside access and rooms needing controlled ventilation'],
             ],
-            'choices' => ['Single large sashes or mixed fixed/opening layouts', 'Safety glass where Building Regulations require it', 'Obscure glass for bathrooms', 'Restrictor and ventilation conversations during survey'],
+            'choices' => ['Single large sashes or mixed fixed/opening layouts', 'Safety glass where Building Regulations require it', 'Obscured glass for bathrooms', 'Restrictor and ventilation conversations during survey'],
         ],
         'sliding-sash-windows' => [
             'systems' => [$systems['roseview']],
@@ -82,7 +82,7 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'Furniture', 'value' => 'Globe or Acorn sash furniture, confirmed around the selected Rose model'],
                 ['label' => 'Best for', 'value' => 'Victorian, Georgian and cottage-style properties where proportions matter'],
             ],
-            'choices' => ['Ultimate Rose, Heritage Rose or Charisma Rose model route', 'Globe or Acorn locks, pole eyes, sash lifts and tilt knobs', 'Obscure glass for landings and bathrooms', 'Acoustic glass for road-facing rooms'],
+            'choices' => ['Ultimate Rose, Heritage Rose or Charisma Rose model route', 'Globe or Acorn locks, pole eyes, sash lifts and tilt knobs', 'Obscured glass for landings and bathrooms', 'Acoustic glass for road-facing rooms'],
         ],
         'aluminium-windows' => [
             'systems' => [$systems['sheerline']],
@@ -208,7 +208,7 @@ function fenster_product_hub_data(string $slug): array
             'specs' => [
                 ['label' => 'System', 'value' => 'Liniar uPVC door profile options'],
                 ['label' => 'Security', 'value' => 'Multi-point locking with anti-snap cylinder and hinge choices confirmed by specification'],
-                ['label' => 'Design', 'value' => 'Full panel, half panel, glazed, side panel and obscure-glass combinations'],
+                ['label' => 'Design', 'value' => 'Full panel, half panel, glazed, side panel and obscured glass combinations'],
                 ['label' => 'Finish', 'value' => 'White, woodgrain foils and selected colours depending on system'],
             ],
             'choices' => ['Front, rear, side and utility doors', 'Sidelights and toplights', 'Low-threshold access conversations', 'Lever/lever or lever/pad hardware options'],
@@ -288,7 +288,7 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'Safety', 'value' => 'Critical locations checked for toughened or laminated safety glass'],
                 ['label' => 'Best for', 'value' => 'Misted, blown, cracked or failed sealed units where frames remain sound'],
             ],
-            'choices' => ['Like-for-like replacement glass', 'Obscure glass upgrades', 'Pet-flap apertures in new sealed units', 'Integral blind units where suitable'],
+            'choices' => ['Like-for-like replacement glass', 'Obscured glass upgrades', 'Pet-flap apertures in new sealed units', 'Integral blind units where suitable'],
         ],
         'secondary-glazing' => [
             'badges' => ['Acoustic improvement', 'Internal aluminium frame', 'RAL colour'],

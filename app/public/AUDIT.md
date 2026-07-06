@@ -1,7 +1,7 @@
 # Fenster Glazing — Master Site Audit
 
 Audit date: 2026-07-03
-Last updated: 2026-07-06 (GitHub upload, SiteGround test deploy, launch SEO hardening, forms verified, docs refresh)
+Last updated: 2026-07-06 (GitHub upload, live theme deploy, launch SEO hardening, office forms verified, docs refresh)
 Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
 
 **How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
@@ -10,12 +10,15 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is scoped to the custom theme and launch docs, excluding WordPress core, uploads, `wp-config.php`, local backups/config, `node_modules` and `wp-content\fenster-reference`.
 - SiteGround test/live are verified Bedrock installs. Deployment should update/swap only the `fenster` theme at `web/app/themes/fenster` from the repo while leaving the production database, uploads, plugins, `.env` and config intact. The reference scrape archive must not be deployed.
-- The test site is running the new `fenster` theme. Live has not been switched yet. Before live deployment, take a fresh SiteGround backup and get explicit owner approval.
+- The test and live sites are running the new `fenster` theme. Future changes should still go local -> GitHub -> test -> verify -> backup -> live.
 - Theme-owned SEO is now the launch source of truth on generated pages. Yoast/Rank Math head output is suppressed there to avoid duplicate titles, stale schema and broken imported social metadata; do not reset Rank Math before launch.
 - Launch SEO hardening has moved the site materially closer to live-ready: homepage title/meta fixed, generated routes normalise with 301s, generated deep routes output breadcrumb schema, generated pages/sitemaps use short public cache headers, and the sitemap is scrubbed to 427 URLs.
 - Navigation/indexation cleanup is complete for known launch debris: `/commercial-areas/` is out of the header/sitemap, thin utility/scrape pages are `noindex,follow`, `/areas-we-cover/` and `/terms-conditions/` are visible in the footer, and inaccessible Isle of Wight commercial coverage is 410'd.
 - Mobile conversion polish is complete for the reported launch blockers: About process cards have padding, Contact CTA cards are readable with no text/action overlap, and mobile quote embeds show a single same-tab `Open quote tool` action.
-- Test form delivery is verified end-to-end: enquiries save privately in WordPress and send HTML emails to `info@fensterglazing.com` with customer confirmations.
+- Form delivery is verified end-to-end on live: enquiries save privately in WordPress and send office HTML emails to `info@fensterglazing.com`. Customer confirmations are paused unless SMTP is configured, and the customer-facing form copy no longer promises one.
+- Optional enquiry file uploads are supported for photos, drawings, schedules and documents; uploads are attached to the private enquiry and office email.
+- Residential case studies are intentionally inaccessible for launch: `/case-studies/` and known residential child routes return 410 and are excluded from the sitemap until the content is rebuilt. Commercial project records remain reachable for `/commercial-projects/`.
+- The privacy-glass route is now `/obscured-glass/`; `/obscure-glass/` redirects there.
 
 ## Remediation Status (2026-07-03)
 
@@ -364,7 +367,7 @@ Issues:
 ## 9. Email / Enquiry Deliverability
 
 - No SMTP constants are defined in `wp-config.php` locally — on production, `wp_mail()` will fall back to PHP `mail()`, which lands in spam or fails silently on most hosts. The constants system exists (`FENSTER_SMTP_*`); it must actually be configured at launch.
-- All mail sends `From: info@fensterglazing.com` — the sending host must be authorised in the domain's **SPF**, and **DKIM/DMARC** should be set up, or both office notifications *and* customer confirmations will spam-folder. The customer confirmation going to spam looks worse than not sending one.
+- Office mail currently sends with the old proven envelope `WordPress <wordpress@fensterglazing.com>`, which live testing confirmed reaches `info@fensterglazing.com`. Authenticated SMTP plus SPF/DKIM/DMARC is still needed before enabling customer confirmation emails again.
 - The office email's "View saved enquiry" button links to wp-admin — correct, but make sure the office staff have accounts.
 - Leads are saved before email (excellent). Add the unsent-lead alerting from 6.13.
 - GDPR: enquiries store personal data indefinitely as private posts. The privacy policy should state retention, and a periodic purge (e.g. 24 months) is worth scheduling.

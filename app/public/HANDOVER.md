@@ -17,14 +17,17 @@ Use:
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Deployment should update the `fenster` theme from the GitHub repo while leaving production `.env`, Bedrock config, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
-- Test is already running the new `fenster` theme. The live site has not been switched yet. Live activation needs an owner-approved backup first, then the same theme copy used on test, then a short post-live check.
+- Test and live are both running the new `fenster` theme. Keep using the same workflow for changes: local edit -> GitHub -> test deploy -> verify -> fresh live backup -> live deploy -> short post-live check.
 - Do not use SiteGround clone/staging tools for this project. The safe model is local -> GitHub -> test -> verify -> backup -> live. This avoids editing test and live at the same time and avoids accidental database URL rewrites.
 - Generated pages are theme-owned for SEO. Yoast/Rank Math public head output is suppressed on generated pages to prevent duplicate metadata and stale imported schema/social tags. Do not reset Rank Math for launch; use it only later if there is a clear admin-tool reason.
 - Launch SEO hardening is complete for the current technical blockers: homepage title/meta override, generated route 301 normalisation, generated breadcrumb schema, public cache headers, sitemap scrub to 427 URLs, `/commercial-areas/` removed from the header, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
 - The residential location matrix has unique generated metadata across the 13 town x 21 product pages. Commercial county metadata is profile-specific, and Isle of Wight commercial glazing has been removed/410'd as inaccessible coverage.
 - Mobile launch fixes are complete for the About process cards, Contact page CTA cards and quote-tool controls. Mobile quote embeds use one same-tab `Open quote tool` action; desktop keeps `Expand view` and `Open in new tab`.
-- Test enquiry delivery has been verified end-to-end: valid submissions save as private `fenster_enquiry` posts and send HTML emails to `info@fensterglazing.com`, with customer confirmations.
-- Live mail deliverability needs authenticated SMTP. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings or silently drop same-domain office notifications. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
+- Test and live enquiry delivery have been verified: valid submissions save as private `fenster_enquiry` posts and send office HTML emails to `info@fensterglazing.com`.
+- Office email delivery currently uses the old proven envelope: `WordPress <wordpress@fensterglazing.com>` to `Fenster Glazing <info@fensterglazing.com>`. Customer confirmation emails are paused unless authenticated SMTP is configured, so public form copy must not promise a confirmation email.
+- Enquiry forms support optional file uploads (`attachments[]`) for photos, drawings, schedules and documents. Files are stored against the private enquiry and attached to the office email.
+- Live mail deliverability still needs authenticated SMTP for future customer-facing sends. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
+- Residential case studies are intentionally hidden for launch. `/case-studies/` and the known residential child case-study routes return 410 and should stay out of menus/sitemaps until that content is rebuilt. Commercial project records under the old case-study URL family remain reachable because `/commercial-projects/` uses them as proof.
 
 ## Current Goal Of The Site
 
@@ -150,7 +153,8 @@ Utility and special routes:
 
 - `/terms-conditions/` is a hardcoded virtual utility page in `inc\generated-pages.php` and renders through the generated simple utility layout.
 - `/why-trust-fenster/` is a hardcoded virtual trust page in `inc\generated-pages.php`. It renders through `template-parts\sections\trust-page.php`, reuses the shared review showcase and is promoted by a small centred link beneath the homepage trust cards.
-- `/obscure-glass/` is a hardcoded virtual product-adjacent page in `inc\generated-pages.php`. It is intentionally not in the menu; product journey pages link to it from the `Gallery and choices` / finish options card.
+- `/obscured-glass/` is a hardcoded virtual product-adjacent page in `inc\generated-pages.php`. It is intentionally not in the menu; product journey pages link to it from the `Gallery and choices` / finish options card.
+- `/obscure-glass/` 301 redirects to `/obscured-glass/`; use "obscured glass" in visible copy, while the legacy asset/data key and folder remain `obscure_glass` / `assets\images\products\obscure-glass`.
 - `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` are hardcoded virtual product-adjacent pages in `inc\generated-pages.php`. They are intentionally specification hubs rather than menu-level product pages; product journey pages link to the colour hub from the specification choices section.
 - `/commercial-glazing-buckinghamshire/` is a hardcoded virtual commercial page in `inc\generated-pages.php`.
 - `/commercial-projects/` is a hardcoded virtual commercial page in `inc\generated-pages.php`.
@@ -264,22 +268,22 @@ Recent verification:
 - `npm.cmd run build` passed after the Sass changes.
 - Rendered checks confirmed the Roseview logo loads, Liniar is not visible, all 10 sash furniture images load after lazy scroll, the three furniture cards align on desktop, and the new sash furniture section does not cause mobile overflow.
 
-### Obscure Glass Page
+### Obscured glass Page
 
-Route: `/obscure-glass/`
+Route: `/obscured-glass/`
 
 Current accepted behaviour:
 
 - The page is hidden from the main navigation.
 - Product journey pages link to it from the `Gallery and choices` / finish options area.
-- Obscure glass data lives in `inc\site-data.php` under `obscure_glass`.
+- Obscured glass data lives in `inc\site-data.php` under `obscure_glass`.
 - Texture assets live under `assets\images\products\obscure-glass`.
 - Cotswold is the default preview and uses the downloaded Pilkington source texture at `assets\images\products\obscure-glass\Cotswold-pilkington.png`.
 - The visualiser can switch between the colour Legend photo at `assets\team\legend-colour.webp` and the house background at `assets\images\products\obscure-glass\birkacre-house.webp`.
-- The accepted preview model is a split comparison: the left side shows the selected obscure glass treatment and the right side keeps a clear reference view.
+- The accepted preview model is a split comparison: the left side shows the selected Obscured glass treatment and the right side keeps a clear reference view.
 - The split is controlled by a draggable range slider, not mouse-follow movement.
 - The glass treatment should follow the Pilkington-style layer model: a blurred/brightened duplicate of the current scene, with the texture pattern as a separate unblurred layer above it. Do not blur the texture layer itself or it turns into glow.
-- Mobile uses the same texture data with tappable horizontal glass controls and no hover dependency.
+- Mobile uses the same texture data with tappable horizontal glass controls, no hover dependency, and touch rules that allow normal vertical page scrolling through the visualiser.
 
 ### Colour Options Pages
 
@@ -550,3 +554,4 @@ Before handing work back:
 - Do not rely on hover for mobile interactions.
 - Do not put dated progress reports in `AI.md` or `HANDOVER.md`.
 - Do not edit compiled CSS/JS without updating source and rebuilding.
+

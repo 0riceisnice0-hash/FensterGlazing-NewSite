@@ -489,15 +489,15 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
-    if ($slug === 'obscure-glass') {
+    if ($slug === 'obscured-glass') {
         return $page_cache[$slug] = [
-            'slug' => 'obscure-glass',
-            'title' => 'Obscure Glass',
-            'url' => home_url('/obscure-glass/'),
+            'slug' => 'obscured-glass',
+            'title' => 'Obscured Glass',
+            'url' => home_url('/obscured-glass/'),
             'seo' => [
-                'title_tag' => 'Obscure Glass Options | Fenster Glazing',
-                'meta_description' => 'Compare obscure glass patterns and privacy levels for Fenster Glazing windows, doors and replacement glass.',
-                'canonical' => 'https://fensterglazing.com/obscure-glass/',
+                'title_tag' => 'Obscured Glass Options | Fenster Glazing',
+                'meta_description' => 'Compare obscured glass patterns and privacy levels for Fenster Glazing windows, doors and replacement glass.',
+                'canonical' => 'https://fensterglazing.com/obscured-glass/',
                 'robots' => 'max-image-preview:large',
             ],
             'sections' => [],
@@ -638,8 +638,12 @@ function fenster_gone_slugs(): array
     return [
         'nick-test-baboon' => true,
         'our-new-website' => true,
+        'case-studies' => true,
+        'case-studies/bespoke-windows-woburn-water-end-barn' => true,
+        'case-studies/double-glazing-rushden' => true,
         'case-studies/test' => true,
         'case-studies/template-new' => true,
+        'case-studies/water-stratford' => true,
         'commercial-glazing-isle-of-wight' => true,
     ];
 }
@@ -658,6 +662,7 @@ function fenster_redirect_target(string $slug): string
         'healthcare_safeguarding_in_construction' => 'healthcare-construction',
         'enquire-now' => 'online-quote',
         'instant-pricing' => 'online-quote',
+        'obscure-glass' => 'obscured-glass',
         'door-designer' => 'online-quote',
     ];
 
@@ -901,7 +906,7 @@ function fenster_maybe_render_generated_sitemap(): void
         echo "  </url>\n";
     }
 
-    foreach (['terms-conditions', 'why-trust-fenster', 'obscure-glass', 'colour-options', 'upvc-colours', 'aluminium-colours', 'areas-we-cover', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
+    foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'colour-options', 'upvc-colours', 'aluminium-colours', 'areas-we-cover', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
         $virtual_page = fenster_get_generated_page($virtual_slug);
         $virtual_loc = fenster_generated_url((string) ($virtual_page['seo']['canonical'] ?? ''));
         if ($virtual_loc && ! isset($seen[$virtual_loc])) {

@@ -58,7 +58,7 @@ $case_cards = [
         'title' => '300 year old property, handled with care.',
         'copy' => 'Flush sash windows were specified for a historic local property near Buckingham, keeping the character while upgrading comfort and performance.',
         'image' => $asset_base . 'smart148.jpg',
-        'url' => home_url('/case-studies/water-stratford/'),
+        'url' => home_url('/commercial-projects/'),
     ],
     [
         'label' => 'Healthcare',
@@ -79,7 +79,7 @@ $case_cards = [
         'title' => 'Milton Keynes installs with proper aftercare.',
         'copy' => 'From warm window upgrades to statement entrance doors, the work is surveyed, fitted and supported by the Fenster team.',
         'image' => $asset_base . 'new-front-door-in-Milton-Keynes.jpeg',
-        'url' => home_url('/case-studies/'),
+        'url' => home_url('/commercial-projects/'),
     ],
 ];
 

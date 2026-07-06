@@ -93,7 +93,7 @@ $team_members = array_slice($members, 2);
             <p><?php esc_html_e('From first enquiry and estimating through to survey, installation, service and aftercare, these are the people who help customers and projects move smoothly.', 'fenster'); ?></p>
             <div class="button-row">
                 <a class="button" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact the team', 'fenster'); ?></a>
-                <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('View project work', 'fenster'); ?></a>
+                <a class="button button--light" href="<?php echo esc_url(home_url('/commercial-projects/')); ?>"><?php esc_html_e('View project work', 'fenster'); ?></a>
             </div>
         </div>
     </section>

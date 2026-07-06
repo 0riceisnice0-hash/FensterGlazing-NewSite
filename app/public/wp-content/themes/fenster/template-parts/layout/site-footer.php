@@ -19,7 +19,6 @@ $footer_company = [
     ['label' => 'Why Trust Fenster', 'url' => home_url('/why-trust-fenster/')],
     ['label' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
     ['label' => 'Meet the Team', 'url' => home_url('/meet-the-team/')],
-    ['label' => 'Case Studies', 'url' => home_url('/case-studies/')],
     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
     ['label' => 'Contact', 'url' => home_url('/contact/')],
     ['label' => 'Instant Quote', 'url' => home_url('/online-quote/')],

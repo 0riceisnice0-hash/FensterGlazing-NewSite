@@ -5334,6 +5334,7 @@ h3 {
   top: 96px;
   overflow: hidden;
   padding: clamp(1rem, 2vw, 1.4rem);
+  touch-action: pan-y;
   transform-style: preserve-3d;
 }
 
@@ -5348,6 +5349,7 @@ h3 {
   perspective: 1200px;
   transform-style: preserve-3d;
   isolation: isolate;
+  touch-action: pan-y;
 }
 
 .fg-obscure-stage__photo,
@@ -5807,6 +5809,7 @@ h3 {
   margin: 0;
   opacity: 0.01;
   cursor: ew-resize;
+  touch-action: pan-y;
 }
 
 .fg-obscure-stage__main-image,
@@ -5901,6 +5904,8 @@ h3 {
 .fg-obscure-mobile-picker {
   display: none;
   grid-area: mobile-picker;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .fg-obscure-picker {

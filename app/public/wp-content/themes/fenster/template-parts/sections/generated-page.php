@@ -147,7 +147,7 @@ $is_integral_blinds = $slug === 'integral-blinds';
 $is_home = $slug === 'home';
 $is_case_study = in_array($slug, ['case-studies', 'commercial-projects'], true) || str_starts_with($slug, 'case-studies/');
 $is_team = $slug === 'meet-the-team';
-$is_obscure_glass = $slug === 'obscure-glass';
+$is_obscure_glass = $slug === 'obscured-glass';
 $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'aluminium-colours'], true);
 $is_trust_page = $slug === 'why-trust-fenster';
 $is_about_page = $slug === 'about';
@@ -1521,7 +1521,7 @@ if ($is_obscure_glass) {
             <div class="container fg-obscure-hero__grid">
                 <div class="fg-obscure-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Glass privacy choices', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Obscure glass, previewed properly.', 'fenster'); ?></h1>
+                    <h1><?php esc_html_e('Obscured glass, previewed properly.', 'fenster'); ?></h1>
                     <p><?php echo esc_html($obscure_glass_intro); ?></p>
                     <div class="button-row">
                         <a class="button" href="#fg-obscure-visualiser"><?php esc_html_e('Try the glass preview', 'fenster'); ?></a>
@@ -1538,7 +1538,7 @@ if ($is_obscure_glass) {
 
         <section id="fg-obscure-visualiser" class="fg-obscure-visualiser" data-fg-obscure-glass>
             <div class="container fg-obscure-visualiser__grid">
-                <div class="fg-obscure-rail fg-obscure-rail--left fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscure glass pattern options, left side', 'fenster'); ?>">
+                <div class="fg-obscure-rail fg-obscure-rail--left fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options, left side', 'fenster'); ?>">
                     <?php foreach ($obscure_glass_left as $index => $texture) : ?>
                         <?php $render_obscure_glass_option($texture, (int) $index); ?>
                     <?php endforeach; ?>
@@ -1558,7 +1558,7 @@ if ($is_obscure_glass) {
                         <div class="fg-obscure-stage__shine" aria-hidden="true"></div>
                         <div class="fg-obscure-stage__scan" aria-hidden="true"></div>
                         <div class="fg-obscure-stage__divider" aria-hidden="true"><span></span></div>
-                        <input class="fg-obscure-stage__range" type="range" min="0" max="100" value="54" aria-label="<?php esc_attr_e('Move the clear and obscure glass comparison divider', 'fenster'); ?>" data-fg-obscure-split>
+                        <input class="fg-obscure-stage__range" type="range" min="0" max="100" value="54" aria-label="<?php esc_attr_e('Move the clear and Obscured glass comparison divider', 'fenster'); ?>" data-fg-obscure-split>
                     </div>
                     <div class="fg-obscure-stage__readout" aria-live="polite">
                         <div>
@@ -1570,7 +1570,7 @@ if ($is_obscure_glass) {
                     </div>
                 </div>
 
-                <div class="fg-obscure-mobile-picker" role="list" aria-label="<?php esc_attr_e('Obscure glass pattern options', 'fenster'); ?>">
+                <div class="fg-obscure-mobile-picker" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options', 'fenster'); ?>" data-lenis-prevent>
                     <?php foreach (array_chunk($obscure_glass_textures, 4, true) as $obscure_glass_page) : ?>
                         <div class="fg-obscure-mobile-picker__page" aria-hidden="false">
                             <?php foreach ($obscure_glass_page as $index => $texture) : ?>
@@ -1580,7 +1580,7 @@ if ($is_obscure_glass) {
                     <?php endforeach; ?>
                 </div>
 
-                <div class="fg-obscure-rail fg-obscure-rail--right fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscure glass pattern options, right side', 'fenster'); ?>">
+                <div class="fg-obscure-rail fg-obscure-rail--right fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options, right side', 'fenster'); ?>">
                     <?php foreach ($obscure_glass_right as $index => $texture) : ?>
                         <?php $render_obscure_glass_option($texture, (int) $index); ?>
                     <?php endforeach; ?>
@@ -1592,7 +1592,7 @@ if ($is_obscure_glass) {
                         <h2><?php esc_html_e('Pick a pattern, then drag the divider across the pane.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('The left side shows the treated view and the right side keeps a clear reference, so privacy levels are easier to compare.', 'fenster'); ?></p>
                     </div>
-                    <div class="fg-obscure-picker__tips" aria-label="<?php esc_attr_e('How to compare obscure glass options', 'fenster'); ?>">
+                    <div class="fg-obscure-picker__tips" aria-label="<?php esc_attr_e('How to compare Obscured glass options', 'fenster'); ?>">
                         <article>
                             <span><?php esc_html_e('1', 'fenster'); ?></span>
                             <strong><?php esc_html_e('Choose a texture', 'fenster'); ?></strong>
@@ -1610,7 +1610,7 @@ if ($is_obscure_glass) {
                         </article>
                     </div>
                     <?php if (! empty($obscure_glass_bottom)) : ?>
-                        <div class="fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('More obscure glass pattern options', 'fenster'); ?>">
+                        <div class="fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('More Obscured glass pattern options', 'fenster'); ?>">
                             <?php foreach ($obscure_glass_bottom as $index => $texture) : ?>
                                 <?php $render_obscure_glass_option($texture, (int) $index); ?>
                             <?php endforeach; ?>
@@ -1624,7 +1624,7 @@ if ($is_obscure_glass) {
             <div class="container">
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Pattern comparison', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('All obscure glass options at a glance.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('All Obscured glass options at a glance.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-obscure-compare__grid">
                     <?php foreach ($obscure_glass_textures as $texture) : ?>
@@ -1645,15 +1645,15 @@ if ($is_obscure_glass) {
             <div class="container fg-obscure-enquiry__grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Glass specification', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Ask Fenster which obscure glass works with your product.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Ask Fenster which Obscured glass works with your product.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Tell the team whether the glass is for a bathroom, entrance door, side panel, replacement unit or another product and they will help narrow the options.', 'fenster'); ?></p>
                 </div>
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [
                     'class' => 'fg-form',
-                    'source' => 'Obscure glass page',
-                    'button_label' => 'Ask about obscure glass',
-                    'project_type' => 'Obscure glass',
+                    'source' => 'Obscured glass page',
+                    'button_label' => 'Ask about Obscured glass',
+                    'project_type' => 'Obscured glass',
                     'compact' => true,
                 ]);
                 ?>
@@ -1665,7 +1665,7 @@ if ($is_obscure_glass) {
                 <div class="container">
                     <div class="section-heading">
                         <p class="eyebrow"><?php esc_html_e('Related products', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Products that can use obscure glass', 'fenster'); ?></h2>
+                        <h2><?php esc_html_e('Products that can use Obscured glass', 'fenster'); ?></h2>
                     </div>
                     <div class="generated-links">
                         <?php foreach (array_slice(array_values($related_links), 0, 18) as $link) : ?>
@@ -1774,7 +1774,7 @@ if ($is_commercial_hub) {
     $commercial_projects = [
         [
             'title' => 'Barn Hotel - Coventry',
-            'url' => home_url('/case-studies/barn-hotel-windows-coventry/'),
+            'url' => home_url('/commercial-projects/'),
             'image' => $asset_base . 'Woburn-Waters-End-Barn.png',
             'scope' => 'Hotel refurbishment',
             'installed' => '37 aluminium windows and commercial entrance doors',
@@ -1782,7 +1782,7 @@ if ($is_commercial_hub) {
         ],
         [
             'title' => 'Sunrise Care Home - Kettering',
-            'url' => home_url('/case-studies/care-home-window-replacement/'),
+            'url' => home_url('/commercial-projects/'),
             'image' => $asset_base . 'inside-door-sunrise-1.jpg',
             'scope' => 'Live healthcare environment',
             'installed' => 'Replacement windows and doors',
@@ -1790,7 +1790,7 @@ if ($is_commercial_hub) {
         ],
         [
             'title' => 'Herts and Essex Community Hospital',
-            'url' => home_url('/case-studies/replacement-aluminium-windows-herts-and-essex-community-hospital/'),
+            'url' => home_url('/commercial-projects/'),
             'image' => $asset_base . 'Herts-and-Profile.png',
             'scope' => 'Healthcare glazing replacement',
             'installed' => 'Aluminium replacement windows',
@@ -2699,11 +2699,11 @@ if ($is_commercial_hub) {
                     </a>
                     <a
                         class="fg-product-option-card fg-product-option-card--glass"
-                        href="<?php echo esc_url(home_url('/obscure-glass/')); ?>"
+                        href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"
                     >
                         <span><?php esc_html_e('02', 'fenster'); ?></span>
                         <h3><?php esc_html_e('Privacy glass', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Preview obscure glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('Preview Obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
                         <strong><?php esc_html_e('Compare glass patterns', 'fenster'); ?></strong>
                     </a>
                     <?php if (! $show_sash_furniture && ! $show_window_handles && ! $show_door_handles) : ?>
@@ -3268,3 +3268,4 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 </article>
+

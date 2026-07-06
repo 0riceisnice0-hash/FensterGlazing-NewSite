@@ -82,7 +82,7 @@ $process = [
                     <h2><?php esc_html_e('Friendly advice for improving your home.', 'fenster'); ?></h2>
                     <p class="fg-about-story__lead"><?php esc_html_e('We supply and install windows, doors and glazing across Milton Keynes, Buckinghamshire and the surrounding areas.', 'fenster'); ?></p>
                     <p><?php esc_html_e('Our team can help you compare uPVC and aluminium frames, colours, glass, security and hardware. We will explain the options clearly, survey the property carefully and keep you informed through ordering and installation.', 'fenster'); ?></p>
-                    <a class="text-link" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('View our recent work', 'fenster'); ?></a>
+                    <a class="text-link" href="<?php echo esc_url(home_url('/commercial-projects/')); ?>"><?php esc_html_e('View our commercial work', 'fenster'); ?></a>
                 </div>
                 <figure class="fg-about-story__media">
                     <img src="<?php echo esc_url(fenster_generated_url($project_image)); ?>" alt="<?php esc_attr_e('A completed Fenster Glazing home installation', 'fenster'); ?>" loading="lazy">

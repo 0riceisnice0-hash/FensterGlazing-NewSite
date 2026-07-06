@@ -5,14 +5,19 @@ Last updated: 2026-07-06
 ## 2026-07-06 - SiteGround Test Deploy, SEO Ownership And Forms
 
 - Verified the real SiteGround structure: both test and live are Bedrock installs, so the server theme path is `web/app/themes/fenster` even though local development uses `wp-content/themes/fenster`.
-- Deployed the GitHub theme to `https://test.fensterglazing.com` from the server repo cache at `~/repos/FensterGlazing-NewSite`, then activated the `fenster` theme on test. Live has not been switched.
+- Deployed the GitHub theme to `https://test.fensterglazing.com` from the server repo cache at `~/repos/FensterGlazing-NewSite`, then activated the `fenster` theme on test. The same theme has since been deployed and activated on live.
 - Disabled the test-only `mousewheel-smooth-scroll` plugin because it conflicted with the theme's Lenis scrolling and caused jumpy scroll behaviour. Do not run another smooth-scroll plugin alongside the theme.
 - Fixed Bedrock theme asset URLs so generated `/wp-content/themes/fenster/...` references map to the real theme URI under `/app/themes/fenster/...`; this restored imported images and theme-owned media on test.
 - Added the aluminium windows story-frame folders to git so the scroll video on `/aluminium-windows/` works on test instead of only locally.
 - Suppressed Yoast and Rank Math public head output on generated pages, then added theme-owned title/social meta handling so public SEO tags come from the theme rather than stale plugin/imported data.
 - Tightened contact and online-quote titles, zoomed the WindowCAD iframe down for a usable first view, and verified key routes/assets returned 200 on test.
-- Verified enquiry delivery on test: valid AJAX form submissions save as private `fenster_enquiry` posts, send an office HTML email to `info@fensterglazing.com`, and send the customer confirmation. Test enquiry ID `8781` confirmed email delivery.
+- Verified enquiry delivery on test and live: valid AJAX form submissions save as private `fenster_enquiry` posts and send an office HTML email to `info@fensterglazing.com`.
 - Polished the enquiry email HTML header so the Fenster logo sits on a light header and remains visible in email clients.
+- Matched the old working office-email envelope (`WordPress <wordpress@fensterglazing.com>` to `Fenster Glazing <info@fensterglazing.com>`) after live manual submissions confirmed the office-facing email was the fragile part.
+- Paused customer confirmation emails unless authenticated SMTP is configured, and removed public form copy that told customers to wait for or reply to a confirmation email.
+- Added optional enquiry file uploads for photos, drawings, schedules and documents; uploaded files are stored against the private enquiry and attached to the office email.
+- Temporarily hid the unfinished residential case-study area for launch: `/case-studies/` and known residential child case-study routes now return 410 and are excluded from the sitemap, with public CTAs moved to `/commercial-projects/`. Commercial project records stay reachable for proof.
+- Renamed the privacy-glass route to `/obscured-glass/`, added a 301 from `/obscure-glass/`, updated visible copy to "obscured glass", and adjusted the mobile visualiser so it does not trap normal vertical scrolling.
 - Documented the future workflow as local code change -> GitHub -> test deploy -> verify -> fresh live backup -> live deploy, avoiding direct live editing and SiteGround clone/staging tools.
 
 ## 2026-07-06 - Launch Documentation, GitHub And Mobile Polish
@@ -159,7 +164,7 @@ Last updated: 2026-07-06
 
 - Removed the product-page mini-gallery that was rendering imported `images` data above the colour choices.
 - Traced the unwanted stock imagery to old copied export entries in `data\pages.json`, including `stock-04.jpg` and `stock-05.jpg`, then tightened generated-image validation so obvious stock/placeholder filenames are rejected.
-- Replaced the huge inline product colour block with compact `Specification choices` cards linking to colour options, obscure glass and relevant hardware decisions.
+- Replaced the huge inline product colour block with compact `Specification choices` cards linking to colour options, Obscured glass and relevant hardware decisions.
 - Added the circular interactive choice dial to the product-page `Specification choices` section, not the colour hub pages.
 - Added hardcoded virtual colour routes:
   - `/colour-options/`
@@ -214,12 +219,12 @@ Last updated: 2026-07-06
 - Added responsive contact-page styling for desktop, tablet and phone layouts.
 - Rebuilt compiled CSS/JS, linted the changed contact PHP template and verified `1440 x 900`, `768 x 1024` and `390 x 844` layouts with no horizontal overflow or console errors.
 
-## 2026-06-26 - Obscure Glass Visualiser Page
+## 2026-06-26 - Obscured glass Visualiser Page
 
-- Added a hardcoded virtual `/obscure-glass/` page in `inc\generated-pages.php` and included it in the generated sitemap virtual route list.
+- Added a hardcoded virtual `/obscured-glass/` page in `inc\generated-pages.php` and included it in the generated sitemap virtual route list.
 - Kept the page out of the main navigation.
-- Added a CTA to the generated product template's `Gallery and choices` / finish options card linking to `/obscure-glass/`.
-- Added obscure glass pattern data in `inc\site-data.php` under `obscure_glass`.
+- Added a CTA to the generated product template's `Gallery and choices` / finish options card linking to `/obscured-glass/`.
+- Added Obscured glass pattern data in `inc\site-data.php` under `obscure_glass`.
 - Converted the supplied Pilkington texture PNGs into web-friendly theme WebP assets under `assets\images\products\obscure-glass`.
 - Added the supplied colour Legend photo as `assets\team\legend-colour.webp` for the visualiser.
 - Added the supplied house background as `assets\images\products\obscure-glass\birkacre-house.webp`.
@@ -485,3 +490,4 @@ Do not use this as the primary rulebook or handover. Use:
 - Kept one continuous page gradient across the contact page.
 - Hid the repeated showroom desk panel on mobile; phone, email and quote remain in the mobile contact dock, with full showroom details in the map section.
 - Rebuilt compiled CSS/JS and verified `390 x 844`, `768 x 1024` and `1440 x 900` screenshots with no horizontal overflow or console errors.
+
