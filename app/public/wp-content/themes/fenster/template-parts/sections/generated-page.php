@@ -2706,7 +2706,7 @@ if ($is_commercial_hub) {
                     </div>
 
                     <div class="fg-composite-glass__grid" aria-label="<?php esc_attr_e('Composite door decorative glass style options', 'fenster'); ?>">
-                        <?php foreach ($product_glass_styles as $style) : ?>
+                        <?php foreach ($product_glass_styles as $index => $style) : ?>
                             <?php
                             $glass_name = trim((string) ($style['name'] ?? 'Glass style'));
                             $glass_image = trim((string) ($style['image'] ?? ''));
@@ -2714,6 +2714,7 @@ if ($is_commercial_hub) {
                             ?>
                             <?php if ($glass_name !== '') : ?>
                                 <article class="fg-composite-glass-card">
+                                    <span class="fg-composite-glass-card__number"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
                                     <?php if ($glass_image !== '') : ?>
                                         <figure>
                                             <img src="<?php echo esc_url(fenster_generated_url($glass_image)); ?>" alt="<?php echo esc_attr($glass_name . ' decorative glass for composite doors'); ?>" loading="lazy">

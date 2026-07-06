@@ -3986,9 +3986,10 @@ h3 {
 }
 
 .fg-composite-glass {
+  padding: clamp(3rem, 6vw, 5rem) 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 251, 249, 0.94)),
-    var(--color-paper);
+    radial-gradient(circle at 8% 12%, rgba(46, 172, 102, 0.16), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(246, 251, 249, 0.8));
 }
 
 .fg-composite-glass__head {
@@ -4014,28 +4015,85 @@ h3 {
 
 .fg-composite-glass__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.7rem;
+  padding: clamp(0.75rem, 1.6vw, 1rem);
+  border: 1px solid rgba(0, 45, 58, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(246, 251, 249, 0.62)),
+    rgba(255, 255, 255, 0.7);
+  box-shadow: 0 18px 48px rgba(0, 45, 58, 0.08);
+  backdrop-filter: blur(12px);
 }
 
 .fg-composite-glass-card {
+  position: relative;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-column: span 2;
+  grid-template-rows: minmax(180px, 1fr) auto;
+  min-height: 342px;
   overflow: hidden;
-  border: 1px solid var(--color-line);
+  border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 14px 38px rgba(0, 45, 58, 0.07);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), #ffffff),
+    #ffffff;
+  box-shadow: 0 14px 34px rgba(0, 45, 58, 0.07);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.fg-composite-glass-card:nth-child(1),
+.fg-composite-glass-card:nth-child(2) {
+  grid-column: span 3;
+  min-height: 390px;
+}
+
+.fg-composite-glass-card:hover,
+.fg-composite-glass-card:focus-within {
+  border-color: rgba(46, 172, 102, 0.38);
+  box-shadow: 0 24px 58px rgba(0, 45, 58, 0.13);
+  transform: translateY(-3px);
+}
+
+.fg-composite-glass-card__number {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 2;
+  display: inline-flex;
+  min-width: 2.35rem;
+  min-height: 2.35rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(0, 45, 58, 0.72);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(8px);
 }
 
 .fg-composite-glass-card figure {
-  display: grid;
-  place-items: center;
+  position: relative;
   margin: 0;
-  aspect-ratio: 1 / 0.72;
+  min-height: 0;
+  overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(0, 45, 58, 0.04), rgba(46, 172, 102, 0.08)),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.88), transparent 44%),
+    linear-gradient(135deg, rgba(0, 45, 58, 0.08), rgba(46, 172, 102, 0.1)),
     #f7fbf9;
+}
+
+.fg-composite-glass-card figure::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  background: linear-gradient(180deg, rgba(0, 45, 58, 0), rgba(0, 45, 58, 0.16));
+  pointer-events: none;
 }
 
 .fg-composite-glass-card img {
@@ -4043,18 +4101,26 @@ h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.fg-composite-glass-card:hover img,
+.fg-composite-glass-card:focus-within img {
+  transform: scale(1.035);
 }
 
 .fg-composite-glass-card div {
   display: grid;
-  gap: 0.35rem;
-  padding: 0.85rem;
+  align-content: start;
+  gap: 0.4rem;
+  min-height: 126px;
+  padding: 0.95rem;
 }
 
 .fg-composite-glass-card h3 {
   color: var(--color-steel);
-  font-size: 1rem;
-  line-height: 1.16;
+  font-size: clamp(1.08rem, 1.4vw, 1.32rem);
+  line-height: 1.08;
 }
 
 .fg-composite-glass-card p {
@@ -4066,7 +4132,7 @@ h3 {
 
 .fg-composite-glass__note {
   max-width: 920px;
-  margin: 1rem 0 0;
+  margin: 0.85rem 0 0;
   padding: 0.85rem 1rem;
   border: 1px solid rgba(46, 172, 102, 0.18);
   border-radius: 8px;
@@ -11573,50 +11639,119 @@ h3 {
 }
 
 .fg-enquiry-form__audience {
+  position: relative;
   display: grid;
-  gap: 0.85rem;
+  gap: 1rem;
   min-width: 0;
   margin: 0;
-  padding: 0;
-  border: 0;
+  padding: clamp(1.15rem, 3vw, 1.65rem);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(46, 172, 102, 0.44), transparent 34%),
+    linear-gradient(145deg, rgba(0, 45, 58, 0.98), rgba(0, 69, 76, 0.92)),
+    var(--color-steel);
+  color: #ffffff;
+  box-shadow: 0 22px 54px rgba(0, 45, 58, 0.18);
+  isolation: isolate;
+}
+
+.fg-enquiry-form__audience::after {
+  content: "";
+  position: absolute;
+  right: -3rem;
+  top: -3rem;
+  z-index: -1;
+  width: 14rem;
+  height: 14rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  opacity: 0.75;
+}
+
+.fg-enquiry-form__audience-kicker {
+  width: fit-content;
+  padding: 0.32rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .fg-enquiry-form__audience legend {
   display: block;
   color: #ffffff;
-  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  max-width: 15ch;
+  font-size: clamp(1.75rem, 3vw, 2.55rem);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 0.98;
 }
 
 .fg-enquiry-form__audience p {
-  max-width: 50ch;
+  max-width: 56ch;
   margin: 0;
-  color: rgba(255, 255, 255, 0.64);
+  color: rgba(255, 255, 255, 0.72);
   line-height: 1.5;
 }
 
 .fg-enquiry-form__audience-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
+  gap: 0.75rem;
 }
 
 .fg-enquiry-form__audience-options button {
+  position: relative;
   display: grid;
-  gap: 0.35rem;
-  min-height: 128px;
+  align-content: end;
+  gap: 0.45rem;
+  min-height: 172px;
   padding: 1rem;
+  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04)),
-    rgba(0, 45, 58, 0.28);
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.22), transparent 38%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.045));
   color: #ffffff;
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.fg-enquiry-form__audience-options button::after {
+  content: "→";
+  position: absolute;
+  right: 0.9rem;
+  top: 0.9rem;
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 850;
+  line-height: 1;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.fg-enquiry-form__audience-options b {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
 }
 
 .fg-enquiry-form__audience-options button:hover,
@@ -11624,21 +11759,46 @@ h3 {
 .fg-enquiry-form__audience-options button.is-active {
   border-color: rgba(118, 214, 159, 0.78);
   background:
-    linear-gradient(145deg, rgba(46, 172, 102, 0.24), rgba(255, 255, 255, 0.08)),
-    rgba(0, 45, 58, 0.34);
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.28), transparent 38%),
+    linear-gradient(145deg, rgba(46, 172, 102, 0.34), rgba(255, 255, 255, 0.08));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 16px 34px rgba(0, 30, 38, 0.18);
   outline: 0;
   transform: translateY(-2px);
 }
 
+.fg-enquiry-form__audience-options button:hover::after,
+.fg-enquiry-form__audience-options button:focus-visible::after,
+.fg-enquiry-form__audience-options button.is-active::after {
+  background: var(--color-accent);
+  transform: translateX(3px);
+}
+
 .fg-enquiry-form__audience-options span {
-  font-size: 1.1rem;
+  max-width: 9ch;
+  font-size: clamp(1.45rem, 3vw, 2rem);
   font-weight: 850;
+  line-height: 0.98;
 }
 
 .fg-enquiry-form__audience-options small {
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.84rem;
+  max-width: 28ch;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
   line-height: 1.42;
+}
+
+.fg-enquiry-form__audience-options i {
+  width: fit-content;
+  margin-top: 0.45rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .fg-enquiry-form__body {
@@ -11646,13 +11806,47 @@ h3 {
   gap: 1rem;
 }
 
+.fg-enquiry-form__body-head {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgba(0, 45, 58, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(46, 172, 102, 0.12), rgba(255, 255, 255, 0.72)),
+    #ffffff;
+  color: var(--color-steel);
+}
+
+.fg-enquiry-form__body-head span {
+  color: var(--color-accent-dark);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.fg-enquiry-form__body-head strong {
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  line-height: 1.05;
+}
+
+.fg-enquiry-form__body-head p {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.48;
+}
+
 .js .fg-enquiry-form--audience-gated:not(.is-audience-selected) .fg-enquiry-form__body {
   display: none;
 }
 
 .js .fg-enquiry-form--audience-gated.is-audience-selected .fg-enquiry-form__audience {
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: none;
 }
 
 .fg-enquiry-form.is-stepped .fg-enquiry-form__step-controls {
@@ -16973,6 +17167,13 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .fg-composite-glass-card,
+  .fg-composite-glass-card:nth-child(1),
+  .fg-composite-glass-card:nth-child(2) {
+    grid-column: span 1;
+    min-height: 330px;
+  }
+
   .fg-product-intel__shell,
   .fg-product-intel__lead,
   .fg-product-visuals__grid {
@@ -17385,8 +17586,16 @@ h3 {
   }
 
   .fg-composite-glass-card {
+    grid-column: 1 / -1;
     grid-template-columns: 112px minmax(0, 1fr);
     grid-template-rows: auto;
+    min-height: 178px;
+  }
+
+  .fg-composite-glass-card:nth-child(1),
+  .fg-composite-glass-card:nth-child(2) {
+    grid-column: 1 / -1;
+    min-height: 178px;
   }
 
   .fg-composite-glass-card figure {

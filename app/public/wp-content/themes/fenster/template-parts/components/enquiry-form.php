@@ -113,36 +113,31 @@ $notices = [
     <?php else : ?>
     <input type="hidden" name="project_type" value="<?php echo esc_attr((string) $args['project_type']); ?>" data-fg-project-type>
     <fieldset class="fg-enquiry-form__audience" data-fg-audience-gate>
-        <legend><?php esc_html_e('Who is this for?', 'fenster'); ?></legend>
-        <p><?php esc_html_e('Choose the route that fits your enquiry so Fenster can send it to the right team.', 'fenster'); ?></p>
+        <span class="fg-enquiry-form__audience-kicker"><?php esc_html_e('Start here', 'fenster'); ?></span>
+        <legend><?php esc_html_e('Who should handle your enquiry?', 'fenster'); ?></legend>
+        <p><?php esc_html_e('Pick the route that fits. The next screen asks for your contact details, project notes and any photos or drawings.', 'fenster'); ?></p>
         <div class="fg-enquiry-form__audience-options">
             <button type="button" data-fg-audience-choice data-project-type="Residential windows and doors" aria-pressed="false">
+                <b aria-hidden="true">01</b>
                 <span><?php esc_html_e('Homeowner', 'fenster'); ?></span>
-                <small><?php esc_html_e('Windows, doors, glass, repairs or home improvements.', 'fenster'); ?></small>
+                <small><?php esc_html_e('Windows, doors, glass, repairs or home improvements for your property.', 'fenster'); ?></small>
+                <i aria-hidden="true"><?php esc_html_e('Continue', 'fenster'); ?></i>
             </button>
             <button type="button" data-fg-audience-choice data-project-type="Commercial glazing" aria-pressed="false">
+                <b aria-hidden="true">02</b>
                 <span><?php esc_html_e('Business', 'fenster'); ?></span>
-                <small><?php esc_html_e('Commercial sites, schools, offices, shopfronts or tenders.', 'fenster'); ?></small>
+                <small><?php esc_html_e('Commercial sites, schools, offices, shopfronts, schedules or tender work.', 'fenster'); ?></small>
+                <i aria-hidden="true"><?php esc_html_e('Continue', 'fenster'); ?></i>
             </button>
         </div>
     </fieldset>
 
     <div class="fg-enquiry-form__body" data-fg-audience-body>
-    <fieldset class="fg-enquiry-form__step">
-        <legend><?php esc_html_e('Project timing', 'fenster'); ?></legend>
-        <div class="fg-enquiry-form__row">
-            <label>
-                <span><?php esc_html_e('When are you hoping to start?', 'fenster'); ?></span>
-                <select name="timescale">
-                    <option value=""><?php esc_html_e('Not sure yet', 'fenster'); ?></option>
-                    <option><?php esc_html_e('As soon as possible', 'fenster'); ?></option>
-                    <option><?php esc_html_e('Within 1-3 months', 'fenster'); ?></option>
-                    <option><?php esc_html_e('Within 3-6 months', 'fenster'); ?></option>
-                    <option><?php esc_html_e('More than 6 months', 'fenster'); ?></option>
-                </select>
-            </label>
-        </div>
-    </fieldset>
+    <div class="fg-enquiry-form__body-head">
+        <span><?php esc_html_e('Step 2 of 2', 'fenster'); ?></span>
+        <strong><?php esc_html_e('Tell us the basics.', 'fenster'); ?></strong>
+        <p><?php esc_html_e('A few useful details are enough. Fenster can confirm the exact specification after survey.', 'fenster'); ?></p>
+    </div>
 
     <fieldset class="fg-enquiry-form__step">
         <legend><?php esc_html_e('Your contact details', 'fenster'); ?></legend>
