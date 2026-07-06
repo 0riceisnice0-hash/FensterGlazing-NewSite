@@ -1029,7 +1029,7 @@ document.querySelectorAll('[data-fg-aw-story]').forEach((story) => {
     const coverScale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
     const drawWidth = image.naturalWidth * coverScale;
     const drawHeight = image.naturalHeight * coverScale;
-    const mobileHorizontalOffset = window.matchMedia('(max-width: 860px)').matches ? width * 0.04 : 0;
+    const mobileHorizontalOffset = window.matchMedia('(max-width: 860px)').matches ? width * -0.05 : 0;
     context.drawImage(image, ((width - drawWidth) / 2) + mobileHorizontalOffset, (height - drawHeight) / 2, drawWidth, drawHeight);
   };
 
