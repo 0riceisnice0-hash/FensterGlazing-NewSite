@@ -663,6 +663,8 @@ function fenster_redirect_target(string $slug): string
         'enquire-now' => 'online-quote',
         'instant-pricing' => 'online-quote',
         'obscure-glass' => 'obscured-glass',
+        'upvc-colours' => 'colour-options',
+        'aluminium-colours' => 'colour-options',
         'door-designer' => 'online-quote',
     ];
 

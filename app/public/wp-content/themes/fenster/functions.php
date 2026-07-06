@@ -19,6 +19,7 @@ $fenster_required_files = [
     'inc/site-data.php',
     'inc/product-hub-data.php',
     'inc/setup.php',
+    'inc/security.php',
     'inc/assets.php',
     'inc/template-tags.php',
     'inc/enquiries.php',
