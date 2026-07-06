@@ -583,9 +583,14 @@ function fenster_generated_url(string $url): string
 
     $parsed = wp_parse_url($url);
     $host = strtolower($parsed['host'] ?? '');
+    $path = (string) ($parsed['path'] ?? $url);
+    $theme_asset_prefix = '/wp-content/themes/fenster/';
+
+    if (str_starts_with($path, $theme_asset_prefix)) {
+        return FENSTER_THEME_URI . '/' . ltrim(substr($path, strlen($theme_asset_prefix)), '/');
+    }
 
     if (in_array($host, ['fensterglazing.com', 'www.fensterglazing.com', 'test.fensterglazing.com'], true)) {
-        $path = $parsed['path'] ?? '/';
         return home_url($path);
     }
 
