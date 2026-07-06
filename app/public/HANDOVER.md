@@ -19,8 +19,8 @@ Use:
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Deployment should update the `fenster` theme from the GitHub repo while leaving production `.env`, Bedrock config, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
-- Test and live are both running the new `fenster` theme. Keep using the same workflow for changes: local edit -> GitHub -> test deploy -> verify -> fresh live backup -> live deploy -> short post-live check.
-- Do not use SiteGround clone/staging tools for this project. The safe model is local -> GitHub -> test -> verify -> backup -> live. This avoids editing test and live at the same time and avoids accidental database URL rewrites.
+- Test and live are both running the new `fenster` theme. Small, scoped changes can go local edit -> build/lint -> commit/push -> live deploy -> verify. Bigger layout/template/routing/form/SEO changes should still go local -> GitHub -> test -> verify -> backup -> live.
+- Do not use SiteGround clone/staging tools for this project. The safe model is theme-only deploys from GitHub, using direct live for small low-risk edits and test-first for bigger or riskier changes. This avoids editing test and live at the same time and avoids accidental database URL rewrites.
 - Generated pages are theme-owned for SEO. Yoast/Rank Math public head output is suppressed on generated pages to prevent duplicate metadata and stale imported schema/social tags. Do not reset Rank Math for launch; use it only later if there is a clear admin-tool reason.
 - Launch SEO hardening is complete for the current technical blockers: homepage title/meta override, generated route 301 normalisation, generated breadcrumb schema, public cache headers, sitemap scrub to 421 currently verified canonical URLs, `/commercial-areas/` removed from the header, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
 - The stale pre-launch audit was rechecked on live on 2026-07-06. Current verified state: social metadata is theme-owned and clean, `lang="en-GB"` is active, `/upvc-colours/` and `/aluminium-colours/` redirect to `/colour-options/`, public REST user enumeration returns 401, WordPress generator/RSD/oEmbed/wp-json/shortlink head links are stripped, and the theme sitemap is served before Rank Math with 421 canonical URLs.
@@ -89,7 +89,7 @@ Accepted deploy model:
 
 For future live changes, use the same route. Do not edit live files directly except for a genuine emergency, and if that happens, copy the emergency fix back into GitHub immediately.
 
-During the final launch-polish phase the owner has approved small direct live hotfixes after local build/lint and GitHub push when the change is urgent. Even then, GitHub remains the source of truth: commit first, push, deploy the theme-only rsync to live, flush cache, and verify the changed route.
+The owner has approved direct live deploys for small, scoped, low-risk changes after local build/lint and GitHub push. Bigger changes still go to test first. GitHub remains the source of truth either way: commit first, push, deploy the theme-only rsync to the chosen target, flush cache, and verify the changed route.
 
 ## Main Theme Map
 

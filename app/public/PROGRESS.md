@@ -2,6 +2,10 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Deploy Policy Clarification
+
+- Updated `AI.md`, `HANDOVER.md` and `LIVECHANGES.md` with the owner's deployment preference: small, scoped, low-risk changes can go directly from local checks/GitHub to live, while bigger layout/template/routing/form/SEO changes should still use test first and then live verification.
+
 ## 2026-07-06 - Cat And Dog Flaps Page Rewrite
 
 - Rebuilt `/cat-and-dog-flaps/` at the generated-page source after the imported scrape title and copy produced bad output such as "Need Cat and Dog Flaps?" and double-question headings.

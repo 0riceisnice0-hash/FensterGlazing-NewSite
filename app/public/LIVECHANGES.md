@@ -7,7 +7,7 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live commit after this update: `aff62a0` (`Fix article CTA form layout`). Check `git log --oneline -8` before assuming this is still current.
+- Latest known deployed live commit after this update: check `git log --oneline -8` and confirm against the live theme before assuming this line is current.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
@@ -38,15 +38,15 @@ Do not replace the whole WordPress install. Do not upload WordPress core. Do not
 3. PHP-lint changed PHP files.
 4. Check `git diff` and keep the change scoped.
 5. Commit and push to GitHub `main`.
-6. Deploy to test first unless the owner explicitly approves a direct live hotfix.
-7. Verify test visually and technically.
-8. Confirm there is a fresh live backup before live deploy.
+6. For small, scoped changes, deploy the committed theme directly to live when the local checks have passed and the owner has not asked for a test stop.
+7. For bigger changes, especially new layouts, shared templates, routing, SEO output, forms or broad visual work, deploy to test first and verify visually and technically.
+8. Confirm there is a fresh live backup before deploying larger verified changes from test to live.
 9. Deploy the same committed theme to live.
 10. Flush cache and verify the changed pages.
 
 If a change touches forms, SEO output, redirects, sitemaps, generated routing, enquiry email, or global header/footer behaviour, treat it as higher risk and verify more pages.
 
-Direct-to-live hotfixes are acceptable only when the owner explicitly asks to move fast or the change is small/urgent. Even then, do not edit live files by hand: local edit, build/lint, commit, push, deploy the theme-only live rsync, flush cache, then verify.
+Direct-to-live is acceptable for small, low-risk edits after local build/lint and GitHub push. Do not edit live files by hand: local edit, build/lint, commit, push, deploy the theme-only live rsync, flush cache, then verify. Bigger layout/template/routing changes should still go through test first unless the owner explicitly overrides that for the current task.
 
 ## Commands Codex Has Been Using
 
