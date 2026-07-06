@@ -740,7 +740,7 @@ $hero_copy = $service['opening'] . ' ' . $copy_variant['hero_join'] . ' ' . $tow
 $intro_copy = $town_profile['intro'] . ' We help you compare ' . $product_profile['choices'] . ' so the survey can confirm exact sizes and fitting details.';
 
 $hero_trust_messages = [
-    ['title' => '200+ five-star reviews', 'copy' => 'Rated by customers across Google.', 'item' => $trust_items[0] ?? null],
+    ['title' => 'Hundreds of customer reviews', 'copy' => 'Feedback across Google and Trustpilot.', 'item' => $trust_items[0] ?? null],
     ['title' => 'Rated Excellent', 'copy' => 'Independent feedback on Trustpilot.', 'item' => $trust_items[1] ?? null],
     ['title' => 'FENSA approved', 'copy' => 'Registered window and door installations.', 'item' => $trust_items[2] ?? null],
     ['title' => 'Insurance-backed protection', 'copy' => 'Supported by the Consumer Protection Association.', 'item' => $trust_items[3] ?? null],

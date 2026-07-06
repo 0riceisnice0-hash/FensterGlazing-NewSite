@@ -400,6 +400,91 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
+    if ($slug === 'privacy-policy') {
+        return $page_cache[$slug] = [
+            'slug' => 'privacy-policy',
+            'title' => 'Privacy Policy',
+            'url' => home_url('/privacy-policy/'),
+            'seo' => [
+                'title_tag' => 'Privacy Policy | Fenster Glazing',
+                'meta_description' => 'How Fenster Glazing collects, uses and protects personal information from enquiries, quote tools, cookies, analytics and customer communications.',
+                'canonical' => 'https://fensterglazing.com/privacy-policy/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [
+                [
+                    'heading' => 'Who this privacy policy is for',
+                    'body' => [
+                        'This privacy policy explains how Fenster Glazing uses personal information when you visit the website, contact the team, submit an enquiry, use the online quote or WindowCAD tool, request a survey, send project details or become a customer.',
+                        'Fenster Glazing is based in Milton Keynes and provides window, door, glazing, repair and commercial glazing services. If you have a question about this policy or your data, contact the team using the details on the Contact page.',
+                    ],
+                ],
+                [
+                    'heading' => 'Information you may give Fenster',
+                    'body' => [
+                        'You may give Fenster information such as your name, email address, phone number, postcode, address, company name, project type, timescale, message, drawings, schedules, photos or other files that help the team understand your enquiry.',
+                        'If you use the online quote or WindowCAD tool, the details you enter into that tool may be sent to Fenster so the team can follow up, check the specification and manage the lead.',
+                    ],
+                ],
+                [
+                    'heading' => 'How Fenster uses your information',
+                    'body' => [
+                        'Fenster uses enquiry and project information to respond to your request, prepare quotations, arrange surveys, discuss products, manage orders, provide installation or repair services, handle aftercare and keep appropriate business records.',
+                        'Fenster may also use information to improve the website, understand which pages and services are useful, prevent spam or misuse, and meet legal, tax, insurance or regulatory obligations.',
+                    ],
+                ],
+                [
+                    'heading' => 'Lead systems and service providers',
+                    'body' => [
+                        'Website enquiries are stored securely in WordPress as private enquiry records and may be emailed to the Fenster team. Leads from the online quote or WindowCAD tool may also be passed into AdminBase so the business can manage follow-up and customer records.',
+                        'Fenster may use trusted service providers for website hosting, email delivery, analytics, CRM, quote tools, payment administration, file storage, IT support or similar business operations. These providers should only use information as needed to provide their service to Fenster.',
+                    ],
+                ],
+                [
+                    'heading' => 'Cookies, analytics and tracking',
+                    'body' => [
+                        'The website uses necessary cookies for basic site functions. Optional analytics and marketing tools, such as Google Tag Manager, Microsoft Clarity or Meta Pixel, should only run after you accept optional cookies through the site cookie banner.',
+                        'Analytics tools can help Fenster understand page views, clicks, scroll behaviour, quote-tool use and form performance. Marketing tools may help measure advertising performance. You can reject optional cookies and still use the website.',
+                    ],
+                ],
+                [
+                    'heading' => 'Legal reasons for using information',
+                    'body' => [
+                        'Fenster usually uses enquiry information because it is necessary to respond before entering into a contract, to perform a contract, or because Fenster has a legitimate interest in managing customer enquiries and business records.',
+                        'Where optional analytics or marketing cookies are used, Fenster relies on your consent. You can change your cookie choice using the cookie settings control on the website where available.',
+                    ],
+                ],
+                [
+                    'heading' => 'How long information is kept',
+                    'body' => [
+                        'Fenster keeps enquiry, quotation, order, installation and aftercare records only for as long as they are reasonably needed for customer service, accounting, warranty, insurance, legal or business administration purposes.',
+                        'Uploaded files, drawings and project photos may be kept with the related enquiry or customer record where they are needed to understand the project, quote, installation or aftercare history.',
+                    ],
+                ],
+                [
+                    'heading' => 'Your rights',
+                    'body' => [
+                        'Depending on the situation, you may have rights to ask for a copy of your personal information, ask for corrections, ask for deletion, object to certain use, restrict processing, or withdraw consent for optional tracking.',
+                        'To make a privacy request, contact Fenster with enough information to identify you and the enquiry or project involved. You also have the right to complain to the UK Information Commissioner if you are unhappy with how your information is handled. The ICO website is ico.org.uk.',
+                    ],
+                ],
+                [
+                    'heading' => 'Keeping this policy current',
+                    'body' => [
+                        'This policy may be updated when the website, lead systems, cookie tools, analytics setup or business processes change. The latest version should always be available from the website footer.',
+                        'Last updated: 6 July 2026.',
+                    ],
+                ],
+            ],
+            'images' => [],
+            'links' => [
+                ['text' => 'Contact Fenster', 'url' => home_url('/contact/')],
+                ['text' => 'Terms and Conditions', 'url' => home_url('/terms-conditions/')],
+                ['text' => 'Start a quote', 'url' => home_url('/online-quote/')],
+            ],
+        ];
+    }
+
     if ($slug === 'terms-conditions') {
         return $page_cache[$slug] = [
             'slug' => 'terms-conditions',

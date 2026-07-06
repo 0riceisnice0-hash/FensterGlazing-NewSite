@@ -35,12 +35,12 @@ if (empty($reviews)) {
                     <span class="fg-review-showcase__google" role="img" aria-label="<?php esc_attr_e('Google', 'fenster'); ?>">
                         <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
                     </span>
-                    <b><?php esc_html_e('130 reviews', 'fenster'); ?></b>
+                    <b><?php esc_html_e('Customer reviews', 'fenster'); ?></b>
                 </span>
                 <span class="fg-review-showcase__source-pill fg-review-showcase__source-pill--trustpilot">
                     <span class="fg-review-showcase__trustpilot-mark" aria-hidden="true">★</span>
                     <span class="fg-review-showcase__trustpilot-word"><?php esc_html_e('Trustpilot', 'fenster'); ?></span>
-                    <b><?php esc_html_e('226 reviews', 'fenster'); ?></b>
+                    <b><?php esc_html_e('Customer reviews', 'fenster'); ?></b>
                 </span>
             </div>
         </header>

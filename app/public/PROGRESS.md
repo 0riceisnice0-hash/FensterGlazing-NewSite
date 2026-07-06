@@ -2,6 +2,11 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Reviews Copy And Privacy Policy Cleanup
+
+- Replaced hardcoded review-count claims such as `200+ five-star reviews`, `Google 130 reviews` and `Trustpilot 226 reviews` with stable wording around hundreds of customer reviews across Google and Trustpilot.
+- Rebuilt `/privacy-policy/` as a theme-owned virtual page with clean title/meta and current plain-English content covering enquiries, uploads, WindowCAD, AdminBase, cookies, analytics, retention and customer rights.
+
 ## 2026-07-06 - Test Domain Deindex Hardening
 
 - Rechecked `test.fensterglazing.com` after it appeared in Google results despite Basic Auth.

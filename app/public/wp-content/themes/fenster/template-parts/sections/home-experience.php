@@ -39,7 +39,7 @@ $trust_items = is_array($args['trust_items']) ? $args['trust_items'] : [];
 $hero_poster = $asset_base . 'home-hero-poster.jpg';
 
 $trust_messages = [
-    ['title' => '200+ five-star reviews', 'copy' => 'Rated by customers across Google.', 'item' => $trust_items[0] ?? null],
+    ['title' => 'Hundreds of customer reviews', 'copy' => 'Feedback across Google and Trustpilot.', 'item' => $trust_items[0] ?? null],
     ['title' => 'Rated Excellent', 'copy' => 'Independent feedback on Trustpilot.', 'item' => $trust_items[1] ?? null],
     ['title' => 'FENSA approved', 'copy' => 'Registered window and door installations.', 'item' => $trust_items[2] ?? null],
     ['title' => 'Insurance-backed protection', 'copy' => 'Supported by the Consumer Protection Association.', 'item' => $trust_items[3] ?? null],

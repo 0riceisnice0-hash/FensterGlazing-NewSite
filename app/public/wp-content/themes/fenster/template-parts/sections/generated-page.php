@@ -420,7 +420,7 @@ $stats = $is_commercial
     : [
         ['value' => '10 year', 'label' => 'insurance-backed guarantee'],
         ['value' => '1,000+', 'label' => 'installations completed'],
-        ['value' => '200+', 'label' => 'five-star reviews'],
+        ['value' => '100s', 'label' => 'of customer reviews'],
     ];
 
 $cta_label = $is_commercial ? 'Discuss a commercial project' : 'Start your design consultation';
@@ -2164,8 +2164,8 @@ if ($is_commercial_hub) {
                     <small><?php esc_html_e('installations completed', 'fenster'); ?></small>
                 </div>
                 <div class="fg-home-proof__metric">
-                    <span>200+</span>
-                    <small><?php esc_html_e('five-star reviews', 'fenster'); ?></small>
+                    <span>100s</span>
+                    <small><?php esc_html_e('of customer reviews', 'fenster'); ?></small>
                 </div>
                 <div class="fg-home-proof__logos">
                     <?php foreach ($trust_items as $item) : ?>
