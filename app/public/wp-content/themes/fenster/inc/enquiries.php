@@ -69,7 +69,7 @@ function fenster_enquiry_recipient(): string
         return (string) FENSTER_ENQUIRY_EMAIL;
     }
 
-    return (string) apply_filters('fenster_enquiry_recipient', 'info@fensterglazing.com');
+    return (string) apply_filters('fenster_enquiry_recipient', 'Fenster Glazing <info@fensterglazing.com>');
 }
 
 function fenster_mail_config_value(string $key, string $default = ''): string
@@ -84,6 +84,21 @@ function fenster_mail_config_value(string $key, string $default = ''): string
     }
 
     return $default;
+}
+
+function fenster_smtp_is_configured(): bool
+{
+    return fenster_mail_config_value('FENSTER_SMTP_HOST') !== '';
+}
+
+function fenster_enquiry_office_subject(array $data): string
+{
+    $project = strtolower((string) ($data['project_type'] ?? ''));
+    if (str_contains($project, 'commercial')) {
+        return sprintf('New Commercial Enquiry from %s', $data['name']);
+    }
+
+    return sprintf('New Residential Enquiry from %s', $data['name']);
 }
 
 add_action('phpmailer_init', 'fenster_configure_smtp');
@@ -303,31 +318,31 @@ function fenster_process_enquiry(): array|WP_Error
     $recipient = fenster_enquiry_recipient();
     $office_headers = [
         'Content-Type: text/html; charset=UTF-8',
-        'From: Fenster Lead Alerts <info@fensterglazing.com>',
-        'Reply-To: Fenster Glazing <info@fensterglazing.com>',
-        'X-Fenster-Enquiry-ID: ' . (int) $enquiry_id,
+        'From: WordPress <wordpress@fensterglazing.com>',
     ];
-    $office_subject = sprintf('LEAD ALERT - %s - %s', $data['project_type'], $data['name']);
     $office_sent = wp_mail(
         $recipient,
-        $office_subject,
+        fenster_enquiry_office_subject($data),
         fenster_enquiry_office_email($data, (int) $enquiry_id),
         $office_headers
     );
     update_post_meta($enquiry_id, '_fenster_email_sent', $office_sent ? '1' : '0');
     update_post_meta($enquiry_id, '_fenster_email_recipient', $recipient);
 
-    $customer_headers = [
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Fenster Glazing <info@fensterglazing.com>',
-        'Reply-To: Fenster Glazing <info@fensterglazing.com>',
-    ];
-    $confirmation_sent = wp_mail(
-        $data['email'],
-        'We received your Fenster Glazing enquiry',
-        fenster_enquiry_customer_email($data),
-        $customer_headers
-    );
+    $confirmation_sent = false;
+    if (fenster_smtp_is_configured()) {
+        $customer_headers = [
+            'Content-Type: text/html; charset=UTF-8',
+            'From: Fenster Glazing <info@fensterglazing.com>',
+            'Reply-To: Fenster Glazing <info@fensterglazing.com>',
+        ];
+        $confirmation_sent = wp_mail(
+            $data['email'],
+            'We received your Fenster Glazing enquiry',
+            fenster_enquiry_customer_email($data),
+            $customer_headers
+        );
+    }
     update_post_meta($enquiry_id, '_fenster_confirmation_sent', $confirmation_sent ? '1' : '0');
 
     do_action('fenster_enquiry_created', $enquiry_id, $meta, $data['message']);
@@ -335,7 +350,7 @@ function fenster_process_enquiry(): array|WP_Error
     return [
         'status' => 'success',
         'message' => 'Thanks — your enquiry has been received.',
-        'copy' => 'Your project details are safely with the Fenster team. We have also sent a confirmation to ' . $data['email'] . '.',
+        'copy' => 'Your project details are safely with the Fenster team.',
         'enquiry_id' => (int) $enquiry_id,
         'office_email_sent' => $office_sent,
         'confirmation_sent' => $confirmation_sent,
