@@ -53,11 +53,16 @@ $steps = [
                         <a class="button fg-quote-hero__mobile-open" href="<?php echo esc_url($instant_quote_url); ?>"><?php esc_html_e('Open quote tool', 'fenster'); ?></a>
                     </div>
                 </div>
-                <div class="fg-quote-hero__embed-frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($instant_quote_url); ?>">
+                <div class="fg-quote-hero__embed-frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($instant_quote_url); ?>" data-quote-autoload="idle">
+                    <div class="fg-quote-frame-placeholder">
+                        <strong><?php esc_html_e('Instant quote tool', 'fenster'); ?></strong>
+                        <span><?php esc_html_e('The designer loads after the page settles, or you can open it now.', 'fenster'); ?></span>
+                        <button class="button" type="button" data-load-quote><?php esc_html_e('Load quote tool', 'fenster'); ?></button>
+                    </div>
                     <iframe
-                        src="<?php echo esc_url($instant_quote_url); ?>"
+                        data-quote-iframe-src="<?php echo esc_url($instant_quote_url); ?>"
                         title="<?php esc_attr_e('Fenster instant quote tool', 'fenster'); ?>"
-                        loading="eager"
+                        loading="lazy"
                         allow="fullscreen"
                         referrerpolicy="no-referrer-when-downgrade"
                     ></iframe>

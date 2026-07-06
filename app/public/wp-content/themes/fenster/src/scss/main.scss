@@ -1681,12 +1681,36 @@ h3 {
     #ffffff;
 }
 
-.fg-product-quote-embed__placeholder p {
-  max-width: 28rem;
-  margin: 0;
+.fg-quote-frame-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.7rem;
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--color-steel);
+  background:
+    linear-gradient(135deg, rgba(0, 45, 58, 0.05), rgba(46, 172, 102, 0.08)),
+    #ffffff;
 }
 
-.fg-product-quote-embed__frame.is-loaded .fg-product-quote-embed__placeholder {
+.fg-quote-frame-placeholder strong {
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  line-height: 1.08;
+}
+
+.fg-quote-frame-placeholder span {
+  max-width: 28rem;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.fg-product-quote-embed__frame.is-loaded .fg-product-quote-embed__placeholder,
+.fg-home-quote-station__preview.is-loaded .fg-quote-frame-placeholder,
+.fg-quote-hero__embed-frame.is-loaded .fg-quote-frame-placeholder {
   display: none;
 }
 
@@ -14599,6 +14623,7 @@ h3 {
 }
 
 .fg-quote-hero__embed-frame {
+  position: relative;
   overflow: hidden;
   height: clamp(420px, 62vh, 680px);
   min-height: 0;

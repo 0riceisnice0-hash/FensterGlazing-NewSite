@@ -980,6 +980,31 @@ document.querySelectorAll('[data-fg-case-steps]').forEach((stepper) => {
 
 const scrollVideoBlocks = [...document.querySelectorAll('[data-scroll-video]')];
 
+const runWhenIdle = (callback, timeout = 1200) => {
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(callback, { timeout });
+    return;
+  }
+
+  window.setTimeout(callback, Math.min(timeout, 900));
+};
+
+document.querySelectorAll('video[data-fg-lazy-video]').forEach((video) => {
+  const loadVideo = () => {
+    if (video.dataset.loaded === 'true') return;
+
+    video.querySelectorAll('source[data-src]').forEach((source) => {
+      source.src = source.dataset.src;
+      source.removeAttribute('data-src');
+    });
+    video.dataset.loaded = 'true';
+    video.load();
+    video.play?.().catch(() => {});
+  };
+
+  window.addEventListener('load', () => runWhenIdle(loadVideo, 1800), { once: true });
+});
+
 document.querySelectorAll('[data-fg-aw-story]').forEach((story) => {
   const canvas = story.querySelector('[data-fg-aw-story-canvas]');
   const panels = [...story.querySelectorAll('[data-fg-aw-story-panel]')];
@@ -1089,7 +1114,9 @@ document.querySelectorAll('[data-fg-aw-story]').forEach((story) => {
     loadFrame(0, true);
 
     // Load an evenly-spaced skeleton first so rapid scrolling always has a nearby frame.
-    for (let index = 12; index < frameCount; index += 12) loadFrame(index);
+    if (story.getBoundingClientRect().top < window.innerHeight * 1.2) {
+      for (let index = 24; index < frameCount; index += 24) loadFrame(index);
+    }
   };
 
   const handleScroll = () => {
@@ -1189,7 +1216,7 @@ document.querySelectorAll('[data-fg-product-video-final]').forEach((finalVideo) 
 
   finalVideo.muted = true;
   finalVideo.playsInline = true;
-  finalVideo.preload = 'auto';
+  finalVideo.preload = 'metadata';
 
   try {
     finalVideo.load();
@@ -1340,6 +1367,49 @@ const loadQuoteFrame = (frameWrap) => {
   frameWrap.classList.add('is-loaded');
 };
 
+const scheduleQuoteFrameLoad = (frameWrap, delay = 0) => {
+  if (!frameWrap || frameWrap.dataset.quoteLoadScheduled === 'true') return;
+
+  frameWrap.dataset.quoteLoadScheduled = 'true';
+  const load = () => loadQuoteFrame(frameWrap);
+
+  if (delay > 0) {
+    window.setTimeout(() => runWhenIdle(load, 1600), delay);
+    return;
+  }
+
+  runWhenIdle(load, 1400);
+};
+
+const quoteAutoloadFrames = [...document.querySelectorAll('[data-quote-frame-wrap][data-quote-autoload]')];
+
+if ('IntersectionObserver' in window) {
+  const quoteFrameObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+
+      scheduleQuoteFrameLoad(entry.target);
+      quoteFrameObserver.unobserve(entry.target);
+    });
+  }, {
+    rootMargin: '280px 0px',
+    threshold: 0.01,
+  });
+
+  quoteAutoloadFrames.forEach((frameWrap) => {
+    if (frameWrap.dataset.quoteAutoload === 'idle') {
+      scheduleQuoteFrameLoad(frameWrap, 900);
+      return;
+    }
+
+    quoteFrameObserver.observe(frameWrap);
+  });
+} else {
+  quoteAutoloadFrames.forEach((frameWrap) => {
+    scheduleQuoteFrameLoad(frameWrap, frameWrap.dataset.quoteAutoload === 'idle' ? 900 : 0);
+  });
+}
+
 const quoteTouchQuery = window.matchMedia('(max-width: 860px)');
 let quoteTouchLockTimer = 0;
 let quoteTouchScrollY = 0;
@@ -1401,7 +1471,9 @@ quoteTouchQuery.addEventListener?.('change', () => {
 document.querySelectorAll('[data-load-quote]').forEach((quoteLoadButton) => {
   quoteLoadButton.addEventListener('click', () => {
     const quoteCard = quoteLoadButton.closest('[data-quote-card]') || quoteLoadButton.closest('section') || document;
-    const frameWrap = quoteCard.querySelector('[data-quote-frame-wrap]');
+    const frameWrap = quoteCard.matches?.('[data-quote-frame-wrap]')
+      ? quoteCard
+      : quoteCard.querySelector('[data-quote-frame-wrap]');
 
     loadQuoteFrame(frameWrap);
   });

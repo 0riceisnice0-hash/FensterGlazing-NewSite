@@ -3180,9 +3180,13 @@ if ($is_commercial_hub) {
                             <a class="button fg-product-quote-embed__mobile-open" href="<?php echo esc_url($product_quote_embed_url); ?>"><?php esc_html_e('Open quote tool', 'fenster'); ?></a>
                         </div>
                     </div>
-                    <div class="fg-product-quote-embed__frame is-loaded" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($product_quote_embed_url); ?>">
+                    <div class="fg-product-quote-embed__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($product_quote_embed_url); ?>" data-quote-autoload="near">
+                        <div class="fg-quote-frame-placeholder fg-product-quote-embed__placeholder">
+                            <strong><?php esc_html_e('Instant quote tool', 'fenster'); ?></strong>
+                            <span><?php esc_html_e('Loads when you reach this section, or tap to open it now.', 'fenster'); ?></span>
+                            <button class="button" type="button" data-load-quote><?php esc_html_e('Load quote tool', 'fenster'); ?></button>
+                        </div>
                         <iframe
-                            src="<?php echo esc_url($product_quote_embed_url); ?>"
                             data-quote-iframe-src="<?php echo esc_url($product_quote_embed_url); ?>"
                             title="<?php echo esc_attr($product_quote_embed_label . ' instant quote tool'); ?>"
                             loading="lazy"

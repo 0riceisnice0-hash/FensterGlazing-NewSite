@@ -104,8 +104,8 @@ $location_links = [
 <article class="generated-page generated-page--home-lab">
     <section class="fg-home-hero" data-fg-home-hero aria-label="<?php esc_attr_e('Fenster Glazing homepage hero', 'fenster'); ?>">
         <?php if ($sick_video !== '') : ?>
-            <video class="fg-home-hero__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url(fenster_generated_url($asset_base . 'home-hero-poster.jpg')); ?>">
-                <source src="<?php echo esc_url($sick_video); ?>" type="video/mp4">
+            <video class="fg-home-hero__video" autoplay muted loop playsinline preload="none" poster="<?php echo esc_url(fenster_generated_url($asset_base . 'home-hero-poster.jpg')); ?>" data-fg-lazy-video>
+                <source data-src="<?php echo esc_url($sick_video); ?>" type="video/mp4">
             </video>
         <?php endif; ?>
         <div class="fg-home-hero__shade"></div>
@@ -180,7 +180,7 @@ $location_links = [
                                 data-fg-product-visual="<?php echo esc_attr((string) $index); ?>"
                                 src="<?php echo esc_url(fenster_generated_url($route['image'])); ?>"
                                 alt=""
-                                loading="eager"
+                                loading="<?php echo esc_attr($index === 0 ? 'eager' : 'lazy'); ?>"
                                 decoding="async"
                                 fetchpriority="<?php echo esc_attr($index === 0 ? 'high' : 'auto'); ?>">
                         <?php endforeach; ?>
@@ -226,9 +226,9 @@ $location_links = [
                 aria-roledescription="<?php esc_attr_e('carousel', 'fenster'); ?>"
                 aria-label="<?php esc_attr_e('Fenster product range', 'fenster'); ?>">
                 <div class="fg-home-product-theatre__mobile-track" aria-label="<?php esc_attr_e('Swipe through Fenster products', 'fenster'); ?>">
-                    <?php foreach ($product_routes as $route) : ?>
+                    <?php foreach ($product_routes as $index => $route) : ?>
                         <a class="fg-home-product-theatre__mobile-card" href="<?php echo esc_url($route['url']); ?>">
-                            <img src="<?php echo esc_url(fenster_generated_url($route['image'])); ?>" alt="<?php echo esc_attr($route['label']); ?>" loading="eager" decoding="async">
+                            <img src="<?php echo esc_url(fenster_generated_url($route['image'])); ?>" alt="<?php echo esc_attr($route['label']); ?>" loading="<?php echo esc_attr($index === 0 ? 'eager' : 'lazy'); ?>" decoding="async" fetchpriority="<?php echo esc_attr($index === 0 ? 'high' : 'auto'); ?>">
                             <div>
                                 <span><?php echo esc_html($route['best_for']); ?></span>
                                 <strong><?php echo esc_html($route['label']); ?></strong>
@@ -266,9 +266,14 @@ $location_links = [
                 <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                 <a class="button button--light" href="<?php echo esc_url($instant_quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
             </div>
-            <div class="fg-home-quote-station__preview" data-lenis-prevent>
+            <div class="fg-home-quote-station__preview" data-quote-frame-wrap data-quote-card data-lenis-prevent data-quote-url="<?php echo esc_url($instant_quote_url); ?>" data-quote-autoload="near">
+                <div class="fg-quote-frame-placeholder">
+                    <strong><?php esc_html_e('Instant quote tool', 'fenster'); ?></strong>
+                    <span><?php esc_html_e('Loads when you reach this section, or tap to open it now.', 'fenster'); ?></span>
+                    <button class="button" type="button" data-load-quote><?php esc_html_e('Load quote tool', 'fenster'); ?></button>
+                </div>
                 <iframe
-                    src="<?php echo esc_url($instant_quote_url); ?>"
+                    data-quote-iframe-src="<?php echo esc_url($instant_quote_url); ?>"
                     title="<?php esc_attr_e('Fenster instant quote tool', 'fenster'); ?>"
                     loading="lazy"
                     allow="fullscreen"
