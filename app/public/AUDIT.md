@@ -1,7 +1,7 @@
 # Fenster Glazing — Master Site Audit
 
 Audit date: 2026-07-03
-Last updated: 2026-07-06 (GitHub upload, live theme deploy, launch SEO hardening, office forms verified, mobile product QA notes)
+Last updated: 2026-07-06 (GitHub upload, live theme deploy, launch SEO hardening, office forms verified, mobile product QA fixes)
 Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rendered local site output, SEO surface, performance, UX, conversion path.
 
 **How to read this:** issues are grouped by severity. "Critical" items either lose leads directly, will break at launch, or actively damage Google's view of the site. Each item says where the problem lives so it can be fixed quickly. Items resolved since the original audit are marked **✅ FIXED** with a note on what was done; full detail is in `PROGRESS.md` (2026-07-03 entry).
@@ -19,7 +19,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Optional enquiry file uploads are supported for photos, drawings, schedules and documents; uploads are attached to the private enquiry and office email.
 - Residential case studies are intentionally inaccessible for launch: `/case-studies/` and known residential child routes return 410 and are excluded from the sitemap until the content is rebuilt. Commercial project records remain reachable for `/commercial-projects/`.
 - The privacy-glass route is now `/obscured-glass/`; `/obscure-glass/` redirects there.
-- Phone QA has identified mobile product-template issues to fix next: product common-choice controls can overflow the viewport on `/casement-windows/`, colour hub hero imagery should be removed/simplified on mobile, `/sliding-sash-windows/` model/spec/detail sections need a mobile redesign, product hub supplier logos are visually oversized, and multi-option product controls need clearer discoverability.
+- Phone QA product-template fixes are now deployed: product common-choice controls are viewport-contained on mobile, the product hub tab rail has a swipe affordance, supplier/proof logos are constrained, `/colour-options/` hides the hero visual on mobile, and `/sliding-sash-windows/` has tighter mobile model/spec/detail image layouts.
 
 ## Remediation Status (2026-07-03)
 
@@ -50,6 +50,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Residential location matrix metadata has been de-duplicated: all 273 town x product pages now generate unique meta descriptions from town and product profiles; a local crawl confirmed 273 unique descriptions, zero duplicate groups and zero fetch errors.
 - The launch SEO hardening pass removed the public `/commercial-areas/` header shortcut, added footer links to `/areas-we-cover/` and `/terms-conditions/`, replaced the inherited homepage title/meta, added breadcrumb schema on generated deep pages, normalised generated URL casing/trailing slashes with 301s, set public cache headers for generated pages/sitemaps, and removed thin utility pages from the sitemap via `noindex,follow`. Local verification shows 427 sitemap URLs after the scrub.
 - Mobile launch polish fixed the About process-card padding, Contact page CTA readability/overlap, and mobile quote-tool action model. Mobile quote embeds now use one same-tab `Open quote tool` action instead of showing desktop expand/new-tab controls.
+- Mobile product-template polish fixed the reported `/casement-windows/` product hub overflow, balanced product-hub badge sizing, added clearer multi-option discovery, hid the weak colour-hub hero visual on mobile, and tightened Roseview sash comparison/detail layouts for phones.
 - SiteGround test deployment proved the launch path: the server repo cache pulls from GitHub, then the theme folder is copied into the Bedrock `web/app/themes/fenster` directory. Bedrock asset URL handling, aluminium story frames, WindowCAD iframe scale, and form email delivery have all been verified on test.
 
 ## Pre-Launch Re-Audit (2026-07-06)
@@ -75,9 +76,9 @@ A full re-crawl of every sitemap URL (427/427 fetched) plus a hardening verifica
 - **R3 — WordPress attack/leak surface.** `/wp-json/wp/v2/users` publicly lists the admin login username ("zac"); XML-RPC is enabled with a discovery link in every head; RSD (`EditURI`) link and a `generator` meta exposing the WordPress version are also emitted. Combined, this hands brute-force tooling both the username and the endpoint. Fix: restrict the users REST endpoint for unauthenticated requests, disable XML-RPC, remove RSD/shortlink/generator output.
 - **R4 — `<html lang="en-US">` on a UK business.** Set Settings → General → Site Language to English (UK) so `lang="en-GB"` is emitted (affects search locale signals and screen-reader pronunciation).
 - **R5 — Host-level launch config (cannot be done locally).** HTTPS certificate, one canonical host with 301s (http→https, www→non-www), SMTP + SPF/DKIM/DMARC for enquiry deliverability, GA4/consent (still open from 2.7), Search Console + GBP verification at go-live.
-- **R6 — Mobile product-template overflow and discoverability.** On phone QA, `/casement-windows/` still has a broken "common choices" / product-view control area that overflows horizontally and lets the whole page scroll sideways. The same product-view pattern is not intuitive enough that there are more than two options. Fix: make the control rail/card layout viewport-contained, remove any `100vw`/wide grid assumptions causing body overflow, add attached dots/count/labels or a clearer segmented/list model, and verify no horizontal page scroll at 390px.
-- **R7 — Mobile colour hub hero image.** The `/colour-options/` style page is good after the hero, but the hero image is poor on mobile. Fix: hide or replace the hero media on mobile and let the page start with clean copy/controls rather than a weak cropped visual.
-- **R8 — Mobile sash page layout.** `/sliding-sash-windows/` starts well, but the Ultimate Rose / Heritage Rose / Charisma Rose stats, corner detail, slide-aligned comparison and large detail imagery are poorly laid out on phone. Fix: redesign the sash model/spec/detail sections specifically for mobile, using contained cards, horizontal tables only where clearly scrollable, smaller fixed-aspect imagery and no layout-induced sideways page scroll.
+- **R6 — Mobile product-template overflow and discoverability — ✅ Fixed 2026-07-06.** The mobile product hub now constrains the tab rail and common-choice strip to the viewport, stacks common choices, balances product-hub badge sizes and adds a "Swipe to see all product checks" affordance when more than two product checks exist. Regression check: confirm no horizontal body scroll at 390px on `/casement-windows/` and sibling product routes.
+- **R7 — Mobile colour hub hero image — ✅ Fixed 2026-07-06.** `/colour-options/` now hides the hero sample-board visual on mobile, letting the page start with cleaner copy and controls.
+- **R8 — Mobile sash page layout — ✅ Fixed 2026-07-06.** `/sliding-sash-windows/` now has phone-specific Roseview model/spec/detail styling: contained model images, stacked comparison rows, card-like spec rows and fixed-aspect detail image panels. Regression check on a real phone remains worthwhile because this section is image-heavy.
 
 ### New findings — medium priority
 

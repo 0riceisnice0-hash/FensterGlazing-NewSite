@@ -24,6 +24,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 - Launch SEO hardening has been completed for the main technical blockers: homepage title/meta override, generated URL trailing-slash/lowercase 301s, public cache headers for logged-out generated pages and sitemaps, generated breadcrumb schema, sitemap scrub to 427 URLs, `/commercial-areas/` removed from public navigation, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
 - Thin utility/scrape pages such as `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `brochures`, `apecs-terms-conditions` and `fenster-partners` are intentionally `noindex,follow` and absent from the sitemap.
 - Mobile launch fixes are in place for the About process cards, Contact hub cards and quote-tool controls. Do not restore the old mobile quote controls that showed both `Expand view` and `Open in new tab`; mobile should show one same-tab `Open quote tool` action.
+- Mobile product-template fixes are in place for the first live phone QA pass. Product information hubs must stay viewport-contained on mobile, common choices should stack, supplier/proof badges should stay visually balanced, and multi-option tab rails need a clear swipe/count affordance.
 - The test site has verified working enquiry delivery to `info@fensterglazing.com`; valid forms are saved privately as `fenster_enquiry` posts before email delivery.
 
 ## Project Basics
@@ -152,6 +153,7 @@ PHP lint example:
 - On mobile, hide the desktop quote controls and show one same-tab `Open quote tool` action. The owner rejected the mobile new-tab/expand controls because they add friction and confuse the lead path.
 - The iframe wrapper should use `data-lenis-prevent` so the embedded tool remains usable with smooth scrolling.
 - Product pages should not render the imported mini-gallery from scraped `images` data. That export contains old stock/placeholder images, so product pages should use curated hero/feature media and link to focused specification hubs instead.
+- On mobile, product hub tabs and common-choice strips must not create horizontal body scroll. Use contained scroll-snap rails for the tabs, stacked choice lists and a visible cue when more than two product checks exist.
 - Colour choices live in the `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` virtual routes using `inc\site-data.php` under `colour_options`; do not rebuild huge inline colour grids on every product page.
 - Product-page specification cards should link to colour options, obscure glass and relevant hardware choices rather than making the product template carry every possible finish.
 - Product hub system logos must use local theme assets and be rendered through `fenster_generated_url()`. Do not point product hubs at `wp-content\fenster-reference` or raw scrape URLs.

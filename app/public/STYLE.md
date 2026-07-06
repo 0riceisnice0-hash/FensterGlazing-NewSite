@@ -19,7 +19,7 @@ Use:
 - Mobile Contact hub cards now require readable overlay contrast, contained heading/copy sizing and no overlapping labels or buttons.
 - Mobile About process cards require proper internal padding and bordered containment; text must not hit the card edge.
 - Quote-tool embeds should stay premium and calm: desktop can show `Expand view` and `Open in new tab`, but mobile should show one clear same-tab `Open quote tool` action.
-- Product mobile QA now has specific priority issues: no generated product section may create horizontal body scroll; common-choice/product-view controls must show clearly when more options exist; colour hub hero imagery can be removed on mobile if it weakens the page; sash comparison/model sections need a designed mobile layout, not squeezed desktop tables/images.
+- Product mobile QA fixes are now in place as a regression standard: no generated product section may create horizontal body scroll; common-choice/product-view controls must show clearly when more options exist; colour hub hero imagery can be removed on mobile if it weakens the page; sash comparison/model sections need a designed mobile layout, not squeezed desktop tables/images.
 - The loading screen has been removed for lead performance. Do not add another blocking entrance animation before the page content.
 - Enquiry email HTML is part of the customer experience. Keep it simple, table-based and email-client-safe; the launch template uses a light header so the Fenster logo remains visible.
 
@@ -148,6 +148,7 @@ There is one shared live customer form:
 - Do not use white or invisible logos inside white badges. If a copied supplier logo disappears, switch to a visible local variant and keep it routed through the theme asset system.
 - Supplier/proof logos in product hubs must feel balanced on mobile. Do not let one or two partner logos dominate smaller accreditations unless there is a deliberate hierarchy.
 - Product choice controls on mobile must make the full option count obvious. A user should not have to guess that there are more than two choices.
+- Product hub tab rails on mobile should be viewport-contained native scroll-snap rails with a visible swipe/count cue. Common-choice lists should stack before they risk causing sideways page scroll.
 
 ## Mobile Design
 

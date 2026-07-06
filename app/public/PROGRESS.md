@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Mobile Product Template Fixes
+
+- Fixed the owner phone QA issues from the product template pass and deployed them live in commit `c21bd46`.
+- Product information hubs now have calmer mobile spacing between "Why choose this product" and the hub.
+- Product hub supplier/proof badges are constrained on mobile so Liniar, Energy Plus, A+ rated and PAS 24 badges sit at more balanced visual sizes.
+- The product information tab rail is viewport-contained on mobile, uses native horizontal scroll-snap, hides the scrollbar, and adds a visible "Swipe to see all product checks" affordance when there are more than two checks.
+- The common-choice strip stacks on mobile and no longer uses two wide columns that can push the whole page sideways.
+- `/colour-options/` hides the hero sample-board visual on mobile so the page starts cleaner.
+- `/sliding-sash-windows/` now has mobile-specific sizing for Roseview model cards, comparison rows and detail imagery: smaller contained images, stacked comparison cards and fixed-aspect image panels.
+- Verification: `npm.cmd run build` passed, `generated-page.php` passed PHP lint, the theme was pushed to GitHub and deployed to live with cache flushed.
+
 ## 2026-07-06 - Live Phone QA Notes
 
 - Captured owner phone QA findings for the next mobile polish pass.
