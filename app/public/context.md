@@ -1,770 +1,694 @@
-# Fenster Glazing Master Context
+# Fenster Glazing Site Context
 
 Last updated: 2026-07-06
 
-This document is a master handover for another AI or developer. It explains what the Fenster Glazing site is, how it is built, what the SEO and UX model is, what has already been fixed, what is still risky, and how to work without undoing the accepted architecture.
+This document is for a personal GPT or strategy assistant. It is not a coding handover. It explains what the Fenster Glazing website is trying to do, how the site is structured, how the customer experience works, what the SEO strategy is, what the important pages mean, what has recently changed, and what still needs thought.
 
-If you are a new AI, read this first, then read the source-of-truth docs listed below before editing code.
+Use this document to have informed conversations about the site, its content, its customer journey, its SEO direction, its strengths, and its risks.
 
-## 1. Site Identity
+## 1. The Business
 
-Fenster Glazing is a UK glazing company serving residential and commercial customers, with a strong Northamptonshire and wider service-area footprint. The website is a lead-generation and trust-building site. Its core jobs are:
+Fenster Glazing is a UK glazing company serving homeowners, landlords, developers, businesses and commercial buyers.
 
-- Explain products clearly enough for homeowners and commercial buyers to choose the right route.
-- Convert visitors into enquiries, phone calls and online quote starts.
-- Rank for local and product-led searches without publishing thin duplicate pages.
-- Present the company as premium, practical, local and credible.
-- Avoid the "template WordPress brochure" feel.
+The business sells and installs products such as:
 
-The site should feel:
+- uPVC windows.
+- Aluminium windows.
+- Sliding sash windows.
+- Composite doors.
+- uPVC doors.
+- Aluminium doors.
+- Bifold doors.
+- Sliding patio doors.
+- French doors.
+- Heritage style products.
+- Integral blinds.
+- Secondary glazing.
+- Replacement glazed units.
+- Cat flaps and dog flaps in doors/glass.
+- Commercial glazing.
+- Repairs and other glazing services.
 
-- Premium but not flashy.
-- Practical rather than abstract.
-- Local and established.
-- Dense enough to be useful, but not cluttered.
-- Smooth and modern without making performance worse.
+The business needs the website to create trust quickly, explain options clearly, and turn visitors into enquiries, calls, and online quote starts.
 
-The public site should not feel like scraped content, a generic product catalogue, or a landing-page factory.
+The site is not just a brochure. It is the main digital sales journey.
 
-## 2. Current Canonical State
+## 2. The Site's Core Job
 
-Canonical live domain:
+The website has four main jobs.
 
-- `https://fensterglazing.com/`
+1. Help people understand what Fenster does.
+2. Help people choose the right product or service route.
+3. Build enough confidence for them to enquire.
+4. Capture leads through forms, phone calls, and WindowCAD/online quote submissions.
 
-Canonical test domain:
+The site needs to work for several different visitor mindsets:
 
-- `https://test.fensterglazing.com/`
-- The test site is intentionally protected with Basic Auth to avoid being indexed as a duplicate.
-- Username: `fenster`
-- Password: `Fenster`
+- "I know I need new windows, but I do not know what type."
+- "I know exactly what I want and need a price."
+- "I am comparing local companies."
+- "I need commercial glazing and want proof they can handle it."
+- "I have a specific problem, such as blown glass, a door panel, or a cat flap."
+- "I came from Google on a town/product search and need to know if they serve my area."
 
-GitHub:
+Good pages should move the visitor from uncertainty to a clear next step.
 
-- `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
+## 3. Brand Positioning
 
-Local project root:
+Fenster should come across as:
 
-- `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
+- Premium but practical.
+- Professional without sounding corporate.
+- Local and approachable.
+- Experienced and trustworthy.
+- Clear rather than salesy.
+- Helpful rather than pushy.
+- Modern but not gimmicky.
 
-Local theme root:
+Avoid making Fenster sound like:
 
-- `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
+- A generic national double glazing lead-gen site.
+- A cheap local trades directory listing.
+- A scraped content site.
+- A brochure copied from manufacturers.
+- An over-designed agency template.
 
-Server installs:
+The tone should be confident, plain-English, and useful.
 
-- Test root: `~/www/test.fensterglazing.com/public_html`
-- Live root: `~/www/fensterglazing.com/public_html`
-- Test and live are Bedrock installs.
-- Server theme path is `web/app/themes/fenster`.
+## 4. Customer Experience Principles
 
-Latest live sequence at this handover:
+The site should help people make decisions.
 
-- `aa45896 Strip residual pixel snippets before consent`
-- `0b1fac2 Gate tracking behind cookie consent`
-- `77798b8 Document deploy policy preference`
-- `da4711d Rewrite cat and dog flaps page`
-- `0ec487a Improve Lighthouse performance path`
-- `e660a4b Update launch handover docs`
-- `aff62a0 Fix article CTA form layout`
-- `7c973b5 Defer heavy media and quote embeds`
-- `5696140 Rework commercial glazing hub`
+Important UX principles:
 
-Always run `git log --oneline -12` before assuming this is still current.
+- Every important page should have a clear next step.
+- Product pages should explain choices, not just list features.
+- Trust evidence should appear before the user is asked to commit.
+- Forms should feel easy and safe.
+- Phone and quote routes should be visible.
+- Mobile should feel deliberately designed, not squeezed.
+- Technical claims should be specific only when known.
+- If the user lands on a deep SEO page, they should still understand who Fenster is and what to do next.
 
-## 3. Source Of Truth Docs
+The ideal visitor journey is:
 
-Project docs live in `app/public`.
+1. Arrive from Google, direct, referral, or ad.
+2. Quickly understand the relevant product/service.
+3. See enough trust proof to keep going.
+4. Compare main choices.
+5. Start a quote, call, or submit an enquiry.
 
-Read these before work:
+## 5. The Main Conversion Routes
 
-- `AI.md` - coding rules, generated-page rules, SEO rules, form rules, product rules, verification expectations.
-- `HANDOVER.md` - current architecture and recent site state.
-- `LIVECHANGES.md` - SSH, deploy commands, live/test runbook and safety rules.
-- `STYLE.md` - visual design contract and responsive design rules.
-- `AUDIT.md` - audit findings, open risks and remediation backlog.
-- `PROGRESS.md` - dated change history.
-- `HOMEPAGE.md` - homepage-specific architecture and "do not undo" list.
+The site has several lead paths.
 
-This `context.md` does not replace those files. It is the briefing document that explains the whole picture.
+### Phone
 
-## 4. WordPress And Legacy Admin Content
+Phone calls are important because many glazing customers want reassurance before committing.
 
-The site used to rely on imported WordPress content and ACF-style fields. Some old page content may still appear in the WordPress admin if you edit a page.
+The phone path should feel immediate and human, especially for:
 
-That is normally not a public-site problem.
+- Repairs.
+- Urgent replacement glass.
+- Commercial enquiries.
+- Complicated product choices.
+- Older or less technical users.
 
-The current site is intentionally code-driven. For generated routes and key pages, the theme controls public output through PHP templates and data arrays. The editor body or old ACF fields can remain in the database as legacy/reference content without affecting the live page, as long as the route is still handled by the theme.
+### Enquiry Forms
 
-Do not try to rebuild the site around ACF, Elementor or editable admin fields unless the owner explicitly changes direction.
+Forms are for people who want a callback, want to describe a project, or want to attach drawings/photos.
 
-Risk rule:
+Forms should gather enough context without feeling like a long survey.
 
-- If a route is theme-handled, edit theme code/data.
-- If a route falls back to normal WordPress page rendering, admin content may matter.
-- If unsure, inspect the rendered HTML and route handling in `inc/generated-pages.php` before editing database content.
+Useful form fields include:
 
-## 5. Architecture Overview
+- Name.
+- Email.
+- Phone.
+- Postcode/location.
+- Project type.
+- Timescale.
+- Message/details.
+- Optional files/photos/drawings.
 
-The active theme is `fenster`.
+### Online Quote / WindowCAD
 
-Important files and directories:
+The online quote tool is powered by WindowCAD. It lets people configure windows/doors, view/save a design, and send project details.
 
-- `wp-content/themes/fenster/functions.php`
-- `wp-content/themes/fenster/inc/generated-pages.php`
-- `wp-content/themes/fenster/inc/site-data.php`
-- `wp-content/themes/fenster/inc/product-hub-data.php`
-- `wp-content/themes/fenster/inc/enquiries.php`
-- `wp-content/themes/fenster/inc/consent.php`
-- `wp-content/themes/fenster/inc/security.php`
-- `wp-content/themes/fenster/template-parts/sections/generated-page.php`
-- `wp-content/themes/fenster/template-parts/sections/generated-article.php`
-- `wp-content/themes/fenster/template-parts/components/enquiry-form.php`
-- `wp-content/themes/fenster/src/scss/main.scss`
-- `wp-content/themes/fenster/src/js/main.js`
-- `wp-content/themes/fenster/assets/css/main.css`
-- `wp-content/themes/fenster/assets/js/main.js`
-- `wp-content/themes/fenster/data/pages.json`
+Important current fact:
 
-Build from the theme folder:
+- WindowCAD lead submission should send data to a WordPress endpoint.
+- WordPress then relays the lead into AdminBase.
+- The user may see "Failed to fetch" if WindowCAD is pointed at a blocked/test endpoint or the browser cannot reach the callback.
 
-```powershell
-npm.cmd run build
-```
+WindowCAD is an important conversion asset, but it should not be the only lead path because some users prefer a normal form or phone call.
 
-PHP lint example:
+### AdminBase
 
-```powershell
-& 'C:\Users\zacpl\AppData\Roaming\Local\lightning-services\php-8.2.29+0\bin\win64\php.exe' -l 'C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster\template-parts\sections\generated-page.php'
-```
+AdminBase is the CRM/lead system that should receive leads from WindowCAD and website enquiries.
 
-The repo is intentionally scoped to the theme and launch docs. Do not add WordPress core, uploads, Local config, database dumps, `wp-config.php`, Bedrock `.env`, plugins, node modules or backups.
+The intended flow is:
 
-## 6. Generated Routes Are The Core
+WindowCAD or site form -> website receives lead -> website relays lead to AdminBase -> Fenster can manage the lead in the business process.
 
-The generated-page system is the route truth for much of the site.
+If AdminBase leads do not appear, the first question is whether the website received the lead at all. If WordPress has no saved WindowCAD enquiry, the problem is upstream from the website relay.
 
-Key responsibilities in `inc/generated-pages.php` include:
+## 6. Website Structure In Plain English
 
-- Matching generated slugs.
-- Owning theme SEO output.
-- Handling 301 redirects.
-- Handling 410 gone routes.
-- Handling noindex routes.
-- Serving sitemap output.
-- Suppressing stale SEO plugin output where the theme owns SEO.
-- Rendering hardcoded utility routes such as `/terms-conditions/`.
+The site has several page types.
 
-Key rendering happens in:
+### Homepage
 
-- `template-parts/sections/generated-page.php`
-- `template-parts/sections/generated-article.php`
+The homepage is the first impression and broad routing page.
 
-Product and commercial routing uses explicit slug whitelists. Do not replace that with substring matching. A previous issue forced blog/article pages through the product template because slugs contained product-like words.
+It should:
 
-Imported scraped data is useful background but not trusted blindly. The live theme should filter, override or replace scraped content when it contains:
+- Show Fenster as a serious glazing company.
+- Establish trust quickly.
+- Route users into products, quote, contact, and service areas.
+- Give people enough confidence to continue.
+- Avoid looking like a generic template.
 
-- Footer/legal debris.
-- Old social snippets.
-- Placeholder JSON-LD.
-- Test-domain URLs.
-- Brochure prompts where a real buying guide is needed.
-- Generic supplier copy.
-- Wrong aliases.
-- Duplicated or scraped boilerplate.
+The homepage uses premium visual assets, but performance matters. Heavy video/media should not make the first mobile load feel slow.
 
-## 7. SEO Model
+### Product Pages
 
-Theme-owned SEO is intentional.
+Product pages explain specific windows, doors, and glazing products.
 
-Generated pages suppress Yoast/Rank Math public head output to prevent stale titles, duplicate meta, old schema and imported social tags from leaking into public pages.
+They should answer:
 
-The theme owns:
+- What is this product?
+- Who is it for?
+- What choices matter?
+- What are the key performance/security/appearance benefits?
+- What should the customer do next?
 
-- Titles.
-- Meta descriptions.
-- Canonicals.
-- Robots tags.
-- OpenGraph/Twitter output where applicable.
-- LocalBusiness schema.
-- FAQ schema.
-- Breadcrumb schema.
-- XML sitemap output.
-- 301 and 410 route handling.
+Product pages should not be generic manufacturer brochures. They should connect the product to real customer decisions.
 
-Do not restore raw imported `schema_json_ld`. It contained old designer-tool schema, placeholder VideoObject data and unsubstantiated rating claims.
+### Service Pages
 
-Do not add aggregateRating or Review schema unless there is a verifiable review feed and the claim can be substantiated.
+Service pages cover specific jobs such as repairs, replacement glass, cat flaps/dog flaps, secondary glazing, and other practical needs.
 
-Core WordPress sitemaps are intentionally disabled. The theme serves:
+These pages should be straightforward and problem-led. People landing on them usually have a specific issue and want to know if Fenster can solve it.
 
-- `/sitemap.xml`
-- `/page-sitemap.xml`
+### Commercial Pages
 
-Robots should advertise the theme sitemap. Check live robots ownership if changing this because a physical/plugin robots file has previously introduced crawl-delay and sitemap ownership drift.
+Commercial pages are for businesses, landlords, developers, schools, offices, retail spaces, and larger projects.
 
-Thin or utility pages should be `noindex,follow` and absent from the sitemap where appropriate.
+Commercial users need:
 
-Known intentionally noindex/thin examples include:
+- Proof of competence.
+- Clear scope.
+- Professional tone.
+- Fast contact options.
+- Confidence that Fenster can handle complexity.
 
-- `gallery`
-- `downloads`
-- `videos`
-- `customer-portal`
-- `refer-a-friend`
-- `brochures`
-- `apecs-terms-conditions`
-- `fenster-partners`
-- some temporary/review surfaces
+Commercial pages should not read like residential homeowner pages with the word "commercial" added.
 
-## 8. Canonicals, Redirects And Server-Level Issues
+### Location Pages
 
-Current canonical host is apex:
+Location pages help people searching by area and product.
 
-- `https://fensterglazing.com/`
+They should:
 
-The `www` host was previously serving as a 200 duplicate. A server `.htaccess` redirect has now been added so `https://www.fensterglazing.com/` should 301 to the apex host.
+- Confirm Fenster covers the area.
+- Match the product/service intent.
+- Avoid thin duplicate copy.
+- Link users back into useful product and contact routes.
 
-Legacy redirect issues fixed in this session:
+The risk with location SEO is creating lots of pages that feel duplicated or low value. The site should use location pages carefully and make them useful.
 
-- `/terms-conditions/` no longer 301s to malformed `/privacy-policy//`.
-- `/aluminium-bifold-doors-northampton/` no longer 301s to the parent product route.
+### Guide / Article Pages
 
-These issues came from live database/server redirect handling, not the theme. Future agents should remember that redirect collisions can live outside the theme.
+Guides and articles should answer research questions and support SEO.
 
-When diagnosing a route:
+They are useful for:
 
-1. Check theme route handling.
-2. Check generated redirects/gone/noindex arrays.
-3. Check WordPress redirect-manager/database rows.
-4. Check `.htaccess` and SiteGround config.
-5. Check cache.
+- Long-tail informational searches.
+- Explaining choices.
+- Helping customers before they are ready to enquire.
+- Building topical authority.
 
-## 9. Consent, Analytics And Tracking
+Guides should still include a sensible next step, but they should not feel like hard-sell landing pages.
 
-UK PECR/GDPR consent matters.
+### Legal / Utility Pages
 
-Before this handover, GTM and Microsoft Clarity were firing without a consent banner. That has been fixed with a theme-owned consent layer.
+Pages such as terms and privacy policy must be reliable and reachable. A previous issue meant the Terms link sent people to Privacy Policy, which was a legal/navigation problem.
 
-Current consent implementation:
+These pages are not conversion pages, but they affect trust.
 
-- File: `inc/consent.php`
-- Included by: `functions.php`
-- Styles: `src/scss/main.scss`
-- Built CSS: `assets/css/main.css`
+## 7. Homepage Experience
 
-The consent layer:
+The homepage should feel like a polished front door to the business.
 
-- Suppresses known raw GTM, Clarity and Meta Pixel snippets before consent.
-- Blocks Insert Headers/GTM/Clarity output that would otherwise fire too early.
-- Renders a cookie banner and settings button.
-- Loads tracking only after analytics consent.
-- Supports rejection without firing tracking.
+Key homepage roles:
 
-Known IDs used by the site:
+- Create immediate confidence.
+- Show the breadth of products.
+- Offer fast quote/contact routes.
+- Display reviews/trust/accreditations.
+- Route people into product categories.
+- Support local relevance.
 
-- GTM: `GTM-K89BCS9`
-- Clarity: `xi7rk1pic8`
-- Meta Pixel: `4315058575189194`
+The homepage should not become:
 
-Do not paste raw tracking snippets into plugin settings or header/footer fields unless they remain blocked until consent.
+- A giant generic hero with no usable route.
+- A decorative page with weak information.
+- A slow media-heavy page that hurts mobile experience.
+- A list of SEO links without brand feel.
 
-Remaining conversion-tracking work:
+Good homepage discussion topics:
 
-- Add meaningful `dataLayer` events for enquiry success.
-- Add phone-click tracking.
-- Add online quote / WindowCAD open tracking.
-- Make sure events respect consent state.
+- Is the hero saying enough about Fenster?
+- Are the next steps obvious?
+- Does the page make the business feel trustworthy?
+- Does it help both homeowners and commercial buyers?
+- Are reviews/trust signals visible enough without taking over?
+- Is the online quote path obvious but not overbearing?
 
-## 10.1 AdminBase And WindowCAD Lead Relay
+## 8. Product Experience
 
-The old `wraith` theme had an AdminBase relay that was lost when the new `fenster` theme went live.
+The product pages are central to the site.
 
-Current restored model:
+A strong product page should include:
 
-- File: `inc/adminbase.php`
-- Included by: `functions.php`
-- WindowCAD endpoint: `/wp-json/fenster/v1/windowcad`
-- AdminBase endpoint: `https://webleads.abinitiosoftware.co.uk/api/LeadDetails`
-- Normal site enquiries also relay to AdminBase through the `fenster_enquiry_created` hook.
-- WindowCAD leads are also saved privately as `fenster_enquiry` posts before/alongside the AdminBase relay.
+- Clear product title.
+- Plain-English intro.
+- Key benefits.
+- Important specs where known.
+- Real choices the customer needs to make.
+- Trust proof.
+- Quote/contact route.
+- Links to related decisions such as colours, glass, handles, or hardware.
 
-Credential rule:
+Product pages should avoid:
 
-- Do not commit AdminBase credentials to GitHub.
-- The theme reads them from constants, environment variables or WordPress options.
-- Live/test credentials are operational server config, not theme source.
+- Scraped copy.
+- Overly generic "beautiful addition to your home" wording.
+- Unsupported technical claims.
+- Huge irrelevant galleries.
+- Too many choices on one page.
+- Hiding the quote/contact action.
 
-The WindowCAD payload from the old site used `json.infoProperties`. The new theme preserves that expected shape and maps customer name, email, phone, postcode and address into the AdminBase form fields.
+The best product pages behave like buying guides, not just SEO landing pages.
 
-## 10. Forms And Enquiries
+## 9. Important Product Routes
 
-There should be exactly one customer-facing form component:
+### Casement Windows
 
-- `template-parts/components/enquiry-form.php`
+Likely one of the main residential window pages. It should cover everyday uPVC window replacement, energy performance, security, colour/hardware choices, and quote route.
 
-Do not add raw standalone forms to templates.
+### Flush Casement Windows
 
-Form submissions are handled in:
+Should explain the cleaner, flatter appearance and why someone might choose flush casements over standard casements.
 
-- `inc/enquiries.php`
+### Tilt And Turn Windows
 
-Current model:
+Should explain ventilation, inward opening, cleaning access, and suitability for certain rooms/buildings.
 
-- Forms use AJAX enhancement from `src/js/main.js`.
-- No-JavaScript fallback should remain.
-- Valid enquiries save as private `fenster_enquiry` posts.
-- Office emails go to `info@fensterglazing.com`.
-- Customer confirmation emails are paused until authenticated SMTP is configured.
-- Optional file uploads are supported and attached to office emails.
+### Sliding Sash Windows
 
-Open form risk:
+This is a Roseview-led page. It should not be generic uPVC window copy.
 
-- Spam protection still needs hardening. The old honeypot/speed gate was disabled or is not sufficient. Add a safe honeypot, Turnstile or equivalent approach without breaking genuine leads.
-- Add an unsent-email alert or admin visibility if mail delivery fails.
-- Do not re-enable customer confirmations until authenticated SMTP is configured.
+Important details:
 
-## 11. UX And Design Direction
+- Roseview is the key product system.
+- Models include Ultimate Rose, Heritage Rose, and Charisma Rose.
+- The page should explain sash-specific details and traditional appearance.
+- It should be useful for period homes and conservation-sensitive projects.
 
-Read `STYLE.md` before changing visual work.
+### Aluminium Windows
 
-The site should avoid repeated section cards and repeated gradients. It uses a continuous page background model rather than repainting the same gradient on every wrapper.
+Should emphasise slimmer sightlines, strength, modern appearance, durability, and suitability for contemporary projects.
 
-Design principles:
+### Composite Doors
 
-- Premium and practical.
-- Warm but not beige-template.
-- Clear routes to enquiry, phone and quote.
-- Trust evidence should be visible but compact.
-- Product pages should be decision tools, not brochure dumps.
-- Mobile should be designed intentionally, not squeezed after desktop.
-- Use real content and assets, not decorative filler.
+Should focus on entrance security, appearance, colour choices, insulation, and kerb appeal.
 
-Typography:
+### uPVC Doors
 
-- Do not make every H1/H2 huge.
-- Normal content pages should use moderate heading scale.
-- Hero-scale type belongs only on real heroes.
-- Form headings and compact panels should stay smaller.
+Should feel practical and value-focused while still premium enough for Fenster.
 
-Cards:
+### Aluminium Bifold Doors
 
-- Use cards for repeated items, modals and genuinely framed tools.
-- Do not place cards inside cards.
-- Do not make every page section a floating card.
+Should explain opening up spaces, sightlines, thresholds, panels, security, and survey/installation considerations.
 
-Mobile:
+### Aluminium Sliding Doors
 
-- Primary breakpoint is `860px`.
-- Test `390 x 844` for phone.
-- Test `768 x 1024` for tablet edge cases.
-- Avoid horizontal body scroll.
-- Tap targets should be at least 44px.
-- Inputs should use at least 16px font size on mobile.
-- Hover-only interactions need touch equivalents.
+Should explain large glass areas, slim frames, views, and modern patio/opening designs.
 
-## 12. Homepage Model
+### Heritage Aluminium Doors
 
-Read `HOMEPAGE.md` before editing the homepage.
+Should speak to steel-look style, partitions, heritage appearance, and design-led buyers.
 
-The homepage is a premium first impression and conversion page. It should not become a generic marketing page.
+### Integral Blinds
 
-Accepted homepage ideas:
+Should explain blinds sealed inside glazing, privacy, low maintenance, and control options such as magnetic or electric.
 
-- Hero with video/poster treatment.
-- Strong trust cards.
-- Product theatre / strong product browsing.
-- Instant pricing route.
-- Review/trust block.
-- Local service-area links.
-- Continuous background and controlled section rhythm.
+### Secondary Glazing
 
-Performance-sensitive homepage rules:
+Should explain noise reduction, thermal improvement, listed/period suitability, and when it is preferable to full replacement.
 
-- The homepage hero video is heavy and must not become part of the initial mobile payload again.
-- Mobile/slow connections should see the poster first.
-- Heavy media should be deferred or gated appropriately.
-- Keep first viewport lightweight.
+### Replacement Glazed Units
 
-Do not restore the old loading screen.
+Should be problem-led: misted/blown glass, failed sealed units, cracked panes, upgraded glass.
 
-## 13. Product Page Model
+### Cat And Dog Flaps
 
-Product pages are not meant to show raw scraped galleries or generic manufacturer boilerplate.
+This page was rewritten because the old scraped copy was poor.
 
-Product source files:
+It should explain:
 
-- Product USP/specification data: `inc/site-data.php` under `product_usps`.
-- Product visible copy overrides: `inc/site-data.php` under `product_content`.
-- Manufacturer/system hub data: `inc/product-hub-data.php`.
-- Product route template: `template-parts/sections/generated-page.php`.
+- Whether a flap goes into a door panel or a new sealed glass unit.
+- Manual, lockable, and microchip options.
+- Pet size and fitting height.
+- Why a survey/check matters.
+- Why not every existing glass unit can simply be cut.
 
-Product pages should:
+The page should feel practical and reassuring, not like a generic pet product page.
 
-- Explain the product in plain customer language.
-- Show key specifications without inventing values.
-- Link to focused hubs for colours, obscure glass and hardware where needed.
-- Use curated media and local assets.
-- Keep quote routes visible.
-- Avoid surfacing scraped footer/legal/promo debris.
+## 10. Colour And Detail Hubs
 
-Do not invent U-values or technical claims. Products with supplied U-values show them first. Composite Doors and Integral Blinds currently do not have supplied U-values. Integral Blinds controls should be described as `Magnetic or electric`.
+The site uses supporting hubs for product choices.
 
-Product quote embeds:
+### Colour Options
 
-- Product-specific WindowCAD URLs are mapped in `generated-page.php`.
-- Product instant quote links should jump to `#fenster-product-quote` where a product-specific collection exists.
-- Desktop/tablet quote embeds can show `Expand view` and `Open in new tab`.
-- Mobile should show one same-tab `Open quote tool` action.
-- Do not put large iframes before scroll-following or cinematic product sections.
-- Quote iframe wrappers should use `data-lenis-prevent`.
+The canonical colour hub is `/colour-options/`.
 
-## 14. Key Product And Content Routes
+It should help customers understand available colour/finish choices across uPVC and aluminium without overwhelming every product page.
 
-### `/cat-and-dog-flaps/`
+The colour hub should be customer-friendly. It should not expose supplier scrape labels or internal provenance.
 
-This page was badly scraped and has been rewritten.
+### Obscured Glass
 
-Current model:
+The canonical route is `/obscured-glass/`.
 
-- Route title/SEO override in `inc/generated-pages.php`.
-- Product copy in `inc/site-data.php`.
-- Product hub data in `inc/product-hub-data.php`.
-- Custom pet-flap guide section in `generated-page.php`.
-- Generic product gallery/spec block suppressed for this route.
+This page should help people understand privacy glass choices for bathrooms, doors, side panels, and overlooked spaces.
 
-It should read as a proper cat flap and dog flap glazing service page, not as scraped fragments.
+### Handles And Hardware
 
-### `/sliding-sash-windows/`
+Hardware details are useful but should not dominate product pages. They should support decisions such as colour, finish, appearance, and security.
 
-This is a Roseview route, not generic Liniar uPVC.
+## 11. Commercial Glazing
 
-Rules:
+Commercial glazing should have its own feel.
 
-- System: Roseview.
-- Logo: `assets/partners/roseview-logo-new.png`.
-- Models: `Ultimate Rose`, `Heritage Rose`, `Charisma Rose`.
-- Keep sash-specific detail: meeting rails, mechanical/welded joints, sash furniture and Roseview model differences.
-- Do not render the generic window handle section on this route.
+Commercial buyers care about:
 
-### `/colour-options/`
+- Reliability.
+- Professional communication.
+- Scope and capability.
+- Timescales.
+- Compliance and safety.
+- Previous project proof.
+- Clear contact routes.
 
-Canonical colour hub. `/upvc-colours/` and `/aluminium-colours/` redirect to this route.
+Commercial pages should use stronger proof and more direct language than residential pages.
 
-Rules:
+Good commercial content should answer:
 
-- Colour data lives in `inc/site-data.php` under `colour_options`.
-- Keep it customer-facing.
-- Do not expose internal supplier scrape names or provenance dumps.
-- uPVC swatches use optimised assets in `assets/images/products/colours/liniar-swatches`.
+- What kinds of commercial projects does Fenster handle?
+- Who does Fenster work with?
+- What information should a buyer provide?
+- How quickly can someone speak to the team?
+- What makes Fenster credible for commercial work?
 
-### `/obscured-glass/`
+Known issue to keep in mind:
 
-Canonical route for obscure glass. `/obscure-glass/` redirects there.
+- Some older commercial/project links may need review because old residential case-study routes were intentionally removed or hidden.
 
-Keep terminology and internal links consistent.
+## 12. Local And SEO Strategy
 
-### `/terms-conditions/`
+The site needs local SEO, but it must avoid becoming a duplicate-page farm.
 
-This is a hardcoded virtual utility page in `inc/generated-pages.php`.
+The local SEO strategy is broadly:
 
-Important history:
+- Main product/service pages for core intent.
+- Location/product pages where there is useful search demand.
+- Area coverage pages that confirm service areas.
+- Commercial county/location pages where they make sense.
+- Guides/articles for informational searches.
 
-- A legacy redirect previously sent it to malformed `/privacy-policy//`.
-- That was a legal-page problem and has been fixed.
+SEO should prioritise:
 
-Do not remove the hardcoded route unless replacing it with an equally reliable legal-page route.
+- Accurate titles and descriptions.
+- Clear H1s.
+- Useful page copy.
+- Strong internal linking.
+- Avoiding duplicate/thin pages.
+- Correct canonical URLs.
+- Noindexing weak utility pages.
+- Clean sitemap/indexation.
+- Avoiding old test-domain or scraped metadata.
 
-### `/contact/`
+The site previously had many imported pages from old/scraped content. The live strategy is to clean and control those pages rather than blindly publish everything.
 
-The accepted contact model is a bold route-card hub with obvious jump targets. Keep the shared enquiry form below the hub.
+## 13. Indexation And Duplicate Risks
 
-Contact-page work should follow the established "in your face" routing style, not a quiet generic contact page.
+Important SEO risks that have been addressed or need watching:
 
-### `/online-quote/`
+- The test site was publicly crawlable and could dilute the live domain. It is now password protected.
+- `www.fensterglazing.com` previously served a duplicate 200 version. It should redirect to the apex domain.
+- Some old redirects hijacked useful pages, including Terms and a Northampton bifold page. These were fixed.
+- Thin utility pages should not be in the sitemap.
+- Old imported metadata/schema can be harmful if rendered publicly.
+- Old test-domain references should not appear in public SEO output.
 
-This is a key conversion route. Verify it after deploys. Do not make quote embeds eager in ways that harm homepage/product performance.
+The canonical public domain is:
 
-### `/areas-we-cover/`
+`https://fensterglazing.com/`
 
-This is a public service-area route and footer target. It should remain useful and indexable unless SEO strategy changes.
+## 14. Trust And Proof
 
-### `/commercial-areas/`
+Trust is central in glazing because customers are making expensive, home-impacting decisions.
 
-Temporary/review-style route in the commercial/location work. Treat indexation carefully. Check current noindex/nav status before changing.
+Useful trust signals include:
 
-## 15. Commercial And Location SEO
+- Reviews.
+- Local presence.
+- Accreditations.
+- Product/system partners.
+- Real project imagery.
+- Clear contact details.
+- Professional email/form experience.
+- Useful technical explanations.
+- Transparent next steps.
 
-The site has a commercial SEO/location model that includes county-style generated pages and local service-area routes.
+Trust signals should be visible but not fake-looking. Avoid exaggerated or unsupported claims.
 
-Important principles:
+Review/platform claims should be kept accurate. If a review count or platform rating is shown, it should match visible evidence.
 
-- Avoid duplicated town/county boilerplate.
-- Keep H1/meta unique.
-- Use the hero form and visible phone route for commercial conversion.
-- Do not publish huge sets of weak location pages without meaningful differentiation.
-- Check the sitemap after route changes.
+## 15. Accessibility And Mobile Experience
 
-Commercial hub work was recently changed in `5696140 Rework commercial glazing hub`.
+Mobile matters heavily because many users will browse from phones.
 
-Known issue:
+Mobile pages should:
 
-- There is a broken internal `/commercial-projects/` link to a residential case-study area that returns 410. This should be fixed by either replacing the link with a live commercial route or creating a proper commercial projects page.
+- Load quickly enough.
+- Avoid horizontal scrolling.
+- Keep buttons easy to tap.
+- Keep forms readable.
+- Avoid tiny controls.
+- Put important actions near the user.
+- Avoid hover-only interactions.
+- Use clear text hierarchy.
 
-## 16. Performance Strategy
+Accessibility matters because it affects both real users and site quality.
 
-Recent performance work focused on first-viewport speed without destroying visual quality.
+Important accessibility concerns:
 
-Implemented performance improvements include:
+- Text contrast.
+- Touch target size.
+- Links distinguishable beyond colour.
+- Correct form labels.
+- Correct ARIA use.
+- Keyboard/focus behaviour.
 
-- WOFF2 Gibson fonts.
-- Critical first-viewport CSS.
-- Async activation of main stylesheet.
-- Homepage hero-poster preload.
-- Image dimension helpers.
-- Mobile/constrained-connection hero video interaction gate.
-- Below-fold homepage `content-visibility`.
-- Deferred heavy media and WindowCAD embeds.
-- Lazy loading non-primary product theatre media.
+## 16. Performance
 
-Do not undo the performance model by:
+Performance is important because the site uses strong visuals and media.
 
-- Making every iframe eager.
-- Making the homepage hero video part of the initial mobile payload.
-- Loading heavy product media before it is near the viewport.
-- Removing width/height attributes from images.
-- Blocking render with unnecessary CSS/JS.
+The current performance direction is:
 
-Remaining likely performance work:
+- Keep the premium feel.
+- Avoid loading heavy video/iframes too early.
+- Use lightweight first visuals on mobile.
+- Defer quote tools and heavy media until needed.
+- Compress/optimise images where possible.
+- Keep first content and main content fast.
 
-- Create smaller/mobile-specific hero video renditions.
-- Improve responsive image `srcset`/`sizes`.
-- Compress or replace oversized social/hero images.
-- Audit unused CSS and JS.
-- Keep third-party tracking blocked before consent.
-- Check SiteGround dynamic cache and browser cache behaviour.
+The site previously had poor mobile Lighthouse symptoms, especially around FCP/LCP and total payload. Performance has improved, but it remains a topic to watch because videos, iframes, fonts and images can easily make glazing sites slow.
 
-Recent Lighthouse symptoms before the performance fixes included:
+Good performance conversation topics:
 
-- FCP around 4.3s on Slow 4G.
-- LCP around 14.5s on Slow 4G.
-- Render-blocking request savings.
-- Large payload around 11.8 MB.
-- Image delivery savings.
-- Unused CSS/JS warnings.
+- Does the homepage need lighter mobile video?
+- Are images sized correctly?
+- Are quote iframes loading only when useful?
+- Are tracking scripts gated and not slowing first load?
+- Are the most important visual assets compressed?
 
-Expect the score to vary. Use Lighthouse as a guide, then inspect the network waterfall and actual LCP element.
+## 17. Consent And Tracking
 
-## 17. Accessibility And Best Practices
+The site uses tracking such as GTM, Microsoft Clarity and Meta Pixel.
 
-Recent Lighthouse accessibility was not disastrous but had issues:
+Because this is a UK site, optional tracking should not run before consent.
 
-- Some prohibited ARIA attributes.
-- Some contrast failures.
-- Links relying only on colour.
-- Touch targets too small or too close.
-- Image dimensions missing in places.
+Current principle:
 
-When editing:
+- Tracking should be consent-gated.
+- Clarity/GTM/Meta should not fire before acceptance.
+- Conversion events should eventually be tracked for forms, phone calls, and quote tool starts/submissions.
 
-- Keep focus states visible.
-- Do not rely on colour alone for links.
-- Maintain contrast on dark overlays and cards.
-- Keep tap targets comfortable.
-- Avoid adding ARIA unless it is correct.
-- Test keyboard interaction for custom controls.
-- Keep form labels readable and associated.
+Useful future tracking events:
 
-## 18. Security And WordPress Hardening
+- Form successfully submitted.
+- Phone link clicked.
+- Online quote opened.
+- WindowCAD project saved/submitted.
+- Contact route clicked.
+- Commercial enquiry submitted.
 
-`inc/security.php` owns public WordPress hardening.
+Tracking should help understand user behaviour without breaking consent rules.
 
-Current hardening includes:
+## 18. Legal And Utility Pages
 
-- REST user enumeration blocked.
-- XML-RPC disabled through WordPress filter.
-- `X-Pingback` removed.
-- WordPress generator/RSD/shortlink/REST/oEmbed/emoji head output stripped.
+Legal and utility pages are not glamorous, but they matter.
 
-Do not remove this unless replacing with equivalent or better protection.
+The footer Terms link previously went to Privacy Policy because of a bad redirect. This was fixed.
 
-## 19. Deployment Model
+Important utility pages:
 
-Golden rule:
+- Terms and Conditions.
+- Privacy Policy.
+- Contact.
+- Areas covered.
+- Sitemap.
 
-- Deploy the theme only.
+These pages should be reliable, reachable and consistent.
 
-Never replace the whole WordPress install. Never overwrite `.env`, Bedrock config, plugins, uploads or database unless explicitly asked.
+## 19. Current Known Issues And Discussion Topics
 
-Normal flow:
+These are the main issues worth discussing with a personal GPT or strategy assistant.
 
-1. Make the change locally.
-2. Build assets if SCSS or JS changed.
-3. PHP-lint changed PHP files.
-4. Check `git diff`.
-5. Commit and push to GitHub `main`.
-6. Small scoped changes can deploy direct to live after checks.
-7. Bigger layout/template/routing/form/SEO changes go to test first.
-8. Verify on test.
-9. Confirm fresh live backup for larger changes.
-10. Deploy same committed theme to live.
-11. Flush cache.
-12. Verify changed pages plus core pages.
+### WindowCAD / AdminBase
 
-Deploy to test:
+The intended flow is restored, but there has been an issue where WindowCAD shows "Failed to fetch" on save. This usually means the WindowCAD callback URL is blocked, wrong, or failing in the browser before WordPress receives the payload.
 
-```powershell
-ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard origin/main && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/test.fensterglazing.com/public_html && wp cache flush"
-```
+The correct live callback should be:
 
-Deploy to live:
+`https://fensterglazing.com/wp-json/fenster/v1/windowcad`
 
-```powershell
-ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard origin/main && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush"
-```
+If leads do not arrive:
 
-The `rsync --delete` is safe only because both source and target are the theme folder. Never aim it at `public_html`, `web`, uploads, plugins or a guessed path.
+- Check whether a private WindowCAD enquiry was saved in WordPress.
+- If not, WindowCAD likely did not reach the website.
+- If yes, check whether AdminBase accepted the relay.
 
-SSH details are in `LIVECHANGES.md`. Do not commit private keys, passphrases or hosting passwords.
+### Spam Protection
 
-## 20. Test Site Indexation
+The forms need stronger spam protection, but it must not hurt conversions.
 
-The test site used to be publicly crawlable and indexable, which risked duplicate indexing against the live domain.
+Possible approaches:
 
-Current state:
+- A simple honeypot.
+- A time-based check.
+- Cloudflare Turnstile.
+- Server-side scoring.
 
-- Basic Auth is enabled for `test.fensterglazing.com`.
-- Unauthenticated access should return 401.
-- Authenticated access should return 200.
+### Conversion Tracking
 
-Keep it protected unless the owner explicitly asks for public temporary review access. If public access is ever needed, add strong `noindex` and robots protection and remove it afterwards.
+The site still needs better lead event tracking.
 
-## 21. Open SEO And Technical Backlog
+Priorities:
 
-High or important remaining issues from the audit and current state:
+- Successful enquiry submission.
+- Phone clicks.
+- Quote tool opens.
+- WindowCAD save/submission.
+- Commercial enquiry.
 
-- Add robust spam protection to the enquiry form without harming conversion.
-- Add consent-aware lead event tracking for form success, phone clicks and quote-tool opens.
-- Fix the broken `/commercial-projects/` internal link or create a valid route.
-- Resolve robots.txt ownership and remove/justify any `Crawl-delay: 10` if still present.
-- Compress or replace the oversized OG/social image, especially the 2.3 MB showroom PNG issue noted in audit work.
-- Confirm SiteGround dynamic cache is enabled where safe.
-- Consider HSTS once redirects and HTTPS are stable.
-- Shorten overlong meta descriptions.
-- Review quote-intent duplicate pages and consolidate where needed.
-- Continue performance work on mobile video, responsive images and unused assets.
-- Re-check review platform claims and counts so public claims match visible evidence.
-- Configure authenticated SMTP before customer confirmation emails.
-- Add alerts/admin visibility for unsent enquiry emails.
-- Verify `/wcad-thank-you/` remains intentionally absent or replaced with a controlled thank-you path if required.
+### Commercial Proof
 
-## 22. Code Cleanup Backlog
+Commercial pages should continue to improve with stronger proof, better project examples, and clearer buyer language.
 
-Known cleanup themes:
+### Meta Descriptions
 
-- `generated-page.php` is large and could be split carefully by concern.
-- Some legacy homepage/Three.js hooks remain inactive. Do not reintroduce Three.js unless explicitly requested.
-- Remove or isolate dead branches only after confirming they are not used by generated routes.
-- Keep route memoisation/canonical handling central.
-- Consider centralising canonical host constants if host logic grows.
-- Keep product data in data files rather than scattering copy inside templates.
+Some pages may still have long or weak meta descriptions. These should be tightened for search snippets and clarity.
 
-Do not perform broad refactors during urgent launch fixes. Keep changes scoped.
+### Social Sharing Image
 
-## 23. Things Not To Break
+The OpenGraph/social image should be compressed and appropriate for sharing.
 
-Do not break these accepted decisions:
+### Duplicate Or Thin Pages
 
-- Theme-owned generated SEO output.
-- Theme-only deployment.
-- No SiteGround clone/staging workflow.
-- Test site Basic Auth.
-- Consent-gated tracking.
-- Shared enquiry form component.
-- Private `fenster_enquiry` saving before email.
-- Mobile quote tool single same-tab action.
-- Homepage hero poster/mobile video gating.
-- Deferred quote embeds and heavy media.
-- Roseview model for `/sliding-sash-windows/`.
-- Canonical `/colour-options/`.
-- Canonical `/obscured-glass/`.
-- Hardcoded virtual `/terms-conditions/`.
-- Product pages using curated data, not raw scraped galleries.
-- Sitemap and route controls in the generated-page system.
+The site should continue to avoid publishing weak duplicated pages just for SEO coverage.
 
-## 24. First 30 Minutes For A New AI
+## 20. Content Quality Rules
 
-Do this before changing code:
+Good Fenster content should:
 
-1. `cd C:\Users\zacpl\Local Sites\fenster-glazing`
-2. `git status --short`
-3. `git log --oneline -12`
-4. Read `app/public/AI.md`.
-5. Read `app/public/HANDOVER.md`.
-6. Read `app/public/LIVECHANGES.md`.
-7. Read `app/public/STYLE.md` if changing UI.
-8. Read `app/public/AUDIT.md` if changing SEO, performance or launch issues.
-9. Inspect the exact route/template/data block before editing.
-10. Build/lint only what changed.
-11. Commit and push scoped changes.
-12. Use test first for larger template/routing/form/SEO/layout changes.
+- Sound like a real local glazing company.
+- Explain practical decisions.
+- Use plain English.
+- Avoid generic filler.
+- Avoid unsupported claims.
+- Be clear about product differences.
+- Make the next step obvious.
+- Match the search intent of the page.
 
-## 25. Verification Checklist
+Weak content usually:
 
-After most changes, verify:
+- Repeats "stunning addition to your home" style language.
+- Talks around the topic without answering practical questions.
+- Uses scraped fragments.
+- Mentions brands/systems inaccurately.
+- Makes every page sound the same.
+- Pushes a quote before building enough context.
 
-- Homepage loads.
-- Changed route loads.
-- `/online-quote/` loads.
-- A representative product route loads, e.g. `/casement-windows/`.
-- A representative location/generated route loads.
-- `/sitemap.xml` loads if routing/SEO changed.
-- `/terms-conditions/` returns 200 if legal/footer/routing changed.
-- `https://www.fensterglazing.com/` redirects to apex if server config changed.
-- Test site still requires Basic Auth.
-- No tracking fires before consent if analytics/header code changed.
-- Form submission still works if form/enquiry JS/PHP changed.
-- Mobile has no horizontal overflow.
-- Lighthouse/network checks if performance was touched.
+## 21. How To Talk About The Site
 
-Useful commands:
+When discussing the site with a GPT, useful prompts include:
 
-```powershell
-git status --short
-git diff --stat
-git diff -- app/public/wp-content/themes/fenster
-npm.cmd run build
-```
+- "How can this page better match the visitor's intent?"
+- "What trust objections would a customer still have?"
+- "Is this product page helping someone choose, or just describing?"
+- "What would make this commercial page more credible?"
+- "Where is the next step unclear?"
+- "Could this SEO page be seen as thin or duplicate?"
+- "What questions would a homeowner ask before enquiring?"
+- "What would stop someone from using the online quote tool?"
+- "How can we improve conversion without making the site feel pushy?"
 
-PHP lint changed files individually:
+The GPT should think like a mix of:
 
-```powershell
-& 'C:\Users\zacpl\AppData\Roaming\Local\lightning-services\php-8.2.29+0\bin\win64\php.exe' -l 'PATH_TO_CHANGED_FILE.php'
-```
+- SEO strategist.
+- UX researcher.
+- Conversion copywriter.
+- Local business advisor.
+- Customer journey analyst.
 
-## 26. Mental Model
+It should not assume it is editing code.
 
-The site is not a normal WordPress content-editing project. It is closer to a custom, code-driven WordPress frontend that uses WordPress as the host/runtime and some database content as legacy source material.
+## 22. Big Picture Summary
 
-Good changes usually:
+Fenster Glazing's site is a custom, premium, SEO-aware lead-generation website for a real glazing company.
 
-- Read the route/data/template first.
-- Fix the source of truth rather than hiding symptoms with CSS.
-- Keep docs in sync when the accepted model changes.
-- Preserve conversion routes.
-- Preserve performance deferral.
-- Preserve SEO ownership.
-- Verify live behaviour, not just local assumptions.
+The strongest version of the site is:
 
-Bad changes usually:
+- Fast enough on mobile.
+- Clear enough for homeowners.
+- Credible enough for commercial buyers.
+- Structured enough for SEO.
+- Practical enough to answer real product questions.
+- Trustworthy enough to earn enquiries.
+- Connected enough that WindowCAD/forms/phone leads flow into the business.
 
-- Edit old admin page content and expect the public route to change.
-- Restore raw scraped content.
-- Re-enable SEO plugin head output on generated pages.
-- Clone or overwrite the live WordPress install.
-- Make heavy videos/iframes eager.
-- Add new forms outside the shared component.
-- Add tracking snippets outside the consent layer.
-- Make broad refactors during launch triage.
+The main ongoing challenge is balance:
 
-If in doubt, keep the change small, inspect rendered output, and document the final accepted model in the right source-of-truth doc.
+- Premium visuals without slow load.
+- SEO coverage without thin duplication.
+- Conversion prompts without pushiness.
+- Technical product detail without overwhelming users.
+- Automation into AdminBase without losing reliability.
+
+For strategic discussion, always ask: does this make it easier for the right customer to trust Fenster and take the next useful step?
