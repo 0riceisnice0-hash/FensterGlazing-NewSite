@@ -114,11 +114,6 @@ $notices = [
     <input type="hidden" name="project_type" value="<?php echo esc_attr((string) $args['project_type']); ?>" data-fg-project-type>
     <fieldset class="fg-enquiry-form__audience" data-fg-audience-gate>
         <legend><?php esc_html_e('Choose enquiry type', 'fenster'); ?></legend>
-        <div class="fg-enquiry-form__audience-copy">
-            <span class="fg-enquiry-form__audience-kicker"><?php esc_html_e('Start here', 'fenster'); ?></span>
-            <strong><?php esc_html_e('Who is the enquiry for?', 'fenster'); ?></strong>
-            <p><?php esc_html_e('Choose the closest route, then send your contact details, project notes and any photos or drawings.', 'fenster'); ?></p>
-        </div>
         <div class="fg-enquiry-form__audience-options">
             <button type="button" data-fg-audience-choice data-project-type="Residential windows and doors" aria-pressed="false">
                 <b aria-hidden="true">01</b>

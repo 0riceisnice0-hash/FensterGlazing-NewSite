@@ -1006,7 +1006,7 @@ function fenster_maybe_render_generated_sitemap(): void
         echo "  </url>\n";
     }
 
-    foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'colour-options', 'upvc-colours', 'aluminium-colours', 'areas-we-cover', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
+    foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
@@ -1292,13 +1292,6 @@ function fenster_render_site_schema(): void
             'position' => 2,
             'name' => 'Commercial Glazing',
             'item' => home_url('/commercial-glazing/'),
-        ];
-    } elseif (fenster_location_matrix_page($slug)) {
-        $breadcrumb_items[] = [
-            '@type' => 'ListItem',
-            'position' => 2,
-            'name' => 'Areas We Cover',
-            'item' => home_url('/areas-we-cover/'),
         ];
     }
 

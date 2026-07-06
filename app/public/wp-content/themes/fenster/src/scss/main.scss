@@ -21202,8 +21202,8 @@ html.fg-blinds-reveal-locked {
 /* Enquiry gate final override: keep the first step compact and form-like. */
 .fg-enquiry-form__audience {
   display: grid;
-  grid-template-columns: minmax(210px, 0.42fr) minmax(0, 1fr);
-  gap: clamp(0.9rem, 2vw, 1.2rem);
+  grid-template-columns: 1fr;
+  gap: 0;
   align-items: stretch;
   padding: clamp(0.85rem, 2vw, 1rem);
   overflow: visible;
@@ -21263,13 +21263,16 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-enquiry-form__audience-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.8rem, 2vw, 1rem);
   align-self: stretch;
 }
 
 .fg-enquiry-form__audience-options button {
   align-content: start;
-  min-height: 100%;
-  padding: 1rem 3.4rem 1rem 1rem;
+  min-height: 168px;
+  padding: clamp(1rem, 2.4vw, 1.25rem) 3.8rem clamp(1rem, 2.4vw, 1.25rem) clamp(1rem, 2.4vw, 1.25rem);
   border-color: rgba(0, 45, 58, 0.12);
   background: var(--color-soft);
   color: var(--color-steel);
@@ -21310,8 +21313,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-enquiry-form__audience-options span {
-  max-width: 12ch;
-  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  max-width: none;
+  font-size: clamp(1.55rem, 2.8vw, 2rem);
   line-height: 1.05;
 }
 
@@ -21328,16 +21331,16 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 760px) {
-  .fg-enquiry-form__audience {
-    grid-template-columns: 1fr;
-  }
-
-  .fg-enquiry-form__audience-copy strong {
-    max-width: 18ch;
+  .fg-enquiry-form__audience-options span {
+    font-size: clamp(1.35rem, 5vw, 1.85rem);
   }
 }
 
 @media (max-width: 640px) {
+  .fg-enquiry-form__audience-options {
+    grid-template-columns: 1fr;
+  }
+
   .fg-enquiry-form__audience-options button {
     min-height: 0;
   }
