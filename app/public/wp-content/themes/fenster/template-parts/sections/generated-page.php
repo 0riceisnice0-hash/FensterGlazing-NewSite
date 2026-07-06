@@ -2529,7 +2529,13 @@ if ($is_commercial_hub) {
                     </div>
 
                     <?php if (! empty($product_hub_specs)) : ?>
+                        <?php $product_hub_spec_count = min(6, count($product_hub_specs)); ?>
                         <div class="fg-product-intel__explorer" data-fg-product-intel>
+                            <?php if ($product_hub_spec_count > 2) : ?>
+                                <p class="fg-product-intel__nav-hint">
+                                    <?php echo esc_html(sprintf(__('Swipe to see all %d product checks.', 'fenster'), $product_hub_spec_count)); ?>
+                                </p>
+                            <?php endif; ?>
                             <div class="fg-product-intel__nav" role="tablist" aria-label="<?php esc_attr_e('Product specification topics', 'fenster'); ?>">
                                 <?php foreach (array_slice($product_hub_specs, 0, 6) as $index => $spec) : ?>
                                     <?php
