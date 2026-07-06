@@ -2774,6 +2774,7 @@ h3 {
 .fg-product-intel,
 .fg-product-visuals,
 .fg-product-gallery-band,
+.fg-pet-flap-guide,
 .fg-window-handles,
 .fg-product-faq,
 .fg-order-process,
@@ -3379,6 +3380,102 @@ h3 {
   margin: 0;
   padding: 0 1rem 1rem 3.85rem;
   color: var(--color-muted);
+}
+
+.fg-pet-flap-guide {
+  background: linear-gradient(180deg, #f7fbf8 0%, #ffffff 100%);
+}
+
+.fg-pet-flap-guide__grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
+  align-items: start;
+}
+
+.fg-pet-flap-guide__lead,
+.fg-pet-flap-guide__cards article {
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 38px rgba(0, 45, 58, 0.08);
+}
+
+.fg-pet-flap-guide__lead {
+  position: sticky;
+  top: 6rem;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.6rem);
+}
+
+.fg-pet-flap-guide__lead h2 {
+  margin: 0;
+  color: var(--color-steel);
+  font-size: clamp(2rem, 3.6vw, 4rem);
+  line-height: 1.05;
+}
+
+.fg-pet-flap-guide__lead p:not(.eyebrow) {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.02rem;
+  line-height: 1.62;
+}
+
+.fg-pet-flap-guide__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fg-pet-flap-guide__cards article {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+  min-height: 260px;
+  padding: clamp(1.15rem, 2vw, 1.7rem);
+}
+
+.fg-pet-flap-guide__cards h3 {
+  margin: 0;
+  color: var(--color-steel);
+  font-size: clamp(1.18rem, 1.6vw, 1.45rem);
+  line-height: 1.16;
+}
+
+.fg-pet-flap-guide__cards p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+.fg-pet-flap-guide__cards ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-pet-flap-guide__cards li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--color-steel);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.fg-pet-flap-guide__cards li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.52rem;
+  height: 0.52rem;
+  border-radius: 999px;
+  background: var(--color-accent);
 }
 
 .fg-product-intel {
@@ -15985,6 +16082,7 @@ h3 {
   .fg-product-why__grid,
   .fg-product-intel__shell,
   .fg-product-intel__lead,
+  .fg-pet-flap-guide__grid,
   .fg-sash-furniture__head,
   .fg-sash-furniture__ranges,
   .fg-sash-furniture__notes,
@@ -16670,6 +16768,22 @@ h3 {
 
   .fg-product-why {
     padding-bottom: 1.5rem;
+  }
+
+  .fg-pet-flap-guide {
+    padding: 2.25rem 0;
+  }
+
+  .fg-pet-flap-guide__lead {
+    position: static;
+  }
+
+  .fg-pet-flap-guide__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-pet-flap-guide__cards article {
+    min-height: 0;
   }
 
   .fg-product-intel {

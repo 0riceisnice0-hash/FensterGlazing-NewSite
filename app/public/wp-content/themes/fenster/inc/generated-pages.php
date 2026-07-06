@@ -601,6 +601,18 @@ function fenster_get_generated_page(?string $slug = null): ?array
         }
     }
 
+    if ($slug === 'cat-and-dog-flaps' && isset($index[$slug]) && is_array($index[$slug])) {
+        $page = $index[$slug];
+        $page['title'] = 'Cat and Dog Flaps';
+        $page['url'] = home_url('/cat-and-dog-flaps/');
+        $page['seo']['title_tag'] = 'Cat and Dog Flaps | Pet Flap Glazing | Fenster Glazing';
+        $page['seo']['meta_description'] = 'Cat and dog flaps fitted into suitable door panels or new sealed glass units, with manual, lockable and microchip options checked before order.';
+        $page['seo']['canonical'] = 'https://fensterglazing.com/cat-and-dog-flaps/';
+        $page['seo']['robots'] = 'max-image-preview:large';
+
+        return $page_cache[$slug] = $page;
+    }
+
     return $page_cache[$slug] = ($index[$slug] ?? null);
 }
 

@@ -197,6 +197,7 @@ $is_product = ! $is_quote_tool && (
 );
 $is_door_product = $is_product && (str_contains($slug, 'door') || str_contains($slug, 'bifold') || str_contains($slug, 'patio') || $slug === 'slide-fold-doors');
 $use_product_journey = $is_product && ! $is_home && ! $is_case_study && ! $is_team && ! $is_about_page && ! $is_contact && ! $is_product_selector_hub && ! $is_commercial_hub && ! $is_commercial_county && ! $is_location_service && ! $is_colour_options;
+$is_pet_flap_page = $slug === 'cat-and-dog-flaps';
 $product_usps = fenster_data('product_usps.' . $slug, []);
 $product_usps = is_array($product_usps) ? array_slice($product_usps, 0, 4) : [];
 $product_content = fenster_data('product_content.' . $slug, []);
@@ -531,6 +532,10 @@ $product_gallery_copy = sprintf(
     'This %1$s gallery brings together verified product imagery, close-up frame details and related specification examples so homeowners can compare sightlines, glazing style, opening format, colour tone and installation context before requesting a quote.',
     strtolower($title)
 );
+if ($is_pet_flap_page) {
+    $product_gallery_heading = 'Pet flap fitting routes and fitted details.';
+    $product_gallery_copy = 'Pet flap projects are less about frame catalogues and more about the right fitting route. Fenster checks whether the flap belongs in a replacement panel or a new sealed glass unit before the work is ordered.';
+}
 $home_categories = [
     ['label' => 'Windows', 'url' => home_url('/windows-milton-keynes/'), 'image' => $asset_base . 'Aluminium-windows.jpg', 'copy' => 'uPVC, aluminium, flush, sash and heritage-style windows for warmer, quieter homes.'],
     ['label' => 'Doors', 'url' => home_url('/doors-milton-keynes/'), 'image' => $asset_base . 'new-front-door-in-Milton-Keynes.jpeg', 'copy' => 'Composite, aluminium, French, patio and uPVC doors built around security and style.'],
@@ -755,6 +760,25 @@ $journey_option_eyebrow = ($is_product && ! $is_commercial) ? 'Popular colours' 
 $journey_option_heading = ($is_product && ! $is_commercial) ? 'Choose a finish that fits the property.' : ($is_commercial ? 'Keep the important project decisions visible.' : 'Understand how Fenster keeps the work grounded.');
 $journey_options = $product_colours;
 
+if ($is_pet_flap_page) {
+    $journey_heading = 'Plan a pet flap that fits the door, glass and pet.';
+    $journey_steps = ['Choose the fitting route', 'Confirm the flap type', 'Survey before ordering'];
+    $journey_intro_heading = 'A small product with details worth checking.';
+    $journey_intro_copy = 'The right result depends on glass type, panel construction, pet size, flap model and the route outside.';
+    $journey_why_eyebrow = 'Pet flap fitting';
+    $journey_why_heading = 'A neat pet flap starts with the right glass or panel decision.';
+    $journey_why_button = 'Ask about a pet flap';
+    $journey_gallery_eyebrow = 'Fitting choices';
+    $journey_gallery_heading = 'Decide the fitting route before anything is made.';
+    $journey_faq_heading = 'FAQs about cat and dog flaps';
+    $journey_order_eyebrow = 'Pet flap process';
+    $journey_order_heading = 'Survey, specify, order and fit without guesswork.';
+    $journey_order_copy = 'Fenster checks the existing door or glass first, confirms the flap route, then orders the right made-to-measure part for installation.';
+    $journey_order_action = 'Ask about pet flap fitting';
+    $journey_option_eyebrow = 'Pet flap checks';
+    $journey_option_heading = 'Choose the fitting route around the existing door or glass.';
+}
+
 if ($is_commercial) {
     $journey_options = [
         ['name' => 'Brief', 'hex' => '#2eac66'],
@@ -796,7 +820,38 @@ if ($is_commercial) {
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Experienced installers manage the work with care for the property and the finished detail.'],
         ['step' => '04', 'title' => 'Aftercare', 'copy' => 'Fenster supports customers after installation with guarantee guidance and practical advice.'],
     ];
+} elseif ($is_pet_flap_page) {
+    $product_order_steps = [
+        ['step' => '01', 'title' => 'Check the opening', 'copy' => 'Fenster confirms whether the flap is going into a suitable panel or a replacement sealed glass unit.'],
+        ['step' => '02', 'title' => 'Choose the flap', 'copy' => 'Manual, lockable and microchip options are matched to the pet, opening size and access-control need.'],
+        ['step' => '03', 'title' => 'Order the part', 'copy' => 'If glass is required, the new sealed unit is made with the correct aperture before installation.'],
+        ['step' => '04', 'title' => 'Fit and finish', 'copy' => 'The flap, glass or panel is installed neatly, with position, weathering and everyday use checked on completion.'],
+    ];
 }
+$pet_flap_cards = $is_pet_flap_page
+    ? [
+        [
+            'title' => 'Replacement glass unit',
+            'copy' => 'For many glazed doors, the existing sealed unit is measured and replaced with a new unit made around the selected flap.',
+            'points' => ['Keeps the sealed unit intact', 'Factory-made aperture', 'Clear or obscure glass options'],
+        ],
+        [
+            'title' => 'Door panel fitting',
+            'copy' => 'Some uPVC or door panels can accept a flap directly once the material, reinforcement and position have been checked.',
+            'points' => ['Suitable panels only', 'Position checked before cutting', 'Useful for simpler access routes'],
+        ],
+        [
+            'title' => 'Microchip access',
+            'copy' => 'Microchip models can reduce unwanted visitors and give better control than a basic open flap.',
+            'points' => ['Manual and lockable alternatives', 'Cat and selected dog sizes', 'Power and battery details checked'],
+        ],
+        [
+            'title' => 'Height and route outside',
+            'copy' => 'The pet, door height, threshold and outside landing all affect whether the flap will feel natural to use.',
+            'points' => ['Pet size matters', 'Threshold and step checked', 'Weather exposure considered'],
+        ],
+    ]
+    : [];
 $related_links = [];
 $generated_pages = fenster_generated_pages_index();
 $virtual_page_titles = [
@@ -2475,6 +2530,34 @@ if ($is_commercial_hub) {
             </div>
         </section>
 
+        <?php if ($is_pet_flap_page && ! empty($pet_flap_cards)) : ?>
+            <section class="fg-pet-flap-guide">
+                <div class="container fg-pet-flap-guide__grid">
+                    <div class="fg-pet-flap-guide__lead">
+                        <p class="eyebrow"><?php esc_html_e('Glass, panel or flap first?', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('The fitting route is chosen before the pet flap is ordered.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. Fenster checks the existing unit, the selected flap and the route outside before giving the go-ahead.', 'fenster'); ?></p>
+                        <a class="button" href="#fenster-enquiry"><?php esc_html_e('Check my pet flap options', 'fenster'); ?></a>
+                    </div>
+                    <div class="fg-pet-flap-guide__cards" aria-label="<?php esc_attr_e('Pet flap fitting options', 'fenster'); ?>">
+                        <?php foreach ($pet_flap_cards as $card) : ?>
+                            <article>
+                                <h3><?php echo esc_html((string) ($card['title'] ?? 'Pet flap option')); ?></h3>
+                                <p><?php echo esc_html((string) ($card['copy'] ?? '')); ?></p>
+                                <?php if (! empty($card['points']) && is_array($card['points'])) : ?>
+                                    <ul>
+                                        <?php foreach ($card['points'] as $point) : ?>
+                                            <li><?php echo esc_html((string) $point); ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+
         <?php if (! empty($product_hub_specs) || ! empty($product_hub_choices)) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
@@ -2667,7 +2750,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if (count($product_visual_gallery) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && count($product_visual_gallery) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -2692,6 +2775,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
+        <?php if (! $is_pet_flap_page) : ?>
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">
@@ -2731,6 +2815,7 @@ if ($is_commercial_hub) {
                 </div>
             </div>
         </section>
+        <?php endif; ?>
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
             <section id="fenster-sash-furniture" class="fg-sash-furniture">

@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-06
 
+## 2026-07-06 - Cat And Dog Flaps Page Rewrite
+
+- Rebuilt `/cat-and-dog-flaps/` at the generated-page source after the imported scrape title and copy produced bad output such as "Need Cat and Dog Flaps?" and double-question headings.
+- Added a route-specific generated-page SEO/title override so the page now uses `Cat and Dog Flaps` consistently in the H1, metadata, FAQ heading and internal labels.
+- Rewrote the pet-flap product intro, benefits, FAQs, product-hub detail and USP labels around the real customer decision: suitable door panel versus new sealed glass unit, manual/lockable/microchip options, pet size, flap height and survey checks.
+- Added a dedicated pet-flap fitting guide section and suppressed the generic product visual gallery/specification-choice block on this route, because frame-colour/privacy-glass catalogue copy does not fit the service.
+- Added responsive SCSS for the pet-flap guide cards so the page collapses cleanly on mobile.
+
 ## 2026-07-06 - Lighthouse Performance Wave 1 And 2
 
 - Added a performance pass in response to the mobile Lighthouse report showing 62 Performance, 4.3s FCP and 14.5s LCP on slow 4G.

@@ -316,15 +316,15 @@ function fenster_product_hub_data(string $slug): array
         ],
         'cat-and-dog-flaps' => [
             'badges' => ['Glass or panel', 'Microchip option', 'New unit required'],
-            'heading' => 'Pet flap fitting explained before the glass is ordered.',
-            'copy' => 'Pet flap pages should prevent the most common confusion: existing toughened double glazing cannot simply be cut on site. A new sealed unit or suitable panel is normally made for the flap.',
+            'heading' => 'Pet flap fitting decided before the glass or panel is ordered.',
+            'copy' => 'A clean pet-flap installation starts with the right route. Fenster checks whether the opening needs a new sealed glass unit, a replacement door panel or a panel cut-out, then confirms the flap model and position before manufacture.',
             'specs' => [
                 ['label' => 'Glass fitting', 'value' => 'A new sealed glass unit is made with the correct aperture for the chosen flap'],
-                ['label' => 'Panel fitting', 'value' => 'Suitable uPVC door panels can often accept a flap after material and position checks'],
-                ['label' => 'Flap types', 'value' => 'Manual, lockable and microchip-controlled options'],
-                ['label' => 'Survey checks', 'value' => 'Pet size, flap height, glass type, door style and route outside'],
+                ['label' => 'Panel fitting', 'value' => 'Suitable uPVC or door panels can often accept a flap after material and position checks'],
+                ['label' => 'Access control', 'value' => 'Manual, lockable and microchip-controlled flap options can be discussed'],
+                ['label' => 'Survey checks', 'value' => 'Pet size, flap height, glass type, door construction, threshold and route outside'],
             ],
-            'choices' => ['Cat flaps and selected dog flap sizes', 'Clear or obscure replacement glass', 'Microchip access control', 'Weather and security positioning advice'],
+            'choices' => ['Cat flaps and selected dog flap sizes', 'Clear or obscure replacement glass', 'Microchip access control', 'Weather, threshold and security positioning advice'],
         ],
     ];
 
