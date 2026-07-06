@@ -7637,10 +7637,10 @@ h3 {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.46fr);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.42fr);
   gap: clamp(1rem, 3vw, 2rem);
   align-items: end;
-  padding: clamp(5rem, 9vw, 8rem) 0 clamp(2rem, 5vw, 4rem);
+  padding: clamp(4.5rem, 8vw, 6.5rem) 0 clamp(1.6rem, 4vw, 3rem);
 }
 
 .fg-commercial-hub-hero__copy {
@@ -7657,10 +7657,10 @@ h3 {
 }
 
 .fg-commercial-hub-hero h1 {
-  max-width: 980px;
+  max-width: 930px;
   color: var(--color-steel);
-  font-size: clamp(2.35rem, 4vw, 4.35rem);
-  line-height: 1.03;
+  font-size: clamp(2.3rem, 3.65vw, 3.75rem);
+  line-height: 1.04;
 }
 
 .fg-commercial-hub-hero__copy p:not(.eyebrow) {
@@ -7712,7 +7712,7 @@ h3 {
 }
 
 .fg-commercial-hub-proof {
-  padding: 0 0 clamp(3rem, 5vw, 4.5rem);
+  padding: 0 0 clamp(2.25rem, 4vw, 3.5rem);
   background: transparent;
   color: var(--color-ink);
 }
@@ -7723,7 +7723,7 @@ h3 {
 }
 
 .fg-commercial-hub-proof article {
-  min-height: 132px;
+  min-height: 108px;
   display: grid;
   align-content: center;
   gap: 0.3rem;
@@ -7739,7 +7739,7 @@ h3 {
 
 .fg-commercial-hub-proof strong {
   color: var(--color-accent);
-  font-size: clamp(1.45rem, 2.5vw, 2.35rem);
+  font-size: clamp(1.25rem, 2vw, 1.85rem);
   line-height: 1;
 }
 
@@ -7753,7 +7753,7 @@ h3 {
 .fg-commercial-projects-preview,
 .fg-commercial-sectors,
 .fg-commercial-enquiry {
-  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  padding: clamp(2.6rem, 5vw, 4.35rem) 0;
 }
 
 .fg-commercial-section-head {
@@ -7765,8 +7765,9 @@ h3 {
 .fg-commercial-flow h2,
 .fg-commercial-sectors h2,
 .fg-commercial-enquiry h2 {
-  font-size: clamp(2.1rem, 4.2vw, 4.65rem);
-  line-height: 1.02;
+  max-width: 760px;
+  font-size: clamp(1.75rem, 2.7vw, 2.55rem);
+  line-height: 1.08;
 }
 
 .fg-commercial-section-head p:not(.eyebrow),
@@ -7784,7 +7785,7 @@ h3 {
 
 .fg-commercial-product-card {
   position: relative;
-  min-height: 330px;
+  min-height: 300px;
   display: grid;
   align-items: end;
   overflow: hidden;
@@ -7832,7 +7833,7 @@ h3 {
 }
 
 .fg-commercial-product-card strong {
-  font-size: clamp(1.35rem, 2vw, 1.9rem);
+  font-size: clamp(1.22rem, 1.65vw, 1.55rem);
   line-height: 1.05;
 }
 
@@ -7848,14 +7849,14 @@ h3 {
 
 .fg-commercial-flow__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(420px, 1fr);
-  gap: clamp(1.5rem, 4vw, 4rem);
+  grid-template-columns: minmax(0, 0.58fr) minmax(420px, 1fr);
+  gap: clamp(1.1rem, 3vw, 2.5rem);
   align-items: start;
 }
 
 .fg-commercial-flow__copy {
-  position: sticky;
-  top: 112px;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border-left: 4px solid var(--color-accent);
 }
 
 .fg-commercial-flow__steps {
@@ -7865,9 +7866,9 @@ h3 {
 
 .fg-commercial-flow__steps article {
   display: grid;
-  grid-template-columns: 78px minmax(0, 1fr);
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 0.9rem;
+  padding: 0.9rem;
   border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.76);
@@ -7876,8 +7877,8 @@ h3 {
 
 .fg-commercial-flow__steps article > span {
   display: grid;
-  width: 62px;
-  height: 62px;
+  width: 54px;
+  height: 54px;
   place-items: center;
   border-radius: 8px;
   background: var(--color-steel);
@@ -7908,7 +7909,7 @@ h3 {
 
 .fg-commercial-project-card {
   position: relative;
-  min-height: 470px;
+  min-height: 410px;
   display: grid;
   align-content: end;
   gap: 0.75rem;
@@ -7953,7 +7954,7 @@ h3 {
 }
 
 .fg-commercial-project-card strong {
-  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  font-size: clamp(1.22rem, 1.75vw, 1.55rem);
   line-height: 1.06;
 }
 
@@ -7998,10 +7999,10 @@ h3 {
 
 .fg-commercial-sectors__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(420px, 1fr);
-  gap: 2rem;
-  align-items: center;
-  padding: clamp(1.2rem, 3vw, 2.4rem);
+  grid-template-columns: minmax(0, 0.52fr) minmax(420px, 1fr);
+  gap: clamp(1rem, 2.4vw, 2rem);
+  align-items: stretch;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
   border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.78);
@@ -8015,16 +8016,35 @@ h3 {
   gap: 0.75rem;
 }
 
-.fg-commercial-sectors__list span {
-  display: flex;
-  align-items: center;
-  min-height: 78px;
-  padding: 0.9rem 1rem;
+.fg-commercial-sectors__grid > div:first-child {
+  display: grid;
+  align-content: center;
+}
+
+.fg-commercial-sectors__grid > div:first-child p:not(.eyebrow) {
+  max-width: 44ch;
+  color: var(--color-muted);
+}
+
+.fg-commercial-sectors__list article {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  min-height: 132px;
+  padding: 1rem;
   border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.fg-commercial-sectors__list strong {
   color: var(--color-steel);
   font-weight: 800;
+}
+
+.fg-commercial-sectors__list span {
+  color: var(--color-muted);
+  font-weight: 650;
 }
 
 .fg-commercial-enquiry {
@@ -8034,7 +8054,7 @@ h3 {
 
 .fg-commercial-enquiry__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(480px, 1fr);
+  grid-template-columns: minmax(270px, 0.46fr) minmax(520px, 1fr);
   gap: 1rem;
   align-items: start;
 }
@@ -8044,18 +8064,56 @@ h3 {
   padding: clamp(1.2rem, 3vw, 2.4rem);
   border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.84);
   box-shadow: 0 18px 44px rgba(0, 45, 58, 0.08);
   backdrop-filter: blur(12px);
 }
 
+.fg-commercial-enquiry__copy {
+  position: sticky;
+  top: 102px;
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
 .fg-commercial-enquiry__copy p {
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-commercial-enquiry__copy h2,
+.fg-commercial-enquiry__copy .eyebrow {
+  color: #ffffff;
+}
+
+.fg-commercial-enquiry__notes {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1.1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-commercial-enquiry__notes li {
+  position: relative;
+  padding-left: 1.2rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 750;
+}
+
+.fg-commercial-enquiry__notes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.68em;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: var(--color-accent);
 }
 
 .fg-commercial-form {
   display: grid;
   gap: 0.9rem;
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .fg-commercial-form__row {
@@ -8075,12 +8133,22 @@ h3 {
 .fg-commercial-form select,
 .fg-commercial-form textarea {
   width: 100%;
-  border: 1px solid var(--color-line);
+  min-height: 52px;
+  border: 1px solid rgba(0, 45, 58, 0.2);
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   color: var(--color-ink);
   font: inherit;
   padding: 0.78rem 0.88rem;
+  box-shadow: inset 0 1px 0 rgba(0, 45, 58, 0.04);
+}
+
+.fg-commercial-form input:focus,
+.fg-commercial-form select:focus,
+.fg-commercial-form textarea:focus {
+  border-color: rgba(46, 172, 102, 0.72);
+  outline: 3px solid rgba(46, 172, 102, 0.16);
+  outline-offset: 0;
 }
 
 .fg-commercial-form textarea {
@@ -8106,6 +8174,10 @@ h3 {
 
 .fg-commercial-hub .fg-contact-list a {
   color: var(--color-steel);
+}
+
+.fg-commercial-enquiry__copy .fg-contact-list a {
+  color: #ffffff;
 }
 
 .fg-commercial-hub .fg-links-band {
@@ -16328,6 +16400,11 @@ h3 {
 
   .fg-commercial-flow__copy {
     position: static;
+    padding-left: 1rem;
+  }
+
+  .fg-commercial-enquiry__copy {
+    position: static;
   }
 
   .fg-commercial-hub-proof__grid,
@@ -17577,12 +17654,12 @@ h3 {
   .fg-commercial-flow h2,
   .fg-commercial-sectors h2,
   .fg-commercial-enquiry h2 {
-    font-size: clamp(2rem, 9.5vw, 2.85rem);
+    font-size: clamp(1.75rem, 8vw, 2.35rem);
   }
 
   .fg-commercial-product-card,
   .fg-commercial-project-card {
-    min-height: 330px;
+    min-height: 300px;
   }
 
   .fg-commercial-project-card div {

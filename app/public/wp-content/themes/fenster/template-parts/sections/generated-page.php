@@ -1712,31 +1712,31 @@ if (! $use_product_journey && ($is_archive_page || $is_utility_page || ! $is_pro
 }
 
 if ($is_commercial_hub) {
-    $commercial_intro = 'Fenster supports commercial glazing packages for refurbishment, education, healthcare, public sector, office and multi-site projects. Send drawings, schedules or site photos and the team can review the scope before a specification conversation.';
+    $commercial_intro = 'Fenster supports commercial glazing packages for refurbishments, education, healthcare, office, public sector and managed buildings. Send the drawings, schedule, site photos or a short scope note and the team can review what is needed before the first specification conversation.';
     $commercial_services = [
         [
             'title' => 'Commercial windows and doors',
-            'copy' => 'Aluminium and uPVC window and door packages for offices, schools, healthcare settings and managed buildings.',
+            'copy' => 'Aluminium and uPVC window and door packages for offices, schools, care settings and managed buildings.',
             'url' => home_url('/commercial-windows-and-doors/'),
-            'image' => $asset_base . 'c02c21c7-23d6-4a83-a739-3932c9eeaffd.png',
+            'image' => $asset_base . 'Airbus-Commercial.jpg',
         ],
         [
             'title' => 'Curtain walling',
             'copy' => 'Glazed facade packages shaped around structure, thermal performance, interfaces and installation sequencing.',
             'url' => home_url('/curtain-walling/'),
-            'image' => $asset_base . 'BFI.jpg',
+            'image' => $asset_base . 'curtain-walling-2.jpg',
         ],
         [
             'title' => 'Louvres and ventilation',
             'copy' => 'Louvre, airflow and screening products coordinated with the wider glazing requirement.',
             'url' => home_url('/louvre-vents/'),
-            'image' => $asset_base . 'Greensand-Country.jpg',
+            'image' => $asset_base . 'IKL33louvresystem.png',
         ],
         [
             'title' => 'AOV and automation',
             'copy' => 'Automated opening vents and controls for life-safety, ventilation and building-management requirements.',
             'url' => home_url('/commercial-automation/'),
-            'image' => $asset_base . 'milton-keynes-museum.jpg',
+            'image' => $asset_base . 'commercial-4.jpg',
         ],
         [
             'title' => 'Replacement glazing',
@@ -1748,34 +1748,32 @@ if ($is_commercial_hub) {
             'title' => 'Project support',
             'copy' => 'Early review of drawings, elevations, scope gaps, access constraints, performance targets and programme pressure.',
             'url' => '#commercial-enquiry',
-            'image' => $asset_base . 'Airbus-Commercial.jpg',
+            'image' => $asset_base . 'commercial-1.jpg',
         ],
     ];
     $commercial_proof = [
-        ['value' => 'Education', 'label' => 'schools, colleges and public buildings'],
-        ['value' => 'Healthcare', 'label' => 'live environments and phased access'],
-        ['value' => 'Part L', 'label' => 'thermal-performance led specification'],
-        ['value' => 'Surveyed', 'label' => 'measured before manufacture'],
+        ['value' => 'Live sites', 'label' => 'phased access, RAMS and occupied buildings'],
+        ['value' => 'Drawings', 'label' => 'reviewed before survey and pricing'],
+        ['value' => 'Systems', 'label' => 'windows, doors, curtain walling and louvres'],
+        ['value' => 'Surveyed', 'label' => 'measured before anything is made'],
     ];
     $commercial_process = [
-        ['step' => '01', 'title' => 'Send the brief', 'copy' => 'Upload drawings, schedules, photos or a short scope note so Fenster can understand the package quickly.'],
-        ['step' => '02', 'title' => 'Review constraints', 'copy' => 'The team checks building type, access, performance targets, interfaces, programme and likely system options.'],
-        ['step' => '03', 'title' => 'Shape the specification', 'copy' => 'Fenster aligns glazing, frames, doors, louvres, finishes and installation detail before pricing is finalised.'],
-        ['step' => '04', 'title' => 'Plan delivery', 'copy' => 'Survey, manufacture, access, sequencing and handover support are planned around the live project conditions.'],
+        ['step' => '01', 'title' => 'Send the package', 'copy' => 'Drawings, schedules, photos or a short note are enough to start the right conversation.'],
+        ['step' => '02', 'title' => 'Check the constraints', 'copy' => 'Fenster reviews building type, access, programme, performance targets and likely system choices.'],
+        ['step' => '03', 'title' => 'Confirm the route', 'copy' => 'Survey, specification, finishes, interfaces and installation detail are shaped before final pricing.'],
+        ['step' => '04', 'title' => 'Plan delivery', 'copy' => 'Manufacture, access, sequencing and handover are planned around the real site conditions.'],
     ];
-    $commercial_sectors = [
-        'Education buildings',
-        'Healthcare and care settings',
-        'Offices and commercial property',
-        'Public sector buildings',
-        'Hospitality and leisure',
-        'Multi-site refurbishment',
+    $commercial_fit = [
+        ['title' => 'Drawings or schedules are ready', 'copy' => 'Best when there is already a package to review, price or tidy into a workable specification.'],
+        ['title' => 'The building is occupied', 'copy' => 'Useful for care, healthcare, education, offices and public buildings where disruption matters.'],
+        ['title' => 'Several products need coordinating', 'copy' => 'Windows, doors, curtain walling, louvres, glass and finishes can be reviewed together.'],
+        ['title' => 'Access or programme is tight', 'copy' => 'Send the awkward details early so lifting, phasing and survey requirements are not guessed.'],
     ];
     $commercial_projects = [
         [
             'title' => 'Barn Hotel - Coventry',
             'url' => home_url('/commercial-projects/'),
-            'image' => $asset_base . 'Woburn-Waters-End-Barn.png',
+            'image' => $asset_base . 'commercial-5.jpg',
             'scope' => 'Hotel refurbishment',
             'installed' => '37 aluminium windows and commercial entrance doors',
             'site' => 'Crane-assisted lifts during shell-stage works',
@@ -1783,7 +1781,7 @@ if ($is_commercial_hub) {
         [
             'title' => 'Sunrise Care Home - Kettering',
             'url' => home_url('/commercial-projects/'),
-            'image' => $asset_base . 'inside-door-sunrise-1.jpg',
+            'image' => $asset_base . 'healthcare.jpg',
             'scope' => 'Live healthcare environment',
             'installed' => 'Replacement windows and doors',
             'site' => 'Phased work with controlled access',
@@ -1791,7 +1789,7 @@ if ($is_commercial_hub) {
         [
             'title' => 'Herts and Essex Community Hospital',
             'url' => home_url('/commercial-projects/'),
-            'image' => $asset_base . 'Herts-and-Profile.png',
+            'image' => $asset_base . 'curtain-walling-4.jpg',
             'scope' => 'Healthcare glazing replacement',
             'installed' => 'Aluminium replacement windows',
             'site' => 'Public building coordination',
@@ -1815,8 +1813,8 @@ if ($is_commercial_hub) {
                     </div>
                 </div>
                 <aside class="fg-commercial-hub-brief" aria-label="<?php esc_attr_e('Commercial enquiry checklist', 'fenster'); ?>">
-                    <span><?php esc_html_e('Fastest way to a useful reply', 'fenster'); ?></span>
-                    <h2><?php esc_html_e('Send drawings, schedules, site photos or a scope note.', 'fenster'); ?></h2>
+                    <span><?php esc_html_e('Fastest route to a useful reply', 'fenster'); ?></span>
+                    <h2><?php esc_html_e('Send the project information you already have.', 'fenster'); ?></h2>
                     <ul>
                         <li><?php esc_html_e('Building type and location', 'fenster'); ?></li>
                         <li><?php esc_html_e('Required systems or performance targets', 'fenster'); ?></li>
@@ -1863,8 +1861,8 @@ if ($is_commercial_hub) {
             <div class="container fg-commercial-flow__grid">
                 <div class="fg-commercial-flow__copy">
                     <p class="eyebrow"><?php esc_html_e('How enquiries move', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('How Fenster handles commercial enquiries.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Fenster can join early enough to flag scope gaps, site constraints and specification decisions before they become expensive problems.', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('A practical route from brief to install.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('The aim is simple: understand the package quickly, spot missing details early and get the enquiry to the right person before time is wasted.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-commercial-flow__steps">
                     <?php foreach ($commercial_process as $step) : ?>
@@ -1916,11 +1914,15 @@ if ($is_commercial_hub) {
             <div class="container fg-commercial-sectors__grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Where this fits', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Built for practical commercial decision-making.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Best-fit commercial enquiries.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('This page is for commercial projects where the details matter: drawings, access, live buildings, multiple products, programme pressure or a specification that needs checking before it becomes expensive.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-commercial-sectors__list">
-                    <?php foreach ($commercial_sectors as $sector) : ?>
-                        <span><?php echo esc_html($sector); ?></span>
+                    <?php foreach ($commercial_fit as $fit) : ?>
+                        <article>
+                            <strong><?php echo esc_html($fit['title']); ?></strong>
+                            <span><?php echo esc_html($fit['copy']); ?></span>
+                        </article>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -1930,8 +1932,13 @@ if ($is_commercial_hub) {
             <div class="container fg-commercial-enquiry__grid">
                 <div class="fg-commercial-enquiry__copy">
                     <p class="eyebrow"><?php esc_html_e('Send a commercial enquiry', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Attach drawings, schedules, photos or a scope note.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Add the files that explain the package best, then include the key site, programme and performance notes so Fenster can send the enquiry to the right person.', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Send the brief. Fenster will route it properly.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Add the key site, programme and performance notes. Attach files if they explain the package better than a message can.', 'fenster'); ?></p>
+                    <ul class="fg-commercial-enquiry__notes">
+                        <li><?php esc_html_e('Drawings, schedules or elevations', 'fenster'); ?></li>
+                        <li><?php esc_html_e('Site photos, access notes or deadlines', 'fenster'); ?></li>
+                        <li><?php esc_html_e('System, colour or performance requirements', 'fenster'); ?></li>
+                    </ul>
                     <div class="fg-contact-list">
                         <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '01908429200')); ?>"><?php echo esc_html($brand['phone'] ?? '01908 429200'); ?></a>
                         <a href="mailto:<?php echo esc_attr($brand['email'] ?? 'info@fensterglazing.com'); ?>"><?php echo esc_html($brand['email'] ?? 'info@fensterglazing.com'); ?></a>
