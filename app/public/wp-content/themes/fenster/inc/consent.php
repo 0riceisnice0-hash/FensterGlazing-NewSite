@@ -10,7 +10,7 @@ if (! defined('ABSPATH')) {
 }
 
 const FENSTER_GTM_ID = 'GTM-K89BCS9';
-const FENSTER_CLARITY_ID = 'rtq25ff3l3';
+const FENSTER_CLARITY_ID = 'xi7rk1pic8';
 const FENSTER_META_PIXEL_ID = '4315058575189194';
 
 add_filter('option_ihaf_insert_header', 'fenster_empty_public_tracking_option', PHP_INT_MAX);
@@ -101,8 +101,27 @@ function fenster_render_cookie_consent(): void
             document.head.appendChild(script);
         }
 
+        function setClarityConsent(adStorage, analyticsStorage) {
+            if (typeof window.clarity !== 'function') {
+                return;
+            }
+
+            window.clarity('consentv2', {
+                ad_Storage: adStorage,
+                analytics_Storage: analyticsStorage
+            });
+        }
+
+        function revokeTrackingConsent() {
+            if (typeof window.clarity === 'function') {
+                setClarityConsent('denied', 'denied');
+                window.clarity('consent', false);
+            }
+        }
+
         function loadTracking() {
             if (accepted) {
+                setClarityConsent('granted', 'granted');
                 return;
             }
 
@@ -114,6 +133,7 @@ function fenster_render_cookie_consent(): void
             window.clarity = window.clarity || function () {
                 (window.clarity.q = window.clarity.q || []).push(arguments);
             };
+            setClarityConsent('granted', 'granted');
             loadScript('https://www.clarity.ms/tag/<?php echo esc_js(FENSTER_CLARITY_ID); ?>');
 
             if (! window.fbq) {
@@ -173,6 +193,7 @@ function fenster_render_cookie_consent(): void
                 setChoice('rejected');
                 hideBanner();
                 showSettingsButton();
+                revokeTrackingConsent();
             }
 
             if (event.target.closest('[data-fg-cookie-settings]')) {

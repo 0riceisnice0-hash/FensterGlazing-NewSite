@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-07
 
+## 2026-07-07 - Clarity Consent Session Fix
+
+- Fixed the Clarity consent setup so accepted visitors receive Microsoft Clarity Consent API v2 signals instead of being treated as no-consent page views.
+- Aligned the theme-loaded Clarity project ID with the WordPress Clarity plugin setting (`xi7rk1pic8`) while keeping third-party tracking blocked until the site cookie banner is accepted.
+- Local browser verification confirmed no Clarity/GTM/Facebook tracking scripts or `_cl*` cookies before consent, then persistent `_clck` and `_clsk` cookies after acceptance across `/aluminium-doors/` to `/sliding-sash-windows/` navigation.
+
 ## 2026-07-07 - Cookie Policy Copy Cleanup
 
 - Replaced the imported `/cookie-policy/` wording with a site-specific policy that matches the current consent banner and tracking setup.
