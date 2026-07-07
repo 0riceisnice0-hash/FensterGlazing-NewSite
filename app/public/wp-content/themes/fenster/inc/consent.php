@@ -10,7 +10,7 @@ if (! defined('ABSPATH')) {
 }
 
 const FENSTER_GTM_ID = 'GTM-K89BCS9';
-const FENSTER_CLARITY_ID = 'xi7rk1pic8';
+const FENSTER_CLARITY_ID = 'rtq25ff3l3';
 const FENSTER_META_PIXEL_ID = '4315058575189194';
 
 add_filter('option_ihaf_insert_header', 'fenster_empty_public_tracking_option', PHP_INT_MAX);
