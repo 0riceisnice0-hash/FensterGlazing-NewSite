@@ -74,7 +74,7 @@ $delivery_points = [
     ],
     [
         'title' => 'Survey-led scope checks',
-        'copy' => sprintf('Drawings, schedules, photographs and site notes help the team identify the right glazing route before pricing work in %s.', $region),
+        'copy' => sprintf('Drawings, schedules, photographs and site notes help the team identify the right glazing approach before pricing work in %s.', $region),
     ],
     [
         'title' => 'Phased live-site work',
@@ -92,7 +92,7 @@ $sectors = [
 $faqs = [
     [
         'question' => sprintf('Which parts of %s do you cover?', $county_name),
-        'answer' => sprintf('Fenster can review commercial glazing projects across %s, including %s. If your site is nearby, send the postcode and the team can confirm the best route.', $county_name, implode(', ', $towns)),
+        'answer' => sprintf('Fenster can review commercial glazing projects across %s, including %s. If your site is nearby, send the postcode and the team can confirm the best approach.', $county_name, implode(', ', $towns)),
     ],
     [
         'question' => sprintf('What makes %s commercial projects different?', $county_name),

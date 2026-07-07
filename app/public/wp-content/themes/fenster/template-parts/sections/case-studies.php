@@ -660,7 +660,7 @@ $project_blocks = $is_commercial_single
                 </div>
                 <div class="fg-commercial-record__facts">
                     <div class="fg-commercial-record__intro">
-                        <p class="eyebrow"><?php esc_html_e('Project record', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('Project details', 'fenster'); ?></p>
                         <p><?php echo esc_html((string) ($project_details['scope'] ?? $intro)); ?></p>
                     </div>
                     <dl class="fg-commercial-record__list">
@@ -798,7 +798,7 @@ $project_blocks = $is_commercial_single
             <div class="container">
                 <div class="fg-case-section-head">
                     <p class="eyebrow"><?php echo esc_html($is_commercial_single ? 'More projects' : 'More case studies'); ?></p>
-                    <h2><?php echo esc_html($is_commercial_single ? 'Additional commercial records.' : 'Keep exploring Fenster project work.'); ?></h2>
+                    <h2><?php echo esc_html($is_commercial_single ? 'More commercial projects.' : 'Keep exploring Fenster project work.'); ?></h2>
                 </div>
                 <div class="fg-case-index__grid">
                     <?php foreach ($related_cards as $card) : ?>

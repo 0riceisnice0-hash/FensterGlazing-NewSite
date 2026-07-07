@@ -277,7 +277,7 @@ if ($slug === 'sliding-sash-windows') {
             'tagline' => 'Cost-conscious sash style',
             'image' => $sash_asset_base . 'charisma-rose-window.png',
             'alt' => 'Charisma Rose sash window viewed externally',
-            'copy' => 'The accessible Rose Collection route: still a proper vertical sliding sash window, but with a simpler sculptured profile and wider rail for projects balancing appearance and budget.',
+            'copy' => 'The accessible Rose Collection option: still a proper vertical sliding sash window, but with a simpler sculptured profile and wider rail for projects balancing appearance and budget.',
             'best_for' => 'Modern replacements, rental refurbishments and homes where sash operation matters more than maximum timber replication.',
             'specs' => [
                 ['label' => 'Meeting rail', 'value' => '60mm'],
@@ -321,7 +321,7 @@ if ($slug === 'sliding-sash-windows') {
         ],
         [
             'title' => 'Ventilation details',
-            'copy' => 'Trickle vent routes, concealed options and frame details are checked at survey so compliance does not ruin the elevation.',
+            'copy' => 'Trickle vent options, concealed options and frame details are checked at survey so compliance does not ruin the elevation.',
         ],
     ];
 }
@@ -538,12 +538,12 @@ $product_why_image = $product_unique_body_images[0] ?? null;
 $product_why_secondary_image = $product_unique_body_images[1] ?? null;
 $product_gallery_heading = sprintf('%s styles, details and installed examples.', $title);
 $product_gallery_copy = sprintf(
-    'This %1$s gallery brings together verified product imagery, close-up frame details and related specification examples so homeowners can compare sightlines, glazing style, opening format, colour tone and installation context before requesting a quote.',
+    'See %1$s styles, finishes and installed details up close. Compare frame lines, glass options, opening formats and colours before you ask for a price.',
     strtolower($title)
 );
 if ($is_pet_flap_page) {
-    $product_gallery_heading = 'Pet flap fitting routes and fitted details.';
-    $product_gallery_copy = 'Pet flap projects are less about frame catalogues and more about the right fitting route. Fenster checks whether the flap belongs in a replacement panel or a new sealed glass unit before the work is ordered.';
+    $product_gallery_heading = 'Pet flap fitting options and fitted details.';
+    $product_gallery_copy = 'Pet flap projects are less about frame catalogues and more about the right fitting choice. Fenster checks whether the flap belongs in a replacement panel or a new sealed glass unit before the work is ordered.';
 }
 $home_categories = [
     ['label' => 'Windows', 'url' => home_url('/windows-milton-keynes/'), 'image' => $asset_base . 'Aluminium-windows.jpg', 'copy' => 'uPVC, aluminium, flush, sash and heritage-style windows for warmer, quieter homes.'],
@@ -561,7 +561,7 @@ $home_showcase = [
     ['label' => 'Bifold living spaces', 'image' => $asset_base . 'Bifold-OpenSplit-v1.webp', 'copy' => 'Open-plan spaces with controlled thresholds, hardware and colour options.'],
 ];
 $home_process = [
-    ['step' => '01', 'title' => 'Design', 'copy' => 'Start with the instant quote route, visualise products and shape a brief before a survey.'],
+    ['step' => '01', 'title' => 'Design', 'copy' => 'Start with the instant quote tool, visualise products and shape a brief before a survey.'],
     ['step' => '02', 'title' => 'Survey', 'copy' => 'Fenster checks sizes, details, access, thresholds, finishes and installation constraints.'],
     ['step' => '03', 'title' => 'Build', 'copy' => 'Systems are specified around performance, security, style and manufacturer fit.'],
     ['step' => '04', 'title' => 'Install', 'copy' => 'Installation is planned cleanly, with aftercare and guarantee support built in.'],
@@ -772,21 +772,21 @@ $journey_options = $product_colours;
 
 if ($is_pet_flap_page) {
     $journey_heading = 'Plan a pet flap that fits the door, glass and pet.';
-    $journey_steps = ['Choose the fitting route', 'Confirm the flap type', 'Survey before ordering'];
+    $journey_steps = ['Choose the fitting method', 'Confirm the flap type', 'Survey before ordering'];
     $journey_intro_heading = 'A small product with details worth checking.';
-    $journey_intro_copy = 'The right result depends on glass type, panel construction, pet size, flap model and the route outside.';
+    $journey_intro_copy = 'The right result depends on glass type, panel construction, pet size, flap model and outside access.';
     $journey_why_eyebrow = 'Pet flap fitting';
     $journey_why_heading = 'A neat pet flap starts with the right glass or panel decision.';
     $journey_why_button = 'Ask about a pet flap';
     $journey_gallery_eyebrow = 'Fitting choices';
-    $journey_gallery_heading = 'Decide the fitting route before anything is made.';
+    $journey_gallery_heading = 'Decide the fitting method before anything is made.';
     $journey_faq_heading = 'FAQs about cat and dog flaps';
     $journey_order_eyebrow = 'Pet flap process';
     $journey_order_heading = 'Survey, specify, order and fit without guesswork.';
-    $journey_order_copy = 'Fenster checks the existing door or glass first, confirms the flap route, then orders the right made-to-measure part for installation.';
+    $journey_order_copy = 'Fenster checks the existing door or glass first, confirms the fitting method, then orders the right made-to-measure part for installation.';
     $journey_order_action = 'Ask about pet flap fitting';
     $journey_option_eyebrow = 'Pet flap checks';
-    $journey_option_heading = 'Choose the fitting route around the existing door or glass.';
+    $journey_option_heading = 'Choose the fitting method around the existing door or glass.';
 }
 
 if ($is_commercial) {
@@ -848,7 +848,7 @@ $pet_flap_cards = $is_pet_flap_page
         [
             'title' => 'Door panel fitting',
             'copy' => 'Some uPVC or door panels can accept a flap directly once the material, reinforcement and position have been checked.',
-            'points' => ['Suitable panels only', 'Position checked before cutting', 'Useful for simpler access routes'],
+            'points' => ['Suitable panels only', 'Position checked before cutting', 'Useful for simpler access needs'],
         ],
         [
             'title' => 'Microchip access',
@@ -856,7 +856,7 @@ $pet_flap_cards = $is_pet_flap_page
             'points' => ['Manual and lockable alternatives', 'Cat and selected dog sizes', 'Power and battery details checked'],
         ],
         [
-            'title' => 'Height and route outside',
+            'title' => 'Height and outside access',
             'copy' => 'The pet, door height, threshold and outside landing all affect whether the flap will feel natural to use.',
             'points' => ['Pet size matters', 'Threshold and step checked', 'Weather exposure considered'],
         ],
@@ -1437,7 +1437,7 @@ if ($is_window_handles) {
                         <div class="fg-window-handles__intro">
                             <p class="eyebrow"><?php esc_html_e('Finishes and styles', 'fenster'); ?></p>
                             <h2><?php esc_html_e('Choose the handle look without crowding the product page.', 'fenster'); ?></h2>
-                            <p><?php esc_html_e('All standard window handle finishes are lockable as standard. Monkey tail is included as the more traditional route where the selected window system allows it.', 'fenster'); ?></p>
+                            <p><?php esc_html_e('All standard window handle finishes are lockable as standard. Monkey tail is included as the more traditional option where the selected window system allows it.', 'fenster'); ?></p>
                         </div>
 
                         <div class="fg-window-handles__visual" aria-live="polite">
@@ -1521,7 +1521,7 @@ if ($is_window_handles) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Match the full specification', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Bring handles, colours and glass together before ordering.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Fenster confirms the final handle route during survey so it works with the chosen window system, colour and opening style.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Fenster confirms the final handle choice during survey so it works with the chosen window system, colour and opening style.', 'fenster'); ?></p>
                 </div>
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [
@@ -1751,7 +1751,7 @@ if ($is_obscure_glass) {
                         <div class="fg-obscure-stage__shine" aria-hidden="true"></div>
                         <div class="fg-obscure-stage__scan" aria-hidden="true"></div>
                         <div class="fg-obscure-stage__divider" aria-hidden="true"><span></span></div>
-                        <input class="fg-obscure-stage__range" type="range" min="0" max="100" value="54" aria-label="<?php esc_attr_e('Move the clear and Obscured glass comparison divider', 'fenster'); ?>" data-fg-obscure-split>
+                        <input class="fg-obscure-stage__range" type="range" min="0" max="100" value="54" aria-label="<?php esc_attr_e('Move the clear and obscured glass comparison divider', 'fenster'); ?>" data-fg-obscure-split>
                     </div>
                     <div class="fg-obscure-stage__readout" aria-live="polite">
                         <div>
@@ -1817,7 +1817,7 @@ if ($is_obscure_glass) {
             <div class="container">
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Pattern comparison', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('All Obscured glass options at a glance.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('All obscured glass options at a glance.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-obscure-compare__grid">
                     <?php foreach ($obscure_glass_textures as $texture) : ?>
@@ -1838,14 +1838,14 @@ if ($is_obscure_glass) {
             <div class="container fg-obscure-enquiry__grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Glass specification', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Ask Fenster which Obscured glass works with your product.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Ask Fenster which obscured glass works with your product.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Tell the team whether the glass is for a bathroom, entrance door, side panel, replacement unit or another product and they will help narrow the options.', 'fenster'); ?></p>
                 </div>
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [
                     'class' => 'fg-form',
                     'source' => 'Obscured glass page',
-                    'button_label' => 'Ask about Obscured glass',
+                    'button_label' => 'Ask about obscured glass',
                     'project_type' => 'Obscured glass',
                     'compact' => true,
                 ]);
@@ -1858,7 +1858,7 @@ if ($is_obscure_glass) {
                 <div class="container">
                     <div class="section-heading">
                         <p class="eyebrow"><?php esc_html_e('Related products', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Products that can use Obscured glass', 'fenster'); ?></h2>
+                        <h2><?php esc_html_e('Products that can use obscured glass', 'fenster'); ?></h2>
                     </div>
                     <div class="generated-links">
                         <?php foreach (array_slice(array_values($related_links), 0, 18) as $link) : ?>
@@ -1953,7 +1953,7 @@ if ($is_commercial_hub) {
     $commercial_process = [
         ['step' => '01', 'title' => 'Send the package', 'copy' => 'Drawings, schedules, photos or a short note are enough to start the right conversation.'],
         ['step' => '02', 'title' => 'Check the constraints', 'copy' => 'Fenster reviews building type, access, programme, performance targets and likely system choices.'],
-        ['step' => '03', 'title' => 'Confirm the route', 'copy' => 'Survey, specification, finishes, interfaces and installation detail are shaped before final pricing.'],
+        ['step' => '03', 'title' => 'Confirm the specification', 'copy' => 'Survey, specification, finishes, interfaces and installation detail are shaped before final pricing.'],
         ['step' => '04', 'title' => 'Plan delivery', 'copy' => 'Manufacture, access, sequencing and handover are planned around the real site conditions.'],
     ];
     $commercial_fit = [
@@ -2006,7 +2006,7 @@ if ($is_commercial_hub) {
                     </div>
                 </div>
                 <aside class="fg-commercial-hub-brief" aria-label="<?php esc_attr_e('Commercial enquiry checklist', 'fenster'); ?>">
-                    <span><?php esc_html_e('Fastest route to a useful reply', 'fenster'); ?></span>
+                    <span><?php esc_html_e('Fastest way to a useful reply', 'fenster'); ?></span>
                     <h2><?php esc_html_e('Send the project information you already have.', 'fenster'); ?></h2>
                     <ul>
                         <li><?php esc_html_e('Building type and location', 'fenster'); ?></li>
@@ -2054,7 +2054,7 @@ if ($is_commercial_hub) {
             <div class="container fg-commercial-flow__grid">
                 <div class="fg-commercial-flow__copy">
                     <p class="eyebrow"><?php esc_html_e('How enquiries move', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('A practical route from brief to install.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('A practical process from brief to install.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('The aim is simple: understand the package quickly, spot missing details early and get the enquiry to the right person before time is wasted.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-commercial-flow__steps">
@@ -2125,7 +2125,7 @@ if ($is_commercial_hub) {
             <div class="container fg-commercial-enquiry__grid">
                 <div class="fg-commercial-enquiry__copy">
                     <p class="eyebrow"><?php esc_html_e('Send a commercial enquiry', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Send the brief. Fenster will route it properly.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Send the brief. Fenster will get it to the right person.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Add the key site, programme and performance notes. Attach files if they explain the package better than a message can.', 'fenster'); ?></p>
                     <ul class="fg-commercial-enquiry__notes">
                         <li><?php esc_html_e('Drawings, schedules or elevations', 'fenster'); ?></li>
@@ -2320,7 +2320,7 @@ if ($is_commercial_hub) {
             <div class="container">
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Pick the product path', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Eight routes into the right glazing system.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Eight ways to find the right glazing system.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-home-services__grid">
                     <?php foreach ($home_categories as $category) : ?>
@@ -2341,7 +2341,7 @@ if ($is_commercial_hub) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Instant quote lab', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Use the visualiser when the site is on the live Fenster domain.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('The preview shows the product selector journey. On the live domain, this route opens the WindowCAD retail designer for product selection and instant pricing.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('The preview shows the product selector journey. On the live domain, this opens the WindowCAD retail designer for product selection and instant pricing.', 'fenster'); ?></p>
                     <div class="button-row">
                         <a class="button" href="<?php echo esc_url($instant_quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Launch instant quote', 'fenster'); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('View quote page', 'fenster'); ?></a>
@@ -2397,7 +2397,7 @@ if ($is_commercial_hub) {
                 <div class="container">
                     <div class="section-heading">
                         <p class="eyebrow"><?php esc_html_e('Keep exploring', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Core routes and service areas', 'fenster'); ?></h2>
+                        <h2><?php esc_html_e('Core products and service areas', 'fenster'); ?></h2>
                     </div>
                     <div class="generated-links">
                         <?php foreach (array_slice(array_values($related_links), 0, 24) as $link) : ?>
@@ -2429,7 +2429,7 @@ if ($is_commercial_hub) {
             <div class="container">
                 <div class="section-heading">
                     <p class="eyebrow"><?php esc_html_e('What we install', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Choose the route that matches your project.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Choose the option that matches your project.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-home-services__grid">
                     <?php foreach ($home_categories as $category) : ?>
@@ -2493,7 +2493,7 @@ if ($is_commercial_hub) {
                     </div>
                     <aside class="fg-sash-collection__note">
                         <span><?php esc_html_e('Fenster survey note', 'fenster'); ?></span>
-                        <p><?php esc_html_e('We confirm the final model, colour, bar layout, horn detail, ventilation route and hardware before order so the sash suits the property rather than just the brochure.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('We confirm the final model, colour, bar layout, horn detail, ventilation option and hardware before order so the sash suits the property rather than just the brochure.', 'fenster'); ?></p>
                     </aside>
                 </div>
 
@@ -2538,7 +2538,7 @@ if ($is_commercial_hub) {
                         ['Frame depth', '137mm', '137mm', '125mm'],
                         ['Glass unit', '28mm IGU', '28mm IGU', '24mm IGU'],
                         ['Energy rating', 'A rated', 'A rated', 'A rated'],
-                        ['ThermoVFlex route', '1.2 W/m2K option', '1.2 W/m2K option', 'Confirm at survey'],
+                        ['ThermoVFlex option', '1.2 W/m²K option', '1.2 W/m²K option', 'Confirm at survey'],
                     ];
                     ?>
                     <?php foreach ($sash_comparison_rows as $row) : ?>
@@ -2653,8 +2653,8 @@ if ($is_commercial_hub) {
                 <div class="container fg-pet-flap-guide__grid">
                     <div class="fg-pet-flap-guide__lead">
                         <p class="eyebrow"><?php esc_html_e('Glass, panel or flap first?', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('The fitting route is chosen before the pet flap is ordered.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. Fenster checks the existing unit, the selected flap and the route outside before giving the go-ahead.', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('The fitting method is chosen before the pet flap is ordered.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. Fenster checks the existing unit, the selected flap and the outside access before giving the go-ahead.', 'fenster'); ?></p>
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Check my pet flap options', 'fenster'); ?></a>
                     </div>
                     <div class="fg-pet-flap-guide__cards" aria-label="<?php esc_attr_e('Pet flap fitting options', 'fenster'); ?>">
@@ -2827,9 +2827,9 @@ if ($is_commercial_hub) {
                         <h2><?php echo esc_html($product_gallery_heading); ?></h2>
                         <p><?php echo esc_html($product_gallery_copy); ?></p>
                         <ul>
-                            <li><?php esc_html_e('Installed product examples and close-up details from verified supplier imagery.', 'fenster'); ?></li>
+                            <li><?php esc_html_e('Installed examples and close-up frame details.', 'fenster'); ?></li>
                             <li><?php esc_html_e('Useful for comparing frame depth, glass area, opening style and colour direction.', 'fenster'); ?></li>
-                            <li><?php esc_html_e('Matched to the product family so the page stays visually accurate.', 'fenster'); ?></li>
+                            <li><?php esc_html_e('Every image is chosen to show this product family clearly.', 'fenster'); ?></li>
                         </ul>
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about this product', 'fenster'); ?></a>
                     </aside>
@@ -2843,7 +2843,7 @@ if ($is_commercial_hub) {
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Move from the product into the details that make it yours.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Colours, privacy glass and hardware now live in focused guides so the product pages stay useful instead of turning into endless finish catalogues.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Choose your colours, privacy glass and hardware in three quick guides; each one helps narrow the detail before survey.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-product-choice-map">
                     <div class="fg-product-options fg-product-options--hub">
@@ -2862,7 +2862,7 @@ if ($is_commercial_hub) {
                     >
                         <span><?php esc_html_e('02', 'fenster'); ?></span>
                         <h3><?php esc_html_e('Privacy glass', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Preview Obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
                         <strong><?php esc_html_e('Compare glass patterns', 'fenster'); ?></strong>
                     </a>
                     <?php if ($show_window_handle_card) : ?>
@@ -2872,7 +2872,7 @@ if ($is_commercial_hub) {
                         >
                             <span><?php esc_html_e('03', 'fenster'); ?></span>
                             <h3><?php esc_html_e('Window handles', 'fenster'); ?></h3>
-                            <p><?php esc_html_e('Compare white, black, chrome, gold, satin silver and monkey tail handle routes on one focused page.', 'fenster'); ?></p>
+                            <p><?php esc_html_e('Compare white, black, chrome, gold, satin silver and monkey tail handle options on one focused page.', 'fenster'); ?></p>
                             <strong><?php esc_html_e('Open handle hub', 'fenster'); ?></strong>
                         </a>
                     <?php endif; ?>
@@ -2944,7 +2944,7 @@ if ($is_commercial_hub) {
                         <?php if (! empty($sash_furniture['finish_note'])) : ?>
                             <article>
                                 <span><?php esc_html_e('Finish check', 'fenster'); ?></span>
-                                <h3><?php esc_html_e('Gold, chrome and white routes.', 'fenster'); ?></h3>
+                                <h3><?php esc_html_e('Gold, chrome and white options.', 'fenster'); ?></h3>
                                 <p><?php echo esc_html((string) $sash_furniture['finish_note']); ?></p>
                             </article>
                         <?php endif; ?>

@@ -36,22 +36,22 @@ $reasons = [
     ],
     [
         'title' => __('Honest advice, not pressure selling', 'fenster'),
-        'copy' => __('Good glazing decisions need straight answers. Fenster helps you compare product type, glass, colour, hardware, security, maintenance, thermal performance and installation route for your home instead of pushing the quickest sale or the most expensive option.', 'fenster'),
+        'copy' => __('Good glazing decisions need straight answers. Fenster helps you compare product type, glass, colour, hardware, security, maintenance, thermal performance and installation approach for your home instead of pushing the quickest sale or the most expensive option.', 'fenster'),
     ],
 ];
 
 $process_steps = [
     ['step' => '01', 'title' => __('Talk it through', 'fenster'), 'copy' => __('Tell us what you are looking at, what matters most and whether you want a showroom visit, online quote or a home survey conversation first.')],
-    ['step' => '02', 'title' => __('Choose the right route', 'fenster'), 'copy' => __('We help narrow the product, glass, colour and hardware choices around your property, budget and the way the room or entrance will be used.')],
+    ['step' => '02', 'title' => __('Choose the right option', 'fenster'), 'copy' => __('We help narrow the product, glass, colour and hardware choices around your property, budget and the way the room or entrance will be used.')],
     ['step' => '03', 'title' => __('Survey and confirm', 'fenster'), 'copy' => __('Before anything is made, the practical details are checked properly: sizes, access, thresholds, openings, fixing points and site conditions.')],
-    ['step' => '04', 'title' => __('Install and support', 'fenster'), 'copy' => __('Your installation is fitted by trained people, with clear contact routes afterwards if you have a question or need support after the job is complete.')],
+    ['step' => '04', 'title' => __('Install and support', 'fenster'), 'copy' => __('Your installation is fitted by trained people, with clear contact options afterwards if you have a question or need support after the job is complete.')],
 ];
 
 $standards = [
     __('We explain what is included in the price, including supply, delivery, installation and VAT where relevant.', 'fenster'),
     __('We do not pressure you to choose before the practical details are clear.', 'fenster'),
     __('We keep the public review platforms visible so you can read customer feedback for yourself.', 'fenster'),
-    __('We use enquiry details to handle the quote, survey, installation and aftercare route.', 'fenster'),
+    __('We use enquiry details to handle the quote, survey, installation and aftercare process.', 'fenster'),
 ];
 
 $hero_trust_cards = [
@@ -82,7 +82,7 @@ $hero_trust_cards = [
         'src' => FENSTER_THEME_URI . '/assets/trust/cpa.png',
         'alt' => __('Consumer Protection Association', 'fenster'),
         'title' => __('CPA backed', 'fenster'),
-        'copy' => __('Extra consumer protection routes available on qualifying work.', 'fenster'),
+        'copy' => __('Extra consumer protection available on qualifying work.', 'fenster'),
         'url' => home_url('/terms-conditions/'),
     ],
 ];
@@ -191,7 +191,7 @@ $team_cards = [
                 <h2><?php esc_html_e('To make buying windows, doors and glazing clearer, fairer and less stressful.', 'fenster'); ?></h2>
             </div>
             <div class="fg-trust-mission__copy">
-                <p><?php esc_html_e('Fenster exists to give customers straight advice, transparent upfront pricing and a properly supported installation route. We want every customer to understand what they are buying, why it suits their property and what happens next before they commit.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Fenster exists to give customers straight advice, transparent upfront pricing and a properly supported installation process. We want every customer to understand what they are buying, why it suits their property and what happens next before they commit.', 'fenster'); ?></p>
                 <p><?php esc_html_e('That means combining showroom advice, practical product knowledge, careful survey checks, trained fitting teams and visible aftercare, so the experience feels controlled from first enquiry through to completion.', 'fenster'); ?></p>
             </div>
         </div>
@@ -265,7 +265,7 @@ $team_cards = [
         <div class="container">
             <div class="section-heading section-heading--wide">
                 <p class="eyebrow"><?php esc_html_e('Order process', 'fenster'); ?></p>
-                <h2><?php esc_html_e('A clear route from first conversation to aftercare.', 'fenster'); ?></h2>
+                <h2><?php esc_html_e('A clear process from first conversation to aftercare.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('This is the usual flow. Some jobs are very simple, others need more detail, but the aim is always to keep the next step clear.', 'fenster'); ?></p>
             </div>
             <div class="fg-order-process__rail">
@@ -309,7 +309,7 @@ $team_cards = [
         <div class="container fg-trust-accreditations__grid">
             <div>
                 <p class="eyebrow"><?php esc_html_e('Reviews and backing', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Public feedback, recognised bodies and real contact routes.', 'fenster'); ?></h2>
+                <h2><?php esc_html_e('Public feedback, recognised bodies and real contact options.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('No single badge should be the whole reason you choose a company. Fenster brings the pieces together: public customer feedback, FENSA approval, Consumer Protection Association backing where applicable, and a local team you can contact directly.', 'fenster'); ?></p>
             </div>
             <div class="fg-trust-accreditations__logos" aria-label="<?php esc_attr_e('Fenster trust logos', 'fenster'); ?>">

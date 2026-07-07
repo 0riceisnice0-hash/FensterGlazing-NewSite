@@ -36,11 +36,11 @@ function fenster_product_hub_data(string $slug): array
             'systems' => [$systems['liniar']],
             'badges' => [$energyplus_badge, 'A+ rated', 'PAS 24 option'],
             'heading' => 'More information on casement windows.',
-            'copy' => 'Casement windows are usually the best value route for replacing older uPVC or timber windows. Fenster specifies the 70mm Liniar EnergyPlus route, with the final layout, glass and hardware confirmed after survey.',
+            'copy' => 'Casement windows are usually the best value option for replacing older uPVC or timber windows. Fenster specifies the 70mm Liniar EnergyPlus system, with the final layout, glass and hardware confirmed after survey.',
             'specs' => [
                 ['label' => 'Profile system', 'value' => '70mm Liniar EnergyPlus uPVC profile'],
                 ['label' => 'Weather seal', 'value' => 'Co-extruded bubble gasket for continuous draught and rain protection'],
-                ['label' => 'Security', 'value' => 'Multi-point locking with PAS 24 and Secured by Design routes where specified'],
+                ['label' => 'Security', 'value' => 'Multi-point locking with PAS 24 and Secured by Design options where specified'],
                 ['label' => 'Best for', 'value' => 'Everyday replacement windows, bedrooms, kitchens and mixed fixed/opening layouts'],
             ],
             'choices' => ['Side-hung, top-hung and fixed lights', 'White, foiled woodgrain and selected colours', 'S2 Signature handle finishes', 'Obscure, acoustic, toughened or laminated glass where required'],
@@ -65,7 +65,7 @@ function fenster_product_hub_data(string $slug): array
             'copy' => 'Tilt and turn windows are a practical choice for upper floors, flats, bedrooms and larger openings because one sash can tilt inwards for ventilation or turn inwards for cleaning and escape-style access.',
             'specs' => [
                 ['label' => 'Operation', 'value' => 'Dual-action inward opening: tilt for ventilation, turn for access and cleaning'],
-                ['label' => 'Profile route', 'value' => 'Liniar uPVC profile options, including higher-performance routes where suitable'],
+                ['label' => 'Profile system', 'value' => 'Liniar uPVC profile options, including higher-performance choices where suitable'],
                 ['label' => 'Security', 'value' => 'Locking handle and multi-point locking around the sash'],
                 ['label' => 'Best for', 'value' => 'Upper floors, restricted outside access and rooms needing controlled ventilation'],
             ],
@@ -82,7 +82,7 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'Furniture', 'value' => 'Globe or Acorn sash furniture, confirmed around the selected Rose model'],
                 ['label' => 'Best for', 'value' => 'Victorian, Georgian and cottage-style properties where proportions matter'],
             ],
-            'choices' => ['Ultimate Rose, Heritage Rose or Charisma Rose model route', 'Globe or Acorn locks, pole eyes, sash lifts and tilt knobs', 'Obscured glass for landings and bathrooms', 'Acoustic glass for road-facing rooms'],
+            'choices' => ['Ultimate Rose, Heritage Rose or Charisma Rose model choice', 'Globe or Acorn locks, pole eyes, sash lifts and tilt knobs', 'Obscured glass for landings and bathrooms', 'Acoustic glass for road-facing rooms'],
         ],
         'aluminium-windows' => [
             'systems' => [$systems['sheerline']],
@@ -93,7 +93,7 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'System', 'value' => 'Sheerline Prestige aluminium window system'],
                 ['label' => 'Sightlines', 'value' => 'Slim frame options with exact sightlines confirmed by opening style'],
                 ['label' => 'Thermal design', 'value' => 'Sheerline Thermlock multi-chamber thermal break technology'],
-                ['label' => 'Security', 'value' => 'PAS 24 and Secured by Design routes available with suitable glass and hardware'],
+                ['label' => 'Security', 'value' => 'PAS 24 and Secured by Design options available with suitable glass and hardware'],
             ],
             'choices' => ['Standard or flush casement styles', 'Beaded or beadless options where the system allows', 'Concealed drainage and ventilation shroud conversations', 'Any RAL colour and selected textured/metallic finishes'],
         ],
@@ -104,7 +104,7 @@ function fenster_product_hub_data(string $slug): array
             'copy' => 'Flush aluminium windows give a flatter sash appearance than standard aluminium casements, with aluminium strength, colour freedom and modern glazing.',
             'specs' => [
                 ['label' => 'Appearance', 'value' => 'Flush sash line for a flatter, more architectural aluminium finish'],
-                ['label' => 'System route', 'value' => 'Sheerline aluminium profiles specified around opening style and sightline target'],
+                ['label' => 'System', 'value' => 'Sheerline aluminium profiles specified around opening style and sightline target'],
                 ['label' => 'Thermal design', 'value' => 'Thermally broken frame and modern insulated glass unit'],
                 ['label' => 'Security', 'value' => 'Locking, glass and hardware selected around the final security requirement'],
             ],
@@ -114,7 +114,7 @@ function fenster_product_hub_data(string $slug): array
             'systems' => [$systems['sheerline']],
             'badges' => ['Sheerline Classic', $thermlock_badge, 'Steel-look styling'],
             'heading' => 'Sheerline Classic heritage windows for steel-look projects.',
-            'copy' => 'Heritage aluminium windows give steel-look styling through glazing bars, slim sightlines, beadless construction, colour choice and a secure modern system route.',
+            'copy' => 'Heritage aluminium windows give steel-look styling through glazing bars, slim sightlines, beadless construction, colour choice and a secure modern system.',
             'specs' => [
                 ['label' => 'System', 'value' => 'Sheerline Classic heritage-style aluminium window system'],
                 ['label' => 'Sightlines', 'value' => 'Slim fixed and opening sightline options for steel-look proportions'],
@@ -125,9 +125,9 @@ function fenster_product_hub_data(string $slug): array
         ],
         'aluminium-bifold-doors' => [
             'systems' => [$systems['sheerline']],
-            'badges' => ['Sheerline Prestige', $thermlock_badge, '1.0 W/m2K option'],
+            'badges' => ['Sheerline Prestige', $thermlock_badge, '1.0 W/m²K option'],
             'heading' => 'Sheerline Prestige bifold doors with configuration detail up front.',
-            'copy' => 'Choose the pane count, traffic door, threshold, sash weight and security route around how the doors need to fold and open day to day.',
+            'copy' => 'Choose the pane count, traffic door, threshold, sash weight and security specification around how the doors need to fold and open day to day.',
             'specs' => [
                 ['label' => 'Configurations', 'value' => 'Up to seven panes, with traffic door options depending on layout'],
                 ['label' => 'Panel capacity', 'value' => 'Large sash sizes and heavy-duty hardware are specified around the opening'],
@@ -163,12 +163,12 @@ function fenster_product_hub_data(string $slug): array
         ],
         'aluminium-doors' => [
             'systems' => [$systems['sheerline']],
-            'badges' => [$thermlock_badge, 'PAS 24 route', 'Low threshold option'],
+            'badges' => [$thermlock_badge, 'PAS 24 option', 'Low threshold option'],
             'heading' => 'Aluminium residential doors with window-matching options.',
             'copy' => 'Aluminium doors are a robust, slim-framed option for front, rear, side and utility entrances, especially when the door needs to match aluminium windows or sliders.',
             'specs' => [
                 ['label' => 'Door styles', 'value' => 'Single doors, glazed entrance doors and paired/French-style aluminium sets'],
-                ['label' => 'Security', 'value' => 'PAS 24 and Secured by Design routes with suitable glass, locks and hardware'],
+                ['label' => 'Security', 'value' => 'PAS 24 and Secured by Design options with suitable glass, locks and hardware'],
                 ['label' => 'Thresholds', 'value' => 'Standard, weathered and low-threshold conversations depending on exposure and access'],
                 ['label' => 'Finish', 'value' => 'Powder-coated aluminium in RAL colours and selected textured finishes'],
             ],
@@ -189,14 +189,14 @@ function fenster_product_hub_data(string $slug): array
         ],
         'composite-doors' => [
             'systems' => [$systems['distinction']],
-            'badges' => ['300+ styles', 'Any RAL option', '70mm Grandeur route'],
+            'badges' => ['300+ styles', 'Any RAL option', '70mm Grandeur option'],
             'heading' => 'Distinction composite doors with style, colour and glass choice made clearer.',
             'copy' => 'Composite doors start with style, then security and construction. Compare the broad design range, GRP skins, foam-filled cores, water-resistant rails and complete doorset specification.',
             'specs' => [
                 ['label' => 'Range', 'value' => 'Hundreds of door styles, including traditional, cottage, contemporary and glazed designs'],
                 ['label' => 'Construction', 'value' => 'GRP door skin, insulated core and reinforced structural elements depending on chosen slab'],
-                ['label' => 'Door depths', 'value' => 'Signature-style 44.5mm and Grandeur-style 70mm routes where available'],
-                ['label' => 'Security', 'value' => 'Secure locks, cylinders, laminated decorative glass and SBD routes by specification'],
+                ['label' => 'Door depths', 'value' => 'Signature-style 44.5mm and Grandeur-style 70mm options where available'],
+                ['label' => 'Security', 'value' => 'Secure locks, cylinders, laminated decorative glass and SBD options by specification'],
             ],
             'choices' => ['Standard colours, premium colours and any RAL colour', 'Dual colour options', 'Decorative, obscure and laminated glass', 'Long bar, lever, urn, knocker and letterplate hardware'],
         ],
@@ -204,7 +204,7 @@ function fenster_product_hub_data(string $slug): array
             'systems' => [$systems['liniar']],
             'badges' => ['Liniar uPVC', $energyplus_badge, 'Multi-point locking'],
             'heading' => 'Liniar uPVC doors for practical front, rear and side entrances.',
-            'copy' => 'uPVC doors are a sensible, secure and affordable route with practical panel and glass choices, locking, cylinders, hinges, thresholds and colour foils.',
+            'copy' => 'uPVC doors are a sensible, secure and affordable option with practical panel and glass choices, locking, cylinders, hinges, thresholds and colour foils.',
             'specs' => [
                 ['label' => 'System', 'value' => 'Liniar uPVC door profile options'],
                 ['label' => 'Security', 'value' => 'Multi-point locking with anti-snap cylinder and hinge choices confirmed by specification'],
@@ -230,12 +230,12 @@ function fenster_product_hub_data(string $slug): array
             'systems' => [$systems['liniar']],
             'badges' => ['ModLok option', $energyplus_badge, 'A+ rated'],
             'heading' => 'Liniar French doors with threshold and security details included.',
-            'copy' => 'French doors are familiar, but the important buying details are open-in/open-out, flying mullion, threshold, security, Georgian bars and whether the door is being used as a main route or occasional garden opening.',
+            'copy' => 'French doors are familiar, but the important buying details are open-in/open-out, flying mullion, threshold, security, Georgian bars and whether the door is being used as a main entrance or occasional garden opening.',
             'specs' => [
-                ['label' => 'System route', 'value' => 'Liniar uPVC French door profiles, including ModLok style reinforcement options where specified'],
+                ['label' => 'System', 'value' => 'Liniar uPVC French door profiles, including ModLok style reinforcement options where specified'],
                 ['label' => 'Opening', 'value' => 'Open-in or open-out configurations depending on space and exposure'],
                 ['label' => 'Thresholds', 'value' => 'Weathered, low and Part M style access threshold conversations'],
-                ['label' => 'Security', 'value' => 'Multi-point locking with PAS 24, SBD and Part Q routes by specification'],
+                ['label' => 'Security', 'value' => 'Multi-point locking with PAS 24, SBD and Part Q options by specification'],
             ],
             'choices' => ['Full glass or panel/glass combinations', 'Georgian or astragal bars', 'Obscure, toughened or laminated glass', 'Door handle and hinge finishes'],
         ],
@@ -247,7 +247,7 @@ function fenster_product_hub_data(string $slug): array
             'specs' => [
                 ['label' => 'System', 'value' => 'Sheerline S1 aluminium roof lantern'],
                 ['label' => 'Sizes', 'value' => 'Large lantern sizes possible, with final span and structural needs confirmed by survey'],
-                ['label' => 'Glazing', 'value' => '28mm glazing routes, solar-control, acoustic and toughened glass options'],
+                ['label' => 'Glazing', 'value' => '28mm glazing, solar-control, acoustic and toughened glass options'],
                 ['label' => 'Ventilation', 'value' => 'SheerVent automated vent and rain sensor options where suitable'],
             ],
             'choices' => ['Two-way, three-way, square and rectangular lantern styles', 'RAL colours inside and outside', 'Solar-control glass for south-facing roofs', 'Security glazing and anti-tamper details'],
@@ -269,9 +269,9 @@ function fenster_product_hub_data(string $slug): array
             'systems' => [$systems['notan']],
             'badges' => ['Magnetic control', 'Electric option', '11 standard colours'],
             'heading' => 'Notan integral blinds with control, size and glass-unit detail.',
-            'copy' => 'Integral blinds are sealed inside the glass unit, so the key choices are cavity size, glass make-up, controls, colour, maximum blind size and warranty route.',
+            'copy' => 'Integral blinds are sealed inside the glass unit, so the key choices are cavity size, glass make-up, controls, colour, maximum blind size and warranty cover.',
             'specs' => [
-                ['label' => 'Glass unit', 'value' => 'NTB 24/28 style cavity routes with Low-E, toughened and argon-filled glass options'],
+                ['label' => 'Glass unit', 'value' => 'NTB 24/28 style cavity options with Low-E, toughened and argon-filled glass options'],
                 ['label' => 'Controls', 'value' => 'Magnetic manual control or electric remote/battery options'],
                 ['label' => 'Testing', 'value' => 'Cycle-tested blind mechanisms, with final warranty depending on control type'],
                 ['label' => 'Colours', 'value' => 'Standard blind colours with RAL conversations where available'],
@@ -317,12 +317,12 @@ function fenster_product_hub_data(string $slug): array
         'cat-and-dog-flaps' => [
             'badges' => ['Glass or panel', 'Microchip option', 'New unit required'],
             'heading' => 'Pet flap fitting decided before the glass or panel is ordered.',
-            'copy' => 'A clean pet-flap installation starts with the right route. Fenster checks whether the opening needs a new sealed glass unit, a replacement door panel or a panel cut-out, then confirms the flap model and position before manufacture.',
+            'copy' => 'A clean pet-flap installation starts with the right fitting method. Fenster checks whether the opening needs a new sealed glass unit, a replacement door panel or a panel cut-out, then confirms the flap model and position before manufacture.',
             'specs' => [
                 ['label' => 'Glass fitting', 'value' => 'A new sealed glass unit is made with the correct aperture for the chosen flap'],
                 ['label' => 'Panel fitting', 'value' => 'Suitable uPVC or door panels can often accept a flap after material and position checks'],
                 ['label' => 'Access control', 'value' => 'Manual, lockable and microchip-controlled flap options can be discussed'],
-                ['label' => 'Survey checks', 'value' => 'Pet size, flap height, glass type, door construction, threshold and route outside'],
+                ['label' => 'Survey checks', 'value' => 'Pet size, flap height, glass type, door construction, threshold and outside access'],
             ],
             'choices' => ['Cat flaps and selected dog flap sizes', 'Clear or obscure replacement glass', 'Microchip access control', 'Weather, threshold and security positioning advice'],
         ],
@@ -332,7 +332,7 @@ function fenster_product_hub_data(string $slug): array
 
     $spec_copy = [
         'casement-windows' => [
-            'Profile system' => 'EnergyPlus is the 70mm uPVC profile route used for Fenster casement windows, with layout and glazing chosen around each room.',
+            'Profile system' => 'EnergyPlus is the 70mm uPVC profile system used for Fenster casement windows, with layout and glazing chosen around each room.',
             'Weather seal' => 'The continuous gasket helps keep draughts and driving rain out, which is especially noticeable on exposed elevations.',
             'Security' => 'Locks, hinges, handles and glass are specified together so the finished window matches the security level needed for the room.',
             'Best for' => 'Casements are flexible enough for most homes because fixed panes, top openers and side openers can be combined in one frame.',
@@ -345,7 +345,7 @@ function fenster_product_hub_data(string $slug): array
         ],
         'tilt-turn-windows' => [
             'Operation' => 'Tilt mode gives secure background ventilation, while turn mode opens the sash inwards for cleaning and wider access.',
-            'Profile route' => 'The profile is chosen around the opening size, required performance and the amount of frame visible from inside.',
+            'Profile system' => 'The profile is chosen around the opening size, required performance and the amount of frame visible from inside.',
             'Security' => 'A tilt and turn window relies on the full sash locking correctly, so hardware and installation accuracy matter.',
             'Best for' => 'They are especially useful upstairs, in flats or anywhere outside cleaning access is awkward.',
         ],
@@ -356,14 +356,14 @@ function fenster_product_hub_data(string $slug): array
             'Best for' => 'These are strongest on homes where proportions, meeting rails and sash details need to look right from the street.',
         ],
         'aluminium-windows' => [
-            'System' => 'Prestige is the main aluminium window route for slim frames, strong sections and a modern powder-coated finish.',
+            'System' => 'Prestige is the main aluminium window system for slim frames, strong sections and a modern powder-coated finish.',
             'Sightlines' => 'Opening style affects how slim the finished window looks, so fixed panes, casements and dummy sashes are planned together.',
             'Thermal design' => 'Thermlock technology separates the inside and outside aluminium to reduce heat transfer through the frame.',
-            'Security' => 'The security route depends on glass, locks and hardware as a complete window specification, not one isolated part.',
+            'Security' => 'The security specification depends on glass, locks and hardware as a complete window specification, not one isolated part.',
         ],
         'aluminium-flush-windows' => [
             'Appearance' => 'The flush sash gives aluminium a cleaner external line, useful on modern homes and sharper renovation projects.',
-            'System route' => 'The exact aluminium profile is matched to the opening style, frame size and sightline target.',
+            'System' => 'The exact aluminium profile is matched to the opening style, frame size and sightline target.',
             'Thermal design' => 'A thermally broken frame and insulated glass unit help reduce cold transfer through the aluminium.',
             'Security' => 'Locks, glass and hardware are chosen together so the finished window suits the location and access risk.',
         ],
@@ -371,7 +371,7 @@ function fenster_product_hub_data(string $slug): array
             'System' => 'Sheerline Classic gives steel-look styling with modern aluminium performance and powder-coated finishes.',
             'Sightlines' => 'Slim fixed and opening sections help create the industrial or period proportions people expect from heritage glazing.',
             'Design details' => 'Bars, mullions and transoms are planned around the room, view and original architecture rather than added at random.',
-            'Security' => 'External heritage windows can be specified with stronger security routes where the full design supports them.',
+            'Security' => 'External heritage windows can be specified with stronger security options where the full design supports them.',
         ],
         'aluminium-bifold-doors' => [
             'Configurations' => 'Pane count and traffic door position decide how the doors work every day, not just how they look fully open.',
@@ -410,7 +410,7 @@ function fenster_product_hub_data(string $slug): array
             'Security' => 'Locks, cylinders, hinges and glass are specified together so the entrance door is secure as a complete set.',
         ],
         'upvc-doors' => [
-            'System' => 'A Liniar uPVC door is a practical route for rear, side and utility openings where durability and value matter.',
+            'System' => 'A Liniar uPVC door is a practical option for rear, side and utility openings where durability and value matter.',
             'Security' => 'Multi-point locking and suitable cylinders are chosen around how exposed and frequently used the door is.',
             'Design' => 'Panels, clear glass and obscure glass can be combined to balance light, privacy and everyday use.',
             'Finish' => 'White and foiled finishes can be coordinated with existing uPVC windows or a wider replacement project.',
@@ -422,13 +422,13 @@ function fenster_product_hub_data(string $slug): array
             'Survey check' => 'The survey confirms floor levels, drainage, track condition and locking alignment before manufacture.',
         ],
         'french-doors' => [
-            'System route' => 'The Liniar route gives a familiar French door with modern uPVC performance and reinforcement options where needed.',
+            'System' => 'The Liniar system gives a familiar French door with modern uPVC performance and reinforcement options where needed.',
             'Opening' => 'Open-in and open-out choices affect furniture, weathering, room layout and how the doors are used day to day.',
             'Thresholds' => 'Thresholds are chosen around access, weather exposure and the finished floor level inside and outside.',
             'Security' => 'Locking, glass and reinforcement are specified together, especially when the doors are used as a main garden entrance.',
         ],
         'roof-lanterns' => [
-            'System' => 'The S1 lantern is the aluminium rooflight route, designed for strong frames and slim internal sightlines.',
+            'System' => 'The S1 lantern is the aluminium rooflight system, designed for strong frames and slim internal sightlines.',
             'Sizes' => 'The opening span, upstand and roof structure decide the final lantern size before it is ordered.',
             'Glazing' => 'Glass choice affects heat, glare, noise and safety, especially on sunny or exposed roof elevations.',
             'Ventilation' => 'Powered ventilation can help release heat and moisture where the roof lantern sits over a busy living space.',
@@ -449,7 +449,7 @@ function fenster_product_hub_data(string $slug): array
             'Glass types' => 'The replacement unit can improve safety, privacy, sound control or solar control while keeping the existing frame.',
             'Spacer' => 'Spacer type and unit thickness must match the frame rebate so the new glass seals correctly.',
             'Safety' => 'Doors, low panes and side panels are checked for safety glass requirements before the unit is ordered.',
-            'Best for' => 'This is usually the right route when the glass has failed but the frame still operates and seals properly.',
+            'Best for' => 'This is usually the right option when the glass has failed but the frame still operates and seals properly.',
         ],
         'secondary-glazing' => [
             'Styles' => 'The opening style is matched to the existing window so the original sashes or casements can still be reached.',
@@ -467,7 +467,7 @@ function fenster_product_hub_data(string $slug): array
             'Glass fitting' => 'Sealed glass cannot be cut on site, so a new unit is manufactured with the aperture already in the right place.',
             'Panel fitting' => 'Panel installs depend on the door material, panel thickness and whether the flap will sit at a usable height.',
             'Access control' => 'Manual, lockable and microchip flaps suit different pets, security needs and household routines.',
-            'Survey checks' => 'Pet size, route outside, threshold height and door construction all affect where the flap should go.',
+            'Survey checks' => 'Pet size, outside access, threshold height and door construction all affect where the flap should go.',
         ],
     ];
 

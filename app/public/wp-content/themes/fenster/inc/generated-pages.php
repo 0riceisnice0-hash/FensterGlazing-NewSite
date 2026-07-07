@@ -126,7 +126,7 @@ function fenster_location_matrix_product_profiles(): array
         'aluminium-flush-windows' => ['intent' => 'flush aluminium lines with slim modern strength', 'decision' => 'sash finish, reveal depth, colour and opening style'],
         'heritage-windows' => ['intent' => 'slim character-led frames with modern comfort', 'decision' => 'bar layout, colour, hardware and sensitive replacement detail'],
         'aluminium-bifold-doors' => ['intent' => 'wide garden openings, folding panels and slim aluminium frames', 'decision' => 'panel count, traffic door, threshold, colour and drainage'],
-        'slide-fold-doors' => ['intent' => 'flexible glazed openings with practical panel movement', 'decision' => 'stacking space, panel route, threshold and glass specification'],
+        'slide-fold-doors' => ['intent' => 'flexible glazed openings with practical panel movement', 'decision' => 'stacking space, panel movement, threshold and glass specification'],
         'aluminium-sliding-doors' => ['intent' => 'large panes, smooth sliding operation and minimal sightlines', 'decision' => 'track layout, sash size, threshold, locking and colour'],
         'aluminium-doors' => ['intent' => 'strong modern entrances and secure everyday access', 'decision' => 'door style, panel design, threshold, hardware and glass'],
         'heritage-aluminium-doors' => ['intent' => 'heritage-style aluminium with slim bars and secure operation', 'decision' => 'bar spacing, configuration, colour, threshold and glazing'],

@@ -642,7 +642,7 @@ $product_profiles = [
     'slide-fold-doors' => [
         'hero' => 'flexible opening panels, practical access and a wide glazed connection outside',
         'choices' => 'panel configuration, traffic door, threshold detail, colour and glass specification',
-        'detail' => 'stacking space, access route, drainage, panel weight and how the door is used every day',
+        'detail' => 'stacking space, access, drainage, panel weight and how the door is used every day',
         'style' => 'slide and fold doors can be styled to match aluminium windows, roof lanterns or other garden doors',
         'package' => 'Fenster can compare slide-fold, bifold and sliding door options if you are not sure which opening style suits the room.',
     ],

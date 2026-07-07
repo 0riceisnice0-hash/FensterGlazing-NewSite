@@ -321,7 +321,7 @@ function fenster_site_data(): array
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
             'cat-and-dog-flaps' => [
-                ['label' => 'Fitting routes', 'value' => 'Glass or door panel'],
+                ['label' => 'Fitting methods', 'value' => 'Glass or door panel'],
                 ['label' => 'Glass work', 'value' => 'New sealed unit'],
                 ['label' => 'Flap types', 'value' => 'Manual, lockable, microchip'],
                 ['label' => 'Survey checks', 'value' => 'Pet size and position'],
@@ -722,7 +722,7 @@ function fenster_site_data(): array
                 ],
             ],
             'aluminium-sliding-doors' => [
-                'intro' => 'Aluminium sliding doors are designed for wide glass areas, slim sightlines and smooth access to the garden. Fenster specifies the track layout, pane size, colour, locking and threshold details around the opening, rather than treating the page as a generic patio-door option.',
+                'intro' => 'Aluminium sliding doors are designed for wide glass areas, slim sightlines and smooth access to the garden. Fenster specifies the track layout, pane size, colour, locking and threshold details around the opening, so the doors suit the room and the way you use the garden.',
                 'benefits' => [
                     ['title' => 'Large glass openings', 'copy' => 'Sliding doors suit wide openings where you want more daylight, uninterrupted views and a clean connection to the outside.'],
                     ['title' => 'Dual or triple-track layouts', 'copy' => 'Fenster can help decide whether a dual or triple-track configuration is the right fit for the available space and daily use.'],
@@ -739,12 +739,12 @@ function fenster_site_data(): array
                 ],
             ],
             'cat-and-dog-flaps' => [
-                'intro' => 'Cat and dog flaps can be fitted neatly when the glass, panel and flap are specified together. Fenster checks the door or glazed unit first, then confirms the right fitting route, height, access control and weather detail before anything is ordered.',
+                'intro' => 'Cat and dog flaps can be fitted neatly when the glass, panel and flap are specified together. Fenster checks the door or glazed unit first, then confirms the right fitting method, height, access control and weather detail before anything is ordered.',
                 'benefits' => [
-                    ['title' => 'The right fitting route', 'copy' => 'Some projects suit a replacement door panel, while glazed doors usually need a new sealed unit made with the aperture already built in.'],
+                    ['title' => 'The right fitting method', 'copy' => 'Some projects suit a replacement door panel, while glazed doors usually need a new sealed unit made with the aperture already built in.'],
                     ['title' => 'No cutting sealed glass on site', 'copy' => 'Toughened double glazed units cannot simply be cut after manufacture. Fenster measures and orders a new unit when glass fitting is required.'],
                     ['title' => 'Manual, lockable or microchip', 'copy' => 'Choose a simple flap, a lockable model or a microchip-controlled option when you want better control over which pets can come in.'],
-                    ['title' => 'Positioned around real use', 'copy' => 'The flap height, size and route outside are checked around the pet, the door construction and day-to-day access through the home.'],
+                    ['title' => 'Positioned around real use', 'copy' => 'The flap height, size and outside access are checked around the pet, the door construction and day-to-day access through the home.'],
                     ['title' => 'Measured before ordering', 'copy' => 'Fenster confirms glass type, panel suitability, flap model and installation details before the made-to-measure part is ordered.'],
                 ],
                 'faqs' => [
@@ -752,7 +752,7 @@ function fenster_site_data(): array
                     ['question' => 'Can pet flaps be fitted into uPVC or composite doors?', 'answer' => 'Yes. Suitable door panels can often accept a pet flap, and Fenster will check the material, panel and position before confirming the approach.'],
                     ['question' => 'Do you offer microchip cat flaps?', 'answer' => 'Yes. Manual, lockable and microchip-activated models can be discussed so the flap matches the pet and the level of access control you want.'],
                     ['question' => 'Can a dog flap go into double glazing?', 'answer' => 'It depends on the flap size, the glass unit and the door design. Larger openings need careful checking before a replacement sealed unit is specified.'],
-                    ['question' => 'Do you survey before ordering the flap or glass?', 'answer' => 'Yes. Fenster checks measurements, glass type, door or panel construction, flap size and the intended route outside before any made-to-measure unit is ordered.'],
+                    ['question' => 'Do you survey before ordering the flap or glass?', 'answer' => 'Yes. Fenster checks measurements, glass type, door or panel construction, flap size and the intended outside access before any made-to-measure unit is ordered.'],
                 ],
             ],
             'roofline' => [
@@ -817,9 +817,9 @@ function fenster_site_data(): array
                 ],
                 'faqs' => [
                     ['question' => 'Are casement windows suitable for most homes?', 'answer' => 'Yes. Casement windows are one of the most flexible window styles and can be configured for most common residential openings.'],
-                    ['question' => 'What energy rating can casement windows achieve?', 'answer' => 'Casement windows can achieve A+ rated performance, with supplied U-value information shown in the key specifications strip.'],
+                    ['question' => 'What energy rating can casement windows achieve?', 'answer' => 'Casement windows can achieve A+ rated performance, with supplied U-value information shown near the top of the page.'],
                     ['question' => 'Can I choose different opening layouts?', 'answer' => 'Yes. Fenster will help plan side-hung, top-hung, fixed and mixed layouts around ventilation, access, safety and the look of the elevation.'],
-                    ['question' => 'Are uPVC casement windows secure?', 'answer' => 'Yes. The specification can include multi-point locking, secure handles and appropriate glazing, with PAS 24 routes available where specified.'],
+                    ['question' => 'Are uPVC casement windows secure?', 'answer' => 'Yes. The specification can include multi-point locking, secure handles and appropriate glazing, with PAS 24 options available where specified.'],
                     ['question' => 'Can the frames be coloured?', 'answer' => 'Yes. Casement windows can be specified in a range of uPVC finishes, including white, woodgrain-style foils and selected contemporary colours.'],
                 ],
             ],
@@ -828,7 +828,7 @@ function fenster_site_data(): array
                 'benefits' => [
                     ['title' => 'Timber-style flush sash', 'copy' => 'The sash sits level within the outer frame, giving a flatter external line than a standard projecting casement window.'],
                     ['title' => 'Liniar weather performance', 'copy' => 'Liniar flush sash systems use modern uPVC profile design and weather sealing to help protect against draughts and rain.'],
-                    ['title' => 'A+ rated comfort', 'copy' => 'Flush casement windows can support warmer rooms and improved efficiency with A+ rated performance routes.'],
+                    ['title' => 'A+ rated comfort', 'copy' => 'Flush casement windows can support warmer rooms and improved efficiency with A+ rated performance options.'],
                     ['title' => 'Period or contemporary finish', 'copy' => 'Choose traditional woodgrain-style foils, smooth contemporary colours, hardware finishes and glazing bars where the design calls for them.'],
                     ['title' => 'Surveyed for the detail', 'copy' => 'Fenster checks frame sizes, sightlines, opening styles and installation conditions so the flush detail works cleanly on the property.'],
                 ],
@@ -845,7 +845,7 @@ function fenster_site_data(): array
                 'benefits' => [
                     ['title' => 'Classic vertical sliding style', 'copy' => 'Sash windows retain the familiar up-and-down opening associated with Georgian, Victorian and Edwardian homes.'],
                     ['title' => 'Modern Roseview system', 'copy' => 'Roseview gives a sash-focused profile system rather than a generic casement window adapted to look traditional.'],
-                    ['title' => 'A+ rated efficiency', 'copy' => 'Sliding sash windows can combine traditional appearance with modern comfort and A+ rated efficiency routes.'],
+                    ['title' => 'A+ rated efficiency', 'copy' => 'Sliding sash windows can combine traditional appearance with modern comfort and A+ rated efficiency options.'],
                     ['title' => 'Authentic design options', 'copy' => 'Run-through horns, astragal bars, woodgrain-style finishes, colours and hardware can be chosen to suit the age and detail of the property.'],
                     ['title' => 'Security and smooth operation', 'copy' => 'Modern sash balances, locks and glazing choices help the windows open smoothly while giving a more secure everyday specification.'],
                 ],
@@ -1020,7 +1020,7 @@ function fenster_site_data(): array
                     ['title' => 'Threshold and drainage check', 'copy' => 'Fenster reviews track position, drainage, floor levels and access before the doors are ordered.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Are patio doors different from aluminium sliding doors?', 'answer' => 'On this site, patio doors refer to uPVC sliding patio doors, while aluminium sliding doors use slimmer aluminium frames for larger glass areas.'],
+                    ['question' => 'Are patio doors different from aluminium sliding doors?', 'answer' => 'Fenster patio doors are uPVC sliding doors, while aluminium sliding doors use slimmer aluminium frames for larger glass areas.'],
                     ['question' => 'How many panes can patio doors have?', 'answer' => 'Configurations up to four panes can be considered, subject to opening size and survey.'],
                     ['question' => 'Are patio doors energy efficient?', 'answer' => 'Yes. Modern glazing and supplied U-value information help show how the doors support comfort.'],
                     ['question' => 'Can patio doors be secure?', 'answer' => 'Yes. Secure locking, suitable glazing and correct installation are all part of the final specification.'],
@@ -1034,7 +1034,7 @@ function fenster_site_data(): array
                     ['title' => 'Liniar profile system', 'copy' => 'A coordinated Liniar uPVC door system supports efficient profile design and consistent finishing.'],
                     ['title' => 'A+ rated performance', 'copy' => 'French doors can support strong comfort around a heavily glazed entrance when specified with the right frame and glass.'],
                     ['title' => 'Multi-point locking', 'copy' => 'Hardware and cylinders are specified around the final door set.'],
-                    ['title' => 'Threshold and glass options', 'copy' => 'Choose threshold detail, privacy glass, decorative glass and handle finishes to suit the route in and out of the home.'],
+                    ['title' => 'Threshold and glass options', 'copy' => 'Choose threshold detail, privacy glass, decorative glass and handle finishes to suit the way you move in and out of the home.'],
                 ],
                 'faqs' => [
                     ['question' => 'Where do French doors work best?', 'answer' => 'They work well for patios, gardens, side entrances and rooms where a classic double-door opening suits the property.'],
@@ -1096,16 +1096,16 @@ function fenster_site_data(): array
                 ],
             ],
             'window-and-door-repairs' => [
-                'intro' => 'Window and door repairs are for restoring security, smooth operation and comfort where replacement is not the right first step. Fenster checks the fault, explains the repair route and uses suitable replacement parts where the existing product can be saved.',
+                'intro' => 'Window and door repairs are for restoring security, smooth operation and comfort where replacement is not the right first step. Fenster checks the fault, explains the repair approach and uses suitable replacement parts where the existing product can be saved.',
                 'benefits' => [
                     ['title' => 'Repair-first advice', 'copy' => 'Where frames are still sound, Fenster can repair faults rather than pushing straight to full replacement.'],
                     ['title' => 'Windows and doors covered', 'copy' => 'Repairs can include uPVC, aluminium and composite windows or doors, depending on the fault and available parts.'],
                     ['title' => 'Locks, handles and hinges', 'copy' => 'Common issues include stiff hinges, failed handles, broken locks, dropped doors, draughts and poor closing action.'],
-                    ['title' => 'Clear repair pricing', 'copy' => 'Fenster explains the repair route and quote before work goes ahead.'],
+                    ['title' => 'Clear repair pricing', 'copy' => 'Fenster explains the repair approach and quote before work goes ahead.'],
                     ['title' => 'Security and comfort restored', 'copy' => 'A good repair can improve locking, weather sealing, operation and everyday confidence without unnecessary disruption.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Can Fenster repair windows and doors instead of replacing them?', 'answer' => 'Often, yes. If the frame and core product are still suitable, repair can be the most practical and cost-effective route.'],
+                    ['question' => 'Can Fenster repair windows and doors instead of replacing them?', 'answer' => 'Often, yes. If the frame and core product are still suitable, repair can be the most practical and cost-effective option.'],
                     ['question' => 'What repair faults can you help with?', 'answer' => 'Typical repair work includes locks, handles, hinges, dropped doors, stiff windows, draughts, failed seals and poor closing action.'],
                     ['question' => 'Do you repair uPVC and aluminium products?', 'answer' => 'Yes. Fenster can review uPVC, aluminium and composite products, subject to fault diagnosis and parts availability.'],
                     ['question' => 'Will you explain the cost before repairing?', 'answer' => 'Yes. Fenster aims to provide a clear repair quote so you understand what is being fixed and why.'],

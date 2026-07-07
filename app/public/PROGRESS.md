@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-07
 
+## 2026-07-07 - Site-Wide Copy Audit Cleanup To Test
+
+- Verified the 2026-07-06 AI copy audit against current theme source before editing.
+- Removed customer-facing template self-talk from product galleries and specification-choice cards, including `verified product imagery`, `verified supplier imagery`, `page stays visually accurate` and finish-guide architecture wording.
+- Replaced visible internal `route` wording across commercial county pages, the trust page, contact page, product hubs, pet-flap copy, handle copy and legacy generated sections with customer-facing terms such as option, approach, process, system and fitting method.
+- Lower-cased mid-sentence `obscured glass` copy, while keeping route/title naming where `Obscured Glass` is the page name.
+- Rewrote copied article/data fragments in `data/pages.json` that ended mid-sentence or promised non-existent live chat; contact copy now points visitors to phone or email, and the verified 24/7 phone-line footer claim remains in place.
+- Verified JSON parsing, PHP lint for all touched PHP files, targeted source greps and local rendered checks on representative product, article, commercial county, commercial projects and obscured-glass routes.
+
 ## 2026-07-07 - Product Template Live Polish, Gallery Lightbox And Mobile Nav Fix
 
 - Deployed the shared product-page redesign and follow-up polish live through commit `3ac98c2`.

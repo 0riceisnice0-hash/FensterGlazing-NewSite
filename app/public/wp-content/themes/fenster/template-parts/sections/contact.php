@@ -33,7 +33,7 @@ $hub_routes = [
         'label' => 'Instant quote',
         'title' => 'Price windows and doors online.',
         'copy' => 'Open the quote tool, choose products, colours and sizes, then use the price as a starting point before survey.',
-        'meta' => 'Fastest route',
+        'meta' => 'Fastest option',
         'url' => home_url('/online-quote/'),
     ],
     [
@@ -64,7 +64,7 @@ $form_notes = [
             <div class="fg-contact-hero__head">
                 <p class="eyebrow"><?php esc_html_e('Contact Fenster Glazing', 'fenster'); ?></p>
                 <h1><?php esc_html_e('How do you want to start?', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Pick the fastest route for your windows, doors, glazing, repairs or showroom visit. The practical details are all below once you choose where you want to go.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Pick the fastest option for your windows, doors, glazing, repairs or showroom visit. The practical details are all below once you choose where you want to go.', 'fenster'); ?></p>
             </div>
 
             <div class="fg-contact-hub" aria-label="<?php esc_attr_e('Choose how to contact Fenster', 'fenster'); ?>">
