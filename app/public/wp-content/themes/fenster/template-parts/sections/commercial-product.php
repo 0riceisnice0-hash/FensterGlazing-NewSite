@@ -21,14 +21,16 @@ $title = (string) ($product['title'] ?? ($page['title'] ?? 'Commercial glazing')
 $subtitle = (string) ($product['subtitle'] ?? '');
 $summary = is_array($product['summary'] ?? null) ? array_values($product['summary']) : [];
 $stats = is_array($product['stats'] ?? null) ? array_values($product['stats']) : [];
-$checkpoints = is_array($product['checkpoints'] ?? null) ? array_values($product['checkpoints']) : [];
-$gallery = is_array($product['gallery'] ?? null) ? array_values($product['gallery']) : [];
+$capabilities = is_array($product['capabilities'] ?? null) ? array_values($product['capabilities']) : [];
+$detail_sections = is_array($product['detail_sections'] ?? null) ? array_values($product['detail_sections']) : [];
 $use_cases = is_array($product['use_cases'] ?? null) ? array_values($product['use_cases']) : [];
 $all_products = function_exists('fenster_commercial_product_pages') ? fenster_commercial_product_pages() : [];
 $related_products = array_filter($all_products, static fn ($item, $item_slug): bool => $item_slug !== $slug, ARRAY_FILTER_USE_BOTH);
 $related_products = array_slice($related_products, 0, 3, true);
 $hero_image = (string) ($product['hero_image'] ?? '');
 $hero_alt = (string) ($product['hero_alt'] ?? $title);
+$intro_image = (string) ($product['intro_image'] ?? $hero_image);
+$intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
 ?>
 
 <article class="fg-commercial-product">
@@ -68,11 +70,14 @@ $hero_alt = (string) ($product['hero_alt'] ?? $title);
 
     <section class="fg-commercial-product-intro">
         <div class="container fg-commercial-product-intro__grid">
-            <div>
-                <p class="eyebrow"><?php esc_html_e('Project fit', 'fenster'); ?></p>
-                <h2><?php echo esc_html('Plan ' . strtolower($title) . ' around the building, not a generic product list.'); ?></h2>
-            </div>
+            <?php if ($intro_image !== '') : ?>
+                <figure class="fg-commercial-product-intro__media">
+                    <img src="<?php echo esc_url(fenster_generated_url($intro_image)); ?>" alt="<?php echo esc_attr($intro_alt); ?>" loading="lazy">
+                </figure>
+            <?php endif; ?>
             <div class="fg-commercial-product-intro__copy">
+                <p class="eyebrow"><?php esc_html_e('What Fenster can do', 'fenster'); ?></p>
+                <h2><?php echo esc_html('How Fenster can help with ' . strtolower($title) . '.'); ?></h2>
                 <?php foreach ($summary as $line) : ?>
                     <p><?php echo esc_html((string) $line); ?></p>
                 <?php endforeach; ?>
@@ -80,19 +85,19 @@ $hero_alt = (string) ($product['hero_alt'] ?? $title);
         </div>
     </section>
 
-    <?php if (! empty($checkpoints)) : ?>
+    <?php if (! empty($capabilities)) : ?>
         <section class="fg-commercial-product-checks">
             <div class="container">
                 <div class="fg-commercial-product-section-head">
-                    <p class="eyebrow"><?php esc_html_e('Specification checkpoints', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('The questions worth answering before pricing.', 'fenster'); ?></h2>
+                    <p class="eyebrow"><?php esc_html_e('Commercial capability', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Useful scope before the price is fixed.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-commercial-product-checks__grid">
-                    <?php foreach ($checkpoints as $index => $checkpoint) : ?>
+                    <?php foreach ($capabilities as $index => $capability) : ?>
                         <article>
                             <span><?php echo esc_html(str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT)); ?></span>
-                            <h3><?php echo esc_html((string) ($checkpoint['title'] ?? '')); ?></h3>
-                            <p><?php echo esc_html((string) ($checkpoint['copy'] ?? '')); ?></p>
+                            <h3><?php echo esc_html((string) ($capability['title'] ?? '')); ?></h3>
+                            <p><?php echo esc_html((string) ($capability['copy'] ?? '')); ?></p>
                         </article>
                     <?php endforeach; ?>
                 </div>
@@ -100,20 +105,28 @@ $hero_alt = (string) ($product['hero_alt'] ?? $title);
         </section>
     <?php endif; ?>
 
-    <?php if (! empty($gallery)) : ?>
-        <section class="fg-commercial-product-gallery">
+    <?php if (! empty($detail_sections)) : ?>
+        <section class="fg-commercial-product-details">
             <div class="container">
-                <div class="fg-commercial-product-section-head">
-                    <p class="eyebrow"><?php esc_html_e('Commercial glazing imagery', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Real project and system references.', 'fenster'); ?></h2>
-                </div>
-                <div class="fg-commercial-product-gallery__grid">
-                    <?php foreach ($gallery as $index => $image) : ?>
-                        <figure class="<?php echo $index === 0 ? 'is-large' : ''; ?>">
-                            <img src="<?php echo esc_url(fenster_generated_url((string) ($image['src'] ?? ''))); ?>" alt="<?php echo esc_attr((string) ($image['alt'] ?? $title)); ?>" loading="lazy">
+                <?php foreach ($detail_sections as $index => $detail) : ?>
+                    <article class="fg-commercial-product-detail <?php echo $index % 2 === 1 ? 'fg-commercial-product-detail--flip' : ''; ?>">
+                        <figure>
+                            <img src="<?php echo esc_url(fenster_generated_url((string) ($detail['image'] ?? ''))); ?>" alt="<?php echo esc_attr((string) ($detail['alt'] ?? $title)); ?>" loading="lazy">
                         </figure>
-                    <?php endforeach; ?>
-                </div>
+                        <div>
+                            <p class="eyebrow"><?php echo esc_html((string) ($detail['eyebrow'] ?? 'Commercial glazing')); ?></p>
+                            <h2><?php echo esc_html((string) ($detail['title'] ?? '')); ?></h2>
+                            <p><?php echo esc_html((string) ($detail['copy'] ?? '')); ?></p>
+                            <?php if (! empty($detail['points']) && is_array($detail['points'])) : ?>
+                                <ul>
+                                    <?php foreach ($detail['points'] as $point) : ?>
+                                        <li><?php echo esc_html((string) $point); ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
             </div>
         </section>
     <?php endif; ?>
@@ -121,9 +134,9 @@ $hero_alt = (string) ($product['hero_alt'] ?? $title);
     <section class="fg-commercial-product-fit">
         <div class="container fg-commercial-product-fit__grid">
             <div>
-                <p class="eyebrow"><?php esc_html_e('Where it fits', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Common commercial settings.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Every site still needs a proper review, but these are the kinds of projects where this package usually belongs.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Common settings', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Buildings Fenster can look at for this type of work.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The final route depends on survey, access and the existing building, but these are typical places where this service applies.', 'fenster'); ?></p>
             </div>
             <?php if (! empty($use_cases)) : ?>
                 <div class="fg-commercial-product-fit__tags">
@@ -139,8 +152,8 @@ $hero_alt = (string) ($product['hero_alt'] ?? $title);
         <section class="fg-commercial-product-related">
             <div class="container">
                 <div class="fg-commercial-product-section-head">
-                    <p class="eyebrow"><?php esc_html_e('Related commercial routes', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Keep the package connected.', 'fenster'); ?></h2>
+                    <p class="eyebrow"><?php esc_html_e('Related commercial services', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Other commercial glazing work Fenster can look at.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-commercial-product-related__grid">
                     <?php foreach ($related_products as $related_slug => $related) : ?>
