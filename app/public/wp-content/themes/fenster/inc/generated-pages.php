@@ -527,7 +527,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                 [
                     'heading' => 'What Fenster does not use cookies for',
                     'body' => [
-                        'Fenster does not currently use website cookies for customer account logins, account dashboards, email newsletter membership, public comments, shopping baskets, checkout accounts, AdSense advertising or on-site user surveys.',
+                        'Fenster does not currently use website cookies for customer account logins, account dashboards, email newsletter membership, public comments, shopping baskets, checkout accounts or on-site user surveys.',
                         'If those website features are added in future, this policy should be updated before they go live.',
                     ],
                 ],

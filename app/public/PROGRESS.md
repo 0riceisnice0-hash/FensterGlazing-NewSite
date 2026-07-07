@@ -5,7 +5,7 @@ Last updated: 2026-07-07
 ## 2026-07-07 - Cookie Policy Copy Cleanup
 
 - Replaced the imported `/cookie-policy/` wording with a site-specific policy that matches the current consent banner and tracking setup.
-- Removed irrelevant claims about customer accounts, logged-in areas, newsletter subscriptions, AdSense advertising and on-site surveys.
+- Removed irrelevant claims about customer accounts, logged-in areas, newsletter subscriptions and on-site surveys.
 - Clarified that optional Google Tag Manager, Microsoft Clarity and Meta Pixel only load after consent, and that visitors can still use the site after rejecting optional cookies.
 - Updated `/privacy-policy/` copy to state that the website does not currently provide customer account registration or an email newsletter sign-up.
 
