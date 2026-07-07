@@ -31,7 +31,7 @@ $footer_company = [
             <div class="site-footer__trust" aria-label="<?php esc_attr_e('Accreditations', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/cpa.png'); ?>" alt="<?php esc_attr_e('Consumer Protection Association', 'fenster'); ?>">
-                <span class="site-footer__trust-mark"><?php esc_html_e('Constructionline Gold', 'fenster'); ?></span>
+                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/constructionline-gold-member.png'); ?>" alt="<?php esc_attr_e('Constructionline Gold Member', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/cropped-ssip.png'); ?>" alt="<?php esc_attr_e('SSIP accredited', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>">
