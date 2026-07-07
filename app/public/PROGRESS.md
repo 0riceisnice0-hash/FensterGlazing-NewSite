@@ -1,6 +1,14 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-06
+Last updated: 2026-07-07
+
+## 2026-07-07 - Product Page Layout Redesign To Test
+
+- Reworked the shared generated product-page journey toward a clearer 50/50 image-and-copy flow before live approval.
+- Replaced the non-FAQ "Why choose this product?" accordion with visible benefit cards, and replaced the tabbed product information explorer with visible specification check cards. FAQs remain the only accordion-style content on product pages.
+- Added a no-repeat image queue for product pages: the body image pool excludes the hero image, and later gallery moments draw from later unique images rather than recycling the same visual.
+- Moved window handle selection out of inline product pages into a dedicated `/window-handles/` specification hub, with product pages linking to that hub from the specification choices area.
+- This is a bigger shared template/routing change, so it should be reviewed on test before any live deployment.
 
 ## 2026-07-06 - Reviews Copy And Privacy Policy Cleanup
 

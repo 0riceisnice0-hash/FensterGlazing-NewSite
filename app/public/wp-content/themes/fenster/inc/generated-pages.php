@@ -591,6 +591,23 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
+    if ($slug === 'window-handles') {
+        return $page_cache[$slug] = [
+            'slug' => 'window-handles',
+            'title' => 'Window Handles',
+            'url' => home_url('/window-handles/'),
+            'seo' => [
+                'title_tag' => 'Window Handle Options | Fenster Glazing',
+                'meta_description' => 'Compare Fenster Glazing window handle finishes including white, black, chrome, gold, satin silver and monkey tail styles.',
+                'canonical' => 'https://fensterglazing.com/window-handles/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+    }
+
     if (in_array($slug, ['colour-options', 'upvc-colours', 'aluminium-colours'], true)) {
         $title = $slug === 'upvc-colours'
             ? 'uPVC Colours'
@@ -1006,7 +1023,7 @@ function fenster_maybe_render_generated_sitemap(): void
         echo "  </url>\n";
     }
 
-    foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
+    foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

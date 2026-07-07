@@ -149,6 +149,7 @@ $is_case_study = in_array($slug, ['case-studies', 'commercial-projects'], true) 
 $is_team = $slug === 'meet-the-team';
 $is_obscure_glass = $slug === 'obscured-glass';
 $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'aluminium-colours'], true);
+$is_window_handles = $slug === 'window-handles';
 $is_trust_page = $slug === 'why-trust-fenster';
 $is_about_page = $slug === 'about';
 $is_about = in_array($slug, ['about', 'meet-the-team'], true);
@@ -214,7 +215,8 @@ $sash_furniture_ranges = is_array($sash_furniture_ranges) ? array_values($sash_f
 $window_handles = fenster_data('window_handles', []);
 $window_handles = is_array($window_handles) ? $window_handles : [];
 $window_handle_slugs = $window_handles['slugs'] ?? [];
-$show_window_handles = $use_product_journey && is_array($window_handle_slugs) && in_array($slug, $window_handle_slugs, true);
+$show_window_handle_card = $use_product_journey && is_array($window_handle_slugs) && in_array($slug, $window_handle_slugs, true);
+$show_window_handles = false;
 $window_handle_finishes = $window_handles['finishes'] ?? [];
 $window_handle_finishes = is_array($window_handle_finishes) ? array_values($window_handle_finishes) : [];
 $door_handles = fenster_data('door_handles', []);
@@ -527,6 +529,13 @@ foreach ($product_visual_candidates as $image) {
         break;
     }
 }
+$product_hero_image_key = strtolower((string) parse_url(fenster_generated_url($hero_media_src), PHP_URL_PATH));
+$product_unique_body_images = array_values(array_filter($product_visual_gallery, static function (array $image) use ($product_hero_image_key): bool {
+    $image_key = strtolower((string) parse_url(fenster_generated_url((string) ($image['src'] ?? '')), PHP_URL_PATH));
+    return $image_key !== '' && $image_key !== $product_hero_image_key;
+}));
+$product_why_image = $product_unique_body_images[0] ?? null;
+$product_why_secondary_image = $product_unique_body_images[1] ?? null;
 $product_gallery_heading = sprintf('%s styles, details and installed examples.', $title);
 $product_gallery_copy = sprintf(
     'This %1$s gallery brings together verified product imagery, close-up frame details and related specification examples so homeowners can compare sightlines, glazing style, opening format, colour tone and installation context before requesting a quote.',
@@ -573,8 +582,9 @@ $product_hub_systems = is_array($product_hub['systems'] ?? null) ? array_values(
 $product_hub_badges = is_array($product_hub['badges'] ?? null) ? array_values($product_hub['badges']) : [];
 $product_hub_specs = is_array($product_hub['specs'] ?? null) ? array_values($product_hub['specs']) : [];
 $product_hub_choices = is_array($product_hub['choices'] ?? null) ? array_values($product_hub['choices']) : [];
-$product_hub_image = is_array($product_hub['image'] ?? null) ? $product_hub['image'] : ($product_visual_gallery[0] ?? $product_why_image);
-$product_hub_support_image = is_array($product_visual_gallery[1] ?? null) ? $product_visual_gallery[1] : ($product_visual_gallery[0] ?? $product_hub_image);
+$product_hub_image = is_array($product_hub['image'] ?? null) ? $product_hub['image'] : ($product_unique_body_images[2] ?? null);
+$product_hub_support_image = is_array($product_unique_body_images[3] ?? null) ? $product_unique_body_images[3] : null;
+$product_visual_gallery_remainder = array_slice($product_unique_body_images, 4);
 $product_glass_styles = is_array($product_content['glass_styles']['items'] ?? null) ? array_values($product_content['glass_styles']['items']) : [];
 if ($use_product_journey) {
     $partner_items = array_values(array_filter(array_map(static function ($system): ?array {
@@ -1397,6 +1407,134 @@ if ($is_quote_tool) {
         'title' => $title,
         'trust_items' => $trust_items,
     ]);
+    return;
+}
+
+if ($is_window_handles) {
+    $window_handle_intro = (string) ($window_handles['intro'] ?? 'Compare Fenster window handle finishes, locking detail and traditional handle options before the final specification is confirmed.');
+    ?>
+    <main class="fg-window-handle-page">
+        <section class="fg-window-handle-hero">
+            <div class="container fg-window-handle-hero__grid">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Specification hub', 'fenster'); ?></p>
+                    <h1><?php esc_html_e('Window handle options for Fenster windows.', 'fenster'); ?></h1>
+                    <p><?php echo esc_html($window_handle_intro); ?></p>
+                    <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about handles', 'fenster'); ?></a>
+                </div>
+                <?php if (! empty($window_handle_finishes[0]['image'])) : ?>
+                    <figure class="fg-window-handle-hero__image">
+                        <img src="<?php echo esc_url(fenster_generated_url((string) $window_handle_finishes[0]['image'])); ?>" alt="<?php esc_attr_e('Fenster window handle finish option', 'fenster'); ?>" loading="eager">
+                    </figure>
+                <?php endif; ?>
+            </div>
+        </section>
+
+        <?php if (! empty($window_handle_finishes)) : ?>
+            <section id="window-handle-finishes" class="fg-window-handles fg-window-handles--hub" data-fg-window-handles>
+                <div class="container">
+                    <div class="fg-window-handles__shell">
+                        <div class="fg-window-handles__intro">
+                            <p class="eyebrow"><?php esc_html_e('Finishes and styles', 'fenster'); ?></p>
+                            <h2><?php esc_html_e('Choose the handle look without crowding the product page.', 'fenster'); ?></h2>
+                            <p><?php esc_html_e('All standard window handle finishes are lockable as standard. Monkey tail is included as the more traditional route where the selected window system allows it.', 'fenster'); ?></p>
+                        </div>
+
+                        <div class="fg-window-handles__visual" aria-live="polite">
+                            <?php foreach ($window_handle_finishes as $index => $finish) : ?>
+                                <?php $finish_name = (string) ($finish['name'] ?? 'Handle finish'); ?>
+                                <img
+                                    src="<?php echo esc_url(fenster_generated_url((string) ($finish['image'] ?? ''))); ?>"
+                                    alt="<?php echo esc_attr($finish_name . ' window handle'); ?>"
+                                    loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
+                                    data-fg-handle-image="<?php echo esc_attr((string) $index); ?>"
+                                    class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
+                                >
+                            <?php endforeach; ?>
+                        </div>
+
+                        <div class="fg-window-handles__chooser">
+                            <div class="fg-window-handles__swatches" role="list" aria-label="<?php esc_attr_e('Handle finish options', 'fenster'); ?>">
+                                <?php foreach ($window_handle_finishes as $index => $finish) : ?>
+                                    <button
+                                        type="button"
+                                        role="listitem"
+                                        class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
+                                        style="<?php echo esc_attr('--swatch:' . (string) ($finish['hex'] ?? '#ffffff')); ?>"
+                                        data-fg-handle-finish="<?php echo esc_attr((string) $index); ?>"
+                                        aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
+                                    >
+                                        <i aria-hidden="true"></i>
+                                        <span><?php echo esc_html((string) ($finish['name'] ?? 'Finish')); ?></span>
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="fg-window-handles__finish-copy">
+                                <?php foreach ($window_handle_finishes as $index => $finish) : ?>
+                                    <article data-fg-handle-panel="<?php echo esc_attr((string) $index); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
+                                        <span><?php echo esc_html((string) ($finish['label'] ?? $finish['name'] ?? 'Handle finish')); ?></span>
+                                        <p><?php echo esc_html((string) ($finish['copy'] ?? '')); ?></p>
+                                    </article>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <?php if (! empty($window_handles['technical']) && is_array($window_handles['technical'])) : ?>
+                                <aside class="fg-window-handles__details" aria-label="<?php esc_attr_e('Technical specification', 'fenster'); ?>">
+                                    <div class="fg-window-handles__details-card">
+                                        <h3><?php esc_html_e('Technical specification', 'fenster'); ?></h3>
+                                        <div class="fg-window-handles__detail-panel">
+                                            <?php if (! empty($window_handles['technical_intro'])) : ?>
+                                                <p><?php echo esc_html((string) $window_handles['technical_intro']); ?></p>
+                                            <?php endif; ?>
+                                            <dl class="fg-window-handles__specs">
+                                                <?php foreach ($window_handles['technical'] as $spec) : ?>
+                                                    <div>
+                                                        <dt><?php echo esc_html((string) ($spec['label'] ?? '')); ?></dt>
+                                                        <dd><?php echo esc_html((string) ($spec['value'] ?? '')); ?></dd>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </aside>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if (! empty($window_handles['features']) && is_array($window_handles['features'])) : ?>
+                            <div class="fg-window-handles__features" aria-label="<?php esc_attr_e('Window handle features', 'fenster'); ?>">
+                                <?php foreach ($window_handles['features'] as $feature) : ?>
+                                    <article>
+                                        <h3><?php echo esc_html((string) ($feature['title'] ?? '')); ?></h3>
+                                        <p><?php echo esc_html((string) ($feature['copy'] ?? '')); ?></p>
+                                    </article>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+
+        <section id="fenster-enquiry" class="fg-obscure-enquiry">
+            <div class="container fg-obscure-enquiry__grid">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Match the full specification', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Bring handles, colours and glass together before ordering.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Fenster confirms the final handle route during survey so it works with the chosen window system, colour and opening style.', 'fenster'); ?></p>
+                </div>
+                <?php
+                get_template_part('template-parts/components/enquiry-form', null, [
+                    'class' => 'fg-form',
+                    'source' => $title,
+                    'button_label' => 'Ask about window handles',
+                    'project_type' => 'Windows',
+                ]);
+                ?>
+            </div>
+        </section>
+    </main>
+    <?php
     return;
 }
 
@@ -2474,9 +2612,9 @@ if ($is_commercial_hub) {
                                 <strong><?php echo esc_html($title); ?></strong>
                             </figcaption>
                         </figure>
-                        <?php if (! empty($gallery_images[1]['src'])) : ?>
+                        <?php if (is_array($product_why_secondary_image) && ! empty($product_why_secondary_image['src'])) : ?>
                             <figure class="fg-product-why__media fg-product-why__media--secondary">
-                                <img src="<?php echo esc_url(fenster_generated_url($gallery_images[1]['src'])); ?>" alt="<?php echo esc_attr($gallery_images[1]['alt'] ?? $title); ?>" loading="lazy">
+                                <img src="<?php echo esc_url(fenster_generated_url($product_why_secondary_image['src'])); ?>" alt="<?php echo esc_attr($product_why_secondary_image['alt'] ?? $title); ?>" loading="lazy">
                             </figure>
                         <?php endif; ?>
                     </div>
@@ -2485,17 +2623,15 @@ if ($is_commercial_hub) {
                     <p class="eyebrow"><?php echo esc_html($journey_why_eyebrow); ?></p>
                     <h2><?php echo esc_html($journey_why_heading); ?></h2>
                     <p><?php echo esc_html($hero_intro); ?></p>
-                    <div class="fg-product-why__accordion">
+                    <div class="fg-product-why__cards">
                         <?php foreach (array_slice($product_benefits, 0, 5) as $index => $benefit) : ?>
-                            <details <?php echo $index === 0 ? 'open' : ''; ?>>
-                                <summary>
-                                    <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
-                                    <?php echo esc_html($benefit['title']); ?>
-                                </summary>
-                                <div class="fg-product-why__answer">
+                            <article>
+                                <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
+                                <div>
+                                    <h3><?php echo esc_html($benefit['title']); ?></h3>
                                     <p><?php echo esc_html($benefit['copy']); ?></p>
                                 </div>
-                            </details>
+                            </article>
                         <?php endforeach; ?>
                     </div>
                     <a class="button" href="#fenster-enquiry"><?php echo esc_html($journey_why_button); ?></a>
@@ -2601,53 +2737,16 @@ if ($is_commercial_hub) {
                     </div>
 
                     <?php if (! empty($product_hub_specs)) : ?>
-                        <?php $product_hub_spec_count = min(6, count($product_hub_specs)); ?>
-                        <div class="fg-product-intel__explorer" data-fg-product-intel>
-                            <?php if ($product_hub_spec_count > 2) : ?>
-                                <p class="fg-product-intel__nav-hint">
-                                    <?php echo esc_html(sprintf(__('Swipe to see all %d product checks.', 'fenster'), $product_hub_spec_count)); ?>
-                                </p>
-                            <?php endif; ?>
-                            <div class="fg-product-intel__nav" role="tablist" aria-label="<?php esc_attr_e('Product specification topics', 'fenster'); ?>">
-                                <?php foreach (array_slice($product_hub_specs, 0, 6) as $index => $spec) : ?>
-                                    <?php
-                                    $spec_label = trim((string) ($spec['label'] ?? 'Specification'));
-                                    $tab_id = 'fg-product-intel-tab-' . $slug . '-' . $index;
-                                    $panel_id = 'fg-product-intel-panel-' . $slug . '-' . $index;
-                                    ?>
-                                    <button
-                                        id="<?php echo esc_attr($tab_id); ?>"
-                                        class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
-                                        type="button"
-                                        role="tab"
-                                        aria-selected="<?php echo $index === 0 ? 'true' : 'false'; ?>"
-                                        aria-controls="<?php echo esc_attr($panel_id); ?>"
-                                        tabindex="<?php echo $index === 0 ? '0' : '-1'; ?>"
-                                        data-fg-product-intel-tab
-                                    >
-                                        <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
-                                        <strong><?php echo esc_html($spec_label); ?></strong>
-                                    </button>
-                                <?php endforeach; ?>
-                            </div>
-
-                            <div class="fg-product-intel__stage">
-                                <?php foreach (array_slice($product_hub_specs, 0, 6) as $index => $spec) : ?>
-                                    <?php
-                                    $spec_label = trim((string) ($spec['label'] ?? 'Specification'));
-                                    $spec_value = trim((string) ($spec['value'] ?? ''));
-                                    $spec_copy = trim((string) ($spec['copy'] ?? ''));
-                                    $tab_id = 'fg-product-intel-tab-' . $slug . '-' . $index;
-                                    $panel_id = 'fg-product-intel-panel-' . $slug . '-' . $index;
-                                    ?>
-                                    <article
-                                        id="<?php echo esc_attr($panel_id); ?>"
-                                        class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
-                                        role="tabpanel"
-                                        aria-labelledby="<?php echo esc_attr($tab_id); ?>"
-                                        <?php echo $index === 0 ? '' : 'hidden'; ?>
-                                        data-fg-product-intel-panel
-                                    >
+                        <div class="fg-product-intel__checks" aria-label="<?php esc_attr_e('Product specification checks', 'fenster'); ?>">
+                            <?php foreach (array_slice($product_hub_specs, 0, 6) as $index => $spec) : ?>
+                                <?php
+                                $spec_label = trim((string) ($spec['label'] ?? 'Specification'));
+                                $spec_value = trim((string) ($spec['value'] ?? ''));
+                                $spec_copy = trim((string) ($spec['copy'] ?? ''));
+                                ?>
+                                <article>
+                                    <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
+                                    <div>
                                         <p class="eyebrow"><?php echo esc_html($spec_label); ?></p>
                                         <?php if ($spec_value !== '') : ?>
                                             <h3><?php echo esc_html($spec_value); ?></h3>
@@ -2657,9 +2756,9 @@ if ($is_commercial_hub) {
                                         <?php else : ?>
                                             <p><?php esc_html_e('This detail is confirmed during survey, with the final choice matched to the property, opening and day-to-day use.', 'fenster'); ?></p>
                                         <?php endif; ?>
-                                    </article>
-                                <?php endforeach; ?>
-                            </div>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
 
@@ -2738,11 +2837,11 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && count($product_visual_gallery) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
-                        <?php foreach (array_slice($product_visual_gallery, 0, 4) as $index => $image) : ?>
+                        <?php foreach (array_slice($product_visual_gallery_remainder, 0, 4) as $index => $image) : ?>
                             <figure>
                                 <img src="<?php echo esc_url(fenster_generated_url($image['src'])); ?>" alt="<?php echo esc_attr($image['alt']); ?>" loading="eager">
                             </figure>
@@ -2791,9 +2890,20 @@ if ($is_commercial_hub) {
                         <p><?php esc_html_e('Preview Obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
                         <strong><?php esc_html_e('Compare glass patterns', 'fenster'); ?></strong>
                     </a>
-                    <?php if (! $show_sash_furniture && ! $show_window_handles && ! $show_door_handles) : ?>
-                        <a class="fg-product-option-card fg-product-option-card--quote" href="<?php echo esc_url($product_quote_link); ?>">
+                    <?php if ($show_window_handle_card) : ?>
+                        <a
+                            class="fg-product-option-card fg-product-option-card--handles"
+                            href="<?php echo esc_url(home_url('/window-handles/')); ?>"
+                        >
                             <span><?php esc_html_e('03', 'fenster'); ?></span>
+                            <h3><?php esc_html_e('Window handles', 'fenster'); ?></h3>
+                            <p><?php esc_html_e('Compare white, black, chrome, gold, satin silver and monkey tail handle routes on one focused page.', 'fenster'); ?></p>
+                            <strong><?php esc_html_e('Open handle hub', 'fenster'); ?></strong>
+                        </a>
+                    <?php endif; ?>
+                    <?php if (! $show_sash_furniture && ! $show_door_handles) : ?>
+                        <a class="fg-product-option-card fg-product-option-card--quote" href="<?php echo esc_url($product_quote_link); ?>">
+                            <span><?php echo esc_html($show_window_handle_card ? '04' : '03'); ?></span>
                             <h3><?php esc_html_e('Quote options', 'fenster'); ?></h3>
                             <p><?php esc_html_e('Use the quote route to combine sizes, layouts, colour and optional extras into a starting price.', 'fenster'); ?></p>
                             <strong><?php esc_html_e('Start pricing', 'fenster'); ?></strong>

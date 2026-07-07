@@ -186,10 +186,12 @@ Current product page model:
 
 - Hero with primary CTA linking to the enquiry form and secondary CTA linking to the in-page instant quote embed when a product collection exists.
 - Four-tile `Key specifications` strip using `inc\site-data.php` product USP data.
-- Manufacturer/product hub badges, system data, spec tabs and choice strips from `inc\product-hub-data.php`.
+- Visible "Why choose this product?" benefit cards; product pages should not use accordions outside FAQ.
+- Manufacturer/product hub badges, system data, visible specification check cards and choice strips from `inc\product-hub-data.php`.
+- Product body imagery should not repeat the hero image. The template uses a unique image queue and skips later image blocks if there are not enough distinct product images.
 - Optional product-specific WindowCAD quote embed placed after the main product journey/trust/accreditation content.
 - Product narrative/content sections from generated data.
-- A compact `Specification choices` section linking to focused colour, privacy-glass and hardware decisions.
+- A compact `Specification choices` section linking to focused colour, privacy-glass and hardware decisions, including the standalone `/window-handles/` hub where relevant.
 - Shared enquiry form.
 - Context-aware related products/service areas.
 
@@ -198,7 +200,7 @@ Current mobile QA notes from live phone review, addressed in commit `c21bd46`:
 - On `/casement-windows/`, the top product page content was broadly good, but there was too much vertical space between "Why choose this product" and the product information hub. Mobile spacing is now tightened.
 - Product hub logos such as Liniar and Energy Plus appeared much larger than the A+ rated and PAS 24 proof options. Mobile supplier/proof badge sizing is now constrained and balanced.
 - The common-choice/product-view control section could break out of its frame and cause full-page horizontal scrolling. The tab rail and common choices are now viewport-contained, and common choices stack on mobile.
-- Product-view controls were not intuitive enough when there were more than two options. The mobile hub now shows a "Swipe to see all product checks" cue with a native scroll-snap tab rail.
+- Product-view controls were not intuitive enough when there were more than two options. The product hub has since moved away from spec tabs to visible specification check cards.
 
 The old product-page mini-gallery above the colour choices has been removed. It was fed by imported `images` arrays from `data\pages.json`, including old copied stock uploads such as `stock-04.jpg` and `stock-05.jpg`. Product pages should not revive that scraped gallery rail; use curated hero/feature media and the specification hubs instead.
 
@@ -248,26 +250,30 @@ Mapped product collections include:
 - Replacement Glazed Units
 - Secondary Glazing
 
-### Window Handle Section
+### Window Handle Hub
 
 Window handle information is shared data in:
 
 `inc\site-data.php`
 
-The section renders from:
+The standalone hub renders from:
 
 `template-parts\sections\generated-page.php`
 
+Route:
+
+`/window-handles/`
+
 Current accepted behaviour:
 
-- Appears on selected window product routes only.
+- Product pages no longer render the full window-handle chooser inline. Selected window routes link to `/window-handles/` from the `Specification choices` card grid.
 - Tilt & Turn Windows is intentionally excluded.
 - Uses supplied S2 finish images from `assets\images\products\handles`.
-- Includes an interactive finish selector for White, Black, Chrome, Gold and Titanium.
-- Includes three feature tiles: Push-to-release, Secure locking and Coordinated finish.
+- Includes an interactive finish selector for White, Black, Chrome, Gold, Satin Silver and Monkey Tail.
+- Includes three feature tiles: Push-to-release, Lockable as standard and Finishes are coordinated.
 - Includes one static technical specification card.
 - No handle accordion is used.
-- Monkey-tail, egress conversion, spindle length and retrofit-ready content have been removed.
+- Egress conversion, spindle length and retrofit-ready content have been removed.
 
 ### Sliding Sash / Roseview Page
 
