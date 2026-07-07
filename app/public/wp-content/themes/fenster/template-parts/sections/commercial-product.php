@@ -19,6 +19,7 @@ $brand_email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $phone_href = preg_replace('/\s+/', '', $brand_phone);
 $title = (string) ($product['title'] ?? ($page['title'] ?? 'Commercial glazing'));
 $subtitle = (string) ($product['subtitle'] ?? '');
+$intro_heading = (string) ($product['intro_heading'] ?? ($title . ' for commercial buildings.'));
 $summary = is_array($product['summary'] ?? null) ? array_values($product['summary']) : [];
 $stats = is_array($product['stats'] ?? null) ? array_values($product['stats']) : [];
 $capabilities = is_array($product['capabilities'] ?? null) ? array_values($product['capabilities']) : [];
@@ -76,8 +77,8 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
                 </figure>
             <?php endif; ?>
             <div class="fg-commercial-product-intro__copy">
-                <p class="eyebrow"><?php esc_html_e('What Fenster can do', 'fenster'); ?></p>
-                <h2><?php echo esc_html('How Fenster can help with ' . strtolower($title) . '.'); ?></h2>
+                <p class="eyebrow"><?php esc_html_e('Scope of works', 'fenster'); ?></p>
+                <h2><?php echo esc_html($intro_heading); ?></h2>
                 <?php foreach ($summary as $line) : ?>
                     <p><?php echo esc_html((string) $line); ?></p>
                 <?php endforeach; ?>
