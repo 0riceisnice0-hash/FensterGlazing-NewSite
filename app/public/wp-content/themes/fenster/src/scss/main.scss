@@ -12639,6 +12639,54 @@ html.fg-gallery-lightbox-open body {
   resize: vertical;
 }
 
+.fg-commercial-form input:not([type="checkbox"]),
+.fg-commercial-form select,
+.fg-commercial-form textarea {
+  width: 100%;
+  border: 1px solid rgba(0, 45, 58, 0.28);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--color-ink);
+  padding: 0.78rem 0.88rem;
+  box-shadow: inset 0 1px 0 rgba(0, 45, 58, 0.04), 0 0 0 1px rgba(0, 45, 58, 0.04);
+}
+
+.fg-commercial-form input:not([type="checkbox"])::placeholder,
+.fg-commercial-form textarea::placeholder {
+  color: rgba(6, 33, 42, 0.48);
+}
+
+.fg-commercial-form input:not([type="checkbox"]):focus,
+.fg-commercial-form select:focus,
+.fg-commercial-form textarea:focus {
+  border-color: rgba(46, 172, 102, 0.78);
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(46, 172, 102, 0.18);
+}
+
+.fg-commercial-form label,
+.fg-commercial-form label > span,
+.fg-commercial-form .fg-enquiry-form__message small,
+.fg-commercial-form .fg-enquiry-form__footer small,
+.fg-commercial-form small {
+  color: var(--color-steel);
+}
+
+.fg-commercial-form label em {
+  color: var(--color-muted);
+}
+
+.fg-commercial-form .fg-enquiry-form__consent {
+  border-color: rgba(0, 45, 58, 0.14);
+  background: var(--color-soft);
+  color: var(--color-muted) !important;
+}
+
+.fg-commercial-form .fg-enquiry-form__consent a {
+  color: var(--color-steel);
+  font-weight: 800;
+}
+
 .fg-enquiry-form__message small {
   color: rgba(255, 255, 255, 0.52);
   font-size: 0.76rem;
