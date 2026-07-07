@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-07
 
+## 2026-07-07 - Product Template Live Polish, Gallery Lightbox And Mobile Nav Fix
+
+- Deployed the shared product-page redesign and follow-up polish live through commit `3ac98c2`.
+- Product sections now use `Product information` plus the product name, and product hubs use `More information on [product]`.
+- Removed the product hub survey summary, common choices strip, quote option card and separate accreditations/systems filler section from generated product pages.
+- Product galleries now open in an in-page lightbox rather than a raw image URL/new tab. The accepted lightbox has no visible caption/alt text, no white image card, close/backdrop/Escape handling, previous/next arrows and keyboard left/right navigation.
+- Fixed the mobile navigation touch layer so the open menu owns the viewport and page hero/content layers cannot intercept taps on mobile menu rows.
+- Verification covered `npm.cmd run build`, PHP lint for changed templates, and browser checks on `/casement-windows/` for the lightbox and mobile nav behaviour.
+
 ## 2026-07-07 - Product Page Layout Redesign To Test
 
 - Reworked the shared generated product-page journey toward a clearer 50/50 image-and-copy flow before live approval.
@@ -10,8 +19,8 @@ Last updated: 2026-07-07
 - Moved window handle selection out of inline product pages into a dedicated `/window-handles/` specification hub, with product pages linking to that hub from the specification choices area.
 - Refined the test template copy so product intro sections use `Product information` plus the product name, and product hubs use `More information on [product]`.
 - Removed the product hub survey summary, common choices strip, quote option card and separate accreditations/systems section from generated product pages.
-- Expanded the product-hub specification check cards to fill the section width, and made product-gallery images open the full image with a hover affordance.
-- This is a bigger shared template/routing change, so it should be reviewed on test before any live deployment.
+- Expanded the product-hub specification check cards to fill the section width, and made product-gallery images open through the site lightbox with a hover affordance.
+- This change was reviewed, refined and later deployed live through commit `3ac98c2`.
 
 ## 2026-07-06 - Reviews Copy And Privacy Policy Cleanup
 
@@ -115,14 +124,14 @@ Last updated: 2026-07-07
 
 ## 2026-07-06 - Live Phone QA Notes
 
-- Captured owner phone QA findings for the next mobile polish pass.
+- Captured owner phone QA findings for the next mobile polish pass. These findings were addressed in later product-template/mobile fixes and superseded by the live product-page redesign through `3ac98c2`.
 - Product pages such as `/casement-windows/` are broadly strong at the top, but need spacing and mobile component polish around the "Why choose this product" to product hub transition.
 - Product hub logo sizing needs balancing on mobile: Liniar and Energy Plus currently feel oversized compared with A+ rated and PAS 24 proof badges.
 - The common-choice/product-view control area is a priority bug: it can overflow its frame and create full-page horizontal scrolling on mobile.
 - Product-view controls need clearer discoverability when more than two options exist.
 - `/colour-options/` should remove or simplify the hero image on mobile; the rest of the page is acceptable.
 - `/sliding-sash-windows/` needs mobile-specific redesign work for the Roseview model stats, corner detail, slide-aligned comparisons and large detail imagery.
-- No code changes were made in this entry; this is documentation of live phone QA findings.
+- No code changes were made in this entry; this was documentation of live phone QA findings before the later fixes.
 
 ## 2026-07-06 - SiteGround Test Deploy, SEO Ownership And Forms
 

@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-07-06
+Last updated: 2026-07-07
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -16,7 +16,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 
 ## Important Updates
 
-- Latest live commit at the time of this update is `aff62a0` (`Fix article CTA form layout`). The current recent live sequence is `5696140` commercial hub v2, `7c973b5` performance deferral of heavy media/quote embeds, then `aff62a0` article/blog CTA form layout. New agents should check `git log --oneline -8` before assuming this is still the latest.
+- Latest live commit at the time of this update is `3ac98c2` (`Refine product gallery lightbox controls`). The current recent live sequence includes `f5191f8` product-page journey redesign, `99d3cd5` product-template refinements, `fd0d9ea` mobile nav touch-layer fix, `8cf8f3f` product gallery lightbox and `3ac98c2` lightbox control polish. New agents should check `git log --oneline -8` before assuming this is still the latest.
 - GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.
 - SiteGround test/live are still Bedrock installs. Local source is standard WordPress at `wp-content\themes\fenster`, but server deploy target is `web/app/themes/fenster`. The verified test deploy path is: GitHub repo cache at `~/repos/FensterGlazing-NewSite`, then rsync `app/public/wp-content/themes/fenster/` into `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Production deploys should swap/update the theme only. Keep the production database, uploads, plugins, `.env`, Bedrock config and `wp-config.php` equivalent in place unless the owner explicitly asks for a full WordPress migration.
@@ -25,7 +25,9 @@ It should not contain dated progress reports, long handover summaries or homepag
 - Launch SEO hardening has been completed for the main technical blockers: homepage title/meta override, generated URL trailing-slash/lowercase 301s, public cache headers for logged-out generated pages and sitemaps, generated breadcrumb schema, sitemap scrub to 427 URLs, `/commercial-areas/` removed from public navigation, and footer links to `/areas-we-cover/` and `/terms-conditions/`.
 - Thin utility/scrape pages such as `gallery`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `brochures`, `apecs-terms-conditions` and `fenster-partners` are intentionally `noindex,follow` and absent from the sitemap.
 - Mobile launch fixes are in place for the About process cards, Contact hub cards and quote-tool controls. Do not restore the old mobile quote controls that showed both `Expand view` and `Open in new tab`; mobile should show one same-tab `Open quote tool` action.
-- Mobile product-template fixes are in place for the first live phone QA pass. Product information hubs must stay viewport-contained on mobile, common choices should stack, supplier/proof badges should stay visually balanced, and multi-option tab rails need a clear swipe/count affordance.
+- The current product-page model is live: product pages use visible `Product information` cards, `More information on [product]` hubs, full-width specification check cards and FAQ-only accordions. Do not restore non-FAQ accordions, the product-hub survey summary, common-choice strip, quote option card, accreditations/systems filler section or inline window-handle chooser.
+- Mobile product-template fixes are in place for the live phone QA pass. Product information hubs must stay viewport-contained on mobile, supplier/proof badges should stay visually balanced, and shared product sections must not create horizontal body scroll.
+- Mobile navigation must own the touch layer when open. At `860px` and below, the open fixed header/nav overlay should sit above page content so hero/cards cannot intercept taps on menu rows.
 - The test site has verified working enquiry delivery to `info@fensterglazing.com`; valid forms are saved privately as `fenster_enquiry` posts before email delivery.
 - Performance has been improved without lowering visual quality by deferring heavy embeds/media instead of removing premium assets: homepage hero video loads after idle, quote iframes use deferred `data-quote-iframe-src` loading, product theatre non-primary media lazy-loads, and quote embeds load near viewport or on interaction. Do not undo this by making every iframe/video eager again.
 - The Lighthouse performance pass added critical first-viewport CSS, async activation of the main stylesheet, WOFF2 Gibson fonts with critical font preloads, a homepage hero-poster preload, mobile/constrained-connection hero-video interaction gating, image dimension helpers and below-fold homepage `content-visibility`. Keep the poster as the mobile/slow-network first visual and do not make the 9.36 MB homepage video part of the initial mobile payload again.
@@ -154,15 +156,16 @@ PHP lint example:
 - Product-specific WindowCAD quote URLs are mapped in `template-parts\sections\generated-page.php`.
 - Product page instant quote links should jump to `#fenster-product-quote` when a product-specific collection exists.
 - Do not place large iframe embeds before scroll-following or cinematic product sections; they can break scroll measurement and pacing.
-- Product quote embeds should stay compact and sit after the main product journey/trust/accreditation content.
+- Product quote embeds should stay compact and sit after the main product journey/trust content.
 - Product quote embeds auto-load the iframe on page load; do not restore the old `Load tool` gate.
 - Embedded quote tools include both `Expand view` and `Open in new tab` actions on desktop/tablet layouts.
 - On mobile, hide the desktop quote controls and show one same-tab `Open quote tool` action. The owner rejected the mobile new-tab/expand controls because they add friction and confuse the lead path.
 - The iframe wrapper should use `data-lenis-prevent` so the embedded tool remains usable with smooth scrolling.
 - Product pages should not render the imported mini-gallery from scraped `images` data. That export contains old stock/placeholder images, so product pages should use curated hero/feature media and link to focused specification hubs instead.
-- On mobile, product hub tabs and common-choice strips must not create horizontal body scroll. Use contained scroll-snap rails for the tabs, stacked choice lists and a visible cue when more than two product checks exist.
+- Product gallery thumbnails should open the in-page lightbox with dark overlay, arrows and no visible caption/alt text. Do not make gallery clicks open a raw image URL or new browser tab.
+- On mobile, product hub specification cards and any remaining horizontal components must not create horizontal body scroll.
 - Colour choices live in the `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` virtual routes using `inc\site-data.php` under `colour_options`; do not rebuild huge inline colour grids on every product page.
-- Product-page specification cards should link to colour options, obscure glass and relevant hardware choices rather than making the product template carry every possible finish.
+- Product-page specification cards should link to colour options, obscured glass and relevant hardware choices rather than making the product template carry every possible finish.
 - Product hub system logos must use local theme assets and be rendered through `fenster_generated_url()`. Do not point product hubs at `wp-content\fenster-reference` or raw scrape URLs.
 - `/sliding-sash-windows/` is a Roseview product route, not a Liniar route. Its product hub system is `Roseview`, its local logo is `assets\partners\roseview-logo-new.png`, and its model badges are `Ultimate Rose`, `Heritage Rose` and `Charisma Rose`.
 
@@ -182,11 +185,11 @@ PHP lint example:
 ## Window Handle Section Rule
 
 - Window handle data belongs in `inc\site-data.php` under `window_handles`.
-- The shared handle section renders from `template-parts\sections\generated-page.php`.
+- Window handles are now a standalone specification hub at `/window-handles/`, registered in `inc\generated-pages.php` and rendered from `template-parts\sections\generated-page.php`.
 - Handle finish images live under `wp-content\themes\fenster\assets\images\products\handles`.
-- The handle section appears on selected window routes only and intentionally excludes Tilt & Turn Windows.
-- The generic window handle section must not render on `/sliding-sash-windows/`.
-- The accepted handle section model is a compact finish selector with three feature tiles and a static technical specification card.
+- Product pages no longer render the full handle chooser inline. Selected window routes link to `/window-handles/` from the specification choice cards.
+- Tilt & Turn Windows and Sliding Sash Windows should not get the generic inline handle chooser because there is no inline chooser anymore.
+- The accepted hub model is a compact finish selector with White, Black, Chrome, Gold, Satin Silver and Monkey Tail, plus three feature tiles and a static technical specification card.
 - Do not restore the handle accordion, egress conversion copy, monkey-tail copy, spindle length row or retrofit-ready card unless the owner explicitly asks for them.
 
 ## Sliding Sash Roseview Rule

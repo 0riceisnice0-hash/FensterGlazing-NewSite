@@ -1,6 +1,6 @@
 # Fenster Glazing Site Context
 
-Last updated: 2026-07-06
+Last updated: 2026-07-07
 
 This document is for a personal GPT or strategy assistant. It is not a coding handover. It explains what the Fenster Glazing website is trying to do, how the site is structured, how the customer experience works, what the SEO strategy is, what the important pages mean, what has recently changed, and what still needs thought.
 
@@ -185,6 +185,10 @@ They should answer:
 
 Product pages should not be generic manufacturer brochures. They should connect the product to real customer decisions.
 
+The current product-page direction is deliberately cleaner than the earlier version. Product pages should have a clear reading path, a balanced rhythm between images and text, and no repeated images. The main explanatory section is called `Product information` followed by the product name, not "Why choose this product?" The deeper product hub uses `More information on [product]`, not "explained properly" wording.
+
+Only FAQs should use accordions. Product information, benefits and specification details should be visible without making the visitor open lots of panels. The old survey summary, common choices strip, quote option card, accreditations/systems filler block and inline window-handle chooser have been removed because they made the page feel busy rather than useful.
+
 ### Service Pages
 
 Service pages cover specific jobs such as repairs, replacement glass, cat flaps/dog flaps, secondary glazing, and other practical needs.
@@ -289,6 +293,8 @@ Product pages should avoid:
 - Huge irrelevant galleries.
 - Too many choices on one page.
 - Hiding the quote/contact action.
+- Repeating the same hero or product image further down the page.
+- Internal or supplier-facing wording that sounds like a developer note rather than customer copy.
 
 The best product pages behave like buying guides, not just SEO landing pages.
 
@@ -388,6 +394,8 @@ This page should help people understand privacy glass choices for bathrooms, doo
 ### Handles And Hardware
 
 Hardware details are useful but should not dominate product pages. They should support decisions such as colour, finish, appearance, and security.
+
+Window handles now have a separate `/window-handles/` hub rather than a full chooser embedded on every product page. Product pages can link to that hub from specification-choice cards. The accepted customer-facing finishes include White, Black, Chrome, Gold, Satin Silver and Monkey Tail. The point is to help customers understand finish and locking choices without making every product page feel like a catalogue.
 
 ## 11. Commercial Glazing
 
@@ -572,7 +580,7 @@ These are the main issues worth discussing with a personal GPT or strategy assis
 
 ### WindowCAD / AdminBase
 
-The intended flow is restored, but there has been an issue where WindowCAD shows "Failed to fetch" on save. This usually means the WindowCAD callback URL is blocked, wrong, or failing in the browser before WordPress receives the payload.
+The intended flow is restored. A previous "Failed to fetch" episode was caused by WindowCAD still pointing at the protected test endpoint from an old session; once refreshed/pointed correctly, the lead path worked again. If the same message returns, it usually means the WindowCAD callback URL is blocked, wrong, or failing in the browser before WordPress receives the payload.
 
 The correct live callback should be:
 

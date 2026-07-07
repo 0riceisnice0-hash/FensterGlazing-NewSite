@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-07-06
+Last updated: 2026-07-07
 
 This file is the source of truth for how the site should look and feel.
 
@@ -22,7 +22,7 @@ Use:
 - Mobile Contact hub cards now require readable overlay contrast, contained heading/copy sizing and no overlapping labels or buttons.
 - Mobile About process cards require proper internal padding and bordered containment; text must not hit the card edge.
 - Quote-tool embeds should stay premium and calm: desktop can show `Expand view` and `Open in new tab`, but mobile should show one clear same-tab `Open quote tool` action.
-- Product mobile QA fixes are now in place as a regression standard: no generated product section may create horizontal body scroll; common-choice/product-view controls must show clearly when more options exist; colour hub hero imagery can be removed on mobile if it weakens the page; sash comparison/model sections need a designed mobile layout, not squeezed desktop tables/images.
+- Product page redesign rules are now in place as a regression standard: no generated product section may create horizontal body scroll; product pages should use visible information cards, full-width specification check cards and FAQ-only accordions; colour hub hero imagery can be removed on mobile if it weakens the page; sash comparison/model sections need a designed mobile layout, not squeezed desktop tables/images.
 - The loading screen has been removed for lead performance. Do not add another blocking entrance animation before the page content.
 - Enquiry email HTML is part of the customer experience. Keep it simple, table-based and email-client-safe; the launch template uses a light header so the Fenster logo remains visible.
 
@@ -153,6 +153,12 @@ There is one shared live customer form:
 
 ## Product Detail Pages
 
+- Product pages should have a clear reading path with a roughly balanced image/text rhythm where useful. Avoid stacking too many cards, controls and text blocks without a visual pause.
+- Product intro sections should be labelled `Product information` and then the product name. Avoid returning to generic headings such as `Why choose this product?`.
+- Product hub sections should use `More information on [product]`, not `Product name, explained properly`.
+- Product pages should not use accordions outside FAQs.
+- Do not restore the product-hub survey summary, common choices strip, quote option card or separate accreditations/systems filler section.
+- Product-gallery thumbnails should open a dark in-page lightbox with no visible alt/caption text, no white background card and previous/next controls. They should not open a raw image URL in a new tab.
 - Product-specific sections should show the real product system, not generic hardware or supplier filler.
 - `/sliding-sash-windows/` is the accepted reference for a richer product detail page: model comparison, spec comparison, image-led detail sections and sash-specific furniture.
 - Sash model cards should keep their `Best for` panels and spec grids visually aligned so Ultimate, Heritage and Charisma can be compared without a chaotic card rhythm.
@@ -160,8 +166,8 @@ There is one shared live customer form:
 - Sash furniture cards should use clean product-object imagery, equal-height range cards and local white/soft panels against the continuous page canvas.
 - Do not use white or invisible logos inside white badges. If a copied supplier logo disappears, switch to a visible local variant and keep it routed through the theme asset system.
 - Supplier/proof logos in product hubs must feel balanced on mobile. Do not let one or two partner logos dominate smaller accreditations unless there is a deliberate hierarchy.
-- Product choice controls on mobile must make the full option count obvious. A user should not have to guess that there are more than two choices.
-- Product hub tab rails on mobile should be viewport-contained native scroll-snap rails with a visible swipe/count cue. Common-choice lists should stack before they risk causing sideways page scroll.
+- Product choice controls on mobile must make the full option count obvious if a control is still used. A user should not have to guess that there are more than two choices.
+- Product hub cards and any remaining mobile rails must stay viewport-contained before they risk causing sideways page scroll.
 
 ## Mobile Design
 
@@ -178,6 +184,7 @@ Mobile is designed, not squeezed.
 - Horizontal body scrolling is a blocker. If any card rail, comparison table, image, iframe or control causes the whole page to scroll sideways at 390px, fix the component before shipping.
 - Mobile CTA cards and overlay cards must keep labels, headings, body copy and arrow/action controls in separate readable zones.
 - Mobile compact process/list cards need at least comfortable internal padding, especially when borders are visible.
+- When mobile navigation is open, its overlay and hit targets must sit above page content. A hero, carousel or product card must never intercept taps meant for the menu.
 
 ## Homepage Background Rule
 

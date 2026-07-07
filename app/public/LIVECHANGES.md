@@ -1,13 +1,13 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-07-06
+Last updated: 2026-07-07
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live commit after this update: check `git log --oneline -8` and confirm against the live theme before assuming this line is current.
+- Latest known deployed live commit after this update: `3ac98c2` (`Refine product gallery lightbox controls`). Check `git log --oneline -8` and confirm against the live theme before assuming this line is still current.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
@@ -127,13 +127,13 @@ Live must not become the source of truth.
 ## Current Launch Notes
 
 - Live and test are both running the new `fenster` theme.
-- Recent live change sequence to understand before continuing: `5696140` commercial hub v2, `7c973b5` heavy media/quote iframe deferral, `aff62a0` article CTA form layout.
+- Recent live change sequence to understand before continuing: `f5191f8` product-page journey redesign, `99d3cd5` product-template refinements, `fd0d9ea` mobile nav touch-layer fix, `8cf8f3f` product gallery lightbox and `3ac98c2` lightbox control polish.
 - Enquiries save as private `fenster_enquiry` posts and send office HTML email to `info@fensterglazing.com`.
 - Customer confirmation emails are paused until authenticated SMTP is configured.
 - Optional enquiry file uploads are supported and attached to office emails.
 - Residential case studies are intentionally 410/inaccessible for launch.
 - `/obscured-glass/` is canonical; `/obscure-glass/` redirects there.
-- Product mobile QA fixes from commit `c21bd46` are deployed live.
+- Product mobile QA fixes and the newer product-page template/lightbox work through `3ac98c2` are deployed live.
 - `/upvc-colours/` and `/aluminium-colours/` redirect to canonical `/colour-options/`.
 - The theme serves `/sitemap.xml` and `/page-sitemap.xml` before Rank Math can output its own XML; live verification after the hardening pass showed 421 canonical sitemap URLs.
 - `inc/security.php` owns public WordPress hardening: REST user enumeration is blocked, XML-RPC is disabled through the WordPress filter, `X-Pingback` is removed, and WordPress generator/RSD/shortlink/REST/oEmbed/emoji head output is stripped.

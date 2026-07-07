@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-Last updated: 2026-07-06
+Last updated: 2026-07-07
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -15,7 +15,7 @@ Use:
 
 ## Important Updates
 
-- Latest known live commit after this handover update: `aff62a0` (`Fix article CTA form layout`). Recent live commits to understand before continuing: `5696140` (`Rework commercial glazing hub`), `7c973b5` (`Defer heavy media and quote embeds`), `aff62a0` (`Fix article CTA form layout`).
+- Latest known live commit after this handover update: `3ac98c2` (`Refine product gallery lightbox controls`). Recent live commits to understand before continuing: `f5191f8` (`Redesign product page journey for test`), `99d3cd5` (`Refine product template test layout`), `fd0d9ea` (`Fix mobile nav touch layer`), `8cf8f3f` (`Add product gallery lightbox`) and `3ac98c2` (`Refine product gallery lightbox controls`).
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Deployment should update the `fenster` theme from the GitHub repo while leaving production `.env`, Bedrock config, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
@@ -32,7 +32,8 @@ Use:
 - Enquiry forms support optional file uploads (`attachments[]`) for photos, drawings, schedules and documents. Files are stored against the private enquiry and attached to the office email.
 - Live mail deliverability still needs authenticated SMTP for future customer-facing sends. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
 - Residential case studies are intentionally hidden for launch. `/case-studies/` and the known residential child case-study routes return 410 and should stay out of menus/sitemaps until that content is rebuilt. Commercial project records under the old case-study URL family remain reachable because `/commercial-projects/` uses them as proof.
-- The first product-template/mobile phone QA pass is deployed on live: `/casement-windows/` style product hubs now constrain common choices and product tabs to the viewport, product hub logos are calmer on mobile, the tab rail shows a swipe affordance, `/colour-options/` hides the hero visual on mobile, and `/sliding-sash-windows/` has tighter Roseview model/spec/detail layouts for phones.
+- The current shared product-page redesign is deployed on live. Product pages now use a clearer image-and-copy flow, visible `Product information` cards, `More information on [product]` hubs, full-width specification check cards, FAQ-only accordions, a standalone `/window-handles/` hub, and an in-page product-gallery lightbox. The old survey summary, common choices strip, quote option card, accreditations/systems filler block and inline handle chooser should stay removed.
+- The mobile nav touch-layer fix is deployed on live. At `860px` and below, the open fixed header/nav owns the full viewport so page hero content cannot intercept taps on menu rows.
 - Commercial hub v2 is deployed on live. The main commercial page was simplified and rebuilt for clearer lead generation: project proof now uses commercial-project imagery, the product/services imagery was corrected from theme assets rather than scrape-reference paths, the useless tiny parallax motion was removed, the "where this fits" section was made more practical, and the commercial form area was restyled so inputs are visible and the copy is not oversized.
 - Performance baseline was improved on live without degrading the premium visuals. Heavy media and quote iframes are deferred: the homepage hero video waits for idle, quote iframes load near viewport or on click, product theatre media avoids eager-loading everything, and quote-tool pages keep a usable placeholder/action state until the iframe loads. Future performance work should continue this approach before compressing/removing signature visuals.
 - A Lighthouse-focused performance pass has added critical first-viewport CSS, async activation of the main stylesheet, WOFF2 Gibson fonts, Regular/SemiBold font preloads, a homepage hero-poster preload, image dimension helpers, and mobile/constrained-connection interaction gating for the homepage hero video. The mobile/slow-network first impression should be the lightweight poster, not the 9.36 MB video download.
@@ -139,6 +140,8 @@ Top-level navigation currently covers:
 
 Mobile navigation activates at `860px` and below. Future work should keep the mobile header, mobile navigation, CSS replacements and JavaScript breakpoint logic aligned at `860px`.
 
+When the mobile menu is open, `.site-header.is-nav-open` should own the viewport and `.site-nav` should sit above page content. If menu rows stop responding to taps, check for hero/content layers intercepting the touch target before changing the navigation data.
+
 ## Generated Pages And Routing
 
 Generated pages are driven by `data\pages.json`.
@@ -189,17 +192,17 @@ Current product page model:
 - Visible `Product information` benefit cards headed by the product name; product pages should not use accordions outside FAQ.
 - Manufacturer/product hub badges, system data and visible full-width specification check cards from `inc\product-hub-data.php`.
 - Product body imagery should not repeat the hero image. The template uses a unique image queue and skips later image blocks if there are not enough distinct product images.
-- Product galleries link each tile to the full image in a new tab and use a hover affordance.
+- Product galleries open an in-page lightbox, not a raw image URL or new tab. The lightbox uses a dark overlay, no visible alt/caption text, no white image card, close/backdrop/Escape handling, previous/next arrows and keyboard left/right navigation.
 - Optional product-specific WindowCAD quote embed placed after the main product journey/trust content.
 - Product narrative/content sections from generated data.
 - A compact `Specification choices` section linking to focused colour, privacy-glass and hardware decisions, including the standalone `/window-handles/` hub where relevant.
 - Shared enquiry form.
 - Context-aware related products/service areas.
 
-Current mobile QA notes from live phone review, addressed in commit `c21bd46`:
+Older mobile QA notes from the first phone review were superseded by the later live redesign through `3ac98c2`:
 
-- On `/casement-windows/`, the top product page content was broadly good, but there was too much vertical space between "Why choose this product" and the product information hub. Mobile spacing is now tightened.
-- Product hub logos such as Liniar and Energy Plus appeared much larger than the A+ rated and PAS 24 proof options. Mobile supplier/proof badge sizing is now constrained and balanced.
+- `/casement-windows/` no longer uses "Why choose this product" wording; the section is now `Product information`.
+- Product hub logos such as Liniar and Energy Plus should stay visually balanced against proof/spec cards.
 - The old common-choice/product-view control section has been removed from the shared product template.
 - Product-view controls were not intuitive enough when there were more than two options. The product hub has since moved away from spec tabs to visible specification check cards.
 
@@ -227,7 +230,7 @@ The embed section id is:
 Current accepted behaviour:
 
 - Product-page instant quote links jump to the in-page embed when a matching `productCollection` exists.
-- The embed sits after the main product journey sections, including trust/accreditations, so scroll-following product video sections are not disturbed.
+- The embed sits after the main product journey and trust sections, so scroll-following product video sections are not disturbed.
 - The embed is intentionally compact, not a full-height page takeover.
 - Product embed iframes auto-load on page load.
 - Desktop quote cards include `Expand view` and `Open in new tab` controls.
