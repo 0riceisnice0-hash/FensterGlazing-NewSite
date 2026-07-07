@@ -2165,6 +2165,7 @@ if ($is_commercial_hub) {
                         'Replacement glazing',
                     ],
                     'show_company' => true,
+                    'lock_project_type' => true,
                 ]);
                 ?>
             </div>
@@ -3405,6 +3406,8 @@ if ($is_commercial_hub) {
                 'source' => $title,
                 'button_label' => $is_commercial ? 'Send project enquiry' : 'Send my project details',
                 'project_type' => $is_commercial ? 'Commercial glazing' : 'Residential windows and doors',
+                'show_company' => $is_commercial,
+                'lock_project_type' => $is_commercial,
             ]);
             ?>
         </div>

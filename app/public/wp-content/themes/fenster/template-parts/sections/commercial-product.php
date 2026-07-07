@@ -196,6 +196,7 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
                     'Replacement glazing',
                 ],
                 'show_company' => true,
+                'lock_project_type' => true,
             ]);
             ?>
         </div>

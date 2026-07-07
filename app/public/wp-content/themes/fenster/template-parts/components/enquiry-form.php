@@ -17,6 +17,7 @@ $args = wp_parse_args($args ?? [], [
     'project_options' => [],
     'show_company' => false,
     'compact' => false,
+    'lock_project_type' => false,
 ]);
 
 $project_options = is_array($args['project_options']) && ! empty($args['project_options'])
@@ -112,27 +113,29 @@ $notices = [
         </div>
     <?php else : ?>
     <input type="hidden" name="project_type" value="<?php echo esc_attr((string) $args['project_type']); ?>" data-fg-project-type>
-    <fieldset class="fg-enquiry-form__audience" data-fg-audience-gate>
-        <legend><?php esc_html_e('Choose enquiry type', 'fenster'); ?></legend>
-        <div class="fg-enquiry-form__audience-options">
-            <button type="button" data-fg-audience-choice data-project-type="Residential windows and doors" aria-pressed="false">
-                <b aria-hidden="true">01</b>
-                <span><?php esc_html_e('Homeowner', 'fenster'); ?></span>
-                <small><?php esc_html_e('Windows, doors, glass, repairs or home improvements for your property.', 'fenster'); ?></small>
-                <i aria-hidden="true"><?php esc_html_e('Continue', 'fenster'); ?></i>
-            </button>
-            <button type="button" data-fg-audience-choice data-project-type="Commercial glazing" aria-pressed="false">
-                <b aria-hidden="true">02</b>
-                <span><?php esc_html_e('Business', 'fenster'); ?></span>
-                <small><?php esc_html_e('Commercial sites, schools, offices, shopfronts, schedules or tender work.', 'fenster'); ?></small>
-                <i aria-hidden="true"><?php esc_html_e('Continue', 'fenster'); ?></i>
-            </button>
-        </div>
-    </fieldset>
+    <?php if (empty($args['lock_project_type'])) : ?>
+        <fieldset class="fg-enquiry-form__audience" data-fg-audience-gate>
+            <legend><?php esc_html_e('Choose enquiry type', 'fenster'); ?></legend>
+            <div class="fg-enquiry-form__audience-options">
+                <button type="button" data-fg-audience-choice data-project-type="Residential windows and doors" aria-pressed="false">
+                    <b aria-hidden="true">01</b>
+                    <span><?php esc_html_e('Homeowner', 'fenster'); ?></span>
+                    <small><?php esc_html_e('Windows, doors, glass, repairs or home improvements for your property.', 'fenster'); ?></small>
+                    <i aria-hidden="true"><?php esc_html_e('Continue', 'fenster'); ?></i>
+                </button>
+                <button type="button" data-fg-audience-choice data-project-type="Commercial glazing" aria-pressed="false">
+                    <b aria-hidden="true">02</b>
+                    <span><?php esc_html_e('Business', 'fenster'); ?></span>
+                    <small><?php esc_html_e('Commercial sites, schools, offices, shopfronts, schedules or tender work.', 'fenster'); ?></small>
+                    <i aria-hidden="true"><?php esc_html_e('Continue', 'fenster'); ?></i>
+                </button>
+            </div>
+        </fieldset>
+    <?php endif; ?>
 
     <div class="fg-enquiry-form__body" data-fg-audience-body>
     <div class="fg-enquiry-form__body-head">
-        <span><?php esc_html_e('Step 2 of 2', 'fenster'); ?></span>
+        <span><?php echo esc_html(empty($args['lock_project_type']) ? __('Step 2 of 2', 'fenster') : __('Project enquiry', 'fenster')); ?></span>
         <strong><?php esc_html_e('Tell us the basics.', 'fenster'); ?></strong>
         <p><?php esc_html_e('A few useful details are enough. Fenster can confirm the exact specification after survey.', 'fenster'); ?></p>
     </div>
