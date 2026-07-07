@@ -171,6 +171,8 @@ $commercial_route_slugs = [
     'healthcare-construction',
 ];
 $is_commercial = in_array($slug, $commercial_route_slugs, true) || str_starts_with($slug, 'commercial-glazing-');
+$commercial_product = function_exists('fenster_commercial_product_page') ? fenster_commercial_product_page($slug) : null;
+$is_commercial_product = is_array($commercial_product);
 $is_quote_tool = in_array($slug, ['online-quote', '3d-visualiser', 'instant-pricing', 'instant-pricing-meta-ads', 'pricing-gads', 'design-your-windows-and-doors', 'door-designer'], true);
 $is_archive_page = $slug === 'blog' || str_starts_with($slug, 'blog/page/') || str_starts_with($slug, 'category/') || str_starts_with($slug, 'tag/') || str_starts_with($slug, 'author/');
 $is_utility_page = in_array($slug, ['privacy-policy', 'cookie-policy', 'terms-conditions', 'why-trust-fenster', 'brochures', 'downloads', 'gallery', 'customer-portal', 'careers', 'refer-a-friend', 'fenster-partners', 'videos', 'apecs-terms-conditions', 'other-services'], true);
@@ -1344,6 +1346,17 @@ if ($is_commercial_county) {
         'brand' => $brand,
         'links' => $related_links,
         'page' => $page,
+        'title' => $title,
+        'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
+if ($is_commercial_product) {
+    get_template_part('template-parts/sections/commercial-product', null, [
+        'brand' => $brand,
+        'page' => $page,
+        'product' => $commercial_product,
         'title' => $title,
         'trust_items' => $trust_items,
     ]);

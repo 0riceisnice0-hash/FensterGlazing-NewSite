@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-07
 
+## 2026-07-07 - Commercial Product Template Local Rebuild
+
+- Put the wider live audit on hold to address poor commercial product pages first, especially `/curtain-walling/`.
+- Added a dedicated commercial product data layer and template for `/commercial-windows-and-doors/`, `/curtain-walling/`, `/louvre-vents/`, `/commercial-automation/` and `/healthcare-construction/` so these routes no longer depend on the generic generated product journey or rough scraped body sections.
+- Curated commercial imagery from the imported theme assets for hero, gallery and related cards, including the curtain walling and real commercial project photos.
+- Rebuilt compiled CSS and verified PHP syntax for the touched files.
+- Local route checks confirmed all five routes return 200, render the new `fg-commercial-product` template, have no old designer/WindowCAD scrape copy, no broken images, no horizontal overflow and no console errors at desktop and mobile widths.
+- This is local-only at the time of writing and still needs test deploy and approval before live.
+
 ## 2026-07-07 - Clarity Consent Session Fix
 
 - Fixed the Clarity consent setup so accepted visitors receive Microsoft Clarity Consent API v2 signals instead of being treated as no-consent page views.
