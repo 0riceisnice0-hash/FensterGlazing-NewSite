@@ -16245,8 +16245,14 @@ h3 {
     right: 0;
     left: 0;
     width: 100%;
+    z-index: 1000;
     isolation: isolate;
     transform: translateZ(0);
+  }
+
+  .site-header.is-nav-open {
+    bottom: 0;
+    height: 100svh;
   }
 
   .site-main {
@@ -16306,6 +16312,7 @@ h3 {
     top: var(--site-header-main-height);
     left: 0;
     right: 0;
+    z-index: 1001;
     width: auto;
     max-width: 100%;
     height: calc(100svh - var(--site-header-main-height));
