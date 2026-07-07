@@ -230,7 +230,6 @@ $team_cards = [
                     <article class="fg-trust-team__card fg-trust-team__card--<?php echo esc_attr($team_card['slug']); ?>">
                         <figure>
                             <img src="<?php echo esc_url($team_card['src']); ?>" alt="<?php echo esc_attr($team_card['alt']); ?>" loading="lazy">
-                            <figcaption><?php echo esc_html($team_card['role']); ?></figcaption>
                         </figure>
                         <div>
                             <h3><?php echo esc_html($team_card['title']); ?></h3>
