@@ -219,7 +219,7 @@ $location_links = [
             <div class="fg-home-product-theatre__mobile-head">
                 <p class="eyebrow"><?php esc_html_e('Explore the range', 'fenster'); ?></p>
                 <h2><?php esc_html_e('What would you like to improve?', 'fenster'); ?></h2>
-                <p class="fg-home-product-theatre__mobile-cue"><?php esc_html_e('Swipe through the range, then tap a product to explore it.', 'fenster'); ?></p>
+                <p class="fg-home-product-theatre__mobile-cue"><?php esc_html_e('Swipe through the range.', 'fenster'); ?></p>
             </div>
             <div
                 class="fg-home-product-theatre__mobile-carousel"
@@ -239,14 +239,12 @@ $location_links = [
                         </a>
                     <?php endforeach; ?>
                 </div>
-                <div class="fg-home-product-theatre__mobile-dots" role="group" aria-label="<?php esc_attr_e('Choose a product slide', 'fenster'); ?>">
+                <div class="fg-home-product-theatre__mobile-dots" aria-hidden="true">
                     <?php foreach ($product_routes as $index => $route) : ?>
-                        <button
+                        <span
                             class="<?php echo esc_attr($index === 0 ? 'is-active' : ''); ?>"
-                            type="button"
                             data-fg-mobile-product-dot="<?php echo esc_attr((string) $index); ?>"
-                            aria-label="<?php echo esc_attr(sprintf('Show %s', $route['label'])); ?>"
-                            aria-current="<?php echo esc_attr($index === 0 ? 'true' : 'false'); ?>"></button>
+                            aria-current="<?php echo esc_attr($index === 0 ? 'true' : 'false'); ?>"></span>
                     <?php endforeach; ?>
                 </div>
             </div>

@@ -19393,25 +19393,21 @@ html.fg-blinds-reveal-locked {
     background: rgba(0, 45, 58, 0.055);
   }
 
-  .fg-home-product-theatre__mobile-dots button {
-    width: 9px;
-    height: 9px;
+  .fg-home-product-theatre__mobile-dots [data-fg-mobile-product-dot] {
+    display: block;
+    width: 8px;
+    height: 8px;
     padding: 0;
     border: 0;
     border-radius: 999px;
     background: rgba(0, 45, 58, 0.24);
-    cursor: pointer;
+    pointer-events: none;
     transition: width 180ms ease, background 180ms ease;
   }
 
-  .fg-home-product-theatre__mobile-dots button.is-active {
-    width: 28px;
+  .fg-home-product-theatre__mobile-dots [data-fg-mobile-product-dot].is-active {
+    width: 18px;
     background: var(--color-accent);
-  }
-
-  .fg-home-product-theatre__mobile-dots button:focus-visible {
-    outline: 3px solid rgba(46, 172, 102, 0.28);
-    outline-offset: 3px;
   }
 
   .fg-home-product-theatre__mobile-card {
@@ -19484,17 +19480,13 @@ html.fg-blinds-reveal-locked {
     position: relative;
     width: fit-content;
     margin-top: 0.35rem;
-    padding-right: 1.7rem;
     color: #ffffff;
     font-size: 0.82rem;
     font-weight: 800;
   }
 
   .fg-home-product-theatre__mobile-card small::after {
-    content: "→";
-    position: absolute;
-    right: 0;
-    color: var(--color-accent);
+    content: none;
   }
 
   .fg-home-product-theatre__mobile-card:active > img {
@@ -21152,8 +21144,7 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-.fg-review-showcase__button,
-.fg-home-product-theatre__mobile-dots button {
+.fg-review-showcase__button {
   min-width: 44px;
   min-height: 44px;
 }

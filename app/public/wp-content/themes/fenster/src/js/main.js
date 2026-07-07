@@ -1946,18 +1946,6 @@ document.querySelectorAll('.fg-home-product-theatre__mobile').forEach((mobileThe
     if (!scrollFrame) scrollFrame = requestAnimationFrame(updateActiveDot);
   }, { passive: true });
 
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      const trackLeft = track.getBoundingClientRect().left;
-      const cardLeft = cards[index].getBoundingClientRect().left;
-      track.scrollTo({
-        left: track.scrollLeft + cardLeft - trackLeft,
-        behavior: 'smooth',
-      });
-      setActiveDot(index);
-    });
-  });
-
   setActiveDot(0);
 });
 
