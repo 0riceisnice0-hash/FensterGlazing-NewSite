@@ -5,6 +5,7 @@ Last updated: 2026-07-07
 ## 2026-07-07 - Site-Wide Copy Audit Cleanup To Test
 
 - Verified the 2026-07-06 AI copy audit against current theme source before editing.
+- Deployed the verified copy cleanup live through commit `4ce91a6`, after first deploying and checking the same commit on test.
 - Removed customer-facing template self-talk from product galleries and specification-choice cards, including `verified product imagery`, `verified supplier imagery`, `page stays visually accurate` and finish-guide architecture wording.
 - Replaced visible internal `route` wording across commercial county pages, the trust page, contact page, product hubs, pet-flap copy, handle copy and legacy generated sections with customer-facing terms such as option, approach, process, system and fitting method.
 - Lower-cased mid-sentence `obscured glass` copy, while keeping route/title naming where `Obscured Glass` is the page name.
