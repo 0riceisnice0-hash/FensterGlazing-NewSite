@@ -76,6 +76,31 @@ ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2
 
 The `rsync --delete` is safe only because the source and target are both the theme folder. Never point it at `public_html`, `web`, `web/app`, uploads, plugins or a path assembled from guesswork.
 
+## PowerShell And SSH Verification Notes
+
+Codex usually runs from Windows PowerShell. Keep remote verification commands simple because quoting loops through PowerShell, SSH and the remote shell can waste time.
+
+- Do not use bare `curl` in local PowerShell for verification. PowerShell aliases `curl` to `Invoke-WebRequest`, so curl flags such as `-w` and shell loops can fail before the command reaches the server.
+- For local public URL checks, use `Invoke-WebRequest` directly.
+- For one or two server-side checks, use a plain one-line SSH command.
+- For multi-route server-side checks, send a small bash script to the server with base64 and pipe it into `bash`. Use this pattern instead of trying to nest multiline loops inside an SSH string:
+
+```powershell
+$remote = @'
+for route in /what-are-integral-blinds/ /louvre-vents/ /commercial-glazing-buckinghamshire/ /obscured-glass/ /commercial-projects/
+do
+  tmp=$(mktemp)
+  status=$(/usr/bin/curl -sSL -A "Mozilla/5.0 Codex verification" -o "$tmp" -w "%{http_code}" "https://www.fensterglazing.com$route")
+  bad=0
+  grep -Eiq "live chat|verified product imagery|verified supplier imagery|page stays visually accurate|best route|right glazing route|installation route|colour route|specification route" "$tmp" && bad=1
+  echo "$route status=$status bad_copy=$bad"
+  rm -f "$tmp"
+done
+'@
+$b64 = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($remote))
+ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "echo $b64 | base64 -d | bash"
+```
+
 ## What Not To Touch
 
 - Do not use SiteGround clone/staging tools. They previously caused URL/database confusion.
