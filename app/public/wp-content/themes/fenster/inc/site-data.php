@@ -17,7 +17,7 @@ function fenster_site_data(): array
     return [
         'brand' => [
             'name' => 'Fenster Glazing',
-            'tagline' => 'Aluminium windows, doors, bifolds and glazing systems.',
+            'tagline' => 'Windows, doors, glazing, repairs and project support for homes and businesses.',
             'phone' => '01908 429200',
             'email' => 'info@fensterglazing.com',
             'address' => [
