@@ -2156,6 +2156,74 @@ document.querySelectorAll('[data-fg-product-intel]').forEach((explorer) => {
   });
 });
 
+const galleryLightboxLinks = [...document.querySelectorAll('[data-fg-gallery-lightbox]')];
+
+if (galleryLightboxLinks.length) {
+  const lightbox = document.createElement('div');
+  lightbox.className = 'fg-gallery-lightbox';
+  lightbox.setAttribute('role', 'dialog');
+  lightbox.setAttribute('aria-modal', 'true');
+  lightbox.setAttribute('aria-label', 'Image preview');
+  lightbox.hidden = true;
+  lightbox.innerHTML = `
+    <button class="fg-gallery-lightbox__close" type="button" aria-label="Close image preview">Close</button>
+    <figure class="fg-gallery-lightbox__figure">
+      <img alt="">
+      <figcaption></figcaption>
+    </figure>
+  `;
+  document.body.appendChild(lightbox);
+
+  const lightboxImage = lightbox.querySelector('img');
+  const lightboxCaption = lightbox.querySelector('figcaption');
+  const closeButton = lightbox.querySelector('button');
+  let previousFocus = null;
+
+  const closeLightbox = () => {
+    lightbox.hidden = true;
+    document.documentElement.classList.remove('fg-gallery-lightbox-open');
+    if (lightboxImage) {
+      lightboxImage.removeAttribute('src');
+    }
+    previousFocus?.focus?.({ preventScroll: true });
+  };
+
+  const openLightbox = (link) => {
+    const image = link.querySelector('img');
+    const src = link.getAttribute('href');
+    const alt = image?.getAttribute('alt') || 'Product gallery image';
+
+    if (!src || !lightboxImage || !lightboxCaption) return;
+
+    previousFocus = document.activeElement;
+    lightboxImage.src = src;
+    lightboxImage.alt = alt;
+    lightboxCaption.textContent = alt;
+    lightbox.hidden = false;
+    document.documentElement.classList.add('fg-gallery-lightbox-open');
+    closeButton?.focus?.({ preventScroll: true });
+  };
+
+  galleryLightboxLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      openLightbox(link);
+    });
+  });
+
+  closeButton?.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !lightbox.hidden) {
+      closeLightbox();
+    }
+  });
+}
+
 document.querySelectorAll('[data-fg-window-selector]').forEach((selector) => {
   const options = [...selector.querySelectorAll('[data-fg-window-option]')];
   const images = [...selector.querySelectorAll('[data-fg-window-image]')];

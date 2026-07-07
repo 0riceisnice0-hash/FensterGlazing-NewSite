@@ -2816,7 +2816,7 @@ if ($is_commercial_hub) {
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
                         <?php foreach (array_slice($product_visual_gallery_remainder, 0, 4) as $index => $image) : ?>
                             <figure>
-                                <a href="<?php echo esc_url(fenster_generated_url($image['src'])); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $image['alt'])); ?>">
+                                <a href="<?php echo esc_url(fenster_generated_url($image['src'])); ?>" data-fg-gallery-lightbox aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $image['alt'])); ?>">
                                     <img src="<?php echo esc_url(fenster_generated_url($image['src'])); ?>" alt="<?php echo esc_attr($image['alt']); ?>" loading="eager">
                                 </a>
                             </figure>

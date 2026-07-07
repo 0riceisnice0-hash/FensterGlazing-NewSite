@@ -4317,7 +4317,7 @@ h3 {
 }
 
 .fg-product-visuals__mosaic a::after {
-  content: "Open image";
+  content: "Preview image";
   position: absolute;
   right: 0.75rem;
   bottom: 0.75rem;
@@ -4359,6 +4359,77 @@ h3 {
 .fg-product-visuals__mosaic a:focus-visible img {
   filter: saturate(1.05) contrast(1.04);
   transform: scale(1.035);
+}
+
+html.fg-gallery-lightbox-open,
+html.fg-gallery-lightbox-open body {
+  overflow: hidden;
+}
+
+.fg-gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: rgba(0, 28, 36, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.fg-gallery-lightbox[hidden] {
+  display: none;
+}
+
+.fg-gallery-lightbox__figure {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  width: min(100%, 1120px);
+  max-height: min(86svh, 820px);
+  margin: 0;
+  padding: clamp(0.65rem, 1.5vw, 1rem);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+}
+
+.fg-gallery-lightbox__figure img {
+  display: block;
+  width: 100%;
+  max-height: min(76svh, 720px);
+  object-fit: contain;
+  border-radius: 6px;
+  background: #f6fbf9;
+}
+
+.fg-gallery-lightbox__figure figcaption {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.fg-gallery-lightbox__close {
+  position: fixed;
+  top: clamp(0.9rem, 2vw, 1.35rem);
+  right: clamp(0.9rem, 2vw, 1.35rem);
+  z-index: 1;
+  min-height: 44px;
+  padding: 0.68rem 0.95rem;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-steel);
+  font: inherit;
+  font-weight: 850;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
+}
+
+.fg-gallery-lightbox__close:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .fg-product-visuals__copy {
