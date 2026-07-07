@@ -10588,6 +10588,7 @@ h3 {
 
 .fg-team-person {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   min-height: 100%;
   overflow: hidden;
   border: 1px solid var(--color-line);
@@ -10615,11 +10616,13 @@ h3 {
 
 .fg-team-person div {
   display: grid;
+  grid-template-rows: auto auto minmax(1.1rem, 1fr) auto;
   gap: 0.55rem;
   padding: 1rem;
 }
 
 .fg-team-person span {
+  align-self: start;
   color: var(--color-accent);
   font-weight: 800;
   text-transform: uppercase;
@@ -10628,6 +10631,7 @@ h3 {
 }
 
 .fg-team-person h3 {
+  align-self: start;
   color: var(--color-steel);
   font-size: 1.45rem;
 }
@@ -10644,12 +10648,15 @@ h3 {
 }
 
 .fg-team-person--boss h2 {
+  align-self: start;
   color: var(--color-steel);
   font-size: clamp(1.65rem, 2.2vw, 2.25rem);
   line-height: 1.06;
 }
 
 .fg-team-person p {
+  grid-row: 4;
+  align-self: end;
   margin: 0;
   color: var(--color-muted);
   font-size: 0.98rem;
