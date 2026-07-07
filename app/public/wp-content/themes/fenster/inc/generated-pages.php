@@ -427,6 +427,12 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     ],
                 ],
                 [
+                    'heading' => 'Accounts and email updates',
+                    'body' => [
+                        'This website does not currently provide customer account registration, customer dashboards or an email newsletter sign-up. If you contact Fenster, your details are used to deal with your enquiry or project rather than to create a public website account or mailing-list membership.',
+                    ],
+                ],
+                [
                     'heading' => 'How Fenster uses your information',
                     'body' => [
                         'Fenster uses enquiry and project information to respond to your request, prepare quotations, arrange surveys, discuss products, manage orders, provide installation or repair services, handle aftercare and keep appropriate business records.',
@@ -480,6 +486,70 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'links' => [
                 ['text' => 'Contact Fenster', 'url' => home_url('/contact/')],
                 ['text' => 'Terms and Conditions', 'url' => home_url('/terms-conditions/')],
+                ['text' => 'Start a quote', 'url' => home_url('/online-quote/')],
+            ],
+        ];
+    }
+
+    if ($slug === 'cookie-policy') {
+        return $page_cache[$slug] = [
+            'slug' => 'cookie-policy',
+            'title' => 'Cookie Policy',
+            'url' => home_url('/cookie-policy/'),
+            'seo' => [
+                'title_tag' => 'Cookie Policy | Fenster Glazing',
+                'meta_description' => 'How Fenster Glazing uses necessary cookies, cookie choices, analytics and marketing tags on the website.',
+                'canonical' => 'https://fensterglazing.com/cookie-policy/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [
+                [
+                    'heading' => 'What this cookie policy covers',
+                    'body' => [
+                        'This cookie policy explains how the Fenster Glazing website uses cookies, browser storage and similar technologies.',
+                        'The website is mainly an information and enquiry site. It does not currently offer customer account registration, member-only areas or an email newsletter sign-up.',
+                    ],
+                ],
+                [
+                    'heading' => 'Strictly necessary cookies and storage',
+                    'body' => [
+                        'Some cookies or browser storage may be needed for basic website functions, security, spam prevention, form handling, embedded quote tools or remembering your cookie choice.',
+                        'The cookie banner stores your choice in your browser using local storage under the name fenster_cookie_consent. This lets the site remember whether you accepted or rejected optional tracking.',
+                    ],
+                ],
+                [
+                    'heading' => 'Optional analytics and marketing tools',
+                    'body' => [
+                        'If you accept optional cookies, the site may load Google Tag Manager, Microsoft Clarity and Meta Pixel. These tools can help Fenster understand which pages are useful, how visitors move through the site, how quote tools and forms perform, and whether advertising is working.',
+                        'These optional tools are blocked until you accept them through the cookie banner. You can reject them and still use the website, read pages, call Fenster, email the team or send an enquiry.',
+                    ],
+                ],
+                [
+                    'heading' => 'What Fenster does not use cookies for',
+                    'body' => [
+                        'Fenster does not currently use website cookies for customer account logins, account dashboards, email newsletter membership, public comments, shopping baskets, checkout accounts, AdSense advertising or on-site user surveys.',
+                        'If those website features are added in future, this policy should be updated before they go live.',
+                    ],
+                ],
+                [
+                    'heading' => 'Changing your choice',
+                    'body' => [
+                        'You can use the Cookies button on the website to open the cookie banner again and change your choice.',
+                        'You can also clear cookies and site data in your browser settings. Browser controls vary, but most browsers let you delete cookies, block cookies for specific sites, or clear local storage.',
+                    ],
+                ],
+                [
+                    'heading' => 'More information',
+                    'body' => [
+                        'For more detail on how Fenster uses personal information from enquiries, quote tools and analytics, read the Privacy Policy.',
+                        'Last updated: 7 July 2026.',
+                    ],
+                ],
+            ],
+            'images' => [],
+            'links' => [
+                ['text' => 'Privacy Policy', 'url' => home_url('/privacy-policy/')],
+                ['text' => 'Contact Fenster', 'url' => home_url('/contact/')],
                 ['text' => 'Start a quote', 'url' => home_url('/online-quote/')],
             ],
         ];
