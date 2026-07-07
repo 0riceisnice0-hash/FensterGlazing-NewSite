@@ -35,7 +35,7 @@ function fenster_product_hub_data(string $slug): array
         'casement-windows' => [
             'systems' => [$systems['liniar']],
             'badges' => [$energyplus_badge, 'A+ rated', 'PAS 24 option'],
-            'heading' => 'Liniar EnergyPlus uPVC casement windows, explained properly.',
+            'heading' => 'More information on casement windows.',
             'copy' => 'Casement windows are usually the best value route for replacing older uPVC or timber windows. Fenster specifies the 70mm Liniar EnergyPlus route, with the final layout, glass and hardware confirmed after survey.',
             'specs' => [
                 ['label' => 'Profile system', 'value' => '70mm Liniar EnergyPlus uPVC profile'],

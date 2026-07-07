@@ -747,8 +747,8 @@ $journey_intro_copy = $is_about
     : ($is_commercial
         ? 'Use this page to compare performance, system fit, project control and enquiry details in one place.'
         : 'The essentials are brought forward: style, performance, security, images, guarantees and a clear way to request a quote or consultation.');
-$journey_why_eyebrow = $is_about ? 'Why Fenster?' : ($is_commercial ? 'Why Fenster commercially?' : 'Why choose this product?');
-$journey_why_heading = $is_about ? 'Why choose Fenster Glazing?' : ($is_commercial ? 'Why choose Fenster for commercial glazing?' : 'Why choose ' . $title . '?');
+$journey_why_eyebrow = $is_about ? 'Why Fenster?' : ($is_commercial ? 'Why Fenster commercially?' : 'Product information');
+$journey_why_heading = $is_about ? 'Why choose Fenster Glazing?' : ($is_commercial ? 'Why choose Fenster for commercial glazing?' : $title);
 $journey_why_button = $is_about ? 'Talk to the team' : ($is_commercial ? 'Start a commercial enquiry' : 'Start a product enquiry');
 $journey_gallery_eyebrow = $is_about ? 'People and proof' : ($is_commercial ? 'Projects and systems' : 'Gallery and choices');
 $journey_gallery_heading = $is_about ? 'See the team, work and details behind the company.' : ($is_commercial ? 'See the commercial work, systems and details before you enquire.' : 'See the styles, finishes and details before you enquire.');
@@ -2682,7 +2682,7 @@ if ($is_commercial_hub) {
                     <div class="fg-product-intel__lead">
                         <div class="fg-product-intel__intro">
                             <p class="eyebrow"><?php echo esc_html((string) ($product_hub['eyebrow'] ?? 'Product guide')); ?></p>
-                            <h2><?php echo esc_html((string) ($product_hub['heading'] ?? 'The details worth checking before you choose.')); ?></h2>
+                            <h2><?php echo esc_html(sprintf(__('More information on %s', 'fenster'), $title)); ?></h2>
                             <p><?php echo esc_html((string) ($product_hub['copy'] ?? 'Fenster confirms the final product specification after survey so each window, door or glazing unit is matched to the property.')); ?></p>
 
                             <?php if (! empty($product_hub_systems) || ! empty($product_hub_badges)) : ?>
@@ -2762,33 +2762,6 @@ if ($is_commercial_hub) {
                         </div>
                     <?php endif; ?>
 
-                    <?php if (! empty($product_hub_choices)) : ?>
-                        <div class="fg-product-intel__choices-strip">
-                            <span><?php esc_html_e('Common choices', 'fenster'); ?></span>
-                            <ul>
-                                <?php foreach ($product_hub_choices as $choice) : ?>
-                                    <?php if (trim((string) $choice) !== '') : ?>
-                                        <li><?php echo esc_html((string) $choice); ?></li>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (! empty($product_hub_choices)) : ?>
-                        <aside class="fg-product-intel__summary">
-                            <?php if (is_array($product_hub_support_image) && ! empty($product_hub_support_image['src'])) : ?>
-                                <figure class="fg-product-intel__summary-image">
-                                    <img src="<?php echo esc_url(fenster_generated_url((string) $product_hub_support_image['src'])); ?>" alt="<?php echo esc_attr((string) ($product_hub_support_image['alt'] ?? $title)); ?>" loading="lazy">
-                                </figure>
-                            <?php endif; ?>
-                            <div>
-                                <span><?php esc_html_e('At survey', 'fenster'); ?></span>
-                                <p><?php esc_html_e('Fenster checks the selected profile, opening style, colour, glass, hardware and installation details before anything is ordered.', 'fenster'); ?></p>
-                            </div>
-                            <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about this specification', 'fenster'); ?></a>
-                        </aside>
-                    <?php endif; ?>
                 </div>
             </section>
         <?php endif; ?>
@@ -2843,7 +2816,9 @@ if ($is_commercial_hub) {
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
                         <?php foreach (array_slice($product_visual_gallery_remainder, 0, 4) as $index => $image) : ?>
                             <figure>
-                                <img src="<?php echo esc_url(fenster_generated_url($image['src'])); ?>" alt="<?php echo esc_attr($image['alt']); ?>" loading="eager">
+                                <a href="<?php echo esc_url(fenster_generated_url($image['src'])); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $image['alt'])); ?>">
+                                    <img src="<?php echo esc_url(fenster_generated_url($image['src'])); ?>" alt="<?php echo esc_attr($image['alt']); ?>" loading="eager">
+                                </a>
                             </figure>
                         <?php endforeach; ?>
                     </div>
@@ -2899,14 +2874,6 @@ if ($is_commercial_hub) {
                             <h3><?php esc_html_e('Window handles', 'fenster'); ?></h3>
                             <p><?php esc_html_e('Compare white, black, chrome, gold, satin silver and monkey tail handle routes on one focused page.', 'fenster'); ?></p>
                             <strong><?php esc_html_e('Open handle hub', 'fenster'); ?></strong>
-                        </a>
-                    <?php endif; ?>
-                    <?php if (! $show_sash_furniture && ! $show_door_handles) : ?>
-                        <a class="fg-product-option-card fg-product-option-card--quote" href="<?php echo esc_url($product_quote_link); ?>">
-                            <span><?php echo esc_html($show_window_handle_card ? '04' : '03'); ?></span>
-                            <h3><?php esc_html_e('Quote options', 'fenster'); ?></h3>
-                            <p><?php esc_html_e('Use the quote route to combine sizes, layouts, colour and optional extras into a starting price.', 'fenster'); ?></p>
-                            <strong><?php esc_html_e('Start pricing', 'fenster'); ?></strong>
                         </a>
                     <?php endif; ?>
                     </div>
@@ -3227,28 +3194,6 @@ if ($is_commercial_hub) {
                 </div>
             </div>
         </section>
-
-        <?php if (! empty($partner_items)) : ?>
-            <section class="fg-product-accreditations">
-                <div class="container fg-partners">
-                    <div>
-                        <p class="eyebrow"><?php esc_html_e('Accreditations and systems', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Backed by recognised glazing bodies and trusted product partners.', 'fenster'); ?></h2>
-                    </div>
-                    <div class="fg-partners__logos">
-                        <?php foreach ($partner_items as $item) : ?>
-                            <span class="fg-logo-tile fg-logo-tile--partner" aria-label="<?php echo esc_attr($item['alt']); ?>">
-                                <?php if (! empty($item['src'])) : ?>
-                                    <img src="<?php echo esc_url($item['src']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="lazy">
-                                <?php else : ?>
-                                    <strong><?php echo esc_html($item['label']); ?></strong>
-                                <?php endif; ?>
-                            </span>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </section>
-        <?php endif; ?>
     <?php endif; ?>
 
     <?php if (! empty($feature_sections) && ! $use_product_journey) : ?>

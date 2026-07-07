@@ -8,6 +8,9 @@ Last updated: 2026-07-07
 - Replaced the non-FAQ "Why choose this product?" accordion with visible benefit cards, and replaced the tabbed product information explorer with visible specification check cards. FAQs remain the only accordion-style content on product pages.
 - Added a no-repeat image queue for product pages: the body image pool excludes the hero image, and later gallery moments draw from later unique images rather than recycling the same visual.
 - Moved window handle selection out of inline product pages into a dedicated `/window-handles/` specification hub, with product pages linking to that hub from the specification choices area.
+- Refined the test template copy so product intro sections use `Product information` plus the product name, and product hubs use `More information on [product]`.
+- Removed the product hub survey summary, common choices strip, quote option card and separate accreditations/systems section from generated product pages.
+- Expanded the product-hub specification check cards to fill the section width, and made product-gallery images open the full image with a hover affordance.
 - This is a bigger shared template/routing change, so it should be reviewed on test before any live deployment.
 
 ## 2026-07-06 - Reviews Copy And Privacy Policy Cleanup
