@@ -1152,7 +1152,7 @@ function fenster_site_data(): array
                 'sliding-sash-windows',
             ],
             'intro' => 'Roseview sash windows use sash-specific furniture rather than normal casement handles. The chosen furniture depends on the Rose model, the window width and the final survey specification.',
-            'finish_note' => 'Roseview scrape copy lists furniture availability in gold, chrome and white, with final compatibility confirmed before order.',
+            'finish_note' => 'Furniture finishes are available in classic options such as gold, chrome and white, with final compatibility confirmed before order.',
             'width_rule' => [
                 'title' => 'Furniture count changes with sash width',
                 'copy' => 'Roseview states that windows under 700mm wide use one pole eye and one lock instead of two. Windows over 700mm wide use two locks, two tilt knobs, two pole eyes on the top sash and two sash lifts on the bottom sash.',

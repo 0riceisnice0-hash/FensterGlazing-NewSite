@@ -11,13 +11,13 @@ $services = fenster_data('home.services', []);
     <div class="container">
         <div class="section-heading">
             <p class="eyebrow"><?php esc_html_e('Core services', 'fenster'); ?></p>
-            <h2><?php esc_html_e('The first hardcoded section map', 'fenster'); ?></h2>
+            <h2><?php esc_html_e('Windows, doors and glazing handled properly.', 'fenster'); ?></h2>
         </div>
         <div class="service-grid">
             <?php foreach ($services as $service) : ?>
                 <article class="service-card">
                     <h3><?php echo esc_html($service); ?></h3>
-                    <p><?php esc_html_e('Content and imagery will be rebuilt from the scrape, then improved in theme code.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Practical advice, careful measuring and clear product options from the first conversation through to installation.', 'fenster'); ?></p>
                 </article>
             <?php endforeach; ?>
         </div>
