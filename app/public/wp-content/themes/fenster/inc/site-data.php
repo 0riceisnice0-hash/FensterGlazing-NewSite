@@ -1248,7 +1248,7 @@ function fenster_site_data(): array
                     'name' => 'Monkey Tail',
                     'label' => 'Traditional Monkey Tail Handle',
                     'hex' => '#1f2325',
-                    'image' => '/wp-content/themes/fenster/assets/images/products/handles/s2-black-finish.png',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles/monkey-tail-handle.png',
                     'copy' => 'A more traditional handle style for heritage-led windows, subject to the selected window system and final specification.',
                 ],
             ],
