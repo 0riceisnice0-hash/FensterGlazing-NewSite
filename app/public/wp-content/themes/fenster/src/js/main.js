@@ -2167,17 +2167,20 @@ if (galleryLightboxLinks.length) {
   lightbox.hidden = true;
   lightbox.innerHTML = `
     <button class="fg-gallery-lightbox__close" type="button" aria-label="Close image preview">Close</button>
+    <button class="fg-gallery-lightbox__arrow fg-gallery-lightbox__arrow--prev" type="button" aria-label="Previous image">‹</button>
     <figure class="fg-gallery-lightbox__figure">
       <img alt="">
-      <figcaption></figcaption>
     </figure>
+    <button class="fg-gallery-lightbox__arrow fg-gallery-lightbox__arrow--next" type="button" aria-label="Next image">›</button>
   `;
   document.body.appendChild(lightbox);
 
   const lightboxImage = lightbox.querySelector('img');
-  const lightboxCaption = lightbox.querySelector('figcaption');
-  const closeButton = lightbox.querySelector('button');
+  const closeButton = lightbox.querySelector('.fg-gallery-lightbox__close');
+  const prevButton = lightbox.querySelector('.fg-gallery-lightbox__arrow--prev');
+  const nextButton = lightbox.querySelector('.fg-gallery-lightbox__arrow--next');
   let previousFocus = null;
+  let currentIndex = 0;
 
   const closeLightbox = () => {
     lightbox.hidden = true;
@@ -2188,30 +2191,42 @@ if (galleryLightboxLinks.length) {
     previousFocus?.focus?.({ preventScroll: true });
   };
 
-  const openLightbox = (link) => {
+  const setLightboxImage = (index) => {
+    currentIndex = (index + galleryLightboxLinks.length) % galleryLightboxLinks.length;
+    const link = galleryLightboxLinks[currentIndex];
     const image = link.querySelector('img');
     const src = link.getAttribute('href');
     const alt = image?.getAttribute('alt') || 'Product gallery image';
 
-    if (!src || !lightboxImage || !lightboxCaption) return;
+    if (!src || !lightboxImage) return;
 
-    previousFocus = document.activeElement;
     lightboxImage.src = src;
     lightboxImage.alt = alt;
-    lightboxCaption.textContent = alt;
+  };
+
+  const openLightbox = (index) => {
+    previousFocus = document.activeElement;
+    setLightboxImage(index);
     lightbox.hidden = false;
     document.documentElement.classList.add('fg-gallery-lightbox-open');
     closeButton?.focus?.({ preventScroll: true });
   };
 
-  galleryLightboxLinks.forEach((link) => {
+  const moveLightbox = (direction) => {
+    if (lightbox.hidden) return;
+    setLightboxImage(currentIndex + direction);
+  };
+
+  galleryLightboxLinks.forEach((link, index) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
-      openLightbox(link);
+      openLightbox(index);
     });
   });
 
   closeButton?.addEventListener('click', closeLightbox);
+  prevButton?.addEventListener('click', () => moveLightbox(-1));
+  nextButton?.addEventListener('click', () => moveLightbox(1));
   lightbox.addEventListener('click', (event) => {
     if (event.target === lightbox) {
       closeLightbox();
@@ -2220,6 +2235,12 @@ if (galleryLightboxLinks.length) {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !lightbox.hidden) {
       closeLightbox();
+    }
+    if (event.key === 'ArrowLeft') {
+      moveLightbox(-1);
+    }
+    if (event.key === 'ArrowRight') {
+      moveLightbox(1);
     }
   });
 }
