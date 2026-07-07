@@ -68,7 +68,7 @@ function fenster_commercial_product_pages(): array
             'intro_image' => $asset_base . 'curtain-walling-2.jpg',
             'intro_alt' => 'Curtain walling glazing detail',
             'summary' => [
-                'Curtain walling is a non-structural external glazing system used to form large glazed elevations, stairwell screens, shopfronts and entrance facades. It carries its own weight and is designed to resist weather, wind loading and day-to-day building movement.',
+                'Curtain walling is a non-structural external glazing system used to form large glazed elevations, stairwell screens, shopfronts and entrance facades. It carries its own weight and is designed to resist weather, wind load and day-to-day building movement.',
                 'Fenster can survey, supply and install aluminium curtain walling for new openings, replacement facades and commercial refurbishments. The system can incorporate glazed doors, opening vents, insulated panels, louvres and a wide choice of powder-coated finishes.',
             ],
             'stats' => [
@@ -93,8 +93,8 @@ function fenster_commercial_product_pages(): array
                 ],
                 [
                     'eyebrow' => 'Building interfaces',
-                    'title' => 'Head, sill, jamb and drainage details checked before installation.',
-                    'copy' => 'Curtain walling must meet the surrounding building fabric properly. Fenster can review fixing points, sill details, drainage, access for fitting and the condition of any existing facade before works begin.',
+                    'title' => 'Head, cill, jamb, drainage and wind load details checked before installation.',
+                    'copy' => 'Curtain walling must meet the surrounding building fabric properly. Fenster can review fixing points, cill details, drainage, wind load requirements, access for fitting and the condition of any existing facade before works begin.',
                     'image' => $asset_base . 'curtain-walling-5.jpg',
                     'alt' => 'Commercial curtain walling installation',
                     'points' => ['Weathering and drainage', 'Fixing and access checks', 'Replacement facade works'],

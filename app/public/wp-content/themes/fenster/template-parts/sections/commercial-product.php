@@ -91,7 +91,7 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
             <div class="container">
                 <div class="fg-commercial-product-section-head">
                     <p class="eyebrow"><?php esc_html_e('Commercial capability', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Useful scope before the price is fixed.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('What Fenster can check, supply and install.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-commercial-product-checks__grid">
                     <?php foreach ($capabilities as $index => $capability) : ?>
