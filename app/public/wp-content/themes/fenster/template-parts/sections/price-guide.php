@@ -109,6 +109,38 @@ $faq_schema = [
         </div>
     </section>
 
+    <?php $visual_examples = array_values(array_filter($examples, static fn (array $example): bool => ! empty($example['image']))); ?>
+    <?php if (! empty($visual_examples)) : ?>
+        <section class="fg-price-guide__examples">
+            <div class="container">
+                <div class="fg-price-guide__section-head">
+                    <p class="eyebrow"><?php esc_html_e('Checked examples', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('The product behind the price.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('These examples show the actual WindowCAD setup behind the guide price, including size, frame, glass, cill, vents, hardware and colour choices.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-price-guide__example-stack">
+                    <?php foreach ($visual_examples as $index => $example) : ?>
+                        <article class="fg-price-guide__example <?php echo esc_attr($index % 2 ? 'fg-price-guide__example--reverse' : ''); ?>">
+                            <div class="fg-price-guide__example-copy">
+                                <p class="eyebrow"><?php echo esc_html(sprintf('Example %02d', $index + 1)); ?></p>
+                                <h3><?php echo esc_html((string) ($example['spec'] ?? 'Checked example')); ?></h3>
+                                <p><?php echo esc_html((string) ($example['details'] ?? 'WindowCAD specification checked by Fenster.')); ?></p>
+                                <strong><?php echo esc_html((string) ($example['price'] ?? 'Price to confirm')); ?></strong>
+                                <small><?php esc_html_e('Guide example only. Final specification is checked before order.', 'fenster'); ?></small>
+                            </div>
+                            <figure class="fg-price-guide__example-media">
+                                <img <?php echo fenster_image_attr_string((string) $example['image'], ['alt' => (string) ($example['image_alt'] ?? $example['spec'] ?? 'WindowCAD price example'), 'loading' => $index === 0 ? 'eager' : 'lazy']); ?>>
+                                <?php if (! empty($example['secondary_image'])) : ?>
+                                    <img <?php echo fenster_image_attr_string((string) $example['secondary_image'], ['alt' => (string) ($example['image_alt'] ?? $example['spec'] ?? 'WindowCAD specification example'), 'loading' => 'lazy']); ?>>
+                                <?php endif; ?>
+                            </figure>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <section class="fg-price-guide__factors">
         <div class="container fg-price-guide__factors-grid">
             <div>

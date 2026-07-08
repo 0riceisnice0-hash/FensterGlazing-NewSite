@@ -219,9 +219,9 @@ function fenster_price_guide_pages(): array
             'quote_url' => $base_quote_url,
             'intro' => 'A plain-English guide to what affects the fitted price of replacement windows and doors in Milton Keynes, using Fenster quote examples as the starting point.',
             'examples' => [
-                ['spec' => '1200 x 1200 uPVC casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, trickle vent and white Signature handle', 'price' => '£583.61 inc VAT'],
-                ['spec' => '900 x 2100 composite entrance door', 'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, 150mm composite door cill, clear glass and chrome lever handle', 'price' => '£1,999.20 inc VAT'],
-                ['spec' => '3000 x 2100 aluminium bifold door', 'details' => 'Prestige aluminium 3-pane bifold, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT'],
+                ['spec' => '1200 x 1200 uPVC casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, trickle vent and white Signature handle', 'price' => '£583.61 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-casement-1200x1200.png', 'image_alt' => 'WindowCAD screenshot for a 1200 x 1200 uPVC casement window'],
+                ['spec' => '900 x 2100 composite entrance door', 'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, 150mm composite door cill, clear glass and chrome lever handle', 'price' => '£1,999.20 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-composite-door-900x2100.png', 'image_alt' => 'WindowCAD screenshot for a 900 x 2100 composite entrance door'],
+                ['spec' => '3000 x 2100 aluminium bifold door', 'details' => 'Prestige aluminium 3-pane bifold, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-product-3000x2100.png', 'image_alt' => 'WindowCAD product view for a 3000 x 2100 aluminium bifold door'],
             ],
             'moves' => [
                 'Size and opening count',
@@ -241,7 +241,7 @@ function fenster_price_guide_pages(): array
             'quote_url' => $base_quote_url . '&productCollection=4',
             'intro' => 'Composite door prices change with the slab design, colour, glazing, furniture, threshold and survey details. This page will show checked fitted examples once the standard WindowCAD configs are confirmed.',
             'examples' => [
-                ['spec' => '900 x 2100 glazed composite door', 'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, 150mm composite door cill, clear glass and chrome lever handle', 'price' => '£1,999.20 inc VAT'],
+                ['spec' => '900 x 2100 glazed composite door', 'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, 150mm composite door cill, clear glass and chrome lever handle', 'price' => '£1,999.20 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-composite-door-900x2100.png', 'image_alt' => 'WindowCAD screenshot for a 900 x 2100 composite entrance door'],
                 ['spec' => '950 x 2100 coloured composite front door', 'details' => 'Anthracite or colour finish, chosen glass design, matching furniture', 'price' => 'To confirm from WindowCAD'],
                 ['spec' => '1000 x 2100 composite door with upgraded hardware', 'details' => 'Premium furniture, bar handle, letterplate and threshold options', 'price' => 'To confirm from WindowCAD'],
             ],
@@ -257,7 +257,7 @@ function fenster_price_guide_pages(): array
             'intro' => 'Bifold door cost is mainly driven by width, panel count, colour, glazing, threshold and whether the opening needs extra survey checks such as drainage or structural detail.',
             'examples' => [
                 ['spec' => '2400 x 2100 small aluminium bifold', 'details' => 'Fewer panels, standard colour, A-rated glazing and standard threshold', 'price' => 'To confirm from WindowCAD'],
-                ['spec' => '3000 x 2100 three-pane bifold', 'details' => 'Prestige aluminium bifold, open in, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT'],
+                ['spec' => '3000 x 2100 three-pane bifold', 'details' => 'Prestige aluminium bifold, open in, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-product-3000x2100.png', 'secondary_image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-spec-3000x2100.png', 'image_alt' => 'WindowCAD product view for a 3000 x 2100 aluminium bifold door'],
                 ['spec' => '4800 x 2100 wide bifold opening', 'details' => 'More panels, larger glass area, threshold and drainage details checked at survey', 'price' => 'To confirm from WindowCAD'],
             ],
             'moves' => ['Overall width and height', 'Panel count and traffic door', 'RAL colour', 'Glazing weight and specification', 'Threshold, drainage and cill detail', 'Wind load and exposed openings'],
@@ -286,7 +286,7 @@ function fenster_price_guide_pages(): array
             'quote_url' => $base_quote_url . '&productCollection=0',
             'intro' => 'Double glazing cost depends on the window style, size, glass, ventilation, colour and how many frames are being fitted together.',
             'examples' => [
-                ['spec' => '1200 x 1200 single casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, 5000EA trickle vent and white Signature handle', 'price' => '£583.61 inc VAT'],
+                ['spec' => '1200 x 1200 single casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, 5000EA trickle vent and white Signature handle', 'price' => '£583.61 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-casement-1200x1200.png', 'image_alt' => 'WindowCAD screenshot for a 1200 x 1200 uPVC casement window'],
                 ['spec' => '600 x 900 bedroom or bathroom window', 'details' => 'Obscure glass, trickle vent where required, standard fitting', 'price' => 'To confirm from WindowCAD'],
                 ['spec' => 'Eight-window house package', 'details' => 'Typical mix of 600 x 900, 1200 x 1200 and 1800 x 1200 windows, survey-confirmed before order', 'price' => 'To confirm from WindowCAD'],
             ],
