@@ -2753,6 +2753,132 @@ h3 {
   text-decoration: none;
 }
 
+.fg-areas-page__town-picker {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fg-areas-page__town-panel {
+  scroll-margin-top: calc(var(--site-header-main-height) + 18px);
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 34px rgba(0, 45, 58, 0.07);
+}
+
+.fg-areas-page__town-panel > summary {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  color: var(--color-steel);
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+.fg-areas-page__town-panel > summary::-webkit-details-marker,
+.fg-areas-page__product-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fg-areas-page__town-panel > summary::after,
+.fg-areas-page__product-group > summary::after {
+  content: "+";
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-soft);
+  color: var(--color-accent-dark);
+  line-height: 1;
+}
+
+.fg-areas-page__town-panel[open] > summary::after,
+.fg-areas-page__product-group[open] > summary::after {
+  content: "-";
+}
+
+.fg-areas-page__town-panel > summary span {
+  font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+}
+
+.fg-areas-page__town-panel > summary em {
+  margin-left: auto;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.fg-areas-page__town-panel-body {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0 1.15rem 1.15rem;
+}
+
+.fg-areas-page__town-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 58px;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(46, 172, 102, 0.28);
+  border-radius: 8px;
+  background: #f0faf4;
+  color: var(--color-steel);
+  text-decoration: none;
+}
+
+.fg-areas-page__town-main strong {
+  line-height: 1.1;
+}
+
+.fg-areas-page__town-main span {
+  color: var(--color-accent-dark);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.fg-areas-page__product-groups {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.fg-areas-page__product-group {
+  border: 1px solid rgba(0, 45, 58, 0.1);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-areas-page__product-group > summary {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0.9rem;
+  color: var(--color-steel);
+  cursor: pointer;
+  font-weight: 800;
+  list-style: none;
+}
+
+.fg-areas-page__product-group > summary::after {
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 0.9rem;
+}
+
+.fg-areas-page__product-group .fg-areas-page__links {
+  padding: 0 0.9rem 0.9rem;
+}
+
 .fg-areas-page__cta-inner {
   display: flex;
   gap: 1.5rem;
@@ -17857,6 +17983,22 @@ html.fg-gallery-lightbox-open body {
   .fg-areas-page__county summary em {
     width: 100%;
     margin-left: 0;
+  }
+
+  .fg-areas-page__town-panel > summary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .fg-areas-page__town-panel > summary em {
+    width: 100%;
+    margin-left: 0;
+    white-space: normal;
+  }
+
+  .fg-areas-page__town-main {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .fg-areas-page__cta-inner {

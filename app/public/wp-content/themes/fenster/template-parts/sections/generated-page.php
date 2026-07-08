@@ -927,17 +927,72 @@ if ($slug === 'areas-we-cover') {
         ['title' => __('Roof lanterns', 'fenster'), 'url' => home_url('/roof-lanterns/')],
         ['title' => __('Online quote', 'fenster'), 'url' => home_url('/online-quote/')],
     ];
-    $county_area_groups = [
-        'Milton Keynes and Buckinghamshire' => ['milton-keynes', 'buckingham', 'aylesbury'],
-        'Bedfordshire' => ['bedford', 'ampthill', 'flitwick', 'dunstable', 'leighton-buzzard', 'luton', 'toddington'],
-        'Northamptonshire' => ['northampton'],
-        'Hertfordshire' => ['hitchin', 'letchworth', 'stevenage'],
+    $town_order = [
+        'milton-keynes',
+        'aylesbury',
+        'buckingham',
+        'bedford',
+        'ampthill',
+        'flitwick',
+        'dunstable',
+        'leighton-buzzard',
+        'luton',
+        'toddington',
+        'northampton',
+        'hitchin',
+        'letchworth',
+        'stevenage',
     ];
+    $product_group_map = [
+        'windows' => [
+            'label' => __('Windows', 'fenster'),
+            'slugs' => [
+                'casement-windows',
+                'flush-casement-windows',
+                'sliding-sash-windows',
+                'french-casement-windows',
+                'tilt-turn-windows',
+                'bow-bay-windows',
+                'aluminium-windows',
+                'aluminium-flush-windows',
+                'heritage-windows',
+            ],
+        ],
+        'doors' => [
+            'label' => __('Doors', 'fenster'),
+            'slugs' => [
+                'composite-doors',
+                'upvc-doors',
+                'aluminium-doors',
+                'heritage-aluminium-doors',
+                'aluminium-bifold-doors',
+                'slide-fold-doors',
+                'aluminium-sliding-doors',
+                'patio-doors',
+                'french-doors',
+            ],
+        ],
+        'extras' => [
+            'label' => __('Glazing and extras', 'fenster'),
+            'slugs' => [
+                'double-glazing',
+                'integral-blinds',
+                'roof-lanterns',
+            ],
+        ],
+    ];
+    $product_group_by_slug = [];
+    foreach ($product_group_map as $group_key => $group) {
+        foreach ($group['slugs'] as $product_slug) {
+            $product_group_by_slug[$product_slug] = $group_key;
+        }
+    }
     $area_groups = [];
     foreach ($matrix_towns as $location_slug => $location_label) {
         $area_groups[$location_slug] = [
             'label' => $location_label,
             'links' => [],
+            'groups' => array_fill_keys(array_keys($product_group_map), []),
         ];
     }
 
@@ -952,11 +1007,16 @@ if ($slug === 'areas-we-cover') {
                 continue;
             }
 
-            $area_groups[$location_slug]['links'][$generated_slug] = [
+            $product_slug = substr($generated_slug, 0, -strlen('-' . $location_slug));
+            $area_link = [
                 'title' => trim((string) ($generated_page['title'] ?? ucwords(str_replace('-', ' ', $generated_slug)))),
                 'url' => home_url('/' . $generated_slug . '/'),
                 'slug' => $generated_slug,
+                'product_slug' => $product_slug,
             ];
+            $area_groups[$location_slug]['links'][$generated_slug] = $area_link;
+            $group_key = $product_group_by_slug[$product_slug] ?? 'extras';
+            $area_groups[$location_slug]['groups'][$group_key][$generated_slug] = $area_link;
             break;
         }
     }
@@ -965,23 +1025,31 @@ if ($slug === 'areas-we-cover') {
         uasort($area_groups[$location_slug]['links'], static function (array $first, array $second): int {
             return strcasecmp($first['title'], $second['title']);
         });
+        foreach ($area_groups[$location_slug]['groups'] as $group_key => $group_links) {
+            uasort($area_groups[$location_slug]['groups'][$group_key], static function (array $first, array $second) use ($product_group_map, $group_key): int {
+                $order = array_flip($product_group_map[$group_key]['slugs'] ?? []);
+
+                return ($order[$first['product_slug']] ?? 999) <=> ($order[$second['product_slug']] ?? 999);
+            });
+        }
     }
 
     $area_groups = array_filter($area_groups, static fn (array $area_group): bool => ! empty($area_group['links']));
     $area_link_count = array_sum(array_map(static fn (array $area_group): int => count($area_group['links']), $area_groups));
-    $grouped_area_sections = [];
-    foreach ($county_area_groups as $county_label => $town_slugs) {
-        foreach ($town_slugs as $town_slug) {
-            if (! empty($area_groups[$town_slug])) {
-                $grouped_area_sections[$county_label][$town_slug] = $area_groups[$town_slug];
-            }
+    $ordered_area_groups = [];
+    foreach ($town_order as $town_slug) {
+        if (! empty($area_groups[$town_slug])) {
+            $ordered_area_groups[$town_slug] = $area_groups[$town_slug];
         }
+    }
+    foreach ($area_groups as $town_slug => $area_group) {
+        $ordered_area_groups[$town_slug] = $ordered_area_groups[$town_slug] ?? $area_group;
     }
     $featured_area_cards = [];
     foreach ($featured_area_slugs as $featured_slug => $featured_label) {
         $featured_area_cards[] = [
             'label' => $featured_label,
-            'url' => home_url('/double-glazing-' . $featured_slug . '/'),
+            'url' => '#area-' . $featured_slug,
             'copy' => sprintf(__('Windows, doors and glazing around %s.', 'fenster'), $featured_label),
         ];
     }
@@ -1053,32 +1121,38 @@ if ($slug === 'areas-we-cover') {
             <div class="container">
                 <div class="fg-areas-page__section-head">
                     <p class="eyebrow"><?php esc_html_e('Browse by region', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Open your nearest region, then pick a town.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Each town includes local pages for double glazing, windows, doors and related products. They help customers find a more relevant page without having to search the whole site.', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Pick your town, then choose windows or doors.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Open the nearest town, choose the product group, then select the page that matches the project.', 'fenster'); ?></p>
                 </div>
-                <div class="fg-areas-page__county-list">
-                    <?php foreach ($grouped_area_sections as $county_label => $county_groups) : ?>
-                        <details class="fg-areas-page__county" <?php echo $county_label === 'Milton Keynes and Buckinghamshire' ? 'open' : ''; ?>>
+                <div class="fg-areas-page__town-picker">
+                    <?php foreach ($ordered_area_groups as $town_slug => $area_group) : ?>
+                        <details class="fg-areas-page__town-panel" id="area-<?php echo esc_attr($town_slug); ?>" <?php echo $town_slug === 'milton-keynes' ? 'open' : ''; ?>>
                             <summary>
-                                <span><?php echo esc_html($county_label); ?></span>
-                                <em><?php echo esc_html(sprintf(_n('%d town', '%d towns', count($county_groups), 'fenster'), count($county_groups))); ?></em>
+                                <span><?php echo esc_html($area_group['label']); ?></span>
+                                <em><?php esc_html_e('Choose Windows, Doors or extras', 'fenster'); ?></em>
                             </summary>
-                            <div class="fg-areas-page__town-list">
-                                <?php foreach ($county_groups as $area_group) : ?>
-                                    <section class="fg-areas-page__town" aria-labelledby="area-<?php echo esc_attr(sanitize_title($area_group['label'])); ?>">
-                                        <header class="fg-areas-page__town-head">
-                                            <h3 id="area-<?php echo esc_attr(sanitize_title($area_group['label'])); ?>"><?php echo esc_html($area_group['label']); ?></h3>
-                                            <a href="<?php echo esc_url(home_url('/double-glazing-' . sanitize_title($area_group['label']) . '/')); ?>"><?php esc_html_e('View local double glazing page', 'fenster'); ?></a>
-                                        </header>
-                                        <div class="fg-areas-page__links">
-                                            <?php foreach ($area_group['links'] as $area_link) : ?>
-                                                <a href="<?php echo esc_url($area_link['url']); ?>">
-                                                    <span><?php echo esc_html($area_link['title']); ?></span>
-                                                </a>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    </section>
-                                <?php endforeach; ?>
+                            <div class="fg-areas-page__town-panel-body">
+                                <a class="fg-areas-page__town-main" href="<?php echo esc_url(home_url('/double-glazing-' . $town_slug . '/')); ?>">
+                                    <strong><?php echo esc_html('Double glazing in ' . $area_group['label']); ?></strong>
+                                    <span><?php esc_html_e('Start with the main local glazing page', 'fenster'); ?></span>
+                                </a>
+                                <div class="fg-areas-page__product-groups">
+                                    <?php foreach ($product_group_map as $group_key => $product_group) : ?>
+                                        <?php if (empty($area_group['groups'][$group_key])) : ?>
+                                            <?php continue; ?>
+                                        <?php endif; ?>
+                                        <details class="fg-areas-page__product-group" <?php echo $group_key === 'windows' ? 'open' : ''; ?>>
+                                            <summary><?php echo esc_html($product_group['label']); ?></summary>
+                                            <div class="fg-areas-page__links">
+                                                <?php foreach ($area_group['groups'][$group_key] as $area_link) : ?>
+                                                    <a href="<?php echo esc_url($area_link['url']); ?>">
+                                                        <span><?php echo esc_html($area_link['title']); ?></span>
+                                                    </a>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </details>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
                         </details>
                     <?php endforeach; ?>
