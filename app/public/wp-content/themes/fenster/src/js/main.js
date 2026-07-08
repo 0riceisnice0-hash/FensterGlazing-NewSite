@@ -1735,6 +1735,7 @@ document.querySelectorAll('[data-fg-product-theatre]').forEach((theatre) => {
   const counter = theatre.querySelector('[data-fg-product-counter]');
   const stageLink = theatre.querySelector('[data-fg-product-stage-link]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const isStaticTheatre = theatre.dataset.fgProductTheatreMode === 'static';
 
   if (!stage || !visuals.length || !contents.length) return;
 
@@ -1838,12 +1839,21 @@ document.querySelectorAll('[data-fg-product-theatre]').forEach((theatre) => {
   };
 
   const syncScroll = () => {
+    if (isStaticTheatre) return;
     if (window.innerWidth <= 860) return;
     updateFromScroll();
     requestRender();
   };
 
   const jumpToScene = (index, behavior = 'smooth') => {
+    if (isStaticTheatre) {
+      const nextIndex = clamp(index, 0, count - 1);
+      setActiveScene(nextIndex, behavior === 'keyboard' ? 'keyboard' : 'click');
+      targetProgress = count <= 1 ? 1 : (nextIndex + 1) / count;
+      requestRender();
+      return;
+    }
+
     const scrollable = Math.max(1, theatre.offsetHeight - window.innerHeight);
     const sceneProgress = (clamp(index, 0, count - 1) + 0.16) / count;
     const theatreTop = theatre.getBoundingClientRect().top + (window.scrollY || 0);
@@ -1865,11 +1875,15 @@ document.querySelectorAll('[data-fg-product-theatre]').forEach((theatre) => {
       if (event.key === 'Home') nextIndex = 0;
       if (event.key === 'End') nextIndex = count - 1;
       setActiveScene(nextIndex, 'keyboard');
-      jumpToScene(nextIndex);
+      jumpToScene(nextIndex, 'keyboard');
     });
   });
 
   const resetForViewport = () => {
+    if (isStaticTheatre) {
+      requestRender();
+      return;
+    }
     if (window.innerWidth <= 860) {
       return;
     }
@@ -1881,6 +1895,11 @@ document.querySelectorAll('[data-fg-product-theatre]').forEach((theatre) => {
   reduceMotion.addEventListener?.('change', resetForViewport);
 
   setActiveScene(0);
+  if (isStaticTheatre) {
+    targetProgress = count <= 1 ? 1 : 1 / count;
+    renderedProgress = targetProgress;
+    if (progressBar) progressBar.style.transform = `scaleX(${renderedProgress.toFixed(5)})`;
+  }
   resetForViewport();
   if (shell) {
     if (window.innerWidth <= 860) {

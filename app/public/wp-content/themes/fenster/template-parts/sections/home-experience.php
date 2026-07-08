@@ -147,6 +147,8 @@ $location_links = [
     <section
         id="fenster-products"
         class="fg-home-product-theatre"
+        data-fg-product-theatre
+        data-fg-product-theatre-mode="static"
         aria-label="<?php esc_attr_e('Explore Fenster products', 'fenster'); ?>">
         <div class="fg-home-product-theatre__stage">
             <div class="container fg-home-product-theatre__shell">
