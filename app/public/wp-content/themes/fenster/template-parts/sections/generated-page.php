@@ -907,17 +907,31 @@ if ($slug === 'areas-we-cover') {
     ];
     $coverage_highlights = [
         [
-            'title' => __('Showroom-led advice', 'fenster'),
-            'copy' => __('Visit the Milton Keynes showroom, then arrange a survey for your home or project.', 'fenster'),
+            'title' => __('Local advice from Milton Keynes', 'fenster'),
+            'copy' => __('Fenster is based in Milton Keynes and works across nearby towns for homeowners planning windows, doors, roof lanterns, glass replacement and larger glazing projects.', 'fenster'),
         ],
         [
-            'title' => __('Residential and commercial', 'fenster'),
-            'copy' => __('Windows, doors, replacement glass, roof lanterns and commercial glazing support.', 'fenster'),
+            'title' => __('Survey-led installation', 'fenster'),
+            'copy' => __('The team checks measurements, access, frame style, glass specification, ventilation, thresholds and installation details before made-to-measure products are ordered.', 'fenster'),
         ],
         [
-            'title' => __('Local survey planning', 'fenster'),
-            'copy' => __('Fenster checks access, measurements, specification choices and installation details before ordering.', 'fenster'),
+            'title' => __('Nearby town not listed?', 'fenster'),
+            'copy' => __('If you are close to one of the listed towns, contact the showroom. The team can confirm whether your postcode is within the normal service area.', 'fenster'),
         ],
+    ];
+    $service_shortcuts = [
+        ['title' => __('Double glazing', 'fenster'), 'url' => home_url('/double-glazing-milton-keynes/')],
+        ['title' => __('Windows', 'fenster'), 'url' => home_url('/windows/')],
+        ['title' => __('Doors', 'fenster'), 'url' => home_url('/doors/')],
+        ['title' => __('Bifold doors', 'fenster'), 'url' => home_url('/aluminium-bifold-doors/')],
+        ['title' => __('Roof lanterns', 'fenster'), 'url' => home_url('/roof-lanterns/')],
+        ['title' => __('Online quote', 'fenster'), 'url' => home_url('/online-quote/')],
+    ];
+    $county_area_groups = [
+        'Milton Keynes and Buckinghamshire' => ['milton-keynes', 'buckingham', 'aylesbury'],
+        'Bedfordshire' => ['bedford', 'ampthill', 'flitwick', 'dunstable', 'leighton-buzzard', 'luton', 'toddington'],
+        'Northamptonshire' => ['northampton'],
+        'Hertfordshire' => ['hitchin', 'letchworth', 'stevenage'],
     ];
     $area_groups = [];
     foreach ($matrix_towns as $location_slug => $location_label) {
@@ -955,6 +969,14 @@ if ($slug === 'areas-we-cover') {
 
     $area_groups = array_filter($area_groups, static fn (array $area_group): bool => ! empty($area_group['links']));
     $area_link_count = array_sum(array_map(static fn (array $area_group): int => count($area_group['links']), $area_groups));
+    $grouped_area_sections = [];
+    foreach ($county_area_groups as $county_label => $town_slugs) {
+        foreach ($town_slugs as $town_slug) {
+            if (! empty($area_groups[$town_slug])) {
+                $grouped_area_sections[$county_label][$town_slug] = $area_groups[$town_slug];
+            }
+        }
+    }
     $featured_area_cards = [];
     foreach ($featured_area_slugs as $featured_slug => $featured_label) {
         $featured_area_cards[] = [
@@ -969,17 +991,17 @@ if ($slug === 'areas-we-cover') {
             <div class="container fg-areas-page__hero-grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Local glazing coverage', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Windows, doors and glazing across the areas we serve.', 'fenster'); ?></h1>
-                    <p><?php esc_html_e('Fenster Glazing works from our Milton Keynes showroom across Buckinghamshire, Bedfordshire, Northamptonshire and nearby towns. Check your local area, then start an enquiry or instant quote.', 'fenster'); ?></p>
+                    <h1><?php esc_html_e('Find Fenster glazing services near you.', 'fenster'); ?></h1>
+                    <p><?php esc_html_e('Fenster supplies and installs double glazing, windows, doors, roof lanterns and replacement glass from Milton Keynes across nearby towns in Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire.', 'fenster'); ?></p>
                     <div class="button-row">
-                        <a class="button" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Ask about your area', 'fenster'); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                        <a class="button" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Ask about your postcode', 'fenster'); ?></a>
                     </div>
                 </div>
                 <aside class="fg-areas-page__summary" aria-label="<?php esc_attr_e('Fenster service area summary', 'fenster'); ?>">
-                    <strong><?php echo esc_html(sprintf(__('%d local service pages', 'fenster'), $area_link_count)); ?></strong>
-                    <span><?php echo esc_html(sprintf(__('%d towns grouped below', 'fenster'), count($area_groups))); ?></span>
-                    <p><?php esc_html_e('If your town is nearby but not listed, contact the showroom and the team can confirm coverage.', 'fenster'); ?></p>
+                    <strong><?php esc_html_e('Start with your nearest town.', 'fenster'); ?></strong>
+                    <span><?php echo esc_html(sprintf(__('%d towns and %d local service links', 'fenster'), count($area_groups), $area_link_count)); ?></span>
+                    <p><?php esc_html_e('You do not need to choose the perfect page. If your property is nearby, send the postcode and Fenster can point you in the right direction.', 'fenster'); ?></p>
                 </aside>
             </div>
         </section>
@@ -987,8 +1009,9 @@ if ($slug === 'areas-we-cover') {
         <section class="fg-areas-page__featured" aria-label="<?php esc_attr_e('Popular local areas', 'fenster'); ?>">
             <div class="container">
                 <div class="fg-areas-page__section-head">
-                    <p class="eyebrow"><?php esc_html_e('Popular areas', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Start with one of our main local pages.', 'fenster'); ?></h2>
+                    <p class="eyebrow"><?php esc_html_e('Main local areas', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Choose the place closest to the property.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('These are the most common starting points for local double glazing, window and door enquiries.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-areas-page__featured-grid">
                     <?php foreach ($featured_area_cards as $featured_area) : ?>
@@ -1012,29 +1035,52 @@ if ($slug === 'areas-we-cover') {
             </div>
         </section>
 
+        <section class="fg-areas-page__services" aria-label="<?php esc_attr_e('Popular services by area', 'fenster'); ?>">
+            <div class="container fg-areas-page__services-inner">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Popular services', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Most customers start with the product they need or the town they live in.', 'fenster'); ?></h2>
+                </div>
+                <nav class="fg-areas-page__service-links" aria-label="<?php esc_attr_e('Popular Fenster services', 'fenster'); ?>">
+                    <?php foreach ($service_shortcuts as $service_shortcut) : ?>
+                        <a href="<?php echo esc_url($service_shortcut['url']); ?>"><?php echo esc_html($service_shortcut['title']); ?></a>
+                    <?php endforeach; ?>
+                </nav>
+            </div>
+        </section>
+
         <section class="fg-areas-page__body">
             <div class="container">
                 <div class="fg-areas-page__section-head">
-                    <p class="eyebrow"><?php esc_html_e('Browse by town', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Find Fenster services near you.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Each town links to the most useful product and service pages for local homeowners.', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('Browse by region', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Open your nearest region, then pick a town.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Each town includes local pages for double glazing, windows, doors and related products. They help customers find a more relevant page without having to search the whole site.', 'fenster'); ?></p>
                 </div>
-                <div class="fg-areas-page__grid">
-                    <?php foreach ($area_groups as $area_group) : ?>
-                        <section class="fg-areas-page__group" aria-labelledby="area-<?php echo esc_attr(sanitize_title($area_group['label'])); ?>">
-                            <header class="fg-areas-page__group-head">
-                                <h3 id="area-<?php echo esc_attr(sanitize_title($area_group['label'])); ?>"><?php echo esc_html($area_group['label']); ?></h3>
-                                <span><?php echo esc_html(sprintf(_n('%d service', '%d services', count($area_group['links']), 'fenster'), count($area_group['links']))); ?></span>
-                            </header>
-
-                            <div class="fg-areas-page__links">
-                                <?php foreach ($area_group['links'] as $area_link) : ?>
-                                    <a href="<?php echo esc_url($area_link['url']); ?>">
-                                        <span><?php echo esc_html($area_link['title']); ?></span>
-                                    </a>
+                <div class="fg-areas-page__county-list">
+                    <?php foreach ($grouped_area_sections as $county_label => $county_groups) : ?>
+                        <details class="fg-areas-page__county" <?php echo $county_label === 'Milton Keynes and Buckinghamshire' ? 'open' : ''; ?>>
+                            <summary>
+                                <span><?php echo esc_html($county_label); ?></span>
+                                <em><?php echo esc_html(sprintf(_n('%d town', '%d towns', count($county_groups), 'fenster'), count($county_groups))); ?></em>
+                            </summary>
+                            <div class="fg-areas-page__town-list">
+                                <?php foreach ($county_groups as $area_group) : ?>
+                                    <section class="fg-areas-page__town" aria-labelledby="area-<?php echo esc_attr(sanitize_title($area_group['label'])); ?>">
+                                        <header class="fg-areas-page__town-head">
+                                            <h3 id="area-<?php echo esc_attr(sanitize_title($area_group['label'])); ?>"><?php echo esc_html($area_group['label']); ?></h3>
+                                            <a href="<?php echo esc_url(home_url('/double-glazing-' . sanitize_title($area_group['label']) . '/')); ?>"><?php esc_html_e('View local double glazing page', 'fenster'); ?></a>
+                                        </header>
+                                        <div class="fg-areas-page__links">
+                                            <?php foreach ($area_group['links'] as $area_link) : ?>
+                                                <a href="<?php echo esc_url($area_link['url']); ?>">
+                                                    <span><?php echo esc_html($area_link['title']); ?></span>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </section>
                                 <?php endforeach; ?>
                             </div>
-                        </section>
+                        </details>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -1044,7 +1090,8 @@ if ($slug === 'areas-we-cover') {
             <div class="container fg-areas-page__cta-inner">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Not sure where to start?', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Tell us where the property is and what you would like to change.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Send the postcode and a few project details.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Fenster can confirm whether the property is covered and whether an instant quote, showroom visit or survey is the best next step.', 'fenster'); ?></p>
                 </div>
                 <a class="button" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Fenster', 'fenster'); ?></a>
             </div>

@@ -50,6 +50,7 @@ function fenster_generated_pages_index(): array
 function fenster_location_matrix_towns(): array
 {
     return [
+        'milton-keynes' => 'Milton Keynes',
         'ampthill' => 'Ampthill',
         'aylesbury' => 'Aylesbury',
         'bedford' => 'Bedford',
@@ -96,6 +97,7 @@ function fenster_location_matrix_products(): array
 function fenster_location_matrix_town_profiles(): array
 {
     return [
+        'milton-keynes' => ['property' => 'Milton Keynes homes, extensions and renovation projects', 'priority' => 'clean modern lines, reliable security and measured installation planning'],
         'ampthill' => ['property' => 'character properties and modernised family homes', 'priority' => 'careful sightlines, colour choice and existing brickwork'],
         'aylesbury' => ['property' => 'new estates, older homes and growing family spaces', 'priority' => 'security, warmth and survey-led fitting'],
         'bedford' => ['property' => 'riverside homes, terraces and family renovation projects', 'priority' => 'varied property styles, access and measured installation detail'],
@@ -389,8 +391,8 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'title' => 'Areas We Cover',
             'url' => home_url('/areas-we-cover/'),
             'seo' => [
-                'title_tag' => 'Areas We Cover | Fenster Glazing',
-                'meta_description' => 'Fenster Glazing supplies and installs windows, doors and glazing across Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and nearby towns.',
+                'title_tag' => 'Areas We Cover | Double Glazing, Windows & Doors',
+                'meta_description' => 'Fenster Glazing covers Milton Keynes, Northampton, Bedford, Buckinghamshire, Bedfordshire and nearby towns for double glazing, windows, doors and roof lanterns.',
                 'canonical' => 'https://fensterglazing.com/areas-we-cover/',
                 'robots' => 'max-image-preview:large',
             ],
