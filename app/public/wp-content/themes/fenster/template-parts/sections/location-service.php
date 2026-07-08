@@ -1014,6 +1014,7 @@ $product_links = [
                 </div>
                 <div class="fg-product-quote-embed__frame" data-quote-frame-wrap data-quote-url="<?php echo esc_url($mk_quote_url); ?>">
                     <div class="fg-product-quote-embed__placeholder">
+                        <img src="<?php echo esc_url($mk_quote_preview); ?>" alt="" loading="lazy">
                         <strong><?php esc_html_e('Instant pricing loads here', 'fenster'); ?></strong>
                         <span><?php esc_html_e('Use the tool to compare likely products, then Fenster confirms the details at survey.', 'fenster'); ?></span>
                     </div>
