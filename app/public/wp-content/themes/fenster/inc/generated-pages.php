@@ -180,6 +180,10 @@ function fenster_location_matrix_page(string $slug, ?array $index = null): ?arra
             $product_profile['decision'],
             $town_profile['priority']
         );
+        if ($slug === 'double-glazing-milton-keynes') {
+            $source['seo']['title_tag'] = 'Double Glazing Milton Keynes | Prices, Windows & Doors';
+            $source['seo']['meta_description'] = 'Double glazing in Milton Keynes from Fenster Glazing. Compare windows, doors, bifolds, roof lanterns and replacement glass with online pricing and survey-led installation.';
+        }
         $source['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
         unset($source['seo']['robots']);
 
@@ -502,8 +506,9 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'images' => [],
             'links' => [],
         ];
-        $page['seo']['title_tag'] = 'Double Glazing Milton Keynes | Windows & Doors | Fenster Glazing';
-        $page['seo']['meta_description'] = 'Fenster Glazing supplies and installs double glazing, windows, doors, bifolds and roof lanterns across Milton Keynes, Bedfordshire and Buckinghamshire.';
+        $page['title'] = 'Fenster Glazing in Milton Keynes';
+        $page['seo']['title_tag'] = 'Fenster Glazing | Windows & Doors Milton Keynes';
+        $page['seo']['meta_description'] = 'Fenster Glazing is a Milton Keynes showroom and installer for windows, doors, bifolds, roof lanterns and replacement glazing, with online pricing and survey-led fitting.';
         $page['seo']['canonical'] = 'https://fensterglazing.com/';
         $page['seo']['robots'] = 'max-image-preview:large';
 

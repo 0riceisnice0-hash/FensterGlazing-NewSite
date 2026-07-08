@@ -475,6 +475,7 @@ $location_name = $location['name'];
 $service_label = $service['label'];
 $service_name = $service['name'];
 $thing = $service['thing'];
+$is_mk_double_glazing_page = $slug === 'double-glazing-milton-keynes';
 $hero_media_src = is_array($hero_image) ? (string) ($hero_image['src'] ?? '') : '';
 $side_image = $gallery_images[0] ?? $hero_image;
 $second_image = $gallery_images[1] ?? null;
@@ -739,6 +740,11 @@ $copy_variant = $copy_variants[abs((int) crc32($slug)) % count($copy_variants)];
 $hero_copy = $service['opening'] . ' ' . $copy_variant['hero_join'] . ' ' . $town_profile['hero'] . '. The specification focuses on ' . $product_profile['hero'] . '.';
 $intro_copy = $town_profile['intro'] . ' We help you compare ' . $product_profile['choices'] . ' so the survey can confirm exact sizes and fitting details.';
 
+if ($is_mk_double_glazing_page) {
+    $hero_copy = 'Fenster Glazing supplies and installs made-to-measure double glazing across Milton Keynes, including windows, doors, bifolds, roof lanterns and replacement glass. Use the online pricing tool for a realistic starting price, then the survey confirms sizes, ventilation, cills, glass, access and fitting details before anything is ordered.';
+    $intro_copy = 'This page is the local Milton Keynes guide. It covers the products Fenster can install, the details that change the price, nearby MK areas we regularly quote for, and how the showroom, online pricing and survey process work together.';
+}
+
 $hero_trust_messages = [
     ['title' => 'Hundreds of customer reviews', 'copy' => 'Feedback across Google and Trustpilot.', 'item' => $trust_items[0] ?? null],
     ['title' => 'Rated Excellent', 'copy' => 'Independent feedback on Trustpilot.', 'item' => $trust_items[1] ?? null],
@@ -782,6 +788,84 @@ $faqs = [
         'question' => 'Do you handle related windows, doors or glass at the same time?',
         'answer' => 'Yes. ' . $product_profile['package'],
     ],
+];
+
+if ($is_mk_double_glazing_page) {
+    $local_points = [
+        [
+            'title' => 'Online prices before the appointment',
+            'copy' => 'Fenster can price many standard windows and doors through WindowCAD before a home visit. That gives you a sensible guide price early, not a vague promise to quote later.',
+        ],
+        [
+            'title' => 'Survey confirms the exact specification',
+            'copy' => 'The survey checks sizes, cill depth, trickle vents, safety glass, openings, access, reveals and finishing trims. Those details decide the final order and prevent surprises on fitting day.',
+        ],
+        [
+            'title' => 'Made for Milton Keynes homes',
+            'copy' => 'Fenster works with older estates, newer developments, extensions and larger glazed openings across MK, so the product choice is matched to the property instead of treated as a one-size job.',
+        ],
+    ];
+    $process_steps = [
+        ['step' => '01', 'title' => 'Price the likely products', 'copy' => 'Use the instant pricing tool or send photos, rough sizes and the product type you want. Fenster can help compare uPVC, aluminium, composite, sash, bifold, sliding and roof lantern options.'],
+        ['step' => '02', 'title' => 'Check what changes the price', 'copy' => 'Colour, glass, opening style, trickle vents, cill choice, hardware, threshold, access and the number of products all affect the final price.'],
+        ['step' => '03', 'title' => 'Survey before manufacture', 'copy' => 'A survey confirms exact sizes, fitting method, safety requirements, ventilation and the finish around the opening before the order is placed.'],
+        ['step' => '04', 'title' => 'Install and support', 'copy' => 'The products are fitted by the Fenster team and supported with the relevant certification, guarantee information and aftercare guidance.'],
+    ];
+    $faqs = [
+        [
+            'question' => 'Can I get double glazing prices online in Milton Keynes?',
+            'answer' => 'Yes. Fenster has an online pricing tool for many windows and doors. It gives a realistic guide price, then a survey confirms the final specification before manufacture.',
+        ],
+        [
+            'question' => 'What changes the price of double glazing?',
+            'answer' => 'Size, frame material, colour, glass specification, opening style, trickle vents, cills, handles, thresholds, access and installation complexity can all change the price.',
+        ],
+        [
+            'question' => 'Does Fenster install across Milton Keynes?',
+            'answer' => 'Yes. Fenster works across Milton Keynes and nearby towns from its local showroom, covering windows, entrance doors, bifolds, sliders, roof lanterns and replacement glass.',
+        ],
+        [
+            'question' => 'Is the online price the final order price?',
+            'answer' => 'It is a guide based on the configuration entered. The final price is confirmed after survey, when the exact sizes, ventilation, glass, cills, trims and fitting details are checked.',
+        ],
+        [
+            'question' => 'Can Fenster quote several products together?',
+            'answer' => 'Yes. Windows, doors, bifolds, sliders, roof lanterns and replacement glass can be reviewed together so the specification, colour and installation plan make sense across the property.',
+        ],
+    ];
+}
+
+$mk_detail_cards = [
+    [
+        'title' => 'What Fenster can install',
+        'copy' => 'uPVC windows, aluminium windows, flush casements, sliding sash windows, composite doors, uPVC doors, French doors, patio sliders, aluminium bifolds, roof lanterns, integral blinds and replacement glass.',
+    ],
+    [
+        'title' => 'What affects the price',
+        'copy' => 'The biggest drivers are product type, size, frame material, colour, glass, number of openers, trickle vents, cills, handles, thresholds, access and finishing work around the opening.',
+    ],
+    [
+        'title' => 'Why a survey still matters',
+        'copy' => 'Online pricing is useful for budgeting, but the survey confirms the measured size, building details, ventilation requirement, safety glass, drainage, trims and installation method.',
+    ],
+    [
+        'title' => 'Local showroom support',
+        'copy' => 'You can speak to the Milton Keynes team, compare products and use the online tool before deciding whether to book a survey.',
+    ],
+];
+$mk_area_links = [
+    ['text' => 'Bletchley', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Wolverton', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Stony Stratford', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Newport Pagnell', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Woburn Sands', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Great Linford', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Shenley Church End', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Furzton', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Oldbrook', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Monkston', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Brooklands', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Whitehouse', 'url' => home_url('/double-glazing-milton-keynes/')],
 ];
 $product_links = [
     ['text' => 'Windows', 'url' => home_url('/windows-milton-keynes/')],
@@ -863,6 +947,41 @@ $product_links = [
             </div>
         </div>
     </section>
+
+    <?php if ($is_mk_double_glazing_page) : ?>
+        <section class="fg-location-products fg-location-products--mk-depth">
+            <div class="container">
+                <div class="fg-location-section-head">
+                    <p class="eyebrow"><?php esc_html_e('Milton Keynes double glazing guide', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Clear product choices, clear price drivers, then a proper survey.', 'fenster'); ?></h2>
+                </div>
+                <div class="fg-location-products__grid">
+                    <?php foreach ($mk_detail_cards as $index => $card) : ?>
+                        <article>
+                            <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
+                            <h3><?php echo esc_html($card['title']); ?></h3>
+                            <p><?php echo esc_html($card['copy']); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <section class="fg-location-intro fg-location-intro--mk-areas">
+            <div class="container">
+                <div class="fg-location-intro__head">
+                    <p class="eyebrow"><?php esc_html_e('Areas around MK', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Double glazing across Milton Keynes estates, villages and new developments.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Fenster quotes and installs across the wider Milton Keynes area. The important part is not just the postcode: it is matching the product, ventilation, glass, colour and installation detail to the property.', 'fenster'); ?></p>
+                </div>
+                <div class="generated-links">
+                    <?php foreach ($mk_area_links as $link) : ?>
+                        <a href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['text']); ?></a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
 
     <section class="fg-location-products">
         <div class="container">

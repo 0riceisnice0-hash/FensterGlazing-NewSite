@@ -1346,6 +1346,11 @@ $add_related_routes = static function (array $target_slugs) use ($add_related_ro
         $add_related_route((string) $target_slug);
     }
 };
+
+if ($is_product && ! $is_commercial && ! $is_commercial_county) {
+    $add_related_route('double-glazing-milton-keynes', 'Double Glazing Milton Keynes');
+}
+
 $matched_family = null;
 foreach ($product_families as $family_prefix => $family) {
     if ($slug === $family_prefix || str_starts_with($slug, $family_prefix . '-')) {
