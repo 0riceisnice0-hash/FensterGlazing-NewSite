@@ -51,6 +51,18 @@ function fenster_location_matrix_towns(): array
 {
     return [
         'milton-keynes' => 'Milton Keynes',
+        'bletchley' => 'Bletchley',
+        'wolverton' => 'Wolverton',
+        'stony-stratford' => 'Stony Stratford',
+        'newport-pagnell' => 'Newport Pagnell',
+        'woburn-sands' => 'Woburn Sands',
+        'great-linford' => 'Great Linford',
+        'shenley-church-end' => 'Shenley Church End',
+        'furzton' => 'Furzton',
+        'oldbrook' => 'Oldbrook',
+        'monkston' => 'Monkston',
+        'brooklands' => 'Brooklands',
+        'whitehouse' => 'Whitehouse',
         'ampthill' => 'Ampthill',
         'aylesbury' => 'Aylesbury',
         'bedford' => 'Bedford',
@@ -98,6 +110,18 @@ function fenster_location_matrix_town_profiles(): array
 {
     return [
         'milton-keynes' => ['property' => 'Milton Keynes homes, extensions and renovation projects', 'priority' => 'clean modern lines, reliable security and measured installation planning'],
+        'bletchley' => ['property' => 'established Bletchley homes, terraces and family properties', 'priority' => 'warmer rooms, secure doors and straightforward survey access'],
+        'wolverton' => ['property' => 'Wolverton terraces, older homes and conservation-sensitive streets', 'priority' => 'sympathetic frame choices, sightlines and ventilation'],
+        'stony-stratford' => ['property' => 'Stony Stratford period homes, town houses and village-edge properties', 'priority' => 'character-friendly styling, colour choice and careful fitting'],
+        'newport-pagnell' => ['property' => 'Newport Pagnell family homes, older properties and extensions', 'priority' => 'secure doors, efficient windows and tidy survey-led installation'],
+        'woburn-sands' => ['property' => 'Woburn Sands homes, village properties and modern extensions', 'priority' => 'balanced style, weathering and low-maintenance finishes'],
+        'great-linford' => ['property' => 'Great Linford homes, estates and family renovation projects', 'priority' => 'practical window styles, ventilation and secure fitting'],
+        'shenley-church-end' => ['property' => 'Shenley Church End family homes and replacement glazing projects', 'priority' => 'thermal comfort, colour choices and neat installation details'],
+        'furzton' => ['property' => 'Furzton homes near lakeside streets, estates and extensions', 'priority' => 'warmth, security and practical room-by-room ventilation'],
+        'oldbrook' => ['property' => 'Oldbrook homes, town houses and replacement glazing projects', 'priority' => 'reliable security, efficient frames and tidy fitting'],
+        'monkston' => ['property' => 'Monkston modern homes, extensions and family properties', 'priority' => 'clean frame lines, energy performance and made-to-measure fitting'],
+        'brooklands' => ['property' => 'Brooklands newer homes, extensions and family spaces', 'priority' => 'modern styling, secure doors and measured installation'],
+        'whitehouse' => ['property' => 'Whitehouse new-build homes, extensions and growing family spaces', 'priority' => 'colour matching, ventilation and low-maintenance frames'],
         'ampthill' => ['property' => 'character properties and modernised family homes', 'priority' => 'careful sightlines, colour choice and existing brickwork'],
         'aylesbury' => ['property' => 'new estates, older homes and growing family spaces', 'priority' => 'security, warmth and survey-led fitting'],
         'bedford' => ['property' => 'riverside homes, terraces and family renovation projects', 'priority' => 'varied property styles, access and measured installation detail'],
@@ -160,7 +184,7 @@ function fenster_location_matrix_page(string $slug, ?array $index = null): ?arra
             return null;
         }
 
-        $source = $index[$slug] ?? $index[$product_slug] ?? $index['double-glazing-' . $town_slug] ?? $index['double-glazing'] ?? null;
+        $source = $index[$slug] ?? $index[$product_slug] ?? $index['double-glazing-' . $town_slug] ?? $index['double-glazing'] ?? $index['double-glazing-milton-keynes'] ?? null;
         if (! is_array($source)) {
             return null;
         }

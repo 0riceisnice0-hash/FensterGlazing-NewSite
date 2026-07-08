@@ -33,6 +33,78 @@ $locations = [
         'fit' => 'clean modern lines, reliable security and measured installation planning',
         'angle' => 'joined-up window and door choices for properties that often have larger openings',
     ],
+    'bletchley' => [
+        'name' => 'Bletchley',
+        'area' => 'Bletchley homes, terraces and family properties',
+        'fit' => 'warmer rooms, secure doors and straightforward survey access',
+        'angle' => 'practical window and door upgrades for established Milton Keynes homes',
+    ],
+    'wolverton' => [
+        'name' => 'Wolverton',
+        'area' => 'Wolverton terraces, older homes and conservation-sensitive streets',
+        'fit' => 'sympathetic frame choices, sightlines and ventilation',
+        'angle' => 'careful glazing choices for older properties and everyday comfort',
+    ],
+    'stony-stratford' => [
+        'name' => 'Stony Stratford',
+        'area' => 'Stony Stratford period homes, town houses and village-edge properties',
+        'fit' => 'character-friendly styling, colour choice and careful fitting',
+        'angle' => 'replacement glazing that respects the look of the property',
+    ],
+    'newport-pagnell' => [
+        'name' => 'Newport Pagnell',
+        'area' => 'Newport Pagnell family homes, older properties and extensions',
+        'fit' => 'secure doors, efficient windows and tidy survey-led installation',
+        'angle' => 'joined-up window and door upgrades for busy family homes',
+    ],
+    'woburn-sands' => [
+        'name' => 'Woburn Sands',
+        'area' => 'Woburn Sands homes, village properties and modern extensions',
+        'fit' => 'balanced style, weathering and low-maintenance finishes',
+        'angle' => 'glazing choices that balance character, comfort and easy upkeep',
+    ],
+    'great-linford' => [
+        'name' => 'Great Linford',
+        'area' => 'Great Linford homes, estates and family renovation projects',
+        'fit' => 'practical window styles, ventilation and secure fitting',
+        'angle' => 'measured glazing upgrades for warmer rooms and better everyday use',
+    ],
+    'shenley-church-end' => [
+        'name' => 'Shenley Church End',
+        'area' => 'Shenley Church End family homes and replacement glazing projects',
+        'fit' => 'thermal comfort, colour choices and neat installation details',
+        'angle' => 'window and door upgrades planned around the whole property',
+    ],
+    'furzton' => [
+        'name' => 'Furzton',
+        'area' => 'Furzton homes near lakeside streets, estates and extensions',
+        'fit' => 'warmth, security and practical room-by-room ventilation',
+        'angle' => 'efficient glazing choices for comfortable, secure family spaces',
+    ],
+    'oldbrook' => [
+        'name' => 'Oldbrook',
+        'area' => 'Oldbrook homes, town houses and replacement glazing projects',
+        'fit' => 'reliable security, efficient frames and tidy fitting',
+        'angle' => 'straightforward window and door upgrades with survey-led detail',
+    ],
+    'monkston' => [
+        'name' => 'Monkston',
+        'area' => 'Monkston modern homes, extensions and family properties',
+        'fit' => 'clean frame lines, energy performance and made-to-measure fitting',
+        'angle' => 'modern glazing choices for warmer, sharper-looking homes',
+    ],
+    'brooklands' => [
+        'name' => 'Brooklands',
+        'area' => 'Brooklands newer homes, extensions and family spaces',
+        'fit' => 'modern styling, secure doors and measured installation',
+        'angle' => 'low-maintenance window and door upgrades for newer properties',
+    ],
+    'whitehouse' => [
+        'name' => 'Whitehouse',
+        'area' => 'Whitehouse new-build homes, extensions and growing family spaces',
+        'fit' => 'colour matching, ventilation and low-maintenance frames',
+        'angle' => 'replacement glazing planned around colour, specification and survey detail',
+    ],
     'buckinghamshire' => [
         'name' => 'Buckinghamshire',
         'area' => 'Buckinghamshire homes, rural properties and family houses',
@@ -854,34 +926,34 @@ $mk_detail_cards = [
     ],
 ];
 $mk_area_links = [
-    ['text' => 'Bletchley', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Wolverton', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Stony Stratford', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Newport Pagnell', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Woburn Sands', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Great Linford', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Shenley Church End', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Furzton', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Oldbrook', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Monkston', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Brooklands', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Whitehouse', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Bletchley', 'url' => home_url('/double-glazing-bletchley/')],
+    ['text' => 'Wolverton', 'url' => home_url('/double-glazing-wolverton/')],
+    ['text' => 'Stony Stratford', 'url' => home_url('/double-glazing-stony-stratford/')],
+    ['text' => 'Newport Pagnell', 'url' => home_url('/double-glazing-newport-pagnell/')],
+    ['text' => 'Woburn Sands', 'url' => home_url('/double-glazing-woburn-sands/')],
+    ['text' => 'Great Linford', 'url' => home_url('/double-glazing-great-linford/')],
+    ['text' => 'Shenley Church End', 'url' => home_url('/double-glazing-shenley-church-end/')],
+    ['text' => 'Furzton', 'url' => home_url('/double-glazing-furzton/')],
+    ['text' => 'Oldbrook', 'url' => home_url('/double-glazing-oldbrook/')],
+    ['text' => 'Monkston', 'url' => home_url('/double-glazing-monkston/')],
+    ['text' => 'Brooklands', 'url' => home_url('/double-glazing-brooklands/')],
+    ['text' => 'Whitehouse', 'url' => home_url('/double-glazing-whitehouse/')],
 ];
 $mk_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
 $mk_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
 $mk_hero_image = $hero_media_src !== '' ? $hero_media_src : FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-windows.jpg';
 $mk_key_products = [
     ['title' => 'uPVC windows', 'copy' => 'Casement, flush, sash, bay and other made-to-measure window styles for warmer, quieter rooms.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Most common home upgrade', 'position' => 'center 55%'],
-    ['title' => 'Composite doors', 'copy' => 'Secure front doors with colour, glass, furniture and threshold options chosen around the entrance.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/distinction-composite-door-installed.jpg', 'url' => home_url('/composite-doors/'), 'meta' => 'Popular entrance upgrade', 'position' => 'center 45%'],
+    ['title' => 'Composite doors', 'copy' => 'Secure front doors with colour, glass, furniture and threshold options chosen around the entrance.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-composite-door.jpg', 'url' => home_url('/composite-doors/'), 'meta' => 'Popular entrance upgrade', 'position' => 'center 48%'],
     ['title' => 'Aluminium bifold doors', 'copy' => 'Slim folding doors for kitchens, extensions and garden rooms, surveyed around levels and drainage.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'meta' => 'Open up the rear of the home', 'position' => 'center 56%'],
     ['title' => 'Sliding and patio doors', 'copy' => 'Large glass, smooth access and practical garden openings where a full bifold is not the best fit.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-patio-door.jpg', 'url' => home_url('/patio-doors/'), 'meta' => 'Bright garden access', 'position' => 'center 55%'],
     ['title' => 'Roof lanterns', 'copy' => 'Aluminium roof lanterns for flat roof extensions, kitchens and brighter open-plan spaces.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-roof-lantern-interior.jpg', 'url' => home_url('/roof-lanterns/'), 'meta' => 'Daylight from above', 'position' => 'center 50%'],
     ['title' => 'Replacement glass', 'copy' => 'Misted units, broken glass, obscure glass, integral blinds and pet flap glass where the frame can stay.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'url' => home_url('/double-glazing-replacement/'), 'meta' => 'Fix the glass', 'position' => 'center 50%'],
 ];
 $mk_cascade_sections = [
-    ['eyebrow' => 'Popular in Milton Keynes', 'title' => 'Composite doors', 'copy' => 'Front and back doors with a made-to-measure frame, secure locking, chosen door style, colour, glazing, handle, letterplate, threshold and cill. Survey confirms the opening before the door is ordered.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/distinction-composite-door-installed.jpg', 'url' => home_url('/composite-doors/'), 'action' => 'View composite doors'],
-    ['eyebrow' => 'Popular in Milton Keynes', 'title' => 'uPVC casement windows', 'copy' => 'Side-hung and top-hung casement windows for bedrooms, kitchens, living rooms and extensions. Price and survey details include opening style, trickle vents, cills, glass type, handles and frame colour.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/casement-windows/'), 'action' => 'View casement windows'],
-    ['eyebrow' => 'Popular in Milton Keynes', 'title' => 'Aluminium bifold doors', 'copy' => 'Folding aluminium doors for kitchens, extensions and garden openings. Panel count, traffic door, threshold, drainage, colour, glass and access all affect the final specification and price.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'action' => 'View bifold doors'],
+    ['eyebrow' => 'Entrance doors', 'title' => 'Composite doors', 'copy' => 'Made-to-measure front and back doors with multi-point locking, chosen door style, colour, glazing, handle, letterplate, threshold and cill. The survey checks the opening before the door is ordered.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-composite-door.jpg', 'url' => home_url('/composite-doors/'), 'action' => 'View composite doors'],
+    ['eyebrow' => 'Window upgrade', 'title' => 'uPVC casement windows', 'copy' => 'Side-hung and top-hung casement windows for bedrooms, kitchens, living rooms and extensions. The price depends on opening style, trickle vents, cills, glass type, handles and frame colour.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/casement-windows/'), 'action' => 'View casement windows'],
+    ['eyebrow' => 'Garden openings', 'title' => 'Aluminium bifold doors', 'copy' => 'Folding aluminium doors for kitchens, extensions and garden openings. Panel count, traffic door, threshold, drainage, colour, glass and access all affect the final specification and price.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'action' => 'View bifold doors'],
 ];
 $mk_order_steps = [
     ['step' => '01', 'title' => 'Online price or enquiry', 'copy' => 'Use the instant quote tool for a guide price, or send photos and rough sizes if you want Fenster to help choose the product first.'],
@@ -1078,6 +1150,7 @@ $product_links = [
                     'source' => 'Double Glazing Milton Keynes',
                     'button_label' => 'Send enquiry',
                     'project_type' => 'Double glazing in Milton Keynes',
+                    'compact' => true,
                     'project_options' => [
                         'Double glazing in Milton Keynes',
                         'Windows',
