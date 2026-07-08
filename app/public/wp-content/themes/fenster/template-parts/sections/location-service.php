@@ -741,8 +741,8 @@ $hero_copy = $service['opening'] . ' ' . $copy_variant['hero_join'] . ' ' . $tow
 $intro_copy = $town_profile['intro'] . ' We help you compare ' . $product_profile['choices'] . ' so the survey can confirm exact sizes and fitting details.';
 
 if ($is_mk_double_glazing_page) {
-    $hero_copy = 'Fenster Glazing supplies and installs made-to-measure double glazing across Milton Keynes, including windows, doors, bifolds, roof lanterns and replacement glass. Use the online pricing tool for a realistic starting price, then the survey confirms sizes, ventilation, cills, glass, access and fitting details before anything is ordered.';
-    $intro_copy = 'This page is the local Milton Keynes guide. It covers the products Fenster can install, the details that change the price, nearby MK areas we regularly quote for, and how the showroom, online pricing and survey process work together.';
+    $hero_copy = 'Windows, doors, bifolds, roof lanterns and replacement glass fitted across Milton Keynes. Get an online guide price, then Fenster checks the exact sizes, vents, cills, glass and fitting details at survey.';
+    $intro_copy = 'Fenster helps you compare the main product options, see what changes the price, and choose the right specification before anything is ordered.';
 }
 
 $hero_trust_messages = [
@@ -871,17 +871,17 @@ $mk_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&u
 $mk_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
 $mk_hero_image = $hero_media_src !== '' ? $hero_media_src : FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-windows.jpg';
 $mk_key_products = [
-    ['title' => 'Windows', 'copy' => 'Casement, flush, sash, French casement, tilt and turn, bay, aluminium and heritage-style windows.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-windows.jpg', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Compare window styles'],
-    ['title' => 'Doors', 'copy' => 'Composite, uPVC, aluminium, French, patio, sliding, bifold and heritage aluminium doors.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-composite-door.jpg', 'url' => home_url('/doors-milton-keynes/'), 'meta' => 'Choose entrance or garden access'],
-    ['title' => 'Bifolds and sliders', 'copy' => 'Slim aluminium openings for extensions, kitchens and garden rooms, with threshold and drainage checked at survey.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'meta' => 'Open up the rear of the home'],
-    ['title' => 'Roof lanterns', 'copy' => 'Aluminium lanterns and glass choices for brighter flat roof extensions and open-plan spaces.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-roof-lantern-interior.jpg', 'url' => home_url('/roof-lanterns/'), 'meta' => 'Bring daylight from above'],
-    ['title' => 'Replacement glass', 'copy' => 'Misted units, broken glass, obscure glass, integral blinds and pet flap glass where the frame can stay.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'url' => home_url('/double-glazing-replacement/'), 'meta' => 'Fix the glass, not always the frame'],
-    ['title' => 'Additional options', 'copy' => 'Colour, handles, cills, trickle vents, safety glass, acoustic glass, obscure glass and integral blinds.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'url' => home_url('/obscured-glass/'), 'meta' => 'Details that affect the finish'],
+    ['title' => 'uPVC windows', 'copy' => 'Casement, flush, sash, bay and other made-to-measure window styles for warmer, quieter rooms.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Most common home upgrade', 'position' => 'center 55%'],
+    ['title' => 'Composite doors', 'copy' => 'Secure front doors with colour, glass, furniture and threshold options chosen around the entrance.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/distinction-composite-door-installed.jpg', 'url' => home_url('/composite-doors/'), 'meta' => 'Popular entrance upgrade', 'position' => 'center 45%'],
+    ['title' => 'Aluminium bifold doors', 'copy' => 'Slim folding doors for kitchens, extensions and garden rooms, surveyed around levels and drainage.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'meta' => 'Open up the rear of the home', 'position' => 'center 56%'],
+    ['title' => 'Sliding and patio doors', 'copy' => 'Large glass, smooth access and practical garden openings where a full bifold is not the best fit.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-patio-door.jpg', 'url' => home_url('/patio-doors/'), 'meta' => 'Bright garden access', 'position' => 'center 55%'],
+    ['title' => 'Roof lanterns', 'copy' => 'Aluminium roof lanterns for flat roof extensions, kitchens and brighter open-plan spaces.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-roof-lantern-interior.jpg', 'url' => home_url('/roof-lanterns/'), 'meta' => 'Daylight from above', 'position' => 'center 50%'],
+    ['title' => 'Replacement glass', 'copy' => 'Misted units, broken glass, obscure glass, integral blinds and pet flap glass where the frame can stay.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'url' => home_url('/double-glazing-replacement/'), 'meta' => 'Fix the glass', 'position' => 'center 50%'],
 ];
 $mk_cascade_sections = [
-    ['eyebrow' => 'Transparent pricing', 'title' => 'Start with a real online price, then confirm the details properly.', 'copy' => 'Fenster can price many standard windows and doors through WindowCAD before a home visit. The survey still matters because it checks the exact size, cill depth, trickle vents, safety glass, access, trims and fitting method.', 'image' => $mk_quote_preview, 'url' => home_url('/online-quote/'), 'action' => 'Get an instant price'],
-    ['eyebrow' => 'Survey-led fitting', 'title' => 'The price should not hide the parts that make the installation work.', 'copy' => 'Ventilation, drainage, thresholds, frame position, reveal depth, safety glass and finishing trims are all discussed before manufacture. That is how Fenster avoids vague quotes that change once someone finally measures the job.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/why-trust-fenster/'), 'action' => 'Why trust Fenster'],
-    ['eyebrow' => 'Local MK projects', 'title' => 'One property might need simple uPVC windows. Another might need aluminium, sash detail or a full extension package.', 'copy' => 'Fenster works across Milton Keynes estates, villages and new developments. The team can compare product styles, colour choices, glass, hardware and fitting details so the finished installation suits the home rather than just the opening size.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-aluminium-window.jpg', 'url' => home_url('/commercial-projects/'), 'action' => 'See project proof'],
+    ['eyebrow' => 'Composite doors', 'title' => 'A better front door starts with the design, glass and hardware.', 'copy' => 'Fenster can quote composite doors with the colour, glazing, handle, letterplate, threshold and cill included in the conversation from the start. Survey confirms the opening and the final order detail.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/distinction-composite-door-installed.jpg', 'url' => home_url('/composite-doors/'), 'action' => 'View composite doors'],
+    ['eyebrow' => 'uPVC casement windows', 'title' => 'The standard choice for many Milton Keynes homes, but still made to measure.', 'copy' => 'Casement windows are usually the most straightforward way to improve warmth, security and ventilation. Fenster checks opening style, trickle vents, cills, glass and handle choices before manufacture.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/casement-windows/'), 'action' => 'View casement windows'],
+    ['eyebrow' => 'Aluminium bifolds', 'title' => 'For extensions and garden openings, the survey detail matters.', 'copy' => 'Panel layout, traffic door, threshold, drainage, colour, glass and access all affect how a bifold works day to day. Fenster helps compare the options before the final sizes are ordered.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'action' => 'View bifold doors'],
 ];
 $mk_option_groups = [
     ['title' => 'Frame choices', 'items' => ['uPVC', 'Aluminium', 'Flush profiles', 'Heritage-style frames', 'Composite entrance doors']],
@@ -907,27 +907,13 @@ $product_links = [
         <div class="container fg-mk-hero__grid">
             <div class="fg-mk-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('Double Glazing Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Windows, doors and glass priced clearly, surveyed properly and fitted by Fenster.', 'fenster'); ?></h1>
+                <h1><?php esc_html_e('Double glazing in Milton Keynes', 'fenster'); ?></h1>
                 <p><?php echo esc_html($hero_copy); ?></p>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--light" href="#fenster-mk-enquiry"><?php esc_html_e('Ask Fenster to quote', 'fenster'); ?></a>
                 </div>
             </div>
-            <aside class="fg-mk-hero__panel" aria-label="<?php esc_attr_e('Fenster double glazing highlights', 'fenster'); ?>">
-                <div>
-                    <strong><?php esc_html_e('Online pricing', 'fenster'); ?></strong>
-                    <span><?php esc_html_e('Guide prices before a home visit for many standard products.', 'fenster'); ?></span>
-                </div>
-                <div>
-                    <strong><?php esc_html_e('Survey confirmed', 'fenster'); ?></strong>
-                    <span><?php esc_html_e('Sizes, cills, vents, glass, access and fitting details checked before order.', 'fenster'); ?></span>
-                </div>
-                <div>
-                    <strong><?php esc_html_e('Milton Keynes showroom', 'fenster'); ?></strong>
-                    <span><?php esc_html_e('Local support for windows, doors, bifolds, roof lanterns and replacement glass.', 'fenster'); ?></span>
-                </div>
-            </aside>
         </div>
     </section>
 
@@ -949,16 +935,6 @@ $product_links = [
         </div>
     </section>
 
-    <section class="fg-mk-intro">
-        <div class="container fg-mk-intro__grid">
-            <div>
-                <p class="eyebrow"><?php esc_html_e('The local buying page', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Everything Fenster can do for double glazing in Milton Keynes, in one place.', 'fenster'); ?></h2>
-            </div>
-            <p><?php echo esc_html($intro_copy); ?></p>
-        </div>
-    </section>
-
     <section class="fg-mk-products" id="fenster-mk-products">
         <div class="container">
             <div class="fg-location-section-head">
@@ -968,7 +944,7 @@ $product_links = [
             <div class="fg-mk-products__grid">
                 <?php foreach ($mk_key_products as $product) : ?>
                     <a href="<?php echo esc_url($product['url']); ?>">
-                        <img src="<?php echo esc_url(fenster_generated_url($product['image'])); ?>" alt="" loading="lazy">
+                        <img src="<?php echo esc_url(fenster_generated_url($product['image'])); ?>" alt="" loading="lazy" style="<?php echo esc_attr('object-position: ' . ($product['position'] ?? 'center')); ?>">
                         <span><?php echo esc_html($product['meta']); ?></span>
                         <strong><?php echo esc_html($product['title']); ?></strong>
                         <p><?php echo esc_html($product['copy']); ?></p>
@@ -996,30 +972,27 @@ $product_links = [
         </div>
     </section>
 
-    <section class="fg-product-quote-embed fg-mk-quote" id="fenster-mk-instant-pricing">
-        <div class="container fg-product-quote-embed__grid">
-            <div class="fg-product-quote-embed__copy">
+    <section class="fg-home-quote-station fg-home-quote-station--bridge fg-mk-quote-station" id="fenster-mk-instant-pricing">
+        <div class="container fg-home-quote-station__grid">
+            <div>
                 <p class="eyebrow"><?php esc_html_e('Instant pricing', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Build the likely product and see a starting price.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The tool helps with budgeting. Fenster then checks vents, cills, glass, survey sizes, access and fitting details before the final order is placed.', 'fenster'); ?></p>
-                <a class="button fg-product-quote-embed__mobile-open" href="<?php echo esc_url($mk_quote_url); ?>"><?php esc_html_e('Open quote tool', 'fenster'); ?></a>
+                <h2><?php esc_html_e('Get an instant quote for your windows and doors.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Choose the product, style, colour and approximate size online. You will see an immediate guide price, then Fenster confirms vents, cills, glass, access and fitting details at survey.', 'fenster'); ?></p>
+                <ul class="fg-home-quote-station__points">
+                    <li><?php esc_html_e('Choose product, style, colour and size', 'fenster'); ?></li>
+                    <li><?php esc_html_e('See a guide price online', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Final specification checked by Fenster', 'fenster'); ?></li>
+                </ul>
+                <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                <a class="button button--light" href="<?php echo esc_url($mk_quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
             </div>
-            <div class="fg-product-quote-embed__card" data-quote-card>
-                <div class="fg-product-quote-embed__bar">
-                    <h3><?php esc_html_e('Fenster instant quote tool', 'fenster'); ?></h3>
-                    <div class="fg-product-quote-embed__actions">
-                        <button class="button button--light" type="button" data-load-quote><?php esc_html_e('Load tool', 'fenster'); ?></button>
-                        <button class="button" type="button" data-fullscreen-quote><?php esc_html_e('Expand view', 'fenster'); ?></button>
-                    </div>
+            <div class="fg-home-quote-station__preview" data-quote-frame-wrap data-quote-card data-lenis-prevent data-quote-url="<?php echo esc_url($mk_quote_url); ?>" data-quote-autoload="near">
+                <div class="fg-quote-frame-placeholder">
+                    <strong><?php esc_html_e('Instant quote tool', 'fenster'); ?></strong>
+                    <span><?php esc_html_e('Loads when you reach this section, or tap to open it now.', 'fenster'); ?></span>
+                    <button class="button" type="button" data-load-quote><?php esc_html_e('Load quote tool', 'fenster'); ?></button>
                 </div>
-                <div class="fg-product-quote-embed__frame" data-quote-frame-wrap data-quote-url="<?php echo esc_url($mk_quote_url); ?>">
-                    <div class="fg-product-quote-embed__placeholder">
-                        <img src="<?php echo esc_url($mk_quote_preview); ?>" alt="" loading="lazy">
-                        <strong><?php esc_html_e('Instant pricing loads here', 'fenster'); ?></strong>
-                        <span><?php esc_html_e('Use the tool to compare likely products, then Fenster confirms the details at survey.', 'fenster'); ?></span>
-                    </div>
-                    <iframe data-quote-iframe-src="<?php echo esc_url($mk_quote_url); ?>" title="<?php esc_attr_e('Fenster instant quote tool', 'fenster'); ?>" loading="lazy"></iframe>
-                </div>
+                <iframe data-quote-iframe-src="<?php echo esc_url($mk_quote_url); ?>" title="<?php esc_attr_e('Fenster instant quote tool', 'fenster'); ?>" loading="lazy" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
@@ -1081,9 +1054,9 @@ $product_links = [
     <section class="fg-mk-enquiry" id="fenster-mk-enquiry">
         <div class="container fg-mk-enquiry__grid">
             <div class="fg-mk-enquiry__copy">
-                <p class="eyebrow"><?php esc_html_e('Ask Fenster', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Send the basics and the team can help narrow the right product.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Photos, rough sizes, the product type and what you want to improve are enough to start. The exact measurements and final specification are checked at survey.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Need help choosing?', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Send photos or rough sizes and Fenster will point you in the right direction.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Tell us what you want to replace, where it is, and whether you want an online price, a showroom chat or a survey. The team can then recommend the right window, door or glass option before anything is ordered.', 'fenster'); ?></p>
             </div>
             <div class="fg-mk-enquiry__form">
                 <?php
