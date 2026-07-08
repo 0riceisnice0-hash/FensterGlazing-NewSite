@@ -207,6 +207,24 @@ function fenster_location_matrix_pages(): array
     return $pages;
 }
 
+function fenster_price_guides_enabled(): bool
+{
+    $host = strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST));
+
+    if ($host === '') {
+        return false;
+    }
+
+    $enabled_hosts = [
+        'fenster-glazing.local',
+        'test.fensterglazing.com',
+        'localhost',
+        '127.0.0.1',
+    ];
+
+    return in_array($host, $enabled_hosts, true);
+}
+
 function fenster_price_guide_pages(): array
 {
     $base_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
@@ -538,9 +556,11 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
-    $price_guides = fenster_price_guide_pages();
-    if (isset($price_guides[$slug])) {
-        return $page_cache[$slug] = $price_guides[$slug];
+    if (fenster_price_guides_enabled()) {
+        $price_guides = fenster_price_guide_pages();
+        if (isset($price_guides[$slug])) {
+            return $page_cache[$slug] = $price_guides[$slug];
+        }
     }
 
     if ($slug === 'privacy-policy') {
@@ -1236,17 +1256,19 @@ function fenster_maybe_render_generated_sitemap(): void
         echo "  </url>\n";
     }
 
-    foreach (fenster_price_guide_pages() as $page) {
-        $loc = fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? ''));
-        if (! $loc || isset($seen[$loc])) {
-            continue;
-        }
+    if (fenster_price_guides_enabled()) {
+        foreach (fenster_price_guide_pages() as $page) {
+            $loc = fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? ''));
+            if (! $loc || isset($seen[$loc])) {
+                continue;
+            }
 
-        $seen[$loc] = true;
-        echo "  <url>\n";
-        echo '    <loc>' . esc_xml($loc) . "</loc>\n";
-        echo "    <changefreq>monthly</changefreq>\n";
-        echo "  </url>\n";
+            $seen[$loc] = true;
+            echo "  <url>\n";
+            echo '    <loc>' . esc_xml($loc) . "</loc>\n";
+            echo "    <changefreq>monthly</changefreq>\n";
+            echo "  </url>\n";
+        }
     }
 
     foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
