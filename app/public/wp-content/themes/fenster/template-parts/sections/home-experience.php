@@ -147,8 +147,6 @@ $location_links = [
     <section
         id="fenster-products"
         class="fg-home-product-theatre"
-        data-fg-product-theatre
-        style="--fg-product-count: <?php echo esc_attr((string) count($product_routes)); ?>;"
         aria-label="<?php esc_attr_e('Explore Fenster products', 'fenster'); ?>">
         <div class="fg-home-product-theatre__stage">
             <div class="container fg-home-product-theatre__shell">
@@ -219,13 +217,20 @@ $location_links = [
             <div class="fg-home-product-theatre__mobile-head">
                 <p class="eyebrow"><?php esc_html_e('Explore the range', 'fenster'); ?></p>
                 <h2><?php esc_html_e('What would you like to improve?', 'fenster'); ?></h2>
-                <p class="fg-home-product-theatre__mobile-cue"><?php esc_html_e('Swipe through the range.', 'fenster'); ?></p>
+                <p class="fg-home-product-theatre__mobile-cue">
+                    <span class="fg-home-product-theatre__cue-desktop"><?php esc_html_e('Use the arrows to browse the range.', 'fenster'); ?></span>
+                    <span class="fg-home-product-theatre__cue-touch"><?php esc_html_e('Swipe through the range.', 'fenster'); ?></span>
+                </p>
             </div>
             <div
                 class="fg-home-product-theatre__mobile-carousel"
                 role="group"
                 aria-roledescription="<?php esc_attr_e('carousel', 'fenster'); ?>"
                 aria-label="<?php esc_attr_e('Fenster product range', 'fenster'); ?>">
+                <div class="fg-home-product-theatre__mobile-controls" aria-label="<?php esc_attr_e('Browse products', 'fenster'); ?>">
+                    <button type="button" data-fg-mobile-product-prev aria-label="<?php esc_attr_e('Previous product', 'fenster'); ?>"></button>
+                    <button type="button" data-fg-mobile-product-next aria-label="<?php esc_attr_e('Next product', 'fenster'); ?>"></button>
+                </div>
                 <div class="fg-home-product-theatre__mobile-track" role="group" aria-label="<?php esc_attr_e('Swipe through Fenster products', 'fenster'); ?>">
                     <?php foreach ($product_routes as $index => $route) : ?>
                         <a class="fg-home-product-theatre__mobile-card" href="<?php echo esc_url($route['url']); ?>">

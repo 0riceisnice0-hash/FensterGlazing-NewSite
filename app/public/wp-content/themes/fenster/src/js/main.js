@@ -1908,6 +1908,8 @@ document.querySelectorAll('.fg-home-product-theatre__mobile').forEach((mobileThe
   const track = mobileTheatre.querySelector('.fg-home-product-theatre__mobile-track');
   const cards = [...mobileTheatre.querySelectorAll('.fg-home-product-theatre__mobile-card')];
   const dots = [...mobileTheatre.querySelectorAll('[data-fg-mobile-product-dot]')];
+  const previousButton = mobileTheatre.querySelector('[data-fg-mobile-product-prev]');
+  const nextButton = mobileTheatre.querySelector('[data-fg-mobile-product-next]');
 
   if (!track || !cards.length || dots.length !== cards.length) return;
 
@@ -1923,6 +1925,9 @@ document.querySelectorAll('.fg-home-product-theatre__mobile').forEach((mobileThe
       dot.classList.toggle('is-active', isActive);
       dot.setAttribute('aria-current', isActive ? 'true' : 'false');
     });
+
+    if (previousButton) previousButton.disabled = index === 0;
+    if (nextButton) nextButton.disabled = index === cards.length - 1;
   };
 
   const updateActiveDot = () => {
@@ -1945,6 +1950,24 @@ document.querySelectorAll('.fg-home-product-theatre__mobile').forEach((mobileThe
   track.addEventListener('scroll', () => {
     if (!scrollFrame) scrollFrame = requestAnimationFrame(updateActiveDot);
   }, { passive: true });
+
+  const scrollToCard = (nextIndex) => {
+    const index = clamp(nextIndex, 0, cards.length - 1);
+    const trackLeft = track.getBoundingClientRect().left;
+    const cardLeft = cards[index].getBoundingClientRect().left;
+
+    track.scrollTo({
+      left: track.scrollLeft + cardLeft - trackLeft,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    });
+    setActiveDot(index);
+  };
+
+  previousButton?.addEventListener('click', () => scrollToCard(activeIndex - 1));
+  nextButton?.addEventListener('click', () => scrollToCard(activeIndex + 1));
+  window.addEventListener('resize', () => {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateActiveDot);
+  });
 
   setActiveDot(0);
 });
