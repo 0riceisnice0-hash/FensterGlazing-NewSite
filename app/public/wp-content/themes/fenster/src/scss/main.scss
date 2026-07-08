@@ -21084,6 +21084,7 @@ html.fg-blinds-reveal-locked {
 
   .fg-home-product-theatre__mobile-head {
     display: grid;
+    grid-template-columns: 1fr;
     gap: 0.55rem;
     margin-bottom: 1rem;
   }
