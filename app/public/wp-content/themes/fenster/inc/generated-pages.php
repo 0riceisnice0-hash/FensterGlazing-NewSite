@@ -1126,7 +1126,11 @@ function fenster_generated_robots_txt(string $output, bool $public): string
 
     $lines = array_filter(
         preg_split('/\r\n|\r|\n/', $output) ?: [],
-        static fn (string $line): bool => stripos(trim($line), 'Sitemap:') !== 0
+        static function (string $line): bool {
+            $line = trim($line);
+
+            return stripos($line, 'Sitemap:') !== 0 && stripos($line, 'Crawl-delay:') !== 0;
+        }
     );
 
     $output = trim(implode("\n", $lines));
