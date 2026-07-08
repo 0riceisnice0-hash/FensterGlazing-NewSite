@@ -879,9 +879,15 @@ $mk_key_products = [
     ['title' => 'Replacement glass', 'copy' => 'Misted units, broken glass, obscure glass, integral blinds and pet flap glass where the frame can stay.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'url' => home_url('/double-glazing-replacement/'), 'meta' => 'Fix the glass', 'position' => 'center 50%'],
 ];
 $mk_cascade_sections = [
-    ['eyebrow' => 'Composite doors', 'title' => 'A better front door starts with the design, glass and hardware.', 'copy' => 'Fenster can quote composite doors with the colour, glazing, handle, letterplate, threshold and cill included in the conversation from the start. Survey confirms the opening and the final order detail.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/distinction-composite-door-installed.jpg', 'url' => home_url('/composite-doors/'), 'action' => 'View composite doors'],
-    ['eyebrow' => 'uPVC casement windows', 'title' => 'The standard choice for many Milton Keynes homes, but still made to measure.', 'copy' => 'Casement windows are usually the most straightforward way to improve warmth, security and ventilation. Fenster checks opening style, trickle vents, cills, glass and handle choices before manufacture.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/casement-windows/'), 'action' => 'View casement windows'],
-    ['eyebrow' => 'Aluminium bifolds', 'title' => 'For extensions and garden openings, the survey detail matters.', 'copy' => 'Panel layout, traffic door, threshold, drainage, colour, glass and access all affect how a bifold works day to day. Fenster helps compare the options before the final sizes are ordered.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'action' => 'View bifold doors'],
+    ['eyebrow' => 'Popular in Milton Keynes', 'title' => 'Composite doors', 'copy' => 'Front and back doors with a made-to-measure frame, secure locking, chosen door style, colour, glazing, handle, letterplate, threshold and cill. Survey confirms the opening before the door is ordered.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/distinction-composite-door-installed.jpg', 'url' => home_url('/composite-doors/'), 'action' => 'View composite doors'],
+    ['eyebrow' => 'Popular in Milton Keynes', 'title' => 'uPVC casement windows', 'copy' => 'Side-hung and top-hung casement windows for bedrooms, kitchens, living rooms and extensions. Price and survey details include opening style, trickle vents, cills, glass type, handles and frame colour.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-closeup.jpg', 'url' => home_url('/casement-windows/'), 'action' => 'View casement windows'],
+    ['eyebrow' => 'Popular in Milton Keynes', 'title' => 'Aluminium bifold doors', 'copy' => 'Folding aluminium doors for kitchens, extensions and garden openings. Panel count, traffic door, threshold, drainage, colour, glass and access all affect the final specification and price.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'action' => 'View bifold doors'],
+];
+$mk_order_steps = [
+    ['step' => '01', 'title' => 'Online price or enquiry', 'copy' => 'Use the instant quote tool for a guide price, or send photos and rough sizes if you want Fenster to help choose the product first.'],
+    ['step' => '02', 'title' => 'Product specification', 'copy' => 'Fenster checks the likely frame, glass, colour, handles, vents, cills, thresholds and fitting details before the order is confirmed.'],
+    ['step' => '03', 'title' => 'Survey before manufacture', 'copy' => 'A survey confirms exact sizes, access, safety glass, ventilation requirements and the finish around each opening.'],
+    ['step' => '04', 'title' => 'Installation and aftercare', 'copy' => 'The products are fitted by Fenster installers, with guarantee information and aftercare support after completion.'],
 ];
 $mk_option_groups = [
     ['title' => 'Frame choices', 'items' => ['uPVC', 'Aluminium', 'Flush profiles', 'Heritage-style frames', 'Composite entrance doors']],
@@ -1018,20 +1024,27 @@ $product_links = [
         </div>
     </section>
 
-    <section class="fg-location-process fg-mk-process">
+    <section class="fg-order-process fg-mk-order-process">
         <div class="container">
-            <div class="fg-location-section-head">
-                <p class="eyebrow"><?php esc_html_e('How it works', 'fenster'); ?></p>
-                <h2><?php esc_html_e('From online price to fitted double glazing in Milton Keynes.', 'fenster'); ?></h2>
+            <div class="section-heading section-heading--wide">
+                <p class="eyebrow"><?php esc_html_e('Order process', 'fenster'); ?></p>
+                <h2><?php esc_html_e('From guide price to fitted double glazing.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Start with a guide price or enquiry, then Fenster confirms the specification, surveys the openings and fits the made-to-measure products.', 'fenster'); ?></p>
             </div>
-            <div class="fg-location-process__rail">
-                <?php foreach ($process_steps as $step) : ?>
+            <div class="fg-order-process__rail">
+                <?php foreach ($mk_order_steps as $step) : ?>
                     <article>
-                        <span><?php echo esc_html($step['step']); ?></span>
-                        <h3><?php echo esc_html($step['title']); ?></h3>
-                        <p><?php echo esc_html($step['copy']); ?></p>
+                        <span class="fg-order-process__number"><?php echo esc_html($step['step']); ?></span>
+                        <div class="fg-order-process__card">
+                            <span class="fg-order-process__icon" aria-hidden="true"></span>
+                            <h3><?php echo esc_html($step['title']); ?></h3>
+                            <p><?php echo esc_html($step['copy']); ?></p>
+                        </div>
                     </article>
                 <?php endforeach; ?>
+            </div>
+            <div class="fg-order-process__action">
+                <a class="button" href="#fenster-mk-enquiry"><?php esc_html_e('Start your enquiry', 'fenster'); ?></a>
             </div>
         </div>
     </section>
