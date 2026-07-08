@@ -21,8 +21,6 @@ $quote_url = (string) ($page['quote_url'] ?? 'https://www.windowsoftware.co.uk/w
 $examples = is_array($page['examples'] ?? null) ? array_values($page['examples']) : [];
 $moves = is_array($page['moves'] ?? null) ? array_values($page['moves']) : [];
 $linked_slugs = is_array($page['links'] ?? null) ? array_values($page['links']) : [];
-$phone = (string) ($brand['phone'] ?? '01908 429200');
-$phone_href = preg_replace('/\s+/', '', $phone);
 $source_product = $product_slug !== '' && function_exists('fenster_get_generated_page') ? fenster_get_generated_page($product_slug) : null;
 $source_images = is_array($source_product['images'] ?? null) ? array_values($source_product['images']) : [];
 $hero_image = $source_images[0] ?? null;
@@ -177,26 +175,33 @@ $faq_schema = [
         </div>
     </section>
 
-    <section id="fenster-enquiry" class="fg-price-guide__cta">
-        <div class="container fg-price-guide__cta-grid">
+    <section id="fenster-instant-pricing" class="fg-home-quote-station fg-home-quote-station--bridge fg-price-guide__quote-station">
+        <div class="container fg-home-quote-station__grid">
             <div>
-                <p class="eyebrow"><?php esc_html_e('Check your own project', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Use the guide, then price the real thing.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Tell Fenster what you want to replace and the team can help check the product choices, survey details and fitted quote.', 'fenster'); ?></p>
-                <div class="fg-contact-list">
-                    <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
-                    <a class="text-link" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Open WindowCAD for this product', 'fenster'); ?></a>
-                </div>
+                <p class="eyebrow"><?php esc_html_e('Ready to see your price?', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Price the real configuration online.', 'fenster'); ?></h2>
+                <p><?php echo esc_html(sprintf('Use the instant pricing tool to choose your %s, style, colour, size and options. Fenster can then check the final details after survey.', $product)); ?></p>
+                <ul class="fg-home-quote-station__points">
+                    <li><?php esc_html_e('See how choices affect the price', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Add details such as vents, glass, colour and hardware', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Final specification checked by Fenster', 'fenster'); ?></li>
+                </ul>
+                <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                <a class="button button--light" href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
             </div>
-            <?php
-            get_template_part('template-parts/components/enquiry-form', null, [
-                'class' => 'fg-form fg-article-form',
-                'source' => 'Price guide: ' . $title,
-                'button_label' => 'Ask about pricing',
-                'project_type' => $product,
-                'compact' => true,
-            ]);
-            ?>
+            <div class="fg-home-quote-station__preview" data-quote-frame-wrap data-quote-card data-lenis-prevent data-quote-url="<?php echo esc_url($quote_url); ?>" data-quote-autoload="near">
+                <div class="fg-quote-frame-placeholder">
+                    <strong><?php esc_html_e('Instant quote tool', 'fenster'); ?></strong>
+                    <span><?php esc_html_e('Loads when you reach this section, or tap to open it now.', 'fenster'); ?></span>
+                    <button class="button" type="button" data-load-quote><?php esc_html_e('Load quote tool', 'fenster'); ?></button>
+                </div>
+                <iframe
+                    data-quote-iframe-src="<?php echo esc_url($quote_url); ?>"
+                    title="<?php echo esc_attr($title . ' instant quote tool'); ?>"
+                    loading="lazy"
+                    allow="fullscreen"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
         </div>
     </section>
 

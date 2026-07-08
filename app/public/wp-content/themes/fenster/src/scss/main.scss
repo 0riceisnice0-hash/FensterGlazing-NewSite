@@ -22514,10 +22514,6 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-.fg-price-guide {
-  background: var(--fg-page-gradient);
-}
-
 .fg-price-guide__hero {
   padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
 }
@@ -22587,8 +22583,7 @@ html.fg-blinds-reveal-locked {
 .fg-price-guide__table-section,
 .fg-price-guide__factors,
 .fg-price-guide__proof,
-.fg-price-guide__faq,
-.fg-price-guide__cta {
+.fg-price-guide__faq {
   padding: clamp(2rem, 4vw, 3.4rem) 0;
 }
 
@@ -22600,8 +22595,7 @@ html.fg-blinds-reveal-locked {
 .fg-price-guide__section-head h2,
 .fg-price-guide__factors h2,
 .fg-price-guide__proof h2,
-.fg-price-guide__faq h2,
-.fg-price-guide__cta h2 {
+.fg-price-guide__faq h2 {
   margin: 0.45rem 0 0.75rem;
   color: var(--color-steel);
   font-size: clamp(1.45rem, 2.2vw, 2rem);
@@ -22663,8 +22657,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-price-guide__factors-grid,
 .fg-price-guide__proof-grid,
-.fg-price-guide__faq-grid,
-.fg-price-guide__cta-grid {
+.fg-price-guide__faq-grid {
   display: grid;
   grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2rem);
@@ -22743,57 +22736,16 @@ html.fg-blinds-reveal-locked {
   background: #ffffff;
 }
 
-.fg-price-guide__cta-grid {
-  padding: clamp(1rem, 2.4vw, 1.6rem);
-  border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18px 48px rgba(0, 45, 58, 0.08);
-}
-
-.fg-price-guide__cta-grid > div:first-child {
-  padding: clamp(1rem, 2.3vw, 1.7rem);
-  border-radius: 8px;
-  background: var(--color-steel);
-  color: #ffffff;
-}
-
-.fg-price-guide__cta-grid > div:first-child h2 {
-  color: #ffffff;
-}
-
-.fg-price-guide__cta-grid > div:first-child p {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.fg-price-guide__cta-grid > div:first-child .fg-contact-list a {
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-}
-
-.fg-price-guide .fg-article-form {
-  padding: clamp(1rem, 2.3vw, 1.7rem);
-  border: 1px solid rgba(0, 45, 58, 0.14);
-  border-radius: 8px;
-  background: #ffffff;
-  color: var(--color-ink);
-}
-
-.fg-price-guide .fg-article-form input,
-.fg-price-guide .fg-article-form select,
-.fg-price-guide .fg-article-form textarea {
-  border: 1px solid rgba(0, 45, 58, 0.2);
-  background: #ffffff;
-  color: var(--color-ink);
+.fg-price-guide__quote-station {
+  margin-top: 0;
+  padding-top: clamp(2rem, 4vw, 3.4rem);
 }
 
 @media (max-width: 900px) {
   .fg-price-guide__hero-grid,
   .fg-price-guide__factors-grid,
   .fg-price-guide__proof-grid,
-  .fg-price-guide__faq-grid,
-  .fg-price-guide__cta-grid {
+  .fg-price-guide__faq-grid {
     grid-template-columns: 1fr;
   }
 
@@ -22821,16 +22773,12 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-price-guide__hero-copy .button-row,
-  .fg-price-guide__hero-copy .button,
-  .fg-price-guide__cta .button {
+  .fg-price-guide__hero-copy .button {
     width: 100%;
   }
 
   .fg-price-guide__quote-card,
-  .fg-price-guide__proof-copy,
-  .fg-price-guide__cta-grid,
-  .fg-price-guide__cta-grid > div:first-child,
-  .fg-price-guide .fg-article-form {
+  .fg-price-guide__proof-copy {
     padding: 1rem;
   }
 
