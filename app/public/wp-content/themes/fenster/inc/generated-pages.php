@@ -1117,7 +1117,7 @@ function fenster_maybe_render_generated_sitemap(): void
 // parallel, incomplete URL set (and a users sitemap) to search engines.
 add_filter('wp_sitemaps_enabled', '__return_false');
 
-add_filter('robots_txt', 'fenster_generated_robots_txt', 10, 2);
+add_filter('robots_txt', 'fenster_generated_robots_txt', PHP_INT_MAX, 2);
 function fenster_generated_robots_txt(string $output, bool $public): string
 {
     if (! $public) {
