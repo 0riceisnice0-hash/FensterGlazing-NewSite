@@ -25,7 +25,7 @@ $source_product = $product_slug !== '' && function_exists('fenster_get_generated
 $source_images = is_array($source_product['images'] ?? null) ? array_values($source_product['images']) : [];
 $hero_image = $source_images[0] ?? null;
 $detail_images = array_slice($source_images, 1, 3);
-$checked_label = 'Guide template ready for July 2026 pricing';
+$checked_label = 'First guide examples checked July 2026';
 $faqs = [
     [
         'question' => 'Are Fenster online prices exact?',
@@ -74,7 +74,7 @@ $faq_schema = [
             <aside class="fg-price-guide__quote-card" aria-label="<?php esc_attr_e('Price guide status', 'fenster'); ?>">
                 <span><?php echo esc_html($checked_label); ?></span>
                 <strong><?php esc_html_e('Real examples, not vague averages.', 'fenster'); ?></strong>
-                <p><?php esc_html_e('The structure is ready. The example rows below are waiting for the confirmed WindowCAD prices, screenshots and install photos before we publish exact figures.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Some rows now use checked WindowCAD examples. The remaining rows are placeholders until the exact configs, screenshots and install photos are added.', 'fenster'); ?></p>
             </aside>
         </div>
     </section>
