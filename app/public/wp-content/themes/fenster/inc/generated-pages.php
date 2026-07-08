@@ -207,6 +207,142 @@ function fenster_location_matrix_pages(): array
     return $pages;
 }
 
+function fenster_price_guide_pages(): array
+{
+    $base_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
+    $guides = [
+        'window-door-prices-milton-keynes' => [
+            'title' => 'Window and Door Prices Milton Keynes',
+            'label' => 'Window and door prices',
+            'product' => 'windows and doors',
+            'product_slug' => 'online-quote',
+            'quote_url' => $base_quote_url,
+            'intro' => 'A plain-English guide to what affects the fitted price of replacement windows and doors in Milton Keynes, using Fenster quote examples as the starting point.',
+            'examples' => [
+                ['spec' => 'Single uPVC casement window', 'details' => 'White frame, A-rated glass, chrome handle, cill and standard fitting', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Composite entrance door', 'details' => 'Door style, colour, glass design, furniture, threshold and fitted survey requirements', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Aluminium bifold door', 'details' => 'Panel count, colour, glazing, threshold, drainage and opening size', 'price' => 'To confirm from WindowCAD'],
+            ],
+            'moves' => [
+                'Size and opening count',
+                'Frame material and colour',
+                'Glazing specification, toughened glass and obscure glass',
+                'Trickle vents and ventilation requirements',
+                'Handles, hinges, furniture and threshold choice',
+                'Access, removal of old frames and survey findings',
+            ],
+            'links' => ['composite-door-prices', 'bifold-door-cost', 'sash-window-prices', 'double-glazing-cost', 'aluminium-window-prices', 'patio-french-door-prices'],
+        ],
+        'composite-door-prices' => [
+            'title' => 'Composite Door Prices',
+            'label' => 'Composite door prices',
+            'product' => 'composite doors',
+            'product_slug' => 'composite-doors',
+            'quote_url' => $base_quote_url . '&productCollection=4',
+            'intro' => 'Composite door prices change with the slab design, colour, glazing, furniture, threshold and survey details. This page will show checked fitted examples once the standard WindowCAD configs are confirmed.',
+            'examples' => [
+                ['spec' => 'Simple glazed composite door', 'details' => 'White frame, standard threshold, clear or satin glass, lever handle', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Coloured composite front door', 'details' => 'Anthracite or colour finish, chosen glass design, matching furniture', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Composite door with upgraded hardware', 'details' => 'Premium furniture, bar handle, letterplate and threshold options', 'price' => 'To confirm from WindowCAD'],
+            ],
+            'moves' => ['Door style and slab range', 'External and internal colour', 'Glass design and privacy level', 'Handle, hinge and letterplate finish', 'Threshold and cill choice', 'Survey and installation detail'],
+            'links' => ['window-door-prices-milton-keynes', 'doors-milton-keynes', 'composite-doors'],
+        ],
+        'bifold-door-cost' => [
+            'title' => 'Bifold Door Cost',
+            'label' => 'Bifold door cost',
+            'product' => 'aluminium bifold doors',
+            'product_slug' => 'aluminium-bifold-doors',
+            'quote_url' => $base_quote_url . '&productCollection=11',
+            'intro' => 'Bifold door cost is mainly driven by width, panel count, colour, glazing, threshold and whether the opening needs extra survey checks such as drainage or structural detail.',
+            'examples' => [
+                ['spec' => 'Small aluminium bifold', 'details' => 'Fewer panels, standard colour, A-rated glazing and standard threshold', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Three or four panel bifold', 'details' => 'Traffic door choice, anthracite finish, standard clear glazing', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Wide bifold opening', 'details' => 'More panels, larger glass area, threshold and drainage details checked at survey', 'price' => 'To confirm from WindowCAD'],
+            ],
+            'moves' => ['Overall width and height', 'Panel count and traffic door', 'RAL colour', 'Glazing weight and specification', 'Threshold, drainage and cill detail', 'Wind load and exposed openings'],
+            'links' => ['window-door-prices-milton-keynes', 'aluminium-bifold-doors', 'aluminium-sliding-doors'],
+        ],
+        'sash-window-prices' => [
+            'title' => 'Sash Window Prices',
+            'label' => 'Sash window prices',
+            'product' => 'sliding sash windows',
+            'product_slug' => 'sliding-sash-windows',
+            'quote_url' => $base_quote_url . '&productCollection=9',
+            'intro' => 'Sash window prices vary by model, size, colour, horn detail, furniture, glazing bars and survey detail around older openings.',
+            'examples' => [
+                ['spec' => 'Standard uPVC sash window', 'details' => 'White finish, A-rated glass, standard furniture and cill', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Heritage-style sash window', 'details' => 'Run-through horns, astragal bars, colour finish and matching furniture', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Front elevation sash set', 'details' => 'Multiple windows priced together, with survey checks for reveals and making good', 'price' => 'To confirm from WindowCAD'],
+            ],
+            'moves' => ['Sash model and furniture range', 'Window size', 'Colour and woodgrain finish', 'Glazing bars and horn detail', 'Obscure or acoustic glass', 'Condition of existing openings'],
+            'links' => ['window-door-prices-milton-keynes', 'sliding-sash-windows', 'windows-milton-keynes'],
+        ],
+        'double-glazing-cost' => [
+            'title' => 'Double Glazing Cost',
+            'label' => 'Double glazing cost',
+            'product' => 'double glazing',
+            'product_slug' => 'double-glazing',
+            'quote_url' => $base_quote_url . '&productCollection=0',
+            'intro' => 'Double glazing cost depends on the window style, size, glass, ventilation, colour and how many frames are being fitted together.',
+            'examples' => [
+                ['spec' => 'Single casement window', 'details' => 'White uPVC frame, A-rated glass, standard chrome handle and cill', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Bedroom or bathroom window', 'details' => 'Obscure glass, trickle vent where required, standard fitting', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Typical house window package', 'details' => 'Multiple windows priced as a project, survey-confirmed before order', 'price' => 'To confirm from WindowCAD'],
+            ],
+            'moves' => ['Number of windows', 'Frame size and opening style', 'Glass specification and texture', 'Trickle vents', 'Colour and handle finish', 'Removal and fitting conditions'],
+            'links' => ['window-door-prices-milton-keynes', 'double-glazing-milton-keynes', 'casement-windows'],
+        ],
+        'aluminium-window-prices' => [
+            'title' => 'Aluminium Window Prices',
+            'label' => 'Aluminium window prices',
+            'product' => 'aluminium windows',
+            'product_slug' => 'aluminium-windows',
+            'quote_url' => $base_quote_url . '&productCollection=5',
+            'intro' => 'Aluminium window prices are affected by the frame system, RAL colour, glass area, vents, hardware, thermal performance and wind load checks on larger openings.',
+            'examples' => [
+                ['spec' => 'Single aluminium window', 'details' => 'Standard colour, clear glazing, handle and cill', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Aluminium flush window', 'details' => 'Flush styling, chosen colour, A-rated glass and ventilation detail', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Large aluminium window set', 'details' => 'Multiple frames, larger panes, wind load and survey checks', 'price' => 'To confirm from WindowCAD'],
+            ],
+            'moves' => ['System and profile choice', 'Frame size and glass weight', 'RAL colour', 'Trickle vents', 'Thermal and acoustic glass options', 'Wind load and exposed location'],
+            'links' => ['window-door-prices-milton-keynes', 'aluminium-windows', 'aluminium-flush-windows'],
+        ],
+        'patio-french-door-prices' => [
+            'title' => 'Patio and French Door Prices',
+            'label' => 'Patio and French door prices',
+            'product' => 'patio and French doors',
+            'product_slug' => 'patio-doors',
+            'quote_url' => $base_quote_url . '&productCollection=2',
+            'intro' => 'Patio and French door prices change with opening size, door type, colour, threshold, glass, handles, trickle vents and survey details.',
+            'examples' => [
+                ['spec' => 'uPVC sliding patio door', 'details' => 'White frame, standard handle, A-rated glass, cill and trickle vent where required', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'uPVC French doors', 'details' => 'Open-in or open-out pair, standard threshold, handle and glass choice', 'price' => 'To confirm from WindowCAD'],
+                ['spec' => 'Larger garden door opening', 'details' => 'Wider frame, side panels or threshold details checked at survey', 'price' => 'To confirm from WindowCAD'],
+            ],
+            'moves' => ['Door type and opening direction', 'Overall width and height', 'Threshold and cill', 'Glass specification', 'Handles and locking', 'Ventilation and survey findings'],
+            'links' => ['window-door-prices-milton-keynes', 'patio-doors', 'french-doors'],
+        ],
+    ];
+
+    foreach ($guides as $slug => &$guide) {
+        $guide['slug'] = $slug;
+        $guide['url'] = home_url('/' . $slug . '/');
+        $guide['seo'] = [
+            'title_tag' => $guide['title'] . ' | Fenster Glazing Milton Keynes',
+            'meta_description' => 'Clear fitted ' . strtolower($guide['label']) . ' guidance from Fenster Glazing, with WindowCAD examples, what affects the price and survey-confirmed next steps.',
+            'canonical' => 'https://fensterglazing.com/' . $slug . '/',
+            'robots' => 'max-image-preview:large',
+        ];
+        $guide['sections'] = [];
+        $guide['images'] = [];
+        $guide['is_price_guide'] = true;
+    }
+    unset($guide);
+
+    return $guides;
+}
+
 function fenster_commercial_county_profiles(): array
 {
     return [
@@ -400,6 +536,11 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'images' => [],
             'links' => [],
         ];
+    }
+
+    $price_guides = fenster_price_guide_pages();
+    if (isset($price_guides[$slug])) {
+        return $page_cache[$slug] = $price_guides[$slug];
     }
 
     if ($slug === 'privacy-policy') {
@@ -1083,6 +1224,19 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     foreach ($commercial_county_pages as $page) {
+        $loc = fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? ''));
+        if (! $loc || isset($seen[$loc])) {
+            continue;
+        }
+
+        $seen[$loc] = true;
+        echo "  <url>\n";
+        echo '    <loc>' . esc_xml($loc) . "</loc>\n";
+        echo "    <changefreq>monthly</changefreq>\n";
+        echo "  </url>\n";
+    }
+
+    foreach (fenster_price_guide_pages() as $page) {
         $loc = fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? ''));
         if (! $loc || isset($seen[$loc])) {
             continue;
