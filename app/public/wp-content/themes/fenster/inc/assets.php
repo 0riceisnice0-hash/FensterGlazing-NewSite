@@ -14,8 +14,8 @@ function fenster_enqueue_assets(): void
 {
     $css_path = FENSTER_THEME_DIR . '/assets/css/main.css';
     $js_path = FENSTER_THEME_DIR . '/assets/js/main.js';
-    $css_version = file_exists($css_path) ? (string) filemtime($css_path) : FENSTER_THEME_VERSION;
-    $js_version = file_exists($js_path) ? (string) filemtime($js_path) : FENSTER_THEME_VERSION;
+    $css_version = file_exists($css_path) ? filemtime($css_path) . '-' . filesize($css_path) : FENSTER_THEME_VERSION;
+    $js_version = file_exists($js_path) ? filemtime($js_path) . '-' . filesize($js_path) : FENSTER_THEME_VERSION;
 
     wp_enqueue_style(
         'fenster-main',
