@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-09
 
+## 2026-07-09 - Product Image Pool Audit
+
+- Audited the product image source path after uPVC door pages were showing aluminium, composite and other wrong-material images.
+- Found the issue in `inc\site-data.php`: several product routes shared broad gallery pools such as `entrance_doors`, `wide_span_doors` and `aluminium_doors`, so unrelated product families bled into each other.
+- Split curated gallery pools by material/product family for uPVC doors, composite doors, patio doors, French doors, aluminium doors, aluminium bifolds, slide-fold doors and aluminium sliding doors.
+- Cleaned uPVC and aluminium window pools so they no longer borrow obvious wrong-material product images just to fill the gallery.
+- Updated `template-parts\sections\location-service.php` so generated town/service routes reuse the same curated product media and gallery pools instead of falling back to raw imported scrape images.
+- Verified representative main product and matrix routes locally, including `/upvc-doors/`, `/composite-doors/`, `/patio-doors/`, `/french-doors/`, `/aluminium-doors/`, `/aluminium-bifold-doors/`, `/aluminium-sliding-doors/`, `/upvc-doors-milton-keynes/`, `/french-doors-milton-keynes/`, `/patio-doors-milton-keynes/` and aluminium/composite matrix equivalents.
+
 ## 2026-07-09 - Microsoft Clarity Replay Rendering Fix
 
 - Debugged broken Clarity recordings by simulating Clarity-style page/resource fetches rather than changing visible layout again.

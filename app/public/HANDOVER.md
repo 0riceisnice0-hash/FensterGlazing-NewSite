@@ -193,6 +193,8 @@ Current product page model:
 - Visible `Product information` benefit cards headed by the product name; product pages should not use accordions outside FAQ.
 - Manufacturer/product hub badges, system data and visible full-width specification check cards from `inc\product-hub-data.php`.
 - Product body imagery should not repeat the hero image. The template uses a unique image queue and skips later image blocks if there are not enough distinct product images.
+- Curated product image pools now stay product/material specific in `inc\site-data.php`: uPVC doors, composite doors, patio doors, French doors, aluminium doors, aluminium bifolds and aluminium sliders each have separate pools instead of sharing one mixed entrance-door or wide-span gallery.
+- Location/service matrix pages rendered through `template-parts\sections\location-service.php` reuse those same curated product media pools and skip the hero image for supporting image slots, so town variants such as `/upvc-doors-milton-keynes/` do not fall back to unrelated scraped aluminium/composite imagery.
 - Product galleries open an in-page lightbox, not a raw image URL or new tab. The lightbox uses a dark overlay, no visible alt/caption text, no white image card, close/backdrop/Escape handling, previous/next arrows and keyboard left/right navigation.
 - Optional product-specific WindowCAD quote embed placed after the main product journey/trust content.
 - Product narrative/content sections from generated data.

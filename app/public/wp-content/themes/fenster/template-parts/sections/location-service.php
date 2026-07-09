@@ -541,6 +541,57 @@ foreach ($locations as $candidate_slug => $candidate_location) {
 $service_slug = $location_slug !== '' ? preg_replace('/-' . preg_quote($location_slug, '/') . '$/', '', $slug) : 'double-glazing';
 $service_slug = $aliases[$service_slug] ?? $service_slug;
 $service = $services[$service_slug] ?? $services['double-glazing'];
+$location_product_media = fenster_data('product_media.' . $service_slug, []);
+$location_product_media = is_array($location_product_media) ? $location_product_media : [];
+$location_gallery_group_map = fenster_data('product_gallery_groups', []);
+$location_gallery_group_map = is_array($location_gallery_group_map) ? $location_gallery_group_map : [];
+$location_gallery_group = (string) ($location_gallery_group_map[$service_slug] ?? '');
+$location_gallery_pool = $location_gallery_group !== '' ? fenster_data('product_gallery_pools.' . $location_gallery_group, []) : [];
+$location_gallery_pool = is_array($location_gallery_pool) ? $location_gallery_pool : [];
+$normalise_location_image = static function ($image) use ($title): ?array {
+    if (! is_array($image)) {
+        return null;
+    }
+
+    $src = trim((string) ($image['src'] ?? ''));
+    if ($src === '') {
+        return null;
+    }
+
+    $alt = trim((string) ($image['alt'] ?? ''));
+
+    return [
+        'src' => $src,
+        'alt' => $alt !== '' ? $alt : $title,
+    ];
+};
+
+if (! empty($location_product_media['hero'])) {
+    $normalised_hero_image = $normalise_location_image($location_product_media['hero']);
+    if (is_array($normalised_hero_image)) {
+        $hero_image = $normalised_hero_image;
+    }
+}
+
+$curated_location_images = [];
+$curated_location_seen = [];
+$location_hero_src = is_array($hero_image) ? trim((string) ($hero_image['src'] ?? '')) : '';
+foreach (array_merge((array) ($location_product_media['gallery'] ?? []), $location_gallery_pool) as $image) {
+    $normalised_image = $normalise_location_image($image);
+    if (is_array($normalised_image)) {
+        $image_src = (string) $normalised_image['src'];
+        if ($image_src === $location_hero_src || isset($curated_location_seen[$image_src])) {
+            continue;
+        }
+
+        $curated_location_seen[$image_src] = true;
+        $curated_location_images[] = $normalised_image;
+    }
+}
+
+if (! empty($curated_location_images)) {
+    $gallery_images = $curated_location_images;
+}
 $location = is_array($location) ? $location : $locations['milton-keynes'];
 
 $location_name = $location['name'];

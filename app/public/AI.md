@@ -165,6 +165,8 @@ PHP lint example:
 - On mobile, hide the desktop quote controls and show one same-tab `Open quote tool` action. The owner rejected the mobile new-tab/expand controls because they add friction and confuse the lead path.
 - The iframe wrapper should use `data-lenis-prevent` so the embedded tool remains usable with smooth scrolling.
 - Product pages should not render the imported mini-gallery from scraped `images` data. That export contains old stock/placeholder images, so product pages should use curated hero/feature media and link to focused specification hubs instead.
+- Product gallery pools in `inc\site-data.php` must stay material/product specific. Do not map uPVC doors, composite doors, French doors, patio doors, aluminium doors, aluminium bifolds or aluminium sliders into one broad entrance/wide-span pool; that reintroduces wrong-material imagery across the main product routes and town/service matrix pages.
+- Location/service pages rendered by `template-parts\sections\location-service.php` intentionally reuse the same curated `product_media` and `product_gallery_pools` source as the main product pages. Do not fall back to raw imported scrape images for product matrix routes when a curated product image source exists.
 - Product gallery thumbnails should open the in-page lightbox with dark overlay, arrows and no visible caption/alt text. Do not make gallery clicks open a raw image URL or new browser tab.
 - On mobile, product hub specification cards and any remaining horizontal components must not create horizontal body scroll.
 - Colour choices live in the `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/` virtual routes using `inc\site-data.php` under `colour_options`; do not rebuild huge inline colour grids on every product page.
