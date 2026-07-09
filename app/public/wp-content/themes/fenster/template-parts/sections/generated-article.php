@@ -21,6 +21,71 @@ $title = (string) ($args['title'] ?? ($page['title'] ?? 'Fenster Glazing'));
 $hero_intro = trim((string) ($args['hero_intro'] ?? ''));
 $phone = (string) ($brand['phone'] ?? '01908 429200');
 $phone_href = preg_replace('/\s+/', '', $phone);
+$slug = trim((string) ($page['slug'] ?? ''), '/');
+
+$article_next_steps_map = [
+    'what-is-a-door-lintel' => [
+        'eyebrow' => 'Planning door work?',
+        'title' => 'Need a doorway checked before new doors or glazing?',
+        'copy' => 'If a door opening, lintel or frame condition affects the project, Fenster can check the practical details before replacement doors or glazing are ordered.',
+        'links' => [
+            ['label' => 'View doors', 'url' => home_url('/doors-milton-keynes/'), 'meta' => 'Front, patio, French and bifold options'],
+            ['label' => 'Composite doors', 'url' => home_url('/composite-doors/'), 'meta' => 'Secure entrance door replacements'],
+            ['label' => 'Window and door repairs', 'url' => home_url('/window-and-door-repairs/'), 'meta' => 'When the opening needs attention first'],
+        ],
+    ],
+    'different-types-of-window-frame-materials' => [
+        'eyebrow' => 'Choosing frames?',
+        'title' => 'Compare window materials around your home, not just the brochure.',
+        'copy' => 'Frame material affects sightlines, colour, maintenance, insulation and cost. Start with the main window ranges, then Fenster can help narrow the specification.',
+        'links' => [
+            ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Compare uPVC, aluminium and heritage styles'],
+            ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/'), 'meta' => 'Slim frames and modern finishes'],
+            ['label' => 'Colour options', 'url' => home_url('/colour-options/'), 'meta' => 'uPVC and aluminium frame colours'],
+        ],
+    ],
+    'what-is-double-glazing-and-how-does-it-work' => [
+        'eyebrow' => 'Ready to compare options?',
+        'title' => 'Turn double glazing research into a practical quote.',
+        'copy' => 'Fenster can help compare windows, doors, replacement glass and frame choices around the rooms you want to improve.',
+        'links' => [
+            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/'), 'meta' => 'Windows, doors and replacement glass'],
+            ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Browse the main window styles'],
+            ['label' => 'Start an online quote', 'url' => home_url('/online-quote/'), 'meta' => 'Get a guide price before survey'],
+        ],
+    ],
+    'what-are-double-glazed-glass-windows' => [
+        'eyebrow' => 'Glass or full window?',
+        'title' => 'Check whether you need replacement glass or new windows.',
+        'copy' => 'If the frame is sound, failed glass may be replaceable. If the frame, seals or hardware are tired, a full window replacement may make more sense.',
+        'links' => [
+            ['label' => 'Double glazing replacement', 'url' => home_url('/double-glazing-replacement/'), 'meta' => 'Failed sealed units and replacement glass'],
+            ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Compare complete window options'],
+            ['label' => 'Window and door repairs', 'url' => home_url('/window-and-door-repairs/'), 'meta' => 'Locks, hinges, glass and frame issues'],
+        ],
+    ],
+    'all-you-need-to-know-about-louvre-vents' => [
+        'eyebrow' => 'Commercial ventilation',
+        'title' => 'Need louvres as part of a commercial glazing package?',
+        'copy' => 'Louvre panels usually need airflow, free-area, colour and facade details checked before they are priced or fitted.',
+        'links' => [
+            ['label' => 'Louvre vents', 'url' => home_url('/louvre-vents/'), 'meta' => 'Commercial louvre panels and ventilation'],
+            ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/'), 'meta' => 'Windows, doors, facades and glass'],
+            ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/'), 'meta' => 'Replacement and refurbishment works'],
+        ],
+    ],
+    'the-history-of-upvc-windows' => [
+        'eyebrow' => 'Considering uPVC?',
+        'title' => 'Compare modern uPVC windows with today\'s frame options.',
+        'copy' => 'Modern uPVC windows can be secure, efficient and low maintenance, but aluminium, flush and heritage styles may suit some homes better.',
+        'links' => [
+            ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Compare all main window ranges'],
+            ['label' => 'Casement windows', 'url' => home_url('/casement-windows/'), 'meta' => 'Practical uPVC window style'],
+            ['label' => 'Flush casement windows', 'url' => home_url('/flush-casement-windows/'), 'meta' => 'Cleaner traditional look'],
+        ],
+    ],
+];
+$article_next_steps = $article_next_steps_map[$slug] ?? [];
 
 $article_blocks = [];
 $intro_consumed = false;
@@ -74,6 +139,28 @@ $inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inl
             <?php endif; ?>
         </div>
     </section>
+
+    <?php if (! empty($article_next_steps)) : ?>
+        <section class="fg-article-next-steps">
+            <div class="container fg-article-next-steps__inner">
+                <div class="fg-article-next-steps__copy">
+                    <p class="eyebrow"><?php echo esc_html((string) ($article_next_steps['eyebrow'] ?? 'Next step')); ?></p>
+                    <h2><?php echo esc_html((string) ($article_next_steps['title'] ?? 'Plan the next step with Fenster.')); ?></h2>
+                    <p><?php echo esc_html((string) ($article_next_steps['copy'] ?? 'Explore the most relevant Fenster products and services for this guide.')); ?></p>
+                </div>
+                <div class="fg-article-next-steps__links">
+                    <?php foreach (array_slice((array) ($article_next_steps['links'] ?? []), 0, 4) as $link) : ?>
+                        <a href="<?php echo esc_url((string) ($link['url'] ?? '#')); ?>">
+                            <strong><?php echo esc_html((string) ($link['label'] ?? 'View option')); ?></strong>
+                            <?php if (! empty($link['meta'])) : ?>
+                                <span><?php echo esc_html((string) $link['meta']); ?></span>
+                            <?php endif; ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
 
     <?php if (! empty($article_blocks)) : ?>
         <section class="fg-article-body">

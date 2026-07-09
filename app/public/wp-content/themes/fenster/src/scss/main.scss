@@ -22690,6 +22690,79 @@ html.fg-blinds-reveal-locked {
     }
   }
 
+  .fg-article-next-steps {
+    padding: 0 0 clamp(1.25rem, 2.8vw, 2.1rem);
+  }
+
+  .fg-article-next-steps__inner {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.52fr) minmax(0, 1fr);
+    gap: clamp(1rem, 2.4vw, 1.6rem);
+    align-items: stretch;
+    padding: clamp(1rem, 2.4vw, 1.45rem);
+    border: 1px solid rgba(0, 45, 58, 0.12);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 14px 42px rgba(0, 45, 58, 0.07);
+  }
+
+  .fg-article-next-steps__copy {
+    display: grid;
+    align-content: center;
+
+    h2 {
+      margin: 0.45rem 0 0.65rem;
+      max-width: 18ch;
+      font-size: clamp(1.35rem, 2vw, 1.9rem);
+      line-height: 1.12;
+    }
+
+    p:not(.eyebrow) {
+      margin: 0;
+      color: var(--color-muted);
+      line-height: 1.58;
+    }
+  }
+
+  .fg-article-next-steps__links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+
+    a {
+      display: grid;
+      gap: 0.4rem;
+      align-content: start;
+      min-height: 100%;
+      padding: 1rem;
+      border: 1px solid rgba(0, 45, 58, 0.12);
+      border-radius: 8px;
+      background: var(--color-soft);
+      color: var(--color-ink);
+      text-decoration: none;
+      transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      border-color: rgba(46, 172, 102, 0.46);
+      box-shadow: 0 12px 30px rgba(0, 45, 58, 0.08);
+      transform: translateY(-1px);
+    }
+
+    strong {
+      color: var(--color-steel);
+      font-size: 0.98rem;
+      line-height: 1.2;
+    }
+
+    span {
+      color: var(--color-muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+  }
+
   .fg-article-body {
     padding: clamp(1.2rem, 2.5vw, 2rem) 0 clamp(2rem, 4vw, 3rem);
   }
@@ -22844,7 +22917,12 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 860px) {
   .fg-article-page {
     .fg-article-hero__grid,
+    .fg-article-next-steps__inner,
     .fg-article-cta__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .fg-article-next-steps__links {
       grid-template-columns: 1fr;
     }
 
@@ -22861,6 +22939,7 @@ html.fg-blinds-reveal-locked {
     }
 
     .fg-article-cta__grid,
+    .fg-article-next-steps__inner,
     .fg-article-cta__grid > div:first-child,
     .fg-article-form {
       padding: 1rem;
