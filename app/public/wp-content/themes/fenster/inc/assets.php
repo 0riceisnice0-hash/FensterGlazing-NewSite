@@ -33,24 +33,6 @@ function fenster_enqueue_assets(): void
     );
 }
 
-add_filter('style_loader_tag', 'fenster_defer_main_stylesheet', 10, 4);
-function fenster_defer_main_stylesheet(string $html, string $handle, string $href, string $media): string
-{
-    if ($handle !== 'fenster-main' || is_admin()) {
-        return $html;
-    }
-
-    $media_attr = $media !== '' && $media !== 'all' ? ' media="' . esc_attr($media) . '"' : '';
-    $href_attr = esc_url($href);
-
-    return sprintf(
-        '<link rel="preload" href="%1$s" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"%2$s>' . "\n" .
-        '<noscript><link rel="stylesheet" href="%1$s"%2$s></noscript>' . "\n",
-        $href_attr,
-        $media_attr
-    );
-}
-
 add_action('wp_head', 'fenster_render_critical_head_assets', 0);
 function fenster_render_critical_head_assets(): void
 {
