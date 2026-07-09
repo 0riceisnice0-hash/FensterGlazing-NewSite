@@ -211,6 +211,7 @@ PHP lint example:
 - Door handle crop assets live under `wp-content\themes\fenster\assets\images\products\door-handles`.
 - The door handle section renders from `template-parts\sections\generated-page.php` on selected door routes.
 - The accepted model uses the same compact selector pattern as window handles: finish swatches, active handle image/copy, three feature tiles and a static compatibility note.
+- Do not show the long-plate door handle selector on `/patio-doors/`, `/aluminium-bifold-doors/` or `/slide-fold-doors/`; those systems use different handle families and should not share the entrance/French door handle section.
 - Do not replace the cropped handle assets with the original nine-handle sheet in templates.
 
 ## Mobile Design And Implementation Rules

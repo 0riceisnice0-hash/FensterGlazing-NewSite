@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-09
 
+## 2026-07-09 - Door Handle Section Scope
+
+- Removed `/patio-doors/`, `/aluminium-bifold-doors/` and `/slide-fold-doors/` from the shared long-plate `door_handles` route list because those systems use different handle families.
+- Kept the selector active for relevant entrance/French-style door routes such as `/upvc-doors/` and `/french-doors/`.
+- Verified locally that the affected three routes return 200 without `#fenster-door-handles`, while `/upvc-doors/` and `/french-doors/` still render the section.
+
 ## 2026-07-09 - Product Image Pool Audit
 
 - Audited the product image source path after uPVC door pages were showing aluminium, composite and other wrong-material images.
