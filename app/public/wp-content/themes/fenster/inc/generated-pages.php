@@ -165,6 +165,117 @@ function fenster_location_matrix_product_profiles(): array
     ];
 }
 
+function fenster_gsc_seo_overrides(): array
+{
+    return [
+        'double-glazing-milton-keynes' => [
+            'title_tag' => 'Double Glazing Milton Keynes | Local Window & Door Quotes',
+            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Compare windows, doors, bifolds, roof lanterns and replacement glass, then get an online quote or survey-led advice.',
+        ],
+        'windows-milton-keynes' => [
+            'title_tag' => 'Windows Milton Keynes | Double Glazed Window Installers',
+            'meta_description' => 'Double glazed windows in Milton Keynes from Fenster Glazing. Compare uPVC, aluminium, flush, sash and heritage styles with local survey-led installation.',
+        ],
+        'doors-milton-keynes' => [
+            'title_tag' => 'Doors Milton Keynes | Front, Patio, Bifold & French Doors',
+            'meta_description' => 'Doors in Milton Keynes from Fenster Glazing, including composite, uPVC, aluminium, French, patio and bifold doors with local survey-led installation.',
+        ],
+        'composite-doors' => [
+            'title_tag' => 'Composite Doors | Secure Front Doors | Fenster Glazing',
+            'meta_description' => 'Composite doors with insulated slabs, secure locking, colour choices and survey-led fitting across Milton Keynes, Northampton and nearby towns.',
+        ],
+        'aluminium-bifold-doors' => [
+            'title_tag' => 'Aluminium Bifold Doors | Slim Bifold Installation',
+            'meta_description' => 'Aluminium bifold doors with slim frames, smooth folding panels, secure hardware and measured installation across Milton Keynes, Northampton and nearby towns.',
+        ],
+        'integral-blinds' => [
+            'title_tag' => 'Integral Blinds | Blinds Inside Double Glazing',
+            'meta_description' => 'Integral blinds sealed inside double glazing for doors, windows and roof glazing, with magnetic or electric controls and survey-led advice from Fenster Glazing.',
+        ],
+        'roof-lanterns' => [
+            'title_tag' => 'Roof Lanterns & Roof Lights | Fenster Glazing',
+            'meta_description' => 'Aluminium roof lanterns and roof lights for brighter extensions, with frame colours, solar-control glass and survey-led installation.',
+        ],
+        'aluminium-bifold-doors-milton-keynes' => [
+            'title_tag' => 'Bifold Doors Milton Keynes | Aluminium Bifold Installation',
+            'meta_description' => 'Aluminium bifold doors in Milton Keynes with slim frames, secure hardware, colour options and survey-led installation from Fenster Glazing.',
+        ],
+        'upvc-doors-milton-keynes' => [
+            'title_tag' => 'uPVC Doors Milton Keynes | Secure Door Installation',
+            'meta_description' => 'uPVC doors in Milton Keynes with low-maintenance frames, secure locking, glass and colour choices, measured and installed by Fenster Glazing.',
+        ],
+        'composite-doors-milton-keynes' => [
+            'title_tag' => 'Composite Doors Milton Keynes | Secure Front Doors',
+            'meta_description' => 'Composite doors in Milton Keynes with insulated slabs, secure locking, colour choices and survey-led fitting from Fenster Glazing.',
+        ],
+        'aluminium-doors-milton-keynes' => [
+            'title_tag' => 'Aluminium Doors Milton Keynes | Modern Secure Entrances',
+            'meta_description' => 'Aluminium doors in Milton Keynes for modern entrances, glazed doors and garden access, with colour, threshold and security details checked before order.',
+        ],
+        'roof-lanterns-milton-keynes' => [
+            'title_tag' => 'Roof Lights & Roof Lanterns Milton Keynes | Fenster Glazing',
+            'meta_description' => 'Roof lights and roof lanterns in Milton Keynes for brighter extensions, with aluminium frames, solar-control glass and survey-led installation.',
+        ],
+        'roof-lanterns-northampton' => [
+            'title_tag' => 'Roof Lights & Roof Lanterns Northampton | Fenster Glazing',
+            'meta_description' => 'Roof lights and roof lanterns in Northampton for extensions and living spaces, with aluminium frames, glass options and survey-led installation.',
+        ],
+        'casement-windows-northampton' => [
+            'title_tag' => 'Casement Windows Northampton | Double Glazed Installers',
+            'meta_description' => 'Casement windows in Northampton with practical opening styles, secure locking, colour choices and survey-led installation from Fenster Glazing.',
+        ],
+        'flush-casement-windows-northampton' => [
+            'title_tag' => 'Flush Casement Windows Northampton | Fenster Glazing',
+            'meta_description' => 'Flush casement windows in Northampton with traditional styling, modern double glazing, colour choices and survey-led installation.',
+        ],
+        'aluminium-bifold-doors-northampton' => [
+            'title_tag' => 'Bifold Doors Northampton | Aluminium Bifold Installation',
+            'meta_description' => 'Aluminium bifold doors in Northampton with slim sightlines, smooth folding panels, secure hardware and measured installation.',
+        ],
+        'commercial-glazing' => [
+            'title_tag' => 'Commercial Glazing Contractors | Windows, Doors & Facades',
+            'meta_description' => 'Commercial glazing from Fenster Glazing for offices, schools, healthcare, retail and managed sites, including windows, doors, curtain walling and replacement glass.',
+        ],
+        'commercial-windows-and-doors' => [
+            'title_tag' => 'Commercial Window Installers | Windows, Doors & Glass',
+            'meta_description' => 'Commercial window and door installers for offices, schools, healthcare, retail units and managed sites, with survey, specification and phased installation support.',
+        ],
+        'curtain-walling' => [
+            'title_tag' => 'Curtain Walling Installers | Commercial Glazed Facades',
+            'meta_description' => 'Curtain walling installers for commercial glazed facades, entrances, screens and replacement elevations, with survey and specification support from Fenster Glazing.',
+        ],
+        'louvre-vents' => [
+            'title_tag' => 'Louvre Vents | Commercial Ventilation Louvres',
+            'meta_description' => 'Aluminium louvre vents and ventilation panels for plant rooms, service areas, commercial facades and glazing packages, specified and installed by Fenster Glazing.',
+        ],
+    ];
+}
+
+function fenster_slug_matches_location_matrix(string $slug): bool
+{
+    $slug = trim($slug, '/');
+
+    foreach (fenster_location_matrix_towns() as $town_slug => $town_label) {
+        if (! str_ends_with($slug, '-' . $town_slug)) {
+            continue;
+        }
+
+        $product_slug = substr($slug, 0, -strlen('-' . $town_slug));
+        return isset(fenster_location_matrix_products()[$product_slug]);
+    }
+
+    return false;
+}
+
+function fenster_gsc_static_seo_overrides(): array
+{
+    return array_filter(
+        fenster_gsc_seo_overrides(),
+        static fn (array $seo, string $slug): bool => ! fenster_slug_matches_location_matrix($slug),
+        ARRAY_FILTER_USE_BOTH
+    );
+}
+
 function fenster_location_matrix_page(string $slug, ?array $index = null): ?array
 {
     $slug = trim($slug, '/');
@@ -195,18 +306,19 @@ function fenster_location_matrix_page(string $slug, ?array $index = null): ?arra
         $source['slug'] = $slug;
         $source['title'] = $title;
         $source['url'] = home_url('/' . $slug . '/');
-        $source['seo']['title_tag'] = $products[$product_slug] . ' in ' . $town_label . ' | Survey & Installation';
+        $source['seo']['title_tag'] = $products[$product_slug] . ' ' . $town_label . ' | Local Supply & Installation';
         $source['seo']['meta_description'] = sprintf(
-            '%s in %s for %s. Fenster helps plan %s around %s before survey and installation.',
+            '%s in %s for %s. Compare options, get a quote and plan %s around %s before survey-led installation.',
             $products[$product_slug],
             $town_label,
             $town_profile['property'],
             $product_profile['decision'],
             $town_profile['priority']
         );
-        if ($slug === 'double-glazing-milton-keynes') {
-            $source['seo']['title_tag'] = 'Double Glazing Milton Keynes | Prices, Windows & Doors';
-            $source['seo']['meta_description'] = 'Double glazing in Milton Keynes from Fenster Glazing. Compare windows, doors, bifolds, roof lanterns and replacement glass with online pricing and survey-led installation.';
+        $gsc_seo_overrides = fenster_gsc_seo_overrides();
+        if (isset($gsc_seo_overrides[$slug])) {
+            $source['seo']['title_tag'] = $gsc_seo_overrides[$slug]['title_tag'];
+            $source['seo']['meta_description'] = $gsc_seo_overrides[$slug]['meta_description'];
         }
         $source['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
         unset($source['seo']['robots']);
@@ -549,6 +661,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'meta_description' => 'Start an online quote for Fenster Glazing windows, doors, bifolds and roof lanterns, then our team can confirm survey details and next steps.',
         ],
     ];
+    $launch_seo_overrides = array_merge($launch_seo_overrides, fenster_gsc_static_seo_overrides());
 
     if (isset($launch_seo_overrides[$slug])) {
         $index = fenster_generated_pages_index();
