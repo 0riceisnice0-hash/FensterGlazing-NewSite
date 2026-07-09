@@ -33,30 +33,40 @@ function fenster_enqueue_assets(): void
     );
 }
 
+add_filter('style_loader_tag', 'fenster_unmask_stylesheet_for_clarity', 10, 4);
+function fenster_unmask_stylesheet_for_clarity(string $html, string $handle, string $href, string $media): string
+{
+    if ($html === '' || str_contains($html, 'data-clarity-unmask=')) {
+        return $html;
+    }
+
+    return str_replace('<link ', '<link data-clarity-unmask="true" ', $html);
+}
+
 add_action('wp_head', 'fenster_render_critical_head_assets', 0);
 function fenster_render_critical_head_assets(): void
 {
     $font_version = (string) filemtime(FENSTER_THEME_DIR . '/assets/fonts/Gibson-Regular.woff2');
 
     printf(
-        '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+        '<link rel="preload" data-clarity-unmask="true" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
         esc_url(FENSTER_THEME_URI . '/assets/fonts/Gibson-Regular.woff2?ver=' . $font_version)
     );
     printf(
-        '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+        '<link rel="preload" data-clarity-unmask="true" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
         esc_url(FENSTER_THEME_URI . '/assets/fonts/Gibson-SemiBold.woff2?ver=' . (string) filemtime(FENSTER_THEME_DIR . '/assets/fonts/Gibson-SemiBold.woff2'))
     );
 
     if (is_front_page() || is_home()) {
         $hero_poster = FENSTER_THEME_URI . '/assets/images/imported/home-hero-poster.jpg';
         printf(
-            '<link rel="preload" href="%s" as="image" type="image/jpeg" fetchpriority="high">' . "\n",
+            '<link rel="preload" data-clarity-unmask="true" href="%s" as="image" type="image/jpeg" fetchpriority="high">' . "\n",
             esc_url($hero_poster)
         );
     }
 
     ?>
-    <style id="fenster-critical-css">
+    <style id="fenster-critical-css" data-clarity-unmask="true">
         @font-face{font-family:"Gibson";src:url("<?php echo esc_url(FENSTER_THEME_URI . '/assets/fonts/Gibson-Regular.woff2?ver=' . $font_version); ?>") format("woff2");font-weight:400;font-style:normal;font-display:swap}
         :root{--color-ink:#06212a;--color-accent:#2eac66;--color-steel:#002d3a;--container:1180px;--site-header-main-height:72px}
         *{box-sizing:border-box}html{scroll-padding-top:88px}body{margin:0;color:var(--color-ink);font-family:"Gibson",Arial,Helvetica,sans-serif;line-height:1.6;background:#eef5f4}a{color:inherit}.container{width:min(100% - 2rem,var(--container));margin-inline:auto}.site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);border-bottom:1px solid rgba(6,33,42,.08)}.site-header__inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem}.site-brand__logo{display:block;width:clamp(132px,14vw,188px);height:auto}.site-nav-toggle,.button{min-height:44px}.button{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.85rem 1.15rem;background:var(--color-accent);color:#fff;text-decoration:none;font-weight:700}.button--light{background:#fff;color:var(--color-steel)}.fg-home-hero{position:relative;min-height:clamp(600px,78svh,760px);display:flex;align-items:center;overflow:hidden;background:#0c3038}.fg-home-hero__video,.fg-home-hero__shade{position:absolute;inset:0;width:100%;height:100%}.fg-home-hero__video{object-fit:cover}.fg-home-hero__shade{background:linear-gradient(90deg,rgba(0,45,58,.78),rgba(0,45,58,.3) 54%,rgba(0,45,58,.08))}.fg-home-hero__inner{position:relative;z-index:1}.fg-home-hero__copy{max-width:720px;color:#fff}.fg-home-hero__copy h1{margin:.25rem 0 1rem;font-size:clamp(2.4rem,5vw,5.4rem);line-height:.95}.fg-home-hero__copy p{font-size:clamp(1rem,1.5vw,1.25rem)}.button-row{display:flex;flex-wrap:wrap;gap:.8rem}.fg-home-proof-wall{padding:clamp(1.25rem,3vw,2.5rem) 0}@media(max-width:860px){.site-header{position:fixed;left:0;right:0}.fg-home-hero{min-height:0;padding:calc(72px + 4.75rem) 0 4rem}.fg-home-hero__copy h1{font-size:clamp(2.2rem,10vw,3.35rem)}.button-row .button{width:100%}}
@@ -248,7 +258,7 @@ function fenster_preload_product_scroll_video(): void
 
     if ($slug === 'aluminium-windows') {
         printf(
-            '<link rel="preload" href="%s" as="image" type="image/webp" fetchpriority="high">' . "\n",
+            '<link rel="preload" data-clarity-unmask="true" href="%s" as="image" type="image/webp" fetchpriority="high">' . "\n",
             esc_url(fenster_aluminium_windows_story_asset_url('frames-desktop/frame-001.webp'))
         );
         return;
