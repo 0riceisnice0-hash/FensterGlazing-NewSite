@@ -8,6 +8,8 @@
 $brand = fenster_data('brand', []);
 $footer_products = [
     ['label' => 'Double Glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['label' => 'Double glazing prices', 'url' => home_url('/double-glazing-prices-milton-keynes/')],
+    ['label' => 'Window and door prices', 'url' => home_url('/window-door-prices-milton-keynes/')],
     ['label' => 'Windows and doors', 'url' => home_url('/windows-milton-keynes/')],
     ['label' => 'Aluminium glazing', 'url' => home_url('/aluminium-windows/')],
     ['label' => 'Bifolds and sliders', 'url' => home_url('/aluminium-bifold-doors/')],
@@ -19,6 +21,7 @@ $footer_company = [
     ['label' => 'About Fenster', 'url' => home_url('/about/')],
     ['label' => 'Why Trust Fenster', 'url' => home_url('/why-trust-fenster/')],
     ['label' => 'Meet the Team', 'url' => home_url('/meet-the-team/')],
+    ['label' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
     ['label' => 'Contact', 'url' => home_url('/contact/')],
     ['label' => 'Instant Quote', 'url' => home_url('/online-quote/')],

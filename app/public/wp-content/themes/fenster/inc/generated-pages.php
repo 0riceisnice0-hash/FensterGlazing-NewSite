@@ -181,12 +181,56 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Doors in Milton Keynes from Fenster Glazing, including composite, uPVC, aluminium, French, patio and bifold doors with local survey-led installation.',
         ],
         'composite-doors' => [
-            'title_tag' => 'Composite Doors | Secure Front Doors | Fenster Glazing',
+            'title_tag' => 'Composite Doors Milton Keynes | Secure Front Doors',
             'meta_description' => 'Composite doors with insulated slabs, secure locking, colour choices and survey-led fitting across Milton Keynes, Northampton and nearby towns.',
         ],
         'aluminium-bifold-doors' => [
-            'title_tag' => 'Aluminium Bifold Doors | Slim Bifold Installation',
+            'title_tag' => 'Aluminium Bifold Doors Milton Keynes | Slim Bifolds',
             'meta_description' => 'Aluminium bifold doors with slim frames, smooth folding panels, secure hardware and measured installation across Milton Keynes, Northampton and nearby towns.',
+        ],
+        'aluminium-flush-windows' => [
+            'title_tag' => 'Aluminium Flush Windows Milton Keynes | Slim Modern Frames',
+            'meta_description' => 'Aluminium flush windows in Milton Keynes with slim sightlines, strong frames, RAL colour options and survey-led installation from Fenster Glazing.',
+        ],
+        'aluminium-sliding-doors' => [
+            'title_tag' => 'Aluminium Sliding Doors Milton Keynes | Slim Patio Doors',
+            'meta_description' => 'Aluminium sliding doors in Milton Keynes with slim sightlines, large glass areas, secure hardware and survey-led installation from Fenster Glazing.',
+        ],
+        'window-and-door-repairs' => [
+            'title_tag' => 'Window and Door Repairs Milton Keynes | Locks, Glass & Frames',
+            'meta_description' => 'Window and door repairs in Milton Keynes, including replacement glass, misted units, locks, hinges, handles and frame issues from Fenster Glazing.',
+        ],
+        'aluminium-doors' => [
+            'title_tag' => 'Aluminium Doors Milton Keynes | Modern Secure Entrances',
+            'meta_description' => 'Aluminium doors in Milton Keynes for secure entrances, garden access and glazed openings, with colour, threshold and hardware details checked before order.',
+        ],
+        'bow-bay-windows' => [
+            'title_tag' => 'Bow and Bay Windows Milton Keynes | Double Glazed Bays',
+            'meta_description' => 'Bow and bay windows in Milton Keynes with double glazing, colour options and survey-led replacement for brighter rooms and kerb appeal.',
+        ],
+        'heritage-windows' => [
+            'title_tag' => 'Heritage Windows Milton Keynes | Slim Aluminium Style',
+            'meta_description' => 'Heritage windows in Milton Keynes with slim aluminium styling, modern double glazing, colour options and survey-led installation.',
+        ],
+        'patio-doors' => [
+            'title_tag' => 'Patio Doors Milton Keynes | Sliding Garden Doors',
+            'meta_description' => 'Patio doors in Milton Keynes with smooth sliding operation, secure locking, colour options and survey-led installation from Fenster Glazing.',
+        ],
+        'roofline' => [
+            'title_tag' => 'Roofline Services Milton Keynes | Fascias, Soffits & Guttering',
+            'meta_description' => 'Roofline services in Milton Keynes, including fascias, soffits, guttering and related exterior details from Fenster Glazing.',
+        ],
+        'slide-fold-doors' => [
+            'title_tag' => 'Slide and Fold Doors Milton Keynes | Bifold Door Options',
+            'meta_description' => 'Slide and fold doors in Milton Keynes for flexible glazed openings, with panel, threshold, colour and survey details checked before order.',
+        ],
+        'sliding-sash-windows' => [
+            'title_tag' => 'Sliding Sash Windows Milton Keynes | Heritage-Style Sash',
+            'meta_description' => 'Sliding sash windows in Milton Keynes with traditional styling, modern double glazing, colour and furniture options, measured and installed by Fenster Glazing.',
+        ],
+        'tilt-turn-windows' => [
+            'title_tag' => 'Tilt and Turn Windows Milton Keynes | Secure uPVC Windows',
+            'meta_description' => 'Tilt and turn windows in Milton Keynes with flexible ventilation, secure opening, colour choices and survey-led installation from Fenster Glazing.',
         ],
         'integral-blinds' => [
             'title_tag' => 'Integral Blinds | Blinds Inside Double Glazing',
@@ -357,6 +401,8 @@ function fenster_price_guides_enabled(): bool
 
     $enabled_hosts = [
         'fenster-glazing.local',
+        'fensterglazing.com',
+        'www.fensterglazing.com',
         'test.fensterglazing.com',
         'localhost',
         '127.0.0.1',
@@ -482,6 +528,14 @@ function fenster_price_guide_pages(): array
             'links' => ['window-door-prices-milton-keynes', 'patio-doors', 'french-doors'],
         ],
     ];
+
+    if (isset($guides['double-glazing-cost'])) {
+        $guides['double-glazing-prices-milton-keynes'] = $guides['double-glazing-cost'];
+        $guides['double-glazing-prices-milton-keynes']['title'] = 'Double Glazing Prices Milton Keynes';
+        $guides['double-glazing-prices-milton-keynes']['label'] = 'Double glazing prices Milton Keynes';
+        $guides['double-glazing-prices-milton-keynes']['intro'] = 'A local guide to double glazing prices in Milton Keynes, with Fenster examples, the main cost factors and a route into instant online pricing before survey.';
+        $guides['double-glazing-prices-milton-keynes']['links'] = ['window-door-prices-milton-keynes', 'double-glazing-milton-keynes', 'windows-milton-keynes', 'online-quote'];
+    }
 
     foreach ($guides as $slug => &$guide) {
         $guide['slug'] = $slug;
@@ -1413,7 +1467,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (['terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
+    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
@@ -1655,6 +1709,14 @@ function fenster_render_site_schema(): void
         'image' => FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png',
         'logo' => FENSTER_THEME_URI . '/assets/brand/favicon-512.png',
         'priceRange' => '££',
+        'hasMap' => 'https://www.google.com/maps/place/Fenster+Glazing/@52.0465566,-0.7938287,15z',
+        'sameAs' => [
+            'https://www.google.com/maps/place/Fenster+Glazing/@52.0465566,-0.7938287,15z',
+            'https://uk.trustpilot.com/review/fensterglazing.com',
+            'https://www.facebook.com/fensterg/',
+            'https://uk.linkedin.com/company/fenster-glazing',
+            'https://www.fensa.org.uk/',
+        ],
         'address' => [
             '@type' => 'PostalAddress',
             'streetAddress' => '97-98 Alston Drive, Bradwell Abbey',
@@ -1662,6 +1724,11 @@ function fenster_render_site_schema(): void
             'addressRegion' => 'Buckinghamshire',
             'postalCode' => 'MK13 9HF',
             'addressCountry' => 'GB',
+        ],
+        'geo' => [
+            '@type' => 'GeoCoordinates',
+            'latitude' => 52.04675706723099,
+            'longitude' => -0.7936422637592695,
         ],
         'openingHoursSpecification' => [
             [

@@ -93,6 +93,9 @@ $partners = [
 
 $location_links = [
     ['text' => 'Double Glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/')],
+    ['text' => 'Double Glazing Prices Milton Keynes', 'url' => home_url('/double-glazing-prices-milton-keynes/')],
+    ['text' => 'Window and Door Prices Milton Keynes', 'url' => home_url('/window-door-prices-milton-keynes/')],
+    ['text' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
     ['text' => 'Double Glazing Northampton', 'url' => home_url('/double-glazing-northampton/')],
     ['text' => 'Double Glazing Bedford', 'url' => home_url('/double-glazing-bedford/')],
     ['text' => 'Double Glazing Buckingham', 'url' => home_url('/double-glazing-buckingham/')],
@@ -355,7 +358,7 @@ $location_links = [
                 <p><?php esc_html_e('A few of our main local service areas. Contact Fenster if your town is not listed.', 'fenster'); ?></p>
             </div>
             <div class="fg-home-seo-mesh__links">
-                <?php foreach (array_slice($location_links, 0, 8) as $link) : ?>
+                <?php foreach (array_slice($location_links, 0, 10) as $link) : ?>
                     <a href="<?php echo esc_url(fenster_generated_url((string) $link['url'])); ?>"><?php echo esc_html((string) $link['text']); ?></a>
                 <?php endforeach; ?>
             </div>
