@@ -9,7 +9,9 @@ Last updated: 2026-07-09
 - Split curated gallery pools by material/product family for uPVC doors, composite doors, patio doors, French doors, aluminium doors, aluminium bifolds, slide-fold doors and aluminium sliding doors.
 - Cleaned uPVC and aluminium window pools so they no longer borrow obvious wrong-material product images just to fill the gallery.
 - Updated `template-parts\sections\location-service.php` so generated town/service routes reuse the same curated product media and gallery pools instead of falling back to raw imported scrape images.
+- Pushed and deployed commit `97d7525` (`Fix product image gallery pools`) to live with a theme-only SiteGround rsync and cache flush.
 - Verified representative main product and matrix routes locally, including `/upvc-doors/`, `/composite-doors/`, `/patio-doors/`, `/french-doors/`, `/aluminium-doors/`, `/aluminium-bifold-doors/`, `/aluminium-sliding-doors/`, `/upvc-doors-milton-keynes/`, `/french-doors-milton-keynes/`, `/patio-doors-milton-keynes/` and aluminium/composite matrix equivalents.
+- Verified the live `/upvc-doors/` route server-side after deployment; it returns 200 and includes the curated uPVC/front-door image set (`fenster-upvc-door.jpg`, `Residential_Door_08.jpg`, `Residential_Door_01.jpg`, `new-front-door-in-Milton-Keynes.jpeg`, `house-front-door.jpeg`, `secure-front-door.jpeg`).
 
 ## 2026-07-09 - Microsoft Clarity Replay Rendering Fix
 

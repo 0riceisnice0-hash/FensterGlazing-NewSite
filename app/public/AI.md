@@ -16,7 +16,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 
 ## Important Updates
 
-- Latest live commit at the time of this update is `f820b87` (`Inline replay CSS before Clarity loads`). New agents should check `git log --oneline -8` before assuming this is still the latest.
+- Latest live commit at the time of this update is `97d7525` (`Fix product image gallery pools`). New agents should check `git log --oneline -8` before assuming this is still the latest.
 - GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.
 - SiteGround test/live are still Bedrock installs. Local source is standard WordPress at `wp-content\themes\fenster`, but server deploy target is `web/app/themes/fenster`. The verified test deploy path is: GitHub repo cache at `~/repos/FensterGlazing-NewSite`, then rsync `app/public/wp-content/themes/fenster/` into `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Production deploys should swap/update the theme only. Keep the production database, uploads, plugins, `.env`, Bedrock config and `wp-config.php` equivalent in place unless the owner explicitly asks for a full WordPress migration.
