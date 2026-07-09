@@ -1018,6 +1018,54 @@ $mk_option_groups = [
     ['title' => 'Finishing details', 'items' => ['Cills', 'Trickle vents', 'Handles', 'Thresholds', 'Colour and foil finish']],
     ['title' => 'Survey checks', 'items' => ['Exact sizes', 'Access', 'Drainage', 'Making good', 'Ventilation requirements']],
 ];
+$mk_price_checked = '9 July 2026';
+$mk_price_examples = [
+    [
+        'spec' => '1200 x 1200 uPVC casement window',
+        'price' => '583.61 inc VAT',
+        'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, 5000EA trickle vent and white Signature handle.',
+        'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-casement-1200x1200.png',
+        'url' => home_url('/double-glazing-cost/'),
+    ],
+    [
+        'spec' => '900 x 2100 composite entrance door',
+        'price' => '1,999.20 inc VAT',
+        'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, composite door cill, clear glass and chrome lever handle.',
+        'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-composite-door-900x2100.png',
+        'url' => home_url('/composite-door-prices/'),
+    ],
+    [
+        'spec' => '3000 x 2100 aluminium bifold door',
+        'price' => '3,469.43 inc VAT',
+        'details' => 'Prestige aluminium three-pane bifold, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent.',
+        'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-bifold-product-3000x2100.png',
+        'url' => home_url('/bifold-door-cost/'),
+    ],
+];
+$mk_trust_reasons = [
+    ['title' => 'A real MK showroom', 'copy' => 'You can visit the Fenster team, compare products, look at colours and handles, and talk through the survey details before committing to the work.'],
+    ['title' => 'Reviews and recognised cover', 'copy' => 'Fenster shows customer review proof alongside FENSA and Consumer Protection Association backing, so the page is not asking people to trust a blank quote form.'],
+    ['title' => 'Survey before manufacture', 'copy' => 'Every made-to-measure order is checked before manufacture, including safety glass, trickle vents, thresholds, cills, access and finishing trims.'],
+    ['title' => 'Product choice in one place', 'copy' => 'Windows, doors, bifolds, sliders, roof lanterns and replacement glass can be compared together so the final specification feels consistent across the property.'],
+];
+$mk_spec_links = [
+    ['title' => 'Window specifications', 'copy' => 'Casement, flush, aluminium, sash and bay window routes with frame and glass choices.', 'url' => home_url('/windows-milton-keynes/')],
+    ['title' => 'Door specifications', 'copy' => 'Composite, uPVC, French, patio, bifold and aluminium entrance door options.', 'url' => home_url('/doors-milton-keynes/')],
+    ['title' => 'Price guide hub', 'copy' => 'Checked WindowCAD examples and the factors that move fitted guide prices.', 'url' => home_url('/window-door-prices-milton-keynes/')],
+    ['title' => 'Instant quote', 'copy' => 'Build a guide price online, then let the survey confirm the final specification.', 'url' => home_url('/online-quote/')],
+    ['title' => 'Why trust Fenster', 'copy' => 'Reviews, accreditations, showroom details and aftercare expectations in one place.', 'url' => home_url('/why-trust-fenster/')],
+    ['title' => 'Contact and directions', 'copy' => 'Showroom location, phone, email, map and direct enquiry routes.', 'url' => home_url('/contact/')],
+];
+$mk_local_proof = [
+    ['area' => 'Central Milton Keynes and apartments', 'proof' => 'Photo slot for balcony doors, replacement units or apartment window upgrades where access and management details matter.', 'detail' => 'Useful proof: before/after image, install note, access constraint and review pull quote.'],
+    ['area' => 'Bletchley, Fenny Stratford and older estates', 'proof' => 'Photo slot for whole-house uPVC window replacements, composite front doors and warmer rooms in established MK homes.', 'detail' => 'Useful proof: street-facing elevation, colour choice, cill/trickle vent note and local review.'],
+    ['area' => 'Wolverton and Stony Stratford', 'proof' => 'Photo slot for sash, flush, heritage-style or conservation-sensitive product choices where proportions matter.', 'detail' => 'Useful proof: close-up of sightlines, handle finish, glass choice and matching detail.'],
+    ['area' => 'Newport Pagnell and east MK', 'proof' => 'Photo slot for rear extensions, bifold doors, patio sliders and roof lanterns with garden-facing images.', 'detail' => 'Useful proof: opening size, panel count, threshold decision and route to showroom directions.'],
+    ['area' => 'Woburn Sands and south-east villages', 'proof' => 'Photo slot for aluminium windows, heritage doors and quieter glass choices on larger detached homes.', 'detail' => 'Useful proof: product system, frame colour, acoustic or thermal requirement and installer notes.'],
+    ['area' => 'New developments around Whitehouse, Brooklands and Monkston', 'proof' => 'Photo slot for matching newer frames, adding doors, replacing misted units or upgrading glass without changing the whole elevation.', 'detail' => 'Useful proof: matching colour, glass replacement note, warranty/aftercare note and homeowner review.'],
+];
+$mk_direction_link = 'https://www.google.com/maps/dir/?api=1&destination=' . rawurlencode('Fenster Glazing Milton Keynes');
+$mk_showroom_image = FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png';
 $product_links = [
     ['text' => 'Windows', 'url' => home_url('/windows-milton-keynes/')],
     ['text' => 'Doors', 'url' => home_url('/doors-milton-keynes/')],
@@ -1064,6 +1112,26 @@ $product_links = [
         </div>
     </section>
 
+    <section class="fg-mk-trust-slab">
+        <div class="container fg-mk-trust-slab__grid">
+            <div class="fg-mk-trust-slab__copy" data-fg-mk-reveal="left">
+                <p class="eyebrow"><?php esc_html_e('Why you can trust Fenster', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Local proof, showroom advice and a survey before manufacture.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('A money page needs more than a nice headline. The reason Fenster can talk about double glazing properly is that the team deals with the whole decision: what product suits the home, what changes the price, which glass and ventilation details are required, how the opening will be surveyed, and what happens after the installation.', 'fenster'); ?></p>
+                <p><?php esc_html_e('For Milton Keynes homeowners, that means you can start with a guide price online, ask the showroom team to compare products, then let the survey confirm the exact sizes, vents, cills, thresholds, glass and finishing details before the order is placed.', 'fenster'); ?></p>
+                <a class="button button--light" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('Why trust Fenster', 'fenster'); ?></a>
+            </div>
+            <div class="fg-mk-trust-slab__reasons" data-fg-mk-reveal="right">
+                <?php foreach ($mk_trust_reasons as $reason) : ?>
+                    <article>
+                        <h3><?php echo esc_html($reason['title']); ?></h3>
+                        <p><?php echo esc_html($reason['copy']); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
     <section class="fg-mk-products" id="fenster-mk-products">
         <div class="container">
             <div class="fg-location-section-head">
@@ -1071,8 +1139,8 @@ $product_links = [
                 <h2><?php esc_html_e('Start with the product, then price and survey the exact specification.', 'fenster'); ?></h2>
             </div>
             <div class="fg-mk-products__grid">
-                <?php foreach ($mk_key_products as $product) : ?>
-                    <a href="<?php echo esc_url($product['url']); ?>">
+                <?php foreach ($mk_key_products as $index => $product) : ?>
+                    <a href="<?php echo esc_url($product['url']); ?>" data-fg-mk-reveal="<?php echo esc_attr($index % 3 === 0 ? 'left' : ($index % 3 === 1 ? 'up' : 'right')); ?>">
                         <img src="<?php echo esc_url(fenster_generated_url($product['image'])); ?>" alt="" loading="lazy" style="<?php echo esc_attr('object-position: ' . ($product['position'] ?? 'center')); ?>">
                         <span><?php echo esc_html($product['meta']); ?></span>
                         <strong><?php echo esc_html($product['title']); ?></strong>
@@ -1086,7 +1154,7 @@ $product_links = [
     <section class="fg-mk-cascade" aria-label="<?php esc_attr_e('How Fenster specifies double glazing', 'fenster'); ?>">
         <div class="container fg-mk-cascade__stack">
             <?php foreach ($mk_cascade_sections as $index => $section) : ?>
-                <article class="fg-mk-cascade__item <?php echo esc_attr($index % 2 ? 'fg-mk-cascade__item--reverse' : ''); ?>">
+                <article class="fg-mk-cascade__item <?php echo esc_attr($index % 2 ? 'fg-mk-cascade__item--reverse' : ''); ?>" data-fg-mk-reveal="<?php echo esc_attr($index % 2 ? 'right' : 'left'); ?>">
                     <div class="fg-mk-cascade__copy">
                         <p class="eyebrow"><?php echo esc_html($section['eyebrow']); ?></p>
                         <h2><?php echo esc_html($section['title']); ?></h2>
@@ -1094,10 +1162,40 @@ $product_links = [
                         <a class="text-link" href="<?php echo esc_url($section['url']); ?>"><?php echo esc_html($section['action']); ?></a>
                     </div>
                     <figure class="fg-mk-cascade__media">
-                        <img src="<?php echo esc_url(fenster_generated_url($section['image'])); ?>" alt="" loading="lazy">
+                        <img src="<?php echo esc_url(fenster_generated_url($section['image'])); ?>" alt="" loading="lazy" data-fg-depth="0.05">
                     </figure>
                 </article>
             <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="fg-mk-price-guide" id="fenster-mk-price-guide">
+        <div class="container">
+            <div class="fg-mk-price-guide__head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Price guidance', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Real guide prices give the conversation a proper starting point.', 'fenster'); ?></h2>
+                </div>
+                <p><?php echo esc_html('Checked ' . $mk_price_checked . '. These WindowCAD examples are fitted guide prices for specific configurations, including VAT. They are not a substitute for survey because final sizes, access, safety glass, ventilation, cills, thresholds, disposal, colour and hardware can change the final order.'); ?></p>
+            </div>
+            <div class="fg-mk-price-guide__grid">
+                <?php foreach ($mk_price_examples as $index => $example) : ?>
+                    <article data-fg-mk-reveal="<?php echo esc_attr($index === 0 ? 'left' : ($index === 1 ? 'up' : 'right')); ?>">
+                        <img <?php echo fenster_image_attr_string($example['image'], ['alt' => $example['spec'] . ' price example', 'loading' => 'lazy']); ?>>
+                        <div>
+                            <span><?php echo esc_html('Checked ' . $mk_price_checked); ?></span>
+                            <h3><?php echo esc_html($example['spec']); ?></h3>
+                            <strong><?php echo '&pound;' . esc_html($example['price']); ?></strong>
+                            <p><?php echo esc_html($example['details']); ?></p>
+                            <a class="text-link" href="<?php echo esc_url($example['url']); ?>"><?php esc_html_e('View the guide', 'fenster'); ?></a>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+            <div class="fg-mk-price-guide__note">
+                <p><?php esc_html_e('If you are comparing quotes, ask whether the price includes VAT, fitting, disposal, cills, vents, toughened glass where required, making good, and whether the company has actually checked the product configuration. Fenster can show the product route, price drivers and survey assumptions before you decide whether to go further.', 'fenster'); ?></p>
+                <a class="button" href="<?php echo esc_url(home_url('/window-door-prices-milton-keynes/')); ?>"><?php esc_html_e('See the full price hub', 'fenster'); ?></a>
+            </div>
         </div>
     </section>
 
@@ -1126,15 +1224,36 @@ $product_links = [
         </div>
     </section>
 
-    <section class="fg-mk-options">
+    <section class="fg-mk-spec-links">
         <div class="container">
             <div class="fg-location-section-head">
-                <p class="eyebrow"><?php esc_html_e('Additional options', 'fenster'); ?></p>
-                <h2><?php esc_html_e('The details that change the look, performance and final price.', 'fenster'); ?></h2>
+                <p class="eyebrow"><?php esc_html_e('Specifications and next steps', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Put the important product decisions at the top, then link people into the deeper pages.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('These routes are the useful next clicks: product specifications, price examples, trust proof, contact details and the instant quote tool.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-mk-spec-links__grid">
+                <?php foreach ($mk_spec_links as $index => $link) : ?>
+                    <article data-fg-mk-reveal="<?php echo esc_attr($index % 2 ? 'right' : 'left'); ?>">
+                        <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
+                        <h3><?php echo esc_html($link['title']); ?></h3>
+                        <p><?php echo esc_html($link['copy']); ?></p>
+                        <a class="text-link" href="<?php echo esc_url($link['url']); ?>"><?php esc_html_e('Open', 'fenster'); ?></a>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="fg-mk-options">
+        <div class="container fg-mk-options__layout">
+            <div>
+                <p class="eyebrow"><?php esc_html_e('What the survey locks down', 'fenster'); ?></p>
+                <h2><?php esc_html_e('The final number is built from the details, not just the headline product.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Two homes can ask for double glazing and need very different specifications. A simple white casement window is not the same job as a coloured flush window with acoustic glass, astragal bars, unusual reveals and tight access. A bifold price can move with the number of panels, threshold, drainage, cill, handle colour, trickle vent position and whether the opening needs additional finishing. This is why the guide price is useful, but the survey is still the point where the order becomes exact.', 'fenster'); ?></p>
             </div>
             <div class="fg-mk-options__grid">
                 <?php foreach ($mk_option_groups as $group) : ?>
-                    <article>
+                    <article data-fg-mk-reveal="up">
                         <h3><?php echo esc_html($group['title']); ?></h3>
                         <ul>
                             <?php foreach ($group['items'] as $item) : ?>
@@ -1143,6 +1262,29 @@ $product_links = [
                         </ul>
                     </article>
                 <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="fg-mk-deep-guide">
+        <div class="container fg-mk-deep-guide__grid">
+            <div class="fg-mk-deep-guide__copy" data-fg-mk-reveal="left">
+                <p class="eyebrow"><?php esc_html_e('Milton Keynes buying guide', 'fenster'); ?></p>
+                <h2><?php esc_html_e('How to choose the right double glazing package for the property you actually own.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Milton Keynes has a mixture of homes that do not all want the same answer. A 1970s family home may need simple, efficient casement windows, warmer bedrooms and a new front door that suits the existing brickwork. A newer home may only need failed sealed units replaced, a colour match maintained, or a door upgraded without changing the whole elevation. An extension or garden room may need aluminium bifolds, sliders or a roof lantern where sightlines, threshold levels and drainage matter more than the cheapest headline product.', 'fenster'); ?></p>
+                <p><?php esc_html_e('That is why this page brings windows, doors, roof glazing, replacement glass, prices, proof and enquiry routes together. People searching for double glazing in Milton Keynes are often not looking for one product page. They are trying to work out what a sensible project looks like, whether the company is local enough to trust, whether guide prices are realistic, and what information they should send before a survey. The page should answer those questions without forcing them to chase six separate pages first.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The first decision is usually the product family. uPVC is the common route for efficient replacement windows and practical doors. Aluminium works well for slimmer frames, bifold doors, sliders, roof lanterns and modern extensions. Composite doors make sense where security, kerb appeal and colour choice matter at the entrance. Replacement glass is the better route when the frame is sound but the unit has misted, cracked, lost performance or needs an option such as obscure glass, integral blinds or a pet flap.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The second decision is the specification. Glass, vents, cills, handles, thresholds, colour, frame profile, opening style, hinge direction and access can all affect the result. These details are not decorative extras; they change how the installation looks, performs, drains, ventilates and complies. A window that looks right in a product render can still be wrong for the room if the opener is awkward, the vent is missed, the safety glass requirement is misunderstood or the cill depth does not suit the existing opening.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The third decision is confidence. A page that ranks for double glazing Milton Keynes should show why the company deserves the enquiry: reviews, accreditations, showroom details, local proof, product examples, pricing guidance and a proper explanation of survey. That is what turns the page from a thin location page into a useful buying guide. The local proof slots below are deliberately ready for real photos and review snippets, because the strongest version of this page will prove the work with Milton Keynes installations instead of relying only on generic manufacturer imagery.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Fenster can therefore handle the journey in stages. Start with a guide price if you already know the product and approximate size. Send photos and rough measurements if you want help choosing. Visit or contact the showroom if you want to compare finishes before booking. Then use the survey to confirm the final sizes, glass, ventilation, cills, thresholds, access and making-good details before anything is manufactured. That sequence keeps the early decision simple without pretending the final order can be guessed from one online field.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-mk-deep-guide__media" data-fg-mk-reveal="right">
+                <figure>
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/new-front-door-in-Milton-Keynes.jpeg'); ?>" alt="<?php esc_attr_e('New front door installed in Milton Keynes', 'fenster'); ?>" loading="lazy" data-fg-depth="0.04">
+                </figure>
+                <figure>
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/replacement-glazing-milton-keynes-scaled.jpg'); ?>" alt="<?php esc_attr_e('Replacement glazing work in Milton Keynes', 'fenster'); ?>" loading="lazy" data-fg-depth="0.06">
+                </figure>
             </div>
         </div>
     </section>
@@ -1187,14 +1329,61 @@ $product_links = [
         </div>
     </section>
 
+    <section class="fg-mk-local-proof">
+        <div class="container">
+            <div class="fg-location-section-head">
+                <p class="eyebrow"><?php esc_html_e('Local proof placeholders', 'fenster'); ?></p>
+                <h2><?php esc_html_e('The page is ready for photos, review snippets and area-specific proof.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('As the gallery grows, these slots should become the strongest part of the page: real installations, actual local notes, routes to directions, and review proof matched to the type of home someone recognises.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-mk-local-proof__grid">
+                <?php foreach ($mk_local_proof as $index => $proof) : ?>
+                    <article data-fg-mk-reveal="<?php echo esc_attr($index % 2 ? 'right' : 'left'); ?>">
+                        <div class="fg-mk-local-proof__media">
+                            <span><?php esc_html_e('Photo slot', 'fenster'); ?></span>
+                        </div>
+                        <div>
+                            <h3><?php echo esc_html($proof['area']); ?></h3>
+                            <p><?php echo esc_html($proof['proof']); ?></p>
+                            <small><?php echo esc_html($proof['detail']); ?></small>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="fg-mk-showroom">
+        <div class="container fg-mk-showroom__grid">
+            <figure class="fg-mk-showroom__media" data-fg-mk-reveal="left">
+                <img <?php echo fenster_image_attr_string($mk_showroom_image, ['alt' => 'Fenster Glazing showroom in Milton Keynes', 'loading' => 'lazy', 'data-fg-depth' => '0.04']); ?>>
+            </figure>
+            <div class="fg-mk-showroom__copy" data-fg-mk-reveal="right">
+                <p class="eyebrow"><?php esc_html_e('Showroom and directions', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Use the page online, then visit or speak to the team before choosing.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The best version of this page should connect online search intent to real-world confidence. A homeowner can compare prices, understand the product families, check reviews and accreditations, send an enquiry, open directions to the showroom, or start an instant quote without needing to jump around the site.', 'fenster'); ?></p>
+                <p><?php esc_html_e('That also makes the page useful for different levels of intent. Someone early in the decision can learn what affects the price. Someone ready to act can build a quote or send photos. Someone nervous about who to trust can see review proof and showroom details in the same journey.', 'fenster'); ?></p>
+                <div class="button-row">
+                    <a class="button" href="<?php echo esc_url($mk_direction_link); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open directions', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Fenster', 'fenster'); ?></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="fg-mk-enquiry" id="fenster-mk-enquiry">
         <div class="container fg-mk-enquiry__grid">
-            <div class="fg-mk-enquiry__copy">
+            <div class="fg-mk-enquiry__copy" data-fg-mk-reveal="left">
                 <p class="eyebrow"><?php esc_html_e('Need help choosing?', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Send photos or rough sizes and Fenster will point you in the right direction.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Tell us what you want to replace, where it is, and whether you want an online price, a showroom chat or a survey. The team can then recommend the right window, door or glass option before anything is ordered.', 'fenster'); ?></p>
+                <ul class="fg-mk-enquiry__points">
+                    <li><?php esc_html_e('Photos of the outside and inside help the team understand the opening.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Rough sizes are enough for an early conversation; exact sizes are checked at survey.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Mention if you want windows, doors, glass replacement, a roof lantern, or several products together.', 'fenster'); ?></li>
+                </ul>
             </div>
-            <div class="fg-mk-enquiry__form">
+            <div class="fg-mk-enquiry__form" data-fg-mk-reveal="right">
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [
                     'class' => 'fg-form fg-form--mk-page',

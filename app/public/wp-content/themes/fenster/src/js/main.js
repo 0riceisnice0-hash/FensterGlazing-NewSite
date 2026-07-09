@@ -1718,6 +1718,31 @@ if (depthItems.length) {
   updateDepthItems();
 }
 
+document.querySelectorAll('.fg-mk-page').forEach((page) => {
+  const revealItems = [...page.querySelectorAll('[data-fg-mk-reveal]')];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!revealItems.length || reduceMotion || !('IntersectionObserver' in window)) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  page.classList.add('fg-mk-motion-ready');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    rootMargin: '0px 0px -12% 0px',
+    threshold: 0.14,
+  });
+
+  revealItems.forEach((item) => observer.observe(item));
+});
+
 document.querySelectorAll('[data-fg-home-product-story]').forEach((story) => {
   const steps = [...story.querySelectorAll('[data-fg-home-product-step]')];
   const images = [...story.querySelectorAll('[data-fg-home-product-image]')];
