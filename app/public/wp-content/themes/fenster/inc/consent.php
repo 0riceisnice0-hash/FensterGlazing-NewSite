@@ -60,6 +60,17 @@ function fenster_render_cookie_consent(): void
     if (is_admin()) {
         return;
     }
+
+    $clarity_stylesheet = FENSTER_THEME_URI . '/assets/css/main.css';
+    $clarity_stylesheet_path = FENSTER_THEME_DIR . '/assets/css/main.css';
+
+    if (file_exists($clarity_stylesheet_path)) {
+        $clarity_stylesheet = add_query_arg(
+            'ver',
+            filemtime($clarity_stylesheet_path) . '-' . filesize($clarity_stylesheet_path),
+            $clarity_stylesheet
+        );
+    }
     ?>
     <div class="fg-cookie-consent" data-fg-cookie-consent hidden>
         <div class="fg-cookie-consent__copy">
@@ -99,6 +110,36 @@ function fenster_render_cookie_consent(): void
             script.async = true;
             script.src = src;
             document.head.appendChild(script);
+        }
+
+        function inlineStylesheetForClarity(callback) {
+            var existing = document.getElementById('fenster-clarity-replay-css');
+
+            if (existing) {
+                callback();
+                return;
+            }
+
+            window.fetch('<?php echo esc_js(esc_url_raw($clarity_stylesheet)); ?>', {
+                credentials: 'same-origin',
+                cache: 'force-cache'
+            })
+                .then(function (response) {
+                    if (! response.ok) {
+                        throw new Error('Stylesheet request failed');
+                    }
+
+                    return response.text();
+                })
+                .then(function (css) {
+                    var style = document.createElement('style');
+                    style.id = 'fenster-clarity-replay-css';
+                    style.setAttribute('data-clarity-unmask', 'true');
+                    style.textContent = css;
+                    document.head.appendChild(style);
+                })
+                .catch(function () {})
+                .then(callback);
         }
 
         function afterVisualReady(callback) {
@@ -147,11 +188,13 @@ function fenster_render_cookie_consent(): void
             loadScript('https://www.googletagmanager.com/gtm.js?id=<?php echo esc_js(FENSTER_GTM_ID); ?>');
 
             afterVisualReady(function () {
-                window.clarity = window.clarity || function () {
-                    (window.clarity.q = window.clarity.q || []).push(arguments);
-                };
-                setClarityConsent('granted', 'granted');
-                loadScript('https://www.clarity.ms/tag/<?php echo esc_js(FENSTER_CLARITY_ID); ?>');
+                inlineStylesheetForClarity(function () {
+                    window.clarity = window.clarity || function () {
+                        (window.clarity.q = window.clarity.q || []).push(arguments);
+                    };
+                    setClarityConsent('granted', 'granted');
+                    loadScript('https://www.clarity.ms/tag/<?php echo esc_js(FENSTER_CLARITY_ID); ?>');
+                });
             });
 
             if (! window.fbq) {
