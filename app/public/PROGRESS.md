@@ -6,7 +6,9 @@ Last updated: 2026-07-09
 
 - Removed `/patio-doors/`, `/aluminium-bifold-doors/` and `/slide-fold-doors/` from the shared long-plate `door_handles` route list because those systems use different handle families.
 - Kept the selector active for relevant entrance/French-style door routes such as `/upvc-doors/` and `/french-doors/`.
+- Pushed and deployed commit `882cf47` (`Scope door handle selector routes`) to live with a theme-only SiteGround rsync and cache flush.
 - Verified locally that the affected three routes return 200 without `#fenster-door-handles`, while `/upvc-doors/` and `/french-doors/` still render the section.
+- Verified live server-side that `/patio-doors/`, `/aluminium-bifold-doors/` and `/slide-fold-doors/` return 200 without `fenster-door-handles`, while `/upvc-doors/` and `/french-doors/` still include it.
 
 ## 2026-07-09 - Product Image Pool Audit
 

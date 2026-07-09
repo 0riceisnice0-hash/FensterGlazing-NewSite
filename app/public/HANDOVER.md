@@ -15,7 +15,7 @@ Use:
 
 ## Important Updates
 
-- Latest known live commit after this handover update: `97d7525` (`Fix product image gallery pools`). Check `git log --oneline -8` and the live theme before assuming this is still current.
+- Latest known live commit after this handover update: `882cf47` (`Scope door handle selector routes`). Check `git log --oneline -8` and the live theme before assuming this is still current.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Deployment should update the `fenster` theme from the GitHub repo while leaving production `.env`, Bedrock config, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
