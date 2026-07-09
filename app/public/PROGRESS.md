@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-09
 
+## 2026-07-09 - Local MK Page Cluster First Pass To Test
+
+- Added a shared local buying-route section to the residential town/product matrix in `template-parts\sections\location-service.php`.
+- The new section appears on normal local pages such as `/double-glazing-bletchley/` and `/composite-doors-bletchley/`, adding an image-led local decision block, three town/product-specific guidance cards, instant quote CTA, MK money-page CTA and internal links back to the relevant product route plus the town double-glazing hub.
+- Added responsive styling in `src\scss\main.scss` so the new module stacks cleanly on mobile and preserves the continuous page canvas.
+- Local verification covered `/double-glazing-bletchley/` and `/composite-doors-bletchley/`: the section rendered with one image, three decision cards, expected CTAs/internal links and zero horizontal overflow on desktop and 390px mobile.
+
 ## 2026-07-09 - Local SEO Quick Wins And Pricing Route Correction
 
 - Shipped GSC/audit-led local SEO quick wins in commit `68f38ae` (`Implement local SEO audit quick wins`), then corrected the accidental exact pricing route in commit `51c3550` (`Remove double glazing prices route`).

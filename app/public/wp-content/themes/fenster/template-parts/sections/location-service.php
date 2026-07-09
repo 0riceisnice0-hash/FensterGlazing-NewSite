@@ -888,6 +888,28 @@ $local_points = [
         'copy' => $town_profile['survey'] . ' This helps the finished installation work properly once it is fitted.',
     ],
 ];
+$service_route_map = [
+    'double-glazing' => 'double-glazing-milton-keynes',
+    'bow-bay-windows' => 'windows-milton-keynes',
+    'french-casement-windows' => 'windows-milton-keynes',
+];
+$service_route_slug = $service_route_map[$service_slug] ?? $service_slug;
+$service_route_url = home_url('/' . $service_route_slug . '/');
+$town_double_glazing_url = home_url('/double-glazing-' . $location_slug . '/');
+$local_decision_cards = [
+    [
+        'title' => 'Start with the property',
+        'copy' => $location_name . ' projects are not all the same. The first check is the house type, the opening, access, existing frame condition and what you want the room or entrance to do better.',
+    ],
+    [
+        'title' => 'Choose the right product route',
+        'copy' => 'Fenster narrows the choice around ' . $product_profile['choices'] . ', then checks whether a related window, door, glass or roof glazing option should be considered at the same time.',
+    ],
+    [
+        'title' => 'Move from idea to price',
+        'copy' => 'Use the instant quote tool if you know the rough product and size, or send photos first if you need help choosing before survey.',
+    ],
+];
 $process_steps = [
     ['step' => '01', 'title' => 'Tell us about the property', 'copy' => 'Share the product, rough sizes, photos or plans and what you want to improve.'],
     ['step' => '02', 'title' => $copy_variant['process_review'], 'copy' => 'We talk through ' . $product_profile['choices'] . ' and narrow the options around your ' . $location_name . ' home.'],
@@ -1526,6 +1548,39 @@ $product_links = [
                         <p><?php echo esc_html($card['copy']); ?></p>
                     </article>
                 <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="fg-location-local-guide">
+        <div class="container fg-location-local-guide__grid">
+            <?php if (is_array($side_image) && ! empty($side_image['src'])) : ?>
+                <figure class="fg-location-local-guide__media">
+                    <img <?php echo fenster_image_attr_string(fenster_generated_url($side_image['src']), ['alt' => $side_image['alt'] ?? ($service_label . ' in ' . $location_name), 'loading' => 'lazy', 'data-fg-depth' => '0.04']); ?>>
+                </figure>
+            <?php endif; ?>
+            <div class="fg-location-local-guide__copy">
+                <p class="eyebrow"><?php echo esc_html($location_name . ' buying route'); ?></p>
+                <h2><?php echo esc_html('How to choose ' . $service_name . ' in ' . $location_name . '.'); ?></h2>
+                <p><?php echo esc_html('The useful page is not the one that says every product is perfect. It is the one that helps you choose the right route for ' . $town_profile['property'] . ', then gives you a simple next step.'); ?></p>
+                <div class="fg-location-local-guide__cards">
+                    <?php foreach ($local_decision_cards as $card) : ?>
+                        <article>
+                            <h3><?php echo esc_html($card['title']); ?></h3>
+                            <p><?php echo esc_html($card['copy']); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+                <div class="button-row">
+                    <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/double-glazing-milton-keynes/')); ?>"><?php esc_html_e('View the Milton Keynes guide', 'fenster'); ?></a>
+                </div>
+                <div class="fg-location-local-guide__links">
+                    <a href="<?php echo esc_url($service_route_url); ?>"><?php echo esc_html('Compare ' . $service_name); ?></a>
+                    <?php if ($slug !== 'double-glazing-' . $location_slug) : ?>
+                        <a href="<?php echo esc_url($town_double_glazing_url); ?>"><?php echo esc_html('View double glazing in ' . $location_name); ?></a>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </section>

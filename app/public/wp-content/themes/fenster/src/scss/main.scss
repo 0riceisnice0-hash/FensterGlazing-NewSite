@@ -3106,6 +3106,7 @@ h3 {
 }
 
 .fg-location-intro,
+.fg-location-local-guide,
 .fg-location-products,
 .fg-location-proof,
 .fg-location-quote,
@@ -3126,7 +3127,12 @@ h3 {
   background: transparent;
 }
 
+.fg-location-local-guide {
+  padding: 0 0 5rem;
+}
+
 .fg-location-proof__grid,
+.fg-location-local-guide__grid,
 .fg-location-quote__grid,
 .fg-location-faq__grid,
 .fg-location-trust__grid {
@@ -3236,6 +3242,9 @@ h3 {
 }
 
 .fg-location-products__grid article,
+.fg-location-local-guide__media,
+.fg-location-local-guide__copy,
+.fg-location-local-guide__cards article,
 .fg-location-proof__copy,
 .fg-location-quote__grid,
 .fg-location-faq__items details,
@@ -3261,6 +3270,101 @@ h3 {
   transform: translateY(-3px);
   border-color: rgba(46, 172, 102, 0.42);
   box-shadow: 0 22px 54px rgba(0, 45, 58, 0.12);
+}
+
+.fg-location-local-guide__grid {
+  grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.25rem);
+  align-items: stretch;
+}
+
+.fg-location-local-guide__media {
+  overflow: hidden;
+  margin: 0;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+}
+
+.fg-location-local-guide__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateY(var(--fg-parallax-y, 0)) scale(1.04);
+}
+
+.fg-location-local-guide__copy {
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+  padding: clamp(1.35rem, 3vw, 2.25rem);
+}
+
+.fg-location-local-guide__copy h2 {
+  max-width: 720px;
+  color: var(--color-steel);
+  font-size: clamp(1.65rem, 2.45vw, 2.45rem);
+  line-height: 1.08;
+}
+
+.fg-location-local-guide__copy > p:not(.eyebrow) {
+  max-width: 760px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.02rem;
+  line-height: 1.68;
+}
+
+.fg-location-local-guide__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.fg-location-local-guide__cards article {
+  padding: 0.9rem;
+  background: var(--color-soft);
+  box-shadow: none;
+}
+
+.fg-location-local-guide__cards h3 {
+  margin: 0 0 0.38rem;
+  color: var(--color-steel);
+  font-size: 1rem;
+  line-height: 1.18;
+}
+
+.fg-location-local-guide__cards p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.fg-location-local-guide__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.fg-location-local-guide__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--color-steel);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.fg-location-local-guide__links a::after {
+  content: "\2192";
+  margin-left: 0.35rem;
+  color: var(--color-accent);
 }
 
 .fg-areas-page {
@@ -18608,6 +18712,7 @@ html.fg-gallery-lightbox-open body {
   .fg-trust-accreditations__grid,
   .fg-trust-cta__inner,
   .fg-location-intro__head,
+  .fg-location-local-guide__grid,
   .fg-location-proof__grid,
   .fg-location-quote__grid,
   .fg-location-faq__grid,
@@ -18685,6 +18790,10 @@ html.fg-gallery-lightbox-open body {
 
   .fg-location-intro__head > p:not(.eyebrow) {
     padding-top: 0;
+  }
+
+  .fg-location-local-guide__cards {
+    grid-template-columns: 1fr;
   }
 
   .fg-team-bosses,
@@ -20299,6 +20408,8 @@ html.fg-gallery-lightbox-open body {
   .fg-contact-hero__showroom,
   .fg-contact-card,
   .fg-contact-route-card,
+  .fg-location-local-guide__copy,
+  .fg-location-local-guide__cards article,
   .fg-simple-card,
   .fg-quote-steps article,
   .fg-form,
@@ -20342,6 +20453,7 @@ html.fg-gallery-lightbox-open body {
   }
 
   .fg-location-intro,
+  .fg-location-local-guide,
   .fg-location-products,
   .fg-location-proof,
   .fg-location-quote,
@@ -20356,13 +20468,22 @@ html.fg-gallery-lightbox-open body {
     padding-top: 0;
   }
 
+  .fg-location-local-guide {
+    padding-top: 0;
+  }
+
   .fg-location-intro h2,
+  .fg-location-local-guide__copy h2,
   .fg-location-section-head h2,
   .fg-location-proof h2,
   .fg-location-quote h2,
   .fg-location-faq h2,
   .fg-location-trust h2 {
     font-size: 1.95rem;
+  }
+
+  .fg-location-local-guide__media {
+    aspect-ratio: 16 / 10;
   }
 
   .fg-product-faq h2,
