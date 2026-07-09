@@ -1043,10 +1043,10 @@ $mk_price_examples = [
     ],
 ];
 $mk_trust_reasons = [
-    ['title' => 'A real MK showroom', 'copy' => 'You can visit the Fenster team, compare products, look at colours and handles, and talk through the survey details before committing to the work.'],
-    ['title' => 'Reviews and recognised cover', 'copy' => 'Fenster shows customer review proof alongside FENSA and Consumer Protection Association backing, so the page is not asking people to trust a blank quote form.'],
-    ['title' => 'Survey before manufacture', 'copy' => 'Every made-to-measure order is checked before manufacture, including safety glass, trickle vents, thresholds, cills, access and finishing trims.'],
-    ['title' => 'Product choice in one place', 'copy' => 'Windows, doors, bifolds, sliders, roof lanterns and replacement glass can be compared together so the final specification feels consistent across the property.'],
+    ['title' => 'A real MK showroom', 'copy' => 'Visit the Fenster team, compare products, look at colours and handles, and talk through the survey details before committing to the work.', 'image' => FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png'],
+    ['title' => 'Reviews and recognised cover', 'copy' => 'Customer review proof sits alongside FENSA and Consumer Protection Association backing, so the page is not asking people to trust a blank quote form.', 'image' => FENSTER_THEME_URI . '/assets/images/imported/Fenster-Glazing-Vs-Anglian-home-improvements-Banner-1.png'],
+    ['title' => 'Survey before manufacture', 'copy' => 'Every made-to-measure order is checked before manufacture, including safety glass, trickle vents, thresholds, cills, access and finishing trims.', 'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-casement-1200x1200.png'],
+    ['title' => 'Product choice in one place', 'copy' => 'Windows, doors, bifolds, sliders, roof lanterns and replacement glass can be compared together so the final specification feels consistent across the property.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg'],
 ];
 $mk_spec_links = [
     ['title' => 'I know what I need', 'copy' => 'Use the instant quote tool for a guide price, then let Fenster confirm the order details at survey.', 'url' => '#fenster-mk-instant-pricing', 'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-casement-1200x1200.png'],
@@ -1106,26 +1106,6 @@ $product_links = [
         <a href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('Why you can trust Fenster Glazing', 'fenster'); ?></a>
     </div>
 
-    <section class="fg-mk-trust-slab">
-        <div class="container fg-mk-trust-slab__grid">
-            <div class="fg-mk-trust-slab__copy" data-fg-mk-reveal="left">
-                <p class="eyebrow"><?php esc_html_e('Why you can trust Fenster', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Local proof, showroom advice and a survey before manufacture.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A money page needs more than a nice headline. The reason Fenster can talk about double glazing properly is that the team deals with the whole decision: what product suits the home, what changes the price, which glass and ventilation details are required, how the opening will be surveyed, and what happens after the installation.', 'fenster'); ?></p>
-                <p><?php esc_html_e('For Milton Keynes homeowners, that means you can start with a guide price online, ask the showroom team to compare products, then let the survey confirm the exact sizes, vents, cills, thresholds, glass and finishing details before the order is placed.', 'fenster'); ?></p>
-                <a class="button button--light" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('Why trust Fenster', 'fenster'); ?></a>
-            </div>
-            <div class="fg-mk-trust-slab__reasons" data-fg-mk-reveal="right">
-                <?php foreach ($mk_trust_reasons as $reason) : ?>
-                    <article>
-                        <h3><?php echo esc_html($reason['title']); ?></h3>
-                        <p><?php echo esc_html($reason['copy']); ?></p>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
     <section class="fg-mk-products" id="fenster-mk-products">
         <div class="container">
             <div class="fg-location-section-head">
@@ -1173,6 +1153,30 @@ $product_links = [
                     </figure>
                 </article>
             <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="fg-mk-trust-slab">
+        <div class="container">
+            <div class="fg-location-section-head fg-mk-trust-slab__head" data-fg-mk-reveal="up">
+                <p class="eyebrow"><?php esc_html_e('Why you can trust Fenster', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Proof, product advice and survey control before anything is made.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Once you have narrowed the product route, the confidence question matters. Fenster backs the page with a local showroom, visible review proof, recognised cover and a survey process that checks the specification before manufacture.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-mk-trust-slab__reasons" data-fg-mk-reveal="up">
+                <?php foreach ($mk_trust_reasons as $reason) : ?>
+                    <article>
+                        <img src="<?php echo esc_url(fenster_generated_url($reason['image'])); ?>" alt="" loading="lazy">
+                        <div>
+                            <h3><?php echo esc_html($reason['title']); ?></h3>
+                            <p><?php echo esc_html($reason['copy']); ?></p>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+            <div class="fg-mk-trust-slab__action" data-fg-mk-reveal="up">
+                <a class="button button--light" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('Why trust Fenster Glazing', 'fenster'); ?></a>
+            </div>
         </div>
     </section>
 
