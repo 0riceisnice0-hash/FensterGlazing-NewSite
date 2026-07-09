@@ -7,7 +7,7 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live commit after this update: `882cf47` (`Scope door handle selector routes`). Check `git log --oneline -8` and confirm against the live theme before assuming this line is still current.
+- Latest known deployed live commit after this update: `51c3550` (`Remove double glazing prices route`). Check `git log --oneline -8` and confirm against the live theme before assuming this line is still current.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
@@ -134,6 +134,13 @@ Minimum checks:
 - A representative generated location page loads.
 - `/sitemap.xml` still loads if SEO/routing changed.
 - Enquiry form is tested if form/email code changed.
+
+SEO/routing note from 2026-07-09:
+
+- `/areas-we-cover/` is an indexable generated route and must remain in `page-sitemap.xml`, footer links and relevant related-link bands.
+- `/window-door-prices-milton-keynes/` is the live pricing hub currently linked from footer/home/generated related links.
+- Do not recreate or internally link `/double-glazing-prices-milton-keynes/`; it was an accidental live route, removed in `51c3550`, and should remain unavailable unless the owner explicitly approves that exact page.
+- Roof-light keyword coverage is handled through title/meta overrides for `/roof-lanterns/`, `/roof-lanterns-milton-keynes/` and `/roof-lanterns-northampton/`.
 
 Known host note: command-line HTTP requests from the local machine may receive a SiteGround 403/WAF page even when the browser works. If that happens, verify through WP-CLI/server-side checks and real browser/phone testing rather than assuming the site is down.
 

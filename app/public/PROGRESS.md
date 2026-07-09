@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-09
 
+## 2026-07-09 - Local SEO Quick Wins And Pricing Route Correction
+
+- Shipped GSC/audit-led local SEO quick wins in commit `68f38ae` (`Implement local SEO audit quick wins`), then corrected the accidental exact pricing route in commit `51c3550` (`Remove double glazing prices route`).
+- Restored `/areas-we-cover/` into the generated `page-sitemap.xml` virtual-route list and added visible links to it from the footer, homepage local mesh and generated related-link bands.
+- Strengthened internal links into `/double-glazing-milton-keynes/` and the agreed live pricing hub `/window-door-prices-milton-keynes/`; the accidental `/double-glazing-prices-milton-keynes/` route was removed, now returns 404, is not in the live sitemap and has no homepage/MK-page internal links.
+- Added LocalBusiness schema fields for `geo`, `hasMap` and `sameAs`, and verified live schema renders clean `priceRange` (`££`) without mojibake.
+- Cleaned local money-page title/meta overrides for key routes including aluminium bifolds, aluminium flush windows, aluminium sliding doors, window and door repairs, patio doors, sliding sash windows, tilt and turn windows, roofline and similar MK-focused product pages.
+- Confirmed the "roof lights" keyword work is already in the GSC override map: `/roof-lanterns/`, `/roof-lanterns-milton-keynes/` and `/roof-lanterns-northampton/` titles/meta include "Roof Lights" alongside "Roof Lanterns".
+- Verified live after deployment: `/double-glazing-milton-keynes/`, `/areas-we-cover/`, `/window-door-prices-milton-keynes/`, `/aluminium-bifold-doors/` and `/window-and-door-repairs/` render expected titles/schema/footer links; `page-sitemap.xml` includes `/areas-we-cover/` and `/window-door-prices-milton-keynes/`.
+
 ## 2026-07-09 - Door Handle Section Scope
 
 - Removed `/patio-doors/`, `/aluminium-bifold-doors/` and `/slide-fold-doors/` from the shared long-plate `door_handles` route list because those systems use different handle families.
