@@ -529,14 +529,6 @@ function fenster_price_guide_pages(): array
         ],
     ];
 
-    if (isset($guides['double-glazing-cost'])) {
-        $guides['double-glazing-prices-milton-keynes'] = $guides['double-glazing-cost'];
-        $guides['double-glazing-prices-milton-keynes']['title'] = 'Double Glazing Prices Milton Keynes';
-        $guides['double-glazing-prices-milton-keynes']['label'] = 'Double glazing prices Milton Keynes';
-        $guides['double-glazing-prices-milton-keynes']['intro'] = 'A local guide to double glazing prices in Milton Keynes, with Fenster examples, the main cost factors and a route into instant online pricing before survey.';
-        $guides['double-glazing-prices-milton-keynes']['links'] = ['window-door-prices-milton-keynes', 'double-glazing-milton-keynes', 'windows-milton-keynes', 'online-quote'];
-    }
-
     foreach ($guides as $slug => &$guide) {
         $guide['slug'] = $slug;
         $guide['url'] = home_url('/' . $slug . '/');

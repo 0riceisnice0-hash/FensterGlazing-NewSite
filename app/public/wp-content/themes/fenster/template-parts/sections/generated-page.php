@@ -1349,7 +1349,6 @@ $add_related_routes = static function (array $target_slugs) use ($add_related_ro
 
 if ($is_product && ! $is_commercial && ! $is_commercial_county) {
     $add_related_route('double-glazing-milton-keynes', 'Double Glazing Milton Keynes');
-    $add_related_route('double-glazing-prices-milton-keynes', 'Double Glazing Prices Milton Keynes');
     $add_related_route('window-door-prices-milton-keynes', 'Window and Door Prices Milton Keynes');
     $add_related_route('areas-we-cover', 'Areas We Cover');
 }
@@ -1366,7 +1365,6 @@ if (str_starts_with($slug, 'double-glazing-') && $current_location !== '') {
     $add_related_route('windows-milton-keynes');
     $add_related_route('doors-milton-keynes');
     $add_related_route('areas-we-cover', 'Areas We Cover');
-    $add_related_route('double-glazing-prices-milton-keynes', 'Double Glazing Prices Milton Keynes');
     $add_related_route('window-door-prices-milton-keynes', 'Window and Door Prices Milton Keynes');
 
     foreach (array_merge(array_slice($window_routes, 1), array_slice($door_routes, 1), $other_service_routes) as $candidate) {
@@ -1429,7 +1427,6 @@ if (count($related_links) < 6) {
         'windows-milton-keynes',
         'doors-milton-keynes',
         'double-glazing-milton-keynes',
-        'double-glazing-prices-milton-keynes',
         'window-door-prices-milton-keynes',
         'areas-we-cover',
         'aluminium-windows',

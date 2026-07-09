@@ -93,7 +93,6 @@ $partners = [
 
 $location_links = [
     ['text' => 'Double Glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['text' => 'Double Glazing Prices Milton Keynes', 'url' => home_url('/double-glazing-prices-milton-keynes/')],
     ['text' => 'Window and Door Prices Milton Keynes', 'url' => home_url('/window-door-prices-milton-keynes/')],
     ['text' => 'Areas We Cover', 'url' => home_url('/areas-we-cover/')],
     ['text' => 'Double Glazing Northampton', 'url' => home_url('/double-glazing-northampton/')],

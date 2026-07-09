@@ -8,7 +8,6 @@
 $brand = fenster_data('brand', []);
 $footer_products = [
     ['label' => 'Double Glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/')],
-    ['label' => 'Double glazing prices', 'url' => home_url('/double-glazing-prices-milton-keynes/')],
     ['label' => 'Window and door prices', 'url' => home_url('/window-door-prices-milton-keynes/')],
     ['label' => 'Windows and doors', 'url' => home_url('/windows-milton-keynes/')],
     ['label' => 'Aluminium glazing', 'url' => home_url('/aluminium-windows/')],
