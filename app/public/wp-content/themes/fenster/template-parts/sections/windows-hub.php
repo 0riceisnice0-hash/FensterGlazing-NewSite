@@ -128,10 +128,10 @@ if ($is_doors) {
 }
 
 $page_eyebrow = $is_doors ? 'Doors in Milton Keynes' : 'Windows in Milton Keynes';
-$page_heading = $is_doors ? 'Which door is right for your home?' : 'Which window is right for your home?';
+$page_heading = $is_doors ? 'Doors in Milton Keynes' : 'Double glazed windows in Milton Keynes';
 $page_intro = $is_doors
-    ? 'Compare entrance, folding, French and sliding door options in the Fenster range.'
-    : 'Compare window styles, materials and opening options in the Fenster range.';
+    ? 'Compare front, bifold, French, patio and sliding door options, then plan the material, glass, threshold and fitting details with Fenster.'
+    : 'Compare uPVC, aluminium, flush, sash and heritage window options, then plan survey-led installation with Fenster.';
 $selector_heading = $is_doors
     ? 'Start with where the door leads and how you want it to open.'
     : 'Start with the way you want the window to look and open.';
