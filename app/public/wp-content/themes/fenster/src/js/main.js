@@ -590,11 +590,106 @@ const siteHeader = document.querySelector('.site-header');
 if (navToggle && siteHeader) {
   const mobileAccordionItems = [...siteHeader.querySelectorAll('[data-mobile-accordion-item]')];
   const mobileNav = siteHeader.querySelector('[data-mobile-accordion-nav]');
+  const desktopNavItems = [...siteHeader.querySelectorAll('.site-nav__item.has-children')];
+  const getDirectDesktopPanel = (item) => [...(item?.children || [])].find((child) => (
+    child.classList?.contains('site-nav__mega') || child.classList?.contains('site-nav__sublist')
+  ));
+
+  desktopNavItems.forEach((item) => {
+    const panel = getDirectDesktopPanel(item);
+    if (!panel) return;
+
+    let closeTimer = 0;
+    const openPanel = () => {
+      window.clearTimeout(closeTimer);
+      panel.hidden = false;
+    };
+    const closePanel = () => {
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => {
+        if (!item.matches(':hover') && !item.contains(document.activeElement)) {
+          panel.hidden = true;
+        }
+      }, 80);
+    };
+
+    item.addEventListener('pointerenter', openPanel);
+    item.addEventListener('pointerleave', closePanel);
+    item.addEventListener('focusin', openPanel);
+    item.addEventListener('focusout', closePanel);
+  });
+
+  const findDesktopNavItem = (target) => target.closest?.('.site-nav__item.has-children');
+  const setDesktopPanelHidden = (item, isHidden) => {
+    const panel = getDirectDesktopPanel(item);
+    if (panel) {
+      panel.hidden = isHidden;
+    }
+  };
+
+  siteHeader.addEventListener('pointerover', (event) => {
+    const item = findDesktopNavItem(event.target);
+    if (item && siteHeader.contains(item)) {
+      setDesktopPanelHidden(item, false);
+    }
+  });
+
+  siteHeader.addEventListener('mouseover', (event) => {
+    const item = findDesktopNavItem(event.target);
+    if (item && siteHeader.contains(item)) {
+      setDesktopPanelHidden(item, false);
+    }
+  });
+
+  siteHeader.addEventListener('focusin', (event) => {
+    const item = findDesktopNavItem(event.target);
+    if (item && siteHeader.contains(item)) {
+      setDesktopPanelHidden(item, false);
+    }
+  });
+
+  siteHeader.addEventListener('pointerout', (event) => {
+    const item = findDesktopNavItem(event.target);
+    if (!item || item.contains(event.relatedTarget)) return;
+    window.setTimeout(() => {
+      if (!item.matches(':hover') && !item.contains(document.activeElement)) {
+        setDesktopPanelHidden(item, true);
+      }
+    }, 80);
+  });
+
+  siteHeader.addEventListener('mouseout', (event) => {
+    const item = findDesktopNavItem(event.target);
+    if (!item || item.contains(event.relatedTarget)) return;
+    window.setTimeout(() => {
+      if (!item.matches(':hover') && !item.contains(document.activeElement)) {
+        setDesktopPanelHidden(item, true);
+      }
+    }, 80);
+  });
+
+  siteHeader.addEventListener('focusout', (event) => {
+    const item = findDesktopNavItem(event.target);
+    if (!item || item.contains(event.relatedTarget)) return;
+    window.setTimeout(() => {
+      if (!item.matches(':hover') && !item.contains(document.activeElement)) {
+        setDesktopPanelHidden(item, true);
+      }
+    }, 80);
+  });
+
+  const setMobileItemOpen = (item, isOpen) => {
+    item.classList.toggle('is-open', isOpen);
+    item.querySelector(':scope > [data-mobile-accordion-toggle]')?.setAttribute('aria-expanded', String(isOpen));
+    const panel = item.querySelector(':scope > .site-mobile-nav__panel');
+    if (panel) {
+      panel.hidden = !isOpen;
+    }
+  };
 
   const closeMobileAccordion = () => {
     mobileAccordionItems.forEach((item) => {
-      item.classList.remove('is-open');
-      item.querySelector(':scope > [data-mobile-accordion-toggle]')?.setAttribute('aria-expanded', 'false');
+      setMobileItemOpen(item, false);
     });
   };
 
@@ -602,6 +697,9 @@ if (navToggle && siteHeader) {
     const isOpen = siteHeader.classList.toggle('is-nav-open');
     document.documentElement.classList.toggle('is-mobile-nav-open', isOpen);
     navToggle.setAttribute('aria-expanded', String(isOpen));
+    if (mobileNav) {
+      mobileNav.hidden = !isOpen;
+    }
     const toggleText = navToggle.querySelector('span');
     if (toggleText) {
       toggleText.textContent = isOpen ? 'Close' : 'Menu';
@@ -617,6 +715,7 @@ if (navToggle && siteHeader) {
       siteHeader.classList.remove('is-nav-open');
       document.documentElement.classList.remove('is-mobile-nav-open');
       navToggle.setAttribute('aria-expanded', 'false');
+      if (mobileNav) mobileNav.hidden = true;
       const toggleText = navToggle.querySelector('span');
       if (toggleText) toggleText.textContent = 'Menu';
       closeMobileAccordion();
@@ -634,6 +733,7 @@ if (navToggle && siteHeader) {
     siteHeader.classList.remove('is-nav-open');
     document.documentElement.classList.remove('is-mobile-nav-open');
     navToggle.setAttribute('aria-expanded', 'false');
+    if (mobileNav) mobileNav.hidden = true;
     const toggleText = navToggle.querySelector('span');
     if (toggleText) toggleText.textContent = 'Menu';
     closeMobileAccordion();
@@ -650,16 +750,13 @@ if (navToggle && siteHeader) {
 
       siblingItems.forEach((sibling) => {
         if (sibling === item) return;
-        sibling.classList.remove('is-open');
-        sibling.querySelector(':scope > [data-mobile-accordion-toggle]')?.setAttribute('aria-expanded', 'false');
+        setMobileItemOpen(sibling, false);
         sibling.querySelectorAll('[data-mobile-accordion-item]').forEach((nestedItem) => {
-          nestedItem.classList.remove('is-open');
-          nestedItem.querySelector(':scope > [data-mobile-accordion-toggle]')?.setAttribute('aria-expanded', 'false');
+          setMobileItemOpen(nestedItem, false);
         });
       });
 
-      item.classList.toggle('is-open', shouldOpen);
-      toggle.setAttribute('aria-expanded', String(shouldOpen));
+      setMobileItemOpen(item, shouldOpen);
     });
   });
 }

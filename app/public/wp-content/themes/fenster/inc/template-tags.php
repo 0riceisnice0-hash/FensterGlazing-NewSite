@@ -55,7 +55,7 @@ function fenster_render_nav_fallback(): void
         );
 
         if ($is_mega) {
-            echo '<div class="site-nav__mega">';
+            echo '<div class="site-nav__mega" hidden>';
             echo '<div class="site-nav__mobile-panel-head">';
             printf(
                 '<button class="site-nav__mobile-back" type="button" data-mobile-menu-back>%s</button>',
@@ -111,7 +111,7 @@ function fenster_render_nav_fallback(): void
             echo '</div>';
             echo '</div>';
         } elseif ($has_children) {
-            echo '<ul class="site-nav__sublist">';
+            echo '<ul class="site-nav__sublist" hidden>';
             foreach ($item['children'] as $child) {
                 printf(
                     '<li><a href="%s">%s</a></li>',
@@ -131,7 +131,7 @@ function fenster_render_nav_fallback(): void
 
 function fenster_render_mobile_nav_fallback(array $items): void
 {
-    echo '<div class="site-mobile-nav" data-mobile-accordion-nav data-lenis-prevent>';
+    echo '<div class="site-mobile-nav" data-mobile-accordion-nav data-lenis-prevent hidden>';
 
     foreach ($items as $item) {
         $label = (string) ($item['label'] ?? '');
@@ -145,14 +145,14 @@ function fenster_render_mobile_nav_fallback(array $items): void
                 '<button class="site-mobile-nav__row" type="button" data-mobile-accordion-toggle aria-expanded="false"><span>%s</span><span aria-hidden="true"></span></button>',
                 esc_html($label)
             );
-            echo '<div class="site-mobile-nav__panel">';
+            echo '<div class="site-mobile-nav__panel" hidden>';
             foreach ($item['columns'] as $column) {
                 echo '<section class="site-mobile-nav__item site-mobile-nav__item--child" data-mobile-accordion-item>';
                 printf(
                     '<button class="site-mobile-nav__row" type="button" data-mobile-accordion-toggle aria-expanded="false"><span>%s</span><span aria-hidden="true"></span></button>',
                     esc_html($column['label'] ?? '')
                 );
-                echo '<div class="site-mobile-nav__panel site-mobile-nav__panel--links">';
+                echo '<div class="site-mobile-nav__panel site-mobile-nav__panel--links" hidden>';
                 printf(
                     '<a href="%s">%s</a>',
                     esc_url($column['url'] ?? $url),
@@ -179,7 +179,7 @@ function fenster_render_mobile_nav_fallback(array $items): void
                 '<button class="site-mobile-nav__row" type="button" data-mobile-accordion-toggle aria-expanded="false"><span>%s</span><span aria-hidden="true"></span></button>',
                 esc_html($label)
             );
-            echo '<div class="site-mobile-nav__panel site-mobile-nav__panel--links">';
+            echo '<div class="site-mobile-nav__panel site-mobile-nav__panel--links" hidden>';
             foreach ($item['children'] as $child) {
                 printf(
                     '<a href="%s">%s</a>',
