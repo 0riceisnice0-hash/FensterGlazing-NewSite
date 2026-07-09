@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-Last updated: 2026-07-07
+Last updated: 2026-07-09
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -15,7 +15,7 @@ Use:
 
 ## Important Updates
 
-- Latest known live commit after this handover update: `3ac98c2` (`Refine product gallery lightbox controls`). Recent live commits to understand before continuing: `f5191f8` (`Redesign product page journey for test`), `99d3cd5` (`Refine product template test layout`), `fd0d9ea` (`Fix mobile nav touch layer`), `8cf8f3f` (`Add product gallery lightbox`) and `3ac98c2` (`Refine product gallery lightbox controls`).
+- Latest known live commit after this handover update: `f820b87` (`Inline replay CSS before Clarity loads`). Check `git log --oneline -8` and the live theme before assuming this is still current.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Deployment should update the `fenster` theme from the GitHub repo while leaving production `.env`, Bedrock config, uploads, database and plugins untouched. Do not deploy `wp-content\fenster-reference`; it is a local-only scrape archive and no runtime code should depend on it.
@@ -38,9 +38,9 @@ Use:
 - Performance baseline was improved on live without degrading the premium visuals. Heavy media and quote iframes are deferred: the homepage hero video waits for idle, quote iframes load near viewport or on click, product theatre media avoids eager-loading everything, and quote-tool pages keep a usable placeholder/action state until the iframe loads. Future performance work should continue this approach before compressing/removing signature visuals.
 - A Lighthouse-focused performance pass has added critical first-viewport CSS, async activation of the main stylesheet, WOFF2 Gibson fonts, Regular/SemiBold font preloads, a homepage hero-poster preload, image dimension helpers, and mobile/constrained-connection interaction gating for the homepage hero video. The mobile/slow-network first impression should be the lightweight poster, not the 9.36 MB video download.
 - `/cat-and-dog-flaps/` has a route-specific generated-page override because the imported scrape title/copy was poor. Keep the clean title/SEO in `inc\generated-pages.php`, the pet-flap product copy in `inc\site-data.php`, the fitting-route detail in `inc\product-hub-data.php`, and the custom pet-flap guide/suppressed generic product-choice block in `template-parts\sections\generated-page.php`.
-- Server cleanup on 2026-07-06 removed the stale `/terms-conditions/` and `/aluminium-bifold-doors-northampton/` redirects, added the live `www` to apex redirect, and password-protected `test.fensterglazing.com` with Basic Auth (`fenster` / `Fenster`). Theme code now owns the cookie consent banner in `inc\consent.php`, gating GTM, Clarity and Meta Pixel until acceptance. Clarity is loaded through the theme with project ID `xi7rk1pic8` and receives Consent API v2 granted/denied signals so accepted users keep multi-page session recordings.
+- Server cleanup on 2026-07-06 removed the stale `/terms-conditions/` and `/aluminium-bifold-doors-northampton/` redirects, added the live `www` to apex redirect, and password-protected `test.fensterglazing.com` with Basic Auth (`fenster` / `Fenster`). Theme code now owns the cookie consent banner in `inc\consent.php`, gating GTM, Clarity and Meta Pixel until acceptance. Clarity is loaded through the theme with project ID `xi7rk1pic8` and receives Consent API v2 granted/denied signals so accepted users keep multi-page session recordings. The live Clarity plugins were removed; do not reinstall them unless there is a deliberate tracking architecture change.
 - Imported blog/guide articles use `template-parts\sections\generated-article.php`. The article CTA form now has article-specific styling through `fg-article-form`, fixing the previous white-on-white labels/input contrast problem shown on generated article pages.
-- Microsoft Clarity is not the visual source of truth. It may show an unstyled/bare HTML replay if its recorder cannot fetch CSS/assets correctly. Use Clarity for behaviour patterns, but verify visual defects in an actual browser or phone before changing code.
+- Microsoft Clarity is not the visual source of truth, but the accepted replay fix is now documented and live. SiteGround/WAF can return a host `403 - Forbidden` HTML page to browser-like bot/resource fetches, which made Clarity recordings look unstyled with huge graphics/images. To work around this, `inc\consent.php` fetches the live `main.css` after accepted cookie consent, injects it as `style#fenster-clarity-replay-css[data-clarity-unmask="true"]`, and only then loads Clarity. `inc\assets.php` also marks stylesheet/font/image resource links as `data-clarity-unmask="true"`. Keep this ordering and markup intact.
 - Test-site pending work on 2026-07-07 adds a dedicated commercial product renderer for `/commercial-windows-and-doors/`, `/curtain-walling/`, `/louvre-vents/`, `/commercial-automation/` and `/healthcare-construction/`. It uses `inc\commercial-product-data.php` plus `template-parts\sections\commercial-product.php` and bypasses the generic generated product journey for those routes. Commit `26f3b43` is deployed to the password-protected test site and still needs explicit approval before live.
 
 ## Current Goal Of The Site

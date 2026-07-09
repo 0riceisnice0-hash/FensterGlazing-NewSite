@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-07-07
+Last updated: 2026-07-09
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -16,7 +16,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 
 ## Important Updates
 
-- Latest live commit at the time of this update is `3ac98c2` (`Refine product gallery lightbox controls`). The current recent live sequence includes `f5191f8` product-page journey redesign, `99d3cd5` product-template refinements, `fd0d9ea` mobile nav touch-layer fix, `8cf8f3f` product gallery lightbox and `3ac98c2` lightbox control polish. New agents should check `git log --oneline -8` before assuming this is still the latest.
+- Latest live commit at the time of this update is `f820b87` (`Inline replay CSS before Clarity loads`). New agents should check `git log --oneline -8` before assuming this is still the latest.
 - GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.
 - SiteGround test/live are still Bedrock installs. Local source is standard WordPress at `wp-content\themes\fenster`, but server deploy target is `web/app/themes/fenster`. The verified test deploy path is: GitHub repo cache at `~/repos/FensterGlazing-NewSite`, then rsync `app/public/wp-content/themes/fenster/` into `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Production deploys should swap/update the theme only. Keep the production database, uploads, plugins, `.env`, Bedrock config and `wp-config.php` equivalent in place unless the owner explicitly asks for a full WordPress migration.
@@ -31,7 +31,10 @@ It should not contain dated progress reports, long handover summaries or homepag
 - The test site has verified working enquiry delivery to `info@fensterglazing.com`; valid forms are saved privately as `fenster_enquiry` posts before email delivery.
 - Performance has been improved without lowering visual quality by deferring heavy embeds/media instead of removing premium assets: homepage hero video loads after idle, quote iframes use deferred `data-quote-iframe-src` loading, product theatre non-primary media lazy-loads, and quote embeds load near viewport or on interaction. Do not undo this by making every iframe/video eager again.
 - The Lighthouse performance pass added critical first-viewport CSS, async activation of the main stylesheet, WOFF2 Gibson fonts with critical font preloads, a homepage hero-poster preload, mobile/constrained-connection hero-video interaction gating, image dimension helpers and below-fold homepage `content-visibility`. Keep the poster as the mobile/slow-network first visual and do not make the 9.36 MB homepage video part of the initial mobile payload again.
-- Microsoft Clarity is installed/being evaluated, but recordings can show a bare HTML-looking page when Clarity cannot fetch CSS/assets from cache/WAF/CSP timing. Treat Clarity as useful for behaviour, not as the sole visual QA tool. Confirm layout issues in a real browser/phone before changing the theme.
+- Microsoft Clarity is theme-loaded only, not plugin-loaded. Live Clarity plugins `microsoft-clarity` and `clarity-ad-blocker` were removed after replay debugging.
+- Clarity replay styling depends on `inc\consent.php` injecting `style#fenster-clarity-replay-css[data-clarity-unmask="true"]` before loading `https://www.clarity.ms/tag/xi7rk1pic8`. Do not remove this inline replay CSS: it works around SiteGround/WAF bot-fetch failures where Clarity-like resource requests can receive the host's 403 HTML page instead of the real stylesheet.
+- Clarity asset links and critical CSS are intentionally marked `data-clarity-unmask="true"` in `inc\assets.php` so stylesheet/font/image URLs are preserved under stricter Clarity masking modes.
+- If Clarity recordings look unstyled, giant, or like a 403/error page again, simulate Clarity before changing layout: fetch the page and CSS with bot-style user agents, check for 403s, verify the inline replay CSS exists after accepted consent, and remember old recordings will not be repaired retroactively.
 
 ## Project Basics
 

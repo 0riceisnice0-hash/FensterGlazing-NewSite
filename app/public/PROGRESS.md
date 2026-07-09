@@ -1,6 +1,16 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-07
+Last updated: 2026-07-09
+
+## 2026-07-09 - Microsoft Clarity Replay Rendering Fix
+
+- Debugged broken Clarity recordings by simulating Clarity-style page/resource fetches rather than changing visible layout again.
+- Found that the real browser site was styled correctly, but browser-like bot/resource requests could receive the SiteGround/nginx `403 - Forbidden` HTML page. That explained Clarity recordings showing raw/default navigation, huge graphics/images and missing CSS.
+- Removed the live Clarity plugins (`microsoft-clarity` and `clarity-ad-blocker`) so Clarity is loaded only through the theme consent layer.
+- Kept Clarity project ID `xi7rk1pic8` in `inc\consent.php`, gated behind accepted optional-cookie consent.
+- Added `data-clarity-unmask="true"` to stylesheet links, critical CSS, font preloads and key image preloads in `inc\assets.php` so stricter Clarity masking preserves resource URLs.
+- Added the accepted workaround in commit `f820b87`: after accepted consent, fetch the live `main.css`, inject it into the DOM as `style#fenster-clarity-replay-css[data-clarity-unmask="true"]`, and only then load Clarity. This gives new recordings a self-contained copy of the theme stylesheet even if Clarity's backend/player cannot fetch external CSS later.
+- Verified live that the inline replay CSS is present before `clarity.ms/tag` and before `q.clarity.ms/collect`; owner confirmed new Clarity recording renders correctly.
 
 ## 2026-07-07 - Commercial Product Template Local Rebuild
 

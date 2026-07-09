@@ -1,13 +1,13 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-07-07
+Last updated: 2026-07-09
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live commit after this update: `8ee25c1` (`Fix Clarity consent session tracking`). Check `git log --oneline -8` and confirm against the live theme before assuming this line is still current.
+- Latest known deployed live commit after this update: `f820b87` (`Inline replay CSS before Clarity loads`). Check `git log --oneline -8` and confirm against the live theme before assuming this line is still current.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
@@ -163,6 +163,6 @@ Live must not become the source of truth.
 - The theme serves `/sitemap.xml` and `/page-sitemap.xml` before Rank Math can output its own XML; live verification after the hardening pass showed 421 canonical sitemap URLs.
 - `inc/security.php` owns public WordPress hardening: REST user enumeration is blocked, XML-RPC is disabled through the WordPress filter, `X-Pingback` is removed, and WordPress generator/RSD/shortlink/REST/oEmbed/emoji head output is stripped.
 - Performance hotfix `7c973b5` defers heavy media and quote embeds without removing premium visuals. Do not make the homepage hero video or WindowCAD iframes eager again unless there is a measured reason.
-- Microsoft Clarity may show unstyled/bare-HTML recordings if its playback cannot fetch CSS/assets correctly. Use real browser/phone checks for visual QA; use Clarity mainly for behaviour, clicks, scroll and friction patterns.
+- Microsoft Clarity had unstyled/giant-image recordings because Clarity-like replay/resource fetches could receive the SiteGround/nginx `403 - Forbidden` HTML page instead of the real stylesheet. The live fix is theme-owned: Clarity plugins are removed, `inc\assets.php` adds `data-clarity-unmask="true"` to CSS/font/image resource links, and `inc\consent.php` injects `style#fenster-clarity-replay-css[data-clarity-unmask="true"]` after accepted consent and before loading `clarity.ms/tag/xi7rk1pic8`. Do not remove this inline replay CSS or reinstall the Clarity plugins without retesting recordings.
 - Public tracking is gated by the theme consent layer in `inc\consent.php`. Do not re-add raw GTM, Clarity or Meta Pixel snippets in Insert Headers/Footers or plugin settings unless they remain blocked until consent.
 - `test.fensterglazing.com` is intentionally Basic Auth protected to avoid a public duplicate. Username: `fenster`; password: `Fenster`. The test `.htaccess` also serves public `robots.txt` with `Allow: /` and uses a custom 401 handler so blocked test URLs return `X-Robots-Tag: noindex, nofollow, noarchive`; keep that combination so Google can drop already-discovered test URLs.
