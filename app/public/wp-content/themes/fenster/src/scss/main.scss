@@ -1966,6 +1966,11 @@ h3 {
   background: transparent;
 }
 
+.fg-mk-proof-wall__link {
+  margin-top: 1rem;
+  margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+}
+
 .fg-mk-areas__grid,
 .fg-mk-trust-slab__grid,
 .fg-mk-showroom__grid,
@@ -2049,6 +2054,13 @@ h3 {
   align-content: center;
   gap: 1rem;
   padding: clamp(1.25rem, 2.6vw, 2rem);
+}
+
+.fg-mk-deep-guide__copy h3 {
+  margin: 0.35rem 0 -0.25rem;
+  color: var(--color-steel);
+  font-size: clamp(1.08rem, 1.45vw, 1.24rem);
+  line-height: 1.18;
 }
 
 .fg-mk-trust-slab__reasons {
@@ -2356,6 +2368,11 @@ h3 {
   grid-template-columns: minmax(0, 0.75fr) minmax(320px, 1fr);
   gap: clamp(1.25rem, 3vw, 3rem);
   align-items: start;
+}
+
+.fg-mk-options__layout > div:first-child {
+  display: grid;
+  gap: 1rem;
 }
 
 .fg-mk-options__grid article {

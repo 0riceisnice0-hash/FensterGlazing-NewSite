@@ -995,7 +995,7 @@ $mk_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.
 $mk_hero_image = $hero_media_src !== '' ? $hero_media_src : FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-windows.jpg';
 $mk_key_products = [
     ['title' => 'uPVC windows', 'copy' => 'Casement, flush, sash, bay and tilt-turn styles for warmer, quieter rooms. Best when you want a practical whole-home window upgrade with clear choices on glass, vents, cills, handles and colour.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/liniar-casement-exterior.jpg', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Most common home upgrade', 'position' => 'center 58%'],
-    ['title' => 'Composite doors', 'copy' => 'Secure front and back doors with colour, glass, furniture and threshold options chosen around the entrance. A strong fit when kerb appeal, security and a warmer hallway matter together.', 'image' => FENSTER_THEME_URI . '/assets/images/imported/new-front-door-in-Milton-Keynes.jpeg', 'url' => home_url('/composite-doors/'), 'meta' => 'Popular entrance upgrade', 'position' => 'center 48%'],
+    ['title' => 'Composite doors', 'copy' => 'Secure front and back doors with colour, glass, furniture and threshold options chosen around the entrance. A strong fit when kerb appeal, security and a warmer hallway matter together.', 'image' => FENSTER_THEME_URI . '/assets/images/imported/front-door.jpeg', 'url' => home_url('/composite-doors/'), 'meta' => 'Popular entrance upgrade', 'position' => 'center 50%'],
     ['title' => 'Aluminium bifold doors', 'copy' => 'Slim folding doors for kitchens, extensions and garden rooms. The survey checks panel count, threshold, drainage and access so the opening works properly once the doors are fitted.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'url' => home_url('/aluminium-bifold-doors/'), 'meta' => 'Open up the rear of the home', 'position' => 'center 56%'],
     ['title' => 'Sliding and patio doors', 'copy' => 'Large glass, smooth access and practical garden openings where a full bifold is not the best fit. Useful for bright rooms, straightforward access and wider views with fewer vertical lines.', 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/sheerline-sliding-door.jpg', 'url' => home_url('/patio-doors/'), 'meta' => 'Bright garden access', 'position' => 'center 55%'],
     ['title' => 'Roof lanterns', 'copy' => 'Aluminium roof lanterns for flat roof extensions, kitchens and open-plan spaces. Designed around daylight, frame colour, glass, upstand details and the way the new room is actually used.', 'image' => FENSTER_THEME_URI . '/assets/images/imported/S1-Lantern-Kitchen-A-min-scaled.jpg', 'url' => home_url('/roof-lanterns/'), 'meta' => 'Daylight from above', 'position' => 'center 50%'],
@@ -1003,7 +1003,7 @@ $mk_key_products = [
 ];
 $mk_cascade_sections = [
     ['eyebrow' => 'Windows', 'title' => 'Replacement windows for Milton Keynes homes', 'copy' => 'Most window projects start with comfort: less draught, less noise, cleaner sightlines and rooms that feel easier to heat. Fenster can compare casement, flush, sash, bay and aluminium options without treating every home as the same white-window job.', 'bullets' => ['Casement and flush options for everyday replacements', 'Sash, bay and aluminium routes for homes that need more design control', 'Glass, vents, cills, handles and colour checked before order'], 'image' => FENSTER_THEME_URI . '/assets/images/imported/Replace-old-windows.jpeg', 'url' => home_url('/windows-milton-keynes/'), 'action' => 'Compare window options'],
-    ['eyebrow' => 'Entrance doors', 'title' => 'Composite and uPVC doors that make the entrance feel finished', 'copy' => 'A front door is part security, part insulation and part first impression. Fenster can help choose slab style, colour, glazing, furniture, threshold and cill so the door suits the house from the street and works properly from the hallway.', 'bullets' => ['Composite front doors for colour, security and kerb appeal', 'uPVC and French door routes where practicality matters most', 'Low threshold, handle, glass and letterplate details checked at survey'], 'image' => FENSTER_THEME_URI . '/assets/images/imported/secure-front-door.jpeg', 'url' => home_url('/doors-milton-keynes/'), 'action' => 'Compare door options'],
+    ['eyebrow' => 'Entrance doors', 'title' => 'Composite and uPVC doors that make the entrance feel finished', 'copy' => 'A front door is part security, part insulation and part first impression. Fenster can help choose slab style, colour, glazing, furniture, threshold and cill so the door suits the house from the street and works properly from the hallway.', 'bullets' => ['Composite front doors for colour, security and kerb appeal', 'uPVC and French door routes where practicality matters most', 'Low threshold, handle, glass and letterplate details checked at survey'], 'image' => FENSTER_THEME_URI . '/assets/images/imported/front-door.jpeg', 'url' => home_url('/doors-milton-keynes/'), 'action' => 'Compare door options'],
     ['eyebrow' => 'Garden openings', 'title' => 'Bifolds, sliders and patio doors for bigger glass', 'copy' => 'Rear openings are where the specification really matters. A bifold, slider or patio door needs the right panel layout, traffic door, handle position, threshold, drainage and colour so the finished opening feels effortless rather than awkward.', 'bullets' => ['Bifolds for flexible openings and extension projects', 'Sliding doors where large panes and wide views matter', 'Threshold, drainage and access confirmed before manufacture'], 'image' => FENSTER_THEME_URI . '/assets/images/imported/Bifold-550-GardenView-v1.webp', 'url' => home_url('/aluminium-bifold-doors/'), 'action' => 'View garden doors'],
     ['eyebrow' => 'Roof glazing', 'title' => 'Roof lanterns for flat roof extensions and brighter kitchens', 'copy' => 'A roof lantern can change how a room feels without filling the walls with extra frames. Fenster helps check size, shape, frame colour, glass and upstand details so the lantern works with the extension rather than looking like an afterthought.', 'bullets' => ['Aluminium lanterns for kitchens, dining rooms and open-plan extensions', 'Glass and frame colour choices matched to the room', 'Survey checks the opening before the lantern is ordered'], 'image' => FENSTER_THEME_URI . '/assets/images/imported/S1-Lantern-Lounge-with-LEDs-min-scaled.jpg', 'url' => home_url('/roof-lanterns/'), 'action' => 'View roof lanterns'],
     ['eyebrow' => 'Glass only', 'title' => 'Replacement glazing when the frame can stay', 'copy' => 'Not every problem needs a full frame replacement. If the frame is sound, Fenster can look at misted glass, cracked units, obscure glass, cat flap glass, integral blinds and other sealed unit options that solve the problem more directly.', 'bullets' => ['Misted, cracked and failed sealed units', 'Obscure glass, pet flap glass and integral blind options', 'A practical route when the existing frame is still worth keeping'], 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'url' => home_url('/double-glazing-replacement/'), 'action' => 'View replacement glass'],
@@ -1016,29 +1016,29 @@ $mk_order_steps = [
     ['step' => '04', 'title' => 'Installation and aftercare', 'copy' => 'The products are fitted by Fenster installers, with guarantee information and aftercare support after completion.'],
 ];
 $mk_option_groups = [
-    ['title' => 'Frame choices', 'items' => ['uPVC', 'Aluminium', 'Flush profiles', 'Heritage-style frames', 'Composite entrance doors']],
-    ['title' => 'Glass choices', 'items' => ['A-rated double glazing', 'Toughened safety glass', 'Obscure glass', 'Acoustic options', 'Integral blinds']],
-    ['title' => 'Finishing details', 'items' => ['Cills', 'Trickle vents', 'Handles', 'Thresholds', 'Colour and foil finish']],
-    ['title' => 'Survey checks', 'items' => ['Exact sizes', 'Access', 'Drainage', 'Making good', 'Ventilation requirements']],
+    ['title' => 'Product decisions', 'items' => ['Window style', 'Door type', 'Bifold or slider', 'Roof lantern size', 'Glass-only replacement']],
+    ['title' => 'Glass and compliance', 'items' => ['Energy rating', 'Safety glass', 'Obscure glass', 'Acoustic upgrade', 'Ventilation needs']],
+    ['title' => 'Finish and daily use', 'items' => ['Cills', 'Handles', 'Thresholds', 'Opening direction', 'Colour and foil finish']],
+    ['title' => 'Survey checks', 'items' => ['Exact sizes', 'Access', 'Drainage', 'Frame position', 'Making good']],
 ];
 $mk_price_checked = '9 July 2026';
 $mk_price_examples = [
     [
         'spec' => '1200 x 1200 uPVC casement window',
-        'price' => '583.61 inc VAT',
-        'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, 5000EA trickle vent and white Signature handle.',
+        'price' => '600 estimate',
+        'details' => 'Rounded from a checked WindowCAD example for a Liniar EnergyPlus casement with white finish, cill, toughened clear glass, trickle vent and white handle.',
         'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-casement-1200x1200.png',
     ],
     [
         'spec' => '900 x 2100 composite entrance door',
-        'price' => '1,999.20 inc VAT',
-        'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, composite door cill, clear glass and chrome lever handle.',
+        'price' => '2,000 estimate',
+        'details' => 'Rounded from a checked WindowCAD example for a Distinction composite entrance door with anthracite grey outside, white inside, low threshold, cill, clear glass and chrome handle.',
         'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-composite-door-900x2100.png',
     ],
     [
         'spec' => '3000 x 2100 aluminium bifold door',
-        'price' => '3,469.43 inc VAT',
-        'details' => 'Prestige aluminium three-pane bifold, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent.',
+        'price' => '3,500 estimate',
+        'details' => 'Rounded from a checked WindowCAD example for a Prestige three-pane aluminium bifold with anthracite grey finish, cill, clear glass, black handles and trickle vent.',
         'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-bifold-product-3000x2100.png',
     ],
 ];
@@ -1052,7 +1052,7 @@ $mk_spec_links = [
     ['title' => 'I know what I need', 'copy' => 'Use the instant quote tool for a guide price, then let Fenster confirm the order details at survey.', 'url' => '#fenster-mk-instant-pricing', 'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-casement-1200x1200.png'],
     ['title' => 'I need product advice', 'copy' => 'Compare windows, doors, bifolds, roof lanterns and replacement glass before choosing the route.', 'url' => '#fenster-mk-products', 'image' => FENSTER_THEME_URI . '/assets/images/imported/types-of-windows.jpeg'],
     ['title' => 'I want to check trust first', 'copy' => 'Read reviews, accreditations, showroom details and aftercare expectations before enquiring.', 'url' => home_url('/why-trust-fenster/'), 'image' => FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png'],
-    ['title' => 'I want to talk to someone', 'copy' => 'Send photos, rough sizes or a quick description and Fenster can help you choose the next step.', 'url' => '#fenster-mk-enquiry', 'image' => FENSTER_THEME_URI . '/assets/images/imported/new-front-door-in-Milton-Keynes.jpeg'],
+    ['title' => 'I want to talk to someone', 'copy' => 'Send photos, rough sizes or a quick description and Fenster can help you choose the next step.', 'url' => '#fenster-mk-enquiry', 'image' => FENSTER_THEME_URI . '/assets/images/imported/front-door.jpeg'],
 ];
 $mk_direction_link = 'https://www.google.com/maps/dir/?api=1&destination=' . rawurlencode('Fenster Glazing Milton Keynes');
 $mk_showroom_image = FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png';
@@ -1102,6 +1102,10 @@ $product_links = [
         </div>
     </section>
 
+    <div class="container fg-home-proof-wall__link fg-mk-proof-wall__link">
+        <a href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('Why you can trust Fenster Glazing', 'fenster'); ?></a>
+    </div>
+
     <section class="fg-mk-trust-slab">
         <div class="container fg-mk-trust-slab__grid">
             <div class="fg-mk-trust-slab__copy" data-fg-mk-reveal="left">
@@ -1127,7 +1131,7 @@ $product_links = [
             <div class="fg-location-section-head">
                 <p class="eyebrow"><?php esc_html_e('Key products', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Choose the product family first. Price and survey make more sense after that.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Most enquiries are not just “double glazing”. They are a mix of windows, doors, glass, roof glazing, access, style and budget. Start with the closest route below, then use the instant price section or enquiry form when you are ready to move.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Most enquiries are not just double glazing in the abstract. They are a mix of windows, doors, glass, roof glazing, access, style and budget. Start with the closest route below, then use the instant price section or enquiry form when you are ready to move.', 'fenster'); ?></p>
             </div>
             <div class="fg-mk-products__grid">
                 <?php foreach ($mk_key_products as $index => $product) : ?>
@@ -1179,7 +1183,7 @@ $product_links = [
                     <p class="eyebrow"><?php esc_html_e('Price guidance', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Use these examples as a benchmark, then build your own instant price below.', 'fenster'); ?></h2>
                 </div>
-                <p><?php echo esc_html('Checked ' . $mk_price_checked . '. These WindowCAD examples are fitted guide prices for specific configurations, including VAT. They show the scale of common projects, but the next useful action is to build your own guide price in the instant quote tool below.'); ?></p>
+                <p><?php echo esc_html('Checked ' . $mk_price_checked . '. These are rounded WindowCAD examples for specific configurations, including VAT. They show the likely scale of common projects. For your own sizes, colours and choices, use the instant price tool below.'); ?></p>
             </div>
             <div class="fg-mk-price-guide__grid">
                 <?php foreach ($mk_price_examples as $index => $example) : ?>
@@ -1190,7 +1194,7 @@ $product_links = [
                             <h3><?php echo esc_html($example['spec']); ?></h3>
                             <strong><?php echo '&pound;' . esc_html($example['price']); ?></strong>
                             <p><?php echo esc_html($example['details']); ?></p>
-                            <a class="text-link" href="#fenster-mk-instant-pricing"><?php esc_html_e('Build your instant price', 'fenster'); ?></a>
+                            <a class="text-link" href="#fenster-mk-instant-pricing"><?php esc_html_e('Get exact pricing for your measurements', 'fenster'); ?></a>
                         </div>
                     </article>
                 <?php endforeach; ?>
@@ -1198,7 +1202,7 @@ $product_links = [
             <div class="fg-mk-price-guide__note">
                 <div>
                     <strong><?php esc_html_e('Ready to make the number relevant to your home?', 'fenster'); ?></strong>
-                    <p><?php esc_html_e('Use the instant price tool for your own product, size, colour and style. Then Fenster can confirm survey details such as vents, safety glass, cills, access and fitting before anything is ordered.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Use the instant price tool for your own product, size, colour and style. The examples above are rounded; the tool gets much closer to your actual measurements before Fenster confirms survey details.', 'fenster'); ?></p>
                 </div>
                 <a class="button" href="#fenster-mk-instant-pricing"><?php esc_html_e('Go to instant pricing', 'fenster'); ?></a>
             </div>
@@ -1254,9 +1258,13 @@ $product_links = [
     <section class="fg-mk-options">
         <div class="container fg-mk-options__layout">
             <div>
-                <p class="eyebrow"><?php esc_html_e('From guide price to real order', 'fenster'); ?></p>
-                <h2><?php esc_html_e('The survey turns an estimate into a specification Fenster can actually manufacture.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A guide price is useful because it gets the conversation moving. The survey is where the real order is checked: exact sizes, frame position, ventilation, safety glass, cill depth, threshold, drainage, handles, colour, access and finishing details. That is the difference between “about right online” and “right for this property”.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('What changes the number', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Instant pricing gets you close. The survey makes it buildable.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The online price is there to stop the first conversation being a guessing game. The survey is where Fenster checks the details that make the order fit the house: exact sizes, frame position, ventilation, safety glass, cill depth, threshold, drainage, handles, colour, access and finishing. That is the jump from a useful estimate to a product that can be manufactured and installed properly.', 'fenster'); ?></p>
+                <div class="button-row">
+                    <a class="button" href="#fenster-mk-instant-pricing"><?php esc_html_e('Use instant pricing', 'fenster'); ?></a>
+                    <a class="button button--light" href="#fenster-mk-enquiry"><?php esc_html_e('Ask Fenster to check it', 'fenster'); ?></a>
+                </div>
             </div>
             <div class="fg-mk-options__grid">
                 <?php foreach ($mk_option_groups as $group) : ?>
@@ -1277,17 +1285,25 @@ $product_links = [
         <div class="container fg-mk-deep-guide__grid">
             <div class="fg-mk-deep-guide__copy" data-fg-mk-reveal="left">
                 <p class="eyebrow"><?php esc_html_e('Milton Keynes buying guide', 'fenster'); ?></p>
-                <h2><?php esc_html_e('How to choose the right double glazing package for the property you actually own.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Milton Keynes has a mixture of homes that do not all want the same answer. A 1970s family home may need simple, efficient casement windows, warmer bedrooms and a new front door that suits the existing brickwork. A newer home may only need failed sealed units replaced, a colour match maintained, or a door upgraded without changing the whole elevation. An extension or garden room may need aluminium bifolds, sliders or a roof lantern where sightlines, threshold levels and drainage matter more than the cheapest headline product.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The page is built around that decision process. If you are replacing windows, the important questions are style, glass, vents, cills and how the frames sit in the existing openings. If you are changing doors, threshold, security, colour, furniture and daily use matter more. If you are opening the back of the house, bifolds and sliders bring panel layout, drainage and access into the conversation.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The first decision is usually the product family. uPVC is the common route for efficient replacement windows and practical doors. Aluminium works well for slimmer frames, bifold doors, sliders, roof lanterns and modern extensions. Composite doors make sense where security, kerb appeal and colour choice matter at the entrance. Replacement glass is the better route when the frame is sound but the unit has misted, cracked, lost performance or needs an option such as obscure glass, integral blinds or a pet flap.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The second decision is the specification. Glass, vents, cills, handles, thresholds, colour, frame profile, opening style, hinge direction and access can all affect the result. These details are not decorative extras; they change how the installation looks, performs, drains, ventilates and complies. A window that looks right in a product render can still be wrong for the room if the opener is awkward, the vent is missed, the safety glass requirement is misunderstood or the cill depth does not suit the existing opening.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The third decision is confidence. Fenster shows reviews, accreditations, product examples, showroom details, pricing guidance and a clear survey process because a homeowner should not have to guess whether a company can handle the project. The aim is simple: help you understand the route, see the likely price level, and make it easy to take the next step.', 'fenster'); ?></p>
-                <p><?php esc_html_e('Fenster can therefore handle the journey in stages. Start with a guide price if you already know the product and approximate size. Send photos and rough measurements if you want help choosing. Visit or contact the showroom if you want to compare finishes before booking. Then use the survey to confirm the final sizes, glass, ventilation, cills, thresholds, access and making-good details before anything is manufactured. That sequence keeps the early decision simple without pretending the final order can be guessed from one online field.', 'fenster'); ?></p>
+                <h2><?php esc_html_e('A practical way to choose glazing without turning it into homework.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Milton Keynes homes vary a lot. Some enquiries are simple window replacements: tired casements, cold bedrooms, misted panes, old handles and rooms that need to feel warmer. Others are entrance projects where the front door has to look right from the road, feel secure, close cleanly and suit the hallway. Extension projects are different again, because bifolds, sliders and roof lanterns are about daylight, access, threshold levels and how the room will be used every day.', 'fenster'); ?></p>
+                <p><?php esc_html_e('That is why this page is split by product instead of pretending every job is one generic double glazing question. If you are replacing windows, focus on frame style, glass, vents, cills and how the frames sit in the existing openings. If you are replacing a door, think about security, threshold, colour, glazing, furniture and the direction the door needs to work. If you are opening up the rear of the house, the right answer may be a bifold, slider or patio door depending on the width, garden access and furniture layout inside.', 'fenster'); ?></p>
+                <h3><?php esc_html_e('If windows are the priority', 'fenster'); ?></h3>
+                <p><?php esc_html_e('Start with the rooms that annoy you most. Bedrooms may need quieter glass, trickle ventilation and openers that are easy to use. Living rooms may need cleaner sightlines, a better bay layout or a warmer frame. Kitchens and bathrooms may need practical openings, obscure glass or safer glass positions. Looking at each room this way makes the quote more useful than simply counting windows across the house.', 'fenster'); ?></p>
+                <h3><?php esc_html_e('If the entrance is the priority', 'fenster'); ?></h3>
+                <p><?php esc_html_e('A door decision is rarely just about the slab. The colour has to suit the brickwork, the glass has to balance privacy with daylight, the threshold has to work for daily access, and the furniture has to feel right in the hand. Composite doors are usually chosen for the front of the home, while uPVC, French or back-door options can still be the sensible route for practical entrances.', 'fenster'); ?></p>
+                <h3><?php esc_html_e('If the back of the house is changing', 'fenster'); ?></h3>
+                <p><?php esc_html_e('Bifolds, sliders and patio doors change the way a room connects to the garden, so the layout matters before the price does. A bifold can create a wide opening, a slider can give bigger glass with fewer vertical lines, and a patio door can be the cleaner answer for straightforward access. The survey checks threshold, drainage, access and frame position so the finished opening works in real life.', 'fenster'); ?></p>
+                <h3><?php esc_html_e('If only the glass has failed', 'fenster'); ?></h3>
+                <p><?php esc_html_e('Misted or cracked units do not always mean the whole frame needs replacing. If the frame is still sound, replacement glazing can restore the view, improve privacy, add obscure glass, include a pet flap or solve a failed sealed unit without turning the job into a full window replacement. That can keep the project smaller, quicker and more proportionate.', 'fenster'); ?></p>
+                <p><?php esc_html_e('For windows, uPVC is usually the most practical route for everyday replacements, while aluminium or flush styles help when slimmer lines or a sharper finish matter. For entrance doors, composite gives more choice on colour, glass and security, while uPVC can still be a sensible back door or utility option. For roof glazing, the lantern has to be considered with the flat roof opening, upstand, glass and frame colour. For failed glass, the best answer may be a new sealed unit rather than a full new frame.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Prices change because the details change. Size is only one part of it. Glass type, safety requirements, trickle vents, cill depth, colour, foil finish, threshold type, handles, drainage, access and making-good all affect the final order. The instant price tool is useful because it gives you a realistic starting point. The survey is useful because it checks the details that an online tool cannot see from your house.', 'fenster'); ?></p>
+                <p><?php esc_html_e('A good route is simple: use the product cards to decide what you are changing, look at the rounded guide prices to understand the scale, then use instant pricing if you know the rough size. If you are not sure, send photos or speak to the showroom team first. Fenster can then turn that early direction into a checked specification before anything is manufactured.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The aim is not to overwhelm you with every possible glazing term. It is to make the next step obvious: pick the product route, get a realistic number, then let the survey confirm the exact sizes, glass, ventilation, thresholds, cills and fitting details for your property.', 'fenster'); ?></p>
             </div>
             <div class="fg-mk-deep-guide__media" data-fg-mk-reveal="right">
                 <figure>
-                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/new-front-door-in-Milton-Keynes.jpeg'); ?>" alt="<?php esc_attr_e('New front door installed in Milton Keynes', 'fenster'); ?>" loading="lazy" data-fg-depth="0.04">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/front-door.jpeg'); ?>" alt="<?php esc_attr_e('Composite front door on a Milton Keynes-style home', 'fenster'); ?>" loading="lazy" data-fg-depth="0.04">
                 </figure>
                 <figure>
                     <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/replacement-glazing-milton-keynes-scaled.jpg'); ?>" alt="<?php esc_attr_e('Replacement glazing work in Milton Keynes', 'fenster'); ?>" loading="lazy" data-fg-depth="0.06">
