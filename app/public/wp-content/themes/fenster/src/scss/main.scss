@@ -17515,6 +17515,127 @@ html.fg-gallery-lightbox-open body {
   color: rgba(255, 255, 255, 0.84);
 }
 
+.fg-careers-page {
+  color: var(--color-ink);
+}
+
+.fg-careers-hero {
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+  background:
+    radial-gradient(circle at 14% 22%, rgba(46, 172, 102, 0.16), transparent 34%),
+    radial-gradient(circle at 86% 14%, rgba(0, 45, 58, 0.14), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(237, 246, 244, 0.72));
+}
+
+.fg-careers-hero__grid,
+.fg-careers-fit__grid,
+.fg-careers-interest__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.62fr);
+  gap: clamp(1rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.fg-careers-hero__copy h1 {
+  max-width: 860px;
+  color: var(--color-steel);
+  font-size: clamp(2.7rem, 5vw, 5rem);
+}
+
+.fg-careers-hero__copy p:not(.eyebrow),
+.fg-careers-fit__intro p,
+.fg-careers-interest p {
+  max-width: 690px;
+  color: var(--color-muted);
+  font-size: 1.08rem;
+}
+
+.fg-careers-status,
+.fg-careers-pillars article {
+  min-width: 0;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 22px 60px rgba(0, 45, 58, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+.fg-careers-status {
+  padding: clamp(1.35rem, 3vw, 2.2rem);
+}
+
+.fg-careers-status span,
+.fg-careers-pillars span {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  color: var(--color-accent-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-careers-status h2,
+.fg-careers-fit__intro h2,
+.fg-careers-interest h2 {
+  color: var(--color-steel);
+  font-size: clamp(2rem, 3.4vw, 3.2rem);
+}
+
+.fg-careers-status p,
+.fg-careers-pillars p {
+  color: var(--color-muted);
+}
+
+.fg-careers-fit,
+.fg-careers-interest {
+  padding: clamp(4rem, 6vw, 6rem) 0;
+}
+
+.fg-careers-fit {
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.fg-careers-pillars {
+  display: grid;
+  gap: 1rem;
+}
+
+.fg-careers-pillars article {
+  padding: 1.25rem;
+}
+
+.fg-careers-pillars h3 {
+  color: var(--color-steel);
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+}
+
+.fg-careers-interest {
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+.fg-careers-interest h2 {
+  color: #ffffff;
+}
+
+.fg-careers-interest p,
+.fg-careers-interest a {
+  color: rgba(255, 255, 255, 0.84);
+}
+
+@media (max-width: 860px) {
+  .fg-careers-hero__grid,
+  .fg-careers-fit__grid,
+  .fg-careers-interest__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-careers-status {
+    order: -1;
+  }
+}
+
 .fg-trust-page {
   color: var(--color-ink);
 }

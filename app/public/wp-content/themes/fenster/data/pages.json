@@ -14517,8 +14517,8 @@
       "url": "https://fensterglazing.com/careers/",
       "title": "Careers",
       "seo": {
-        "title_tag": "Careers - Join Our Team | Fenster Glazing, Milton Keynes",
-        "meta_description": "Explore rewarding career opportunities in glazing and join our team. Discover growth at Fenster Glazing today. Apply now!",
+        "title_tag": "Careers at Fenster Glazing | Milton Keynes",
+        "meta_description": "Careers at Fenster Glazing in Milton Keynes. There are no current vacancies, but you can learn about the team and register interest for future roles.",
         "description_source": "yoast-indexable-backup",
         "canonical": "https://fensterglazing.com/careers/",
         "robots": "max-image-preview:large",
@@ -14529,11 +14529,11 @@
         "open_graph": [
           {
             "key": "og:title",
-            "content": "{\"width\":1000,\"height\":667,\"url\":\"https://fensterglazing.com/app/uploads/2023/01/commercial-7.jpg\",\"path\":\"/home/customer/www/fensterglazing.com/public_html/web/app/uploads/2023/01/commercial-7.jpg\",\"size\":\"full\",\"id\":5477,\"alt\":\"commercial windows\",\"pixels\":667000,\"type\":\"image/jpeg\"}"
+            "content": "Careers at Fenster Glazing | Milton Keynes"
           },
           {
             "key": "og:description",
-            "content": "0"
+            "content": "Careers at Fenster Glazing in Milton Keynes. There are no current vacancies, but you can learn about the team and register interest for future roles."
           },
           {
             "key": "og:url",
@@ -14555,11 +14555,11 @@
           },
           {
             "key": "twitter:title",
-            "content": "Careers - Join Our Team | Fenster Glazing, Milton Keynes"
+            "content": "Careers at Fenster Glazing | Milton Keynes"
           },
           {
             "key": "twitter:description",
-            "content": "https://fensterglazing.com/app/uploads/2023/01/commercial-7.jpg"
+            "content": "Careers at Fenster Glazing in Milton Keynes. There are no current vacancies, but you can learn about the team and register interest for future roles."
           },
           {
             "key": "twitter:image",
@@ -14582,8 +14582,8 @@
         },
         "primary_focus_keyword": "careers"
       },
-      "meta_description": "",
-      "word_count": 616,
+      "meta_description": "Careers at Fenster Glazing in Milton Keynes. There are no current vacancies, but you can learn about the team and register interest for future roles.",
+      "word_count": 392,
       "hero_image": {
         "src": "/wp-content/themes/fenster/assets/images/imported/shutterstock_1014119725-scaled.jpg",
         "alt": "double glazing careers",
@@ -14598,58 +14598,49 @@
       ],
       "links": [
         {
-          "text": "APPLY NOW",
-          "url": "https://fensterglazing.com/careers/"
+          "text": "Contact Fenster",
+          "url": "https://fensterglazing.com/contact/"
         },
         {
-          "text": "The Best Windows Milton Keynes",
-          "url": "https://fensterglazing.com/windows-milton-keynes/"
+          "text": "About Fenster",
+          "url": "https://fensterglazing.com/about/"
         },
         {
-          "text": "Commercial Glazing: High-Quality Windows and Doors",
+          "text": "Commercial glazing",
           "url": "https://fensterglazing.com/commercial-glazing/"
         },
         {
-          "text": "2026 Giveaway Terms & Conditions",
-          "url": "https://fensterglazing.com/terms-conditions/"
-        },
-        {
-          "text": "SHOWROOM 97-98 Alston Drive Bradwell Abbey Milton Keynes Buckinghamshire MK13 9HF",
-          "url": "https://www.google.com/maps/place/Fenster%2BGlazing/@52.0465566%2C-0.7938287%2C15z/data%3D%214m2%213m1%211s0x0:0x1afb9c1cb36d2bea?sa=X&ved=2ahUKEwisiMyc1fL0AhVwQUEAHUKPDNIQ_BJ6BAg8EAU"
+          "text": "Windows in Milton Keynes",
+          "url": "https://fensterglazing.com/windows-milton-keynes/"
         }
       ],
       "sections": [
         {
           "heading": "Careers",
           "body": [
-            "We're looking for talented and driven individuals to join our growing team at Fenster Glazing. If you're passionate about delivering exceptional customer experience, we want to hear from you. Explore our vacancies and take the next step in your career!"
+            "Fenster Glazing is a Milton Keynes glazing company working across residential and commercial windows, doors, roof lanterns, replacement glass and related projects.",
+            "There are currently no open vacancies. When a role becomes available, this page will be updated with the position, location, hours and how to apply."
           ]
         },
         {
-          "heading": "Project Coordinator",
+          "heading": "Current vacancies",
           "body": [
-            "As a Project Coordinator in our commercial team, you'll play a key role in managing schedules, coordinating suppliers, and ensuring projects run smoothly from start to finish. This role is perfect for someone who thrives on organisation and problem-solving in a fast-paced environment.",
-            "APPLY NOW"
+            "No current jobs are available at Fenster Glazing.",
+            "Any vacancy information that previously appeared on this page is no longer active. This page will be updated when a genuine opening is available."
           ]
         },
         {
-          "heading": "Digital Marketing Manager",
+          "heading": "What we look for",
           "body": [
-            "As a Marketing Manager at Fenster, you’ll be responsible for driving brand growth and generating leads through digital and offline campaigns. From social media and content creation to SEO and paid ads, this role is ideal for someone who’s creative, data-driven, and ready to make an impact.",
-            "APPLY NOW"
+            "Good communication, care around customers' homes and attention to detail matter here. Fenster projects involve survey notes, product choices, installation standards and aftercare, so the best fit is someone who takes the work seriously without making the process feel difficult for customers.",
+            "Future roles may include installation, surveying, project coordination, showroom support, administration, sales, marketing or commercial glazing support."
           ]
         },
         {
-          "heading": "Don't see the right role for you?",
+          "heading": "Register your interest",
           "body": [
-            "Our team at Fenster Glazing is constantly growing. We believe in creating the right role for the right person. If none of the roles listed above quite fit you, but you still want to be a part of our organisation, feel free to get in touch anyway!",
-            "Stay updated with us by following us on our social media channels! Be the first to know about our latest projects, product launches, and industry insights.",
-            "Don’t miss out on exclusive content and behind-the-scenes glimpses. Click on the links and be a part of our online community today!",
-            "Fenster Glazing are expert window & door installers based in Milton Keynes, Northampton. We deliver the very highest quality products and services to our customers.",
-            "We supply throughout Milton Keynes, Northampton, Ampthill, Toddington, Leighton Buzzard & Buckinghamshire. Contact us online today!",
-            "The Best Windows Milton Keynes",
-            "Commercial Glazing: High-Quality Windows and Doors",
-            "2026 Giveaway Terms & Conditions"
+            "If you would like Fenster to keep your details in mind for future opportunities, email a short introduction and CV to info@fensterglazing.com.",
+            "Please include the kind of role you are interested in, your relevant experience, where you are based and the best way to contact you. We cannot promise a response when there are no vacancies, but suitable details may be kept on file for future hiring."
           ]
         }
       ]

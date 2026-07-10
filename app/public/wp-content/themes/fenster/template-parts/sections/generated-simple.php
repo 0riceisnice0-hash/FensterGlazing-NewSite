@@ -24,6 +24,7 @@ $phone = (string) ($brand['phone'] ?? '01908 429200');
 $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $phone_href = preg_replace('/\s+/', '', $phone);
 $cards = [];
+$is_careers = $slug === 'careers';
 
 foreach ($sections as $index => $section) {
     $heading = trim((string) ($section['heading'] ?? ''));
@@ -42,6 +43,87 @@ foreach ($sections as $index => $section) {
 }
 
 $cards = array_slice($cards, 0, $is_archive ? 18 : 8);
+
+if ($is_careers) :
+    $careers_intro = $cards[0]['body'] ?? [];
+    $careers_status = $cards[1]['body'] ?? [];
+    $careers_fit = $cards[2]['body'] ?? [];
+    $careers_interest = $cards[3]['body'] ?? [];
+    ?>
+
+<article class="fg-careers-page">
+    <section class="fg-careers-hero">
+        <div class="container fg-careers-hero__grid">
+            <div class="fg-careers-hero__copy">
+                <p class="eyebrow"><?php esc_html_e('Careers at Fenster', 'fenster'); ?></p>
+                <h1><?php esc_html_e('Work with a glazing team that cares about the details.', 'fenster'); ?></h1>
+                <?php foreach (array_slice($careers_intro, 0, 2) as $paragraph) : ?>
+                    <p><?php echo esc_html($paragraph); ?></p>
+                <?php endforeach; ?>
+                <div class="button-row">
+                    <a class="button" href="mailto:<?php echo esc_attr($email); ?>?subject=Future%20careers%20interest"><?php esc_html_e('Register interest', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Fenster', 'fenster'); ?></a>
+                </div>
+            </div>
+            <aside class="fg-careers-status" aria-labelledby="fg-careers-status-title">
+                <span><?php esc_html_e('Hiring status', 'fenster'); ?></span>
+                <h2 id="fg-careers-status-title"><?php esc_html_e('No current vacancies', 'fenster'); ?></h2>
+                <?php foreach (array_slice($careers_status, 0, 2) as $paragraph) : ?>
+                    <p><?php echo esc_html($paragraph); ?></p>
+                <?php endforeach; ?>
+            </aside>
+        </div>
+    </section>
+
+    <section class="fg-careers-fit">
+        <div class="container fg-careers-fit__grid">
+            <div class="fg-careers-fit__intro">
+                <p class="eyebrow"><?php esc_html_e('Future opportunities', 'fenster'); ?></p>
+                <h2><?php esc_html_e('The kind of people who usually fit well here.', 'fenster'); ?></h2>
+                <?php foreach (array_slice($careers_fit, 0, 2) as $paragraph) : ?>
+                    <p><?php echo esc_html($paragraph); ?></p>
+                <?php endforeach; ?>
+            </div>
+            <div class="fg-careers-pillars" aria-label="<?php esc_attr_e('Fenster working standards', 'fenster'); ?>">
+                <article>
+                    <span><?php esc_html_e('01', 'fenster'); ?></span>
+                    <h3><?php esc_html_e('Clear with customers', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('Good updates, tidy handovers and plain answers matter as much as the product itself.', 'fenster'); ?></p>
+                </article>
+                <article>
+                    <span><?php esc_html_e('02', 'fenster'); ?></span>
+                    <h3><?php esc_html_e('Careful with details', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('Survey notes, measurements, trims, thresholds, hardware and aftercare all need proper attention.', 'fenster'); ?></p>
+                </article>
+                <article>
+                    <span><?php esc_html_e('03', 'fenster'); ?></span>
+                    <h3><?php esc_html_e('Ready to learn', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('The glazing world changes quickly, so curiosity and pride in improvement go a long way.', 'fenster'); ?></p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="fg-careers-interest">
+        <div class="container fg-careers-interest__inner">
+            <div>
+                <p class="eyebrow"><?php esc_html_e('Stay in touch', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Want to be considered when something opens?', 'fenster'); ?></h2>
+                <?php foreach (array_slice($careers_interest, 0, 2) as $paragraph) : ?>
+                    <p><?php echo esc_html($paragraph); ?></p>
+                <?php endforeach; ?>
+            </div>
+            <div class="fg-contact-list">
+                <a href="mailto:<?php echo esc_attr($email); ?>?subject=Future%20careers%20interest"><?php echo esc_html($email); ?></a>
+                <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
+            </div>
+        </div>
+    </section>
+</article>
+
+    <?php
+    return;
+endif;
 ?>
 
 <article class="fg-simple-page <?php echo esc_attr($is_archive ? 'fg-simple-page--archive' : ''); ?>">
