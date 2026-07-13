@@ -82,15 +82,22 @@ function fenster_dashboard_track_event(string $event, array $payload = []): void
             : sanitize_text_field((string) $payload[$key]);
     }
 
-    wp_remote_post($endpoint, [
-        'timeout' => 5,
-        'blocking' => false,
+    $response = wp_remote_post($endpoint, [
+        'timeout' => 8,
+        // WindowCAD callbacks can end before a non-blocking outbound request
+        // has been sent. Wait for the no-PII dashboard acknowledgement so a
+        // completed quote is not silently lost.
+        'blocking' => true,
         'headers' => [
             'Content-Type' => 'application/json',
             'X-Fenster-Website-Secret' => $secret,
         ],
         'body' => wp_json_encode($clean),
     ]);
+
+    if (is_wp_error($response) || wp_remote_retrieve_response_code($response) >= 300) {
+        error_log('Fenster website tracking relay failed for event: ' . $event);
+    }
 }
 
 function fenster_windowcad_tracking_from_fields(array $fields): string
