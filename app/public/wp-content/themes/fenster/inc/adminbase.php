@@ -221,7 +221,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $phone = sanitize_text_field((string) ($fields['Phone'] ?? $fields['Telephone'] ?? ''));
     $postcode = sanitize_text_field((string) ($fields['Post code'] ?? $fields['Postcode'] ?? ''));
     $notes = 'Lead from WindowCAD';
-    $journey_ref = fenster_windowcad_reference_from_fields($fields);
+    $journey_ref = fenster_windowcad_tracking_from_fields($fields);
     $quote_price = fenster_windowcad_price_from_fields($fields);
 
     $summary = implode("\n", array_filter([

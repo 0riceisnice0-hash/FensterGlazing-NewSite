@@ -4,7 +4,8 @@
  *
  * Browser events only contain journey and marketing context. Lead PII stays in
  * WordPress/AdminBase; WindowCAD's hidden Reference field carries the opaque
- * journey ID back to this site when a quote is completed.
+ * journey ID back to this site in WindowCAD's separate Tracking field when a
+ * quote is completed. The office-owned Reference field is never read or set.
  *
  * @package Fenster
  */
@@ -92,9 +93,9 @@ function fenster_dashboard_track_event(string $event, array $payload = []): void
     ]);
 }
 
-function fenster_windowcad_reference_from_fields(array $fields): string
+function fenster_windowcad_tracking_from_fields(array $fields): string
 {
-    foreach (['Reference', 'reference', 'REF', 'Ref'] as $key) {
+    foreach (['Tracking', 'tracking'] as $key) {
         $value = sanitize_text_field((string) ($fields[$key] ?? ''));
         if (preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $value)) {
             return strtoupper($value);
