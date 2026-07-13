@@ -1189,7 +1189,9 @@ function fenster_redirect_target(string $slug): string
 {
     // Main product pages already own Milton Keynes intent. Keep legacy matrix
     // URLs useful for visitors, but consolidate their equity to that parent.
-    if (str_ends_with($slug, '-milton-keynes')) {
+    // '/double-glazing-milton-keynes/' is exempt: it is the deliberate
+    // head-term landing page, not a matrix duplicate, and must stay live.
+    if (str_ends_with($slug, '-milton-keynes') && $slug !== 'double-glazing-milton-keynes') {
         $product_slug = substr($slug, 0, -strlen('-milton-keynes'));
         if (isset(fenster_location_matrix_products()[$product_slug])) {
             return $product_slug;
