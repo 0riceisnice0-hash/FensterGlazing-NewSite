@@ -447,7 +447,23 @@ document.querySelectorAll('[data-fg-visitor-id]').forEach((field) => {
 
 if (trackingConsentAccepted()) {
   trackWebsiteEvent('visitor_seen');
+  trackWebsiteEvent('page_view');
 }
+
+const pageTrackingStartedAt = Date.now();
+let pageEngagementRecorded = false;
+const recordPageEngagement = () => {
+  if (pageEngagementRecorded || !trackingConsentAccepted()) return;
+  pageEngagementRecorded = true;
+  trackWebsiteEvent('page_engaged', {
+    page_duration_seconds: Math.min(1800, Math.max(1, Math.round((Date.now() - pageTrackingStartedAt) / 1000))),
+  });
+};
+
+window.addEventListener('pagehide', recordPageEngagement, { once: true });
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') recordPageEngagement();
+});
 
 document.addEventListener('click', (event) => {
   const phoneLink = event.target.closest('a[href^="tel:"]');
@@ -459,6 +475,17 @@ document.addEventListener('click', (event) => {
   if (emailLink) {
     trackWebsiteEvent('email_click', { cta: (emailLink.textContent || 'Email').trim().slice(0, 120) });
   }
+
+  const pageLink = event.target.closest('a[href]');
+  if (!pageLink || phoneLink || emailLink || /windowsoftware\.co\.uk\/windowcad7/i.test(pageLink.href) || pageLink.getAttribute('href')?.startsWith('#')) return;
+
+  try {
+    const destination = new URL(pageLink.href, window.location.href);
+    trackWebsiteEvent('link_click', {
+      cta: (pageLink.textContent || pageLink.getAttribute('aria-label') || 'Link').trim().slice(0, 120),
+      link_target: destination.origin === window.location.origin ? destination.pathname : destination.origin,
+    });
+  } catch (_error) {}
 });
 
 const enquiryForms = [...document.querySelectorAll('[data-fg-enquiry-form]')];
