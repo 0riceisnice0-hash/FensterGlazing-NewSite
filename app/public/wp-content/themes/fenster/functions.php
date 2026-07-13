@@ -24,6 +24,7 @@ $fenster_required_files = [
     'inc/consent.php',
     'inc/assets.php',
     'inc/template-tags.php',
+    'inc/website-tracking.php',
     'inc/enquiries.php',
     'inc/adminbase.php',
     'inc/generated-pages.php',

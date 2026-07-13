@@ -221,6 +221,8 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $phone = sanitize_text_field((string) ($fields['Phone'] ?? $fields['Telephone'] ?? ''));
     $postcode = sanitize_text_field((string) ($fields['Post code'] ?? $fields['Postcode'] ?? ''));
     $notes = 'Lead from WindowCAD';
+    $journey_ref = fenster_windowcad_reference_from_fields($fields);
+    $quote_price = fenster_windowcad_price_from_fields($fields);
 
     $summary = implode("\n", array_filter([
         'Name: ' . $full_name,
@@ -251,6 +253,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             '_fenster_project_type' => 'WindowCAD',
             '_fenster_source' => 'WindowCAD',
             '_fenster_page_url' => home_url('/online-quote/'),
+            '_fenster_journey_ref' => $journey_ref,
             '_fenster_windowcad_fields' => wp_json_encode($fields),
         ];
         foreach ($meta as $key => $value) {
@@ -287,6 +290,12 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             'enquiry_id' => is_wp_error($enquiry_id) ? 0 : (int) $enquiry_id,
         ], 500);
     }
+
+    fenster_dashboard_track_event('quote_completed', [
+        'journey_id' => $journey_ref,
+        'price_amount' => $quote_price,
+        'price_currency' => 'GBP',
+    ]);
 
     fenster_windowcad_log('adminbase relay succeeded', [
         'status' => (string) ($result['status'] ?? ''),

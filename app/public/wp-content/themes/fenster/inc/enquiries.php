@@ -346,6 +346,7 @@ function fenster_process_enquiry(): array|WP_Error
         'message' => sanitize_textarea_field(wp_unslash($_POST['message'] ?? '')),
         'source' => sanitize_text_field(wp_unslash($_POST['source'] ?? 'Website')),
         'page_url' => esc_url_raw(wp_unslash($_POST['page_url'] ?? '')),
+        'journey_ref' => sanitize_text_field(wp_unslash($_POST['journey_ref'] ?? '')),
     ];
     $privacy = ! empty($_POST['privacy']);
 
@@ -401,6 +402,7 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_timescale' => $data['timescale'],
         '_fenster_source' => $data['source'],
         '_fenster_page_url' => $data['page_url'],
+        '_fenster_journey_ref' => $data['journey_ref'],
     ];
     foreach ($meta as $key => $value) {
         update_post_meta($enquiry_id, $key, $value);
@@ -443,6 +445,12 @@ function fenster_process_enquiry(): array|WP_Error
     update_post_meta($enquiry_id, '_fenster_confirmation_sent', $confirmation_sent ? '1' : '0');
 
     do_action('fenster_enquiry_created', $enquiry_id, $meta, $data['message']);
+
+    fenster_dashboard_track_event('form_submitted', [
+        'journey_id' => $data['journey_ref'],
+        'page_path' => (string) wp_parse_url($data['page_url'], PHP_URL_PATH),
+        'source' => $data['source'],
+    ]);
 
     return [
         'status' => 'success',

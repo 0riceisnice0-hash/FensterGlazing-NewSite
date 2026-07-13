@@ -272,6 +272,124 @@ if (document.body) {
   window.addEventListener('DOMContentLoaded', preventHyphenatedWordSplits, { once: true });
 }
 
+// WindowCAD is on another domain, so it cannot read our cookies.  Instead, an
+// opaque reference is carried through its hidden Reference field and joined to
+// non-PII website events in the Marketing Dashboard when the quote returns.
+const websiteTracking = window.fensterWebsiteTracking || {};
+const journeyStorageKey = 'fenster_quote_journey_ref';
+
+const trackingConsentAccepted = () => {
+  try {
+    return window.localStorage.getItem('fenster_cookie_consent') === 'accepted';
+  } catch (_error) {
+    return false;
+  }
+};
+
+const createJourneyReference = () => {
+  const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
+    || `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
+  return `FG2-${random.toUpperCase()}`;
+};
+
+const journeyReference = () => {
+  try {
+    const existing = window.sessionStorage.getItem(journeyStorageKey);
+    if (existing && /^FG2-[A-Z0-9-]{8,80}$/i.test(existing)) return existing;
+    const created = createJourneyReference();
+    window.sessionStorage.setItem(journeyStorageKey, created);
+    return created;
+  } catch (_error) {
+    return createJourneyReference();
+  }
+};
+
+const campaignContext = () => {
+  const parameters = new URLSearchParams(window.location.search);
+  return {
+    page_path: window.location.pathname,
+    landing_path: window.location.pathname,
+    source: parameters.get('utm_source') || '',
+    medium: parameters.get('utm_medium') || '',
+    campaign: parameters.get('utm_campaign') || '',
+    content: parameters.get('utm_content') || '',
+    term: parameters.get('utm_term') || '',
+    referrer_host: (() => {
+      try { return document.referrer ? new URL(document.referrer).hostname : ''; } catch (_error) { return ''; }
+    })(),
+  };
+};
+
+const trackWebsiteEvent = (event, detail = {}) => {
+  const payload = {
+    event,
+    journey_id: journeyReference(),
+    ...campaignContext(),
+    ...detail,
+  };
+
+  if (!trackingConsentAccepted()) return payload.journey_id;
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: `fenster_${event}`, ...payload });
+  window.clarity?.('event', `fenster_${event}`);
+
+  if (websiteTracking.endpoint) {
+    const body = JSON.stringify(payload);
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(websiteTracking.endpoint, new Blob([body], { type: 'text/plain;charset=UTF-8' }));
+    } else {
+      window.fetch(websiteTracking.endpoint, {
+        method: 'POST',
+        mode: 'cors',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      }).catch(() => {});
+    }
+  }
+
+  return payload.journey_id;
+};
+
+const windowCadUrlWithReference = (value) => {
+  if (!value || !/windowsoftware\.co\.uk\/windowcad7/i.test(value)) return value;
+
+  try {
+    const url = new URL(value, window.location.href);
+    url.searchParams.set(websiteTracking.referenceParameter || 'reference', journeyReference());
+    return url.toString();
+  } catch (_error) {
+    return value;
+  }
+};
+
+document.querySelectorAll('a[href*="windowsoftware.co.uk/windowcad7/"]').forEach((link) => {
+  link.href = windowCadUrlWithReference(link.href);
+  link.addEventListener('click', () => {
+    trackWebsiteEvent('quote_opened', {
+      cta: (link.textContent || 'WindowCAD link').trim().slice(0, 120),
+      product_collection: new URL(link.href).searchParams.get('productCollection') || '',
+    });
+  });
+});
+
+document.querySelectorAll('[data-fg-journey-ref]').forEach((field) => {
+  field.value = journeyReference();
+});
+
+document.addEventListener('click', (event) => {
+  const phoneLink = event.target.closest('a[href^="tel:"]');
+  if (phoneLink) {
+    trackWebsiteEvent('phone_click', { cta: (phoneLink.textContent || 'Phone').trim().slice(0, 120) });
+  }
+
+  const emailLink = event.target.closest('a[href^="mailto:"]');
+  if (emailLink) {
+    trackWebsiteEvent('email_click', { cta: (emailLink.textContent || 'Email').trim().slice(0, 120) });
+  }
+});
+
 const enquiryForms = [...document.querySelectorAll('[data-fg-enquiry-form]')];
 const ukPostcodePattern = /^(GIR\s?0AA|[A-Z]{1,2}[0-9][A-Z0-9]?\s?[0-9][A-Z]{2})$/i;
 
@@ -529,6 +647,9 @@ enquiryForms.forEach((form) => {
       form.style.minHeight = `${submittedHeight}px`;
       form.reset();
       form.classList.add('is-submitted');
+      trackWebsiteEvent('form_submitted', {
+        cta: (submitLabel?.textContent || 'Send enquiry').trim().slice(0, 120),
+      });
       showFeedback(
         'success',
         result.message || 'Thanks — your enquiry has been received.',
@@ -1504,7 +1625,14 @@ const loadQuoteFrame = (frameWrap) => {
     return;
   }
 
-  quoteIframe.setAttribute('src', quoteSrc);
+  const trackedQuoteSrc = windowCadUrlWithReference(quoteSrc);
+  quoteIframe.setAttribute('data-quote-iframe-src', trackedQuoteSrc);
+  quoteIframe.setAttribute('src', trackedQuoteSrc);
+  frameWrap.setAttribute('data-quote-url', windowCadUrlWithReference(frameWrap.getAttribute('data-quote-url') || quoteSrc));
+  trackWebsiteEvent('quote_iframe_loaded', {
+    cta: 'Embedded instant quote',
+    product_collection: new URL(trackedQuoteSrc).searchParams.get('productCollection') || '',
+  });
   frameWrap.classList.add('is-loaded');
 };
 
