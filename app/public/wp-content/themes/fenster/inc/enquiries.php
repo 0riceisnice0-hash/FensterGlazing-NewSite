@@ -450,12 +450,14 @@ function fenster_process_enquiry(): array|WP_Error
 
     do_action('fenster_enquiry_created', $enquiry_id, $meta, $data['message']);
 
-    fenster_dashboard_track_event('form_submitted', [
-        'journey_id' => $data['journey_ref'],
-        'visitor_id' => $data['visitor_id'],
-        'page_path' => (string) wp_parse_url($data['page_url'], PHP_URL_PATH),
-        'source' => $data['source'],
-    ]);
+    if ($data['journey_ref'] !== '') {
+        fenster_dashboard_track_event('form_submitted', [
+            'journey_id' => $data['journey_ref'],
+            'visitor_id' => $data['visitor_id'],
+            'page_path' => (string) wp_parse_url($data['page_url'], PHP_URL_PATH),
+            'source' => $data['source'],
+        ]);
+    }
 
     return [
         'status' => 'success',
