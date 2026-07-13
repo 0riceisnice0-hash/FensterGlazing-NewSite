@@ -347,6 +347,24 @@ function fenster_gsc_seo_overrides(): array
         'why-choose-fenster-over-anglian' => [
             'meta_description' => 'Compare Fenster Glazing with Anglian for local expertise, product choice, survey-led fitting and clear pricing.',
         ],
+        'about' => [
+            'meta_description' => 'Fenster Glazing are window and door experts. We install windows and doors across Milton Keynes, Northampton and Buckinghamshire.',
+        ],
+        'are-my-windows-energy-efficient' => [
+            'meta_description' => 'Learn how energy-efficient windows can improve comfort, warmth and bills in your Milton Keynes home, with advice from Fenster Glazing.',
+        ],
+        'blog' => [
+            'meta_description' => 'Read Fenster Glazing news, guides and advice on windows, doors and double glazing in Milton Keynes and nearby areas.',
+        ],
+        'case-studies/barn-hotel-windows-coventry' => [
+            'meta_description' => 'Fenster Glazing delivered a full commercial window installation package for a major hotel refurbishment in Coventry.',
+        ],
+        'case-studies/pub-windows-eversholt' => [
+            'meta_description' => 'Replacement windows for The Green Man in Eversholt, improving comfort, appearance and energy performance throughout the pub.',
+        ],
+        'what-are-integral-blinds' => [
+            'meta_description' => 'Learn how integral blinds work inside double glazing, including their benefits, controls and suitability for windows and doors.',
+        ],
     ];
 }
 
