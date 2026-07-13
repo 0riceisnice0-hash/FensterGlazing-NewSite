@@ -109,21 +109,6 @@ function fenster_render_cookie_consent(): void
             }).catch(function () {});
         }
 
-        function recordBannerShownOnce() {
-            // This is not visitor tracking: it is a session-only guard so one
-            // undecided browser that moves between pages cannot inflate the
-            // aggregate banner-impression total. It disappears when the tab
-            // session ends and carries no identifier or page data.
-            try {
-                if (window.sessionStorage.getItem('fenster_cookie_banner_seen') === '1') {
-                    return;
-                }
-                window.sessionStorage.setItem('fenster_cookie_banner_seen', '1');
-            } catch (error) {}
-
-            recordConsentMetric('shown');
-        }
-
         function getChoice() {
             try {
                 return window.localStorage.getItem(consentKey);
@@ -273,7 +258,6 @@ function fenster_render_cookie_consent(): void
             showSettingsButton();
         } else {
             showBanner();
-            window.setTimeout(recordBannerShownOnce, 0);
         }
 
         document.addEventListener('click', function (event) {
