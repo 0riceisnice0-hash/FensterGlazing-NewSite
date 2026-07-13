@@ -14,6 +14,8 @@ Last updated: 2026-07-13
 - Replaced the two `/areas-we-cover/` shortcut links that still pointed to legacy `/windows/` and `/doors/` redirects with direct canonical links to the Milton Keynes hubs.
 - Rewrote the weak generic title tags on `/about/` and `/blog/`, and replaced the overlong, article-like `/commercial-glazing-leeds/` title with a concise commercial-service title.
 - The live 681-URL audit found zero sitemap fetch, canonical, title duplication, description duplication, H1, `noindex`, Open Graph image or JSON-LD coverage errors. The remaining strategic SEO work is earning and publishing genuine local project proof for the suburb cluster.
+- Reconciled `SEO-AUDIT.md` against a fresh 681-URL live crawl: marked F1–F4 and the completed F9 work, clearly separated historical GSC/competitor snapshots from current advice, and replaced obsolete lead-tracking guidance with the deployed consent-safe first-party attribution model.
+- Restored Milton Keynes to the `/roof-lanterns/` title, removed the repeated location from the pricing-hub title, and replaced the head-term page's internal “routes” wording with customer-facing language.
 
 ## 2026-07-13 - MK Matrix Canonicalisation And Metadata Guard
 

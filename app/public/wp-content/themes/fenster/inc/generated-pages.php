@@ -235,7 +235,7 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Integral blinds sealed inside double glazing for doors, windows and roof glazing, with magnetic or electric controls and survey-led advice from Fenster Glazing.',
         ],
         'roof-lanterns' => [
-            'title_tag' => 'Roof Lanterns & Roof Lights | Fenster Glazing',
+            'title_tag' => 'Roof Lanterns & Roof Lights Milton Keynes | Fenster Glazing',
             'meta_description' => 'Aluminium roof lanterns and roof lights for brighter extensions, with frame colours, solar-control glass and survey-led installation.',
         ],
         'aluminium-bifold-doors-milton-keynes' => [
@@ -490,6 +490,7 @@ function fenster_price_guide_pages(): array
     $base_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
     $guides = [
         'window-door-prices-milton-keynes' => [
+            'title_tag' => 'Window and Door Prices Milton Keynes | Fenster Glazing',
             'title' => 'Window and Door Prices Milton Keynes',
             'label' => 'Window and door prices',
             'product' => 'windows and doors',

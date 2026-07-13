@@ -6,7 +6,36 @@ Method: full technical crawl of all 421 live URLs, content-scope internal link g
 
 ---
 
-## The Honest Verdict
+## Status reconciliation — 2026-07-13
+
+The original audit is retained below as a dated strategy record. Its crawl, SERP, competitor and GSC figures are **not current measurements**: the live sitemap is now **681 URLs**, and competitor/review/ranking figures must be rechecked before using them as decisions.
+
+Fresh live verification on 2026-07-13: 681/681 sitemap URLs return 200; there are zero missing/duplicate titles or descriptions, zero descriptions over 160 characters, zero canonical/H1/`noindex`/`og:image`/schema coverage errors, and zero broken internal page targets. The test host is protected by `401` plus `X-Robots-Tag: noindex, nofollow, noarchive`.
+
+| Finding | Current status | Evidence / current advice |
+| --- | --- | --- |
+| F1 head-term internal links and dedicated page depth | **✅ Completed** | `/double-glazing-milton-keynes/` is a dedicated ~4,300-word route with its required content marker and 1,785 live internal anchor occurrences. Continue monitoring GSC for cannibalisation; do not 301 it. |
+| F2 areas hub orphaning | **✅ Completed** | `/areas-we-cover/` is sitemap-listed, footer-linked and has 682 live internal anchor occurrences. |
+| F3 MK product titles | **✅ Completed** | The named product titles contain Milton Keynes and the legacy UK suffix issue has been removed. |
+| F4 LocalBusiness-to-GBP schema | **✅ Completed** | Live schema has clean `priceRange`, `geo`, `hasMap` and `sameAs`. |
+| F5 MK suburb coverage | **🟡 Technically completed; proof incomplete** | 280 suburb/product routes are live. Do not rebuild the matrix; add genuine job proof, photography and approved reviews as material becomes available. |
+| F6 authority/citations | **⬜ Owner/external work** | No code change can create supplier listings, citations, PR or reviews. Use the list below as an outreach checklist. |
+| F7 content gaps | **🟡 Partly completed** | A live pricing hub and product cost routes exist; repair targeting is local. Residential local proof, case studies, a publishing cadence and a conservatories/porches business decision remain. |
+| F8 performance | **🟡 Still valid** | Repeated server-side TTFB is about 0.19–0.39s. Do not prioritise cache changes without a CWV test; lack of responsive `srcset` output remains the meaningful technical opportunity. |
+| F9 quick sweep | **✅ Mostly completed** | Crawl-delay, long descriptions and Woburn card are fixed. Quote-tool route consolidation remains a product/SEO decision. |
+| Measurement | **🟡 Partly completed** | Consent-safe first-party journey/quote/form attribution and mobile call intent are live. Search Console and GBP/rank review remain owner-held measurement work. |
+
+### Remaining owner-held inputs
+
+1. Real MK-area residential jobs: town, products, before/after photos, scope and approval to publish.
+2. Approved customer quotations/reviews tied to those jobs, ideally with the public Google/Trustpilot URL.
+3. Supplier-directory, accreditation, citation and local-PR outreach; confirm the exact profiles Fenster wants to claim.
+4. A business decision on conservatories and porches: sell/install them, or consciously exclude that keyword family.
+5. Search Console, GBP and rank-tracker exports on a regular cadence. The dated 2026-07-07 rank/competitor observations below should not be treated as current.
+
+---
+
+## The Honest Verdict (historical 2026-07-07 assessment; see reconciliation above)
 
 The technical SEO is now better than every competitor checked — genuinely. 421/421 URLs healthy, zero duplicate titles, zero duplicate descriptions, unique H1s, self-consistent canonicals, LocalBusiness + breadcrumb schema on every page, FAQ schema on 35 product pages, 100% og:image coverage, clean redirects, scrubbed sitemap. Fenster is already appearing on page one for "double glazing Milton Keynes" and top-3 in web results for "windows and doors Milton Keynes installer" within days of launch.
 
@@ -32,7 +61,7 @@ Pillar scores:
 
 ---
 
-## F1 — CRITICAL: The head-term page has one internal link
+## F1 — CRITICAL: The head-term page has one internal link **✅ COMPLETED 2026-07-13**
 
 `/double-glazing-milton-keynes/` targets the single most valuable phrase in the business — and the content-link graph gives it **1 in-link across the entire site**. For comparison: `/double-glazing-replacement/` has 357, `/windows-milton-keynes/` 327, `/composite-doors/` 306, even `/privacy-policy/` has 405. The page that should be the strongest is the most starved.
 
@@ -43,19 +72,19 @@ Compounding it, the **homepage targets the same term** (title "Double Glazing Mi
 2. Differentiate the two pages by intent rather than merging: homepage = brand + head term; `/double-glazing-milton-keynes/` = the deep local page (prices guidance, MK estates/suburbs served, MK installs, MK reviews, showroom directions). Its 1,573 words are a decent base — make it the best "double glazing in MK" page in the market (3,000+ words, photos of MK installs, suburb list, price-guide section feeding the instant quote tool).
 3. Watch GSC for 4–6 weeks: if Google keeps flip-flopping which URL ranks, consolidate (301 the dedicated page into the homepage). Don't 301 pre-emptively — the dedicated page currently ranks.
 
-## F2 — CRITICAL: `/areas-we-cover/` is fully orphaned (regression)
+## F2 — CRITICAL: `/areas-we-cover/` is fully orphaned (regression) **✅ COMPLETED 2026-07-13**
 
 The hub that organises all 273 town×product pages is now: **absent from the live sitemap** (every other virtual route is present), **no longer linked from the footer** (the 07-06 footer link is gone from live), and the About-page CTA was removed in commit `6d65c1b`. Zero content in-links. It's a 200, indexable page that nothing on the site points to — and it's the "surrounding areas" half of the ranking goal.
 
 **Fix:** restore it to the sitemap's virtual-route list, restore the footer link, and give it a link from `/double-glazing-milton-keynes/` and the homepage areas block. Town pages currently survive on product-page related-links + sitemap alone; the hub restores a proper crawl path and a rankable "areas we cover" asset.
 
-## F3 — HIGH: Four money titles don't mention Milton Keynes
+## F3 — HIGH: Four money titles don't mention Milton Keynes **✅ COMPLETED 2026-07-13**
 
 `/aluminium-bifold-doors/` ("Aluminium Bifold Doors | Fenster Glazing"), `/aluminium-sliding-doors/`, `/aluminium-flush-windows/` and `/window-and-door-repairs/` have no geo term at all. "Bifold doors Milton Keynes" is one of the highest-value queries in this niche. Also: several titles carry legacy "…Prices UK" / "…Supply UK" suffixes ("Sash Windows Prices UK", "Patio Sliding Doors Supply UK", "Roofline Installation UK") — a national signal diluting local relevance on otherwise local pages.
 
 **Fix:** normalise the pattern to `{Product} Milton Keynes | {benefit/secondary} | Fenster Glazing` across all 24 product pages; kill every "UK" suffix on local money pages. One pass in `pages.json`/title overrides.
 
-## F4 — HIGH: Schema isn't wired to the Google Business Profile
+## F4 — HIGH: Schema isn't wired to the Google Business Profile **✅ COMPLETED 2026-07-13**
 
 The LocalBusiness block is missing exactly the fields that connect site ↔ GBP ↔ map pack:
 - **No `geo`** (lat/long for MK13 9HF), **no `hasMap`** (GBP maps URL), **no `sameAs`** (GBP listing, social profiles, FENSA/CPA directory entries).
@@ -64,13 +93,13 @@ The LocalBusiness block is missing exactly the fields that connect site ↔ GBP 
 
 **Fix:** add geo/hasMap/sameAs to `fenster_render_site_schema()` and fix the encoding. Fifteen-minute change, direct map-pack relevance.
 
-## F5 — HIGH: Milton Keynes' own suburbs are uncovered
+## F5 — HIGH: Milton Keynes' own suburbs are uncovered **🟡 ROUTES COMPLETED; LOCAL PROOF OUTSTANDING**
 
 The 13-town matrix covers the ring (Bedford, Northampton, Aylesbury, Buckingham…) but **not one MK suburb**. Custom Glaze explicitly targets Bletchley, Newport Pagnell and more. People search "double glazing Bletchley", "windows Newport Pagnell", "composite doors Wolverton" — and Fenster, the company *based in MK*, has nothing for them. There's even an orphan proof-page already (`/replacing-windows-doors-in-wolverton-mk/`).
 
 **Fix:** add an MK-suburb ring to the matrix (or better, hand-build 6–8 richer pages): Bletchley, Newport Pagnell, Stony Stratford, Wolverton, Woburn Sands, Olney, Buckingham-side estates. Hand-built beats matrix here — these are proximity queries where genuine local detail (estate names, install photos) wins.
 
-## F6 — HIGH: Authority deficit (the long pole)
+## F6 — HIGH: Authority deficit (the long pole) **⬜ EXTERNAL / OWNER WORK**
 
 Known backlink profile: one Milton Keynes Citizen article. The incumbents have decades of citations, supplier listings, sponsorships and brand equity. No amount of on-site work outranks that alone. The playbook, roughly in effort order:
 
@@ -80,7 +109,7 @@ Known backlink profile: one Milton Keynes Citizen article. The incumbents have d
 4. **Local PR cadence** — the instant-pricing-tool story already worked once with the MK Citizen; repeat quarterly (showroom events, charity sponsorship, apprentice hires, notable local installs). MKFM, MK Citizen, OneMK.
 5. **Review velocity** — 99 Google reviews at 4.9★ is good; the incumbents have volume. Systemise the ask: post-installation SMS/email with the GBP review link (the enquiry system already emails customers once SMTP lands — add the review ask to the aftercare touchpoint).
 
-## F7 — MEDIUM: Content gaps where buyers search
+## F7 — MEDIUM: Content gaps where buyers search **🟡 PARTLY COMPLETED**
 
 1. **Price intent** — "double glazing prices Milton Keynes", "how much do bifold doors cost" etc. are the highest-converting queries after the head terms, and Fenster owns the perfect asset (the instant quote tool) with **no price-content pages** feeding it. Build honest price-guide pages/sections ("what affects the price", typical ranges, then the tool). This is the biggest content win available.
 2. **Conservatories & porches** — every incumbent sells them; Fenster has no page (porches are one line in other-services). Business decision: if Fenster fits them, this is a whole missing keyword family; if not, ignore.
@@ -88,7 +117,7 @@ Known backlink profile: one Milton Keynes Citizen article. The incumbents have d
 4. **Residential case studies are 410'd** — understandable pre-launch, but local proof pages ("Sash windows in Stony Stratford", "Bifolds in Woburn Sands") are exactly what suburb pages and E-E-A-T need. Rebuild a few real MK jobs with photos as a priority, not a someday.
 5. **Blog freshness** — the imported guides are fine but undated and static; 1–2 new local posts a month (installs, advice, MK-specific) keeps the domain visibly alive.
 
-## F8 — MEDIUM: Performance / Core Web Vitals
+## F8 — MEDIUM: Performance / Core Web Vitals **🟡 CURRENTLY OPEN**
 
 - Documented Lighthouse mobile baseline was 62 (4.3s FCP / 14.5s LCP) before deferral waves 1–2; PSI couldn't be re-run today (keyless quota) — re-test and record.
 - Images now ship width/height (good) but **no `srcset`** — full-size JPEGs serve to phones. This is the main remaining LCP lever, already noted in HANDOVER as the next performance phase.
@@ -96,7 +125,7 @@ Known backlink profile: one Milton Keynes Citizen article. The incumbents have d
 - CSS has grown to 85 KB gz (was 55 KB) — worth watching, not urgent. No HSTS header.
 - Fonts still OTF, no preload (carried from the original audit).
 
-## F9 — SMALL RESIDUALS (quick sweep-up)
+## F9 — SMALL RESIDUALS (quick sweep-up) **✅ MOSTLY COMPLETED 2026-07-13**
 
 - `robots.txt` still carries `Crawl-delay: 10` — throttles Bing for no benefit. Remove.
 - 363 meta descriptions still exceed ~175 chars (matrix/county templates) — unique and well-written, but Google truncates the CTA off. Trim the templates.
@@ -104,7 +133,7 @@ Known backlink profile: one Milton Keynes Citizen article. The incumbents have d
 - `/videos/` and friends still appear in Google from stale indexing — they're noindexed correctly; request removal in GSC to tidy faster.
 - Quote-intent split: `/online-quote/`, `/3d-visualiser/`, `/design-your-windows-and-doors/` all indexable for the same intent (carried finding).
 
-## Measurement (can't hit #1 blind)
+## Measurement (can't hit #1 blind) **🟡 PARTLY COMPLETED**
 
 - **Google Search Console**: verify property, submit `sitemap.xml`, fix-check the two F1/F2 pages' impressions weekly. (Not confirmable from outside — treat as unchecked.)
 - **Lead events**: GTM (`GTM-K89BCS9`) and Clarity are live, consent banner is live — but the theme still pushes no `dataLayer` events on form success/phone clicks/quote-tool opens. Until that lands, "what ranks" can't be tied to "what converts".
@@ -113,7 +142,7 @@ Known backlink profile: one Milton Keynes Citizen article. The incumbents have d
 
 ---
 
-## The 30 / 60 / 90 Plan
+## The 30 / 60 / 90 Plan (historical plan — see 2026-07-13 reconciliation above)
 
 **Days 1–30 (mechanical, all in-house):**
 F2 areas-hub restoration → F1 internal links to the head-term page → F3 title pass (4 missing-MK + kill "UK" suffixes) → F4 schema geo/sameAs/hasMap + mojibake → F9 sweep (crawl-delay, Woburn link, description templates) → GSC verification + sitemap submission + lead events in GTM → supplier installer-directory requests sent → citations audit.
@@ -156,30 +185,30 @@ It was *good, not immaculate*: it also shipped fake aggregateRating schema, inde
 
 **Verified done on live:** F2 `/areas-we-cover/` back in sitemap + footer; F3 titles (bifolds/sliders/flush/repairs/sash/patio all MK-targeted, "UK" suffixes gone); F4 schema complete (GeoCoordinates, hasMap, 5 sameAs entries, clean `££`); roof-lights keyword live in titles; `Crawl-delay` stripped from robots.txt; `/double-glazing-milton-keynes/` heavily interlinked (10 links from six money pages alone) **and substantially rebuilt — now ~4,200 rendered words with 14 real content sections**, further along than the status notes suggest.
 
-**Residual fixes found during verification (all small):**
-1. `/roof-lanterns/` title lost "Milton Keynes" in the roof-lights retitle ("Roof Lanterns & Roof Lights | Fenster Glazing") — and since MK isn't a matrix town, this *is* the MK roof lantern page. Restore the geo term.
-2. Pricing hub title doubles the location: "Window and Door Prices Milton Keynes | **Fenster Glazing Milton Keynes**".
-3. The Woburn broken link on `/commercial-projects/` → 410 target is still live (carried from L7).
-4. Matrix meta descriptions are still 260–285 chars — the trim (R6/L11) has not happened.
-5. Quote-intent trio (`/online-quote/`, `/3d-visualiser/`, `/design-your-windows-and-doors/`) all still indexable — consolidation decision still open.
-6. Copy-vocab regression on the new head-term page copy: "Four **routes** through the page…" — the banned internal vocab is creeping back into new writing; re-check new copy against COPY-AUDIT.md §3 before deploys.
-7. What the head-term page still lacks vs the F1 spec: MK suburb/estate coverage, real install photos/local proof, a reviews moment and showroom directions — the skeleton and pricing content are already strong.
+**Residual fixes found during verification (status reconciled 2026-07-13):**
+1. **✅ Completed:** `/roof-lanterns/` again includes Milton Keynes in its title.
+2. **✅ Completed:** the pricing hub title no longer doubles Milton Keynes.
+3. **✅ Completed:** `/commercial-projects/` no longer links to the 410 Woburn case study.
+4. **✅ Completed:** the generated-description rewrite leaves zero live descriptions above 160 characters.
+5. **⬜ Open decision:** quote-intent trio (`/online-quote/`, `/3d-visualiser/`, `/design-your-windows-and-doors/`) remain separately indexable. Consolidate only after agreeing the intended search roles and preserving valuable visualiser/tool queries.
+6. **✅ Completed:** the head-term heading now says "Four ways to move forward" rather than using internal vocabulary.
+7. **🟡 Still needs real-world input:** local install photos/proof, approved reviews and richer suburb/estate detail. The page structure and pricing content are already strong.
 
-**Remaining hard items (agreed backlog):** MK suburb pages · residential case studies (biggest gap vs Crown) · authority/citations (non-code) · lead-event tracking in GTM · responsive images/CWV re-test · price-content strategy beyond the hub · conservatories/porches business decision · measurement rhythm.
+**Remaining hard items (reconciled 2026-07-13):** local proof modules for the suburb pages · residential case studies (biggest gap vs Crown) · authority/citations (non-code) · responsive images/CWV re-test · price-content strategy beyond the existing hub · conservatories/porches business decision · Search Console/GBP/rank-review rhythm. Consent-safe first-party lead and journey attribution is live; it replaces the old blanket “no lead events” statement.
 
-## Whole-Site Health Check (2026-07-09, evening crawl — 701 URLs)
+## Whole-Site Health Check (2026-07-09, evening crawl — historical 701-URL snapshot; reconciled above)
 
 The MK suburb expansion is live: sitemap grew 421 → **701 URLs** (280 new = 21 products × ~13 MK suburbs incl. Bletchley, Newport Pagnell, Stony Stratford, Wolverton, Woburn Sands, Furzton, Oldbrook, Monkston, Great Linford, Brooklands, Whitehouse). All 701 fetch 200 with full schema/og:image coverage, zero H1/canonical issues, zero duplicate descriptions.
 
-**New issues introduced by the expansion:**
-1. **CANNIBALISATION — "milton-keynes" was included as a matrix town.** The main product pages already ARE the MK pages, so all 21 new `-milton-keynes` matrix pages target the same queries as their parent product pages. Two have byte-identical titles (`/composite-doors/` vs `/composite-doors-milton-keynes/` — both "Composite Doors Milton Keynes | Secure Front Doors"; same for aluminium doors). Fix: remove `milton-keynes` from the suburb matrix and 301 those 21 URLs to the main product pages (or, minimum, differentiate every title/intent — but the 301 is cleaner).
-2. **690 of 701 meta descriptions now exceed ~175 chars** — the new pages inherited the long-description template; the trim (R6) is now a 690-page issue and should happen in the template before Google indexes the new set.
-3. The suburb pages are matrix-templated rather than the hand-built-with-local-proof pages the plan specified — acceptable to ship, but they will rank materially better once each carries at least one real local job/photo (ties to the case-studies workstream).
-4. Woburn broken link on `/commercial-projects/` — still present (third audit in a row).
+**New issues introduced by the expansion (status reconciled 2026-07-13):**
+1. **✅ Completed:** `milton-keynes` was removed from the suburb matrix. The 20 genuine duplicate `-milton-keynes` URLs 301 to their parent product pages; the deliberate `/double-glazing-milton-keynes/` head-term route is explicitly preserved, returns 200 and uses its dedicated template.
+2. **✅ Completed:** all live descriptions are now complete source copy at 160 characters or fewer; the trim is a safety guard only.
+3. **🟡 Still open:** the suburb pages are still matrix-templated. Add real local job/photo/review proof rather than replacing the entire working route set.
+4. **✅ Completed:** the retired Woburn card is absent from `/commercial-projects/`.
 
 **Also shipped since last review (verified in git):** a consent-gated first-party attribution pipeline — WindowCAD quote relay/attribution, visitor journey tracking, funnel relay, mobile header call button — which substantially closes the L6 lead-tracking gap. TTFB has improved further to ~0.29s.
 
-## GSC Reality Check (added 2026-07-09, from the 16-month Search Console export)
+## GSC Reality Check (added 2026-07-09, from the 16-month Search Console export — historical baseline, not current performance)
 
 Source: owner's GSC performance export, Web search, 2025-03-08 → 2026-07-07 (mostly the old site; the new site is only the final days). 9,694 clicks / 2.82M impressions / 358 pages / 1,000 queries.
 
@@ -200,7 +229,7 @@ Source: owner's GSC performance export, Web search, 2025-03-08 → 2026-07-07 (m
 
 **Reprioritisation this data forces:** F1 (head-term page) is now measurably the single highest-value fix (pos 11 with 10K impressions is one push from page 1); F3's repairs title has a query waiting for it; add "roof lights" synonym work; and treat the article layer as a first-class traffic asset — the lintel page alone out-earned every product page combined.
 
-## Head-to-Head: Fenster vs Crown Windows (primary competitor)
+## Head-to-Head: Fenster vs Crown Windows (primary competitor — historical 2026-07-07 comparison; recheck before acting)
 
 Crown Conservatories, Windows & Doors — crownwindows.co.uk, Unit E Lyon Road, **Bletchley MK1** (same city, so the local pack is a straight GBP fight). Audited 2026-07-07 from their sitemaps, key pages, schema and review footprint.
 
@@ -239,7 +268,7 @@ Crown Conservatories, Windows & Doors — crownwindows.co.uk, Unit E Lyon Road, 
 
 **Beat-Crown priority stack (folds into the 30/60/90):** case studies back (target 20+ MK-area jobs in 90 days) → suburb pages incl. Olney/Woburn where Crown already ranks → geo/sameAs schema parity (F4) → price-guide content vs their quote-form CTA → local comparison guide page → review velocity + Trustpilot/Checkatrade/Houzz citations → conservatories decision → protect the speed advantage.
 
-## Competitor Reference (checked 2026-07-07)
+## Competitor Reference (checked 2026-07-07 — historical; recheck before outreach or strategy decisions)
 
 | Competitor | Angle | Notable |
 |---|---|---|

@@ -1264,7 +1264,7 @@ $product_links = [
         <div class="container">
             <div class="fg-location-section-head">
                 <p class="eyebrow"><?php esc_html_e('Choose your next step', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Four routes through the page, depending on how ready you are.', 'fenster'); ?></h2>
+                <h2><?php esc_html_e('Four ways to move forward, depending on how ready you are.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Some people arrive knowing the product and size. Others need to understand the options first. This section keeps the decision moving without pushing every visitor into the same button.', 'fenster'); ?></p>
             </div>
             <div class="fg-mk-spec-links__grid">
