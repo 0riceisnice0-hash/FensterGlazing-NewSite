@@ -608,7 +608,7 @@ function fenster_price_guide_pages(): array
         $guide['slug'] = $slug;
         $guide['url'] = home_url('/' . $slug . '/');
         $guide['seo'] = [
-            'title_tag' => $guide['title'] . ' | Fenster Glazing Milton Keynes',
+            'title_tag' => $guide['title_tag'] ?? ($guide['title'] . ' | Fenster Glazing Milton Keynes'),
             'meta_description' => 'Clear fitted ' . strtolower($guide['label']) . ' guidance from Fenster Glazing, with WindowCAD examples, what affects the price and survey-confirmed next steps.',
             'canonical' => 'https://fensterglazing.com/' . $slug . '/',
             'robots' => 'max-image-preview:large',
