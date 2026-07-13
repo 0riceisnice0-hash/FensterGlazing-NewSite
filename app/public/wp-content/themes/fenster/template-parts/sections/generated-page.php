@@ -180,7 +180,11 @@ $is_archive_page = $slug === 'blog' || str_starts_with($slug, 'blog/page/') || s
 $is_utility_page = in_array($slug, ['privacy-policy', 'cookie-policy', 'terms-conditions', 'why-trust-fenster', 'brochures', 'downloads', 'gallery', 'customer-portal', 'careers', 'refer-a-friend', 'fenster-partners', 'videos', 'apecs-terms-conditions', 'other-services'], true);
 $location_matrix_towns = function_exists('fenster_location_matrix_towns') ? fenster_location_matrix_towns() : [];
 $location_matrix_products = function_exists('fenster_location_matrix_products') ? fenster_location_matrix_products() : [];
-$is_location_service = function_exists('fenster_location_matrix_page') && is_array(fenster_location_matrix_page($slug));
+// '/double-glazing-milton-keynes/' is no longer a matrix route (Milton Keynes
+// was removed from the town matrix) but it must keep rendering through
+// location-service.php, which carries its dedicated head-term page sections.
+$is_location_service = ($slug === 'double-glazing-milton-keynes')
+    || (function_exists('fenster_location_matrix_page') && is_array(fenster_location_matrix_page($slug)));
 $product_route_slugs = array_merge(
     array_keys($location_matrix_products),
     [
