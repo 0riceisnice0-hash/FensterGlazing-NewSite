@@ -927,8 +927,8 @@ if ($slug === 'areas-we-cover') {
     ];
     $service_shortcuts = [
         ['title' => __('Double glazing', 'fenster'), 'url' => home_url('/double-glazing-milton-keynes/')],
-        ['title' => __('Windows', 'fenster'), 'url' => home_url('/windows/')],
-        ['title' => __('Doors', 'fenster'), 'url' => home_url('/doors/')],
+        ['title' => __('Windows', 'fenster'), 'url' => home_url('/windows-milton-keynes/')],
+        ['title' => __('Doors', 'fenster'), 'url' => home_url('/doors-milton-keynes/')],
         ['title' => __('Bifold doors', 'fenster'), 'url' => home_url('/aluminium-bifold-doors/')],
         ['title' => __('Roof lanterns', 'fenster'), 'url' => home_url('/roof-lanterns/')],
         ['title' => __('Online quote', 'fenster'), 'url' => home_url('/online-quote/')],
@@ -3576,4 +3576,3 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 </article>
-

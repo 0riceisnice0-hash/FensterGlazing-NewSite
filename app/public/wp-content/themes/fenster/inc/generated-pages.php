@@ -309,6 +309,7 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Guides from Fenster Glazing on safe, practical window, door and glazing decisions for homes and commercial buildings.',
         ],
         'commercial-glazing-leeds' => [
+            'title_tag' => 'Commercial Glazing Leeds | Windows, Doors & Facades',
             'meta_description' => 'Commercial glazing in Leeds from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
         ],
         'commercial-glazing-manchester' => [
@@ -348,12 +349,14 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Compare Fenster Glazing with Anglian for local expertise, product choice, survey-led fitting and clear pricing.',
         ],
         'about' => [
+            'title_tag' => 'About Fenster Glazing | Local Windows & Doors Experts',
             'meta_description' => 'Fenster Glazing are window and door experts. We install windows and doors across Milton Keynes, Northampton and Buckinghamshire.',
         ],
         'are-my-windows-energy-efficient' => [
             'meta_description' => 'Learn how energy-efficient windows can improve comfort, warmth and bills in your Milton Keynes home, with advice from Fenster Glazing.',
         ],
         'blog' => [
+            'title_tag' => 'Window & Door Advice | Fenster Glazing Blog',
             'meta_description' => 'Read Fenster Glazing news, guides and advice on windows, doors and double glazing in Milton Keynes and nearby areas.',
         ],
         'case-studies/barn-hotel-windows-coventry' => [

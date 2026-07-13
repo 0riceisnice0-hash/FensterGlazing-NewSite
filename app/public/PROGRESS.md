@@ -9,6 +9,12 @@ Last updated: 2026-07-13
 - Kept `fenster_trim_meta_description()` only as a future-safety guard. Source verification across 754 generated and virtual routes found zero descriptions above 160 characters and zero source descriptions ending in its `...` fallback.
 - Applied the final editorial review to six legacy descriptions (`/about/`, `/are-my-windows-energy-efficient/`, `/blog/`, two case studies and `/what-are-integral-blinds/`), correcting grammar, the energy-efficiency meaning, stray punctuation and incomplete sentence endings.
 
+## 2026-07-13 - Live SEO Audit Follow-up
+
+- Replaced the two `/areas-we-cover/` shortcut links that still pointed to legacy `/windows/` and `/doors/` redirects with direct canonical links to the Milton Keynes hubs.
+- Rewrote the weak generic title tags on `/about/` and `/blog/`, and replaced the overlong, article-like `/commercial-glazing-leeds/` title with a concise commercial-service title.
+- The live 681-URL audit found zero sitemap fetch, canonical, title duplication, description duplication, H1, `noindex`, Open Graph image or JSON-LD coverage errors. The remaining strategic SEO work is earning and publishing genuine local project proof for the suburb cluster.
+
 ## 2026-07-13 - MK Matrix Canonicalisation And Metadata Guard
 
 - Removed `milton-keynes` from the residential location matrix. The 21 duplicate `/{product}-milton-keynes/` URLs now 301 to their parent product pages, rather than competing with their existing Milton Keynes product intent.
