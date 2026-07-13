@@ -132,7 +132,7 @@ Minimum checks:
 - `/online-quote/` loads.
 - A representative product page such as `/casement-windows/` loads.
 - A representative generated location page loads.
-- After any routing, redirect or sitemap change, confirm these deliberate canonical routes all return `200`: `/`, `/double-glazing-milton-keynes/`, `/windows-milton-keynes/`, `/doors-milton-keynes/` and `/areas-we-cover/`.
+- After any routing, redirect or sitemap change, confirm these deliberate canonical routes all return `200`: `/`, `/double-glazing-milton-keynes/`, `/windows-milton-keynes/`, `/doors-milton-keynes/` and `/areas-we-cover/`. For `/double-glazing-milton-keynes/`, also assert that the response contains `Choose the product family first`; status alone does not prove that its dedicated head-term template rendered.
 - `/sitemap.xml` still loads if SEO/routing changed.
 - Enquiry form is tested if form/email code changed.
 
