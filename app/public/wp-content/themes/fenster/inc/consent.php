@@ -91,6 +91,21 @@ function fenster_render_cookie_consent(): void
         var settings = document.querySelector('[data-fg-cookie-settings]');
         var accepted = false;
 
+        function recordConsentMetric(choice) {
+            var endpoint = window.fensterWebsiteTracking && window.fensterWebsiteTracking.consentEndpoint;
+            if (! endpoint) {
+                return;
+            }
+
+            window.fetch(endpoint, {
+                method: 'POST',
+                mode: 'cors',
+                keepalive: true,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ choice: choice })
+            }).catch(function () {});
+        }
+
         function getChoice() {
             try {
                 return window.localStorage.getItem(consentKey);
@@ -240,10 +255,12 @@ function fenster_render_cookie_consent(): void
             showSettingsButton();
         } else {
             showBanner();
+            window.setTimeout(function () { recordConsentMetric('shown'); }, 0);
         }
 
         document.addEventListener('click', function (event) {
             if (event.target.closest('[data-fg-cookie-accept]')) {
+                recordConsentMetric('accepted');
                 setChoice('accepted');
                 hideBanner();
                 showSettingsButton();
@@ -251,6 +268,7 @@ function fenster_render_cookie_consent(): void
             }
 
             if (event.target.closest('[data-fg-cookie-decline]')) {
+                recordConsentMetric('rejected');
                 setChoice('rejected');
                 hideBanner();
                 showSettingsButton();

@@ -289,6 +289,14 @@ const trackingConsentAccepted = () => {
   }
 };
 
+const trackingConsentRejected = () => {
+  try {
+    return window.localStorage.getItem('fenster_cookie_consent') === 'rejected';
+  } catch (_error) {
+    return false;
+  }
+};
+
 const createJourneyReference = () => {
   const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
     || `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
@@ -321,6 +329,8 @@ const storeTrackingValue = (key, value) => {
 };
 
 const journeyReference = () => {
+  if (!trackingConsentAccepted()) return '';
+
   if (trackingConsentAccepted()) {
     const existing = readStoredTrackingValue(journeyStorageKey, (value) => validTrackingReference(value, 'FG2'));
     if (existing) return existing;
@@ -420,7 +430,8 @@ const windowCadUrlWithReference = (value) => {
 
   try {
     const url = new URL(value, window.location.href);
-    url.searchParams.set(websiteTracking.referenceParameter || 'reference', journeyReference());
+    const trackingValue = trackingConsentRejected() ? 'rejected-cookies' : (journeyReference() || 'cookie-consent-not-accepted');
+    url.searchParams.set(websiteTracking.referenceParameter || 'reference', trackingValue);
     return url.toString();
   } catch (_error) {
     return value;
@@ -430,6 +441,7 @@ const windowCadUrlWithReference = (value) => {
 document.querySelectorAll('a[href*="windowsoftware.co.uk/windowcad7/"]').forEach((link) => {
   link.href = windowCadUrlWithReference(link.href);
   link.addEventListener('click', () => {
+    link.href = windowCadUrlWithReference(link.href);
     trackWebsiteEvent('quote_opened', {
       cta: (link.textContent || 'WindowCAD link').trim().slice(0, 120),
       product_collection: new URL(link.href).searchParams.get('productCollection') || '',

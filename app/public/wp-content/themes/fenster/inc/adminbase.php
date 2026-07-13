@@ -291,11 +291,13 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         ], 500);
     }
 
-    fenster_dashboard_track_event('quote_completed', [
-        'journey_id' => $journey_ref,
-        'price_amount' => $quote_price,
-        'price_currency' => 'GBP',
-    ]);
+    if ($journey_ref !== '') {
+        fenster_dashboard_track_event('quote_completed', [
+            'journey_id' => $journey_ref,
+            'price_amount' => $quote_price,
+            'price_currency' => 'GBP',
+        ]);
+    }
 
     fenster_windowcad_log('adminbase relay succeeded', [
         'status' => (string) ($result['status'] ?? ''),
