@@ -42,7 +42,7 @@ function fenster_windowcad_reference_parameter(): string
 {
     return defined('FENSTER_WINDOWCAD_REFERENCE_PARAMETER')
         ? sanitize_key((string) FENSTER_WINDOWCAD_REFERENCE_PARAMETER)
-        : 'reference';
+        : 'tracking';
 }
 
 function fenster_dashboard_track_event(string $event, array $payload = []): void
