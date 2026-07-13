@@ -8,6 +8,8 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 
 ## Important Updates (2026-07-06)
 
+- **Tracking/consent status superseded on 2026-07-13.** The historical L3/L6 and 2.7 findings below describe the pre-consent/pre-attribution state. The live theme now blocks optional tracking until acceptance and the separate Marketing Dashboard records consented no-PII visitors/journeys, pages/time, scroll depth, CTA/link clicks, form/quote starts, phone/email intent, WindowCAD completions and per-visitor timelines. The dashboard is hosted as the separate `0riceisnice0-hash/Marketing-Dashboard` repository on GitHub. Consent health counts accepts/rejects only in aggregate; banner impressions were removed after anonymous crawler/session traffic made them unreliable. Focus Group answered/missed call outcomes, a WindowCAD project-level ID, and downstream sale outcomes remain open integration work.
+
 - Latest known live commit after this update is `aff62a0` (`Fix article CTA form layout`). Recent live fixes not in the original audit: `5696140` commercial hub v2, `7c973b5` heavy media/quote iframe deferral, `aff62a0` article CTA form contrast/layout.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is scoped to the custom theme and launch docs, excluding WordPress core, uploads, `wp-config.php`, local backups/config, `node_modules` and `wp-content\fenster-reference`.
 - SiteGround test/live are verified Bedrock installs. Deployment should update/swap only the `fenster` theme at `web/app/themes/fenster` from the repo while leaving the production database, uploads, plugins, `.env` and config intact. The reference scrape archive must not be deployed.
@@ -26,6 +28,32 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 - Commercial hub v2 is live and should be treated as the current baseline for `/commercial-glazing/`: corrected project proof imagery, better product/service imagery, no decorative micro-parallax, clearer sections and a readable commercial enquiry form.
 - Article/blog generated pages now have a readable CTA form layout through `fg-article-form`, resolving the white-on-white form issue in generated article CTA cards.
 
+## Post-Launch Live Audit (2026-07-06)
+
+Full crawl of all 421 live sitemap URLs on `https://fensterglazing.com` (421/421 fetched, redirect-aware HEAD sweep included), plus host, header, analytics and new-code review. Overall: the live SEO surface is in excellent shape — zero duplicate titles (bar the hijack below), unique descriptions, one H1 everywhere, LocalBusiness + breadcrumb schema on every page, FAQPage on 36 product pages, **100% og:image coverage**, no missing alt text, and only one broken internal link.
+
+### Live findings — high priority
+
+- **L1 — Legacy database redirects hijack two live sitemap URLs.** Old-site redirect rules still in the live database (Rank Math/redirect plugin) send `/terms-conditions/` → `/privacy-policy//` (malformed double slash) and `/aluminium-bifold-doors-northampton/` → `/aluminium-bifold-doors/`. The footer's Terms & Conditions link therefore lands on the privacy policy sitewide, and one matrix town page is unreachable. Fix: delete these two rules in the live redirects manager (wp-admin), then re-verify; also scan the redirect list for other rules that collide with new theme routes.
+- **L2 — The live enquiry form has no spam protection.** The honeypot server check (`d40ae84`) and the speed gate (`38b95a7`) were both disabled, leaving only the nonce — which any bot obtains by loading the page. With file uploads now enabled, spam can also attach files (disk + mailbox abuse). Fix: reinstate an autofill-safe honeypot (renamed field, `autocomplete="off"`, flag-don't-discard so real leads are never lost), and/or add Cloudflare Turnstile; consider per-IP rate limiting on the AJAX endpoint.
+- **L3 — GTM + Microsoft Clarity run with no consent banner.** Clarity sets cookies; under UK PECR that needs prior consent. Fix: add a consent banner wired to GTM Consent Mode before the tags fire.
+- **L4 — `test.fensterglazing.com` is a public, indexable duplicate of the entire site.** It returns 200, has no noindex, and its robots.txt allows crawling. Google can index it and dilute the live site. Fix: HTTP-auth the test vhost, or send `X-Robots-Tag: noindex` on the test host and enable "discourage search engines" there — ideally both.
+- **L5 — `www.fensterglazing.com` serves the full site as 200** instead of 301ing to the apex. Canonical tags point to non-www (mitigates), but the host-level 301 should be added in SiteGround.
+- **L6 — No lead-event tracking despite GTM being live** (`GTM-K89BCS9`). The theme JS pushes nothing to the dataLayer on form success, so enquiries aren't measurable as conversions. Fix: `dataLayer.push({event: 'enquiry_submitted', enquiry_source: ...})` in the AJAX success handler + a GTM trigger/GA4 event; add phone-click and WindowCAD-open events at the same time.
+
+### Live findings — medium priority
+
+- **L7 — Resolved locally on 2026-07-13:** `/commercial-projects/` no longer renders cards for any case-study route intentionally marked 410, removing the broken Woburn link without reviving a retired case study.
+- **L8 — robots.txt is not the theme's output**: a physical/plugin file with `Crawl-delay: 10` (throttles Bing) and the `sitemap_index.xml` pointer (which does resolve to the theme index). Remove the crawl-delay and align ownership.
+- **L9 — og:image is the 2.3 MB showroom PNG.** It works, but social crawlers prefer <300 KB at 1200×630. Create a dedicated compressed social card.
+- **L10 — SiteGround dynamic cache is off** (`X-Cache-Enabled: False`). The theme's Cache-Control headers help, but enabling SG's dynamic cache would cut TTFB across all 421 pages. No HSTS header either.
+- **L11 — 362 meta descriptions still exceed ~175 chars** (matrix/county templates; carried over from R6).
+- **L12 — Quote-intent split remains:** `/online-quote/`, `/3d-visualiser/` and `/design-your-windows-and-doors/` are all indexable near-duplicates of the same tool (carried from earlier audits).
+
+### Verified healthy on live
+
+HTTPS with valid cert and http→https 301; theme sitemap served at both `/sitemap.xml` and `/sitemap_index.xml` (421 URLs, all 200 apart from L1); REST users endpoint 401; XML-RPC disabled; generator/RSD/oEmbed/emoji output stripped; `lang="en-GB"`; theme-owned social metadata with working Bedrock-path og:images; hero video deferred via `data-src`; case-study 410s working; colour-hub 301s working; matrix pages rendering unique titles/descriptions/canonicals; upload handling uses `wp_handle_upload` with a MIME whitelist and 5×8 MB caps; customer emails correctly gated behind SMTP config.
+
 ## Remediation Status (2026-07-03)
 
 | # | Blocker | Status |
@@ -36,7 +64,7 @@ Audited: full theme code (`wp-content/themes/fenster`), `data/pages.json`, rende
 | 2.4 | Test/debris pages indexable | ✅ Fixed — 410s, 301s and noindex applied; current live theme sitemap exposes 421 canonical URLs |
 | 2.5 | Blog articles render as broken product pages | ✅ Fixed — explicit route whitelists + new `generated-article.php` template |
 | 2.6 | Duplicate competing town pages | ✅ Fixed — 301s to the canonical matrix slugs |
-| 2.7 | No analytics / conversion tracking | ⏳ Open — awaiting GA4/GTM ID, Google Ads link and consent-banner decision from the owner |
+| 2.7 | No analytics / conversion tracking | 🟡 Partially fixed — GTM (`GTM-K89BCS9`) and Microsoft Clarity are live, but no lead events fire from the theme (L6) and there is no consent banner (L3) |
 | 2.8 | No git history | ✅ Fixed — initial scoped GitHub push completed; theme/docs are versioned without WordPress core, uploads, reference archives or local config |
 | 2.9 | Form delivery unproven on host | ✅ Fixed — test submission saved enquiry ID `8781` and sent office/customer emails via SiteGround |
 

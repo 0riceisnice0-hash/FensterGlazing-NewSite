@@ -1,6 +1,39 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-09
+Last updated: 2026-07-13
+
+## 2026-07-13 - MK Matrix Canonicalisation And Metadata Guard
+
+- Removed `milton-keynes` from the residential location matrix. The 21 duplicate `/{product}-milton-keynes/` URLs now 301 to their parent product pages, rather than competing with their existing Milton Keynes product intent.
+- Added a shared generated-page metadata guard that trims description and Open Graph description output to 160 characters or fewer at render time, protecting all generated routes from overlong inherited descriptions.
+- Removed the Woburn 410 link from `/commercial-projects/` by excluding deliberately retired case-study routes from archive cards.
+- Local verification: sitemap reduced from 701 to 680 URLs; no product matrix `-milton-keynes/` URLs remain; all 21 legacy URLs resolve to their parent products; `/composite-doors-bletchley/` renders 151-character description and Open Graph description; the Woburn card is absent.
+
+## 2026-07-13 - Consent-Safe Website Attribution And Marketing Dashboard
+
+- Added the Fenster Marketing Dashboard Website Tracker in the separate `Marketing-Dashboard` Cloudflare Pages project. Its source code, API and tracker documentation are hosted at `https://github.com/0riceisnice0-hash/Marketing-Dashboard`. It now reports consented anonymous visitors, first touch, acquisition channels, quote starts, forms, contact intent, completed WindowCAD quotes and a clickable per-visitor event timeline with page views, time on page and meaningful link clicks.
+- Extended the accepted-only tracker with CTA clicks, 25/50/75/90% scroll milestones, form starts and first validation warning (field name only). The dashboard now shows a more useful lead funnel and lets the office label completed website leads `new`, `contacted`, `appointment`, `won` or `lost` without copying customer details into D1.
+- Changed the aggregate consent request to a simple `text/plain` CORS request so it does not depend on a JSON preflight when someone closes the banner on a privacy-focused/mobile browser.
+- Removed banner-impression reporting entirely. The original implementation counted each fresh page load before a choice and even a session-only guard could still be inflated by anonymous crawler sessions. Consent health now truthfully reports recorded accepts and rejects only.
+- The theme creates opaque `FGV-…` visitor and `FG2-…` journey values only after optional-cookie acceptance. Both persist for 90 days in the same consenting browser; incognito, cleared storage, a different device or a rejected choice starts no tracked visitor.
+- WindowCAD attribution now uses only its dedicated **Tracking** customer field. The office-owned **Reference** field remains untouched. Accepted journeys pass `FG2-…`; rejected-cookie quotes pass `rejected-cookies`, and quotes before a choice pass `cookie-consent-not-accepted`.
+- WindowCAD and normal form leads still reach WordPress/AdminBase after a rejection, but the dashboard relay is suppressed without a valid `FG2-…`. This prevents unconsented quotes/forms becoming unattributed dashboard records.
+- Added aggregate-only consent health reporting: daily accepts, rejects and acceptance rate. The consent table has no visitor identifier, URL, source, device or personal data; banner impressions were removed as unreliable before-consent crawler/session traffic inflated them.
+- Added the mobile green header `Call us` control beside Menu; it records a consented phone-tap intent only. Actual answered/missed call attribution remains pending Focus Group API/webhook or scheduled call-report export.
+- The final consent-metric correction is live in theme commit `f6c763e` and Marketing Dashboard commit `4957c7e`. The current consent health panel deliberately reports choices recorded, accepts, rejects and acceptance rate only.
+- Refreshed the durable theme handover, audit, live-change and progress documentation to record the tracker architecture, privacy boundary, WindowCAD Tracking-field bridge, dashboard ownership and outstanding Focus Group/CRM work. A clean evidence-based continuation prompt was also prepared for the next chat; it treats the early launch GSC observations as historical context rather than current fact.
+
+## 2026-07-13 - Search Console Launch Baseline And SEO Plan
+
+- Reviewed the Google Search Console exports for `Last 7 days` and `Last 28 days`, ending 2026-07-10. The new site went live on 2026-07-06, so the 7-day report mixes old-site Saturday/Sunday with new-site Monday-Friday, and Google may still be crawling/indexing old templates.
+- The cleanest early comparison is old-site weekdays 2026-06-29 to 2026-07-03 versus new-site weekdays 2026-07-06 to 2026-07-10: clicks stayed essentially flat at 86 -> 87, impressions rose slightly from 23,362 -> 23,709, weighted CTR stayed about 0.37%, and average position improved from about 24.7 to 23.7. This is not a launch win yet, but it shows no immediate search cliff.
+- The full 28-day baseline was 405 clicks, 127,649 impressions, 0.32% CTR and average position 24.6. The launch-week slice was slightly above that at about 15.1 clicks/day, but this is too early to judge new-site SEO success.
+- The main finding is that Google is still carrying the site through older informational and utility pages rather than the new MK money-page structure. Strong existing traffic/visibility includes `/3d-visualiser/`, `/what-is-a-door-lintel/`, `/different-types-of-window-frame-materials/`, `/what-are-double-glazed-glass-windows/`, `/soundproof-windows/` and `/french-casement-windows/`.
+- Highest-priority CTR opportunity: `/french-casement-windows/` had 3,614 impressions, average position 3.52 and only 0.19% CTR across the 28-day export. Its title/meta/first-screen/snippet intent should be fixed before lower-signal SEO work.
+- Highest-priority visibility-but-no-click opportunity: `/what-are-double-glazed-glass-windows/` had 17,884 impressions, 10 clicks and 0.06% CTR. It needs clearer intent ownership around double-glazed glass, replacement sealed units, misted glass, energy upgrades and commercial routes into quote/repair/product pages.
+- Money-page state: `/windows-milton-keynes/` had 4,630 impressions, 7 clicks and average position 18.17; `/double-glazing-milton-keynes/` had 1,115 impressions, 0 clicks and average position 56.47; `/doors-milton-keynes/` had 2,416 impressions, 3 clicks and average position 43.71. These pages need more internal authority, richer local/commercial content and stronger conversion structure before judging them.
+- Priority fix plan: improve SERP titles/meta and first-screen relevance for `/french-casement-windows/`, `/what-are-double-glazed-glass-windows/`, `/composite-doors/`, `/soundproof-windows/` and related high-impression pages; turn high-traffic info pages into feeders for quote/visualiser/MK pages; strengthen `/double-glazing-milton-keynes/`, `/windows-milton-keynes/` and `/doors-milton-keynes/` through internal links, product-led sections, local trust/proof, pricing/visualiser CTAs and readable SEO copy.
+- Next measurement should compare clean new-site weeks, especially 2026-07-06 to 2026-07-10 versus 2026-07-13 to 2026-07-17, instead of treating the mixed launch export as a final verdict.
 
 ## 2026-07-09 - Local MK Page Cluster First Pass To Test
 

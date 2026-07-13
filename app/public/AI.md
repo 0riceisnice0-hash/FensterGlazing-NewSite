@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-07-09
+Last updated: 2026-07-13
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -35,6 +35,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 - Clarity replay styling depends on `inc\consent.php` injecting `style#fenster-clarity-replay-css[data-clarity-unmask="true"]` before loading `https://www.clarity.ms/tag/xi7rk1pic8`. Do not remove this inline replay CSS: it works around SiteGround/WAF bot-fetch failures where Clarity-like resource requests can receive the host's 403 HTML page instead of the real stylesheet.
 - Clarity asset links and critical CSS are intentionally marked `data-clarity-unmask="true"` in `inc\assets.php` so stylesheet/font/image URLs are preserved under stricter Clarity masking modes.
 - If Clarity recordings look unstyled, giant, or like a 403/error page again, simulate Clarity before changing layout: fetch the page and CSS with bot-style user agents, check for 403s, verify the inline replay CSS exists after accepted consent, and remember old recordings will not be repaired retroactively.
+- The 2026-07-13 Search Console baseline says the launch did not cause an obvious search cliff, but Google is still mostly rewarding older informational pages. When doing SEO work next, prioritise CTR and internal-link fixes for pages that already have impressions: `/french-casement-windows/`, `/what-are-double-glazed-glass-windows/`, `/windows-milton-keynes/`, `/double-glazing-milton-keynes/`, `/doors-milton-keynes/`, `/composite-doors/`, `/soundproof-windows/` and `/3d-visualiser/`. Do not make generic SEO filler; make high-impression pages feed quote, visualiser and local money pages.
 
 ## Project Basics
 
@@ -110,6 +111,10 @@ PHP lint example:
 - Form-section headings are content headings, not heroes. Keep shared enquiry h2 sizes moderate across the site.
 - Article/blog CTA forms use the shared component with the extra `fg-article-form` class from `template-parts\sections\generated-article.php`. Keep that page-specific styling so labels/inputs stay readable inside article CTA cards.
 - AdminBase lead relay lives in `inc\adminbase.php`. It restores the old `wraith` WindowCAD endpoint at `/wp-json/fenster/v1/windowcad` and relays normal saved enquiries through the `fenster_enquiry_created` hook. Do not commit AdminBase credentials; configure them through constants, environment variables or WordPress options.
+- Website attribution is theme-owned in `inc\website-tracking.php` and `src\js\main.js`, with the Marketing Dashboard as the aggregate/reporting surface. Its code and durable tracker documentation are hosted at `https://github.com/0riceisnice0-hash/Marketing-Dashboard`; do not duplicate its API/UI logic in the theme. `FG2-…` is an opaque consented quote/journey reference; `FGV-…` is an opaque consented browser visitor reference. Do not put names, emails, phones, addresses, raw WindowCAD fields or ad click IDs into the dashboard.
+- Only accepted optional-cookie choices may create `FG2`/`FGV`, page/click/time events, WindowCAD joins or dashboard conversion events. A WindowCAD quote after rejection must use the separate WindowCAD **Tracking** field value `rejected-cookies`; before a choice it uses `cookie-consent-not-accepted`. Both still go to the office, but neither may be relayed into the dashboard.
+- Consent reporting is deliberately aggregate-only: the dashboard may count accepts and rejects per day, but must never attach those records to a visitor, URL, source, device or journey. Do not bring back banner-impression totals: without pre-consent identity they are not a dependable metric and can be inflated by anonymous sessions/crawlers.
+- Consent-safe journey detail may include page time, scroll milestones, CTA labels/destinations and form-field *names* that failed validation, but never customer-entered values. Lead status is a dashboard-only manual business outcome tied to an existing consented completed lead.
 
 ## Related Links Rule
 

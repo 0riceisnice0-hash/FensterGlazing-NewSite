@@ -50,7 +50,6 @@ function fenster_generated_pages_index(): array
 function fenster_location_matrix_towns(): array
 {
     return [
-        'milton-keynes' => 'Milton Keynes',
         'bletchley' => 'Bletchley',
         'wolverton' => 'Wolverton',
         'stony-stratford' => 'Stony Stratford',
@@ -109,7 +108,6 @@ function fenster_location_matrix_products(): array
 function fenster_location_matrix_town_profiles(): array
 {
     return [
-        'milton-keynes' => ['property' => 'Milton Keynes homes, extensions and renovation projects', 'priority' => 'clean modern lines, reliable security and measured installation planning'],
         'bletchley' => ['property' => 'established Bletchley homes, terraces and family properties', 'priority' => 'warmer rooms, secure doors and straightforward survey access'],
         'wolverton' => ['property' => 'Wolverton terraces, older homes and conservation-sensitive streets', 'priority' => 'sympathetic frame choices, sightlines and ventilation'],
         'stony-stratford' => ['property' => 'Stony Stratford period homes, town houses and village-edge properties', 'priority' => 'character-friendly styling, colour choice and careful fitting'],
@@ -1189,6 +1187,15 @@ function fenster_gone_slugs(): array
  */
 function fenster_redirect_target(string $slug): string
 {
+    // Main product pages already own Milton Keynes intent. Keep legacy matrix
+    // URLs useful for visitors, but consolidate their equity to that parent.
+    if (str_ends_with($slug, '-milton-keynes')) {
+        $product_slug = substr($slug, 0, -strlen('-milton-keynes'));
+        if (isset(fenster_location_matrix_products()[$product_slug])) {
+            return $product_slug;
+        }
+    }
+
     $map = [
         'dunstable-casement-windows' => 'casement-windows-dunstable',
         'bow-and-bay-windows-northampton' => 'bow-bay-windows-northampton',
@@ -1257,6 +1264,35 @@ function fenster_slug_is_noindex(string $slug): bool
     return false;
 }
 
+/**
+ * Keep generated search snippets concise without cutting a word in half.
+ */
+function fenster_trim_meta_description(string $description, int $maximum_length = 160): string
+{
+    $description = trim((string) preg_replace('/\s+/', ' ', wp_strip_all_tags($description)));
+
+    if ($description === '' || strlen($description) <= $maximum_length) {
+        return $description;
+    }
+
+    $truncated = rtrim(substr($description, 0, max(1, $maximum_length - 3)));
+    $last_space = strrpos($truncated, ' ');
+    if ($last_space !== false) {
+        $truncated = rtrim(substr($truncated, 0, $last_space));
+    }
+
+    return rtrim($truncated, " ,;:-") . '...';
+}
+
+function fenster_normalize_generated_page_seo(array $page): array
+{
+    if (isset($page['seo']['meta_description'])) {
+        $page['seo']['meta_description'] = fenster_trim_meta_description((string) $page['seo']['meta_description']);
+    }
+
+    return $page;
+}
+
 function fenster_send_public_cache_headers(int $browser_max_age = 600, int $shared_max_age = 3600): void
 {
     if (is_user_logged_in()) {
@@ -1315,6 +1351,7 @@ function fenster_maybe_render_generated_page(): void
     if (! $page) {
         return;
     }
+    $page = fenster_normalize_generated_page_seo($page);
 
     if ($slug !== 'home' && ! $is_file_request && ! str_ends_with((string) wp_parse_url(add_query_arg([]), PHP_URL_PATH), '/')) {
         $target = home_url('/' . $slug . '/');
@@ -1556,6 +1593,7 @@ function fenster_render_generated_seo(): void
     if (! $page || empty($page['seo']) || ! is_array($page['seo'])) {
         return;
     }
+    $page = fenster_normalize_generated_page_seo($page);
 
     $seo = $page['seo'];
     $canonical = (string) ($seo['canonical'] ?? '');

@@ -350,6 +350,13 @@ if (! function_exists('fenster_case_archive_cards')) {
                 continue;
             }
 
+            // Do not surface a project card that is deliberately retired with
+            // a 410 response. This prevented the Commercial Projects archive
+            // from linking to the removed Woburn case-study route.
+            if (function_exists('fenster_gone_slugs') && isset(fenster_gone_slugs()[$path])) {
+                continue;
+            }
+
             $case_page = fenster_get_generated_page($path);
             if (! is_array($case_page)) {
                 continue;
