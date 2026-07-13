@@ -17,6 +17,11 @@ $brand = fenster_data('brand', []);
             <?php endif; ?>
         </a>
 
+        <a class="site-header__mobile-call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'])); ?>">
+            <span class="site-header__mobile-call-icon" aria-hidden="true">&#9742;</span>
+            <span><?php esc_html_e('Call us', 'fenster'); ?></span>
+        </a>
+
         <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">
             <span><?php esc_html_e('Menu', 'fenster'); ?></span>
         </button>
