@@ -75,6 +75,7 @@ function fenster_dashboard_track_event(string $event, array $payload = []): void
         'product_collection',
         'price_amount',
         'price_currency',
+        'event_value',
     ];
     $clean = ['event' => $event, 'origin' => home_url('/')];
 

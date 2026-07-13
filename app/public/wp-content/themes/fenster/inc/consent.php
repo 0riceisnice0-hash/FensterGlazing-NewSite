@@ -101,7 +101,10 @@ function fenster_render_cookie_consent(): void
                 method: 'POST',
                 mode: 'cors',
                 keepalive: true,
-                headers: { 'Content-Type': 'application/json' },
+                // Keep this a CORS "simple request". Some mobile/privacy
+                // browsers abandon a JSON preflight while the visitor closes
+                // the banner. This contains aggregate consent only.
+                headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
                 body: JSON.stringify({ choice: choice })
             }).catch(function () {});
         }

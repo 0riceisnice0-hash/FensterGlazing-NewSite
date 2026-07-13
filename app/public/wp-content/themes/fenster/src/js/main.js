@@ -273,8 +273,8 @@ if (document.body) {
 }
 
 // WindowCAD is on another domain, so it cannot read our cookies.  Instead, an
-// opaque reference is carried through its hidden Reference field and joined to
-// non-PII website events in the Marketing Dashboard when the quote returns.
+// opaque reference is carried through WindowCAD's separate Tracking field and
+// joined to non-PII website events in the Marketing Dashboard when the quote returns.
 const websiteTracking = window.fensterWebsiteTracking || {};
 const journeyStorageKey = 'fenster_quote_journey_ref';
 const visitorStorageKey = 'fenster_website_visitor_id';
@@ -500,6 +500,37 @@ document.addEventListener('click', (event) => {
   } catch (_error) {}
 });
 
+// Commercial CTA interactions are distinct from ordinary navigation. Labels
+// and destinations only: never form values or other customer-entered data.
+document.addEventListener('click', (event) => {
+  const action = event.target.closest('a.button, button.button, [data-fg-audience-choice]');
+  if (!action || action.matches('[data-fg-cookie-accept], [data-fg-cookie-decline]') || action.matches('[type="submit"]')) return;
+  const label = (action.textContent || action.getAttribute('aria-label') || 'Website action').trim().replace(/\s+/g, ' ').slice(0, 120);
+  let target = '';
+  if (action instanceof HTMLAnchorElement && action.href) {
+    try {
+      const url = new URL(action.href, window.location.href);
+      target = url.origin === window.location.origin ? url.pathname : url.origin;
+    } catch (_error) {}
+  }
+  trackWebsiteEvent('cta_click', { cta: label, link_target: target });
+});
+
+const trackedScrollMilestones = new Set();
+const recordScrollMilestones = () => {
+  if (!trackingConsentAccepted()) return;
+  const documentHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+  const visibleBottom = window.scrollY + window.innerHeight;
+  const percent = documentHeight > 0 ? Math.min(100, Math.round((visibleBottom / documentHeight) * 100)) : 0;
+  [25, 50, 75, 90].forEach((milestone) => {
+    if (percent < milestone || trackedScrollMilestones.has(milestone)) return;
+    trackedScrollMilestones.add(milestone);
+    trackWebsiteEvent('scroll_depth', { cta: `${milestone}% page depth`, event_value: milestone });
+  });
+};
+window.addEventListener('scroll', recordScrollMilestones, { passive: true });
+window.addEventListener('load', recordScrollMilestones, { once: true });
+
 const enquiryForms = [...document.querySelectorAll('[data-fg-enquiry-form]')];
 const ukPostcodePattern = /^(GIR\s?0AA|[A-Z]{1,2}[0-9][A-Z0-9]?\s?[0-9][A-Z]{2})$/i;
 
@@ -535,6 +566,24 @@ enquiryForms.forEach((form) => {
   const previousStepButton = form.querySelector('[data-fg-enquiry-prev]');
   const nextStepButton = form.querySelector('[data-fg-enquiry-next]');
   let activeStep = 0;
+  let formStartRecorded = false;
+  let formErrorRecorded = false;
+
+  const formContext = () => form.dataset.source || form.getAttribute('aria-label') || 'Website enquiry form';
+  const recordFormStart = () => {
+    if (formStartRecorded) return;
+    formStartRecorded = true;
+    trackWebsiteEvent('form_started', { cta: formContext() });
+  };
+
+  form.addEventListener('focusin', (event) => {
+    if (event.target.matches('input, select, textarea')) recordFormStart();
+  });
+  form.addEventListener('invalid', (event) => {
+    if (formErrorRecorded || !event.target.name) return;
+    formErrorRecorded = true;
+    trackWebsiteEvent('form_validation_error', { cta: `${formContext()}: ${event.target.name}` });
+  }, true);
 
   const isSteppedForm = () => steps.length > 1;
   const validationFields = [
@@ -708,6 +757,7 @@ enquiryForms.forEach((form) => {
   };
 
   form.addEventListener('submit', async (event) => {
+    recordFormStart();
     form.querySelectorAll('[data-fg-journey-ref]').forEach((field) => { field.value = journeyReference(); });
     form.querySelectorAll('[data-fg-visitor-id]').forEach((field) => { field.value = visitorReference(); });
     validateContactFields();
