@@ -168,7 +168,7 @@ function fenster_gsc_seo_overrides(): array
     return [
         'double-glazing-milton-keynes' => [
             'title_tag' => 'Double Glazing Milton Keynes | Local Window & Door Quotes',
-            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Compare windows, doors, bifolds, roof lanterns and replacement glass, then get an online quote or survey-led advice.',
+            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Compare windows, doors and roof lanterns, then get a local quote.',
         ],
         'windows-milton-keynes' => [
             'title_tag' => 'Windows Milton Keynes | Double Glazed Window Installers',
@@ -276,19 +276,76 @@ function fenster_gsc_seo_overrides(): array
         ],
         'commercial-glazing' => [
             'title_tag' => 'Commercial Glazing Contractors | Windows, Doors & Facades',
-            'meta_description' => 'Commercial glazing from Fenster Glazing for offices, schools, healthcare, retail and managed sites, including windows, doors, curtain walling and replacement glass.',
+            'meta_description' => 'Commercial glazing from Fenster for offices, schools, healthcare and retail sites, including windows, doors and curtain walling.',
         ],
         'commercial-windows-and-doors' => [
             'title_tag' => 'Commercial Window Installers | Windows, Doors & Glass',
-            'meta_description' => 'Commercial window and door installers for offices, schools, healthcare, retail units and managed sites, with survey, specification and phased installation support.',
+            'meta_description' => 'Commercial window and door installation for offices, schools, healthcare and retail sites, with survey and phased fitting.',
         ],
         'curtain-walling' => [
             'title_tag' => 'Curtain Walling Installers | Commercial Glazed Facades',
-            'meta_description' => 'Curtain walling installers for commercial glazed facades, entrances, screens and replacement elevations, with survey and specification support from Fenster Glazing.',
+            'meta_description' => 'Curtain walling for commercial facades, entrances and screens, with survey and specification support from Fenster.',
         ],
         'louvre-vents' => [
             'title_tag' => 'Louvre Vents | Commercial Ventilation Louvres',
-            'meta_description' => 'Aluminium louvre vents and ventilation panels for plant rooms, service areas, commercial facades and glazing packages, specified and installed by Fenster Glazing.',
+            'meta_description' => 'Aluminium louvre vents and ventilation panels for plant rooms, service areas and commercial facades from Fenster.',
+        ],
+        'apecs-ingenious-locks-and-hardware' => [
+            'meta_description' => 'APECS and Ingenious locks, cylinders, handles and door hardware from Fenster Glazing, with security options for replacement doors.',
+        ],
+        'apecs-terms-conditions' => [
+            'meta_description' => 'Terms for APECS and Ingenious locks, cylinders, handles, hinges and door hardware supplied with Fenster doors.',
+        ],
+        'author/adam' => [
+            'meta_description' => 'Commercial glazing guidance from Fenster Glazing, covering energy efficiency, compliance and refurbishment planning.',
+        ],
+        'blog/page/2' => [
+            'meta_description' => 'More Fenster Glazing articles on commercial windows, doors, energy performance and property maintenance.',
+        ],
+        'category/fenster-doors' => [
+            'meta_description' => 'Browse Fenster Glazing articles on commercial windows, doors, energy performance and property maintenance.',
+        ],
+        'category/guides-knowledge' => [
+            'meta_description' => 'Guides from Fenster Glazing on safe, practical window, door and glazing decisions for homes and commercial buildings.',
+        ],
+        'commercial-glazing-leeds' => [
+            'meta_description' => 'Commercial glazing in Leeds from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
+        ],
+        'commercial-glazing-manchester' => [
+            'meta_description' => 'Commercial glazing in Manchester from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
+        ],
+        'commercial-glazing-milton-keynes' => [
+            'meta_description' => 'Commercial glazing in Milton Keynes from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
+        ],
+        'fenster-partners' => [
+            'meta_description' => 'Refer a friend to Fenster Glazing for windows or doors and earn a reward when their project is complete.',
+        ],
+        'guide-noise-insulation-for-windows' => [
+            'meta_description' => 'Practical advice from Fenster Glazing on reducing outside noise with better window and glass choices.',
+        ],
+        'instant-pricing-meta-ads' => [
+            'meta_description' => 'Explore Fenster’s online window and door designer, compare options and get an instant price for your project.',
+        ],
+        'nick-test-baboon' => [
+            'meta_description' => 'Commercial glazing support from Fenster for refurbishment and new-build projects.',
+        ],
+        'soundproof-windows' => [
+            'meta_description' => 'Soundproof windows from Fenster Glazing: compare glass, frames and installation choices for a quieter home.',
+        ],
+        'tag/doors' => [
+            'meta_description' => 'Browse Fenster Glazing articles on commercial windows, doors, energy performance and property maintenance.',
+        ],
+        'tag/education' => [
+            'meta_description' => 'Guides from Fenster Glazing on safe, practical window, door and glazing decisions for homes and commercial buildings.',
+        ],
+        'tag/safety-compliance' => [
+            'meta_description' => 'Guides from Fenster Glazing on safety, compliance and practical glazing decisions for commercial buildings.',
+        ],
+        'tag/windows' => [
+            'meta_description' => 'Browse Fenster Glazing articles on commercial windows, doors, energy performance and property maintenance.',
+        ],
+        'why-choose-fenster-over-anglian' => [
+            'meta_description' => 'Compare Fenster Glazing with Anglian for local expertise, product choice, survey-led fitting and clear pricing.',
         ],
     ];
 }
@@ -350,12 +407,10 @@ function fenster_location_matrix_page(string $slug, ?array $index = null): ?arra
         $source['url'] = home_url('/' . $slug . '/');
         $source['seo']['title_tag'] = $products[$product_slug] . ' ' . $town_label . ' | Local Supply & Installation';
         $source['seo']['meta_description'] = sprintf(
-            '%s in %s for %s. Compare options, get a quote and plan %s around %s before survey-led installation.',
+            '%s in %s from Fenster Glazing. %s. Get a local quote.',
             $products[$product_slug],
             $town_label,
-            $town_profile['property'],
-            $product_profile['decision'],
-            $town_profile['priority']
+            ucfirst((string) $product_profile['intent'])
         );
         $gsc_seo_overrides = fenster_gsc_seo_overrides();
         if (isset($gsc_seo_overrides[$slug])) {
@@ -614,15 +669,9 @@ function fenster_commercial_county_page(string $slug): ?array
 
     $profile = $profiles[$county_slug];
     $county = (string) $profile['county'];
-    $region = (string) ($profile['region'] ?? $county);
-    $towns = is_array($profile['towns'] ?? null) ? array_values($profile['towns']) : [];
-    $town_summary = implode(', ', array_slice($towns, 0, 3));
-    $context = (string) ($profile['context'] ?? 'commercial buildings and phased refurbishment projects');
     $meta_description = sprintf(
-        'Commercial glazing for %s sites around %s. Fenster plans windows, doors, curtain walling and replacement glass for %s.',
+        'Commercial glazing in %s: windows, doors, curtain walling and replacement glass for local businesses.',
         $county,
-        $town_summary !== '' ? $town_summary : $region,
-        $context
     );
 
     return [
@@ -688,7 +737,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
         $page['title'] = 'Fenster Glazing in Milton Keynes';
         $page['seo']['title_tag'] = 'Fenster Glazing | Windows & Doors Milton Keynes';
-        $page['seo']['meta_description'] = 'Fenster Glazing is a Milton Keynes showroom and installer for windows, doors, bifolds, roof lanterns and replacement glazing, with online pricing and survey-led fitting.';
+        $page['seo']['meta_description'] = 'Fenster Glazing in Milton Keynes for windows, doors, bifolds, roof lanterns and replacement glazing. Get online pricing and survey-led fitting.';
         $page['seo']['canonical'] = 'https://fensterglazing.com/';
         $page['seo']['robots'] = 'max-image-preview:large';
 
@@ -983,7 +1032,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'url' => home_url('/why-trust-fenster/'),
             'seo' => [
                 'title_tag' => 'Why Trust Fenster Glazing | Honest Pricing, Reviews and Trained Fitters',
-                'meta_description' => 'See why customers trust Fenster Glazing: established in 2018, around 25 years of combined experience, transparent upfront pricing, trained fitters and public reviews.',
+                'meta_description' => 'Why Fenster Glazing? Local experience, transparent pricing, trained fitters and public customer reviews.',
                 'canonical' => 'https://fensterglazing.com/why-trust-fenster/',
                 'robots' => 'max-image-preview:large',
             ],

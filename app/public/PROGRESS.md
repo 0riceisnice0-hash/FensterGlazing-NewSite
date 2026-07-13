@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-13
 
+## 2026-07-13 - Complete Generated Meta Description Rewrite
+
+- Replaced the long matrix and commercial-county description formulas with concise, complete page-specific sentences; each retains the product or county intent without clipping the end of the copy.
+- Rewrote every remaining legacy/generated description that exceeded 160 characters, including the homepage, trust page, commercial hubs, archive shells and older imported SEO fields.
+- Kept `fenster_trim_meta_description()` only as a future-safety guard. Source verification across 754 generated and virtual routes found zero descriptions above 160 characters and zero source descriptions ending in its `...` fallback.
+
 ## 2026-07-13 - MK Matrix Canonicalisation And Metadata Guard
 
 - Removed `milton-keynes` from the residential location matrix. The 21 duplicate `/{product}-milton-keynes/` URLs now 301 to their parent product pages, rather than competing with their existing Milton Keynes product intent.

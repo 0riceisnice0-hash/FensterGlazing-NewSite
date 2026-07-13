@@ -131,6 +131,7 @@ PHP lint example:
 ## Generated SEO Rule
 
 - Do not render raw imported SEO tags blindly.
+- Write generated meta descriptions as complete, useful sentences at 160 characters or fewer. `fenster_trim_meta_description()` is a regression guard only; do not treat its trailing ellipsis as finished SEO copy.
 - Generated pages suppress Yoast/Rank Math public head output. Keep theme-owned titles, descriptions, canonicals, robots, social meta, LocalBusiness schema, FAQ schema, breadcrumb schema and sitemaps as the source of truth unless the architecture deliberately changes.
 - Skip imported OpenGraph, Twitter and JSON-LD values that are placeholders, JSON blobs, old designer-tool schema, `test.fensterglazing.com` references or other scraped development-domain debris.
 - Imported `schema_json_ld` from the scrape is never rendered. It contains old designer-tool VideoObject markup and unsubstantiated aggregateRating values. Structured data is generated fresh instead: `fenster_render_site_schema()` in `inc\generated-pages.php` outputs a LocalBusiness block site-wide, product journey pages output `FAQPage` JSON-LD built from the same FAQs shown on the page, and generated deep routes output `BreadcrumbList` JSON-LD. Do not add aggregateRating/Review schema unless a verifiable review feed exists.
