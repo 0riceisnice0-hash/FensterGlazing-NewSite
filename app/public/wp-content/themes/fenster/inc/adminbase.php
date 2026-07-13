@@ -220,9 +220,9 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $email = sanitize_email((string) ($fields['Email'] ?? ''));
     $phone = sanitize_text_field((string) ($fields['Phone'] ?? $fields['Telephone'] ?? ''));
     $postcode = sanitize_text_field((string) ($fields['Post code'] ?? $fields['Postcode'] ?? ''));
-    $notes = 'Lead from WindowCAD';
     $journey_ref = fenster_windowcad_tracking_from_fields($fields);
     $quote_price = fenster_windowcad_price_from_fields($fields);
+    $notes = 'Lead from WindowCAD' . ($journey_ref !== '' ? "\nWebsite tracking: " . $journey_ref : '');
 
     $summary = implode("\n", array_filter([
         'Name: ' . $full_name,
@@ -323,7 +323,7 @@ function fenster_send_enquiry_to_adminbase(int $enquiry_id, array $meta, string 
         'email' => (string) ($meta['_fenster_email'] ?? ''),
         'phone' => (string) ($meta['_fenster_phone'] ?? ''),
         'postcode' => (string) ($meta['_fenster_location'] ?? ''),
-        'notes' => $message,
+        'notes' => trim($message . (($meta['_fenster_journey_ref'] ?? '') !== '' ? "\n\nWebsite tracking: " . $meta['_fenster_journey_ref'] : '')),
         'sales_area' => $is_commercial ? 'COMM' : '',
         'quote_type' => $is_commercial ? 'Commercial' : '',
     ]);

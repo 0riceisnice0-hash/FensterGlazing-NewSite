@@ -277,6 +277,9 @@ if (document.body) {
 // non-PII website events in the Marketing Dashboard when the quote returns.
 const websiteTracking = window.fensterWebsiteTracking || {};
 const journeyStorageKey = 'fenster_quote_journey_ref';
+const visitorStorageKey = 'fenster_website_visitor_id';
+const firstTouchStorageKey = 'fenster_website_first_touch';
+const trackingStorageLifetime = 90 * 24 * 60 * 60 * 1000;
 
 const trackingConsentAccepted = () => {
   try {
@@ -292,10 +295,43 @@ const createJourneyReference = () => {
   return `FG2-${random.toUpperCase()}`;
 };
 
+const createVisitorReference = () => {
+  const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
+    || `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
+  return `FGV-${random.toUpperCase()}`;
+};
+
+const validTrackingReference = (value, prefix) => new RegExp(`^${prefix}-[A-Z0-9-]{8,80}$`, 'i').test(value || '');
+
+const readStoredTrackingValue = (key, validator) => {
+  try {
+    const raw = window.localStorage.getItem(key);
+    const record = raw ? JSON.parse(raw) : null;
+    if (record && validator(record.value) && Number(record.expires_at) > Date.now()) return record.value;
+    window.localStorage.removeItem(key);
+  } catch (_error) {}
+  return '';
+};
+
+const storeTrackingValue = (key, value) => {
+  if (!trackingConsentAccepted()) return;
+  try {
+    window.localStorage.setItem(key, JSON.stringify({ value, expires_at: Date.now() + trackingStorageLifetime }));
+  } catch (_error) {}
+};
+
 const journeyReference = () => {
+  if (trackingConsentAccepted()) {
+    const existing = readStoredTrackingValue(journeyStorageKey, (value) => validTrackingReference(value, 'FG2'));
+    if (existing) return existing;
+    const created = createJourneyReference();
+    storeTrackingValue(journeyStorageKey, created);
+    return created;
+  }
+
   try {
     const existing = window.sessionStorage.getItem(journeyStorageKey);
-    if (existing && /^FG2-[A-Z0-9-]{8,80}$/i.test(existing)) return existing;
+    if (validTrackingReference(existing, 'FG2')) return existing;
     const created = createJourneyReference();
     window.sessionStorage.setItem(journeyStorageKey, created);
     return created;
@@ -304,10 +340,18 @@ const journeyReference = () => {
   }
 };
 
-const campaignContext = () => {
+const visitorReference = () => {
+  if (!trackingConsentAccepted()) return '';
+  const existing = readStoredTrackingValue(visitorStorageKey, (value) => validTrackingReference(value, 'FGV'));
+  if (existing) return existing;
+  const created = createVisitorReference();
+  storeTrackingValue(visitorStorageKey, created);
+  return created;
+};
+
+const currentCampaignContext = () => {
   const parameters = new URLSearchParams(window.location.search);
   return {
-    page_path: window.location.pathname,
     landing_path: window.location.pathname,
     source: parameters.get('utm_source') || '',
     medium: parameters.get('utm_medium') || '',
@@ -320,10 +364,29 @@ const campaignContext = () => {
   };
 };
 
+const campaignContext = () => {
+  const current = currentCampaignContext();
+  if (!trackingConsentAccepted()) return { page_path: window.location.pathname, ...current };
+
+  try {
+    const raw = window.localStorage.getItem(firstTouchStorageKey);
+    const stored = raw ? JSON.parse(raw) : null;
+    if (stored && Number(stored.expires_at) > Date.now() && stored.context) {
+      return { page_path: window.location.pathname, ...stored.context };
+    }
+    const context = { ...current };
+    window.localStorage.setItem(firstTouchStorageKey, JSON.stringify({ context, expires_at: Date.now() + trackingStorageLifetime }));
+    return { page_path: window.location.pathname, ...context };
+  } catch (_error) {
+    return { page_path: window.location.pathname, ...current };
+  }
+};
+
 const trackWebsiteEvent = (event, detail = {}) => {
   const payload = {
     event,
     journey_id: journeyReference(),
+    visitor_id: visitorReference(),
     ...campaignContext(),
     ...detail,
   };
@@ -377,6 +440,14 @@ document.querySelectorAll('a[href*="windowsoftware.co.uk/windowcad7/"]').forEach
 document.querySelectorAll('[data-fg-journey-ref]').forEach((field) => {
   field.value = journeyReference();
 });
+
+document.querySelectorAll('[data-fg-visitor-id]').forEach((field) => {
+  field.value = visitorReference();
+});
+
+if (trackingConsentAccepted()) {
+  trackWebsiteEvent('visitor_seen');
+}
 
 document.addEventListener('click', (event) => {
   const phoneLink = event.target.closest('a[href^="tel:"]');
@@ -598,6 +669,8 @@ enquiryForms.forEach((form) => {
   };
 
   form.addEventListener('submit', async (event) => {
+    form.querySelectorAll('[data-fg-journey-ref]').forEach((field) => { field.value = journeyReference(); });
+    form.querySelectorAll('[data-fg-visitor-id]').forEach((field) => { field.value = visitorReference(); });
     validateContactFields();
 
     if (showStepForInvalidField()) {
@@ -647,9 +720,6 @@ enquiryForms.forEach((form) => {
       form.style.minHeight = `${submittedHeight}px`;
       form.reset();
       form.classList.add('is-submitted');
-      trackWebsiteEvent('form_submitted', {
-        cta: (submitLabel?.textContent || 'Send enquiry').trim().slice(0, 120),
-      });
       showFeedback(
         'success',
         result.message || 'Thanks — your enquiry has been received.',

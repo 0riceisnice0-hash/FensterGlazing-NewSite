@@ -238,6 +238,7 @@ $notices = [
     <input type="hidden" name="source" value="<?php echo esc_attr((string) $args['source']); ?>">
     <input type="hidden" name="page_url" value="<?php echo esc_url((string) home_url(wp_unslash($_SERVER['REQUEST_URI'] ?? '/'))); ?>">
     <input type="hidden" name="journey_ref" value="" data-fg-journey-ref>
+    <input type="hidden" name="visitor_id" value="" data-fg-visitor-id>
     <input type="hidden" name="fenster_started_at" value="<?php echo esc_attr((string) time()); ?>">
     <?php wp_nonce_field('fenster_submit_enquiry', 'fenster_enquiry_nonce'); ?>
 </form>

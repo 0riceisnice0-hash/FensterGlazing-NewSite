@@ -347,7 +347,10 @@ function fenster_process_enquiry(): array|WP_Error
         'source' => sanitize_text_field(wp_unslash($_POST['source'] ?? 'Website')),
         'page_url' => esc_url_raw(wp_unslash($_POST['page_url'] ?? '')),
         'journey_ref' => sanitize_text_field(wp_unslash($_POST['journey_ref'] ?? '')),
+        'visitor_id' => sanitize_text_field(wp_unslash($_POST['visitor_id'] ?? '')),
     ];
+    $data['journey_ref'] = preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $data['journey_ref']) ? strtoupper($data['journey_ref']) : '';
+    $data['visitor_id'] = preg_match('/^FGV-[A-Z0-9-]{8,80}$/i', $data['visitor_id']) ? strtoupper($data['visitor_id']) : '';
     $privacy = ! empty($_POST['privacy']);
 
     if ($data['name'] === '' || $data['email'] === '' || $data['phone'] === '' || $data['location'] === '' || $data['project_type'] === '' || $data['message'] === '' || ! $privacy) {
@@ -403,6 +406,7 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_source' => $data['source'],
         '_fenster_page_url' => $data['page_url'],
         '_fenster_journey_ref' => $data['journey_ref'],
+        '_fenster_visitor_id' => $data['visitor_id'],
     ];
     foreach ($meta as $key => $value) {
         update_post_meta($enquiry_id, $key, $value);
@@ -448,6 +452,7 @@ function fenster_process_enquiry(): array|WP_Error
 
     fenster_dashboard_track_event('form_submitted', [
         'journey_id' => $data['journey_ref'],
+        'visitor_id' => $data['visitor_id'],
         'page_path' => (string) wp_parse_url($data['page_url'], PHP_URL_PATH),
         'source' => $data['source'],
     ]);

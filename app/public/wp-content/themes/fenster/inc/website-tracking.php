@@ -51,12 +51,13 @@ function fenster_dashboard_track_event(string $event, array $payload = []): void
     $endpoint = fenster_website_dashboard_url();
     $secret = fenster_website_dashboard_secret();
 
-    if ($endpoint === '' || $secret === '') {
+    if ($endpoint === '') {
         return;
     }
 
     $allowed = [
         'journey_id',
+        'visitor_id',
         'page_path',
         'landing_path',
         'source',
