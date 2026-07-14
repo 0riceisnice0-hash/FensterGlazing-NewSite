@@ -70,30 +70,6 @@ $roof_styles = [
             </div>
         </section>
 
-        <section id="rooflight-types" class="fg-roof-light-types">
-            <div class="container">
-                <div class="fg-roof-light-types__heading">
-                    <p class="eyebrow"><?php esc_html_e('Roof lantern or flat rooflight', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Choose how much structure you want to see.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('A lantern creates a raised, pitched feature. A flat rooflight keeps the outside profile lower and gives you a simpler opening from below. We will check the roof and explain which options suit it.', 'fenster'); ?></p>
-                </div>
-                <div class="fg-roof-light-types__grid">
-                    <article>
-                        <figure><img src="<?php echo esc_url($imported('S1-Lantern-first-installation-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Sheerline S1 pitched roof lantern installed on a flat roof', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-first-installation-min-scaled.jpg'); ?>></figure>
-                        <div><span><?php esc_html_e('Sheerline S1', 'fenster'); ?></span><h3><?php esc_html_e('Roof lantern', 'fenster'); ?></h3><p><?php esc_html_e('A pitched aluminium lantern with 13 layouts, 28mm glazing and optional powered ventilation.', 'fenster'); ?></p></div>
-                    </article>
-                    <article>
-                        <figure><img src="<?php echo esc_url($asset('titan/titan-edge-fixed-rooflight.jpg')); ?>" alt="<?php esc_attr_e('Titan EDGE fixed flat rooflight with edge-to-edge glass', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-fixed-rooflight.jpg'); ?>></figure>
-                        <div><span><?php esc_html_e('Titan EDGE', 'fenster'); ?></span><h3><?php esc_html_e('Fixed flat rooflight', 'fenster'); ?></h3><p><?php esc_html_e('Edge-to-edge glass, a thermally broken aluminium frame and a low 63mm height above the upstand.', 'fenster'); ?></p></div>
-                    </article>
-                    <article>
-                        <figure><img src="<?php echo esc_url($asset('titan/titan-edge-air-opening-rooflight.jpg')); ?>" alt="<?php esc_attr_e('Titan EDGE Air opening flat rooflight', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-air-opening-rooflight.jpg'); ?>></figure>
-                        <div><span><?php esc_html_e('Titan EDGE Air', 'fenster'); ?></span><h3><?php esc_html_e('Opening flat rooflight', 'fenster'); ?></h3><p><?php esc_html_e('Manual or powered opening with optional remote, rain sensor and thermostatic controls.', 'fenster'); ?></p></div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
         <section class="fg-roof-lantern-views">
             <div class="container">
                 <div class="fg-roof-lantern-views__heading">
@@ -205,6 +181,13 @@ $roof_styles = [
             </div>
         </section>
 
+        <section class="fg-roof-related">
+            <div class="container fg-roof-related__card">
+                <figure><img src="<?php echo esc_url($asset('titan/titan-edge-installed-pair.jpg')); ?>" alt="<?php esc_attr_e('Pair of Titan EDGE fixed flat rooflights', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-installed-pair.jpg'); ?>></figure>
+                <div><p class="eyebrow"><?php esc_html_e('Prefer a flatter roof profile?', 'fenster'); ?></p><h2><?php esc_html_e('Compare fixed and opening flat rooflights.', 'fenster'); ?></h2><p><?php esc_html_e('Titan flat rooflights use edge-to-edge glass without the pitched rafters of a lantern. The separate page covers fixed, opening, larger Multipane and Walkon options.', 'fenster'); ?></p><a class="button button--outline" href="<?php echo esc_url(home_url('/flat-rooflights/')); ?>"><?php esc_html_e('View flat rooflights', 'fenster'); ?></a></div>
+            </div>
+        </section>
+
         <section id="fenster-roof-lantern-enquiry" class="fg-roof-lantern-enquiry">
             <div class="container fg-roof-lantern-enquiry__grid">
                 <div class="fg-roof-lantern-enquiry__copy">
@@ -222,7 +205,7 @@ $roof_styles = [
                         'class' => 'fg-form fg-roof-lantern-form',
                         'source' => 'Roof Lanterns',
                         'button_label' => 'Send enquiry',
-                        'project_type' => 'Roof lanterns and flat rooflights',
+                        'project_type' => 'Roof lanterns',
                         'lock_project_type' => true,
                     ]); ?>
                 </div>

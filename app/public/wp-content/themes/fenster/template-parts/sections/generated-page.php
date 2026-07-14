@@ -1563,6 +1563,15 @@ if ($slug === 'roof-lanterns') {
     return;
 }
 
+if ($slug === 'flat-rooflights') {
+    get_template_part('template-parts/sections/flat-rooflights', null, [
+        'page' => $page,
+        'title' => $title,
+        'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
 if ($is_product_selector_hub) {
     get_template_part('template-parts/sections/windows-hub', null, [
         'asset_base' => $asset_base,

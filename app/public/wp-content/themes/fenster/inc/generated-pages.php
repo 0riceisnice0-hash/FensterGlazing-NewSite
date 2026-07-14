@@ -235,8 +235,12 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Integral blinds sealed inside double glazing for doors, windows and roof glazing, with magnetic or electric controls and survey-led advice from Fenster Glazing.',
         ],
         'roof-lanterns' => [
-            'title_tag' => 'Roof Lanterns & Roof Lights Milton Keynes | Fenster Glazing',
-            'meta_description' => 'Aluminium roof lanterns and roof lights for brighter extensions, with frame colours, solar-control glass and survey-led installation.',
+            'title_tag' => 'Roof Lanterns Milton Keynes | Sheerline S1 Lanterns',
+            'meta_description' => 'Sheerline S1 aluminium roof lanterns in Milton Keynes, with 13 layouts, frame colours, glass and ventilation specified before installation.',
+        ],
+        'flat-rooflights' => [
+            'title_tag' => 'Flat Rooflights Milton Keynes | Fixed & Opening Rooflights',
+            'meta_description' => 'Titan flat rooflights in Milton Keynes, including fixed EDGE, opening EDGE Air, Multipane and Walkon units with survey-led installation.',
         ],
         'aluminium-bifold-doors-milton-keynes' => [
             'title_tag' => 'Bifold Doors Milton Keynes | Aluminium Bifold Installation',
@@ -1610,7 +1614,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation'] as $virtual_slug) {
+    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'flat-rooflights'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

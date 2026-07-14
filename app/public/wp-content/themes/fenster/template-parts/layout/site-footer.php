@@ -11,7 +11,8 @@ $footer_products = [
     ['label' => 'Windows and doors', 'url' => home_url('/windows-milton-keynes/')],
     ['label' => 'Aluminium glazing', 'url' => home_url('/aluminium-windows/')],
     ['label' => 'Bifolds and sliders', 'url' => home_url('/aluminium-bifold-doors/')],
-    ['label' => 'Roof lanterns and glass', 'url' => home_url('/roof-lanterns/')],
+    ['label' => 'Roof lanterns', 'url' => home_url('/roof-lanterns/')],
+    ['label' => 'Flat rooflights', 'url' => home_url('/flat-rooflights/')],
     ['label' => 'Repairs and replacement units', 'url' => home_url('/double-glazing-replacement/')],
     ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
 ];

@@ -159,6 +159,7 @@ function fenster_site_data(): array
                         'url' => home_url('/other-services/'),
                         'items' => [
                             ['label' => 'Roof Lanterns', 'url' => home_url('/roof-lanterns/')],
+                            ['label' => 'Flat Rooflights', 'url' => home_url('/flat-rooflights/')],
                             ['label' => 'Roofline', 'url' => home_url('/roofline/')],
                             ['label' => 'Integral Blinds', 'url' => home_url('/integral-blinds/')],
                             ['label' => 'Replacement Glazing', 'url' => home_url('/double-glazing-replacement/')],
