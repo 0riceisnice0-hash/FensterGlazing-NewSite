@@ -12,6 +12,7 @@ Last updated: 2026-07-13
 - Reworked the calendar after visual review into a compact six-week card sized to its actual content, with a visible three-part availability strip for Monday-Friday, 9am-4pm and bank-holiday exclusions. England-and-Wales bank holidays now come from the official GOV.UK feed and are blocked by both the picker and server validation.
 - Rebuilt the final booking-details stage as a light consultation-specific form surface: the chosen slot is clearly summarised, fields and required labels remain legible, and the privacy/submit finish is visually contained.
 - Replaced the staged booking flow's `Change date` and `Change time` text links with compact, labelled back-arrow controls.
+- Added a compact image pair to the consultation hero using the real Milton Keynes showroom and a completed Fenster installation. Updated `STYLE.md` so future new customer-facing pages must scan available local assets and use relevant real imagery when it adds trust, clarity or conversion value.
 - Replaced the Contact consultation link with the new `#book-consultation` section. The customer copy correctly says Fenster confirms the requested appointment.
 
 ## 2026-07-13 - Complete Generated Meta Description Rewrite

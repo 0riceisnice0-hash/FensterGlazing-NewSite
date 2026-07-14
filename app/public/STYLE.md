@@ -74,6 +74,7 @@ Sections should feel like parts of one composed page.
 
 Use real, relevant visuals whenever a page needs personality or trust.
 
+- Every new page or substantial new page section must begin with a scan of the local theme image assets and use the best relevant real image(s) where they improve understanding, local proof or conversion. Do not leave a new customer-facing page text-only by default when suitable project, product, team or showroom imagery exists.
 - Product pages should show the product, finish, handle, glass, project, showroom or quote experience where useful.
 - Contact and about pages should use real Fenster/team/showroom imagery where available.
 - Avoid dark, blurred, vague or purely atmospheric imagery when customers need to understand the thing.

@@ -15,6 +15,18 @@ $trust_items = is_array($args['trust_items'] ?? null) ? $args['trust_items'] : [
 $phone = (string) ($brand['phone'] ?? '01908 429200');
 $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $phone_href = preg_replace('/\s+/', '', $phone);
+$consultation_visuals = [
+    [
+        'src' => FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png',
+        'alt' => 'Fenster Glazing showroom in Milton Keynes',
+        'caption' => 'Visit the Milton Keynes showroom',
+    ],
+    [
+        'src' => FENSTER_THEME_URI . '/assets/images/imported/Installation-4.jpg',
+        'alt' => 'Fenster windows and door installation on a Milton Keynes home',
+        'caption' => 'Talk through what suits your home',
+    ],
+];
 $booking_notes = [
     'Choose a weekday within the next 30 days.',
     'Select a preferred time from 9am to 4pm.',
@@ -69,6 +81,14 @@ $faq_schema = [
                         <li><?php echo esc_html($note); ?></li>
                     <?php endforeach; ?>
                 </ul>
+                <div class="fg-consultation-page__hero-visuals" aria-label="<?php esc_attr_e('Fenster showroom and installation work', 'fenster'); ?>">
+                    <?php foreach ($consultation_visuals as $index => $visual) : ?>
+                        <figure class="fg-consultation-page__hero-visual fg-consultation-page__hero-visual--<?php echo esc_attr((string) ($index + 1)); ?>">
+                            <img <?php echo fenster_image_attr_string((string) $visual['src'], ['alt' => (string) $visual['alt'], 'loading' => $index === 0 ? 'eager' : 'lazy', 'fetchpriority' => $index === 0 ? 'high' : 'auto']); ?>>
+                            <figcaption><?php echo esc_html($visual['caption']); ?></figcaption>
+                        </figure>
+                    <?php endforeach; ?>
+                </div>
             </div>
 
             <?php
