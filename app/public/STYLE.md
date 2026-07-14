@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-07-07
+Last updated: 2026-07-14
 
 This file is the source of truth for how the site should look and feel.
 
@@ -41,6 +41,65 @@ Design decisions should prioritise:
 - calm premium polish,
 - mobile layouts designed on purpose,
 - continuity from section to section.
+
+## Design Direction: Get It Right In The First Pass
+
+The expected standard is a finished, intentional page on the first implementation pass — not a collection of reasonable components that are repeatedly rearranged after the fact. An agent must make the design decision before writing the layout.
+
+### Start With The Page Idea
+
+Before coding a new page or a substantial redesign, establish these five things in writing for yourself:
+
+1. The customer's primary task on the page.
+2. The single visual object that should command the first viewport: a product, a project image, a quote tool, a calendar or a clear route choice.
+3. Which existing sections earn a place because they help that task — and which do not.
+4. One deliberate supporting image treatment and what it proves or helps the customer understand.
+5. Where reassurance belongs: immediately near the action, as real reviews later in the journey, or both with clearly different jobs.
+
+Do not begin by adding cards, filling a standard section sequence, or treating every supplied instruction as a separate component. The result must read as one idea from top to bottom.
+
+### Required First-Pass Workflow
+
+- Inspect the closest successful existing page patterns and scan relevant local image assets before choosing a layout.
+- Create a page inventory: retain, remove, or replace each existing section. Do not accidentally preserve weak legacy filler merely because it already renders.
+- Choose the full desktop composition before styling individual sections. Define the first viewport, section order, image role, proof role and final stopping point.
+- Build the complete composition in one coherent pass. Do not make a visible page progressively worse through a series of speculative patches.
+- Treat visual QA as validation, not as the stage where the design concept is discovered. If the first full-page render does not read as one composed journey, rethink the hierarchy before adding polish.
+- Do not call a page complete because individual components look clean in isolation. The page must feel designed as a whole at the actual viewport.
+
+### Conversion-Page Composition
+
+For a conversion page, use this order unless the owner specifies another:
+
+1. A first viewport with one dominant action and only the information needed to make it feel safe and useful.
+2. Compact, adjacent reassurance for that action.
+3. One art-directed supporting section: a real image and useful decision-supporting copy, not a generic card grid.
+4. Only the remaining proof, answers or contact detail that removes genuine friction.
+5. A clear end. Do not append a generic link band, duplicate process cards or another CTA merely to make the page longer.
+
+The booking consultation page is the reference: calendar as the first-view object; restrained Trustpilot/FENSA reassurance beneath it; one full image-and-advice section; concise booking answers; then genuine reviews. It does not need a detached proof wall, process cards, decorative hero tiles, product-card grids or filler links.
+
+### Hierarchy, Proof And Imagery
+
+- Give every page one primary action. A second CTA is allowed only when it is a genuine alternative route, not a duplicate of the primary action.
+- Do not repeat the same promise in hero copy, notes, process cards, trust strips and FAQ copy. Say it once in the best location.
+- Reassurance immediately next to a form or tool should be compact and specific. A fuller review section later should provide different evidence, not repeat the same badges.
+- Use one strong image treatment before using several small ones. A single relevant project image beside meaningful copy is more premium than a collection of tiles.
+- Every image needs a job: local proof, product understanding, outcome, team confidence or decision support. If its only job is to break up white space, do not use it.
+- Never force portrait or unusually tall source imagery into a repeated card grid. Crop it intentionally, use it as a feature image, or select a better asset.
+- Do not use excessive empty space as a substitute for hierarchy. Equally, do not compress a page into stacked cards. Space should frame the dominant object and mark a genuine change of thought.
+
+### What Fenster Should Look Like
+
+Fenster pages should feel considered, local and quietly expensive — strong Gibson type, dark steel for confidence, green reserved for action/proof, real work on real homes, restrained panels and clear practical copy. They should never feel like:
+
+- a generic SaaS dashboard;
+- a random stack of white cards;
+- a marketing template with every section shouting;
+- a collage of unrelated images;
+- a long page made from repeated proof, process and CTA blocks.
+
+When in doubt, remove the weaker section, make the primary task clearer, use the better image once, and let the page end earlier.
 
 ## Site-Wide Background Rule
 
