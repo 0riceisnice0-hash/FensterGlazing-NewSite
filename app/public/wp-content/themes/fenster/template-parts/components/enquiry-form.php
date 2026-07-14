@@ -34,6 +34,7 @@ $project_options = is_array($args['project_options']) && ! empty($args['project_
     ];
 $phone_pattern = '^(?:\+44|0044|0)[0-9\s().-]{9,18}$';
 $postcode_pattern = '^([Gg][Ii][Rr]\s?0[Aa]{2}|[A-Za-z]{1,2}[0-9][A-Za-z0-9]?\s?[0-9][A-Za-z]{2})$';
+$bank_holidays = function_exists('fenster_consultation_bank_holidays') ? fenster_consultation_bank_holidays() : [];
 $status = sanitize_key(wp_unslash($_GET['fenster_enquiry'] ?? ''));
 $notices = [
     'success' => ['title' => 'Thanks - your enquiry has been received.', 'copy' => 'The Fenster team now has your details and will come back to you as soon as possible.'],
@@ -41,7 +42,7 @@ $notices = [
     'bad_email' => ['title' => 'Please check your email address.', 'copy' => 'Enter a valid email address so the team can reply.'],
     'bad_phone' => ['title' => 'Please check your phone number.', 'copy' => 'Enter a valid UK phone number, such as 01908 429200 or 07123 456789.'],
     'bad_postcode' => ['title' => 'Please check your postcode.', 'copy' => 'Enter a valid UK postcode.'],
-    'bad_appointment' => ['title' => 'Please choose another appointment time.', 'copy' => 'Consultations can be requested on weekdays in the next 30 days, between 9am and 4pm.'],
+    'bad_appointment' => ['title' => 'Please choose another appointment time.', 'copy' => 'Consultations can be requested Monday to Friday in the next 30 days, between 9am and 4pm, excluding bank holidays.'],
     'invalid' => ['title' => 'The form session expired.', 'copy' => 'Please refresh the page and send your enquiry again.'],
     'error' => ['title' => 'We could not save that enquiry.', 'copy' => 'Please call 01908 429200 or email info@fensterglazing.com and the team will help.'],
 ];
@@ -68,8 +69,9 @@ $notices = [
         <input type="hidden" name="appointment_date" value="" data-fg-consultation-date required>
         <input type="hidden" name="appointment_time" value="" data-fg-consultation-time required>
 
-        <div class="fg-consultation-booking" data-fg-consultation-booking>
+        <div class="fg-consultation-booking" data-fg-consultation-booking data-fg-consultation-bank-holidays="<?php echo esc_attr(wp_json_encode($bank_holidays)); ?>">
             <noscript>
+                <p><?php esc_html_e('Appointments are available Monday to Friday, from 9am to 4pm, excluding bank holidays.', 'fenster'); ?></p>
                 <label><span><?php esc_html_e('Preferred weekday', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="date" name="appointment_date" min="<?php echo esc_attr(wp_date('Y-m-d')); ?>" max="<?php echo esc_attr(wp_date('Y-m-d', strtotime('+30 days'))); ?>" required></label>
                 <label><span><?php esc_html_e('Preferred time', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><select name="appointment_time" required><option value=""><?php esc_html_e('Select a time', 'fenster'); ?></option><?php foreach (['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $time) : ?><?php $time_label = (((int) substr($time, 0, 2) % 12) ?: 12) . ((int) substr($time, 0, 2) < 12 ? ' am' : ' pm'); ?><option value="<?php echo esc_attr($time); ?>"><?php echo esc_html($time_label); ?></option><?php endforeach; ?></select></label>
             </noscript>
@@ -80,6 +82,7 @@ $notices = [
                     <p><?php esc_html_e('Pick a preferred time and the Fenster team will confirm the appointment with you.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-consultation-booking__calendar" data-fg-consultation-calendar aria-live="polite"></div>
+                <p class="fg-consultation-booking__availability"><?php esc_html_e('Appointments are available Monday to Friday, from 9am to 4pm, excluding bank holidays.', 'fenster'); ?></p>
             </div>
             <div class="fg-consultation-booking__stage" data-fg-consultation-stage="time" hidden>
                 <div class="fg-consultation-booking__times" data-fg-consultation-times>

@@ -105,6 +105,50 @@ function fenster_enquiry_office_subject(array $data): string
     return sprintf('New Residential Enquiry from %s', $data['name']);
 }
 
+/**
+ * Return England and Wales bank-holiday dates from the official GOV.UK feed.
+ *
+ * @return string[] Dates in Y-m-d format.
+ */
+function fenster_consultation_bank_holidays(): array
+{
+    $cached = get_transient('fenster_consultation_bank_holidays_england_wales');
+    if (is_array($cached)) {
+        return $cached;
+    }
+
+    $dates = [];
+    $response = wp_remote_get('https://www.gov.uk/bank-holidays.json', [
+        'timeout' => 4,
+        'redirection' => 2,
+    ]);
+
+    if (! is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+        $payload = json_decode((string) wp_remote_retrieve_body($response), true);
+        $events = $payload['england-and-wales']['events'] ?? [];
+        if (is_array($events)) {
+            foreach ($events as $event) {
+                $date = is_array($event) ? (string) ($event['date'] ?? '') : '';
+                if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+                    $dates[] = $date;
+                }
+            }
+        }
+    }
+
+    $dates = array_values(array_unique($dates));
+    if (! empty($dates)) {
+        set_transient('fenster_consultation_bank_holidays_england_wales', $dates, DAY_IN_SECONDS);
+    }
+
+    return $dates;
+}
+
+function fenster_consultation_is_bank_holiday(DateTimeInterface $date): bool
+{
+    return in_array($date->format('Y-m-d'), fenster_consultation_bank_holidays(), true);
+}
+
 add_action('phpmailer_init', 'fenster_configure_smtp');
 function fenster_configure_smtp(PHPMailer\PHPMailer\PHPMailer $mailer): void
 {
@@ -395,9 +439,10 @@ function fenster_process_enquiry(): array|WP_Error
             || $appointment < $today
             || $appointment > $last_bookable_day
             || (int) $appointment->format('N') > 5
+            || fenster_consultation_is_bank_holiday($appointment)
             || ! in_array($data['appointment_time'], $allowed_times, true)
         ) {
-            return fenster_enquiry_error('bad_appointment', 'Please choose a weekday within the next 30 days and a time between 9am and 4pm.');
+            return fenster_enquiry_error('bad_appointment', 'Please choose a Monday to Friday date within the next 30 days, excluding bank holidays, and a time between 9am and 4pm.');
         }
 
         $data['appointment_display'] = wp_date('l j F Y', $appointment->getTimestamp(), $timezone) . ' at ' . wp_date('g a', strtotime($data['appointment_time']));

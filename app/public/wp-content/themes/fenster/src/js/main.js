@@ -851,6 +851,14 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
   const stages = booking.querySelectorAll('[data-fg-consultation-stage]');
   if (!form || !calendar || !times || !selection || !dateField || !timeField || !stages.length) return;
 
+  let bankHolidays = [];
+  try {
+    bankHolidays = JSON.parse(booking.dataset.fgConsultationBankHolidays || '[]');
+  } catch (error) {
+    bankHolidays = [];
+  }
+  const bankHolidayDates = new Set(Array.isArray(bankHolidays) ? bankHolidays : []);
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const lastBookableDate = new Date(today);
@@ -866,7 +874,7 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
     if (focusSelector) window.requestAnimationFrame(() => booking.querySelector(focusSelector)?.focus());
   };
   const isoDate = (date) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
-  const isBookable = (date) => date >= today && date <= lastBookableDate && date.getDay() !== 0 && date.getDay() !== 6;
+  const isBookable = (date) => date >= today && date <= lastBookableDate && date.getDay() !== 0 && date.getDay() !== 6 && !bankHolidayDates.has(isoDate(date));
   const readableDate = (date) => new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(date);
   const updateSelection = () => {
     if (!selectedDate || !selectedTime) return;
@@ -887,6 +895,7 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
       const selected = selectedDate && isoDate(date) === isoDate(selectedDate);
       days += `<button type="button" data-fg-consultation-day="${isoDate(date)}" ${bookable ? '' : 'disabled'} aria-pressed="${selected ? 'true' : 'false'}" aria-label="${readableDate(date)}">${day}</button>`;
     }
+    days += '<span></span>'.repeat(42 - firstOffset - monthEnd.getDate());
     days += '</div>';
     calendar.innerHTML = `<div class="fg-consultation-booking__calendar-head"><button type="button" data-fg-consultation-previous ${canGoBack ? '' : 'disabled'} aria-label="Previous month">←</button><strong>${heading}</strong><button type="button" data-fg-consultation-next ${canGoForward ? '' : 'disabled'} aria-label="Next month">→</button></div>${days}`;
     calendar.querySelector('[data-fg-consultation-previous]')?.addEventListener('click', () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1); renderCalendar(); });

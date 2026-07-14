@@ -9,6 +9,7 @@ Last updated: 2026-07-13
 - Added a dark-blue desktop-header `Book consultation` action beside `Instant Quote`.
 - Added the dedicated, indexable `/book-a-consultation/` route with route-specific title/meta/canonical, sitemap inclusion, breadcrumb schema, visible FAQ/FAQPage schema, the homepage's four-card reviews/accreditations proof row, review proof and the same shared staged consultation form. The page uses one continuous `--fg-page-gradient` canvas in line with `STYLE.md`. Header, footer and Contact now link to this canonical booking route.
 - Added server-side weekday, 30-day-window and 9am-4pm validation in `inc\enquiries.php`; selected date/time are saved with the private enquiry and shown in the branded `info@fensterglazing.com` office email.
+- Expanded the calendar into a full-height six-week date surface and added the visible Monday-Friday, 9am-4pm, bank-holiday-excluded availability note. England-and-Wales bank holidays now come from the official GOV.UK feed and are blocked by both the picker and server validation.
 - Replaced the Contact consultation link with the new `#book-consultation` section. The customer copy correctly says Fenster confirms the requested appointment.
 
 ## 2026-07-13 - Complete Generated Meta Description Rewrite
