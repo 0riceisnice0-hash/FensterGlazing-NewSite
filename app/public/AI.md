@@ -95,6 +95,7 @@ PHP lint example:
 - Do not delete established proof, page rhythm or working sections to make room for a new design idea. Improve the weak element in place first; only escalate to structural change when the owner asks for it.
 - Do not add imagery just to satisfy an "add imagery" style instruction. Images must earn their place by improving an existing section; a grid of tall generic image cards is not an improvement.
 - A functional component review is not visual QA. Before shipping visual changes to a conversion page, inspect the whole rendered page at desktop, tablet and mobile widths, including every below-the-fold section and the space between sections.
+- When the owner gives an explicit visual hierarchy for a page, treat that as approval for a coherent recomposition. Build that hierarchy directly instead of preserving legacy sections that undermine it. For the consultation model, this is: booking-first hero, one art-directed advice/image section, close reassurance without duplicate proof, concise booking answers, then real reviews.
 
 ## Three.js / Canvas Rule
 

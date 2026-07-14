@@ -15,6 +15,7 @@ Last updated: 2026-07-13
 - Added a compact image pair to the consultation hero using the real Milton Keynes showroom and a completed Fenster installation. Updated `STYLE.md` so future new customer-facing pages must scan available local assets and use relevant real imagery when it adds trust, clarity or conversion value.
 - Replaced the Contact consultation link with the new `#book-consultation` section. The customer copy correctly says Fenster confirms the requested appointment.
 - Reverted the 2026-07-14 wholesale consultation-page rebuild (commits `40db70d`/`03763c1`/`a0bfbac`). That rebuild overreacted to a visual critique: it replaced the approved page structure with a generic three-column image-card section, removed the established four-card proof row and booking steps, and forced imagery into sections that did not need it. The approved `5e695bf` composition is restored as the baseline — hero copy/imagery beside the booking panel, homepage-style proof row, booking steps, advice/contact, FAQs, review showcase and related links — with three small evidenced fixes kept: tighter section rhythm (`clamp(3rem, 5.5vw, 5rem)` desktop, `3rem` at 560px), subtle icon-led phone/email actions in the `Prefer to speak now?` panel, and no functional changes to the shared consultation booking flow. `AI.md` and `STYLE.md` recovery rules were corrected: preserve approved layout, smallest coherent fix first, and a full redesign requires explicit owner approval.
+- Replaced that restored baseline with the owner-approved consultation hierarchy: one booking-first calendar hero, a compact Trustpilot/FENSA reassurance strip, one art-directed bifold-door advice/contact section, concise FAQ answers and real review proof. Removed the legacy process cards, detached proof wall, extra hero image tiles and related-link filler. This is the accepted exception to the preservation rule because the owner explicitly approved the new hierarchy. The Products mega-menu now also presents `Book a consultation` beside `Get an instant quote`.
 
 ## 2026-07-13 - Complete Generated Meta Description Rewrite
 
@@ -762,4 +763,3 @@ Do not use this as the primary rulebook or handover. Use:
 - Kept one continuous page gradient across the contact page.
 - Hid the repeated showroom desk panel on mobile; phone, email and quote remain in the mobile contact dock, with full showroom details in the map section.
 - Rebuilt compiled CSS/JS and verified `390 x 844`, `768 x 1024` and `1440 x 900` screenshots with no horizontal overflow or console errors.
-

@@ -173,6 +173,11 @@ function fenster_site_data(): array
                         'url' => home_url('/online-quote/'),
                         'copy' => 'Price windows and doors through the online quote tool.',
                     ],
+                    [
+                        'label' => 'Book a consultation',
+                        'url' => home_url('/book-a-consultation/'),
+                        'copy' => 'Talk through your project with the Fenster team.',
+                    ],
                 ],
             ],
             [
