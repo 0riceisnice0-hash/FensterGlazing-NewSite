@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-13
 
+## 2026-07-14 - Reusable Consultation Booking Request To Test
+
+- Extended the one shared `enquiry-form.php` component with a reusable `consultation_booking` mode rather than adding a second customer form.
+- Added an accessible month-calendar request flow: the next 30 days of weekdays, a 9am-4pm preferred-time choice, then the normal contact/privacy details.
+- Added server-side weekday, 30-day-window and 9am-4pm validation in `inc\enquiries.php`; selected date/time are saved with the private enquiry and shown in the branded `info@fensterglazing.com` office email.
+- Replaced the Contact consultation link with the new `#book-consultation` section. The customer copy correctly says Fenster confirms the requested appointment.
+
 ## 2026-07-13 - Complete Generated Meta Description Rewrite
 
 - Replaced the long matrix and commercial-county description formulas with concise, complete page-specific sentences; each retains the product or county intent without clipping the end of the copy.

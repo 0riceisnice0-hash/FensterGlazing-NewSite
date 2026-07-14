@@ -39,9 +39,9 @@ $hub_routes = [
     [
         'label' => 'Consultation',
         'title' => 'Talk to the showroom team.',
-        'copy' => 'Visit Milton Keynes, call the desk, or send an enquiry if you want help choosing products, glass, colours or repair options.',
+        'copy' => 'Choose a weekday and preferred time for a showroom or project consultation with the Fenster team.',
         'meta' => 'Best for advice',
-        'url' => '#contact-form',
+        'url' => '#book-consultation',
     ],
 ];
 
@@ -52,9 +52,9 @@ $quick_routes = [
 ];
 
 $form_notes = [
-    'Your enquiry is saved securely before email delivery.',
-    'Fenster can reply by phone or email depending on the detail.',
-    'Photos, drawings and schedules can be sent by email after the form.',
+    'Weekday consultations can be requested up to 30 days ahead.',
+    'Available request times run from 9am to 4pm.',
+    'Fenster will confirm the appointment by phone or email.',
 ];
 ?>
 
@@ -151,12 +151,12 @@ $form_notes = [
         </div>
     </section>
 
-    <section id="contact-form" class="fg-contact-form-section">
+    <section id="book-consultation" class="fg-contact-form-section fg-contact-form-section--consultation">
         <div class="container fg-contact-form-section__grid">
             <div class="fg-contact-form-section__copy">
-                <p class="eyebrow"><?php esc_html_e('Send an enquiry', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Tell us what you need help with.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Add the basics and Fenster will come back to you. If you have photos, drawings or schedules, email them directly after sending the form.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Book a consultation', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Choose a time to talk things through.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Start with a weekday, choose your preferred time, then leave the details Fenster needs to confirm the appointment.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
                     <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>
@@ -169,10 +169,10 @@ $form_notes = [
             </div>
             <?php
             get_template_part('template-parts/components/enquiry-form', null, [
-                'class' => 'fg-contact-form',
-                'source' => 'Contact page',
-                'button_label' => 'Send enquiry',
-                'project_type' => 'Residential windows and doors',
+                'class' => 'fg-contact-form fg-consultation-form',
+                'source' => 'Contact page consultation request',
+                'button_label' => 'Request consultation',
+                'consultation_booking' => true,
             ]);
             ?>
         </div>

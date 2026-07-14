@@ -93,6 +93,10 @@ function fenster_smtp_is_configured(): bool
 
 function fenster_enquiry_office_subject(array $data): string
 {
+    if (! empty($data['appointment_date']) && ! empty($data['appointment_time'])) {
+        return sprintf('New Consultation Request from %s', $data['name']);
+    }
+
     $project = strtolower((string) ($data['project_type'] ?? ''));
     if (str_contains($project, 'commercial')) {
         return sprintf('New Commercial Enquiry from %s', $data['name']);
@@ -258,6 +262,7 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
         fenster_enquiry_email_row('Phone', $data['phone'], $phone_href),
         fenster_enquiry_email_row('Location', $data['location']),
         fenster_enquiry_email_row('Project', $data['project_type']),
+        fenster_enquiry_email_row('Preferred consultation', $data['appointment_display'] ?? ''),
         fenster_enquiry_email_row('Timescale', $data['timescale'] !== '' ? $data['timescale'] : 'Not specified'),
         fenster_enquiry_email_row('Source', $data['source']),
         fenster_enquiry_email_row('Files', ! empty($attachments) ? implode(', ', array_map(static fn (array $file): string => (string) ($file['name'] ?? ''), $attachments)) : ''),
@@ -268,8 +273,8 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
 <body style="margin:0;padding:0;background:#edf4f2;font-family:Arial,Helvetica,sans-serif;color:#06212a;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#edf4f2;"><tr><td align="center" style="padding:28px 12px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 16px 50px rgba(0,45,58,.12);">
-<tr><td style="padding:22px 28px;background:#ffffff;border-bottom:1px solid #dce7e5;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td><img src="' . esc_url($logo) . '" width="170" alt="Fenster Glazing" style="display:block;max-width:170px;height:auto;"></td><td align="right" style="color:#087943;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">New website enquiry</td></tr></table></td></tr>
-<tr><td style="padding:30px 28px 12px;"><div style="display:inline-block;padding:7px 10px;border-radius:999px;background:#e6f6ed;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">' . esc_html($data['project_type']) . '</div><h1 style="margin:16px 0 8px;color:#06212a;font-size:28px;line-height:1.12;">' . esc_html($data['name']) . ' has started a project.</h1><p style="margin:0;color:#60727a;font-size:15px;line-height:1.6;">Reply directly to this email to contact the customer, or use the details below.</p></td></tr>
+<tr><td style="padding:22px 28px;background:#ffffff;border-bottom:1px solid #dce7e5;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td><img src="' . esc_url($logo) . '" width="170" alt="Fenster Glazing" style="display:block;max-width:170px;height:auto;"></td><td align="right" style="color:#087943;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">' . (! empty($data['appointment_display']) ? 'Consultation request' : 'New website enquiry') . '</td></tr></table></td></tr>
+<tr><td style="padding:30px 28px 12px;"><div style="display:inline-block;padding:7px 10px;border-radius:999px;background:#e6f6ed;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">' . esc_html($data['project_type']) . '</div><h1 style="margin:16px 0 8px;color:#06212a;font-size:28px;line-height:1.12;">' . esc_html($data['name']) . (! empty($data['appointment_display']) ? ' has requested a consultation.' : ' has started a project.') . '</h1><p style="margin:0;color:#60727a;font-size:15px;line-height:1.6;">Reply directly to this email to contact the customer, or use the details below.</p></td></tr>
 <tr><td style="padding:10px 28px 4px;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0">' . $rows . '</table></td></tr>
 <tr><td style="padding:24px 28px;"><div style="padding:22px;border-radius:12px;background:#f3f8f7;border-left:4px solid #2eac66;"><div style="margin-bottom:8px;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Project details</div><div style="color:#06212a;font-size:16px;line-height:1.65;">' . nl2br(esc_html($data['message'])) . '</div></div></td></tr>
 <tr><td style="padding:0 28px 30px;"><table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="border-radius:8px;background:#2eac66;"><a href="mailto:' . esc_attr($data['email']) . '" style="display:inline-block;padding:14px 20px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Reply to ' . esc_html($data['name']) . '</a></td><td width="10"></td><td style="border-radius:8px;border:1px solid #cbdad7;"><a href="' . esc_url($admin_url) . '" style="display:inline-block;padding:13px 20px;color:#003845;text-decoration:none;font-size:15px;font-weight:700;">View saved enquiry</a></td></tr></table></td></tr>
@@ -348,6 +353,8 @@ function fenster_process_enquiry(): array|WP_Error
         'page_url' => esc_url_raw(wp_unslash($_POST['page_url'] ?? '')),
         'journey_ref' => sanitize_text_field(wp_unslash($_POST['journey_ref'] ?? '')),
         'visitor_id' => sanitize_text_field(wp_unslash($_POST['visitor_id'] ?? '')),
+        'appointment_date' => sanitize_text_field(wp_unslash($_POST['appointment_date'] ?? '')),
+        'appointment_time' => sanitize_text_field(wp_unslash($_POST['appointment_time'] ?? '')),
     ];
     $data['journey_ref'] = preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $data['journey_ref']) ? strtoupper($data['journey_ref']) : '';
     $data['visitor_id'] = preg_match('/^FGV-[A-Z0-9-]{8,80}$/i', $data['visitor_id']) ? strtoupper($data['visitor_id']) : '';
@@ -369,6 +376,33 @@ function fenster_process_enquiry(): array|WP_Error
         return fenster_enquiry_error('bad_postcode', 'Please enter a valid UK postcode.');
     }
 
+    $has_appointment = $data['appointment_date'] !== '' || $data['appointment_time'] !== '';
+    $data['appointment_display'] = '';
+    if ($data['project_type'] === 'Consultation request' && ! $has_appointment) {
+        return fenster_enquiry_error('bad_appointment', 'Please choose a weekday within the next 30 days and a time between 9am and 4pm.');
+    }
+
+    if ($has_appointment) {
+        $timezone = wp_timezone();
+        $appointment = DateTimeImmutable::createFromFormat('!Y-m-d', $data['appointment_date'], $timezone);
+        $today = new DateTimeImmutable('today', $timezone);
+        $last_bookable_day = $today->modify('+30 days');
+        $allowed_times = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'];
+
+        if (
+            ! $appointment
+            || $appointment->format('Y-m-d') !== $data['appointment_date']
+            || $appointment < $today
+            || $appointment > $last_bookable_day
+            || (int) $appointment->format('N') > 5
+            || ! in_array($data['appointment_time'], $allowed_times, true)
+        ) {
+            return fenster_enquiry_error('bad_appointment', 'Please choose a weekday within the next 30 days and a time between 9am and 4pm.');
+        }
+
+        $data['appointment_display'] = wp_date('l j F Y', $appointment->getTimestamp(), $timezone) . ' at ' . wp_date('g a', strtotime($data['appointment_time']));
+    }
+
     $summary = implode("\n", array_filter([
         'Name: ' . $data['name'],
         'Email: ' . $data['email'],
@@ -376,6 +410,7 @@ function fenster_process_enquiry(): array|WP_Error
         $data['phone'] !== '' ? 'Phone: ' . $data['phone'] : '',
         $data['location'] !== '' ? 'Postcode / location: ' . $data['location'] : '',
         'Project type: ' . $data['project_type'],
+        $data['appointment_display'] !== '' ? 'Preferred consultation: ' . $data['appointment_display'] : '',
         $data['timescale'] !== '' ? 'Timescale: ' . $data['timescale'] : '',
         'Source: ' . $data['source'],
         $data['page_url'] !== '' ? 'Page: ' . $data['page_url'] : '',
@@ -407,6 +442,9 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_page_url' => $data['page_url'],
         '_fenster_journey_ref' => $data['journey_ref'],
         '_fenster_visitor_id' => $data['visitor_id'],
+        '_fenster_appointment_date' => $data['appointment_date'],
+        '_fenster_appointment_time' => $data['appointment_time'],
+        '_fenster_appointment_display' => $data['appointment_display'],
     ];
     foreach ($meta as $key => $value) {
         update_post_meta($enquiry_id, $key, $value);

@@ -841,6 +841,73 @@ enquiryForms.forEach((form) => {
   });
 });
 
+document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) => {
+  const form = booking.closest('[data-fg-enquiry-form]');
+  const calendar = booking.querySelector('[data-fg-consultation-calendar]');
+  const times = booking.querySelector('[data-fg-consultation-times]');
+  const selection = booking.querySelector('[data-fg-consultation-selection]');
+  const dateField = form?.querySelector('[data-fg-consultation-date]');
+  const timeField = form?.querySelector('[data-fg-consultation-time]');
+  if (!form || !calendar || !times || !selection || !dateField || !timeField) return;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const lastBookableDate = new Date(today);
+  lastBookableDate.setDate(lastBookableDate.getDate() + 30);
+  let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  let selectedDate = null;
+  let selectedTime = '';
+  const isoDate = (date) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+  const isBookable = (date) => date >= today && date <= lastBookableDate && date.getDay() !== 0 && date.getDay() !== 6;
+  const readableDate = (date) => new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(date);
+  const updateSelection = () => {
+    if (!selectedDate || !selectedTime) {
+      selection.hidden = true;
+      return;
+    }
+    selection.textContent = `Preferred consultation: ${readableDate(selectedDate)} at ${new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hour12: true }).format(new Date(`2000-01-01T${selectedTime}:00`)).toLowerCase()}`;
+    selection.hidden = false;
+  };
+  const renderCalendar = () => {
+    const monthStart = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
+    const monthEnd = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0);
+    const canGoBack = visibleMonth.getFullYear() > today.getFullYear() || visibleMonth.getMonth() > today.getMonth();
+    const canGoForward = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1) <= lastBookableDate;
+    const heading = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).format(monthStart);
+    const firstOffset = (monthStart.getDay() + 6) % 7;
+    let days = '<div class="fg-consultation-booking__weekdays" aria-hidden="true"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="fg-consultation-booking__days">';
+    days += '<span></span>'.repeat(firstOffset);
+    for (let day = 1; day <= monthEnd.getDate(); day += 1) {
+      const date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day);
+      const bookable = isBookable(date);
+      const selected = selectedDate && isoDate(date) === isoDate(selectedDate);
+      days += `<button type="button" data-fg-consultation-day="${isoDate(date)}" ${bookable ? '' : 'disabled'} aria-pressed="${selected ? 'true' : 'false'}" aria-label="${readableDate(date)}">${day}</button>`;
+    }
+    days += '</div>';
+    calendar.innerHTML = `<div class="fg-consultation-booking__calendar-head"><button type="button" data-fg-consultation-previous ${canGoBack ? '' : 'disabled'} aria-label="Previous month">←</button><strong>${heading}</strong><button type="button" data-fg-consultation-next ${canGoForward ? '' : 'disabled'} aria-label="Next month">→</button></div>${days}`;
+    calendar.querySelector('[data-fg-consultation-previous]')?.addEventListener('click', () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1); renderCalendar(); });
+    calendar.querySelector('[data-fg-consultation-next]')?.addEventListener('click', () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1); renderCalendar(); });
+    calendar.querySelectorAll('[data-fg-consultation-day]').forEach((button) => button.addEventListener('click', () => {
+      selectedDate = new Date(`${button.dataset.fgConsultationDay}T00:00:00`);
+      dateField.value = button.dataset.fgConsultationDay || '';
+      selectedTime = '';
+      timeField.value = '';
+      times.hidden = false;
+      booking.querySelectorAll('[data-fg-consultation-time-option]').forEach((option) => option.setAttribute('aria-pressed', 'false'));
+      renderCalendar();
+      updateSelection();
+      times.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }));
+  };
+  booking.querySelectorAll('[data-fg-consultation-time-option]').forEach((button) => button.addEventListener('click', () => {
+    selectedTime = button.dataset.time || '';
+    timeField.value = selectedTime;
+    booking.querySelectorAll('[data-fg-consultation-time-option]').forEach((option) => option.setAttribute('aria-pressed', option === button ? 'true' : 'false'));
+    updateSelection();
+  }));
+  renderCalendar();
+});
+
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const lenis = new Lenis({
     anchors: {
