@@ -468,45 +468,45 @@ a {
 }
 
 /* Final booking step: dedicated light-surface form treatment, not the dark shared-form defaults. */
-.fg-consultation-form .fg-consultation-booking__details {
+.fg-consultation-form.fg-enquiry-form .fg-consultation-booking__details {
   gap: 1rem;
   padding-top: 0;
 }
 
-.fg-consultation-form .fg-consultation-booking__details-head {
+.fg-consultation-form.fg-enquiry-form .fg-consultation-booking__details-head {
   gap: 0.28rem;
   padding-bottom: 0.85rem;
   border-bottom: 1px solid rgba(0, 45, 58, 0.12);
 }
 
-.fg-consultation-form .fg-consultation-booking__details-head .fg-consultation-booking__back {
+.fg-consultation-form.fg-enquiry-form .fg-consultation-booking__details-head .fg-consultation-booking__back {
   margin-top: 0.15rem;
 }
 
-.fg-consultation-form .fg-enquiry-form__row {
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__row {
   gap: 0.9rem;
 }
 
-.fg-consultation-form .fg-enquiry-form label,
-.fg-consultation-form .fg-enquiry-form label > span,
-.fg-consultation-form .fg-enquiry-form__message,
-.fg-consultation-form .fg-enquiry-form__footer small {
+.fg-consultation-form.fg-enquiry-form label,
+.fg-consultation-form.fg-enquiry-form label > span,
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__message,
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__footer small {
   color: var(--color-steel);
 }
 
-.fg-consultation-form .fg-enquiry-form label {
+.fg-consultation-form.fg-enquiry-form label {
   display: grid;
   gap: 0.42rem;
   font-size: 0.9rem;
   font-weight: 750;
 }
 
-.fg-consultation-form .fg-enquiry-form label em {
+.fg-consultation-form.fg-enquiry-form label em {
   color: var(--color-accent-dark);
 }
 
-.fg-consultation-form .fg-enquiry-form input:not([type="checkbox"]),
-.fg-consultation-form .fg-enquiry-form textarea {
+.fg-consultation-form.fg-enquiry-form input:not([type="checkbox"]),
+.fg-consultation-form.fg-enquiry-form textarea {
   width: 100%;
   min-height: 50px;
   padding: 0.72rem 0.8rem;
@@ -517,17 +517,17 @@ a {
   box-shadow: inset 0 1px 0 rgba(0, 45, 58, 0.03);
 }
 
-.fg-consultation-form .fg-enquiry-form textarea {
+.fg-consultation-form.fg-enquiry-form textarea {
   min-height: 118px;
 }
 
-.fg-consultation-form .fg-enquiry-form input:not([type="checkbox"])::placeholder,
-.fg-consultation-form .fg-enquiry-form textarea::placeholder {
+.fg-consultation-form.fg-enquiry-form input:not([type="checkbox"])::placeholder,
+.fg-consultation-form.fg-enquiry-form textarea::placeholder {
   color: #6a7b82;
   opacity: 1;
 }
 
-.fg-consultation-form .fg-enquiry-form__consent {
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__consent {
   margin-top: 0.15rem;
   padding: 0.8rem 0.9rem;
   border: 1px solid rgba(0, 45, 58, 0.12);
@@ -536,22 +536,22 @@ a {
   color: var(--color-muted) !important;
 }
 
-.fg-consultation-form .fg-enquiry-form__consent a {
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__consent a {
   color: var(--color-steel);
   font-weight: 800;
 }
 
-.fg-consultation-form .fg-enquiry-form__footer {
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__footer {
   flex-wrap: wrap;
   gap: 0.75rem 1rem;
   padding-top: 0.25rem;
 }
 
-.fg-consultation-form .fg-enquiry-form__footer .button {
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__footer .button {
   min-width: 0;
 }
 
-.fg-consultation-form .fg-enquiry-form__footer > small {
+.fg-consultation-form.fg-enquiry-form .fg-enquiry-form__footer > small {
   max-width: 31ch;
   text-align: left;
 }
@@ -562,8 +562,8 @@ a {
   .fg-consultation-booking__days button { min-height: 2.35rem; }
   .fg-consultation-booking__time-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  .fg-consultation-form .fg-enquiry-form__row { grid-template-columns: 1fr; }
-  .fg-consultation-form .fg-enquiry-form__footer .button { width: 100%; }
+  .fg-consultation-form.fg-enquiry-form .fg-enquiry-form__row { grid-template-columns: 1fr; }
+  .fg-consultation-form.fg-enquiry-form .fg-enquiry-form__footer .button { width: 100%; }
 }
 
 .site-header__mobile-call {
