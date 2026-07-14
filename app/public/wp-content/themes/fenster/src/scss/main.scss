@@ -860,7 +860,7 @@ a {
 
 .fg-consultation-page__hero { padding-top: clamp(2.5rem, 4vw, 4rem); }
 .fg-consultation-page__hero-grid { display: grid; grid-template-columns: minmax(0, 0.78fr) minmax(530px, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
-.fg-consultation-page__hero-copy { min-width: 0; }
+.fg-consultation-page__hero-intro, .fg-consultation-page__hero-copy { min-width: 0; }
 .fg-consultation-page__hero-copy .eyebrow, .fg-consultation-page__section-head .eyebrow { color: var(--color-accent-dark); }
 .fg-consultation-page__hero h1 { max-width: 12ch; margin: 0.3rem 0 0.9rem; color: var(--color-steel); font-size: clamp(2.1rem, 3.6vw, 3.6rem); line-height: 1.02; }
 .fg-consultation-page__hero-copy > p:not(.eyebrow) { max-width: 34rem; margin: 0; color: var(--color-muted); font-size: 1.08rem; line-height: 1.6; }
@@ -910,7 +910,7 @@ a {
 .fg-consultation-page__links .section-heading { margin-bottom: 1.25rem; }
 
 @media (max-width: 1050px) { .fg-consultation-page__hero-grid { grid-template-columns: minmax(0, 0.75fr) minmax(440px, 1fr); } .fg-consultation-page__support-grid { grid-template-columns: minmax(180px, 0.72fr) minmax(220px, 0.95fr) minmax(215px, 0.75fr); } }
-@media (max-width: 860px) { .fg-consultation-page__hero-grid, .fg-consultation-page__support-grid, .fg-consultation-page__faq-grid { grid-template-columns: 1fr; } .fg-consultation-page__hero h1 { max-width: 15ch; } .fg-consultation-page__support-image { max-height: 340px; } .fg-consultation-page__support-image img { min-height: 0; aspect-ratio: 1.8 / 1; } .fg-consultation-page__support-contact { min-height: 0; } }
+@media (max-width: 860px) { .fg-consultation-page__hero-grid, .fg-consultation-page__support-grid, .fg-consultation-page__faq-grid { grid-template-columns: 1fr; } .fg-consultation-page__hero-intro { display: contents; } .fg-consultation-page__hero-copy { order: 1; } .fg-consultation-page__booking { order: 2; } .fg-consultation-page__hero-image { order: 3; } .fg-consultation-page__hero h1 { max-width: 15ch; } .fg-consultation-page__support-image { max-height: 340px; } .fg-consultation-page__support-image img { min-height: 0; aspect-ratio: 1.8 / 1; } .fg-consultation-page__support-contact { min-height: 0; } }
 @media (max-width: 560px) { .fg-consultation-page__hero, .fg-consultation-page__decisions, .fg-consultation-page__support, .fg-consultation-page__faq, .fg-consultation-page .fg-links-band { padding: 2.75rem 0; } .fg-consultation-page__hero h1 { font-size: clamp(2.25rem, 12vw, 3.15rem); } .fg-consultation-page__booking-trust, .fg-consultation-page__decisions-grid { grid-template-columns: 1fr; } .fg-consultation-page__hero-image { aspect-ratio: 1.25 / 1; } .fg-consultation-page__decision-card img { height: 220px; } }
 
 .has-children > a::after {

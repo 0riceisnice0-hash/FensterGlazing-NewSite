@@ -73,10 +73,12 @@ $faq_schema = [
 <article class="fg-consultation-page">
     <section class="fg-consultation-page__hero">
         <div class="container fg-consultation-page__hero-grid">
-            <div class="fg-consultation-page__hero-copy">
-                <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Book a window and door consultation in Milton Keynes.', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Choose a weekday and a preferred time. We will confirm your appointment directly and help you make the right decisions for your home.', 'fenster'); ?></p>
+            <div class="fg-consultation-page__hero-intro">
+                <div class="fg-consultation-page__hero-copy">
+                    <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes', 'fenster'); ?></p>
+                    <h1><?php esc_html_e('Book a window and door consultation in Milton Keynes.', 'fenster'); ?></h1>
+                    <p><?php esc_html_e('Choose a weekday and a preferred time. We will confirm your appointment directly and help you make the right decisions for your home.', 'fenster'); ?></p>
+                </div>
                 <figure class="fg-consultation-page__hero-image">
                     <img <?php echo fenster_image_attr_string((string) $hero_image['src'], ['alt' => (string) $hero_image['alt'], 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
                     <figcaption><?php esc_html_e('See products, finishes and options at our Milton Keynes showroom.', 'fenster'); ?></figcaption>
