@@ -849,69 +849,340 @@ a {
   background: #004554;
 }
 
-/* Dedicated consultation booking page: make the action, proof and product context one journey. */
-.fg-consultation-page { color: var(--color-ink); background: var(--fg-page-gradient); }
+/* Dedicated consultation booking page: an appointment-led counterpart to the quote tool. */
+.fg-consultation-page {
+  color: var(--color-ink);
+  background: var(--fg-page-gradient);
+}
 
 .fg-consultation-page__hero,
-.fg-consultation-page__decisions,
+.fg-consultation-page__steps,
 .fg-consultation-page__support,
 .fg-consultation-page__faq,
-.fg-consultation-page .fg-links-band { padding: clamp(3rem, 5vw, 4.75rem) 0; }
+.fg-consultation-page .fg-links-band {
+  padding: clamp(3rem, 5.5vw, 5rem) 0;
+}
 
-.fg-consultation-page__hero { padding-top: clamp(2.5rem, 4vw, 4rem); }
-.fg-consultation-page__hero-grid { display: grid; grid-template-columns: minmax(0, 0.78fr) minmax(530px, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
-.fg-consultation-page__hero-intro, .fg-consultation-page__hero-copy { min-width: 0; }
-.fg-consultation-page__hero-copy .eyebrow, .fg-consultation-page__section-head .eyebrow { color: var(--color-accent-dark); }
-.fg-consultation-page__hero h1 { max-width: 12ch; margin: 0.3rem 0 0.9rem; color: var(--color-steel); font-size: clamp(2.1rem, 3.6vw, 3.6rem); line-height: 1.02; }
-.fg-consultation-page__hero-copy > p:not(.eyebrow) { max-width: 34rem; margin: 0; color: var(--color-muted); font-size: 1.08rem; line-height: 1.6; }
-.fg-consultation-page__hero-image { position: relative; aspect-ratio: 1.45 / 1; margin: 1.6rem 0 0; overflow: hidden; border-radius: 8px; box-shadow: 0 18px 42px rgba(0, 45, 58, 0.12); }
-.fg-consultation-page__hero-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.fg-consultation-page__hero-image figcaption { position: absolute; right: 0; bottom: 0; left: 0; padding: 1.25rem 1rem 0.8rem; background: linear-gradient(transparent, rgba(0, 45, 58, 0.9)); color: #ffffff; font-size: 0.84rem; font-weight: 800; line-height: 1.3; }
-.fg-consultation-page__booking { min-width: 0; }
-.fg-consultation-page__form { scroll-margin-top: calc(var(--site-header-main-height) + 1.5rem); }
-.fg-consultation-page__booking-trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
-.fg-consultation-page__booking-trust > div { display: flex; min-width: 0; align-items: center; gap: 0.7rem; padding: 0.7rem; border: 1px solid rgba(0, 45, 58, 0.12); border-radius: 7px; background: rgba(255, 255, 255, 0.72); }
-.fg-consultation-page__booking-trust img { width: 48px; height: 36px; object-fit: contain; }
-.fg-consultation-page__booking-trust p { display: grid; gap: 0.05rem; margin: 0; line-height: 1.25; }
-.fg-consultation-page__booking-trust strong { color: var(--color-steel); font-size: 0.85rem; }
-.fg-consultation-page__booking-trust span { color: var(--color-muted); font-size: 0.74rem; }
-.fg-consultation-page__section-head { max-width: 43rem; }
-.fg-consultation-page__section-head h2, .fg-consultation-page__support h2, .fg-consultation-page__faq h2 { margin: 0.35rem 0 0; color: var(--color-steel); font-size: clamp(1.65rem, 2.5vw, 2.35rem); line-height: 1.12; }
-.fg-consultation-page__decisions { background: rgba(255, 255, 255, 0.42); }
-.fg-consultation-page__decisions-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.75rem; }
-.fg-consultation-page__decision-card { display: grid; grid-template-rows: auto 1fr; min-width: 0; overflow: hidden; border: 1px solid rgba(0, 45, 58, 0.12); border-radius: 8px; background: #ffffff; box-shadow: 0 4px 20px rgba(0, 45, 58, 0.07); color: inherit; text-decoration: none; transition: transform 180ms ease, box-shadow 180ms ease; }
-.fg-consultation-page__decision-card:hover, .fg-consultation-page__decision-card:focus-visible { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0, 45, 58, 0.13); }
-.fg-consultation-page__decision-card img { display: block; width: 100%; height: clamp(200px, 19vw, 260px); object-fit: cover; }
-.fg-consultation-page__decision-card > span { display: grid; gap: 0.4rem; padding: 1rem; }
-.fg-consultation-page__decision-card strong { color: var(--color-steel); font-size: 1.15rem; line-height: 1.15; }
-.fg-consultation-page__decision-card small, .fg-consultation-page__support p, .fg-consultation-page__faq p { color: var(--color-muted); font-size: 0.96rem; line-height: 1.5; }
-.fg-consultation-page__support-grid { display: grid; grid-template-columns: minmax(210px, 0.74fr) minmax(240px, 0.95fr) minmax(245px, 0.75fr); gap: clamp(1rem, 3vw, 2.5rem); align-items: stretch; }
-.fg-consultation-page__support-image { margin: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 12px 32px rgba(0, 45, 58, 0.09); }
-.fg-consultation-page__support-image img { display: block; width: 100%; height: 100%; min-height: 260px; object-fit: cover; }
-.fg-consultation-page__support-copy { display: grid; align-content: center; }
-.fg-consultation-page__support-copy > p:not(.eyebrow) { margin: 0.8rem 0 0; }
-.fg-consultation-page__support-contact { display: grid; align-content: center; gap: 0.75rem; min-height: 100%; padding: clamp(1.35rem, 3vw, 2rem); border-radius: 8px; background: var(--color-steel); box-shadow: 0 18px 42px rgba(0, 45, 58, 0.16); }
-.fg-consultation-page__support-contact > span { color: #77d79f; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
-.fg-consultation-page__support-contact a { display: flex; align-items: center; gap: 0.7rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; text-decoration: none; }
-.fg-consultation-page__support-contact svg { width: 1.35rem; flex: 0 0 auto; color: #77d79f; }
-.fg-consultation-page__support-contact a span { display: grid; gap: 0.05rem; min-width: 0; }
-.fg-consultation-page__support-contact small { color: rgba(255, 255, 255, 0.68); font-size: 0.76rem; }
-.fg-consultation-page__support-contact strong { font-size: 1.05rem; line-height: 1.2; }
-.fg-consultation-page__faq { background: rgba(255, 255, 255, 0.34); }
-.fg-consultation-page__faq-grid { display: grid; grid-template-columns: minmax(250px, 0.7fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
-.fg-consultation-page__faq-intro figure { aspect-ratio: 1.55 / 1; margin: 0 0 1rem; overflow: hidden; border-radius: 8px; box-shadow: 0 12px 32px rgba(0, 45, 58, 0.09); }
-.fg-consultation-page__faq-intro img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.fg-consultation-page__faq-items { display: grid; overflow: hidden; border: 1px solid rgba(0, 45, 58, 0.14); border-radius: 8px; background: #ffffff; box-shadow: 0 4px 20px rgba(0, 45, 58, 0.05); }
-.fg-consultation-page__faq article { padding: 1.15rem 1.3rem; border-bottom: 1px solid rgba(0, 45, 58, 0.12); }
-.fg-consultation-page__faq article:last-child { border-bottom: 0; }
-.fg-consultation-page__faq h3 { margin: 0 0 0.45rem; color: var(--color-steel); font-size: 1rem; }
-.fg-consultation-page__faq p { margin: 0; }
-.fg-consultation-page__links { padding-top: 3rem !important; }
-.fg-consultation-page__links .section-heading { margin-bottom: 1.25rem; }
+.fg-consultation-page__hero {
+  background: transparent;
+}
 
-@media (max-width: 1050px) { .fg-consultation-page__hero-grid { grid-template-columns: minmax(0, 0.75fr) minmax(440px, 1fr); } .fg-consultation-page__support-grid { grid-template-columns: minmax(180px, 0.72fr) minmax(220px, 0.95fr) minmax(215px, 0.75fr); } }
-@media (max-width: 860px) { .fg-consultation-page__hero-grid, .fg-consultation-page__support-grid, .fg-consultation-page__faq-grid { grid-template-columns: 1fr; } .fg-consultation-page__hero-intro { display: contents; } .fg-consultation-page__hero-copy { order: 1; } .fg-consultation-page__booking { order: 2; } .fg-consultation-page__hero-image { order: 3; } .fg-consultation-page__hero h1 { max-width: 15ch; } .fg-consultation-page__support-image { max-height: 340px; } .fg-consultation-page__support-image img { min-height: 0; aspect-ratio: 1.8 / 1; } .fg-consultation-page__support-contact { min-height: 0; } }
-@media (max-width: 560px) { .fg-consultation-page__hero, .fg-consultation-page__decisions, .fg-consultation-page__support, .fg-consultation-page__faq, .fg-consultation-page .fg-links-band { padding: 2.75rem 0; } .fg-consultation-page__hero h1 { font-size: clamp(2.25rem, 12vw, 3.15rem); } .fg-consultation-page__booking-trust, .fg-consultation-page__decisions-grid { grid-template-columns: 1fr; } .fg-consultation-page__hero-image { aspect-ratio: 1.25 / 1; } .fg-consultation-page__decision-card img { height: 220px; } }
+.fg-consultation-page__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.76fr) minmax(580px, 1fr);
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+  align-items: center;
+}
+
+.fg-consultation-page__hero-copy {
+  min-width: 0;
+}
+
+.fg-consultation-page__hero-copy .eyebrow,
+.fg-consultation-page__section-head .eyebrow {
+  color: var(--color-accent-dark);
+}
+
+.fg-consultation-page__hero h1 {
+  max-width: 12ch;
+  margin: 0.3rem 0 1rem;
+  color: var(--color-steel);
+  font-size: clamp(2.1rem, 3.6vw, 3.6rem);
+  line-height: 1.02;
+}
+
+.fg-consultation-page__hero-copy > p:not(.eyebrow) {
+  max-width: 39rem;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.fg-consultation-page__hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.fg-consultation-page__hero-actions .text-link {
+  color: var(--color-steel);
+  font-weight: 800;
+}
+
+.fg-consultation-page__notes {
+  display: grid;
+  gap: 0.55rem;
+  margin: 2rem 0 0;
+  padding: 1.15rem 0 0;
+  border-top: 1px solid rgba(0, 45, 58, 0.16);
+  list-style: none;
+}
+
+.fg-consultation-page__notes li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  color: var(--color-steel);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.fg-consultation-page__notes li::before {
+  content: "✓";
+  display: grid;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 0.72rem;
+}
+
+.fg-consultation-page__hero-visuals {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+
+.fg-consultation-page__hero-visual {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-steel);
+}
+
+.fg-consultation-page__hero-visual--1 {
+  aspect-ratio: 1.65 / 1;
+}
+
+.fg-consultation-page__hero-visual--2 {
+  aspect-ratio: 1 / 1;
+}
+
+.fg-consultation-page__hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-consultation-page__hero-visual--1 img {
+  object-position: center 58%;
+}
+
+.fg-consultation-page__hero-visual figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.7rem 0.8rem;
+  background: linear-gradient(transparent, rgba(0, 45, 58, 0.9));
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.fg-consultation-page__form {
+  scroll-margin-top: calc(var(--site-header-main-height) + 1.5rem);
+}
+
+.fg-consultation-page__proof {
+  padding-top: 0;
+}
+
+.fg-consultation-page__section-head {
+  max-width: 43rem;
+}
+
+.fg-consultation-page__section-head h2,
+.fg-consultation-page__support h2,
+.fg-consultation-page__faq h2 {
+  margin: 0.35rem 0 0;
+  color: var(--color-steel);
+  font-size: clamp(1.65rem, 2.5vw, 2.35rem);
+  line-height: 1.12;
+}
+
+.fg-consultation-page__steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 2rem;
+  overflow: hidden;
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  border-radius: 8px;
+  background: rgba(0, 45, 58, 0.14);
+}
+
+.fg-consultation-page__steps-grid article {
+  min-width: 0;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.fg-consultation-page__steps-grid span {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-steel);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.fg-consultation-page__steps-grid h3 {
+  margin: 1rem 0 0.45rem;
+  color: var(--color-steel);
+  font-size: 1.25rem;
+}
+
+.fg-consultation-page__steps-grid p,
+.fg-consultation-page__support p,
+.fg-consultation-page__faq p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+.fg-consultation-page__support {
+  background: transparent;
+}
+
+.fg-consultation-page__support-grid,
+.fg-consultation-page__faq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.78fr);
+  gap: clamp(1.5rem, 5vw, 6rem);
+  align-items: center;
+}
+
+.fg-consultation-page__support-contact {
+  display: grid;
+  gap: 0.55rem;
+  padding: clamp(1.35rem, 3vw, 2.25rem);
+  border-radius: 8px;
+  background: var(--color-steel);
+  box-shadow: 0 18px 42px rgba(0, 45, 58, 0.16);
+}
+
+.fg-consultation-page__support-contact > span {
+  color: #77d79f;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-consultation-page__support-contact a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.fg-consultation-page__support-contact svg {
+  width: 1.35rem;
+  flex: 0 0 auto;
+  color: #77d79f;
+}
+
+.fg-consultation-page__support-contact a span {
+  display: grid;
+  gap: 0.05rem;
+  min-width: 0;
+}
+
+.fg-consultation-page__support-contact small {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.76rem;
+}
+
+.fg-consultation-page__support-contact strong {
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.fg-consultation-page__faq-grid > div:last-child {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-consultation-page__faq article {
+  padding: 1.25rem 1.4rem;
+  border-bottom: 1px solid rgba(0, 45, 58, 0.12);
+}
+
+.fg-consultation-page__faq article:last-child {
+  border-bottom: 0;
+}
+
+.fg-consultation-page__faq h3 {
+  margin: 0 0 0.45rem;
+  color: var(--color-steel);
+  font-size: 1rem;
+}
+
+@media (max-width: 1050px) {
+  .fg-consultation-page__hero-grid {
+    grid-template-columns: minmax(0, 0.75fr) minmax(440px, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-consultation-page__hero-grid,
+  .fg-consultation-page__support-grid,
+  .fg-consultation-page__faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-consultation-page__hero h1 {
+    max-width: 15ch;
+  }
+
+}
+
+@media (max-width: 560px) {
+  .fg-consultation-page__hero,
+  .fg-consultation-page__steps,
+  .fg-consultation-page__support,
+  .fg-consultation-page__faq,
+  .fg-consultation-page .fg-links-band {
+    padding: 3rem 0;
+  }
+
+  .fg-consultation-page__hero h1 {
+    font-size: clamp(2.25rem, 12vw, 3.15rem);
+  }
+
+  .fg-consultation-page__form {
+    min-width: 0;
+  }
+
+  .fg-consultation-page__hero-visuals {
+    margin-top: 1.25rem;
+  }
+
+  .fg-consultation-page__steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 .has-children > a::after {
   content: "";
