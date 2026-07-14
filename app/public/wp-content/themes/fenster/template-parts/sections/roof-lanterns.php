@@ -38,7 +38,7 @@ $imported = static function (string $path): string {
                     </ul>
                 </div>
                 <figure class="fg-roof-lantern-hero__media">
-                    <img src="<?php echo esc_url($asset('s1-kitchen-vertical.jpg')); ?>" alt="<?php esc_attr_e('Sheerline roof lantern above a modern kitchen and dining space', 'fenster'); ?>" loading="eager"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/s1-kitchen-vertical.jpg'); ?>>
+                    <img src="<?php echo esc_url($imported('S1-Lantern-Kitchen-A-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Sheerline roof lantern above a modern kitchen and dining space', 'fenster'); ?>" loading="eager"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-Kitchen-A-min-scaled.jpg'); ?>>
                     <figcaption><?php esc_html_e('Sheerline S1 aluminium roof lantern', 'fenster'); ?></figcaption>
                 </figure>
             </div>
@@ -63,9 +63,9 @@ $imported = static function (string $path): string {
                     <p><?php esc_html_e('From the room below to the flat roof above, the profile, glass and proportion should feel considered—not bolted on at the end of the build.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-roof-lantern-views__grid">
-                    <figure class="fg-roof-lantern-views__dusk"><img src="<?php echo esc_url($asset('s1-dusk-exterior.jpg')); ?>" alt="<?php esc_attr_e('Low-profile Sheerline roof lantern viewed from a flat roof at dusk', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/s1-dusk-exterior.jpg'); ?>></figure>
-                    <figure class="fg-roof-lantern-views__inside"><img src="<?php echo esc_url($asset('s1-kitchen-vertical.jpg')); ?>" alt="<?php esc_attr_e('Roof lantern bringing light into a kitchen dining room', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/s1-kitchen-vertical.jpg'); ?>></figure>
-                    <figure class="fg-roof-lantern-views__installed"><img src="<?php echo esc_url($asset('s1-installed-exterior.jpg')); ?>" alt="<?php esc_attr_e('Installed aluminium roof lantern on a flat roof extension', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/s1-installed-exterior.jpg'); ?>></figure>
+                    <figure><img src="<?php echo esc_url($imported('S1-Lantern-by-night-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Low-profile Sheerline roof lantern viewed from a flat roof at dusk', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-by-night-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('Low-line profile', 'fenster'); ?></figcaption></figure>
+                    <figure><img src="<?php echo esc_url($imported('S1-Lantern-exterior-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Installed Sheerline aluminium roof lantern viewed across a flat roof', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-exterior-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('Finished exterior', 'fenster'); ?></figcaption></figure>
+                    <figure><img src="<?php echo esc_url($imported('S1-Lantern-first-installation-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Completed Sheerline roof lantern installation', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-first-installation-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('Installed proportion', 'fenster'); ?></figcaption></figure>
                 </div>
             </div>
         </section>
