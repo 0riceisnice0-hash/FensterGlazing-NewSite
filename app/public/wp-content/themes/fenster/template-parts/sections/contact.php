@@ -41,7 +41,7 @@ $hub_routes = [
         'title' => 'Talk to the showroom team.',
         'copy' => 'Choose a weekday and preferred time for a showroom or project consultation with the Fenster team.',
         'meta' => 'Best for advice',
-        'url' => '#book-consultation',
+        'url' => home_url('/book-a-consultation/'),
     ],
 ];
 

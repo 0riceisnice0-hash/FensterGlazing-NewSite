@@ -186,7 +186,7 @@ function fenster_site_data(): array
             ['label' => 'About Us', 'url' => home_url('/about/')],
             ['label' => 'Contact', 'url' => home_url('/contact/')],
             ['label' => 'Instant Quote', 'url' => home_url('/online-quote/'), 'classes' => ['site-nav__quote']],
-            ['label' => 'Book consultation', 'url' => home_url('/contact/#book-consultation'), 'classes' => ['site-nav__consultation']],
+            ['label' => 'Book consultation', 'url' => home_url('/book-a-consultation/'), 'classes' => ['site-nav__consultation']],
         ],
         'product_usps' => [
             'aluminium-bifold-doors' => [

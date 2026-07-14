@@ -775,6 +775,10 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'title_tag' => 'Online Window and Door Quote | Fenster Glazing',
             'meta_description' => 'Start an online quote for Fenster Glazing windows, doors, bifolds and roof lanterns, then our team can confirm survey details and next steps.',
         ],
+        'book-a-consultation' => [
+            'title_tag' => 'Book a Window & Door Consultation | Milton Keynes',
+            'meta_description' => 'Book a window, door or glazing consultation with Fenster Glazing in Milton Keynes. Choose a weekday and preferred time, then our team will confirm your appointment.',
+        ],
     ];
     $launch_seo_overrides = array_merge($launch_seo_overrides, fenster_gsc_static_seo_overrides());
 
@@ -792,6 +796,9 @@ function fenster_get_generated_page(?string $slug = null): ?array
         $page['seo']['meta_description'] = $launch_seo_overrides[$slug]['meta_description'];
         $page['seo']['canonical'] = 'https://fensterglazing.com/' . $slug . '/';
         $page['seo']['robots'] = 'max-image-preview:large';
+        if ($slug === 'book-a-consultation') {
+            $page['title'] = 'Book a Consultation';
+        }
 
         return $page_cache[$slug] = $page;
     }
@@ -1569,7 +1576,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors'] as $virtual_slug) {
+    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

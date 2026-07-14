@@ -154,6 +154,7 @@ $is_trust_page = $slug === 'why-trust-fenster';
 $is_about_page = $slug === 'about';
 $is_about = in_array($slug, ['about', 'meet-the-team'], true);
 $is_contact = $slug === 'contact';
+$is_consultation_page = $slug === 'book-a-consultation';
 $is_windows_hub = $slug === 'windows-milton-keynes';
 $is_doors_hub = $slug === 'doors-milton-keynes';
 $is_product_selector_hub = $is_windows_hub || $is_doors_hub;
@@ -1538,6 +1539,16 @@ if ($is_contact) {
         'page' => $page,
         'related_links' => $related_links,
         'title' => $title,
+        'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
+if ($is_consultation_page) {
+    get_template_part('template-parts/sections/consultation-booking', null, [
+        'brand' => $brand,
+        'page' => $page,
+        'related_links' => $related_links,
         'trust_items' => $trust_items,
     ]);
     return;

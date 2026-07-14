@@ -23,6 +23,7 @@ $footer_company = [
     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
     ['label' => 'Contact', 'url' => home_url('/contact/')],
     ['label' => 'Instant Quote', 'url' => home_url('/online-quote/')],
+    ['label' => 'Book a Consultation', 'url' => home_url('/book-a-consultation/')],
 ];
 ?>
 <footer class="site-footer">

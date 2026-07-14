@@ -11,6 +11,7 @@ if (! defined('ABSPATH')) {
 
 $args = wp_parse_args($args ?? [], [
     'class' => 'fg-form',
+    'id' => '',
     'source' => 'Website',
     'button_label' => 'Send enquiry',
     'project_type' => 'Residential windows and doors',
@@ -47,6 +48,7 @@ $notices = [
 ?>
 
 <form
+    <?php if (! empty($args['id'])) : ?>id="<?php echo esc_attr((string) $args['id']); ?>"<?php endif; ?>
     class="<?php echo esc_attr((string) $args['class']); ?> fg-enquiry-form"
     action="<?php echo esc_url(admin_url('admin-post.php')); ?>"
     method="post"
