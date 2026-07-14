@@ -52,7 +52,7 @@ $faq_schema = [
         <div class="container fg-consultation-page__hero-grid">
             <div class="fg-consultation-page__hero-copy">
                 <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Book a window and door consultation.', 'fenster'); ?></h1>
+                <h1><?php esc_html_e('Book a window and door consultation in Milton Keynes.', 'fenster'); ?></h1>
                 <p><?php esc_html_e('Choose a preferred weekday and time to talk through your windows, doors, glazing or project plans with the Fenster team.', 'fenster'); ?></p>
                 <div class="fg-consultation-page__hero-actions">
                     <a class="button" href="#book-consultation"><?php esc_html_e('Choose a date', 'fenster'); ?></a>
