@@ -25444,6 +25444,122 @@ html.fg-blinds-reveal-locked {
   line-height: 1.45;
 }
 
+.fg-roof-light-types,
+.fg-roof-lantern-configurations {
+  padding: clamp(2rem, 4.5vh, 3rem) 0;
+}
+
+.fg-roof-light-types__heading,
+.fg-roof-lantern-configurations__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 6vw, 7rem);
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.fg-roof-light-types__heading .eyebrow,
+.fg-roof-lantern-configurations__heading .eyebrow {
+  grid-column: 1 / -1;
+}
+
+.fg-roof-light-types__heading h2,
+.fg-roof-lantern-configurations__heading h2 {
+  max-width: 16ch;
+  margin-bottom: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  line-height: 1.08;
+}
+
+.fg-roof-light-types__heading p:not(.eyebrow),
+.fg-roof-lantern-configurations__heading p:not(.eyebrow) {
+  max-width: 54ch;
+  margin-bottom: 0.2rem;
+  color: var(--color-muted);
+  line-height: 1.58;
+}
+
+.fg-roof-light-types__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fg-roof-light-types__grid article {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fg-roof-light-types__grid figure {
+  height: clamp(155px, 20vh, 190px);
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-soft);
+}
+
+.fg-roof-light-types__grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-roof-light-types__grid article > div {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.fg-roof-light-types__grid span {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--color-accent-dark);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-roof-light-types__grid h3 {
+  margin-bottom: 0.55rem;
+  color: var(--color-ink);
+  font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+  line-height: 1.08;
+}
+
+.fg-roof-light-types__grid p {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.fg-roof-lantern-configurations__carousel {
+  width: min(100%, 1060px);
+}
+
+.fg-roof-lantern-configurations__carousel .fg-colour-carousel__viewport {
+  min-height: clamp(340px, 33vw, 375px);
+}
+
+.fg-roof-lantern-configurations__slide {
+  width: min(62%, 500px);
+}
+
+.fg-roof-lantern-configurations__slide img {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  padding: clamp(0.5rem, 1.5vw, 1rem);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--color-soft));
+  object-fit: contain;
+}
+
+.fg-roof-lantern-configurations__slide > div {
+  min-height: 88px;
+  padding: 0.75rem 1rem 0.85rem;
+}
+
 .fg-roof-lantern-views {
   padding: clamp(2rem, 4.5vh, 2.75rem) 0;
 }
@@ -25917,18 +26033,25 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 860px) {
   .fg-roof-lantern-hero,
   .fg-roof-lantern-intro,
-  .fg-roof-lantern-system,
   .fg-roof-lantern-options,
   .fg-roof-lantern-enquiry {
     padding: 2.5rem 0;
   }
 
+  .fg-roof-lantern-system {
+    padding: 2rem 0;
+  }
+
   .fg-roof-lantern-hero__grid,
   .fg-roof-lantern-intro__grid,
-  .fg-roof-lantern-system__grid,
   .fg-roof-lantern-enquiry__grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .fg-roof-lantern-system__grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 
   .fg-roof-lantern-hero__copy {
@@ -25956,6 +26079,12 @@ html.fg-blinds-reveal-locked {
 
   .fg-roof-lantern-brief p:nth-child(-n + 2) {
     border-bottom: 1px solid rgba(15, 49, 54, 0.12);
+  }
+
+  .fg-roof-light-types__heading,
+  .fg-roof-lantern-configurations__heading {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
   }
 
   .fg-roof-lantern-views__heading {
@@ -26018,6 +26147,42 @@ html.fg-blinds-reveal-locked {
 
   .fg-roof-lantern-views {
     padding-bottom: 3.25rem;
+  }
+
+  .fg-roof-light-types,
+  .fg-roof-lantern-configurations {
+    padding: 2.25rem 0;
+  }
+
+  .fg-roof-light-types__grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    gap: 0.65rem;
+    padding-bottom: 0.65rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .fg-roof-light-types__grid article {
+    scroll-snap-align: start;
+  }
+
+  .fg-roof-light-types__grid figure {
+    height: 160px;
+  }
+
+  .fg-roof-lantern-configurations__carousel .fg-colour-carousel__viewport {
+    min-height: 315px;
+  }
+
+  .fg-roof-lantern-configurations__slide {
+    width: min(84vw, 330px);
+  }
+
+  .fg-roof-lantern-configurations__slide > div {
+    min-height: 82px;
   }
 
   .fg-roof-lantern-views__grid {

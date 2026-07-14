@@ -5,7 +5,7 @@ Last updated: 2026-07-14
 ## 2026-07-14 - Roof Lanterns Dedicated Page Redesign
 
 - Replaced the generic generated-product journey on `/roof-lanterns/` with a dedicated roof-lantern conversion page in `template-parts\sections\roof-lanterns.php`.
-- Set the page around one clear customer task: plan a roof lantern around the extension, not browse a generic product stack. The new order is an installed-lantern hero and enquiry action, concise S1 specification summary, room-planning guidance, thermal/detail explanation, security, ventilation, then the shared enquiry form and real review proof.
+- Set the page around one clear customer task: compare the suitable roof lantern specification and request a quote. The new order is an installed-lantern hero and enquiry action, concise S1 specification summary, room-planning guidance, thermal/detail explanation, security, ventilation, then the shared enquiry form and real review proof.
 - Used the supplied Sheerline S1 scrape as the product-information and image reference. Added four local, deployable S1 assets for thermal, corner, security and SheerVent details under `assets\images\products\roof-lanterns`; the runtime page does not depend on the scrape export.
 - Removed the generic product gallery, broad specification hub, generic choice cards, templated process rail and related-link band from this route only. The shared enquiry component remains the only live form.
 - Rebuilt CSS, PHP-linted the dedicated template and router, and browser-checked the redesigned route at `1440 x 900`, `768 x 1024` and `390 x 844` with no horizontal overflow.
@@ -16,6 +16,9 @@ Last updated: 2026-07-14
 - Audited the page copy against the supplied Sheerline S1 scrape. S1-specific appearance, Thermlock, 28mm glazing, size, security, Secured by Design, SheerVent and rain-sensor claims are concise rewrites of the manufacturer source; the room-planning, survey, installation and enquiry language is original Fenster service copy rather than presented as Sheerline wording.
 - Restored the preferred asymmetric image treatment in **The S1 system** section: the thermal construction image is again the dominant square visual, paired with a narrower portrait corner detail raised slightly beside it. The compact type and spacing remain unchanged, and the section still fits inside the `1467 x 709` review viewport without horizontal overflow.
 - Rewrote the complete roof-lantern page in a direct `we` and `you` voice. Removed third-person references to Fenster, every em dash, vague lifestyle phrases and the `Plan my roof lantern` CTA. The primary action is now `Get a roof lantern quote`, the form action is `Send enquiry`, and the supporting copy explains what we supply, what we check, what the customer can send and what happens next. The verified Sheerline S1 facts remain intact.
+- Added a direct rooflight comparison using official Titan EDGE and EDGE Air information and locally stored Titan product images. Customers can now compare the Sheerline S1 pitched lantern with fixed and opening flat rooflights without leaving the page.
+- Added all 13 official Sheerline S1 configuration renders as a dedicated interactive carousel using the site's established colour-options interaction. It supports buttons, keyboard control, drag/swipe and a visible `01 / 13` counter, while the surrounding copy explains the square, 2-way and 3-way choices in Fenster's own voice.
+- Kept the new comparison and configuration sections within the reviewed viewport at `1467 x 709`, `768 x 1024` and `390 x 844`. Mobile rooflight choices use a deliberate swipe rail, all added images load from local theme assets, and the page has no horizontal overflow.
 
 ## 2026-07-14 - Reusable Consultation Booking Request To Test
 
