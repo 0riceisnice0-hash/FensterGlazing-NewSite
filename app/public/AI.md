@@ -102,7 +102,7 @@ PHP lint example:
   - `template-parts\components\enquiry-form.php`
 - Do not add raw standalone `<form>` markup to templates.
 - If a new form context is needed, extend the shared component arguments and shared handler.
-- The reusable consultation mode is an argument on the shared component, not a separate form: it must keep the date/time request validation in `inc\enquiries.php`, save the preferred appointment with the private enquiry, and clearly state that the office confirms availability.
+- The reusable consultation mode is an argument on the shared component, not a separate form: it must keep the date/time request validation in `inc\enquiries.php`, save the preferred appointment with the private enquiry, and clearly state that the office confirms availability. Its JavaScript experience is one fixed consultation panel with distinct date, time and details stages, not a stacked form.
 - All forms should use the AJAX enhancement in `src\js\main.js`, with the no-JavaScript fallback preserved.
 - Submissions are handled in `inc\enquiries.php`.
 - Valid enquiries are saved as private `fenster_enquiry` posts before email delivery is attempted.

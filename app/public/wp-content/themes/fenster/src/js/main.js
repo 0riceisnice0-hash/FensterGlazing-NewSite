@@ -848,7 +848,8 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
   const selection = booking.querySelector('[data-fg-consultation-selection]');
   const dateField = form?.querySelector('[data-fg-consultation-date]');
   const timeField = form?.querySelector('[data-fg-consultation-time]');
-  if (!form || !calendar || !times || !selection || !dateField || !timeField) return;
+  const stages = booking.querySelectorAll('[data-fg-consultation-stage]');
+  if (!form || !calendar || !times || !selection || !dateField || !timeField || !stages.length) return;
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -857,16 +858,19 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
   let visibleMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   let selectedDate = null;
   let selectedTime = '';
+  const showStage = (stageName, focusSelector = '') => {
+    stages.forEach((stage) => {
+      stage.hidden = stage.dataset.fgConsultationStage !== stageName;
+    });
+    booking.dataset.fgConsultationActiveStage = stageName;
+    if (focusSelector) window.requestAnimationFrame(() => booking.querySelector(focusSelector)?.focus());
+  };
   const isoDate = (date) => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
   const isBookable = (date) => date >= today && date <= lastBookableDate && date.getDay() !== 0 && date.getDay() !== 6;
   const readableDate = (date) => new Intl.DateTimeFormat('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(date);
   const updateSelection = () => {
-    if (!selectedDate || !selectedTime) {
-      selection.hidden = true;
-      return;
-    }
+    if (!selectedDate || !selectedTime) return;
     selection.textContent = `Preferred consultation: ${readableDate(selectedDate)} at ${new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hour12: true }).format(new Date(`2000-01-01T${selectedTime}:00`)).toLowerCase()}`;
-    selection.hidden = false;
   };
   const renderCalendar = () => {
     const monthStart = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
@@ -892,11 +896,9 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
       dateField.value = button.dataset.fgConsultationDay || '';
       selectedTime = '';
       timeField.value = '';
-      times.hidden = false;
       booking.querySelectorAll('[data-fg-consultation-time-option]').forEach((option) => option.setAttribute('aria-pressed', 'false'));
       renderCalendar();
-      updateSelection();
-      times.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      showStage('time', '[data-fg-consultation-time-option]');
     }));
   };
   booking.querySelectorAll('[data-fg-consultation-time-option]').forEach((button) => button.addEventListener('click', () => {
@@ -904,7 +906,12 @@ document.querySelectorAll('[data-fg-consultation-booking]').forEach((booking) =>
     timeField.value = selectedTime;
     booking.querySelectorAll('[data-fg-consultation-time-option]').forEach((option) => option.setAttribute('aria-pressed', option === button ? 'true' : 'false'));
     updateSelection();
+    showStage('details', 'input[name="name"]');
   }));
+  booking.querySelectorAll('[data-fg-consultation-back]').forEach((button) => button.addEventListener('click', () => {
+    showStage(button.dataset.fgConsultationBack || 'date');
+  }));
+  showStage('date');
   renderCalendar();
 });
 

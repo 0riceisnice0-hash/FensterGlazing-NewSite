@@ -67,28 +67,34 @@ $notices = [
         <input type="hidden" name="appointment_time" value="" data-fg-consultation-time required>
 
         <div class="fg-consultation-booking" data-fg-consultation-booking>
-            <div class="fg-consultation-booking__intro">
-                <span><?php esc_html_e('Step 1 of 3', 'fenster'); ?></span>
-                <strong><?php esc_html_e('Choose a weekday for your consultation.', 'fenster'); ?></strong>
-                <p><?php esc_html_e('Pick a preferred time and the Fenster team will confirm the appointment with you.', 'fenster'); ?></p>
+            <noscript>
+                <label><span><?php esc_html_e('Preferred weekday', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="date" name="appointment_date" min="<?php echo esc_attr(wp_date('Y-m-d')); ?>" max="<?php echo esc_attr(wp_date('Y-m-d', strtotime('+30 days'))); ?>" required></label>
+                <label><span><?php esc_html_e('Preferred time', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><select name="appointment_time" required><option value=""><?php esc_html_e('Select a time', 'fenster'); ?></option><?php foreach (['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $time) : ?><option value="<?php echo esc_attr($time); ?>"><?php echo esc_html(wp_date('g a', strtotime($time))); ?></option><?php endforeach; ?></select></label>
+            </noscript>
+            <div class="fg-consultation-booking__stage" data-fg-consultation-stage="date">
+                <div class="fg-consultation-booking__intro">
+                    <span><?php esc_html_e('Step 1 of 3', 'fenster'); ?></span>
+                    <strong><?php esc_html_e('Choose a weekday for your consultation.', 'fenster'); ?></strong>
+                    <p><?php esc_html_e('Pick a preferred time and the Fenster team will confirm the appointment with you.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-consultation-booking__calendar" data-fg-consultation-calendar aria-live="polite"></div>
             </div>
-            <div class="fg-consultation-booking__calendar" data-fg-consultation-calendar aria-live="polite"></div>
-            <div class="fg-consultation-booking__times" data-fg-consultation-times hidden>
+            <div class="fg-consultation-booking__stage" data-fg-consultation-stage="time" hidden>
+                <div class="fg-consultation-booking__times" data-fg-consultation-times>
                 <div><span><?php esc_html_e('Step 2 of 3', 'fenster'); ?></span><strong><?php esc_html_e('Choose a time between 9am and 4pm.', 'fenster'); ?></strong></div>
                 <div class="fg-consultation-booking__time-options" role="group" aria-label="<?php esc_attr_e('Available consultation times', 'fenster'); ?>">
                     <?php foreach (['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $time) : ?>
                         <button type="button" data-fg-consultation-time-option data-time="<?php echo esc_attr($time); ?>" aria-pressed="false"><?php echo esc_html(wp_date('g a', strtotime($time))); ?></button>
                     <?php endforeach; ?>
                 </div>
+                <button class="fg-consultation-booking__back" type="button" data-fg-consultation-back="date"><?php esc_html_e('Change date', 'fenster'); ?></button>
+                </div>
             </div>
-            <div class="fg-consultation-booking__selection" data-fg-consultation-selection hidden></div>
-            <noscript>
-                <label><span><?php esc_html_e('Preferred weekday', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="date" name="appointment_date" min="<?php echo esc_attr(wp_date('Y-m-d')); ?>" max="<?php echo esc_attr(wp_date('Y-m-d', strtotime('+30 days'))); ?>" required></label>
-                <label><span><?php esc_html_e('Preferred time', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><select name="appointment_time" required><option value=""><?php esc_html_e('Select a time', 'fenster'); ?></option><?php foreach (['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $time) : ?><option value="<?php echo esc_attr($time); ?>"><?php echo esc_html(wp_date('g a', strtotime($time))); ?></option><?php endforeach; ?></select></label>
-            </noscript>
-            <div class="fg-consultation-booking__details">
-                <div class="fg-consultation-booking__details-head"><span><?php esc_html_e('Step 3 of 3', 'fenster'); ?></span><strong><?php esc_html_e('Your details', 'fenster'); ?></strong></div>
-                <div class="fg-enquiry-form__row">
+            <div class="fg-consultation-booking__stage" data-fg-consultation-stage="details" hidden>
+                <div class="fg-consultation-booking__selection" data-fg-consultation-selection></div>
+                <div class="fg-consultation-booking__details">
+                    <div class="fg-consultation-booking__details-head"><span><?php esc_html_e('Step 3 of 3', 'fenster'); ?></span><strong><?php esc_html_e('Your details', 'fenster'); ?></strong><button class="fg-consultation-booking__back" type="button" data-fg-consultation-back="time"><?php esc_html_e('Change time', 'fenster'); ?></button></div>
+                    <div class="fg-enquiry-form__row">
                     <label><span><?php esc_html_e('Your name', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="text" name="name" autocomplete="name" required></label>
                     <label><span><?php esc_html_e('Phone number', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" pattern="<?php echo esc_attr($phone_pattern); ?>" title="<?php esc_attr_e('Enter a valid UK phone number.', 'fenster'); ?>" required></label>
                 </div>
@@ -99,6 +105,7 @@ $notices = [
                 <label class="fg-enquiry-form__message"><span><?php esc_html_e('What would you like to discuss?', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><textarea name="message" rows="4" required placeholder="<?php esc_attr_e('Tell us about your windows, doors, glazing, repairs or showroom visit.', 'fenster'); ?>"></textarea></label>
                 <label class="fg-enquiry-form__consent"><input type="checkbox" name="privacy" value="1" required><span><?php printf(wp_kses(__('I agree that Fenster can use these details to respond to my enquiry. See the <a href="%s">privacy policy</a>.', 'fenster'), ['a' => ['href' => []]]), esc_url(home_url('/privacy-policy/'))); ?></span></label>
                 <div class="fg-enquiry-form__footer"><button class="button" type="submit"><span><?php echo esc_html((string) $args['button_label']); ?></span><i aria-hidden="true">-&gt;</i></button><small><?php esc_html_e('Your preferred time is a request. Fenster will confirm your appointment directly.', 'fenster'); ?></small></div>
+            </div>
             </div>
         </div>
     <?php elseif (! empty($args['compact'])) : ?>
