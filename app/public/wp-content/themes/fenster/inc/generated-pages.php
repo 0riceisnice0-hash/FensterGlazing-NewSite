@@ -240,7 +240,7 @@ function fenster_gsc_seo_overrides(): array
         ],
         'flat-rooflights' => [
             'title_tag' => 'Flat Rooflights Milton Keynes | Fixed & Opening Rooflights',
-            'meta_description' => 'Titan flat rooflights in Milton Keynes, including fixed EDGE, opening EDGE Air, Multipane and Walkon units with survey-led installation.',
+            'meta_description' => 'Flat rooflights in Milton Keynes, including fixed, opening, multi-pane and walk-on options with glass, controls and survey-led installation.',
         ],
         'aluminium-bifold-doors-milton-keynes' => [
             'title_tag' => 'Bifold Doors Milton Keynes | Aluminium Bifold Installation',

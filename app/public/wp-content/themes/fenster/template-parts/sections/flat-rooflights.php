@@ -11,7 +11,7 @@ if (! defined('ABSPATH')) {
 
 $trust_items = is_array($args['trust_items'] ?? null) ? $args['trust_items'] : [];
 $asset = static function (string $path): string {
-    return fenster_generated_url('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/' . $path);
+    return fenster_generated_url('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/' . $path);
 };
 $imported = static function (string $path): string {
     return fenster_generated_url('/wp-content/themes/fenster/assets/images/imported/' . $path);
@@ -25,7 +25,7 @@ $imported = static function (string $path): string {
                 <div class="fg-flat-rooflight-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Flat rooflights in Milton Keynes', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Daylight from above, with less frame in view.', 'fenster'); ?></h1>
-                    <p class="fg-flat-rooflight-hero__lead"><?php esc_html_e('We supply and install Titan aluminium flat rooflights for extensions, flat roofs, larger openings and walk-on areas. We check the opening, upstand, glass and whether the rooflight needs to open before it is ordered.', 'fenster'); ?></p>
+                    <p class="fg-flat-rooflight-hero__lead"><?php esc_html_e('We supply and install aluminium flat rooflights for extensions, flat roofs, larger openings and walk-on areas. We check the opening, upstand, glass and whether the rooflight needs to open before it is ordered.', 'fenster'); ?></p>
                     <div class="fg-flat-rooflight-hero__actions">
                         <a class="button" href="#fenster-flat-rooflight-enquiry"><?php esc_html_e('Get a flat rooflight quote', 'fenster'); ?></a>
                         <a class="fg-flat-rooflight-hero__call" href="tel:01908429200"><?php esc_html_e('Call us on 01908 429200', 'fenster'); ?></a>
@@ -37,8 +37,8 @@ $imported = static function (string $path): string {
                     </ul>
                 </div>
                 <figure class="fg-flat-rooflight-hero__media">
-                    <img src="<?php echo esc_url($asset('titan-edge-installed-pair.jpg')); ?>" alt="<?php esc_attr_e('Pair of Titan EDGE fixed flat rooflights installed on a flat roof', 'fenster'); ?>" loading="eager"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-installed-pair.jpg'); ?>>
-                    <figcaption><?php esc_html_e('Titan EDGE fixed flat rooflight', 'fenster'); ?></figcaption>
+                    <img src="<?php echo esc_url($asset('fixed-flat-rooflights-installed-pair.jpg')); ?>" alt="<?php esc_attr_e('Pair of fixed flat rooflights installed on a flat roof', 'fenster'); ?>" loading="eager"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/fixed-flat-rooflights-installed-pair.jpg'); ?>>
+                    <figcaption><?php esc_html_e('Fixed aluminium flat rooflights', 'fenster'); ?></figcaption>
                 </figure>
             </div>
         </section>
@@ -47,7 +47,7 @@ $imported = static function (string $path): string {
             <div class="container fg-flat-rooflight-brief__grid">
                 <p><strong><?php esc_html_e('Edge-to-edge glass', 'fenster'); ?></strong><span><?php esc_html_e('No raised perimeter frame above the glass', 'fenster'); ?></span></p>
                 <p><strong><?php esc_html_e('Fixed or opening', 'fenster'); ?></strong><span><?php esc_html_e('Manual and powered ventilation options', 'fenster'); ?></span></p>
-                <p><strong><?php esc_html_e('Typical 1.3 W/m²K', 'fenster'); ?></strong><span><?php esc_html_e('Overall roof value across the Titan range shown', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('Typical 1.3 W/m²K', 'fenster'); ?></strong><span><?php esc_html_e('Overall roof value across the range shown', 'fenster'); ?></span></p>
                 <p><strong><?php esc_html_e('Safety glass', 'fenster'); ?></strong><span><?php esc_html_e('Toughened or laminated inner pane by specification', 'fenster'); ?></span></p>
             </div>
         </section>
@@ -57,16 +57,16 @@ $imported = static function (string $path): string {
                 <div class="fg-flat-rooflight-heading">
                     <p class="eyebrow"><?php esc_html_e('Fixed or opening', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Choose whether the rooflight only brings in light or also opens.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Titan EDGE stays fixed and sits 63mm above the upstand. EDGE Air adds manual or powered opening and rises to 103mm, only 40mm higher than the fixed version.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('The fixed rooflight sits 63mm above the upstand. The opening version can use manual or powered operation and rises to 103mm, only 40mm higher than the fixed version.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-flat-rooflight-choice__grid">
                     <article>
-                        <figure><img src="<?php echo esc_url($asset('titan-edge-close-up.jpg')); ?>" alt="<?php esc_attr_e('Close-up of the polished edge-to-edge glass on a Titan EDGE rooflight', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-close-up.jpg'); ?>></figure>
-                        <div><span><?php esc_html_e('Titan EDGE', 'fenster'); ?></span><h3><?php esc_html_e('Fixed flat rooflight', 'fenster'); ?></h3><p><?php esc_html_e('Choose this when daylight is the priority and the room already has enough ventilation. Water can run off the polished glass edge without a raised frame around it.', 'fenster'); ?></p></div>
+                        <figure><img src="<?php echo esc_url($asset('edge-to-edge-glass-close-up.jpg')); ?>" alt="<?php esc_attr_e('Close-up of polished edge-to-edge rooflight glass', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/edge-to-edge-glass-close-up.jpg'); ?>></figure>
+                        <div><span><?php esc_html_e('Daylight only', 'fenster'); ?></span><h3><?php esc_html_e('Fixed flat rooflight', 'fenster'); ?></h3><p><?php esc_html_e('Choose this when daylight is the priority and the room already has enough ventilation. Water can run off the polished glass edge without a raised frame around it.', 'fenster'); ?></p></div>
                     </article>
                     <article>
-                        <figure><img src="<?php echo esc_url($asset('titan-edge-air-opening-rooflight.jpg')); ?>" alt="<?php esc_attr_e('Titan EDGE Air flat rooflight open above its upstand', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-air-opening-rooflight.jpg'); ?>></figure>
-                        <div><span><?php esc_html_e('Titan EDGE Air', 'fenster'); ?></span><h3><?php esc_html_e('Opening flat rooflight', 'fenster'); ?></h3><p><?php esc_html_e('Choose this when the room also needs high-level ventilation. It opens up to 300mm using a manual winder or a powered actuator.', 'fenster'); ?></p></div>
+                        <figure><img src="<?php echo esc_url($asset('opening-flat-rooflight.jpg')); ?>" alt="<?php esc_attr_e('Opening flat rooflight raised above its upstand', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/opening-flat-rooflight.jpg'); ?>></figure>
+                        <div><span><?php esc_html_e('Daylight and ventilation', 'fenster'); ?></span><h3><?php esc_html_e('Opening flat rooflight', 'fenster'); ?></h3><p><?php esc_html_e('Choose this when the room also needs high-level ventilation. It opens up to 300mm using a manual winder or powered operation.', 'fenster'); ?></p></div>
                     </article>
                 </div>
             </div>
@@ -77,11 +77,10 @@ $imported = static function (string $path): string {
                 <div class="fg-flat-rooflight-heading">
                     <p class="eyebrow"><?php esc_html_e('Opening and controls', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Decide how you want the rooflight to open.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('EDGE Air can use a wall switch, remote control or manual pole. Powered versions can also add rain sensing and thermostatic control, so we need to confirm the controls and wiring before order.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('An opening rooflight can use a wall switch, remote control or manual pole. Powered versions can also add rain sensing and thermostatic control, so we need to confirm the controls and wiring before order.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-flat-rooflight-operation__grid">
-                    <figure><img src="<?php echo esc_url($asset('titan-edge-air-controls.jpg')); ?>" alt="<?php esc_attr_e('Remote, wall switch and actuator controls for a Titan EDGE Air rooflight', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-air-controls.jpg'); ?>><figcaption><?php esc_html_e('Remote and wall controls', 'fenster'); ?></figcaption></figure>
-                    <figure><img src="<?php echo esc_url($asset('titan-edge-air-actuator.jpg')); ?>" alt="<?php esc_attr_e('Section detail comparing the fixed EDGE and opening EDGE Air rooflight frames', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-air-actuator.jpg'); ?>><figcaption><?php esc_html_e('Concealed powered actuator', 'fenster'); ?></figcaption></figure>
+                    <figure><img src="<?php echo esc_url($asset('opening-rooflight-controls.jpg')); ?>" alt="<?php esc_attr_e('Remote and wall-switch controls for an opening rooflight', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/opening-rooflight-controls.jpg'); ?>><figcaption><?php esc_html_e('Remote and wall controls', 'fenster'); ?></figcaption></figure>
                 </div>
             </div>
         </section>
@@ -91,22 +90,22 @@ $imported = static function (string $path): string {
                 <div class="fg-flat-rooflight-heading">
                     <p class="eyebrow"><?php esc_html_e('Larger and walk-on openings', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Some roofs need more than a single pane.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Multipane divides a larger opening into several glazed panels. Walkon uses a heavier laminated glass build-up for balconies and other areas where people need to cross the rooflight.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('A multi-pane rooflight divides a larger opening into several glazed panels. A walk-on rooflight uses a heavier laminated glass build-up for balconies and other areas where people need to cross the glass.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-flat-rooflight-special__grid">
                     <article>
                         <div class="fg-flat-rooflight-special__images">
-                            <img src="<?php echo esc_url($asset('titan-multipane-exterior.jpg')); ?>" alt="<?php esc_attr_e('Titan Multipane flat rooflight viewed from outside', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-multipane-exterior.jpg'); ?>>
-                            <img src="<?php echo esc_url($asset('titan-multipane-interior.jpg')); ?>" alt="<?php esc_attr_e('Titan Multipane flat rooflight viewed from the room below', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-multipane-interior.jpg'); ?>>
+                            <img src="<?php echo esc_url($asset('multi-pane-rooflight-exterior.jpg')); ?>" alt="<?php esc_attr_e('Multi-pane flat rooflight viewed from outside', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/multi-pane-rooflight-exterior.jpg'); ?>>
+                            <img src="<?php echo esc_url($asset('multi-pane-rooflight-interior.jpg')); ?>" alt="<?php esc_attr_e('Multi-pane flat rooflight viewed from the room below', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/multi-pane-rooflight-interior.jpg'); ?>>
                         </div>
-                        <div><span><?php esc_html_e('Titan EDGE Multipane', 'fenster'); ?></span><h3><?php esc_html_e('For larger roof openings', 'fenster'); ?></h3><p><?php esc_html_e('Multiple panes reduce individual glass sizes while keeping narrow internal and external sightlines. The unit is normally delivered in one section with its fixing straps attached.', 'fenster'); ?></p></div>
+                        <div><span><?php esc_html_e('Multi-pane rooflight', 'fenster'); ?></span><h3><?php esc_html_e('For larger roof openings', 'fenster'); ?></h3><p><?php esc_html_e('Multiple panes reduce individual glass sizes while keeping narrow internal and external sightlines. The unit is normally delivered in one section with its fixing straps attached.', 'fenster'); ?></p></div>
                     </article>
                     <article>
                         <div class="fg-flat-rooflight-special__images">
-                            <img src="<?php echo esc_url($asset('titan-walkon-exterior.jpg')); ?>" alt="<?php esc_attr_e('Titan Walkon rooflight set into a terrace', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-walkon-exterior.jpg'); ?>>
-                            <img src="<?php echo esc_url($asset('titan-walkon-deck.jpg')); ?>" alt="<?php esc_attr_e('Person standing on a Titan Walkon rooflight in a deck', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-walkon-deck.jpg'); ?>>
+                            <img src="<?php echo esc_url($asset('walk-on-rooflight-exterior.jpg')); ?>" alt="<?php esc_attr_e('Walk-on rooflight set into a terrace', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/walk-on-rooflight-exterior.jpg'); ?>>
+                            <img src="<?php echo esc_url($asset('walk-on-rooflight-deck.jpg')); ?>" alt="<?php esc_attr_e('Person standing on a walk-on rooflight in a deck', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/walk-on-rooflight-deck.jpg'); ?>>
                         </div>
-                        <div><span><?php esc_html_e('Titan EDGE Walkon', 'fenster'); ?></span><h3><?php esc_html_e('For pedestrian areas', 'fenster'); ?></h3><p><?php esc_html_e('Three laminated layers of 10mm toughened glass form the walk-on outer section. Clear, obscure, sandblasted and textured anti-slip finishes are available by specification.', 'fenster'); ?></p></div>
+                        <div><span><?php esc_html_e('Walk-on rooflight', 'fenster'); ?></span><h3><?php esc_html_e('For pedestrian areas', 'fenster'); ?></h3><p><?php esc_html_e('Three laminated layers of 10mm toughened glass form the walk-on outer section. Clear, obscure, sandblasted and textured anti-slip finishes are available by specification.', 'fenster'); ?></p></div>
                     </article>
                 </div>
             </div>
@@ -126,7 +125,7 @@ $imported = static function (string $path): string {
                     <h2><?php esc_html_e('Send us the opening details.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Tell us where the rooflight is going, the rough opening size and whether it needs to open or be walked on. Photos or drawings help us understand the roof before we contact you.', 'fenster'); ?></p>
                     <ul>
-                        <li><?php esc_html_e('Fixed, opening, Multipane or Walkon if known', 'fenster'); ?></li>
+                        <li><?php esc_html_e('Fixed, opening, multi-pane or walk-on if known', 'fenster'); ?></li>
                         <li><?php esc_html_e('Rough opening and upstand dimensions', 'fenster'); ?></li>
                         <li><?php esc_html_e('Any safety, privacy, heat or ventilation concerns', 'fenster'); ?></li>
                     </ul>

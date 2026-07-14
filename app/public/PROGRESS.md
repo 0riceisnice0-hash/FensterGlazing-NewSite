@@ -21,6 +21,7 @@ Last updated: 2026-07-14
 - Built the new flat-rooflights page from the supplied Titan scrape and its image manifest. The page separately explains fixed EDGE, opening EDGE Air, Multipane for larger openings and Walkon for pedestrian areas, with direct Fenster copy, local official Titan imagery, a dedicated enquiry source and its own SEO metadata.
 - Added the new flat-rooflights route to the Products menu, footer and sitemap. Both roof pages cross-link without mixing their main product content or enquiry project types.
 - Kept the new rooflight sections within the reviewed viewport at `1467 x 709`, `768 x 1024` and `390 x 844`. Mobile product choices, controls and specialist units use deliberate swipe rails, all added images load from local theme assets, and both pages have no horizontal overflow.
+- Removed the flat-rooflight manufacturer's name and model branding from all customer-facing copy, metadata, captions and alt text. The page now describes the choices generically as fixed, opening, multi-pane and walk-on. Removed the concealed actuator section diagram and retained only the customer-relevant remote and wall-control image.
 
 ## 2026-07-14 - Reusable Consultation Booking Request To Test
 

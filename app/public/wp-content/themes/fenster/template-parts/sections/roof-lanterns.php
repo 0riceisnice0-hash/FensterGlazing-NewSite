@@ -183,8 +183,8 @@ $roof_styles = [
 
         <section class="fg-roof-related">
             <div class="container fg-roof-related__card">
-                <figure><img src="<?php echo esc_url($asset('titan/titan-edge-installed-pair.jpg')); ?>" alt="<?php esc_attr_e('Pair of Titan EDGE fixed flat rooflights', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/titan/titan-edge-installed-pair.jpg'); ?>></figure>
-                <div><p class="eyebrow"><?php esc_html_e('Prefer a flatter roof profile?', 'fenster'); ?></p><h2><?php esc_html_e('Compare fixed and opening flat rooflights.', 'fenster'); ?></h2><p><?php esc_html_e('Titan flat rooflights use edge-to-edge glass without the pitched rafters of a lantern. The separate page covers fixed, opening, larger Multipane and Walkon options.', 'fenster'); ?></p><a class="button button--outline" href="<?php echo esc_url(home_url('/flat-rooflights/')); ?>"><?php esc_html_e('View flat rooflights', 'fenster'); ?></a></div>
+                <figure><img src="<?php echo esc_url($asset('flat-rooflights/fixed-flat-rooflights-installed-pair.jpg')); ?>" alt="<?php esc_attr_e('Pair of fixed flat rooflights', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/fixed-flat-rooflights-installed-pair.jpg'); ?>></figure>
+                <div><p class="eyebrow"><?php esc_html_e('Prefer a flatter roof profile?', 'fenster'); ?></p><h2><?php esc_html_e('Compare fixed and opening flat rooflights.', 'fenster'); ?></h2><p><?php esc_html_e('Flat rooflights use edge-to-edge glass without the pitched rafters of a lantern. The separate page covers fixed, opening, larger multi-pane and walk-on options.', 'fenster'); ?></p><a class="button button--outline" href="<?php echo esc_url(home_url('/flat-rooflights/')); ?>"><?php esc_html_e('View flat rooflights', 'fenster'); ?></a></div>
             </div>
         </section>
 

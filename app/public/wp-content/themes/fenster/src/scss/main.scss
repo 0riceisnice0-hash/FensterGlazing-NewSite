@@ -26162,7 +26162,7 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-// Flat rooflights: a separate Titan product journey for fixed, opening, large and walk-on units.
+// Flat rooflights: a separate product journey for fixed, opening, large and walk-on units.
 .fg-flat-rooflight-page {
   background: var(--fg-page-gradient);
   background-attachment: fixed;
@@ -26435,6 +26435,10 @@ html.fg-blinds-reveal-locked {
   gap: 1rem;
 }
 
+.fg-flat-rooflight-operation__grid figure {
+  grid-column: 2;
+}
+
 .fg-flat-rooflight-operation figure {
   position: relative;
   height: clamp(260px, 40vh, 300px);
@@ -26644,8 +26648,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-flat-rooflight-choice__grid,
-  .fg-flat-rooflight-special__grid,
-  .fg-flat-rooflight-operation__grid {
+  .fg-flat-rooflight-special__grid {
     grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 84%;
@@ -26657,8 +26660,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-flat-rooflight-choice article,
-  .fg-flat-rooflight-special article,
-  .fg-flat-rooflight-operation figure {
+  .fg-flat-rooflight-special article {
     scroll-snap-align: start;
   }
 
@@ -26667,8 +26669,13 @@ html.fg-blinds-reveal-locked {
     height: 170px;
   }
 
+  .fg-flat-rooflight-operation__grid {
+    display: block;
+  }
+
   .fg-flat-rooflight-operation figure {
-    aspect-ratio: 1.25;
+    width: 100%;
+    height: 240px;
   }
 
   .fg-roof-related__card {
