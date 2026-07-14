@@ -432,17 +432,31 @@ a {
 }
 
 .fg-consultation-booking__back {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
   justify-self: start;
   padding: 0;
-  border: 0;
-  background: transparent;
+  border: 1px solid rgba(0, 45, 58, 0.16);
+  border-radius: 6px;
+  background: #ffffff;
   color: var(--color-primary);
   cursor: pointer;
   font: inherit;
-  font-size: 0.78rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
+  line-height: 1;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.fg-consultation-booking__back:hover,
+.fg-consultation-booking__back:focus-visible {
+  border-color: var(--color-accent);
+  background: #e6f6ed;
+  color: var(--color-accent-dark);
+  outline: 0;
+  transform: translateX(-2px);
 }
 
 .fg-consultation-booking__selection {

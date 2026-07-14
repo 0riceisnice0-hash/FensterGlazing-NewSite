@@ -97,13 +97,13 @@ $notices = [
                         <button type="button" data-fg-consultation-time-option data-time="<?php echo esc_attr($time); ?>" aria-pressed="false"><?php echo esc_html($time_label); ?></button>
                     <?php endforeach; ?>
                 </div>
-                <button class="fg-consultation-booking__back" type="button" data-fg-consultation-back="date"><?php esc_html_e('Change date', 'fenster'); ?></button>
+                <button class="fg-consultation-booking__back" type="button" data-fg-consultation-back="date" aria-label="<?php esc_attr_e('Back to date selection', 'fenster'); ?>" title="<?php esc_attr_e('Back to date selection', 'fenster'); ?>"><span aria-hidden="true">&#8592;</span></button>
                 </div>
             </div>
             <div class="fg-consultation-booking__stage" data-fg-consultation-stage="details" hidden>
                 <div class="fg-consultation-booking__selection" data-fg-consultation-selection></div>
                 <div class="fg-consultation-booking__details">
-                    <div class="fg-consultation-booking__details-head"><span><?php esc_html_e('Step 3 of 3', 'fenster'); ?></span><strong><?php esc_html_e('Your details', 'fenster'); ?></strong><button class="fg-consultation-booking__back" type="button" data-fg-consultation-back="time"><?php esc_html_e('Change time', 'fenster'); ?></button></div>
+                    <div class="fg-consultation-booking__details-head"><span><?php esc_html_e('Step 3 of 3', 'fenster'); ?></span><strong><?php esc_html_e('Your details', 'fenster'); ?></strong><button class="fg-consultation-booking__back" type="button" data-fg-consultation-back="time" aria-label="<?php esc_attr_e('Back to time selection', 'fenster'); ?>" title="<?php esc_attr_e('Back to time selection', 'fenster'); ?>"><span aria-hidden="true">&#8592;</span></button></div>
                     <div class="fg-enquiry-form__row">
                     <label><span><?php esc_html_e('Your name', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="text" name="name" autocomplete="name" required></label>
                     <label><span><?php esc_html_e('Phone number', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" pattern="<?php echo esc_attr($phone_pattern); ?>" title="<?php esc_attr_e('Enter a valid UK phone number.', 'fenster'); ?>" required></label>
