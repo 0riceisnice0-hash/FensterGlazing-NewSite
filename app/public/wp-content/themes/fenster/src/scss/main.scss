@@ -25284,8 +25284,6 @@ html.fg-blinds-reveal-locked {
 .fg-roof-lantern-hero__grid,
 .fg-roof-lantern-intro__grid,
 .fg-roof-lantern-system__grid,
-.fg-roof-lantern-assurance__grid,
-.fg-roof-lantern-ventilation__grid,
 .fg-roof-lantern-enquiry__grid {
   display: grid;
   align-items: center;
@@ -25309,7 +25307,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-roof-lantern-hero__lead {
   max-width: 55ch;
-  color: var(--fg-ink-soft);
+  color: var(--color-muted);
   font-size: clamp(1.05rem, 1.3vw, 1.22rem);
   line-height: 1.7;
 }
@@ -25323,17 +25321,16 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-roof-lantern-hero__call {
-  color: var(--fg-ink);
+  color: var(--color-ink);
   font-weight: 700;
   text-decoration: none;
 }
 
 .fg-roof-lantern-hero__call:hover {
-  color: var(--fg-green-dark);
+  color: var(--color-accent-dark);
 }
 
 .fg-roof-lantern-hero__reassurance,
-.fg-roof-lantern-ventilation ul,
 .fg-roof-lantern-enquiry__copy ul {
   display: grid;
   gap: 0.6rem;
@@ -25343,15 +25340,13 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-roof-lantern-hero__reassurance li,
-.fg-roof-lantern-ventilation li,
 .fg-roof-lantern-enquiry__copy li {
   position: relative;
   padding-left: 1.45rem;
-  color: var(--fg-ink-soft);
+  color: var(--color-muted);
 }
 
 .fg-roof-lantern-hero__reassurance li::before,
-.fg-roof-lantern-ventilation li::before,
 .fg-roof-lantern-enquiry__copy li::before {
   position: absolute;
   top: 0.45em;
@@ -25359,17 +25354,20 @@ html.fg-blinds-reveal-locked {
   width: 0.55rem;
   height: 0.55rem;
   border-radius: 50%;
-  background: var(--fg-green);
+  background: var(--color-accent);
   content: '';
 }
 
 .fg-roof-lantern-hero__media {
   position: relative;
-  min-height: clamp(390px, 44vw, 640px);
+  width: min(100%, 520px);
+  min-height: 0;
+  aspect-ratio: 0.72;
   margin: 0;
+  justify-self: end;
   overflow: hidden;
   border-radius: 8px;
-  background: var(--fg-steel);
+  background: var(--color-steel);
 }
 
 .fg-roof-lantern-hero__media::after {
@@ -25384,8 +25382,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-roof-lantern-hero__media img,
 .fg-roof-lantern-intro__media img,
-.fg-roof-lantern-assurance figure img,
-.fg-roof-lantern-ventilation figure img {
+.fg-roof-lantern-options figure img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -25397,7 +25394,13 @@ html.fg-blinds-reveal-locked {
   right: 1.25rem;
   bottom: 1.15rem;
   left: 1.25rem;
-  color: #fff;
+  display: inline-block;
+  right: auto;
+  left: 1.25rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-ink);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -25430,20 +25433,80 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-roof-lantern-brief strong {
-  color: var(--fg-ink);
+  color: var(--color-ink);
   font-size: 0.95rem;
 }
 
 .fg-roof-lantern-brief span {
-  color: var(--fg-ink-soft);
+  color: var(--color-muted);
   font-size: 0.86rem;
   line-height: 1.45;
 }
 
+.fg-roof-lantern-views {
+  padding: clamp(2rem, 4vw, 4rem) 0 clamp(3.5rem, 6vw, 6.5rem);
+}
+
+.fg-roof-lantern-views__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 6vw, 7rem);
+  align-items: end;
+  margin-bottom: 1.5rem;
+}
+
+.fg-roof-lantern-views__heading .eyebrow {
+  grid-column: 1 / -1;
+}
+
+.fg-roof-lantern-views__heading h2 {
+  max-width: 13ch;
+  margin-bottom: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.8rem, 3vw, 3.1rem);
+  line-height: 1.02;
+}
+
+.fg-roof-lantern-views__heading p:not(.eyebrow) {
+  max-width: 48ch;
+  margin-bottom: 0.2rem;
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.fg-roof-lantern-views__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(180px, 0.55fr) minmax(0, 0.9fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.fg-roof-lantern-views figure {
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-soft);
+}
+
+.fg-roof-lantern-views img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-roof-lantern-views__dusk,
+.fg-roof-lantern-views__installed {
+  aspect-ratio: 1.25;
+}
+
+.fg-roof-lantern-views__inside {
+  aspect-ratio: 0.62;
+}
+
 .fg-roof-lantern-intro,
 .fg-roof-lantern-system,
-.fg-roof-lantern-assurance,
-.fg-roof-lantern-ventilation,
+.fg-roof-lantern-options,
 .fg-roof-lantern-enquiry {
   padding: clamp(3.5rem, 7vw, 7.5rem) 0;
 }
@@ -25461,8 +25524,6 @@ html.fg-blinds-reveal-locked {
 
 .fg-roof-lantern-intro__copy h2,
 .fg-roof-lantern-system__copy h2,
-.fg-roof-lantern-assurance h2,
-.fg-roof-lantern-ventilation h2,
 .fg-roof-lantern-enquiry h2 {
   max-width: 16ch;
   margin-bottom: 1.2rem;
@@ -25472,11 +25533,9 @@ html.fg-blinds-reveal-locked {
 
 .fg-roof-lantern-intro__copy > p:not(.eyebrow),
 .fg-roof-lantern-system__copy > p:not(.eyebrow),
-.fg-roof-lantern-assurance p:not(.eyebrow),
-.fg-roof-lantern-ventilation p:not(.eyebrow),
 .fg-roof-lantern-enquiry__copy > p:not(.eyebrow) {
   max-width: 54ch;
-  color: var(--fg-ink-soft);
+  color: var(--color-muted);
   line-height: 1.7;
 }
 
@@ -25501,13 +25560,13 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-roof-lantern-intro__steps span {
-  color: var(--fg-ink-soft);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
 .fg-roof-lantern-system {
-  background: var(--fg-steel);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--color-ink);
 }
 
 .fg-roof-lantern-system__grid {
@@ -25517,7 +25576,7 @@ html.fg-blinds-reveal-locked {
 .fg-roof-lantern-system .eyebrow,
 .fg-roof-lantern-system__copy > p:not(.eyebrow),
 .fg-roof-lantern-system__points dd {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-muted);
 }
 
 .fg-roof-lantern-system__points {
@@ -25531,7 +25590,7 @@ html.fg-blinds-reveal-locked {
   grid-template-columns: 10rem minmax(0, 1fr);
   gap: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.17);
+  border-top: 1px solid var(--color-line);
 }
 
 .fg-roof-lantern-system__points dt {
@@ -25571,39 +25630,96 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
-.fg-roof-lantern-assurance__grid {
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-}
-
-.fg-roof-lantern-assurance figure {
-  aspect-ratio: 1;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.fg-roof-lantern-assurance__note {
-  padding: 1rem 1.1rem;
-  border-left: 2px solid var(--fg-green);
-  background: rgba(255, 255, 255, 0.5);
-  color: var(--fg-ink) !important;
-  font-weight: 600;
-}
-
-.fg-roof-lantern-ventilation__grid {
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-}
-
-.fg-roof-lantern-ventilation figure {
-  height: clamp(360px, 38vw, 530px);
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.fg-roof-lantern-ventilation ul,
 .fg-roof-lantern-enquiry__copy ul {
   margin-top: 1.7rem;
+}
+
+.fg-roof-lantern-options {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.fg-roof-lantern-options__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 6vw, 7rem);
+  align-items: end;
+  margin-bottom: 1.75rem;
+}
+
+.fg-roof-lantern-options__heading .eyebrow {
+  grid-column: 1 / -1;
+}
+
+.fg-roof-lantern-options__heading h2 {
+  max-width: 16ch;
+  margin-bottom: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.9rem, 3.1vw, 3.35rem);
+  line-height: 1.02;
+}
+
+.fg-roof-lantern-options__heading p:not(.eyebrow) {
+  max-width: 48ch;
+  margin-bottom: 0.2rem;
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.fg-roof-lantern-options__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.fg-roof-lantern-options__grid article {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fg-roof-lantern-options__grid figure {
+  aspect-ratio: 16 / 10;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-soft);
+}
+
+.fg-roof-lantern-options__grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-roof-lantern-options__copy {
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.fg-roof-lantern-options__copy span {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--color-accent-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-roof-lantern-options__copy h3 {
+  max-width: 18ch;
+  margin-bottom: 0.8rem;
+  color: var(--color-ink);
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  line-height: 1.08;
+}
+
+.fg-roof-lantern-options__copy p {
+  max-width: 52ch;
+  margin-bottom: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
 }
 
 .fg-roof-lantern-enquiry {
@@ -25614,20 +25730,93 @@ html.fg-blinds-reveal-locked {
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
   padding: clamp(1.25rem, 3.5vw, 3rem);
   border-radius: 8px;
-  background: var(--fg-steel);
-  color: #fff;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-soft);
 }
 
 .fg-roof-lantern-enquiry .eyebrow,
 .fg-roof-lantern-enquiry__copy > p:not(.eyebrow),
 .fg-roof-lantern-enquiry__copy li {
-  color: rgba(255, 255, 255, 0.74);
+  color: var(--color-muted);
 }
 
 .fg-roof-lantern-enquiry__form {
   padding: clamp(1rem, 2.5vw, 2rem);
   border-radius: 8px;
   background: #fff;
+}
+
+.fg-roof-lantern-form {
+  color: var(--color-ink);
+}
+
+.fg-roof-lantern-form label,
+.fg-roof-lantern-form label > span,
+.fg-roof-lantern-form .fg-enquiry-form__message small,
+.fg-roof-lantern-form .fg-enquiry-form__footer > small,
+.fg-roof-lantern-form small {
+  color: var(--color-steel);
+}
+
+.fg-roof-lantern-form label > span {
+  font-weight: 800;
+}
+
+.fg-roof-lantern-form label em {
+  color: var(--color-muted);
+}
+
+.fg-roof-lantern-form input:not([type="checkbox"]),
+.fg-roof-lantern-form select,
+.fg-roof-lantern-form textarea {
+  min-height: 52px;
+  border: 1px solid rgba(0, 45, 58, 0.22);
+  background: #fff;
+  color: var(--color-ink);
+  box-shadow: inset 0 1px 0 rgba(0, 45, 58, 0.04);
+}
+
+.fg-roof-lantern-form textarea {
+  min-height: 145px;
+}
+
+.fg-roof-lantern-form input:focus,
+.fg-roof-lantern-form select:focus,
+.fg-roof-lantern-form textarea:focus {
+  border-color: rgba(46, 172, 102, 0.72);
+  outline: 3px solid rgba(46, 172, 102, 0.16);
+  outline-offset: 0;
+}
+
+.fg-roof-lantern-form .fg-enquiry-form__consent {
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  background: var(--color-soft);
+  color: var(--color-muted);
+}
+
+.fg-roof-lantern-form .fg-enquiry-form__consent a {
+  color: var(--color-steel);
+  font-weight: 800;
+}
+
+.fg-roof-lantern-form .fg-enquiry-form__footer > .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 56px;
+}
+
+.fg-roof-lantern-form .fg-enquiry-form__footer > .button span,
+.fg-roof-lantern-form .fg-enquiry-form__footer > .button i {
+  white-space: nowrap;
+}
+
+.fg-roof-lantern-form .fg-enquiry-form__footer > .button i {
+  flex: 0 0 auto;
 }
 
 .fg-roof-lantern-page .fg-review-showcase {
@@ -25638,8 +25827,7 @@ html.fg-blinds-reveal-locked {
   .fg-roof-lantern-hero,
   .fg-roof-lantern-intro,
   .fg-roof-lantern-system,
-  .fg-roof-lantern-assurance,
-  .fg-roof-lantern-ventilation,
+  .fg-roof-lantern-options,
   .fg-roof-lantern-enquiry {
     padding: 3.25rem 0;
   }
@@ -25647,8 +25835,6 @@ html.fg-blinds-reveal-locked {
   .fg-roof-lantern-hero__grid,
   .fg-roof-lantern-intro__grid,
   .fg-roof-lantern-system__grid,
-  .fg-roof-lantern-assurance__grid,
-  .fg-roof-lantern-ventilation__grid,
   .fg-roof-lantern-enquiry__grid {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -25663,8 +25849,10 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-roof-lantern-hero__media {
+    width: min(100%, 430px);
     min-height: 0;
-    aspect-ratio: 1.18;
+    aspect-ratio: 0.72;
+    justify-self: start;
   }
 
   .fg-roof-lantern-brief__grid {
@@ -25679,6 +25867,28 @@ html.fg-blinds-reveal-locked {
     border-bottom: 1px solid rgba(15, 49, 54, 0.12);
   }
 
+  .fg-roof-lantern-views__heading {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .fg-roof-lantern-options__heading {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .fg-roof-lantern-views__grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(120px, 0.62fr);
+  }
+
+  .fg-roof-lantern-views__dusk {
+    grid-column: 1 / -1;
+  }
+
+  .fg-roof-lantern-views__dusk {
+    aspect-ratio: 1.38;
+  }
+
   .fg-roof-lantern-intro__media {
     height: auto;
     aspect-ratio: 1.1;
@@ -25686,12 +25896,6 @@ html.fg-blinds-reveal-locked {
 
   .fg-roof-lantern-system__corner {
     transform: none;
-  }
-
-  .fg-roof-lantern-assurance figure,
-  .fg-roof-lantern-ventilation figure {
-    height: auto;
-    aspect-ratio: 1.18;
   }
 
   .fg-roof-lantern-enquiry__form {
@@ -25717,6 +25921,15 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: 1fr;
   }
 
+  .fg-roof-lantern-views {
+    padding-bottom: 3.25rem;
+  }
+
+  .fg-roof-lantern-views__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(92px, 0.55fr);
+    gap: 0.65rem;
+  }
+
   .fg-roof-lantern-brief p,
   .fg-roof-lantern-brief p:nth-child(2) {
     border-right: 0;
@@ -25729,8 +25942,7 @@ html.fg-blinds-reveal-locked {
 
   .fg-roof-lantern-intro__copy h2,
   .fg-roof-lantern-system__copy h2,
-  .fg-roof-lantern-assurance h2,
-  .fg-roof-lantern-ventilation h2,
+  .fg-roof-lantern-options__heading h2,
   .fg-roof-lantern-enquiry h2 {
     max-width: 13ch;
   }
@@ -25743,5 +25955,9 @@ html.fg-blinds-reveal-locked {
   .fg-roof-lantern-system__visuals {
     grid-template-columns: minmax(0, 1fr) minmax(100px, 0.6fr);
     gap: 0.7rem;
+  }
+
+  .fg-roof-lantern-options__grid {
+    grid-template-columns: 1fr;
   }
 }
