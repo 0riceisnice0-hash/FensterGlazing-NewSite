@@ -7,7 +7,7 @@ Last updated: 2026-07-13
 - Extended the one shared `enquiry-form.php` component with a reusable `consultation_booking` mode rather than adding a second customer form.
 - Added an accessible fixed-panel request flow: the next 30 days of weekdays are replaced by a 9am-4pm preferred-time choice, then the normal contact/privacy details, with back controls rather than a stacked form.
 - Added a dark-blue desktop-header `Book consultation` action beside `Instant Quote`.
-- Added the dedicated, indexable `/book-a-consultation/` route with route-specific title/meta/canonical, sitemap inclusion, breadcrumb schema, visible FAQ/FAQPage schema, trust bar, review proof and the same shared staged consultation form. Header, footer and Contact now link to this canonical booking route.
+- Added the dedicated, indexable `/book-a-consultation/` route with route-specific title/meta/canonical, sitemap inclusion, breadcrumb schema, visible FAQ/FAQPage schema, the homepage's four-card reviews/accreditations proof row, review proof and the same shared staged consultation form. The page uses one continuous `--fg-page-gradient` canvas in line with `STYLE.md`. Header, footer and Contact now link to this canonical booking route.
 - Added server-side weekday, 30-day-window and 9am-4pm validation in `inc\enquiries.php`; selected date/time are saved with the private enquiry and shown in the branded `info@fensterglazing.com` office email.
 - Replaced the Contact consultation link with the new `#book-consultation` section. The customer copy correctly says Fenster confirms the requested appointment.
 

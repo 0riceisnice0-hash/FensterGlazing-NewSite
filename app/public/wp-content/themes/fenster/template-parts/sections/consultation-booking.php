@@ -20,6 +20,12 @@ $booking_notes = [
     'Select a preferred time from 9am to 4pm.',
     'Fenster confirms the appointment directly with you.',
 ];
+$trust_messages = [
+    ['title' => 'Hundreds of customer reviews', 'copy' => 'Feedback across Google and Trustpilot.', 'item' => $trust_items[0] ?? null],
+    ['title' => 'Rated Excellent', 'copy' => 'Independent feedback on Trustpilot.', 'item' => $trust_items[1] ?? null],
+    ['title' => 'FENSA approved', 'copy' => 'Registered window and door installations.', 'item' => $trust_items[2] ?? null],
+    ['title' => 'Insurance-backed protection', 'copy' => 'Supported by the Consumer Protection Association.', 'item' => $trust_items[3] ?? null],
+];
 $steps = [
     ['number' => '01', 'title' => 'Pick a date', 'copy' => 'Choose the weekday that suits you from the next 30 days.'],
     ['number' => '02', 'title' => 'Choose a time', 'copy' => 'Select your preferred appointment time between 9am and 4pm.'],
@@ -77,14 +83,22 @@ $faq_schema = [
         </div>
     </section>
 
-    <section class="fg-consultation-page__trust" aria-label="<?php esc_attr_e('Fenster trust and accreditation', 'fenster'); ?>">
-        <div class="container">
-            <p><?php esc_html_e('Local advice, survey-led fitting and recognised customer protection.', 'fenster'); ?></p>
-            <div class="fg-consultation-page__trust-items">
-                <?php foreach ($trust_items as $item) : ?>
-                    <img src="<?php echo esc_url((string) ($item['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($item['alt'] ?? '')); ?>" loading="lazy">
-                <?php endforeach; ?>
-            </div>
+    <section class="fg-home-proof-wall fg-consultation-page__proof" aria-label="<?php esc_attr_e('Reviews and accreditations', 'fenster'); ?>">
+        <div class="container fg-home-proof-wall__grid">
+            <?php foreach ($trust_messages as $trust) : ?>
+                <?php if (is_array($trust['item'])) : ?>
+                    <article class="fg-home-trust-card">
+                        <img <?php echo fenster_image_attr_string((string) $trust['item']['src'], ['alt' => (string) $trust['item']['alt'], 'loading' => 'lazy']); ?>>
+                        <div>
+                            <strong><?php echo esc_html($trust['title']); ?></strong>
+                            <span><?php echo esc_html($trust['copy']); ?></span>
+                        </div>
+                    </article>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="container fg-home-proof-wall__link">
+            <a href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('Why you can trust Fenster Glazing', 'fenster'); ?></a>
         </div>
     </section>
 
