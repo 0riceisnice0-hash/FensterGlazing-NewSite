@@ -41,7 +41,6 @@ $faq_schema = [
                 <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Book a window and door consultation in Milton Keynes.', 'fenster'); ?></h1>
                 <p><?php esc_html_e('Choose a weekday and preferred time to talk through your project with the Fenster team. We will confirm your appointment directly.', 'fenster'); ?></p>
-                <p class="fg-consultation-page__hero-assurance"><?php esc_html_e('Weekdays, 9am–4pm · England and Wales bank holidays excluded', 'fenster'); ?></p>
             </div>
 
             <div class="fg-consultation-page__booking">
