@@ -82,7 +82,11 @@ $notices = [
                     <p><?php esc_html_e('Pick a preferred time and the Fenster team will confirm the appointment with you.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-consultation-booking__calendar" data-fg-consultation-calendar aria-live="polite"></div>
-                <p class="fg-consultation-booking__availability"><?php esc_html_e('Appointments are available Monday to Friday, from 9am to 4pm, excluding bank holidays.', 'fenster'); ?></p>
+                <p class="fg-consultation-booking__availability" aria-label="<?php esc_attr_e('Consultation availability', 'fenster'); ?>">
+                    <span><?php esc_html_e('Monday to Friday', 'fenster'); ?></span>
+                    <span><?php esc_html_e('9am to 4pm', 'fenster'); ?></span>
+                    <span><?php esc_html_e('Bank holidays excluded', 'fenster'); ?></span>
+                </p>
             </div>
             <div class="fg-consultation-booking__stage" data-fg-consultation-stage="time" hidden>
                 <div class="fg-consultation-booking__times" data-fg-consultation-times>
