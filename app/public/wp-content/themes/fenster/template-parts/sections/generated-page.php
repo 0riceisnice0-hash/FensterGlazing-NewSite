@@ -1554,6 +1554,15 @@ if ($is_consultation_page) {
     return;
 }
 
+if ($slug === 'roof-lanterns') {
+    get_template_part('template-parts/sections/roof-lanterns', null, [
+        'page' => $page,
+        'title' => $title,
+        'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
 if ($is_product_selector_hub) {
     get_template_part('template-parts/sections/windows-hub', null, [
         'asset_base' => $asset_base,

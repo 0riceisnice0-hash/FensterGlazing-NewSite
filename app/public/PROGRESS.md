@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-14
 
+## 2026-07-14 - Roof Lanterns Dedicated Page Redesign
+
+- Replaced the generic generated-product journey on `/roof-lanterns/` with a dedicated roof-lantern conversion page in `template-parts\sections\roof-lanterns.php`.
+- Set the page around one clear customer task: plan a roof lantern around the extension, not browse a generic product stack. The new order is an installed-lantern hero and enquiry action, concise S1 specification summary, room-planning guidance, thermal/detail explanation, security, ventilation, then the shared enquiry form and real review proof.
+- Used the supplied Sheerline S1 scrape as the product-information and image reference. Added four local, deployable S1 assets for thermal, corner, security and SheerVent details under `assets\images\products\roof-lanterns`; the runtime page does not depend on the scrape export.
+- Removed the generic product gallery, broad specification hub, generic choice cards, templated process rail and related-link band from this route only. The shared enquiry component remains the only live form.
+- Rebuilt CSS, PHP-linted the dedicated template and router, and browser-checked the redesigned route at `1440 x 900`, `768 x 1024` and `390 x 844` with no horizontal overflow.
+
 ## 2026-07-14 - Reusable Consultation Booking Request To Test
 
 - Extended the one shared `enquiry-form.php` component with a reusable `consultation_booking` mode rather than adding a second customer form.
