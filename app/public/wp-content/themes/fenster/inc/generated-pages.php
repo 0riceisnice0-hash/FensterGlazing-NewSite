@@ -777,7 +777,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ],
         'book-a-consultation' => [
             'title_tag' => 'Book a Window & Door Consultation | Milton Keynes',
-            'meta_description' => 'Book a window, door or glazing consultation with Fenster Glazing in Milton Keynes. Choose a weekday and preferred time, then our team will confirm your appointment.',
+            'meta_description' => 'Book a window, door or glazing consultation with Fenster Glazing in Milton Keynes. Pick a weekday and preferred time; our team will confirm it.',
         ],
     ];
     $launch_seo_overrides = array_merge($launch_seo_overrides, fenster_gsc_static_seo_overrides());
@@ -1444,6 +1444,40 @@ function fenster_maybe_render_generated_page(): void
         $wp_query->is_404 = false;
         $wp_query->is_page = true;
         $wp_query->is_singular = true;
+
+        if (! ($wp_query->post instanceof WP_Post)) {
+            $virtual_post = new WP_Post((object) [
+                'ID' => 0,
+                'post_author' => 0,
+                'post_date' => '',
+                'post_date_gmt' => '',
+                'post_content' => '',
+                'post_title' => (string) ($page['title'] ?? ''),
+                'post_excerpt' => '',
+                'post_status' => 'publish',
+                'comment_status' => 'closed',
+                'ping_status' => 'closed',
+                'post_password' => '',
+                'post_name' => $slug,
+                'to_ping' => '',
+                'pinged' => '',
+                'post_modified' => '',
+                'post_modified_gmt' => '',
+                'post_content_filtered' => '',
+                'post_parent' => 0,
+                'guid' => (string) ($page['url'] ?? home_url('/' . $slug . '/')),
+                'menu_order' => 0,
+                'post_type' => 'page',
+                'post_mime_type' => '',
+                'comment_count' => 0,
+                'filter' => 'raw',
+            ]);
+            $wp_query->post = $virtual_post;
+            $wp_query->posts = [$virtual_post];
+            $wp_query->post_count = 1;
+            $GLOBALS['post'] = $virtual_post;
+            setup_postdata($virtual_post);
+        }
     }
 
     status_header(200);
