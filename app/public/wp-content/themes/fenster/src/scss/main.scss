@@ -681,6 +681,20 @@ a {
   background: var(--color-accent-dark);
 }
 
+.site-nav__consultation > a {
+  margin-left: 0.25rem;
+  padding: 0.72rem 1rem;
+  border-radius: 7px;
+  background: var(--color-steel);
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.site-nav__consultation > a:hover,
+.site-nav__consultation > a:focus {
+  background: #004554;
+}
+
 .has-children > a::after {
   content: "";
   display: inline-block;
