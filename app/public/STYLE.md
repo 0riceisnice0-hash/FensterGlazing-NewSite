@@ -218,3 +218,13 @@ Before handing back visual work:
 - Check console errors when browser QA is available.
 - Inspect section transitions, not only the top of the page.
 - If a screenshot looks wrong but the CSS seems reasonable, the screenshot wins.
+
+## New Conversion Page Review
+
+Before building a new customer-facing conversion page, write down the intended reading order: primary action, immediately adjacent reassurance, decision-supporting content, human contact route, then secondary exploration. This prevents a stack of individually acceptable components becoming a generic page.
+
+- The primary task must be visible in the first viewport on desktop. Do not place explanatory process cards ahead of a calendar, form or tool the page exists to promote.
+- Give each proof treatment one purpose and one location. Do not repeat the same review/accreditation claims in a hero, a proof wall and a review section.
+- Use real local imagery throughout only where it has a role: a showroom for local reassurance, a project/product image for a decision, or a finished-home image for outcome. A pair of small image tiles is not a substitute for image-led section design.
+- Keep the page compact. Large vertical gaps, duplicated process explanations, and generic link dumps are defects, not breathing room.
+- Do a full-page screenshot pass at `1440 x 900`, `768 x 1024` and `390 x 844`; inspect the first fold, every section transition, form states, footer approach, text wrapping and horizontal overflow. Rebuild a rejected composition instead of adding another patch over it.

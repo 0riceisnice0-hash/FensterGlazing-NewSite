@@ -14,6 +14,7 @@ Last updated: 2026-07-13
 - Replaced the staged booking flow's `Change date` and `Change time` text links with compact, labelled back-arrow controls.
 - Added a compact image pair to the consultation hero using the real Milton Keynes showroom and a completed Fenster installation. Updated `STYLE.md` so future new customer-facing pages must scan available local assets and use relevant real imagery when it adds trust, clarity or conversion value.
 - Replaced the Contact consultation link with the new `#book-consultation` section. The customer copy correctly says Fenster confirms the requested appointment.
+- Rebuilt the dedicated consultation page after a full-page visual review found that the original composition was additive rather than intentional: the booking tool competed with repeated process copy, a detached proof wall and generic link filler; imagery was only decorative; and section spacing left the page feeling much longer than its task. The accepted rebuild makes the booking panel and nearby Trustpilot/FENSA reassurance the first-view conversion focus, removes the redundant proof/process sections, uses local product/showroom/project images as decision-supporting content, gives the telephone/email panel balanced icon-led contact actions, and reduces the page to contextual internal links. `AI.md` and `STYLE.md` now require whole-page visual QA and composition-first recovery rather than another patch when a direction is rejected.
 
 ## 2026-07-13 - Complete Generated Meta Description Rewrite
 
