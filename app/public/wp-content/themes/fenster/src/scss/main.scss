@@ -25613,8 +25613,9 @@ html.fg-blinds-reveal-locked {
 
 .fg-roof-lantern-system__visuals {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.05fr) minmax(130px, 0.65fr);
   gap: 1rem;
+  align-items: end;
 }
 
 .fg-roof-lantern-system__visuals figure {
@@ -25624,11 +25625,12 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-roof-lantern-system__thermal {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1;
 }
 
 .fg-roof-lantern-system__corner {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 0.72;
+  transform: translateY(1.5rem);
 }
 
 .fg-roof-lantern-system__visuals img {
