@@ -69,7 +69,7 @@ $notices = [
         <div class="fg-consultation-booking" data-fg-consultation-booking>
             <noscript>
                 <label><span><?php esc_html_e('Preferred weekday', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="date" name="appointment_date" min="<?php echo esc_attr(wp_date('Y-m-d')); ?>" max="<?php echo esc_attr(wp_date('Y-m-d', strtotime('+30 days'))); ?>" required></label>
-                <label><span><?php esc_html_e('Preferred time', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><select name="appointment_time" required><option value=""><?php esc_html_e('Select a time', 'fenster'); ?></option><?php foreach (['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $time) : ?><option value="<?php echo esc_attr($time); ?>"><?php echo esc_html(wp_date('g a', strtotime($time))); ?></option><?php endforeach; ?></select></label>
+                <label><span><?php esc_html_e('Preferred time', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><select name="appointment_time" required><option value=""><?php esc_html_e('Select a time', 'fenster'); ?></option><?php foreach (['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $time) : ?><?php $time_label = (((int) substr($time, 0, 2) % 12) ?: 12) . ((int) substr($time, 0, 2) < 12 ? ' am' : ' pm'); ?><option value="<?php echo esc_attr($time); ?>"><?php echo esc_html($time_label); ?></option><?php endforeach; ?></select></label>
             </noscript>
             <div class="fg-consultation-booking__stage" data-fg-consultation-stage="date">
                 <div class="fg-consultation-booking__intro">
@@ -84,7 +84,8 @@ $notices = [
                 <div><span><?php esc_html_e('Step 2 of 3', 'fenster'); ?></span><strong><?php esc_html_e('Choose a time between 9am and 4pm.', 'fenster'); ?></strong></div>
                 <div class="fg-consultation-booking__time-options" role="group" aria-label="<?php esc_attr_e('Available consultation times', 'fenster'); ?>">
                     <?php foreach (['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $time) : ?>
-                        <button type="button" data-fg-consultation-time-option data-time="<?php echo esc_attr($time); ?>" aria-pressed="false"><?php echo esc_html(wp_date('g a', strtotime($time))); ?></button>
+                        <?php $time_label = (((int) substr($time, 0, 2) % 12) ?: 12) . ((int) substr($time, 0, 2) < 12 ? ' am' : ' pm'); ?>
+                        <button type="button" data-fg-consultation-time-option data-time="<?php echo esc_attr($time); ?>" aria-pressed="false"><?php echo esc_html($time_label); ?></button>
                     <?php endforeach; ?>
                 </div>
                 <button class="fg-consultation-booking__back" type="button" data-fg-consultation-back="date"><?php esc_html_e('Change date', 'fenster'); ?></button>
