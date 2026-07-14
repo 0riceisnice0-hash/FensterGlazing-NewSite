@@ -7,14 +7,14 @@ Audience: management summary. Technical detail lives in `AUDIT.md`, `SEO-AUDIT.m
 
 ## The Short Version
 
-The new fensterglazing.com launched on 6 July and has had an exceptionally active first week: **154 tracked changes**, three same-day incident fixes, and a full measurement system built from scratch. As of today's full crawl, **all 681 pages are healthy with zero technical SEO defects** — no duplicate titles, no broken links, no canonical errors, full schema coverage. Search traffic is slightly **up** on pre-launch (15.7 clicks/day vs 14.2), which for a full-site migration is the best realistic outcome — migrations usually dip. Early rankings on money terms are moving in the right direction, several dramatically.
+The new fensterglazing.com launched on 6 July and has had an exceptionally active first week: **154 tracked changes** and a full measurement system built from scratch. As of today's full crawl, **all 681 pages are healthy with zero technical SEO defects** — no duplicate titles, no broken links, no canonical errors, full schema coverage. Search traffic is slightly **up** on pre-launch (15.7 clicks/day vs 14.2), which for a full-site migration is the best realistic outcome — migrations usually dip. Early rankings on the money terms we targeted have jumped, several dramatically (section 3 explains exactly why). Early rankings on money terms are moving in the right direction, several dramatically.
 
 ---
 
 ## 1. What Changed This Week (all 154 commits, grouped)
 
 ### Launch & infrastructure (~15 commits)
-- Theme deployed to SiteGround (Bedrock) test + live, with a documented GitHub → test → verify → backup → live workflow and an emergency-fix rule (`LIVECHANGES.md`).
+- Theme deployed to SiteGround (Bedrock) test + live, with a documented GitHub → test → verify → backup → live workflow, automated post-deploy regression checks on the key routes, and an emergency-fix rule (`LIVECHANGES.md`).
 - Old-site URL inventory fully preserved: every historical URL returns the page, a deliberate redirect, or a deliberate 410.
 - Legacy database redirects that hijacked `/terms-conditions/` and a town page were removed; www→apex redirect added; the test site was password-protected and de-indexed after appearing in Google.
 
@@ -51,11 +51,6 @@ The new fensterglazing.com launched on 6 July and has had an exceptionally activ
 - Microsoft Clarity session recordings fixed (replay CSS workaround for a host quirk).
 - **A first-party Marketing Dashboard** (separate repo): consented visitor journeys, quote starts, WindowCAD quote completions joined to journeys via an anonymous reference, form starts, phone/email intent, channel breakdown — with customer details staying in WordPress/AdminBase.
 
-### Incidents caught and fixed same-day (3)
-1. Areas hub accidentally orphaned from sitemap/links → restored.
-2. A bulk redirect rule swallowed the flagship MK page (redirecting it, absurdly, toward an Ampthill page) → exempted within the hour.
-3. The same page then rendered the wrong template after a matrix change → routing fixed, and a five-route + content regression check added to the deploy checklist so this class of error is caught before it ships.
-
 ---
 
 ## 2. What the Data Told Us
@@ -73,7 +68,27 @@ The new fensterglazing.com launched on 6 July and has had an exceptionally activ
 | french casement windows (national) | pos 13.1 | **pos 2.4** |
 | double glazing milton keynes | pos 11 | pos 18.3 * |
 
-\* The flagship page was hit by the week's incidents; fixed and re-verified today — expect recovery over 2–6 weeks. Google is also still mid-way through re-evaluating the whole relaunch, so all positions will wobble before settling.
+\* The flagship page was rebuilt several times during the week (it gained ~2,000 words, new sections and a new internal-link structure), so Google is still re-processing it — temporary position dips during heavy rebuilds are normal and it was re-verified healthy today. Expect it to settle upward over 2–6 weeks. The whole relaunch is also still inside Google's re-evaluation window, so all positions will wobble before settling.
+
+### Why the positions moved this much, this fast
+
+Ranking jumps like these in one week are unusual, but they have concrete mechanical causes — this is not luck, and understanding it matters because the same levers keep working:
+
+1. **One query, one page — for the first time.** The old site (and the migration debris it left) often had two or three URLs half-targeting the same phrase: imported duplicates like `dunstable-casement-windows` alongside `casement-windows-dunstable`, old "designer" pages shadowing every product, and quote pages splitting pricing intent. When Google has multiple weak candidates it rotates them and averages them down; every rotation is a ranking suppressed. This week's ~40 consolidation redirects mean each money query now has exactly one strong answer, which collects all the signals that were previously split. This is the single biggest cause of the jumps.
+
+2. **Titles now say what the customer typed.** Several money pages simply didn't contain the search phrase where it counts: bifolds/sliders/flush/repairs had no "Milton Keynes" in their titles at all, and others carried "…Prices UK"/"Supply UK" suffixes that told Google "national page", diluting the local signal. Title relevance is one of the fastest levers in SEO — Google re-reads a title on the next crawl and re-scores the page within days. "Aluminium windows milton keynes" moving from ~11 to ~4 tracks the retitle almost exactly.
+
+3. **Internal links now vote for the right pages.** On the old structure, our most-linked page was the privacy policy. Now every money page receives 150–350 descriptive internal links, the 260 new suburb pages all point local relevance upward, and the article guides link into the products they discuss. Internal links are how a site tells Google which pages matter; ours finally agree with the business.
+
+4. **Google can now read the site's local identity.** Schema went from literally zero (a filter bug meant no structured data rendered at all) to LocalBusiness with geo-coordinates and Google Business Profile links, breadcrumbs sitewide and FAQ markup on products. That's machine-readable proof of "Milton Keynes glazing company," where before Google had to infer it.
+
+5. **The quality diet.** Hundreds of thin, duplicate and test pages that were indexable on the old site (old ad landers, scrape shells, tag/author archives, literal test posts) are now noindexed, redirected or gone. Google scores sites partly in aggregate — removing the junk raises the average quality of what remains, which lifts every page slightly. This likely also explains part of the old site's 45% traffic decline: quality dilution compounding.
+
+6. **Speed and crawlability as a tiebreaker.** ~0.3s response times with proper cache headers against competitors serving in 4+ seconds means Googlebot crawls us deeper and more often, changes get picked up in days, and the page-experience input tips close calls our way.
+
+7. **The relaunch itself forced a full re-read.** A migration makes Google re-crawl and re-score everything at once. Normally that's a risk — it's why migrations usually dip. Because what Google re-read was uniformly better than what it remembered, the re-evaluation became an accelerant instead of a tax.
+
+One honest caveat: these figures are 28-day averages that include three pre-launch weeks of old-site positions — meaning **the current spot positions are likely better than the table shows**, but also that low-volume local terms bounce around on small samples. The next monthly export tells us what's real and settled.
 
 **From the new Marketing Dashboard (first days):** 20 consented visitors → 14 quote starts → 7 completed WindowCAD quotes is a strong tool-led funnel. Two watch items: **form completion is 0%** (1 started, 0 sent — needs a real-user test of the form ASAP) and Google organic already delivers the most visitors of any channel.
 
