@@ -85,14 +85,13 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
         aria-label="Chat with Legend, Fenster’s AI assistant"
     >
         <span class="legend-assistant__prompt" aria-hidden="true">
-            <strong>Ask Legend</strong>
-            <small>AI assistant</small>
+            <strong>Need a hand?</strong>
+            <small>I’m Fenster’s AI assistant</small>
         </span>
         <span class="legend-assistant__character" aria-hidden="true">
             <span class="legend-sprite" data-legend-sprite>
                 <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
             </span>
-            <span class="legend-assistant__available"></span>
         </span>
     </button>
 </aside>
