@@ -18,7 +18,9 @@ $brand = fenster_data('brand', []);
         </a>
 
         <a class="site-header__mobile-call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'])); ?>">
-            <span class="site-header__mobile-call-icon" aria-hidden="true">&#9742;</span>
+            <svg class="site-header__mobile-call-icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                <path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.34 11.34 0 0 0 3.56.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.34 11.34 0 0 0 .57 3.56 1 1 0 0 1-.24 1.01l-2.21 2.22Z" />
+            </svg>
             <span><?php esc_html_e('Call us', 'fenster'); ?></span>
         </a>
 
