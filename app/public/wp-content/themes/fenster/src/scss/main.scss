@@ -1558,18 +1558,22 @@ h3 {
   font: inherit;
   font-size: 0.86rem;
   font-weight: 800;
+  transition: right 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 160ms ease;
+}
+
+.legend-chat-open .fg-cookie-settings {
+  right: calc(min(420px, 100vw) + 1rem);
 }
 
 /* Legend AI assistant preview. Kept separate from consent controls and enquiry forms. */
 .legend-assistant {
   position: fixed;
-  right: 1rem;
-  bottom: calc(1rem + var(--legend-cookie-offset, 0px));
+  right: 0;
+  bottom: 0;
   z-index: 79;
   display: grid;
   justify-items: end;
   font-family: var(--font-body);
-  transition: bottom 180ms ease;
 }
 
 .legend-assistant__launcher {
@@ -1579,6 +1583,7 @@ h3 {
   align-items: center;
   min-width: 0;
   min-height: 126px;
+  margin: 0 1rem calc(1rem + var(--legend-cookie-offset, 0px)) 0;
   padding: 0;
   overflow: visible;
   border: 0;
@@ -1649,8 +1654,22 @@ h3 {
   flex: 0 0 auto;
   width: 118px;
   aspect-ratio: 192 / 208;
-  overflow: hidden;
+  overflow: visible;
   filter: drop-shadow(0 12px 12px rgba(0, 45, 58, 0.24));
+}
+
+.legend-assistant__character::before {
+  position: absolute;
+  inset: 14% 10% 10%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  content: '';
+  filter: blur(19px);
+  transform: scale(0.9);
+}
+
+.legend-assistant__character .legend-sprite {
+  z-index: 1;
 }
 
 .legend-assistant.is-open .legend-assistant__launcher,
@@ -1686,19 +1705,29 @@ h3 {
 }
 
 .legend-assistant__panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  width: min(382px, calc(100vw - 2rem));
-  height: min(640px, calc(100vh - var(--legend-cookie-offset, 0px) - 7.5rem));
-  min-height: 480px;
-  margin-bottom: 0.8rem;
+  width: min(420px, 100vw);
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
   overflow: hidden;
   border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
+  border-width: 0 0 0 1px;
+  border-radius: 8px 0 0 8px;
   background: #f6f9f8;
   box-shadow: 0 24px 72px rgba(0, 45, 58, 0.3);
-  transform-origin: right bottom;
-  animation: legend-panel-in 220ms ease both;
+  transform-origin: right center;
+  animation: legend-panel-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.legend-assistant__panel.is-closing {
+  animation: legend-panel-out 280ms ease-in both;
 }
 
 .legend-assistant__panel[hidden] {
@@ -2103,8 +2132,13 @@ h3 {
 }
 
 @keyframes legend-panel-in {
-  from { opacity: 0; transform: translateY(10px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes legend-panel-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
 }
 
 @keyframes legend-prompt-in {
@@ -2119,14 +2153,20 @@ h3 {
 
 @media (max-width: 560px) {
   .legend-assistant {
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: calc(0.75rem + var(--legend-cookie-offset, 0px));
+    right: 0;
+    bottom: 0;
+  }
+
+  .legend-chat-open .fg-cookie-settings {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
   }
 
   .legend-assistant__launcher {
     min-width: 0;
     min-height: 104px;
+    margin: 0 0.75rem calc(0.75rem + var(--legend-cookie-offset, 0px)) 0;
   }
 
   .legend-assistant__prompt {
@@ -2140,8 +2180,11 @@ h3 {
 
   .legend-assistant__panel {
     width: 100%;
-    height: min(590px, calc(100vh - var(--legend-cookie-offset, 0px) - 6.5rem));
+    height: 100vh;
+    height: 100dvh;
     min-height: 0;
+    border-left: 0;
+    border-radius: 0;
   }
 
   .legend-assistant__messages {

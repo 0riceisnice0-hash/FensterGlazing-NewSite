@@ -338,6 +338,7 @@ if (legendAssistant) {
 
     isOpen = true;
     isTransitioning = true;
+    document.documentElement.classList.add('legend-chat-open');
     panel.hidden = false;
     launcher.setAttribute('aria-expanded', 'true');
     stopRoaming();
@@ -365,10 +366,13 @@ if (legendAssistant) {
     stopRoaming();
 
     const travel = travelLegend(roamer, launcherCharacter, 'down');
+    panel.classList.add('is-closing');
     legendAssistant.classList.add('is-transitioning');
     legendAssistant.classList.remove('is-open', 'has-arrived');
-    panel.hidden = true;
     await travel;
+    panel.hidden = true;
+    panel.classList.remove('is-closing');
+    document.documentElement.classList.remove('legend-chat-open');
 
     roamer?.classList.remove('is-at-right');
     roamerIsRight = false;
