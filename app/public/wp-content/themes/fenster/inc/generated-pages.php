@@ -1046,7 +1046,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                 [
                     'heading' => 'Guarantees and aftercare',
                     'body' => [
-                        'Guarantees apply as described in the relevant order documentation, manufacturer warranty information and insurance-backed guarantee documents where applicable. Guarantee cover can vary by product, component, hardware, glass unit and installation type.',
+                        'Every new Fenster window and door installation receives a 10-year insurance-backed guarantee through the Consumer Protection Association. The relevant order documentation, manufacturer warranty information and insurance-backed guarantee documents explain the exact cover for each installation.',
                         'Guarantees do not normally cover misuse, accidental damage, lack of maintenance, third-party alteration, movement in the building, condensation caused by property conditions, or damage caused by issues outside Fenster control.',
                     ],
                 ],
@@ -1206,7 +1206,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'url' => home_url('/consumer-protection-association/'),
             'seo' => [
                 'title_tag' => 'Consumer Protection Association Guarantee | Fenster Glazing',
-                'meta_description' => 'Understand the Consumer Protection Association Insurance Backed Guarantee available with qualifying Fenster Glazing installations.',
+                'meta_description' => 'Understand the 10-year Consumer Protection Association Insurance Backed Guarantee included with new Fenster window and door installations.',
                 'canonical' => 'https://fensterglazing.com/consumer-protection-association/',
                 'robots' => 'max-image-preview:large',
             ],

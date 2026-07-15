@@ -23,7 +23,7 @@ $asset = static function (string $path): string {
                 <div class="fg-fensa-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('What is CPA?', 'fenster'); ?></p>
                     <h1><?php esc_html_e('A back-up for your Fenster guarantee.', 'fenster'); ?></h1>
-                    <p class="fg-fensa-hero__lead"><?php esc_html_e('CPA means Consumer Protection Association. We give you the written guarantee for our installation work. On qualifying projects, CPA-backed insurance can protect that guarantee if Fenster Glazing ever stops trading.', 'fenster'); ?></p>
+                    <p class="fg-fensa-hero__lead"><?php esc_html_e('CPA means Consumer Protection Association. Every new Fenster window and door installation receives a 10-year insurance-backed guarantee, which can protect our written guarantee if Fenster Glazing ever stops trading.', 'fenster'); ?></p>
                     <div class="fg-fensa-hero__actions">
                         <a class="button" href="#fenster-cpa-enquiry"><?php esc_html_e('Ask how your guarantee is protected', 'fenster'); ?></a>
                         <a class="fg-fensa-hero__call" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
@@ -66,7 +66,7 @@ $asset = static function (string $path): string {
                     <div class="fg-fensa-story__copy">
                         <p class="eyebrow"><?php esc_html_e('What you receive', 'fenster'); ?></p>
                         <h2><?php esc_html_e('We make the protection around your job clear before you commit.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('We explain whether your installation qualifies, set out our own written guarantee and tell you what documents to expect. If CPA-backed cover applies, you will receive insurance documentation that explains the protection in your name.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('We set out our own written guarantee and tell you what documents to expect. You will receive insurance documentation that explains the 10-year protection in your name and the exact policy cover.', 'fenster'); ?></p>
                         <p><?php esc_html_e('FENSA and CPA do different jobs. FENSA records Building Regulations compliance for eligible replacement work. CPA-backed insurance protects the Fenster guarantee if we are no longer able to honour it. Keep both sets of documents with your property records.', 'fenster'); ?></p>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ $asset = static function (string $path): string {
                 <div class="fg-fensa-enquiry__copy">
                     <p class="eyebrow"><?php esc_html_e('Ask before work starts', 'fenster'); ?></p>
                     <h2><?php esc_html_e('We will explain exactly what protects your installation.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Tell us what you are planning to replace. We will explain our written guarantee, whether CPA-backed cover applies and the documents you should keep after installation.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Tell us what you are planning to replace. We will explain our written guarantee, the 10-year CPA-backed cover and the documents you should keep after installation.', 'fenster'); ?></p>
                     <p class="fg-fensa-enquiry__reassurance"><?php esc_html_e('No jargon: we will explain who does what, and what you receive.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-fensa-enquiry__form">

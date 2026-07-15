@@ -64,8 +64,8 @@ $asset = static function (string $path): string {
                     <div class="fg-fensa-story__copy">
                         <p class="eyebrow"><?php esc_html_e('What else protects your job', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Your guarantee has insurance behind it.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('A Consumer Protection Association Insurance Backed Guarantee can protect the installer’s written guarantee if Fenster Glazing were ever to cease trading, subject to the individual policy terms.', 'fenster'); ?></p>
-                        <p><?php esc_html_e('The certificate and policy wording confirm the exact cover and duration. Many guarantees are available for up to 10 years, but your own documents are the record to keep with your FENSA certificate.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('Every new Fenster window and door installation receives a 10-year Consumer Protection Association Insurance Backed Guarantee. It can protect our written guarantee if Fenster Glazing were ever to cease trading, subject to the individual policy terms.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('The certificate and policy wording confirm the exact cover. Keep your own guarantee documents with your FENSA certificate.', 'fenster'); ?></p>
                         <p class="fg-fensa-story__accreditation"><a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/consumer-protection-association/')); ?>" aria-label="<?php esc_attr_e('Learn about Consumer Protection Association protection', 'fenster'); ?>"><img src="<?php echo esc_url($asset('trust/cpa.png')); ?>" alt="Consumer Protection Association"></a><span><?php esc_html_e('Insurance backing supplied by the Consumer Protection Association', 'fenster'); ?></span></p>
                     </div>
                 </div>
