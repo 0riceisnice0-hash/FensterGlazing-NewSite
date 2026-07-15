@@ -5,6 +5,8 @@ Last updated: 2026-07-15
 ## 2026-07-15 - Legend AI Chat Preview On Test
 
 - Added Legend, Fenster's black office cat mascot, as a site-wide floating AI assistant above the cookie controls. The launcher uses the approved animated Legend sprite and responds with a wave when opened.
+- Reworked the chat header after owner review into a full-width animated character stage. Legend now moves between both sides with deliberate pauses, the idle sprite cycle runs at a calmer pace, and the chat panel is taller on desktop and mobile.
+- Identified Legend in the welcome copy as Fenster's real office cat and Chief Meow Officer. Added a `Who is Legend?` button that links directly to his newly anchored card on `/meet-the-team/#legend`.
 - Built a responsive, keyboard-accessible chat panel with a live message log, safe text-only message rendering, auto-growing composer, Enter-to-send, Shift+Enter for a new line, Escape-to-close, typing feedback and reduced-motion support.
 - Added an intentionally isolated browser-only preview reply. Messages are not transmitted or stored, and the interface clearly explains that the real live-chat service is not connected yet.
 - Kept the component independent from enquiry forms, consent decisions and tracking. It observes the existing cookie controls only for layout, moving above both the compact Cookies button and the full choices banner without changing consent behaviour.
