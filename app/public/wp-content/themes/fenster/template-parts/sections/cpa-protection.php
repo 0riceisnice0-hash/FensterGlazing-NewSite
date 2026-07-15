@@ -30,7 +30,9 @@ $asset = static function (string $path): string {
                     </div>
                 </div>
                 <aside class="fg-fensa-hero__assurance" aria-label="Consumer Protection Association assurance">
-                    <img src="<?php echo esc_url($asset('trust/cpa.png')); ?>" alt="Consumer Protection Association">
+                    <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/consumer-protection-association/')); ?>" aria-label="<?php esc_attr_e('Learn about Consumer Protection Association protection', 'fenster'); ?>">
+                        <img src="<?php echo esc_url($asset('trust/cpa.png')); ?>" alt="Consumer Protection Association">
+                    </a>
                     <p class="eyebrow"><?php esc_html_e('Insurance Backed Guarantee', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Protection if your installer can no longer honour their guarantee.', 'fenster'); ?></h2>
                     <ul>
