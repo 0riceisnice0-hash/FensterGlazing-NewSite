@@ -156,6 +156,7 @@ $is_about = in_array($slug, ['about', 'meet-the-team'], true);
 $is_contact = $slug === 'contact';
 $is_consultation_page = $slug === 'book-a-consultation';
 $is_fensa_page = $slug === 'fensa-approved-installers';
+$is_cpa_page = $slug === 'consumer-protection-association';
 $is_windows_hub = $slug === 'windows-milton-keynes';
 $is_doors_hub = $slug === 'doors-milton-keynes';
 $is_product_selector_hub = $is_windows_hub || $is_doors_hub;
@@ -580,7 +581,7 @@ $trust_items = [
     ['src' => FENSTER_THEME_URI . '/assets/trust/google-5-stars.png', 'alt' => 'Google five star reviews'],
     ['src' => FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png', 'alt' => 'Trustpilot Excellent'],
     ['src' => FENSTER_THEME_URI . '/assets/trust/fensa.png', 'alt' => 'FENSA approved', 'url' => home_url('/fensa-approved-installers/')],
-    ['src' => FENSTER_THEME_URI . '/assets/trust/cpa.png', 'alt' => 'Consumer Protection Association'],
+    ['src' => FENSTER_THEME_URI . '/assets/trust/cpa.png', 'alt' => 'Consumer Protection Association', 'url' => home_url('/consumer-protection-association/')],
 ];
 $partner_items = [
     ['src' => FENSTER_THEME_URI . '/assets/partners/sheerline.png', 'alt' => 'Sheerline'],
@@ -1562,6 +1563,13 @@ if ($is_fensa_page) {
     return;
 }
 
+if ($is_cpa_page) {
+    get_template_part('template-parts/sections/cpa-protection', null, [
+        'page' => $page,
+    ]);
+    return;
+}
+
 if ($slug === 'roof-lanterns') {
     get_template_part('template-parts/sections/roof-lanterns', null, [
         'page' => $page,
@@ -2455,7 +2463,7 @@ if ($is_commercial_hub) {
                     <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : 'Get pricing or book a design chat.'); ?></h2>
                     <div class="fg-hero-card__logos">
                         <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
-                        <a class="fg-fensa-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                        <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
                             <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
                         </a>
                     </div>
@@ -2490,7 +2498,7 @@ if ($is_commercial_hub) {
                 <div class="fg-home-proof__logos">
                     <?php foreach ($trust_items as $item) : ?>
                         <?php if (! empty($item['url'])) : ?>
-                            <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $item['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $item['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $item['alt'])); ?>">
                         <?php endif; ?>
                         <img src="<?php echo esc_url($item['src']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="lazy">
                         <?php if (! empty($item['url'])) : ?></a><?php endif; ?>

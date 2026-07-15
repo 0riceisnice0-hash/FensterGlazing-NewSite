@@ -1180,6 +1180,23 @@ function fenster_get_generated_page(?string $slug = null): ?array
         return $page_cache[$slug] = $page;
     }
 
+    if ($slug === 'consumer-protection-association') {
+        return $page_cache[$slug] = [
+            'slug' => 'consumer-protection-association',
+            'title' => 'Consumer Protection Association',
+            'url' => home_url('/consumer-protection-association/'),
+            'seo' => [
+                'title_tag' => 'Consumer Protection Association Guarantee | Fenster Glazing',
+                'meta_description' => 'Understand the Consumer Protection Association Insurance Backed Guarantee available with qualifying Fenster Glazing installations.',
+                'canonical' => 'https://fensterglazing.com/consumer-protection-association/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+    }
+
     $location_matrix_page = fenster_location_matrix_page($slug, $index);
     if (is_array($location_matrix_page)) {
         return $page_cache[$slug] = $location_matrix_page;
@@ -1624,7 +1641,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'flat-rooflights'] as $virtual_slug) {
+    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'flat-rooflights'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

@@ -83,7 +83,7 @@ $hero_trust_cards = [
         'alt' => __('Consumer Protection Association', 'fenster'),
         'title' => __('CPA backed', 'fenster'),
         'copy' => __('Extra consumer protection available on qualifying work.', 'fenster'),
-        'url' => home_url('/terms-conditions/'),
+        'url' => home_url('/consumer-protection-association/'),
     ],
 ];
 
@@ -152,13 +152,13 @@ $team_cards = [
             <aside class="fg-trust-hero__checklist fg-trust-hero__proof" aria-label="<?php esc_attr_e('Fenster trust proof', 'fenster'); ?>">
                 <div class="fg-trust-hero__logos">
                     <?php foreach ($hero_trust_cards as $hero_trust_card) : ?>
-                        <?php $is_fensa_hero_logo = str_contains((string) ($hero_trust_card['src'] ?? ''), '/fensa.'); ?>
+                        <?php $is_accreditation_hero_logo = str_contains((string) ($hero_trust_card['src'] ?? ''), '/fensa.') || str_contains((string) ($hero_trust_card['src'] ?? ''), '/cpa.'); ?>
                         <div class="fg-trust-hero__logo-card">
-                            <?php if ($is_fensa_hero_logo && ! empty($hero_trust_card['url'])) : ?>
-                                <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $hero_trust_card['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                            <?php if ($is_accreditation_hero_logo && ! empty($hero_trust_card['url'])) : ?>
+                                <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $hero_trust_card['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $hero_trust_card['alt'])); ?>">
                             <?php endif; ?>
                             <img src="<?php echo esc_url($hero_trust_card['src']); ?>" alt="<?php echo esc_attr($hero_trust_card['alt']); ?>" loading="eager">
-                            <?php if ($is_fensa_hero_logo && ! empty($hero_trust_card['url'])) : ?></a><?php endif; ?>
+                            <?php if ($is_accreditation_hero_logo && ! empty($hero_trust_card['url'])) : ?></a><?php endif; ?>
                             <strong><?php echo esc_html($hero_trust_card['title']); ?></strong>
                             <span><?php echo esc_html($hero_trust_card['copy']); ?></span>
                         </div>
@@ -320,7 +320,7 @@ $team_cards = [
             <div class="fg-trust-accreditations__logos" aria-label="<?php esc_attr_e('Fenster trust logos', 'fenster'); ?>">
                 <?php foreach ($trust_items as $trust_item) : ?>
                     <?php if (! empty($trust_item['url'])) : ?>
-                        <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust_item['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                        <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $trust_item['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) ($trust_item['alt'] ?? ''))); ?>">
                     <?php endif; ?>
                     <img src="<?php echo esc_url((string) ($trust_item['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($trust_item['alt'] ?? '')); ?>" loading="lazy">
                     <?php if (! empty($trust_item['url'])) : ?></a><?php endif; ?>

@@ -1113,7 +1113,7 @@ $product_links = [
                     <?php if (is_array($trust['item'])) : ?>
                         <article class="fg-location-proof-wall__item">
                             <?php if (! empty($trust['item']['url'])) : ?>
-                                <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                                <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $trust['item']['alt'])); ?>">
                             <?php endif; ?>
                             <img src="<?php echo esc_url($trust['item']['src']); ?>" alt="<?php echo esc_attr($trust['item']['alt']); ?>" loading="lazy">
                             <?php if (! empty($trust['item']['url'])) : ?></a><?php endif; ?>
@@ -1527,7 +1527,7 @@ $product_links = [
                     <?php if (is_array($trust['item'])) : ?>
                         <article class="fg-location-proof-wall__item">
                             <?php if (! empty($trust['item']['url'])) : ?>
-                                <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                                <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $trust['item']['alt'])); ?>">
                             <?php endif; ?>
                             <img src="<?php echo esc_url($trust['item']['src']); ?>" alt="<?php echo esc_attr($trust['item']['alt']); ?>" loading="lazy">
                             <?php if (! empty($trust['item']['url'])) : ?></a><?php endif; ?>

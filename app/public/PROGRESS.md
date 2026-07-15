@@ -4,6 +4,7 @@ Last updated: 2026-07-15
 
 ## 2026-07-15 - FENSA Page Redesign And Fallback Template Audit
 
+- Added the indexable `/consumer-protection-association/` route using the FENSA page's approved image-led template. It explains the distinct role of a CPA Insurance Backed Guarantee, links to CPA consumer guidance and makes clear that the individual certificate and policy wording define the cover and duration. CPA logos now link to this route.
 - Linked every theme-rendered FENSA logo to `/fensa-approved-installers/`, including the footer, homepage proof areas, generated product/location hero proof, consultation reassurance, Why Trust Fenster and the FENSA page itself.
 - Updated the approved FENSA page copy from the business owner: Fenster applies for the certificate, FENSA sends it directly to the customer, the certificate avoids a separate Building Control sign-off for eligible work, certification matters during a property sale, and eligible registration includes a CPA-supplied Insurance Backed Guarantee that typically lasts 10 years.
 - Rebuilt the FENSA page again after owner review showed the first refinement still did not match `STYLE.md`. The page now speaks as the approved installer, says clearly that eligible work will receive a certificate, and removes the third-party `ask before you appoint an installer` wording.
