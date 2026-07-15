@@ -177,7 +177,11 @@ if (legendAssistant) {
   window.addEventListener('load', syncCookieOffset, { once: true });
 
   playSprite('idle');
-  window.setTimeout(observeCookieControls, 0);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeCookieControls, { once: true });
+  } else {
+    observeCookieControls();
+  }
 }
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
