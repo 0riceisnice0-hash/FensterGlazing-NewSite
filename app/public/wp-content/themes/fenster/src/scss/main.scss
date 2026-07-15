@@ -1560,6 +1560,425 @@ h3 {
   font-weight: 800;
 }
 
+/* Legend AI assistant preview. Kept separate from consent controls and enquiry forms. */
+.legend-assistant {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + var(--legend-cookie-offset, 0px));
+  z-index: 79;
+  display: grid;
+  justify-items: end;
+  font-family: var(--font-body);
+  transition: bottom 180ms ease;
+}
+
+.legend-assistant__launcher {
+  position: relative;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  min-width: 210px;
+  min-height: 88px;
+  padding: 0.25rem 0.45rem 0.25rem 1rem;
+  overflow: visible;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 16px 42px rgba(0, 45, 58, 0.24);
+  color: var(--color-steel);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.legend-assistant__launcher:hover {
+  box-shadow: 0 20px 50px rgba(0, 45, 58, 0.3);
+  transform: translateY(-2px);
+}
+
+.legend-assistant__launcher:focus-visible,
+.legend-assistant__close:focus-visible,
+.legend-assistant__composer textarea:focus-visible,
+.legend-assistant__composer button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.legend-assistant__prompt {
+  display: grid;
+  gap: 0.1rem;
+  line-height: 1.15;
+}
+
+.legend-assistant__prompt strong {
+  font-size: 0.98rem;
+  font-weight: 850;
+}
+
+.legend-assistant__prompt small {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.legend-assistant__character {
+  position: relative;
+  flex: 0 0 auto;
+  width: 76px;
+  aspect-ratio: 192 / 208;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #eef7f3, #d5ebe2);
+}
+
+.legend-assistant__available {
+  position: absolute;
+  right: 3px;
+  bottom: 6px;
+  width: 14px;
+  height: 14px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: #2ea66b;
+}
+
+.legend-sprite {
+  --legend-column: 0;
+  --legend-row: 0;
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.legend-sprite img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800%;
+  max-width: none;
+  height: 1100%;
+  transform: translate(calc(var(--legend-column) * -12.5%), calc(var(--legend-row) * -9.090909%));
+}
+
+.legend-assistant__panel {
+  width: min(382px, calc(100vw - 2rem));
+  max-height: min(610px, calc(100vh - var(--legend-cookie-offset, 0px) - 8.5rem));
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: #f6f9f8;
+  box-shadow: 0 24px 72px rgba(0, 45, 58, 0.3);
+  transform-origin: right bottom;
+  animation: legend-panel-in 220ms ease both;
+}
+
+.legend-assistant__panel[hidden] {
+  display: none;
+}
+
+.legend-assistant__header {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 76px;
+  padding: 0.75rem 0.8rem;
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+.legend-assistant__portrait {
+  position: relative;
+  width: 48px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: #dcece5;
+}
+
+.legend-sprite--portrait {
+  width: 48px;
+  height: calc(48px * 208 / 192);
+}
+
+.legend-assistant__identity {
+  min-width: 0;
+}
+
+.legend-assistant__identity p,
+.legend-assistant__identity h2 {
+  margin: 0;
+  color: inherit;
+}
+
+.legend-assistant__eyebrow {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.legend-assistant__identity h2 {
+  font-size: 1.1rem;
+  line-height: 1.15;
+}
+
+.legend-assistant__status {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  margin-top: 0.2rem !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-size: 0.72rem;
+}
+
+.legend-assistant__status span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #64d99a;
+  box-shadow: 0 0 0 3px rgba(100, 217, 154, 0.16);
+}
+
+.legend-assistant__close {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.legend-assistant__close svg {
+  width: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.8;
+}
+
+.legend-assistant__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 238px;
+  max-height: min(350px, calc(100vh - var(--legend-cookie-offset, 0px) - 22rem));
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.legend-message {
+  align-self: flex-start;
+  max-width: 86%;
+}
+
+.legend-message--user {
+  align-self: flex-end;
+}
+
+.legend-message__author {
+  display: block;
+  margin: 0 0 0.24rem 0.2rem;
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.legend-message p {
+  margin: 0;
+  padding: 0.72rem 0.82rem;
+  border: 1px solid rgba(0, 45, 58, 0.08);
+  border-radius: 8px 8px 8px 2px;
+  background: #ffffff;
+  box-shadow: 0 5px 14px rgba(0, 45, 58, 0.06);
+  color: var(--color-text);
+  font-size: 0.88rem;
+  line-height: 1.48;
+  overflow-wrap: anywhere;
+}
+
+.legend-message--user p {
+  border-color: var(--color-steel);
+  border-radius: 8px 8px 2px;
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+.legend-message--typing {
+  display: flex;
+  gap: 0.28rem;
+  align-items: center;
+  min-height: 40px;
+  padding: 0.72rem 0.82rem;
+  border: 1px solid rgba(0, 45, 58, 0.08);
+  border-radius: 8px 8px 8px 2px;
+  background: #ffffff;
+}
+
+.legend-message--typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-muted);
+  animation: legend-typing 900ms infinite ease-in-out;
+}
+
+.legend-message--typing i:nth-of-type(2) { animation-delay: 120ms; }
+.legend-message--typing i:nth-of-type(3) { animation-delay: 240ms; }
+
+.legend-assistant__composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: end;
+  margin: 0 0.75rem;
+  padding: 0.4rem;
+  border: 1px solid rgba(0, 45, 58, 0.16);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 45, 58, 0.06);
+}
+
+.legend-assistant__composer:focus-within {
+  border-color: var(--color-steel);
+  box-shadow: 0 0 0 3px rgba(0, 45, 58, 0.09);
+}
+
+.legend-assistant__composer textarea {
+  width: 100%;
+  min-height: 40px;
+  max-height: 112px;
+  padding: 0.56rem 0.45rem;
+  resize: none;
+  overflow-y: auto;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.legend-assistant__composer button {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-steel);
+  cursor: pointer;
+}
+
+.legend-assistant__composer button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.legend-assistant__composer button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.legend-assistant__composer button svg {
+  width: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.legend-assistant__notice {
+  margin: 0;
+  padding: 0.55rem 0.9rem 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+@keyframes legend-panel-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes legend-typing {
+  0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+@media (max-width: 560px) {
+  .legend-assistant {
+    right: 0.75rem;
+    bottom: calc(0.75rem + var(--legend-cookie-offset, 0px));
+  }
+
+  .legend-assistant__launcher {
+    min-width: 0;
+    min-height: 70px;
+    padding: 0.25rem;
+  }
+
+  .legend-assistant__prompt {
+    position: absolute;
+    right: calc(100% + 0.55rem);
+    width: max-content;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid rgba(0, 45, 58, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 8px 24px rgba(0, 45, 58, 0.16);
+  }
+
+  .legend-assistant.is-open .legend-assistant__prompt {
+    display: none;
+  }
+
+  .legend-assistant__character {
+    width: 62px;
+  }
+
+  .legend-assistant__panel {
+    width: calc(100vw - 1.5rem);
+    max-height: min(560px, calc(100vh - var(--legend-cookie-offset, 0px) - 6.5rem));
+  }
+
+  .legend-assistant__messages {
+    min-height: 190px;
+    max-height: min(310px, calc(100vh - var(--legend-cookie-offset, 0px) - 20rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legend-assistant,
+  .legend-assistant__launcher,
+  .legend-assistant__panel,
+  .legend-message--typing i {
+    transition: none;
+    animation: none;
+  }
+}
+
 .content-band {
   padding: 5rem 0;
 }

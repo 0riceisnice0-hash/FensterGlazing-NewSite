@@ -2,6 +2,184 @@ import Lenis from 'lenis';
 
 document.documentElement.classList.add('js');
 
+const legendAssistant = document.querySelector('[data-legend-assistant]');
+
+if (legendAssistant) {
+  const panel = legendAssistant.querySelector('[data-legend-panel]');
+  const launcher = legendAssistant.querySelector('[data-legend-launcher]');
+  const closeButton = legendAssistant.querySelector('[data-legend-close]');
+  const input = legendAssistant.querySelector('[data-legend-input]');
+  const sendButton = legendAssistant.querySelector('[data-legend-send]');
+  const messages = legendAssistant.querySelector('[data-legend-messages]');
+  const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let replyTimer = 0;
+  let spriteTimer = 0;
+  let isOpen = false;
+
+  const spriteSequences = {
+    idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [280, 110, 110, 140, 140, 320], loop: true },
+    wave: { row: 3, frames: [0, 1, 2, 3], timings: [140, 140, 140, 280], loop: false },
+    thinking: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
+  };
+
+  const showSpriteFrame = (row, column) => {
+    sprites.forEach((sprite) => {
+      sprite.style.setProperty('--legend-row', row);
+      sprite.style.setProperty('--legend-column', column);
+    });
+  };
+
+  const playSprite = (name = 'idle') => {
+    window.clearTimeout(spriteTimer);
+    const sequence = spriteSequences[name] || spriteSequences.idle;
+    let index = 0;
+
+    if (reduceMotion.matches) {
+      showSpriteFrame(sequence.row, sequence.frames[0]);
+      return;
+    }
+
+    const advance = () => {
+      showSpriteFrame(sequence.row, sequence.frames[index]);
+      const delay = sequence.timings[index] || 160;
+      index += 1;
+
+      if (index >= sequence.frames.length) {
+        if (!sequence.loop) {
+          spriteTimer = window.setTimeout(() => playSprite('idle'), delay);
+          return;
+        }
+        index = 0;
+      }
+
+      spriteTimer = window.setTimeout(advance, delay);
+    };
+
+    advance();
+  };
+
+  const syncCookieOffset = () => {
+    const banner = document.querySelector('[data-fg-cookie-consent]');
+    const settings = document.querySelector('[data-fg-cookie-settings]');
+    let offset = 0;
+
+    if (banner && !banner.hidden) {
+      offset = Math.ceil(banner.getBoundingClientRect().height + 16);
+    } else if (settings && !settings.hidden) {
+      offset = Math.ceil(settings.getBoundingClientRect().height + 16);
+    }
+
+    legendAssistant.style.setProperty('--legend-cookie-offset', `${offset}px`);
+  };
+
+  const observeCookieControls = () => {
+    const controls = document.querySelectorAll('[data-fg-cookie-consent], [data-fg-cookie-settings]');
+    const observer = new MutationObserver(syncCookieOffset);
+    controls.forEach((control) => observer.observe(control, { attributes: true, attributeFilter: ['hidden'] }));
+    syncCookieOffset();
+  };
+
+  const resizeInput = () => {
+    input.style.height = 'auto';
+    input.style.height = `${Math.min(input.scrollHeight, 112)}px`;
+  };
+
+  const scrollToLatestMessage = () => {
+    messages.scrollTop = messages.scrollHeight;
+  };
+
+  const addMessage = (text, role) => {
+    const message = document.createElement('div');
+    const author = document.createElement('span');
+    const copy = document.createElement('p');
+    message.className = `legend-message legend-message--${role}`;
+    author.className = 'legend-message__author';
+    author.textContent = role === 'assistant' ? 'Legend' : 'You';
+    copy.textContent = text;
+    message.append(author, copy);
+    messages.append(message);
+    scrollToLatestMessage();
+  };
+
+  const addTypingIndicator = () => {
+    const indicator = document.createElement('div');
+    indicator.className = 'legend-message legend-message--assistant legend-message--typing';
+    indicator.dataset.legendTyping = '';
+    indicator.innerHTML = '<span class="screen-reader-text">Legend is typing</span><i></i><i></i><i></i>';
+    messages.append(indicator);
+    scrollToLatestMessage();
+  };
+
+  const openChat = () => {
+    isOpen = true;
+    panel.hidden = false;
+    launcher.setAttribute('aria-expanded', 'true');
+    legendAssistant.classList.add('is-open');
+    playSprite('wave');
+    window.setTimeout(() => input.focus(), reduceMotion.matches ? 0 : 180);
+  };
+
+  const closeChat = () => {
+    isOpen = false;
+    panel.hidden = true;
+    launcher.setAttribute('aria-expanded', 'false');
+    legendAssistant.classList.remove('is-open');
+    playSprite('idle');
+    launcher.focus();
+  };
+
+  const sendMessage = () => {
+    const text = input.value.trim();
+    if (!text || replyTimer) return;
+
+    addMessage(text, 'user');
+    input.value = '';
+    resizeInput();
+    sendButton.disabled = true;
+    input.disabled = true;
+    addTypingIndicator();
+    playSprite('thinking');
+
+    replyTimer = window.setTimeout(() => {
+      messages.querySelector('[data-legend-typing]')?.remove();
+      addMessage('Thanks for your message. I’m currently in preview mode, so this conversation isn’t sent to the Fenster team yet. Live chat will be connected here soon.', 'assistant');
+      input.disabled = false;
+      replyTimer = 0;
+      playSprite('wave');
+      input.focus();
+    }, reduceMotion.matches ? 250 : 1100);
+  };
+
+  launcher.addEventListener('click', () => {
+    if (isOpen) {
+      closeChat();
+    } else {
+      openChat();
+    }
+  });
+  closeButton.addEventListener('click', closeChat);
+  sendButton.addEventListener('click', sendMessage);
+  input.addEventListener('input', () => {
+    sendButton.disabled = !input.value.trim() || Boolean(replyTimer);
+    resizeInput();
+  });
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen) closeChat();
+  });
+  window.addEventListener('resize', syncCookieOffset);
+  window.addEventListener('load', syncCookieOffset, { once: true });
+
+  playSprite('idle');
+  window.setTimeout(observeCookieControls, 0);
+}
+
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
 const integralBlindsReveal = document.querySelector('[data-fg-integral-blinds-reveal]');
