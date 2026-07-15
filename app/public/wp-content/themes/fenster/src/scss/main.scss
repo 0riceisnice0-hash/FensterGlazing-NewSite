@@ -1929,6 +1929,7 @@ h3 {
 
 @media (max-width: 560px) {
   .legend-assistant {
+    left: 0.75rem;
     right: 0.75rem;
     bottom: calc(0.75rem + var(--legend-cookie-offset, 0px));
   }
@@ -1959,7 +1960,7 @@ h3 {
   }
 
   .legend-assistant__panel {
-    width: calc(100vw - 1.5rem);
+    width: 100%;
     max-height: min(560px, calc(100vh - var(--legend-cookie-offset, 0px) - 6.5rem));
   }
 
