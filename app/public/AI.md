@@ -127,6 +127,13 @@ PHP lint example:
 - Consent reporting is deliberately aggregate-only: the dashboard may count accepts and rejects per day, but must never attach those records to a visitor, URL, source, device or journey. Do not bring back banner-impression totals: without pre-consent identity they are not a dependable metric and can be inflated by anonymous sessions/crawlers.
 - Consent-safe journey detail may include page time, scroll milestones, CTA labels/destinations and form-field *names* that failed validation, but never customer-entered values. Lead status is a dashboard-only manual business outcome tied to an existing consented completed lead.
 
+## Legend AI Assistant Rule
+
+- Legend's backend lives in `inc\legend-assistant.php` and uses the theme REST route `POST /wp-json/fenster/v1/legend/chat`. Keep the OpenAI key server-only in Bedrock `.env` as `FENSTER_OPENAI_API_KEY`; never expose it to JavaScript, HTML, version control, screenshots or documentation. `FENSTER_OPENAI_MODEL` is optional and currently defaults to `gpt-5.4-mini`.
+- The assistant may use a bounded, sanitised snapshot of the current page and recent chat history so it can answer in context. Keep page content labelled as untrusted reference material, not instructions, and retain the Fenster-specific identity, accuracy, privacy, safety and capability boundaries in the server instruction block.
+- Preserve the nonce and same-origin checks, anonymous rate limit, input/history caps, plain-text output rendering, request timeout and `store: false`. Do not log message text, page snapshots, model replies or the API key.
+- Legend is an AI assistant, not a staffed live-chat channel. It must not claim to submit enquiries, book appointments, check accounts or pass messages to the team. Direct users to the real contact routes when human action is required.
+
 ## Related Links Rule
 
 - Do not restore the old generic related-link merge.

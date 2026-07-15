@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-Last updated: 2026-07-13
+Last updated: 2026-07-15
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -36,6 +36,8 @@ Use:
 - Office email delivery currently uses the old proven envelope: `WordPress <wordpress@fensterglazing.com>` to `Fenster Glazing <info@fensterglazing.com>`. Customer confirmation emails are paused unless authenticated SMTP is configured, so public form copy must not promise a confirmation email.
 - Enquiry forms support optional file uploads (`attachments[]`) for photos, drawings, schedules and documents. Files are stored against the private enquiry and attached to the office email.
 - Live mail deliverability still needs authenticated SMTP for future customer-facing sends. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
+- Legend's AI chat backend is theme-owned in `inc\legend-assistant.php` and exposed only through `POST /wp-json/fenster/v1/legend/chat`. Configure the test Bedrock environment at `~/www/test.fensterglazing.com/public_html/.env` with `FENSTER_OPENAI_API_KEY`; `FENSTER_OPENAI_MODEL` is optional and defaults to `gpt-5.4-mini`. Never commit, publish, place in JavaScript or paste the key into project documentation. The test site is deliberately unconfigured until the owner adds the key.
+- Legend receives a bounded snapshot of the current page (title, description, navigation, main content and footer) and recent in-panel conversation. The server supplies Fenster-specific identity, tone, accuracy, privacy and safety instructions; treats page text as untrusted reference material; validates the WordPress nonce and same-site request; rate-limits anonymous clients; and sends OpenAI requests with `store: false`. Prompts and responses are not written to theme logs.
 - Residential case studies are intentionally hidden for launch. `/case-studies/` and the known residential child case-study routes return 410 and should stay out of menus/sitemaps until that content is rebuilt. Commercial project records under the old case-study URL family remain reachable because `/commercial-projects/` uses them as proof.
 - The current shared product-page redesign is deployed on live. Product pages now use a clearer image-and-copy flow, visible `Product information` cards, `More information on [product]` hubs, full-width specification check cards, FAQ-only accordions, a standalone `/window-handles/` hub, and an in-page product-gallery lightbox. The old survey summary, common choices strip, quote option card, accreditations/systems filler block and inline handle chooser should stay removed.
 - The mobile nav touch-layer fix is deployed on live. At `860px` and below, the open fixed header/nav owns the full viewport so page hero content cannot intercept taps on menu rows.
