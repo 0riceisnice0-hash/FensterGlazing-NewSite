@@ -58,9 +58,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
             </div>
         </div>
 
-        <section class="legend-assistant__consent" data-legend-consent aria-labelledby="legend-assistant-consent-title">
-            <p class="legend-assistant__consent-eyebrow">Before you chat</p>
-            <h3 id="legend-assistant-consent-title">Live chat terms</h3>
+        <section class="legend-assistant__consent" aria-label="Live chat terms">
             <p class="legend-assistant__consent-summary">By using this live chat, you agree to Fenster processing your messages to provide an AI reply. Please do not share sensitive personal information.</p>
             <details class="legend-assistant__consent-details">
                 <summary>Read chat terms</summary>
@@ -70,13 +68,9 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
                     <p>Replies may be inaccurate and are general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment. Read our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
                 </div>
             </details>
-            <div class="legend-assistant__consent-actions">
-                <button type="button" class="button button--primary" data-legend-consent-continue>I understand</button>
-                <button type="button" class="legend-assistant__consent-decline" data-legend-consent-decline>Not now</button>
-            </div>
         </section>
 
-        <div class="legend-assistant__composer" data-legend-composer hidden>
+        <div class="legend-assistant__composer" data-legend-composer>
             <label class="screen-reader-text" for="legend-assistant-message">Message Legend</label>
             <textarea
                 id="legend-assistant-message"
@@ -91,7 +85,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 16 8-16 8 2.2-8L4 4Zm2.2 8H20" /></svg>
             </button>
         </div>
-        <div class="legend-assistant__notice" data-legend-notice hidden>
+        <div class="legend-assistant__notice" data-legend-notice>
             <p>
                 <?php if ($legend_connected) : ?>
                     AI replies may be inaccurate and are not legally binding. Chats may be reviewed for quality assurance for up to 30 days. Do not share sensitive personal information. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.

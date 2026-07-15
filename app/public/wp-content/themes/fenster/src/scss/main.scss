@@ -2118,6 +2118,11 @@ h3 {
   line-height: 1.4;
 }
 
+.legend-assistant__messages { order: 1; }
+.legend-assistant__composer { order: 2; }
+.legend-assistant__consent { order: 3; }
+.legend-assistant__notice { order: 4; }
+
 .legend-assistant__composer button {
   display: grid;
   width: 42px;

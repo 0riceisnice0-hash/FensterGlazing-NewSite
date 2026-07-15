@@ -27,7 +27,7 @@ The current experience includes:
 - A `Who is Legend?` link to `/meet-the-team/#legend`.
 - An accessible live message log, typing indicator, auto-growing textarea, Enter-to-send, Shift+Enter for a new line, Escape-to-close and keyboard focus management.
 - Safe `**bold**` formatting and one route-checked same-site `[label](/route/)` link in assistant replies without allowing model-generated HTML.
-- A mandatory compact `Live chat terms` acknowledgement before the composer becomes available, with the full disclosure behind `Read chat terms`.
+- An immediately available composer, followed by a compact agreement that using live chat permits AI processing. The full disclosure is behind `Read chat terms`.
 - A direct Privacy Policy link and a persistent accuracy/non-binding warning beneath the enabled composer.
 
 ## Drawer And Cookie-Control Behaviour
@@ -80,9 +80,9 @@ The browser sends this context and the visitor's message to:
 
 The WordPress REST handler validates the request, adds Fenster-specific instructions and calls the OpenAI Responses API. The response is returned to the browser and rendered as inert text, with only the small safe `**bold**` subset and a single same-site `[label](/route/)` link converted into DOM-created `strong` and `a` elements. External, full-URL and malformed links remain plain text.
 
-After acknowledgement, the browser keeps up to 16 recent messages in `fenster_legend_chat_v1` for up to 24 hours from the latest activity. This restores and synchronises the conversation across Fenster pages and browser tabs in the same browser. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
+After chat use, the browser keeps up to 16 recent messages in `fenster_legend_chat_v1` for up to 24 hours from the latest activity. This restores and synchronises the conversation across Fenster pages and browser tabs in the same browser. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
 
-After the separate chat acknowledgement, each user message and Legend reply is copied to the authenticated Marketing Dashboard Website Tracker for quality assurance and automatically expires 30 days after each message. If the visitor has accepted optional cookies, the copy is linked to the existing anonymous `FGV-...` visitor and `FG2-...` journey, start page and timestamps; the dashboard has a dedicated Legend chats view and the visitor journey links to that transcript. If optional cookies are rejected, the transcript remains chat-only: it has no `FGV`, `FG2`, journey or website-event record.
+When a visitor uses chat, each user message and Legend reply is copied to the authenticated Marketing Dashboard Website Tracker for quality assurance and automatically expires 30 days after each message. If the visitor has accepted optional cookies, the copy is linked to the existing anonymous `FGV-...` visitor and `FG2-...` journey, start page and timestamps; the dashboard has a dedicated Legend chats view and the visitor journey links to that transcript. If optional cookies are rejected, the transcript remains chat-only: it has no `FGV`, `FG2`, journey or website-event record.
 
 ## Cross-Page Fenster Search
 
@@ -136,7 +136,7 @@ Legend must:
 
 ## Privacy And Chat Acknowledgement
 
-Before typing, the visitor must choose `Continue to chat`. The acknowledgement explains that:
+The composer is immediately available. The compact terms below it explain that using chat means:
 
 - Legend uses AI.
 - The message and relevant page content are processed to generate a reply.
@@ -147,7 +147,7 @@ Before typing, the visitor must choose `Continue to chat`. The acknowledgement e
 
 The alternative `Not now` action closes the drawer.
 
-The acknowledgement and up to 16 recent messages are stored in `fenster_legend_chat_v1` for up to 24 hours from the latest chat activity so the visitor can continue across Fenster pages and tabs. `Clear chat` removes the browser-stored message history, and the expired state is removed when Legend next loads. The separate QA copy is retained for 30 days and is not deleted by Clear chat; it is linked to anonymous analytics only when optional cookies were accepted. This assistant storage is deliberately separate from analytics and marketing cookie consent and must never change `fenster_cookie_consent`. A visitor who rejected optional cookies remains rejected before, during and after using Legend.
+Up to 16 recent messages are stored in `fenster_legend_chat_v1` for up to 24 hours from the latest chat activity so the visitor can continue across Fenster pages and tabs. `Clear chat` removes the browser-stored message history, and the expired state is removed when Legend next loads. The separate QA copy is retained for 30 days and is not deleted by Clear chat; it is linked to anonymous analytics only when optional cookies were accepted. This assistant storage is deliberately separate from analytics and marketing cookie consent and must never change `fenster_cookie_consent`. A visitor who rejected optional cookies remains rejected before, during and after using Legend.
 
 The Privacy Policy now contains a dedicated `Legend AI assistant` section explaining the processing, limitations, lead-record position and separation from optional cookies.
 
@@ -187,7 +187,7 @@ A future live configuration would belong in the live Bedrock `.env`, not the the
 
 ## Main Files
 
-- `wp-content/themes/fenster/template-parts/components/legend-assistant.php`: drawer, launcher, acknowledgement, composer and customer-facing notices.
+- `wp-content/themes/fenster/template-parts/components/legend-assistant.php`: drawer, launcher, immediately available composer, compact chat terms and customer-facing notices.
 - `wp-content/themes/fenster/inc/legend-assistant.php`: environment configuration, instructions, validation, rate limiting, same-site search and OpenAI request.
 - `wp-content/themes/fenster/src/js/main.js`: current-page context, chat transport, safe formatting, focus behaviour, sprite timing, roaming and jump handoff.
 - `wp-content/themes/fenster/src/scss/main.scss`: launcher, white halo, drawer, cookie-control movement, responsive layout and animation styling.
@@ -231,7 +231,7 @@ The implementation has been checked on the protected test site for:
 - Fenster-only scope enforcement.
 - Profanity redaction and recall protection.
 - Rate-limit and connection failure copy.
-- Pre-chat acknowledgement and composer locking.
+- Immediate composer with compact terms and expandable disclosure.
 - Optional-cookie rejection remaining unchanged after chat use.
 - Desktop drawer dimensions at `1440 x 900`.
 - Mobile full-height drawer dimensions at `390 x 844`.
