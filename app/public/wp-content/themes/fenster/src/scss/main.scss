@@ -1596,6 +1596,8 @@ h3 {
 
 .legend-assistant__launcher:focus-visible,
 .legend-assistant__close:focus-visible,
+.legend-assistant__consent button:focus-visible,
+.legend-assistant__consent a:focus-visible,
 .legend-assistant__composer textarea:focus-visible,
 .legend-assistant__composer button:focus-visible {
   outline: 3px solid var(--color-accent);
@@ -1864,6 +1866,10 @@ h3 {
   overscroll-behavior: contain;
 }
 
+.legend-assistant:not(.is-chat-acknowledged) .legend-assistant__messages {
+  min-height: 110px;
+}
+
 .legend-message {
   align-self: flex-start;
   max-width: 86%;
@@ -1927,6 +1933,96 @@ h3 {
 
 .legend-message--typing i:nth-of-type(2) { animation-delay: 120ms; }
 .legend-message--typing i:nth-of-type(3) { animation-delay: 240ms; }
+
+.legend-assistant__consent {
+  margin: 0 0.75rem 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 5px 18px rgba(0, 45, 58, 0.07);
+}
+
+.legend-assistant__consent[hidden],
+.legend-assistant__composer[hidden],
+.legend-assistant__notice[hidden] {
+  display: none;
+}
+
+.legend-assistant__consent-eyebrow,
+.legend-assistant__consent h3,
+.legend-assistant__consent p {
+  margin: 0;
+}
+
+.legend-assistant__consent-eyebrow {
+  color: var(--color-muted);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.legend-assistant__consent h3 {
+  margin-top: 0.12rem;
+  color: var(--color-steel);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.legend-assistant__consent p:not(.legend-assistant__consent-eyebrow) {
+  margin-top: 0.48rem;
+  color: var(--color-text);
+  font-size: 0.76rem;
+  line-height: 1.42;
+}
+
+.legend-assistant__consent a,
+.legend-assistant__notice a {
+  color: var(--color-steel);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.legend-assistant__consent-confirmation {
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.1);
+}
+
+.legend-assistant__consent-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  align-items: center;
+  margin-top: 0.8rem;
+}
+
+.legend-assistant__consent-actions button {
+  min-height: 42px;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.legend-assistant__consent-actions .button {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--color-steel);
+}
+
+.legend-assistant__consent-decline {
+  padding: 0.55rem 0.65rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted);
+}
+
+.legend-assistant__consent-decline:hover {
+  color: var(--color-steel);
+  text-decoration: underline;
+}
 
 .legend-assistant__composer {
   display: grid;

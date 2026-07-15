@@ -878,6 +878,14 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     ],
                 ],
                 [
+                    'heading' => 'Legend AI assistant',
+                    'body' => [
+                        'Legend is an optional AI website assistant. If you choose Continue to chat, the message you type, recent messages in that chat and relevant content from the page you are viewing are sent through the OpenAI API so Legend can generate a reply. The website requests that OpenAI does not store the response for later retrieval by Fenster, but you should still avoid entering sensitive personal information.',
+                        'The chat is not an enquiry form and its conversation is not added to Fenster\'s customer or lead records by the website. Replies are generated automatically, may be inaccurate and are for general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment. Fenster\'s written quotations, surveys, order documents and agreed terms take priority.',
+                        'Choosing to use Legend does not change your optional cookie choice. If you previously rejected analytics or marketing cookies, they remain rejected. The chat acknowledgement applies only to the information needed to provide and protect the assistant during your current page visit.',
+                    ],
+                ],
+                [
                     'heading' => 'Cookies, analytics and tracking',
                     'body' => [
                         'The website uses necessary cookies for basic site functions. Optional analytics and marketing tools, such as Google Tag Manager, Microsoft Clarity or Meta Pixel, should only run after you accept optional cookies through the site cookie banner.',
@@ -909,7 +917,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'heading' => 'Keeping this policy current',
                     'body' => [
                         'This policy may be updated when the website, lead systems, cookie tools, analytics setup or business processes change. The latest version should always be available from the website footer.',
-                        'Last updated: 6 July 2026.',
+                        'Last updated: 15 July 2026.',
                     ],
                 ],
             ],

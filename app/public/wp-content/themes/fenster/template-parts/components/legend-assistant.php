@@ -58,7 +58,20 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
             </div>
         </div>
 
-        <div class="legend-assistant__composer">
+        <section class="legend-assistant__consent" data-legend-consent aria-labelledby="legend-assistant-consent-title">
+            <p class="legend-assistant__consent-eyebrow">Before you chat</p>
+            <h3 id="legend-assistant-consent-title">A quick note about Legend</h3>
+            <p>Legend uses AI. Your message and relevant content from the page you are viewing are processed to create a reply.</p>
+            <p>Replies may be inaccurate and are general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment.</p>
+            <p>Please do not share sensitive personal information. Read our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
+            <p class="legend-assistant__consent-confirmation">By selecting Continue to chat, you acknowledge this information and agree to the processing described above.</p>
+            <div class="legend-assistant__consent-actions">
+                <button type="button" class="button button--primary" data-legend-consent-continue>Continue to chat</button>
+                <button type="button" class="legend-assistant__consent-decline" data-legend-consent-decline>Not now</button>
+            </div>
+        </section>
+
+        <div class="legend-assistant__composer" data-legend-composer hidden>
             <label class="screen-reader-text" for="legend-assistant-message">Message Legend</label>
             <textarea
                 id="legend-assistant-message"
@@ -73,7 +86,13 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 16 8-16 8 2.2-8L4 4Zm2.2 8H20" /></svg>
             </button>
         </div>
-        <p class="legend-assistant__notice"><?php echo esc_html($legend_connected ? 'AI assistant. Please don’t share sensitive personal information.' : 'AI connection coming soon. Messages aren’t sent to the Fenster team.'); ?></p>
+        <p class="legend-assistant__notice" data-legend-notice hidden>
+            <?php if ($legend_connected) : ?>
+                AI replies may be inaccurate and are not legally binding. Do not share sensitive personal information. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
+            <?php else : ?>
+                AI connection coming soon. Messages are not sent to the Fenster team. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
+            <?php endif; ?>
+        </p>
     </section>
 
     <button

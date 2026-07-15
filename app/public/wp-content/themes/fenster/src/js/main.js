@@ -11,6 +11,11 @@ if (legendAssistant) {
   const input = legendAssistant.querySelector('[data-legend-input]');
   const sendButton = legendAssistant.querySelector('[data-legend-send]');
   const messages = legendAssistant.querySelector('[data-legend-messages]');
+  const consentGate = legendAssistant.querySelector('[data-legend-consent]');
+  const consentContinue = legendAssistant.querySelector('[data-legend-consent-continue]');
+  const consentDecline = legendAssistant.querySelector('[data-legend-consent-decline]');
+  const composer = legendAssistant.querySelector('[data-legend-composer]');
+  const notice = legendAssistant.querySelector('[data-legend-notice]');
   const endpoint = legendAssistant.dataset.legendEndpoint || '';
   const nonce = legendAssistant.dataset.legendNonce || '';
   const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
@@ -25,6 +30,7 @@ if (legendAssistant) {
   let roamerIsRight = false;
   let isOpen = false;
   let isTransitioning = false;
+  let chatAcknowledged = false;
   const conversation = [];
 
   const spriteSequences = {
@@ -347,7 +353,7 @@ if (legendAssistant) {
     legendAssistant.classList.remove('is-transitioning');
     isTransitioning = false;
     startRoaming();
-    input.focus();
+    (chatAcknowledged ? input : consentContinue)?.focus();
   };
 
   const closeChat = async () => {
@@ -375,7 +381,7 @@ if (legendAssistant) {
 
   const sendMessage = async () => {
     const text = input.value.trim();
-    if (!text || replyTimer) return;
+    if (!chatAcknowledged || !text || replyTimer) return;
 
     addMessage(text, 'user');
     conversation.push({ role: 'user', content: text });
@@ -415,6 +421,15 @@ if (legendAssistant) {
     }
   });
   closeButton.addEventListener('click', closeChat);
+  consentContinue?.addEventListener('click', () => {
+    chatAcknowledged = true;
+    legendAssistant.classList.add('is-chat-acknowledged');
+    consentGate.hidden = true;
+    composer.hidden = false;
+    notice.hidden = false;
+    input.focus();
+  });
+  consentDecline?.addEventListener('click', closeChat);
   sendButton.addEventListener('click', sendMessage);
   input.addEventListener('input', () => {
     sendButton.disabled = !input.value.trim() || Boolean(replyTimer);
