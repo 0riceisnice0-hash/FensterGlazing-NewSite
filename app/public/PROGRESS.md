@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-15
 
+## 2026-07-15 - Legend AI Chat Preview On Test
+
+- Added Legend, Fenster's black office cat mascot, as a site-wide floating AI assistant above the cookie controls. The launcher uses the approved animated Legend sprite and responds with a wave when opened.
+- Built a responsive, keyboard-accessible chat panel with a live message log, safe text-only message rendering, auto-growing composer, Enter-to-send, Shift+Enter for a new line, Escape-to-close, typing feedback and reduced-motion support.
+- Added an intentionally isolated browser-only preview reply. Messages are not transmitted or stored, and the interface clearly explains that the real live-chat service is not connected yet.
+- Kept the component independent from enquiry forms, consent decisions and tracking. It observes the existing cookie controls only for layout, moving above both the compact Cookies button and the full choices banner without changing consent behaviour.
+- Rebuilt the theme, PHP-linted the component and footer integration, deployed the theme to the protected test site, and verified the open, send and placeholder-reply flow at `1440 x 900`, `768 x 1024` and `390 x 844`. Final checks found no horizontal overflow or browser console errors.
+
 ## 2026-07-15 - FENSA Page Redesign And Fallback Template Audit
 
 - Replaced the scrape-derived `/glass-and-glazing-federation-ggf-standards/` article with a dedicated customer guidance page. It uses the approved FENSA/CPA visual structure and explains GGF guidance without wrongly implying it is FENSA certification, a product guarantee or a claim of GGF membership.
