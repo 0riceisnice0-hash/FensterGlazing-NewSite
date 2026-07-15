@@ -7,7 +7,7 @@ This document explains the Legend AI assistant currently deployed on the passwor
 ## Current Status
 
 - Legend is deployed on `https://test.fensterglazing.com/` only.
-- The latest Legend implementation deployed to test is commit `0fb84b5` (`Fix Legend drawer jump path`).
+- The latest Legend implementation deployed to test is commit `42c78eb` (`Persist Legend chat and improve product facts`).
 - The production site at `https://fensterglazing.com/` was not deployed during this work. Legend must be treated as test-only until the owner explicitly approves a live release.
 - The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
 - The test OpenAI connection is configured and has returned verified live model responses. The API key remains in the test Bedrock `.env` and is not stored in the theme or this repository.
@@ -262,5 +262,6 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `377da55` | Converted the floating chat panel into a full-height side drawer. |
 | `46d9289` | Kept the mobile drawer above the fixed site header. |
 | `0fb84b5` | Rebuilt the jump path around the drawer's settled position to remove the fly-off and teleport. |
+| `42c78eb` | Added 24-hour cross-page/tab chat continuity, Clear chat and high-priority canonical product specifications. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.
