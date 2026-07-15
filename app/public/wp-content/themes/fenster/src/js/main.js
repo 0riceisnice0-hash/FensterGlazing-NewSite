@@ -31,9 +31,7 @@ if (legendAssistant) {
     idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [900, 180, 180, 260, 260, 1400], loop: true },
     runningRight: { row: 1, frames: [0, 1, 2, 3, 4, 5, 6, 7], timings: [120, 120, 120, 120, 120, 120, 120, 220], loop: true },
     runningLeft: { row: 2, frames: [0, 1, 2, 3, 4, 5, 6, 7], timings: [120, 120, 120, 120, 120, 120, 120, 220], loop: true },
-    wave: { row: 3, frames: [0, 1, 2, 3], timings: [140, 140, 140, 280], loop: false },
     jumping: { row: 4, frames: [0, 1, 2, 3, 4], timings: [240, 260, 300, 300, 340], loop: false },
-    thinking: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
   };
 
   const showSpriteFrame = (row, column) => {
@@ -197,8 +195,7 @@ if (legendAssistant) {
       }, pause);
     };
 
-    playRoamerSprite('wave');
-    roamerMotionTimer = window.setTimeout(scheduleNextRun, 900);
+    scheduleNextRun();
   };
 
   const syncCookieOffset = () => {
@@ -387,8 +384,6 @@ if (legendAssistant) {
     sendButton.disabled = true;
     input.disabled = true;
     addTypingIndicator();
-    playSprite('thinking');
-
     replyTimer = 1;
     try {
       const reply = await requestLegendReply(text);
@@ -397,14 +392,17 @@ if (legendAssistant) {
       conversation.push({ role: 'assistant', content: reply });
     } catch (error) {
       messages.querySelector('[data-legend-typing]')?.remove();
-      const fallback = error?.code === 'not_configured'
-        ? 'My AI connection hasn’t been switched on yet. Once the server key is added, I’ll be able to answer using this page.'
-        : 'I’m having trouble connecting just now. Please try again shortly, or contact the Fenster team if you need help now.';
+      let fallback = 'I’m having trouble connecting just now. Please try again shortly, or contact the Fenster team if you need help now.';
+      if (error?.code === 'not_configured') {
+        fallback = 'My AI connection hasn’t been switched on yet. Once the server key is added, I’ll be able to answer using this page.';
+      } else if (error?.code === 'rate_limited') {
+        fallback = 'I’ve received a lot of messages in a short time. Please wait a moment and try again. My AI connection is still online.';
+      }
       addMessage(fallback, 'assistant');
     } finally {
       input.disabled = false;
       replyTimer = 0;
-      playSprite('wave');
+      playSprite('idle');
       input.focus();
     }
   };

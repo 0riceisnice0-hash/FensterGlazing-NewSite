@@ -91,7 +91,7 @@ function fenster_legend_rate_limit_allows_request(): bool
     $key = 'fenster_legend_rate_' . substr(fenster_legend_request_fingerprint(), 0, 32);
     $count = (int) get_transient($key);
 
-    if ($count >= 20) {
+    if ($count >= 40) {
         return false;
     }
 
