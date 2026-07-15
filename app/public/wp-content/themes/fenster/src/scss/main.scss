@@ -26163,6 +26163,228 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+/* FENSA homeowner guidance */
+.fg-fensa-page {
+  background: var(--fg-page-gradient);
+  color: #12363b;
+}
+
+.fg-fensa-hero {
+  padding: clamp(2.4rem, 5vw, 5.4rem) 0 2rem;
+}
+
+.fg-fensa-hero__grid,
+.fg-fensa-explainer__grid,
+.fg-fensa-process__grid,
+.fg-fensa-enquiry__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.88fr);
+  gap: clamp(2rem, 5vw, 5.5rem);
+  align-items: center;
+}
+
+.fg-fensa-hero h1 {
+  max-width: 12ch;
+  margin: 0.55rem 0 1.15rem;
+  font-size: clamp(2.5rem, 4.5vw, var(--fg-font-size-max));
+  line-height: 0.98;
+}
+
+.fg-fensa-hero__lead {
+  max-width: 650px;
+  font-size: clamp(1.05rem, 1.45vw, 1.18rem);
+  line-height: 1.65;
+}
+
+.fg-fensa-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
+  align-items: center;
+  margin: 1.55rem 0;
+}
+
+.fg-fensa-hero__call {
+  color: #12363b;
+  font-weight: 700;
+}
+
+.fg-fensa-hero__checks {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-fensa-hero__checks li {
+  position: relative;
+  padding-left: 1.55rem;
+}
+
+.fg-fensa-hero__checks li::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  left: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #54ad48;
+  box-shadow: 0 0 0 5px rgba(84, 173, 72, 0.14);
+}
+
+.fg-fensa-hero__media {
+  position: relative;
+  min-height: 440px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 26px 70px rgba(15, 49, 54, 0.2);
+}
+
+.fg-fensa-hero__media > img {
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  object-fit: cover;
+  object-position: 58% center;
+}
+
+.fg-fensa-hero__media figcaption {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  color: #fff;
+  background: rgba(15, 49, 54, 0.92);
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.fg-fensa-hero__media figcaption img {
+  width: 92px;
+  max-height: 48px;
+  object-fit: contain;
+  padding: 0.35rem;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.fg-fensa-proof {
+  padding: 1rem 0 3.25rem;
+}
+
+.fg-fensa-proof__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-block: 1px solid rgba(15, 49, 54, 0.18);
+}
+
+.fg-fensa-proof p {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 1.35rem clamp(1rem, 3vw, 2rem);
+  border-right: 1px solid rgba(15, 49, 54, 0.18);
+}
+
+.fg-fensa-proof p:last-child { border-right: 0; }
+.fg-fensa-proof strong { font-size: 1.08rem; }
+.fg-fensa-proof span { color: rgba(18, 54, 59, 0.72); line-height: 1.5; }
+
+.fg-fensa-explainer,
+.fg-fensa-scope,
+.fg-fensa-process,
+.fg-fensa-enquiry {
+  padding: clamp(3rem, 6vw, 5.5rem) 0;
+}
+
+.fg-fensa-explainer__copy,
+.fg-fensa-heading > p,
+.fg-fensa-process__grid > div:first-child {
+  max-width: 650px;
+}
+
+.fg-fensa-explainer h2,
+.fg-fensa-heading h2,
+.fg-fensa-process h2,
+.fg-fensa-enquiry h2 {
+  margin: 0.5rem 0 1rem;
+  font-size: clamp(1.65rem, 2.4vw, 2.15rem);
+  line-height: 1.08;
+}
+
+.fg-fensa-explainer p,
+.fg-fensa-heading > p,
+.fg-fensa-process p,
+.fg-fensa-enquiry p {
+  line-height: 1.65;
+}
+
+.fg-fensa-explainer figure {
+  height: 480px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.fg-fensa-explainer figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-fensa-scope { background: #12363b; color: #fff; }
+.fg-fensa-heading { display: grid; grid-template-columns: 1fr 0.72fr; gap: 2rem; align-items: end; margin-bottom: 2rem; }
+.fg-fensa-scope__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.fg-fensa-scope article { padding: clamp(1.4rem, 3vw, 2.35rem); background: #fff; color: #12363b; border-radius: 8px; }
+.fg-fensa-scope__outside { background: #e8efed !important; }
+.fg-fensa-scope h3 { margin: 0 0 1rem; font-size: 1.35rem; }
+.fg-fensa-scope ul { display: grid; gap: 0.7rem; margin: 0; padding-left: 1.2rem; line-height: 1.5; }
+
+.fg-fensa-process__grid { align-items: start; }
+.fg-fensa-process ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(15, 49, 54, 0.16); }
+.fg-fensa-process li { display: grid; grid-template-columns: 54px 1fr; gap: 1rem; padding: 1.2rem 0; border-bottom: 1px solid rgba(15, 49, 54, 0.16); }
+.fg-fensa-process li > span { color: #54ad48; font-weight: 700; }
+.fg-fensa-process li p { margin: 0.25rem 0 0; color: rgba(18, 54, 59, 0.72); }
+
+.fg-fensa-enquiry { background: #dce9e6; }
+.fg-fensa-enquiry__grid { align-items: start; }
+.fg-fensa-enquiry__form { padding: clamp(1rem, 2vw, 1.5rem); background: #12363b; border-radius: 8px; }
+
+@media (max-width: 860px) {
+  .fg-fensa-hero__grid,
+  .fg-fensa-explainer__grid,
+  .fg-fensa-process__grid,
+  .fg-fensa-enquiry__grid,
+  .fg-fensa-heading { grid-template-columns: 1fr; }
+  .fg-fensa-hero__media { min-height: 360px; }
+  .fg-fensa-hero__media > img { min-height: 360px; }
+  .fg-fensa-explainer figure { height: 360px; }
+  .fg-fensa-proof__grid { grid-template-columns: 1fr; }
+  .fg-fensa-proof p { border-right: 0; border-bottom: 1px solid rgba(15, 49, 54, 0.18); }
+  .fg-fensa-proof p:last-child { border-bottom: 0; }
+}
+
+@media (max-width: 560px) {
+  .fg-fensa-hero { padding-top: 1.75rem; }
+  .fg-fensa-hero h1 { font-size: clamp(2.35rem, 11vw, 3rem); }
+  .fg-fensa-hero__actions { display: grid; align-items: stretch; }
+  .fg-fensa-hero__actions .button { width: 100%; }
+  .fg-fensa-hero__media,
+  .fg-fensa-hero__media > img { min-height: 315px; }
+  .fg-fensa-hero__media figcaption { grid-template-columns: 72px 1fr; font-size: 0.88rem; }
+  .fg-fensa-hero__media figcaption img { width: 72px; }
+  .fg-fensa-scope__grid { grid-template-columns: 1fr; }
+  .fg-fensa-explainer figure { height: 300px; }
+}
+
 // Flat rooflights: a separate product journey for fixed, opening, large and walk-on units.
 .fg-flat-rooflight-page {
   background: var(--fg-page-gradient);

@@ -38,15 +38,15 @@ Do not replace the whole WordPress install. Do not upload WordPress core. Do not
 3. PHP-lint changed PHP files.
 4. Check `git diff` and keep the change scoped.
 5. Commit and push to GitHub `main`.
-6. For small, scoped changes, deploy the committed theme directly to live when the local checks have passed and the owner has not asked for a test stop.
-7. For bigger changes, especially new layouts, shared templates, routing, SEO output, forms or broad visual work, deploy to test first and verify visually and technically.
-8. Confirm there is a fresh live backup before deploying larger verified changes from test to live.
-9. Deploy the same committed theme to live.
-10. Flush cache and verify the changed pages.
+6. Deploy the committed theme to the password-protected test site for every completed change, regardless of size or risk.
+7. Flush the test cache and verify the changed route visually and technically.
+8. If the change is approved for live, confirm the appropriate backup or checkpoint is in place.
+9. Deploy the same verified commit to live.
+10. Flush the live cache and verify the changed pages.
 
 If a change touches forms, SEO output, redirects, sitemaps, generated routing, enquiry email, or global header/footer behaviour, treat it as higher risk and verify more pages.
 
-Direct-to-live is acceptable for small, low-risk edits after local build/lint and GitHub push. Do not edit live files by hand: local edit, build/lint, commit, push, deploy the theme-only live rsync, flush cache, then verify. Bigger layout/template/routing changes should still go through test first unless the owner explicitly overrides that for the current task.
+Direct-to-live is not the normal workflow, including for small or low-risk edits. Always use local edit, build/lint, commit, push, theme-only test rsync, test cache flush and test verification first. Do not edit live files by hand. Skip test only when the owner explicitly overrides this rule for the current task.
 
 ## Commands Codex Has Been Using
 

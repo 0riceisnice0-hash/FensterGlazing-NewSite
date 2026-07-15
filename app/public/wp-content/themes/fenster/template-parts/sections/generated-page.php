@@ -155,6 +155,7 @@ $is_about_page = $slug === 'about';
 $is_about = in_array($slug, ['about', 'meet-the-team'], true);
 $is_contact = $slug === 'contact';
 $is_consultation_page = $slug === 'book-a-consultation';
+$is_fensa_page = $slug === 'fensa-approved-installers';
 $is_windows_hub = $slug === 'windows-milton-keynes';
 $is_doors_hub = $slug === 'doors-milton-keynes';
 $is_product_selector_hub = $is_windows_hub || $is_doors_hub;
@@ -1550,6 +1551,13 @@ if ($is_consultation_page) {
         'page' => $page,
         'related_links' => $related_links,
         'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
+if ($is_fensa_page) {
+    get_template_part('template-parts/sections/fensa-approved', null, [
+        'page' => $page,
     ]);
     return;
 }

@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-15
 
+## 2026-07-15 - FENSA Page Redesign And Fallback Template Audit
+
+- Updated `AI.md`, `HANDOVER.md` and `LIVECHANGES.md` to make test-first deployment mandatory for every completed change. Small and low-risk changes no longer have a documented direct-to-live exception.
+- Replaced `/fensa-approved-installers/` generic imported-article output with a dedicated homeowner conversion page in `template-parts/sections/fensa-approved.php`.
+- Removed the route's scrape debris from public output, including `ONLINE DESIGNER`, isolated linked words, social-media filler, old footer/service-area copy and generic quote-engine sections.
+- Rewrote the page around current FENSA homeowner guidance: what the certificate proves, which replacement work is normally within the scheme, common exclusions, the Fenster survey-to-registration process and one shared enquiry form.
+- Added route-owned SEO title and meta description so malformed imported Open Graph/schema values remain irrelevant to the rendered page.
+- Reused local showroom, installation and FENSA assets, added responsive page-specific SCSS, rebuilt compiled CSS and PHP-linted the new template plus routing/SEO changes.
+- Audited the generic renderer fallbacks. The thin/noindex shells remain `gallery`, `brochures`, `downloads`, `videos`, `customer-portal`, `refer-a-friend`, `fenster-partners` and `apecs-terms-conditions`; they should be rebuilt only when there is real content or a working customer function. `/glass-and-glazing-federation-ggf-standards/` is the next indexable compliance page that would benefit from a dedicated treatment. `/our-new-website/` and the retired/template case-study records should be reviewed for redirect or removal rather than automatically redesigned.
+
 ## 2026-07-15 - Site-Wide Typography Ceiling And First-Pass Design Contract
 
 - Added `--fg-font-size-max: 3.6rem` as the shared site-wide display-type ceiling and replaced every existing font-size clamp above that value with the token. No source heading or display declaration now exceeds `57.6px`.
@@ -222,7 +232,7 @@ Last updated: 2026-07-15
 
 ## 2026-07-06 - Deploy Policy Clarification
 
-- Updated `AI.md`, `HANDOVER.md` and `LIVECHANGES.md` with the owner's deployment preference: small, scoped, low-risk changes can go directly from local checks/GitHub to live, while bigger layout/template/routing/form/SEO changes should still use test first and then live verification.
+- Historical note: this entry originally allowed small, scoped, low-risk changes to go directly to live. That workflow was superseded on 2026-07-15; every completed change now goes to the password-protected test site first.
 
 ## 2026-07-06 - Cat And Dog Flaps Page Rewrite
 

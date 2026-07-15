@@ -1170,6 +1170,16 @@ function fenster_get_generated_page(?string $slug = null): ?array
     }
 
     $index = fenster_generated_pages_index();
+
+    if ($slug === 'fensa-approved-installers' && isset($index[$slug]) && is_array($index[$slug])) {
+        $page = $index[$slug];
+        $page['title'] = 'FENSA Approved Installers';
+        $page['seo']['title_tag'] = 'FENSA Approved Installer Milton Keynes | Fenster Glazing';
+        $page['seo']['meta_description'] = 'Choose Fenster for FENSA registered replacement windows and doors in Milton Keynes, with clear advice, local installation and certification.';
+        $page['seo']['canonical'] = 'https://fensterglazing.com/fensa-approved-installers/';
+        return $page_cache[$slug] = $page;
+    }
+
     $location_matrix_page = fenster_location_matrix_page($slug, $index);
     if (is_array($location_matrix_page)) {
         return $page_cache[$slug] = $location_matrix_page;
