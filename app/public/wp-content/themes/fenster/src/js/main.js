@@ -42,13 +42,14 @@ if (legendAssistant) {
   const newLegendMessageId = () => `LCM-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
 
   const recordLegendTranscript = (role, body) => {
-    if (!trackingConsentAccepted() || !websiteTracking.chatEndpoint || !chatConversationId || !body) return;
-    const journeyId = trackWebsiteEvent(role === 'user' ? 'chat_message_sent' : 'chat_reply_received', { cta: 'Legend AI assistant' });
+    if (!websiteTracking.chatEndpoint || !chatConversationId || !body) return;
+    const hasTrackingConsent = trackingConsentAccepted();
+    const journeyId = hasTrackingConsent ? trackWebsiteEvent(role === 'user' ? 'chat_message_sent' : 'chat_reply_received', { cta: 'Legend AI assistant' }) : '';
     const payload = {
       conversation_id: chatConversationId,
       message_id: newLegendMessageId(),
       journey_id: journeyId,
-      visitor_id: visitorReference(),
+      visitor_id: hasTrackingConsent ? visitorReference() : '',
       page_path: window.location.pathname,
       role,
       body: String(body).slice(0, 900),

@@ -62,7 +62,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
             <p class="legend-assistant__consent-eyebrow">Before you chat</p>
             <h3 id="legend-assistant-consent-title">A quick note about Legend</h3>
             <p>Legend uses AI. Your message and relevant content from the page you are viewing are processed to create a reply.</p>
-            <p>To keep your chat when you move between Fenster pages or browser tabs, recent messages are saved in this browser for up to 24 hours. If you have accepted optional cookies, Fenster also stores the transcript for up to 30 days in its restricted quality-assurance tracker so the team can improve Legend. This does not change your optional cookie choice.</p>
+            <p>To keep your chat when you move between Fenster pages or browser tabs, recent messages are saved in this browser for up to 24 hours. Fenster also stores the transcript for up to 30 days in its restricted quality-assurance tracker so the team can improve Legend. If you accept optional cookies it is linked to your anonymous website journey; otherwise it remains chat-only. This does not change your optional cookie choice.</p>
             <p>Replies may be inaccurate and are general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment.</p>
             <p>Please do not share sensitive personal information. Read our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
             <p class="legend-assistant__consent-confirmation">By selecting Continue to chat, you acknowledge this information and agree to the processing described above.</p>
@@ -90,7 +90,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
         <div class="legend-assistant__notice" data-legend-notice hidden>
             <p>
                 <?php if ($legend_connected) : ?>
-                    AI replies may be inaccurate and are not legally binding. If you accepted optional cookies, chats may be reviewed for quality assurance for up to 30 days. Do not share sensitive personal information. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
+                    AI replies may be inaccurate and are not legally binding. Chats may be reviewed for quality assurance for up to 30 days. Do not share sensitive personal information. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
                 <?php else : ?>
                     AI connection coming soon. Messages are not sent to the Fenster team. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
                 <?php endif; ?>
