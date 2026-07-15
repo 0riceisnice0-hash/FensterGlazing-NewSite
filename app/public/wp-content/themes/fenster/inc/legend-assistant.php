@@ -347,7 +347,7 @@ function fenster_legend_verified_business_context(): string
         'Residential service area: Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire.',
         'Commercial service area: nationwide across England and Wales.',
         'Consultation requests are not instant confirmed bookings. The visitor chooses a preferred weekday and time, then the Fenster team confirms by phone or email.',
-        'Every new Fenster window and door installation receives a 10-year insurance-backed guarantee through the Consumer Protection Association. This does not automatically include repairs, replacement glass, roofline, integral blinds, pet flaps or commercial work.',
+        'Every new Fenster window and door installation receives a 10-year insurance-backed guarantee through the Consumer Protection Association. This does not automatically include repairs, replacement glass, roofline, integral blinds or pet flaps.',
         'The Fenster written guarantee is the first point of contact for covered issues while Fenster is trading. CPA insurance backs that guarantee if Fenster permanently ceases trading, subject to the policy terms.',
         'Fenster guarantees are not transferable to a new homeowner.',
         'For eligible domestic replacement windows and doors, Fenster applies for FENSA registration after installation and FENSA sends the certificate directly to the customer.',
@@ -355,7 +355,7 @@ function fenster_legend_verified_business_context(): string
         'Published product-card specifications are authoritative. A U-value label with an asterisk is the lowest achievable U-value, not a value guaranteed for every size and configuration.',
         'Fenster currently offers Distinction composite doors. Every composite door currently offered includes the published £5,000 security guarantee. Do not extend that claim to future ranges.',
         'Integral blinds are available with magnetic or electric controls and have a 10-year guarantee.',
-        'Do not estimate prices. Direct visitors to the instant quote tool unless a price is explicitly published for the exact request.',
+        'Do not estimate prices. Direct visitors to the instant quote tool unless a price is explicitly published for the exact request. Do not add a telephone alternative unless the visitor asks to speak to someone or cannot use the quote tool.',
     ];
 
     return "<VERIFIED_BUSINESS_FACTS>\n"
