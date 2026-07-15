@@ -16,6 +16,7 @@ if (legendAssistant) {
   const consentDecline = legendAssistant.querySelector('[data-legend-consent-decline]');
   const composer = legendAssistant.querySelector('[data-legend-composer]');
   const notice = legendAssistant.querySelector('[data-legend-notice]');
+  const clearChatButton = legendAssistant.querySelector('[data-legend-clear]');
   const endpoint = legendAssistant.dataset.legendEndpoint || '';
   const nonce = legendAssistant.dataset.legendNonce || '';
   const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
@@ -32,6 +33,9 @@ if (legendAssistant) {
   let isTransitioning = false;
   let chatAcknowledged = false;
   const conversation = [];
+  const welcomeMessage = messages.firstElementChild?.cloneNode(true);
+  const chatStorageKey = 'fenster_legend_chat_v1';
+  const chatStorageLifetime = 24 * 60 * 60 * 1000;
 
   const spriteSequences = {
     idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [900, 180, 180, 260, 260, 1400], loop: true },
@@ -285,6 +289,91 @@ if (legendAssistant) {
     scrollToLatestMessage();
   };
 
+  const setChatAcknowledged = (acknowledged) => {
+    chatAcknowledged = acknowledged;
+    legendAssistant.classList.toggle('is-chat-acknowledged', acknowledged);
+    consentGate.hidden = acknowledged;
+    composer.hidden = !acknowledged;
+    notice.hidden = !acknowledged;
+  };
+
+  const storedConversation = (value) => {
+    if (!Array.isArray(value)) return [];
+
+    return value
+      .filter((item) => item && ['user', 'assistant'].includes(item.role) && typeof item.content === 'string')
+      .slice(-16)
+      .map((item) => ({
+        role: item.role,
+        content: item.content.trim().slice(0, 900),
+      }))
+      .filter((item) => item.content);
+  };
+
+  const readLegendState = () => {
+    try {
+      const state = JSON.parse(window.localStorage.getItem(chatStorageKey) || 'null');
+      const updatedAt = Number(state?.updatedAt || 0);
+
+      if (!state || state.version !== 1 || !state.acknowledged || Date.now() - updatedAt > chatStorageLifetime) {
+        if (state) window.localStorage.removeItem(chatStorageKey);
+        return null;
+      }
+
+      return {
+        acknowledged: true,
+        conversation: storedConversation(state.conversation),
+      };
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const persistLegendState = () => {
+    if (!chatAcknowledged) return;
+
+    try {
+      window.localStorage.setItem(chatStorageKey, JSON.stringify({
+        version: 1,
+        acknowledged: true,
+        updatedAt: Date.now(),
+        conversation: storedConversation(conversation),
+      }));
+    } catch (error) {
+      // The chat still works for this page when browser storage is unavailable.
+    }
+  };
+
+  const renderConversation = () => {
+    if (welcomeMessage) {
+      messages.replaceChildren(welcomeMessage.cloneNode(true));
+    } else {
+      messages.replaceChildren();
+    }
+
+    conversation.forEach((item) => addMessage(item.content, item.role));
+  };
+
+  const restoreLegendState = () => {
+    const state = readLegendState();
+    if (!state) return;
+
+    conversation.splice(0, conversation.length, ...state.conversation);
+    renderConversation();
+    setChatAcknowledged(true);
+  };
+
+  const clearLegendChat = () => {
+    if (replyTimer) return;
+    conversation.splice(0, conversation.length);
+    renderConversation();
+    persistLegendState();
+    input.value = '';
+    resizeInput();
+    sendButton.disabled = true;
+    input.focus();
+  };
+
   const addTypingIndicator = () => {
     const indicator = document.createElement('div');
     indicator.className = 'legend-message legend-message--assistant legend-message--typing';
@@ -299,6 +388,29 @@ if (legendAssistant) {
     .replace(/[ \t]+/g, ' ')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
+
+  const collectHighPriorityFacts = () => {
+    const facts = [];
+    const seen = new Set();
+    const candidates = document.querySelectorAll([
+      'main .fg-product-pulse--usps',
+      'main [aria-label*="specification" i]',
+      'main [aria-label*="technical" i]',
+      'main .fg-product-intel__summary',
+      'main .fg-sash-spec-table',
+    ].join(','));
+
+    candidates.forEach((element) => {
+      const label = element.getAttribute('aria-label') || '';
+      const copy = normalisePageText(`${label}\n${element.textContent || ''}`).slice(0, 1600);
+      const key = copy.toLowerCase();
+      if (!copy || seen.has(key)) return;
+      seen.add(key);
+      facts.push(copy);
+    });
+
+    return facts.slice(0, 12).join('\n\n').slice(0, 8000);
+  };
 
   const collectPageContext = () => {
     const description = document.querySelector('meta[name="description"]')?.content || '';
@@ -315,6 +427,7 @@ if (legendAssistant) {
       page_title: document.title.slice(0, 180),
       page_url: pageUrl.href.slice(0, 1000),
       page_description: description.slice(0, 320),
+      page_facts: collectHighPriorityFacts(),
       page_text: normalisePageText(`${headerText}\n\n${mainText}\n\n${footerText}`).slice(0, 60000),
     };
   };
@@ -408,6 +521,7 @@ if (legendAssistant) {
 
     addMessage(text, 'user');
     conversation.push({ role: 'user', content: text });
+    persistLegendState();
     input.value = '';
     resizeInput();
     sendButton.disabled = true;
@@ -419,6 +533,7 @@ if (legendAssistant) {
       messages.querySelector('[data-legend-typing]')?.remove();
       addMessage(reply, 'assistant');
       conversation.push({ role: 'assistant', content: reply });
+      persistLegendState();
     } catch (error) {
       messages.querySelector('[data-legend-typing]')?.remove();
       let fallback = 'I’m having trouble connecting just now. Please try again shortly, or contact the Fenster team if you need help now.';
@@ -445,14 +560,12 @@ if (legendAssistant) {
   });
   closeButton.addEventListener('click', closeChat);
   consentContinue?.addEventListener('click', () => {
-    chatAcknowledged = true;
-    legendAssistant.classList.add('is-chat-acknowledged');
-    consentGate.hidden = true;
-    composer.hidden = false;
-    notice.hidden = false;
+    setChatAcknowledged(true);
+    persistLegendState();
     input.focus();
   });
   consentDecline?.addEventListener('click', closeChat);
+  clearChatButton?.addEventListener('click', clearLegendChat);
   sendButton.addEventListener('click', sendMessage);
   input.addEventListener('input', () => {
     sendButton.disabled = !input.value.trim() || Boolean(replyTimer);
@@ -469,7 +582,16 @@ if (legendAssistant) {
   });
   window.addEventListener('resize', syncCookieOffset);
   window.addEventListener('load', syncCookieOffset, { once: true });
+  window.addEventListener('storage', (event) => {
+    if (event.key !== chatStorageKey || replyTimer) return;
+    const state = readLegendState();
+    if (!state) return;
+    conversation.splice(0, conversation.length, ...state.conversation);
+    renderConversation();
+    setChatAcknowledged(true);
+  });
 
+  restoreLegendState();
   playSprite('idle');
   showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
   if (document.readyState === 'loading') {

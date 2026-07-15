@@ -1603,6 +1603,7 @@ h3 {
 .legend-assistant__close:focus-visible,
 .legend-assistant__consent button:focus-visible,
 .legend-assistant__consent a:focus-visible,
+.legend-assistant__notice button:focus-visible,
 .legend-assistant__composer textarea:focus-visible,
 .legend-assistant__composer button:focus-visible {
   outline: 3px solid var(--color-accent);
@@ -2123,12 +2124,32 @@ h3 {
 }
 
 .legend-assistant__notice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  align-items: center;
   margin: 0;
   padding: 0.55rem 0.9rem 0.75rem;
   color: var(--color-muted);
   font-size: 0.68rem;
   line-height: 1.35;
   text-align: center;
+}
+
+.legend-assistant__notice p {
+  margin: 0;
+}
+
+.legend-assistant__notice button {
+  padding: 0.2rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-steel);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
 }
 
 @keyframes legend-panel-in {

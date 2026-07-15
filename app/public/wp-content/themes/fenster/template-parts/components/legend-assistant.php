@@ -62,6 +62,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
             <p class="legend-assistant__consent-eyebrow">Before you chat</p>
             <h3 id="legend-assistant-consent-title">A quick note about Legend</h3>
             <p>Legend uses AI. Your message and relevant content from the page you are viewing are processed to create a reply.</p>
+            <p>To keep your chat when you move between Fenster pages or browser tabs, recent messages are saved in this browser for up to 24 hours. This does not change your optional cookie choice.</p>
             <p>Replies may be inaccurate and are general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment.</p>
             <p>Please do not share sensitive personal information. Read our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
             <p class="legend-assistant__consent-confirmation">By selecting Continue to chat, you acknowledge this information and agree to the processing described above.</p>
@@ -86,13 +87,16 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 16 8-16 8 2.2-8L4 4Zm2.2 8H20" /></svg>
             </button>
         </div>
-        <p class="legend-assistant__notice" data-legend-notice hidden>
-            <?php if ($legend_connected) : ?>
-                AI replies may be inaccurate and are not legally binding. Do not share sensitive personal information. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
-            <?php else : ?>
-                AI connection coming soon. Messages are not sent to the Fenster team. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
-            <?php endif; ?>
-        </p>
+        <div class="legend-assistant__notice" data-legend-notice hidden>
+            <p>
+                <?php if ($legend_connected) : ?>
+                    AI replies may be inaccurate and are not legally binding. Do not share sensitive personal information. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
+                <?php else : ?>
+                    AI connection coming soon. Messages are not sent to the Fenster team. <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.
+                <?php endif; ?>
+            </p>
+            <button type="button" data-legend-clear>Clear chat</button>
+        </div>
     </section>
 
     <button

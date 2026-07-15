@@ -882,7 +882,8 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'body' => [
                         'Legend is an optional AI website assistant. If you choose Continue to chat, the message you type, recent messages in that chat and relevant content from the page you are viewing are sent through the OpenAI API so Legend can generate a reply. The website requests that OpenAI does not store the response for later retrieval by Fenster, but you should still avoid entering sensitive personal information.',
                         'The chat is not an enquiry form and its conversation is not added to Fenster\'s customer or lead records by the website. Replies are generated automatically, may be inaccurate and are for general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment. Fenster\'s written quotations, surveys, order documents and agreed terms take priority.',
-                        'Choosing to use Legend does not change your optional cookie choice. If you previously rejected analytics or marketing cookies, they remain rejected. The chat acknowledgement applies only to the information needed to provide and protect the assistant during your current page visit.',
+                        'After you choose Continue to chat, the acknowledgement and up to 16 recent chat messages are stored in your browser under fenster_legend_chat_v1 for up to 24 hours from your latest chat activity. This lets Legend continue across Fenster pages and tabs in the same browser. You can remove the history with Clear chat, and expired history is removed when the assistant next loads.',
+                        'Choosing to use Legend does not change your optional cookie choice. If you previously rejected analytics or marketing cookies, they remain rejected. The chat storage is used only to provide the continuity you requested from the assistant.',
                     ],
                 ],
                 [
@@ -954,6 +955,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'body' => [
                         'Some cookies or browser storage may be needed for basic website functions, security, spam prevention, form handling, embedded quote tools or remembering your cookie choice.',
                         'The cookie banner stores your choice in your browser using local storage under the name fenster_cookie_consent. This lets the site remember whether you accepted or rejected optional tracking.',
+                        'If you choose Continue to chat with Legend, the site uses local storage named fenster_legend_chat_v1 to keep the acknowledgement and recent chat history available across Fenster pages and browser tabs for up to 24 hours from the latest activity. This assistant storage does not accept optional analytics or marketing cookies and can be cleared using Clear chat.',
                     ],
                 ],
                 [
@@ -981,7 +983,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'heading' => 'More information',
                     'body' => [
                         'For more detail on how Fenster uses personal information from enquiries, quote tools and analytics, read the Privacy Policy.',
-                        'Last updated: 7 July 2026.',
+                        'Last updated: 15 July 2026.',
                     ],
                 ],
             ],
