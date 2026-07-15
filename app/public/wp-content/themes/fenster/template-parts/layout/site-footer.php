@@ -42,7 +42,9 @@ $footer_company = [
                 <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/constructionline-gold/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s Constructionline Gold membership', 'fenster'); ?>">
                     <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/constructionline-gold-member.png'); ?>" alt="<?php esc_attr_e('Constructionline Gold Member', 'fenster'); ?>">
                 </a>
-                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/cropped-ssip.png'); ?>" alt="<?php esc_attr_e('SSIP accredited', 'fenster'); ?>">
+                <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/ssip-health-and-safety/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s SSIP health and safety assessment', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/cropped-ssip.png'); ?>" alt="<?php esc_attr_e('SSIP health and safety assessed', 'fenster'); ?>">
+                </a>
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
                 <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>">
             </div>

@@ -1223,6 +1223,23 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
+    if ($slug === 'ssip-health-and-safety') {
+        return $page_cache[$slug] = [
+            'slug' => 'ssip-health-and-safety',
+            'title' => 'SSIP Health and Safety',
+            'url' => home_url('/ssip-health-and-safety/'),
+            'seo' => [
+                'title_tag' => 'SSIP Health & Safety Assessment | Fenster Glazing',
+                'meta_description' => 'Understand Fenster Glazing’s SSIP health and safety assessment and what it means for commercial glazing supplier pre-qualification.',
+                'canonical' => 'https://fensterglazing.com/ssip-health-and-safety/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+    }
+
     $location_matrix_page = fenster_location_matrix_page($slug, $index);
     if (is_array($location_matrix_page)) {
         return $page_cache[$slug] = $location_matrix_page;
@@ -1667,7 +1684,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'flat-rooflights'] as $virtual_slug) {
+    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
