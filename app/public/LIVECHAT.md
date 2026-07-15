@@ -7,7 +7,7 @@ This document explains the Legend AI assistant currently deployed on the passwor
 ## Current Status
 
 - Legend is deployed on `https://test.fensterglazing.com/` only.
-- The latest Legend implementation deployed to test is commit `a7e1edc` (`Keep Legend specification answers direct`).
+- The latest Legend implementation deployed to test is commit `44597e0` (`Match plural Legend product questions`).
 - The production site at `https://fensterglazing.com/` was not deployed during this work. Legend must be treated as test-only until the owner explicitly approves a live release.
 - The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
 - The test OpenAI connection is configured and has returned verified live model responses. The API key remains in the test Bedrock `.env` and is not stored in the theme or this repository.
@@ -97,6 +97,26 @@ The search process:
 - Caps the complete related-page context before it reaches the model.
 
 This is same-site, read-only retrieval. It is not unrestricted internet browsing. All visible-page and retrieved-page text is labelled as untrusted reference material and cannot override the server's assistant instructions.
+
+## Verified Fenster Facts And Source Priority
+
+The backend also supplies an owner-confirmed fact block on every request. These facts outrank imported FAQs, older articles, generic page copy and previous conversation messages when sources conflict. Query-matched product specifications are injected directly from `product_usps`, independently of related-page excerpt ranking.
+
+The confirmed business facts are:
+
+- Every new window and door installation receives a 10-year insurance-backed guarantee through the Consumer Protection Association. Repairs, replacement glass, roofline, integral blinds and pet flaps are not automatically included in that insurance-backed guarantee.
+- Fenster handles covered guarantee issues while trading. CPA is the insurance back-up if Fenster permanently ceases trading, subject to the policy terms.
+- Fenster guarantees are not transferable to a new homeowner.
+- Double glazing is standard. Triple glazing is a specification option on most new windows and doors, except uPVC flush casement windows, slide and fold doors, and sash windows.
+- Residential coverage is Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. Commercial coverage is nationwide across England and Wales.
+- Eligible domestic replacement windows and doors receive FENSA registration. Fenster applies after installation and FENSA sends the certificate directly to the customer.
+- Product-card specifications are authoritative. A starred U-value is the lowest achievable value and must not be presented as guaranteed for every size and configuration.
+- Current Distinction composite doors include the published £5,000 security guarantee. Integral blinds have magnetic or electric controls and a 10-year guarantee.
+- Prices must not be estimated. Use the instant quote tool unless an exact price is explicitly published.
+- Showroom hours are Monday to Friday, 8.30am to 5pm, with phone lines open 24/7. Fenster is closed at weekends.
+- Consultation dates and times are requests until the team confirms them by phone or email.
+
+Articles and guides may still supply general advice, but they cannot establish current product availability, certification eligibility, hours or guarantee terms by themselves.
 
 ## Legend's Behaviour Rules
 
@@ -216,6 +236,8 @@ The implementation has been checked on the protected test site for:
 - No horizontal page overflow.
 - Correct animation rows only.
 - Jump-path landing coordinates with no rightward overshoot or teleport.
+- A 39-call post-fix live regression through the protected REST endpoint, covering owner-confirmed business facts, product specifications, guarantee scope, triple-glazing exceptions, residential and commercial areas, FENSA, CPA, pricing boundaries and unrelated-request refusal.
+- A full canonical product-card sweep. This caught and fixed plural product-name matching so `aluminium flush windows`, `heritage windows` and `uPVC doors` now resolve to their own specifications rather than generic or missing results.
 
 ## Before Any Live Release
 
@@ -264,5 +286,8 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `0fb84b5` | Rebuilt the jump path around the drawer's settled position to remove the fly-off and teleport. |
 | `42c78eb` | Added 24-hour cross-page/tab chat continuity, Clear chat and high-priority canonical product specifications. |
 | `a7e1edc` | Restricted direct published specification answers to one sentence without an unnecessary offer or call to action. |
+| `017d704` | Added owner-confirmed business facts, query-matched product specifications and aligned CPA/FENSA guarantee wording. |
+| `77da806` | Clarified the new-window-and-door guarantee scope and instant-quote pricing route. |
+| `44597e0` | Fixed singular/plural product matching and verified the failed product questions on test. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.
