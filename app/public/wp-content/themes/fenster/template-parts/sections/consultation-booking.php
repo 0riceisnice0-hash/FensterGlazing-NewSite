@@ -55,7 +55,11 @@ $faq_schema = [
                     <?php foreach ($booking_trust as $trust) : ?>
                         <?php if (is_array($trust['item'])) : ?>
                             <div>
+                                <?php if (! empty($trust['item']['url'])) : ?>
+                                    <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                                <?php endif; ?>
                                 <img <?php echo fenster_image_attr_string((string) $trust['item']['src'], ['alt' => (string) $trust['item']['alt'], 'loading' => 'lazy']); ?>>
+                                <?php if (! empty($trust['item']['url'])) : ?></a><?php endif; ?>
                                 <p><strong><?php echo esc_html($trust['title']); ?></strong><span><?php echo esc_html($trust['copy']); ?></span></p>
                             </div>
                         <?php endif; ?>

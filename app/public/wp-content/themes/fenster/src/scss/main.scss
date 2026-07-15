@@ -26164,6 +26164,12 @@ html.fg-blinds-reveal-locked {
 }
 
 /* FENSA homeowner guidance */
+.fg-fensa-logo-link {
+  display: inline-flex;
+  width: fit-content;
+  line-height: 0;
+}
+
 .fg-fensa-page {
   background: var(--fg-page-gradient);
   color: #12363b;

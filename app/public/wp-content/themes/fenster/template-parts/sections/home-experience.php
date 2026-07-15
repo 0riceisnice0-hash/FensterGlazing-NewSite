@@ -131,7 +131,11 @@ $location_links = [
             <?php foreach ($trust_messages as $trust) : ?>
                 <?php if (is_array($trust['item'])) : ?>
                     <article class="fg-home-trust-card">
+                        <?php if (! empty($trust['item']['url'])) : ?>
+                            <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                        <?php endif; ?>
                         <img <?php echo fenster_image_attr_string((string) $trust['item']['src'], ['alt' => (string) $trust['item']['alt'], 'loading' => 'lazy']); ?>>
+                        <?php if (! empty($trust['item']['url'])) : ?></a><?php endif; ?>
                         <div>
                             <strong><?php echo esc_html($trust['title']); ?></strong>
                             <span><?php echo esc_html($trust['copy']); ?></span>

@@ -314,7 +314,11 @@ $team_cards = [
             </div>
             <div class="fg-trust-accreditations__logos" aria-label="<?php esc_attr_e('Fenster trust logos', 'fenster'); ?>">
                 <?php foreach ($trust_items as $trust_item) : ?>
+                    <?php if (! empty($trust_item['url'])) : ?>
+                        <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust_item['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                    <?php endif; ?>
                     <img src="<?php echo esc_url((string) ($trust_item['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($trust_item['alt'] ?? '')); ?>" loading="lazy">
+                    <?php if (! empty($trust_item['url'])) : ?></a><?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </div>

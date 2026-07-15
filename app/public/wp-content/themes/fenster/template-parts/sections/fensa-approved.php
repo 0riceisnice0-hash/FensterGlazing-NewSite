@@ -28,7 +28,9 @@ $asset = static function (string $path): string {
                     </div>
                 </div>
                 <aside class="fg-fensa-hero__assurance" aria-label="FENSA certificate assurance">
-                    <img src="<?php echo esc_url($asset('trust/fensa.png')); ?>" alt="FENSA Approved Installer">
+                    <a class="fg-fensa-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                        <img src="<?php echo esc_url($asset('trust/fensa.png')); ?>" alt="FENSA Approved Installer">
+                    </a>
                     <p class="eyebrow"><?php esc_html_e('Included with eligible work', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Yes, you will receive a FENSA certificate.', 'fenster'); ?></h2>
                     <ul>

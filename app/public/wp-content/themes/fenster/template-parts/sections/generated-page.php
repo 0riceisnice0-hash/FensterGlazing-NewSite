@@ -579,7 +579,7 @@ $home_process = [
 $trust_items = [
     ['src' => FENSTER_THEME_URI . '/assets/trust/google-5-stars.png', 'alt' => 'Google five star reviews'],
     ['src' => FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png', 'alt' => 'Trustpilot Excellent'],
-    ['src' => FENSTER_THEME_URI . '/assets/trust/fensa.png', 'alt' => 'FENSA approved'],
+    ['src' => FENSTER_THEME_URI . '/assets/trust/fensa.png', 'alt' => 'FENSA approved', 'url' => home_url('/fensa-approved-installers/')],
     ['src' => FENSTER_THEME_URI . '/assets/trust/cpa.png', 'alt' => 'Consumer Protection Association'],
 ];
 $partner_items = [
@@ -2455,7 +2455,9 @@ if ($is_commercial_hub) {
                     <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : 'Get pricing or book a design chat.'); ?></h2>
                     <div class="fg-hero-card__logos">
                         <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
-                        <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
+                        <a class="fg-fensa-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                            <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
+                        </a>
                     </div>
                     <div class="fg-hero-form">
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Start your project', 'fenster'); ?></a>
@@ -2487,7 +2489,11 @@ if ($is_commercial_hub) {
                 </div>
                 <div class="fg-home-proof__logos">
                     <?php foreach ($trust_items as $item) : ?>
+                        <?php if (! empty($item['url'])) : ?>
+                            <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $item['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                        <?php endif; ?>
                         <img src="<?php echo esc_url($item['src']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="lazy">
+                        <?php if (! empty($item['url'])) : ?></a><?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             </div>

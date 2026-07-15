@@ -1112,7 +1112,11 @@ $product_links = [
                 <?php foreach ($hero_trust_messages as $trust) : ?>
                     <?php if (is_array($trust['item'])) : ?>
                         <article class="fg-location-proof-wall__item">
+                            <?php if (! empty($trust['item']['url'])) : ?>
+                                <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                            <?php endif; ?>
                             <img src="<?php echo esc_url($trust['item']['src']); ?>" alt="<?php echo esc_attr($trust['item']['alt']); ?>" loading="lazy">
+                            <?php if (! empty($trust['item']['url'])) : ?></a><?php endif; ?>
                             <div>
                                 <strong><?php echo esc_html($trust['title']); ?></strong>
                                 <span><?php echo esc_html($trust['copy']); ?></span>
@@ -1522,7 +1526,11 @@ $product_links = [
                 <?php foreach ($hero_trust_messages as $trust) : ?>
                     <?php if (is_array($trust['item'])) : ?>
                         <article class="fg-location-proof-wall__item">
+                            <?php if (! empty($trust['item']['url'])) : ?>
+                                <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                            <?php endif; ?>
                             <img src="<?php echo esc_url($trust['item']['src']); ?>" alt="<?php echo esc_attr($trust['item']['alt']); ?>" loading="lazy">
+                            <?php if (! empty($trust['item']['url'])) : ?></a><?php endif; ?>
                             <div>
                                 <strong><?php echo esc_html($trust['title']); ?></strong>
                                 <span><?php echo esc_html($trust['copy']); ?></span>

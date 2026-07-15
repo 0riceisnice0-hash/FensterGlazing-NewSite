@@ -4,6 +4,7 @@ Last updated: 2026-07-15
 
 ## 2026-07-15 - FENSA Page Redesign And Fallback Template Audit
 
+- Linked every theme-rendered FENSA logo to `/fensa-approved-installers/`, including the footer, homepage proof areas, generated product/location hero proof, consultation reassurance, Why Trust Fenster and the FENSA page itself.
 - Updated the approved FENSA page copy from the business owner: Fenster applies for the certificate, FENSA sends it directly to the customer, the certificate avoids a separate Building Control sign-off for eligible work, certification matters during a property sale, and eligible registration includes a CPA-supplied Insurance Backed Guarantee that typically lasts 10 years.
 - Rebuilt the FENSA page again after owner review showed the first refinement still did not match `STYLE.md`. The page now speaks as the approved installer, says clearly that eligible work will receive a certificate, and removes the third-party `ask before you appoint an installer` wording.
 - Replaced the line-heavy hero proof strip, certificate box, dark covered/excluded band and numbered process rail with the calmer `/why-trust-fenster/` composition: one accreditation assurance panel, two alternating image-led explanations and the existing enquiry section.
