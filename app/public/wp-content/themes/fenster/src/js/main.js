@@ -155,6 +155,21 @@ if (legendAssistant) {
     messages.scrollTop = messages.scrollHeight;
   };
 
+  const appendLegendFormatting = (element, text) => {
+    const parts = text.split(/(\*\*[^*\n]+\*\*)/g);
+
+    parts.forEach((part) => {
+      if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+        const strong = document.createElement('strong');
+        strong.textContent = part.slice(2, -2);
+        element.append(strong);
+        return;
+      }
+
+      element.append(document.createTextNode(part));
+    });
+  };
+
   const addMessage = (text, role) => {
     const message = document.createElement('div');
     const author = document.createElement('span');
@@ -162,7 +177,11 @@ if (legendAssistant) {
     message.className = `legend-message legend-message--${role}`;
     author.className = 'legend-message__author';
     author.textContent = role === 'assistant' ? 'Legend' : 'You';
-    copy.textContent = text;
+    if (role === 'assistant') {
+      appendLegendFormatting(copy, text);
+    } else {
+      copy.textContent = text;
+    }
     message.append(author, copy);
     messages.append(message);
     scrollToLatestMessage();
@@ -204,7 +223,7 @@ if (legendAssistant) {
 
   const requestLegendReply = async (message) => {
     const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 32000);
+    const timeout = window.setTimeout(() => controller.abort(), 45000);
 
     try {
       const response = await fetch(endpoint, {

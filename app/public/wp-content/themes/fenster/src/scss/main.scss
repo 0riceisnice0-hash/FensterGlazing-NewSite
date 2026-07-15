@@ -1870,6 +1870,10 @@ h3 {
   white-space: pre-wrap;
 }
 
+.legend-message p strong {
+  font-weight: 850;
+}
+
 .legend-message--user p {
   border-color: var(--color-steel);
   border-radius: 8px 8px 2px;
