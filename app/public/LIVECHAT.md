@@ -26,7 +26,7 @@ The current experience includes:
 - A full-width animated header stage where Legend idles, runs right, idles, runs left and repeats at deliberate timings.
 - A `Who is Legend?` link to `/meet-the-team/#legend`.
 - An accessible live message log, typing indicator, auto-growing textarea, Enter-to-send, Shift+Enter for a new line, Escape-to-close and keyboard focus management.
-- Safe `**bold**` formatting in assistant replies without allowing model-generated HTML.
+- Safe `**bold**` formatting and one route-checked same-site `[label](/route/)` link in assistant replies without allowing model-generated HTML.
 - A mandatory `Before you chat` acknowledgement before the composer becomes available.
 - A direct Privacy Policy link and a persistent accuracy/non-binding warning beneath the enabled composer.
 
@@ -78,7 +78,7 @@ The browser sends this context and the visitor's message to:
 
 `POST /wp-json/fenster/v1/legend/chat`
 
-The WordPress REST handler validates the request, adds Fenster-specific instructions and calls the OpenAI Responses API. The response is returned to the browser and rendered as inert text, with only the small safe `**bold**` subset converted into DOM-created `strong` elements.
+The WordPress REST handler validates the request, adds Fenster-specific instructions and calls the OpenAI Responses API. The response is returned to the browser and rendered as inert text, with only the small safe `**bold**` subset and a single same-site `[label](/route/)` link converted into DOM-created `strong` and `a` elements. External, full-URL and malformed links remain plain text.
 
 After acknowledgement, the browser keeps up to 16 recent messages in `fenster_legend_chat_v1` for up to 24 hours from the latest activity. This restores and synchronises the conversation across Fenster pages and browser tabs in the same browser. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
 

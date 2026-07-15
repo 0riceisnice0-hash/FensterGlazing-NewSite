@@ -8,6 +8,7 @@ Last updated: 2026-07-15
 - Added a restricted transcript store in the separate Marketing Dashboard, linked to the existing anonymous `FGV-...` visitor and `FG2-...` journey only where optional cookies were accepted. The tracker has a Legend chats view and visitor journeys link to their saved conversations.
 - Set transcript retention to 30 days. Legend still works after rejected optional cookies; its QA transcript is chat-only in that case, with no chat tracking event or `FGV`/`FG2` journey link.
 - Updated the pre-chat acknowledgement, persistent chat notice, generated Privacy Policy and `LIVECHAT.md` so visitors are told before chatting that accepted-consent transcripts may be retained for quality assurance for up to 30 days. This remains test-only until Legend itself receives explicit live approval.
+- Legend replies now support one safe, same-site route link in `[label](/route/)` form, alongside bold text, so a useful next step such as `/book-a-consultation/` is directly tappable. The browser creates the link only after validating it remains on Fenster; no raw HTML or external links are rendered.
 
 ## 2026-07-15 - Legend AI Chat Preview On Test
 

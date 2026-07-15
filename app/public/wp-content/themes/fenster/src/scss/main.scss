@@ -1935,6 +1935,19 @@ h3 {
   font-weight: 850;
 }
 
+.legend-message p a {
+  color: var(--color-steel);
+  font-weight: 850;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.16em;
+}
+
+.legend-message p a:hover,
+.legend-message p a:focus-visible {
+  color: var(--color-accent);
+}
+
 .legend-message--user p {
   border-color: var(--color-steel);
   border-radius: 8px 8px 2px;

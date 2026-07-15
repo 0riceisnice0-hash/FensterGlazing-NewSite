@@ -281,7 +281,7 @@ if (legendAssistant) {
   };
 
   const appendLegendFormatting = (element, text) => {
-    const parts = text.split(/(\*\*[^*\n]+\*\*)/g);
+    const parts = text.split(/(\*\*[^*\n]+\*\*|\[[^\]\n]{1,80}\]\(\/[a-zA-Z0-9_\-/.?=&%#]+\))/g);
 
     parts.forEach((part) => {
       if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
@@ -289,6 +289,18 @@ if (legendAssistant) {
         strong.textContent = part.slice(2, -2);
         element.append(strong);
         return;
+      }
+
+      const link = part.match(/^\[([^\]\n]{1,80})\]\((\/[a-zA-Z0-9_\-/.?=&%#]+)\)$/);
+      if (link) {
+        const url = new URL(link[2], window.location.origin);
+        if (url.origin === window.location.origin && url.pathname.startsWith('/')) {
+          const anchor = document.createElement('a');
+          anchor.href = `${url.pathname}${url.search}${url.hash}`;
+          anchor.textContent = link[1];
+          element.append(anchor);
+          return;
+        }
       }
 
       element.append(document.createTextNode(part));
