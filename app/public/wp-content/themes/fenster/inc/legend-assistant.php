@@ -266,7 +266,7 @@ function fenster_legend_search_terms(string $query): array
     $query = strtolower(remove_accents($query));
     $query = str_replace(
         ['warrenties', 'warranties', 'warrantee', 'warranty', 'guaranties'],
-        ' guarantee warranty ',
+        ' warranty guarantee ',
         $query
     );
     $tokens = preg_split('/[^a-z0-9]+/', $query, -1, PREG_SPLIT_NO_EMPTY) ?: [];
@@ -443,6 +443,7 @@ function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
         . fenster_legend_page_context($data);
     if ($related_context !== '') {
         $reference_context .= "\n\n" . $related_context;
+        $reference_context .= "\n\nA related-site lookup returned relevant matches. Consider them before answering and name any useful Fenster page you relied on.";
     }
 
     $input = array_merge(
