@@ -7,6 +7,7 @@ const legendAssistant = document.querySelector('[data-legend-assistant]');
 if (legendAssistant) {
   const panel = legendAssistant.querySelector('[data-legend-panel]');
   const launcher = legendAssistant.querySelector('[data-legend-launcher]');
+  const promptCloseButton = legendAssistant.querySelector('[data-legend-prompt-close]');
   const closeButton = legendAssistant.querySelector('[data-legend-close]');
   const input = legendAssistant.querySelector('[data-legend-input]');
   const sendButton = legendAssistant.querySelector('[data-legend-send]');
@@ -33,10 +34,21 @@ if (legendAssistant) {
   const conversation = [];
   const welcomeMessage = messages.firstElementChild?.cloneNode(true);
   const chatStorageKey = 'fenster_legend_chat_v1';
+  const promptDismissedStorageKey = 'fenster_legend_prompt_dismissed_v1';
   const chatStorageLifetime = 24 * 60 * 60 * 1000;
 
   const newLegendConversationId = () => `CHT-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
   const newLegendMessageId = () => `LCM-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
+
+  const setLegendPromptDismissed = (dismissed) => {
+    legendAssistant.classList.toggle('is-prompt-dismissed', dismissed);
+    try {
+      if (dismissed) window.sessionStorage.setItem(promptDismissedStorageKey, '1');
+      else window.sessionStorage.removeItem(promptDismissedStorageKey);
+    } catch (error) {
+      // The visual dismissal still works when browser storage is unavailable.
+    }
+  };
 
   const recordLegendTranscript = (role, body) => {
     if (!websiteTracking.chatEndpoint || !chatConversationId || !body) return;
@@ -588,6 +600,7 @@ if (legendAssistant) {
       openChat();
     }
   });
+  promptCloseButton?.addEventListener('click', () => setLegendPromptDismissed(true));
   closeButton.addEventListener('click', closeChat);
   clearChatButton?.addEventListener('click', clearLegendChat);
   sendButton.addEventListener('click', sendMessage);
@@ -615,6 +628,11 @@ if (legendAssistant) {
   });
 
   legendAssistant.classList.add('is-chat-acknowledged');
+  try {
+    setLegendPromptDismissed(window.sessionStorage.getItem(promptDismissedStorageKey) === '1');
+  } catch (error) {
+    setLegendPromptDismissed(false);
+  }
   restoreLegendState();
   playSprite('idle');
   showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);

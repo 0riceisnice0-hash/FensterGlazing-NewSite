@@ -115,4 +115,5 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
             </span>
         </span>
     </button>
+    <button class="legend-assistant__prompt-close" type="button" data-legend-prompt-close aria-label="Hide Legend prompt">×</button>
 </aside>

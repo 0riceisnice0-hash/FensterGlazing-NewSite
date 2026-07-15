@@ -1650,6 +1650,40 @@ h3 {
   font-weight: 700;
 }
 
+.legend-assistant__prompt-close {
+  position: fixed;
+  z-index: 1101;
+  right: calc(1rem + 118px + 0.45rem);
+  bottom: calc(1rem + var(--legend-cookie-offset, 0px) + 78px);
+  display: grid;
+  width: 1.3rem;
+  height: 1.3rem;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 45, 58, 0.08);
+  color: var(--color-steel);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.legend-assistant__prompt-close:hover,
+.legend-assistant__prompt-close:focus-visible {
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+.legend-assistant.is-open .legend-assistant__prompt-close,
+.legend-assistant.is-prompt-dismissed .legend-assistant__prompt,
+.legend-assistant.is-prompt-dismissed .legend-assistant__prompt-close {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
 .legend-assistant__character {
   position: relative;
   flex: 0 0 auto;
@@ -2229,6 +2263,11 @@ h3 {
   .legend-assistant__prompt {
     max-width: 158px;
     padding: 0.6rem 0.7rem;
+  }
+
+  .legend-assistant__prompt-close {
+    right: calc(0.75rem + 96px + 0.4rem);
+    bottom: calc(0.75rem + var(--legend-cookie-offset, 0px) + 66px);
   }
 
   .legend-assistant__character {
