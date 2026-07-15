@@ -4,6 +4,7 @@ Last updated: 2026-07-15
 
 ## 2026-07-15 - FENSA Page Redesign And Fallback Template Audit
 
+- Replaced the scrape-derived `/glass-and-glazing-federation-ggf-standards/` article with a dedicated customer guidance page. It uses the approved FENSA/CPA visual structure and explains GGF guidance without wrongly implying it is FENSA certification, a product guarantee or a claim of GGF membership.
 - Added the indexable `/consumer-protection-association/` route using the FENSA page's approved image-led template. It explains the distinct role of a CPA Insurance Backed Guarantee, links to CPA consumer guidance and makes clear that the individual certificate and policy wording define the cover and duration. CPA logos now link to this route.
 - Rewrote the CPA page in direct homeowner language after review: Fenster remains the first point of contact and responsible for its written guarantee; CPA-backed insurance is the safety net if Fenster permanently ceases trading. The page now plainly separates what CPA is, what Fenster does and how the customer benefits.
 - Linked every theme-rendered FENSA logo to `/fensa-approved-installers/`, including the footer, homepage proof areas, generated product/location hero proof, consultation reassurance, Why Trust Fenster and the FENSA page itself.

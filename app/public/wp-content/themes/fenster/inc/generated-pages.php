@@ -1180,6 +1180,15 @@ function fenster_get_generated_page(?string $slug = null): ?array
         return $page_cache[$slug] = $page;
     }
 
+    if ($slug === 'glass-and-glazing-federation-ggf-standards' && isset($index[$slug]) && is_array($index[$slug])) {
+        $page = $index[$slug];
+        $page['title'] = 'Glass and Glazing Federation Guidance';
+        $page['seo']['title_tag'] = 'GGF Glass Standards Explained | Fenster Glazing';
+        $page['seo']['meta_description'] = 'Understand how Fenster uses relevant Glass and Glazing Federation guidance to assess the visual quality of new windows and doors fairly.';
+        $page['seo']['canonical'] = 'https://fensterglazing.com/glass-and-glazing-federation-ggf-standards/';
+        return $page_cache[$slug] = $page;
+    }
+
     if ($slug === 'consumer-protection-association') {
         return $page_cache[$slug] = [
             'slug' => 'consumer-protection-association',

@@ -26312,6 +26312,15 @@ html.fg-blinds-reveal-locked {
   object-position: center 48%;
 }
 
+.fg-ggf-story__image {
+  background: #ffffff !important;
+}
+
+.fg-ggf-story__image img {
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
 .fg-fensa-story h2,
 .fg-fensa-enquiry h2 {
   max-width: 15ch;
