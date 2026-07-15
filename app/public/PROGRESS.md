@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-15
 
+## 2026-07-15 - Legend Chat Quality Assurance Tracking To Test
+
+- Extended the consented Website Tracker with Legend chat opened, acknowledgement, message-sent and reply-received events.
+- Added a restricted transcript store in the separate Marketing Dashboard, linked to the existing anonymous `FGV-...` visitor and `FG2-...` journey only where optional cookies were accepted. The tracker has a Legend chats view and visitor journeys link to their saved conversations.
+- Set transcript retention to 30 days. Legend still works after rejected optional cookies, but it sends no chat tracking event or transcript in that case.
+- Updated the pre-chat acknowledgement, persistent chat notice, generated Privacy Policy and `LIVECHAT.md` so visitors are told before chatting that accepted-consent transcripts may be retained for quality assurance for up to 30 days. This remains test-only until Legend itself receives explicit live approval.
+
 ## 2026-07-15 - Legend AI Chat Preview On Test
 
 - Added Legend, Fenster's black office cat mascot, as a site-wide floating AI assistant above the cookie controls. The launcher uses the approved animated Legend sprite and responds with a wave when opened.

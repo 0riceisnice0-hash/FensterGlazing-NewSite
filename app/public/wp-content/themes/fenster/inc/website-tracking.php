@@ -28,6 +28,11 @@ function fenster_website_dashboard_consent_url(): string
     return (string) preg_replace('#/event/?$#', '/consent', fenster_website_dashboard_url());
 }
 
+function fenster_website_dashboard_chat_url(): string
+{
+    return (string) preg_replace('#/event/?$#', '/chat', fenster_website_dashboard_url());
+}
+
 function fenster_website_dashboard_secret(): string
 {
     if (defined('FENSTER_WEBSITE_DASHBOARD_SECRET')) {
@@ -138,6 +143,7 @@ function fenster_enqueue_website_tracking_config(): void
     $config = [
         'endpoint' => fenster_website_dashboard_url(),
         'consentEndpoint' => fenster_website_dashboard_consent_url(),
+        'chatEndpoint' => fenster_website_dashboard_chat_url(),
         'referenceParameter' => fenster_windowcad_reference_parameter(),
     ];
 

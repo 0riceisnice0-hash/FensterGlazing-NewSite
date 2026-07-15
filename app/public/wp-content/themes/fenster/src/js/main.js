@@ -32,10 +32,32 @@ if (legendAssistant) {
   let isOpen = false;
   let isTransitioning = false;
   let chatAcknowledged = false;
+  let chatConversationId = '';
   const conversation = [];
   const welcomeMessage = messages.firstElementChild?.cloneNode(true);
   const chatStorageKey = 'fenster_legend_chat_v1';
   const chatStorageLifetime = 24 * 60 * 60 * 1000;
+
+  const newLegendConversationId = () => `CHT-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
+  const newLegendMessageId = () => `LCM-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
+
+  const recordLegendTranscript = (role, body) => {
+    if (!trackingConsentAccepted() || !websiteTracking.chatEndpoint || !chatConversationId || !body) return;
+    const journeyId = trackWebsiteEvent(role === 'user' ? 'chat_message_sent' : 'chat_reply_received', { cta: 'Legend AI assistant' });
+    const payload = {
+      conversation_id: chatConversationId,
+      message_id: newLegendMessageId(),
+      journey_id: journeyId,
+      visitor_id: visitorReference(),
+      page_path: window.location.pathname,
+      role,
+      body: String(body).slice(0, 900),
+    };
+    window.fetch(websiteTracking.chatEndpoint, {
+      method: 'POST', mode: 'cors', keepalive: true,
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+    }).catch(() => {});
+  };
 
   const spriteSequences = {
     idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [900, 180, 180, 260, 260, 1400], loop: true },
@@ -322,6 +344,7 @@ if (legendAssistant) {
 
       return {
         acknowledged: true,
+        conversationId: typeof state.conversationId === 'string' ? state.conversationId : '',
         conversation: storedConversation(state.conversation),
       };
     } catch (error) {
@@ -336,6 +359,7 @@ if (legendAssistant) {
       window.localStorage.setItem(chatStorageKey, JSON.stringify({
         version: 1,
         acknowledged: true,
+        conversationId: chatConversationId,
         updatedAt: Date.now(),
         conversation: storedConversation(conversation),
       }));
@@ -359,6 +383,7 @@ if (legendAssistant) {
     if (!state) return;
 
     conversation.splice(0, conversation.length, ...state.conversation);
+    chatConversationId = state.conversationId || newLegendConversationId();
     renderConversation();
     setChatAcknowledged(true);
   };
@@ -469,6 +494,7 @@ if (legendAssistant) {
     if (isTransitioning || isOpen) return;
 
     isOpen = true;
+    if (trackingConsentAccepted()) trackWebsiteEvent('chat_opened', { cta: 'Legend AI assistant' });
     isTransitioning = true;
     document.documentElement.classList.add('legend-chat-open');
     panel.hidden = false;
@@ -521,6 +547,7 @@ if (legendAssistant) {
 
     addMessage(text, 'user');
     conversation.push({ role: 'user', content: text });
+    recordLegendTranscript('user', text);
     persistLegendState();
     input.value = '';
     resizeInput();
@@ -533,6 +560,7 @@ if (legendAssistant) {
       messages.querySelector('[data-legend-typing]')?.remove();
       addMessage(reply, 'assistant');
       conversation.push({ role: 'assistant', content: reply });
+      recordLegendTranscript('assistant', reply);
       persistLegendState();
     } catch (error) {
       messages.querySelector('[data-legend-typing]')?.remove();
@@ -560,7 +588,9 @@ if (legendAssistant) {
   });
   closeButton.addEventListener('click', closeChat);
   consentContinue?.addEventListener('click', () => {
+    chatConversationId = chatConversationId || newLegendConversationId();
     setChatAcknowledged(true);
+    if (trackingConsentAccepted()) trackWebsiteEvent('chat_acknowledged', { cta: 'Legend AI assistant' });
     persistLegendState();
     input.focus();
   });

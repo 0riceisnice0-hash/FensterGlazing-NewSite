@@ -82,6 +82,8 @@ The WordPress REST handler validates the request, adds Fenster-specific instruct
 
 After acknowledgement, the browser keeps up to 16 recent messages in `fenster_legend_chat_v1` for up to 24 hours from the latest activity. This restores and synchronises the conversation across Fenster pages and browser tabs in the same browser. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
 
+If the visitor has also accepted optional cookies, each user message and Legend reply is copied to the authenticated Marketing Dashboard Website Tracker for quality assurance. The copy is linked to the existing anonymous `FGV-...` visitor and `FG2-...` journey, start page and timestamps, and automatically expires 30 days after each message. The dashboard has a dedicated Legend chats view and the visitor journey links to any saved transcript. If optional cookies are rejected, Legend can still answer but no dashboard transcript or chat tracking event is sent.
+
 ## Cross-Page Fenster Search
 
 Legend is not limited to the visible page. When a factual Fenster question needs more information, the backend searches a bounded local index of other published Fenster theme and WordPress pages.
@@ -145,7 +147,7 @@ Before typing, the visitor must choose `Continue to chat`. The acknowledgement e
 
 The alternative `Not now` action closes the drawer.
 
-The acknowledgement and up to 16 recent messages are stored in `fenster_legend_chat_v1` for up to 24 hours from the latest chat activity so the visitor can continue across Fenster pages and tabs. `Clear chat` removes the stored message history, and expired state is removed when Legend next loads. This assistant storage is deliberately separate from analytics and marketing cookie consent and must never change `fenster_cookie_consent`. A visitor who rejected optional cookies remains rejected before, during and after using Legend.
+The acknowledgement and up to 16 recent messages are stored in `fenster_legend_chat_v1` for up to 24 hours from the latest chat activity so the visitor can continue across Fenster pages and tabs. `Clear chat` removes the browser-stored message history, and expired state is removed when Legend next loads. The optional-cookie-accepted QA copy is retained separately for 30 days and is not deleted by Clear chat. This assistant storage is deliberately separate from analytics and marketing cookie consent and must never change `fenster_cookie_consent`. A visitor who rejected optional cookies remains rejected before, during and after using Legend.
 
 The Privacy Policy now contains a dedicated `Legend AI assistant` section explaining the processing, limitations, lead-record position and separation from optional cookies.
 
@@ -162,7 +164,7 @@ The backend currently includes:
 - A server-side OpenAI key only.
 - OpenAI request setting `store: false`.
 - A request timeout and clear customer-facing error states.
-- No theme logging of prompts, page snapshots or model replies.
+- No WordPress theme logging of prompts, page snapshots or model replies. The only retained QA copy is the consent-linked 30-day transcript in the authenticated Marketing Dashboard, as disclosed before chat and in the Privacy Policy.
 
 Do not expose the OpenAI key in PHP-rendered HTML, JavaScript, screenshots, commits, documentation or browser storage.
 
@@ -195,6 +197,7 @@ A future live configuration would belong in the live Bedrock `.env`, not the the
 - `wp-content/themes/fenster/footer.php`: loads the shared component site-wide.
 - `wp-content/themes/fenster/functions.php`: loads the Legend REST backend.
 - `wp-content/themes/fenster/inc/generated-pages.php`: Legend disclosure on the generated Privacy Policy.
+- `Marketing-Dashboard` repository: `migrations/0015_legend_chat_qa.sql`, `functions/api/[[path]].js` and `public/app.js` store and present the restricted 30-day transcript QA view.
 
 ## Build And Test Workflow
 

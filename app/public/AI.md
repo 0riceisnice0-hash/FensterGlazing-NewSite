@@ -127,6 +127,7 @@ PHP lint example:
 - Only accepted optional-cookie choices may create `FG2`/`FGV`, page/click/time events, WindowCAD joins or dashboard conversion events. A WindowCAD quote after rejection must use the separate WindowCAD **Tracking** field value `rejected-cookies`; before a choice it uses `cookie-consent-not-accepted`. Both still go to the office, but neither may be relayed into the dashboard.
 - Consent reporting is deliberately aggregate-only: the dashboard may count accepts and rejects per day, but must never attach those records to a visitor, URL, source, device or journey. Do not bring back banner-impression totals: without pre-consent identity they are not a dependable metric and can be inflated by anonymous sessions/crawlers.
 - Consent-safe journey detail may include page time, scroll milestones, CTA labels/destinations and form-field *names* that failed validation, but never customer-entered values. Lead status is a dashboard-only manual business outcome tied to an existing consented completed lead.
+- **Narrow exception — Legend QA.** The test-only Legend assistant may send its actual user/assistant transcript to the authenticated Marketing Dashboard only after both the chat acknowledgement and optional-cookie acceptance. It is linked to `FGV`/`FG2`, retained for 30 days, disclosed in the chat notice and Privacy Policy, and must never be put in `website_events`, AdminBase or general analytics. Rejected-cookie visitors can still use chat but must create no dashboard transcript.
 
 ## Legend AI Assistant Rule
 
