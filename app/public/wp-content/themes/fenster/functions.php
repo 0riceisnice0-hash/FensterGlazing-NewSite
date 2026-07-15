@@ -22,6 +22,7 @@ $fenster_required_files = [
     'inc/setup.php',
     'inc/security.php',
     'inc/consent.php',
+    'inc/legend-assistant.php',
     'inc/assets.php',
     'inc/template-tags.php',
     'inc/website-tracking.php',

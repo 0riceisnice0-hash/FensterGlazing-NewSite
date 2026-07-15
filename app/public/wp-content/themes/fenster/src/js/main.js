@@ -11,6 +11,8 @@ if (legendAssistant) {
   const input = legendAssistant.querySelector('[data-legend-input]');
   const sendButton = legendAssistant.querySelector('[data-legend-send]');
   const messages = legendAssistant.querySelector('[data-legend-messages]');
+  const endpoint = legendAssistant.dataset.legendEndpoint || '';
+  const nonce = legendAssistant.dataset.legendNonce || '';
   const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
   const roamer = legendAssistant.querySelector('[data-legend-roamer]');
   const roamerSprite = legendAssistant.querySelector('[data-legend-roamer-sprite]');
@@ -21,6 +23,7 @@ if (legendAssistant) {
   let roamerMotionTimer = 0;
   let roamerIsRight = false;
   let isOpen = false;
+  const conversation = [];
 
   const spriteSequences = {
     idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [900, 180, 180, 260, 260, 1400], loop: true },
@@ -174,6 +177,64 @@ if (legendAssistant) {
     scrollToLatestMessage();
   };
 
+  const normalisePageText = (value) => value
+    .replace(/\r/g, '')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+
+  const collectPageContext = () => {
+    const description = document.querySelector('meta[name="description"]')?.content || '';
+    const headerText = document.querySelector('.site-header')?.textContent || '';
+    const mainText = document.querySelector('main')?.textContent || '';
+    const footerText = document.querySelector('.site-footer')?.textContent || '';
+    const pageUrl = new URL(window.location.href);
+    pageUrl.username = '';
+    pageUrl.password = '';
+    pageUrl.search = '';
+    pageUrl.hash = '';
+
+    return {
+      page_title: document.title.slice(0, 180),
+      page_url: pageUrl.href.slice(0, 1000),
+      page_description: description.slice(0, 320),
+      page_text: normalisePageText(`${headerText}\n\n${mainText}\n\n${footerText}`).slice(0, 60000),
+    };
+  };
+
+  const requestLegendReply = async (message) => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 32000);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Fenster-Legend-Nonce': nonce,
+        },
+        body: JSON.stringify({
+          message,
+          conversation: conversation.slice(-8),
+          ...collectPageContext(),
+        }),
+        signal: controller.signal,
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok || typeof payload.reply !== 'string' || !payload.reply.trim()) {
+        const error = new Error(payload.message || 'Legend could not answer just now.');
+        error.code = payload.code || 'request_failed';
+        throw error;
+      }
+
+      return payload.reply.trim();
+    } finally {
+      window.clearTimeout(timeout);
+    }
+  };
+
   const openChat = () => {
     isOpen = true;
     panel.hidden = false;
@@ -197,11 +258,12 @@ if (legendAssistant) {
     launcher.focus();
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const text = input.value.trim();
     if (!text || replyTimer) return;
 
     addMessage(text, 'user');
+    conversation.push({ role: 'user', content: text });
     input.value = '';
     resizeInput();
     sendButton.disabled = true;
@@ -209,14 +271,24 @@ if (legendAssistant) {
     addTypingIndicator();
     playSprite('thinking');
 
-    replyTimer = window.setTimeout(() => {
+    replyTimer = 1;
+    try {
+      const reply = await requestLegendReply(text);
       messages.querySelector('[data-legend-typing]')?.remove();
-      addMessage('Thanks for your message. I’m currently in preview mode, so this conversation isn’t sent to the Fenster team yet. Live chat will be connected here soon.', 'assistant');
+      addMessage(reply, 'assistant');
+      conversation.push({ role: 'assistant', content: reply });
+    } catch (error) {
+      messages.querySelector('[data-legend-typing]')?.remove();
+      const fallback = error?.code === 'not_configured'
+        ? 'My AI connection hasn’t been switched on yet. Once the server key is added, I’ll be able to answer using this page.'
+        : 'I’m having trouble connecting just now. Please try again shortly, or contact the Fenster team if you need help now.';
+      addMessage(fallback, 'assistant');
+    } finally {
       input.disabled = false;
       replyTimer = 0;
       playSprite('wave');
       input.focus();
-    }, reduceMotion.matches ? 250 : 1100);
+    }
   };
 
   launcher.addEventListener('click', () => {

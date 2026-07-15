@@ -13,8 +13,16 @@ if (! defined('ABSPATH')) {
 }
 
 $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet.webp');
+$legend_connected = function_exists('fenster_legend_is_configured') && fenster_legend_is_configured();
 ?>
-<aside class="legend-assistant" data-legend-assistant style="--legend-cookie-offset: 0px;">
+<aside
+    class="legend-assistant"
+    data-legend-assistant
+    data-legend-endpoint="<?php echo esc_url(rest_url('fenster/v1/legend/chat')); ?>"
+    data-legend-nonce="<?php echo esc_attr(wp_create_nonce('fenster_legend_chat')); ?>"
+    data-legend-connected="<?php echo $legend_connected ? 'true' : 'false'; ?>"
+    style="--legend-cookie-offset: 0px;"
+>
     <section
         class="legend-assistant__panel"
         id="legend-assistant-panel"
@@ -28,7 +36,7 @@ $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet
             <div class="legend-assistant__identity">
                 <p class="legend-assistant__eyebrow">Fenster AI assistant</p>
                 <h2 id="legend-assistant-title">Legend the cat</h2>
-                <p class="legend-assistant__status"><span aria-hidden="true"></span> Preview mode</p>
+                <p class="legend-assistant__status"><span aria-hidden="true"></span> <?php echo esc_html($legend_connected ? 'AI online' : 'Awaiting connection'); ?></p>
                 <a class="legend-assistant__about" href="<?php echo esc_url(home_url('/meet-the-team/#legend')); ?>">Who is Legend?</a>
             </div>
             <div class="legend-assistant__stage" aria-hidden="true">
@@ -46,7 +54,7 @@ $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet
         <div class="legend-assistant__messages" data-legend-messages role="log" aria-live="polite" aria-relevant="additions">
             <div class="legend-message legend-message--assistant">
                 <span class="legend-message__author">Legend</span>
-                <p id="legend-assistant-description">Hello. I’m Legend, Fenster’s real office cat and Chief Meow Officer. I’m also the face of this AI assistant while live chat is in preview.</p>
+                <p id="legend-assistant-description">Hello. I’m Legend, Fenster’s real office cat and Chief Meow Officer. Ask me about this page and I’ll help point you in the right direction.</p>
             </div>
         </div>
 
@@ -65,7 +73,7 @@ $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 16 8-16 8 2.2-8L4 4Zm2.2 8H20" /></svg>
             </button>
         </div>
-        <p class="legend-assistant__notice">Preview only. Messages aren’t sent to the Fenster team yet.</p>
+        <p class="legend-assistant__notice"><?php echo esc_html($legend_connected ? 'AI assistant. Please don’t share sensitive personal information.' : 'AI connection coming soon. Messages aren’t sent to the Fenster team.'); ?></p>
     </section>
 
     <button
