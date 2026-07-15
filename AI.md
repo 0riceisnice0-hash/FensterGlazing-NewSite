@@ -10,10 +10,11 @@ For a new Codex chat, start by reading these tracked docs in order:
 
 1. `app/public/AI.md`
 2. `app/public/HANDOVER.md`
-3. `app/public/LIVECHANGES.md`
-4. `app/public/STYLE.md`
-5. `app/public/AUDIT.md`
-6. `app/public/PROGRESS.md`
+3. `app/public/LIVECHAT.md`
+4. `app/public/LIVECHANGES.md`
+5. `app/public/STYLE.md`
+6. `app/public/AUDIT.md`
+7. `app/public/PROGRESS.md`
 
 The GitHub repo is:
 

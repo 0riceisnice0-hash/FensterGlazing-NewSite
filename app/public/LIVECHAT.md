@@ -1,0 +1,263 @@
+# Fenster Glazing Legend Live Chat
+
+Last updated: 2026-07-15
+
+This document explains the Legend AI assistant currently deployed on the password-protected Fenster test site. It covers the customer experience, frontend animation, WordPress and OpenAI integration, privacy and consent rules, test status, main files and implementation commits.
+
+## Current Status
+
+- Legend is deployed on `https://test.fensterglazing.com/` only.
+- The latest Legend implementation deployed to test is commit `0fb84b5` (`Fix Legend drawer jump path`).
+- The production site at `https://fensterglazing.com/` was not deployed during this work. Legend must be treated as test-only until the owner explicitly approves a live release.
+- The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
+- The test OpenAI connection is configured and has returned verified live model responses. The API key remains in the test Bedrock `.env` and is not stored in the theme or this repository.
+
+## What Was Implemented
+
+Legend is Fenster's animated, site-wide AI assistant. He is presented as Fenster's real office cat and Chief Meow Officer while remaining clearly identified as an AI assistant.
+
+The current experience includes:
+
+- A standalone animated Legend launcher with a speech bubble reading `Need a hand?` and `I'm Fenster's AI assistant`.
+- A soft white halo behind the closed Legend sprite so the dark character remains visible over dark page backgrounds.
+- A full-height chat drawer fixed to the right edge of the viewport rather than a floating chat box.
+- A drawer that slides in from and out to the right.
+- A single-character handoff. The launcher Legend jumps into the drawer header instead of creating a second visible Legend.
+- A full-width animated header stage where Legend idles, runs right, idles, runs left and repeats at deliberate timings.
+- A `Who is Legend?` link to `/meet-the-team/#legend`.
+- An accessible live message log, typing indicator, auto-growing textarea, Enter-to-send, Shift+Enter for a new line, Escape-to-close and keyboard focus management.
+- Safe `**bold**` formatting in assistant replies without allowing model-generated HTML.
+- A mandatory `Before you chat` acknowledgement before the composer becomes available.
+- A direct Privacy Policy link and a persistent accuracy/non-binding warning beneath the enabled composer.
+
+## Drawer And Cookie-Control Behaviour
+
+On desktop the drawer is `420px` wide, limited by the available viewport width, and covers the viewport from top to bottom. The compact Cookies button moves to a position `16px` left of the open drawer and returns to the bottom-right when the drawer closes.
+
+On mobile the drawer becomes full width and full height. The Cookies button is temporarily hidden while the drawer is open because there is no safe space beside a full-width panel. Closing Legend restores the Cookies control.
+
+Legend observes the cookie banner and settings button only for launcher positioning. Opening or using chat must never accept, reject or overwrite the visitor's optional-cookie choice.
+
+## Animation System
+
+The website uses the packaged `legend-spritesheet.webp` atlas. The runtime intentionally references only these verified rows:
+
+- Row `0`: idle.
+- Row `1`: running right.
+- Row `2`: running left.
+- Row `4`: jumping.
+
+Thinking, waving and other atlas rows must not be added to the website animation sequences unless the owner explicitly requests them and the frames are visually checked first.
+
+The launcher-to-header handoff uses the five verified jumping frames at slower timings. The travelling sprite follows a four-stage motion path:
+
+1. Lift away from the launcher.
+2. Reach the arc apex.
+3. Descend towards the drawer header.
+4. Land at the final header-roamer position.
+
+The landing point is calculated from the drawer's settled right-edge position. Do not measure the target against the drawer's temporary off-screen transform. That earlier mistake made Legend fly right towards the opening keyframe and then teleport back when the header sprite appeared.
+
+Reduced-motion visitors receive an instant handoff without the travel animation.
+
+## How The Chat Works
+
+The browser collects a bounded current-page context containing:
+
+- Page title.
+- Canonicalised same-site page URL with credentials, query string and hash removed.
+- Meta description.
+- Header and navigation text.
+- Main page content.
+- Footer text.
+- The most recent messages from the current in-panel conversation.
+
+The browser sends this context and the visitor's message to:
+
+`POST /wp-json/fenster/v1/legend/chat`
+
+The WordPress REST handler validates the request, adds Fenster-specific instructions and calls the OpenAI Responses API. The response is returned to the browser and rendered as inert text, with only the small safe `**bold**` subset converted into DOM-created `strong` elements.
+
+The browser keeps conversation state only for the current loaded page. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
+
+## Cross-Page Fenster Search
+
+Legend is not limited to the visible page. When a factual Fenster question needs more information, the backend searches a bounded local index of other published Fenster theme and WordPress pages.
+
+The search process:
+
+- Excludes the current route.
+- Normalises search terms, including common warranty spelling variants.
+- Scores titles, descriptions and page content.
+- Selects up to four relevant sources.
+- Supplies short excerpts with page titles and URLs.
+- Caps the complete related-page context before it reaches the model.
+
+This is same-site, read-only retrieval. It is not unrestricted internet browsing. All visible-page and retrieved-page text is labelled as untrusted reference material and cannot override the server's assistant instructions.
+
+## Legend's Behaviour Rules
+
+Legend must:
+
+- Answer only questions about Fenster Glazing, its products, services, pages, customer journey and directly related glazing decisions.
+- Redirect unrelated programming, homework, general knowledge, politics, entertainment and creative-writing requests back to Fenster in one short response.
+- Use concise British English with short paragraphs rather than walls of text.
+- Avoid em dashes.
+- Be honest when the available Fenster information does not support an answer.
+- Direct visitors to the real contact, quote or consultation routes when human action is required.
+- Never claim to book appointments, send enquiries, check customer accounts or pass a message to the team.
+- Avoid repeating or generating profanity, slurs or abusive language. Input history and model output are filtered server-side as an additional safeguard.
+- Treat its answers as general guidance, not a quotation, technical specification, warranty decision, contract, professional advice or legally binding commitment.
+
+## Privacy And Chat Acknowledgement
+
+Before typing, the visitor must choose `Continue to chat`. The acknowledgement explains that:
+
+- Legend uses AI.
+- The message and relevant page content are processed to generate a reply.
+- Replies may be inaccurate.
+- Replies do not form quotations, contracts, warranties, professional advice or legally binding commitments.
+- Sensitive personal information should not be entered.
+- The Privacy Policy contains further information.
+
+The alternative `Not now` action closes the drawer.
+
+This acknowledgement is held only in JavaScript memory for the current page visit. It is deliberately separate from analytics and marketing cookie consent. It does not write a chat-consent value to browser storage and it must never change `fenster_cookie_consent`. A visitor who rejected optional cookies remains rejected before, during and after using Legend.
+
+The Privacy Policy now contains a dedicated `Legend AI assistant` section explaining the processing, limitations, lead-record position and separation from optional cookies.
+
+## Security And Data Limits
+
+The backend currently includes:
+
+- A WordPress REST nonce.
+- Same-site request validation.
+- An anonymous HMAC-based request fingerprint.
+- A limit of 40 requests per ten-minute rate-limit window.
+- Message, history, page-context, search-context and output length limits.
+- Profanity redaction on visitor conversation input and assistant output.
+- A server-side OpenAI key only.
+- OpenAI request setting `store: false`.
+- A request timeout and clear customer-facing error states.
+- No theme logging of prompts, page snapshots or model replies.
+
+Do not expose the OpenAI key in PHP-rendered HTML, JavaScript, screenshots, commits, documentation or browser storage.
+
+## OpenAI Configuration
+
+The Bedrock environment variables are:
+
+```dotenv
+FENSTER_OPENAI_API_KEY='replace-with-the-server-key'
+FENSTER_OPENAI_MODEL='gpt-5.4-mini'
+```
+
+`FENSTER_OPENAI_API_KEY` is required. `FENSTER_OPENAI_MODEL` is optional because the backend currently defaults to `gpt-5.4-mini`.
+
+Test configuration belongs in:
+
+`~/www/test.fensterglazing.com/public_html/.env`
+
+A future live configuration would belong in the live Bedrock `.env`, not the theme. Do not copy or expose the test key when preparing a live deployment.
+
+## Main Files
+
+- `wp-content/themes/fenster/template-parts/components/legend-assistant.php`: drawer, launcher, acknowledgement, composer and customer-facing notices.
+- `wp-content/themes/fenster/inc/legend-assistant.php`: environment configuration, instructions, validation, rate limiting, same-site search and OpenAI request.
+- `wp-content/themes/fenster/src/js/main.js`: current-page context, chat transport, safe formatting, focus behaviour, sprite timing, roaming and jump handoff.
+- `wp-content/themes/fenster/src/scss/main.scss`: launcher, white halo, drawer, cookie-control movement, responsive layout and animation styling.
+- `wp-content/themes/fenster/assets/js/main.js`: compiled browser JavaScript. Rebuild rather than editing directly.
+- `wp-content/themes/fenster/assets/css/main.css`: compiled CSS. Rebuild rather than editing directly.
+- `wp-content/themes/fenster/assets/images/assistant/legend-spritesheet.webp`: website animation atlas.
+- `wp-content/themes/fenster/footer.php`: loads the shared component site-wide.
+- `wp-content/themes/fenster/functions.php`: loads the Legend REST backend.
+- `wp-content/themes/fenster/inc/generated-pages.php`: Legend disclosure on the generated Privacy Policy.
+
+## Build And Test Workflow
+
+After changing source JS or SCSS, run from the theme directory:
+
+```powershell
+npm.cmd run build
+```
+
+For every functional or visual change:
+
+1. Make the change locally.
+2. Rebuild compiled assets.
+3. Run `git diff --check` and PHP-lint changed PHP files.
+4. Commit and push to GitHub `main`.
+5. Deploy the committed theme to the password-protected test site only.
+6. Flush WordPress and SiteGround caches.
+7. Check closed, opening, open, sending and closing states.
+8. Check desktop and mobile viewports.
+9. Confirm the Cookies control and existing rejection remain correct.
+10. Do not deploy live without explicit owner approval.
+
+## Verification Completed On Test
+
+The implementation has been checked on the protected test site for:
+
+- Live OpenAI responses.
+- Current-page identification and answers.
+- Cross-page Fenster retrieval.
+- Safe bold rendering.
+- Fenster-only scope enforcement.
+- Profanity redaction and recall protection.
+- Rate-limit and connection failure copy.
+- Pre-chat acknowledgement and composer locking.
+- Optional-cookie rejection remaining unchanged after chat use.
+- Desktop drawer dimensions at `1440 x 900`.
+- Mobile full-height drawer dimensions at `390 x 844`.
+- Cookies button movement and restoration.
+- No horizontal page overflow.
+- Correct animation rows only.
+- Jump-path landing coordinates with no rightward overshoot or teleport.
+
+## Before Any Live Release
+
+Legend is not approved for production merely because the code is on `main`. Before a live release:
+
+1. Obtain explicit owner approval for the complete test experience and legal wording.
+2. Compare the current live commit with `main` so unrelated test-only changes are not accidentally released.
+3. Confirm the Privacy Policy and non-binding language are accepted for production.
+4. Configure the live server key separately and confirm the intended model and cost controls.
+5. Recheck rate limits, failure handling and mobile drawer behaviour.
+6. Back up or record the live theme checkpoint.
+7. Deploy the approved theme commit using the theme-only process in `LIVECHANGES.md`.
+8. Flush live caches and repeat the chat, consent and responsive tests on production.
+
+## Legend Commit History
+
+All commits below were created on 2026-07-15. They are listed in implementation order.
+
+| Commit | Change |
+| --- | --- |
+| `876c480` | Added the first Legend AI chat preview. |
+| `62389e5` | Corrected the initial mobile panel alignment. |
+| `e23a54a` | Kept the assistant clear of the cookie banner. |
+| `6504a6e` | Documented the initial test deployment. |
+| `ed4944f` | Expanded the animated Legend header. |
+| `af9ef91` | Documented the refined header behaviour. |
+| `18ce5a5` | Added Legend movement across the chat header. |
+| `12ef19a` | Documented the first motion correction. |
+| `89b4529` | Corrected movement to directional running rows. |
+| `cb6068b` | Documented the verified running rows. |
+| `9885f52` | Connected the WordPress chat route to the OpenAI Responses API. |
+| `179b907` | Documented the server-side OpenAI configuration. |
+| `2b08351` | Refined the standalone launcher, reply length and tone. |
+| `277f02a` | Added cross-page Fenster search and safe bold rendering. |
+| `50eea15` | Clarified how related-page sources are presented to Legend. |
+| `2bfee01` | Improved local site-search ranking. |
+| `9f1e81a` | Preserved richer relevant search sources. |
+| `6f62fb3` | Strengthened related-page grounding. |
+| `30e8a36` | Normalised uncertainty after cross-page retrieval. |
+| `299930a` | Replaced duplicate characters with the jump handoff. |
+| `3e425e3` | Restricted website animation rows and clarified AI limitations. |
+| `20fb5df` | Restricted Legend to Fenster-related support and added profanity safeguards. |
+| `15f6905` | Added the explicit chat acknowledgement and Privacy Policy disclosure. |
+| `377da55` | Converted the floating chat panel into a full-height side drawer. |
+| `46d9289` | Kept the mobile drawer above the fixed site header. |
+| `0fb84b5` | Rebuilt the jump path around the drawer's settled position to remove the fly-off and teleport. |
+
+Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.

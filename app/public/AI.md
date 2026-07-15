@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-07-13
+Last updated: 2026-07-15
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -13,6 +13,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 - `STYLE.md` for site-wide visual styling, background, section rhythm and design rules.
 - `HOMEPAGE.md` for homepage-specific architecture and design.
 - `PROGRESS.md` for dated work logs and completed changes.
+- `LIVECHAT.md` for the complete Legend AI assistant implementation and test handover.
 
 ## Important Updates
 

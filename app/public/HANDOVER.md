@@ -12,6 +12,7 @@ Use:
 - `HOMEPAGE.md` for homepage-specific design and implementation context.
 - `PROGRESS.md` for dated progress reports.
 - `LIVECHANGES.md` for the exact SSH/deploy workflow, live safety rules and what not to touch.
+- `LIVECHAT.md` for the complete Legend AI assistant architecture, behaviour, test-only status and commit history.
 
 ## Important Updates
 
