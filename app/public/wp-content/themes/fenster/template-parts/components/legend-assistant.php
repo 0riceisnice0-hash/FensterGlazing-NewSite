@@ -32,9 +32,11 @@ $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet
                 <a class="legend-assistant__about" href="<?php echo esc_url(home_url('/meet-the-team/#legend')); ?>">Who is Legend?</a>
             </div>
             <div class="legend-assistant__stage" aria-hidden="true">
-                <span class="legend-assistant__roamer">
-                    <span class="legend-sprite" data-legend-sprite>
-                        <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
+                <span class="legend-assistant__roamer" data-legend-roamer>
+                    <span class="legend-assistant__roamer-facing" data-legend-roamer-facing>
+                        <span class="legend-sprite" data-legend-roamer-sprite>
+                            <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
+                        </span>
                     </span>
                 </span>
             </div>

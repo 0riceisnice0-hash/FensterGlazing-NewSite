@@ -1686,8 +1686,8 @@ h3 {
 
 .legend-assistant__header {
   position: relative;
-  flex: 0 0 132px;
-  min-height: 132px;
+  flex: 0 0 150px;
+  min-height: 150px;
   padding: 0.9rem 3.4rem 0.8rem 0.9rem;
   overflow: hidden;
   background: var(--color-steel);
@@ -1765,25 +1765,42 @@ h3 {
 }
 
 .legend-assistant__stage {
-  --legend-roam-distance: 72px;
+  --legend-roam-distance: 86px;
   position: absolute;
   z-index: 1;
-  right: 3.35rem;
+  right: 0;
   bottom: 0;
-  width: 146px;
-  height: 122px;
+  width: 218px;
+  height: 150px;
   overflow: hidden;
-  background: radial-gradient(circle at 60% 94%, rgba(46, 172, 102, 0.2), transparent 55%);
+  background:
+    radial-gradient(circle at 68% 88%, rgba(46, 172, 102, 0.24), transparent 50%),
+    linear-gradient(90deg, rgba(0, 45, 58, 0) 0, #d7eee4 28%, #edf8f3 100%);
 }
 
 .legend-assistant__roamer {
   position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 72px;
+  bottom: -4px;
+  left: 24px;
+  width: 104px;
   aspect-ratio: 192 / 208;
-  animation: legend-roam 16s ease-in-out infinite;
+  transition: transform 2200ms linear;
+}
+
+.legend-assistant__roamer.is-at-right {
+  transform: translateX(var(--legend-roam-distance));
+}
+
+.legend-assistant__roamer-facing {
+  position: absolute;
+  inset: 0;
+  transform: scaleX(1);
   transform-origin: center bottom;
+  transition: transform 120ms ease;
+}
+
+.legend-assistant__roamer-facing.is-facing-left {
+  transform: scaleX(-1);
 }
 
 .legend-assistant__close {
@@ -1798,8 +1815,8 @@ h3 {
   place-items: center;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: rgba(0, 45, 58, 0.12);
+  color: var(--color-steel);
   cursor: pointer;
 }
 
@@ -1969,14 +1986,6 @@ h3 {
   30% { opacity: 1; transform: translateY(-3px); }
 }
 
-@keyframes legend-roam {
-  0%, 18% { transform: translateX(0) scaleX(1); }
-  42% { transform: translateX(var(--legend-roam-distance)) scaleX(1); }
-  42.01%, 58% { transform: translateX(var(--legend-roam-distance)) scaleX(-1); }
-  82% { transform: translateX(0) scaleX(-1); }
-  82.01%, 100% { transform: translateX(0) scaleX(1); }
-}
-
 @media (max-width: 560px) {
   .legend-assistant {
     left: 0.75rem;
@@ -2020,8 +2029,13 @@ h3 {
   }
 
   .legend-assistant__stage {
-    --legend-roam-distance: 50px;
-    width: 122px;
+    --legend-roam-distance: 62px;
+    width: 190px;
+  }
+
+  .legend-assistant__roamer {
+    left: 20px;
+    width: 96px;
   }
 }
 
@@ -2030,6 +2044,7 @@ h3 {
   .legend-assistant__launcher,
   .legend-assistant__panel,
   .legend-assistant__roamer,
+  .legend-assistant__roamer-facing,
   .legend-message--typing i {
     transition: none;
     animation: none;

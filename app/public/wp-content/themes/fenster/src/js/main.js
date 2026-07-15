@@ -12,15 +12,22 @@ if (legendAssistant) {
   const sendButton = legendAssistant.querySelector('[data-legend-send]');
   const messages = legendAssistant.querySelector('[data-legend-messages]');
   const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
+  const roamer = legendAssistant.querySelector('[data-legend-roamer]');
+  const roamerFacing = legendAssistant.querySelector('[data-legend-roamer-facing]');
+  const roamerSprite = legendAssistant.querySelector('[data-legend-roamer-sprite]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let replyTimer = 0;
   let spriteTimer = 0;
+  let roamerSpriteTimer = 0;
+  let roamerMotionTimer = 0;
+  let roamerIsRight = false;
   let isOpen = false;
 
   const spriteSequences = {
     idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [900, 180, 180, 260, 260, 1400], loop: true },
     wave: { row: 3, frames: [0, 1, 2, 3], timings: [140, 140, 140, 280], loop: false },
     thinking: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
+    run: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
   };
 
   const showSpriteFrame = (row, column) => {
@@ -57,6 +64,63 @@ if (legendAssistant) {
     };
 
     advance();
+  };
+
+  const showRoamerFrame = (row, column) => {
+    roamerSprite?.style.setProperty('--legend-row', row);
+    roamerSprite?.style.setProperty('--legend-column', column);
+  };
+
+  const playRoamerSprite = (name = 'idle') => {
+    window.clearTimeout(roamerSpriteTimer);
+    const sequence = spriteSequences[name] || spriteSequences.idle;
+    let index = 0;
+
+    if (reduceMotion.matches) {
+      showRoamerFrame(sequence.row, sequence.frames[0]);
+      return;
+    }
+
+    const advance = () => {
+      showRoamerFrame(sequence.row, sequence.frames[index]);
+      const delay = sequence.timings[index] || 160;
+      index = (index + 1) % sequence.frames.length;
+      roamerSpriteTimer = window.setTimeout(advance, delay);
+    };
+
+    advance();
+  };
+
+  const stopRoaming = () => {
+    window.clearTimeout(roamerMotionTimer);
+    window.clearTimeout(roamerSpriteTimer);
+  };
+
+  const startRoaming = () => {
+    stopRoaming();
+
+    if (!roamer || !roamerFacing || !roamerSprite || reduceMotion.matches) {
+      showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
+      return;
+    }
+
+    const scheduleNextRun = () => {
+      const pause = roamerIsRight ? 2800 : 3400;
+      playRoamerSprite('idle');
+      roamerMotionTimer = window.setTimeout(() => {
+        const movingRight = !roamerIsRight;
+        roamerFacing.classList.toggle('is-facing-left', !movingRight);
+        playRoamerSprite('run');
+        roamer.classList.toggle('is-at-right', movingRight);
+        roamerMotionTimer = window.setTimeout(() => {
+          roamerIsRight = movingRight;
+          scheduleNextRun();
+        }, 2200);
+      }, pause);
+    };
+
+    playRoamerSprite('wave');
+    roamerMotionTimer = window.setTimeout(scheduleNextRun, 900);
   };
 
   const syncCookieOffset = () => {
@@ -117,6 +181,7 @@ if (legendAssistant) {
     launcher.setAttribute('aria-expanded', 'true');
     legendAssistant.classList.add('is-open');
     playSprite('wave');
+    startRoaming();
     window.setTimeout(() => input.focus(), reduceMotion.matches ? 0 : 180);
   };
 
@@ -126,6 +191,11 @@ if (legendAssistant) {
     launcher.setAttribute('aria-expanded', 'false');
     legendAssistant.classList.remove('is-open');
     playSprite('idle');
+    stopRoaming();
+    roamer?.classList.remove('is-at-right');
+    roamerFacing?.classList.remove('is-facing-left');
+    roamerIsRight = false;
+    showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
     launcher.focus();
   };
 
@@ -177,6 +247,7 @@ if (legendAssistant) {
   window.addEventListener('load', syncCookieOffset, { once: true });
 
   playSprite('idle');
+  showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', observeCookieControls, { once: true });
   } else {
