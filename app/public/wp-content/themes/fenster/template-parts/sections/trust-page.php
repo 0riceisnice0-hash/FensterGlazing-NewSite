@@ -152,8 +152,13 @@ $team_cards = [
             <aside class="fg-trust-hero__checklist fg-trust-hero__proof" aria-label="<?php esc_attr_e('Fenster trust proof', 'fenster'); ?>">
                 <div class="fg-trust-hero__logos">
                     <?php foreach ($hero_trust_cards as $hero_trust_card) : ?>
+                        <?php $is_fensa_hero_logo = str_contains((string) ($hero_trust_card['src'] ?? ''), '/fensa.'); ?>
                         <div class="fg-trust-hero__logo-card">
+                            <?php if ($is_fensa_hero_logo && ! empty($hero_trust_card['url'])) : ?>
+                                <a class="fg-fensa-logo-link" href="<?php echo esc_url((string) $hero_trust_card['url']); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                            <?php endif; ?>
                             <img src="<?php echo esc_url($hero_trust_card['src']); ?>" alt="<?php echo esc_attr($hero_trust_card['alt']); ?>" loading="eager">
+                            <?php if ($is_fensa_hero_logo && ! empty($hero_trust_card['url'])) : ?></a><?php endif; ?>
                             <strong><?php echo esc_html($hero_trust_card['title']); ?></strong>
                             <span><?php echo esc_html($hero_trust_card['copy']); ?></span>
                         </div>
