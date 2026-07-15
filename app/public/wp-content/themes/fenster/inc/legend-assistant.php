@@ -496,6 +496,13 @@ function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
     $reply = fenster_legend_limit_text(fenster_legend_response_text($payload), 900);
     $reply = str_replace('—', '.', $reply);
     $reply = preg_replace('/\.\s*\./', '.', $reply) ?? $reply;
+    if ($related_context !== '') {
+        $reply = preg_replace(
+            "/I(?:'|’)m not certain from [^.]{1,120} page alone\./iu",
+            'Fenster’s published pages do not confirm this.',
+            $reply
+        ) ?? $reply;
+    }
     if ($reply === '') {
         return new WP_REST_Response([
             'code' => 'empty_response',
