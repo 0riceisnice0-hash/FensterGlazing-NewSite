@@ -27,7 +27,7 @@ The current experience includes:
 - A `Who is Legend?` link to `/meet-the-team/#legend`.
 - An accessible live message log, typing indicator, auto-growing textarea, Enter-to-send, Shift+Enter for a new line, Escape-to-close and keyboard focus management.
 - Safe `**bold**` formatting and one route-checked same-site `[label](/route/)` link in assistant replies without allowing model-generated HTML.
-- A mandatory `Before you chat` acknowledgement before the composer becomes available.
+- A mandatory compact `Live chat terms` acknowledgement before the composer becomes available, with the full disclosure behind `Read chat terms`.
 - A direct Privacy Policy link and a persistent accuracy/non-binding warning beneath the enabled composer.
 
 ## Drawer And Cookie-Control Behaviour

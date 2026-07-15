@@ -2020,17 +2020,34 @@ h3 {
   line-height: 1.42;
 }
 
+.legend-assistant__consent-details {
+  margin-top: 0.58rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.1);
+}
+
+.legend-assistant__consent-details summary {
+  padding-top: 0.58rem;
+  color: var(--color-steel);
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.legend-assistant__consent-details summary:hover,
+.legend-assistant__consent-details summary:focus-visible {
+  color: var(--color-accent-dark);
+}
+
+.legend-assistant__consent-details > div {
+  padding-top: 0.04rem;
+}
+
 .legend-assistant__consent a,
 .legend-assistant__notice a {
   color: var(--color-steel);
   font-weight: 800;
   text-decoration: underline;
   text-underline-offset: 0.16em;
-}
-
-.legend-assistant__consent-confirmation {
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(0, 45, 58, 0.1);
 }
 
 .legend-assistant__consent-actions {

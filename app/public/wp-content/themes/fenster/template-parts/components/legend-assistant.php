@@ -60,14 +60,18 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
 
         <section class="legend-assistant__consent" data-legend-consent aria-labelledby="legend-assistant-consent-title">
             <p class="legend-assistant__consent-eyebrow">Before you chat</p>
-            <h3 id="legend-assistant-consent-title">A quick note about Legend</h3>
-            <p>Legend uses AI. Your message and relevant content from the page you are viewing are processed to create a reply.</p>
-            <p>To keep your chat when you move between Fenster pages or browser tabs, recent messages are saved in this browser for up to 24 hours. Fenster also stores the transcript for up to 30 days in its restricted quality-assurance tracker so the team can improve Legend. If you accept optional cookies it is linked to your anonymous website journey; otherwise it remains chat-only. This does not change your optional cookie choice.</p>
-            <p>Replies may be inaccurate and are general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment.</p>
-            <p>Please do not share sensitive personal information. Read our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
-            <p class="legend-assistant__consent-confirmation">By selecting Continue to chat, you acknowledge this information and agree to the processing described above.</p>
+            <h3 id="legend-assistant-consent-title">Live chat terms</h3>
+            <p class="legend-assistant__consent-summary">By using this live chat, you agree to Fenster processing your messages to provide an AI reply. Please do not share sensitive personal information.</p>
+            <details class="legend-assistant__consent-details">
+                <summary>Read chat terms</summary>
+                <div>
+                    <p>Legend uses AI. Your message and relevant content from the page you are viewing are processed to create a reply.</p>
+                    <p>Recent messages are saved in this browser for up to 24 hours so your chat can continue across Fenster pages and tabs. Fenster also stores the transcript for up to 30 days in its restricted quality-assurance tracker so the team can improve Legend. If you accept optional cookies it is linked to your anonymous website journey; otherwise it remains chat-only. This does not change your optional cookie choice.</p>
+                    <p>Replies may be inaccurate and are general guidance only. They do not form a quotation, contract, warranty, professional advice or legally binding commitment. Read our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
+                </div>
+            </details>
             <div class="legend-assistant__consent-actions">
-                <button type="button" class="button button--primary" data-legend-consent-continue>Continue to chat</button>
+                <button type="button" class="button button--primary" data-legend-consent-continue>I understand</button>
                 <button type="button" class="legend-assistant__consent-decline" data-legend-consent-decline>Not now</button>
             </div>
         </section>
