@@ -158,6 +158,7 @@ $is_consultation_page = $slug === 'book-a-consultation';
 $is_fensa_page = $slug === 'fensa-approved-installers';
 $is_cpa_page = $slug === 'consumer-protection-association';
 $is_ggf_page = $slug === 'glass-and-glazing-federation-ggf-standards';
+$is_constructionline_page = $slug === 'constructionline-gold';
 $is_windows_hub = $slug === 'windows-milton-keynes';
 $is_doors_hub = $slug === 'doors-milton-keynes';
 $is_product_selector_hub = $is_windows_hub || $is_doors_hub;
@@ -1573,6 +1574,13 @@ if ($is_cpa_page) {
 
 if ($is_ggf_page) {
     get_template_part('template-parts/sections/ggf-standards', null, [
+        'page' => $page,
+    ]);
+    return;
+}
+
+if ($is_constructionline_page) {
+    get_template_part('template-parts/sections/constructionline-gold', null, [
         'page' => $page,
     ]);
     return;

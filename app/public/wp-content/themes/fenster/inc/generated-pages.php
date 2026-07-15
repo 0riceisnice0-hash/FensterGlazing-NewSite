@@ -1206,6 +1206,23 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
+    if ($slug === 'constructionline-gold') {
+        return $page_cache[$slug] = [
+            'slug' => 'constructionline-gold',
+            'title' => 'Constructionline Gold',
+            'url' => home_url('/constructionline-gold/'),
+            'seo' => [
+                'title_tag' => 'Constructionline Gold Member | Fenster Glazing',
+                'meta_description' => 'Understand what Fenster Glazing’s Constructionline Gold membership means for commercial glazing projects and supplier pre-qualification.',
+                'canonical' => 'https://fensterglazing.com/constructionline-gold/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+    }
+
     $location_matrix_page = fenster_location_matrix_page($slug, $index);
     if (is_array($location_matrix_page)) {
         return $page_cache[$slug] = $location_matrix_page;
@@ -1650,7 +1667,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'flat-rooflights'] as $virtual_slug) {
+    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'flat-rooflights'] as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

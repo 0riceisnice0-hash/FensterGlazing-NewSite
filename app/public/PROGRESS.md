@@ -802,6 +802,12 @@ Do not use this as the primary rulebook or handover. Use:
 - Kept no-JavaScript behaviour as a complete normal form using the same shared fields and handler.
 - Added step controls, progress text/bar and per-step validation before continuing.
 
+## 2026-07-15 - Constructionline Gold Guidance
+
+- Added a dedicated `/constructionline-gold/` page explaining Fenster's Constructionline Gold membership in plain language for commercial clients.
+- Clearly distinguishes supplier pre-qualification from project-specific certification, warranties and Building Regulations paperwork.
+- Linked the Constructionline Gold footer badge to the new page.
+
 ## 2026-06-29 - Contact Page Compact Pass
 
 - Tightened `/contact/` hero, contact dock and section padding to match the quieter quote/team page rhythm.
