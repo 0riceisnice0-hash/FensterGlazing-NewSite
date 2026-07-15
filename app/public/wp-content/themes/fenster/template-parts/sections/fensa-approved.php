@@ -26,17 +26,13 @@ $asset = static function (string $path): string {
                         <a class="button" href="#fenster-fensa-enquiry"><?php esc_html_e('Get a window or door quote', 'fenster'); ?></a>
                         <a class="fg-fensa-hero__call" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
                     </div>
-                    <ul class="fg-fensa-hero__checks" aria-label="FENSA installation reassurance">
-                        <li><?php esc_html_e('Building Regulations compliance recorded', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Installation registered with the local council', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Certificate issued after eligible work is complete', 'fenster'); ?></li>
-                    </ul>
+                    <p class="fg-fensa-hero__note"><?php esc_html_e('FENSA applies to eligible domestic replacement work. We confirm the correct compliance route before anything is ordered.', 'fenster'); ?></p>
                 </div>
                 <figure class="fg-fensa-hero__media">
-                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/about/fenster-showroom.png', ['alt' => 'Fenster Glazing showroom in Milton Keynes', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
+                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Residential_Door_08.jpg', ['alt' => 'Replacement entrance door installed in a stone property', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
                     <figcaption>
                         <img src="<?php echo esc_url($asset('trust/fensa.png')); ?>" alt="FENSA Approved Installer">
-                        <span><?php esc_html_e('Local advice, survey, installation and aftercare from our Milton Keynes team.', 'fenster'); ?></span>
+                        <span><?php esc_html_e('Eligible replacement work registered after installation.', 'fenster'); ?></span>
                     </figcaption>
                 </figure>
             </div>
@@ -44,9 +40,9 @@ $asset = static function (string $path): string {
 
         <section class="fg-fensa-proof" aria-label="What a FENSA certificate proves">
             <div class="container fg-fensa-proof__grid">
-                <p><strong><?php esc_html_e('Compliant', 'fenster'); ?></strong><span><?php esc_html_e('The eligible installation meets the relevant Building Regulations.', 'fenster'); ?></span></p>
-                <p><strong><?php esc_html_e('Registered', 'fenster'); ?></strong><span><?php esc_html_e('The completed work is registered with the local council.', 'fenster'); ?></span></p>
-                <p><strong><?php esc_html_e('Documented', 'fenster'); ?></strong><span><?php esc_html_e('You have evidence to keep with the property and use when you sell.', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('Building Regulations', 'fenster'); ?></strong><span><?php esc_html_e('Proof that eligible replacement work meets the relevant requirements.', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('Local council record', 'fenster'); ?></strong><span><?php esc_html_e('The completed installation is registered for you.', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('Property evidence', 'fenster'); ?></strong><span><?php esc_html_e('A certificate to keep with the home and provide when you sell.', 'fenster'); ?></span></p>
             </div>
         </section>
 
@@ -54,14 +50,17 @@ $asset = static function (string $path): string {
             <div class="container fg-fensa-explainer__grid">
                 <div class="fg-fensa-explainer__copy">
                     <p class="eyebrow"><?php esc_html_e('What FENSA means', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('One less piece of compliance for you to organise.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('What the certificate tells you.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('FENSA is a government-authorised Competent Person Scheme for replacement windows and doors in England and Wales. Approved installers can self-certify eligible work instead of leaving the homeowner to arrange a separate Building Control inspection.', 'fenster'); ?></p>
                     <p><?php esc_html_e('The certificate is proof of compliance and registration. It is separate from the product and installation guarantee, although FENSA also requires the installer guarantee for registered work to be insurance backed.', 'fenster'); ?></p>
                     <a class="text-link" href="https://www.fensa.org.uk/homeowners" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Read FENSA guidance for homeowners', 'fenster'); ?></a>
                 </div>
-                <figure>
-                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Residential_Door_08.jpg', ['alt' => 'Replacement entrance door installed in a stone property', 'loading' => 'lazy']); ?>>
-                </figure>
+                <aside class="fg-fensa-certificate-note">
+                    <img src="<?php echo esc_url($asset('trust/fensa.png')); ?>" alt="">
+                    <p class="eyebrow"><?php esc_html_e('Ask before you appoint an installer', 'fenster'); ?></p>
+                    <h3><?php esc_html_e('Will I receive a FENSA certificate?', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('For eligible work, the answer should be clear and written into the quote. If the project sits outside the scheme, the installer should explain the alternative approval route before work begins.', 'fenster'); ?></p>
+                </aside>
             </div>
         </section>
 
