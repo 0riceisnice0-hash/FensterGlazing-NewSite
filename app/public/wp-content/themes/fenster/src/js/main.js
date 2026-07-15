@@ -113,6 +113,18 @@ if (legendAssistant) {
     const targetRect = target.getBoundingClientRect();
     if (!sourceRect.width || !targetRect.width) return;
 
+    let targetLeft = targetRect.left;
+    let targetTop = targetRect.top;
+
+    // The drawer is still translating in when the jump begins. Measure Legend's
+    // destination against the drawer's settled right-edge position so he does
+    // not chase the temporary off-screen transform and teleport back afterwards.
+    if (panel.contains(target)) {
+      const panelRect = panel.getBoundingClientRect();
+      const settledPanelLeft = document.documentElement.clientWidth - panelRect.width;
+      targetLeft -= panelRect.left - settledPanelLeft;
+    }
+
     const traveller = document.createElement('span');
     const sourceSprite = source.querySelector('.legend-sprite');
     const travellerSprite = sourceSprite?.cloneNode(true);
@@ -147,17 +159,24 @@ if (legendAssistant) {
       return;
     }
 
-    const distanceX = targetRect.left - sourceRect.left;
-    const distanceY = targetRect.top - sourceRect.top;
+    const distanceX = targetLeft - sourceRect.left;
+    const distanceY = targetTop - sourceRect.top;
     const targetScale = targetRect.width / sourceRect.width;
-    const middleScale = 1 + ((targetScale - 1) * 0.52);
-    const arc = direction === 'up' ? -64 : -42;
+    const lift = direction === 'up' ? 84 : 58;
     const duration = 1440;
     const motion = traveller.animate([
       { transform: 'translate3d(0, 0, 0) scale(1)', offset: 0 },
       {
-        transform: `translate3d(${distanceX * 0.5}px, ${(distanceY * 0.52) + arc}px, 0) scale(${middleScale})`,
-        offset: 0.52,
+        transform: `translate3d(${distanceX * 0.14}px, ${(distanceY * 0.12) - (lift * 0.55)}px, 0) scale(${1 + ((targetScale - 1) * 0.14)})`,
+        offset: 0.18,
+      },
+      {
+        transform: `translate3d(${distanceX * 0.56}px, ${(distanceY * 0.5) - lift}px, 0) scale(${1 + ((targetScale - 1) * 0.56)})`,
+        offset: 0.56,
+      },
+      {
+        transform: `translate3d(${distanceX * 0.86}px, ${(distanceY * 0.84) - (lift * 0.36)}px, 0) scale(${1 + ((targetScale - 1) * 0.86)})`,
+        offset: 0.84,
       },
       {
         transform: `translate3d(${distanceX}px, ${distanceY}px, 0) scale(${targetScale})`,
