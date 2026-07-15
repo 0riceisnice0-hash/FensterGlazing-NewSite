@@ -48,6 +48,10 @@ function fenster_legend_instructions(): string
     return implode("\n", [
         'You are Legend, the helpful AI assistant for Fenster Glazing and the digital counterpart of Legend, Fenster\'s real black office cat and Chief Meow Officer.',
         'Help website visitors understand the current Fenster page, compare relevant glazing products and services, find the next useful action, and decide whether to request a quote, book a consultation, call or contact the team.',
+        'Your scope is strictly Fenster Glazing: the company, this website, its team, service areas, windows, doors, glazing, repairs, products, projects, quotes, consultations, guarantees, aftercare and directly related customer questions.',
+        'Do not answer unrelated requests such as programming, homework, general knowledge, entertainment, politics, creative writing or advice unrelated to Fenster. For any unrelated request, reply exactly: "I’m here to help with Fenster Glazing. Ask me about our windows, doors, glazing, services or this website."',
+        'If a message mixes a Fenster question with an unrelated request, answer only the Fenster part. Do not explain, solve or continue the unrelated part.',
+        'Never swear or repeat, quote, translate, spell out or transform profanity, slurs or abusive language from a visitor. Respond calmly and redirect to Fenster. Do not repeat an inappropriate previous message when asked what the visitor last said.',
         'Write in clear British English. Sound warm, calm, professional and lightly personable. A subtle cat reference is acceptable occasionally, but never make the answer childish or gimmicky.',
         'Default to one or two short sentences and no more than about 45 words. Give the direct answer first and stop when the question is answered.',
         'Never use em dashes. Use full stops, commas or parentheses instead.',
@@ -76,6 +80,13 @@ function fenster_legend_limit_text(string $value, int $limit): string
     $value = trim($value);
 
     return function_exists('mb_substr') ? mb_substr($value, 0, $limit) : substr($value, 0, $limit);
+}
+
+function fenster_legend_redact_profanity(string $value): string
+{
+    $pattern = '/\b(?:motherfucker(?:s)?|fuck(?:ing|ed|er|ers|s)?|shit(?:ting|ty|ted|s)?|cunt(?:s)?|bitch(?:es|ing|ed|y|s)?|bastard(?:s)?|bollocks|wanker(?:s)?|twat(?:s)?|dickhead(?:s)?|arsehole(?:s)?|asshole(?:s)?)\b/iu';
+
+    return preg_replace($pattern, '[language removed]', $value) ?? $value;
 }
 
 function fenster_legend_request_fingerprint(): string
@@ -376,7 +387,9 @@ function fenster_legend_conversation(array $data): array
             continue;
         }
 
-        $content = fenster_legend_limit_text((string) ($item['content'] ?? ''), 900);
+        $content = fenster_legend_redact_profanity(
+            fenster_legend_limit_text((string) ($item['content'] ?? ''), 900)
+        );
         if ($content !== '') {
             $messages[] = ['role' => $role, 'content' => $content];
         }
@@ -424,7 +437,9 @@ function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
 
     $data = $request->get_json_params();
     $data = is_array($data) ? $data : [];
-    $message = fenster_legend_limit_text((string) ($data['message'] ?? ''), 600);
+    $message = fenster_legend_redact_profanity(
+        fenster_legend_limit_text((string) ($data['message'] ?? ''), 600)
+    );
 
     if ($message === '') {
         return new WP_REST_Response([
@@ -494,6 +509,7 @@ function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
     }
 
     $reply = fenster_legend_limit_text(fenster_legend_response_text($payload), 900);
+    $reply = fenster_legend_redact_profanity($reply);
     $reply = str_replace('—', '.', $reply);
     $reply = preg_replace('/\.\s*\./', '.', $reply) ?? $reply;
     if ($related_context !== '') {

@@ -135,6 +135,7 @@ PHP lint example:
 - Assistant messages support only a deliberately small Markdown subset: `**bold**`. Render it with DOM-created text and `strong` nodes; do not introduce raw HTML rendering or a general Markdown parser unless its sanitisation and link policy are explicitly reviewed.
 - Preserve the nonce and same-origin checks, anonymous rate limit, input/history caps, plain-text output rendering, request timeout and `store: false`. Do not log message text, page snapshots, model replies or the API key.
 - Legend is an AI assistant, not a staffed live-chat channel. It must not claim to submit enquiries, book appointments, check accounts or pass messages to the team. Direct users to the real contact routes when human action is required.
+- Legend's scope is strictly Fenster Glazing and directly related customer questions. It must refuse programming, homework, general knowledge, entertainment and other unrelated requests with a brief Fenster redirect. Preserve server-side profanity redaction on both conversation input and assistant output so it cannot repeat or generate abusive language, including when asked to recall an earlier message.
 
 ## Related Links Rule
 
