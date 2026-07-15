@@ -25,15 +25,18 @@ $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet
         hidden
     >
         <header class="legend-assistant__header">
-            <div class="legend-assistant__portrait" aria-hidden="true">
-                <span class="legend-sprite legend-sprite--portrait" data-legend-sprite>
-                    <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
-                </span>
-            </div>
             <div class="legend-assistant__identity">
                 <p class="legend-assistant__eyebrow">Fenster AI assistant</p>
-                <h2 id="legend-assistant-title">Legend</h2>
+                <h2 id="legend-assistant-title">Legend the cat</h2>
                 <p class="legend-assistant__status"><span aria-hidden="true"></span> Preview mode</p>
+                <a class="legend-assistant__about" href="<?php echo esc_url(home_url('/meet-the-team/#legend')); ?>">Who is Legend?</a>
+            </div>
+            <div class="legend-assistant__stage" aria-hidden="true">
+                <span class="legend-assistant__roamer">
+                    <span class="legend-sprite" data-legend-sprite>
+                        <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
+                    </span>
+                </span>
             </div>
             <button class="legend-assistant__close" type="button" data-legend-close aria-label="Close chat with Legend">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 6.5 11 11m0-11-11 11" /></svg>
@@ -43,7 +46,7 @@ $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet
         <div class="legend-assistant__messages" data-legend-messages role="log" aria-live="polite" aria-relevant="additions">
             <div class="legend-message legend-message--assistant">
                 <span class="legend-message__author">Legend</span>
-                <p id="legend-assistant-description">Hello. I’m Legend, Fenster’s AI assistant. Ask me a question to try the chat preview.</p>
+                <p id="legend-assistant-description">Hello. I’m Legend, Fenster’s real office cat and Chief Meow Officer. I’m also the face of this AI assistant while live chat is in preview.</p>
             </div>
         </div>
 

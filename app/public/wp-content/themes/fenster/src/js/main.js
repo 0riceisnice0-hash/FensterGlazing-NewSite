@@ -18,7 +18,7 @@ if (legendAssistant) {
   let isOpen = false;
 
   const spriteSequences = {
-    idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [280, 110, 110, 140, 140, 320], loop: true },
+    idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [900, 180, 180, 260, 260, 1400], loop: true },
     wave: { row: 3, frames: [0, 1, 2, 3], timings: [140, 140, 140, 280], loop: false },
     thinking: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
   };
