@@ -4,6 +4,8 @@ Last updated: 2026-07-15
 
 ## 2026-07-15 - FENSA Page Redesign And Fallback Template Audit
 
+- Rebuilt the FENSA page again after owner review showed the first refinement still did not match `STYLE.md`. The page now speaks as the approved installer, says clearly that eligible work will receive a certificate, and removes the third-party `ask before you appoint an installer` wording.
+- Replaced the line-heavy hero proof strip, certificate box, dark covered/excluded band and numbered process rail with the calmer `/why-trust-fenster/` composition: one accreditation assurance panel, two alternating image-led explanations and the existing enquiry section.
 - Reworked the first FENSA layout after whole-page review against `STYLE.md`. Removed repeated hero reassurance, changed the hero from showroom photography to a relevant finished installation, replaced the second image with one focused certificate question, converted the dark coverage cards into a quieter divided comparison and corrected the desktop compact form to a two-column layout so the final section stays within a sensible viewport rhythm.
 - Updated `AI.md`, `HANDOVER.md` and `LIVECHANGES.md` to make test-first deployment mandatory for every completed change. Small and low-risk changes no longer have a documented direct-to-live exception.
 - Replaced `/fensa-approved-installers/` generic imported-article output with a dedicated homeowner conversion page in `template-parts/sections/fensa-approved.php`.

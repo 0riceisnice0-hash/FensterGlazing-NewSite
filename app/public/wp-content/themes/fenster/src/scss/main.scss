@@ -26170,29 +26170,29 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-fensa-hero {
-  padding: clamp(2.4rem, 4.5vw, 4.5rem) 0 1.5rem;
+  padding: clamp(2.8rem, 5vw, 4.4rem) 0 clamp(3.2rem, 5vw, 4.8rem);
 }
 
 .fg-fensa-hero__grid,
-.fg-fensa-explainer__grid,
-.fg-fensa-process__grid,
 .fg-fensa-enquiry__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(380px, 0.88fr);
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 0.9fr) minmax(380px, 0.72fr);
+  gap: clamp(2rem, 5vw, 4.6rem);
   align-items: center;
 }
 
 .fg-fensa-hero h1 {
-  max-width: 13ch;
-  margin: 0.55rem 0 1.15rem;
-  font-size: clamp(2.35rem, 3.8vw, 3.3rem);
-  line-height: 1;
+  max-width: 11ch;
+  margin: 0.6rem 0 1.2rem;
+  color: var(--color-steel);
+  font-size: clamp(2.4rem, 4vw, 3.55rem);
+  line-height: 1.02;
 }
 
 .fg-fensa-hero__lead {
-  max-width: 650px;
-  font-size: clamp(1.05rem, 1.45vw, 1.18rem);
+  max-width: 610px;
+  color: var(--color-muted);
+  font-size: clamp(1.05rem, 1.4vw, 1.18rem);
   line-height: 1.65;
 }
 
@@ -26209,154 +26209,123 @@ html.fg-blinds-reveal-locked {
   font-weight: 700;
 }
 
-.fg-fensa-hero__note {
-  max-width: 590px;
-  margin: 0;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(15, 49, 54, 0.18);
-  color: rgba(18, 54, 59, 0.72);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.fg-fensa-hero__media {
-  position: relative;
-  min-height: 420px;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 26px 70px rgba(15, 49, 54, 0.2);
-}
-
-.fg-fensa-hero__media > img {
-  width: 100%;
-  height: 100%;
-  min-height: 420px;
-  object-fit: cover;
-  object-position: center;
-}
-
-.fg-fensa-hero__media figcaption {
-  position: absolute;
-  right: 1rem;
-  bottom: 1rem;
-  left: 1rem;
-  display: grid;
-  grid-template-columns: 92px 1fr;
-  gap: 1rem;
-  align-items: center;
-  padding: 0.9rem 1rem;
-  color: #fff;
-  background: rgba(15, 49, 54, 0.92);
-  border-radius: 6px;
-  backdrop-filter: blur(10px);
-}
-
-.fg-fensa-hero__media figcaption img {
-  width: 92px;
-  max-height: 48px;
-  object-fit: contain;
-  padding: 0.35rem;
-  background: #fff;
-  border-radius: 4px;
-}
-
-.fg-fensa-proof {
-  padding: 0.75rem 0 2.5rem;
-}
-
-.fg-fensa-proof__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-block: 1px solid rgba(15, 49, 54, 0.18);
-}
-
-.fg-fensa-proof p {
-  display: grid;
-  gap: 0.25rem;
-  margin: 0;
-  padding: 1.1rem clamp(1rem, 3vw, 1.75rem);
-  border-right: 1px solid rgba(15, 49, 54, 0.18);
-}
-
-.fg-fensa-proof p:last-child { border-right: 0; }
-.fg-fensa-proof strong { font-size: 1.08rem; }
-.fg-fensa-proof span { color: rgba(18, 54, 59, 0.72); line-height: 1.5; }
-
-.fg-fensa-explainer,
-.fg-fensa-scope,
-.fg-fensa-process,
-.fg-fensa-enquiry {
-  padding: clamp(3rem, 5vw, 4.5rem) 0;
-}
-
-.fg-fensa-explainer__copy,
-.fg-fensa-heading > p,
-.fg-fensa-process__grid > div:first-child {
-  max-width: 650px;
-}
-
-.fg-fensa-explainer h2,
-.fg-fensa-heading h2,
-.fg-fensa-process h2,
-.fg-fensa-enquiry h2 {
-  margin: 0.5rem 0 1rem;
-  font-size: clamp(1.65rem, 2.4vw, 2.15rem);
-  line-height: 1.08;
-}
-
-.fg-fensa-explainer p,
-.fg-fensa-heading > p,
-.fg-fensa-process p,
-.fg-fensa-enquiry p {
-  line-height: 1.65;
-}
-
-.fg-fensa-certificate-note {
+.fg-fensa-hero__assurance {
   display: grid;
   align-content: center;
-  min-height: 330px;
-  padding: clamp(1.5rem, 3vw, 2.4rem);
-  border-left: 4px solid #54ad48;
-  background: rgba(255, 255, 255, 0.72);
+  min-height: 410px;
+  padding: clamp(1.6rem, 3vw, 2.5rem);
+  border: 1px solid rgba(0, 45, 58, 0.11);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 24px 64px rgba(15, 49, 54, 0.13);
+  backdrop-filter: blur(12px);
 }
 
-.fg-fensa-certificate-note img {
-  width: 112px;
-  margin-bottom: 1.6rem;
+.fg-fensa-hero__assurance img {
+  width: 148px;
+  height: 74px;
+  margin-bottom: 1.5rem;
+  object-fit: contain;
+  object-position: left center;
 }
 
-.fg-fensa-certificate-note h3 {
-  max-width: 15ch;
-  margin: 0.45rem 0 0.9rem;
-  color: #12363b;
-  font-size: clamp(1.35rem, 2vw, 1.75rem);
+.fg-fensa-hero__assurance h2 {
+  max-width: 16ch;
+  margin: 0.5rem 0 1.1rem;
+  color: var(--color-steel);
+  font-size: clamp(1.55rem, 2.4vw, 2.05rem);
   line-height: 1.08;
 }
 
-.fg-fensa-certificate-note p:last-child {
-  max-width: 44ch;
-  margin-bottom: 0;
-  color: rgba(18, 54, 59, 0.74);
+.fg-fensa-hero__assurance ul {
+  display: grid;
+  gap: 0.72rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.fg-fensa-scope { background: #12363b; color: #fff; }
-.fg-fensa-heading { display: grid; grid-template-columns: 1fr 0.72fr; gap: 2rem; align-items: end; margin-bottom: 2rem; }
-.fg-fensa-scope__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-block: 1px solid rgba(255, 255, 255, 0.18); }
-.fg-fensa-scope article { padding: clamp(1.4rem, 3vw, 2.1rem) clamp(0rem, 3vw, 2.2rem); color: #fff; }
-.fg-fensa-scope article:first-child { padding-left: 0; border-right: 1px solid rgba(255, 255, 255, 0.18); }
-.fg-fensa-scope article:last-child { padding-right: 0; }
-.fg-fensa-scope h3 { margin: 0 0 1rem; font-size: 1.35rem; }
-.fg-fensa-scope ul { display: grid; gap: 0.7rem; margin: 0; padding-left: 1.2rem; color: rgba(255, 255, 255, 0.82); line-height: 1.5; }
+.fg-fensa-hero__assurance li {
+  position: relative;
+  padding-left: 1.55rem;
+  color: var(--color-muted);
+  font-weight: 700;
+  line-height: 1.42;
+}
 
-.fg-fensa-process__grid { align-items: start; }
-.fg-fensa-process ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(15, 49, 54, 0.16); }
-.fg-fensa-process li { display: grid; grid-template-columns: 54px 1fr; gap: 1rem; padding: 1.2rem 0; border-bottom: 1px solid rgba(15, 49, 54, 0.16); }
-.fg-fensa-process li > span { color: #54ad48; font-weight: 700; }
-.fg-fensa-process li p { margin: 0.25rem 0 0; color: rgba(18, 54, 59, 0.72); }
+.fg-fensa-hero__assurance li::before,
+.fg-fensa-enquiry__reassurance::before {
+  position: absolute;
+  top: 0.38em;
+  left: 0;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  content: '';
+}
 
-.fg-fensa-enquiry { background: #dce9e6; }
+.fg-fensa-stories {
+  padding: clamp(3.2rem, 6vw, 5rem) 0;
+}
+
+.fg-fensa-story {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.82fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.fg-fensa-story:last-child {
+  margin-bottom: 0;
+}
+
+.fg-fensa-story--reverse figure {
+  order: 2;
+}
+
+.fg-fensa-story figure {
+  overflow: hidden;
+  margin: 0;
+  border: 6px solid #ffffff;
+  border-radius: 8px;
+  background: var(--color-steel);
+  box-shadow: 0 18px 54px rgba(0, 45, 58, 0.13);
+}
+
+.fg-fensa-story img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.fg-fensa-story:first-child img {
+  object-position: center 48%;
+}
+
+.fg-fensa-story h2,
+.fg-fensa-enquiry h2 {
+  max-width: 15ch;
+  margin: 0.5rem 0 1rem;
+  color: var(--color-steel);
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
+  line-height: 1.04;
+}
+
+.fg-fensa-story p:not(.eyebrow),
+.fg-fensa-enquiry p {
+  max-width: 58ch;
+  color: var(--color-muted);
+  font-size: 1.02rem;
+  line-height: 1.62;
+}
+
+.fg-fensa-enquiry { padding: clamp(3.2rem, 6vw, 5rem) 0; background: #dce9e6; }
 .fg-fensa-enquiry__grid { grid-template-columns: minmax(280px, 0.65fr) minmax(620px, 1.35fr); gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+.fg-fensa-enquiry__copy { padding-top: 0.4rem; }
+.fg-fensa-enquiry__reassurance { position: relative; margin-top: 1.3rem; padding-left: 1.55rem; font-weight: 700; }
 .fg-fensa-enquiry__form { padding: clamp(1rem, 2vw, 1.5rem); background: #12363b; border-radius: 8px; }
 .fg-fensa-enquiry__form .fg-form { padding: 0; background: transparent; }
 .fg-fensa-enquiry__form .fg-enquiry-form__compact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
@@ -26367,16 +26336,10 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 860px) {
   .fg-fensa-hero__grid,
-  .fg-fensa-explainer__grid,
-  .fg-fensa-process__grid,
-  .fg-fensa-enquiry__grid,
-  .fg-fensa-heading { grid-template-columns: 1fr; }
-  .fg-fensa-hero__media { min-height: 360px; }
-  .fg-fensa-hero__media > img { min-height: 360px; }
-  .fg-fensa-certificate-note { min-height: 0; }
-  .fg-fensa-proof__grid { grid-template-columns: 1fr; }
-  .fg-fensa-proof p { border-right: 0; border-bottom: 1px solid rgba(15, 49, 54, 0.18); }
-  .fg-fensa-proof p:last-child { border-bottom: 0; }
+  .fg-fensa-story,
+  .fg-fensa-enquiry__grid { grid-template-columns: 1fr; }
+  .fg-fensa-hero__assurance { min-height: 0; }
+  .fg-fensa-story--reverse figure { order: 0; }
   .fg-fensa-enquiry__form .fg-enquiry-form__compact-grid { grid-template-columns: 1fr; }
   .fg-fensa-enquiry__form .fg-enquiry-form__compact-wide { grid-column: auto; }
 }
@@ -26386,15 +26349,8 @@ html.fg-blinds-reveal-locked {
   .fg-fensa-hero h1 { font-size: clamp(2.35rem, 11vw, 3rem); }
   .fg-fensa-hero__actions { display: grid; align-items: stretch; }
   .fg-fensa-hero__actions .button { width: 100%; }
-  .fg-fensa-hero__media,
-  .fg-fensa-hero__media > img { min-height: 315px; }
-  .fg-fensa-hero__media figcaption { grid-template-columns: 72px 1fr; font-size: 0.88rem; }
-  .fg-fensa-hero__media figcaption img { width: 72px; }
-  .fg-fensa-scope__grid { grid-template-columns: 1fr; }
-  .fg-fensa-scope article,
-  .fg-fensa-scope article:first-child,
-  .fg-fensa-scope article:last-child { padding: 1.35rem 0; border-right: 0; }
-  .fg-fensa-scope article:first-child { border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
+  .fg-fensa-hero__assurance { padding: 1.4rem; }
+  .fg-fensa-story figure { border-width: 4px; }
   .fg-fensa-enquiry__form .fg-enquiry-form__footer { grid-template-columns: 1fr; }
 }
 
