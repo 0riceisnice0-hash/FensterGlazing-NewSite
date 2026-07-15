@@ -368,7 +368,7 @@ function fenster_legend_product_aliases(): array
     return [
         'aluminium-bifold-doors' => ['aluminium bifold', 'aluminium bi fold', 'bifold door', 'bi fold door'],
         'aluminium-windows' => ['aluminium window'],
-        'aluminium-doors' => ['aluminium entrance door', 'aluminium front door'],
+        'aluminium-doors' => ['aluminium entrance door', 'aluminium front door', 'aluminium door'],
         'aluminium-flush-windows' => ['aluminium flush window'],
         'heritage-windows' => ['heritage window'],
         'heritage-aluminium-doors' => ['heritage aluminium door', 'heritage door'],
@@ -400,7 +400,8 @@ function fenster_legend_verified_product_context(string $query): string
 
     foreach (fenster_legend_product_aliases() as $slug => $aliases) {
         foreach ($aliases as $alias) {
-            if (str_contains(' ' . $normalised_query . ' ', ' ' . $alias . ' ')) {
+            $pattern = '/\b' . preg_quote($alias, '/') . 's?\b/';
+            if (preg_match($pattern, $normalised_query) === 1) {
                 $matches[$slug] = max($matches[$slug] ?? 0, strlen($alias));
             }
         }
