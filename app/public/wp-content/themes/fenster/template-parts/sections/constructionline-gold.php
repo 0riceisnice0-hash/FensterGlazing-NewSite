@@ -19,7 +19,7 @@ $asset = static function (string $path): string {
         <section class="fg-fensa-hero">
             <div class="container fg-fensa-hero__grid">
                 <div class="fg-fensa-hero__copy">
-                    <p class="eyebrow"><?php esc_html_e('Constructionline Gold member', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What is Constructionline Gold?', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Commercial glazing, with the checks already in place.', 'fenster'); ?></h1>
                     <p class="fg-fensa-hero__lead"><?php esc_html_e('Constructionline is a supplier pre-qualification service used across construction. Our Gold membership means our business information has been checked against the Common Assessment Standard, helping commercial clients assess us before a project starts.', 'fenster'); ?></p>
                     <div class="fg-fensa-hero__actions">
@@ -31,7 +31,7 @@ $asset = static function (string $path): string {
                     <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/constructionline-gold/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s Constructionline Gold membership', 'fenster'); ?>">
                         <img src="<?php echo esc_url($asset('trust/constructionline-gold-member.png')); ?>" alt="Constructionline Gold Member">
                     </a>
-                    <p class="eyebrow"><?php esc_html_e('What it means', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What it means for you', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Useful evidence before you appoint a supplier.', 'fenster'); ?></h2>
                     <ul>
                         <li><?php esc_html_e('Gold aligns with the Common Assessment Standard desktop assessment', 'fenster'); ?></li>
@@ -49,7 +49,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Airbus-Commercial.jpg', ['alt' => 'Commercial glazing installation by Fenster Glazing', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('Less repetition at the start', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('How it works with Fenster', 'fenster'); ?></p>
                         <h2><?php esc_html_e('It helps your procurement team get a clearer picture of Fenster.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('Commercial clients often need to review a supplier before inviting them onto a project. Constructionline brings standard supplier questions into one place, rather than asking every prospective contractor to prepare the same information from scratch.', 'fenster'); ?></p>
                         <p><?php esc_html_e('At Gold level, Constructionline verifies a desktop submission against the Common Assessment Standard. That makes our membership useful evidence when you are considering Fenster for commercial windows, doors, curtain walling or specialist glazing.', 'fenster'); ?></p>
@@ -62,7 +62,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/commercial-4.jpg', ['alt' => 'Commercial glazing project completed by Fenster Glazing', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('Clear about its role', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('What it means for your project', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Constructionline Gold is not a product warranty or a certificate for your installation.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('It is a business pre-qualification status, not a substitute for project-specific design, survey, product approvals, warranties or Building Regulations paperwork. We still scope your job properly, agree the specification and explain the documents that apply to it.', 'fenster'); ?></p>
                         <p><?php esc_html_e('For domestic replacement work, FENSA may provide the Building Regulations route where the installation is eligible. For commercial work, we will set out the compliance, product and handover requirements with you before work begins.', 'fenster'); ?></p>

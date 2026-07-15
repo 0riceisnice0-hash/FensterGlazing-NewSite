@@ -813,6 +813,10 @@ Do not use this as the primary rulebook or handover. Use:
 - Added a dedicated `/ssip-health-and-safety/` page that explains SSIP health and safety assessment and mutual recognition without presenting it as a product warranty or project-specific approval.
 - Linked the SSIP footer badge to the new page.
 
+## 2026-07-15 - Accreditation Page Message Structure
+
+- Standardised the FENSA, CPA, GGF, Constructionline Gold and SSIP pages around three customer questions: what it is, how it works with Fenster and what it means for the visitor or project.
+
 ## 2026-06-29 - Contact Page Compact Pass
 
 - Tightened `/contact/` hero, contact dock and section padding to match the quieter quote/team page rhythm.

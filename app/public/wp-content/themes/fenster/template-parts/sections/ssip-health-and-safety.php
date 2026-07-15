@@ -19,7 +19,7 @@ $asset = static function (string $path): string {
         <section class="fg-fensa-hero">
             <div class="container fg-fensa-hero__grid">
                 <div class="fg-fensa-hero__copy">
-                    <p class="eyebrow"><?php esc_html_e('SSIP health and safety assessment', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What is SSIP?', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Health and safety checks, without repeating the paperwork.', 'fenster'); ?></h1>
                     <p class="fg-fensa-hero__lead"><?php esc_html_e('SSIP means Safety Schemes in Procurement. It is the shared framework used by recognised assessment schemes to check a contractor’s health and safety arrangements before commercial work is awarded.', 'fenster'); ?></p>
                     <div class="fg-fensa-hero__actions">
@@ -31,7 +31,7 @@ $asset = static function (string $path): string {
                     <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/ssip-health-and-safety/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s SSIP health and safety assessment', 'fenster'); ?>">
                         <img src="<?php echo esc_url($asset('images/imported/cropped-ssip.png')); ?>" alt="Safety Schemes in Procurement">
                     </a>
-                    <p class="eyebrow"><?php esc_html_e('What it means', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What it means for you', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Our health and safety arrangements have been assessed for procurement.', 'fenster'); ?></h2>
                     <ul>
                         <li><?php esc_html_e('It supports early-stage health and safety pre-qualification', 'fenster'); ?></li>
@@ -49,7 +49,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/commercial-1.jpg', ['alt' => 'Fenster Glazing team completing a commercial project', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('One clear starting point', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('How it works with Fenster', 'fenster'); ?></p>
                         <h2><?php esc_html_e('SSIP helps clients avoid asking the same health and safety questions again.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('When you are appointing a contractor, you need confidence that their health and safety management has been assessed. SSIP is the umbrella body behind a group of assessment schemes that use common core criteria for that early procurement check.', 'fenster'); ?></p>
                         <p><?php esc_html_e('The practical benefit is mutual recognition. A current assessment through one recognised SSIP member scheme can be accepted by another, so your procurement team does not have to begin the same first-stage review from scratch.', 'fenster'); ?></p>
@@ -62,7 +62,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/commercial-5.jpg', ['alt' => 'Commercial glazing installation by Fenster Glazing', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('Clear about its limits', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('What it means for your project', 'fenster'); ?></p>
                         <h2><?php esc_html_e('It is not a blanket approval for every site or every kind of work.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('SSIP looks at health and safety capability at the pre-qualification stage. It does not replace project-specific risk assessments, method statements, design responsibility, product approvals or the checks needed for work on your site.', 'fenster'); ?></p>
                         <p><?php esc_html_e('That is why we still review the scope, access, programme and glazing specification with you before work begins. For a domestic installation, the same care applies, but SSIP is primarily useful as commercial procurement evidence rather than a homeowner certificate.', 'fenster'); ?></p>

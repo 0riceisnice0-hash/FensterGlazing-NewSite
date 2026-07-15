@@ -21,7 +21,7 @@ $asset = static function (string $path): string {
         <section class="fg-fensa-hero">
             <div class="container fg-fensa-hero__grid">
                 <div class="fg-fensa-hero__copy">
-                    <p class="eyebrow"><?php esc_html_e('Consumer Protection Association', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What is CPA?', 'fenster'); ?></p>
                     <h1><?php esc_html_e('A back-up for your Fenster guarantee.', 'fenster'); ?></h1>
                     <p class="fg-fensa-hero__lead"><?php esc_html_e('CPA means Consumer Protection Association. We give you the written guarantee for our installation work. On qualifying projects, CPA-backed insurance can protect that guarantee if Fenster Glazing ever stops trading.', 'fenster'); ?></p>
                     <div class="fg-fensa-hero__actions">
@@ -33,7 +33,7 @@ $asset = static function (string $path): string {
                     <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/consumer-protection-association/')); ?>" aria-label="<?php esc_attr_e('Learn about Consumer Protection Association protection', 'fenster'); ?>">
                         <img src="<?php echo esc_url($asset('trust/cpa.png')); ?>" alt="Consumer Protection Association">
                     </a>
-                    <p class="eyebrow"><?php esc_html_e('Insurance Backed Guarantee', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What it means for you', 'fenster'); ?></p>
                     <h2><?php esc_html_e('A back-up to our guarantee, not a replacement for it.', 'fenster'); ?></h2>
                     <ul>
                         <li><?php esc_html_e('Fenster remains responsible for fixing issues while we are trading', 'fenster'); ?></li>
@@ -51,7 +51,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Residential_Door_08.jpg', ['alt' => 'Replacement entrance door installed in a stone property', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('How it helps you', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('How it works with Fenster', 'fenster'); ?></p>
                         <h2><?php esc_html_e('If something goes wrong, you call Fenster first.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('Your agreement is with us, so we deal with any installation issue covered by our written guarantee. CPA insurance is not another product warranty or a separate aftercare service while Fenster is here to help.', 'fenster'); ?></p>
                         <p><?php esc_html_e('It becomes your safety net only if Fenster Glazing permanently ceases trading during the guarantee period. In that situation, you may be able to claim under the Insurance Backed Guarantee, subject to its policy terms.', 'fenster'); ?></p>
@@ -64,7 +64,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', ['alt' => 'Replacement windows installed in a row of homes', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('What Fenster does', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('What you receive', 'fenster'); ?></p>
                         <h2><?php esc_html_e('We make the protection around your job clear before you commit.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('We explain whether your installation qualifies, set out our own written guarantee and tell you what documents to expect. If CPA-backed cover applies, you will receive insurance documentation that explains the protection in your name.', 'fenster'); ?></p>
                         <p><?php esc_html_e('FENSA and CPA do different jobs. FENSA records Building Regulations compliance for eligible replacement work. CPA-backed insurance protects the Fenster guarantee if we are no longer able to honour it. Keep both sets of documents with your property records.', 'fenster'); ?></p>

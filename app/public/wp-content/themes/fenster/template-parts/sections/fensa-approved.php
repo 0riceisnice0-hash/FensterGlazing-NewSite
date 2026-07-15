@@ -19,7 +19,7 @@ $asset = static function (string $path): string {
         <section class="fg-fensa-hero">
             <div class="container fg-fensa-hero__grid">
                 <div class="fg-fensa-hero__copy">
-                    <p class="eyebrow"><?php esc_html_e('FENSA Approved Installer in Milton Keynes', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What is FENSA?', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Your installation, registered by us.', 'fenster'); ?></h1>
                     <p class="fg-fensa-hero__lead"><?php esc_html_e('With any eligible installation, you will receive a FENSA certificate. We apply for it on your behalf, and FENSA sends it directly to you once your installation has been registered.', 'fenster'); ?></p>
                     <div class="fg-fensa-hero__actions">
@@ -31,7 +31,7 @@ $asset = static function (string $path): string {
                     <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
                         <img src="<?php echo esc_url($asset('trust/fensa.png')); ?>" alt="FENSA Approved Installer">
                     </a>
-                    <p class="eyebrow"><?php esc_html_e('Included with eligible work', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('What it means for you', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Yes, you will receive a FENSA certificate.', 'fenster'); ?></h2>
                     <ul>
                         <li><?php esc_html_e('We apply on your behalf after installation', 'fenster'); ?></li>
@@ -49,7 +49,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Residential_Door_08.jpg', ['alt' => 'Replacement entrance door installed in a stone property', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('We handle the registration', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('How it works with Fenster', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Nothing extra for you to arrange.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('Your FENSA certificate confirms that the installation complies with Building Regulations. That means there is no need for your local authority’s Building Control department to inspect and sign off eligible work separately.', 'fenster'); ?></p>
                         <p><?php esc_html_e('If an installer is not part of a Competent Person Scheme such as FENSA, Building Control approval may be required instead. Without the correct certification, you could run into problems when selling because solicitors will often ask for proof that replacement windows and doors comply with Building Regulations.', 'fenster'); ?></p>
@@ -62,7 +62,7 @@ $asset = static function (string $path): string {
                         <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', ['alt' => 'Replacement windows installed in a row of homes', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
-                        <p class="eyebrow"><?php esc_html_e('Insurance Backed Guarantee', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('What else protects your job', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Your guarantee has insurance behind it.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('A Consumer Protection Association Insurance Backed Guarantee can protect the installer’s written guarantee if Fenster Glazing were ever to cease trading, subject to the individual policy terms.', 'fenster'); ?></p>
                         <p><?php esc_html_e('The certificate and policy wording confirm the exact cover and duration. Many guarantees are available for up to 10 years, but your own documents are the record to keep with your FENSA certificate.', 'fenster'); ?></p>
