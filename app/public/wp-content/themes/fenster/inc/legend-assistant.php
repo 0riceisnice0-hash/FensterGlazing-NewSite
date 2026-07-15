@@ -295,6 +295,7 @@ function fenster_legend_related_site_context(string $query, array $data): string
         $content = strtolower(remove_accents((string) $document['content']));
         $score = 0;
         $first_term = '';
+        $matched_terms = 0;
 
         foreach ($terms as $term) {
             $term_score = (substr_count($title, $term) * 12)
@@ -303,8 +304,15 @@ function fenster_legend_related_site_context(string $query, array $data): string
             if ($term_score > 0 && $first_term === '') {
                 $first_term = $term;
             }
+            if ($term_score > 0) {
+                $matched_terms++;
+            }
             $score += $term_score;
         }
+
+        // Prefer pages covering several parts of the question over pages that
+        // repeat one popular product term many times.
+        $score += $matched_terms * 25;
 
         if ($score <= 0) {
             continue;
