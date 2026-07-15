@@ -1791,18 +1791,6 @@ h3 {
   transform: translateX(var(--legend-roam-distance));
 }
 
-.legend-assistant__roamer-facing {
-  position: absolute;
-  inset: 0;
-  transform: scaleX(1);
-  transform-origin: center bottom;
-  transition: transform 120ms ease;
-}
-
-.legend-assistant__roamer-facing.is-facing-left {
-  transform: scaleX(-1);
-}
-
 .legend-assistant__close {
   position: absolute;
   z-index: 3;
@@ -2044,7 +2032,6 @@ h3 {
   .legend-assistant__launcher,
   .legend-assistant__panel,
   .legend-assistant__roamer,
-  .legend-assistant__roamer-facing,
   .legend-message--typing i {
     transition: none;
     animation: none;

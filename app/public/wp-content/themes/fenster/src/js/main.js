@@ -13,7 +13,6 @@ if (legendAssistant) {
   const messages = legendAssistant.querySelector('[data-legend-messages]');
   const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
   const roamer = legendAssistant.querySelector('[data-legend-roamer]');
-  const roamerFacing = legendAssistant.querySelector('[data-legend-roamer-facing]');
   const roamerSprite = legendAssistant.querySelector('[data-legend-roamer-sprite]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let replyTimer = 0;
@@ -25,9 +24,10 @@ if (legendAssistant) {
 
   const spriteSequences = {
     idle: { row: 0, frames: [0, 1, 2, 3, 4, 5], timings: [900, 180, 180, 260, 260, 1400], loop: true },
+    runningRight: { row: 1, frames: [0, 1, 2, 3, 4, 5, 6, 7], timings: [120, 120, 120, 120, 120, 120, 120, 220], loop: true },
+    runningLeft: { row: 2, frames: [0, 1, 2, 3, 4, 5, 6, 7], timings: [120, 120, 120, 120, 120, 120, 120, 220], loop: true },
     wave: { row: 3, frames: [0, 1, 2, 3], timings: [140, 140, 140, 280], loop: false },
     thinking: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
-    run: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
   };
 
   const showSpriteFrame = (row, column) => {
@@ -99,7 +99,7 @@ if (legendAssistant) {
   const startRoaming = () => {
     stopRoaming();
 
-    if (!roamer || !roamerFacing || !roamerSprite || reduceMotion.matches) {
+    if (!roamer || !roamerSprite || reduceMotion.matches) {
       showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
       return;
     }
@@ -109,8 +109,7 @@ if (legendAssistant) {
       playRoamerSprite('idle');
       roamerMotionTimer = window.setTimeout(() => {
         const movingRight = !roamerIsRight;
-        roamerFacing.classList.toggle('is-facing-left', !movingRight);
-        playRoamerSprite('run');
+        playRoamerSprite(movingRight ? 'runningRight' : 'runningLeft');
         roamer.classList.toggle('is-at-right', movingRight);
         roamerMotionTimer = window.setTimeout(() => {
           roamerIsRight = movingRight;
@@ -193,7 +192,6 @@ if (legendAssistant) {
     playSprite('idle');
     stopRoaming();
     roamer?.classList.remove('is-at-right');
-    roamerFacing?.classList.remove('is-facing-left');
     roamerIsRight = false;
     showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
     launcher.focus();

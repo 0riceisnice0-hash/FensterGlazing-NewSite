@@ -33,10 +33,8 @@ $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet
             </div>
             <div class="legend-assistant__stage" aria-hidden="true">
                 <span class="legend-assistant__roamer" data-legend-roamer>
-                    <span class="legend-assistant__roamer-facing" data-legend-roamer-facing>
-                        <span class="legend-sprite" data-legend-roamer-sprite>
-                            <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
-                        </span>
+                    <span class="legend-sprite" data-legend-roamer-sprite>
+                        <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
                     </span>
                 </span>
             </div>
