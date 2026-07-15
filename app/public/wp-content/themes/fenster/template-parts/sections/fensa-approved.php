@@ -14,7 +14,7 @@ $asset = static function (string $path): string {
 };
 ?>
 
-<main id="main-content" class="fg-fensa-page">
+<div class="fg-fensa-page">
     <article>
         <section class="fg-fensa-hero">
             <div class="container fg-fensa-hero__grid">
@@ -89,4 +89,4 @@ $asset = static function (string $path): string {
             </div>
         </section>
     </article>
-</main>
+</div>
