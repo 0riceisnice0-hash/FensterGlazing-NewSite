@@ -88,7 +88,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
             <strong>Need a hand?</strong>
             <small>I’m Fenster’s AI assistant</small>
         </span>
-        <span class="legend-assistant__character" aria-hidden="true">
+        <span class="legend-assistant__character" data-legend-character aria-hidden="true">
             <span class="legend-sprite" data-legend-sprite>
                 <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
             </span>

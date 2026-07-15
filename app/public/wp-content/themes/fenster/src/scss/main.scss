@@ -1587,7 +1587,7 @@ h3 {
   cursor: pointer;
   font: inherit;
   text-align: left;
-  transition: transform 180ms ease;
+  transition: opacity 140ms ease, transform 180ms ease, visibility 140ms ease;
 }
 
 .legend-assistant__launcher:hover {
@@ -1649,6 +1649,13 @@ h3 {
   aspect-ratio: 192 / 208;
   overflow: hidden;
   filter: drop-shadow(0 12px 12px rgba(0, 45, 58, 0.24));
+}
+
+.legend-assistant.is-open .legend-assistant__launcher,
+.legend-assistant.is-transitioning .legend-assistant__launcher {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
 }
 
 .legend-assistant.is-open .legend-assistant__prompt {
@@ -1796,11 +1803,29 @@ h3 {
   left: 24px;
   width: 104px;
   aspect-ratio: 192 / 208;
+  visibility: hidden;
+  opacity: 0;
   transition: transform 2200ms linear;
+}
+
+.legend-assistant.has-arrived .legend-assistant__roamer {
+  visibility: visible;
+  opacity: 1;
 }
 
 .legend-assistant__roamer.is-at-right {
   transform: translateX(var(--legend-roam-distance));
+}
+
+.legend-assistant__traveller {
+  position: fixed;
+  z-index: 10000;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 12px rgba(0, 45, 58, 0.24));
+  transform-origin: top left;
+  will-change: transform;
 }
 
 .legend-assistant__close {
@@ -2044,6 +2069,7 @@ h3 {
   .legend-assistant__panel,
   .legend-assistant__prompt,
   .legend-assistant__roamer,
+  .legend-assistant__traveller,
   .legend-message--typing i {
     transition: none;
     animation: none;

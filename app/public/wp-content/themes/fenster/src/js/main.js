@@ -14,6 +14,7 @@ if (legendAssistant) {
   const endpoint = legendAssistant.dataset.legendEndpoint || '';
   const nonce = legendAssistant.dataset.legendNonce || '';
   const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
+  const launcherCharacter = legendAssistant.querySelector('[data-legend-character]');
   const roamer = legendAssistant.querySelector('[data-legend-roamer]');
   const roamerSprite = legendAssistant.querySelector('[data-legend-roamer-sprite]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -23,6 +24,7 @@ if (legendAssistant) {
   let roamerMotionTimer = 0;
   let roamerIsRight = false;
   let isOpen = false;
+  let isTransitioning = false;
   const conversation = [];
 
   const spriteSequences = {
@@ -30,6 +32,7 @@ if (legendAssistant) {
     runningRight: { row: 1, frames: [0, 1, 2, 3, 4, 5, 6, 7], timings: [120, 120, 120, 120, 120, 120, 120, 220], loop: true },
     runningLeft: { row: 2, frames: [0, 1, 2, 3, 4, 5, 6, 7], timings: [120, 120, 120, 120, 120, 120, 120, 220], loop: true },
     wave: { row: 3, frames: [0, 1, 2, 3], timings: [140, 140, 140, 280], loop: false },
+    jumping: { row: 4, frames: [0, 1, 2, 3, 4], timings: [240, 260, 300, 300, 340], loop: false },
     thinking: { row: 7, frames: [0, 1, 2, 3, 4, 5], timings: [120, 120, 120, 120, 120, 220], loop: true },
   };
 
@@ -97,6 +100,79 @@ if (legendAssistant) {
   const stopRoaming = () => {
     window.clearTimeout(roamerMotionTimer);
     window.clearTimeout(roamerSpriteTimer);
+  };
+
+  const travelLegend = async (source, target, direction = 'up') => {
+    if (!source || !target || reduceMotion.matches) return;
+
+    const sourceRect = source.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    if (!sourceRect.width || !targetRect.width) return;
+
+    const traveller = document.createElement('span');
+    const sourceSprite = source.querySelector('.legend-sprite');
+    const travellerSprite = sourceSprite?.cloneNode(true);
+    if (!travellerSprite) return;
+
+    traveller.className = 'legend-assistant__traveller';
+    traveller.setAttribute('aria-hidden', 'true');
+    traveller.style.left = `${sourceRect.left}px`;
+    traveller.style.top = `${sourceRect.top}px`;
+    traveller.style.width = `${sourceRect.width}px`;
+    traveller.style.height = `${sourceRect.height}px`;
+    traveller.append(travellerSprite);
+    document.body.append(traveller);
+
+    const sequence = spriteSequences.jumping;
+    let frameIndex = 0;
+    let frameTimer = 0;
+    const advanceFrame = () => {
+      travellerSprite.style.setProperty('--legend-row', sequence.row);
+      travellerSprite.style.setProperty('--legend-column', sequence.frames[frameIndex]);
+      const delay = sequence.timings[frameIndex] || 280;
+      if (frameIndex < sequence.frames.length - 1) {
+        frameIndex += 1;
+        frameTimer = window.setTimeout(advanceFrame, delay);
+      }
+    };
+    advanceFrame();
+
+    if (typeof traveller.animate !== 'function') {
+      window.clearTimeout(frameTimer);
+      traveller.remove();
+      return;
+    }
+
+    const distanceX = targetRect.left - sourceRect.left;
+    const distanceY = targetRect.top - sourceRect.top;
+    const targetScale = targetRect.width / sourceRect.width;
+    const middleScale = 1 + ((targetScale - 1) * 0.52);
+    const arc = direction === 'up' ? -64 : -42;
+    const duration = 1440;
+    const motion = traveller.animate([
+      { transform: 'translate3d(0, 0, 0) scale(1)', offset: 0 },
+      {
+        transform: `translate3d(${distanceX * 0.5}px, ${(distanceY * 0.52) + arc}px, 0) scale(${middleScale})`,
+        offset: 0.52,
+      },
+      {
+        transform: `translate3d(${distanceX}px, ${distanceY}px, 0) scale(${targetScale})`,
+        offset: 1,
+      },
+    ], {
+      duration,
+      easing: 'cubic-bezier(0.34, 0.72, 0.32, 1)',
+      fill: 'forwards',
+    });
+
+    try {
+      await motion.finished;
+    } catch (error) {
+      // A resize or navigation can cancel the visual handoff safely.
+    }
+
+    window.clearTimeout(frameTimer);
+    traveller.remove();
   };
 
   const startRoaming = () => {
@@ -254,26 +330,49 @@ if (legendAssistant) {
     }
   };
 
-  const openChat = () => {
+  const openChat = async () => {
+    if (isTransitioning || isOpen) return;
+
     isOpen = true;
+    isTransitioning = true;
     panel.hidden = false;
     launcher.setAttribute('aria-expanded', 'true');
-    legendAssistant.classList.add('is-open');
-    playSprite('wave');
-    startRoaming();
-    window.setTimeout(() => input.focus(), reduceMotion.matches ? 0 : 180);
-  };
-
-  const closeChat = () => {
-    isOpen = false;
-    panel.hidden = true;
-    launcher.setAttribute('aria-expanded', 'false');
-    legendAssistant.classList.remove('is-open');
-    playSprite('idle');
     stopRoaming();
     roamer?.classList.remove('is-at-right');
     roamerIsRight = false;
+    showRoamerFrame(spriteSequences.jumping.row, spriteSequences.jumping.frames[0]);
+
+    const travel = travelLegend(launcherCharacter, roamer, 'up');
+    legendAssistant.classList.add('is-transitioning');
+    await travel;
+
+    legendAssistant.classList.add('is-open', 'has-arrived');
+    legendAssistant.classList.remove('is-transitioning');
+    isTransitioning = false;
+    startRoaming();
+    input.focus();
+  };
+
+  const closeChat = async () => {
+    if (isTransitioning || !isOpen) return;
+
+    isTransitioning = true;
+    isOpen = false;
+    launcher.setAttribute('aria-expanded', 'false');
+    stopRoaming();
+
+    const travel = travelLegend(roamer, launcherCharacter, 'down');
+    legendAssistant.classList.add('is-transitioning');
+    legendAssistant.classList.remove('is-open', 'has-arrived');
+    panel.hidden = true;
+    await travel;
+
+    roamer?.classList.remove('is-at-right');
+    roamerIsRight = false;
     showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
+    legendAssistant.classList.remove('is-transitioning');
+    isTransitioning = false;
+    playSprite('idle');
     launcher.focus();
   };
 
