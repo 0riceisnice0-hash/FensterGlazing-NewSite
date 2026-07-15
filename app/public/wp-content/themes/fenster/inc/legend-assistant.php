@@ -246,6 +246,13 @@ function fenster_legend_search_documents(): array
         $description = fenster_legend_limit_text((string) ($page['seo']['meta_description'] ?? $page['excerpt'] ?? ''), 400);
         $content = fenster_legend_limit_text(fenster_legend_flatten_content($page), 30000);
 
+        if (
+            isset($documents[$path])
+            && strlen((string) $documents[$path]['content']) >= strlen($content)
+        ) {
+            continue;
+        }
+
         if ($title !== '' && $content !== '') {
             $documents[$path] = compact('title', 'url', 'description', 'content', 'path');
         }
