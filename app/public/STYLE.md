@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-07-14
+Last updated: 2026-07-15
 
 This file is the source of truth for how the site should look and feel.
 
@@ -15,6 +15,7 @@ Use:
 
 ## Important Updates
 
+- The theme now defines `--fg-font-size-max: 3.6rem` as the site-wide display-type ceiling. No heading or decorative text may exceed it at any breakpoint. Existing oversized clamps have been capped at this token.
 - The article/blog CTA form layout has been fixed with a page-specific `fg-article-form` wrapper. Do not let shared form styles render white-on-white or low-contrast labels inside article CTA panels again.
 - The commercial glazing hub has been simplified into a proof-led conversion page. Commercial pages should avoid decorative micro-parallax, oversized form headings and vague "where this fits" card grids that do not help a buyer submit an enquiry.
 - Performance polish should preserve the premium feel by deferring heavy media/embeds and right-sizing assets before removing visual proof.
@@ -41,6 +42,25 @@ Design decisions should prioritise:
 - calm premium polish,
 - mobile layouts designed on purpose,
 - continuity from section to section.
+
+## Non-Negotiable First-Pass Standard
+
+These rules apply to every new page and substantial redesign. They are hard defaults, not optional polish:
+
+- Keep every visible font size at or below `var(--fg-font-size-max)`, currently `3.6rem` or `57.6px`. Do not introduce a larger desktop or mobile exception.
+- Use dark ink on white, pale or gradient backgrounds. White or near-white text is allowed only inside a visibly dark solid panel or over an image with a tested dark overlay. White text on a light page is a release blocker.
+- Preserve the continuous page-level gradient when the page family uses it. Do not replace it with a flat white page or restart it on each section.
+- At `1440 x 900`, a normal narrative section should be understandable as one complete composition within the available viewport below the header. This includes its heading, useful copy, main media and any controls. Forms, long specifications, comparison tables, FAQs and galleries may be taller when the content genuinely requires it.
+- Do not achieve viewport fit by shrinking text below the approved reading scale. Shorten copy, remove repetition, reduce empty padding, choose a shallower crop or simplify the composition.
+- Product pages need a sustained image rhythm. Avoid two consecutive text-heavy sections when a relevant product, project, detail or finished-room image exists. Each image must still explain or prove something.
+- Never use an accidental image collage. Mixed image sizes require a deliberate grid with aligned edges, controlled aspect ratios and clear visual priority. Narrow leftover columns, stretched portraits, unexplained overlaps and arbitrary crops are defects.
+- Write directly as Fenster using `we`, `our` and `you`. Do not describe Fenster in the third person.
+- Do not use em dashes in customer-facing copy.
+- Use plain CTA labels that describe the action, such as `Get a quote`, `View colours`, `See configurations` or `Call us`. Avoid invented journey language such as `Plan my...`, `Start your journey`, `Discover the difference` or similar campaign-style copy.
+- Manufacturer names may appear only when Fenster intentionally sells the page around that named system. Do not expose scrape provenance, source-company names, filenames or internal product labels by accident.
+- Information learned from a supplier scrape must be fact-checked and rewritten in Fenster's direct voice. Do not paste supplier paragraphs or mirror their sentence structure.
+
+The owner can override any default for a specific page. In the absence of an override, these rules decide the first implementation rather than waiting for screenshot feedback.
 
 ## Design Direction: Get It Right In The First Pass
 
@@ -128,6 +148,9 @@ Sections should feel like parts of one composed page.
 - Do not hide awkward joins with repeated backgrounds.
 - Do not use negative margins unless the layout has a documented, measured reason.
 - Controls, dots, progress bars and buttons belong visually to the component they operate.
+- On desktop, target a composed section height of roughly `680px` to `780px` for ordinary product storytelling so it remains visible beneath the header at `1440 x 900`.
+- Do not apply `min-height: 100vh` to every section. Viewport fit is a composition check, not a reason to create artificial empty space.
+- If a section exceeds one desktop viewport, identify the cause before shipping. Usual causes are too much copy, oversized headings, excessive vertical padding, duplicated captions or media without a controlled height.
 
 ## Visual Assets
 
@@ -140,6 +163,10 @@ Use real, relevant visuals whenever a page needs personality or trust.
 - Never stretch images or videos to fill space. Use `object-fit` and intentional crop positions.
 - Product/gallery mosaics should use fixed aspect-ratio cells, usually `4 / 3` or `16 / 10`, with `object-fit: cover`; tall source images must not be allowed to stretch the whole section.
 - Mobile image crops need a clear focal point.
+- A major product page should normally show at least one relevant image in the hero and continue with useful product or installation imagery through the page. Do not let a page become a mostly textual brochure when suitable assets exist.
+- Before coding, inspect image dimensions and subjects. Choose the grid from the actual assets rather than forcing every source into a preselected card pattern.
+- For three-image compositions, use a clear dominant image plus two supporting images with aligned outer edges, or use three equal cells. Do not create a thin central strip between two oversized images.
+- Captions must sit with the image they describe and must not compete with the main heading.
 
 ## Cards And Panels
 
@@ -167,15 +194,29 @@ The site should use Fenster's green, teal/steel and soft neutrals with restraint
 
 Type should be bold and confident, but sized for its container.
 
-- Use hero-scale headings only for true hero moments.
-- Default page headers should be moderate, not oversized. Unless a page is the homepage, a major product hero, a case-study hero or another deliberately cinematic first screen, cap page H1s around `clamp(2.1rem, 3.6vw, 3.6rem)`.
-- For normal trust, about, utility, contact-support, proof, policy, guide and content pages, H2 and H3 headings should usually share the same calm supporting scale, around `clamp(1.45rem, 2.2vw, 2rem)`, rather than stepping up toward hero size.
+- The absolute site-wide ceiling is `var(--fg-font-size-max)`, currently `3.6rem`. This applies to homepage display text, heroes, promotional headings and mobile overrides as well as ordinary page headings.
+- New large type must use the shared token as the maximum value, for example `font-size: clamp(2.5rem, 3.6vw, var(--fg-font-size-max));`.
+- Use hero-scale headings only for true hero moments. A normal page H1 should usually use `clamp(2.1rem, 3.6vw, var(--fg-font-size-max))`.
+- H2 headings should usually stay around `clamp(1.45rem, 2.2vw, 2rem)`. An art-directed product section may rise toward `2.5rem` when the surrounding composition supports it, but it does not inherit hero scale.
+- H3 headings should usually stay between `1.15rem` and `1.45rem`.
+- Body and lead copy should normally stay between `1rem` and `1.18rem`. Use width and spacing for emphasis before increasing body text.
 - If an AI is unsure whether a heading should be large, choose the smaller size first and let layout, proof, imagery and copy carry the importance.
 - Use tighter headings inside cards, sidebars, forms and compact panels.
 - Enquiry/form section headings are supporting content headings, not page heroes. Keep them moderate site-wide.
 - Do not scale font size directly with viewport width.
 - Letter spacing should normally be `0`, except small uppercase eyebrow labels.
 - Long words, email addresses and phone/action text must not overflow their containers.
+- Do not use large type as the main source of visual drama. Composition, photography, contrast and spacing should establish hierarchy.
+
+## Customer-Facing Copy
+
+- Write from Fenster to the customer: `We supply and install...`, `Tell us...`, `You can choose...`.
+- Prefer short declarative sentences and ordinary punctuation. Do not use em dashes.
+- Avoid talking about Fenster as `the installer`, `the company`, `your local specialist` or another third-person entity unless the sentence genuinely refers to a separate party.
+- Headings should state a useful customer truth, not advertise the writing. Avoid headings such as `Designed around you`, `The perfect finishing touch`, `Explore the possibilities` and `Everything you need to know`.
+- Buttons state the next action. Good labels include `Get a quote`, `Call 01908 429200`, `View flat rooflights`, `See colour options` and `Send an enquiry`.
+- Do not turn product configuration into role-play copy. Avoid `Plan my roof lantern`, `Build my dream`, `Find my perfect...` and similar phrasing.
+- Keep SEO terms inside natural sentences. Repeating a location or product phrase is not worth making the page sound as if it was written about Fenster by somebody else.
 
 ## Forms
 
@@ -277,6 +318,11 @@ Before handing back visual work:
 - Check console errors when browser QA is available.
 - Inspect section transitions, not only the top of the page.
 - If a screenshot looks wrong but the CSS seems reasonable, the screenshot wins.
+- At `1440 x 900`, inspect each ordinary section at its natural top edge and confirm its complete composition is visible without another scroll. Record and justify genuine content exceptions.
+- Check computed heading sizes. Nothing may exceed `57.6px` while `--fg-font-size-max` is `3.6rem`.
+- Search the rendered page for light text on light backgrounds, source-company names, internal filenames, em dashes and campaign-style CTA copy.
+- Confirm every image has loaded, keeps its intended aspect ratio and belongs to a deliberate composition. The presence of several images does not excuse a poor grid.
+- Review the full page as a sequence. Check that no two adjacent sections repeat the same layout, repeat the same promise or become an unbroken wall of copy.
 
 ## New Conversion Page Review
 

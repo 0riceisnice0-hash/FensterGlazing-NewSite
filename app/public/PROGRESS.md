@@ -1,6 +1,12 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-14
+Last updated: 2026-07-15
+
+## 2026-07-15 - Site-Wide Typography Ceiling And First-Pass Design Contract
+
+- Added `--fg-font-size-max: 3.6rem` as the shared site-wide display-type ceiling and replaced every existing font-size clamp above that value with the token. No source heading or display declaration now exceeds `57.6px`.
+- Expanded `STYLE.md` with hard first-pass rules for viewport-contained desktop sections, dark text on light backgrounds, continuous gradients, deliberate image compositions, sustained product imagery, direct `we` and `you` copy, no em dashes, plain action-led CTAs, supplier-source rewriting and rendered-page QA.
+- Rebuilt the complete theme CSS and confirmed the source contains no remaining font-size maximum above `3.6rem`.
 
 ## 2026-07-14 - Roof Lanterns Dedicated Page Redesign
 
