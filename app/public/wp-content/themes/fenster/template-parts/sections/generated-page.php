@@ -2825,9 +2825,18 @@ if ($is_commercial_hub) {
                 <div class="fg-sash-carousel" data-fg-sash-carousel>
                 <div class="fg-sash-models" aria-label="<?php esc_attr_e('Roseview sash model comparison', 'fenster'); ?>" data-fg-sash-track>
                     <?php foreach ($sash_roseview_models as $index => $model) : ?>
+                        <?php
+                        $model_image = (string) $model['image'];
+                        $model_image_dir = trailingslashit(dirname($model_image));
+                        $model_image_stem = pathinfo($model_image, PATHINFO_FILENAME);
+                        $model_image_srcset = implode(', ', [
+                            fenster_generated_url($model_image_dir . $model_image_stem . '-400w.webp') . ' 400w',
+                            fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp') . ' 800w',
+                        ]);
+                        ?>
                         <article class="fg-sash-model" data-fg-sash-slide>
                             <figure class="fg-sash-model__media" data-fg-depth="<?php echo esc_attr($index === 1 ? '0.045' : '0.065'); ?>">
-                                <img src="<?php echo esc_url(fenster_generated_url((string) $model['image'])); ?>" alt="<?php echo esc_attr((string) $model['alt']); ?>" loading="lazy">
+                                <img src="<?php echo esc_url(fenster_generated_url($model_image_dir . $model_image_stem . '-800w.webp')); ?>" srcset="<?php echo esc_attr($model_image_srcset); ?>" sizes="(max-width: 860px) 86vw, 30vw" alt="<?php echo esc_attr((string) $model['alt']); ?>" loading="lazy">
                                 <span class="fg-sash-model__rail-detail">
                                     <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy">
                                     <strong><?php echo esc_html((string) $model['rail_label']); ?></strong>
@@ -3778,6 +3787,7 @@ if ($is_commercial_hub) {
             'copy' => 'Fenster combines local installation experience with recognised accreditations and trusted glazing system partners.',
             'trust_items' => $trust_items,
             'limit' => 7,
+            'prioritise_context' => $slug === 'sliding-sash-windows' ? 'sash windows' : '',
         ]);
         ?>
     <?php endif; ?>

@@ -28449,8 +28449,11 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-sash-furniture-selector__guide {
+  display: block;
   color: var(--color-accent-dark);
   font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .fg-product-quote-embed__sash-mobile-action {
