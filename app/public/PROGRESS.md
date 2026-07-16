@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Friendlier Legend personality
+
+- Expanded Legend's permitted conversation to include greetings, thanks, goodbyes, meows, purrs, harmless cat jokes and questions about Legend without forcing each reply back to windows, doors or a sales action.
+- Made the assistant warmer, cuter and more naturally in character while retaining concise British English, factual accuracy and the boundary against substantive unrelated tasks.
+- Added the owner-confirmed relationship that Legend's dad is Nick Baker, Fenster's Sales Director, to both the assistant instructions and authoritative business context. Legend is told not to invent any other biographical details.
+
 ## 2026-07-16 - Legend close delay, iOS prompt and footer cookie control
 
 - Changed drawer-close behaviour so Legend returns to idle and waits 10 seconds before curling up; the normal inactivity timeout remains 20 seconds.
