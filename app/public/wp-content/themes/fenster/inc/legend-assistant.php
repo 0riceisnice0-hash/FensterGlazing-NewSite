@@ -634,17 +634,29 @@ function fenster_legend_normalise_reply_link(string $reply): string
         $reply
     ) ?? $reply;
 
+    foreach (fenster_legend_product_aliases() as $slug => $aliases) {
+        foreach ($aliases as $alias) {
+            $pattern = '/(?<!\[)\*\*(' . preg_quote($alias, '/') . 's?)\*\*/iu';
+            if (preg_match($pattern, $reply) === 1) {
+                // A bold product is normally the primary recommendation. Make
+                // that the single useful link instead of retaining a later,
+                // less relevant model-selected route.
+                $reply = preg_replace(
+                    '/\[([^\]\n]{1,80})\]\(\/[a-zA-Z0-9_\-\/.?=&%#]+\)/',
+                    '$1',
+                    $reply
+                ) ?? $reply;
+                return preg_replace($pattern, '[$1](/' . $slug . '/)', $reply, 1) ?? $reply;
+            }
+        }
+    }
+
     if (preg_match('/\[[^\]\n]{1,80}\]\(\/[a-zA-Z0-9_\-\/.?=&%#]+\)/', $reply) === 1) {
         return $reply;
     }
 
     foreach (fenster_legend_product_aliases() as $slug => $aliases) {
         foreach ($aliases as $alias) {
-            $pattern = '/\*\*(' . preg_quote($alias, '/') . 's?)\*\*/iu';
-            if (preg_match($pattern, $reply) === 1) {
-                return preg_replace($pattern, '[$1](/' . $slug . '/)', $reply, 1) ?? $reply;
-            }
-
             $pattern = '/\b(' . preg_quote($alias, '/') . 's?)\b/iu';
             if (preg_match($pattern, $reply) === 1) {
                 return preg_replace($pattern, '[$1](/' . $slug . '/)', $reply, 1) ?? $reply;
