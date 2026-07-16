@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Legend close delay, iOS prompt and footer cookie control
+
+- Changed drawer-close behaviour so Legend returns to idle and waits 10 seconds before curling up; the normal inactivity timeout remains 20 seconds.
+- Hardened the scroll-triggered speech bubble for iOS by checking all relevant scroll roots and listening to document, touch and visual-viewport movement. The prompt can now appear while Legend is asleep.
+- Removed the persistent viewport Cookie settings button and kept the reopening control in the footer. Limited pointer events to the visible Legend launcher and speech bubble so the transparent positioning wrapper cannot cover cookie or footer controls.
+- Built and PHP-linted the theme, isolated the release from unrelated sliding-sash work and deployed it to the protected test site for responsive verification. Production remains on the previously approved Legend release until this follow-up is approved.
+
 ## 2026-07-16 - Legend Sleep And Scroll Prompt Live
 
 - Used the approved hatch-pet Legend identity and contact sheet to generate a coherent eight-frame standing-to-curled sleeping animation. The first generation was rejected because two tails touched and produced clipped extraction fragments; the complete row was regenerated with separated poses, then passed deterministic frame inspection and visual contact-sheet review.

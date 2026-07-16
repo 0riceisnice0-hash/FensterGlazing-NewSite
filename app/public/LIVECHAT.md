@@ -8,6 +8,7 @@ This document explains the Legend AI assistant deployed on the Fenster website. 
 
 - Legend is deployed on both `https://test.fensterglazing.com/` and `https://fensterglazing.com/`.
 - The approved live theme was deployed from commit `400cf10` on 2026-07-16. The functional sleep and prompt code is in commits `1a7be33` and `0f614d1`; `400cf10` adds the matching handover documentation.
+- The 2026-07-16 follow-up is currently on the protected test site only. It waits 10 seconds after drawer close before sleeping, hardens the prompt reveal for iOS scrolling, limits the launcher hit area to visible controls and keeps Cookie settings in the footer rather than floating in the viewport.
 - Production has a separately configured OpenAI connection and returned `AI_CONFIGURED=yes` during the post-deploy check.
 - The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
 - Test and production OpenAI connections are configured through their separate Bedrock `.env` files. No API key is stored in the theme or this repository.
@@ -32,11 +33,11 @@ The current experience includes:
 
 ## Drawer And Cookie-Control Behaviour
 
-On desktop the drawer is `420px` wide, limited by the available viewport width, and covers the viewport from top to bottom. The compact Cookies button moves to a position `16px` left of the open drawer and returns to the bottom-right when the drawer closes.
+On desktop the drawer is `420px` wide, limited by the available viewport width, and covers the viewport from top to bottom. On mobile the drawer becomes full width and full height.
 
-On mobile the drawer becomes full width and full height. The Cookies button is temporarily hidden while the drawer is open because there is no safe space beside a full-width panel. Closing Legend restores the Cookies control.
+There is no persistent floating Cookies button. The `Cookie settings` control lives in the footer and reopens the consent banner from there. Legend observes only the actual consent banner for launcher positioning. The launcher's large positioning wrapper does not accept pointer events; only the visible Legend button and speech bubble do, so its transparent area cannot block footer or cookie controls.
 
-Legend observes the cookie banner and settings button only for launcher positioning. Opening or using chat must never accept, reject or overwrite the visitor's optional-cookie choice.
+Opening or using chat must never accept, reject or overwrite the visitor's optional-cookie choice.
 
 ## Animation System
 
@@ -62,9 +63,10 @@ Reduced-motion visitors receive an instant handoff without the travel animation.
 
 Legend also uses the separate transparent eight-frame `legend-sleep-strip.webp` generated from the approved character through the hatch-pet workflow. It progresses from standing, sitting and tucking his paws through to a compact curled sleeping ball. The last two frames alternate slowly as a breathing loop.
 
-- Clicking the chat drawer X returns Legend to the launcher and immediately plays the curl-up sequence.
+- Clicking the chat drawer X returns Legend to the launcher in his idle state, then waits 10 seconds before playing the curl-up sequence.
 - Twenty seconds without interaction with Legend plays the same sequence, whether the drawer is open or closed.
 - Pointer, focus, typing or launcher interaction resets the inactivity timer. Clicking a sleeping Legend reverses the sleep frames before the normal jump into chat.
+- The speech bubble reveal checks window, document, touch and `visualViewport` scrolling so it also appears on iOS. Sleeping does not suppress a scroll-triggered bubble.
 - Reduced-motion visitors move directly between the final sleeping frame and normal idle state.
 
 ## How The Chat Works
@@ -242,7 +244,7 @@ The implementation has been checked on the protected test site for:
 - Optional-cookie rejection remaining unchanged after chat use.
 - Desktop drawer dimensions at `1440 x 900`.
 - Mobile full-height drawer dimensions at `390 x 844`.
-- Cookies button movement and restoration.
+- Footer Cookie settings control, consent-banner reopening and unobstructed pointer access.
 - No horizontal page overflow.
 - Correct animation rows only.
 - Jump-path landing coordinates with no rightward overshoot or teleport.
@@ -301,5 +303,8 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `44597e0` | Fixed singular/plural product matching and verified the failed product questions on test. |
 | `1a7be33` | Added the generated curl-up sleep strip, 20-second inactivity state, close-to-sleep behaviour and scroll-triggered prompt. |
 | `0f614d1` | Restored the launcher character dimensions after the prompt was separated into valid sibling controls. |
+| `e04fa89` | Added the 10-second post-close sleep delay, iOS scroll handling and footer-only Cookie settings control. |
+| `debe566` | Allowed the scroll-triggered prompt to remain visible while Legend is asleep. |
+| `9fb8309` | Limited pointer input to the visible launcher and prompt so the transparent wrapper cannot cover footer controls. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.
