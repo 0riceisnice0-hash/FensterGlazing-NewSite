@@ -553,7 +553,7 @@ $product_why_secondary_image = $product_unique_body_images[1] ?? null;
 $product_gallery_heading = sprintf('%s styles, details and installed examples.', $title);
 $product_gallery_copy = sprintf(
     'See %1$s styles, finishes and installed details up close. Compare frame lines, glass options, opening formats and colours before you ask for a price.',
-    strtolower($title)
+    $title
 );
 if ($is_pet_flap_page) {
     $product_gallery_heading = 'Pet flap fitting options and fitted details.';
@@ -3079,7 +3079,7 @@ if ($is_commercial_hub) {
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Move from the product into the details that make it yours.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Choose your colours, privacy glass and hardware in three quick guides; each one helps narrow the detail before survey.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-product-choice-map">
                     <div class="fg-product-options fg-product-options--hub">

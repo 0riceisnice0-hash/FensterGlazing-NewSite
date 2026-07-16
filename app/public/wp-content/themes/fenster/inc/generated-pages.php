@@ -182,6 +182,14 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Composite Doors Milton Keynes | Secure Front Doors',
             'meta_description' => 'Composite doors with insulated slabs, secure locking, colour choices and survey-led fitting across Milton Keynes, Northampton and nearby towns.',
         ],
+        'upvc-doors' => [
+            'title_tag' => 'uPVC Doors Milton Keynes | Secure Low-Maintenance Doors',
+            'meta_description' => 'uPVC front, back and side doors in Milton Keynes with multi-point locking, 14 colour options and a 10-year guarantee. Get an instant online price.',
+        ],
+        'casement-windows' => [
+            'title_tag' => 'Casement Windows Milton Keynes | uPVC Casement Installers',
+            'meta_description' => 'uPVC casement windows in Milton Keynes with A+ rated efficiency options, 16 colour choices and PAS 24 security, fitted by our local team.',
+        ],
         'aluminium-bifold-doors' => [
             'title_tag' => 'Aluminium Bifold Doors Milton Keynes | Slim Bifolds',
             'meta_description' => 'Aluminium bifold doors with slim frames, smooth folding panels, secure hardware and measured installation across Milton Keynes, Northampton and nearby towns.',

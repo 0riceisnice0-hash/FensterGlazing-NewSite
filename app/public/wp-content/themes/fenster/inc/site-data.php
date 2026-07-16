@@ -171,11 +171,13 @@ function fenster_site_data(): array
                 'ctas' => [
                     [
                         'label' => 'Get an instant quote',
+                        'badge' => 'Quick start',
                         'url' => home_url('/online-quote/'),
                         'copy' => 'Price windows and doors through the online quote tool.',
                     ],
                     [
                         'label' => 'Book a consultation',
+                        'badge' => 'Explore',
                         'url' => home_url('/book-a-consultation/'),
                         'copy' => 'Talk through your project with the Fenster team.',
                     ],
@@ -286,7 +288,7 @@ function fenster_site_data(): array
                 ['label' => 'Opening style', 'value' => 'Highly versatile'],
             ],
             'sliding-sash-windows' => [
-                ['label' => 'Energy rating', 'value' => 'A+ rated'],
+                ['label' => 'Energy rating', 'value' => 'A rated'],
                 ['label' => 'Colour choice', 'value' => 'Full RAL range'],
                 ['label' => 'Profile system', 'value' => 'Roseview'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
@@ -462,11 +464,11 @@ function fenster_site_data(): array
                 ],
             ],
             'upvc-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'uPVC residential entrance door with decorative glazing'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'Golden oak front door with decorative glazed side panels'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'uPVC residential entrance door with decorative glazing'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_08.jpg', 'alt' => 'uPVC residential door with decorative glass'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_01.jpg', 'alt' => 'uPVC residential door panel and glazing detail'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'Golden oak front door with decorative glazed side panels'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_01.jpg', 'alt' => 'Black panel front door with decorative glazed side screens'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Chartwell Green with twin glazed top panels'],
                 ],
             ],
             'patio-doors' => [
@@ -633,15 +635,12 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/composite-doors-milton-keynes-3.jpg', 'alt' => 'Composite door installed in Milton Keynes'],
             ],
             'upvc_doors' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'uPVC residential entrance door with decorative glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_08.jpg', 'alt' => 'uPVC residential door with decorative glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_01.jpg', 'alt' => 'uPVC residential door panel and glass detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/new-front-door-in-Milton-Keynes.jpeg', 'alt' => 'Front door installed in Milton Keynes'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/front-door.jpeg', 'alt' => 'uPVC style front door with decorative glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/house-front-door.jpeg', 'alt' => 'Front door fitted to a home entrance'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/secure-front-door.jpeg', 'alt' => 'Secure residential uPVC style entrance door'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-cat-flap-glass.jpg', 'alt' => 'Pet flap installed into a glazed door panel'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Front-door-threshold.jpeg', 'alt' => 'uPVC door threshold detail'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'Golden oak front door with decorative glazed side panels'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_01.jpg', 'alt' => 'Black panel front door with decorative glazed side screens'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Chartwell Green with twin glazed top panels'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Golden-Oak-Golden-Oak-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Golden Oak woodgrain finish'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/front-door.jpeg', 'alt' => 'Blue six-panel front door with brass letterplate'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Front-door-threshold.jpeg', 'alt' => 'Low threshold detail on a uPVC door'],
             ],
             'upvc_patio_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-patio-door.jpg', 'alt' => 'uPVC sliding patio doors in a kitchen extension'],
@@ -874,7 +873,7 @@ function fenster_site_data(): array
                 'benefits' => [
                     ['title' => 'Classic vertical sliding style', 'copy' => 'Sash windows retain the familiar up-and-down opening associated with Georgian, Victorian and Edwardian homes.'],
                     ['title' => 'Modern Roseview system', 'copy' => 'Roseview gives a sash-focused profile system rather than a generic casement window adapted to look traditional.'],
-                    ['title' => 'A+ rated efficiency', 'copy' => 'Sliding sash windows can combine traditional appearance with modern comfort and A+ rated efficiency options.'],
+                    ['title' => 'A-rated efficiency', 'copy' => 'Sliding sash windows combine traditional appearance with modern comfort, with A-rated efficiency as standard across the range.'],
                     ['title' => 'Authentic design options', 'copy' => 'Run-through horns, astragal bars, woodgrain-style finishes, colours and hardware can be chosen to suit the age and detail of the property.'],
                     ['title' => 'Security and smooth operation', 'copy' => 'Modern sash balances, locks and glazing choices help the windows open smoothly while giving a more secure everyday specification.'],
                 ],
@@ -1184,14 +1183,14 @@ function fenster_site_data(): array
             'finish_note' => 'Furniture finishes are available in classic options such as gold, chrome and white, with final compatibility confirmed before order.',
             'width_rule' => [
                 'title' => 'Furniture count changes with sash width',
-                'copy' => 'Roseview states that windows under 700mm wide use one pole eye and one lock instead of two. Windows over 700mm wide use two locks, two tilt knobs, two pole eyes on the top sash and two sash lifts on the bottom sash.',
+                'copy' => 'Windows under 700mm wide use one pole eye and one lock instead of two. Windows over 700mm wide use two locks, two tilt knobs, two pole eyes on the top sash and two sash lifts on the bottom sash.',
             ],
             'ranges' => [
                 [
                     'name' => 'Globe furniture',
                     'model' => 'Ultimate Rose',
                     'tagline' => 'Premium Ultimate Rose hardware',
-                    'copy' => 'The Globe range is described by Roseview as a premium furniture set exclusive to Ultimate Rose, used where the closest timber-style detailing matters.',
+                    'copy' => 'Globe is the premium furniture range, exclusive to Ultimate Rose and chosen where the closest timber-style detailing matters.',
                     'items' => [
                         ['name' => 'Globe Hook Lock', 'image' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/globe-lock.jpg'],
                         ['name' => 'Globe Tilt Knob', 'image' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/ultimate-tilt-knob.jpg'],
@@ -1203,7 +1202,7 @@ function fenster_site_data(): array
                     'name' => 'Acorn furniture',
                     'model' => 'Heritage Rose and Charisma Rose',
                     'tagline' => 'Standard Heritage and Charisma hardware',
-                    'copy' => 'Roseview lists Acorn furniture as standard on Heritage Rose and Charisma Rose, keeping the hardware sash-specific without stepping into the Ultimate-only Globe range.',
+                    'copy' => 'Acorn furniture comes as standard on Heritage Rose and Charisma Rose, keeping the hardware sash-specific without stepping up to the Ultimate-only Globe range.',
                     'items' => [
                         ['name' => 'Acorn Lock', 'image' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/acorn-lock.jpg'],
                         ['name' => 'Acorn Tilt Knob', 'image' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/acorn-tilt-knob.jpg'],
@@ -1215,7 +1214,7 @@ function fenster_site_data(): array
                     'name' => 'Extra furniture',
                     'model' => 'Survey-led extras',
                     'tagline' => 'Additional sash furniture options',
-                    'copy' => 'The Roseview options page also lists extra furniture including a Shark Fin limit stop and D Handle, useful where the sash specification needs additional control or operation detail.',
+                    'copy' => 'Extra options include a Shark Fin limit stop and D Handle, useful where the sash specification needs additional control or operation detail.',
                     'items' => [
                         ['name' => 'Shark Fin Limit Stop', 'image' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/shark-fin-lock.jpg'],
                         ['name' => 'D Handle', 'image' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/d-handle.jpg'],

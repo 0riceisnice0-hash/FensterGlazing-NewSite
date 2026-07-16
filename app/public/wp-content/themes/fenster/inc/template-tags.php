@@ -99,9 +99,11 @@ function fenster_render_nav_fallback(): void
             if (! empty($item['ctas']) && is_array($item['ctas'])) {
                 echo '<div class="site-nav__mega-ctas">';
                 foreach ($item['ctas'] as $cta) {
+                    $cta_badge = (string) ($cta['badge'] ?? '');
                     printf(
-                        '<a class="site-nav__mega-cta" href="%s"><strong>%s</strong><span>%s</span></a>',
+                        '<a class="site-nav__mega-cta" href="%s">%s<strong>%s</strong><span>%s</span></a>',
                         esc_url($cta['url'] ?? '#'),
+                        $cta_badge !== '' ? '<span class="site-nav__mega-cta-badge">' . esc_html($cta_badge) . '</span>' : '',
                         esc_html($cta['label'] ?? ''),
                         esc_html($cta['copy'] ?? '')
                     );

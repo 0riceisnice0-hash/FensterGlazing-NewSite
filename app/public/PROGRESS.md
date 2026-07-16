@@ -1,6 +1,19 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-15
+Last updated: 2026-07-16
+
+## 2026-07-16 - Content/Imagery Audit And Week One Quick Fixes
+
+- Completed a full content, imagery, design and SEO audit of the live site (12 pages crawled at desktop and mobile widths with rendered-text extraction and layout metrics) and recorded the prioritised plan in `ACTION-PLAN.md`.
+- Made the Products mega-menu CTA badges data-driven through a new `badge` field on the nav CTAs in `inc\site-data.php`, rendered in `inc\template-tags.php` and styled as `.site-nav__mega-cta-badge`. The previously swapped CSS `content` labels are gone: `Get an instant quote` now reads `Quick start` and `Book a consultation` reads `Explore`.
+- Fixed the shared product template's hardcoded "three quick guides" claim (door pages only render two specification-choice cards) and stopped `strtolower($title)` breaking product casing in gallery copy ("upvc doors" now renders as "uPVC Doors").
+- Curated the `upvc_doors` image pool and `product_media` gallery: removed the cat-flap photo, a CGI render, a painted timber cottage door, a timber colour collage and a duplicated hero image; added two genuine Liniar uPVC door renders from the reserved `assets\images\products\colours\liniar-door` set; rewrote every alt text so no image claims a material it does not show.
+- Resolved the sliding sash energy-rating contradiction: the USP strip said `A+ rated` while the on-page comparison table said `A rated`; both now state `A rated`, matching Roseview's published standard rating, and the matching benefit card copy was updated.
+- Rewrote the four sash furniture descriptions that exposed supplier-research phrasing ("described by Roseview as", "Roseview lists", "Roseview states", "The Roseview options page also lists") into direct customer-facing statements with the same facts.
+- Normalised review card dates at component level in `template-parts\components\review-showcase.php` (`strtotime` + `date_i18n('j M Y')`), so ISO Google dates and human Trustpilot dates render in one format.
+- Added `upvc-doors` and `casement-windows` to `fenster_gsc_seo_overrides()` with rewritten titles and meta descriptions, replacing the imported scrape-era metadata ("View our uPVC doors...", "Learn about our casement windows...").
+- Retracted one audit finding: the Legend launcher does not overlap hero content; it is fixed to the bottom-right corner and the apparent overlap was a full-page screenshot artifact.
+- Rebuilt CSS/JS and PHP-linted all changed files. The footer "Phone lines open 24/7" claim still needs an owner decision before it is changed.
 
 ## 2026-07-15 - Legend Chat Quality Assurance Tracking To Test
 

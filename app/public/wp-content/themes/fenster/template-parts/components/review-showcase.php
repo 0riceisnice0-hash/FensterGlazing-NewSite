@@ -53,11 +53,14 @@ if (empty($reviews)) {
                     $source = (string) ($review['source'] ?? 'Google');
                     $is_google = strtolower($source) === 'google';
                     $initial = strtoupper(substr((string) ($review['author'] ?? 'R'), 0, 1));
+                    $review_date_raw = (string) ($review['date'] ?? '');
+                    $review_date_ts = $review_date_raw !== '' ? strtotime($review_date_raw) : false;
+                    $review_date = $review_date_ts ? date_i18n('j M Y', $review_date_ts) : $review_date_raw;
                     ?>
                     <a class="fg-review-showcase__card" href="<?php echo esc_url((string) ($review['url'] ?? '#')); ?>" target="_blank" rel="noopener">
                         <span class="fg-review-showcase__avatar" aria-hidden="true"><?php echo esc_html($initial); ?></span>
                         <span class="fg-review-showcase__name"><?php echo esc_html((string) ($review['author'] ?? 'Customer')); ?></span>
-                        <span class="fg-review-showcase__date"><?php echo esc_html((string) ($review['date'] ?? '')); ?></span>
+                        <span class="fg-review-showcase__date"><?php echo esc_html($review_date); ?></span>
                         <span class="<?php echo esc_attr($is_google ? 'fg-review-showcase__platform fg-review-showcase__platform--google' : 'fg-review-showcase__platform fg-review-showcase__platform--trustpilot'); ?>">
                             <?php if ($is_google) : ?>
                                 <span class="fg-review-showcase__gmark" aria-hidden="true">G</span>
