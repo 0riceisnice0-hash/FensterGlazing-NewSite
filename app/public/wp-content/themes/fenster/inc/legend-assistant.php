@@ -607,6 +607,54 @@ function fenster_legend_verified_direct_reply(string $message): string
     return '';
 }
 
+/**
+ * Keep model links portable between test and live, then add one useful product
+ * link when a reply names a known product but omitted its route.
+ */
+function fenster_legend_normalise_reply_link(string $reply): string
+{
+    $reply = preg_replace_callback(
+        '/\[([^\]\n]{1,80})\]\((https?:\/\/[^)\s]+)\)/i',
+        static function (array $match): string {
+            $host = strtolower((string) wp_parse_url($match[2], PHP_URL_HOST));
+            if (! in_array($host, ['fensterglazing.com', 'www.fensterglazing.com', 'test.fensterglazing.com'], true)) {
+                return $match[0];
+            }
+
+            $path = (string) wp_parse_url($match[2], PHP_URL_PATH);
+            $query = (string) wp_parse_url($match[2], PHP_URL_QUERY);
+            $fragment = (string) wp_parse_url($match[2], PHP_URL_FRAGMENT);
+            $route = ($path !== '' ? $path : '/')
+                . ($query !== '' ? '?' . $query : '')
+                . ($fragment !== '' ? '#' . $fragment : '');
+            $label = preg_replace('/^\*\*(.+)\*\*$/', '$1', trim($match[1])) ?? trim($match[1]);
+
+            return '[' . $label . '](' . $route . ')';
+        },
+        $reply
+    ) ?? $reply;
+
+    if (preg_match('/\[[^\]\n]{1,80}\]\(\/[a-zA-Z0-9_\-\/.?=&%#]+\)/', $reply) === 1) {
+        return $reply;
+    }
+
+    foreach (fenster_legend_product_aliases() as $slug => $aliases) {
+        foreach ($aliases as $alias) {
+            $pattern = '/\*\*(' . preg_quote($alias, '/') . 's?)\*\*/iu';
+            if (preg_match($pattern, $reply) === 1) {
+                return preg_replace($pattern, '[$1](/' . $slug . '/)', $reply, 1) ?? $reply;
+            }
+
+            $pattern = '/\b(' . preg_quote($alias, '/') . 's?)\b/iu';
+            if (preg_match($pattern, $reply) === 1) {
+                return preg_replace($pattern, '[$1](/' . $slug . '/)', $reply, 1) ?? $reply;
+            }
+        }
+    }
+
+    return $reply;
+}
+
 function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
 {
     if (! fenster_legend_is_configured()) {
@@ -718,6 +766,7 @@ function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
             $reply
         ) ?? $reply;
     }
+    $reply = fenster_legend_normalise_reply_link($reply);
     if ($reply === '') {
         return new WP_REST_Response([
             'code' => 'empty_response',
