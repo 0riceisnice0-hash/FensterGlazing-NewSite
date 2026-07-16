@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Legend Sleep And Scroll Prompt On Test
+
+- Used the approved hatch-pet Legend identity and contact sheet to generate a coherent eight-frame standing-to-curled sleeping animation. The first generation was rejected because two tails touched and produced clipped extraction fragments; the complete row was regenerated with separated poses, then passed deterministic frame inspection and visual contact-sheet review.
+- Added the transparent `legend-sleep-strip.webp` as a website-only animation asset. It is deliberately separate from the validated Codex v2 atlas and alternates its final two frames as a quiet breathing loop.
+- Added a 20-second Legend-specific inactivity timer in both launcher and open-chat states. Pointer, focus and typing activity wakes him; clicking him reverses the sleep sequence before reopening chat. Clicking the drawer X returns him to the launcher and immediately curls him up.
+- Rebuilt the launcher prompt as valid sibling controls instead of nesting an independent X over the old launcher button. The bubble starts invisible, appears after 240px of scroll, opens chat from its copy area and contains its own session-dismiss close button.
+- Built, PHP-linted, committed and deployed the work to the protected test site only. Desktop QA verified the complete `0` through `7` close-triggered progression, the 20-second trigger at 20.5 seconds, breathing state, wake-to-open path, integrated close geometry and scroll reveal. A true `390 x 844` pass verified the prompt layout and no horizontal overflow. No new console errors were introduced.
+
 ## 2026-07-16 - Sliding Sash Desktop Journey Aligned With Mobile
 
 - Carried the approved concise, image-led mobile journey onto desktop without stretching the phone carousel across a wide screen. Desktop retains the useful side-by-side view of all three Roseview models and the full shared comparison table.

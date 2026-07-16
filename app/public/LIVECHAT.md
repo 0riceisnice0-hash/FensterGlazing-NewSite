@@ -7,7 +7,7 @@ This document explains the Legend AI assistant currently deployed on the passwor
 ## Current Status
 
 - Legend is deployed on `https://test.fensterglazing.com/` only.
-- The latest Legend implementation deployed to test is commit `44597e0` (`Match plural Legend product questions`).
+- The latest Legend implementation deployed to test is commit `0f614d1` (`Restore Legend launcher dimensions`).
 - The production site at `https://fensterglazing.com/` was not deployed during this work. Legend must be treated as test-only until the owner explicitly approves a live release.
 - The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
 - The test OpenAI connection is configured and has returned verified live model responses. The API key remains in the test Bedrock `.env` and is not stored in the theme or this repository.
@@ -18,7 +18,7 @@ Legend is Fenster's animated, site-wide AI assistant. He is presented as Fenster
 
 The current experience includes:
 
-- A standalone animated Legend launcher with a speech bubble reading `Need a hand?` and `I'm Fenster's AI assistant`.
+- A standalone animated Legend launcher. Its `Need a hand?` speech bubble starts hidden, appears after the visitor scrolls 240px, and has a correctly nested action plus its own close button rather than an X positioned independently over the component.
 - A soft white halo behind the closed Legend sprite so the dark character remains visible over dark page backgrounds.
 - A full-height chat drawer fixed to the right edge of the viewport rather than a floating chat box.
 - A drawer that slides in from and out to the right.
@@ -59,6 +59,13 @@ The launcher-to-header handoff uses the five verified jumping frames at slower t
 The landing point is calculated from the drawer's settled right-edge position. Do not measure the target against the drawer's temporary off-screen transform. That earlier mistake made Legend fly right towards the opening keyframe and then teleport back when the header sprite appeared.
 
 Reduced-motion visitors receive an instant handoff without the travel animation.
+
+Legend also uses the separate transparent eight-frame `legend-sleep-strip.webp` generated from the approved character through the hatch-pet workflow. It progresses from standing, sitting and tucking his paws through to a compact curled sleeping ball. The last two frames alternate slowly as a breathing loop.
+
+- Clicking the chat drawer X returns Legend to the launcher and immediately plays the curl-up sequence.
+- Twenty seconds without interaction with Legend plays the same sequence, whether the drawer is open or closed.
+- Pointer, focus, typing or launcher interaction resets the inactivity timer. Clicking a sleeping Legend reverses the sleep frames before the normal jump into chat.
+- Reduced-motion visitors move directly between the final sleeping frame and normal idle state.
 
 ## How The Chat Works
 
@@ -292,5 +299,7 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `017d704` | Added owner-confirmed business facts, query-matched product specifications and aligned CPA/FENSA guarantee wording. |
 | `77da806` | Clarified the new-window-and-door guarantee scope and instant-quote pricing route. |
 | `44597e0` | Fixed singular/plural product matching and verified the failed product questions on test. |
+| `1a7be33` | Added the generated curl-up sleep strip, 20-second inactivity state, close-to-sleep behaviour and scroll-triggered prompt. |
+| `0f614d1` | Restored the launcher character dimensions after the prompt was separated into valid sibling controls. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.
