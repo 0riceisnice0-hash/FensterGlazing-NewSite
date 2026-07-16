@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Sliding Sash Mobile Installation Gallery
+
+- Visually reviewed all `1,064` raster files in the supplied Roseview scrape using labelled contact sheets, then opened the strongest candidates at full resolution. Rejected duplicates, logos, staff/trade graphics, technical diagrams, unfinished-site photography and images that did not clearly support the sash product.
+- Added six approved, locally hosted Roseview images: a wisteria-framed sash, finished dining and bay-room interiors, a full Surrey elevation, an arched exterior sash and arched interior detailing. Converted the chosen sources to responsive WebP assets so the production theme has no runtime dependency on the external scrape.
+- Added a mobile-only `Real homes` gallery immediately after the Roseview model selector. It is a compact dark swipe rail with a clean next-card peek, concise captions and the existing tap-to-enlarge lightbox; desktop remains unchanged.
+- Enlarged the Ultimate, Heritage and Charisma model media areas while retaining the one-card mobile decision flow. The final product artwork uses a fixed responsive object-fit box so the full portrait window is visible instead of being cropped.
+- Rebuilt compiled CSS, PHP-linted `generated-page.php`, checked the diff, pushed commits through `880a3f8`, deployed that exact theme commit to the password-protected test site and flushed its cache. The new gallery asset and route both return `200` on test.
+- Browser QA passed at `390 x 844`, `768 x 1024` and `1440 x 900`: the phone carousel is about `759px` tall, the six-image gallery is about `472px`, carousel controls update both the name/count and selected specifications, the lightbox opens/closes, mobile/tablet have no horizontal overflow, desktop keeps its three-card comparison/full detail run, and no console errors were recorded. The phone page is about `7,639px` tall after adding the image-led gallery. Nothing was deployed live.
+
 ## 2026-07-16 - Sliding Sash Mobile Comparison Redesign
 
 - Preserved the approved desktop Sliding Sash Windows page while rebuilding the Roseview comparison specifically for `860px` and below.
