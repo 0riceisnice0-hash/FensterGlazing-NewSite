@@ -591,6 +591,22 @@ function fenster_legend_response_text(array $payload): string
     return '';
 }
 
+/**
+ * Return owner-approved answers that must not vary with retrieval or the model.
+ */
+function fenster_legend_verified_direct_reply(string $message): string
+{
+    $normalised = strtolower(remove_accents($message));
+    $asks_about_zac = preg_match('/\bzac(?:\s+bartley)?\b/', $normalised) === 1
+        && preg_match('/\b(who|what|role|job|does|do|about|work|works)\b/', $normalised) === 1;
+
+    if ($asks_about_zac) {
+        return 'Zac Bartley is Fenster Glazing’s **Marketing Executive**. He leads Fenster’s website, digital advertising, social media, content and brand development.';
+    }
+
+    return '';
+}
+
 function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
 {
     if (! fenster_legend_is_configured()) {
@@ -618,6 +634,11 @@ function fenster_handle_legend_chat(WP_REST_Request $request): WP_REST_Response
             'code' => 'empty_message',
             'message' => 'Please enter a message for Legend.',
         ], 422);
+    }
+
+    $verified_direct_reply = fenster_legend_verified_direct_reply($message);
+    if ($verified_direct_reply !== '') {
+        return new WP_REST_Response(['reply' => $verified_direct_reply], 200);
     }
 
     $conversation = fenster_legend_conversation($data);
