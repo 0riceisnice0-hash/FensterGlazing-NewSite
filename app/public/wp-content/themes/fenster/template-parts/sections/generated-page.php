@@ -2407,7 +2407,7 @@ if ($is_commercial_hub) {
     return;
 }
 ?>
-<article class="generated-page generated-page--<?php echo esc_attr($is_commercial ? 'commercial' : 'residential'); ?> <?php echo esc_attr($use_product_journey ? 'generated-page--product-journey' : ''); ?> <?php echo esc_attr($is_aluminium_windows ? 'generated-page--aluminium-windows-story' : ''); ?> <?php echo esc_attr($is_integral_blinds ? 'generated-page--integral-blinds-reveal' : ''); ?>">
+<article class="generated-page generated-page--<?php echo esc_attr($is_commercial ? 'commercial' : 'residential'); ?> <?php echo esc_attr($use_product_journey ? 'generated-page--product-journey' : ''); ?> <?php echo esc_attr($is_aluminium_windows ? 'generated-page--aluminium-windows-story' : ''); ?> <?php echo esc_attr($is_integral_blinds ? 'generated-page--integral-blinds-reveal' : ''); ?> <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'generated-page--sliding-sash' : ''); ?>">
     <?php if ($is_aluminium_windows && $aluminium_windows_story_desktop_frames) : ?>
     <section class="fg-aw-story" data-fg-aw-story style="--fg-aw-panel-count: <?php echo esc_attr((string) (count($aluminium_windows_story_panels) + 1)); ?>;">
         <div class="fg-aw-story__stage">
