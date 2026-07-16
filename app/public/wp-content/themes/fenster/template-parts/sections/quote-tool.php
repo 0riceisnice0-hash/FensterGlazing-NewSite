@@ -23,12 +23,12 @@ $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $phone_href = preg_replace('/\s+/', '', $phone);
 $hero_heading = $is_visualiser ? 'Visualise your windows and doors with Fenster.' : 'Start your window and door quote.';
 $hero_copy = $is_visualiser
-    ? 'Explore product styles, colours and glazing choices, then send Fenster the details so the team can check the specification with you.'
-    : 'Use the product selector as a starting point, then Fenster can confirm the details, survey requirements and next steps with you.';
+    ? 'Explore product styles, colours and glazing choices, then send us the details so we can check the specification with you.'
+    : 'Use the product selector as a starting point, then we can confirm the details, survey requirements and next steps with you.';
 $steps = [
     ['title' => 'Choose a product', 'copy' => 'Pick the window, door or glazing option you want to price.'],
     ['title' => 'Get your quote', 'copy' => 'Use the online tool to choose sizes, layouts, colours and options.'],
-    ['title' => 'Fenster gets in touch', 'copy' => 'The team checks the details, survey needs and next steps before anything is ordered.'],
+    ['title' => 'We get in touch', 'copy' => 'We check the details, survey needs and next steps before anything is ordered.'],
 ];
 ?>
 
@@ -93,8 +93,8 @@ $steps = [
         <div class="container fg-quote-form-section__grid">
             <div>
                 <p class="eyebrow"><?php esc_html_e('Send the basics', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Tell Fenster what you are looking for.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Share the useful details and Fenster will receive the enquiry directly. You can attach drawings, schedules or photos to the form if they help.', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Tell us what you are looking for.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Share the useful details and our team will receive the enquiry directly. You can attach drawings, schedules or photos to the form if they help.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
                     <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>

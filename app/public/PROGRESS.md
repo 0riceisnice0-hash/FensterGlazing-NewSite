@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Week Two: Shared Copy Rewrite And Full Image Audit
+
+- Rewrote the shared customer-facing template copy in `generated-page.php`, `quote-tool.php`, `windows-hub.php`, `home-experience.php`, `about.php`, `contact.php`, `price-guide.php`, `consultation-booking.php` and `enquiry-form.php` from third-person "Fenster does X" into direct we/you voice, reading each string in context rather than find-and-replace. Brand-named copy was deliberately kept where it earns its place: `/why-trust-fenster/`, About-page process labels, the accreditation trust strip, commercial county intros and "the Fenster quote tool".
+- Removed the self-describing product gallery bullets ("Every image is chosen to show this product family clearly") and replaced them with an action prompt; replaced the "Move from the product into the details that make it yours" and "Choose the handle finish with the door, not after it" headings with customer-truth headings; fixed the clunky "{Product} styles, details and installed examples" grammar with a colon form.
+- Completed the full image audit: all 98 unique images referenced by `product_media` and `product_gallery_pools` in `inc\site-data.php` were opened and classified. Removals: duplicate sash photo (`Sliding-Sash-Windows-Flitwick-9` = curated hero), two US stock interiors from the aluminium windows pool, three same-scene CGI courtyard renders and a duplicate CGI kitchen across the door/bifold pools, the wrong-product `steel-look-patio-hero` render from the sliding pool, a garden photo posing as a casement window, and a French casement window from the French doors pool.
+- Promotions and moves: real installs replaced CGI as the bifold hero (`sheerline-bifold-exterior`) and casement hero (`Casement-Windows-Flitwick-10`); the Liniar `7016_grey_patio` photo moved to the uPVC patio pool; two previously unused genuine bifold assets (`Aluminium-Bifold-Doors-Flitwick-6`, `Bifold-Espag-Handle-v1`) were added so the bifold gallery keeps its four-image minimum.
+- Rewrote every dishonest alt text: no image claims a material, product or town it does not show (previous alts claimed renders were "installed in Northampton/Letchworth/Milton Keynes" and called the double-glazed unit sample "secondary glazing").
+- Added `PHOTO-CHECKLIST.md`: a five-shot per-job photo routine for fitters plus the wishlist of gaps that only real job photography can fill (uPVC door installs, aluminium windows on a local home, secondary glazing, town-spread sash installs).
+
 ## 2026-07-16 - Content/Imagery Audit And Week One Quick Fixes
 
 - Completed a full content, imagery, design and SEO audit of the live site (12 pages crawled at desktop and mobile widths with rendered-text extraction and layout metrics) and recorded the prioritised plan in `ACTION-PLAN.md`.

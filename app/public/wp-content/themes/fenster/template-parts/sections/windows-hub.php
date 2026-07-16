@@ -141,21 +141,21 @@ $guide_heading = $is_doors
     ? 'Start with the opening. We will help with the specification.'
     : 'Start with the style. We will help with the specification.';
 $quote_heading = $is_doors
-    ? 'Build a door online, then let Fenster check the details.'
-    : 'Build a window online, then let Fenster check the details.';
+    ? 'Build a door online, then let us check the details.'
+    : 'Build a window online, then let us check the details.';
 $guide_intro = $is_doors
-    ? 'Tell Fenster where the door leads, how much glass you want and how you would like it to open. We will confirm the material, security, threshold and configuration.'
-    : 'Tell Fenster what you like, what you want to improve and how the room is used. The survey and design process will confirm the right frame, glazing, hardware and configuration.';
+    ? 'Tell us where the door leads, how much glass you want and how you would like it to open. We will confirm the material, security, threshold and configuration.'
+    : 'Tell us what you like, what you want to improve and how the room is used. The survey and design process will confirm the right frame, glazing, hardware and configuration.';
 $guide_steps = $is_doors
     ? [
         ['title' => 'Choose the purpose', 'copy' => 'Front entrance, garden access or a wide opening for an extension.'],
         ['title' => 'Choose how it opens', 'copy' => 'Hinged, folding or sliding around the space available.'],
-        ['title' => 'Fenster specifies the detail', 'copy' => 'Material, glass, colour, security and threshold are checked around your property.'],
+        ['title' => 'We specify the detail', 'copy' => 'Material, glass, colour, security and threshold are checked around your property.'],
     ]
     : [
         ['title' => 'Choose the character', 'copy' => 'Modern, traditional, slim, flush or feature-led.'],
         ['title' => 'Choose how it opens', 'copy' => 'Everyday ventilation, a wide opening or easy inward cleaning.'],
-        ['title' => 'Fenster specifies the detail', 'copy' => 'Material, glass, colour, security and installation are checked around your property.'],
+        ['title' => 'We specify the detail', 'copy' => 'Material, glass, colour, security and installation are checked around your property.'],
     ];
 
 ?>

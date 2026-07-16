@@ -19,7 +19,7 @@ $booking_trust = [
     ['title' => 'FENSA approved', 'copy' => 'Registered window and door installations.', 'item' => $trust_items[2] ?? null],
 ];
 $faqs = [
-    ['question' => 'How do I book a consultation?', 'answer' => 'Choose an available weekday, select a preferred time and leave your contact details. Fenster will then confirm the appointment directly with you.'],
+    ['question' => 'How do I book a consultation?', 'answer' => 'Choose an available weekday, select a preferred time and leave your contact details. We will then confirm the appointment directly with you.'],
     ['question' => 'Is my chosen time confirmed immediately?', 'answer' => 'No. Your selected date and time are a preferred appointment request. The Fenster team checks availability and confirms the appointment by phone or email.'],
     ['question' => 'What can I discuss at a consultation?', 'answer' => 'You can discuss windows, doors, glazing, repairs, roof lanterns, colour choices, project plans or a showroom visit with the Fenster team.'],
 ];

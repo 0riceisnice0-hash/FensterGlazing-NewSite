@@ -45,7 +45,7 @@ $assurances = [
 
 $process = [
     ['title' => 'Talk', 'copy' => 'Call, email, visit the showroom or use the enquiry form to explain what you want to change.'],
-    ['title' => 'Quote', 'copy' => 'Fenster helps compare suitable products, finishes, glass options and practical installation details.'],
+    ['title' => 'Quote', 'copy' => 'We help you compare suitable products, finishes, glass options and practical installation details.'],
     ['title' => 'Survey', 'copy' => 'A proper survey checks sizes, access, thresholds, trims, hardware and the condition of the opening.'],
     ['title' => 'Install', 'copy' => 'Experienced fitters install the products, tidy the details and leave you with aftercare information.'],
 ];

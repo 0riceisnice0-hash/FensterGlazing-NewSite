@@ -54,7 +54,7 @@ $quick_routes = [
 $form_notes = [
     'Weekday consultations can be requested up to 30 days ahead.',
     'Available request times run from 9am to 4pm.',
-    'Fenster will confirm the appointment by phone or email.',
+    'We will confirm the appointment by phone or email.',
 ];
 ?>
 

@@ -64,7 +64,7 @@ $case_cards = [
     [
         'label' => 'Healthcare',
         'title' => 'Commercial replacement glazing in live settings.',
-        'copy' => 'Fenster supports healthcare and high-use commercial environments where access, safety and disruption planning matter as much as the frames.',
+        'copy' => 'We support healthcare and high-use commercial environments where access, safety and disruption planning matter as much as the frames.',
         'image' => $asset_base . 'healthcare.jpg',
         'url' => home_url('/commercial-window-installation-in-healthcare/'),
     ],
@@ -299,7 +299,7 @@ $location_links = [
             <div class="fg-home-partner-strip__copy">
                 <p class="eyebrow"><?php esc_html_e('Systems and backing', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Product systems matched to the job.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Fenster specifies recognised window and door systems around the property, budget and finish you want.', 'fenster'); ?></p>
+                <p><?php esc_html_e('We specify recognised window and door systems around the property, budget and finish you want.', 'fenster'); ?></p>
             </div>
             <div class="fg-home-partner-strip__logos">
                 <?php foreach ($partners as $partner) : ?>

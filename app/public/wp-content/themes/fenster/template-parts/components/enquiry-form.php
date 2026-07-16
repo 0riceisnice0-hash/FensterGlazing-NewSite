@@ -114,7 +114,7 @@ $notices = [
                 </div>
                 <label class="fg-enquiry-form__message"><span><?php esc_html_e('What would you like to discuss?', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><textarea name="message" rows="4" required placeholder="<?php esc_attr_e('Tell us about your windows, doors, glazing, repairs or showroom visit.', 'fenster'); ?>"></textarea></label>
                 <label class="fg-enquiry-form__consent"><input type="checkbox" name="privacy" value="1" required><span><?php printf(wp_kses(__('I agree that Fenster can use these details to respond to my enquiry. See the <a href="%s">privacy policy</a>.', 'fenster'), ['a' => ['href' => []]]), esc_url(home_url('/privacy-policy/'))); ?></span></label>
-                <div class="fg-enquiry-form__footer"><button class="button" type="submit"><span><?php echo esc_html((string) $args['button_label']); ?></span><i aria-hidden="true">-&gt;</i></button><small><?php esc_html_e('Your preferred time is a request. Fenster will confirm your appointment directly.', 'fenster'); ?></small></div>
+                <div class="fg-enquiry-form__footer"><button class="button" type="submit"><span><?php echo esc_html((string) $args['button_label']); ?></span><i aria-hidden="true">-&gt;</i></button><small><?php esc_html_e('Your preferred time is a request. We will confirm your appointment directly.', 'fenster'); ?></small></div>
             </div>
             </div>
         </div>

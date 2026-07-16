@@ -29,7 +29,7 @@ $checked_label = 'First guide examples checked July 2026';
 $faqs = [
     [
         'question' => 'Are Fenster online prices exact?',
-        'answer' => 'They are a strong starting point from the online pricing tool. The final order is confirmed after Fenster checks the specification and completes the survey where required.',
+        'answer' => 'They are a strong starting point from the online pricing tool. The final order is confirmed after we check the specification and complete the survey where required.',
     ],
     [
         'question' => 'Does Fenster include VAT and fitting?',

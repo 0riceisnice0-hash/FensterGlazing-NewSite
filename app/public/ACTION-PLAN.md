@@ -153,9 +153,9 @@ Also fix on this page:
 
 ### Weeks 2–3 — shared copy + image audit
 
-10. Rewrite all shared product-template strings in `generated-page.php` to we/you voice, customer-truth headings, no section-self-description (1a, 1b). One file, every product page improves.
-11. Full image audit of every pool in `site-data.php` with the classification table; strip wrong/stock/render images; pull honest supplier photography as gap fill (Theme 2).
-12. Start the fitter photo checklist so real imagery accumulates from live jobs.
+10. ✅ Done 2026-07-16 — shared template strings rewritten in we/you voice across `generated-page.php`, `quote-tool.php`, `windows-hub.php`, `home-experience.php`, `about.php`, `contact.php`, `price-guide.php`, `consultation-booking.php` and the enquiry form; self-describing gallery bullets removed; "Move from the product..." and door-handle headings replaced with customer-truth headings. Brand-named "Fenster" deliberately kept where it earns its place: the trust page, About-page process/eyebrows, the accreditation trust strip, commercial county intros and "the Fenster quote tool".
+11. ✅ Done 2026-07-16 — all 98 unique pool images audited (individually viewed). Removed: a duplicate sash photo, two US stock interiors from the aluminium windows pool, three duplicate CGI courtyard renders and a duplicate CGI kitchen in the door pools, a wrong-product steel-look render from the sliding pool, a garden shot posing as a casement window, and a French window from the French doors pool. Promoted real install photos to the bifold and casement heroes, moved the Liniar 7016 patio shot to the uPVC patio pool, and rewrote every dishonest alt (no more false "installed in [town]" claims). Known remaining gaps are listed in `PHOTO-CHECKLIST.md`.
+12. ✅ Done 2026-07-16 — fitter photo checklist created (`PHOTO-CHECKLIST.md`) with a 5-shot per-job routine and a wishlist covering the gaps the audit could not fill from honest assets (real uPVC door installs, aluminium windows, secondary glazing).
 
 ### Weeks 3–4 — structure and balance
 

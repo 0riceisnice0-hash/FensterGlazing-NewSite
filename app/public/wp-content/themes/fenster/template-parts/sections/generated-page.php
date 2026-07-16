@@ -320,7 +320,7 @@ if ($slug === 'sliding-sash-windows') {
                 'Ultimate Rose: visible butt-joint style detail for the closest timber replication.',
                 'Heritage Rose: welded construction with a slimmer traditional sash appearance.',
                 'Charisma Rose: welded construction for a simpler, cost-conscious sash specification.',
-                'Fenster checks the right construction level against the elevation, budget and survey detail.',
+                'We check the right construction level against the elevation, budget and survey detail.',
             ],
         ],
     ];
@@ -550,14 +550,14 @@ $product_unique_body_images = array_values(array_filter($product_visual_gallery,
 }));
 $product_why_image = $product_unique_body_images[0] ?? null;
 $product_why_secondary_image = $product_unique_body_images[1] ?? null;
-$product_gallery_heading = sprintf('%s styles, details and installed examples.', $title);
+$product_gallery_heading = sprintf('%s: styles, details and fitted examples.', $title);
 $product_gallery_copy = sprintf(
-    'See %1$s styles, finishes and installed details up close. Compare frame lines, glass options, opening formats and colours before you ask for a price.',
+    'A closer look at %1$s: compare frame lines, glass options, opening formats and colours before you ask for a price.',
     $title
 );
 if ($is_pet_flap_page) {
     $product_gallery_heading = 'Pet flap fitting options and fitted details.';
-    $product_gallery_copy = 'Pet flap projects are less about frame catalogues and more about the right fitting choice. Fenster checks whether the flap belongs in a replacement panel or a new sealed glass unit before the work is ordered.';
+    $product_gallery_copy = 'Pet flap projects are less about frame catalogues and more about the right fitting choice. We check whether the flap belongs in a replacement panel or a new sealed glass unit before the work is ordered.';
 }
 $home_categories = [
     ['label' => 'Windows', 'url' => home_url('/windows-milton-keynes/'), 'image' => $asset_base . 'Aluminium-windows.jpg', 'copy' => 'uPVC, aluminium, flush, sash and heritage-style windows for warmer, quieter homes.'],
@@ -576,7 +576,7 @@ $home_showcase = [
 ];
 $home_process = [
     ['step' => '01', 'title' => 'Design', 'copy' => 'Start with the instant quote tool, visualise products and shape a brief before a survey.'],
-    ['step' => '02', 'title' => 'Survey', 'copy' => 'Fenster checks sizes, details, access, thresholds, finishes and installation constraints.'],
+    ['step' => '02', 'title' => 'Survey', 'copy' => 'We check sizes, details, access, thresholds, finishes and installation constraints.'],
     ['step' => '03', 'title' => 'Build', 'copy' => 'Systems are specified around performance, security, style and manufacturer fit.'],
     ['step' => '04', 'title' => 'Install', 'copy' => 'Installation is planned cleanly, with aftercare and guarantee support built in.'],
 ];
@@ -638,7 +638,7 @@ foreach (array_slice($feature_sections, 0, 6) as $section) {
 
 if (empty($product_benefits)) {
     $product_benefits = [
-        ['title' => 'Designed around your property', 'copy' => 'Fenster helps shape the right specification around style, performance, security and the way the space will be used.'],
+        ['title' => 'Designed around your property', 'copy' => 'We help shape the right specification around style, performance, security and the way the space will be used.'],
         ['title' => 'Surveyed before specification', 'copy' => 'Every project is checked carefully so sizes, thresholds, finishes and installation details are understood before manufacture.'],
         ['title' => 'Installed with aftercare', 'copy' => 'The team supports the project from first conversation through to installation, guarantee and aftercare.'],
     ];
@@ -673,7 +673,7 @@ if (empty($product_faqs)) {
     $product_faqs = [
         [
             'question' => 'How do I choose the right specification?',
-            'answer' => 'Fenster will guide you through product style, frame material, colour, glazing, hardware and installation details after understanding the property and how the space is used.',
+            'answer' => 'We will guide you through product style, frame material, colour, glazing, hardware and installation details once we understand the property and how the space is used.',
         ],
         [
             'question' => 'Can I choose different colours and finishes?',
@@ -681,7 +681,7 @@ if (empty($product_faqs)) {
         ],
         [
             'question' => 'Will the product be surveyed before it is made?',
-            'answer' => 'Yes. Fenster checks measurements, thresholds, access and installation details before manufacture so the final specification fits the project properly.',
+            'answer' => 'Yes. We check measurements, thresholds, access and installation details before manufacture so the final specification fits the project properly.',
         ],
         [
             'question' => 'What happens after installation?',
@@ -771,10 +771,10 @@ $journey_faq_heading = $is_about ? 'FAQs about Fenster Glazing' : ($is_commercia
 $journey_order_eyebrow = $is_commercial ? 'Project process' : ($is_about ? 'How Fenster works' : 'Order process');
 $journey_order_heading = $is_commercial ? 'A clear process from early brief to delivery.' : ($is_about ? 'A clear process from first conversation to aftercare.' : 'A clear process from first quote to aftercare.');
 $journey_order_copy = $is_commercial
-    ? 'Fenster keeps commercial projects moving through brief, specification, coordination, installation and aftercare.'
+    ? 'We keep commercial projects moving through brief, specification, coordination, installation and aftercare.'
     : ($is_about
-        ? 'Fenster keeps enquiries straightforward: understand the need, check the details, install carefully and support the work afterwards.'
-        : 'Fenster keeps the process simple: understand the brief, survey properly, install carefully and support the product afterwards.');
+        ? 'We keep enquiries straightforward: understand the need, check the details, install carefully and support the work afterwards.'
+        : 'We keep the process simple: understand the brief, survey properly, install carefully and support the product afterwards.');
 $journey_order_action = $is_commercial ? 'Start a commercial conversation' : ($is_about ? 'Start a conversation' : 'Start your enquiry');
 $journey_trust_heading = $is_about ? 'A local glazing team backed by recognised accreditations.' : 'Reviewed, accredited and backed by proven product systems.';
 $journey_trust_copy = $is_about
@@ -797,7 +797,7 @@ if ($is_pet_flap_page) {
     $journey_faq_heading = 'FAQs about cat and dog flaps';
     $journey_order_eyebrow = 'Pet flap process';
     $journey_order_heading = 'Survey, specify, order and fit without guesswork.';
-    $journey_order_copy = 'Fenster checks the existing door or glass first, confirms the fitting method, then orders the right made-to-measure part for installation.';
+    $journey_order_copy = 'We check the existing door or glass first, confirm the fitting method, then order the right made-to-measure part for installation.';
     $journey_order_action = 'Ask about pet flap fitting';
     $journey_option_eyebrow = 'Pet flap checks';
     $journey_option_heading = 'Choose the fitting method around the existing door or glass.';
@@ -824,29 +824,29 @@ if ($is_commercial) {
 }
 
 $product_order_steps = [
-    ['step' => '01', 'title' => 'Quotation', 'copy' => 'Tell Fenster what you want to change and get clear pricing guidance for the product.'],
-    ['step' => '02', 'title' => 'Design & Survey', 'copy' => 'The team checks measurements, styles, colours, thresholds, hardware and installation details.'],
-    ['step' => '03', 'title' => 'Installation', 'copy' => 'Your product is installed by experienced fitters with the right preparation and care on site.'],
-    ['step' => '04', 'title' => 'Aftercare', 'copy' => 'Fenster supports the installation with guarantee guidance, maintenance advice and aftercare.'],
+    ['step' => '01', 'title' => 'Quotation', 'copy' => 'Tell us what you want to change and get clear pricing guidance for the product.'],
+    ['step' => '02', 'title' => 'Design & Survey', 'copy' => 'We check measurements, styles, colours, thresholds, hardware and installation details.'],
+    ['step' => '03', 'title' => 'Installation', 'copy' => 'Your product is installed by our experienced fitters with the right preparation and care on site.'],
+    ['step' => '04', 'title' => 'Aftercare', 'copy' => 'We support the installation with guarantee guidance, maintenance advice and aftercare.'],
 ];
 
 if ($is_commercial) {
     $product_order_steps = [
         ['step' => '01', 'title' => 'Brief', 'copy' => 'Share the building type, package scope, programme, drawings and performance requirements.'],
-        ['step' => '02', 'title' => 'Specification', 'copy' => 'Fenster helps align systems, glazing, access, interfaces and delivery constraints before work moves ahead.'],
+        ['step' => '02', 'title' => 'Specification', 'copy' => 'We help align systems, glazing, access, interfaces and delivery constraints before work moves ahead.'],
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Commercial installation is planned around site coordination, safety, sequencing and programme needs.'],
         ['step' => '04', 'title' => 'Aftercare', 'copy' => 'The team remains available for documentation, maintenance guidance and practical project support.'],
     ];
 } elseif ($is_about) {
     $product_order_steps = [
-        ['step' => '01', 'title' => 'Conversation', 'copy' => 'Fenster starts by understanding the property, the people involved and what needs to change.'],
+        ['step' => '01', 'title' => 'Conversation', 'copy' => 'We start by understanding the property, the people involved and what needs to change.'],
         ['step' => '02', 'title' => 'Survey', 'copy' => 'The team checks details properly so the recommendation is based on real site conditions.'],
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Experienced installers manage the work with care for the property and the finished detail.'],
-        ['step' => '04', 'title' => 'Aftercare', 'copy' => 'Fenster supports the installation after completion with guarantee guidance and practical advice.'],
+        ['step' => '04', 'title' => 'Aftercare', 'copy' => 'We support the installation after completion with guarantee guidance and practical advice.'],
     ];
 } elseif ($is_pet_flap_page) {
     $product_order_steps = [
-        ['step' => '01', 'title' => 'Check the opening', 'copy' => 'Fenster confirms whether the flap is going into a suitable panel or a replacement sealed glass unit.'],
+        ['step' => '01', 'title' => 'Check the opening', 'copy' => 'We confirm whether the flap is going into a suitable panel or a replacement sealed glass unit.'],
         ['step' => '02', 'title' => 'Choose the flap', 'copy' => 'Manual, lockable and microchip options are matched to the pet, opening size and access-control need.'],
         ['step' => '03', 'title' => 'Order the part', 'copy' => 'If glass is required, the new sealed unit is made with the correct aperture before installation.'],
         ['step' => '04', 'title' => 'Fit and finish', 'copy' => 'The flap, glass or panel is installed neatly, with position, weathering and everyday use checked on completion.'],
@@ -1750,7 +1750,7 @@ if ($is_window_handles) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Match the full specification', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Bring handles, colours and glass together before ordering.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Fenster confirms the final handle choice during survey so it works with the chosen window system, colour and opening style.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('We confirm the final handle choice during survey so it works with the chosen window system, colour and opening style.', 'fenster'); ?></p>
                 </div>
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [
@@ -2134,7 +2134,7 @@ if (! $use_product_journey && ($is_archive_page || $is_utility_page || ! $is_pro
 }
 
 if ($is_commercial_hub) {
-    $commercial_intro = 'Fenster supports commercial glazing packages for refurbishments, education, healthcare, office, public sector and managed buildings. Send the drawings, schedule, site photos or a short scope note and the team can review what is needed before the first specification conversation.';
+    $commercial_intro = 'We support commercial glazing packages for refurbishments, education, healthcare, office, public sector and managed buildings. Send the drawings, schedule, site photos or a short scope note and we can review what is needed before the first specification conversation.';
     $commercial_services = [
         [
             'title' => 'Commercial windows and doors',
@@ -2354,7 +2354,7 @@ if ($is_commercial_hub) {
             <div class="container fg-commercial-enquiry__grid">
                 <div class="fg-commercial-enquiry__copy">
                     <p class="eyebrow"><?php esc_html_e('Send a commercial enquiry', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Send the brief. Fenster will get it to the right person.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Send the brief and we will get it to the right person.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Add the key site, programme and performance notes. Attach files if they explain the package better than a message can.', 'fenster'); ?></p>
                     <ul class="fg-commercial-enquiry__notes">
                         <li><?php esc_html_e('Drawings, schedules or elevations', 'fenster'); ?></li>
@@ -2611,7 +2611,7 @@ if ($is_commercial_hub) {
             <div class="container fg-home-final__grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Ready when you are', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Tell Fenster what you want to change.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Tell us what you want to change.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Windows, doors, bifolds, lanterns, integral blinds, replacement glass and commercial glazing all start with the same thing: a clear conversation.', 'fenster'); ?></p>
                     <div class="fg-contact-list">
                         <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '01908429200')); ?>"><?php echo esc_html($brand['phone'] ?? '01908 429200'); ?></a>
@@ -2890,7 +2890,7 @@ if ($is_commercial_hub) {
                     <div class="fg-pet-flap-guide__lead">
                         <p class="eyebrow"><?php esc_html_e('Glass, panel or flap first?', 'fenster'); ?></p>
                         <h2><?php esc_html_e('The fitting method is chosen before the pet flap is ordered.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. Fenster checks the existing unit, the selected flap and the outside access before giving the go-ahead.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. We check the existing unit, the selected flap and the outside access before giving the go-ahead.', 'fenster'); ?></p>
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Check my pet flap options', 'fenster'); ?></a>
                     </div>
                     <div class="fg-pet-flap-guide__cards" aria-label="<?php esc_attr_e('Pet flap fitting options', 'fenster'); ?>">
@@ -2919,7 +2919,7 @@ if ($is_commercial_hub) {
                         <div class="fg-product-intel__intro">
                             <p class="eyebrow"><?php echo esc_html((string) ($product_hub['eyebrow'] ?? 'Product guide')); ?></p>
                             <h2><?php echo esc_html(sprintf(__('More information on %s', 'fenster'), $title)); ?></h2>
-                            <p><?php echo esc_html((string) ($product_hub['copy'] ?? 'Fenster confirms the final product specification after survey so each window, door or glazing unit is matched to the property.')); ?></p>
+                            <p><?php echo esc_html((string) ($product_hub['copy'] ?? 'We confirm the final product specification after survey so each window, door or glazing unit is matched to the property.')); ?></p>
 
                             <?php if (! empty($product_hub_systems) || ! empty($product_hub_badges)) : ?>
                                 <div class="fg-product-intel__badges" aria-label="<?php esc_attr_e('Product systems and highlights', 'fenster'); ?>">
@@ -3062,11 +3062,7 @@ if ($is_commercial_hub) {
                         <p class="eyebrow"><?php esc_html_e('Product gallery', 'fenster'); ?></p>
                         <h2><?php echo esc_html($product_gallery_heading); ?></h2>
                         <p><?php echo esc_html($product_gallery_copy); ?></p>
-                        <ul>
-                            <li><?php esc_html_e('Installed examples and close-up frame details.', 'fenster'); ?></li>
-                            <li><?php esc_html_e('Useful for comparing frame depth, glass area, opening style and colour direction.', 'fenster'); ?></li>
-                            <li><?php esc_html_e('Every image is chosen to show this product family clearly.', 'fenster'); ?></li>
-                        </ul>
+                        <p><?php esc_html_e('If you spot a style, colour or glass detail you like, mention it in your enquiry and we will build the quote around it.', 'fenster'); ?></p>
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about this product', 'fenster'); ?></a>
                     </aside>
                 </div>
@@ -3078,7 +3074,7 @@ if ($is_commercial_hub) {
             <div class="container">
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Move from the product into the details that make it yours.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Finish the design with your colours, glass and hardware.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-product-choice-map">
@@ -3284,7 +3280,7 @@ if ($is_commercial_hub) {
                     <div class="fg-window-handles__shell">
                         <div class="fg-window-handles__intro">
                             <p class="eyebrow"><?php esc_html_e('Door handles', 'fenster'); ?></p>
-                            <h2><?php esc_html_e('Choose the handle finish with the door, not after it.', 'fenster'); ?></h2>
+                            <h2><?php esc_html_e('Door handles in finishes that match the frame and letterplate.', 'fenster'); ?></h2>
                             <?php if (! empty($door_handles['intro'])) : ?>
                                 <p><?php echo esc_html((string) $door_handles['intro']); ?></p>
                             <?php endif; ?>
