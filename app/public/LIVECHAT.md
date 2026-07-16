@@ -80,6 +80,7 @@ The browser collects a bounded current-page context containing:
 - Canonicalised same-site page URL with credentials, query string and hash removed.
 - Meta description.
 - High-priority visible specification and technical panels.
+- High-priority visible Meet the Team profiles, including each person's name, role and published biography.
 - Canonical theme `product_usps` values for the current product route.
 - Header and navigation text.
 - Main page content.
@@ -91,6 +92,8 @@ The browser sends this context and the visitor's message to:
 `POST /wp-json/fenster/v1/legend/chat`
 
 The WordPress REST handler validates the request, adds Fenster-specific instructions and calls the OpenAI Responses API. The response is returned to the browser and rendered as inert text, with only the small safe `**bold**` subset and a single same-site `[label](/route/)` link converted into DOM-created `strong` and `a` elements. External, full-URL and malformed links remain plain text.
+
+For every question, the backend also extracts a focused passage around the first meaningful matching term in the current page. This query-matched excerpt prevents relevant names and facts from being overlooked inside the larger page snapshot. A named profile visible on Meet the Team must be answered directly rather than treated as unknown.
 
 After chat use, the browser keeps up to 16 recent messages in `fenster_legend_chat_v1` for up to 24 hours from the latest activity. This restores and synchronises the conversation across Fenster pages and browser tabs in the same browser. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
 
@@ -314,5 +317,6 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `debe566` | Allowed the scroll-triggered prompt to remain visible while Legend is asleep. |
 | `9fb8309` | Limited pointer input to the visible launcher and prompt so the transparent wrapper cannot cover footer controls. |
 | `611985b` | Added disclosure dismissal after first send, same-site open-state continuity, independent wheel/touch transcript scrolling and reopen-to-latest behaviour. |
+| `4a40824` | Promoted team profiles and query-matched current-page passages so Legend reliably identifies visible Fenster staff. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.

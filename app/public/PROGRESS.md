@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Reliable current-page team answers
+
+- Fixed Legend failing to identify Zac Bartley while the visitor was already on Meet the Team. The profile existed in rendered HTML but was buried in the general page snapshot, while the related-page source index did not contain the runtime replacement accurately.
+- Promoted every visible team profile into high-priority assistant context and added a backend query-matched excerpt around meaningful words from each question. The prompt now explicitly requires a direct answer when a named staff profile is supplied.
+- Protected-site regression confirmed `who is zac bartley` returns Marketing Executive and the published remit, while `what does Zac do at Fenster?` returns the same role details directly.
+
 ## 2026-07-16 - Legend chat continuity and scrolling polish
 
 - Hid the full `By using this live chat` disclosure after the visitor's first sent message while retaining the compact accuracy, non-binding, QA-retention, sensitive-data and Privacy Policy notice.
