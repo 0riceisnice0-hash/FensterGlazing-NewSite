@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Reliable Legend recommendation links
+
+- Fixed product recommendations appearing as bold text without a hyperlink. Link support had not been removed, but model-selected formatting was optional and therefore inconsistent.
+- Added server-side link normalisation that converts full test/live Fenster URLs into portable relative routes and automatically links a known product when the model supplies no useful route.
+- Prioritised the first bold known product as the single recommendation link, removing a later less-relevant model-selected route when necessary. Endpoint regression for the owner's premium-window question returned `[aluminium windows](/aluminium-windows/)`.
+
 ## 2026-07-16 - Website Tracker operating guide
 
 - Added the Marketing Dashboard repository's `WEBSITE-TRACKER.md` as the single operating guide for the consented Website Tracker. It explains FGV/FG2 and WindowCAD Tracking joins, consent and retention, every metric/funnel stage, visitor timelines, Legend QA transcripts, UTM attribution, limits of phone-click data and a troubleshooting checklist.

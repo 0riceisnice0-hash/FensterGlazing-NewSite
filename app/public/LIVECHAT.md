@@ -29,6 +29,7 @@ The current experience includes:
 - A `Who is Legend?` link to `/meet-the-team/#legend`.
 - An accessible live message log, typing indicator, auto-growing textarea, Enter-to-send, Shift+Enter for a new line, Escape-to-close and keyboard focus management.
 - Safe `**bold**` formatting and one route-checked same-site `[label](/route/)` link in assistant replies without allowing model-generated HTML.
+- Server-normalised links: full test or production Fenster URLs are converted to portable relative routes, and a known bold product recommendation is made the single primary link when the model omits or chooses a less useful destination.
 - An immediately available composer, followed by a compact agreement that using live chat permits AI processing. The full disclosure is behind `Read chat terms`.
 - A direct Privacy Policy link and a persistent accuracy/non-binding warning beneath the enabled composer.
 - The full `By using this live chat` disclosure disappears after the visitor sends their first message; the compact accuracy and privacy warning remains available beneath the composer.
@@ -323,5 +324,7 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `4a40824` | Promoted team profiles and query-matched current-page passages so Legend reliably identifies visible Fenster staff. |
 | `4ba8b4b` | Added a deterministic server answer for Zac Bartley identity and role questions. |
 | `368093b` | Rebuilt the drawer header as a unified dark stage with dedicated walking and sleeping space. |
+| `f01b925` | Added safe automatic product links and normalised full Fenster URLs into portable relative routes. |
+| `d9b9ffc` | Made the primary bold product recommendation take priority over a later secondary link. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.
