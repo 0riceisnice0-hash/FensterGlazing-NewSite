@@ -5829,7 +5829,8 @@ h3 {
 
 .fg-sash-carousel__controls,
 .fg-sash-carousel__dots,
-.fg-sash-mobile-specs {
+.fg-sash-mobile-specs,
+.fg-sash-heading--mobile {
   display: none;
 }
 
@@ -21273,7 +21274,7 @@ html.fg-gallery-lightbox-open body {
   }
 
   .generated-page--sliding-sash .fg-sash-collection {
-    padding: 1.5rem 0 1.75rem;
+    padding: 1rem 0 1.25rem;
   }
 
   .generated-page--sliding-sash .fg-sash-collection__hero {
@@ -21282,9 +21283,17 @@ html.fg-gallery-lightbox-open body {
   }
 
   .generated-page--sliding-sash .fg-sash-collection__hero h2 {
-    max-width: 14ch;
+    max-width: 12ch;
     margin-bottom: 0;
-    font-size: clamp(1.65rem, 7.5vw, 2rem);
+    font-size: clamp(1.55rem, 7vw, 1.85rem);
+  }
+
+  .generated-page--sliding-sash .fg-sash-heading--desktop {
+    display: none;
+  }
+
+  .generated-page--sliding-sash .fg-sash-heading--mobile {
+    display: inline;
   }
 
   .generated-page--sliding-sash .fg-sash-collection__hero > div > p:not(.eyebrow),

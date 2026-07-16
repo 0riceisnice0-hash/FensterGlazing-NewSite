@@ -2724,7 +2724,10 @@ if ($is_commercial_hub) {
                 <div class="fg-sash-collection__hero">
                     <div>
                         <p class="eyebrow"><?php esc_html_e('Roseview sash systems', 'fenster'); ?></p>
-                        <h2 id="fg-sash-collection-title"><?php esc_html_e('Choose the sash window by detail level, not just by name.', 'fenster'); ?></h2>
+                        <h2 id="fg-sash-collection-title">
+                            <span class="fg-sash-heading--desktop"><?php esc_html_e('Choose the sash window by detail level, not just by name.', 'fenster'); ?></span>
+                            <span class="fg-sash-heading--mobile"><?php esc_html_e('Choose your Roseview sash.', 'fenster'); ?></span>
+                        </h2>
                         <p><?php esc_html_e('Ultimate, Heritage and Charisma Rose all give a vertical sliding sash format. The important differences are the meeting rail, corner construction, horns, cills, glazing depth and how closely the window needs to reproduce timber.', 'fenster'); ?></p>
                     </div>
                     <aside class="fg-sash-collection__note">
