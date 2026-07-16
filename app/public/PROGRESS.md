@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Sliding Sash Desktop Journey Aligned With Mobile
+
+- Carried the approved concise, image-led mobile journey onto desktop without stretching the phone carousel across a wide screen. Desktop retains the useful side-by-side view of all three Roseview models and the full shared comparison table.
+- Rebuilt the desktop model cards around much larger, fully contained product renders. Removed the repeated paragraph and per-card specification grids; each card now carries only its model position, name and concise `Best for` guidance, while the table states each technical difference once.
+- Promoted the six-image `Real homes` gallery to desktop as an editorial collage: one dominant wisteria installation, two supporting room/elevation images and three compact detail views. Desktop gets dedicated explanatory copy, hover treatment and the existing accessible lightbox; mobile retains its swipe rail and mobile-specific instruction.
+- Applied the same content consolidation at desktop widths by removing the repeated sash detail run, generic product-information blocks, order-process repetition and related-link filler. The remaining journey moves from hero/specification summary to model choice, real installations, finish choices, furniture, FAQs and enquiry.
+- The rendered desktop page at `1440 x 900` reduced from roughly `11,591px` to `7,278px`; the three-card comparison is about `604px` and the desktop gallery about `910px`. Mobile remains about `7,648px` at `390 x 844` and tablet about `7,251px` at `768 x 1024`.
+- Rebuilt compiled CSS, PHP-linted the generated template, pushed through commit `d851e0f`, deployed that exact theme commit to the password-protected test site and flushed its cache. Browser QA passed at `390 x 844`, `768 x 1024`, `1024 x 768` and `1440 x 900`: no horizontal overflow, correct breakpoint-specific gallery copy, desktop/mobile gallery layouts intact, lightbox opens and closes, and no console errors. Nothing was deployed live.
+
 ## 2026-07-16 - Sliding Sash Mobile Installation Gallery
 
 - Visually reviewed all `1,064` raster files in the supplied Roseview scrape using labelled contact sheets, then opened the strongest candidates at full resolution. Rejected duplicates, logos, staff/trade graphics, technical diagrams, unfinished-site photography and images that did not clearly support the sash product.
