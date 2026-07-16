@@ -637,10 +637,14 @@ function fenster_site_data(): array
             'upvc_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'Golden oak front door with decorative glazed side panels'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_01.jpg', 'alt' => 'Black panel front door with decorative glazed side screens'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Chartwell Green with twin glazed top panels'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Golden-Oak-Golden-Oak-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Golden Oak woodgrain finish'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/front-door.jpeg', 'alt' => 'Blue six-panel front door with brass letterplate'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Front-door-threshold.jpeg', 'alt' => 'Low threshold detail on a uPVC door'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Chartwell Green with twin glazed top panels'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Golden-Oak-Golden-Oak-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Golden Oak woodgrain finish'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Blue-Blue-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in blue with glazed top panels'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Cream-Woodgrain-Cream-Woodgrain-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in cream woodgrain finish'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Rosewood-Rosewood-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in rosewood woodgrain finish'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-White-White-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in white with glazed top panels'],
             ],
             'upvc_patio_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-patio-door.jpg', 'alt' => 'uPVC sliding patio doors in a kitchen extension'],
