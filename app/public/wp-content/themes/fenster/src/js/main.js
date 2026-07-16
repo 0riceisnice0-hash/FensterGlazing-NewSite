@@ -46,6 +46,7 @@ if (legendAssistant) {
   const promptDismissedStorageKey = 'fenster_legend_prompt_dismissed_v1';
   const chatStorageLifetime = 24 * 60 * 60 * 1000;
   const legendInactivityDelay = 20 * 1000;
+  const legendCloseSleepDelay = 10 * 1000;
   const promptRevealThreshold = 240;
 
   const newLegendConversationId = () => `CHT-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
@@ -214,7 +215,7 @@ if (legendAssistant) {
     return wakePromise;
   };
 
-  const scheduleLegendSleep = () => {
+  const scheduleLegendSleep = (delay = legendInactivityDelay) => {
     window.clearTimeout(inactivityTimer);
     inactivityTimer = window.setTimeout(() => {
       if (replyTimer || isTransitioning) {
@@ -222,7 +223,7 @@ if (legendAssistant) {
         return;
       }
       sleepLegend();
-    }, legendInactivityDelay);
+    }, delay);
   };
 
   const registerLegendActivity = () => {
@@ -230,8 +231,16 @@ if (legendAssistant) {
     if (isSleeping) void wakeLegend();
   };
 
+  const currentLegendScroll = () => Math.max(
+    window.scrollY || 0,
+    window.pageYOffset || 0,
+    document.scrollingElement?.scrollTop || 0,
+    document.documentElement.scrollTop || 0,
+    document.body.scrollTop || 0,
+  );
+
   const revealPromptAfterScroll = () => {
-    if (promptRevealed || window.scrollY < promptRevealThreshold) return;
+    if (promptRevealed || currentLegendScroll() < promptRevealThreshold) return;
     promptRevealed = true;
     legendAssistant.classList.add('is-prompt-visible');
   };
@@ -387,20 +396,17 @@ if (legendAssistant) {
 
   const syncCookieOffset = () => {
     const banner = document.querySelector('[data-fg-cookie-consent]');
-    const settings = document.querySelector('[data-fg-cookie-settings]');
     let offset = 0;
 
     if (banner && !banner.hidden) {
       offset = Math.ceil(banner.getBoundingClientRect().height + 16);
-    } else if (settings && !settings.hidden) {
-      offset = Math.ceil(settings.getBoundingClientRect().height + 16);
     }
 
     legendAssistant.style.setProperty('--legend-cookie-offset', `${offset}px`);
   };
 
   const observeCookieControls = () => {
-    const controls = document.querySelectorAll('[data-fg-cookie-consent], [data-fg-cookie-settings]');
+    const controls = document.querySelectorAll('[data-fg-cookie-consent]');
     const observer = new MutationObserver(syncCookieOffset);
     controls.forEach((control) => observer.observe(control, { attributes: true, attributeFilter: ['hidden'] }));
     syncCookieOffset();
@@ -680,12 +686,8 @@ if (legendAssistant) {
     showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
     legendAssistant.classList.remove('is-transitioning');
     isTransitioning = false;
-    if (sleepAfterClose) {
-      sleepLegend();
-    } else {
-      playSprite('idle');
-      scheduleLegendSleep();
-    }
+    playSprite('idle');
+    scheduleLegendSleep(sleepAfterClose ? legendCloseSleepDelay : legendInactivityDelay);
     launcher.focus();
   };
 
@@ -774,13 +776,18 @@ if (legendAssistant) {
   });
   launcherWrap?.addEventListener('pointerenter', registerLegendActivity);
   let promptScrollFrame = 0;
-  window.addEventListener('scroll', () => {
+  const watchLegendScroll = () => {
     if (promptScrollFrame || promptRevealed) return;
     promptScrollFrame = window.requestAnimationFrame(() => {
       promptScrollFrame = 0;
       revealPromptAfterScroll();
     });
-  }, { passive: true });
+  };
+  window.addEventListener('scroll', watchLegendScroll, { passive: true });
+  document.addEventListener('scroll', watchLegendScroll, { passive: true, capture: true });
+  window.addEventListener('touchmove', watchLegendScroll, { passive: true });
+  window.addEventListener('touchend', watchLegendScroll, { passive: true });
+  window.visualViewport?.addEventListener('scroll', watchLegendScroll, { passive: true });
   window.addEventListener('resize', syncCookieOffset);
   window.addEventListener('load', syncCookieOffset, { once: true });
   window.addEventListener('storage', (event) => {

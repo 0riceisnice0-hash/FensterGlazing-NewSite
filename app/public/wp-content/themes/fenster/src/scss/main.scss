@@ -1480,8 +1480,7 @@ h3 {
   color: var(--color-steel);
 }
 
-.fg-cookie-consent,
-.fg-cookie-settings {
+.fg-cookie-consent {
   position: fixed;
   z-index: 80;
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1489,7 +1488,7 @@ h3 {
 }
 
 .fg-cookie-consent[hidden],
-.fg-cookie-settings[hidden] {
+.site-footer__cookie-settings[hidden] {
   display: none;
 }
 
@@ -1542,24 +1541,6 @@ h3 {
   font-weight: 800;
   text-decoration: underline;
   text-underline-offset: 0.2em;
-}
-
-.fg-cookie-settings {
-  right: 1rem;
-  bottom: 1rem;
-  min-height: 40px;
-  padding: 0.5rem 0.75rem;
-  border-radius: 999px;
-  background: #ffffff;
-  color: var(--color-steel);
-  font: inherit;
-  font-size: 0.86rem;
-  font-weight: 800;
-  transition: right 320ms cubic-bezier(0.22, 1, 0.36, 1), opacity 160ms ease;
-}
-
-.legend-chat-open .fg-cookie-settings {
-  right: calc(min(420px, 100vw) + 1rem);
 }
 
 /* Legend AI assistant preview. Kept separate from consent controls and enquiry forms. */
@@ -2311,12 +2292,6 @@ h3 {
     bottom: 0;
   }
 
-  .legend-chat-open .fg-cookie-settings {
-    visibility: hidden;
-    pointer-events: none;
-    opacity: 0;
-  }
-
   .legend-assistant__launcher-wrap {
     min-width: 0;
     min-height: 104px;
@@ -2455,6 +2430,23 @@ h3 {
 .site-footer a {
   color: rgba(255, 255, 255, 0.86);
   text-decoration: none;
+}
+
+.site-footer__cookie-settings {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+}
+
+.site-footer__cookie-settings:hover,
+.site-footer__cookie-settings:focus-visible {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .site-footer p,
@@ -28312,6 +28304,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-sash-furniture-selector__visual {
   display: grid;
+  min-width: 0;
   min-height: 500px;
   place-items: center;
   padding: clamp(1rem, 3vw, 2rem);
@@ -28333,6 +28326,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-sash-furniture-selector__controls {
   display: grid;
+  min-width: 0;
   align-content: start;
   gap: 1rem;
   padding: clamp(1rem, 2.5vw, 1.6rem);
@@ -28343,6 +28337,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-sash-furniture-selector__styles {
   display: grid;
+  min-width: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.65rem;
 }

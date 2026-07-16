@@ -83,7 +83,6 @@ function fenster_render_cookie_consent(): void
         </div>
         <a href="<?php echo esc_url(home_url('/cookie-policy/')); ?>"><?php esc_html_e('Cookie policy', 'fenster'); ?></a>
     </div>
-    <button type="button" class="fg-cookie-settings" data-fg-cookie-settings hidden><?php esc_html_e('Cookies', 'fenster'); ?></button>
     <script>
     (function () {
         var consentKey = 'fenster_cookie_consent';
