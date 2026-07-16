@@ -1,13 +1,13 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-07-09
+Last updated: 2026-07-16
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live commit after this update: `51c3550` (`Remove double glazing prices route`). Check `git log --oneline -8` and confirm against the live theme before assuming this line is still current.
+- Latest known deployed live theme commit: `8533d4e` (`Fill sash glass choice panel on mobile`), promoted and verified on 2026-07-16. Documentation-only commits may sit above this hash; confirm theme checksums before assuming a later repository commit is deployed.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`

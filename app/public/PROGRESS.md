@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Sliding sash redesign live release
+
+- Completed the final release audit for the rebuilt `/sliding-sash-windows/` journey and promoted the exact protected-test theme commit `8533d4e` to production after owner approval.
+- Release checks passed: clean repository and GitHub parity, full CSS/JS build, all 53 theme PHP files linted, test/repository CSS and generated-template checksums matched, and 390 × 844, 768 × 1024 and 1440 × 900 browser QA showed no horizontal overflow.
+- Reverified the mobile model carousel, three-product desktop layout, six-image gallery, corrected Roseview specifications, privacy-glass-only choice panel, fixed-height furniture selector, all eagerly loaded furniture finishes, sash-specific review ordering, responsive quote behaviour, footer trust grid and Instagram/Facebook/LinkedIn links.
+- Created the fresh rollback archive `/home/u453-m73mh4m4wev2/backups/fenster-theme/fenster-pre-8533d4e-20260716-141859.tar.gz` before the theme-only production rsync.
+- Production cache was flushed and live theme CSS/template checksums matched the reviewed repository. The homepage, sash page, online quote, consultation, contact and about routes all returned `200`; critical sash images and compiled assets also returned `200`.
+- Post-release browser checks passed on live at all three breakpoints. The sash controls worked, all furniture images were loaded before interaction, the hardware stage stayed fixed, responsive hero sources were selected correctly, and homepage/online-quote smoke tests produced no browser errors.
+
 ## 2026-07-16 - Legend drawer header redesign
 
 - Removed the abrupt dark-to-pale header split and replaced it with a continuous deep-teal gradient, soft mint floor glow and restrained lower stage line.
