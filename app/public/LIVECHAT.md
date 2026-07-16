@@ -30,6 +30,9 @@ The current experience includes:
 - Safe `**bold**` formatting and one route-checked same-site `[label](/route/)` link in assistant replies without allowing model-generated HTML.
 - An immediately available composer, followed by a compact agreement that using live chat permits AI processing. The full disclosure is behind `Read chat terms`.
 - A direct Privacy Policy link and a persistent accuracy/non-binding warning beneath the enabled composer.
+- The full `By using this live chat` disclosure disappears after the visitor sends their first message; the compact accuracy and privacy warning remains available beneath the composer.
+- The drawer's open state follows the visitor through same-site page navigation, including links generated in Legend's replies and the `Who is Legend?` link. Restored drawers open immediately without replaying the entrance animation and return to the newest message.
+- The transcript is a self-contained mouse-wheel and touch-scroll region. It is excluded from Lenis page smoothing, contains scroll chaining and keeps the page behind the drawer stationary.
 
 ## Drawer And Cookie-Control Behaviour
 
@@ -90,6 +93,8 @@ The browser sends this context and the visitor's message to:
 The WordPress REST handler validates the request, adds Fenster-specific instructions and calls the OpenAI Responses API. The response is returned to the browser and rendered as inert text, with only the small safe `**bold**` subset and a single same-site `[label](/route/)` link converted into DOM-created `strong` and `a` elements. External, full-URL and malformed links remain plain text.
 
 After chat use, the browser keeps up to 16 recent messages in `fenster_legend_chat_v1` for up to 24 hours from the latest activity. This restores and synchronises the conversation across Fenster pages and browser tabs in the same browser. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
+
+The same state records whether the drawer is open and whether a message has been sent. This keeps an active chat open during same-site navigation and prevents the introductory disclosure from reappearing after use. Closing the drawer records the closed state. Opening or restoring always scrolls the transcript to its newest message.
 
 When a visitor uses chat, each user message and Legend reply is copied to the authenticated Marketing Dashboard Website Tracker for quality assurance and automatically expires 30 days after each message. If the visitor has accepted optional cookies, the copy is linked to the existing anonymous `FGV-...` visitor and `FG2-...` journey, start page and timestamps; the dashboard has a dedicated Legend chats view and the visitor journey links to that transcript. If optional cookies are rejected, the transcript remains chat-only: it has no `FGV`, `FG2`, journey or website-event record.
 
@@ -308,5 +313,6 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `e04fa89` | Added the 10-second post-close sleep delay, iOS scroll handling and footer-only Cookie settings control. |
 | `debe566` | Allowed the scroll-triggered prompt to remain visible while Legend is asleep. |
 | `9fb8309` | Limited pointer input to the visible launcher and prompt so the transparent wrapper cannot cover footer controls. |
+| `611985b` | Added disclosure dismissal after first send, same-site open-state continuity, independent wheel/touch transcript scrolling and reopen-to-latest behaviour. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.

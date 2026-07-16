@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Legend chat continuity and scrolling polish
+
+- Hid the full `By using this live chat` disclosure after the visitor's first sent message while retaining the compact accuracy, non-binding, QA-retention, sensitive-data and Privacy Policy notice.
+- Persisted the drawer's open or closed state so same-site hyperlinks keep an active chat open on the destination page. Restored chats skip the entrance animation and do not steal keyboard focus.
+- Excluded the drawer from Lenis page smoothing and added contained native wheel/touch transcript scrolling, stable scrollbar space and touch momentum. Wheel and touch reading also reset Legend's inactivity timer.
+- Made every normal open and restored open scroll to the newest message after layout. A protected-site mobile test used an overflowing transcript and confirmed chat-only wheel movement, a stationary background page, open-state navigation, hidden disclosure and reopen-to-bottom behaviour.
+
 ## 2026-07-16 - Friendlier Legend personality
 
 - Expanded Legend's permitted conversation to include greetings, thanks, goodbyes, meows, purrs, harmless cat jokes and questions about Legend without forcing each reply back to windows, doors or a sales action.
