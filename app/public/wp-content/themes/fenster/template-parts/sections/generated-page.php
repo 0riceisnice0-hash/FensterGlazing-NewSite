@@ -2884,7 +2884,7 @@ if ($is_commercial_hub) {
                     <div class="fg-sash-gallery__head">
                         <div>
                             <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
-                            <h2 id="fg-sash-gallery-title"><?php esc_html_e('See the difference in the room.', 'fenster'); ?></h2>
+                            <h2 id="fg-sash-gallery-title"><?php esc_html_e('Roseview sash windows in real homes.', 'fenster'); ?></h2>
                         </div>
                         <p>
                             <span class="fg-sash-gallery__copy--desktop"><?php esc_html_e('Explore finished Roseview installations across period rooms, bays, full elevations and special window shapes.', 'fenster'); ?></span>
