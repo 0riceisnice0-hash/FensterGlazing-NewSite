@@ -28327,6 +28327,7 @@ html.fg-blinds-reveal-locked {
 .fg-sash-furniture-selector__controls {
   display: grid;
   min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: 1rem;
   padding: clamp(1rem, 2.5vw, 1.6rem);
