@@ -179,8 +179,8 @@ $team_cards = [
                 <span><?php esc_html_e('helping homeowners and businesses choose better glazing', 'fenster'); ?></span>
             </article>
             <article>
-                <strong><?php esc_html_e('25 yrs', 'fenster'); ?></strong>
-                <span><?php esc_html_e('over 50 years of combined glazing experience', 'fenster'); ?></span>
+                <strong><?php esc_html_e('50+ yrs', 'fenster'); ?></strong>
+                <span><?php esc_html_e('of combined glazing experience across the team', 'fenster'); ?></span>
             </article>
             <article>
                 <strong><?php esc_html_e('Clear prices', 'fenster'); ?></strong>
