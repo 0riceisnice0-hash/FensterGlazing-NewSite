@@ -28550,12 +28550,35 @@ html.fg-blinds-reveal-locked {
     font-size: 0.68rem;
   }
 
-  .fg-sash-furniture-selector__styles {
-    grid-template-columns: 1fr;
-  }
-
   .fg-sash-furniture-selector__styles button {
     min-height: 76px;
+  }
+
+  .fg-sash-furniture-selector__visual {
+    min-height: 220px;
+    padding: 0.75rem;
+  }
+
+  .fg-sash-furniture-selector__controls {
+    padding: 0.8rem;
+  }
+
+  .fg-sash-furniture-selector__finishes {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.15rem 0 0.45rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .fg-sash-furniture-selector__finishes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fg-sash-furniture-selector__finishes button {
+    flex: 0 0 118px;
+    scroll-snap-align: start;
   }
 
   .site-footer__trust {

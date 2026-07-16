@@ -3836,6 +3836,7 @@ if ($is_commercial_hub) {
                 'project_type' => $is_commercial ? 'Commercial glazing' : ($slug === 'sliding-sash-windows' ? 'Sliding sash windows' : 'Residential windows and doors'),
                 'show_company' => $is_commercial,
                 'lock_project_type' => $is_commercial || $slug === 'sliding-sash-windows',
+                'compact' => $slug === 'sliding-sash-windows',
             ]);
             ?>
         </div>
