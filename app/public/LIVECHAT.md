@@ -7,8 +7,7 @@ This document explains the Legend AI assistant deployed on the Fenster website. 
 ## Current Status
 
 - Legend is deployed on both `https://test.fensterglazing.com/` and `https://fensterglazing.com/`.
-- The approved live theme was deployed from commit `400cf10` on 2026-07-16. The functional sleep and prompt code is in commits `1a7be33` and `0f614d1`; `400cf10` adds the matching handover documentation.
-- The 2026-07-16 follow-up is currently on the protected test site only. It waits 10 seconds after drawer close before sleeping, hardens the prompt reveal for iOS scrolling, limits the launcher hit area to visible controls and keeps Cookie settings in the footer rather than floating in the viewport.
+- The complete approved Legend follow-up is deployed on test and production through source commit `cd5b430` (latest theme-code commit `d9b9ffc`). This includes the 10-second post-close sleep delay, iOS prompt handling, footer-only Cookie settings, restricted launcher hit area, chat continuity, team-profile context, deterministic Zac answer, unified header redesign and reliable product links.
 - Production has a separately configured OpenAI connection and returned `AI_CONFIGURED=yes` during the post-deploy check.
 - The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
 - Test and production OpenAI connections are configured through their separate Bedrock `.env` files. No API key is stored in the theme or this repository.
@@ -243,7 +242,7 @@ For every functional or visual change:
 9. Confirm the Cookies control and existing rejection remain correct.
 10. Do not deploy live without explicit owner approval.
 
-## Verification Completed On Test
+## Verification Completed On Test And Live
 
 The implementation has been checked on the protected test site for:
 

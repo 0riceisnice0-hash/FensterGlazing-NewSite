@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Legend follow-up production reconciliation
+
+- Audited the current repository against both SiteGround themes after the owner noticed the header redesign was already live. The live checksum dry run showed all current theme work was already present except `inc/legend-assistant.php`; test matched the repository fully.
+- Identified the only unlive code as the reliable hyperlink safeguards from `f01b925` and `d9b9ffc`. Created rollback archive `/home/u453-m73mh4m4wev2/backups/fenster-theme/fenster-before-legend-links-20260716-160023.tar.gz`, deployed the verified source at `cd5b430` and flushed production cache.
+- Post-release checksum comparison was empty. Homepage, Meet the Team, windows hub and quote tool returned `200`. Live endpoint checks confirmed `who is zac` returns the verified Marketing Executive answer and the premium-window question links `[aluminium windows](/aluminium-windows/)`.
+
 ## 2026-07-16 - Reliable Legend recommendation links
 
 - Fixed product recommendations appearing as bold text without a hyperlink. Link support had not been removed, but model-selected formatting was optional and therefore inconsistent.
@@ -33,7 +39,7 @@ Last updated: 2026-07-16
 - Fixed Legend failing to identify Zac Bartley while the visitor was already on Meet the Team. The profile existed in rendered HTML but was buried in the general page snapshot, while the related-page source index did not contain the runtime replacement accurately.
 - Promoted every visible team profile into high-priority assistant context and added a backend query-matched excerpt around meaningful words from each question. The prompt now explicitly requires a direct answer when a named staff profile is supplied.
 - Protected-site regression confirmed `who is zac bartley` returns Marketing Executive and the published remit, while `what does Zac do at Fenster?` returns the same role details directly.
-- A subsequent real-chat failure showed the model could still ignore the supplied profile. Added a deterministic pre-model answer for common Zac identity and role wording, including the exact short message `who is zac`. Endpoint checks confirmed test returns the verified Marketing Executive answer while production remains on the earlier assistant release pending approval.
+- A subsequent real-chat failure showed the model could still ignore the supplied profile. Added a deterministic pre-model answer for common Zac identity and role wording, including the exact short message `who is zac`. This was later promoted and verified on production in the reconciliation release above.
 
 ## 2026-07-16 - Legend chat continuity and scrolling polish
 
@@ -53,7 +59,7 @@ Last updated: 2026-07-16
 - Changed drawer-close behaviour so Legend returns to idle and waits 10 seconds before curling up; the normal inactivity timeout remains 20 seconds.
 - Hardened the scroll-triggered speech bubble for iOS by checking all relevant scroll roots and listening to document, touch and visual-viewport movement. The prompt can now appear while Legend is asleep.
 - Removed the persistent viewport Cookie settings button and kept the reopening control in the footer. Limited pointer events to the visible Legend launcher and speech bubble so the transparent positioning wrapper cannot cover cookie or footer controls.
-- Built and PHP-linted the theme, isolated the release from unrelated sliding-sash work and deployed it to the protected test site for responsive verification. Production remains on the previously approved Legend release until this follow-up is approved.
+- Built and PHP-linted the theme, isolated the release from unrelated sliding-sash work and deployed it to the protected test site for responsive verification. This was later promoted and verified on production in the reconciliation release above.
 
 ## 2026-07-16 - Legend Sleep And Scroll Prompt Live
 

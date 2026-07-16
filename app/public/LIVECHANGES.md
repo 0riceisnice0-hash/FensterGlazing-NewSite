@@ -7,7 +7,7 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live theme commit: `8533d4e` (`Fill sash glass choice panel on mobile`), promoted and verified on 2026-07-16. Documentation-only commits may sit above this hash; confirm theme checksums before assuming a later repository commit is deployed.
+- Latest known deployed live source commit: `cd5b430` (`Document reliable Legend product links`), promoted and verified on 2026-07-16. Its latest theme-code change is `d9b9ffc`. A checksum dry run confirmed the live theme exactly matched the repository after deployment.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
