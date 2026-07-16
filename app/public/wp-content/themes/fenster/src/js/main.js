@@ -588,6 +588,7 @@ if (legendAssistant) {
       'main [aria-label*="technical" i]',
       'main .fg-product-intel__summary',
       'main .fg-sash-spec-table',
+      'main .fg-team-person',
     ].join(','));
 
     candidates.forEach((element) => {
@@ -599,7 +600,7 @@ if (legendAssistant) {
       facts.push(copy);
     });
 
-    return facts.slice(0, 12).join('\n\n').slice(0, 8000);
+    return facts.slice(0, 24).join('\n\n').slice(0, 12000);
   };
 
   const collectPageContext = () => {
