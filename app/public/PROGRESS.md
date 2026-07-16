@@ -925,3 +925,19 @@ Do not use this as the primary rulebook or handover. Use:
 - Kept one continuous page gradient across the contact page.
 - Hid the repeated showroom desk panel on mobile; phone, email and quote remain in the mobile contact dock, with full showroom details in the map section.
 - Rebuilt compiled CSS/JS and verified `390 x 844`, `768 x 1024` and `1440 x 900` screenshots with no horizontal overflow or console errors.
+
+## 2026-07-16 - Sliding Sash Product Journey And Footer Pass
+
+- Rebuilt `/sliding-sash-windows/` around a shorter, visual purchase journey shared across mobile and desktop.
+- Replaced the long mobile product stack with a viewport-contained three-model carousel and retained a three-column desktop comparison.
+- Enlarged the Ultimate, Heritage and Charisma Rose product renders and added meeting-rail detail insets.
+- Simplified the model comparison data and corrected the Charisma Rose thermal option.
+- Added a six-image real-installation gallery using visually approved Roseview assets and responsive WebP sources.
+- Added a post-gallery quote/consultation prompt and removed repeated generic product sections from this page.
+- Replaced the old furniture catalogue with an interactive Globe/Acorn lock and finish selector derived from the Rose Collection furniture guide.
+- Added the supplied Rose Collection furniture PDF as a downloadable page resource.
+- Added sash-specific FAQs, a compact mobile quote action, a sash-specific enquiry form and a sash-installation review first in the review rail.
+- Reworked the mobile footer trust bar into a consistent two-column grid.
+- Added Fenster Instagram, Facebook and LinkedIn links to the footer.
+- Rebuilt compiled CSS/JS and verified the protected test page at `390 x 844`, `768 x 1024` and `1440 x 900` with no horizontal overflow; verified selector state changes, social URLs, PDF/image delivery and responsive asset delivery.
+- Test deployment only; no live-site deployment was performed.
