@@ -1956,7 +1956,7 @@ function fenster_render_site_schema(): void
         ],
         'address' => [
             '@type' => 'PostalAddress',
-            'streetAddress' => '97-98 Alston Drive, Bradwell Abbey',
+            'streetAddress' => '98 Alston Drive, Bradwell Abbey',
             'addressLocality' => 'Milton Keynes',
             'addressRegion' => 'Buckinghamshire',
             'postalCode' => 'MK13 9HF',

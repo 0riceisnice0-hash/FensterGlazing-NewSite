@@ -21,7 +21,7 @@ function fenster_site_data(): array
             'phone' => '01908 429200',
             'email' => 'info@fensterglazing.com',
             'address' => [
-                '97-98 Alston Drive',
+                '98 Alston Drive',
                 'Bradwell Abbey',
                 'Milton Keynes',
                 'Buckinghamshire MK13 9HF',

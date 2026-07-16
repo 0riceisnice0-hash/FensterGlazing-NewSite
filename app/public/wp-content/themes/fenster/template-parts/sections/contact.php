@@ -15,7 +15,7 @@ $trust_items = is_array($args['trust_items'] ?? null) ? $args['trust_items'] : [
 $phone = (string) ($brand['phone'] ?? '01908 429200');
 $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
 $address = is_array($brand['address'] ?? null) ? $brand['address'] : [
-    '97-98 Alston Drive',
+    '98 Alston Drive',
     'Bradwell Abbey',
     'Milton Keynes',
     'Buckinghamshire MK13 9HF',
@@ -96,7 +96,7 @@ $form_notes = [
             <div class="fg-contact-hero__showroom-strip">
                 <img src="<?php echo esc_url($showroom_image); ?>" alt="<?php esc_attr_e('Fenster Glazing showroom exterior in Milton Keynes', 'fenster'); ?>" loading="eager">
                 <div>
-                    <span><?php esc_html_e('97-98 Alston Drive', 'fenster'); ?></span>
+                    <span><?php esc_html_e('98 Alston Drive', 'fenster'); ?></span>
                     <p><?php esc_html_e('Visit the showroom for product displays, colour decisions, glazing advice and survey support.', 'fenster'); ?></p>
                 </div>
             </div>

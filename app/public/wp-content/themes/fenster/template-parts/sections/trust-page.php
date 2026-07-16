@@ -27,7 +27,7 @@ $reasons = [
         'copy' => __('Fenster started in 2018 and has grown around local homes, showroom advice and repeat recommendations. That means there is a real local company behind the quote, with people you can contact before the work starts, while decisions are being made and after the installation is complete.', 'fenster'),
     ],
     [
-        'title' => __('Around 25 years of combined experience', 'fenster'),
+        'title' => __('Over 50 years of combined experience', 'fenster'),
         'copy' => __('The team brings practical experience across windows, doors, aluminium systems, uPVC, composite doors, replacement glass, repairs and installation planning. Advice is based on products the team actually works with, not a sales script or a one-size-fits-all online estimate.', 'fenster'),
     ],
     [
@@ -143,7 +143,7 @@ $team_cards = [
             <div class="fg-trust-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('Why trust Fenster Glazing', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Honest pricing, experienced fitters and a local team you can actually speak to.', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Fenster Glazing has been helping customers since 2018. We combine around 25 years of glazing experience with transparent upfront pricing, highly trained fitters and a straightforward approach from first quote to aftercare.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Fenster Glazing has been helping customers since 2018. We combine over 50 years of glazing experience with transparent upfront pricing, highly trained fitters and a straightforward approach from first quote to aftercare.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url($google_reviews_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Read Google reviews', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url($trustpilot_reviews_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Read Trustpilot reviews', 'fenster'); ?></a>
@@ -180,7 +180,7 @@ $team_cards = [
             </article>
             <article>
                 <strong><?php esc_html_e('25 yrs', 'fenster'); ?></strong>
-                <span><?php esc_html_e('around 25 years of combined glazing experience', 'fenster'); ?></span>
+                <span><?php esc_html_e('over 50 years of combined glazing experience', 'fenster'); ?></span>
             </article>
             <article>
                 <strong><?php esc_html_e('Clear prices', 'fenster'); ?></strong>
