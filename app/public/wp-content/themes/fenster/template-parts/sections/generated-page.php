@@ -2879,16 +2879,19 @@ if ($is_commercial_hub) {
         </section>
 
         <?php if (! empty($sash_roseview_gallery)) : ?>
-            <section class="fg-sash-mobile-gallery" aria-labelledby="fg-sash-gallery-title">
+            <section class="fg-sash-gallery" aria-labelledby="fg-sash-gallery-title">
                 <div class="container">
-                    <div class="fg-sash-mobile-gallery__head">
+                    <div class="fg-sash-gallery__head">
                         <div>
                             <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
                             <h2 id="fg-sash-gallery-title"><?php esc_html_e('See the difference in the room.', 'fenster'); ?></h2>
                         </div>
-                        <p><?php esc_html_e('Swipe through finished Roseview installations. Tap any image for a closer look.', 'fenster'); ?></p>
+                        <p>
+                            <span class="fg-sash-gallery__copy--desktop"><?php esc_html_e('Explore finished Roseview installations across period rooms, bays, full elevations and special window shapes.', 'fenster'); ?></span>
+                            <span class="fg-sash-gallery__copy--mobile"><?php esc_html_e('Swipe through finished Roseview installations. Tap any image for a closer look.', 'fenster'); ?></span>
+                        </p>
                     </div>
-                    <div class="fg-sash-mobile-gallery__rail" aria-label="<?php esc_attr_e('Roseview sash window gallery', 'fenster'); ?>">
+                    <div class="fg-sash-gallery__rail" aria-label="<?php esc_attr_e('Roseview sash window gallery', 'fenster'); ?>">
                         <?php foreach ($sash_roseview_gallery as $image) : ?>
                             <figure>
                                 <a href="<?php echo esc_url(fenster_generated_url((string) $image['image'])); ?>" data-fg-gallery-lightbox aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), (string) $image['alt'])); ?>">
@@ -2898,7 +2901,7 @@ if ($is_commercial_hub) {
                             </figure>
                         <?php endforeach; ?>
                     </div>
-                    <p class="fg-sash-mobile-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
+                    <p class="fg-sash-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
                 </div>
             </section>
         <?php endif; ?>
