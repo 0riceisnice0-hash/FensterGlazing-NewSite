@@ -25,6 +25,7 @@ The current experience includes:
 - A drawer that slides in from and out to the right.
 - A single-character handoff. The launcher Legend jumps into the drawer header instead of creating a second visible Legend.
 - A full-width animated header stage where Legend idles, runs right, idles, runs left and repeats at deliberate timings.
+- A unified deep-teal header treatment with a soft mint floor glow. The stage has no separate pale panel or hard vertical gradient seam, while retaining a `224px` desktop route and `190px` mobile route for standing, running and curled sleeping poses.
 - A `Who is Legend?` link to `/meet-the-team/#legend`.
 - An accessible live message log, typing indicator, auto-growing textarea, Enter-to-send, Shift+Enter for a new line, Escape-to-close and keyboard focus management.
 - Safe `**bold**` formatting and one route-checked same-site `[label](/route/)` link in assistant replies without allowing model-generated HTML.
@@ -321,5 +322,6 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `611985b` | Added disclosure dismissal after first send, same-site open-state continuity, independent wheel/touch transcript scrolling and reopen-to-latest behaviour. |
 | `4a40824` | Promoted team profiles and query-matched current-page passages so Legend reliably identifies visible Fenster staff. |
 | `4ba8b4b` | Added a deterministic server answer for Zac Bartley identity and role questions. |
+| `368093b` | Rebuilt the drawer header as a unified dark stage with dedicated walking and sleeping space. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.

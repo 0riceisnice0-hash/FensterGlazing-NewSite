@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Legend drawer header redesign
+
+- Removed the abrupt dark-to-pale header split and replaced it with a continuous deep-teal gradient, soft mint floor glow and restrained lower stage line.
+- Restyled the close control for the unified dark surface and retained clear identity copy contrast.
+- Preserved dedicated animation geometry: a `224px` desktop stage and `190px` mobile stage accommodate Legend's standing, left/right movement and curled sleeping frames. Protected-site visual QA confirmed desktop standing contrast, mobile sleep containment and zero horizontal overflow.
+
 ## 2026-07-16 - Reliable current-page team answers
 
 - Fixed Legend failing to identify Zac Bartley while the visitor was already on Meet the Team. The profile existed in rendered HTML but was buried in the general page snapshot, while the related-page source index did not contain the runtime replacement accurately.
