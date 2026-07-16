@@ -6,7 +6,9 @@ const legendAssistant = document.querySelector('[data-legend-assistant]');
 
 if (legendAssistant) {
   const panel = legendAssistant.querySelector('[data-legend-panel]');
+  const launcherWrap = legendAssistant.querySelector('[data-legend-launcher-wrap]');
   const launcher = legendAssistant.querySelector('[data-legend-launcher]');
+  const promptActionButton = legendAssistant.querySelector('[data-legend-prompt-action]');
   const promptCloseButton = legendAssistant.querySelector('[data-legend-prompt-close]');
   const closeButton = legendAssistant.querySelector('[data-legend-close]');
   const input = legendAssistant.querySelector('[data-legend-input]');
@@ -18,6 +20,7 @@ if (legendAssistant) {
   const endpoint = legendAssistant.dataset.legendEndpoint || '';
   const nonce = legendAssistant.dataset.legendNonce || '';
   const sprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sprite]'));
+  const sleepSprites = Array.from(legendAssistant.querySelectorAll('[data-legend-sleep-sprite]'));
   const launcherCharacter = legendAssistant.querySelector('[data-legend-character]');
   const roamer = legendAssistant.querySelector('[data-legend-roamer]');
   const roamerSprite = legendAssistant.querySelector('[data-legend-roamer-sprite]');
@@ -26,9 +29,15 @@ if (legendAssistant) {
   let spriteTimer = 0;
   let roamerSpriteTimer = 0;
   let roamerMotionTimer = 0;
+  let sleepSpriteTimer = 0;
+  let sleepAnimationVersion = 0;
+  let inactivityTimer = 0;
   let roamerIsRight = false;
   let isOpen = false;
   let isTransitioning = false;
+  let isSleeping = false;
+  let wakePromise = null;
+  let promptRevealed = false;
   let chatAcknowledged = true;
   let chatConversationId = '';
   const conversation = [];
@@ -36,6 +45,8 @@ if (legendAssistant) {
   const chatStorageKey = 'fenster_legend_chat_v1';
   const promptDismissedStorageKey = 'fenster_legend_prompt_dismissed_v1';
   const chatStorageLifetime = 24 * 60 * 60 * 1000;
+  const legendInactivityDelay = 20 * 1000;
+  const promptRevealThreshold = 240;
 
   const newLegendConversationId = () => `CHT-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
   const newLegendMessageId = () => `LCM-${(window.crypto?.randomUUID?.() || `${Date.now()}${Math.random()}`).replace(/[^a-z0-9]/gi, '').toUpperCase()}`.slice(0, 84);
@@ -110,6 +121,119 @@ if (legendAssistant) {
     };
 
     advance();
+  };
+
+  const sleepSequence = {
+    frames: [0, 1, 2, 3, 4, 5, 6, 7],
+    timings: [360, 320, 320, 340, 380, 420, 760, 900],
+  };
+
+  const showSleepFrame = (column) => {
+    sleepSprites.forEach((sprite) => sprite.style.setProperty('--legend-sleep-column', column));
+  };
+
+  const runSleepFrames = (frames, timings, onComplete) => {
+    window.clearTimeout(sleepSpriteTimer);
+    const version = ++sleepAnimationVersion;
+    let index = 0;
+
+    const advance = () => {
+      if (version !== sleepAnimationVersion) return;
+      showSleepFrame(frames[index]);
+      const delay = timings[index] || 220;
+      index += 1;
+      if (index >= frames.length) {
+        sleepSpriteTimer = window.setTimeout(() => {
+          if (version === sleepAnimationVersion) onComplete?.();
+        }, delay);
+        return;
+      }
+      sleepSpriteTimer = window.setTimeout(advance, delay);
+    };
+
+    advance();
+  };
+
+  const startSleepBreathing = () => {
+    legendAssistant.classList.add('is-asleep');
+    let breathingFrame = 6;
+    const breathe = () => {
+      if (!isSleeping) return;
+      showSleepFrame(breathingFrame);
+      breathingFrame = breathingFrame === 6 ? 7 : 6;
+      sleepSpriteTimer = window.setTimeout(breathe, 1200);
+    };
+    breathe();
+  };
+
+  const sleepLegend = () => {
+    if (isSleeping || isTransitioning || replyTimer) return;
+    isSleeping = true;
+    stopRoaming();
+    window.clearTimeout(spriteTimer);
+    legendAssistant.classList.add('is-sleeping');
+    legendAssistant.classList.remove('is-asleep');
+
+    if (reduceMotion.matches) {
+      showSleepFrame(7);
+      legendAssistant.classList.add('is-asleep');
+      return;
+    }
+
+    runSleepFrames(sleepSequence.frames, sleepSequence.timings, startSleepBreathing);
+  };
+
+  const wakeLegend = () => {
+    if (wakePromise) return wakePromise;
+    if (!isSleeping) return Promise.resolve();
+
+    wakePromise = new Promise((resolve) => {
+
+      window.clearTimeout(sleepSpriteTimer);
+      legendAssistant.classList.remove('is-asleep');
+      if (reduceMotion.matches) {
+        isSleeping = false;
+        legendAssistant.classList.remove('is-sleeping');
+        playSprite('idle');
+        if (isOpen) startRoaming();
+        wakePromise = null;
+        resolve();
+        return;
+      }
+
+      const reverseFrames = [...sleepSequence.frames].reverse();
+      runSleepFrames(reverseFrames, reverseFrames.map(() => 120), () => {
+        isSleeping = false;
+        legendAssistant.classList.remove('is-sleeping');
+        playSprite('idle');
+        if (isOpen) startRoaming();
+        wakePromise = null;
+        resolve();
+      });
+    });
+    return wakePromise;
+  };
+
+  const scheduleLegendSleep = () => {
+    window.clearTimeout(inactivityTimer);
+    inactivityTimer = window.setTimeout(() => {
+      if (replyTimer || isTransitioning) {
+        scheduleLegendSleep();
+        return;
+      }
+      sleepLegend();
+    }, legendInactivityDelay);
+  };
+
+  const registerLegendActivity = () => {
+    scheduleLegendSleep();
+    if (isSleeping) void wakeLegend();
+  };
+
+  const revealPromptAfterScroll = () => {
+    if (promptRevealed || window.scrollY < promptRevealThreshold) return;
+    promptRevealed = true;
+    legendAssistant.classList.add('is-prompt-visible');
   };
 
   const showRoamerFrame = (row, column) => {
@@ -236,6 +360,8 @@ if (legendAssistant) {
 
   const startRoaming = () => {
     stopRoaming();
+
+    if (isSleeping) return;
 
     if (!roamer || !roamerSprite || reduceMotion.matches) {
       showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
@@ -506,6 +632,9 @@ if (legendAssistant) {
   const openChat = async () => {
     if (isTransitioning || isOpen) return;
 
+    window.clearTimeout(inactivityTimer);
+    await wakeLegend();
+
     isOpen = true;
     if (trackingConsentAccepted()) trackWebsiteEvent('chat_opened', { cta: 'Legend AI assistant' });
     isTransitioning = true;
@@ -525,10 +654,11 @@ if (legendAssistant) {
     legendAssistant.classList.remove('is-transitioning');
     isTransitioning = false;
     startRoaming();
+    scheduleLegendSleep();
     input.focus();
   };
 
-  const closeChat = async () => {
+  const closeChat = async ({ sleepAfterClose = false } = {}) => {
     if (isTransitioning || !isOpen) return;
 
     isTransitioning = true;
@@ -550,13 +680,20 @@ if (legendAssistant) {
     showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
     legendAssistant.classList.remove('is-transitioning');
     isTransitioning = false;
-    playSprite('idle');
+    if (sleepAfterClose) {
+      sleepLegend();
+    } else {
+      playSprite('idle');
+      scheduleLegendSleep();
+    }
     launcher.focus();
   };
 
   const sendMessage = async () => {
     const text = input.value.trim();
     if (!chatAcknowledged || !text || replyTimer) return;
+
+    registerLegendActivity();
 
     chatConversationId = chatConversationId || newLegendConversationId();
     addMessage(text, 'user');
@@ -589,22 +726,32 @@ if (legendAssistant) {
       input.disabled = false;
       replyTimer = 0;
       playSprite('idle');
+      scheduleLegendSleep();
       input.focus();
     }
   };
 
+  const openLegendFromTrigger = async () => {
+    scheduleLegendSleep();
+    await wakeLegend();
+    await openChat();
+  };
+
   launcher.addEventListener('click', () => {
-    if (isOpen) {
-      closeChat();
-    } else {
-      openChat();
-    }
+    void openLegendFromTrigger();
   });
-  promptCloseButton?.addEventListener('click', () => setLegendPromptDismissed(true));
-  closeButton.addEventListener('click', closeChat);
+  promptActionButton?.addEventListener('click', () => {
+    void openLegendFromTrigger();
+  });
+  promptCloseButton?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    setLegendPromptDismissed(true);
+  });
+  closeButton.addEventListener('click', () => closeChat({ sleepAfterClose: true }));
   clearChatButton?.addEventListener('click', clearLegendChat);
   sendButton.addEventListener('click', sendMessage);
   input.addEventListener('input', () => {
+    registerLegendActivity();
     sendButton.disabled = !input.value.trim() || Boolean(replyTimer);
     resizeInput();
   });
@@ -617,6 +764,23 @@ if (legendAssistant) {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && isOpen) closeChat();
   });
+  legendAssistant.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('[data-legend-close], [data-legend-launcher], [data-legend-prompt-action], [data-legend-prompt-close]')) return;
+    registerLegendActivity();
+  });
+  legendAssistant.addEventListener('focusin', (event) => {
+    if (event.target.closest('[data-legend-close]')) return;
+    registerLegendActivity();
+  });
+  launcherWrap?.addEventListener('pointerenter', registerLegendActivity);
+  let promptScrollFrame = 0;
+  window.addEventListener('scroll', () => {
+    if (promptScrollFrame || promptRevealed) return;
+    promptScrollFrame = window.requestAnimationFrame(() => {
+      promptScrollFrame = 0;
+      revealPromptAfterScroll();
+    });
+  }, { passive: true });
   window.addEventListener('resize', syncCookieOffset);
   window.addEventListener('load', syncCookieOffset, { once: true });
   window.addEventListener('storage', (event) => {
@@ -636,6 +800,8 @@ if (legendAssistant) {
   restoreLegendState();
   playSprite('idle');
   showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
+  revealPromptAfterScroll();
+  scheduleLegendSleep();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', observeCookieControls, { once: true });
   } else {

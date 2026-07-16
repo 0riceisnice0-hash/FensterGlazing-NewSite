@@ -13,6 +13,7 @@ if (! defined('ABSPATH')) {
 }
 
 $legend_sprite = get_theme_file_uri('/assets/images/assistant/legend-spritesheet.webp');
+$legend_sleep_sprite = get_theme_file_uri('/assets/images/assistant/legend-sleep-strip.webp');
 $legend_connected = function_exists('fenster_legend_is_configured') && fenster_legend_is_configured();
 ?>
 <aside
@@ -43,6 +44,9 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
                 <span class="legend-assistant__roamer" data-legend-roamer>
                     <span class="legend-sprite" data-legend-roamer-sprite>
                         <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
+                    </span>
+                    <span class="legend-sleep-sprite" data-legend-sleep-sprite>
+                        <img src="<?php echo esc_url($legend_sleep_sprite); ?>" alt="" width="1536" height="208">
                     </span>
                 </span>
             </div>
@@ -97,23 +101,32 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
         </div>
     </section>
 
-    <button
-        class="legend-assistant__launcher"
-        type="button"
-        data-legend-launcher
-        aria-controls="legend-assistant-panel"
-        aria-expanded="false"
-        aria-label="Chat with Legend, Fenster’s AI assistant"
-    >
-        <span class="legend-assistant__prompt" aria-hidden="true">
-            <strong>Need a hand?</strong>
-            <small>I’m Fenster’s AI assistant</small>
-        </span>
-        <span class="legend-assistant__character" data-legend-character aria-hidden="true">
-            <span class="legend-sprite" data-legend-sprite>
-                <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
+    <div class="legend-assistant__launcher-wrap" data-legend-launcher-wrap>
+        <div class="legend-assistant__prompt" data-legend-prompt>
+            <button class="legend-assistant__prompt-action" type="button" data-legend-prompt-action aria-controls="legend-assistant-panel">
+                <strong>Need a hand?</strong>
+                <small>I’m Fenster’s AI assistant</small>
+            </button>
+            <button class="legend-assistant__prompt-close" type="button" data-legend-prompt-close aria-label="Hide Legend prompt">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10m0-10L7 17" /></svg>
+            </button>
+        </div>
+        <button
+            class="legend-assistant__launcher"
+            type="button"
+            data-legend-launcher
+            aria-controls="legend-assistant-panel"
+            aria-expanded="false"
+            aria-label="Chat with Legend, Fenster’s AI assistant"
+        >
+            <span class="legend-assistant__character" data-legend-character aria-hidden="true">
+                <span class="legend-sprite" data-legend-sprite>
+                    <img src="<?php echo esc_url($legend_sprite); ?>" alt="" width="1536" height="2288">
+                </span>
+                <span class="legend-sleep-sprite" data-legend-sleep-sprite>
+                    <img src="<?php echo esc_url($legend_sleep_sprite); ?>" alt="" width="1536" height="208">
+                </span>
             </span>
-        </span>
-    </button>
-    <button class="legend-assistant__prompt-close" type="button" data-legend-prompt-close aria-label="Hide Legend prompt">×</button>
+        </button>
+    </div>
 </aside>
