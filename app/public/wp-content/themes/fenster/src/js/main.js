@@ -809,6 +809,37 @@ if (legendAssistant) {
   }
 }
 
+document.querySelectorAll('[data-fg-sash-furniture]').forEach((selector) => {
+  const styleButtons = [...selector.querySelectorAll('[data-fg-furniture-style]')];
+  const panels = [...selector.querySelectorAll('[data-fg-furniture-panel]')];
+  const images = [...selector.querySelectorAll('[data-fg-furniture-image]')];
+
+  const showFinish = (assetKey) => {
+    images.forEach((image) => {
+      image.hidden = image.dataset.fgFurnitureImage !== assetKey;
+    });
+    selector.querySelectorAll('[data-fg-furniture-finish]').forEach((button) => {
+      button.setAttribute('aria-pressed', button.dataset.fgFurnitureFinish === assetKey ? 'true' : 'false');
+    });
+  };
+
+  styleButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const style = button.dataset.fgFurnitureStyle;
+      styleButtons.forEach((item) => item.setAttribute('aria-pressed', item === button ? 'true' : 'false'));
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.fgFurniturePanel !== style;
+      });
+      const firstFinish = selector.querySelector(`[data-fg-furniture-panel="${style}"] [data-fg-furniture-finish]`);
+      if (firstFinish) showFinish(firstFinish.dataset.fgFurnitureFinish);
+    });
+  });
+
+  selector.querySelectorAll('[data-fg-furniture-finish]').forEach((button) => {
+    button.addEventListener('click', () => showFinish(button.dataset.fgFurnitureFinish));
+  });
+});
+
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
 const integralBlindsReveal = document.querySelector('[data-fg-integral-blinds-reveal]');

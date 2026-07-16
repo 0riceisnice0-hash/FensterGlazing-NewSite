@@ -13,10 +13,19 @@ $args = wp_parse_args($args ?? [], [
     'class' => '',
     'trust_items' => [],
     'limit' => 7,
+    'prioritise_context' => '',
 ]);
 
 $reviews = fenster_data('customer_reviews', []);
 $reviews = is_array($reviews) ? array_values($reviews) : [];
+$prioritise_context = strtolower(trim((string) $args['prioritise_context']));
+if ($prioritise_context !== '') {
+    usort($reviews, static function (array $left, array $right) use ($prioritise_context): int {
+        $left_match = str_contains(strtolower((string) ($left['context'] ?? '')), $prioritise_context);
+        $right_match = str_contains(strtolower((string) ($right['context'] ?? '')), $prioritise_context);
+        return (int) $right_match <=> (int) $left_match;
+    });
+}
 $reviews = array_slice($reviews, 0, max(1, (int) $args['limit']));
 $classes = trim('fg-review-showcase ' . (string) $args['class']);
 

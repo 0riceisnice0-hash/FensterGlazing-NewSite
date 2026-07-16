@@ -45,8 +45,22 @@ $footer_company = [
                 <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/ssip-health-and-safety/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s SSIP health and safety assessment', 'fenster'); ?>">
                     <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/cropped-ssip.png'); ?>" alt="<?php esc_attr_e('SSIP health and safety assessed', 'fenster'); ?>">
                 </a>
-                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
-                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>">
+                <span class="site-footer__trust-mark"><img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>"></span>
+                <span class="site-footer__trust-mark"><img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>"></span>
+            </div>
+            <div class="site-footer__socials" aria-label="<?php esc_attr_e('Fenster Glazing social media', 'fenster'); ?>">
+                <a href="https://www.instagram.com/fensterglazing/" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Fenster Glazing on Instagram', 'fenster'); ?>">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.facebook.com/fensterg/" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Fenster Glazing on Facebook', 'fenster'); ?>">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v3H6v4h3v6h4v-6h3l1-4h-4V9c0-.7.3-1 1-1Z"></path></svg>
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.linkedin.com/company/fenster-glazing/" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Fenster Glazing on LinkedIn', 'fenster'); ?>">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="4" height="12"></rect><circle cx="5" cy="5" r="2"></circle><path d="M10 9h4v2c1-1.5 2.5-2.4 4.5-2.4 2.4 0 3.5 1.6 3.5 4.4v8h-4v-7c0-1.4-.5-2.2-1.7-2.2-1.4 0-2.3 1-2.3 2.8V21h-4Z"></path></svg>
+                    <span>LinkedIn</span>
+                </a>
             </div>
         </div>
 

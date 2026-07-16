@@ -263,6 +263,8 @@ if ($slug === 'sliding-sash-windows') {
             'name' => 'Ultimate Rose',
             'tagline' => 'Closest to timber',
             'image' => $sash_asset_base . 'ultimate-rose-window-external.png',
+            'rail_image' => $sash_asset_base . 'ultimate-35mm-meeting-rail.jpg',
+            'rail_label' => '35mm meeting rail',
             'alt' => 'Ultimate Rose sash window viewed externally',
             'copy' => 'The premium choice when the window needs to look genuinely traditional up close, with the finest meeting rail and the most authentic joint detailing in the Rose Collection.',
             'best_for' => 'Conservation-led projects, high-detail period homes and front elevations where authenticity matters most.',
@@ -277,6 +279,8 @@ if ($slug === 'sliding-sash-windows') {
             'name' => 'Heritage Rose',
             'tagline' => 'Traditional all-rounder',
             'image' => $sash_asset_base . 'heritage-rose-window.png',
+            'rail_image' => $sash_asset_base . 'heritage-44mm-midrail.jpg',
+            'rail_label' => '44.5mm meeting rail',
             'alt' => 'Heritage Rose sash window viewed externally',
             'copy' => 'A strong traditional sash specification with slim sightlines, putty-line detailing and welded frame construction for homeowners who want period character without stepping to the highest-detail model.',
             'best_for' => 'Traditional homes, Victorian or Edwardian styling and projects where a convincing timber-style appearance is needed.',
@@ -291,6 +295,8 @@ if ($slug === 'sliding-sash-windows') {
             'name' => 'Charisma Rose',
             'tagline' => 'Cost-conscious sash style',
             'image' => $sash_asset_base . 'charisma-rose-window.png',
+            'rail_image' => $sash_asset_base . 'charisma-60mm-rail.jpg',
+            'rail_label' => '60mm meeting rail',
             'alt' => 'Charisma Rose sash window viewed externally',
             'copy' => 'The accessible Rose Collection option: still a proper vertical sliding sash window, but with a simpler sculptured profile and wider rail for projects balancing appearance and budget.',
             'best_for' => 'Modern replacements, rental refurbishments and homes where sash operation matters more than maximum timber replication.',
@@ -306,32 +312,38 @@ if ($slug === 'sliding-sash-windows') {
         [
             'image' => $sash_asset_base . 'gallery/roseview-wisteria-window.webp',
             'alt' => 'White Roseview sash window framed by flowering wisteria',
-            'caption' => 'Traditional detail',
+            'caption' => 'Arched sash with Georgian bars',
+            'width' => 1800,
         ],
         [
             'image' => $sash_asset_base . 'gallery/roseview-dining-room.webp',
             'alt' => 'Roseview sash windows in a bright period dining room',
-            'caption' => 'Made for period rooms',
+            'caption' => 'Sage-green frames in a period dining room',
+            'width' => 1800,
         ],
         [
             'image' => $sash_asset_base . 'gallery/roseview-surrey-home.webp',
             'alt' => 'White Surrey home fitted with Roseview sash windows',
-            'caption' => 'A complete elevation',
+            'caption' => 'Full-property sash replacement',
+            'width' => 1800,
         ],
         [
             'image' => $sash_asset_base . 'gallery/roseview-bay-room.webp',
             'alt' => 'Roseview sash bay window in a green living room',
-            'caption' => 'Bay window character',
+            'caption' => 'Three-sided bay window',
+            'width' => 1800,
         ],
         [
-            'image' => $sash_asset_base . 'gallery/roseview-arched-wisteria-window.webp',
-            'alt' => 'Arched Roseview sash window framed by flowering wisteria',
-            'caption' => 'Made for special shapes',
+            'image' => $sash_asset_base . 'gallery/roseview-red-brick-home.webp',
+            'alt' => 'Large red-brick home fitted with Roseview sash windows',
+            'caption' => 'Balanced sash proportions across a large elevation',
+            'width' => 1500,
         ],
         [
             'image' => $sash_asset_base . 'gallery/roseview-arched-interior.webp',
             'alt' => 'Arched Roseview sash windows viewed from inside a period home',
-            'caption' => 'Character from inside',
+            'caption' => 'Special-shaped sash windows viewed from inside',
+            'width' => 1200,
         ],
     ];
     $sash_roseview_details = [
@@ -727,6 +739,35 @@ if (! empty($product_content['faqs']) && is_array($product_content['faqs'])) {
     $product_faqs = array_values(array_filter($product_content['faqs'], static function ($faq): bool {
         return trim((string) ($faq['question'] ?? '')) !== '' && trim((string) ($faq['answer'] ?? '')) !== '';
     }));
+}
+
+if ($slug === 'sliding-sash-windows') {
+    $product_faqs = [
+        [
+            'question' => 'Which Roseview sash window should I choose?',
+            'answer' => 'Ultimate Rose gives the closest timber replication, Heritage Rose balances traditional detailing and value, and Charisma Rose suits simpler or more contemporary replacements. We confirm the right model after seeing the property and the level of detail required.',
+        ],
+        [
+            'question' => 'Do sash windows need planning permission?',
+            'answer' => 'Most like-for-like replacements do not need planning permission, but listed buildings, Article 4 directions and some conservation areas can require consent. Check with the local planning authority before ordering if restrictions may apply.',
+        ],
+        [
+            'question' => 'Are Roseview sash windows suitable for conservation areas?',
+            'answer' => 'Ultimate Rose is commonly chosen where timber-like proportions and joint detailing matter most. Acceptance always depends on the property and local planning requirements, so we can help prepare the specification but cannot guarantee planning approval.',
+        ],
+        [
+            'question' => 'How do tilt-in sash windows work?',
+            'answer' => 'The sliding sashes can tilt inwards so the outside glass can be cleaned safely from inside. Tilt availability and any weight restrictions are confirmed for the finished window during survey.',
+        ],
+        [
+            'question' => 'What affects the price of sliding sash windows?',
+            'answer' => 'Price depends on the Roseview model, size, colour, glazing bars, horn and cill details, glass specification, security upgrades, access and installation conditions. A survey confirms the final specification and price.',
+        ],
+        [
+            'question' => 'What security upgrades are available?',
+            'answer' => 'PAS 24, Part Q and Secured by Design options are available on suitable Roseview specifications. The final lock and furniture package is confirmed around the selected model and project requirements.',
+        ],
+    ];
 }
 
 $upvc_colour_routes = [
@@ -2689,6 +2730,7 @@ if ($is_commercial_hub) {
             'copy' => 'Fenster combines local installation experience with recognised accreditations and trusted glazing system partners.',
             'trust_items' => $trust_items,
             'limit' => 7,
+            'prioritise_context' => $slug === 'sliding-sash-windows' ? 'sash windows' : '',
         ]);
         ?>
     <?php endif; ?>
@@ -2773,10 +2815,10 @@ if ($is_commercial_hub) {
                 $sash_mobile_comparison_rows = [
                     ['Meeting rail', '35mm', '44.5mm', '60mm'],
                     ['Corner detail', 'Mechanical joints', 'Welded joints', 'Welded joints'],
-                    ['Frame depth', '137mm', '137mm', '125mm'],
+                    ['Profile', 'Putty line', 'Putty line', 'Sculptured ovolo'],
+                    ['Bottom rail', '81mm standard', '81mm standard', '68mm standard'],
                     ['Glass unit', '28mm IGU', '28mm IGU', '24mm IGU'],
-                    ['Energy rating', 'A rated', 'A rated', 'A rated'],
-                    ['ThermoVFlex option', '1.2 W/m²K option', '1.2 W/m²K option', 'Confirm at survey'],
+                    ['Best U-value', '1.2 W/m²K option', '1.2 W/m²K option', '1.4 W/m²K option'],
                 ];
                 ?>
 
@@ -2786,6 +2828,10 @@ if ($is_commercial_hub) {
                         <article class="fg-sash-model" data-fg-sash-slide>
                             <figure class="fg-sash-model__media" data-fg-depth="<?php echo esc_attr($index === 1 ? '0.045' : '0.065'); ?>">
                                 <img src="<?php echo esc_url(fenster_generated_url((string) $model['image'])); ?>" alt="<?php echo esc_attr((string) $model['alt']); ?>" loading="lazy">
+                                <span class="fg-sash-model__rail-detail">
+                                    <img src="<?php echo esc_url(fenster_generated_url((string) $model['rail_image'])); ?>" alt="" loading="lazy">
+                                    <strong><?php echo esc_html((string) $model['rail_label']); ?></strong>
+                                </span>
                             </figure>
                             <div class="fg-sash-model__body">
                                 <span><?php echo esc_html((string) $model['tagline']); ?></span>
@@ -2857,10 +2903,12 @@ if ($is_commercial_hub) {
                     $sash_comparison_rows = [
                         ['Meeting rail', '35mm', '44.5mm', '60mm'],
                         ['Corner detail', 'Mechanical joints', 'Welded joints', 'Welded joints'],
-                        ['Frame depth', '137mm', '137mm', '125mm'],
+                        ['Profile detail', 'Putty line', 'Putty line', 'Sculptured ovolo'],
+                        ['Bottom rail', '81mm standard', '81mm standard', '68mm standard'],
+                        ['Horn options', 'Seamless run-through', 'Run-through, clip-on or none', 'Run-through, clip-on or none'],
                         ['Glass unit', '28mm IGU', '28mm IGU', '24mm IGU'],
-                        ['Energy rating', 'A rated', 'A rated', 'A rated'],
-                        ['ThermoVFlex option', '1.2 W/m²K option', '1.2 W/m²K option', 'Confirm at survey'],
+                        ['Best U-value', '1.2 W/m²K option', '1.2 W/m²K option', '1.4 W/m²K option'],
+                        ['Furniture', 'Globe standard', 'Acorn standard', 'Acorn standard'],
                     ];
                     ?>
                     <?php foreach ($sash_comparison_rows as $row) : ?>
@@ -2893,9 +2941,23 @@ if ($is_commercial_hub) {
                     </div>
                     <div class="fg-sash-gallery__rail" aria-label="<?php esc_attr_e('Roseview sash window gallery', 'fenster'); ?>">
                         <?php foreach ($sash_roseview_gallery as $image) : ?>
+                            <?php
+                            $gallery_src = (string) $image['image'];
+                            $gallery_stem = preg_replace('/\.webp$/', '', $gallery_src);
+                            $gallery_width = (int) ($image['width'] ?? 1200);
+                            $gallery_sources = [
+                                fenster_generated_url($gallery_stem . '-480w.webp') . ' 480w',
+                                fenster_generated_url($gallery_stem . '-800w.webp') . ' 800w',
+                            ];
+                            if ($gallery_width > 1400) {
+                                $gallery_sources[] = fenster_generated_url($gallery_stem . '-1400w.webp') . ' 1400w';
+                            }
+                            $gallery_sources[] = fenster_generated_url($gallery_src) . ' ' . $gallery_width . 'w';
+                            $gallery_srcset = implode(', ', $gallery_sources);
+                            ?>
                             <figure>
-                                <a href="<?php echo esc_url(fenster_generated_url((string) $image['image'])); ?>" data-fg-gallery-lightbox aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), (string) $image['alt'])); ?>">
-                                    <img src="<?php echo esc_url(fenster_generated_url((string) $image['image'])); ?>" alt="<?php echo esc_attr((string) $image['alt']); ?>" loading="lazy">
+                                <a href="<?php echo esc_url(fenster_generated_url($gallery_src)); ?>" data-fg-gallery-lightbox aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), (string) $image['alt'])); ?>">
+                                    <img src="<?php echo esc_url(fenster_generated_url($gallery_stem . '-800w.webp')); ?>" srcset="<?php echo esc_attr($gallery_srcset); ?>" sizes="(max-width: 860px) 82vw, (max-width: 1100px) 48vw, 42vw" alt="<?php echo esc_attr((string) $image['alt']); ?>" loading="lazy">
                                     <figcaption><?php echo esc_html((string) $image['caption']); ?></figcaption>
                                 </a>
                             </figure>
@@ -2906,6 +2968,21 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
+        <section class="fg-sash-gallery-cta" aria-label="<?php esc_attr_e('Sliding sash window quote options', 'fenster'); ?>">
+            <div class="container fg-sash-gallery-cta__inner">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Your project', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Ready to price your sash windows?', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Start an instant estimate or book a design consultation to compare the Roseview options for your property.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-sash-gallery-cta__actions">
+                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get a sash window quote', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a design consultation', 'fenster'); ?></a>
+                </div>
+            </div>
+        </section>
+
+        <?php if ($slug !== 'sliding-sash-windows') : ?>
         <section class="fg-sash-detail-run">
             <div class="container">
                 <div class="section-heading section-heading--wide">
@@ -2941,9 +3018,11 @@ if ($is_commercial_hub) {
                 </div>
             </div>
         </section>
+        <?php endif; ?>
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
+        <?php if ($slug !== 'sliding-sash-windows') : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -2997,6 +3076,7 @@ if ($is_commercial_hub) {
                 </div>
             </div>
         </section>
+        <?php endif; ?>
 
         <?php if ($is_pet_flap_page && ! empty($pet_flap_cards)) : ?>
             <section class="fg-pet-flap-guide">
@@ -3026,7 +3106,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if (! empty($product_hub_specs) || ! empty($product_hub_choices)) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -3199,7 +3279,7 @@ if ($is_commercial_hub) {
                     >
                         <span><?php esc_html_e('01', 'fenster'); ?></span>
                         <h3><?php esc_html_e('Frame colours', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.', 'fenster'); ?></p>
+                        <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare Roseview foils, woodgrain finishes, dual colours and special colour options.' : 'Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.'); ?></p>
                         <strong><?php esc_html_e('Open colour hub', 'fenster'); ?></strong>
                     </a>
                     <a
@@ -3229,71 +3309,81 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
-            <section id="fenster-sash-furniture" class="fg-sash-furniture">
+            <?php
+            $sash_furniture_base = '/wp-content/themes/fenster/assets/images/products/sash-roseview/furniture-guide/';
+            $sash_furniture_options = [
+                'globe' => [
+                    'name' => 'Globe furniture',
+                    'models' => 'Ultimate Rose',
+                    'copy' => 'The curved Globe lock is the standard traditional furniture style for Ultimate Rose.',
+                    'finishes' => ['Bronze', 'Gold', 'Chrome', 'Antique Black', 'Graphite', 'Pewter'],
+                ],
+                'acorn' => [
+                    'name' => 'Acorn furniture',
+                    'models' => 'Ultimate, Heritage and Charisma Rose',
+                    'copy' => 'The Acorn lock is standard on Heritage and Charisma Rose and is also available on suitable Ultimate Rose specifications.',
+                    'finishes' => ['Bronze', 'Gold', 'Chrome', 'Antique Black', 'Graphite', 'Pewter', 'White'],
+                ],
+            ];
+            ?>
+            <section id="fenster-sash-furniture" class="fg-sash-furniture fg-sash-furniture--selector" data-fg-sash-furniture>
                 <div class="container">
                     <div class="fg-sash-furniture__head">
                         <div>
                             <p class="eyebrow"><?php esc_html_e('Sash window furniture', 'fenster'); ?></p>
-                            <h2><?php esc_html_e('Locks, pole eyes and sash lifts matched to the Rose model.', 'fenster'); ?></h2>
+                            <h2><?php esc_html_e('Choose the lock style and finish.', 'fenster'); ?></h2>
                         </div>
-                        <?php if (! empty($sash_furniture['intro'])) : ?>
-                            <p><?php echo esc_html((string) $sash_furniture['intro']); ?></p>
-                        <?php endif; ?>
+                        <p><?php esc_html_e('Globe and Acorn furniture are supplied as coordinated sets with matching sash lifts, pole eyes and tilt knobs. Compatibility depends on the Roseview model.', 'fenster'); ?></p>
                     </div>
 
-                    <div class="fg-sash-furniture__ranges" aria-label="<?php esc_attr_e('Roseview sash furniture options', 'fenster'); ?>">
-                        <?php foreach ($sash_furniture_ranges as $range) : ?>
-                            <?php
-                            $range_items = is_array($range['items'] ?? null) ? array_values($range['items']) : [];
-                            $range_name = (string) ($range['name'] ?? 'Sash furniture');
-                            ?>
-                            <article class="fg-sash-furniture__range">
-                                <div class="fg-sash-furniture__range-copy">
-                                    <span><?php echo esc_html((string) ($range['tagline'] ?? 'Roseview sash furniture')); ?></span>
-                                    <h3><?php echo esc_html($range_name); ?></h3>
-                                    <?php if (! empty($range['model'])) : ?>
-                                        <p class="fg-sash-furniture__model"><?php echo esc_html((string) $range['model']); ?></p>
-                                    <?php endif; ?>
-                                    <?php if (! empty($range['copy'])) : ?>
-                                        <p><?php echo esc_html((string) $range['copy']); ?></p>
-                                    <?php endif; ?>
-                                </div>
+                    <div class="fg-sash-furniture-selector">
+                        <div class="fg-sash-furniture-selector__visual" aria-live="polite">
+                            <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
+                                <?php foreach ($style['finishes'] as $finish_index => $finish) : ?>
+                                    <?php $asset_key = $style_key . '-' . sanitize_title($finish); ?>
+                                    <img
+                                        src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $asset_key . '.webp')); ?>"
+                                        alt="<?php echo esc_attr($style['name'] . ' in ' . $finish); ?>"
+                                        loading="lazy"
+                                        data-fg-furniture-image="<?php echo esc_attr($asset_key); ?>"
+                                        <?php echo $style_key === 'globe' && $finish_index === 0 ? '' : 'hidden'; ?>
+                                    >
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </div>
 
-                                <?php if (! empty($range_items)) : ?>
-                                    <div class="fg-sash-furniture__items">
-                                        <?php foreach ($range_items as $item) : ?>
-                                            <?php
-                                            $item_name = (string) ($item['name'] ?? 'Sash furniture item');
-                                            $item_image = (string) ($item['image'] ?? '');
-                                            ?>
-                                            <figure>
-                                                <?php if ($item_image !== '') : ?>
-                                                    <img src="<?php echo esc_url(fenster_generated_url($item_image)); ?>" alt="<?php echo esc_attr($item_name . ' for Roseview sash windows'); ?>" loading="lazy">
-                                                <?php endif; ?>
-                                                <figcaption><?php echo esc_html($item_name); ?></figcaption>
-                                            </figure>
+                        <div class="fg-sash-furniture-selector__controls">
+                            <div class="fg-sash-furniture-selector__styles" role="group" aria-label="<?php esc_attr_e('Furniture style', 'fenster'); ?>">
+                                <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
+                                    <button type="button" data-fg-furniture-style="<?php echo esc_attr($style_key); ?>" aria-pressed="<?php echo $style_key === 'globe' ? 'true' : 'false'; ?>">
+                                        <strong><?php echo esc_html($style['name']); ?></strong>
+                                        <span><?php echo esc_html($style['models']); ?></span>
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <?php foreach ($sash_furniture_options as $style_key => $style) : ?>
+                                <section data-fg-furniture-panel="<?php echo esc_attr($style_key); ?>" <?php echo $style_key === 'globe' ? '' : 'hidden'; ?>>
+                                    <p><?php echo esc_html($style['copy']); ?></p>
+                                    <div class="fg-sash-furniture-selector__finishes" role="group" aria-label="<?php echo esc_attr($style['name'] . ' finishes'); ?>">
+                                        <?php foreach ($style['finishes'] as $finish_index => $finish) : ?>
+                                            <?php $asset_key = $style_key . '-' . sanitize_title($finish); ?>
+                                            <button type="button" data-fg-furniture-finish="<?php echo esc_attr($asset_key); ?>" aria-pressed="<?php echo $finish_index === 0 ? 'true' : 'false'; ?>">
+                                                <i class="fg-sash-furniture-selector__swatch fg-sash-furniture-selector__swatch--<?php echo esc_attr(sanitize_title($finish)); ?>" aria-hidden="true"></i>
+                                                <span><?php echo esc_html($finish); ?></span>
+                                                <?php if (in_array($finish, ['Graphite', 'Pewter'], true)) : ?><small><?php esc_html_e('New', 'fenster'); ?></small><?php endif; ?>
+                                            </button>
                                         <?php endforeach; ?>
                                     </div>
-                                <?php endif; ?>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
+                                </section>
+                            <?php endforeach; ?>
 
-                    <div class="fg-sash-furniture__notes">
-                        <?php if (! empty($sash_furniture['width_rule']) && is_array($sash_furniture['width_rule'])) : ?>
-                            <article>
-                                <span><?php esc_html_e('Width rule', 'fenster'); ?></span>
-                                <h3><?php echo esc_html((string) ($sash_furniture['width_rule']['title'] ?? 'Furniture count changes by sash width')); ?></h3>
-                                <p><?php echo esc_html((string) ($sash_furniture['width_rule']['copy'] ?? '')); ?></p>
-                            </article>
-                        <?php endif; ?>
-                        <?php if (! empty($sash_furniture['finish_note'])) : ?>
-                            <article>
-                                <span><?php esc_html_e('Finish check', 'fenster'); ?></span>
-                                <h3><?php esc_html_e('Gold, chrome and white options.', 'fenster'); ?></h3>
-                                <p><?php echo esc_html((string) $sash_furniture['finish_note']); ?></p>
-                            </article>
-                        <?php endif; ?>
+                            <div class="fg-sash-furniture-selector__note">
+                                <strong><?php esc_html_e('Supplied as a matching set', 'fenster'); ?></strong>
+                                <p><?php esc_html_e('The number of locks, lifts and pole eyes depends on the finished sash width and is confirmed during survey.', 'fenster'); ?></p>
+                            </div>
+                            <a class="fg-sash-furniture-selector__guide" href="<?php echo esc_url(FENSTER_THEME_URI . '/assets/docs/rose-collection-furniture-colour-guide.pdf'); ?>" target="_blank" rel="noopener"><?php esc_html_e('Download the Rose Collection furniture colour guide', 'fenster'); ?></a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -3479,6 +3569,7 @@ if ($is_commercial_hub) {
 
         <?php if (! empty($product_faqs)) : ?>
             <?php
+            $product_faq_limit = $slug === 'sliding-sash-windows' ? 6 : 5;
             $faq_schema = [
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',
@@ -3491,7 +3582,7 @@ if ($is_commercial_hub) {
                             'text' => (string) $faq['answer'],
                         ],
                     ],
-                    array_slice($product_faqs, 0, 5)
+                    array_slice($product_faqs, 0, $product_faq_limit)
                 ),
             ];
             ?>
@@ -3503,7 +3594,7 @@ if ($is_commercial_hub) {
                         <h2><?php echo esc_html($journey_faq_heading); ?></h2>
                     </div>
                     <div class="fg-product-faq__items">
-                        <?php foreach (array_slice($product_faqs, 0, 5) as $index => $faq) : ?>
+                        <?php foreach (array_slice($product_faqs, 0, $product_faq_limit) as $index => $faq) : ?>
                             <details <?php echo $index === 0 ? 'open' : ''; ?>>
                                 <summary><?php echo esc_html($faq['question']); ?></summary>
                                 <div class="fg-product-faq__answer">
@@ -3516,6 +3607,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
+        <?php if ($slug !== 'sliding-sash-windows') : ?>
         <section class="fg-order-process">
             <div class="container">
                 <div class="section-heading section-heading--wide">
@@ -3540,6 +3632,7 @@ if ($is_commercial_hub) {
                 </div>
             </div>
         </section>
+        <?php endif; ?>
     <?php endif; ?>
 
     <?php if (! empty($feature_sections) && ! $use_product_journey) : ?>
@@ -3644,6 +3737,9 @@ if ($is_commercial_hub) {
                     <p class="eyebrow"><?php esc_html_e('Instant quote', 'fenster'); ?></p>
                     <h2><?php echo esc_html('Design and price your ' . $product_quote_embed_label . ' online.'); ?></h2>
                     <p><?php esc_html_e('Use the Fenster quote tool to choose a style, sizes, colours and options. Final pricing and specification are confirmed after survey.', 'fenster'); ?></p>
+                    <?php if ($slug === 'sliding-sash-windows') : ?>
+                        <a class="button fg-product-quote-embed__sash-mobile-action" href="<?php echo esc_url($product_quote_embed_url); ?>"><?php esc_html_e('Design and price your sash windows', 'fenster'); ?></a>
+                    <?php endif; ?>
                 </div>
                 <article class="fg-product-quote-embed__card" data-quote-card>
                     <div class="fg-product-quote-embed__bar">
@@ -3737,15 +3833,15 @@ if ($is_commercial_hub) {
                 'class' => 'fg-form',
                 'source' => $title,
                 'button_label' => $is_commercial ? 'Send project enquiry' : 'Send my project details',
-                'project_type' => $is_commercial ? 'Commercial glazing' : 'Residential windows and doors',
+                'project_type' => $is_commercial ? 'Commercial glazing' : ($slug === 'sliding-sash-windows' ? 'Sliding sash windows' : 'Residential windows and doors'),
                 'show_company' => $is_commercial,
-                'lock_project_type' => $is_commercial,
+                'lock_project_type' => $is_commercial || $slug === 'sliding-sash-windows',
             ]);
             ?>
         </div>
     </section>
 
-    <?php if (! empty($related_links)) : ?>
+    <?php if (! empty($related_links) && $slug !== 'sliding-sash-windows') : ?>
         <section class="fg-links-band">
             <div class="container">
                 <div class="section-heading">
