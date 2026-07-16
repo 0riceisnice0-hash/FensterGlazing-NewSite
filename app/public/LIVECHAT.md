@@ -1,16 +1,16 @@
 # Fenster Glazing Legend Live Chat
 
-Last updated: 2026-07-15
+Last updated: 2026-07-16
 
-This document explains the Legend AI assistant currently deployed on the password-protected Fenster test site. It covers the customer experience, frontend animation, WordPress and OpenAI integration, privacy and consent rules, test status, main files and implementation commits.
+This document explains the Legend AI assistant deployed on the Fenster website. It covers the customer experience, frontend animation, WordPress and OpenAI integration, privacy and consent rules, deployment status, main files and implementation commits.
 
 ## Current Status
 
-- Legend is deployed on `https://test.fensterglazing.com/` only.
-- The latest Legend implementation deployed to test is commit `0f614d1` (`Restore Legend launcher dimensions`).
-- The production site at `https://fensterglazing.com/` was not deployed during this work. Legend must be treated as test-only until the owner explicitly approves a live release.
+- Legend is deployed on both `https://test.fensterglazing.com/` and `https://fensterglazing.com/`.
+- The approved live theme was deployed from commit `400cf10` on 2026-07-16. The functional sleep and prompt code is in commits `1a7be33` and `0f614d1`; `400cf10` adds the matching handover documentation.
+- Production has a separately configured OpenAI connection and returned `AI_CONFIGURED=yes` during the post-deploy check.
 - The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
-- The test OpenAI connection is configured and has returned verified live model responses. The API key remains in the test Bedrock `.env` and is not stored in the theme or this repository.
+- Test and production OpenAI connections are configured through their separate Bedrock `.env` files. No API key is stored in the theme or this repository.
 
 ## What Was Implemented
 
