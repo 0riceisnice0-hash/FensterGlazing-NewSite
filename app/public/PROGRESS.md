@@ -7,6 +7,7 @@ Last updated: 2026-07-16
 - Fixed Legend failing to identify Zac Bartley while the visitor was already on Meet the Team. The profile existed in rendered HTML but was buried in the general page snapshot, while the related-page source index did not contain the runtime replacement accurately.
 - Promoted every visible team profile into high-priority assistant context and added a backend query-matched excerpt around meaningful words from each question. The prompt now explicitly requires a direct answer when a named staff profile is supplied.
 - Protected-site regression confirmed `who is zac bartley` returns Marketing Executive and the published remit, while `what does Zac do at Fenster?` returns the same role details directly.
+- A subsequent real-chat failure showed the model could still ignore the supplied profile. Added a deterministic pre-model answer for common Zac identity and role wording, including the exact short message `who is zac`. Endpoint checks confirmed test returns the verified Marketing Executive answer while production remains on the earlier assistant release pending approval.
 
 ## 2026-07-16 - Legend chat continuity and scrolling polish
 

@@ -95,6 +95,8 @@ The WordPress REST handler validates the request, adds Fenster-specific instruct
 
 For every question, the backend also extracts a focused passage around the first meaningful matching term in the current page. This query-matched excerpt prevents relevant names and facts from being overlooked inside the larger page snapshot. A named profile visible on Meet the Team must be answered directly rather than treated as unknown.
 
+Zac Bartley's identity and role also have an owner-approved deterministic server response for common identity and role questions. This runs before the model and returns his Marketing Executive remit even if page context is missing or the model would otherwise ignore it.
+
 After chat use, the browser keeps up to 16 recent messages in `fenster_legend_chat_v1` for up to 24 hours from the latest activity. This restores and synchronises the conversation across Fenster pages and browser tabs in the same browser. It does not submit the chat as a Fenster enquiry, create a customer account, add a CRM lead or claim that a staff member has received the message.
 
 The same state records whether the drawer is open and whether a message has been sent. This keeps an active chat open during same-site navigation and prevents the introductory disclosure from reappearing after use. Closing the drawer records the closed state. Opening or restoring always scrolls the transcript to its newest message.
@@ -318,5 +320,6 @@ All commits below were created on 2026-07-15. They are listed in implementation 
 | `9fb8309` | Limited pointer input to the visible launcher and prompt so the transparent wrapper cannot cover footer controls. |
 | `611985b` | Added disclosure dismissal after first send, same-site open-state continuity, independent wheel/touch transcript scrolling and reopen-to-latest behaviour. |
 | `4a40824` | Promoted team profiles and query-matched current-page passages so Legend reliably identifies visible Fenster staff. |
+| `4ba8b4b` | Added a deterministic server answer for Zac Bartley identity and role questions. |
 
 Use `git log --oneline -- app/public/LIVECHAT.md` for later documentation-only updates, and `git log --oneline --grep="Legend\|legend"` for subsequent implementation commits.
