@@ -21309,10 +21309,10 @@ html.fg-gallery-lightbox-open body {
   }
 
   .generated-page--sliding-sash .fg-sash-model__media img {
-    width: auto;
-    height: 100%;
+    width: 86%;
+    height: calc(100% - 1.1rem);
     max-width: 86%;
-    max-height: 100%;
+    max-height: none;
   }
 
   .generated-page--sliding-sash .fg-sash-model__body {
