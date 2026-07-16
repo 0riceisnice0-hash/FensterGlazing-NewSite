@@ -1619,7 +1619,7 @@ h3 {
   transition: opacity 240ms ease, transform 360ms cubic-bezier(0.22, 1, 0.36, 1), visibility 240ms ease;
 }
 
-.legend-assistant.is-prompt-visible:not(.is-prompt-dismissed):not(.is-open):not(.is-transitioning):not(.is-sleeping) .legend-assistant__prompt {
+.legend-assistant.is-prompt-visible:not(.is-prompt-dismissed):not(.is-open):not(.is-transitioning) .legend-assistant__prompt {
   visibility: visible;
   opacity: 1;
   transform: translateX(0) scale(1);
