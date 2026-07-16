@@ -1832,8 +1832,23 @@ h3 {
   min-height: 150px;
   padding: 0.9rem 3.4rem 0.8rem 0.9rem;
   overflow: hidden;
-  background: var(--color-steel);
+  background:
+    radial-gradient(circle at 76% 112%, rgba(93, 218, 153, 0.26) 0, rgba(46, 172, 102, 0.1) 28%, transparent 54%),
+    linear-gradient(128deg, #002d3a 0%, #043a47 58%, #07515a 100%);
   color: #ffffff;
+  isolation: isolate;
+}
+
+.legend-assistant__header::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0 42%, rgba(100, 217, 154, 0.72) 72%, transparent 100%);
+  content: '';
+  pointer-events: none;
 }
 
 .legend-assistant__identity {
@@ -1910,20 +1925,40 @@ h3 {
   --legend-roam-distance: 86px;
   position: absolute;
   z-index: 1;
-  right: 0;
+  right: 2.65rem;
   bottom: 0;
-  width: 218px;
+  width: 224px;
   height: 150px;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 68% 88%, rgba(46, 172, 102, 0.24), transparent 50%),
-    linear-gradient(90deg, rgba(0, 45, 58, 0) 0, #d7eee4 28%, #edf8f3 100%);
+}
+
+.legend-assistant__stage::before {
+  position: absolute;
+  right: 4px;
+  bottom: -34px;
+  left: 4px;
+  height: 116px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(229, 250, 239, 0.34) 0, rgba(100, 217, 154, 0.16) 44%, transparent 72%);
+  content: '';
+  pointer-events: none;
+}
+
+.legend-assistant__stage::after {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  left: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(224, 248, 236, 0.48) 18% 82%, transparent);
+  content: '';
+  pointer-events: none;
 }
 
 .legend-assistant__roamer {
   position: absolute;
   bottom: -4px;
-  left: 24px;
+  left: 12px;
   width: 104px;
   aspect-ratio: 192 / 208;
   visibility: hidden;
@@ -1963,9 +1998,19 @@ h3 {
   place-items: center;
   border: 0;
   border-radius: 50%;
-  background: rgba(0, 45, 58, 0.12);
-  color: var(--color-steel);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.legend-assistant__close:hover,
+.legend-assistant__close:focus-visible {
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.04);
 }
 
 .legend-assistant__close svg {
@@ -2340,11 +2385,12 @@ h3 {
 
   .legend-assistant__stage {
     --legend-roam-distance: 62px;
+    right: 2.35rem;
     width: 190px;
   }
 
   .legend-assistant__roamer {
-    left: 20px;
+    left: 8px;
     width: 96px;
   }
 }
