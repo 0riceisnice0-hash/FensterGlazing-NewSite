@@ -984,7 +984,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                 [
                     'heading' => 'Changing your choice',
                     'body' => [
-                        'You can use the Cookies button on the website to open the cookie banner again and change your choice.',
+                        'You can use the Cookie settings button in the website footer to open the cookie banner again and change your choice.',
                         'You can also clear cookies and site data in your browser settings. Browser controls vary, but most browsers let you delete cookies, block cookies for specific sites, or clear local storage.',
                     ],
                 ],

@@ -84,6 +84,7 @@ $footer_company = [
         <p>&copy; <?php echo esc_html(date('Y')); ?> <?php echo esc_html($brand['name']); ?>. <?php esc_html_e('Made in house by', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/meet-the-team/#zac-bartley')); ?>"><?php esc_html_e('Zac', 'fenster'); ?></a>.</p>
         <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>"><?php esc_html_e('Privacy Policy', 'fenster'); ?></a>
         <a href="<?php echo esc_url(home_url('/cookie-policy/')); ?>"><?php esc_html_e('Cookie Policy', 'fenster'); ?></a>
+        <button type="button" class="site-footer__cookie-settings" data-fg-cookie-settings hidden><?php esc_html_e('Cookie settings', 'fenster'); ?></button>
         <a href="<?php echo esc_url(home_url('/terms-conditions/')); ?>"><?php esc_html_e('Terms & Conditions', 'fenster'); ?></a>
     </div>
 </footer>
