@@ -21385,6 +21385,10 @@ html.fg-gallery-lightbox-open body {
     display: inline;
   }
 
+  .generated-page--sliding-sash .fg-sash-gallery__copy--desktop {
+    display: none;
+  }
+
   .generated-page--sliding-sash .fg-sash-gallery__head {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(180px, 0.72fr);
