@@ -5830,7 +5830,8 @@ h3 {
 .fg-sash-carousel__controls,
 .fg-sash-carousel__dots,
 .fg-sash-mobile-specs,
-.fg-sash-heading--mobile {
+.fg-sash-heading--mobile,
+.fg-sash-mobile-gallery {
   display: none;
 }
 
@@ -21302,13 +21303,14 @@ html.fg-gallery-lightbox-open body {
   }
 
   .generated-page--sliding-sash .fg-sash-model__media {
-    aspect-ratio: 16 / 7;
-    padding: 0.45rem;
+    height: clamp(190px, 27vh, 230px);
+    aspect-ratio: auto;
+    padding: 0.55rem;
   }
 
   .generated-page--sliding-sash .fg-sash-model__media img {
-    width: min(54%, 180px);
-    max-height: 138px;
+    width: min(82%, 280px);
+    max-height: calc(100% - 0.4rem);
   }
 
   .generated-page--sliding-sash .fg-sash-model__body {
@@ -21333,7 +21335,7 @@ html.fg-gallery-lightbox-open body {
     overflow: hidden;
     font-size: 0.82rem;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
   }
 
   .generated-page--sliding-sash .fg-sash-carousel__controls {
@@ -21358,12 +21360,120 @@ html.fg-gallery-lightbox-open body {
   }
 
   .generated-page--sliding-sash .fg-sash-mobile-specs dl div {
-    min-height: 58px;
+    min-height: 54px;
     padding: 0.58rem;
   }
 
   .generated-page--sliding-sash .fg-sash-mobile-specs dd {
     font-size: 0.82rem;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery {
+    display: block;
+    padding: 1.8rem 0 1.45rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(46, 172, 102, 0.22), transparent 34%),
+      var(--color-steel);
+    color: #ffffff;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 0.72fr);
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 1rem;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__head .eyebrow {
+    margin-bottom: 0.4rem;
+    color: #72dc98;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__head h2 {
+    max-width: 15ch;
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(1.55rem, 7vw, 2rem);
+    line-height: 1.05;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__head > p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail {
+    display: grid;
+    grid-auto-columns: min(82vw, 430px);
+    grid-auto-flow: column;
+    gap: 0.7rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 0 0 0.35rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail figure {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    background: #123f49;
+    scroll-snap-align: start;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail a,
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail img {
+    object-fit: cover;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail a::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 42%;
+    background: linear-gradient(transparent, rgba(0, 24, 31, 0.78));
+    content: "";
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__rail figcaption {
+    position: absolute;
+    z-index: 1;
+    right: 0.85rem;
+    bottom: 0.75rem;
+    left: 0.85rem;
+    color: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 800;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__hint {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.45rem 0 0;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .generated-page--sliding-sash .fg-product-gallery-band {
@@ -28021,5 +28131,16 @@ html.fg-blinds-reveal-locked {
   .fg-flat-rooflight-enquiry__grid {
     grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
     gap: 1.5rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__head {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .generated-page--sliding-sash .fg-sash-mobile-gallery__head > p {
+    max-width: 34ch;
   }
 }

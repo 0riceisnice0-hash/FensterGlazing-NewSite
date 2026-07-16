@@ -255,6 +255,7 @@ $product_scroll_video_sources = fenster_product_scroll_video_sources_for_slug($s
 $sash_roseview_models = [];
 $sash_roseview_details = [];
 $sash_roseview_feature_cards = [];
+$sash_roseview_gallery = [];
 if ($slug === 'sliding-sash-windows') {
     $sash_asset_base = '/wp-content/themes/fenster/assets/images/products/sash-roseview/';
     $sash_roseview_models = [
@@ -299,6 +300,38 @@ if ($slug === 'sliding-sash-windows') {
                 ['label' => 'Bottom rail', 'value' => '68mm standard'],
                 ['label' => 'Glazing', 'value' => '24mm IGUs'],
             ],
+        ],
+    ];
+    $sash_roseview_gallery = [
+        [
+            'image' => $sash_asset_base . 'gallery/roseview-wisteria-window.webp',
+            'alt' => 'White Roseview sash window framed by flowering wisteria',
+            'caption' => 'Traditional detail',
+        ],
+        [
+            'image' => $sash_asset_base . 'gallery/roseview-dining-room.webp',
+            'alt' => 'Roseview sash windows in a bright period dining room',
+            'caption' => 'Made for period rooms',
+        ],
+        [
+            'image' => $sash_asset_base . 'gallery/roseview-surrey-home.webp',
+            'alt' => 'White Surrey home fitted with Roseview sash windows',
+            'caption' => 'A complete elevation',
+        ],
+        [
+            'image' => $sash_asset_base . 'gallery/roseview-bay-room.webp',
+            'alt' => 'Roseview sash bay window in a green living room',
+            'caption' => 'Bay window character',
+        ],
+        [
+            'image' => $sash_asset_base . 'gallery/roseview-arched-wisteria-window.webp',
+            'alt' => 'Arched Roseview sash window framed by flowering wisteria',
+            'caption' => 'Made for special shapes',
+        ],
+        [
+            'image' => $sash_asset_base . 'gallery/roseview-arched-interior.webp',
+            'alt' => 'Arched Roseview sash windows viewed from inside a period home',
+            'caption' => 'Character from inside',
         ],
     ];
     $sash_roseview_details = [
@@ -2844,6 +2877,31 @@ if ($is_commercial_hub) {
                 </div>
             </div>
         </section>
+
+        <?php if (! empty($sash_roseview_gallery)) : ?>
+            <section class="fg-sash-mobile-gallery" aria-labelledby="fg-sash-gallery-title">
+                <div class="container">
+                    <div class="fg-sash-mobile-gallery__head">
+                        <div>
+                            <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
+                            <h2 id="fg-sash-gallery-title"><?php esc_html_e('See the difference in the room.', 'fenster'); ?></h2>
+                        </div>
+                        <p><?php esc_html_e('Swipe through finished Roseview installations. Tap any image for a closer look.', 'fenster'); ?></p>
+                    </div>
+                    <div class="fg-sash-mobile-gallery__rail" aria-label="<?php esc_attr_e('Roseview sash window gallery', 'fenster'); ?>">
+                        <?php foreach ($sash_roseview_gallery as $image) : ?>
+                            <figure>
+                                <a href="<?php echo esc_url(fenster_generated_url((string) $image['image'])); ?>" data-fg-gallery-lightbox aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), (string) $image['alt'])); ?>">
+                                    <img src="<?php echo esc_url(fenster_generated_url((string) $image['image'])); ?>" alt="<?php echo esc_attr((string) $image['alt']); ?>" loading="lazy">
+                                    <figcaption><?php echo esc_html((string) $image['caption']); ?></figcaption>
+                                </a>
+                            </figure>
+                        <?php endforeach; ?>
+                    </div>
+                    <p class="fg-sash-mobile-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
+                </div>
+            </section>
+        <?php endif; ?>
 
         <section class="fg-sash-detail-run">
             <div class="container">
