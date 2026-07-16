@@ -1171,6 +1171,16 @@ if (document.body) {
 // opaque reference is carried through WindowCAD's separate Tracking field and
 // joined to non-PII website events in the Marketing Dashboard when the quote returns.
 const websiteTracking = window.fensterWebsiteTracking || {};
+const aggregateStatEvents = new Set([
+  'page_view',
+  'page_engaged',
+  'quote_opened',
+  'quote_iframe_loaded',
+  'form_started',
+  'form_submitted',
+  'phone_click',
+  'email_click',
+]);
 const journeyStorageKey = 'fenster_quote_journey_ref';
 const visitorStorageKey = 'fenster_website_visitor_id';
 const firstTouchStorageKey = 'fenster_website_first_touch';
@@ -1287,7 +1297,52 @@ const campaignContext = () => {
   }
 };
 
+const aggregateStatDevice = () => {
+  if (window.matchMedia?.('(max-width: 600px)').matches) return 'mobile';
+  if (window.matchMedia?.('(max-width: 1024px)').matches) return 'tablet';
+  return 'desktop';
+};
+
+const trackAggregateStat = (event, detail = {}) => {
+  if (!websiteTracking.statEndpoint || !aggregateStatEvents.has(event)) return;
+  try {
+    if (window.localStorage.getItem('fenster_statistical_optout') === '1') return;
+  } catch (_error) {}
+  const body = JSON.stringify({
+    event,
+    page_path: window.location.pathname,
+    referrer_host: (() => {
+      try { return document.referrer ? new URL(document.referrer).hostname : ''; } catch (_error) { return ''; }
+    })(),
+    device_type: aggregateStatDevice(),
+    origin: window.location.origin,
+    ...detail,
+  });
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(websiteTracking.statEndpoint, new Blob([body], { type: 'text/plain;charset=UTF-8' }));
+  } else {
+    window.fetch(websiteTracking.statEndpoint, {
+      method: 'POST',
+      mode: 'cors',
+      keepalive: true,
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body,
+    }).catch(() => {});
+  }
+};
+
+document.querySelectorAll('[data-fg-statistics-optout]').forEach((button) => {
+  try {
+    if (window.localStorage.getItem('fenster_statistical_optout') === '1') button.textContent = 'Anonymous statistics excluded';
+  } catch (_error) {}
+  button.addEventListener('click', () => {
+    try { window.localStorage.setItem('fenster_statistical_optout', '1'); } catch (_error) {}
+    button.textContent = 'Anonymous statistics excluded';
+  });
+});
+
 const trackWebsiteEvent = (event, detail = {}) => {
+  if (!trackingConsentAccepted()) trackAggregateStat(event, detail);
   const payload = {
     event,
     journey_id: journeyReference(),
@@ -1352,10 +1407,21 @@ document.querySelectorAll('[data-fg-visitor-id]').forEach((field) => {
   field.value = visitorReference();
 });
 
+let consentedPageRecorded = false;
 if (trackingConsentAccepted()) {
+  consentedPageRecorded = true;
   trackWebsiteEvent('visitor_seen');
   trackWebsiteEvent('page_view');
+} else {
+  trackAggregateStat('page_view');
 }
+
+document.addEventListener('fenster:tracking-consent-accepted', () => {
+  if (consentedPageRecorded || !trackingConsentAccepted()) return;
+  consentedPageRecorded = true;
+  trackWebsiteEvent('visitor_seen');
+  trackWebsiteEvent('page_view');
+});
 
 const pageTrackingStartedAt = Date.now();
 let pageEngagementRecorded = false;
@@ -1709,6 +1775,7 @@ enquiryForms.forEach((form) => {
         result.message || 'Thanks — your enquiry has been received.',
         result.copy || 'Your project details are safely with the Fenster team.',
       );
+      if (!trackingConsentAccepted()) trackAggregateStat('form_submitted');
       const restoreSubmissionPosition = () => {
         smoothScroll?.scrollTo?.(submittedScrollY, { immediate: true, force: true });
         window.scrollTo({ top: submittedScrollY, left: window.scrollX, behavior: 'auto' });

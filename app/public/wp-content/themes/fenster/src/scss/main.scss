@@ -2488,7 +2488,8 @@ h3 {
   text-decoration: none;
 }
 
-.site-footer__cookie-settings {
+.site-footer__cookie-settings,
+.site-footer__stat-settings {
   padding: 0;
   border: 0;
   background: transparent;
@@ -2499,7 +2500,9 @@ h3 {
 }
 
 .site-footer__cookie-settings:hover,
-.site-footer__cookie-settings:focus-visible {
+.site-footer__cookie-settings:focus-visible,
+.site-footer__stat-settings:hover,
+.site-footer__stat-settings:focus-visible {
   color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 0.18em;

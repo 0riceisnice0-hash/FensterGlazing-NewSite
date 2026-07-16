@@ -975,6 +975,14 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     ],
                 ],
                 [
+                    'heading' => 'Anonymous aggregate statistics',
+                    'body' => [
+                        'The website may record anonymous aggregate statistics even when optional cookies are rejected or no choice has been made. This helps Fenster understand overall page demand, broad device usage, referrer types, page performance and aggregate quote or enquiry activity.',
+                        'This statistical measurement is stored only in hourly totals. It does not create a visitor or journey ID, does not build an individual browsing timeline, does not use fingerprinting, and is not used for advertising, remarketing or cross-site tracking. It cannot be used to identify you as an individual.',
+                        'Use the “Opt out of anonymous statistics” control in the footer if you do not want your visits included. The website records that preference using only the minimum storage needed to remember the request.',
+                    ],
+                ],
+                [
                     'heading' => 'What Fenster does not use cookies for',
                     'body' => [
                         'Fenster does not currently use website cookies for customer account logins, account dashboards, email newsletter membership, public comments, shopping baskets, checkout accounts or on-site user surveys.',
@@ -992,7 +1000,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'heading' => 'More information',
                     'body' => [
                         'For more detail on how Fenster uses personal information from enquiries, quote tools and analytics, read the Privacy Policy.',
-                        'Last updated: 15 July 2026.',
+                        'Last updated: 16 July 2026.',
                     ],
                 ],
             ],

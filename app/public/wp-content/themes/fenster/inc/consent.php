@@ -75,7 +75,7 @@ function fenster_render_cookie_consent(): void
     <div class="fg-cookie-consent" data-fg-cookie-consent hidden>
         <div class="fg-cookie-consent__copy">
             <strong><?php esc_html_e('Cookie choices', 'fenster'); ?></strong>
-            <p><?php esc_html_e('We use optional analytics and marketing cookies to understand site use and improve enquiries. They only load if you accept.', 'fenster'); ?></p>
+            <p><?php esc_html_e('We use anonymous aggregate statistics to improve the website. Optional analytics and marketing cookies, which help us understand individual journeys and enquiries, only load if you accept.', 'fenster'); ?></p>
         </div>
         <div class="fg-cookie-consent__actions">
             <button type="button" class="button button--light" data-fg-cookie-decline><?php esc_html_e('Reject', 'fenster'); ?></button>
@@ -266,6 +266,7 @@ function fenster_render_cookie_consent(): void
                 hideBanner();
                 showSettingsButton();
                 loadTracking();
+                window.dispatchEvent(new CustomEvent('fenster:tracking-consent-accepted'));
             }
 
             if (event.target.closest('[data-fg-cookie-decline]')) {
