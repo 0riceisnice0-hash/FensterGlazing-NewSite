@@ -15,6 +15,7 @@ if (legendAssistant) {
   const sendButton = legendAssistant.querySelector('[data-legend-send]');
   const messages = legendAssistant.querySelector('[data-legend-messages]');
   const composer = legendAssistant.querySelector('[data-legend-composer]');
+  const consent = legendAssistant.querySelector('[data-legend-consent]');
   const notice = legendAssistant.querySelector('[data-legend-notice]');
   const clearChatButton = legendAssistant.querySelector('[data-legend-clear]');
   const endpoint = legendAssistant.dataset.legendEndpoint || '';
@@ -39,6 +40,8 @@ if (legendAssistant) {
   let wakePromise = null;
   let promptRevealed = false;
   let chatAcknowledged = true;
+  let hasSentMessage = false;
+  let restoreOpenState = false;
   let chatConversationId = '';
   const conversation = [];
   const welcomeMessage = messages.firstElementChild?.cloneNode(true);
@@ -421,6 +424,16 @@ if (legendAssistant) {
     messages.scrollTop = messages.scrollHeight;
   };
 
+  const scrollToLatestMessageAfterLayout = () => {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(scrollToLatestMessage);
+    });
+  };
+
+  const syncConsentVisibility = () => {
+    if (consent) consent.hidden = hasSentMessage;
+  };
+
   const appendLegendFormatting = (element, text) => {
     const parts = text.split(/(\*\*[^*\n]+\*\*|\[[^\]\n]{1,80}\]\(\/[a-zA-Z0-9_\-/.?=&%#]+\))/g);
 
@@ -490,6 +503,8 @@ if (legendAssistant) {
 
       return {
         acknowledged: true,
+        hasSentMessage: Boolean(state.hasSentMessage || state.conversation?.some?.((item) => item?.role === 'user')),
+        open: Boolean(state.open),
         conversationId: typeof state.conversationId === 'string' ? state.conversationId : '',
         conversation: storedConversation(state.conversation),
       };
@@ -505,6 +520,8 @@ if (legendAssistant) {
       window.localStorage.setItem(chatStorageKey, JSON.stringify({
         version: 1,
         acknowledged: true,
+        hasSentMessage,
+        open: isOpen,
         conversationId: chatConversationId,
         updatedAt: Date.now(),
         conversation: storedConversation(conversation),
@@ -530,6 +547,9 @@ if (legendAssistant) {
 
     conversation.splice(0, conversation.length, ...state.conversation);
     chatConversationId = state.conversationId || newLegendConversationId();
+    hasSentMessage = state.hasSentMessage;
+    restoreOpenState = state.open;
+    syncConsentVisibility();
     renderConversation();
   };
 
@@ -642,6 +662,7 @@ if (legendAssistant) {
     await wakeLegend();
 
     isOpen = true;
+    persistLegendState();
     if (trackingConsentAccepted()) trackWebsiteEvent('chat_opened', { cta: 'Legend AI assistant' });
     isTransitioning = true;
     document.documentElement.classList.add('legend-chat-open');
@@ -661,7 +682,25 @@ if (legendAssistant) {
     isTransitioning = false;
     startRoaming();
     scheduleLegendSleep();
+    scrollToLatestMessageAfterLayout();
     input.focus();
+  };
+
+  const restoreOpenChat = () => {
+    if (!restoreOpenState || isOpen) return;
+
+    isOpen = true;
+    document.documentElement.classList.add('legend-chat-open');
+    panel.hidden = false;
+    panel.classList.add('is-restored');
+    launcher.setAttribute('aria-expanded', 'true');
+    legendAssistant.classList.add('is-open', 'has-arrived');
+    roamer?.classList.remove('is-at-right');
+    roamerIsRight = false;
+    showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
+    startRoaming();
+    scheduleLegendSleep();
+    scrollToLatestMessageAfterLayout();
   };
 
   const closeChat = async ({ sleepAfterClose = false } = {}) => {
@@ -669,10 +708,12 @@ if (legendAssistant) {
 
     isTransitioning = true;
     isOpen = false;
+    persistLegendState();
     launcher.setAttribute('aria-expanded', 'false');
     stopRoaming();
 
     const travel = travelLegend(roamer, launcherCharacter, 'down');
+    panel.classList.remove('is-restored');
     panel.classList.add('is-closing');
     legendAssistant.classList.add('is-transitioning');
     legendAssistant.classList.remove('is-open', 'has-arrived');
@@ -698,6 +739,8 @@ if (legendAssistant) {
     registerLegendActivity();
 
     chatConversationId = chatConversationId || newLegendConversationId();
+    hasSentMessage = true;
+    syncConsentVisibility();
     addMessage(text, 'user');
     conversation.push({ role: 'user', content: text });
     recordLegendTranscript('user', text);
@@ -775,6 +818,8 @@ if (legendAssistant) {
     registerLegendActivity();
   });
   launcherWrap?.addEventListener('pointerenter', registerLegendActivity);
+  messages.addEventListener('wheel', registerLegendActivity, { passive: true });
+  messages.addEventListener('touchmove', registerLegendActivity, { passive: true });
   let promptScrollFrame = 0;
   const watchLegendScroll = () => {
     if (promptScrollFrame || promptRevealed) return;
@@ -795,6 +840,8 @@ if (legendAssistant) {
     const state = readLegendState();
     if (!state) return;
     conversation.splice(0, conversation.length, ...state.conversation);
+    hasSentMessage = state.hasSentMessage;
+    syncConsentVisibility();
     renderConversation();
   });
 
@@ -805,10 +852,12 @@ if (legendAssistant) {
     setLegendPromptDismissed(false);
   }
   restoreLegendState();
+  syncConsentVisibility();
   playSprite('idle');
   showRoamerFrame(spriteSequences.idle.row, spriteSequences.idle.frames[0]);
   revealPromptAfterScroll();
-  scheduleLegendSleep();
+  restoreOpenChat();
+  if (!isOpen) scheduleLegendSleep();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', observeCookieControls, { once: true });
   } else {

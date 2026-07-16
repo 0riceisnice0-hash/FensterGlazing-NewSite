@@ -31,6 +31,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
         role="dialog"
         aria-labelledby="legend-assistant-title"
         aria-describedby="legend-assistant-description"
+        data-lenis-prevent
         hidden
     >
         <header class="legend-assistant__header">
@@ -62,7 +63,7 @@ $legend_connected = function_exists('fenster_legend_is_configured') && fenster_l
             </div>
         </div>
 
-        <section class="legend-assistant__consent" aria-label="Live chat terms">
+        <section class="legend-assistant__consent" data-legend-consent aria-label="Live chat terms">
             <p class="legend-assistant__consent-summary">By using this live chat, you agree to Fenster processing your messages to provide an AI reply. Please do not share sensitive personal information.</p>
             <details class="legend-assistant__consent-details">
                 <summary>Read chat terms</summary>
