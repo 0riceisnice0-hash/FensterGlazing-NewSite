@@ -9,6 +9,7 @@ Last updated: 2026-07-16
 - Removed the repetitive mobile comparison-table stack. Mobile now shows one compact specification panel for the selected carousel model, updating meeting rail, corner detail, frame depth, glass unit, energy rating and ThermoVFlex information as the customer changes model.
 - Kept the full three-card layout and four-column specification table unchanged on desktop.
 - Rebuilt the compiled CSS and JavaScript, PHP-linted the generated product template and checked the diff for whitespace errors.
+- Committed and pushed the change as `4ff4eb8`, deployed that exact commit to the password-protected test site and flushed its cache. Browser QA at `390 x 844`, `768 x 1024` and `1440 x 900` confirmed working model controls and selected-spec updates, no horizontal overflow, no console errors and no desktop layout regression.
 
 ## 2026-07-16 - Week Two: Shared Copy Rewrite And Full Image Audit
 
