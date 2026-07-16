@@ -2022,10 +2022,14 @@ function fenster_render_site_schema(): void
         ];
     }
 
+    $breadcrumb_title = $slug === 'customer-portal'
+        ? 'Customer Portal'
+        : (string) ($page['title'] ?? get_bloginfo('name'));
+
     $breadcrumb_items[] = [
         '@type' => 'ListItem',
         'position' => count($breadcrumb_items) + 1,
-        'name' => (string) ($page['title'] ?? get_bloginfo('name')),
+        'name' => $breadcrumb_title,
         'item' => fenster_generated_url((string) ($page['seo']['canonical'] ?? $page['url'] ?? home_url('/' . $slug . '/'))),
     ];
 
