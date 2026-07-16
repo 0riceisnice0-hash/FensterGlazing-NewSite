@@ -21310,7 +21310,7 @@ html.fg-gallery-lightbox-open body {
 
   .generated-page--sliding-sash .fg-sash-model__media img {
     width: 86%;
-    height: calc(100% - 1.1rem);
+    height: clamp(182px, calc(28vh - 1.1rem), 222px);
     max-width: 86%;
     max-height: none;
   }
