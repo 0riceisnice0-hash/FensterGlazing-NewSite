@@ -12,7 +12,8 @@ Use:
 - `HOMEPAGE.md` for homepage-specific design and implementation context.
 - `PROGRESS.md` for dated progress reports.
 - `LIVECHANGES.md` for the exact SSH/deploy workflow, live safety rules and what not to touch.
-- `LIVECHAT.md` for the complete Legend AI assistant architecture, behaviour, test-only status and commit history.
+- `LIVECHAT.md` for the complete Legend AI assistant architecture, live behaviour and commit history.
+- `https://github.com/0riceisnice0-hash/Marketing-Dashboard/blob/main/WEBSITE-TRACKER.md` for the Website Tracker operating model, consent boundary and how to interpret its data. This is the tracker source of truth; do not infer meaning from a dashboard card label alone.
 
 ## Important Updates
 

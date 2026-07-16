@@ -2,6 +2,11 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Website Tracker operating guide
+
+- Added the Marketing Dashboard repository's `WEBSITE-TRACKER.md` as the single operating guide for the consented Website Tracker. It explains FGV/FG2 and WindowCAD Tracking joins, consent and retention, every metric/funnel stage, visitor timelines, Legend QA transcripts, UTM attribution, limits of phone-click data and a troubleshooting checklist.
+- Linked the guide from the dashboard README and the theme handover/deployment rules so future work does not treat the dashboard as a CRM or mistake intent metrics for confirmed business outcomes.
+
 ## 2026-07-16 - Sliding sash redesign live release
 
 - Completed the final release audit for the rebuilt `/sliding-sash-windows/` journey and promoted the exact protected-test theme commit `8533d4e` to production after owner approval.
