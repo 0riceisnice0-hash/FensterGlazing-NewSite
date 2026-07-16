@@ -1713,6 +1713,14 @@ if ($is_quote_tool) {
     return;
 }
 
+if ($slug === 'customer-portal') {
+    get_template_part('template-parts/sections/customer-portal', null, [
+        'page' => $page,
+        'title' => $title,
+    ]);
+    return;
+}
+
 if ($is_window_handles) {
     $window_handle_intro = (string) ($window_handles['intro'] ?? 'Compare Fenster window handle finishes, locking detail and traditional handle options before the final specification is confirmed.');
     ?>

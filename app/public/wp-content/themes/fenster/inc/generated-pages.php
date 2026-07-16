@@ -330,6 +330,10 @@ function fenster_gsc_seo_overrides(): array
         'commercial-glazing-milton-keynes' => [
             'meta_description' => 'Commercial glazing in Milton Keynes from Fenster: windows, doors, curtain walling and replacement glass for local businesses.',
         ],
+        'customer-portal' => [
+            'title_tag' => 'Customer Portal | Check Your Fenster Order',
+            'meta_description' => 'Check your Fenster order using your order number and postcode, or contact our team if you need an update or help.',
+        ],
         'fenster-partners' => [
             'meta_description' => 'Refer a friend to Fenster Glazing for windows or doors and earn a reward when their project is complete.',
         ],
