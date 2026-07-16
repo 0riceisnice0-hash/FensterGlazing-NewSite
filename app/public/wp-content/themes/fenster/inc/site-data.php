@@ -289,7 +289,7 @@ function fenster_site_data(): array
             ],
             'sliding-sash-windows' => [
                 ['label' => 'Energy rating', 'value' => 'A rated'],
-                ['label' => 'Colour choice', 'value' => 'Full RAL range'],
+                ['label' => 'Sash models', 'value' => '3 Rose options'],
                 ['label' => 'Profile system', 'value' => 'Roseview'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],

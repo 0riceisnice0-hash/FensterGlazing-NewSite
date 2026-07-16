@@ -978,3 +978,4 @@ Do not use this as the primary rulebook or handover. Use:
 - Added `SASH-PAGE-REDESIGN.md` documenting the design strategy, implementation and reusable QA method.
 - Follow-up: replaced the sash hero with a visually approved Roseview bay-window photograph and responsive 480/960/1920 WebP sources, with product-specific desktop/mobile crops.
 - Removed the generic frame-colour panel from the sash page because the Roseview range differs; retained privacy glass and the dedicated furniture selector.
+- Replaced the inaccurate `Colour choice / Full RAL range` hero specification tile with `Sash models / 3 Rose options`.
