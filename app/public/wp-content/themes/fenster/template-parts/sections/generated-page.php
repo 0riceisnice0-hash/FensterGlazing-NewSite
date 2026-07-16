@@ -3353,7 +3353,7 @@ if ($is_commercial_hub) {
                                     <img
                                         src="<?php echo esc_url(fenster_generated_url($sash_furniture_base . $asset_key . '.webp')); ?>"
                                         alt="<?php echo esc_attr($style['name'] . ' in ' . $finish); ?>"
-                                        loading="lazy"
+                                        loading="eager"
                                         data-fg-furniture-image="<?php echo esc_attr($asset_key); ?>"
                                         <?php echo $style_key === 'globe' && $finish_index === 0 ? '' : 'hidden'; ?>
                                     >
@@ -3391,7 +3391,6 @@ if ($is_commercial_hub) {
                                 <strong><?php esc_html_e('Supplied as a matching set', 'fenster'); ?></strong>
                                 <p><?php esc_html_e('The number of locks, lifts and pole eyes depends on the finished sash width and is confirmed during survey.', 'fenster'); ?></p>
                             </div>
-                            <a class="fg-sash-furniture-selector__guide" href="<?php echo esc_url(FENSTER_THEME_URI . '/assets/docs/rose-collection-furniture-colour-guide.pdf'); ?>" target="_blank" rel="noopener"><?php esc_html_e('Download the Rose Collection furniture colour guide', 'fenster'); ?></a>
                         </div>
                     </div>
                 </div>

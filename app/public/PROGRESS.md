@@ -948,3 +948,5 @@ Do not use this as the primary rulebook or handover. Use:
 - Added Fenster Instagram, Facebook and LinkedIn links to the footer.
 - Rebuilt compiled CSS/JS and verified the protected test page at `390 x 844`, `768 x 1024` and `1440 x 900` with no horizontal overflow; verified selector state changes, social URLs, PDF/image delivery and responsive asset delivery.
 - Test deployment only; no live-site deployment was performed.
+- Follow-up: removed the customer-facing furniture PDF download, eagerly loaded the 69 KB furniture image set and fixed the responsive image-stage height so finish changes cannot cause mobile layout shift.
+- Added `SASH-PAGE-REDESIGN.md` documenting the design strategy, implementation and reusable QA method.

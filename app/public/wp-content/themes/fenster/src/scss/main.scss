@@ -28308,7 +28308,7 @@ html.fg-blinds-reveal-locked {
 .fg-sash-furniture-selector__visual {
   display: grid;
   min-width: 0;
-  min-height: 500px;
+  height: 500px;
   place-items: center;
   padding: clamp(1rem, 3vw, 2rem);
   border: 1px solid var(--color-line);
@@ -28321,6 +28321,8 @@ html.fg-blinds-reveal-locked {
   display: block;
   width: min(100%, 520px);
   height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .fg-sash-furniture-selector__visual img[hidden] {
@@ -28447,14 +28449,6 @@ html.fg-blinds-reveal-locked {
   margin: 0.3rem 0 0;
 }
 
-.fg-sash-furniture-selector__guide {
-  display: block;
-  color: var(--color-accent-dark);
-  font-weight: 800;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
 .fg-product-quote-embed__sash-mobile-action {
   display: none;
   margin-top: 1rem;
@@ -28518,7 +28512,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-sash-furniture-selector__visual {
-    min-height: 300px;
+    height: 300px;
   }
 
   .fg-sash-furniture-selector__visual img {
@@ -28557,7 +28551,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-sash-furniture-selector__visual {
-    min-height: 220px;
+    height: 260px;
     padding: 0.75rem;
   }
 
