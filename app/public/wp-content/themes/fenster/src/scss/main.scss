@@ -21303,14 +21303,16 @@ html.fg-gallery-lightbox-open body {
   }
 
   .generated-page--sliding-sash .fg-sash-model__media {
-    height: clamp(190px, 27vh, 230px);
+    height: clamp(200px, 28vh, 240px);
     aspect-ratio: auto;
     padding: 0.55rem;
   }
 
   .generated-page--sliding-sash .fg-sash-model__media img {
-    width: min(82%, 280px);
-    max-height: calc(100% - 0.4rem);
+    width: auto;
+    height: 100%;
+    max-width: 86%;
+    max-height: 100%;
   }
 
   .generated-page--sliding-sash .fg-sash-model__body {
