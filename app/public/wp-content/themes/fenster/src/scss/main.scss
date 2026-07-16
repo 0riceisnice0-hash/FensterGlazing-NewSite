@@ -5827,6 +5827,12 @@ h3 {
   gap: 1rem;
 }
 
+.fg-sash-carousel__controls,
+.fg-sash-carousel__dots,
+.fg-sash-mobile-specs {
+  display: none;
+}
+
 .fg-sash-model {
   display: grid;
   grid-template-rows: minmax(250px, 36vh) 1fr;
@@ -21063,14 +21069,36 @@ html.fg-gallery-lightbox-open body {
   }
 
   .fg-sash-collection__hero,
-  .fg-sash-models,
   .fg-sash-detail,
   .fg-sash-detail--flip,
   .fg-sash-feature-strip {
     grid-template-columns: 1fr;
   }
 
+  .fg-sash-carousel {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .fg-sash-models {
+    --fg-sash-index: 0;
+    --fg-sash-drag: 0;
+    display: flex;
+    gap: 0;
+    transform: translateX(calc((var(--fg-sash-index) * -100%) + (var(--fg-sash-drag) * 1px)));
+    transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+    touch-action: pan-y;
+    will-change: transform;
+  }
+
+  .fg-sash-carousel.is-dragging .fg-sash-models {
+    transition: none;
+  }
+
   .fg-sash-model {
+    flex: 0 0 100%;
+    width: 100%;
     grid-template-rows: auto;
     overflow: hidden;
   }
@@ -21079,6 +21107,10 @@ html.fg-gallery-lightbox-open body {
     gap: 0.8rem;
     grid-template-rows: auto;
     padding: 1rem;
+  }
+
+  .fg-sash-model dl {
+    display: none;
   }
 
   .fg-sash-model__best {
@@ -21101,54 +21133,135 @@ html.fg-gallery-lightbox-open body {
     transform: none;
   }
 
-  .fg-sash-spec-table {
+  .fg-sash-carousel__controls {
     display: grid;
-    gap: 0.75rem;
-    overflow: visible;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    gap: 0.65rem;
+    align-items: center;
+    margin-top: 0.8rem;
   }
 
-  .fg-sash-spec-table__row {
-    grid-template-columns: 1fr;
-    min-width: 0;
-    overflow: hidden;
-    border: 1px solid var(--color-line);
-    border-radius: 8px;
+  .fg-sash-carousel__controls > button {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    place-items: center;
+    border: 1px solid rgba(0, 45, 58, 0.14);
+    border-radius: 999px;
     background: #ffffff;
-  }
-
-  .fg-sash-spec-table__row--head {
-    display: none;
-  }
-
-  .fg-sash-spec-table__row > * {
-    border-left: 0;
-  }
-
-  .fg-sash-spec-table__row p {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.18rem;
-    border-top: 1px solid var(--color-line);
-  }
-
-  .fg-sash-spec-table__row p::before {
     color: var(--color-steel);
+    font: inherit;
+    font-size: 1.8rem;
+    line-height: 1;
+    box-shadow: 0 10px 24px rgba(0, 45, 58, 0.08);
+  }
+
+  .fg-sash-carousel__status {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding: 0.68rem 0.85rem;
+    border: 1px solid rgba(46, 172, 102, 0.2);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  .fg-sash-carousel__status strong {
+    overflow: hidden;
+    color: var(--color-steel);
+    font-size: 0.9rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fg-sash-carousel__status span {
+    flex: 0 0 auto;
+    color: var(--color-accent-dark);
+    font-size: 0.78rem;
     font-weight: 850;
   }
 
-  .fg-sash-spec-table__row p:nth-child(2)::before {
-    content: "Ultimate Rose";
+  .fg-sash-carousel__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0.75rem 0 1rem;
   }
 
-  .fg-sash-spec-table__row p:nth-child(3)::before {
-    content: "Heritage Rose";
+  .fg-sash-carousel__dots button {
+    width: 28px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(0, 45, 58, 0.18);
+    transition: width 180ms ease, background-color 180ms ease;
   }
 
-  .fg-sash-spec-table__row p:nth-child(4)::before {
-    content: "Charisma Rose";
+  .fg-sash-carousel__dots button[aria-pressed="true"] {
+    width: 48px;
+    background: var(--color-accent);
+  }
+
+  .fg-sash-mobile-specs {
+    display: block;
+    padding: 1rem;
+    border: 1px solid rgba(0, 45, 58, 0.12);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 14px 38px rgba(0, 45, 58, 0.08);
+  }
+
+  .fg-sash-mobile-specs > .eyebrow {
+    margin-bottom: 0.35rem;
+  }
+
+  .fg-sash-mobile-specs section[hidden] {
+    display: none;
+  }
+
+  .fg-sash-mobile-specs h3 {
+    margin: 0 0 0.85rem;
+    color: var(--color-steel);
+    font-size: 1.3rem;
+  }
+
+  .fg-sash-mobile-specs dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .fg-sash-mobile-specs dl div {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0.75rem;
+    border: 1px solid rgba(0, 45, 58, 0.1);
+    border-radius: 8px;
+    background: #f6fbf9;
+  }
+
+  .fg-sash-mobile-specs dt {
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .fg-sash-mobile-specs dd {
+    margin: 0;
+    color: var(--color-steel);
+    font-size: 0.88rem;
+    font-weight: 850;
+    line-height: 1.25;
+  }
+
+  .fg-sash-spec-table {
+    display: none;
   }
 
   .fg-sash-detail--flip figure {

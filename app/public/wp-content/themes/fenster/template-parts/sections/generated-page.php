@@ -2733,9 +2733,21 @@ if ($is_commercial_hub) {
                     </aside>
                 </div>
 
-                <div class="fg-sash-models" aria-label="<?php esc_attr_e('Roseview sash model comparison', 'fenster'); ?>">
+                <?php
+                $sash_mobile_comparison_rows = [
+                    ['Meeting rail', '35mm', '44.5mm', '60mm'],
+                    ['Corner detail', 'Mechanical joints', 'Welded joints', 'Welded joints'],
+                    ['Frame depth', '137mm', '137mm', '125mm'],
+                    ['Glass unit', '28mm IGU', '28mm IGU', '24mm IGU'],
+                    ['Energy rating', 'A rated', 'A rated', 'A rated'],
+                    ['ThermoVFlex option', '1.2 W/m²K option', '1.2 W/m²K option', 'Confirm at survey'],
+                ];
+                ?>
+
+                <div class="fg-sash-carousel" data-fg-sash-carousel>
+                <div class="fg-sash-models" aria-label="<?php esc_attr_e('Roseview sash model comparison', 'fenster'); ?>" data-fg-sash-track>
                     <?php foreach ($sash_roseview_models as $index => $model) : ?>
-                        <article class="fg-sash-model">
+                        <article class="fg-sash-model" data-fg-sash-slide>
                             <figure class="fg-sash-model__media" data-fg-depth="<?php echo esc_attr($index === 1 ? '0.045' : '0.065'); ?>">
                                 <img src="<?php echo esc_url(fenster_generated_url((string) $model['image'])); ?>" alt="<?php echo esc_attr((string) $model['alt']); ?>" loading="lazy">
                             </figure>
@@ -2758,6 +2770,44 @@ if ($is_commercial_hub) {
                             </div>
                         </article>
                     <?php endforeach; ?>
+                </div>
+
+                <div class="fg-sash-carousel__controls" aria-label="<?php esc_attr_e('Choose a sash window model', 'fenster'); ?>">
+                    <button type="button" data-fg-sash-prev aria-label="<?php esc_attr_e('Previous sash model', 'fenster'); ?>">&#8249;</button>
+                    <div class="fg-sash-carousel__status" aria-live="polite">
+                        <strong data-fg-sash-name><?php echo esc_html((string) ($sash_roseview_models[0]['name'] ?? '')); ?></strong>
+                        <span data-fg-sash-count><?php echo esc_html('01 / ' . sprintf('%02d', count($sash_roseview_models))); ?></span>
+                    </div>
+                    <button type="button" data-fg-sash-next aria-label="<?php esc_attr_e('Next sash model', 'fenster'); ?>">&#8250;</button>
+                </div>
+
+                <div class="fg-sash-carousel__dots" aria-label="<?php esc_attr_e('Sash model slides', 'fenster'); ?>">
+                    <?php foreach ($sash_roseview_models as $index => $model) : ?>
+                        <button
+                            type="button"
+                            data-fg-sash-dot="<?php echo esc_attr((string) $index); ?>"
+                            aria-label="<?php echo esc_attr(sprintf(__('Show %s', 'fenster'), (string) $model['name'])); ?>"
+                            aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
+                        ></button>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="fg-sash-mobile-specs">
+                    <p class="eyebrow"><?php esc_html_e('Selected model specifications', 'fenster'); ?></p>
+                    <?php foreach ($sash_roseview_models as $model_index => $model) : ?>
+                        <section data-fg-sash-spec-panel <?php echo $model_index === 0 ? '' : 'hidden'; ?>>
+                            <h3><?php echo esc_html((string) $model['name']); ?></h3>
+                            <dl>
+                                <?php foreach ($sash_mobile_comparison_rows as $row) : ?>
+                                    <div>
+                                        <dt><?php echo esc_html((string) $row[0]); ?></dt>
+                                        <dd><?php echo esc_html((string) $row[$model_index + 1]); ?></dd>
+                                    </div>
+                                <?php endforeach; ?>
+                            </dl>
+                        </section>
+                    <?php endforeach; ?>
+                </div>
                 </div>
 
                 <div class="fg-sash-spec-table" aria-label="<?php esc_attr_e('Roseview sash model specification comparison', 'fenster'); ?>">

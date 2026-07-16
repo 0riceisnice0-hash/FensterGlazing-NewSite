@@ -312,6 +312,8 @@ Current accepted behaviour:
 - Sash furniture renders from `inc\site-data.php` under `sash_furniture`: Globe furniture for Ultimate Rose, Acorn furniture for Heritage/Charisma Rose, Shark Fin Limit Stop and D Handle extras, plus the Roseview under/over 700mm furniture-count rule.
 - Runtime assets are local theme copies from the Roseview scrape. Do not reference the scrape export or `wp-content\fenster-reference` for this page.
 - Mobile QA: the top of the page is acceptable. Commit `c21bd46` tightened the Roseview model stats/cards for Ultimate Rose, Heritage Rose and Charisma Rose, corner/detail sections, comparison rows and large detail images for phone layouts. Continue to real-phone regression check this page because it is image-heavy.
+- At `860px` and below, the three Roseview model cards use a single-card swipe carousel with previous/next controls, position dots and a visible model counter. The desktop three-card grid remains unchanged.
+- The desktop comparison table remains unchanged. Mobile replaces it with a selected-model specification panel that updates with the carousel and shows meeting rail, corner detail, frame depth, glass unit, energy rating and ThermoVFlex information in a compact two-column grid. Do not restore the old mobile pattern that stacked every table row and repeated all three model values down the page.
 
 Recent verification:
 

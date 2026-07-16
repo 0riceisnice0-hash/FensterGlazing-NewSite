@@ -2082,6 +2082,109 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
   update();
 });
 
+document.querySelectorAll('[data-fg-sash-carousel]').forEach((carousel) => {
+  const track = carousel.querySelector('[data-fg-sash-track]');
+  const slides = [...carousel.querySelectorAll('[data-fg-sash-slide]')];
+  const panels = [...carousel.querySelectorAll('[data-fg-sash-spec-panel]')];
+  const dots = [...carousel.querySelectorAll('[data-fg-sash-dot]')];
+  const previous = carousel.querySelector('[data-fg-sash-prev]');
+  const next = carousel.querySelector('[data-fg-sash-next]');
+  const name = carousel.querySelector('[data-fg-sash-name]');
+  const count = carousel.querySelector('[data-fg-sash-count]');
+  const mobileQuery = window.matchMedia('(max-width: 860px)');
+  let activeIndex = 0;
+  let pointerId = null;
+  let pointerStartX = 0;
+  let dragDistance = 0;
+
+  if (!track || slides.length < 2) return;
+
+  const update = () => {
+    track.style.setProperty('--fg-sash-index', String(activeIndex));
+    track.style.setProperty('--fg-sash-drag', '0');
+
+    slides.forEach((slide, index) => {
+      if (mobileQuery.matches) {
+        slide.setAttribute('aria-hidden', index === activeIndex ? 'false' : 'true');
+      } else {
+        slide.removeAttribute('aria-hidden');
+      }
+    });
+
+    panels.forEach((panel, index) => {
+      panel.hidden = index !== activeIndex;
+    });
+
+    dots.forEach((dot, index) => {
+      dot.setAttribute('aria-pressed', index === activeIndex ? 'true' : 'false');
+    });
+
+    if (name) {
+      name.textContent = slides[activeIndex]?.querySelector('h3')?.textContent?.trim() || '';
+    }
+
+    if (count) {
+      count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    }
+  };
+
+  const goTo = (index) => {
+    activeIndex = (index + slides.length) % slides.length;
+    update();
+  };
+
+  const finishDrag = (event) => {
+    if (pointerId === null || event.pointerId !== pointerId) return;
+    const threshold = Math.min(72, carousel.clientWidth * 0.16);
+
+    carousel.classList.remove('is-dragging');
+    if (dragDistance <= -threshold) {
+      activeIndex = (activeIndex + 1) % slides.length;
+    } else if (dragDistance >= threshold) {
+      activeIndex = (activeIndex - 1 + slides.length) % slides.length;
+    }
+
+    pointerId = null;
+    dragDistance = 0;
+    update();
+  };
+
+  previous?.addEventListener('click', () => goTo(activeIndex - 1));
+  next?.addEventListener('click', () => goTo(activeIndex + 1));
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goTo(index));
+  });
+
+  track.addEventListener('pointerdown', (event) => {
+    if (!mobileQuery.matches) return;
+    pointerId = event.pointerId;
+    pointerStartX = event.clientX;
+    dragDistance = 0;
+    carousel.classList.add('is-dragging');
+    track.setPointerCapture?.(event.pointerId);
+  });
+
+  track.addEventListener('pointermove', (event) => {
+    if (pointerId === null || event.pointerId !== pointerId) return;
+    dragDistance = Math.max(-carousel.clientWidth, Math.min(carousel.clientWidth, event.clientX - pointerStartX));
+    track.style.setProperty('--fg-sash-drag', String(dragDistance));
+  });
+
+  track.addEventListener('pointerup', finishDrag);
+  track.addEventListener('pointercancel', finishDrag);
+
+  carousel.addEventListener('keydown', (event) => {
+    if (!mobileQuery.matches || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    goTo(activeIndex + (event.key === 'ArrowRight' ? 1 : -1));
+  });
+
+  carousel.setAttribute('tabindex', '0');
+  mobileQuery.addEventListener?.('change', update);
+  update();
+});
+
 document.querySelectorAll('[data-fg-case-steps]').forEach((stepper) => {
   const buttons = [...stepper.querySelectorAll('[data-case-step]')];
   const panels = [...stepper.querySelectorAll('[data-case-panel]')];

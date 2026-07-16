@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-16
 
+## 2026-07-16 - Sliding Sash Mobile Comparison Redesign
+
+- Preserved the approved desktop Sliding Sash Windows page while rebuilding the Roseview comparison specifically for `860px` and below.
+- Replaced the three long stacked Ultimate, Heritage and Charisma cards with a one-card swipe carousel using previous/next controls, a visible model name/count and position indicators.
+- Removed the repetitive mobile comparison-table stack. Mobile now shows one compact specification panel for the selected carousel model, updating meeting rail, corner detail, frame depth, glass unit, energy rating and ThermoVFlex information as the customer changes model.
+- Kept the full three-card layout and four-column specification table unchanged on desktop.
+- Rebuilt the compiled CSS and JavaScript, PHP-linted the generated product template and checked the diff for whitespace errors.
+
 ## 2026-07-16 - Week Two: Shared Copy Rewrite And Full Image Audit
 
 - Rewrote the shared customer-facing template copy in `generated-page.php`, `quote-tool.php`, `windows-hub.php`, `home-experience.php`, `about.php`, `contact.php`, `price-guide.php`, `consultation-booking.php` and `enquiry-form.php` from third-person "Fenster does X" into direct we/you voice, reading each string in context rather than find-and-replace. Brand-named copy was deliberately kept where it earns its place: `/why-trust-fenster/`, About-page process labels, the accreditation trust strip, commercial county intros and "the Fenster quote tool".
