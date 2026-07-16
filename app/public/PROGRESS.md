@@ -10,6 +10,9 @@ Last updated: 2026-07-16
 - Kept the full three-card layout and four-column specification table unchanged on desktop.
 - Rebuilt the compiled CSS and JavaScript, PHP-linted the generated product template and checked the diff for whitespace errors.
 - Committed and pushed the change as `4ff4eb8`, deployed that exact commit to the password-protected test site and flushed its cache. Browser QA at `390 x 844`, `768 x 1024` and `1440 x 900` confirmed working model controls and selected-spec updates, no horizontal overflow, no console errors and no desktop layout regression.
+- Reassessed the full phone journey after the first carousel pass remained too long. The rendered mobile page was roughly `18,600px` high because the model decision was repeated through the detail run, generic Product information, More information checks, furniture catalogue, order process and related-link band.
+- The whole-page mobile pass removes those repeated detail/product/process/link sections below `860px`, compresses the selector to one viewport-sized decision component, and turns colour/glass and furniture into short horizontal rails. The complete desktop page remains unchanged.
+- Final test measurements: about `7,200px` total at `390 x 844` and `6,800px` at `768 x 1024`; the phone carousel itself is about `693px` including its active card, controls, dots and selected-model specification grid. No horizontal overflow or console errors were found, and the desktop comparison cards, table and supporting sections still render normally.
 
 ## 2026-07-16 - Week Two: Shared Copy Rewrite And Full Image Audit
 
