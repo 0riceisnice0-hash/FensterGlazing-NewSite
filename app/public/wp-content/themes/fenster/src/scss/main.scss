@@ -21650,6 +21650,10 @@ html.fg-gallery-lightbox-open body {
     scroll-snap-align: start;
   }
 
+  .generated-page--sliding-sash .fg-product-choice-map--sash .fg-product-option-card {
+    flex-basis: 100%;
+  }
+
   .generated-page--sliding-sash .fg-product-option-card::before {
     transform: scale(0.72);
     transform-origin: top right;
