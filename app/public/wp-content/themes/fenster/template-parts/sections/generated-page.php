@@ -2528,7 +2528,22 @@ if ($is_commercial_hub) {
                 <source src="<?php echo esc_url($sick_video); ?>" type="video/mp4">
             </video>
         <?php elseif ($hero_media_src) : ?>
-            <img <?php echo fenster_image_attr_string($hero_media_src, ['class' => 'fg-hero__image', 'alt' => $title, 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
+            <?php if ($slug === 'sliding-sash-windows') : ?>
+                <img <?php echo fenster_image_attr_string($hero_media_src, [
+                    'class' => 'fg-hero__image',
+                    'alt' => 'White Roseview sliding sash bay window fitted to a red-brick home',
+                    'loading' => 'eager',
+                    'fetchpriority' => 'high',
+                    'srcset' => implode(', ', [
+                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/sash-roseview/hero/roseview-sash-bay-480w.webp') . ' 480w',
+                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/sash-roseview/hero/roseview-sash-bay-960w.webp') . ' 960w',
+                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/sash-roseview/hero/roseview-sash-bay-1920w.webp') . ' 1920w',
+                    ]),
+                    'sizes' => '100vw',
+                ]); ?>>
+            <?php else : ?>
+                <img <?php echo fenster_image_attr_string($hero_media_src, ['class' => 'fg-hero__image', 'alt' => $title, 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
+            <?php endif; ?>
         <?php endif; ?>
         <div class="fg-hero__shade"></div>
         <div class="container fg-hero__inner <?php echo esc_attr($is_home ? 'fg-hero__inner--quote' : ''); ?>">
@@ -3277,11 +3292,12 @@ if ($is_commercial_hub) {
             <div class="container">
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Finish the design with your colours, glass and hardware.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.', 'fenster'); ?></p>
+                    <h2><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.'); ?></h2>
+                    <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.'); ?></p>
                 </div>
-                <div class="fg-product-choice-map">
+                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?>">
                     <div class="fg-product-options fg-product-options--hub">
+                    <?php if ($slug !== 'sliding-sash-windows') : ?>
                     <a
                         class="fg-product-option-card fg-product-option-card--colour"
                         href="<?php echo esc_url(home_url('/colour-options/')); ?>"
@@ -3291,11 +3307,12 @@ if ($is_commercial_hub) {
                         <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare Roseview foils, woodgrain finishes, dual colours and special colour options.' : 'Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.'); ?></p>
                         <strong><?php esc_html_e('Open colour hub', 'fenster'); ?></strong>
                     </a>
+                    <?php endif; ?>
                     <a
                         class="fg-product-option-card fg-product-option-card--glass"
                         href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"
                     >
-                        <span><?php esc_html_e('02', 'fenster'); ?></span>
+                        <span><?php echo esc_html($slug === 'sliding-sash-windows' ? '01' : '02'); ?></span>
                         <h3><?php esc_html_e('Privacy glass', 'fenster'); ?></h3>
                         <p><?php esc_html_e('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
                         <strong><?php esc_html_e('Compare glass patterns', 'fenster'); ?></strong>

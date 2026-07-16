@@ -2774,6 +2774,10 @@ h3 {
   object-fit: cover;
 }
 
+.generated-page--sliding-sash .fg-hero__image {
+  object-position: 50% 48%;
+}
+
 .fg-hero__shade {
   background:
     linear-gradient(90deg, rgba(0, 45, 58, 0.54) 0%, rgba(0, 45, 58, 0.42) 42%, rgba(0, 45, 58, 0.1) 100%),
@@ -7623,6 +7627,10 @@ html.fg-gallery-lightbox-open body {
 
 .fg-product-choice-map::after {
   content: none;
+}
+
+.fg-product-choice-map--sash {
+  max-width: 520px;
 }
 
 .fg-product-option-card {
@@ -28566,6 +28574,10 @@ html.fg-blinds-reveal-locked {
 
   .fg-sash-furniture-selector__visual {
     height: 300px;
+  }
+
+  .generated-page--sliding-sash .fg-hero__image {
+    object-position: 50% 50%;
   }
 
   .fg-sash-furniture-selector__visual img {

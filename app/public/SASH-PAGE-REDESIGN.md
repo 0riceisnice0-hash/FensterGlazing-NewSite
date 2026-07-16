@@ -65,6 +65,8 @@ Desktop uses the same cards and information, but presents all three together in 
 
 ## 2. Making the products visually legible
 
+The generic close-cropped hero was replaced with a product-led Roseview photograph showing a complete white sash bay in a red-brick elevation. Separate 480, 960 and 1920 pixel WebP sources keep the image sharp at desktop size without sending the full asset to mobile. Product-specific object positioning preserves the bay window at both hero crops.
+
 The product images were enlarged because windows are bought visually. The imagery needed to communicate proportion, sightlines and period character before the customer read a table.
 
 Responsive WebP variants were created for each model so the larger visual treatment did not require serving oversized source files to phones.
@@ -163,6 +165,8 @@ The original PDF download was initially included as a supporting resource, then 
 ## 7. Removing repetition
 
 The page previously inherited generic sections that repeated information already covered by the sash-specific journey.
+
+The generic frame-colour panel is also omitted because Roseview has its own product-specific colour range; the page now directs this stage of the journey to privacy glass and the dedicated Roseview furniture selector only.
 
 For this page, redundant detail runs, generic benefits, generic buying-process content and repeated related-link sections were removed at template level. They were not merely hidden visually.
 

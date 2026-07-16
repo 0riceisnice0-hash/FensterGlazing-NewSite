@@ -400,7 +400,7 @@ function fenster_site_data(): array
                 ],
             ],
             'sliding-sash-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-sliding-sash-window.jpg', 'alt' => 'White sliding sash window with Georgian bars'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/hero/roseview-sash-bay-1920w.webp', 'alt' => 'White Roseview sliding sash bay window fitted to a red-brick home'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-sliding-sash-window.jpg', 'alt' => 'White sliding sash window with Georgian bars'],
                     ['src' => '/wp-content/themes/fenster/assets/images/imported/Sash-horn-astragal.jpeg', 'alt' => 'Sash horn and astragal glazing bar detail'],
