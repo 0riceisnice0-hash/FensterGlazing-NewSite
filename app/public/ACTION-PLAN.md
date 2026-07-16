@@ -149,7 +149,7 @@ Also fix on this page:
 6. ✅ Done 2026-07-16 — review dates normalised to `j M Y` in `review-showcase.php` (component-level, so future data in either format renders consistently).
 7. ✅ Done 2026-07-16 — `/upvc-doors/` and `/casement-windows/` added to `fenster_gsc_seo_overrides()` with rewritten titles and meta descriptions.
 8. ❌ Retracted — Legend's launcher is `position: fixed; bottom: 0; right: 0`; the apparent hero overlap was a full-page screenshot artifact (fixed elements paint at odd offsets in `captureBeyondViewport` shots). No change needed.
-9. ⏳ Owner input needed — the "Phone lines open 24/7" footer claim can only be verified by the business (is there a real answering service?). Left in place pending an answer.
+9. ✅ Resolved 2026-07-16 — owner confirmed a real 24/7 answering service exists; the footer claim stays as written.
 
 ### Weeks 2–3 — shared copy + image audit
 
