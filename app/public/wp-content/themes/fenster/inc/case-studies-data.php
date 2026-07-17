@@ -40,9 +40,14 @@ function fenster_case_studies(): array
     $flush = esc_url(home_url('/flush-casement-windows/'));
     $bifold = esc_url(home_url('/aluminium-bifold-doors/'));
     $slidefold = esc_url(home_url('/slide-fold-doors/'));
-    $colour = esc_url(home_url('/colour-options/'));
     $team = esc_url(home_url('/meet-the-team/'));
     $team_img = FENSTER_THEME_URI . '/assets/images/imported/';
+
+    // Colour hub deep links pre-select the swatch and scroll to its material.
+    $colour_link = static fn (string $material, string $slug): string => home_url('/colour-options/?material=' . $material . '&colour=' . $slug);
+    $colour_basalt = $colour_link('upvc', 'basalt-grey');
+    $colour_anthracite = $colour_link('aluminium', 'anthracite-grey');
+    $colour_white = $colour_link('upvc', 'white');
 
     $cache = [
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
@@ -54,7 +59,7 @@ function fenster_case_studies(): array
             'products' => [
                 ['label' => 'Aluminium bifold doors', 'url' => home_url('/aluminium-bifold-doors/')],
             ],
-            'colour' => ['label' => 'Anthracite grey', 'url' => home_url('/colour-options/')],
+            'colour' => ['label' => 'Anthracite grey', 'url' => $colour_anthracite],
             'specs' => [
                 ['label' => 'Product', 'value' => 'Aluminium bifold doors'],
                 ['label' => 'System', 'value' => 'Sheerline Prestige aluminium'],
@@ -64,7 +69,7 @@ function fenster_case_studies(): array
             'overview' => [
                 'The owners wanted to open the back of the house right up to the garden, without losing warmth or security once the doors were shut. We fitted <a href="' . $bifold . '">aluminium bifold doors</a> from the Sheerline Prestige system, which uses thermally broken aluminium frames with ultra slim sightlines, so almost all of the opening is glass rather than frame.',
                 'The doors fold back against the wall to leave a clear span, with a main traffic door for everyday garden access without opening the full run. A low threshold keeps the step between inside and out to a minimum. Closed, the frames reach a 1.0 W/m²K U-value and lock at several points, so the room stays warm and secure through winter.',
-                'We finished the frames in <a href="' . $colour . '">anthracite grey</a> inside and out, one of the most popular choices for a modern look that sits well against both brick and render. Sheerline aluminium can be powder coated in any RAL colour if a different shade suits the property.',
+                'We finished the frames in <a href="' . $colour_anthracite . '">anthracite grey</a> inside and out, one of the most popular choices for a modern look that sits well against both brick and render. Sheerline aluminium can be powder coated in any RAL colour if a different shade suits the property.',
             ],
             'installed' => [
                 'Sheerline Prestige aluminium bifold doors',
@@ -92,41 +97,41 @@ function fenster_case_studies(): array
         ],
 
         'upvc-casement-windows-broughton-milton-keynes' => [
-            'title' => 'uPVC casement windows, Broughton',
+            'title' => 'uPVC casement window, Broughton',
             'location' => 'Broughton, Milton Keynes',
             'type' => 'Residential',
-            'summary' => 'A two-tone Liniar casement replacement in Broughton, turning a boarded-up opening back into a warm, secure window.',
-            'lead' => 'We replaced the failed windows on this Broughton home, including a boarded-up opening, with two-tone Liniar casements: basalt grey outside and white inside.',
+            'summary' => 'A single two-tone Liniar casement in Broughton, replacing a boarded-up dormer window with a warm, secure one.',
+            'lead' => 'We replaced a boarded-up dormer window on this Broughton home with a single two-tone Liniar casement, basalt grey outside and white inside.',
             'products' => [
                 ['label' => 'uPVC casement windows', 'url' => home_url('/casement-windows/')],
             ],
-            'colour' => ['label' => 'Basalt grey (RAL 7012)', 'url' => home_url('/colour-options/')],
+            'colour' => ['label' => 'Basalt grey (RAL 7012)', 'url' => $colour_basalt],
             'specs' => [
-                ['label' => 'Product', 'value' => 'uPVC casement windows'],
+                ['label' => 'Product', 'value' => 'One uPVC casement window'],
                 ['label' => 'System', 'value' => 'Liniar EnergyPlus 70mm uPVC'],
                 ['label' => 'Colour', 'value' => 'Basalt grey outside, white inside'],
                 ['label' => 'Energy rating', 'value' => 'A+ (0.95 W/m²K)'],
             ],
             'overview' => [
-                'One of the front openings had been boarded up and the rest of the windows were tired and draughty. We fitted <a href="' . $casement . '">uPVC casement windows</a> using the 70mm Liniar EnergyPlus system, an A+ rated, multi-chambered profile with a co-extruded bubble gasket that seals continuously around the frame against draughts and driving rain.',
-                'With modern double glazing the windows reach a 0.95 W/m²K U-value and lock at several points with a PAS 24 security option, so the house is warmer and far more secure than the units they replaced. We combined side and top opening sashes to suit each room.',
-                'The owners chose a two-tone finish: <a href="' . $colour . '">basalt grey (RAL 7012)</a> on the outside for a contemporary kerbside look, with a white interior so the rooms stay bright and neutral. It is a popular way to get a dark modern frontage without darkening the room inside.',
+                'The dormer window at the top of the house had been boarded up. We replaced it with a single <a href="' . $casement . '">uPVC casement window</a> on the 70mm Liniar EnergyPlus system, an A+ rated, multi-chambered profile with a co-extruded bubble gasket that seals continuously around the frame against draughts and driving rain.',
+                'With modern double glazing the window reaches a 0.95 W/m²K U-value and locks with a PAS 24 security option, so the room behind it is warmer, quieter and far more secure than the boarded opening it replaced.',
+                'The owner chose a two-tone finish: <a href="' . $colour_basalt . '">basalt grey (RAL 7012)</a> on the outside to match the other frames on the house, with a white interior so the room stays bright. It is a popular way to get a dark modern frame without darkening the room inside.',
             ],
             'installed' => [
-                'Liniar EnergyPlus casement windows',
+                'One Liniar EnergyPlus casement window',
                 'Basalt grey (RAL 7012) outside, white inside',
                 'A+ rated, energy efficient double glazing',
                 'Multi-point locking with a PAS 24 option',
             ],
             'images' => [
-                ['src' => $img . 'cs-mk-broughton-casement-after.jpg', 'caption' => 'The finished frontage, with the new basalt grey casements shown from the same angle as before.'],
-                ['src' => $img . 'cs-mk-broughton-casement-before.jpg', 'caption' => 'The same elevation beforehand, with one window opening boarded up.'],
-                ['src' => $img . 'cs-mk-broughton-casement-inside.jpg', 'caption' => 'Seen from inside, the frames are white so the room stays bright and neutral.'],
-                ['src' => $img . 'cs-mk-broughton-casement-side.jpg', 'caption' => 'A closer side view of the basalt grey outer frame and glazing.'],
+                ['src' => $img . 'cs-mk-broughton-casement-side.jpg', 'caption' => 'The finished dormer window in basalt grey, the single window we replaced.'],
+                ['src' => $img . 'cs-mk-broughton-casement-before.jpg', 'caption' => 'Before: the dormer window boarded up at the top of the house.'],
+                ['src' => $img . 'cs-mk-broughton-casement-after.jpg', 'caption' => 'The house frontage with the reglazed dormer window back in place at the top.'],
+                ['src' => $img . 'cs-mk-broughton-casement-inside.jpg', 'caption' => 'Seen from inside, the frame is white so the room stays bright and neutral.'],
             ],
             'seo' => [
-                'title_tag' => 'uPVC Casement Windows Case Study, Milton Keynes | Fenster Glazing',
-                'meta_description' => 'A real Fenster project in Broughton, Milton Keynes: two-tone Liniar casement windows replacing failing units, including a boarded-up opening.',
+                'title_tag' => 'uPVC Casement Window Case Study, Milton Keynes | Fenster Glazing',
+                'meta_description' => 'How we replaced a boarded-up dormer window with a single two-tone Liniar casement window for a home in Broughton, Milton Keynes.',
             ],
         ],
 
@@ -181,7 +186,7 @@ function fenster_case_studies(): array
             'products' => [
                 ['label' => 'uPVC casement windows', 'url' => home_url('/casement-windows/')],
             ],
-            'colour' => ['label' => 'White', 'url' => home_url('/colour-options/')],
+            'colour' => ['label' => 'White', 'url' => $colour_white],
             'specs' => [
                 ['label' => 'Product', 'value' => 'uPVC casement windows'],
                 ['label' => 'System', 'value' => 'Liniar EnergyPlus 70mm uPVC'],
@@ -191,7 +196,7 @@ function fenster_case_studies(): array
             'overview' => [
                 'The owners wanted a straightforward, well-fitted set of white windows that would make the rooms brighter and hold their heat far better than the old units. We fitted <a href="' . $casement . '">uPVC casement windows</a> on the 70mm Liniar EnergyPlus system, which is A+ rated and reaches a 0.95 W/m²K U-value with modern double glazing.',
                 'A co-extruded bubble gasket seals continuously around each frame against draughts and rain, and the windows lock at several points with a PAS 24 security option. We combined side and top opening sashes to suit each room, on smooth, quality hardware.',
-                'The frames are finished in classic <a href="' . $colour . '">white</a>, which keeps the frontage clean and bright, though the same window is available in 16 colours and foiled woodgrain finishes. uPVC frames never need repainting and simply wipe clean.',
+                'The frames are finished in classic <a href="' . $colour_white . '">white</a>, which keeps the frontage clean and bright, though the same window is available in 16 colours and foiled woodgrain finishes. uPVC frames never need repainting and simply wipe clean.',
             ],
             'installed' => [
                 'Liniar EnergyPlus casement windows',

@@ -2400,6 +2400,34 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
     window.addEventListener('pointercancel', handlePointerCancel);
   });
 
+  // Deep link: /colour-options/?material=upvc&colour=basalt-grey pre-selects
+  // the matching swatch and scrolls to its material section.
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const wantColour = params.get('colour');
+    if (wantColour) {
+      const material = carousel.closest('[data-fg-colour-material]');
+      const materialKey = material?.getAttribute('data-fg-colour-material') || '';
+      const wantMaterial = params.get('material');
+      if (!wantMaterial || wantMaterial === materialKey) {
+        const idx = slides.findIndex((slide) => slide.getAttribute('data-colour-slug') === wantColour);
+        if (idx >= 0) {
+          activeIndex = idx;
+          const target = material || carousel;
+          window.setTimeout(() => {
+            if (window.fensterLenis?.scrollTo) {
+              window.fensterLenis.scrollTo(target, { offset: -96 });
+            } else {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 450);
+        }
+      }
+    }
+  } catch (error) {
+    /* deep link is best-effort */
+  }
+
   update();
 });
 

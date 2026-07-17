@@ -78,7 +78,7 @@ if ($is_archive) :
             <div class="container">
                 <p class="eyebrow"><?php esc_html_e('Case studies', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Recent installations', 'fenster'); ?></h1>
-                <p class="fg-cs-head__lead"><?php esc_html_e('A look at recent Fenster window and door projects across Milton Keynes and Bedfordshire, with the products, colours and detail behind each one.', 'fenster'); ?></p>
+                <p class="fg-cs-head__lead"><?php esc_html_e('We have completed over 1,000 window and door installations across Milton Keynes and Bedfordshire. We are writing up the best of them here as full case studies, with the products, colours and detail behind each one, so this page will keep growing.', 'fenster'); ?></p>
             </div>
         </header>
 
@@ -156,7 +156,9 @@ $related = array_slice($related, 0, 3);
             </div>
             <?php if (is_array($hero_image)) : ?>
                 <figure class="fg-cs-hero__media">
-                    <img src="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($hero_image['caption'] ?? $title)); ?>" loading="eager">
+                    <a class="fg-cs-zoom" href="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" data-fg-gallery-lightbox aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>">
+                        <img src="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($hero_image['caption'] ?? $title)); ?>" loading="eager">
+                    </a>
                 </figure>
             <?php endif; ?>
         </div>
@@ -255,7 +257,9 @@ $related = array_slice($related, 0, 3);
                 <div class="fg-cs-gallery__masonry">
                     <?php foreach ($gallery_images as $image) : ?>
                         <figure class="fg-cs-shot">
-                            <img src="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($image['caption'] ?? $title)); ?>" loading="lazy">
+                            <a class="fg-cs-zoom" href="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" data-fg-gallery-lightbox aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>">
+                                <img src="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($image['caption'] ?? $title)); ?>" loading="lazy">
+                            </a>
                             <?php if (! empty($image['caption'])) : ?>
                                 <figcaption><?php echo esc_html((string) $image['caption']); ?></figcaption>
                             <?php endif; ?>

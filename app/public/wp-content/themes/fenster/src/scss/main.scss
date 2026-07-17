@@ -11334,6 +11334,15 @@ html.fg-gallery-lightbox-open body {
   background: var(--color-soft);
 }
 
+.fg-cs-zoom {
+  display: block;
+  cursor: zoom-in;
+}
+
+.fg-cs-hero__media .fg-cs-zoom {
+  height: 100%;
+}
+
 .fg-cs-shot figcaption {
   color: var(--color-muted);
   font-size: 0.9rem;

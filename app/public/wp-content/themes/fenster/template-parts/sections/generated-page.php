@@ -1871,7 +1871,7 @@ if ($is_colour_options) {
                     <div class="fg-colour-carousel__track" data-fg-colour-carousel-track>
                         <?php foreach ($colours as $index => $colour) : ?>
                             <?php $swatch = (string) ($colour['hex'] ?? '#ffffff'); ?>
-                            <article class="fg-colour-carousel__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide>
+                            <article class="fg-colour-carousel__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
                                 <?php if (! empty($colour['image'])) : ?>
                                     <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour')); ?>" loading="lazy">
                                 <?php else : ?>
