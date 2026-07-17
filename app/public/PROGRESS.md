@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-17
 
+## 2026-07-17 - Case studies: dates, fitters, deep links, lightbox, guide (test)
+
+- Fixed the Broughton study: it was a single dormer window, not multiple. Title, copy and specs are now singular and the hero is the close-up of that one window.
+- Every gallery and hero photo opens full screen in the existing in-page lightbox (no new tab).
+- Colour links now deep-link the colour hub: they pre-select the swatch (`data-colour-slug`) and scroll to the right material. The scroll pauses Lenis on window load because the colour hero images otherwise keep the page pinned at the top.
+- Added install dates (shown on the detail hero and archive cards) and a fitters/Installers panel per job, with links that scroll to each person's Meet the Team profile. Gave every team member an anchor id (`sanitize_title(name)`). People without a profile (Aaron) render as a name-only chip. Never lists marketing Zac Bartley; the fitter is Zac Rugman.
+- Widened the archive intro to full width and reworded it around 1,000+ installations, explaining the page will grow over time.
+- Scanned the retired residential studies: the Water Stratford cottage and Rushden bungalow have good written stories but no photos, so they cannot be republished in the image-led format without photography.
+- Added `CASESTUDIES.md`: a complete guide to adding and maintaining case studies (photo prep, data schema, copy rules, product/colour deep links, fitters, reviews, routing, deploy checklist) so future work is one-pass.
+
 ## 2026-07-17 - Case study detail: hero image, spec strip, masonry gallery, installers + review (test)
 
 - Owner feedback on the text-led version: hero was too text-heavy with no image, the specification sat too low, and the gallery cropped photos with small captions.
