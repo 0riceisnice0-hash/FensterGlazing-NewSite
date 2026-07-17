@@ -8,8 +8,7 @@ if (legendAssistant) {
   const panel = legendAssistant.querySelector('[data-legend-panel]');
   const launcherWrap = legendAssistant.querySelector('[data-legend-launcher-wrap]');
   const launcher = legendAssistant.querySelector('[data-legend-launcher]');
-  const promptActionButton = legendAssistant.querySelector('[data-legend-prompt-action]');
-  const promptCloseButton = legendAssistant.querySelector('[data-legend-prompt-close]');
+  const prompt = legendAssistant.querySelector('[data-legend-prompt]');
   const closeButton = legendAssistant.querySelector('[data-legend-close]');
   const input = legendAssistant.querySelector('[data-legend-input]');
   const sendButton = legendAssistant.querySelector('[data-legend-send]');
@@ -786,10 +785,7 @@ if (legendAssistant) {
   launcher.addEventListener('click', () => {
     void openLegendFromTrigger();
   });
-  promptActionButton?.addEventListener('click', () => {
-    void openLegendFromTrigger();
-  });
-  promptCloseButton?.addEventListener('click', (event) => {
+  prompt?.addEventListener('click', (event) => {
     event.stopPropagation();
     setLegendPromptDismissed(true);
   });
