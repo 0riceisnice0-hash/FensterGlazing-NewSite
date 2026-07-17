@@ -31417,8 +31417,9 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-mosaic {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-auto-rows: 210px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: clamp(150px, 15.5vw, 234px);
+  grid-auto-flow: row dense;
   gap: clamp(0.65rem, 1.4vw, 1rem);
 }
 
@@ -31438,12 +31439,9 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
-.fg-cd3-tile.is-tall {
-  grid-row: span 2;
-}
-
-.fg-cd3-tile.is-wide {
+.fg-cd3-tile.is-anchor {
   grid-column: span 2;
+  grid-row: span 2;
 }
 
 .fg-cd3-tile figcaption {
@@ -31550,8 +31548,9 @@ html.fg-blinds-reveal-locked {
     grid-auto-rows: 168px;
   }
 
-  .fg-cd3-tile.is-wide {
-    grid-column: span 2;
+  .fg-cd3-tile.is-anchor {
+    grid-column: span 1;
+    grid-row: span 1;
   }
 
   .fg-cd3-types__panel {

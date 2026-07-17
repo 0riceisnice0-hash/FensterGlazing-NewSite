@@ -414,12 +414,12 @@ if ($is_composite_doors) {
     ];
     // Real-home mosaic. Each tile names the finish and the style so it teaches, not just decorates.
     $composite_gallery = [
-        ['stem' => 'gallery/black-chatsworth-entrance', 'widths' => [480, 800], 'class' => 'is-tall', 'caption' => 'Twin Chatsworth glass on a black entrance', 'sub' => 'Signature, three-quarter lite'],
+        ['stem' => 'gallery/black-chatsworth-entrance', 'widths' => [480, 800], 'class' => 'is-anchor', 'caption' => 'Twin Chatsworth glass on a black entrance', 'sub' => 'Signature, three-quarter lite'],
         ['stem' => 'gallery/anthracite-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'Anthracite grey with a diagonal groove', 'sub' => 'Contemporary Infinity'],
         ['stem' => 'gallery/ruby-red-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'A ruby red statement door', 'sub' => 'Contemporary Infinity'],
-        ['stem' => 'families/rustic-renown', 'widths' => [400, 800], 'class' => 'is-tall', 'caption' => 'Basalt grey cottage door', 'sub' => 'Signature Rustic Renown'],
         ['stem' => 'gallery/chartwell-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'Chartwell green with an arched top light', 'sub' => 'Signature Eclat Arch'],
-        ['stem' => 'gallery/blue-door-interior', 'widths' => [480, 800, 1400], 'class' => 'is-wide', 'caption' => 'A dual-colour door from the hallway side', 'sub' => 'Different colours inside and out'],
+        ['stem' => 'families/rustic-renown', 'widths' => [400, 800], 'class' => '', 'caption' => 'Basalt grey cottage door', 'sub' => 'Signature Rustic Renown'],
+        ['stem' => 'gallery/blue-door-interior', 'widths' => [480, 800, 1400], 'class' => '', 'caption' => 'A dual-colour door from the hallway side', 'sub' => 'Different colours inside and out'],
     ];
     // Door types that are not a plain single door.
     $composite_door_types = [
