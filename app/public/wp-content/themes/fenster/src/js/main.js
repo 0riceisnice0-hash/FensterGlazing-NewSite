@@ -2415,12 +2415,13 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
           activeIndex = idx;
           const target = material || carousel;
           window.setTimeout(() => {
+            const y = target.getBoundingClientRect().top + window.scrollY - 96;
             if (window.fensterLenis?.scrollTo) {
-              window.fensterLenis.scrollTo(target, { offset: -96 });
+              window.fensterLenis.scrollTo(y, { immediate: true, force: true });
             } else {
-              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              window.scrollTo(0, y);
             }
-          }, 450);
+          }, 400);
         }
       }
     }
