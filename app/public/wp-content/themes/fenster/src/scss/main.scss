@@ -29818,9 +29818,9 @@ html.fg-blinds-reveal-locked {
 }
 
 .generated-page--composite-doors main h2 {
-  font-size: clamp(2rem, 3vw, 3.25rem);
-  font-weight: 700;
-  line-height: 1.07;
+  font-size: clamp(1.9rem, 2.8vw, 2.8rem) !important;
+  font-weight: 650 !important;
+  line-height: 1.08 !important;
   letter-spacing: -0.035em;
 }
 
@@ -30465,6 +30465,7 @@ html.fg-blinds-reveal-locked {
 .fg-composite-choice-options button > img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
 }
