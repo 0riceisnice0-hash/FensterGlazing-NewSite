@@ -135,8 +135,16 @@ $installed = is_array($study['installed'] ?? null) ? $study['installed'] : [];
 $images = is_array($study['images'] ?? null) ? $study['images'] : [];
 $installers = is_array($study['installers'] ?? null) ? $study['installers'] : [];
 $review = is_array($study['review'] ?? null) ? $study['review'] : null;
-$hero_image = $images[0] ?? null;
-$gallery_images = array_slice($images, 1);
+$video = is_array($study['video'] ?? null) ? $study['video'] : null;
+$is_wide_video = $video && ($video['orientation'] ?? '') === 'landscape';
+if ($video) {
+    // A video takes the hero, so every still image goes to the gallery.
+    $hero_image = null;
+    $gallery_images = $images;
+} else {
+    $hero_image = $images[0] ?? null;
+    $gallery_images = array_slice($images, 1);
+}
 
 $related = [];
 foreach ($cards as $short => $card) {
@@ -146,34 +154,58 @@ foreach ($cards as $short => $card) {
 }
 $related = array_slice($related, 0, 3);
 ?>
+<?php
+ob_start();
+?>
+<a class="fg-cs-back" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
+<p class="eyebrow"><?php echo esc_html(trim($type . ' • ' . $location, ' ')); ?></p>
+<h1><?php echo esc_html($title); ?></h1>
+<p class="fg-cs-hero__lead"><?php echo esc_html($lead); ?></p>
+<?php if ($date_display !== '') : ?>
+    <p class="fg-cs-hero__date"><?php esc_html_e('Installed', 'fenster'); ?> <time datetime="<?php echo esc_attr($date_iso); ?>"><?php echo esc_html($date_display); ?></time></p>
+<?php endif; ?>
+<div class="fg-cs-hero__actions">
+    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+    <?php $first_product = $products[0] ?? null; ?>
+    <?php if (is_array($first_product)) : ?>
+        <a class="button button--light" href="<?php echo esc_url((string) ($first_product['url'] ?? '#')); ?>"><?php echo esc_html((string) ($first_product['label'] ?? '')); ?></a>
+    <?php endif; ?>
+</div>
+<?php
+$hero_intro_html = ob_get_clean();
+?>
 <article class="fg-cs fg-cs--single">
-    <header class="fg-cs-hero">
-        <div class="container fg-cs-hero__grid">
-            <div class="fg-cs-hero__intro">
-                <a class="fg-cs-back" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
-                <p class="eyebrow"><?php echo esc_html(trim($type . ' • ' . $location, ' ')); ?></p>
-                <h1><?php echo esc_html($title); ?></h1>
-                <p class="fg-cs-hero__lead"><?php echo esc_html($lead); ?></p>
-                <?php if ($date_display !== '') : ?>
-                    <p class="fg-cs-hero__date"><?php esc_html_e('Installed', 'fenster'); ?> <time datetime="<?php echo esc_attr($date_iso); ?>"><?php echo esc_html($date_display); ?></time></p>
-                <?php endif; ?>
-                <div class="fg-cs-hero__actions">
-                    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
-                    <?php $first_product = $products[0] ?? null; ?>
-                    <?php if (is_array($first_product)) : ?>
-                        <a class="button button--light" href="<?php echo esc_url((string) ($first_product['url'] ?? '#')); ?>"><?php echo esc_html((string) ($first_product['label'] ?? '')); ?></a>
-                    <?php endif; ?>
+    <?php if ($is_wide_video) : ?>
+        <header class="fg-cs-hero fg-cs-hero--wide-video">
+            <div class="container">
+                <div class="fg-cs-hero__intro fg-cs-hero__intro--wide"><?php echo $hero_intro_html; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+                <div class="fg-cs-hero__video-wide">
+                    <video autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url((string) ($video['poster'] ?? '')); ?>" aria-label="<?php echo esc_attr((string) ($video['label'] ?? $title)); ?>">
+                        <source src="<?php echo esc_url((string) ($video['src'] ?? '')); ?>" type="video/mp4">
+                    </video>
                 </div>
             </div>
-            <?php if (is_array($hero_image)) : ?>
-                <figure class="fg-cs-hero__media">
-                    <a class="fg-cs-zoom" href="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" data-fg-gallery-lightbox aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>">
-                        <img src="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($hero_image['caption'] ?? $title)); ?>" loading="eager">
-                    </a>
-                </figure>
-            <?php endif; ?>
-        </div>
-    </header>
+        </header>
+    <?php else : ?>
+        <header class="fg-cs-hero">
+            <div class="container fg-cs-hero__grid">
+                <div class="fg-cs-hero__intro"><?php echo $hero_intro_html; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+                <?php if ($video) : ?>
+                    <figure class="fg-cs-hero__media fg-cs-hero__media--video">
+                        <video autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url((string) ($video['poster'] ?? '')); ?>" aria-label="<?php echo esc_attr((string) ($video['label'] ?? $title)); ?>">
+                            <source src="<?php echo esc_url((string) ($video['src'] ?? '')); ?>" type="video/mp4">
+                        </video>
+                    </figure>
+                <?php elseif (is_array($hero_image)) : ?>
+                    <figure class="fg-cs-hero__media">
+                        <a class="fg-cs-zoom" href="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" data-fg-gallery-lightbox aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>">
+                            <img src="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($hero_image['caption'] ?? $title)); ?>" loading="eager">
+                        </a>
+                    </figure>
+                <?php endif; ?>
+            </div>
+        </header>
+    <?php endif; ?>
 
     <?php if (! empty($specs)) : ?>
         <section class="fg-cs-specstrip">

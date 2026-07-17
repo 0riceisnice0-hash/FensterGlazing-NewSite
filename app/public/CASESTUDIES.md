@@ -289,6 +289,51 @@ on the bifold job, not a windows job).
 
 ---
 
+## 8b. Video case studies
+
+A study can lead with a video instead of a hero image. Add a `video` field:
+
+```php
+'video' => [
+    'src'         => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-....mp4',
+    'poster'      => $img . 'cs-...-poster.jpg',   // shown before the video loads
+    'orientation' => 'landscape',                  // or 'portrait'
+    'label'       => 'Video of the installed ...',  // accessible label
+],
+```
+
+Treatment depends on `orientation`:
+- **`landscape`** → a full-width 16:9 video sits under the title block, in place
+  of the hero image (`fg-cs-hero--wide-video`).
+- **`portrait`** → the video is shown as a square in the hero image slot
+  (`fg-cs-hero__media--video`). Crop portrait source to a centre square when
+  encoding.
+
+When a `video` is present the hero has no still image, so **all** `images` go to
+the gallery. Videos autoplay muted, loop and are `playsinline` with the poster
+shown first.
+
+Encoding (there is no system ffmpeg; use the bundled one via
+`pip install imageio-ffmpeg`, then `python -c "import imageio_ffmpeg as f; print(f.get_ffmpeg_exe())"`):
+
+```bash
+# landscape -> 1280x720 web mp4 + poster
+ffmpeg -y -i in.mp4 -vf scale=1280:720 -c:v libx264 -pix_fmt yuv420p -crf 26 -preset medium -an -movflags +faststart cs-x.mp4
+ffmpeg -y -ss 14 -i in.mp4 -vf scale=1600:900 -frames:v 1 -q:v 3 cs-x-poster.jpg
+# portrait 1080x1920 -> centre square 1080x1080 + square poster
+ffmpeg -y -i in.mp4 -vf "crop=1080:1080:0:420" -c:v libx264 -pix_fmt yuv420p -crf 26 -preset medium -an -movflags +faststart cs-y.mp4
+ffmpeg -y -ss 6 -i in.mp4 -vf "crop=1080:1080:0:420" -frames:v 1 -q:v 3 cs-y-poster.jpg
+```
+
+Videos live in `assets/videos/case-studies/`; posters and any stills in
+`assets/images/case-studies/`. Keep videos short (~20s loop) and ideally under
+~7MB. `crop=1080:1080:0:420` takes the centre square of a 1080x1920 clip
+(vertical offset `(1920-1080)/2 = 420`).
+
+Note: `date` is required for ordering — the archive and related sections sort by
+it automatically (newest first, `uasort` in `fenster_case_studies()`), so the
+order you write entries in the file does not matter.
+
 ## 9. Routing, sitemap and retired studies
 
 Handled in `inc/generated-pages.php`; you normally don't touch it:

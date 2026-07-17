@@ -239,7 +239,104 @@ function fenster_case_studies(): array
                 'meta_description' => 'A real Fenster project in Leighton Buzzard: crisp white Liniar casement windows replacing tired units for warmer, brighter rooms.',
             ],
         ],
+
+        'sheerline-roof-lantern' => [
+            'title' => 'Sheerline roof lantern',
+            'location' => '',
+            'type' => 'Residential',
+            'date' => '2025-06-08',
+            'summary' => 'A large Sheerline S1 aluminium roof lantern with automated opening vents, flooding an extension with daylight.',
+            'lead' => 'We installed a large Sheerline S1 aluminium roof lantern over this extension, bringing far more daylight into the room below.',
+            'products' => [
+                ['label' => 'Roof lanterns', 'url' => home_url('/roof-lanterns/')],
+            ],
+            'colour' => ['label' => 'White', 'url' => $colour_link('aluminium', 'pure-white')],
+            'specs' => [
+                ['label' => 'Product', 'value' => 'Sheerline S1 roof lantern'],
+                ['label' => 'System', 'value' => 'Sheerline S1 aluminium, Thermlock'],
+                ['label' => 'Glazing', 'value' => '28mm, solar-control options'],
+                ['label' => 'Ventilation', 'value' => 'SheerVent automated openers'],
+            ],
+            'overview' => [
+                'The owners wanted to open the roof of their extension up to the sky. We installed a large <a href="' . esc_url(home_url('/roof-lanterns/')) . '">Sheerline S1 roof lantern</a>, an aluminium lantern system with a slim, low-line external profile so more of the roof is glass and less is frame.',
+                'Inside the frame, Sheerline Thermlock multi-chamber technology works with 28mm glazing to keep the room insulated, with solar-control glass options to manage heat and glare. This lantern also uses SheerVent automated openers, so the vents open for fresh air and close on their own if it starts to rain.',
+                'The lantern is finished in white to sit cleanly against the existing roof and windows. Sheerline aluminium can be powder coated in a wide range of finishes, which you can browse on our <a href="' . $colour_link('aluminium', 'pure-white') . '">colour options</a> page.',
+            ],
+            'installed' => [
+                'Sheerline S1 aluminium roof lantern',
+                'White frame finish',
+                '28mm glazing with solar-control options',
+                'SheerVent automated opening vents',
+            ],
+            'installers' => [$fitter_tom],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-big-roof-lantern.mp4',
+                'poster' => $img . 'cs-big-roof-lantern-poster.jpg',
+                'orientation' => 'landscape',
+                'label' => 'Video of the installed Sheerline roof lantern with its vents open',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-big-roof-lantern-14.jpg', 'caption' => 'The finished lantern from above, with the SheerVent openers open for ventilation.'],
+                ['src' => $img . 'cs-big-roof-lantern-19.jpg', 'caption' => 'A closer look at the slim white frame and opening vents along the lantern.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Sheerline Roof Lantern Case Study | Fenster Glazing',
+                'meta_description' => 'A real Fenster project: a large Sheerline S1 aluminium roof lantern with SheerVent automated openers, bringing daylight into an extension.',
+            ],
+        ],
+
+        'roof-lantern-and-heritage-doors' => [
+            'title' => 'Roof lantern and heritage doors',
+            'location' => '',
+            'type' => 'Residential',
+            'date' => '2025-04-22',
+            'summary' => 'A Sheerline roof lantern paired with black steel-look heritage aluminium doors on a brick extension.',
+            'lead' => 'We fitted a Sheerline roof lantern and a set of black heritage aluminium doors on this extension, pairing overhead daylight with a sharp steel-look opening to the garden.',
+            'products' => [
+                ['label' => 'Roof lanterns', 'url' => home_url('/roof-lanterns/')],
+                ['label' => 'Heritage aluminium doors', 'url' => home_url('/heritage-aluminium-doors/')],
+            ],
+            'colour' => ['label' => 'Black', 'url' => $colour_link('aluminium', 'jet-black')],
+            'specs' => [
+                ['label' => 'Products', 'value' => 'Roof lantern and heritage doors'],
+                ['label' => 'Lantern', 'value' => 'Sheerline S1 aluminium'],
+                ['label' => 'Doors', 'value' => 'Sheerline Classic, 1.4 W/m²K'],
+                ['label' => 'Colour', 'value' => 'Black, inside and out'],
+            ],
+            'overview' => [
+                'This extension needed both overhead light and a smart opening to the garden. We installed a <a href="' . esc_url(home_url('/roof-lanterns/')) . '">Sheerline S1 roof lantern</a> over the room, with a slim low-line aluminium frame and 28mm glazing, so the space is bright from above through the day.',
+                'To the garden we fitted <a href="' . esc_url(home_url('/heritage-aluminium-doors/')) . '">heritage aluminium doors</a> on the Sheerline Classic system. These give the steel-look styling of traditional doors, with slim sightlines, glazing bars and toplights, in a modern thermally broken aluminium frame that reaches a 1.4 W/m²K U-value and locks at several points.',
+                'The lantern and the doors are finished in <a href="' . $colour_link('aluminium', 'jet-black') . '">black</a> inside and out, so the glazing reads as one crisp, contemporary detail across the extension.',
+            ],
+            'installed' => [
+                'Sheerline S1 aluminium roof lantern',
+                'Sheerline Classic heritage aluminium doors',
+                'Black finish, inside and out',
+                'Steel-look glazing bars, toplights and multi-point locking',
+            ],
+            'installers' => [$fitter_johnnie, $fitter_tom],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-roof-lantern-heritage-doors.mp4',
+                'poster' => $img . 'cs-roof-lantern-heritage-doors-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Video of the installed roof lantern and heritage doors',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-lantern-doors-6.jpg', 'caption' => 'The black heritage aluminium doors and the roof lantern above, seen from the garden.'],
+                ['src' => $img . 'cs-lantern-doors-16.jpg', 'caption' => 'The roof lantern from above, with its slim black frame on the flat roof.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Roof Lantern and Heritage Doors Case Study | Fenster Glazing',
+                'meta_description' => 'A real Fenster project: a Sheerline roof lantern and black steel-look heritage aluminium doors fitted to a brick extension.',
+            ],
+        ],
     ];
+
+    // Newest first, so the archive and related sections stay in date order
+    // regardless of the order entries are written above.
+    uasort($cache, static function (array $a, array $b): int {
+        return strcmp((string) ($b['date'] ?? ''), (string) ($a['date'] ?? ''));
+    });
 
     return $cache;
 }

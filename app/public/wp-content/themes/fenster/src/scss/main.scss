@@ -11045,6 +11045,41 @@ html.fg-gallery-lightbox-open body {
   object-fit: cover;
 }
 
+.fg-cs-hero__media--video video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.fg-cs-hero--wide-video {
+  padding-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+
+.fg-cs-hero__intro--wide {
+  max-width: 62ch;
+}
+
+.fg-cs-hero__intro--wide h1 {
+  max-width: 24ch;
+}
+
+.fg-cs-hero__video-wide {
+  margin-top: clamp(1.2rem, 2.5vw, 2rem);
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-steel);
+  box-shadow: var(--shadow-soft);
+}
+
+.fg-cs-hero__video-wide video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 /* Key specification strip */
 .fg-cs-specstrip {
   padding: 0 0 clamp(1.5rem, 3vw, 2.4rem);
