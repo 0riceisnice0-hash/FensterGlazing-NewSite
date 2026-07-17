@@ -2414,37 +2414,37 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
         if (idx >= 0) {
           activeIndex = idx;
           const target = material || carousel;
-          // During load the browser/Lenis keep the page pinned at the top while
-          // the colour hero images settle. Re-assert the target position every
-          // frame (our rAF runs after Lenis' so there is no flicker) until it
-          // holds on its own, then stop. Abort if the visitor scrolls.
+          const lenis = window.fensterLenis;
+          const jump = () => {
+            const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 96);
+            if (lenis?.scrollTo) {
+              lenis.scrollTo(y, { immediate: true, force: true });
+            } else {
+              window.scrollTo(0, y);
+            }
+          };
+          // Lenis keeps the page pinned at the top while the colour hero images
+          // settle after load. Pause it, jump to the swatch, re-assert as the
+          // layout settles, then hand smooth scrolling back. Abort on any input.
           let cancelled = false;
-          let heldFrames = 0;
-          const startTime = performance.now();
-          const cancel = () => {
+          const release = () => {
             cancelled = true;
+            lenis?.start?.();
           };
           ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((eventName) => {
-            window.addEventListener(eventName, cancel, { once: true, passive: true });
+            window.addEventListener(eventName, release, { once: true, passive: true });
           });
-          const enforce = () => {
-            if (cancelled) return;
-            const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 96);
-            if (Math.abs(window.scrollY - y) < 4) {
-              heldFrames += 1;
-            } else {
-              heldFrames = 0;
-              if (window.fensterLenis?.scrollTo) {
-                window.fensterLenis.scrollTo(y, { immediate: true, force: true });
-              } else {
-                window.scrollTo(0, y);
-              }
+          lenis?.stop?.();
+          jump();
+          [150, 400, 800, 1300].forEach((delay) => window.setTimeout(() => {
+            if (!cancelled) jump();
+          }, delay));
+          window.setTimeout(() => {
+            if (!cancelled) {
+              jump();
+              lenis?.start?.();
             }
-            if (heldFrames < 12 && performance.now() - startTime < 6000) {
-              window.requestAnimationFrame(enforce);
-            }
-          };
-          window.requestAnimationFrame(enforce);
+          }, 1600);
         }
       }
     }
