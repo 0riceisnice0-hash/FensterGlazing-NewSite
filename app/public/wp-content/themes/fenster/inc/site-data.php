@@ -246,9 +246,9 @@ function fenster_site_data(): array
                 ['label' => 'Security', 'value' => 'Flush hook-locks'],
             ],
             'composite-doors' => [
-                ['label' => 'Design choice', 'value' => 'Extensive range'],
-                ['label' => 'Colour choice', 'value' => 'Any RAL colour'],
-                ['label' => 'Construction', 'value' => 'Reinforced core'],
+                ['label' => 'Door families', 'value' => '4 collections'],
+                ['label' => 'Standard slab', 'value' => '44mm insulated'],
+                ['label' => 'Premium option', 'value' => '70mm double rebate'],
                 ['label' => 'Security guarantee', 'value' => '£5,000'],
             ],
             'integral-blinds' => [
@@ -517,10 +517,10 @@ function fenster_site_data(): array
                 ],
             ],
             'composite-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/distinction-composite-door.jpg', 'alt' => 'Composite front door with half glazing'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-grandeur-entrance-1920w.webp', 'alt' => 'Dark Grandeur composite entrance door open into a contemporary hallway'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/distinction-composite-door.jpg', 'alt' => 'Composite front door with half glazing'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/distinction-composite-door-installed.jpg', 'alt' => 'Composite entrance door installed in a brick home'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/chatsworth-double-lite-1400w.webp', 'alt' => 'Pale composite entrance door with twin Chatsworth glazed panels'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp', 'alt' => 'Dark contemporary composite entrance door with a long pull handle'],
                 ],
             ],
         ],
@@ -1135,7 +1135,7 @@ function fenster_site_data(): array
                 ],
             ],
             'composite-doors' => [
-                'intro' => 'Composite doors give front entrances a strong, low-maintenance and highly personal finish. Fenster helps you choose the door style, colour, glass, hardware and security details around the property, then surveys the opening before ordering.',
+                'intro' => 'Distinction composite doors range from traditional panelled entrances to flush contemporary designs and a 70mm double-rebated premium option. Fenster helps you compare the four collections, then confirms colour, glass, hardware and the complete doorset after survey.',
                 'benefits' => [
                     ['title' => 'Strong entrance door construction', 'copy' => 'Composite doors combine a reinforced core, durable skins and secure hardware for a robust front-door upgrade.'],
                     ['title' => 'Wide design choice', 'copy' => 'Fenster can help compare door styles, glass designs, colours and hardware so the entrance suits the property.'],

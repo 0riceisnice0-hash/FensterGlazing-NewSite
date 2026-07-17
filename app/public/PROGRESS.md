@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-17
 
+## 2026-07-17 - Composite Doors complete Distinction redesign (test)
+
+- Rebuilt `/composite-doors/` as a route-specific, image-led journey using the Distinction Doors scrape and the method documented in `SASH-PAGE-REDESIGN.md`.
+- Visually audited the scrape and built 35 responsive WebP assets (hero, four door families, six inspiration images and six decorative-glass details) from the approved source imagery. Added a repeatable image build script and `COMPOSITE-DOOR-REDESIGN.md` maintenance guide.
+- New journey: responsive Grandeur hero, corrected four-fact strip, Signature/Contemporary/nxt-gen/Grandeur selector, desktop comparison and mobile selected specs, six-image inspiration gallery, mid-page quote prompt, product-specific colour/glass/hardware section, FAQs, responsive quote, relevant review and compact Composite Doors enquiry.
+- Removed the route's repeated generic introduction, product-intel panel, global colour link, eleven-card glass wall, generic visual mosaic, universal handle selector, order-process repeat and related-link filler at PHP level.
+- Corrected product claims: standard 44mm slab vs Grandeur 70mm double rebate, no blanket `Any RAL colour` promise, no invented whole-doorset U-value, and explicit qualification of supplier thermal, glass, colour and compatibility statements.
+- Built the compiled CSS/JS and linted all 61 theme PHP files. Protected-test responsive browser verification is required before production promotion; no live deploy is authorised by this entry.
+
 ## 2026-07-17 - Residential case studies live release
 
 - Promoted the verified case studies work to production. Backed up the live theme first (`~/backups/fenster-theme/fenster-pre-9fba379-20260717-105524.tar.gz`, 320M), then theme-only rsync of commit `9fba379` to live and flushed WP + SiteGround dynamic cache.

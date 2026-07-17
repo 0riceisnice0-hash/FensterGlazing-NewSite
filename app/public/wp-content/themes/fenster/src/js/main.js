@@ -866,6 +866,75 @@ if (legendAssistant) {
   }
 }
 
+document.querySelectorAll('[data-fg-composite-carousel]').forEach((carousel) => {
+  const track = carousel.querySelector('[data-fg-composite-track]');
+  const slides = [...carousel.querySelectorAll('[data-fg-composite-slide]')];
+  const panels = [...carousel.querySelectorAll('[data-fg-composite-spec-panel]')];
+  const dots = [...carousel.querySelectorAll('[data-fg-composite-dot]')];
+  const previous = carousel.querySelector('[data-fg-composite-prev]');
+  const next = carousel.querySelector('[data-fg-composite-next]');
+  const name = carousel.querySelector('[data-fg-composite-name]');
+  const count = carousel.querySelector('[data-fg-composite-count]');
+
+  if (!track || slides.length < 2) return;
+
+  let activeIndex = 0;
+  let pointerStart = null;
+  let dragDistance = 0;
+
+  const showSlide = (requestedIndex) => {
+    activeIndex = (requestedIndex + slides.length) % slides.length;
+    track.style.setProperty('--fg-composite-index', String(activeIndex));
+    track.style.setProperty('--fg-composite-drag', '0');
+    track.classList.remove('is-dragging');
+    dragDistance = 0;
+
+    slides.forEach((slide, index) => {
+      slide.setAttribute('aria-hidden', index === activeIndex ? 'false' : 'true');
+    });
+    panels.forEach((panel, index) => {
+      panel.hidden = index !== activeIndex;
+    });
+    dots.forEach((dot, index) => {
+      dot.setAttribute('aria-pressed', index === activeIndex ? 'true' : 'false');
+    });
+
+    const activeName = slides[activeIndex].querySelector('h3')?.textContent?.trim() || '';
+    if (name) name.textContent = activeName;
+    if (count) count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+  };
+
+  previous?.addEventListener('click', () => showSlide(activeIndex - 1));
+  next?.addEventListener('click', () => showSlide(activeIndex + 1));
+  dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)));
+
+  track.addEventListener('pointerdown', (event) => {
+    if (window.matchMedia('(min-width: 861px)').matches) return;
+    pointerStart = { id: event.pointerId, x: event.clientX };
+    dragDistance = 0;
+    track.setPointerCapture(event.pointerId);
+    track.classList.add('is-dragging');
+  });
+
+  track.addEventListener('pointermove', (event) => {
+    if (!pointerStart || event.pointerId !== pointerStart.id) return;
+    dragDistance = event.clientX - pointerStart.x;
+    track.style.setProperty('--fg-composite-drag', String(dragDistance));
+  });
+
+  const finishDrag = (event) => {
+    if (!pointerStart || event.pointerId !== pointerStart.id) return;
+    const threshold = Math.min(70, track.clientWidth * 0.16);
+    const direction = dragDistance < -threshold ? 1 : (dragDistance > threshold ? -1 : 0);
+    pointerStart = null;
+    showSlide(activeIndex + direction);
+  };
+
+  track.addEventListener('pointerup', finishDrag);
+  track.addEventListener('pointercancel', finishDrag);
+  showSlide(0);
+});
+
 document.querySelectorAll('[data-fg-sash-furniture]').forEach((selector) => {
   const styleButtons = [...selector.querySelectorAll('[data-fg-furniture-style]')];
   const panels = [...selector.querySelectorAll('[data-fg-furniture-panel]')];
