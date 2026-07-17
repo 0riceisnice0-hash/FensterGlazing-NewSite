@@ -391,48 +391,44 @@ $composite_door_colours = [];
 $composite_door_glass = [];
 if ($is_composite_doors) {
     $composite_asset_base = '/wp-content/themes/fenster/assets/images/products/composite-distinction/';
-    $composite_door_families = [
+    // Two Distinction collections, each holding the styles Fenster fits within it.
+    $composite_collections = [
         [
             'name' => 'Signature',
-            'tagline' => 'Traditional and character-led',
-            'image' => $composite_asset_base . 'families/signature-800w.webp',
-            'alt' => 'Black Signature composite door with decorative Lunna glazing',
-            'copy' => 'The broad traditional collection, with familiar panel shapes and a wide decorative-glass choice for entrances that need to suit an established property.',
-            'best_for' => 'Period homes, traditional elevations and customers who want the widest classic design choice.',
-            'specs' => [
-                ['label' => 'Door slab', 'value' => '44.5mm insulated GRP'],
-                ['label' => 'Character', 'value' => 'Classic panels and glazing'],
-                ['label' => 'Finish', 'value' => 'Woodgrain-effect GRP skin'],
-                ['label' => 'Choice', 'value' => 'Broadest traditional range'],
-            ],
+            'tagline' => 'Traditional',
+            'image_400' => $composite_asset_base . 'families/signature-400w.webp',
+            'image_800' => $composite_asset_base . 'families/signature-800w.webp',
+            'alt' => 'Black Signature composite door with decorative glass on a period home',
+            'copy' => 'Classic panels, decorative glass and period detail. The widest choice for established and traditional homes.',
+            'styles' => ['Classical', 'Elegance', 'Esteem', 'Renown', 'Rustic Renown', 'New England'],
         ],
         [
             'name' => 'Contemporary',
-            'tagline' => 'Statement shapes and grooves',
-            'image' => $composite_asset_base . 'families/contemporary-800w.webp',
-            'alt' => 'Pale Contemporary composite door with circular glazing',
-            'copy' => 'A more expressive collection using routed grooves, modern glass positions and the same tactile woodgrain finish to create a cleaner entrance.',
-            'best_for' => 'Renovated homes, crisp facades and entrances where the glass shape should do more of the design work.',
-            'specs' => [
-                ['label' => 'Door slab', 'value' => '44.5mm insulated GRP'],
-                ['label' => 'Character', 'value' => 'Grooves and bold apertures'],
-                ['label' => 'Finish', 'value' => 'Woodgrain-effect GRP skin'],
-                ['label' => 'Choice', 'value' => 'Modern glazing layouts'],
-            ],
+            'tagline' => 'Modern',
+            'image_400' => $composite_asset_base . 'collections/contemporary-hall-400w.webp',
+            'image_800' => $composite_asset_base . 'collections/contemporary-hall-800w.webp',
+            'alt' => 'Anthracite Contemporary composite door with side panels in a modern hallway',
+            'copy' => 'Clean grooves, bold glass layouts and statement shapes for a crisp, modern frontage.',
+            'styles' => ['Esprit', 'Infinity', 'Venture'],
         ],
-        [
-            'name' => 'Rustic Renown',
-            'tagline' => 'Signature cottage style',
-            'image' => $composite_asset_base . 'families/rustic-renown-800w.webp',
-            'alt' => 'Rustic Renown composite door in basalt grey on a brick cottage',
-            'copy' => 'Rustic Renown sits within the Signature range. Vertical plank detailing and compact glazing give it a quieter cottage-style character without losing modern composite-door performance.',
-            'best_for' => 'Cottages, country-style homes and brick elevations that suit a simpler boarded door face.',
-            'specs' => [
-                ['label' => 'Door slab', 'value' => '44.5mm insulated GRP'],
-                ['label' => 'Character', 'value' => 'Vertical plank detailing'],
-                ['label' => 'Finish', 'value' => 'Woodgrain-effect GRP skin'],
-                ['label' => 'Choice', 'value' => 'Solid, diamond or top light'],
-            ],
+    ];
+    // Real-home mosaic. Each tile names the finish and the style so it teaches, not just decorates.
+    $composite_gallery = [
+        ['stem' => 'gallery/black-chatsworth-entrance', 'widths' => [480, 800], 'class' => 'is-tall', 'caption' => 'Twin Chatsworth glass on a black entrance', 'sub' => 'Signature, three-quarter lite'],
+        ['stem' => 'gallery/anthracite-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'Anthracite grey with a diagonal groove', 'sub' => 'Contemporary Infinity'],
+        ['stem' => 'gallery/ruby-red-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'A ruby red statement door', 'sub' => 'Contemporary Infinity'],
+        ['stem' => 'families/rustic-renown', 'widths' => [400, 800], 'class' => 'is-tall', 'caption' => 'Basalt grey cottage door', 'sub' => 'Signature Rustic Renown'],
+        ['stem' => 'gallery/chartwell-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'Chartwell green with an arched top light', 'sub' => 'Signature Eclat Arch'],
+        ['stem' => 'gallery/blue-door-interior', 'widths' => [480, 800, 1400], 'class' => 'is-wide', 'caption' => 'A dual-colour door from the hallway side', 'sub' => 'Different colours inside and out'],
+    ];
+    // Door types that are not a plain single door.
+    $composite_door_types = [
+        'image_stem' => 'types/stable-kitchen',
+        'image_widths' => [800, 1200],
+        'image_alt' => 'Pastel blue Signature stable door open at the top in a cottage kitchen',
+        'items' => [
+            ['name' => 'Stable doors', 'copy' => 'Open the top half for light and fresh air while the bottom stays shut and secure. A favourite for kitchens, utility rooms and cottage frontages.'],
+            ['name' => 'Side panels', 'copy' => 'Matching glazed side panels widen a narrow opening and bring more daylight into the hallway, framed to suit the door you choose.'],
         ],
     ];
     $composite_door_colours = [
@@ -2915,7 +2911,9 @@ if ($is_commercial_hub) {
     <?php if ($is_composite_doors) : ?>
         <?php
         get_template_part('template-parts/sections/composite-doors-v2', null, [
-            'families' => $composite_door_families,
+            'collections' => $composite_collections,
+            'gallery' => $composite_gallery,
+            'door_types' => $composite_door_types,
             'colours' => $composite_door_colours,
             'glass' => $composite_door_glass,
             'handles' => $door_handle_finishes,
