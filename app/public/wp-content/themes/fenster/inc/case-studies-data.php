@@ -41,6 +41,8 @@ function fenster_case_studies(): array
     $bifold = esc_url(home_url('/aluminium-bifold-doors/'));
     $slidefold = esc_url(home_url('/slide-fold-doors/'));
     $colour = esc_url(home_url('/colour-options/'));
+    $team = esc_url(home_url('/meet-the-team/'));
+    $team_img = FENSTER_THEME_URI . '/assets/images/imported/';
 
     $cache = [
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
@@ -69,6 +71,14 @@ function fenster_case_studies(): array
                 'Anthracite grey finish, inside and out',
                 'Slim sightlines with a low threshold',
                 'Double glazed, multi-point locking with a main traffic door',
+            ],
+            'installers' => [
+                ['name' => 'Tom Carter', 'role' => 'Installer', 'image' => $team_img . 'unnamed-8.jpg', 'url' => home_url('/meet-the-team/')],
+                ['name' => 'Johnnie Greenwell', 'role' => 'Installer', 'image' => $team_img . '1.png', 'url' => home_url('/meet-the-team/')],
+            ],
+            'review' => [
+                'quote' => 'We are over the moon with the doors! They are excellent! What a difference it has made to our kitchen space! The two lads, <a href="' . $team . '">Tom</a> and <a href="' . $team . '">Johnnie</a>, who came to install were exceptional. Professional, tidy, and the speed they got it installed was mind blowing to us. Thank you to you and your whole team!',
+                'author' => 'Conor and Laura',
             ],
             'images' => [
                 ['src' => $img . 'cs-mk-whitehouse-bifold-closed.jpg', 'caption' => 'The bifold doors closed, seen from the garden, with the anthracite grey frames sitting neatly to the patio.'],

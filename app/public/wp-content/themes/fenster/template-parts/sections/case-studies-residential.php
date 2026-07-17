@@ -125,6 +125,10 @@ $products = is_array($study['products'] ?? null) ? $study['products'] : [];
 $colour = is_array($study['colour'] ?? null) ? $study['colour'] : null;
 $installed = is_array($study['installed'] ?? null) ? $study['installed'] : [];
 $images = is_array($study['images'] ?? null) ? $study['images'] : [];
+$installers = is_array($study['installers'] ?? null) ? $study['installers'] : [];
+$review = is_array($study['review'] ?? null) ? $study['review'] : null;
+$hero_image = $images[0] ?? null;
+$gallery_images = array_slice($images, 1);
 
 $related = [];
 foreach ($cards as $short => $card) {
@@ -135,14 +139,41 @@ foreach ($cards as $short => $card) {
 $related = array_slice($related, 0, 3);
 ?>
 <article class="fg-cs fg-cs--single">
-    <header class="fg-cs-head">
-        <div class="container">
-            <a class="fg-cs-back" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
-            <p class="eyebrow"><?php echo esc_html(trim($type . ' • ' . $location, ' ')); ?></p>
-            <h1><?php echo esc_html($title); ?></h1>
-            <p class="fg-cs-head__lead"><?php echo esc_html($lead); ?></p>
+    <header class="fg-cs-hero">
+        <div class="container fg-cs-hero__grid">
+            <div class="fg-cs-hero__intro">
+                <a class="fg-cs-back" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
+                <p class="eyebrow"><?php echo esc_html(trim($type . ' • ' . $location, ' ')); ?></p>
+                <h1><?php echo esc_html($title); ?></h1>
+                <p class="fg-cs-hero__lead"><?php echo esc_html($lead); ?></p>
+                <div class="fg-cs-hero__actions">
+                    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                    <?php $first_product = $products[0] ?? null; ?>
+                    <?php if (is_array($first_product)) : ?>
+                        <a class="button button--light" href="<?php echo esc_url((string) ($first_product['url'] ?? '#')); ?>"><?php echo esc_html((string) ($first_product['label'] ?? '')); ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php if (is_array($hero_image)) : ?>
+                <figure class="fg-cs-hero__media">
+                    <img src="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($hero_image['caption'] ?? $title)); ?>" loading="eager">
+                </figure>
+            <?php endif; ?>
         </div>
     </header>
+
+    <?php if (! empty($specs)) : ?>
+        <section class="fg-cs-specstrip">
+            <div class="container fg-cs-specstrip__grid">
+                <?php foreach ($specs as $spec) : ?>
+                    <div class="fg-cs-specstrip__item">
+                        <span><?php echo esc_html((string) ($spec['label'] ?? '')); ?></span>
+                        <strong><?php echo esc_html((string) ($spec['value'] ?? '')); ?></strong>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+    <?php endif; ?>
 
     <section class="fg-cs-body">
         <div class="container fg-cs-body__grid">
@@ -159,38 +190,56 @@ $related = array_slice($related, 0, 3);
                     );
                     ?>
                 </p>
+
+                <?php if ($review && ! empty($review['quote'])) : ?>
+                    <figure class="fg-cs-review">
+                        <blockquote><?php echo wp_kses((string) $review['quote'], $allowed_overview_html); ?></blockquote>
+                        <?php if (! empty($review['author'])) : ?>
+                            <figcaption><?php echo esc_html((string) $review['author']); ?></figcaption>
+                        <?php endif; ?>
+                    </figure>
+                <?php endif; ?>
             </div>
 
-            <aside class="fg-cs-specs">
-                <?php if (! empty($specs)) : ?>
-                    <h2 class="fg-cs-specs__title"><?php esc_html_e('Specification', 'fenster'); ?></h2>
-                    <dl class="fg-cs-specs__list">
-                        <?php foreach ($specs as $spec) : ?>
-                            <div>
-                                <dt><?php echo esc_html((string) ($spec['label'] ?? '')); ?></dt>
-                                <dd><?php echo esc_html((string) ($spec['value'] ?? '')); ?></dd>
-                            </div>
-                        <?php endforeach; ?>
-                    </dl>
-                <?php endif; ?>
-                <?php if (! empty($products) || $colour) : ?>
-                    <div class="fg-cs-specs__links">
-                        <span class="fg-cs-specs__links-label"><?php esc_html_e('Explore', 'fenster'); ?></span>
-                        <?php foreach ($products as $product) : ?>
-                            <a class="fg-cs-link" href="<?php echo esc_url((string) ($product['url'] ?? '#')); ?>"><?php echo esc_html((string) ($product['label'] ?? '')); ?></a>
-                        <?php endforeach; ?>
-                        <?php if ($colour) : ?>
-                            <a class="fg-cs-link" href="<?php echo esc_url((string) ($colour['url'] ?? home_url('/colour-options/'))); ?>"><?php echo esc_html((string) ($colour['label'] ?? '')); ?></a>
-                        <?php endif; ?>
-                        <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
-                    </div>
-                <?php endif; ?>
+            <aside class="fg-cs-aside">
+                <div class="fg-cs-aside__block">
+                    <span class="fg-cs-aside__label"><?php esc_html_e('Explore', 'fenster'); ?></span>
+                    <?php foreach ($products as $product) : ?>
+                        <a class="fg-cs-link" href="<?php echo esc_url((string) ($product['url'] ?? '#')); ?>"><?php echo esc_html((string) ($product['label'] ?? '')); ?></a>
+                    <?php endforeach; ?>
+                    <?php if ($colour) : ?>
+                        <a class="fg-cs-link" href="<?php echo esc_url((string) ($colour['url'] ?? home_url('/colour-options/'))); ?>"><?php echo esc_html((string) ($colour['label'] ?? '')); ?></a>
+                    <?php endif; ?>
+                    <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                </div>
+
                 <?php if (! empty($installed)) : ?>
-                    <div class="fg-cs-specs__installed">
-                        <span class="fg-cs-specs__links-label"><?php esc_html_e('What we fitted', 'fenster'); ?></span>
-                        <ul>
+                    <div class="fg-cs-aside__block">
+                        <span class="fg-cs-aside__label"><?php esc_html_e('What we fitted', 'fenster'); ?></span>
+                        <ul class="fg-cs-fitted">
                             <?php foreach ($installed as $item) : ?>
                                 <li><?php echo esc_html((string) $item); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (! empty($installers)) : ?>
+                    <div class="fg-cs-aside__block fg-cs-installers">
+                        <span class="fg-cs-aside__label"><?php esc_html_e('Installers', 'fenster'); ?></span>
+                        <ul class="fg-cs-installers__list">
+                            <?php foreach ($installers as $person) : ?>
+                                <li>
+                                    <a class="fg-cs-installer" href="<?php echo esc_url((string) ($person['url'] ?? home_url('/meet-the-team/'))); ?>">
+                                        <?php if (! empty($person['image'])) : ?>
+                                            <span class="fg-cs-installer__photo"><img src="<?php echo esc_url((string) $person['image']); ?>" alt="<?php echo esc_attr((string) ($person['name'] ?? '')); ?>" loading="lazy"></span>
+                                        <?php endif; ?>
+                                        <span class="fg-cs-installer__meta">
+                                            <strong><?php echo esc_html((string) ($person['name'] ?? '')); ?></strong>
+                                            <small><?php echo esc_html((string) ($person['role'] ?? 'Installer')); ?></small>
+                                        </span>
+                                    </a>
+                                </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
@@ -199,15 +248,14 @@ $related = array_slice($related, 0, 3);
         </div>
     </section>
 
-    <?php if (! empty($images)) : ?>
+    <?php if (! empty($gallery_images)) : ?>
         <section class="fg-cs-gallery">
             <div class="container">
-                <div class="fg-cs-gallery__grid">
-                    <?php foreach ($images as $image) : ?>
-                        <figure class="fg-cs-figure">
-                            <div class="fg-cs-figure__media">
-                                <img src="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($image['caption'] ?? $title)); ?>" loading="lazy">
-                            </div>
+                <h2 class="fg-cs-gallery__title"><?php esc_html_e('The project in pictures', 'fenster'); ?></h2>
+                <div class="fg-cs-gallery__masonry">
+                    <?php foreach ($gallery_images as $image) : ?>
+                        <figure class="fg-cs-shot">
+                            <img src="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($image['caption'] ?? $title)); ?>" loading="lazy">
                             <?php if (! empty($image['caption'])) : ?>
                                 <figcaption><?php echo esc_html((string) $image['caption']); ?></figcaption>
                             <?php endif; ?>
