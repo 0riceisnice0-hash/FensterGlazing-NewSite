@@ -232,11 +232,12 @@ on Meet the Team (every team member now has an `id` of `sanitize_title(name)`,
 set in `template-parts/sections/team.php`).
 
 Define people once at the top of `case-studies-data.php` with the `$fitter`
-helper: `$fitter('Full Name', 'photo-file.png')` builds `name`, `role`
-("Fitter"), `image` (from `assets/images/imported/`) and `url`
-(`/meet-the-team/#full-name`). Omit the photo argument for someone with no team
-profile yet (e.g. Aaron) — they render as a name-only chip with an initial, no
-link.
+helper: `$fitter('Full Name', 'Role', 'photo-file.png')` builds `name`, `role`,
+`image` (from `assets/images/imported/`) and `url` (`/meet-the-team/#full-name`).
+The **role must match the person's job title on Meet the Team** (e.g. Andy
+McCullagh is "Service Engineer", not "Fitter"). Omit the photo argument for
+someone with no team profile yet (e.g. Aaron) — they render as a name-only chip
+with an initial, no link.
 
 Current fitters and photos:
 
