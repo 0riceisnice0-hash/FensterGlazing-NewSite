@@ -16,7 +16,7 @@ Last updated: 2026-07-17
 - New journey: responsive Grandeur hero, corrected four-fact strip, Signature/Contemporary/nxt-gen/Grandeur selector, desktop comparison and mobile selected specs, six-image inspiration gallery, mid-page quote prompt, product-specific colour/glass/hardware section, FAQs, responsive quote, relevant review and compact Composite Doors enquiry.
 - Removed the route's repeated generic introduction, product-intel panel, global colour link, eleven-card glass wall, generic visual mosaic, universal handle selector, order-process repeat and related-link filler at PHP level.
 - Corrected product claims: standard 44mm slab vs Grandeur 70mm double rebate, no blanket `Any RAL colour` promise, no invented whole-doorset U-value, and explicit qualification of supplier thermal, glass, colour and compatibility statements.
-- Built the compiled CSS/JS and linted all 61 theme PHP files. Protected-test responsive browser verification is required before production promotion; no live deploy is authorised by this entry.
+- Built the compiled CSS/JS and linted all 61 theme PHP files. Deployed theme commit `68cfc9d` to the protected test site, flushed the WordPress and SiteGround caches, and verified the route at 390px, 768px and 1440px: no horizontal overflow or broken images; the mobile carousel updates its matching specification; the desktop four-range comparison, responsive quote handoff, footer trust grid and social links all render correctly. Production was not deployed.
 
 ## 2026-07-17 - Residential case studies live release
 
