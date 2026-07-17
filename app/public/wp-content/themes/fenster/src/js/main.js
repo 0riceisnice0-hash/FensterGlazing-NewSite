@@ -2414,18 +2414,37 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
         if (idx >= 0) {
           activeIndex = idx;
           const target = material || carousel;
-          const jumpToTarget = () => {
+          // During load the browser/Lenis keep the page pinned at the top while
+          // the colour hero images settle. Re-assert the target position every
+          // frame (our rAF runs after Lenis' so there is no flicker) until it
+          // holds on its own, then stop. Abort if the visitor scrolls.
+          let cancelled = false;
+          let heldFrames = 0;
+          const startTime = performance.now();
+          const cancel = () => {
+            cancelled = true;
+          };
+          ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((eventName) => {
+            window.addEventListener(eventName, cancel, { once: true, passive: true });
+          });
+          const enforce = () => {
+            if (cancelled) return;
             const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 96);
-            if (window.fensterLenis?.scrollTo) {
-              window.fensterLenis.scrollTo(y, { immediate: true, force: true });
+            if (Math.abs(window.scrollY - y) < 4) {
+              heldFrames += 1;
             } else {
-              window.scrollTo(0, y);
+              heldFrames = 0;
+              if (window.fensterLenis?.scrollTo) {
+                window.fensterLenis.scrollTo(y, { immediate: true, force: true });
+              } else {
+                window.scrollTo(0, y);
+              }
+            }
+            if (heldFrames < 12 && performance.now() - startTime < 6000) {
+              window.requestAnimationFrame(enforce);
             }
           };
-          // Re-run a few times because the colour hero images shift layout as
-          // they load, and Lenis can reset the initial scroll position.
-          [200, 500, 900].forEach((delay) => window.setTimeout(jumpToTarget, delay));
-          window.addEventListener('load', () => window.setTimeout(jumpToTarget, 120), { once: true });
+          window.requestAnimationFrame(enforce);
         }
       }
     }
