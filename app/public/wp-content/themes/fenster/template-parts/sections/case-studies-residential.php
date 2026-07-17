@@ -84,7 +84,7 @@ if ($is_archive) :
             <div class="container">
                 <p class="eyebrow"><?php esc_html_e('Case studies', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Recent installations', 'fenster'); ?></h1>
-                <p class="fg-cs-head__lead"><?php esc_html_e('See the most recent of our 1,000+ installations in the case studies below. We are writing up the best of them as full case studies, with the products, colours and detail behind each one, so this page will keep growing over time.', 'fenster'); ?></p>
+                <p class="fg-cs-head__lead"><?php esc_html_e('See the most recent of our 1,000+ installations in the case studies below.', 'fenster'); ?></p>
             </div>
         </header>
 
