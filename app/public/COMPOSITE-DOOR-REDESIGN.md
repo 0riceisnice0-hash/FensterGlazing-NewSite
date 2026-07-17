@@ -50,10 +50,11 @@ Approved imagery covers:
 
 - a Grandeur entrance for the responsive hero;
 - one visually distinct image for each of the four collections;
-- six inspiration views covering traditional, modern, large-glass, colour-led and interior contexts;
-- six close decorative-glass details.
+- six portrait-first complete entrance views;
+- eight real-door colour examples;
+- six glass styles shown on complete doors, plus six close decorative-glass details.
 
-The build script creates WebP variants rather than shipping the original multi-megabyte files. The hero has 480, 960 and 1920 pixel sources; family images have 400 and 800 pixel sources; gallery images have 480, 800 and 1400 pixel sources.
+The build script creates 77 WebP variants rather than shipping the original multi-megabyte files. The hero has 480, 960 and 1920 pixel sources; family images have 400 and 800 pixel sources; portrait galleries have 480 and 800 pixel sources; colour and glass selectors have 240 pixel thumbnails plus 480 and 800 pixel previews; glass close-ups have 360 and 720 pixel sources.
 
 ## Product facts and claim handling
 
@@ -70,9 +71,10 @@ Mobile is deliberately one decision at a time:
 - the hero uses a 480 pixel responsive image and a controlled crop;
 - the four collections are a full-width swipe carousel with previous/next controls, position dots and a selected-collection specification panel;
 - the wide comparison table is removed from the mobile layout;
-- the inspiration gallery is a snap-scrolling rail with one large image in view;
-- colour remains a visual card instead of becoming another link panel;
-- glass and hardware are fixed-size horizontal rails, so image loading cannot collapse the layout;
+- the inspiration gallery is a portrait snap-scrolling rail with one complete entrance in view;
+- colour is an eight-option image selector that shows each colour on a real door;
+- glass is a six-option image selector with complete-door and close-detail modes;
+- all selector previews keep a fixed 4:5 media box, so image loading cannot collapse or jump the layout;
 - the external Composite Doors quote tool opens directly instead of embedding a cramped iframe;
 - the final enquiry form is compact and locked to Composite Doors.
 
@@ -82,11 +84,13 @@ Desktop uses the width to compare without imitating a stretched phone layout:
 
 - all four collections are visible together in equal-height image-led cards;
 - one five-column table states the shared differences once;
-- the six-image inspiration gallery becomes an editorial collage;
-- colour uses a large two-column image-and-swatch composition;
-- glass becomes a six-item visual grid;
+- the six-image inspiration gallery becomes one consistent row of vertical entrance cards;
+- colour uses a two-column live preview with eight real-door thumbnails;
+- glass uses the same live-preview pattern, with a door/detail toggle and six selectable styles;
 - hardware is a compact four-finish strip;
 - the quote tool remains embedded for visitors who want to design in-page.
+
+All route section headings are capped at `2.8rem` and use a restrained 650 weight. This route-specific rule prevents generic component styles from inflating headings back to display scale.
 
 ## Maintenance rules
 
@@ -94,8 +98,10 @@ Desktop uses the width to compare without imitating a stretched phone layout:
 - Do not add a claimed whole-door U-value without a confirmed complete doorset specification.
 - Do not promise that every colour, glass or handle works with every collection.
 - Add gallery images only after visual inspection and create all responsive variants.
+- Keep gallery and selector imagery portrait-first; do not return to landscape-heavy collages for a vertical product.
+- Every colour and glass option must show a real door, not only an abstract swatch or pale isolated close-up.
 - Keep mobile family cards at one per viewport.
-- Preserve fixed media dimensions in the glass and hardware rails.
+- Preserve fixed media dimensions in the colour, glass and hardware controls.
 - If the Distinction range changes, update both the family data and comparison values together.
 
 ## Verification standard
