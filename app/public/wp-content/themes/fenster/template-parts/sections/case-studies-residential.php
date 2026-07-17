@@ -285,8 +285,9 @@ $related = array_slice($related, 0, 3);
                 <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                 <?php $primary_product = $products[0] ?? null; ?>
                 <?php if (is_array($primary_product)) : ?>
+                    <?php $cta_label = str_replace('upvc', 'uPVC', strtolower((string) ($primary_product['label'] ?? 'products'))); ?>
                     <a class="button button--light" href="<?php echo esc_url((string) ($primary_product['url'] ?? '#')); ?>">
-                        <?php printf(esc_html__('View %s', 'fenster'), esc_html(strtolower((string) ($primary_product['label'] ?? 'products')))); ?>
+                        <?php printf(esc_html__('View %s', 'fenster'), esc_html($cta_label)); ?>
                     </a>
                 <?php else : ?>
                     <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('Back to case studies', 'fenster'); ?></a>
