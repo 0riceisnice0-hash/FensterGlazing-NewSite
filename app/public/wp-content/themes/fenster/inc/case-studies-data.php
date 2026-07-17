@@ -241,8 +241,8 @@ function fenster_case_studies(): array
         ],
 
         'sheerline-roof-lantern' => [
-            'title' => 'Sheerline roof lantern',
-            'location' => '',
+            'title' => 'Sheerline roof lantern, Drayton Parslow',
+            'location' => 'Drayton Parslow',
             'type' => 'Residential',
             'date' => '2025-06-08',
             'summary' => 'A large Sheerline S1 aluminium roof lantern with automated opening vents, flooding an extension with daylight.',
@@ -268,7 +268,7 @@ function fenster_case_studies(): array
                 '28mm glazing with solar-control options',
                 'SheerVent automated opening vents',
             ],
-            'installers' => [$fitter_tom],
+            'installers' => [$fitter_tom, $fitter_johnnie],
             'video' => [
                 'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-big-roof-lantern.mp4',
                 'poster' => $img . 'cs-big-roof-lantern-poster.jpg',
@@ -280,14 +280,14 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-big-roof-lantern-19.jpg', 'caption' => 'A closer look at the slim white frame and opening vents along the lantern.'],
             ],
             'seo' => [
-                'title_tag' => 'Sheerline Roof Lantern Case Study | Fenster Glazing',
-                'meta_description' => 'A real Fenster project: a large Sheerline S1 aluminium roof lantern with SheerVent automated openers, bringing daylight into an extension.',
+                'title_tag' => 'Sheerline Roof Lantern Case Study, Drayton Parslow | Fenster Glazing',
+                'meta_description' => 'A real Fenster project in Drayton Parslow: a large Sheerline S1 aluminium roof lantern with SheerVent automated openers, bringing daylight into an extension.',
             ],
         ],
 
         'roof-lantern-and-heritage-doors' => [
-            'title' => 'Roof lantern and heritage doors',
-            'location' => '',
+            'title' => 'Roof lantern and heritage doors, Northampton',
+            'location' => 'Northampton',
             'type' => 'Residential',
             'date' => '2025-04-22',
             'summary' => 'A Sheerline roof lantern paired with black steel-look heritage aluminium doors on a brick extension.',
@@ -326,8 +326,8 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-lantern-doors-16.jpg', 'caption' => 'The roof lantern from above, with its slim black frame on the flat roof.'],
             ],
             'seo' => [
-                'title_tag' => 'Roof Lantern and Heritage Doors Case Study | Fenster Glazing',
-                'meta_description' => 'A real Fenster project: a Sheerline roof lantern and black steel-look heritage aluminium doors fitted to a brick extension.',
+                'title_tag' => 'Roof Lantern and Heritage Doors Case Study, Northampton | Fenster Glazing',
+                'meta_description' => 'A real Fenster project in Northampton: a Sheerline roof lantern and black steel-look heritage aluminium doors fitted to a brick extension.',
             ],
         ],
     ];

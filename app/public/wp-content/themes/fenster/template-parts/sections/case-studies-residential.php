@@ -137,11 +137,13 @@ $installers = is_array($study['installers'] ?? null) ? $study['installers'] : []
 $review = is_array($study['review'] ?? null) ? $study['review'] : null;
 $video = is_array($study['video'] ?? null) ? $study['video'] : null;
 $is_wide_video = $video && ($video['orientation'] ?? '') === 'landscape';
-if ($video) {
-    // A video takes the hero, so every still image goes to the gallery.
+if ($video && ! $is_wide_video) {
+    // A square/portrait video fills the hero slot, so every still goes to the gallery.
     $hero_image = null;
     $gallery_images = $images;
 } else {
+    // No video, or a wide video (which sits full-width below a normal two-column
+    // hero): the first still fills the hero image slot, the rest go to the gallery.
     $hero_image = $images[0] ?? null;
     $gallery_images = array_slice($images, 1);
 }
@@ -178,7 +180,16 @@ $hero_intro_html = ob_get_clean();
     <?php if ($is_wide_video) : ?>
         <header class="fg-cs-hero fg-cs-hero--wide-video">
             <div class="container">
-                <div class="fg-cs-hero__intro fg-cs-hero__intro--wide"><?php echo $hero_intro_html; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+                <div class="fg-cs-hero__grid">
+                    <div class="fg-cs-hero__intro"><?php echo $hero_intro_html; // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+                    <?php if (is_array($hero_image)) : ?>
+                        <figure class="fg-cs-hero__media">
+                            <a class="fg-cs-zoom" href="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" data-fg-gallery-lightbox aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>">
+                                <img src="<?php echo esc_url((string) ($hero_image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($hero_image['caption'] ?? $title)); ?>" loading="eager">
+                            </a>
+                        </figure>
+                    <?php endif; ?>
+                </div>
                 <div class="fg-cs-hero__video-wide">
                     <video autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url((string) ($video['poster'] ?? '')); ?>" aria-label="<?php echo esc_attr((string) ($video['label'] ?? $title)); ?>">
                         <source src="<?php echo esc_url((string) ($video['src'] ?? '')); ?>" type="video/mp4">
