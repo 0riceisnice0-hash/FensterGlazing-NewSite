@@ -2883,7 +2883,7 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
-    <?php if ($use_product_journey && count($product_usps) === 4) : ?>
+    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors) : ?>
         <section class="fg-product-pulse fg-product-pulse--usps" aria-label="<?php echo esc_attr($title . ' key specifications'); ?>">
             <div class="container fg-product-pulse__inner">
                 <div>
@@ -2912,7 +2912,19 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
-    <?php if (! empty($composite_door_families)) : ?>
+    <?php if ($is_composite_doors) : ?>
+        <?php
+        get_template_part('template-parts/sections/composite-doors-v2', null, [
+            'families' => $composite_door_families,
+            'colours' => $composite_door_colours,
+            'glass' => $composite_door_glass,
+            'handles' => $door_handle_finishes,
+            'asset_base' => $composite_asset_base,
+        ]);
+        ?>
+    <?php endif; ?>
+
+    <?php if (! $is_composite_doors && ! empty($composite_door_families)) : ?>
         <section class="fg-composite-range" aria-labelledby="fg-composite-range-title">
             <div class="container">
                 <div class="fg-composite-range__head">

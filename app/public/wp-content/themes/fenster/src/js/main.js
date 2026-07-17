@@ -935,6 +935,37 @@ document.querySelectorAll('[data-fg-composite-carousel]').forEach((carousel) => 
   showSlide(0);
 });
 
+document.querySelectorAll('[data-fg-cd-range]').forEach((range) => {
+  const tabs = [...range.querySelectorAll('[data-fg-cd-range-tab]')];
+  const images = [...range.querySelectorAll('[data-fg-cd-range-image]')];
+  const panels = [...range.querySelectorAll('[data-fg-cd-range-panel]')];
+  const name = range.querySelector('[data-fg-cd-range-name]');
+
+  const activate = (target) => {
+    tabs.forEach((tab) => tab.setAttribute('aria-selected', tab.dataset.fgCdRangeTab === target ? 'true' : 'false'));
+    images.forEach((image) => { image.hidden = image.dataset.fgCdRangeImage !== target; });
+    panels.forEach((panel) => { panel.hidden = panel.dataset.fgCdRangePanel !== target; });
+    const activeTab = tabs.find((tab) => tab.dataset.fgCdRangeTab === target);
+    if (name && activeTab) name.textContent = activeTab.querySelector('strong')?.textContent || '';
+  };
+
+  tabs.forEach((tab) => tab.addEventListener('click', () => activate(tab.dataset.fgCdRangeTab || '0')));
+  if (tabs.length) activate('0');
+});
+
+document.querySelectorAll('[data-fg-cd-config]').forEach((config) => {
+  const tabs = [...config.querySelectorAll('[data-fg-cd-config-tab]')];
+  const panels = [...config.querySelectorAll('[data-fg-cd-config-panel]')];
+
+  const activate = (target) => {
+    tabs.forEach((tab) => tab.setAttribute('aria-selected', tab.dataset.fgCdConfigTab === target ? 'true' : 'false'));
+    panels.forEach((panel) => { panel.hidden = panel.dataset.fgCdConfigPanel !== target; });
+  };
+
+  tabs.forEach((tab) => tab.addEventListener('click', () => activate(tab.dataset.fgCdConfigTab || 'colour')));
+  if (tabs.length) activate('colour');
+});
+
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');
