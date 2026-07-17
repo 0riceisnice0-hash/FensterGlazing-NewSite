@@ -2414,14 +2414,18 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
         if (idx >= 0) {
           activeIndex = idx;
           const target = material || carousel;
-          window.setTimeout(() => {
-            const y = target.getBoundingClientRect().top + window.scrollY - 96;
+          const jumpToTarget = () => {
+            const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 96);
             if (window.fensterLenis?.scrollTo) {
               window.fensterLenis.scrollTo(y, { immediate: true, force: true });
             } else {
               window.scrollTo(0, y);
             }
-          }, 400);
+          };
+          // Re-run a few times because the colour hero images shift layout as
+          // they load, and Lenis can reset the initial scroll position.
+          [200, 500, 900].forEach((delay) => window.setTimeout(jumpToTarget, delay));
+          window.addEventListener('load', () => window.setTimeout(jumpToTarget, 120), { once: true });
         }
       }
     }
