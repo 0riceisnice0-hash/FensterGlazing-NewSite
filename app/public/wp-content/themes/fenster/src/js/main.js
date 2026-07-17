@@ -2415,17 +2415,6 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
           activeIndex = idx;
           const target = material || carousel;
           const lenis = window.fensterLenis;
-          const jump = () => {
-            const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 96);
-            if (lenis?.scrollTo) {
-              lenis.scrollTo(y, { immediate: true, force: true });
-            } else {
-              window.scrollTo(0, y);
-            }
-          };
-          // Lenis keeps the page pinned at the top while the colour hero images
-          // settle after load. Pause it, jump to the swatch, re-assert as the
-          // layout settles, then hand smooth scrolling back. Abort on any input.
           let cancelled = false;
           const release = () => {
             cancelled = true;
@@ -2434,17 +2423,37 @@ document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
           ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((eventName) => {
             window.addEventListener(eventName, release, { once: true, passive: true });
           });
-          lenis?.stop?.();
-          jump();
-          [150, 400, 800, 1300].forEach((delay) => window.setTimeout(() => {
-            if (!cancelled) jump();
-          }, delay));
-          window.setTimeout(() => {
-            if (!cancelled) {
-              jump();
-              lenis?.start?.();
+          const settle = () => {
+            if (cancelled) return;
+            const y = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 96);
+            if (lenis?.scrollTo) {
+              lenis.scrollTo(y, { immediate: true, force: true });
+            } else {
+              window.scrollTo(0, y);
             }
-          }, 1600);
+          };
+          // Wait for load so the colour hero images have sized the page, then
+          // pause Lenis, jump to the swatch, re-assert briefly and hand smooth
+          // scrolling back. Running before load leaves the jump pinned at top.
+          const run = () => {
+            if (cancelled) return;
+            lenis?.stop?.();
+            settle();
+            [120, 350, 700].forEach((delay) => window.setTimeout(() => {
+              if (!cancelled) settle();
+            }, delay));
+            window.setTimeout(() => {
+              if (!cancelled) {
+                settle();
+                lenis?.start?.();
+              }
+            }, 950);
+          };
+          if (document.readyState === 'complete') {
+            window.setTimeout(run, 60);
+          } else {
+            window.addEventListener('load', () => window.setTimeout(run, 60), { once: true });
+          }
         }
       }
     }
