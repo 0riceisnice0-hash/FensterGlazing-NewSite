@@ -1200,6 +1200,54 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
+    if ($slug === 'case-studies' && function_exists('fenster_case_studies')) {
+        $studies = fenster_case_studies();
+        $first = is_array($studies) ? (reset($studies) ?: []) : [];
+        $og_image = (string) ($first['images'][0]['src'] ?? '');
+        $links = [];
+        foreach ($studies as $short_slug => $study) {
+            $links[] = ['url' => home_url('/case-studies/' . $short_slug . '/'), 'label' => (string) ($study['title'] ?? '')];
+        }
+
+        return $page_cache[$slug] = [
+            'slug' => 'case-studies',
+            'title' => 'Case Studies',
+            'url' => home_url('/case-studies/'),
+            'seo' => [
+                'title_tag' => 'Case Studies | Real Window and Door Installations | Fenster Glazing',
+                'meta_description' => 'Real Fenster window and door installations across Milton Keynes, Leighton Buzzard and beyond, with the products, colours and detail behind each project.',
+                'canonical' => 'https://fensterglazing.com/case-studies/',
+                'robots' => 'max-image-preview:large',
+                'og_image' => $og_image,
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => $links,
+        ];
+    }
+
+    if (str_starts_with($slug, 'case-studies/') && function_exists('fenster_case_study')) {
+        $short_slug = substr($slug, strlen('case-studies/'));
+        $study = fenster_case_study($short_slug);
+        if (is_array($study)) {
+            return $page_cache[$slug] = [
+                'slug' => $slug,
+                'title' => (string) ($study['title'] ?? 'Case Study'),
+                'url' => home_url('/' . $slug . '/'),
+                'seo' => [
+                    'title_tag' => (string) ($study['seo']['title_tag'] ?? ($study['title'] ?? 'Case Study') . ' | Fenster Glazing'),
+                    'meta_description' => (string) ($study['seo']['meta_description'] ?? ($study['summary'] ?? '')),
+                    'canonical' => 'https://fensterglazing.com/' . $slug . '/',
+                    'robots' => 'max-image-preview:large',
+                    'og_image' => (string) ($study['images'][0]['src'] ?? ''),
+                ],
+                'sections' => [],
+                'images' => is_array($study['images'] ?? null) ? $study['images'] : [],
+                'links' => [],
+            ];
+        }
+    }
+
     $index = fenster_generated_pages_index();
 
     if ($slug === 'fensa-approved-installers' && isset($index[$slug]) && is_array($index[$slug])) {
@@ -1354,7 +1402,9 @@ function fenster_gone_slugs(): array
     return [
         'nick-test-baboon' => true,
         'our-new-website' => true,
-        'case-studies' => true,
+        // The residential /case-studies/ archive is now a live, curated page
+        // driven by fenster_case_studies(); it must not be 410. The retired
+        // scrape-era residential detail routes below stay gone.
         'case-studies/bespoke-windows-woburn-water-end-barn' => true,
         'case-studies/double-glazing-rushden' => true,
         'case-studies/test' => true,
@@ -1715,7 +1765,12 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights'] as $virtual_slug) {
+    $case_study_slugs = function_exists('fenster_case_studies') ? array_map(
+        static fn (string $short): string => 'case-studies/' . $short,
+        array_keys(fenster_case_studies())
+    ) : [];
+
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights'], $case_study_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

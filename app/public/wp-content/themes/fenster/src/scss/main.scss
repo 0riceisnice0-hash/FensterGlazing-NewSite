@@ -10932,6 +10932,106 @@ html.fg-gallery-lightbox-open body {
   color: rgba(255, 255, 255, 0.76);
 }
 
+/* Residential case studies (curated data-driven system) */
+.fg-case-page--residential .fg-case-index__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fg-case-card--residential {
+  min-height: 420px;
+}
+
+.fg-case-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+
+.fg-case-card__tag {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(6px);
+}
+
+.fg-case-brief {
+  padding: 3.5rem 0 0;
+}
+
+.fg-case-brief__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.6fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.fg-case-brief .fg-case-snapshot__intro {
+  align-content: start;
+}
+
+.fg-case-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.3rem;
+}
+
+.fg-case-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(0, 45, 58, 0.16);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-steel);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.fg-case-chip::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+}
+
+.fg-case-chip--colour::before {
+  background: var(--color-steel);
+}
+
+.fg-case-chip:hover,
+.fg-case-chip:focus-visible {
+  border-color: var(--color-accent);
+  background: var(--color-soft);
+}
+
+.fg-case-quote-note {
+  margin-top: 1.3rem;
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.98rem;
+}
+
+.fg-case-quote-note a {
+  color: var(--color-accent);
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(46, 172, 102, 0.35);
+}
+
+.fg-case-quote-note a:hover {
+  border-bottom-color: var(--color-accent);
+}
+
 .fg-designer-cta {
   padding: 5rem 0;
   background: #ffffff;
@@ -16445,6 +16545,8 @@ html.fg-gallery-lightbox-open body {
 
 .fg-home-proof-wall__link {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   justify-content: center;
   margin-top: 0.85rem;
 }
@@ -20650,7 +20752,9 @@ html.fg-gallery-lightbox-open body {
   .fg-about-trust__grid,
   .fg-case-featured__grid,
   .fg-case-index__grid,
+  .fg-case-page--residential .fg-case-index__grid,
   .fg-case-snapshot__grid,
+  .fg-case-brief__grid,
   .fg-case-story__grid,
   .fg-scroll-video__grid,
   .fg-feature,

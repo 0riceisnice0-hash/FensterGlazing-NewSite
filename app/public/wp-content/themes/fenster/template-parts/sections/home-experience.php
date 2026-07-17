@@ -146,6 +146,7 @@ $location_links = [
         </div>
         <div class="container fg-home-proof-wall__link">
             <a href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('Why you can trust Fenster Glazing', 'fenster'); ?></a>
+            <a href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('See our recent case studies', 'fenster'); ?></a>
         </div>
     </section>
 

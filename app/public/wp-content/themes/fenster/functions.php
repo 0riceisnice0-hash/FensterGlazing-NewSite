@@ -18,6 +18,7 @@ define('FENSTER_THEME_URI', get_template_directory_uri());
 $fenster_required_files = [
     'inc/site-data.php',
     'inc/commercial-product-data.php',
+    'inc/case-studies-data.php',
     'inc/product-hub-data.php',
     'inc/setup.php',
     'inc/security.php',
