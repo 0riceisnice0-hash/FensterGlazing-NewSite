@@ -1,6 +1,15 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-16
+Last updated: 2026-07-17
+
+## 2026-07-17 - Residential case studies rebuilt (test)
+
+- Rebuilt `/case-studies/` as a curated, expandable system driven by a new `inc/case-studies-data.php` (`fenster_case_studies()`). Adding an entry there publishes a new archive card and detail page, wires its own routing, SEO, images, product/colour links and related-project cards. Designed to scale to 100+ studies from one data file.
+- Added the first four real projects with owner-supplied photography (optimised into `assets/images/case-studies/`): anthracite grey Sheerline aluminium bifolds (Whitehouse, MK), two-tone basalt grey Liniar casements over a boarded-up opening (Broughton, MK), flush casements plus a uPVC slide and fold door (Leighton Buzzard) and white Liniar casements (Leighton Buzzard).
+- Each detail page links the products used (e.g. `/aluminium-bifold-doors/`, `/casement-windows/`, `/flush-casement-windows/`, `/slide-fold-doors/`) and the colour (`/colour-options/`), states that the customer priced with the `/online-quote/` instant quote tool, and ends with product plus quote CTAs. Copy is direct we/you voice with no em dashes, per `STYLE.md`, reusing the existing `fg-case-*` styling with residential chip/quote additions.
+- Routing: removed the `/case-studies/` 410 and added synthetic archive/detail pages in `fenster_get_generated_page()`; kept `/commercial-projects/` and the commercial detail pages on their existing `pages.json` source by reading the raw index directly. The two retired residential studies (`double-glazing-rushden`, `water-stratford`) stay 410 and no longer appear anywhere.
+- Sitewide CTAs: added a footer `Case Studies` link and a homepage proof-wall link.
+- Deployed the exact commit to the protected test site only (not live). Server checks: `/case-studies/`, all four detail routes and `/commercial-projects/` return `200`; retired residential routes still `410`; new routes present in `page-sitemap.xml`. Browser DOM QA at 1440x900 and 390x844 confirmed no horizontal overflow, H1 within the `3.6rem` ceiling, correct product/colour/quote links, all images loading and grids stacking on mobile. (Full-page screenshots timed out in the test browser; verification was DOM/text based.)
 
 ## 2026-07-16 - Legend follow-up production reconciliation
 
