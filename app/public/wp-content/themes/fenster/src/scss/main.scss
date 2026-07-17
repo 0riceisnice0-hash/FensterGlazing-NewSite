@@ -29817,6 +29817,18 @@ html.fg-blinds-reveal-locked {
     linear-gradient(0deg, rgba(0, 31, 40, 0.58), transparent 62%);
 }
 
+.generated-page--composite-doors main h2 {
+  font-size: clamp(2rem, 3vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.07;
+  letter-spacing: -0.035em;
+}
+
+.generated-page--composite-doors main h3,
+.generated-page--composite-doors main strong {
+  font-weight: 600;
+}
+
 .fg-composite-range,
 .fg-composite-choices {
   padding: 3.25rem 0;
@@ -29837,11 +29849,13 @@ html.fg-blinds-reveal-locked {
 .fg-composite-colour-card h3,
 .fg-composite-glass-picker h3,
 .fg-composite-hardware h3 {
-  max-width: 18ch;
+  max-width: 22ch;
   margin: 0;
   color: var(--color-ink);
-  font-size: clamp(2rem, 8vw, 3.4rem);
-  line-height: 0.98;
+  font-size: clamp(2rem, 6.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
 }
 
 .fg-composite-range__head > div > p:not(.eyebrow),
@@ -29984,6 +29998,7 @@ html.fg-blinds-reveal-locked {
 .fg-composite-family__best strong {
   color: var(--color-ink);
   font-size: 0.88rem;
+  font-weight: 600;
   line-height: 1.4;
 }
 
@@ -30143,7 +30158,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-composite-gallery__rail figure {
-  height: 68vw;
+  height: auto;
+  aspect-ratio: 4 / 5;
   min-height: 270px;
   max-height: 390px;
   margin: 0;
@@ -30177,7 +30193,7 @@ html.fg-blinds-reveal-locked {
   background: rgba(0, 35, 45, 0.82);
   color: #fff;
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.35;
   backdrop-filter: blur(6px);
 }
@@ -30206,8 +30222,10 @@ html.fg-blinds-reveal-locked {
   max-width: 16ch;
   margin: 0;
   color: #fff;
-  font-size: clamp(2rem, 8vw, 3.2rem);
-  line-height: 0.98;
+  font-size: clamp(2rem, 6.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 }
 
 .fg-composite-gallery-cta p:not(.eyebrow) {
@@ -30293,6 +30311,183 @@ html.fg-blinds-reveal-locked {
   border-radius: 50%;
   background: var(--door-colour);
   box-shadow: 0 0 0 1px rgba(0, 45, 58, 0.2);
+}
+
+.fg-composite-choice-selector {
+  display: grid;
+  overflow: hidden;
+  margin-top: 1.25rem;
+  border: 1px solid rgba(0, 45, 58, 0.13);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 16px 44px rgba(0, 45, 58, 0.08);
+}
+
+.fg-composite-choice-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  background: #dfe7e5;
+}
+
+.fg-composite-choice-preview > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-composite-choice-preview figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2.75rem 1.15rem 1.1rem;
+  background: linear-gradient(0deg, rgba(0, 31, 40, 0.92), rgba(0, 31, 40, 0));
+  color: #fff;
+}
+
+.fg-composite-choice-preview figcaption > span {
+  display: block;
+  margin-bottom: 0.22rem;
+  color: #70da98;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.fg-composite-choice-preview figcaption h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.fg-composite-choice-preview figcaption p {
+  max-width: 48ch;
+  margin: 0.4rem 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.8rem;
+  line-height: 1.42;
+}
+
+.fg-composite-choice-preview__modes {
+  position: absolute;
+  z-index: 2;
+  top: 0.85rem;
+  left: 0.85rem;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 99px;
+  background: rgba(0, 31, 40, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.fg-composite-choice-preview__modes button {
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fg-composite-choice-preview__modes button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--color-ink);
+}
+
+.fg-composite-choice-controls {
+  min-width: 0;
+  padding: 1.2rem;
+}
+
+.fg-composite-choice-controls > h3 {
+  max-width: 22ch;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.55rem, 6vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.fg-composite-choice-controls > p:not(.eyebrow) {
+  max-width: 58ch;
+  margin: 0.7rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.fg-composite-choice-options {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 7.7rem;
+  gap: 0.65rem;
+  overflow-x: auto;
+  margin: 1rem -1.2rem 0 0;
+  padding: 0 1.2rem 0.35rem 0;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.fg-composite-choice-options::-webkit-scrollbar {
+  display: none;
+}
+
+.fg-composite-choice-options button {
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 7px;
+  background: #f4f7f6;
+  color: var(--color-ink);
+  text-align: left;
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+
+.fg-composite-choice-options button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.fg-composite-choice-options button > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.fg-composite-choice-options button > span {
+  display: flex;
+  min-height: 2.8rem;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.fg-composite-choice-options button i {
+  flex: 0 0 0.82rem;
+  width: 0.82rem;
+  height: 0.82rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--door-colour);
+  box-shadow: 0 0 0 1px rgba(0, 45, 58, 0.22);
 }
 
 .fg-composite-glass-picker,
@@ -30404,7 +30599,7 @@ html.fg-blinds-reveal-locked {
   .fg-composite-range__head h2,
   .fg-composite-gallery__head h2,
   .fg-composite-choices__head h2 {
-    font-size: clamp(3rem, 4.7vw, 5rem);
+    font-size: clamp(2.4rem, 3vw, 3.25rem);
   }
 
   .fg-composite-range__head aside {
@@ -30497,8 +30692,8 @@ html.fg-blinds-reveal-locked {
   .fg-composite-gallery__rail {
     grid-auto-flow: initial;
     grid-auto-columns: initial;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-rows: 280px 250px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
     gap: 0.9rem;
     overflow: visible;
     margin-right: 0;
@@ -30507,16 +30702,12 @@ html.fg-blinds-reveal-locked {
 
   .fg-composite-gallery__rail figure {
     height: auto;
+    aspect-ratio: 4 / 5;
     min-height: 0;
     max-height: none;
+    grid-column: auto !important;
+    grid-row: auto !important;
   }
-
-  .fg-composite-gallery__rail figure:nth-child(1) { grid-column: 1 / 6; grid-row: 1; }
-  .fg-composite-gallery__rail figure:nth-child(2) { grid-column: 6 / 10; grid-row: 1; }
-  .fg-composite-gallery__rail figure:nth-child(3) { grid-column: 10 / 13; grid-row: 1 / 3; }
-  .fg-composite-gallery__rail figure:nth-child(4) { grid-column: 1 / 4; grid-row: 2; }
-  .fg-composite-gallery__rail figure:nth-child(5) { grid-column: 4 / 8; grid-row: 2; }
-  .fg-composite-gallery__rail figure:nth-child(6) { grid-column: 8 / 10; grid-row: 2; }
 
   .fg-composite-gallery__hint {
     display: none;
@@ -30538,6 +30729,42 @@ html.fg-blinds-reveal-locked {
 
   .fg-composite-choices__head {
     margin-bottom: 2.4rem;
+  }
+
+  .fg-composite-choice-selector {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: stretch;
+  }
+
+  .fg-composite-choice-preview {
+    min-height: 590px;
+  }
+
+  .fg-composite-choice-controls {
+    display: grid;
+    align-content: center;
+    padding: clamp(2rem, 3.5vw, 3.5rem);
+  }
+
+  .fg-composite-choice-options {
+    grid-auto-flow: row;
+    grid-auto-columns: initial;
+    gap: 0.75rem;
+    overflow: visible;
+    margin: 1.4rem 0 0;
+    padding: 0.15rem;
+  }
+
+  .fg-composite-choice-options--colours {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fg-composite-choice-options--glass {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fg-composite-choice-options button > span {
+    min-height: 3rem;
   }
 
   .fg-composite-colour-card {
@@ -30604,6 +30831,10 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (min-width: 1180px) {
+  .fg-composite-gallery__rail {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
   .fg-composite-family {
     grid-template-rows: 390px 1fr;
   }

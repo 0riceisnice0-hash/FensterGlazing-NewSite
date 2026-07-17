@@ -450,30 +450,30 @@ if ($is_composite_doors) {
         ],
     ];
     $composite_door_gallery = [
-        ['image' => $composite_asset_base . 'gallery/chatsworth-double-lite-1400w.webp', 'alt' => 'Pale composite entrance door with twin Chatsworth glazed panels', 'caption' => 'Twin Chatsworth glass in a traditional entrance'],
-        ['image' => $composite_asset_base . 'gallery/venture-urban-entrance-1400w.webp', 'alt' => 'Dark contemporary composite door with a long pull handle', 'caption' => 'Dark entrance with sidelights and a long pull handle'],
-        ['image' => $composite_asset_base . 'gallery/nxt-gen-interior-1400w.webp', 'alt' => 'Grey nxt-gen composite door viewed from a bright hallway', 'caption' => 'Traditional glass seen from the inside'],
-        ['image' => $composite_asset_base . 'gallery/pale-blue-glass-detail-1400w.webp', 'alt' => 'Pale blue composite door with twin decorative glass panels', 'caption' => 'Colour, glass and hardware working together'],
-        ['image' => $composite_asset_base . 'gallery/three-quarter-glass-1400w.webp', 'alt' => 'Black composite entrance door with a large decorative glass panel', 'caption' => 'Three-quarter glazing for more daylight'],
-        ['image' => $composite_asset_base . 'gallery/blue-door-interior-1400w.webp', 'alt' => 'Blue composite entrance door viewed from inside with glazed side panels', 'caption' => 'Dual-colour planning from the hallway side'],
+        ['image' => $composite_asset_base . 'gallery/anthracite-entrance-800w.webp', 'alt' => 'Anthracite grey contemporary composite entrance door', 'caption' => 'Anthracite grey with a long pull handle'],
+        ['image' => $composite_asset_base . 'gallery/black-lunna-entrance-800w.webp', 'alt' => 'Black traditional composite door with Lunna decorative glass', 'caption' => 'Black Signature door with Lunna glass'],
+        ['image' => $composite_asset_base . 'gallery/ruby-red-entrance-800w.webp', 'alt' => 'Ruby red contemporary composite entrance door', 'caption' => 'Ruby red as the main architectural accent'],
+        ['image' => $composite_asset_base . 'gallery/chartwell-entrance-800w.webp', 'alt' => 'Chartwell green traditional composite entrance door', 'caption' => 'Chartwell green on a traditional elevation'],
+        ['image' => $composite_asset_base . 'gallery/black-chatsworth-entrance-800w.webp', 'alt' => 'Black composite entrance door with Chatsworth privacy glass', 'caption' => 'Chatsworth privacy glass on the complete door'],
+        ['image' => $composite_asset_base . 'gallery/white-wentworth-interior-800w.webp', 'alt' => 'White composite door with Wentworth glass viewed from the hallway', 'caption' => 'Wentworth glass viewed from the hallway'],
     ];
     $composite_door_colours = [
-        ['name' => 'Anthracite Grey', 'hex' => '#383e42'],
-        ['name' => 'Black', 'hex' => '#121516'],
-        ['name' => 'French Grey', 'hex' => '#8d918a'],
-        ['name' => 'Duck Egg Blue', 'hex' => '#9fbec0'],
-        ['name' => 'Distinction Blue', 'hex' => '#294d70'],
-        ['name' => 'Ruby Red', 'hex' => '#8c1f2b'],
-        ['name' => 'Chartwell Green', 'hex' => '#9aab92'],
-        ['name' => 'White', 'hex' => '#f2f0e8'],
+        ['name' => 'Anthracite Grey', 'hex' => '#383e42', 'slug' => 'anthracite-grey', 'copy' => 'A crisp dark neutral for modern brick, render and metalwork.', 'alt' => 'Anthracite grey contemporary composite entrance door'],
+        ['name' => 'Black', 'hex' => '#121516', 'slug' => 'black', 'copy' => 'Strong and traditional, especially with brass or stainless hardware.', 'alt' => 'Black composite entrance door with decorative glass'],
+        ['name' => 'Light Grey', 'hex' => '#a8aaa5', 'slug' => 'light-grey', 'copy' => 'A softer neutral that works with both period and contemporary interiors.', 'alt' => 'Light grey composite entrance door viewed from inside'],
+        ['name' => 'Pale Blue', 'hex' => '#9fbec0', 'slug' => 'pale-blue', 'copy' => 'A calm colour direction that keeps decorative glass feeling light.', 'alt' => 'Pale blue composite door with decorative glass and chrome hardware'],
+        ['name' => 'Distant Blue', 'hex' => '#294d70', 'slug' => 'distant-blue', 'copy' => 'A deeper blue that reads clearly against pale render and brick.', 'alt' => 'Distant blue contemporary composite entrance door'],
+        ['name' => 'Ruby Red', 'hex' => '#8c1f2b', 'slug' => 'ruby-red', 'copy' => 'A confident architectural accent for restrained elevations.', 'alt' => 'Ruby red contemporary composite entrance door'],
+        ['name' => 'Chartwell Green', 'hex' => '#9aab92', 'slug' => 'chartwell-green', 'copy' => 'A muted green suited to brick, stone and traditional frontages.', 'alt' => 'Chartwell green traditional composite entrance door'],
+        ['name' => 'White', 'hex' => '#f2f0e8', 'slug' => 'white', 'copy' => 'Clean and bright, with the door profile and glass doing the visual work.', 'alt' => 'White composite entrance door viewed from the hallway'],
     ];
     $composite_door_glass = [
-        ['name' => 'Lunna', 'image' => $composite_asset_base . 'glass/lunna-360w.webp', 'copy' => 'Decorative zinc detail with textured glass.'],
-        ['name' => 'Chatsworth', 'image' => $composite_asset_base . 'glass/chatsworth-360w.webp', 'copy' => 'A restrained satin centre and clear border.'],
-        ['name' => 'Wentworth', 'image' => $composite_asset_base . 'glass/wentworth-360w.webp', 'copy' => 'A wider clear border around a privacy centre.'],
-        ['name' => 'Andorra', 'image' => $composite_asset_base . 'glass/andorra-360w.webp', 'copy' => 'Curved decorative lines with a central bevel.'],
-        ['name' => 'Scotia', 'image' => $composite_asset_base . 'glass/scotia-360w.webp', 'copy' => 'A traditional bevelled pattern with texture.'],
-        ['name' => 'Kara Zinc', 'image' => $composite_asset_base . 'glass/kara-zinc-360w.webp', 'copy' => 'Clean zinc caming for a brighter decorative finish.'],
+        ['name' => 'Lunna', 'slug' => 'lunna', 'copy' => 'Decorative zinc lines and textured glass with a traditional feel.'],
+        ['name' => 'Chatsworth', 'slug' => 'chatsworth', 'copy' => 'A restrained satin privacy centre with a fine clear border.'],
+        ['name' => 'Wentworth', 'slug' => 'wentworth', 'copy' => 'A wider clear border around a softly obscured privacy centre.'],
+        ['name' => 'Andorra', 'slug' => 'andorra', 'copy' => 'Curved decorative lines and a central bevel for a softer pattern.'],
+        ['name' => 'Scotia', 'slug' => 'scotia', 'copy' => 'Compact traditional bevels that suit smaller glazed apertures.'],
+        ['name' => 'Kara Zinc', 'slug' => 'kara-zinc', 'copy' => 'Clean zinc caming with stronger geometry and a brighter finish.'],
     ];
 }
 $aluminium_windows_story_poster = $is_aluminium_windows ? fenster_aluminium_windows_story_asset_url('website-header-specifiers-poster.jpg') : '';
@@ -3011,16 +3011,16 @@ if ($is_commercial_hub) {
                 <div class="fg-composite-gallery__head">
                     <div>
                         <p class="eyebrow"><?php esc_html_e('Door inspiration', 'fenster'); ?></p>
-                        <h2 id="fg-composite-gallery-title"><?php esc_html_e('See how the style, glass and hardware change the entrance.', 'fenster'); ?></h2>
+                        <h2 id="fg-composite-gallery-title"><?php esc_html_e('Doors in context.', 'fenster'); ?></h2>
                     </div>
-                    <p><?php esc_html_e('These Distinction visuals are useful for direction. We match the final combination to your opening and confirm every available component before order.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Compare complete entrances rather than isolated slabs. Every image is framed vertically so the door remains the focus.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-composite-gallery__rail" aria-label="<?php esc_attr_e('Composite door inspiration gallery', 'fenster'); ?>">
                     <?php foreach ($composite_door_gallery as $image) : ?>
-                        <?php $gallery_stem = str_replace('-1400w.webp', '', (string) $image['image']); ?>
+                        <?php $gallery_stem = preg_replace('/-800w\.webp$/', '', (string) $image['image']); ?>
                         <figure>
                             <a href="<?php echo esc_url(fenster_generated_url((string) $image['image'])); ?>" data-fg-gallery-lightbox aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), (string) $image['alt'])); ?>">
-                                <img src="<?php echo esc_url(fenster_generated_url($gallery_stem . '-800w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($gallery_stem . '-480w.webp') . ' 480w, ' . fenster_generated_url($gallery_stem . '-800w.webp') . ' 800w, ' . fenster_generated_url((string) $image['image']) . ' 1400w'); ?>" sizes="(max-width: 860px) 84vw, (max-width: 1100px) 48vw, 42vw" alt="<?php echo esc_attr((string) $image['alt']); ?>" loading="lazy">
+                                <img src="<?php echo esc_url(fenster_generated_url($gallery_stem . '-480w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($gallery_stem . '-480w.webp') . ' 480w, ' . fenster_generated_url((string) $image['image']) . ' 800w'); ?>" sizes="(max-width: 860px) 78vw, (max-width: 1100px) 31vw, 18vw" alt="<?php echo esc_attr((string) $image['alt']); ?>" loading="lazy" width="800" height="1000">
                                 <figcaption><?php echo esc_html((string) $image['caption']); ?></figcaption>
                             </a>
                         </figure>
@@ -3048,39 +3048,78 @@ if ($is_commercial_hub) {
             <div class="container">
                 <div class="fg-composite-choices__head">
                     <p class="eyebrow"><?php esc_html_e('Make it yours', 'fenster'); ?></p>
-                    <h2 id="fg-composite-choices-title"><?php esc_html_e('Colour, glass and hardware—without the catalogue wall.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Use these as design directions. The exact palette, glass aperture and compatible hardware depend on the collection and final doorset.', 'fenster'); ?></p>
+                    <h2 id="fg-composite-choices-title"><?php esc_html_e('Choose the finish on the door.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Select a colour or glass style to see it in context. Final availability still depends on the collection, aperture and complete doorset.', 'fenster'); ?></p>
                 </div>
 
-                <div class="fg-composite-colour-card">
-                    <figure>
-                        <img src="<?php echo esc_url(fenster_generated_url($composite_asset_base . 'gallery/pale-blue-glass-detail-800w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($composite_asset_base . 'gallery/pale-blue-glass-detail-480w.webp') . ' 480w, ' . fenster_generated_url($composite_asset_base . 'gallery/pale-blue-glass-detail-800w.webp') . ' 800w, ' . fenster_generated_url($composite_asset_base . 'gallery/pale-blue-glass-detail-1400w.webp') . ' 1400w'); ?>" sizes="(max-width: 860px) 100vw, 50vw" alt="Pale blue composite entrance door showing colour, glass and hardware together" loading="lazy">
+                <?php
+                $first_composite_colour = $composite_door_colours[0];
+                $first_composite_colour_stem = $composite_asset_base . 'colours/' . $first_composite_colour['slug'];
+                ?>
+                <div class="fg-composite-choice-selector fg-composite-choice-selector--colour" data-fg-door-selector>
+                    <figure class="fg-composite-choice-preview">
+                        <img data-fg-choice-image src="<?php echo esc_url(fenster_generated_url($first_composite_colour_stem . '-480w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($first_composite_colour_stem . '-480w.webp') . ' 480w, ' . fenster_generated_url($first_composite_colour_stem . '-800w.webp') . ' 800w'); ?>" sizes="(max-width: 860px) 100vw, 42vw" alt="<?php echo esc_attr((string) $first_composite_colour['alt']); ?>" loading="lazy" width="800" height="1000">
+                        <figcaption>
+                            <span><?php esc_html_e('Selected colour', 'fenster'); ?></span>
+                            <h3 data-fg-choice-name><?php echo esc_html((string) $first_composite_colour['name']); ?></h3>
+                            <p data-fg-choice-copy><?php echo esc_html((string) $first_composite_colour['copy']); ?></p>
+                        </figcaption>
                     </figure>
-                    <div>
+                    <div class="fg-composite-choice-controls">
                         <p class="eyebrow"><?php esc_html_e('Colour direction', 'fenster'); ?></p>
-                        <h3><?php esc_html_e('Choose the outside for the property—and the inside for the hallway.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Stock, bespoke and dual-colour options are available across the Distinction ranges. We recommend confirming the final colour from a physical sample because screens and printed brochures shift the finish.', 'fenster'); ?></p>
-                        <ul class="fg-composite-swatches" aria-label="<?php esc_attr_e('Popular composite door colour directions', 'fenster'); ?>">
-                            <?php foreach ($composite_door_colours as $colour) : ?>
-                                <li style="--door-colour: <?php echo esc_attr((string) $colour['hex']); ?>"><i aria-hidden="true"></i><span><?php echo esc_html((string) $colour['name']); ?></span></li>
+                        <h3><?php esc_html_e('See each colour on a complete door.', 'fenster'); ?></h3>
+                        <p><?php esc_html_e('Choose a direction here, then confirm the final painted finish from a physical sample. Inside and outside colours can be specified separately.', 'fenster'); ?></p>
+                        <div class="fg-composite-choice-options fg-composite-choice-options--colours" aria-label="<?php esc_attr_e('Popular composite door colour directions', 'fenster'); ?>">
+                            <?php foreach ($composite_door_colours as $index => $colour) : ?>
+                                <?php
+                                $colour_stem = $composite_asset_base . 'colours/' . $colour['slug'];
+                                $colour_src = fenster_generated_url($colour_stem . '-480w.webp');
+                                $colour_srcset = $colour_src . ' 480w, ' . fenster_generated_url($colour_stem . '-800w.webp') . ' 800w';
+                                ?>
+                                <button type="button" data-fg-choice-option data-preview-src="<?php echo esc_url($colour_src); ?>" data-preview-srcset="<?php echo esc_attr($colour_srcset); ?>" data-preview-alt="<?php echo esc_attr((string) $colour['alt']); ?>" data-preview-name="<?php echo esc_attr((string) $colour['name']); ?>" data-preview-copy="<?php echo esc_attr((string) $colour['copy']); ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
+                                    <img src="<?php echo esc_url(fenster_generated_url($colour_stem . '-240w.webp')); ?>" alt="" loading="lazy" width="240" height="300">
+                                    <span><i style="--door-colour: <?php echo esc_attr((string) $colour['hex']); ?>" aria-hidden="true"></i><?php echo esc_html((string) $colour['name']); ?></span>
+                                </button>
                             <?php endforeach; ?>
-                        </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="fg-composite-glass-picker">
-                    <div>
+                <?php
+                $first_composite_glass = $composite_door_glass[0];
+                $first_composite_glass_stem = $composite_asset_base . 'glass-doors/' . $first_composite_glass['slug'];
+                ?>
+                <div class="fg-composite-choice-selector fg-composite-choice-selector--glass" data-fg-door-selector data-fg-glass-selector>
+                    <figure class="fg-composite-choice-preview">
+                        <img data-fg-choice-image src="<?php echo esc_url(fenster_generated_url($first_composite_glass_stem . '-480w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($first_composite_glass_stem . '-480w.webp') . ' 480w, ' . fenster_generated_url($first_composite_glass_stem . '-800w.webp') . ' 800w'); ?>" sizes="(max-width: 860px) 100vw, 42vw" alt="Lunna decorative glass shown on a complete composite entrance door" loading="lazy" width="800" height="1000">
+                        <div class="fg-composite-choice-preview__modes" aria-label="<?php esc_attr_e('Glass preview view', 'fenster'); ?>">
+                            <button type="button" data-fg-choice-mode="door" aria-pressed="true"><?php esc_html_e('On the door', 'fenster'); ?></button>
+                            <button type="button" data-fg-choice-mode="detail" aria-pressed="false"><?php esc_html_e('Glass detail', 'fenster'); ?></button>
+                        </div>
+                        <figcaption>
+                            <span><?php esc_html_e('Selected glass', 'fenster'); ?></span>
+                            <h3 data-fg-choice-name><?php echo esc_html((string) $first_composite_glass['name']); ?></h3>
+                            <p data-fg-choice-copy><?php echo esc_html((string) $first_composite_glass['copy']); ?></p>
+                        </figcaption>
+                    </figure>
+                    <div class="fg-composite-choice-controls">
                         <p class="eyebrow"><?php esc_html_e('Decorative glass', 'fenster'); ?></p>
-                        <h3><?php esc_html_e('Pick the level of detail and privacy—not just a pattern name.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Most decorative units are shown by Distinction as triple glazed and laminated. Aperture size, privacy and current availability are checked against your selected door.', 'fenster'); ?></p>
-                    </div>
-                    <div class="fg-composite-glass-picker__rail" aria-label="<?php esc_attr_e('Selected Distinction decorative glass styles', 'fenster'); ?>">
-                        <?php foreach ($composite_door_glass as $glass) : ?>
-                            <article>
-                                <img src="<?php echo esc_url(fenster_generated_url((string) $glass['image'])); ?>" alt="<?php echo esc_attr((string) $glass['name'] . ' decorative glass detail'); ?>" loading="lazy" width="360" height="360">
-                                <div><h4><?php echo esc_html((string) $glass['name']); ?></h4><p><?php echo esc_html((string) $glass['copy']); ?></p></div>
-                            </article>
-                        <?php endforeach; ?>
+                        <h3><?php esc_html_e('Compare glass on the complete door.', 'fenster'); ?></h3>
+                        <p><?php esc_html_e('Switch between the entrance view and the close-up. Aperture size, privacy and availability are checked against the selected door.', 'fenster'); ?></p>
+                        <div class="fg-composite-choice-options fg-composite-choice-options--glass" aria-label="<?php esc_attr_e('Selected Distinction decorative glass styles', 'fenster'); ?>">
+                            <?php foreach ($composite_door_glass as $index => $glass) : ?>
+                                <?php
+                                $glass_door_stem = $composite_asset_base . 'glass-doors/' . $glass['slug'];
+                                $glass_detail_stem = $composite_asset_base . 'glass/' . $glass['slug'];
+                                $glass_door_src = fenster_generated_url($glass_door_stem . '-480w.webp');
+                                $glass_detail_src = fenster_generated_url($glass_detail_stem . '-360w.webp');
+                                ?>
+                                <button type="button" data-fg-choice-option data-door-src="<?php echo esc_url($glass_door_src); ?>" data-door-srcset="<?php echo esc_attr($glass_door_src . ' 480w, ' . fenster_generated_url($glass_door_stem . '-800w.webp') . ' 800w'); ?>" data-door-alt="<?php echo esc_attr((string) $glass['name'] . ' decorative glass shown on a complete composite entrance door'); ?>" data-detail-src="<?php echo esc_url($glass_detail_src); ?>" data-detail-srcset="<?php echo esc_attr($glass_detail_src . ' 360w, ' . fenster_generated_url($glass_detail_stem . '-720w.webp') . ' 720w'); ?>" data-detail-alt="<?php echo esc_attr((string) $glass['name'] . ' decorative glass close-up'); ?>" data-preview-name="<?php echo esc_attr((string) $glass['name']); ?>" data-preview-copy="<?php echo esc_attr((string) $glass['copy']); ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
+                                    <img src="<?php echo esc_url(fenster_generated_url($glass_door_stem . '-240w.webp')); ?>" alt="" loading="lazy" width="240" height="300">
+                                    <span><?php echo esc_html((string) $glass['name']); ?></span>
+                                </button>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
 

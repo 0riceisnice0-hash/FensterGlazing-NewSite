@@ -935,6 +935,56 @@ document.querySelectorAll('[data-fg-composite-carousel]').forEach((carousel) => 
   showSlide(0);
 });
 
+document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
+  const preview = selector.querySelector('[data-fg-choice-image]');
+  const name = selector.querySelector('[data-fg-choice-name]');
+  const copy = selector.querySelector('[data-fg-choice-copy]');
+  const options = [...selector.querySelectorAll('[data-fg-choice-option]')];
+  const modeButtons = [...selector.querySelectorAll('[data-fg-choice-mode]')];
+
+  if (!preview || !options.length) return;
+
+  let selectedOption = options.find((option) => option.getAttribute('aria-pressed') === 'true') || options[0];
+  let selectedMode = modeButtons.find((button) => button.getAttribute('aria-pressed') === 'true')?.dataset.fgChoiceMode || 'door';
+
+  const updatePreview = () => {
+    const isGlassSelector = selector.hasAttribute('data-fg-glass-selector');
+    const prefix = isGlassSelector ? selectedMode : 'preview';
+    const source = selectedOption.dataset[`${prefix}Src`];
+    const sourceSet = selectedOption.dataset[`${prefix}Srcset`];
+    const alt = selectedOption.dataset[`${prefix}Alt`];
+
+    if (source) preview.src = source;
+    if (sourceSet) preview.srcset = sourceSet;
+    if (alt) preview.alt = alt;
+    if (name) name.textContent = selectedOption.dataset.previewName || '';
+    if (copy) copy.textContent = selectedOption.dataset.previewCopy || '';
+
+    options.forEach((option) => {
+      option.setAttribute('aria-pressed', option === selectedOption ? 'true' : 'false');
+    });
+    modeButtons.forEach((button) => {
+      button.setAttribute('aria-pressed', button.dataset.fgChoiceMode === selectedMode ? 'true' : 'false');
+    });
+  };
+
+  options.forEach((option) => {
+    option.addEventListener('click', () => {
+      selectedOption = option;
+      updatePreview();
+    });
+  });
+
+  modeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      selectedMode = button.dataset.fgChoiceMode || 'door';
+      updatePreview();
+    });
+  });
+
+  updatePreview();
+});
+
 document.querySelectorAll('[data-fg-sash-furniture]').forEach((selector) => {
   const styleButtons = [...selector.querySelectorAll('[data-fg-furniture-style]')];
   const panels = [...selector.querySelectorAll('[data-fg-furniture-panel]')];
