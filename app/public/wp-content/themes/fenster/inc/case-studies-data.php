@@ -315,6 +315,12 @@ function fenster_case_studies(): array
                 'Steel-look glazing bars, toplights and multi-point locking',
             ],
             'installers' => [$fitter_johnnie, $fitter_tom],
+            'award' => [
+                'title' => 'Installation of the Month',
+                'source' => 'Sheerline',
+                'logo' => FENSTER_THEME_URI . '/assets/partners/sheerline.png',
+                'note' => 'Sheerline chose this project as their Installation of the Month.',
+            ],
             'video' => [
                 'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-roof-lantern-heritage-doors.mp4',
                 'poster' => $img . 'cs-roof-lantern-heritage-doors-poster.jpg',
@@ -322,6 +328,8 @@ function fenster_case_studies(): array
                 'label' => 'Video of the installed roof lantern and heritage doors',
             ],
             'images' => [
+                ['src' => $img . 'cs-lantern-doors-interior.jpg', 'caption' => 'Looking out through the black heritage doors to the garden, with the roof lantern above.'],
+                ['src' => $img . 'cs-lantern-doors-up.jpg', 'caption' => 'The roof lantern from inside the room, framing the sky.'],
                 ['src' => $img . 'cs-lantern-doors-6.jpg', 'caption' => 'The black heritage aluminium doors and the roof lantern above, seen from the garden.'],
                 ['src' => $img . 'cs-lantern-doors-16.jpg', 'caption' => 'The roof lantern from above, with its slim black frame on the flat roof.'],
             ],

@@ -11109,6 +11109,68 @@ html.fg-gallery-lightbox-open body {
   line-height: 1.25;
 }
 
+/* Award banner (e.g. Sheerline Installation of the Month) */
+.fg-cs-award {
+  padding: 0 0 clamp(0.5rem, 1.5vw, 1rem);
+}
+
+.fg-cs-award__inner {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  padding: clamp(1rem, 2vw, 1.4rem) clamp(1.1rem, 2.2vw, 1.75rem);
+  border: 1px solid rgba(46, 172, 102, 0.35);
+  border-radius: 12px;
+  background: linear-gradient(120deg, rgba(46, 172, 102, 0.12), rgba(46, 172, 102, 0.04));
+  box-shadow: var(--shadow-soft);
+}
+
+.fg-cs-award__badge {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.fg-cs-award__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.fg-cs-award__title {
+  margin: 0;
+  color: var(--color-steel);
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.fg-cs-award__note {
+  margin: 0.2rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.fg-cs-award__logo {
+  flex: 0 0 auto;
+  width: clamp(120px, 15vw, 165px);
+  height: auto;
+}
+
+@media (max-width: 620px) {
+  .fg-cs-award__inner {
+    flex-wrap: wrap;
+  }
+
+  .fg-cs-award__logo {
+    width: 130px;
+  }
+}
+
 /* Body: written overview + aside */
 .fg-cs-body {
   padding: 0 0 clamp(2rem, 4vw, 3.5rem);

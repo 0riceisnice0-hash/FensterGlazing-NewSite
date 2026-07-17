@@ -135,6 +135,7 @@ $installed = is_array($study['installed'] ?? null) ? $study['installed'] : [];
 $images = is_array($study['images'] ?? null) ? $study['images'] : [];
 $installers = is_array($study['installers'] ?? null) ? $study['installers'] : [];
 $review = is_array($study['review'] ?? null) ? $study['review'] : null;
+$award = is_array($study['award'] ?? null) ? $study['award'] : null;
 $video = is_array($study['video'] ?? null) ? $study['video'] : null;
 $is_wide_video = $video && ($video['orientation'] ?? '') === 'landscape';
 if ($video && ! $is_wide_video) {
@@ -227,6 +228,25 @@ $hero_intro_html = ob_get_clean();
                         <strong><?php echo esc_html((string) ($spec['value'] ?? '')); ?></strong>
                     </div>
                 <?php endforeach; ?>
+            </div>
+        </section>
+    <?php endif; ?>
+
+    <?php if ($award) : ?>
+        <section class="fg-cs-award">
+            <div class="container fg-cs-award__inner">
+                <span class="fg-cs-award__badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M8.5 13.5 7 22l5-3 5 3-1.5-8.5"></path></svg>
+                </span>
+                <div class="fg-cs-award__text">
+                    <p class="fg-cs-award__title"><?php echo esc_html((string) ($award['title'] ?? '')); ?></p>
+                    <?php if (! empty($award['note'])) : ?>
+                        <p class="fg-cs-award__note"><?php echo esc_html((string) $award['note']); ?></p>
+                    <?php endif; ?>
+                </div>
+                <?php if (! empty($award['logo'])) : ?>
+                    <img class="fg-cs-award__logo" src="<?php echo esc_url((string) $award['logo']); ?>" alt="<?php echo esc_attr((string) ($award['source'] ?? 'Sheerline')); ?>" loading="lazy">
+                <?php endif; ?>
             </div>
         </section>
     <?php endif; ?>
