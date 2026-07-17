@@ -30866,3 +30866,412 @@ html.fg-blinds-reveal-locked {
     height: 390px;
   }
 }
+
+/* Composite doors: approved range correction and one continuous canvas. */
+.generated-page--composite-doors {
+  background: var(--fg-page-gradient);
+}
+
+.generated-page--composite-doors .fg-hero__image {
+  object-position: 50% 50%;
+}
+
+.generated-page--composite-doors > .fg-composite-range,
+.generated-page--composite-doors > .fg-composite-choices {
+  background: transparent;
+}
+
+.fg-composite-approved {
+  position: relative;
+  z-index: 2;
+  padding: 0.7rem 0;
+  background: var(--color-steel);
+  color: #fff;
+}
+
+.fg-composite-approved__inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.fg-composite-approved__mark {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.fg-composite-approved strong {
+  display: block;
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.fg-composite-approved p {
+  margin: 0.16rem 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.fg-composite-approved img {
+  width: 118px;
+  max-height: 42px;
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  background: #fff;
+  object-fit: contain;
+}
+
+.fg-composite-choice-selector {
+  grid-template-areas:
+    "controls"
+    "preview";
+}
+
+.fg-composite-choice-controls {
+  grid-area: controls;
+}
+
+.fg-composite-choice-preview {
+  grid-area: preview;
+  height: 340px;
+  aspect-ratio: auto;
+}
+
+.fg-composite-choice-selector--glass .fg-composite-choice-preview {
+  height: 280px;
+}
+
+.fg-composite-choice-selector--glass .fg-composite-choice-preview > img {
+  object-position: center;
+}
+
+.fg-composite-choice-options {
+  grid-auto-flow: initial;
+  grid-auto-columns: initial;
+  gap: 0.45rem;
+  overflow: visible;
+  margin: 0.9rem 0 0;
+  padding: 0.15rem;
+}
+
+.fg-composite-choice-options--colours {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fg-composite-choice-options--glass {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.fg-composite-choice-options button {
+  display: grid;
+  min-height: 44px;
+  place-items: center;
+  padding: 0;
+  text-align: center;
+}
+
+.fg-composite-choice-options button > span {
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.38rem 0.3rem;
+  font-size: 0.66rem;
+}
+
+.fg-composite-choice-options button i {
+  flex-basis: 0.72rem;
+  width: 0.72rem;
+  height: 0.72rem;
+}
+
+.fg-composite-choice-more {
+  display: grid;
+  min-height: 44px;
+  place-items: center;
+  border: 1px dashed rgba(0, 45, 58, 0.24);
+  border-radius: 7px;
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.fg-composite-hardware {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 45, 58, 0.13);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 16px 44px rgba(0, 45, 58, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.fg-composite-hardware__intro h3 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 1.55rem;
+  line-height: 1.08;
+}
+
+.fg-composite-hardware__intro > p:not(.eyebrow) {
+  max-width: 48ch;
+  margin: 0.55rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.fg-composite-hardware__stage {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent 22% 78%, rgba(255, 255, 255, 0.04)),
+    #163d45;
+}
+
+.fg-composite-hardware__door-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 32%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 12px 0 0 rgba(0, 0, 0, 0.08);
+}
+
+.fg-composite-hardware__stage > img {
+  position: absolute;
+  top: 50%;
+  left: 31%;
+  width: 155px;
+  height: 220px;
+  opacity: 0;
+  object-fit: contain;
+  transform: translate(-50%, -47%) scale(0.92);
+  transition: opacity 220ms ease, transform 320ms cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+.fg-composite-hardware__stage > img.is-active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.fg-composite-hardware__selected {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  left: 55%;
+  transform: translateY(-50%);
+}
+
+.fg-composite-hardware__selected > span {
+  color: #70da98;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fg-composite-hardware__selected strong {
+  display: block;
+  margin-top: 0.28rem;
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.fg-composite-hardware__selected p {
+  margin: 0.4rem 0 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  line-height: 1.42;
+}
+
+.fg-composite-hardware__finishes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.fg-composite-hardware__finishes button {
+  display: grid;
+  min-width: 0;
+  min-height: 50px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.fg-composite-hardware__finishes button.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.fg-composite-hardware__finishes i {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--hardware-swatch);
+  box-shadow: 0 0 0 1px rgba(0, 45, 58, 0.22);
+}
+
+.fg-composite-hardware__finishes span {
+  min-width: 0;
+  font-size: 0.61rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+@media (max-width: 560px) {
+  .fg-composite-approved img {
+    display: none;
+  }
+
+  .fg-composite-approved__inner {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .fg-composite-range,
+  .fg-composite-choices {
+    padding: 2.5rem 0;
+  }
+
+  .fg-composite-choices__head {
+    margin-bottom: 1rem;
+  }
+
+  .fg-composite-choice-controls {
+    padding: 1rem;
+  }
+
+  .fg-composite-choice-controls > h3 {
+    font-size: 1.35rem;
+  }
+
+  .fg-composite-choice-controls > p:not(.eyebrow) {
+    margin-top: 0.45rem;
+    font-size: 0.78rem;
+    line-height: 1.42;
+  }
+
+  .fg-composite-choice-preview figcaption {
+    padding: 2.3rem 1rem 0.85rem;
+  }
+
+  .fg-composite-choice-preview figcaption h3 {
+    font-size: 1.4rem;
+  }
+
+  .fg-composite-choice-preview figcaption p {
+    margin-top: 0.25rem;
+    font-size: 0.73rem;
+  }
+}
+
+@media (min-width: 861px) {
+  .fg-composite-range,
+  .fg-composite-choices {
+    padding: 4.5rem 0;
+  }
+
+  .fg-composite-family-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fg-composite-family {
+    grid-template-rows: 310px 1fr;
+  }
+
+  .fg-composite-family figure {
+    height: 310px;
+  }
+
+  .fg-composite-comparison__row {
+    grid-template-columns: 1.1fr repeat(3, minmax(0, 1fr));
+  }
+
+  .fg-composite-choice-selector {
+    grid-template-areas: "controls preview";
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  }
+
+  .fg-composite-choice-preview,
+  .fg-composite-choice-selector--glass .fg-composite-choice-preview {
+    height: 540px;
+    min-height: 0;
+  }
+
+  .fg-composite-choice-selector--glass .fg-composite-choice-preview > img {
+    object-fit: cover;
+  }
+
+  .fg-composite-choice-options--colours {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fg-composite-choice-options--glass {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fg-composite-choice-options button > span {
+    min-height: 48px;
+    font-size: 0.72rem;
+  }
+
+  .fg-composite-hardware {
+    grid-template-columns: minmax(220px, 0.33fr) minmax(330px, 0.42fr) minmax(220px, 0.25fr);
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .fg-composite-hardware__intro {
+    display: grid;
+    align-content: center;
+    padding: 1rem;
+  }
+
+  .fg-composite-hardware__stage {
+    min-height: 360px;
+  }
+
+  .fg-composite-hardware__stage > img {
+    width: 190px;
+    height: 300px;
+  }
+
+  .fg-composite-hardware__finishes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: center;
+  }
+}
+
+@media (min-width: 1180px) {
+  .fg-composite-family,
+  .fg-composite-family figure {
+    height: auto;
+  }
+
+  .fg-composite-family {
+    grid-template-rows: 340px 1fr;
+  }
+}

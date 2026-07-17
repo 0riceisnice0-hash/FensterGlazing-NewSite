@@ -189,16 +189,16 @@ function fenster_product_hub_data(string $slug): array
         ],
         'composite-doors' => [
             'systems' => [$systems['distinction']],
-            'badges' => ['300+ styles', 'Any RAL option', '70mm Grandeur option'],
+            'badges' => ['Approved installer', 'Signature range', 'Contemporary range'],
             'heading' => 'Distinction composite doors with style, colour and glass choice made clearer.',
             'copy' => 'Composite doors start with style, then security and construction. Compare the broad design range, GRP skins, foam-filled cores, water-resistant rails and complete doorset specification.',
             'specs' => [
-                ['label' => 'Range', 'value' => 'Hundreds of door styles, including traditional, cottage, contemporary and glazed designs'],
+                ['label' => 'Range', 'value' => 'Signature and Contemporary doors, including Rustic Renown and glazed designs'],
                 ['label' => 'Construction', 'value' => 'GRP door skin, insulated core and reinforced structural elements depending on chosen slab'],
-                ['label' => 'Door depths', 'value' => 'Signature-style 44.5mm and Grandeur-style 70mm options where available'],
+                ['label' => 'Door slab', 'value' => '44.5mm insulated GRP composite slab'],
                 ['label' => 'Security', 'value' => 'Secure locks, cylinders, laminated decorative glass and SBD options by specification'],
             ],
-            'choices' => ['Standard colours, premium colours and any RAL colour', 'Dual colour options', 'Decorative, obscure and laminated glass', 'Long bar, lever, urn, knocker and letterplate hardware'],
+            'choices' => ['Standard and premium colour choices', 'Dual colour options where available', 'Decorative, obscure and laminated glass', 'Long bar, lever, urn, knocker and letterplate hardware'],
         ],
         'upvc-doors' => [
             'systems' => [$systems['liniar']],

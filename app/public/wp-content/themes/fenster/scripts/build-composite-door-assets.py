@@ -8,11 +8,10 @@ TARGET = Path(__file__).resolve().parents[1] / "assets" / "images" / "products" 
 
 
 ASSETS = {
-    "hero/distinction-grandeur-entrance": ("Grandeur-Collection-header-image.jpg", (480, 960, 1920)),
+    "hero/distinction-signature-entrance": ("colour-main.jpg", (480, 960, 1920)),
     "families/signature": ("Signature-Eclat-with-Lunna-GlazingDOF-1024x1024-2.jpg", (400, 800)),
     "families/contemporary": ("Contemporary-1-V5MAIN-DOF-1024x1024-2.jpg", (400, 800)),
-    "families/nxt-gen": ("Next-Generation-Elegance-Door-in-Ral-3003-Main_v4-DOF-1024x1024-1.jpg", (400, 800)),
-    "families/grandeur": ("Grandeur-Collection-header-image.jpg", (400, 800)),
+    "families/rustic-renown": ("Diamond-rustic-Renown-Basalt-Grey@2x.jpg", (400, 800)),
     "glass/lunna": ("Lunna.jpg", (360, 720)),
     "glass/chatsworth": ("Chatsworth-Close-Up-3.jpg", (360, 720)),
     "glass/wentworth": ("Wentworth-Close-Up-2.jpg", (360, 720)),
@@ -34,8 +33,8 @@ PORTRAIT_ASSETS = {
     "colours/pale-blue": ("colour-main.jpg", (240, 480, 800)),
     "colours/distant-blue": ("GD08L-Distant-Blue-1180x1197-1.jpg", (240, 480, 800)),
     "colours/ruby-red": ("GD02-Ruby-Red-Canvas-V2-1024x1024@2x.jpg", (240, 480, 800)),
-    "colours/chartwell-green": ("Next-Generation-Eclat-Arch-in-New-Nan-Ya-Chartwell_v3-DOF-Lunna-1024x1024-1.jpg", (240, 480, 800)),
-    "colours/white": ("REC05-70mm-White-Wentworth-1.jpg", (240, 480, 800)),
+    "colours/green": ("green-door.jpg", (240, 480, 800)),
+    "colours/white": ("grey-door.jpg", (240, 480, 800)),
     "glass-doors/lunna": ("Signature-Eclat-with-Lunna-GlazingDOF-1024x1024-2.jpg", (240, 480, 800)),
     "glass-doors/chatsworth": ("Three-quarter-9k-Chatsworth-Black-grey91.jpg", (240, 480, 800)),
     "glass-doors/wentworth": ("REC05-70mm-White-Wentworth-1.jpg", (240, 480, 800)),

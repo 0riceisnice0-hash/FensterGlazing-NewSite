@@ -246,9 +246,9 @@ function fenster_site_data(): array
                 ['label' => 'Security', 'value' => 'Flush hook-locks'],
             ],
             'composite-doors' => [
-                ['label' => 'Door families', 'value' => '4 collections'],
-                ['label' => 'Standard slab', 'value' => '44mm insulated'],
-                ['label' => 'Premium option', 'value' => '70mm double rebate'],
+                ['label' => 'Door ranges', 'value' => 'Signature & Contemporary'],
+                ['label' => 'Popular style', 'value' => 'Rustic Renown'],
+                ['label' => 'Door slab', 'value' => '44.5mm insulated GRP'],
                 ['label' => 'Security guarantee', 'value' => '£5,000'],
             ],
             'integral-blinds' => [
@@ -517,7 +517,7 @@ function fenster_site_data(): array
                 ],
             ],
             'composite-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-grandeur-entrance-1920w.webp', 'alt' => 'Dark Grandeur composite entrance door open into a contemporary hallway'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-signature-entrance-1920w.webp', 'alt' => 'Pale blue Signature composite front door with decorative glass'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/chatsworth-double-lite-1400w.webp', 'alt' => 'Pale composite entrance door with twin Chatsworth glazed panels'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp', 'alt' => 'Dark contemporary composite entrance door with a long pull handle'],
@@ -1135,7 +1135,7 @@ function fenster_site_data(): array
                 ],
             ],
             'composite-doors' => [
-                'intro' => 'Distinction composite doors range from traditional panelled entrances to flush contemporary designs and a 70mm double-rebated premium option. Fenster helps you compare the four collections, then confirms colour, glass, hardware and the complete doorset after survey.',
+                'intro' => 'As an approved Distinction Doors installer, we supply Signature and Contemporary composite doors, including the Rustic Renown style. We confirm the colour, glass, hardware and complete doorset after survey.',
                 'benefits' => [
                     ['title' => 'Strong entrance door construction', 'copy' => 'Composite doors combine a reinforced core, durable skins and secure hardware for a robust front-door upgrade.'],
                     ['title' => 'Wide design choice', 'copy' => 'Fenster can help compare door styles, glass designs, colours and hardware so the entrance suits the property.'],
