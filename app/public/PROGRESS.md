@@ -2,7 +2,14 @@
 
 Last updated: 2026-07-17
 
-## 2026-07-17 - Residential case studies rebuilt (test)
+## 2026-07-17 - Residential case studies redesigned, clean text-led (test)
+
+- Owner rejected the first version for looking too much like the commercial project pages. Rebuilt the detail and archive templates from scratch in their own `fg-cs-*` namespace, copying nothing from the commercial `fg-case-*` styling.
+- New detail layout is descriptive and text-led with no hero imagery: a short lead, a written overview, a sticky specification panel (product, system, colour, U-value/rating) with product/colour/instant-quote links, a "what we fitted" list, and a captioned image gallery where every photo is described (expanded from the owner's filename notes). Sits on the continuous page gradient with clean white panels.
+- Expanded the bare project notes into accurate copy by scanning the real product pages: casement `/casement-windows/` (Liniar EnergyPlus 70mm, 0.95 W/m²K, A+, PAS 24), flush `/flush-casement-windows/` (Liniar 70mm flush sash, 1.2 W/m²K, A+), aluminium bifolds `/aluminium-bifold-doors/` (Sheerline Prestige, 1.0 W/m²K, up to 7 panes) and slide/fold `/slide-fold-doors/` (10-point locking, independent panels).
+- Archive is a clean two-up card grid. Verified on test at 1440x900 and 390x844: no horizontal overflow, H1 within the ceiling, correct product/colour/quote links, captioned gallery, no broken images, no console errors, grids stack on mobile.
+
+## 2026-07-17 - Residential case studies rebuilt (test, superseded same day)
 
 - Rebuilt `/case-studies/` as a curated, expandable system driven by a new `inc/case-studies-data.php` (`fenster_case_studies()`). Adding an entry there publishes a new archive card and detail page, wires its own routing, SEO, images, product/colour links and related-project cards. Designed to scale to 100+ studies from one data file.
 - Added the first four real projects with owner-supplied photography (optimised into `assets/images/case-studies/`): anthracite grey Sheerline aluminium bifolds (Whitehouse, MK), two-tone basalt grey Liniar casements over a boarded-up opening (Broughton, MK), flush casements plus a uPVC slide and fold door (Leighton Buzzard) and white Liniar casements (Leighton Buzzard).
