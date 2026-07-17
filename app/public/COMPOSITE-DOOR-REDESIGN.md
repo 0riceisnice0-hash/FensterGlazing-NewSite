@@ -1,123 +1,97 @@
-# Composite Door Page Redesign
+# Composite Door Page Redesign V2
 
 ## Purpose
 
-This document records how `/composite-doors/` was rebuilt from a long generic product page into a visual, responsive buying journey based on the Distinction Doors range.
-
-It follows the method documented in `SASH-PAGE-REDESIGN.md`: make the customer decisions clear first, approve the imagery, then build separate mobile and desktop presentations around the same content.
+This document records the route-specific redesign of `/composite-doors/`. The finished page is a compact buying journey for the Distinction doors Fenster actually installs. It replaces the rejected card-heavy first version with one range studio and one finish configurator.
 
 The implementation lives in:
 
-- Template: `wp-content/themes/fenster/template-parts/sections/generated-page.php`
-- Shared product facts: `wp-content/themes/fenster/inc/site-data.php`
+- V2 section: `wp-content/themes/fenster/template-parts/sections/composite-doors-v2.php`
+- Route assembly: `wp-content/themes/fenster/template-parts/sections/generated-page.php`
+- Product facts: `wp-content/themes/fenster/inc/site-data.php` and `inc/product-hub-data.php`
 - Styling: `wp-content/themes/fenster/src/scss/main.scss`
 - Interaction: `wp-content/themes/fenster/src/js/main.js`
 - Optimised imagery: `wp-content/themes/fenster/assets/images/products/composite-distinction/`
-- Repeatable image build: `wp-content/themes/fenster/scripts/build-composite-door-assets.py`
+- Image build: `wp-content/themes/fenster/scripts/build-composite-door-assets.py`
 
-## Original problems
+## Product truth
 
-The inherited product template made the route much longer than the decision required. It repeated the introduction and benefits through several generic sections, sent visitors to a global colour page that did not explain the Distinction range, showed eleven decorative-glass cards in one wall, and used the same large universal door-handle selector as unrelated door systems.
+Fenster is an approved installer of Distinction Doors. The page only presents the ranges Fenster sells:
 
-The page had products and choices, but not a useful order for making them.
+- Signature for traditional designs;
+- Contemporary for cleaner grooves and glass layouts;
+- Rustic Renown as the cottage-style Signature design.
 
-## Customer journey used
+`nxt-gen` and Grandeur are not sold and must not be reintroduced. Rustic Renown is not described as a separate manufacturer collection. The old blanket `Any RAL colour` claim is also removed. Current colour, glass and compatible hardware availability is confirmed during consultation and survey.
 
-The rebuilt route now follows this order:
+## V2 design model
 
-1. See a strong entrance image and understand the category.
-2. Scan four truthful key facts.
-3. Compare Signature, Contemporary, nxt-gen and Grandeur visually.
-4. Read the meaningful construction and design differences.
-5. Browse six entrance, glass and interior contexts.
-6. Start a price or consultation while intent is high.
-7. Refine colour, decorative glass and hardware in one route-specific section.
-8. Resolve product questions.
-9. Open the preselected Composite Doors quote tool.
-10. Read relevant customer proof and send a compact, pre-scoped enquiry.
+The page uses the site-wide `--fg-page-gradient` as one continuous canvas. The only full dark interruptions are functional: the hero, the approved-installer banner, the configurator action strip and the final enquiry section.
 
-The generic product-introduction, product-intel, visual-gallery, colour-hub, glass-wall, universal-hardware, order-process and related-link sections are suppressed at the PHP level for this route. They are not merely hidden with CSS.
+The main journey is deliberately short:
 
-## Distinction source work
+1. Category hero and direct calls to action.
+2. Approved Distinction installer proof.
+3. One range studio for Signature, Contemporary and Rustic Renown.
+4. One tabbed configurator for colour, glass and hardware.
+5. FAQs, quote, reviews and a product-scoped enquiry.
 
-The source scrape was:
+The generic four-card specification pulse is suppressed for this route. The V1 collection grid, comparison table, inspiration gallery, separate colour wall, separate glass wall and standalone hardware band are not rendered.
+
+## Range studio
+
+The range studio keeps one large door image visible. Tabs change the image, product description, best-use guidance and compact specification list. Three small facts above it provide the shared slab, installer and security information without creating another card section.
+
+Desktop and tablet use the available width for a two-column visual and control layout. Narrow phones use one large image followed by three compact tabs and one detail panel.
+
+## Finish configurator
+
+Colour, glass and hardware occupy the same component and only one panel is visible at a time.
+
+- Colour shows eight photographed examples as compact swatches and names, plus `And more`, with one large door preview.
+- Glass shows compact design names, including Chatsworth and Wentworth, with one large close-detail preview.
+- Hardware uses eight finish controls and one dark presentation stage. The selected handle and supporting text change without collapsing the media box.
+
+The selector thumbnails were deliberately removed. The customer chooses a label or swatch and sees one useful image rather than scanning a wall of repeated doors.
+
+## Source imagery
+
+The approved imagery comes from:
 
 `C:\Users\zacpl\Documents\Codex\2026-06-04\i-need-you-to-build-a\outputs\distinctiondoors_scrape`
 
-The scrape contained 1,098 image files. Images were narrowed by source page, file dimensions and subject, then every selected source was visually inspected before use.
+The repeatable build creates 75 responsive WebP assets. The V2 hero uses an approved Signature entrance, family images are portrait-led, colour examples show real doors, glass uses visible close-ups and hardware retains fixed-size transparent product imagery.
 
-Approved imagery covers:
+## Responsive rules
 
-- a Grandeur entrance for the responsive hero;
-- one visually distinct image for each of the four collections;
-- six portrait-first complete entrance views;
-- eight real-door colour examples;
-- six glass styles shown on complete doors, plus six close decorative-glass details.
+- Section H2 headings resolve to 24.8px on phone and tablet and 28.8px at 1440px.
+- Phone is designed at 390 × 844 with no horizontal overflow.
+- Tablet is designed at 768 × 1024 and uses the compact two-column studio.
+- Desktop is designed at 1440 × 900 with both main interactive compositions kept within the viewport height.
+- Preview boxes have explicit dimensions, so changing an image cannot collapse or jump the page.
+- Only one range image, range panel and configurator panel may be visible at once.
 
-The build script creates 77 WebP variants rather than shipping the original multi-megabyte files. The hero has 480, 960 and 1920 pixel sources; family images have 400 and 800 pixel sources; portrait galleries have 480 and 800 pixel sources; colour and glass selectors have 240 pixel thumbnails plus 480 and 800 pixel previews; glass close-ups have 360 and 720 pixel sources.
+## Verification
 
-## Product facts and claim handling
+Protected-test browser QA on theme revision `7aae3b0` confirmed:
 
-The page distinguishes between the standard 44mm composite slab and the Grandeur 70mm double-rebated option. Grandeur's 50mm triple-glazed laminated glass and the supplier's 35% thermal-efficiency comparison are labelled as collection-specific facts, with a note that final doorset performance depends on frame, glass and the complete specification.
+- no broken images at 390, 768 or 1440 pixels;
+- no horizontal overflow at any tested width;
+- phone configurator height 842.9px inside an 844px viewport;
+- tablet configurator height 804.5px inside a 1024px viewport;
+- desktop configurator height 814.6px inside a 900px viewport;
+- Rustic Renown updates the range image and copy;
+- Chatsworth updates the glass preview;
+- Chrome updates the hardware image and supporting panel;
+- the continuous route gradient remains visible behind FAQ, quote and review sections.
 
-The old blanket `Any RAL colour` statement was removed. The new colour section describes stock, bespoke and dual-colour directions and tells customers to confirm from a physical sample. Glass and hardware availability is also described as dependent on collection, aperture and lock-compatible specification.
-
-This matters because Distinction supplies components and Fenster specifies and installs the finished doorset.
-
-## Mobile design
-
-Mobile is deliberately one decision at a time:
-
-- the hero uses a 480 pixel responsive image and a controlled crop;
-- the four collections are a full-width swipe carousel with previous/next controls, position dots and a selected-collection specification panel;
-- the wide comparison table is removed from the mobile layout;
-- the inspiration gallery is a portrait snap-scrolling rail with one complete entrance in view;
-- colour is an eight-option image selector that shows each colour on a real door;
-- glass is a six-option image selector with complete-door and close-detail modes;
-- all selector previews keep a fixed 4:5 media box, so image loading cannot collapse or jump the layout;
-- the external Composite Doors quote tool opens directly instead of embedding a cramped iframe;
-- the final enquiry form is compact and locked to Composite Doors.
-
-## Desktop design
-
-Desktop uses the width to compare without imitating a stretched phone layout:
-
-- all four collections are visible together in equal-height image-led cards;
-- one five-column table states the shared differences once;
-- the six-image inspiration gallery becomes one consistent row of vertical entrance cards;
-- colour uses a two-column live preview with eight real-door thumbnails;
-- glass uses the same live-preview pattern, with a door/detail toggle and six selectable styles;
-- hardware is a compact four-finish strip;
-- the quote tool remains embedded for visitors who want to design in-page.
-
-All route section headings are capped at `2.8rem` and use a restrained 650 weight. This route-specific rule prevents generic component styles from inflating headings back to display scale.
+The route remains protected-test only until the owner explicitly approves production promotion.
 
 ## Maintenance rules
 
-- Keep the four family descriptions tied to current Distinction collection information.
-- Do not add a claimed whole-door U-value without a confirmed complete doorset specification.
-- Do not promise that every colour, glass or handle works with every collection.
-- Add gallery images only after visual inspection and create all responsive variants.
-- Keep gallery and selector imagery portrait-first; do not return to landscape-heavy collages for a vertical product.
-- Every colour and glass option must show a real door, not only an abstract swatch or pale isolated close-up.
-- Keep mobile family cards at one per viewport.
-- Preserve fixed media dimensions in the colour, glass and hardware controls.
-- If the Distinction range changes, update both the family data and comparison values together.
-
-## Verification standard
-
-Before promotion from protected test to live, verify:
-
-- 390 × 844 mobile;
-- 768 × 1024 tablet;
-- 1440 × 900 desktop;
-- family next, previous, dots and swipe;
-- selected mobile specification updates;
-- hero `srcset` selection;
-- gallery and glass/hardware image loading;
-- no horizontal page overflow;
-- direct mobile quote action and desktop quote embed;
-- FAQ, review and compact enquiry order;
-- homepage and `/online-quote/` smoke checks.
-
-The page must remain test-only until the owner explicitly approves promotion to production.
+- Keep the sold-range list accurate.
+- Do not turn Rustic Renown into a standalone manufacturer collection.
+- Do not restore the inspiration gallery or separate selector sections without a new customer-journey reason.
+- Add a colour or glass option only when a suitable visual asset exists; otherwise retain `And more`.
+- Preserve fixed preview heights and single-panel tab behaviour.
+- Build and verify all three target viewports before promotion.
