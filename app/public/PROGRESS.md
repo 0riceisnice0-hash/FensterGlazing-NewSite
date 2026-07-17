@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-17
 
+## 2026-07-17 - Case study detail: hero image, spec strip, masonry gallery, installers + review (test)
+
+- Owner feedback on the text-led version: hero was too text-heavy with no image, the specification sat too low, and the gallery cropped photos with small captions.
+- Detail hero is now a two-column layout with a lead image, and the key specification is a scannable four-item strip directly under the hero (was a low sidebar).
+- Gallery rebuilt as an uncropped masonry: every photo shows whole at its natural aspect ratio, and the portrait/landscape mix becomes the layout, in the spirit of the roof lanterns page. No `object-fit` crop on gallery images.
+- Added per-project people: an Installers panel (Tom Carter and Johnnie Greenwell) with their Meet the Team photos linking to `/meet-the-team/`, and a customer review (Conor and Laura) with the installers' names hyperlinked. Attached to the Whitehouse aluminium bifold project because the review is about the doors and kitchen. Both are optional data fields, so other studies render without them.
+- Verified on test at 1440x900 and 390x844: section order hero, spec strip, body, gallery, more, CTA; no horizontal overflow; masonry shows whole photos; review and installer links resolve; studies without review/installers render cleanly; no console errors.
+
 ## 2026-07-17 - Residential case studies redesigned, clean text-led (test)
 
 - Owner rejected the first version for looking too much like the commercial project pages. Rebuilt the detail and archive templates from scratch in their own `fg-cs-*` namespace, copying nothing from the commercial `fg-case-*` styling.
