@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-17
 
+## 2026-07-17 - Case studies expansion live release (13e7f95)
+
+- Promoted commit `13e7f95` to production (backup `fenster-pre-13e7f95-20260717-132541.tar.gz` taken first). Live is confirmed at `13e7f95`; the other agent's concurrent composite-doors commit (`68cfc9d`) is NOT on live.
+- This release adds to the live case studies: install dates with automatic date-sorting, fitter panels that link to Meet the Team, a customer review, colour-hub deep links, an in-page lightbox, and two video-led roof lantern studies (landscape video = full-width hero plus a still; portrait video = square hero). The Northampton lantern + heritage doors study carries the customer's real interior photos and a Sheerline "Installation of the Month" award banner.
+- Videos were encoded with a bundled ffmpeg (`pip install imageio-ffmpeg`) to ~6.8MB each; they autoplay muted, loop, and only play while in view.
+- Cache note now documented: `wp cache flush` does not clear SiteGround's dynamic cache, so `wp sg purge` is part of the deploy flow, otherwise updates look missing behind the proxy cache. Verified live at all breakpoints: archive shows six studies newest-first, videos and the interior photo return `200`, both new studies are in `page-sitemap.xml`.
+
 ## 2026-07-17 - Composite Doors complete Distinction redesign (test)
 
 - Rebuilt `/composite-doors/` as a route-specific, image-led journey using the Distinction Doors scrape and the method documented in `SASH-PAGE-REDESIGN.md`.

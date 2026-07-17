@@ -16,4 +16,4 @@ The active local theme is:
 
 Do not use the old notes that mentioned a live Three.js homepage as the current architecture. The live site is the custom `fenster` theme deployed through GitHub/SiteGround theme-only rsync, with current docs under `app/public`.
 
-Latest known live commit when this pointer was updated: `9fba379`.
+Latest known live commit when this pointer was updated: `13e7f95`.

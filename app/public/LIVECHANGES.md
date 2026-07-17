@@ -7,7 +7,8 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live source commit: `9fba379` (`Trim case studies archive intro to one line`), promoted and verified on 2026-07-17. This release ships the new curated residential case studies system (`/case-studies/`) with four real projects. Live checks returned `200` for the archive and all four detail pages, `410` for the retired residential studies, and the page-sitemap included the new routes after a SiteGround dynamic-cache purge (the plain sitemap URL is proxy-cached, so purge or cache-bust when verifying sitemap changes).
+- Latest known deployed live source commit: `13e7f95` (`Heritage doors case study: real interior photos + Sheerline award`), promoted and verified on 2026-07-17. This is the curated residential case studies system (`/case-studies/`), now with six projects including two video-led roof lantern studies (Drayton Parslow big lantern, Northampton lantern + heritage doors with a Sheerline Installation of the Month award). Studies auto-sort by date.
+- Deploy cache note: `wp cache flush` alone does NOT clear SiteGround's dynamic/proxy cache, so changes can appear missing on test/live. Run `wp sg purge` after every deploy (and it is included in the deploy one-liners below). When verifying, also cache-bust the URL. Verified live on 13e7f95: archive plus all six detail pages `200`, videos and the interior photo `200`, both new studies present in `page-sitemap.xml`.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
