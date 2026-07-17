@@ -49,11 +49,30 @@ function fenster_case_studies(): array
     $colour_anthracite = $colour_link('aluminium', 'anthracite-grey');
     $colour_white = $colour_link('upvc', 'white');
 
+    // The fitters who worked on each job. Each entry links to that person's
+    // anchor on Meet the Team, so clicking a name scrolls to their profile.
+    // Aaron has no team profile yet, so he is shown as a name only.
+    $fitter = static function (string $name, string $image = '') use ($team_img): array {
+        $person = ['name' => $name, 'role' => 'Fitter'];
+        if ($image !== '') {
+            $person['image'] = $team_img . $image;
+            $person['url'] = home_url('/meet-the-team/#' . sanitize_title($name));
+        }
+        return $person;
+    };
+    $fitter_tom = $fitter('Tom Carter', 'unnamed-8.jpg');
+    $fitter_johnnie = $fitter('Johnnie Greenwell', '1.png');
+    $fitter_andy = $fitter('Andy McCullagh', '7.png');
+    $fitter_zac = $fitter('Zac Rugman', '8.png');
+    $fitter_shane = $fitter('Shane Gowing', '20250617_1628580-scaled.jpg');
+    $fitter_aaron = $fitter('Aaron');
+
     $cache = [
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
             'title' => 'Aluminium bifold doors, Whitehouse',
             'location' => 'Whitehouse, Milton Keynes',
             'type' => 'Residential',
+            'date' => '2026-07-09',
             'summary' => 'Slim anthracite grey aluminium bifold doors opening the back of a Whitehouse home out to the garden.',
             'lead' => 'We opened up the back of this Whitehouse home with a run of slim aluminium bifold doors in anthracite grey, folding the whole opening back to the garden.',
             'products' => [
@@ -77,10 +96,7 @@ function fenster_case_studies(): array
                 'Slim sightlines with a low threshold',
                 'Double glazed, multi-point locking with a main traffic door',
             ],
-            'installers' => [
-                ['name' => 'Tom Carter', 'role' => 'Installer', 'image' => $team_img . 'unnamed-8.jpg', 'url' => home_url('/meet-the-team/')],
-                ['name' => 'Johnnie Greenwell', 'role' => 'Installer', 'image' => $team_img . '1.png', 'url' => home_url('/meet-the-team/')],
-            ],
+            'installers' => [$fitter_johnnie, $fitter_tom],
             'review' => [
                 'quote' => 'We are over the moon with the doors! They are excellent! What a difference it has made to our kitchen space! The two lads, <a href="' . $team . '">Tom</a> and <a href="' . $team . '">Johnnie</a>, who came to install were exceptional. Professional, tidy, and the speed they got it installed was mind blowing to us. Thank you to you and your whole team!',
                 'author' => 'Conor and Laura',
@@ -100,6 +116,7 @@ function fenster_case_studies(): array
             'title' => 'uPVC casement window, Broughton',
             'location' => 'Broughton, Milton Keynes',
             'type' => 'Residential',
+            'date' => '2026-07-02',
             'summary' => 'A single two-tone Liniar casement in Broughton, replacing a boarded-up dormer window with a warm, secure one.',
             'lead' => 'We replaced a boarded-up dormer window on this Broughton home with a single two-tone Liniar casement, basalt grey outside and white inside.',
             'products' => [
@@ -123,6 +140,7 @@ function fenster_case_studies(): array
                 'A+ rated, energy efficient double glazing',
                 'Multi-point locking with a PAS 24 option',
             ],
+            'installers' => [$fitter_andy],
             'images' => [
                 ['src' => $img . 'cs-mk-broughton-casement-side.jpg', 'caption' => 'The finished dormer window in basalt grey, the single window we replaced.'],
                 ['src' => $img . 'cs-mk-broughton-casement-before.jpg', 'caption' => 'Before: the dormer window boarded up at the top of the house.'],
@@ -139,6 +157,7 @@ function fenster_case_studies(): array
             'title' => 'Flush windows and slide and fold doors, Leighton Buzzard',
             'location' => 'Leighton Buzzard, Bedfordshire',
             'type' => 'Residential',
+            'date' => '2025-05-08',
             'summary' => 'A full package for a Leighton Buzzard home: flush casement windows and a uPVC slide and fold door that opens the room right out.',
             'lead' => 'We handled the windows and the main garden opening together for this Leighton Buzzard home, pairing flush casement windows with a uPVC slide and fold door.',
             'products' => [
@@ -163,6 +182,7 @@ function fenster_case_studies(): array
                 'Flush, timber-style window sightlines',
                 'Energy efficient double glazing throughout',
             ],
+            'installers' => [$fitter_zac, $fitter_shane],
             'images' => [
                 ['src' => $img . 'cs-leighton-buzzard-slide-fold-closed.jpg', 'caption' => 'The slide and fold door closed, forming a secure glazed wall across the opening.'],
                 ['src' => $img . 'cs-leighton-buzzard-slide-fold-opening.jpg', 'caption' => 'Opening the door part way, one panel at a time.'],
@@ -181,6 +201,7 @@ function fenster_case_studies(): array
             'title' => 'uPVC casement windows, Leighton Buzzard',
             'location' => 'Leighton Buzzard, Bedfordshire',
             'type' => 'Residential',
+            'date' => '2026-07-16',
             'summary' => 'A crisp white Liniar casement replacement in Leighton Buzzard, for warmer, brighter rooms and a tidier frontage.',
             'lead' => 'We replaced the windows on this Leighton Buzzard home with crisp white Liniar casements, for warmer, brighter rooms and a tidier frontage.',
             'products' => [
@@ -204,6 +225,7 @@ function fenster_case_studies(): array
                 'A+ rated, energy efficient double glazing',
                 'Multi-point locking with quality handles',
             ],
+            'installers' => [$fitter_aaron, $fitter_shane],
             'images' => [
                 ['src' => $img . 'cs-leighton-buzzard-casement-front.jpg', 'caption' => 'The finished white casements across the front of the home.'],
                 ['src' => $img . 'cs-leighton-buzzard-casement-inside.jpg', 'caption' => 'Seen from inside, the new window brightens the room.'],

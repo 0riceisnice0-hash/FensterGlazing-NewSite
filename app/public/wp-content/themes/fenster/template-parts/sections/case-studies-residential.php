@@ -42,6 +42,7 @@ foreach ($studies as $short => $study) {
         'summary' => (string) ($study['summary'] ?? ''),
         'image' => is_array($study['images'][0] ?? null) ? $study['images'][0] : null,
         'products' => is_array($study['products'] ?? null) ? $study['products'] : [],
+        'date' => (string) ($study['date'] ?? ''),
     ];
 }
 
@@ -55,7 +56,12 @@ $render_card = static function (array $card): void {
             <?php endif; ?>
         </div>
         <div class="fg-cs-card__body">
-            <span class="fg-cs-card__meta"><?php echo esc_html(trim($card['type'] . ' • ' . $card['location'], ' ')); ?></span>
+            <span class="fg-cs-card__meta">
+                <?php echo esc_html(trim($card['type'] . ' • ' . $card['location'], ' ')); ?>
+                <?php if (! empty($card['date'])) : ?>
+                    <span class="fg-cs-card__date"><?php echo esc_html(date_i18n('j M Y', (int) strtotime((string) $card['date']))); ?></span>
+                <?php endif; ?>
+            </span>
             <h2 class="fg-cs-card__title"><?php echo esc_html($card['title']); ?></h2>
             <p class="fg-cs-card__summary"><?php echo esc_html($card['summary']); ?></p>
             <?php if (! empty($card['products'])) : ?>
@@ -78,7 +84,7 @@ if ($is_archive) :
             <div class="container">
                 <p class="eyebrow"><?php esc_html_e('Case studies', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Recent installations', 'fenster'); ?></h1>
-                <p class="fg-cs-head__lead"><?php esc_html_e('We have completed over 1,000 window and door installations across Milton Keynes and Bedfordshire. We are writing up the best of them here as full case studies, with the products, colours and detail behind each one, so this page will keep growing.', 'fenster'); ?></p>
+                <p class="fg-cs-head__lead"><?php esc_html_e('See the most recent of our 1,000+ installations in the case studies below. We are writing up the best of them as full case studies, with the products, colours and detail behind each one, so this page will keep growing over time.', 'fenster'); ?></p>
             </div>
         </header>
 
@@ -118,6 +124,8 @@ if (! is_array($study)) {
 $title = (string) ($study['title'] ?? 'Case study');
 $location = (string) ($study['location'] ?? '');
 $type = (string) ($study['type'] ?? 'Residential');
+$date_iso = (string) ($study['date'] ?? '');
+$date_display = $date_iso !== '' ? date_i18n('j F Y', (int) strtotime($date_iso)) : '';
 $lead = (string) ($study['lead'] ?? ($study['summary'] ?? ''));
 $overview = is_array($study['overview'] ?? null) ? $study['overview'] : [];
 $specs = is_array($study['specs'] ?? null) ? $study['specs'] : [];
@@ -146,6 +154,9 @@ $related = array_slice($related, 0, 3);
                 <p class="eyebrow"><?php echo esc_html(trim($type . ' • ' . $location, ' ')); ?></p>
                 <h1><?php echo esc_html($title); ?></h1>
                 <p class="fg-cs-hero__lead"><?php echo esc_html($lead); ?></p>
+                <?php if ($date_display !== '') : ?>
+                    <p class="fg-cs-hero__date"><?php esc_html_e('Installed', 'fenster'); ?> <time datetime="<?php echo esc_attr($date_iso); ?>"><?php echo esc_html($date_display); ?></time></p>
+                <?php endif; ?>
                 <div class="fg-cs-hero__actions">
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                     <?php $first_product = $products[0] ?? null; ?>
@@ -231,16 +242,24 @@ $related = array_slice($related, 0, 3);
                         <span class="fg-cs-aside__label"><?php esc_html_e('Installers', 'fenster'); ?></span>
                         <ul class="fg-cs-installers__list">
                             <?php foreach ($installers as $person) : ?>
+                                <?php
+                                $person_url = (string) ($person['url'] ?? '');
+                                $person_tag = $person_url !== '' ? 'a' : 'span';
+                                ?>
                                 <li>
-                                    <a class="fg-cs-installer" href="<?php echo esc_url((string) ($person['url'] ?? home_url('/meet-the-team/'))); ?>">
-                                        <?php if (! empty($person['image'])) : ?>
-                                            <span class="fg-cs-installer__photo"><img src="<?php echo esc_url((string) $person['image']); ?>" alt="<?php echo esc_attr((string) ($person['name'] ?? '')); ?>" loading="lazy"></span>
-                                        <?php endif; ?>
+                                    <<?php echo $person_tag; ?> class="fg-cs-installer<?php echo $person_url === '' ? ' fg-cs-installer--static' : ''; ?>"<?php echo $person_url !== '' ? ' href="' . esc_url($person_url) . '"' : ''; ?>>
+                                        <span class="fg-cs-installer__photo">
+                                            <?php if (! empty($person['image'])) : ?>
+                                                <img src="<?php echo esc_url((string) $person['image']); ?>" alt="<?php echo esc_attr((string) ($person['name'] ?? '')); ?>" loading="lazy">
+                                            <?php else : ?>
+                                                <span class="fg-cs-installer__initial" aria-hidden="true"><?php echo esc_html(strtoupper(substr((string) ($person['name'] ?? '?'), 0, 1))); ?></span>
+                                            <?php endif; ?>
+                                        </span>
                                         <span class="fg-cs-installer__meta">
                                             <strong><?php echo esc_html((string) ($person['name'] ?? '')); ?></strong>
-                                            <small><?php echo esc_html((string) ($person['role'] ?? 'Installer')); ?></small>
+                                            <small><?php echo esc_html((string) ($person['role'] ?? 'Fitter')); ?></small>
                                         </span>
-                                    </a>
+                                    </<?php echo $person_tag; ?>>
                                 </li>
                             <?php endforeach; ?>
                         </ul>

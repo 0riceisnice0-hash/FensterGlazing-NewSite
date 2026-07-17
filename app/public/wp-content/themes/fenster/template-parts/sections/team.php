@@ -103,7 +103,7 @@ $team_members = array_slice($members, 2);
             <?php if (! empty($bosses)) : ?>
                 <div class="fg-team-bosses">
                     <?php foreach ($bosses as $member) : ?>
-                        <article <?php echo $member['name'] === 'Zac Bartley' ? 'id="zac-bartley"' : ''; ?> class="fg-team-person fg-team-person--boss fg-team-person--<?php echo esc_attr(sanitize_title($member['name'])); ?>">
+                        <article id="<?php echo esc_attr(sanitize_title($member['name'])); ?>" class="fg-team-person fg-team-person--boss fg-team-person--<?php echo esc_attr(sanitize_title($member['name'])); ?>">
                             <?php if ($member['image'] !== '') : ?>
                                 <img src="<?php echo esc_url(fenster_generated_url($member['image'])); ?>" alt="<?php echo esc_attr($member['name']); ?>" loading="<?php echo $member['name'] === 'Zac Bartley' ? 'eager' : 'lazy'; ?>">
                             <?php endif; ?>
@@ -118,8 +118,7 @@ $team_members = array_slice($members, 2);
             <?php endif; ?>
             <div class="fg-team-lanes">
                 <?php foreach ($team_members as $member) : ?>
-                    <?php $member_id = $member['name'] === 'Zac Bartley' ? 'zac-bartley' : ($member['name'] === 'Legend' ? 'legend' : ''); ?>
-                    <article <?php echo $member_id !== '' ? 'id="' . esc_attr($member_id) . '"' : ''; ?> class="fg-team-person fg-team-person--<?php echo esc_attr(sanitize_title($member['name'])); ?>">
+                    <article id="<?php echo esc_attr(sanitize_title($member['name'])); ?>" class="fg-team-person fg-team-person--<?php echo esc_attr(sanitize_title($member['name'])); ?>">
                         <?php if ($member['image'] !== '') : ?>
                             <img src="<?php echo esc_url(fenster_generated_url($member['image'])); ?>" alt="<?php echo esc_attr($member['name']); ?>" loading="<?php echo $member['name'] === 'Zac Bartley' ? 'eager' : 'lazy'; ?>">
                         <?php endif; ?>
