@@ -3905,6 +3905,27 @@ if (galleryLightboxLinks.length) {
   });
 }
 
+// Case study hero videos: keep them muted, play only while in view and pause
+// off-screen so we do not burn battery or data on a looping clip.
+document.querySelectorAll('.fg-cs video').forEach((video) => {
+  video.muted = true;
+  const tryPlay = () => video.play().catch(() => {});
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tryPlay();
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(video);
+  } else {
+    tryPlay();
+  }
+});
+
 document.querySelectorAll('[data-fg-window-selector]').forEach((selector) => {
   const options = [...selector.querySelectorAll('[data-fg-window-option]')];
   const images = [...selector.querySelectorAll('[data-fg-window-image]')];
