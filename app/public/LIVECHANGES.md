@@ -7,7 +7,7 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live source commit: `cd5b430` (`Document reliable Legend product links`), promoted and verified on 2026-07-16. Its latest theme-code change is `d9b9ffc`. A checksum dry run confirmed the live theme exactly matched the repository after deployment.
+- Latest known deployed live source commit: `9fba379` (`Trim case studies archive intro to one line`), promoted and verified on 2026-07-17. This release ships the new curated residential case studies system (`/case-studies/`) with four real projects. Live checks returned `200` for the archive and all four detail pages, `410` for the retired residential studies, and the page-sitemap included the new routes after a SiteGround dynamic-cache purge (the plain sitemap URL is proxy-cached, so purge or cache-bust when verifying sitemap changes).
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
@@ -164,7 +164,7 @@ Live must not become the source of truth.
 - Enquiries save as private `fenster_enquiry` posts and send office HTML email to `info@fensterglazing.com`.
 - Customer confirmation emails are paused until authenticated SMTP is configured.
 - Optional enquiry file uploads are supported and attached to office emails.
-- Residential case studies are intentionally 410/inaccessible for launch.
+- Residential case studies are LIVE as of 2026-07-17: `/case-studies/` is a curated, data-driven system in `inc/case-studies-data.php` (see `CASESTUDIES.md`). Only the retired scrape-era residential studies (`double-glazing-rushden`, `water-stratford`, `bespoke-windows-woburn-water-end-barn`, `test`, `template-new`) remain 410. `/commercial-projects/` still uses the legacy pages.json system.
 - `/obscured-glass/` is canonical; `/obscure-glass/` redirects there.
 - Product mobile QA fixes and the newer product-page template/lightbox work through `3ac98c2` are deployed live.
 - `/upvc-colours/` and `/aluminium-colours/` redirect to canonical `/colour-options/`.

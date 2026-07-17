@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-17
 
+## 2026-07-17 - Residential case studies live release
+
+- Promoted the verified case studies work to production. Backed up the live theme first (`~/backups/fenster-theme/fenster-pre-9fba379-20260717-105524.tar.gz`, 320M), then theme-only rsync of commit `9fba379` to live and flushed WP + SiteGround dynamic cache.
+- Live verification: `/case-studies/` archive and all four detail pages return `200`; the retired residential studies (`water-stratford`, `double-glazing-rushden`) return `410`; homepage, `/online-quote/`, `/casement-windows/`, a location page, `/commercial-projects/` and `/sitemap.xml` all `200`. Meet the Team carries the new fitter anchors and the colour hub has `data-colour-slug`.
+- The plain `page-sitemap.xml` was served from the SiteGround proxy cache (`x-proxy-cache-info: DT:1`) without the new routes; a cache-busted fetch and then `wp sg purge` confirmed and served the fresh sitemap with all four new studies. Note for future sitemap changes: purge or cache-bust when verifying.
+- Browser check of the live archive: four cards with dates, trimmed one-line intro, no horizontal overflow, no broken images.
+- Updated docs to reflect that residential case studies are now live: `LIVECHANGES.md`, `HANDOVER.md`, `AUDIT.md`, the root `AI.md`/`HANDOVER.md` live-commit pointers, and `CASESTUDIES.md`.
+
 ## 2026-07-17 - Case studies: dates, fitters, deep links, lightbox, guide (test)
 
 - Fixed the Broughton study: it was a single dormer window, not multiple. Title, copy and specs are now singular and the hero is the close-up of that one window.
