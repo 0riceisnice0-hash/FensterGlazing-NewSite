@@ -31847,6 +31847,8 @@ html.fg-blinds-reveal-locked {
 
   .fg-cd-v2-range + .fg-cd-v2-config { padding-top: 0; }
 
+  .fg-cd-v2-config { padding-bottom: 1.25rem; }
+
   .fg-cd-v2-range__facts { grid-template-columns: 1fr; }
 
   .fg-cd-v2-range__facts > span {
@@ -31919,13 +31921,16 @@ html.fg-blinds-reveal-locked {
   .fg-cd-v2-selector__preview,
   .fg-cd-v2-hardware__preview,
   .fg-cd-v2-selector__preview > img {
-    min-height: 285px;
-    height: 285px;
+    min-height: 240px;
+    height: 240px;
   }
 
   .fg-cd-v2-hardware__preview > img { height: 180px; }
 
-  .fg-cd-v2-config__actions { padding: 0.85rem; }
+  .fg-cd-v2-config__actions {
+    gap: 0.5rem;
+    padding: 0.65rem;
+  }
 
   .fg-cd-v2-config__actions p { font-size: 0.74rem; }
 
