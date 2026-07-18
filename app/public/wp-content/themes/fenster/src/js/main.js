@@ -25,6 +25,8 @@ if (legendAssistant) {
   const roamer = legendAssistant.querySelector('[data-legend-roamer]');
   const roamerSprite = legendAssistant.querySelector('[data-legend-roamer-sprite]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const quoteFrameMedia = window.matchMedia('(max-width: 860px)');
+  const quoteFrameWraps = Array.from(document.querySelectorAll('[data-quote-frame-wrap]'));
   let replyTimer = 0;
   let spriteTimer = 0;
   let roamerSpriteTimer = 0;
@@ -412,6 +414,28 @@ if (legendAssistant) {
     const observer = new MutationObserver(syncCookieOffset);
     controls.forEach((control) => observer.observe(control, { attributes: true, attributeFilter: ['hidden'] }));
     syncCookieOffset();
+  };
+
+  const syncQuoteFrameVisibility = () => {
+    const quoteFrameLoaded = quoteFrameWraps.some((frameWrap) => (
+      frameWrap.classList.contains('is-loaded') || Boolean(frameWrap.querySelector('iframe[src]'))
+    ));
+
+    legendAssistant.classList.toggle('is-mobile-quote-frame-loaded', quoteFrameMedia.matches && quoteFrameLoaded);
+  };
+
+  const observeQuoteFrames = () => {
+    if (!quoteFrameWraps.length) return;
+
+    const observer = new MutationObserver(syncQuoteFrameVisibility);
+    quoteFrameWraps.forEach((frameWrap) => {
+      observer.observe(frameWrap, { attributes: true, attributeFilter: ['class'] });
+      frameWrap.querySelectorAll('iframe').forEach((iframe) => {
+        observer.observe(iframe, { attributes: true, attributeFilter: ['src'] });
+      });
+    });
+    quoteFrameMedia.addEventListener?.('change', syncQuoteFrameVisibility);
+    syncQuoteFrameVisibility();
   };
 
   const resizeInput = () => {
@@ -857,8 +881,10 @@ if (legendAssistant) {
   if (!isOpen) scheduleLegendSleep();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', observeCookieControls, { once: true });
+    document.addEventListener('DOMContentLoaded', observeQuoteFrames, { once: true });
   } else {
     observeCookieControls();
+    observeQuoteFrames();
   }
 }
 

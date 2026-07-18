@@ -1738,6 +1738,13 @@ h3 {
   opacity: 0;
 }
 
+.legend-assistant.is-mobile-quote-frame-loaded .legend-assistant__launcher-wrap {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
 .legend-assistant.is-open .legend-assistant__prompt {
   visibility: hidden;
   opacity: 0;
