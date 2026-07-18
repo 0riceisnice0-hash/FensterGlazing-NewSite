@@ -25,7 +25,6 @@ if (legendAssistant) {
   const roamer = legendAssistant.querySelector('[data-legend-roamer]');
   const roamerSprite = legendAssistant.querySelector('[data-legend-roamer-sprite]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const quoteFrameMedia = window.matchMedia('(max-width: 860px)');
   const quoteFrameWraps = Array.from(document.querySelectorAll('[data-quote-frame-wrap]'));
   let replyTimer = 0;
   let spriteTimer = 0;
@@ -421,7 +420,7 @@ if (legendAssistant) {
       frameWrap.classList.contains('is-loaded') || Boolean(frameWrap.querySelector('iframe[src]'))
     ));
 
-    legendAssistant.classList.toggle('is-mobile-quote-frame-loaded', quoteFrameMedia.matches && quoteFrameLoaded);
+    legendAssistant.classList.toggle('is-quote-frame-loaded', quoteFrameLoaded);
   };
 
   const observeQuoteFrames = () => {
@@ -434,7 +433,6 @@ if (legendAssistant) {
         observer.observe(iframe, { attributes: true, attributeFilter: ['src'] });
       });
     });
-    quoteFrameMedia.addEventListener?.('change', syncQuoteFrameVisibility);
     syncQuoteFrameVisibility();
   };
 
