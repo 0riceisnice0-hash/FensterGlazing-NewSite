@@ -168,7 +168,7 @@ $accreditations = [
         <div class="container fg-about-award__grid">
             <figure class="fg-about-award__media">
                 <span class="fg-about-parallax" data-fg-depth="0.06">
-                    <img <?php echo $img($cs . 'cs-lantern-doors-6.jpg', ['alt' => 'Black heritage aluminium doors and a Sheerline roof lantern on a Northampton extension', 'loading' => 'lazy']); ?>>
+                    <img <?php echo $img($cs . 'cs-roof-lantern-heritage-doors-poster.jpg', ['alt' => 'Black heritage aluminium doors and a Sheerline roof lantern on a Northampton extension', 'loading' => 'lazy']); ?>>
                 </span>
             </figure>
             <div class="fg-about-award__copy">
