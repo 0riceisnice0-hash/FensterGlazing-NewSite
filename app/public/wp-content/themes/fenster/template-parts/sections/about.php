@@ -151,7 +151,7 @@ $routes = [
             <div class="fg-about-installs__head">
                 <p class="eyebrow"><?php esc_html_e('Recent installs', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Our own work, photographed on the day.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('No stock photography and no showroom mock-ups. Drag through a few of the jobs we finished recently, or open the full case studies for specifications, finishes and the fitters who did them.', 'fenster'); ?></p>
+                <p><?php esc_html_e('No stock photography and no showroom mock-ups. A few of the jobs we finished recently. Open any of them for the full specification, the finish we used and the fitters who did the work.', 'fenster'); ?></p>
             </div>
             <ul class="fg-about-work__mosaic">
                 <?php foreach ($installs as $shot) : ?>
