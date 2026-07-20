@@ -1450,6 +1450,22 @@ function fenster_site_data(): array
                         ['name' => 'Any RAL Colour', 'hex' => 'conic-gradient(from 45deg, #e43d30, #f5c542, #43a047, #1e88e5, #7b1fa2, #e43d30)', 'finish' => 'Matched powder-coated finish, confirmed by sample'],
                     ],
                 ],
+                'composite' => [
+                    'label' => 'Composite door colours',
+                    'slug' => 'composite-door-colours',
+                    'headline' => 'Composite door colours.',
+                    'copy' => 'Photographed Distinction composite doors in the colours homeowners choose most.',
+                    'colours' => [
+                        ['name' => 'Anthracite Grey', 'hex' => '#383e42', 'slug' => 'anthracite-grey', 'copy' => 'A crisp dark neutral for modern brick, render and metalwork.', 'alt' => 'Anthracite grey contemporary composite entrance door', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/anthracite-grey-480w.webp'],
+                        ['name' => 'Black', 'hex' => '#121516', 'slug' => 'black', 'copy' => 'Strong and traditional, especially with brass or stainless hardware.', 'alt' => 'Black composite entrance door with decorative glass', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/black-480w.webp'],
+                        ['name' => 'Light Grey', 'hex' => '#a8aaa5', 'slug' => 'light-grey', 'copy' => 'A softer neutral that works with both period and contemporary interiors.', 'alt' => 'Light grey composite entrance door viewed from inside', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/light-grey-480w.webp'],
+                        ['name' => 'Pale Blue', 'hex' => '#9fbec0', 'slug' => 'pale-blue', 'copy' => 'A calm colour direction that keeps decorative glass feeling light.', 'alt' => 'Pale blue composite door with decorative glass and chrome hardware', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/pale-blue-480w.webp'],
+                        ['name' => 'Distant Blue', 'hex' => '#294d70', 'slug' => 'distant-blue', 'copy' => 'A deeper blue that reads clearly against pale render and brick.', 'alt' => 'Distant blue contemporary composite entrance door', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/distant-blue-480w.webp'],
+                        ['name' => 'Ruby Red', 'hex' => '#8c1f2b', 'slug' => 'ruby-red', 'copy' => 'A confident architectural accent for restrained elevations.', 'alt' => 'Ruby red contemporary composite entrance door', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/ruby-red-480w.webp'],
+                        ['name' => 'Green', 'hex' => '#62745b', 'slug' => 'green', 'copy' => 'A traditional green suited to brick, stone and country-style frontages.', 'alt' => 'Green Signature composite entrance door with decorative glass', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/green-480w.webp'],
+                        ['name' => 'White', 'hex' => '#f2f0e8', 'slug' => 'white', 'copy' => 'Clean and bright, with the door profile and glass doing the visual work.', 'alt' => 'White composite entrance door viewed from the hallway', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/colours/white-480w.webp'],
+                    ],
+                ],
             ],
         ],
         'home' => [

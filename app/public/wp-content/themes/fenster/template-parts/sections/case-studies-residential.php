@@ -33,48 +33,15 @@ $allowed_overview_html = [
 /** Build lightweight card data for the archive and related sections. */
 $cards = [];
 foreach ($studies as $short => $study) {
-    $cards[$short] = [
-        'short' => $short,
-        'url' => home_url('/case-studies/' . $short . '/'),
-        'title' => (string) ($study['title'] ?? ''),
-        'location' => (string) ($study['location'] ?? ''),
-        'type' => (string) ($study['type'] ?? 'Residential'),
-        'summary' => (string) ($study['summary'] ?? ''),
-        'image' => is_array($study['images'][0] ?? null) ? $study['images'][0] : null,
-        'products' => is_array($study['products'] ?? null) ? $study['products'] : [],
-        'date' => (string) ($study['date'] ?? ''),
-    ];
+    $cards[$short] = fenster_case_study_card((string) $short, $study);
 }
 
-/** Render a single archive/related card. */
-$render_card = static function (array $card): void {
-    ?>
-    <a class="fg-cs-card" href="<?php echo esc_url($card['url']); ?>">
-        <div class="fg-cs-card__media">
-            <?php if (is_array($card['image'])) : ?>
-                <img src="<?php echo esc_url((string) ($card['image']['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($card['image']['caption'] ?? $card['title'])); ?>" loading="lazy">
-            <?php endif; ?>
-        </div>
-        <div class="fg-cs-card__body">
-            <span class="fg-cs-card__meta">
-                <?php echo esc_html(trim($card['type'] . ' • ' . $card['location'], ' ')); ?>
-                <?php if (! empty($card['date'])) : ?>
-                    <span class="fg-cs-card__date"><?php echo esc_html(date_i18n('j M Y', (int) strtotime((string) $card['date']))); ?></span>
-                <?php endif; ?>
-            </span>
-            <h2 class="fg-cs-card__title"><?php echo esc_html($card['title']); ?></h2>
-            <p class="fg-cs-card__summary"><?php echo esc_html($card['summary']); ?></p>
-            <?php if (! empty($card['products'])) : ?>
-                <span class="fg-cs-card__tags">
-                    <?php foreach ($card['products'] as $product) : ?>
-                        <span class="fg-cs-tag"><?php echo esc_html((string) ($product['label'] ?? '')); ?></span>
-                    <?php endforeach; ?>
-                </span>
-            <?php endif; ?>
-            <span class="fg-cs-card__more"><?php esc_html_e('Read case study', 'fenster'); ?></span>
-        </div>
-    </a>
-    <?php
+/** Render a single archive/related card via the shared partial. */
+$render_card = static function (array $card, string $heading = 'h2'): void {
+    get_template_part('template-parts/components/case-study-card', null, [
+        'card' => $card,
+        'heading' => $heading,
+    ]);
 };
 
 if ($is_archive) :

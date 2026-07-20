@@ -1468,17 +1468,15 @@ $product_links = [
                 <p class="eyebrow"><?php esc_html_e('Keep exploring', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Products, services and nearby areas', 'fenster'); ?></h2>
             </div>
-            <div class="generated-links">
-                <?php
-                $mk_footer_links = array_values(array_filter(array_merge($product_links, $related_links), static function ($link): bool {
-                    $url = (string) ($link['url'] ?? '');
-                    return ! preg_match('/(?:price|prices|cost)/i', $url);
-                }));
-                ?>
-                <?php foreach (array_slice($mk_footer_links, 0, 24) as $link) : ?>
-                    <a href="<?php echo esc_url(fenster_generated_url($link['url'])); ?>"><?php echo esc_html($link['text']); ?></a>
-                <?php endforeach; ?>
-            </div>
+            <?php
+            $mk_footer_links = array_values(array_filter(array_merge($product_links, $related_links), static function ($link): bool {
+                $url = (string) ($link['url'] ?? '');
+                return ! preg_match('/(?:price|prices|cost)/i', $url);
+            }));
+            get_template_part('template-parts/components/link-cards', null, [
+                'links' => array_slice($mk_footer_links, 0, 24),
+            ]);
+            ?>
         </div>
     </section>
 </article>
@@ -1732,11 +1730,11 @@ $product_links = [
                 <p class="eyebrow"><?php esc_html_e('Keep exploring', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Products, services and nearby areas', 'fenster'); ?></h2>
             </div>
-            <div class="generated-links">
-                <?php foreach (array_slice(array_values(array_merge($product_links, $related_links)), 0, 24) as $link) : ?>
-                    <a href="<?php echo esc_url(fenster_generated_url($link['url'])); ?>"><?php echo esc_html($link['text']); ?></a>
-                <?php endforeach; ?>
-            </div>
+            <?php
+            get_template_part('template-parts/components/link-cards', null, [
+                'links' => array_slice(array_values(array_merge($product_links, $related_links)), 0, 24),
+            ]);
+            ?>
         </div>
     </section>
 </article>

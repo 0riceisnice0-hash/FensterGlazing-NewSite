@@ -362,3 +362,64 @@ function fenster_case_study(string $short_slug): ?array
 
     return isset($studies[$short_slug]) && is_array($studies[$short_slug]) ? $studies[$short_slug] : null;
 }
+
+/**
+ * Build the lightweight card array a case-study card partial renders from.
+ *
+ * @param string               $short Short slug (no "case-studies/" prefix).
+ * @param array<string, mixed> $study Full study entry.
+ * @return array<string, mixed>
+ */
+function fenster_case_study_card(string $short, array $study): array
+{
+    return [
+        'short' => $short,
+        'url' => home_url('/case-studies/' . $short . '/'),
+        'title' => (string) ($study['title'] ?? ''),
+        'location' => (string) ($study['location'] ?? ''),
+        'type' => (string) ($study['type'] ?? 'Residential'),
+        'summary' => (string) ($study['summary'] ?? ''),
+        'image' => is_array($study['images'][0] ?? null) ? $study['images'][0] : null,
+        'products' => is_array($study['products'] ?? null) ? $study['products'] : [],
+        'date' => (string) ($study['date'] ?? ''),
+    ];
+}
+
+/**
+ * Case-study cards relevant to a product route.
+ *
+ * Matches on the products[] links each study already carries, so there is no
+ * separate tagging to maintain. Falls back to the newest studies when nothing
+ * matches, which keeps the section alive on routes with no direct study yet.
+ *
+ * @param string $slug  Current page slug, e.g. "casement-windows".
+ * @param int    $limit Cards to return.
+ * @return array<int, array<string, mixed>> Card arrays for the card partial.
+ */
+function fenster_case_studies_for_product(string $slug, int $limit = 3): array
+{
+    $studies = fenster_case_studies();
+    $target = '/' . trim($slug, '/') . '/';
+    $matched = [];
+
+    foreach ($studies as $short => $study) {
+        foreach ((array) ($study['products'] ?? []) as $product) {
+            $path = (string) wp_parse_url((string) ($product['url'] ?? ''), PHP_URL_PATH);
+            if ($path !== '' && rtrim($path, '/') . '/' === $target) {
+                $matched[$short] = $study;
+                break;
+            }
+        }
+    }
+
+    if ($matched === []) {
+        $matched = $studies;
+    }
+
+    $cards = [];
+    foreach (array_slice($matched, 0, max(1, $limit), true) as $short => $study) {
+        $cards[] = fenster_case_study_card((string) $short, $study);
+    }
+
+    return $cards;
+}

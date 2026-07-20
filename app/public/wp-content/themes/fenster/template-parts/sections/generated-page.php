@@ -431,16 +431,12 @@ if ($is_composite_doors) {
             ['name' => 'Side panels', 'copy' => 'Matching glazed side panels widen a narrow opening and bring more daylight into the hallway, framed to suit the door you choose.'],
         ],
     ];
-    $composite_door_colours = [
-        ['name' => 'Anthracite Grey', 'hex' => '#383e42', 'slug' => 'anthracite-grey', 'copy' => 'A crisp dark neutral for modern brick, render and metalwork.', 'alt' => 'Anthracite grey contemporary composite entrance door'],
-        ['name' => 'Black', 'hex' => '#121516', 'slug' => 'black', 'copy' => 'Strong and traditional, especially with brass or stainless hardware.', 'alt' => 'Black composite entrance door with decorative glass'],
-        ['name' => 'Light Grey', 'hex' => '#a8aaa5', 'slug' => 'light-grey', 'copy' => 'A softer neutral that works with both period and contemporary interiors.', 'alt' => 'Light grey composite entrance door viewed from inside'],
-        ['name' => 'Pale Blue', 'hex' => '#9fbec0', 'slug' => 'pale-blue', 'copy' => 'A calm colour direction that keeps decorative glass feeling light.', 'alt' => 'Pale blue composite door with decorative glass and chrome hardware'],
-        ['name' => 'Distant Blue', 'hex' => '#294d70', 'slug' => 'distant-blue', 'copy' => 'A deeper blue that reads clearly against pale render and brick.', 'alt' => 'Distant blue contemporary composite entrance door'],
-        ['name' => 'Ruby Red', 'hex' => '#8c1f2b', 'slug' => 'ruby-red', 'copy' => 'A confident architectural accent for restrained elevations.', 'alt' => 'Ruby red contemporary composite entrance door'],
-        ['name' => 'Green', 'hex' => '#62745b', 'slug' => 'green', 'copy' => 'A traditional green suited to brick, stone and country-style frontages.', 'alt' => 'Green Signature composite entrance door with decorative glass'],
-        ['name' => 'White', 'hex' => '#f2f0e8', 'slug' => 'white', 'copy' => 'Clean and bright, with the door profile and glass doing the visual work.', 'alt' => 'White composite entrance door viewed from the hallway'],
-    ];
+    // Shared with the colours hub: the palette lives in inc/site-data.php under
+    // colour_options.materials.composite so both surfaces stay in sync.
+    $composite_door_colours = array_values(array_filter(
+        (array) fenster_data('colour_options.materials.composite.colours', []),
+        static fn ($colour): bool => is_array($colour) && ! empty($colour['slug'])
+    ));
     $composite_door_glass = [
         ['name' => 'Lunna', 'slug' => 'lunna', 'copy' => 'Decorative zinc lines and textured glass with a traditional feel.'],
         ['name' => 'Chatsworth', 'slug' => 'chatsworth', 'copy' => 'A restrained satin privacy centre with a fine clear border.'],
@@ -2140,13 +2136,17 @@ if ($is_obscure_glass) {
                     </div>
                 </div>
 
+                <?php
+                /*
+                 * Flat item-level snap rail. The previous full-width page chunks
+                 * with scroll-snap-type: x mandatory would not swipe on iPhones
+                 * (WebKit snaps straight back on 100%-width snap pages); this is
+                 * the same native card-rail pattern as the rest of the site.
+                 */
+                ?>
                 <div class="fg-obscure-mobile-picker" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options', 'fenster'); ?>" data-lenis-prevent>
-                    <?php foreach (array_chunk($obscure_glass_textures, 4, true) as $obscure_glass_page) : ?>
-                        <div class="fg-obscure-mobile-picker__page" aria-hidden="false">
-                            <?php foreach ($obscure_glass_page as $index => $texture) : ?>
-                                <?php $render_obscure_glass_option($texture, (int) $index); ?>
-                            <?php endforeach; ?>
-                        </div>
+                    <?php foreach ($obscure_glass_textures as $index => $texture) : ?>
+                        <?php $render_obscure_glass_option($texture, (int) $index); ?>
                     <?php endforeach; ?>
                 </div>
 
@@ -2237,11 +2237,11 @@ if ($is_obscure_glass) {
                         <p class="eyebrow"><?php esc_html_e('Related products', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Products that can use obscured glass', 'fenster'); ?></h2>
                     </div>
-                    <div class="generated-links">
-                        <?php foreach (array_slice(array_values($related_links), 0, 18) as $link) : ?>
-                            <a href="<?php echo esc_url(fenster_generated_url($link['url'])); ?>"><?php echo esc_html($link['text']); ?></a>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php
+                    get_template_part('template-parts/components/link-cards', null, [
+                        'links' => array_slice(array_values($related_links), 0, 18),
+                    ]);
+                    ?>
                 </div>
             </section>
         <?php endif; ?>
@@ -2542,11 +2542,11 @@ if ($is_commercial_hub) {
                         <p class="eyebrow"><?php esc_html_e('Commercial services', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Service areas and related commercial pages', 'fenster'); ?></h2>
                     </div>
-                    <div class="generated-links">
-                        <?php foreach (array_slice(array_values($related_links), 0, 24) as $link) : ?>
-                            <a href="<?php echo esc_url(fenster_generated_url($link['url'])); ?>"><?php echo esc_html($link['text']); ?></a>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php
+                    get_template_part('template-parts/components/link-cards', null, [
+                        'links' => array_slice(array_values($related_links), 0, 24),
+                    ]);
+                    ?>
                 </div>
             </section>
         <?php endif; ?>
@@ -2811,11 +2811,11 @@ if ($is_commercial_hub) {
                         <p class="eyebrow"><?php esc_html_e('Keep exploring', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Core products and service areas', 'fenster'); ?></h2>
                     </div>
-                    <div class="generated-links">
-                        <?php foreach (array_slice(array_values($related_links), 0, 24) as $link) : ?>
-                            <a href="<?php echo esc_url(fenster_generated_url($link['url'])); ?>"><?php echo esc_html($link['text']); ?></a>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php
+                    get_template_part('template-parts/components/link-cards', null, [
+                        'links' => array_slice(array_values($related_links), 0, 24),
+                    ]);
+                    ?>
                 </div>
             </section>
         <?php endif; ?>
@@ -4150,6 +4150,33 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
+    <?php if ($use_product_journey && function_exists('fenster_case_studies_for_product')) : ?>
+        <?php $product_case_cards = fenster_case_studies_for_product($slug, 3); ?>
+        <?php if ($product_case_cards !== []) : ?>
+            <section class="fg-cs-strip">
+                <div class="container">
+                    <div class="fg-cs-strip__head">
+                        <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('Real installs, photographed on the day.', 'fenster'); ?></h2>
+                    </div>
+                    <div class="fg-cs-strip__grid">
+                        <?php foreach ($product_case_cards as $product_case_card) : ?>
+                            <?php
+                            get_template_part('template-parts/components/case-study-card', null, [
+                                'card' => $product_case_card,
+                                'heading' => 'h3',
+                            ]);
+                            ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="button-row fg-cs-strip__cta">
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('See all case studies', 'fenster'); ?></a>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+    <?php endif; ?>
+
     <section id="fenster-enquiry" class="fg-enquiry">
         <div class="container fg-enquiry__grid">
             <div class="fg-enquiry__copy">
@@ -4182,11 +4209,11 @@ if ($is_commercial_hub) {
                     <p class="eyebrow"><?php esc_html_e('Keep exploring', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Related products and service areas', 'fenster'); ?></h2>
                 </div>
-                <div class="generated-links">
-                    <?php foreach (array_slice(array_values($related_links), 0, 24) as $link) : ?>
-                        <a href="<?php echo esc_url(fenster_generated_url($link['url'])); ?>"><?php echo esc_html($link['text']); ?></a>
-                    <?php endforeach; ?>
-                </div>
+                <?php
+                get_template_part('template-parts/components/link-cards', null, [
+                    'links' => array_slice(array_values($related_links), 0, 24),
+                ]);
+                ?>
             </div>
         </section>
     <?php endif; ?>

@@ -274,3 +274,50 @@ function fenster_preload_product_scroll_video(): void
 
     return;
 }
+
+/**
+ * Curated thumbnail for an internal route, used by the shared link-cards
+ * component. Keyed by route path so town/matrix variants fall back to plain
+ * text links. Only material-correct imagery is mapped: a wrong-material
+ * thumbnail is worse than none.
+ *
+ * @param string $url Internal link URL.
+ * @return string Theme-relative image path, or '' when the route has no image.
+ */
+function fenster_link_card_image(string $url): string
+{
+    static $map = null;
+
+    if ($map === null) {
+        $curated = '/wp-content/themes/fenster/assets/images/products/curated/';
+        $map = [
+            'windows-milton-keynes' => $curated . 'home-theatre-windows.jpg',
+            'doors-milton-keynes' => $curated . 'home-theatre-composite-door.jpg',
+            'double-glazing-milton-keynes' => $curated . 'liniar-casement-closeup.jpg',
+            'casement-windows' => $curated . 'liniar-casement-exterior.jpg',
+            'flush-casement-windows' => $curated . 'liniar-flush-window.jpg',
+            'sliding-sash-windows' => $curated . 'fenster-sliding-sash-window.jpg',
+            'bow-bay-windows' => $curated . 'liniar-bay-window.jpg',
+            'aluminium-windows' => $curated . 'sheerline-aluminium-window.jpg',
+            'heritage-windows' => $curated . 'sheerline-heritage-windows.jpg',
+            'composite-doors' => $curated . 'distinction-composite-door-installed.jpg',
+            'upvc-doors' => $curated . 'fenster-upvc-door.jpg',
+            'aluminium-doors' => $curated . 'sheerline-aluminium-door.jpg',
+            'heritage-aluminium-doors' => $curated . 'sheerline-heritage-door.jpg',
+            'aluminium-bifold-doors' => $curated . 'sheerline-bifold-exterior.jpg',
+            'aluminium-sliding-doors' => $curated . 'sheerline-sliding-door.jpg',
+            'slide-fold-doors' => $curated . 'neutral-slide-fold-doors.jpg',
+            'patio-doors' => $curated . 'liniar-patio-door.jpg',
+            'integral-blinds' => $curated . 'notan-integral-blinds.jpg',
+            'roof-lanterns' => $curated . 'sheerline-roof-lantern.jpg',
+            'flat-rooflights' => $curated . 'sheerline-roof-lantern-interior.jpg',
+            'cat-and-dog-flaps' => $curated . 'fenster-cat-flap-glass.jpg',
+            'window-and-door-repairs' => $curated . 'fenster-double-glazed-unit.jpeg',
+            'roofline' => $curated . 'liniar-roofline-fascia.jpg',
+        ];
+    }
+
+    $path = strtolower(trim((string) wp_parse_url($url, PHP_URL_PATH), '/'));
+
+    return $map[$path] ?? '';
+}
