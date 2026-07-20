@@ -15134,13 +15134,19 @@ a.fg-cs-installer:hover {
    sections, alternating grid ratios so no two adjacent sections share a rhythm,
    ch-clamped headings and scrim-and-chip captions on media. The crew stage
    reuses the data-fg-cd-range tab component from the composite door page. */
+/* About page.
+   Image-led, on the continuous page gradient. Art direction follows the roof
+   lanterns page (contained sections, alternating grid ratios, ch-clamped
+   measures, scrim-and-chip captions) and the case studies page (uncropped
+   masonry, dual-speed card hover). Motion comes from the global data-fg-depth
+   parallax utility, so there is no new JavaScript. */
 .fg-about {
   overflow: clip;
   color: var(--color-ink);
 }
 
 .fg-about section {
-  padding: clamp(2.25rem, 4.5vw, 3.4rem) 0;
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
 }
 
 .fg-about .eyebrow {
@@ -15152,16 +15158,15 @@ a.fg-cs-installer:hover {
   text-transform: uppercase;
 }
 
-/* Size and line-height are owned by the shared page-heading guardrail further
-   down this file, which deliberately keeps information pages out of hero scale.
-   Only the measure is set here. */
+/* Size and line-height for h1 are owned by the shared page-heading guardrail
+   further down this file, which keeps information pages out of hero scale. */
 .fg-about h1 {
-  max-width: 15ch;
+  max-width: 16ch;
   margin: 0 0 1rem;
 }
 
 .fg-about h2 {
-  max-width: 20ch;
+  max-width: 22ch;
   margin: 0 0 0.85rem;
   font-size: clamp(1.45rem, 2.2vw, 2rem);
   line-height: 1.12;
@@ -15174,7 +15179,6 @@ a.fg-cs-installer:hover {
   line-height: 1.62;
 }
 
-/* Shared media treatment: 8px radius, bottom scrim, floating caption chip. */
 .fg-about figure {
   position: relative;
   margin: 0;
@@ -15182,28 +15186,42 @@ a.fg-cs-installer:hover {
   border-radius: 8px;
 }
 
-.fg-about figure > img {
+/* Parallax wrapper. The utility writes --fg-parallax-y on scroll; the image is
+   oversized so the translation never exposes an edge. */
+.fg-about-parallax {
+  display: block;
+  overflow: hidden;
+}
+
+.fg-about-parallax img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: translate3d(0, var(--fg-parallax-y, 0), 0);
+  will-change: transform;
+}
+
+.fg-about-hero__media,
+.fg-about-award__media,
+.fg-about-visit__media {
+  isolation: isolate;
 }
 
 .fg-about-hero__media::after,
-.fg-about-award__media::after,
 .fg-about-visit__media::after {
   content: "";
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   height: 35%;
   pointer-events: none;
   background: linear-gradient(transparent, rgba(10, 34, 38, 0.72));
 }
 
 .fg-about-hero__media figcaption,
-.fg-about-award__media figcaption,
 .fg-about-visit__media figcaption {
   position: absolute;
   bottom: 0.9rem;
@@ -15219,19 +15237,14 @@ a.fg-cs-installer:hover {
   text-transform: uppercase;
 }
 
-.fg-about-visit__media figcaption {
-  text-transform: none;
-  letter-spacing: 0.02em;
-}
-
-/* Hero: narrow copy, wide media. */
+/* Hero */
 .fg-about-hero {
   padding-top: clamp(2.25rem, 4vw, 3.25rem);
 }
 
 .fg-about-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
   gap: clamp(1.75rem, 3.5vw, 3rem);
   align-items: center;
 }
@@ -15240,36 +15253,20 @@ a.fg-cs-installer:hover {
   font-size: clamp(1.02rem, 1.25vw, 1.14rem);
 }
 
-.fg-about-hero__points {
-  margin: 0 0 1.4rem;
-  padding: 0;
-  list-style: none;
+.fg-about-hero .button-row {
+  margin-top: 1.4rem;
 }
 
-.fg-about-hero__points li {
-  position: relative;
-  padding-left: 1.35rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.98rem;
-  line-height: 1.5;
-}
-
-.fg-about-hero__points li::before {
-  content: "";
-  position: absolute;
-  top: 0.55rem;
-  left: 0;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  background: var(--color-accent);
+.fg-about-hero__media .fg-about-parallax {
+  aspect-ratio: 16 / 10;
 }
 
 .fg-about-hero__media img {
-  aspect-ratio: 4 / 3;
+  height: 112%;
+  margin-top: -6%;
 }
 
-/* Facts: bordered spec strip. */
+/* Facts strip */
 .fg-about-facts {
   padding-top: 0;
 }
@@ -15306,253 +15303,145 @@ a.fg-cs-installer:hover {
   line-height: 1.4;
 }
 
-/* Crew stage: selector rail plus a portrait and job panel. */
-.fg-about-crew__head {
+/* Founders: two matched portraits, offset parallax between them. */
+.fg-about-founders__head {
   margin-bottom: clamp(1.4rem, 2.5vw, 2rem);
 }
 
-.fg-about-crew__head p:last-child {
+.fg-about-founders__head p:last-child {
   margin-bottom: 0;
 }
 
-.fg-about-crew__stage {
+.fg-about-founders__grid {
   display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 2rem);
-  align-items: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
 }
 
-.fg-about-crew__selector {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.fg-about-crew__tab {
-  display: grid;
-  grid-template-columns: 2.75rem minmax(0, 1fr);
-  gap: 0.7rem;
-  align-items: center;
-  width: 100%;
-  min-height: 44px;
-  padding: 0.5rem 0.7rem;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.86);
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-
-.fg-about-crew__tab:hover,
-.fg-about-crew__tab:focus-visible {
-  border-color: rgba(46, 172, 102, 0.5);
-}
-
-.fg-about-crew__tab[aria-selected="true"] {
-  border-color: var(--color-accent);
-  background: #ffffff;
-  box-shadow: 0 10px 26px rgba(0, 45, 58, 0.1);
-}
-
-.fg-about-crew__tab-portrait {
-  display: block;
-  overflow: hidden;
-  border-radius: 50%;
+.fg-about-founder {
   background: var(--color-steel);
 }
 
-.fg-about-crew__tab-portrait img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  object-position: center 22%;
-  filter: grayscale(1) contrast(1.04);
-}
-
-.fg-about-crew__tab strong {
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.15;
-}
-
-.fg-about-crew__tab-role {
-  display: block;
-  color: rgba(6, 33, 42, 0.66);
-  font-size: 0.78rem;
-  line-height: 1.3;
-}
-
-.fg-about-crew__tab[aria-selected="true"] .fg-about-crew__tab-role {
-  color: var(--color-accent-dark);
-}
-
-.fg-about-crew__display {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
-  gap: clamp(1.25rem, 2.5vw, 1.85rem);
-  align-items: start;
-  min-height: 24rem;
-}
-
-/* One house style across mixed-quality source portraits. */
-.fg-about-crew__portrait {
-  background: var(--color-steel);
-}
-
-.fg-about-crew__portrait img {
+.fg-about-founder .fg-about-parallax {
   aspect-ratio: 4 / 5;
-  object-position: center 20%;
-  filter: grayscale(1) contrast(1.05);
 }
 
-.fg-about-crew__portrait figcaption {
+.fg-about-founder img {
+  height: 110%;
+  margin-top: -5%;
+  filter: grayscale(1) contrast(1.04);
+  object-position: center 18%;
+}
+
+.fg-about-founder figcaption {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 2;
-  padding: 1.6rem 1rem 0.85rem;
-  background: linear-gradient(transparent, rgba(0, 28, 36, 0.86));
+  padding: 3rem 1.25rem 1.15rem;
+  background: linear-gradient(transparent, rgba(0, 24, 31, 0.9));
   color: #ffffff;
 }
 
-.fg-about-crew__portrait figcaption strong {
+.fg-about-founder figcaption strong {
   display: block;
-  font-size: 1.02rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
   font-weight: 800;
+  line-height: 1.15;
 }
 
-.fg-about-crew__portrait figcaption span {
+.fg-about-founder__role {
   display: block;
-  color: rgba(255, 255, 255, 0.82);
+  margin-top: 0.15rem;
+  color: #7fe0aa;
   font-size: 0.84rem;
-}
-
-.fg-about-crew__note {
-  margin: 0 0 0.5rem;
-  font-size: 1rem;
   font-weight: 700;
-}
-
-.fg-about-crew__count {
-  margin: 0 0 0.85rem;
-  color: var(--color-accent-dark);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.fg-about-crew__jobs {
-  display: grid;
-  gap: 0.7rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* Job card: the dual-speed hover from the case study cards. */
-.fg-about-job {
-  display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: 0.9rem;
-  align-items: center;
-  overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.92);
-  color: inherit;
-  text-decoration: none;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-}
-
-.fg-about-job:hover,
-.fg-about-job:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 22px 50px rgba(0, 45, 58, 0.14);
-}
-
-.fg-about-job__media {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  background: var(--color-steel);
-}
-
-.fg-about-job__media img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.fg-about-job:hover .fg-about-job__media img,
-.fg-about-job:focus-visible .fg-about-job__media img {
-  transform: scale(1.04);
-}
-
-.fg-about-job__award {
-  position: absolute;
-  top: 0.4rem;
-  left: 0.4rem;
-  padding: 0.18rem 0.4rem;
-  border-radius: 4px;
-  background: var(--color-accent);
-  color: #ffffff;
-  font-size: 0.62rem;
-  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.fg-about-job__body {
+.fg-about-founder__copy {
   display: block;
-  padding: 0.7rem 0.9rem 0.7rem 0;
+  max-width: 40ch;
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.94rem;
+  line-height: 1.5;
 }
 
-.fg-about-job__body strong {
-  display: block;
-  font-size: 0.98rem;
-  font-weight: 800;
-  line-height: 1.2;
+/* Recent installs: uncropped masonry, the case studies treatment. */
+.fg-about-work__head {
+  margin-bottom: clamp(1.4rem, 2.5vw, 2rem);
 }
 
-.fg-about-job__meta {
+.fg-about-work__head p:last-child {
+  margin-bottom: 0;
+}
+
+.fg-about-work__masonry {
+  columns: 2 20rem;
+  column-gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.fg-about-shot {
+  break-inside: avoid;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-soft);
+}
+
+.fg-about-shot > a {
   display: block;
-  margin-top: 0.25rem;
-  color: rgba(6, 33, 42, 0.66);
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+}
+
+.fg-about-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.4s ease;
+}
+
+.fg-about-shot:hover img,
+.fg-about-shot:focus-within img {
+  transform: scale(1.04);
+}
+
+.fg-about-shot figcaption {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.85rem 1rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.fg-about-shot figcaption a {
   font-size: 0.84rem;
+  font-weight: 700;
 }
 
-.fg-about-job__meta em {
-  font-style: normal;
+.fg-about-work__more {
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
 }
 
-.fg-about-job__meta em::before {
-  content: " • ";
-}
-
-.fg-about-crew__empty {
-  font-size: 0.98rem;
-}
-
-.fg-about-crew__more {
-  margin: 1.3rem 0 0;
-}
-
-/* Award: media left, so the rhythm alternates against the crew stage. */
+/* Award: media left so the rhythm alternates. */
 .fg-about-award__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: clamp(1.75rem, 3.5vw, 3rem);
   align-items: center;
 }
 
+.fg-about-award__media .fg-about-parallax {
+  aspect-ratio: 4 / 5;
+}
+
 .fg-about-award__media img {
-  aspect-ratio: 16 / 11;
+  height: 112%;
+  margin-top: -6%;
 }
 
 .fg-about-award__mark {
@@ -15574,71 +15463,43 @@ a.fg-cs-installer:hover {
   object-fit: contain;
 }
 
-/* Guarantee: definition rows, borrowed from the roof lantern spec list. */
-.fg-about-guarantee__grid {
+/* Trust */
+.fg-about-trust__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(1.5rem, 3vw, 2.75rem);
-  align-items: start;
+  align-items: center;
 }
 
-.fg-about-guarantee__links {
-  display: flex;
-  gap: 1.2rem;
-  margin: 0;
-  flex-wrap: wrap;
+.fg-about-trust__copy p:last-child {
+  margin-bottom: 0;
 }
 
-.fg-about-guarantee__rows {
-  margin: 0;
-}
-
-.fg-about-guarantee__row {
+.fg-about-trust__logos {
   display: grid;
-  grid-template-columns: 10rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: 0.95rem 0;
-  border-top: 1px solid var(--color-line);
-}
-
-.fg-about-guarantee__row:last-child {
-  border-bottom: 1px solid var(--color-line);
-}
-
-.fg-about-guarantee__row dt {
-  color: var(--color-accent-dark);
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fg-about-guarantee__row dd {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
   margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.55;
+  padding: 0;
+  list-style: none;
 }
 
-/* Prices: the one deliberate solid band on the page. */
-.fg-about-prices {
-  background: var(--color-steel);
-  color: #ffffff;
+.fg-about-trust__logos li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  padding: 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
 }
 
-.fg-about-prices__inner {
-  max-width: 46rem;
-}
-
-.fg-about-prices .eyebrow {
-  color: #7fe0aa;
-}
-
-.fg-about-prices h2 {
-  max-width: 24ch;
-}
-
-.fg-about-prices .button-row {
-  margin-top: 1.4rem;
+.fg-about-trust__logos img {
+  width: auto;
+  max-width: 100%;
+  max-height: 56px;
+  object-fit: contain;
 }
 
 /* Visit */
@@ -15649,9 +15510,18 @@ a.fg-cs-installer:hover {
   align-items: center;
 }
 
+.fg-about-visit__media .fg-about-parallax {
+  aspect-ratio: 3 / 2;
+}
+
+.fg-about-visit__media img {
+  height: 112%;
+  margin-top: -6%;
+}
+
 .fg-about-visit__address {
   display: grid;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.7rem;
   font-style: normal;
   font-size: 1rem;
   line-height: 1.55;
@@ -15675,28 +15545,82 @@ a.fg-cs-installer:hover {
   font-weight: 700;
 }
 
-.fg-about-visit__media img {
-  aspect-ratio: 4 / 3;
+/* Routes: the dual-speed hover from the case study cards. */
+.fg-about-routes__head {
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.fg-about-routes__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.35rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-about-route {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.fg-about-route:hover,
+.fg-about-route:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 50px rgba(0, 45, 58, 0.14);
+}
+
+.fg-about-route__media {
+  display: block;
+  overflow: hidden;
+  background: var(--color-steel);
+}
+
+.fg-about-route__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.fg-about-route:hover .fg-about-route__media img,
+.fg-about-route:focus-visible .fg-about-route__media img {
+  transform: scale(1.04);
+}
+
+.fg-about-route__body {
+  display: block;
+  padding: 0.95rem 1.1rem 1.15rem;
+}
+
+.fg-about-route__body strong {
+  display: block;
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.fg-about-route__body span {
+  display: block;
+  margin-top: 0.3rem;
+  color: rgba(6, 33, 42, 0.7);
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 @media (max-width: 1040px) {
-  .fg-about-crew__stage {
-    grid-template-columns: 1fr;
-  }
-
-  /* The selector becomes a scroll-snap rail above the stage. */
-  .fg-about-crew__selector {
-    display: flex;
-    gap: 0.6rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 0.35rem;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .fg-about-crew__tab {
-    flex: 0 0 13.5rem;
-    scroll-snap-align: start;
+  .fg-about-routes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -15705,10 +15629,7 @@ a.fg-cs-installer:hover {
     padding: clamp(2rem, 7vw, 2.75rem) 0;
   }
 
-  .fg-about h1 {
-    max-width: none;
-  }
-
+  .fg-about h1,
   .fg-about h2,
   .fg-about p {
     max-width: none;
@@ -15716,30 +15637,40 @@ a.fg-cs-installer:hover {
 
   .fg-about-hero__grid,
   .fg-about-award__grid,
-  .fg-about-visit__grid,
-  .fg-about-guarantee__grid,
-  .fg-about-crew__display {
+  .fg-about-trust__grid,
+  .fg-about-visit__grid {
     grid-template-columns: 1fr;
   }
 
-  /* Open each section on something to look at rather than a wall of type. */
-  .fg-about-award__media {
+  /* Open the section on the picture rather than a wall of type. */
+  .fg-about-award__media,
+  .fg-about-visit__media {
     order: -1;
   }
 
-  .fg-about-hero__media img,
-  .fg-about-award__media img,
-  .fg-about-visit__media img {
+  .fg-about-award__media .fg-about-parallax,
+  .fg-about-visit__media .fg-about-parallax {
     aspect-ratio: 16 / 10;
   }
 
-  .fg-about-crew__display {
-    min-height: 0;
+  .fg-about-founders__grid {
+    gap: 0.75rem;
   }
 
-  .fg-about-crew__portrait img {
-    aspect-ratio: 3 / 2;
-    object-position: center 18%;
+  .fg-about-founder .fg-about-parallax {
+    aspect-ratio: 3 / 4;
+  }
+
+  .fg-about-founder figcaption {
+    padding: 2.25rem 0.9rem 0.9rem;
+  }
+
+  .fg-about-founder__copy {
+    display: none;
+  }
+
+  .fg-about-work__masonry {
+    columns: 1;
   }
 
   .fg-about-facts__strip {
@@ -15754,13 +15685,8 @@ a.fg-cs-installer:hover {
     border-top: 1px solid var(--color-line);
   }
 
-  .fg-about-guarantee__row {
+  .fg-about-routes__grid {
     grid-template-columns: 1fr;
-    gap: 0.3rem;
-  }
-
-  .fg-about-job {
-    grid-template-columns: 6rem minmax(0, 1fr);
   }
 }
 
@@ -15776,22 +15702,35 @@ a.fg-cs-installer:hover {
   .fg-about-facts__item + .fg-about-facts__item {
     border-top: 1px solid var(--color-line);
   }
+
+  .fg-about-trust__logos {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fg-about-job,
-  .fg-about-job__media img,
-  .fg-about-crew__tab {
+  .fg-about-parallax img {
+    transform: none;
+    height: 100%;
+    margin-top: 0;
+    will-change: auto;
+  }
+
+  .fg-about-shot img,
+  .fg-about-route,
+  .fg-about-route__media img {
     transition: none;
   }
 
-  .fg-about-job:hover,
-  .fg-about-job:focus-visible {
+  .fg-about-shot:hover img,
+  .fg-about-shot:focus-within img,
+  .fg-about-route:hover .fg-about-route__media img,
+  .fg-about-route:focus-visible .fg-about-route__media img {
     transform: none;
   }
 
-  .fg-about-job:hover .fg-about-job__media img,
-  .fg-about-job:focus-visible .fg-about-job__media img {
+  .fg-about-route:hover,
+  .fg-about-route:focus-visible {
     transform: none;
   }
 }
