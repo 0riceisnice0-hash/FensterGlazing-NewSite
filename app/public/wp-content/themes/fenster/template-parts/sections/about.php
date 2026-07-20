@@ -57,12 +57,11 @@ $facts = [
 
 // One dominant image plus five supporting cells, per the STYLE.md mosaic rule.
 $gallery = [
-    ['file' => 'cs-big-roof-lantern-14.jpg', 'caption' => 'Sheerline S1 roof lantern, Drayton Parslow', 'study' => 'sheerline-roof-lantern', 'lead' => true],
-    ['file' => 'cs-mk-whitehouse-bifold-open.jpg', 'caption' => 'Aluminium bifolds, Whitehouse', 'study' => 'aluminium-bifold-doors-whitehouse-milton-keynes'],
+    ['file' => 'cs-mk-whitehouse-bifold-open.jpg', 'caption' => 'Aluminium bifolds, Whitehouse', 'study' => 'aluminium-bifold-doors-whitehouse-milton-keynes', 'lead' => true],
     ['file' => 'cs-lantern-doors-interior.jpg', 'caption' => 'Heritage doors, Northampton', 'study' => 'roof-lantern-and-heritage-doors'],
-    ['file' => 'cs-leighton-buzzard-casement-street.jpg', 'caption' => 'Casements, Leighton Buzzard', 'study' => 'upvc-casement-windows-leighton-buzzard'],
+    ['file' => 'cs-big-roof-lantern-14.jpg', 'caption' => 'Roof lantern, Drayton Parslow', 'study' => 'sheerline-roof-lantern'],
     ['file' => 'cs-leighton-buzzard-slide-fold-open.jpg', 'caption' => 'Slide and fold doors, Leighton Buzzard', 'study' => 'flush-casement-and-slide-fold-doors-leighton-buzzard'],
-    ['file' => 'cs-mk-broughton-casement-after.jpg', 'caption' => 'Dormer casement, Broughton', 'study' => 'upvc-casement-windows-broughton-milton-keynes'],
+    ['file' => 'cs-leighton-buzzard-casement-street.jpg', 'caption' => 'Casements, Leighton Buzzard', 'study' => 'upvc-casement-windows-leighton-buzzard'],
 ];
 
 $routes = [
@@ -98,9 +97,9 @@ $accreditations = [
             </div>
             <figure class="fg-about-hero__media">
                 <span class="fg-about-parallax" data-fg-depth="0.05">
-                    <img <?php echo $img($cs . 'cs-big-roof-lantern-19.jpg', ['alt' => 'A Sheerline aluminium roof lantern installed by Fenster over an extension', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
+                    <img <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
                 </span>
-                <figcaption><?php esc_html_e('Drayton Parslow', 'fenster'); ?></figcaption>
+                <figcaption><?php esc_html_e('Our showroom, Milton Keynes', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </section>
@@ -209,9 +208,9 @@ $accreditations = [
         <div class="container fg-about-visit__grid">
             <figure class="fg-about-visit__media">
                 <span class="fg-about-parallax" data-fg-depth="0.04">
-                    <img <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'lazy']); ?>>
+                    <img <?php echo $img($cs . 'cs-leighton-buzzard-casement-front.jpg', ['alt' => 'A Fenster casement window installation in Leighton Buzzard', 'loading' => 'lazy']); ?>>
                 </span>
-                <figcaption><?php esc_html_e('Alston Drive, Bradwell Abbey', 'fenster'); ?></figcaption>
+                <figcaption><?php esc_html_e('Leighton Buzzard', 'fenster'); ?></figcaption>
             </figure>
             <div class="fg-about-visit__copy">
                 <p class="eyebrow"><?php esc_html_e('Where we are', 'fenster'); ?></p>
