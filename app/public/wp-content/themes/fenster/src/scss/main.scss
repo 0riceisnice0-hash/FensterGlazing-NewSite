@@ -15217,27 +15217,22 @@ a.fg-cs-installer:hover {
   transform: none;
 }
 
-/* Hero: the mission over our own work, full bleed. The video is a background,
-   so it is desktop-only and reduced-motion users keep the poster; see the
-   data-fg-video-bg handling in src/js/main.js. */
+/* Hero: the mission beside the showroom in a contained frame, owner request. */
 .fg-about-hero {
-  padding: 0;
+  padding-top: clamp(2rem, 3.2vw, 2.75rem);
 }
 
-.fg-about-hero__stage {
-  position: relative;
-  display: flex;
+.fg-about-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
   align-items: center;
-  min-height: clamp(29rem, 64vh, 36rem);
-  overflow: hidden;
-  background: var(--color-steel);
 }
 
 /* Videos are absolutely positioned inside fixed-size boxes. In-flow they feed
    intrinsic size into the layout and the box derives the wrong width (498px in
-   a 390px viewport, once). */
-.fg-about-hero__stage video,
-.fg-about-hero__image,
+   a 390px viewport, once). The boxed hero image gets the same treatment. */
+.fg-about-hero__media img,
 .fg-about-award__media video {
   position: absolute;
   inset: 0;
@@ -15246,52 +15241,18 @@ a.fg-cs-installer:hover {
   object-fit: cover;
 }
 
-.fg-about-hero__scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(3, 24, 31, 0.92) 0%, rgba(3, 24, 31, 0.68) 42%, rgba(3, 24, 31, 0.16) 78%, rgba(3, 24, 31, 0.3) 100%);
-}
-
-/* No width override here: .container sizes itself via min(100% - 2rem, var)
-   and centers with auto margins, which works as a flex item too. */
-.fg-about-hero__content {
-  position: relative;
-  z-index: 1;
-  padding-top: clamp(2.5rem, 5vw, 4rem);
-  padding-bottom: clamp(2.5rem, 5vw, 4rem);
-}
-
-.fg-about-hero__content .eyebrow {
-  color: #7fe0aa;
-}
-
-.fg-about-hero__content h1 {
-  color: #ffffff;
+.fg-about-hero__media {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--color-steel);
 }
 
 .fg-about-hero__lead {
-  max-width: 36rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: clamp(1.02rem, 1.25vw, 1.12rem);
+  font-size: clamp(1.01rem, 1.2vw, 1.1rem);
 }
 
 .fg-about-hero .button-row {
-  margin-top: 1.4rem;
-}
-
-.fg-about-hero__tag {
-  position: absolute;
-  right: 0.9rem;
-  bottom: 0.9rem;
-  z-index: 1;
-  padding: 0.3rem 0.55rem;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--color-steel);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  margin-top: 1.25rem;
 }
 
 .fg-about-visit__media img {
@@ -15806,26 +15767,7 @@ a.fg-cs-installer:hover {
     max-width: none;
   }
 
-  /* Mobile hero: copy anchored to the bottom of the poster under a vertical
-     scrim; the video never loads at this width. */
-  .fg-about-hero__stage {
-    min-height: min(78vh, 34rem);
-    align-items: flex-end;
-  }
-
-  .fg-about-hero__scrim {
-    background: linear-gradient(180deg, rgba(3, 24, 31, 0.34) 0%, rgba(3, 24, 31, 0.62) 45%, rgba(3, 24, 31, 0.94) 100%);
-  }
-
-  .fg-about-hero__content {
-    padding-top: clamp(7rem, 30vw, 10rem);
-    padding-bottom: 1.9rem;
-  }
-
-  .fg-about-hero__tag {
-    display: none;
-  }
-
+  .fg-about-hero__grid,
   .fg-about-pricing__grid,
   .fg-about-founders__grid,
   .fg-about-award__grid,

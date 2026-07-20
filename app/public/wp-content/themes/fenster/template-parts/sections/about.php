@@ -113,10 +113,8 @@ $routes = [
 <article class="fg-about">
 
     <section class="fg-about-hero">
-        <div class="fg-about-hero__stage">
-            <img class="fg-about-hero__image" <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
-            <span class="fg-about-hero__scrim" aria-hidden="true"></span>
-            <div class="container fg-about-hero__content">
+        <div class="container fg-about-hero__grid">
+            <div class="fg-about-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('About Fenster Glazing', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Simple, honest glazing.', 'fenster'); ?></h1>
                 <p class="fg-about-hero__lead"><?php esc_html_e('Fenster exists to make windows and doors straightforward: a fair price you can get in minutes, people who know what they are fitting, and a company that is still here long after the scaffolding has gone. We started in 2018, our showroom is in Milton Keynes, and everyone who surveys, fits and answers the phone works for us.', 'fenster'); ?></p>
@@ -125,7 +123,10 @@ $routes = [
                     <a class="button button--light" href="<?php echo esc_url($consult_url); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
                 </div>
             </div>
-            <span class="fg-about-hero__tag"><?php esc_html_e('Our showroom, Milton Keynes', 'fenster'); ?></span>
+            <figure class="fg-about-hero__media">
+                <img <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
+                <figcaption><?php esc_html_e('Our showroom, Milton Keynes', 'fenster'); ?></figcaption>
+            </figure>
         </div>
     </section>
 
