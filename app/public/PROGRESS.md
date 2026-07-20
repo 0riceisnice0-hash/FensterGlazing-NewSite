@@ -2,6 +2,23 @@
 
 Last updated: 2026-07-20
 
+## 2026-07-20 - About page redesign (fifth version), deployed to test only
+
+Full recomposition of `/about/` around the instant-pricing positioning, built after reading `ABOUT-PAGE-HANDOVER.md` and verified in a real browser on the test site. Live is untouched; test is at `6918091`.
+
+**Composition (desktop, cascading media right/left/right/left):** hero with H1 `The price comes first.` beside the Drayton Parslow roof lantern install video; fact strip (2018, 1,000+, in-house fitters, 10 year guarantee); dark steel pricing band with a numbered `Pricing with us` vs `The usual way` comparison rail; five-cell fixed mosaic of case-study photos, each linking to its study; founders section with mid-size B/W portraits of Adam and Nick; Sheerline Installation of the Month (August 2025) section playing the actual Northampton job video; accreditation cards with the honest guarantee-exclusions note; showroom visit section; shared review showcase; six-card route grid (quote, consultation, case studies, team, trust, colours).
+
+**Movement without parallax:** the two case-study videos load deferred via `[data-fg-about-video]` (sources carry `data-src`, attached near viewport; reduced-motion users get poster plus controls, no autoplay), plus gentle fade-up reveals via `[data-fg-about-reveal]`. No multi-image parallax and no ghost numerals, both previously rejected.
+
+**Bugs found by looking at the rendered page:**
+
+- Founder name captions rendered as overlay chips across the portraits: the generic `.fg-about figure > figcaption` chip rule out-specified the founder override. Fixed with a more specific selector.
+- Hero video measured 498px wide in a 390px viewport: in-flow videos fed intrinsic size into the grid row and the figure `aspect-ratio` derived width from that height. Videos are now absolutely positioned inside their aspect-ratio boxes.
+- A dead rule from a pre-redesign About page (`.fg-about-hero__media, .fg-about-feature__media, ... { min-height: 280px }`) squashed the mobile hero to the wrong ratio. Removed; the other selectors exist in no template.
+- Fast scrolling could jump a reveal item past the IntersectionObserver in one frame, leaving it permanently invisible. The observer now uses a huge top rootMargin so anything at or above the viewport counts as intersecting.
+
+**Verification:** all 22 reveal items visible after a fast scroll; every image `complete` with real dimensions; no horizontal overflow at 390 or 1440; H1 51.8px within the 57.6px cap; grids collapse correctly at 390 (single column, 2-col mosaic, copy before the pricing panel). Note for future QA sessions: the claude-in-chrome automation browser cannot stream any mp4 (even the live case-study videos stall at readyState 0 there), so video playback must be judged by the 206/range-request check and a human eyeball; posters cover the fallback.
+
 ## 2026-07-20 - Live/doc reconciliation: unapproved production release found
 
 Documentation-only session from the home PC. No code or production change was made.
