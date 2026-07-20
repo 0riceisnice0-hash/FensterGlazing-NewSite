@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-20
 
+## 2026-07-20 - Six fixes from Nick's list, deployed to test only
+
+Each claim in the supplied task list was verified against the codebase before coding; two were inaccurate (there are eight related-link bands plus the price-guide one, not four, and `$product_routes` on the homepage is a five-entry hub list rather than a URL-to-image map). Test is at `146d78a`.
+
+1. **Composite door colours on the colours hub.** The eight-colour array moved from `generated-page.php` into `colour_options.materials.composite` in `inc/site-data.php` with a 480w image per colour. The hub renderer picked it up with no template change; the composite doors V2 page reads the same source (verified: selector renders all eight and previews correctly). Portrait door slides get a scoped 4:5 crop on a narrower slide so the coverflow row holds. Deep links (`?material=composite&colour=ruby-red`) work through the existing generic handler.
+2. **Case studies on product pages.** `fenster_case_studies_for_product()` matches on the `products[]` links studies already carry (verified on `/casement-windows/`: both casement studies, not newest-three), newest-first fallback otherwise, rendered as a strip before the enquiry section on product-journey routes.
+3. **Homepage case-studies block** after the proof wall: three newest studies via the same shared card partial (`components/case-study-card.php`), which the archive now uses too.
+4. **Related-links image cards.** `fenster_link_card_image()` maps ~20 routes to material-correct curated photos; the shared `components/link-cards.php` renders image cards plus text pills for unmapped links (areas, towns). Converted the four `generated-page.php` bands and the two location-service "Keep exploring" bands; the MK-area link clouds stay text by design. Two fixes found by looking: card labels were white-on-white inside the dark links band, and `repeat(auto-fit, minmax(min, max))` counts tracks by the definite max, which forced two columns; the card is capped instead of the track.
+5. **Footer socials** restyled as solid brand-tinted 44px chips with 22px icons; markup untouched.
+6. **Obscured-glass mobile picker.** Rebuilt the swipe rail: the old full-width page chunks with `scroll-snap-type: x mandatory` plus negative margins is a known WebKit-fragile construct (snaps straight back, so iPhones could not swipe). Now a flat two-row `grid-auto-flow: column` rail with per-card proximity snapping, `touch-action` and `-webkit-overflow-scrolling` overrides removed, matching the site's other iPhone-working rails. Verified at 390: 21 buttons, 1,618px of scrollable overflow, programmatic scroll works, no body overflow. Not tested on a physical iPhone; needs a real-device check.
+
 ## 2026-07-20 - Promoted to live: About redesign, price guide redesign, review links
 
 Owner approved promotion after reviewing test. Live deployed from the server repo cache pinned to `a8f15d8` (never `origin/main`), after a server-side theme backup (`~/fenster-theme-backup-before-a8f15d8-20260720-153724.tar.gz`, 346M) and the `git log af4cfc2..a8f15d8` range check.
