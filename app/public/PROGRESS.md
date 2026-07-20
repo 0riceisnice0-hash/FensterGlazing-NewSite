@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-20
 
+## 2026-07-20 - Six-fixes batch promoted to live at de13375
+
+Owner approved with one change: the footer social chips looked poor (the outline-style Instagram SVG was being force-filled into a solid blob, and the dark green tint was muddy on the dark footer). They are now white pill chips echoing the trust-logo tiles, with the Instagram mark stroked and the solid glyphs filled.
+
+Promotion followed the rules: `git log a8f15d8..de13375` range check (only this session's commits), server-side theme backup (`~/fenster-theme-backup-before-de13375-20260720-190148.tar.gz`, 346M), reset to the explicit SHA, `wp cache flush && wp sg purge`. Verified on production: all six routes 200, composite section on the colours hub, case-study strip and link cards on `/casement-windows/`, homepage strip, no old picker page-chunks on `/obscured-glass/`, new socials in the footer. The obscured-glass swipe still deserves a quick real-iPhone check when convenient.
+
 ## 2026-07-20 - Six fixes from Nick's list, deployed to test only
 
 Each claim in the supplied task list was verified against the codebase before coding; two were inaccurate (there are eight related-link bands plus the price-guide one, not four, and `$product_routes` on the homepage is a five-entry hub list rather than a URL-to-image map). Test is at `146d78a`.
