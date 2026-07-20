@@ -17,7 +17,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 
 ## Important Updates
 
-- Live is at `af4cfc2` as of 2026-07-20, with live and test byte-identical and nothing staged on test. New agents should verify the live theme rather than trusting this line.
+- Live is at `a8f15d8` as of 2026-07-20 (About redesign, price guide redesign, Nick's review-links/nav commit `68b9e6b`), with live and test byte-identical and nothing staged on test. New agents should verify the live theme rather than trusting this line.
 - Never deploy `origin/main` to live. Reset the server repo cache to the explicit approved SHA and check `git log --oneline <LIVE_SHA>..<SHA>` first. Deploying `main` wholesale put unapproved composite-door work on production on 2026-07-18; see `LIVECHANGES.md` and the 2026-07-20 entry in `PROGRESS.md`.
 - Any feature intended to stay off production needs a real gate, not just an absence of approval. Composite Doors V2 had no host gate and shipped with the theme. `fenster_price_guides_enabled()` shows the host-gate pattern — but note that gate was itself silently opened to live inside an unrelated SEO commit, so changes to a gate must be called out in the commit message and the docs.
 - GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.

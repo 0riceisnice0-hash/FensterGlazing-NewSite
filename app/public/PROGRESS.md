@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-20
 
+## 2026-07-20 - Promoted to live: About redesign, price guide redesign, review links
+
+Owner approved promotion after reviewing test. Live deployed from the server repo cache pinned to `a8f15d8` (never `origin/main`), after a server-side theme backup (`~/fenster-theme-backup-before-a8f15d8-20260720-153724.tar.gz`, 346M) and the `git log af4cfc2..a8f15d8` range check.
+
+The range check surfaced one rider: `68b9e6b` (Nick's 2026-07-20 site review: linked Google/Trustpilot logos site-wide, removed the homepage collection counter, expanded the Commercial and Windows nav). It is owner-originated, was verified on test, and shipped with this promotion; noted here so the audit trail is explicit.
+
+Post-deploy verification on production: `/about/` serves the boxed showroom hero, mission H1 and the one-number pricing line; `/window-door-prices-milton-keynes/` serves the round guide figures (£600, £2,000, £3,500) with zero internal-plan copy; all seven price guide routes return 200. Caches flushed with `wp cache flush` and `wp sg purge`.
+
+Later the same day the About hero was reverted from the full-bleed stage to a boxed 16:10 frame beside the mission copy (owner request), and the guide prices were rounded to the owner's figures. Both are included in `a8f15d8`.
+
 ## 2026-07-20 - About hero swap and price guide redesign, deployed to test only
 
 Second owner feedback round. Test is at the About/price-guide redesign commit; live untouched.
