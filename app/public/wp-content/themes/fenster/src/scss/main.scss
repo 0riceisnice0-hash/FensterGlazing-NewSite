@@ -32331,8 +32331,15 @@ html.fg-blinds-reveal-locked {
    studies, and each count should look intentional rather than leave holes. */
 .fg-cs-strip__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 24rem));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: clamp(0.9rem, 2vw, 1.5rem);
+}
+
+/* Cap the card, not the track: auto-fit counts tracks by the max size when it
+   is definite, which forced two columns. The cap keeps a lone matched study
+   from stretching across the whole container. */
+.fg-cs-strip__grid .fg-cs-card {
+  max-width: 26rem;
 }
 
 .fg-cs-strip__grid .fg-cs-card__title {
