@@ -11,17 +11,24 @@
  * 2. Images carrying real height attributes need an explicit CSS height, or the
  *    attribute beats aspect-ratio and renders them at full natural size. That
  *    once produced 2560px-tall portraits.
- * 3. The two case-study videos load deferred: sources carry data-src and the
+ * 3. The case-study videos load deferred: sources carry data-src and the
  *    [data-fg-about-video] handler in src/js/main.js attaches them near the
- *    viewport. Reduced-motion users get a poster with controls, no autoplay.
- * 4. CTAs are buttons. Text links for primary actions are a STYLE.md failure.
- * 5. No multi-image parallax on this page. The owner rejected it at every
+ *    viewport. The hero video also carries data-fg-video-bg: it is a background,
+ *    so it stays a poster on mobile and for reduced-motion users, with no
+ *    controls. The award video gets poster plus controls under reduced motion.
+ * 4. Videos are absolutely positioned inside aspect-ratio boxes. In flow they
+ *    feed intrinsic size into the grid row and the box derives the wrong width.
+ * 5. CTAs are buttons. Text links for primary actions are a STYLE.md failure.
+ * 6. No multi-image parallax on this page. The owner rejected it at every
  *    strength that was visible.
  *
- * Do not reinstate the founding anecdote: the owner ruled it out. Do not claim
- * the quote tool gives a price without taking any details, because it does not.
- * The honest and still strong claim is speed: a real figure in minutes instead
- * of an appointment and a callback days later.
+ * Copy rules from the owner, 2026-07-20: the page opens with the mission, not
+ * the quote tool. The pricing comparison presents two routes Fenster genuinely
+ * offers, online or a priced-on-the-spot consultation, as equals; do not mock
+ * the traditional route, because we sell it too. Both run on the same pricing
+ * software, so the number is the same either way, and that fact belongs on the
+ * page. Do not reinstate the founding anecdote. Do not claim the quote tool
+ * gives a price without taking any details, because it does not.
  *
  * @package Fenster
  */
@@ -50,6 +57,7 @@ $img = static function (string $url, array $attrs = []): string {
 
 $quote_url = home_url('/online-quote/');
 $consult_url = home_url('/book-a-consultation/');
+$prices_url = home_url('/window-door-prices-milton-keynes/');
 
 $facts = [
     ['value' => '2018', 'label' => 'trading since'],
@@ -58,17 +66,22 @@ $facts = [
     ['value' => '10 years', 'label' => 'insurance-backed guarantee'],
 ];
 
-$our_way = [
-    'Specify it online, at your kitchen table',
-    'See a real figure in about ten minutes',
-    'We survey and confirm before anything is made',
+$price_online = [
+    'title' => 'Online',
+    'steps' => [
+        'Build the job on our quote tool',
+        'A real figure in about ten minutes',
+        'A free survey confirms the details',
+    ],
 ];
 
-$usual_way = [
-    'Fill in a form and hand over your details',
-    'Wait for the callback',
-    'Sit through a sales appointment',
-    'The quote finally arrives, days later',
+$price_visit = [
+    'title' => 'In person',
+    'steps' => [
+        'Send an enquiry or give us a call',
+        'We visit, measure and talk it through',
+        'You get the price on the spot',
+    ],
 ];
 
 $installs = [
@@ -88,7 +101,7 @@ $accreditations = [
 
 $routes = [
     ['title' => 'Get an instant price', 'copy' => 'Your sizes, your finishes, a real figure in minutes.', 'url' => $quote_url, 'primary' => true],
-    ['title' => 'Book a home visit', 'copy' => 'We measure up and talk it through at the property.', 'url' => $consult_url],
+    ['title' => 'Book a consultation', 'copy' => 'We measure up and price the job at the property.', 'url' => $consult_url],
     ['title' => 'See our work', 'copy' => 'Real installs with the fitters, specs and photos.', 'url' => home_url('/case-studies/')],
     ['title' => 'Meet the team', 'copy' => 'Everyone here, including the office cat.', 'url' => home_url('/meet-the-team/')],
     ['title' => 'Why you can trust us', 'copy' => 'Guarantees, accreditations and how we price.', 'url' => home_url('/why-trust-fenster/')],
@@ -100,24 +113,23 @@ $routes = [
 <article class="fg-about">
 
     <section class="fg-about-hero">
-        <div class="container fg-about-hero__grid">
-            <div class="fg-about-hero__copy">
+        <div class="fg-about-hero__stage">
+            <video data-fg-about-video data-fg-video-bg muted playsinline loop preload="none"
+                poster="<?php echo esc_url(fenster_generated_url($cs . 'cs-big-roof-lantern-poster.jpg')); ?>"
+                aria-label="<?php esc_attr_e('Video of a Sheerline roof lantern we installed in Drayton Parslow', 'fenster'); ?>">
+                <source data-src="<?php echo esc_url(fenster_generated_url($video_base . 'cs-big-roof-lantern.mp4')); ?>" type="video/mp4">
+            </video>
+            <span class="fg-about-hero__scrim" aria-hidden="true"></span>
+            <div class="container fg-about-hero__content">
                 <p class="eyebrow"><?php esc_html_e('About Fenster Glazing', 'fenster'); ?></p>
-                <h1><?php esc_html_e('The price comes first.', 'fenster'); ?></h1>
-                <p class="fg-about-hero__lead"><?php esc_html_e('Most glazing companies want an appointment before they will talk numbers. Fenster is built the other way round. Price your own windows and doors on this site and get a real figure in about ten minutes, then talk to us when you are ready. The surveyors, the fitters and the Milton Keynes showroom are all ours.', 'fenster'); ?></p>
+                <h1><?php esc_html_e('Simple, honest glazing.', 'fenster'); ?></h1>
+                <p class="fg-about-hero__lead"><?php esc_html_e('Fenster exists to make windows and doors straightforward: a fair price you can get in minutes, people who know what they are fitting, and a company that is still here long after the scaffolding has gone. We started in 2018, our showroom is in Milton Keynes, and everyone who surveys, fits and answers the phone works for us.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url($consult_url); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
                 </div>
             </div>
-            <figure class="fg-about-hero__media">
-                <video data-fg-about-video muted playsinline loop preload="none"
-                    poster="<?php echo esc_url(fenster_generated_url($cs . 'cs-big-roof-lantern-poster.jpg')); ?>"
-                    aria-label="<?php esc_attr_e('Video of a Sheerline roof lantern we installed in Drayton Parslow', 'fenster'); ?>">
-                    <source data-src="<?php echo esc_url(fenster_generated_url($video_base . 'cs-big-roof-lantern.mp4')); ?>" type="video/mp4">
-                </video>
-                <figcaption><?php esc_html_e('Our install, Drayton Parslow', 'fenster'); ?></figcaption>
-            </figure>
+            <span class="fg-about-hero__tag"><?php esc_html_e('Our install, Drayton Parslow', 'fenster'); ?></span>
         </div>
     </section>
 
@@ -137,32 +149,37 @@ $routes = [
     <section class="fg-about-pricing">
         <div class="container fg-about-pricing__grid">
             <div class="fg-about-pricing__copy" data-fg-about-reveal>
-                <p class="eyebrow"><?php esc_html_e('What we are known for', 'fenster'); ?></p>
-                <h2><?php esc_html_e('A real figure in minutes, not a callback in days.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The usual way of buying windows is a form, a callback and a sales appointment before anyone tells you a number. Ours is simpler. Build the job on our quote tool, with your sizes, colours and glass, and it prices as you go from the same list our office quotes from.', 'fenster'); ?></p>
-                <p><?php esc_html_e('If the figure works, carry on to a survey. If it does not, you have lost ten minutes rather than an evening. We also publish example prices for common jobs, free to browse with no form in the way.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('How pricing works', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Price it online, or let us come to you.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('If you like doing things yourself, build the job on our quote tool: your sizes, styles, colours and glass, priced as you go. Most people have a real figure inside ten minutes.', 'fenster'); ?></p>
+                <p><?php esc_html_e('If you would rather talk it through, book a consultation. We come out, measure the openings properly, answer the awkward questions and price the job before we leave. No waiting a week to find out the number.', 'fenster'); ?></p>
+                <p>
+                    <?php esc_html_e('Both routes run on the same pricing software and the same price list, so the figure is the same whichever you choose. If you want to sense-check us first, we publish', 'fenster'); ?>
+                    <a href="<?php echo esc_url($prices_url); ?>"><?php esc_html_e('example prices for real jobs', 'fenster'); ?></a><?php esc_html_e(', free to browse with no form in the way.', 'fenster'); ?>
+                </p>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--ghost" href="<?php echo esc_url(home_url('/window-door-prices-milton-keynes/')); ?>"><?php esc_html_e('See example prices', 'fenster'); ?></a>
+                    <a class="button button--ghost" href="<?php echo esc_url($consult_url); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
                 </div>
             </div>
             <div class="fg-about-pricing__panel" data-fg-about-reveal>
-                <div class="fg-about-pricing__way fg-about-pricing__way--ours">
-                    <h3><?php esc_html_e('Pricing with us', 'fenster'); ?></h3>
+                <div class="fg-about-pricing__way">
+                    <h3><?php echo esc_html($price_online['title']); ?></h3>
                     <ol>
-                        <?php foreach ($our_way as $step) : ?>
+                        <?php foreach ($price_online['steps'] as $step) : ?>
                             <li><?php echo esc_html($step); ?></li>
                         <?php endforeach; ?>
                     </ol>
                 </div>
-                <div class="fg-about-pricing__way fg-about-pricing__way--usual">
-                    <h3><?php esc_html_e('The usual way', 'fenster'); ?></h3>
+                <div class="fg-about-pricing__way">
+                    <h3><?php echo esc_html($price_visit['title']); ?></h3>
                     <ol>
-                        <?php foreach ($usual_way as $step) : ?>
+                        <?php foreach ($price_visit['steps'] as $step) : ?>
                             <li><?php echo esc_html($step); ?></li>
                         <?php endforeach; ?>
                     </ol>
                 </div>
+                <p class="fg-about-pricing__same"><?php esc_html_e('Same software, same price list, same number.', 'fenster'); ?></p>
             </div>
         </div>
     </section>
@@ -171,8 +188,8 @@ $routes = [
         <div class="container">
             <div class="fg-about-work__head" data-fg-about-reveal>
                 <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Real jobs, photographed on the day.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Nothing here is stock photography. These are recent installations by our own fitters, and each one opens the full case study with the specification, the colours and the people who did the work.', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Recent jobs, photographed the day we finished.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('No stock photos and no showroom sets. These are real installations by our own fitters, and each one opens the full case study with the specification, the exact colours and the people who did the work.', 'fenster'); ?></p>
             </div>
             <ul class="fg-about-work__mosaic">
                 <?php foreach ($installs as $index => $shot) : ?>
@@ -194,9 +211,9 @@ $routes = [
         <div class="container fg-about-founders__grid">
             <div class="fg-about-founders__copy" data-fg-about-reveal>
                 <p class="eyebrow"><?php esc_html_e('Who runs it', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Two founders, both from the trade.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Adam Butcher and Nick Baker started Fenster in 2018 and still run it day to day. Nick leads sales and the showroom. Adam runs the commercial side, from schools and care homes through to curtain walling. The name is the German word for window.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The team behind them came from the trade too: fitters with fifteen and twenty years on the tools, service engineers, surveyors and an office that answers its own phone, around the clock.', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Run by the two people who started it.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Adam Butcher and Nick Baker founded Fenster in 2018 and are still here every day. Nick runs sales and the showroom. Adam runs the commercial side, from schools and care homes to full curtain walling. The name is the German word for window.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Behind them is a team from the trade, not a call centre: fitters with decades on the tools between them, service engineers, surveyors, and an office that answers its own phone at any hour.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button button--light" href="<?php echo esc_url(home_url('/meet-the-team/')); ?>"><?php esc_html_e('Meet the team', 'fenster'); ?></a>
                 </div>
@@ -231,7 +248,7 @@ $routes = [
             <div class="fg-about-award__copy" data-fg-about-reveal>
                 <p class="eyebrow"><?php esc_html_e('Recognised work', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Sheerline Installation of the Month.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Sheerline make the aluminium systems we fit, and each month they pick one installation to feature. In August 2025 they chose our Northampton extension: an S1 roof lantern overhead and black steel-look heritage doors opening to the garden. Johnnie and Tom fitted it, and this is the actual job on video.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Sheerline manufacture the aluminium systems we fit, and each month they feature one installation. In August 2025 it was ours: a Northampton extension with an S1 roof lantern overhead and black steel-look heritage doors to the garden. Johnnie and Tom fitted it. This is the actual job.', 'fenster'); ?></p>
                 <p class="fg-about-award__mark">
                     <img <?php echo $img('/wp-content/themes/fenster/assets/partners/sheerline.png', ['alt' => 'Sheerline', 'loading' => 'lazy']); ?>>
                     <span><?php esc_html_e('Installation of the Month, August 2025', 'fenster'); ?></span>
@@ -247,8 +264,8 @@ $routes = [
         <div class="container">
             <div class="fg-about-trust__head" data-fg-about-reveal>
                 <p class="eyebrow"><?php esc_html_e('Accreditations', 'fenster'); ?></p>
-                <h2><?php esc_html_e('The badges, and what each one actually covers.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Anyone can print a logo. Here is what each of ours means, including the limits most companies keep in the small print.', 'fenster'); ?></p>
+                <h2><?php esc_html_e('The badges, and what they actually mean.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Any installer can print a logo, so here is what each of ours covers, including the limits most keep in the small print.', 'fenster'); ?></p>
             </div>
             <ul class="fg-about-trust__grid">
                 <?php foreach ($accreditations as $index => $item) : ?>
@@ -272,8 +289,8 @@ $routes = [
         <div class="container fg-about-visit__grid">
             <div class="fg-about-visit__copy" data-fg-about-reveal>
                 <p class="eyebrow"><?php esc_html_e('Come and see us', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Try the products in our Milton Keynes showroom.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Frames, colours, glass and handles all look different in person. Open a bifold, feel the difference between a foil and a powder coat, and talk to people who fit these products every week. You do not need an appointment.', 'fenster'); ?></p>
+                <h2><?php esc_html_e('See it all in person at the showroom.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Colours, glass, frames and handles never look quite the same on a screen. Come and open a bifold, feel the weight of a handle, compare a foil to a powder coat and ask the awkward questions. You do not need an appointment.', 'fenster'); ?></p>
                 <?php if ($address !== []) : ?>
                     <address class="fg-about-visit__address">
                         <?php foreach ($address as $line) : ?>

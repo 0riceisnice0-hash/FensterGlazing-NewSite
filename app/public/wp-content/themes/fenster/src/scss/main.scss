@@ -15217,42 +15217,79 @@ a.fg-cs-installer:hover {
   transform: none;
 }
 
-/* Hero: copy beside a real install on video. */
+/* Hero: the mission over our own work, full bleed. The video is a background,
+   so it is desktop-only and reduced-motion users keep the poster; see the
+   data-fg-video-bg handling in src/js/main.js. */
 .fg-about-hero {
-  padding-top: clamp(2rem, 3.2vw, 2.75rem);
+  padding: 0;
 }
 
-.fg-about-hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: clamp(1.5rem, 3vw, 2.6rem);
+.fg-about-hero__stage {
+  position: relative;
+  display: flex;
   align-items: center;
-}
-
-.fg-about-hero__lead {
-  font-size: clamp(1.01rem, 1.2vw, 1.1rem);
-}
-
-.fg-about-hero .button-row {
-  margin-top: 1.25rem;
-}
-
-.fg-about-hero__media {
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  min-height: clamp(29rem, 64vh, 36rem);
+  overflow: hidden;
   background: var(--color-steel);
 }
 
-/* Videos are absolutely positioned inside their aspect-ratio boxes. In-flow
-   they feed intrinsic size into the grid row and the figure's aspect-ratio
-   derives a width wider than the column (498px in a 390px viewport). */
-.fg-about-hero__media video,
+/* Videos are absolutely positioned inside fixed-size boxes. In-flow they feed
+   intrinsic size into the layout and the box derives the wrong width (498px in
+   a 390px viewport, once). */
+.fg-about-hero__stage video,
 .fg-about-award__media video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.fg-about-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(3, 24, 31, 0.92) 0%, rgba(3, 24, 31, 0.68) 42%, rgba(3, 24, 31, 0.16) 78%, rgba(3, 24, 31, 0.3) 100%);
+}
+
+.fg-about-hero__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.fg-about-hero__content .eyebrow {
+  color: #7fe0aa;
+}
+
+.fg-about-hero__content h1 {
+  color: #ffffff;
+}
+
+.fg-about-hero__lead {
+  max-width: 36rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1.02rem, 1.25vw, 1.12rem);
+}
+
+.fg-about-hero .button-row {
+  margin-top: 1.4rem;
+}
+
+.fg-about-hero__tag {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  z-index: 1;
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-steel);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .fg-about-visit__media img {
@@ -15262,7 +15299,6 @@ a.fg-cs-installer:hover {
   object-fit: cover;
 }
 
-.fg-about-hero__media::after,
 .fg-about-visit__media::after {
   content: "";
   position: absolute;
@@ -15276,9 +15312,6 @@ a.fg-cs-installer:hover {
 }
 
 /* Facts */
-.fg-about-facts {
-  padding-top: 0;
-}
 
 .fg-about-facts__strip {
   display: grid;
@@ -15351,27 +15384,16 @@ a.fg-cs-installer:hover {
 
 .fg-about-pricing__way {
   padding: 1.25rem 1.2rem 1.4rem;
-  background: rgba(6, 33, 42, 0.6);
-}
-
-.fg-about-pricing__way--ours {
-  background: rgba(24, 144, 111, 0.24);
+  background: rgba(6, 33, 42, 0.55);
 }
 
 .fg-about-pricing__way h3 {
   margin: 0 0 0.9rem;
+  color: #7fe0aa;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-}
-
-.fg-about-pricing__way--ours h3 {
-  color: #7fe0aa;
-}
-
-.fg-about-pricing__way--usual h3 {
-  color: rgba(255, 255, 255, 0.55);
 }
 
 .fg-about-pricing__way ol {
@@ -15387,6 +15409,7 @@ a.fg-cs-installer:hover {
   position: relative;
   padding-left: 2.1rem;
   counter-increment: fg-about-way;
+  color: #ffffff;
   font-size: 0.92rem;
   line-height: 1.45;
 }
@@ -15402,26 +15425,25 @@ a.fg-cs-installer:hover {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
+  background: var(--color-accent);
+  color: #ffffff;
   font-size: 0.74rem;
   font-weight: 800;
 }
 
-.fg-about-pricing__way--ours li {
+/* Both routes are ours; the strip says the number is identical either way. */
+.fg-about-pricing__same {
+  grid-column: 1 / -1;
+  max-width: none;
+  margin: 0;
+  padding: 0.8rem 1.2rem;
+  background: rgba(24, 144, 111, 0.32);
   color: #ffffff;
-}
-
-.fg-about-pricing__way--ours li::before {
-  background: var(--color-accent);
-  color: #ffffff;
-}
-
-.fg-about-pricing__way--usual li {
-  color: rgba(255, 255, 255, 0.62);
-}
-
-.fg-about-pricing__way--usual li::before {
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 /* Work: deliberate mosaic, fixed cells, aligned edges. Five cells close the
@@ -15796,7 +15818,26 @@ a.fg-cs-installer:hover {
     max-width: none;
   }
 
-  .fg-about-hero__grid,
+  /* Mobile hero: copy anchored to the bottom of the poster under a vertical
+     scrim; the video never loads at this width. */
+  .fg-about-hero__stage {
+    min-height: min(78vh, 34rem);
+    align-items: flex-end;
+  }
+
+  .fg-about-hero__scrim {
+    background: linear-gradient(180deg, rgba(3, 24, 31, 0.34) 0%, rgba(3, 24, 31, 0.62) 45%, rgba(3, 24, 31, 0.94) 100%);
+  }
+
+  .fg-about-hero__content {
+    padding-top: clamp(7rem, 30vw, 10rem);
+    padding-bottom: 1.9rem;
+  }
+
+  .fg-about-hero__tag {
+    display: none;
+  }
+
   .fg-about-pricing__grid,
   .fg-about-founders__grid,
   .fg-about-award__grid,
@@ -15856,6 +15897,17 @@ a.fg-cs-installer:hover {
 
   .fg-about-trust__grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Stacked full-width actions read better than two cramped side-by-side
+     buttons at phone widths. */
+  .fg-about .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fg-about .button-row .button {
+    width: 100%;
   }
 }
 

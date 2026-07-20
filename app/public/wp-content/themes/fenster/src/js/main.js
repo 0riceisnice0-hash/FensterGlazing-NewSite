@@ -4794,6 +4794,12 @@ document.querySelectorAll('.fg-about').forEach((about) => {
 
   const attachAboutVideo = (video) => {
     if (video.dataset.fgVideoReady) return;
+    // Background videos (the hero) stay a poster on mobile and for
+    // reduced-motion users: no payload, no unreachable controls.
+    if (video.hasAttribute('data-fg-video-bg')
+      && (aboutReduceMotion || window.matchMedia('(max-width: 860px)').matches)) {
+      return;
+    }
     video.dataset.fgVideoReady = 'true';
     [...video.querySelectorAll('source[data-src]')].forEach((source) => {
       source.src = source.getAttribute('data-src');
