@@ -56,20 +56,19 @@ $facts = [
 ];
 
 $installs = [
-    ['file' => 'cs-mk-whitehouse-bifold-open.jpg', 'title' => 'Aluminium bifolds', 'place' => 'Whitehouse, Milton Keynes'],
-    ['file' => 'cs-lantern-doors-interior.jpg', 'title' => 'Heritage doors and lantern', 'place' => 'Northampton'],
-    ['file' => 'cs-big-roof-lantern-14.jpg', 'title' => 'Sheerline S1 roof lantern', 'place' => 'Drayton Parslow'],
-    ['file' => 'cs-leighton-buzzard-slide-fold-open.jpg', 'title' => 'Slide and fold doors', 'place' => 'Leighton Buzzard'],
-    ['file' => 'cs-leighton-buzzard-casement-street.jpg', 'title' => 'uPVC casements', 'place' => 'Leighton Buzzard'],
-    ['file' => 'cs-mk-broughton-casement-after.jpg', 'title' => 'Dormer casement', 'place' => 'Broughton, Milton Keynes'],
+    ['file' => 'cs-mk-whitehouse-bifold-open.jpg', 'title' => 'Aluminium bifolds', 'place' => 'Whitehouse', 'study' => 'aluminium-bifold-doors-whitehouse-milton-keynes', 'lead' => true],
+    ['file' => 'cs-lantern-doors-interior.jpg', 'title' => 'Heritage doors', 'place' => 'Northampton', 'study' => 'roof-lantern-and-heritage-doors'],
+    ['file' => 'cs-big-roof-lantern-14.jpg', 'title' => 'Roof lantern', 'place' => 'Drayton Parslow', 'study' => 'sheerline-roof-lantern'],
+    ['file' => 'cs-leighton-buzzard-slide-fold-open.jpg', 'title' => 'Slide and fold doors', 'place' => 'Leighton Buzzard', 'study' => 'flush-casement-and-slide-fold-doors-leighton-buzzard'],
+    ['file' => 'cs-leighton-buzzard-casement-street.jpg', 'title' => 'uPVC casements', 'place' => 'Leighton Buzzard', 'study' => 'upvc-casement-windows-leighton-buzzard'],
 ];
 
 $process = [
-    ['step' => '01', 'title' => 'Price it yourself', 'copy' => 'Start online with your sizes, style, colour, glass and hardware. The tool prices as you go, using the same figures the office quotes from, so you know the ballpark before you speak to anybody. Most people get there in about ten minutes on a phone.'],
-    ['step' => '02', 'title' => 'Talk it through', 'copy' => 'Call, email, or come into the showroom and see the frames in person. This is where the awkward questions get answered: what suits the property, whether trickle vents are required, and what the glass should do about heat, noise or privacy.'],
-    ['step' => '03', 'title' => 'A proper survey', 'copy' => 'Before anything is ordered we measure on site and check the details that catch people out: access, thresholds, lintels, cills, trims, the state of the opening and how the frames meet the brickwork. The survey is what makes the price final.'],
-    ['step' => '04', 'title' => 'Manufacture and fit', 'copy' => 'Your frames are made to the surveyed sizes, then fitted by our own installers. They clear up behind themselves, run through the hardware with you, and leave you with the paperwork, guarantee details and FENSA registration where the work is eligible.'],
-    ['step' => '05', 'title' => 'Afterwards', 'copy' => 'If a handle drops or a hinge needs adjusting a year later, you call the same office and one of our service engineers comes out. That is the part a national lead-generation site cannot offer, because there is nobody local behind it.'],
+    ['step' => '01', 'title' => 'Price it', 'copy' => 'Specify it online and get a real figure in about ten minutes.'],
+    ['step' => '02', 'title' => 'Talk it through', 'copy' => 'Showroom, phone or email. The awkward questions get answered here.'],
+    ['step' => '03', 'title' => 'Survey', 'copy' => 'We measure on site and check access, thresholds, lintels and cills.'],
+    ['step' => '04', 'title' => 'Fit', 'copy' => 'Made to the surveyed sizes and installed by our own fitters.'],
+    ['step' => '05', 'title' => 'Aftercare', 'copy' => 'One phone call and a service engineer comes back out.'],
 ];
 
 $accreditations = [
@@ -98,18 +97,13 @@ $routes = [
                 <p class="eyebrow"><?php esc_html_e('About Fenster Glazing', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Windows and doors, priced in minutes.', 'fenster'); ?></h1>
                 <p class="fg-about-hero__lead"><?php esc_html_e('Most people find us because of the pricing. You can specify your own windows and doors on this site and get a real figure straight away, instead of booking an appointment and waiting days for someone to call you back. Everything after that is ours: our surveyors, our fitters, our showroom in Milton Keynes.', 'fenster'); ?></p>
-                <ul class="fg-about-hero__points">
-                    <li><?php esc_html_e('Installing across Milton Keynes and the surrounding counties since 2018', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Over a thousand installations completed', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Ten year insurance-backed guarantee on new windows and doors', 'fenster'); ?></li>
-                </ul>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--light" href="<?php echo esc_url($consult_url); ?>"><?php esc_html_e('Book a home visit', 'fenster'); ?></a>
                 </div>
             </div>
             <figure class="fg-about-hero__media">
-                <span class="fg-about-parallax" data-fg-depth="0.05">
+                <span class="fg-about-parallax" data-fg-depth="0.45">
                     <img <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
                 </span>
                 <figcaption><?php esc_html_e('Our showroom, Milton Keynes', 'fenster'); ?></figcaption>
@@ -159,27 +153,16 @@ $routes = [
                 <h2><?php esc_html_e('Our own work, photographed on the day.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('No stock photography and no showroom mock-ups. Drag through a few of the jobs we finished recently, or open the full case studies for specifications, finishes and the fitters who did them.', 'fenster'); ?></p>
             </div>
-            <div class="fg-colour-carousel fg-about-carousel" data-fg-colour-carousel>
-                <div class="fg-colour-carousel__viewport">
-                    <div class="fg-colour-carousel__track" data-fg-colour-carousel-track>
-                        <?php foreach ($installs as $index => $install) : ?>
-                            <article class="fg-colour-carousel__slide" data-fg-colour-slide>
-                                <img <?php echo $img($cs . $install['file'], ['alt' => $install['title'] . ', ' . $install['place'], 'loading' => $index < 2 ? 'eager' : 'lazy']); ?>>
-                                <div>
-                                    <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
-                                    <h3><?php echo esc_html($install['title']); ?></h3>
-                                    <p><?php echo esc_html($install['place']); ?></p>
-                                </div>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="fg-colour-carousel__controls">
-                    <button type="button" data-fg-colour-prev aria-label="<?php esc_attr_e('Previous install', 'fenster'); ?>">&#8249;</button>
-                    <span data-fg-colour-count><?php echo esc_html('01 / ' . sprintf('%02d', count($installs))); ?></span>
-                    <button type="button" data-fg-colour-next aria-label="<?php esc_attr_e('Next install', 'fenster'); ?>">&#8250;</button>
-                </div>
-            </div>
+            <ul class="fg-about-work__mosaic">
+                <?php foreach ($installs as $shot) : ?>
+                    <li class="fg-about-cell<?php echo ! empty($shot['lead']) ? ' fg-about-cell--lead' : ''; ?>">
+                        <a href="<?php echo esc_url(home_url('/case-studies/' . $shot['study'] . '/')); ?>">
+                            <img <?php echo $img($cs . $shot['file'], ['alt' => $shot['title'] . ', ' . $shot['place'], 'loading' => 'lazy']); ?>>
+                            <span class="fg-about-cell__caption"><strong><?php echo esc_html($shot['title']); ?></strong><em><?php echo esc_html($shot['place']); ?></em></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
             <div class="button-row fg-about-installs__cta">
                 <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
             </div>
@@ -221,7 +204,7 @@ $routes = [
             <ul class="fg-about-founders__people">
                 <li>
                     <figure class="fg-about-founder">
-                        <span class="fg-about-parallax" data-fg-depth="0.04">
+                        <span class="fg-about-parallax" data-fg-depth="0.30">
                             <img <?php echo $img($team . 'adam-butcher-scaled.jpg', ['alt' => 'Adam Butcher', 'loading' => 'lazy']); ?>>
                         </span>
                         <figcaption><strong><?php esc_html_e('Adam Butcher', 'fenster'); ?></strong><span><?php esc_html_e('Commercial Director', 'fenster'); ?></span></figcaption>
@@ -229,7 +212,7 @@ $routes = [
                 </li>
                 <li>
                     <figure class="fg-about-founder">
-                        <span class="fg-about-parallax" data-fg-depth="0.09">
+                        <span class="fg-about-parallax" data-fg-depth="0.60">
                             <img <?php echo $img($team . 'unnamed-5.jpg', ['alt' => 'Nick Baker', 'loading' => 'lazy']); ?>>
                         </span>
                         <figcaption><strong><?php esc_html_e('Nick Baker', 'fenster'); ?></strong><span><?php esc_html_e('Sales Director', 'fenster'); ?></span></figcaption>
@@ -267,7 +250,7 @@ $routes = [
     <section class="fg-about-award">
         <div class="container fg-about-award__grid">
             <figure class="fg-about-award__media">
-                <span class="fg-about-parallax" data-fg-depth="0.07">
+                <span class="fg-about-parallax" data-fg-depth="0.55">
                     <img <?php echo $img($cs . 'cs-roof-lantern-heritage-doors-poster.jpg', ['alt' => 'Black heritage aluminium doors and a Sheerline roof lantern on a Northampton extension', 'loading' => 'lazy']); ?>>
                 </span>
             </figure>
@@ -300,7 +283,7 @@ $routes = [
     <section class="fg-about-visit">
         <div class="container fg-about-visit__grid">
             <figure class="fg-about-visit__media">
-                <span class="fg-about-parallax" data-fg-depth="0.05">
+                <span class="fg-about-parallax" data-fg-depth="0.45">
                     <img <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'lazy']); ?>>
                 </span>
                 <figcaption><?php esc_html_e('Alston Drive, Bradwell Abbey', 'fenster'); ?></figcaption>
