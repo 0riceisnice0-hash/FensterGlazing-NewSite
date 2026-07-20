@@ -4838,6 +4838,9 @@ document.querySelectorAll('.fg-about').forEach((about) => {
 
   about.classList.add('fg-about-motion');
 
+  // The huge top margin keeps anything at or above the viewport "intersecting",
+  // so a fast scroll cannot jump an element past the observer and leave it
+  // permanently hidden.
   const aboutRevealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
@@ -4845,7 +4848,7 @@ document.querySelectorAll('.fg-about').forEach((about) => {
       aboutRevealObserver.unobserve(entry.target);
     });
   }, {
-    rootMargin: '0px 0px -10% 0px',
+    rootMargin: '100000px 0px -10% 0px',
     threshold: 0.12,
   });
 
