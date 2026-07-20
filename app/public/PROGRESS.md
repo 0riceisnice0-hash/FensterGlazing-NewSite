@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-20
 
+## 2026-07-20 - About hero swap and price guide redesign, deployed to test only
+
+Second owner feedback round. Test is at the About/price-guide redesign commit; live untouched.
+
+- **About:** the cinematic mission hero keeps its layout but the media is now the showroom photograph (owner request), with the tag `Our showroom, Milton Keynes`. The `Same software, same price list, same number.` strip was removed as unnecessary; the fact lives in the pricing copy as `One number for the job, not an online teaser and a different figure at the door.` The award video remains the page's only video.
+- **Price guides (all seven, shared template):** full customer-facing redesign, prompted by the pages being accidentally live. The internal plan copy (`These rows are the slots we will fill...`, `How we should show it`, the status card) is gone. Placeholder `To confirm from WindowCAD` rows never render publicly; only examples with a confirmed £ price appear. The main page leads with its three checked examples (£583.61 casement, £1,999.20 composite door, £3,469.43 bifold) as photo-led cards pairing the fitted price with our own install photos (Leighton Buzzard casements, Whitehouse bifolds) and the exact WindowCAD configuration as a captioned inset. The hero gains an at-a-glance checked-prices card; guides with no checked examples get a `Your price in minutes` fallback card instead. Factors render as a ticked two-column checklist, FAQs are rewritten for customers, intros in `fenster_price_guide_pages()` are rewritten customer-facing, and the deferred quote-station iframe block is untouched and verified loading.
+- Verified at 1440/975 visually and 390 numerically on both routes: no overflow, no heading-cap violations, photo-first stacking and full-width buttons on mobile, and zero leaks of internal copy on any guide checked.
+
 ## 2026-07-20 - About page revision after owner feedback, deployed to test only
 
 Owner feedback on the fifth version: open with the mission rather than selling the quote tool, write better copy, present the traditional consultation route as something we offer rather than mock, note that both routes use the same pricing software so the number is identical, drop "at your kitchen table", improve mobile, and add one wow factor. Test is at `2064ea4`.
