@@ -7,7 +7,8 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- Latest known deployed live source commit: `13e7f95` (`Heritage doors case study: real interior photos + Sheerline award`), promoted and verified on 2026-07-17. This is the curated residential case studies system (`/case-studies/`), now with six projects including two video-led roof lantern studies (Drayton Parslow big lantern, Northampton lantern + heritage doors with a Sheerline Installation of the Month award). Studies auto-sort by date.
+- Latest known deployed live source commit: `af4cfc2` (`Hide Legend on all quote iframes`), verified on production 2026-07-20. Live and test are byte-identical; nothing is staged on test awaiting promotion.
+- The previous approved promotion was `13e7f95` (`Heritage doors case study: real interior photos + Sheerline award`) on 2026-07-17. This is the curated residential case studies system (`/case-studies/`), now with six projects including two video-led roof lantern studies (Drayton Parslow big lantern, Northampton lantern + heritage doors with a Sheerline Installation of the Month award). Studies auto-sort by date.
 - Deploy cache note: `wp cache flush` alone does NOT clear SiteGround's dynamic/proxy cache, so changes can appear missing on test/live. Run `wp sg purge` after every deploy (and it is included in the deploy one-liners below). When verifying, also cache-bust the URL. Verified live on 13e7f95: archive plus all six detail pages `200`, videos and the interior photo `200`, both new studies present in `page-sitemap.xml`.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
@@ -71,9 +72,21 @@ ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2
 
 Deploy to live:
 
+**Deploy an explicit commit, never `origin/main`.** Replace `<SHA>` with the exact commit you verified on test:
+
 ```powershell
-ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard origin/main && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush"
+ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard <SHA> && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush && wp sg purge"
 ```
+
+> **Why this changed.** The old form of this command used `git reset --hard origin/main`, which deploys whatever happens to be on `main` rather than the commit you approved. On 2026-07-18 a deploy of four small Legend fixes also pushed fourteen unapproved composite-door commits to production, because they were sitting in front of the Legend work on `main`. Resetting to an explicit SHA is what makes "deploy the same verified commit to live" in the Normal Change Flow actually true.
+>
+> Before deploying, confirm what you are about to ship:
+>
+> ```powershell
+> git log --oneline <LIVE_SHA>..<SHA>
+> ```
+>
+> If that list contains anything you did not verify and approve, stop and cherry-pick instead.
 
 The `rsync --delete` is safe only because the source and target are both the theme folder. Never point it at `public_html`, `web`, `web/app`, uploads, plugins or a path assembled from guesswork.
 
@@ -116,6 +129,7 @@ ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2
 
 ## Before Deploy Checklist
 
+- `git log --oneline <LIVE_SHA>..<SHA>` has been run and every commit in the range is intended for this release. This is the check that would have caught the 2026-07-18 composite-door incident.
 - `git status --short` is understood. Unrelated user changes are not reverted.
 - SCSS/JS changes have been built and compiled files are included.
 - PHP changes have been linted.
@@ -166,6 +180,7 @@ Live must not become the source of truth.
 - Customer confirmation emails are paused until authenticated SMTP is configured.
 - Optional enquiry file uploads are supported and attached to office emails.
 - Residential case studies are LIVE as of 2026-07-17: `/case-studies/` is a curated, data-driven system in `inc/case-studies-data.php` (see `CASESTUDIES.md`). Only the retired scrape-era residential studies (`double-glazing-rushden`, `water-stratford`, `bespoke-windows-woburn-water-end-barn`, `test`, `template-new`) remain 410. `/commercial-projects/` still uses the legacy pages.json system.
+- Composite Doors V2 (`/composite-doors/`) and the seven price-guide routes are LIVE as of 2026-07-20. Both reached production without an explicit promotion decision; the owner reviewed them on 2026-07-20 and chose to keep them up and iterate directly on live. Price-guide figures are public and indexable, so treat their accuracy as a live-content responsibility.
 - `/obscured-glass/` is canonical; `/obscure-glass/` redirects there.
 - Product mobile QA fixes and the newer product-page template/lightbox work through `3ac98c2` are deployed live.
 - `/upvc-colours/` and `/aluminium-colours/` redirect to canonical `/colour-options/`.

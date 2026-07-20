@@ -85,7 +85,11 @@ Protected-test browser QA on theme revision `7aae3b0` confirmed:
 - Chrome updates the hardware image and supporting panel;
 - the continuous route gradient remains visible behind FAQ, quote and review sections.
 
-The route remains protected-test only until the owner explicitly approves production promotion.
+**Status: LIVE (verified 2026-07-20).** `/composite-doors/` serves this V2 template on production.
+
+It reached live unintentionally. The route never had a host gate, so it deployed with the theme as soon as live moved past `13e7f95` — see the 2026-07-20 entry in `PROGRESS.md` for the full account. The owner reviewed the live result on 2026-07-20 and decided to keep it up and continue work directly on live rather than pull it back to test.
+
+Note that the doc previously described V2 as suppressing the inspiration gallery and comparison table. That is out of date: `0610753` and `46a961f` rebuilt the range around the full Distinction set and added a deterministic gallery mosaic, and that is what production serves.
 
 ## Maintenance rules
 

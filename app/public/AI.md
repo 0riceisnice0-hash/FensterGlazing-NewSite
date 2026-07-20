@@ -17,7 +17,9 @@ It should not contain dated progress reports, long handover summaries or homepag
 
 ## Important Updates
 
-- Latest live commit at the time of this update is `882cf47` (`Scope door handle selector routes`). New agents should check `git log --oneline -8` before assuming this is still the latest.
+- Live is at `af4cfc2` as of 2026-07-20, with live and test byte-identical and nothing staged on test. New agents should verify the live theme rather than trusting this line.
+- Never deploy `origin/main` to live. Reset the server repo cache to the explicit approved SHA and check `git log --oneline <LIVE_SHA>..<SHA>` first. Deploying `main` wholesale put unapproved composite-door work on production on 2026-07-18; see `LIVECHANGES.md` and the 2026-07-20 entry in `PROGRESS.md`.
+- Any feature intended to stay off production needs a real gate, not just an absence of approval. Composite Doors V2 had no host gate and shipped with the theme. `fenster_price_guides_enabled()` shows the host-gate pattern — but note that gate was itself silently opened to live inside an unrelated SEO commit, so changes to a gate must be called out in the commit message and the docs.
 - GitHub is now live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. The repo is intentionally scoped to the custom theme and launch docs; do not add WordPress core, uploads, `wp-config.php`, `node_modules`, backups, Local config or `wp-content\fenster-reference`.
 - SiteGround test/live are still Bedrock installs. Local source is standard WordPress at `wp-content\themes\fenster`, but server deploy target is `web/app/themes/fenster`. The verified test deploy path is: GitHub repo cache at `~/repos/FensterGlazing-NewSite`, then rsync `app/public/wp-content/themes/fenster/` into `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/`.
 - Production deploys should swap/update the theme only. Keep the production database, uploads, plugins, `.env`, Bedrock config and `wp-config.php` equivalent in place unless the owner explicitly asks for a full WordPress migration.
@@ -38,6 +40,12 @@ It should not contain dated progress reports, long handover summaries or homepag
 - Clarity asset links and critical CSS are intentionally marked `data-clarity-unmask="true"` in `inc\assets.php` so stylesheet/font/image URLs are preserved under stricter Clarity masking modes.
 - If Clarity recordings look unstyled, giant, or like a 403/error page again, simulate Clarity before changing layout: fetch the page and CSS with bot-style user agents, check for 403s, verify the inline replay CSS exists after accepted consent, and remember old recordings will not be repaired retroactively.
 - The 2026-07-13 Search Console baseline says the launch did not cause an obvious search cliff, but Google is still mostly rewarding older informational pages. When doing SEO work next, prioritise CTR and internal-link fixes for pages that already have impressions: `/french-casement-windows/`, `/what-are-double-glazed-glass-windows/`, `/windows-milton-keynes/`, `/double-glazing-milton-keynes/`, `/doors-milton-keynes/`, `/composite-doors/`, `/soundproof-windows/` and `/3d-visualiser/`. Do not make generic SEO filler; make high-impression pages feed quote, visualiser and local money pages.
+
+## Owner-Confirmed Business Facts
+
+These are settled. Do not re-flag them as unverified claims, do not raise them in audits, and do not "helpfully" suggest softening or removing them.
+
+- **"Phone lines open 24/7" is accurate and approved.** Fenster runs a genuine 24/7 answering service alongside showroom hours of Monday to Friday, 8.30am to 5pm. The footer claim stays exactly as written. This was queried in the 2026-07-03 audit and in `COPY-AUDIT.md`, confirmed by the owner on 2026-07-16, and reconfirmed on 2026-07-20. It is closed. Any future doc or audit that lists it as an open item is stale and should be corrected rather than acted on.
 
 ## Project Basics
 

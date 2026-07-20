@@ -24,7 +24,7 @@ The new fensterglazing.com launched on 6 July and has had an exceptionally activ
 - Local money-page targeting: every product page titled for Milton Keynes; "roof lights" synonym added after search data showed we ranked for it without using the phrase; meta descriptions capped at 160 characters sitewide.
 - **MK suburb expansion: 260 new local pages** (Bletchley, Newport Pagnell, Stony Stratford, Wolverton, Woburn Sands, Olney, Furzton, Oldbrook, Monkston, Great Linford + more × 21 products).
 - The flagship `/double-glazing-milton-keynes/` page rebuilt as a ~3,500-word conversion page: product chooser, real price benchmarks from our quote tool, process, proof.
-- Price-guide pages built with checked WindowCAD prices and screenshots — currently gated to the test site pending a go decision.
+- Price-guide pages built with checked WindowCAD prices and screenshots. **These are now live** (confirmed 2026-07-20): all seven routes return `200` on production and appear in `page-sitemap.xml`.
 
 ### Content & copy (~20 commits)
 - Full site-wide copy audit: removed internal/template language from customer copy, fixed ~25 scraped paragraphs that ended mid-sentence, removed a false "live chat" claim, rewrote the cat-and-dog-flaps page, cleaned review-count claims, rewrote the cookie and privacy policies to match what the site actually does.
@@ -102,7 +102,7 @@ One honest caveat: these figures are 28-day averages that include three pre-laun
 |---|---|---|---|
 | 1 | **Test the live enquiry form as a real customer** | Us, today | Dashboard shows 0% form completion — could be sample noise, could be a blocker eating leads |
 | 2 | **Residential case studies** (photos + details from ~10 real jobs) | Business supplies material, we build | Biggest content gap vs Crown; feeds suburb pages and trust |
-| 3 | **Decide: publish price guides?** | Business decision | Built, tested, gated to test site. Our biggest differentiator — nobody else shows prices |
+| 3 | ~~**Decide: publish price guides?**~~ **✅ Live as of 2026-07-20** | Done | All seven price-guide routes are live and in the sitemap. Ongoing work happens directly on live |
 | 4 | **Request indexing** for the flagship MK page + retitled pages in Search Console | 10 minutes | Accelerates Google seeing this week's fixes |
 | 5 | **Authority building**: supplier installer directories (Liniar/Sheerline/Roseview/Distinction), FENSA/CPA profile links, Bing Places, Apple Business Connect, citations | Mostly business/admin | The gap that decides #1 — competitors have 20–40 years of links |
 | 6 | **Review velocity system**: post-install Google review ask | Business process | Map-pack ranking is largely a reviews contest; we're at 99, incumbents have hundreds |
@@ -118,4 +118,4 @@ One honest caveat: these figures are 28-day averages that include three pre-laun
 
 Honest framing for the next quarter: the technical and on-page work — the part an agency would bill months for — is done and measurably ahead of every local competitor. The first ranking responses are visible within one week. What separates us from #1 now is not code: it's **proof** (case studies), **authority** (links, citations, reviews) and **cadence** (publishing, review asks, monthly measurement). Those need business inputs — job photos, supplier contacts, a review-ask habit — and the payoff timeline is: page-one consolidation on money terms over weeks, top-5 contention over a quarter, #1 contention inside 6–12 months, with the map pack likely to respond fastest of all once the GBP/review work compounds.
 
-One asset deserves special mention: the instant pricing tool is already earning its own search traffic ("window visualiser tool" position 5, "instant window quote" position 5) and drives the strongest funnel in the dashboard. Every competitor makes people fill in a form and wait. We show prices. The price-guide pages waiting on the test site are how we turn that advantage into rankings — recommend a go decision this week.
+One asset deserves special mention: the instant pricing tool is already earning its own search traffic ("window visualiser tool" position 5, "instant window quote" position 5) and drives the strongest funnel in the dashboard. Every competitor makes people fill in a form and wait. We show prices. The price-guide pages are how we turn that advantage into rankings, and as of 2026-07-20 they are live and indexable — the next step is measuring what they earn in Search Console rather than deciding whether to publish them.

@@ -99,7 +99,7 @@ Customers don't buy "routes"; they buy options. Replace with *option / choice / 
 ## 4. HIGH — False or unsupportable claims
 
 1. **"Live chat" doesn't exist.** `/commercial-automation/`, `/curtain-walling/` and `/louvre-vents/` (scraped FAQ in `pages.json`): "you can also speak directly to our expert sales team via phone or **live chat**". There is no chat on the site. Remove or change to "phone or email".
-2. **"Phone lines open 24/7"** — footer, all 421 pages. Only keep if a 24/7 answering service genuinely exists; otherwise it manufactures a broken promise at the first out-of-hours call.
+2. ~~**"Phone lines open 24/7"** — footer, all 421 pages.~~ **✅ Not a false claim. Closed 2026-07-16, reconfirmed 2026-07-20.** The 24/7 answering service is real, so the claim is accurate and stays as written. Do not re-raise it — see the confirmed-facts section in `AI.md`.
 
 ---
 
@@ -144,7 +144,7 @@ On every town×product page the same "Survey checks…" sentence appears up to t
 
 ## Suggested fix order
 
-1. §4 false claims (live chat, verify 24/7) — trust risk, minutes to fix.
+1. §4 false claims — only the "live chat" wording remains; the 24/7 claim is confirmed accurate and closed.
 2. §2 template self-talk (5 strings in `generated-page.php` + 2 in `site-data.php`) — fixes 30+ pages per string.
 3. §5 "Obscured" casing (2 files) — visible on 36 pages.
 4. §3 "route" vocabulary — one county template string fixes 47 pages; then trust/commercial/casement instances.

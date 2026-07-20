@@ -6,8 +6,12 @@ This document explains the Legend AI assistant deployed on the Fenster website. 
 
 ## Current Status
 
+**Legend is complete, live and fully verified. There is no outstanding Legend work and nothing awaiting testing or approval.** Treat this section as settled unless a new Legend feature is deliberately started.
+
 - Legend is deployed on both `https://test.fensterglazing.com/` and `https://fensterglazing.com/`.
 - The complete approved Legend follow-up is deployed on test and production through source commit `cd5b430` (latest theme-code commit `d9b9ffc`). This includes the 10-second post-close sleep delay, iOS prompt handling, footer-only Cookie settings, restricted launcher hit area, chat continuity, team-profile context, deterministic Zac answer, unified header redesign and reliable product links.
+- Four later refinements are also live through `af4cfc2` (2026-07-18): cookie consent kept above the chat (`716e918`), an easier-to-dismiss prompt (`a4f7276`), and Legend hidden on mobile and then all quote iframes (`8f04e7a`, `af4cfc2`) so he cannot overlay the WindowCAD tool.
+- Live and test are byte-identical as of 2026-07-20, so there is no Legend delta between environments.
 - Production has a separately configured OpenAI connection and returned `AI_CONFIGURED=yes` during the post-deploy check.
 - The source is committed to GitHub `main`, but production uses a separate manual theme deployment. A commit existing in GitHub does not mean the live server has received it.
 - Test and production OpenAI connections are configured through their separate Bedrock `.env` files. No API key is stored in the theme or this repository.
@@ -264,18 +268,17 @@ The implementation has been checked on the protected test site for:
 - A 39-call post-fix live regression through the protected REST endpoint, covering owner-confirmed business facts, product specifications, guarantee scope, triple-glazing exceptions, residential and commercial areas, FENSA, CPA, pricing boundaries and unrelated-request refusal.
 - A full canonical product-card sweep. This caught and fixed plural product-name matching so `aluminium flush windows`, `heritage windows` and `uPVC doors` now resolve to their own specifications rather than generic or missing results.
 
-## Before Any Live Release
+## Before Any Future Legend Change
 
-Legend is not approved for production merely because the code is on `main`. Before a live release:
+The initial production release is done — steps 1 to 4 below were completed on 2026-07-16 and the live OpenAI key, model and cost controls are configured. This checklist now applies only to *new* Legend work:
 
-1. Obtain explicit owner approval for the complete test experience and legal wording.
-2. Compare the current live commit with `main` so unrelated test-only changes are not accidentally released.
-3. Confirm the Privacy Policy and non-binding language are accepted for production.
-4. Configure the live server key separately and confirm the intended model and cost controls.
-5. Recheck rate limits, failure handling and mobile drawer behaviour.
-6. Back up or record the live theme checkpoint.
-7. Deploy the approved theme commit using the theme-only process in `LIVECHANGES.md`.
-8. Flush live caches and repeat the chat, consent and responsive tests on production.
+1. Obtain explicit owner approval for the changed experience and any altered legal wording.
+2. Run `git log --oneline <LIVE_SHA>..<SHA>` and confirm the release contains only what you verified. Do not deploy `origin/main` — see the deploy trap note in `LIVECHANGES.md`.
+3. Confirm the Privacy Policy and non-binding language still match the behaviour you changed.
+4. Recheck rate limits, failure handling and mobile drawer behaviour.
+5. Back up or record the live theme checkpoint.
+6. Deploy the approved theme commit using the theme-only process in `LIVECHANGES.md`.
+7. Flush live caches (`wp cache flush` *and* `wp sg purge`) and repeat the chat, consent and responsive tests on production.
 
 ## Legend Commit History
 

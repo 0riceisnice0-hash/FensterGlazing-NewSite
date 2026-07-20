@@ -1,6 +1,32 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-17
+Last updated: 2026-07-20
+
+## 2026-07-20 - Live/doc reconciliation: unapproved production release found
+
+Documentation-only session from the home PC. No code or production change was made.
+
+**What was found.** Server-side checks showed live and test theme directories byte-identical (`main.css` md5 `7d3edfc3613998a94884767aca678e6d`), both at `af4cfc2`. Docs claimed live was `13e7f95` with three features held back on test. All three were in fact on production:
+
+- **Composite Doors V2** — `/composite-doors/` serves the V2 template (`fg-cd3-collections` present in live HTML). `COMPOSITE-DOOR-REDESIGN.md` said protected-test only, pending owner approval.
+- **Price guides** — all seven routes return `200` and appear in `page-sitemap.xml`. `LAUNCH-WEEK-REPORT.md` said gated to test pending a go decision.
+- **Commercial product renderer** (`26f3b43`) — live on `/curtain-walling/` and `/commercial-windows-and-doors/`. `HANDOVER.md` said awaiting approval since 2026-07-07.
+
+**How each happened.**
+
+1. Price guides: commit `68f38ae` (2026-07-09, `Implement local SEO audit quick wins`) added `fensterglazing.com` and `www.fensterglazing.com` to `fenster_price_guides_enabled()`. The un-gating was bundled into an unrelated SEO commit and named in neither its message nor the docs. `68f38ae` is an ancestor of `13e7f95`, so the price guides went live as a silent passenger on the approved 2026-07-17 case-studies promotion.
+2. Composite Doors V2: the route has no host gate at all — `generated-page.php:2911` renders it on `$is_composite_doors` alone. It went live the moment the theme moved past `13e7f95`.
+3. Root cause for the composite release: the live deploy one-liner in `LIVECHANGES.md` ran `git reset --hard origin/main`, deploying whatever sat on `main` rather than the verified commit. Deploying the four small Legend iframe fixes (2026-07-17/18) therefore also shipped the fourteen composite commits queued in front of them.
+
+**Owner decision (2026-07-20).** Leave Composite Doors V2 and the price guides live and continue work directly on production. No rollback, no re-gating.
+
+**Documentation changes made.**
+
+- `LIVECHANGES.md`: live deploy command now resets to an explicit SHA with a `git log --oneline <LIVE_SHA>..<SHA>` pre-check and an explanation of the incident; `wp sg purge` added to the live one-liner; live commit pointer corrected to `af4cfc2`; before-deploy checklist gained the commit-range check.
+- `HANDOVER.md`: live-state pointer corrected, deploy trap documented, and composite/price-guide/commercial-renderer status corrected to live.
+- `COMPOSITE-DOOR-REDESIGN.md`, `LAUNCH-WEEK-REPORT.md`: status corrected to live. The composite doc's claim that V2 suppresses the inspiration gallery and comparison table was stale — `0610753` and `46a961f` rebuilt both, and that is what production serves.
+- `LIVECHAT.md`: Legend recorded as complete and live with nothing outstanding; the pre-release checklist reframed for future changes only.
+- `AI.md`, `AUDIT.md`, `COPY-AUDIT.md`: the footer "Phone lines open 24/7" claim closed permanently as owner-confirmed accurate.
 
 ## 2026-07-17 - Case studies expansion live release (13e7f95)
 
