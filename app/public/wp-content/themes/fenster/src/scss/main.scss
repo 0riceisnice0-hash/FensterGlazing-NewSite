@@ -15688,6 +15688,215 @@ a.fg-cs-installer:hover {
   }
 }
 
+/* Pricing: the differentiator section. */
+.fg-about-pricing__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: center;
+}
+
+.fg-about-pricing__points {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-about-pricing__points li {
+  padding: 0.9rem 1.05rem;
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.fg-about-pricing__points strong {
+  display: block;
+  font-size: 0.96rem;
+  font-weight: 800;
+}
+
+.fg-about-pricing__points span {
+  display: block;
+  margin-top: 0.2rem;
+  color: rgba(6, 33, 42, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* Install coverflow reuses fg-colour-carousel; only spacing is set here. */
+.fg-about-installs__head {
+  margin-bottom: clamp(1.25rem, 2.4vw, 1.85rem);
+}
+
+.fg-about-installs__head p:last-child {
+  margin-bottom: 0;
+}
+
+.fg-about-installs__cta {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* Process: numbered rail, borrowed from the roof lantern step list. */
+.fg-about-process__head {
+  margin-bottom: clamp(1.25rem, 2.4vw, 1.85rem);
+}
+
+.fg-about-process__head p:last-child {
+  margin-bottom: 0;
+}
+
+.fg-about-process__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.fg-about-process__list > li {
+  padding-left: 1.1rem;
+  border-left: 2px solid rgba(24, 144, 111, 0.55);
+}
+
+.fg-about-process__step {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--color-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.fg-about-process__list h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.08rem;
+  line-height: 1.2;
+}
+
+.fg-about-process__list p {
+  max-width: none;
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* Trust badges */
+.fg-about-trust__head {
+  margin-bottom: clamp(1.25rem, 2.4vw, 1.85rem);
+}
+
+.fg-about-trust__head p:last-child {
+  margin-bottom: 0;
+}
+
+.fg-about-trust__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-about-badge {
+  display: block;
+  height: 100%;
+  padding: 1.1rem 1.15rem 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.fg-about-badge:hover,
+.fg-about-badge:focus-visible {
+  border-color: var(--color-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 45, 58, 0.12);
+}
+
+.fg-about-badge__logo {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  margin-bottom: 0.75rem;
+}
+
+.fg-about-badge__logo img {
+  width: auto;
+  height: auto;
+  max-width: 128px;
+  max-height: 44px;
+  object-fit: contain;
+}
+
+.fg-about-badge strong {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.fg-about-badge__copy {
+  display: block;
+  margin-top: 0.3rem;
+  color: rgba(6, 33, 42, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.fg-about-trust__note {
+  max-width: 78ch;
+  margin: clamp(1rem, 2vw, 1.4rem) 0 1.1rem;
+  color: rgba(6, 33, 42, 0.78);
+  font-size: 0.94rem;
+}
+
+.fg-about-route--primary {
+  border-color: var(--color-accent);
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(46, 172, 102, 0.14);
+}
+
+@media (max-width: 1040px) {
+  .fg-about-trust__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-about-pricing__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-about-process__list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .fg-about-trust__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-about-badge {
+    transition: none;
+  }
+
+  .fg-about-badge:hover,
+  .fg-about-badge:focus-visible {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fg-about-parallax img {
     height: 100%;
