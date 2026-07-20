@@ -29245,7 +29245,9 @@ html.fg-blinds-reveal-locked {
   place-items: center;
 }
 
-/* Solid brand-tinted chips: Nick wants the social links to actually read. */
+/* White chips that echo the trust-logo tiles above them; icons read in steel
+   with the label. The Instagram mark is outline shapes, so it is stroked, not
+   filled, or the camera frame renders as a solid blob. */
 .site-footer__socials {
   display: flex;
   flex-wrap: wrap;
@@ -29258,29 +29260,42 @@ html.fg-blinds-reveal-locked {
   gap: 0.5rem;
   align-items: center;
   min-height: 44px;
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(46, 172, 102, 0.55);
+  padding: 0.5rem 1.05rem;
+  border: 0;
   border-radius: 999px;
-  background: rgba(46, 172, 102, 0.22);
-  color: #ffffff;
+  background: #ffffff;
+  color: var(--color-steel);
   font-size: 0.85rem;
   font-weight: 800;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .site-footer__socials a:hover,
 .site-footer__socials a:focus-visible {
-  border-color: var(--color-accent);
   background: var(--color-accent);
+  color: #ffffff;
   transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
 }
 
 .site-footer__socials svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   fill: currentColor;
+  stroke: none;
+}
+
+.site-footer__socials svg.site-footer__social-outline {
+  fill: none;
   stroke: currentColor;
-  stroke-width: 1.8;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+/* The lens dot is too small to survive as an outline: fill it. */
+.site-footer__socials svg.site-footer__social-outline circle:last-of-type {
+  fill: currentColor;
+  stroke-width: 1.4;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -55,7 +55,7 @@ $footer_company = [
             </div>
             <div class="site-footer__socials" aria-label="<?php esc_attr_e('Fenster Glazing social media', 'fenster'); ?>">
                 <a href="https://www.instagram.com/fensterglazing/" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Fenster Glazing on Instagram', 'fenster'); ?>">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
+                    <svg class="site-footer__social-outline" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.5"></circle></svg>
                     <span>Instagram</span>
                 </a>
                 <a href="https://www.facebook.com/fensterg/" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Fenster Glazing on Facebook', 'fenster'); ?>">
