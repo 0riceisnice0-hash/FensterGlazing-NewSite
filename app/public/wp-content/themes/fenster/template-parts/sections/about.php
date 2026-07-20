@@ -125,7 +125,7 @@ $routes = [
     </section>
 
     <section class="fg-about-pricing">
-        <div class="container fg-about-pricing__grid">
+        <div class="container fg-about-pricing__grid fg-about-flip">
             <div class="fg-about-pricing__copy">
                 <p class="eyebrow"><?php esc_html_e('What we are known for', 'fenster'); ?></p>
                 <h2><?php esc_html_e('You should not wait a week to find out what it costs.', 'fenster'); ?></h2>
@@ -191,7 +191,7 @@ $routes = [
     </section>
 
     <section class="fg-about-founders">
-        <div class="container fg-about-founders__grid">
+        <div class="container fg-about-founders__grid fg-about-flip">
             <div class="fg-about-founders__copy">
                 <p class="eyebrow"><?php esc_html_e('Who runs it', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Adam and Nick started Fenster in 2018.', 'fenster'); ?></h2>
@@ -281,7 +281,7 @@ $routes = [
     ?>
 
     <section class="fg-about-visit">
-        <div class="container fg-about-visit__grid">
+        <div class="container fg-about-visit__grid fg-about-flip">
             <figure class="fg-about-visit__media">
                 <span class="fg-about-parallax" data-fg-depth="0.45">
                     <img <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'lazy']); ?>>
