@@ -318,8 +318,9 @@ function fenster_case_studies(): array
             'award' => [
                 'title' => 'Installation of the Month',
                 'source' => 'Sheerline',
+                'date' => 'August 2025',
                 'logo' => FENSTER_THEME_URI . '/assets/partners/sheerline.png',
-                'note' => 'Sheerline chose this project as their Installation of the Month.',
+                'note' => 'Sheerline chose this project as their Installation of the Month in August 2025.',
             ],
             'video' => [
                 'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-roof-lantern-heritage-doors.mp4',

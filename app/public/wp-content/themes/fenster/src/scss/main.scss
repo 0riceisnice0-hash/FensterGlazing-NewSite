@@ -15129,472 +15129,669 @@ a.fg-cs-installer:hover {
 /* About page.
    Sits on the continuous page gradient per STYLE.md: no section repaints the
    background. Local contrast comes from white panels and one dark band. */
-.fg-about-page {
+/* About page.
+   Art direction follows the roof lanterns page: one continuous canvas, contained
+   sections, alternating grid ratios so no two adjacent sections share a rhythm,
+   ch-clamped headings and scrim-and-chip captions on media. The crew stage
+   reuses the data-fg-cd-range tab component from the composite door page. */
+.fg-about {
+  overflow: clip;
   color: var(--color-ink);
 }
 
-.fg-about-page section {
-  padding: clamp(3rem, 5vw, 4.5rem) 0;
+.fg-about section {
+  padding: clamp(2.25rem, 4.5vw, 3.4rem) 0;
 }
 
-.fg-about-page .eyebrow {
-  margin: 0 0 0.75rem;
+.fg-about .eyebrow {
+  margin: 0 0 0.7rem;
   color: var(--color-accent-dark);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.fg-about-page h2 {
-  margin: 0 0 0.9rem;
+/* Size and line-height are owned by the shared page-heading guardrail further
+   down this file, which deliberately keeps information pages out of hero scale.
+   Only the measure is set here. */
+.fg-about h1 {
+  max-width: 15ch;
+  margin: 0 0 1rem;
+}
+
+.fg-about h2 {
+  max-width: 20ch;
+  margin: 0 0 0.85rem;
   font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.14;
+  line-height: 1.12;
 }
 
-.fg-about-page h3 {
-  margin: 0 0 0.7rem;
-  font-size: 1.15rem;
-  line-height: 1.2;
-}
-
-.fg-about-page p {
+.fg-about p {
+  max-width: 56ch;
   margin: 0 0 1rem;
   font-size: clamp(1rem, 1.05vw, 1.09rem);
   line-height: 1.62;
 }
 
-/* Hero */
-.fg-about-hero {
-  padding-top: clamp(2.5rem, 4vw, 3.6rem);
-}
-
-.fg-about-hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(1.75rem, 3.5vw, 3rem);
-  align-items: center;
-}
-
-.fg-about-hero__copy {
-  max-width: 620px;
-}
-
-.fg-about-hero__lead {
-  font-size: clamp(1.05rem, 1.3vw, 1.18rem);
-  line-height: 1.58;
-}
-
-.fg-about-hero .button-row {
-  margin-top: 1.5rem;
-}
-
-.fg-about-hero__media {
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 22px 60px rgba(0, 45, 58, 0.16);
-}
-
-.fg-about-hero__media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-/* Origin story */
-.fg-about-story__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
-  gap: clamp(1.75rem, 3.5vw, 3.25rem);
-  align-items: center;
-}
-
-.fg-about-story__copy {
-  max-width: 640px;
-}
-
-.fg-about-story__copy p:last-child {
-  margin-bottom: 0;
-}
-
-.fg-about-story__media {
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.fg-about-story__media img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-/* Facts */
-.fg-about-facts__grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.fg-about-fact {
-  padding: 1.4rem 1.3rem;
-  border: 1px solid rgba(0, 45, 58, 0.1);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(0, 45, 58, 0.06);
-}
-
-.fg-about-fact__value {
-  display: block;
-  color: var(--color-steel);
-  font-size: clamp(1.5rem, 2vw, 1.85rem);
-  font-weight: 800;
-  line-height: 1.05;
-}
-
-.fg-about-fact__label {
-  display: block;
-  margin: 0.35rem 0 0.6rem;
-  color: var(--color-accent-dark);
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.fg-about-fact p {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* The crew */
-.fg-about-crew__head {
-  max-width: 720px;
-  margin-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
-}
-
-.fg-about-crew__head p:last-child {
-  margin-bottom: 0;
-}
-
-.fg-about-crew__grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-about-crew__item {
-  margin: 0;
-}
-
-.fg-about-crew__card {
-  display: block;
-  height: 100%;
-  padding-bottom: 1.1rem;
-  overflow: hidden;
-  border: 1px solid rgba(0, 45, 58, 0.1);
-  border-radius: 8px;
-  background: #ffffff;
-  color: inherit;
-  text-decoration: none;
-  box-shadow: 0 10px 30px rgba(0, 45, 58, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.fg-about-crew__card:hover,
-.fg-about-crew__card:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(0, 45, 58, 0.12);
-}
-
-/* One house style across mixed-quality source portraits: consistent crop,
-   greyscale and contrast so studio shots and phone photos sit together. */
-.fg-about-crew__portrait {
-  display: block;
-  margin-bottom: 0.9rem;
-  background: var(--color-steel);
-}
-
-.fg-about-crew__portrait img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: center 22%;
-  filter: grayscale(1) contrast(1.04);
-}
-
-.fg-about-crew__name {
-  display: block;
-  padding: 0 1.1rem;
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.fg-about-crew__role {
-  display: block;
-  padding: 0.2rem 1.1rem 0;
-  color: var(--color-accent-dark);
-  font-size: 0.86rem;
-  font-weight: 700;
-}
-
-.fg-about-crew__note {
-  display: block;
-  padding: 0.3rem 1.1rem 0;
-  color: rgba(6, 33, 42, 0.7);
-  font-size: 0.85rem;
-  line-height: 1.4;
-}
-
-.fg-about-crew__more {
-  margin: 1.35rem 0 0;
-}
-
-/* Award */
-.fg-about-award__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
-  gap: clamp(1.75rem, 3.5vw, 3rem);
-  align-items: center;
-}
-
-.fg-about-award__copy {
-  max-width: 600px;
-}
-
-.fg-about-award__links {
-  display: flex;
-  gap: 1.1rem;
-  align-items: center;
-  margin: 1.4rem 0 0;
-  flex-wrap: wrap;
-}
-
-.fg-about-award__media {
+/* Shared media treatment: 8px radius, bottom scrim, floating caption chip. */
+.fg-about figure {
   position: relative;
   margin: 0;
   overflow: hidden;
   border-radius: 8px;
 }
 
-.fg-about-award__media img {
+.fg-about figure > img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
 }
 
-.fg-about-award__media figcaption {
-  display: flex;
-  gap: 0.65rem;
+.fg-about-hero__media::after,
+.fg-about-award__media::after,
+.fg-about-visit__media::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 35%;
+  pointer-events: none;
+  background: linear-gradient(transparent, rgba(10, 34, 38, 0.72));
+}
+
+.fg-about-hero__media figcaption,
+.fg-about-award__media figcaption,
+.fg-about-visit__media figcaption {
+  position: absolute;
+  bottom: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
+  padding: 0.34rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-steel);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-about-visit__media figcaption {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hero: narrow copy, wide media. */
+.fg-about-hero {
+  padding-top: clamp(2.25rem, 4vw, 3.25rem);
+}
+
+.fg-about-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.75rem, 3.5vw, 3rem);
   align-items: center;
-  padding: 0.85rem 1rem;
+}
+
+.fg-about-hero__lead {
+  font-size: clamp(1.02rem, 1.25vw, 1.14rem);
+}
+
+.fg-about-hero__points {
+  margin: 0 0 1.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-about-hero__points li {
+  position: relative;
+  padding-left: 1.35rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.fg-about-hero__points li::before {
+  content: "";
+  position: absolute;
+  top: 0.55rem;
+  left: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.fg-about-hero__media img {
+  aspect-ratio: 4 / 3;
+}
+
+/* Facts: bordered spec strip. */
+.fg-about-facts {
+  padding-top: 0;
+}
+
+.fg-about-facts__strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.fg-about-facts__item {
+  padding: 1.15rem 1.25rem;
+  border-left: 1px solid var(--color-line);
+}
+
+.fg-about-facts__item:first-child {
+  border-left: 0;
+}
+
+.fg-about-facts__strip dt {
+  color: var(--color-steel);
+  font-size: clamp(1.4rem, 1.9vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.fg-about-facts__strip dd {
+  margin: 0.3rem 0 0;
+  color: rgba(6, 33, 42, 0.72);
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+/* Crew stage: selector rail plus a portrait and job panel. */
+.fg-about-crew__head {
+  margin-bottom: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+.fg-about-crew__head p:last-child {
+  margin-bottom: 0;
+}
+
+.fg-about-crew__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: start;
+}
+
+.fg-about-crew__selector {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.fg-about-crew__tab {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.fg-about-crew__tab:hover,
+.fg-about-crew__tab:focus-visible {
+  border-color: rgba(46, 172, 102, 0.5);
+}
+
+.fg-about-crew__tab[aria-selected="true"] {
+  border-color: var(--color-accent);
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(0, 45, 58, 0.1);
+}
+
+.fg-about-crew__tab-portrait {
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
   background: var(--color-steel);
+}
+
+.fg-about-crew__tab-portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center 22%;
+  filter: grayscale(1) contrast(1.04);
+}
+
+.fg-about-crew__tab strong {
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.fg-about-crew__tab-role {
+  display: block;
+  color: rgba(6, 33, 42, 0.66);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.fg-about-crew__tab[aria-selected="true"] .fg-about-crew__tab-role {
+  color: var(--color-accent-dark);
+}
+
+.fg-about-crew__display {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 1.85rem);
+  align-items: start;
+  min-height: 24rem;
+}
+
+/* One house style across mixed-quality source portraits. */
+.fg-about-crew__portrait {
+  background: var(--color-steel);
+}
+
+.fg-about-crew__portrait img {
+  aspect-ratio: 4 / 5;
+  object-position: center 20%;
+  filter: grayscale(1) contrast(1.05);
+}
+
+.fg-about-crew__portrait figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 1.6rem 1rem 0.85rem;
+  background: linear-gradient(transparent, rgba(0, 28, 36, 0.86));
   color: #ffffff;
-  font-size: 0.88rem;
+}
+
+.fg-about-crew__portrait figcaption strong {
+  display: block;
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.fg-about-crew__portrait figcaption span {
+  display: block;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.84rem;
+}
+
+.fg-about-crew__note {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
-.fg-about-award__logo {
+.fg-about-crew__count {
+  margin: 0 0 0.85rem;
+  color: var(--color-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fg-about-crew__jobs {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Job card: the dual-speed hover from the case study cards. */
+.fg-about-job {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.fg-about-job:hover,
+.fg-about-job:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 50px rgba(0, 45, 58, 0.14);
+}
+
+.fg-about-job__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--color-steel);
+}
+
+.fg-about-job__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.fg-about-job:hover .fg-about-job__media img,
+.fg-about-job:focus-visible .fg-about-job__media img {
+  transform: scale(1.04);
+}
+
+.fg-about-job__award {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  padding: 0.18rem 0.4rem;
+  border-radius: 4px;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-about-job__body {
+  display: block;
+  padding: 0.7rem 0.9rem 0.7rem 0;
+}
+
+.fg-about-job__body strong {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.fg-about-job__meta {
+  display: block;
+  margin-top: 0.25rem;
+  color: rgba(6, 33, 42, 0.66);
+  font-size: 0.84rem;
+}
+
+.fg-about-job__meta em {
+  font-style: normal;
+}
+
+.fg-about-job__meta em::before {
+  content: " • ";
+}
+
+.fg-about-crew__empty {
+  font-size: 0.98rem;
+}
+
+.fg-about-crew__more {
+  margin: 1.3rem 0 0;
+}
+
+/* Award: media left, so the rhythm alternates against the crew stage. */
+.fg-about-award__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(1.75rem, 3.5vw, 3rem);
+  align-items: center;
+}
+
+.fg-about-award__media img {
+  aspect-ratio: 16 / 11;
+}
+
+.fg-about-award__mark {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  margin: 1.1rem 0;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.fg-about-award__mark img {
   width: auto;
-  height: 20px;
-  aspect-ratio: auto;
+  height: 22px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
 }
 
-/* Guarantee */
-.fg-about-guarantee__head {
-  max-width: 720px;
-  margin-bottom: clamp(1.5rem, 2.5vw, 2.25rem);
-}
-
-.fg-about-guarantee__head p:last-child {
-  margin-bottom: 0;
-}
-
+/* Guarantee: definition rows, borrowed from the roof lantern spec list. */
 .fg-about-guarantee__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.1rem;
-}
-
-.fg-about-guarantee__panel {
-  padding: 1.6rem 1.5rem;
-  border: 1px solid rgba(0, 45, 58, 0.1);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(0, 45, 58, 0.06);
-}
-
-.fg-about-guarantee__panel--limits {
-  background: rgba(0, 45, 58, 0.04);
-  box-shadow: none;
-}
-
-.fg-about-guarantee__panel ul {
-  margin: 0;
-  padding-left: 1.1rem;
-}
-
-.fg-about-guarantee__panel li {
-  margin-bottom: 0.6rem;
-  font-size: 0.98rem;
-  line-height: 1.55;
-}
-
-.fg-about-guarantee__panel li:last-child {
-  margin-bottom: 0;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: start;
 }
 
 .fg-about-guarantee__links {
   display: flex;
-  gap: 1.25rem;
-  margin: 1.35rem 0 0;
+  gap: 1.2rem;
+  margin: 0;
   flex-wrap: wrap;
 }
 
-/* Prices: the one deliberate dark band on the page. */
+.fg-about-guarantee__rows {
+  margin: 0;
+}
+
+.fg-about-guarantee__row {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.95rem 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.fg-about-guarantee__row:last-child {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-about-guarantee__row dt {
+  color: var(--color-accent-dark);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-about-guarantee__row dd {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+/* Prices: the one deliberate solid band on the page. */
 .fg-about-prices {
   background: var(--color-steel);
   color: #ffffff;
 }
 
 .fg-about-prices__inner {
-  max-width: 760px;
+  max-width: 46rem;
 }
 
 .fg-about-prices .eyebrow {
   color: #7fe0aa;
 }
 
+.fg-about-prices h2 {
+  max-width: 24ch;
+}
+
 .fg-about-prices .button-row {
-  margin-top: 1.5rem;
+  margin-top: 1.4rem;
 }
 
 /* Visit */
 .fg-about-visit__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   gap: clamp(1.75rem, 3.5vw, 3rem);
   align-items: center;
 }
 
-.fg-about-visit__copy {
-  max-width: 620px;
-}
-
 .fg-about-visit__address {
   display: grid;
-  margin: 0 0 1.1rem;
+  margin: 0 0 0.75rem;
   font-style: normal;
   font-size: 1rem;
   line-height: 1.55;
 }
 
+.fg-about-visit__hours {
+  color: rgba(6, 33, 42, 0.72);
+  font-size: 0.92rem;
+}
+
 .fg-about-visit__links {
   display: flex;
-  gap: 1.25rem;
-  margin-bottom: 1.35rem;
+  gap: 1.2rem;
   flex-wrap: wrap;
 }
 
 .fg-about-visit__links a {
-  min-height: 44px;
   display: inline-flex;
+  min-height: 44px;
   align-items: center;
   font-weight: 700;
 }
 
-.fg-about-visit__legend {
-  margin: 0;
-  color: rgba(6, 33, 42, 0.72);
-  font-size: 0.95rem;
-}
-
-.fg-about-visit__media {
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
 .fg-about-visit__media img {
-  display: block;
-  width: 100%;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
 }
 
 @media (max-width: 1040px) {
-  .fg-about-facts__grid,
-  .fg-about-crew__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .fg-about-crew__stage {
+    grid-template-columns: 1fr;
+  }
+
+  /* The selector becomes a scroll-snap rail above the stage. */
+  .fg-about-crew__selector {
+    display: flex;
+    gap: 0.6rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .fg-about-crew__tab {
+    flex: 0 0 13.5rem;
+    scroll-snap-align: start;
   }
 }
 
 @media (max-width: 860px) {
-  .fg-about-page section {
-    padding: clamp(2.25rem, 7vw, 3rem) 0;
+  .fg-about section {
+    padding: clamp(2rem, 7vw, 2.75rem) 0;
+  }
+
+  .fg-about h1 {
+    max-width: none;
+  }
+
+  .fg-about h2,
+  .fg-about p {
+    max-width: none;
   }
 
   .fg-about-hero__grid,
-  .fg-about-story__grid,
   .fg-about-award__grid,
   .fg-about-visit__grid,
-  .fg-about-guarantee__grid {
+  .fg-about-guarantee__grid,
+  .fg-about-crew__display {
     grid-template-columns: 1fr;
   }
 
-  /* Lead with the image on mobile for the story and award, so the page opens
-     each section on something to look at rather than a wall of type. */
-  .fg-about-story__media,
+  /* Open each section on something to look at rather than a wall of type. */
   .fg-about-award__media {
     order: -1;
   }
 
   .fg-about-hero__media img,
-  .fg-about-story__media img,
+  .fg-about-award__media img,
   .fg-about-visit__media img {
     aspect-ratio: 16 / 10;
   }
 
-  .fg-about-crew__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+  .fg-about-crew__display {
+    min-height: 0;
   }
 
   .fg-about-crew__portrait img {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 2;
+    object-position: center 18%;
   }
 
-  .fg-about-visit__links,
-  .fg-about-guarantee__links,
-  .fg-about-award__links {
-    gap: 0.9rem 1.1rem;
+  .fg-about-facts__strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-about-facts__item:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .fg-about-facts__item:nth-child(n + 3) {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .fg-about-guarantee__row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .fg-about-job {
+    grid-template-columns: 6rem minmax(0, 1fr);
   }
 }
 
 @media (max-width: 430px) {
-  .fg-about-facts__grid {
+  .fg-about-facts__strip {
     grid-template-columns: 1fr;
+  }
+
+  .fg-about-facts__item {
+    border-left: 0;
+  }
+
+  .fg-about-facts__item + .fg-about-facts__item {
+    border-top: 1px solid var(--color-line);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fg-about-crew__card {
+  .fg-about-job,
+  .fg-about-job__media img,
+  .fg-about-crew__tab {
     transition: none;
   }
 
-  .fg-about-crew__card:hover,
-  .fg-about-crew__card:focus-visible {
+  .fg-about-job:hover,
+  .fg-about-job:focus-visible {
+    transform: none;
+  }
+
+  .fg-about-job:hover .fg-about-job__media img,
+  .fg-about-job:focus-visible .fg-about-job__media img {
     transform: none;
   }
 }
