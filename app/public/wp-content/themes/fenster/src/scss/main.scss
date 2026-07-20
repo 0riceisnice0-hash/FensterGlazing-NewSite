@@ -15251,10 +15251,11 @@ a.fg-cs-installer:hover {
   background: linear-gradient(90deg, rgba(3, 24, 31, 0.92) 0%, rgba(3, 24, 31, 0.68) 42%, rgba(3, 24, 31, 0.16) 78%, rgba(3, 24, 31, 0.3) 100%);
 }
 
+/* No width override here: .container sizes itself via min(100% - 2rem, var)
+   and centers with auto margins, which works as a flex item too. */
 .fg-about-hero__content {
   position: relative;
   z-index: 1;
-  width: 100%;
   padding-top: clamp(2.5rem, 5vw, 4rem);
   padding-bottom: clamp(2.5rem, 5vw, 4rem);
 }
