@@ -15140,43 +15140,46 @@ a.fg-cs-installer:hover {
    measures, scrim-and-chip captions) and the case studies page (uncropped
    masonry, dual-speed card hover). Motion comes from the global data-fg-depth
    parallax utility, so there is no new JavaScript. */
+/* About page.
+   Image-led but disciplined. Gallery is a deliberate mosaic with fixed cell
+   ratios, never a ragged masonry. Portraits are supporting elements, not
+   half-viewport faces. Motion uses the global data-fg-depth utility. */
 .fg-about {
   overflow: clip;
   color: var(--color-ink);
 }
 
 .fg-about section {
-  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  padding: clamp(2rem, 3.6vw, 3rem) 0;
 }
 
 .fg-about .eyebrow {
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.6rem;
   color: var(--color-accent-dark);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-/* Size and line-height for h1 are owned by the shared page-heading guardrail
-   further down this file, which keeps information pages out of hero scale. */
+/* h1 size is owned by the shared page-heading guardrail further down. */
 .fg-about h1 {
-  max-width: 16ch;
-  margin: 0 0 1rem;
+  max-width: 14ch;
+  margin: 0 0 0.9rem;
 }
 
 .fg-about h2 {
   max-width: 22ch;
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.75rem;
   font-size: clamp(1.45rem, 2.2vw, 2rem);
   line-height: 1.12;
 }
 
 .fg-about p {
-  max-width: 56ch;
-  margin: 0 0 1rem;
-  font-size: clamp(1rem, 1.05vw, 1.09rem);
-  line-height: 1.62;
+  max-width: 54ch;
+  margin: 0 0 0.9rem;
+  font-size: clamp(1rem, 1.05vw, 1.06rem);
+  line-height: 1.6;
 }
 
 .fg-about figure {
@@ -15186,8 +15189,6 @@ a.fg-cs-installer:hover {
   border-radius: 8px;
 }
 
-/* Parallax wrapper. The utility writes --fg-parallax-y on scroll; the image is
-   oversized so the translation never exposes an edge. */
 .fg-about-parallax {
   display: block;
   overflow: hidden;
@@ -15196,16 +15197,10 @@ a.fg-cs-installer:hover {
 .fg-about-parallax img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 110%;
+  margin-top: -5%;
   object-fit: cover;
   transform: translate3d(0, var(--fg-parallax-y, 0), 0);
-  will-change: transform;
-}
-
-.fg-about-hero__media,
-.fg-about-award__media,
-.fg-about-visit__media {
-  isolation: isolate;
 }
 
 .fg-about-hero__media::after,
@@ -15216,22 +15211,22 @@ a.fg-cs-installer:hover {
   bottom: 0;
   left: 0;
   z-index: 1;
-  height: 35%;
+  height: 34%;
   pointer-events: none;
-  background: linear-gradient(transparent, rgba(10, 34, 38, 0.72));
+  background: linear-gradient(transparent, rgba(10, 34, 38, 0.7));
 }
 
 .fg-about-hero__media figcaption,
 .fg-about-visit__media figcaption {
   position: absolute;
-  bottom: 0.9rem;
-  left: 0.9rem;
+  bottom: 0.85rem;
+  left: 0.85rem;
   z-index: 2;
-  padding: 0.34rem 0.6rem;
+  padding: 0.3rem 0.55rem;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.9);
   color: var(--color-steel);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -15239,34 +15234,29 @@ a.fg-cs-installer:hover {
 
 /* Hero */
 .fg-about-hero {
-  padding-top: clamp(2.25rem, 4vw, 3.25rem);
+  padding-top: clamp(2rem, 3.2vw, 2.75rem);
 }
 
 .fg-about-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-  gap: clamp(1.75rem, 3.5vw, 3rem);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
   align-items: center;
 }
 
 .fg-about-hero__lead {
-  font-size: clamp(1.02rem, 1.25vw, 1.14rem);
+  font-size: clamp(1.01rem, 1.2vw, 1.1rem);
 }
 
 .fg-about-hero .button-row {
-  margin-top: 1.4rem;
+  margin-top: 1.25rem;
 }
 
 .fg-about-hero__media .fg-about-parallax {
   aspect-ratio: 16 / 10;
 }
 
-.fg-about-hero__media img {
-  height: 112%;
-  margin-top: -6%;
-}
-
-/* Facts strip */
+/* Facts */
 .fg-about-facts {
   padding-top: 0;
 }
@@ -15281,7 +15271,7 @@ a.fg-cs-installer:hover {
 }
 
 .fg-about-facts__item {
-  padding: 1.15rem 1.25rem;
+  padding: 1rem 1.15rem;
   border-left: 1px solid var(--color-line);
 }
 
@@ -15291,46 +15281,50 @@ a.fg-cs-installer:hover {
 
 .fg-about-facts__strip dt {
   color: var(--color-steel);
-  font-size: clamp(1.4rem, 1.9vw, 1.75rem);
+  font-size: clamp(1.3rem, 1.8vw, 1.65rem);
   font-weight: 800;
   line-height: 1.05;
 }
 
 .fg-about-facts__strip dd {
-  margin: 0.3rem 0 0;
+  margin: 0.25rem 0 0;
   color: rgba(6, 33, 42, 0.72);
-  font-size: 0.86rem;
-  line-height: 1.4;
+  font-size: 0.84rem;
+  line-height: 1.35;
 }
 
-/* Founders: two matched portraits, offset parallax between them. */
-.fg-about-founders__head {
-  margin-bottom: clamp(1.4rem, 2.5vw, 2rem);
+/* Founders: copy-led, portraits are a supporting pair. */
+.fg-about-founders__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: center;
 }
 
-.fg-about-founders__head p:last-child {
+.fg-about-founders__copy p:last-child {
   margin-bottom: 0;
 }
 
-.fg-about-founders__grid {
+.fg-about-founders__people {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 2.5vw, 2rem);
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .fg-about-founder {
   background: var(--color-steel);
 }
 
-.fg-about-founder .fg-about-parallax {
-  aspect-ratio: 4 / 5;
-}
-
 .fg-about-founder img {
-  height: 110%;
-  margin-top: -5%;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 16%;
   filter: grayscale(1) contrast(1.04);
-  object-position: center 18%;
 }
 
 .fg-about-founder figcaption {
@@ -15338,136 +15332,138 @@ a.fg-cs-installer:hover {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
-  padding: 3rem 1.25rem 1.15rem;
+  padding: 1.75rem 0.75rem 0.7rem;
   background: linear-gradient(transparent, rgba(0, 24, 31, 0.9));
   color: #ffffff;
 }
 
 .fg-about-founder figcaption strong {
   display: block;
-  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  font-size: 0.92rem;
   font-weight: 800;
   line-height: 1.15;
 }
 
-.fg-about-founder__role {
+.fg-about-founder figcaption span {
   display: block;
-  margin-top: 0.15rem;
-  color: #7fe0aa;
-  font-size: 0.84rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.76rem;
 }
 
-.fg-about-founder__copy {
-  display: block;
-  max-width: 40ch;
-  margin-top: 0.5rem;
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 0.94rem;
-  line-height: 1.5;
-}
-
-/* Recent installs: uncropped masonry, the case studies treatment. */
+/* Work: deliberate mosaic, fixed cells, aligned edges. */
 .fg-about-work__head {
-  margin-bottom: clamp(1.4rem, 2.5vw, 2rem);
+  margin-bottom: clamp(1.15rem, 2.2vw, 1.6rem);
 }
 
 .fg-about-work__head p:last-child {
   margin-bottom: 0;
 }
 
-.fg-about-work__masonry {
-  columns: 2 20rem;
-  column-gap: clamp(1rem, 2vw, 1.5rem);
+.fg-about-work__mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: clamp(9rem, 13vw, 12.5rem);
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.fg-about-shot {
-  break-inside: avoid;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: var(--shadow-soft);
-}
-
-.fg-about-shot > a {
-  display: block;
+.fg-about-cell {
+  position: relative;
   overflow: hidden;
-  border-radius: 10px 10px 0 0;
+  border-radius: 8px;
+  background: var(--color-steel);
 }
 
-.fg-about-shot img {
+.fg-about-cell--lead {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.fg-about-cell > a {
   display: block;
   width: 100%;
-  height: auto;
-  transition: transform 0.4s ease;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
 }
 
-.fg-about-shot:hover img,
-.fg-about-shot:focus-within img {
-  transform: scale(1.04);
+.fg-about-cell img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
 }
 
-.fg-about-shot figcaption {
-  display: grid;
-  gap: 0.3rem;
-  padding: 0.85rem 1rem 1rem;
-  font-size: 0.9rem;
-  line-height: 1.45;
+.fg-about-cell:hover img,
+.fg-about-cell:focus-within img {
+  transform: scale(1.05);
 }
 
-.fg-about-shot figcaption a {
-  font-size: 0.84rem;
+.fg-about-cell__caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2rem 0.85rem 0.7rem;
+  background: linear-gradient(transparent, rgba(0, 24, 31, 0.88));
+  color: #ffffff;
+  font-size: 0.82rem;
   font-weight: 700;
+  line-height: 1.3;
+}
+
+.fg-about-cell--lead .fg-about-cell__caption {
+  padding: 2.5rem 1.1rem 0.95rem;
+  font-size: 0.95rem;
 }
 
 .fg-about-work__more {
-  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  margin: clamp(1.1rem, 2vw, 1.5rem) 0 0;
 }
 
-/* Award: media left so the rhythm alternates. */
+/* Award */
 .fg-about-award__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(1.75rem, 3.5vw, 3rem);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
   align-items: center;
 }
 
 .fg-about-award__media .fg-about-parallax {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 5 / 4;
 }
 
-.fg-about-award__media img {
-  height: 112%;
-  margin-top: -6%;
+.fg-about-award__copy p:last-child {
+  margin-bottom: 0;
 }
 
 .fg-about-award__mark {
   display: flex;
-  gap: 0.7rem;
+  gap: 0.6rem;
   align-items: center;
-  margin: 1.1rem 0;
-  padding: 0.6rem 0.85rem;
+  margin: 0.9rem 0;
+  padding: 0.5rem 0.75rem;
   border: 1px solid var(--color-line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.86);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-weight: 700;
 }
 
 .fg-about-award__mark img {
   width: auto;
-  height: 22px;
+  height: 20px;
   object-fit: contain;
 }
 
 /* Trust */
 .fg-about-trust__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
   align-items: center;
 }
 
@@ -15477,8 +15473,8 @@ a.fg-cs-installer:hover {
 
 .fg-about-trust__logos {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.9rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -15488,8 +15484,8 @@ a.fg-cs-installer:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 96px;
-  padding: 1rem;
+  min-height: 74px;
+  padding: 0.75rem;
   border: 1px solid var(--color-line);
   border-radius: 8px;
   background: #ffffff;
@@ -15498,15 +15494,15 @@ a.fg-cs-installer:hover {
 .fg-about-trust__logos img {
   width: auto;
   max-width: 100%;
-  max-height: 56px;
+  max-height: 42px;
   object-fit: contain;
 }
 
 /* Visit */
 .fg-about-visit__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-  gap: clamp(1.75rem, 3.5vw, 3rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
   align-items: center;
 }
 
@@ -15514,27 +15510,22 @@ a.fg-cs-installer:hover {
   aspect-ratio: 3 / 2;
 }
 
-.fg-about-visit__media img {
-  height: 112%;
-  margin-top: -6%;
-}
-
 .fg-about-visit__address {
   display: grid;
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.6rem;
   font-style: normal;
-  font-size: 1rem;
-  line-height: 1.55;
+  font-size: 0.98rem;
+  line-height: 1.5;
 }
 
 .fg-about-visit__hours {
   color: rgba(6, 33, 42, 0.72);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
 }
 
 .fg-about-visit__links {
   display: flex;
-  gap: 1.2rem;
+  gap: 1.1rem;
   flex-wrap: wrap;
 }
 
@@ -15545,88 +15536,58 @@ a.fg-cs-installer:hover {
   font-weight: 700;
 }
 
-/* Routes: the dual-speed hover from the case study cards. */
-.fg-about-routes__head {
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
-}
-
+/* Routes: compact text cards, no images needed. */
 .fg-about-routes__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.9rem, 2vw, 1.35rem);
+  gap: 0.7rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .fg-about-route {
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: block;
   height: 100%;
-  overflow: hidden;
+  padding: 0.95rem 1.1rem;
   border: 1px solid var(--color-line);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
   color: inherit;
   text-decoration: none;
-  box-shadow: var(--shadow-soft);
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .fg-about-route:hover,
 .fg-about-route:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 22px 50px rgba(0, 45, 58, 0.14);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 45, 58, 0.1);
 }
 
-.fg-about-route__media {
+.fg-about-route strong {
   display: block;
-  overflow: hidden;
-  background: var(--color-steel);
-}
-
-.fg-about-route__media img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.fg-about-route:hover .fg-about-route__media img,
-.fg-about-route:focus-visible .fg-about-route__media img {
-  transform: scale(1.04);
-}
-
-.fg-about-route__body {
-  display: block;
-  padding: 0.95rem 1.1rem 1.15rem;
-}
-
-.fg-about-route__body strong {
-  display: block;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   font-weight: 800;
-  line-height: 1.2;
 }
 
-.fg-about-route__body span {
+.fg-about-route span {
   display: block;
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
   color: rgba(6, 33, 42, 0.7);
-  font-size: 0.92rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 @media (max-width: 1040px) {
-  .fg-about-routes__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .fg-about-founders__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 18rem);
   }
 }
 
 @media (max-width: 860px) {
   .fg-about section {
-    padding: clamp(2rem, 7vw, 2.75rem) 0;
+    padding: clamp(1.75rem, 6vw, 2.4rem) 0;
   }
 
   .fg-about h1,
@@ -15636,13 +15597,13 @@ a.fg-cs-installer:hover {
   }
 
   .fg-about-hero__grid,
+  .fg-about-founders__grid,
   .fg-about-award__grid,
   .fg-about-trust__grid,
   .fg-about-visit__grid {
     grid-template-columns: 1fr;
   }
 
-  /* Open the section on the picture rather than a wall of type. */
   .fg-about-award__media,
   .fg-about-visit__media {
     order: -1;
@@ -15653,24 +15614,19 @@ a.fg-cs-installer:hover {
     aspect-ratio: 16 / 10;
   }
 
-  .fg-about-founders__grid {
-    gap: 0.75rem;
+  .fg-about-founders__people {
+    max-width: 22rem;
   }
 
-  .fg-about-founder .fg-about-parallax {
-    aspect-ratio: 3 / 4;
+  /* Two columns, lead spans the full width and stays first. */
+  .fg-about-work__mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: clamp(8rem, 30vw, 10rem);
   }
 
-  .fg-about-founder figcaption {
-    padding: 2.25rem 0.9rem 0.9rem;
-  }
-
-  .fg-about-founder__copy {
-    display: none;
-  }
-
-  .fg-about-work__masonry {
-    columns: 1;
+  .fg-about-cell--lead {
+    grid-column: span 2;
+    grid-row: span 1;
   }
 
   .fg-about-facts__strip {
@@ -15685,8 +15641,22 @@ a.fg-cs-installer:hover {
     border-top: 1px solid var(--color-line);
   }
 
+  .fg-about-trust__logos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fg-about-routes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
   .fg-about-routes__grid {
     grid-template-columns: 1fr;
+  }
+
+  .fg-about-trust__logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -15702,33 +15672,22 @@ a.fg-cs-installer:hover {
   .fg-about-facts__item + .fg-about-facts__item {
     border-top: 1px solid var(--color-line);
   }
-
-  .fg-about-trust__logos {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .fg-about-parallax img {
-    transform: none;
     height: 100%;
     margin-top: 0;
-    will-change: auto;
+    transform: none;
   }
 
-  .fg-about-shot img,
-  .fg-about-route,
-  .fg-about-route__media img {
+  .fg-about-cell img,
+  .fg-about-route {
     transition: none;
   }
 
-  .fg-about-shot:hover img,
-  .fg-about-shot:focus-within img,
-  .fg-about-route:hover .fg-about-route__media img,
-  .fg-about-route:focus-visible .fg-about-route__media img {
-    transform: none;
-  }
-
+  .fg-about-cell:hover img,
+  .fg-about-cell:focus-within img,
   .fg-about-route:hover,
   .fg-about-route:focus-visible {
     transform: none;
