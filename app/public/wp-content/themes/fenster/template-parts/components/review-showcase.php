@@ -40,17 +40,17 @@ if (empty($reviews)) {
             <strong><?php esc_html_e('EXCELLENT', 'fenster'); ?></strong>
             <span class="fg-review-showcase__summary-stars" role="img" aria-label="<?php esc_attr_e('5 out of 5 stars', 'fenster'); ?>"></span>
             <div class="fg-review-showcase__sources" role="group" aria-label="<?php esc_attr_e('Review sources', 'fenster'); ?>">
-                <span class="fg-review-showcase__source-pill">
+                <a class="fg-review-showcase__source-pill" href="<?php echo esc_url((string) fenster_data('brand.google_reviews_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Google', 'fenster'); ?>">
                     <span class="fg-review-showcase__google" role="img" aria-label="<?php esc_attr_e('Google', 'fenster'); ?>">
                         <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
                     </span>
                     <b><?php esc_html_e('Customer reviews', 'fenster'); ?></b>
-                </span>
-                <span class="fg-review-showcase__source-pill fg-review-showcase__source-pill--trustpilot">
+                </a>
+                <a class="fg-review-showcase__source-pill fg-review-showcase__source-pill--trustpilot" href="<?php echo esc_url((string) fenster_data('brand.trustpilot_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Trustpilot', 'fenster'); ?>">
                     <span class="fg-review-showcase__trustpilot-mark" aria-hidden="true">★</span>
                     <span class="fg-review-showcase__trustpilot-word"><?php esc_html_e('Trustpilot', 'fenster'); ?></span>
                     <b><?php esc_html_e('Customer reviews', 'fenster'); ?></b>
-                </span>
+                </a>
             </div>
         </header>
 

@@ -692,8 +692,8 @@ $home_process = [
     ['step' => '04', 'title' => 'Install', 'copy' => 'Installation is planned cleanly, with aftercare and guarantee support built in.'],
 ];
 $trust_items = [
-    ['src' => FENSTER_THEME_URI . '/assets/trust/google-5-stars.png', 'alt' => 'Google five star reviews'],
-    ['src' => FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png', 'alt' => 'Trustpilot Excellent'],
+    ['src' => FENSTER_THEME_URI . '/assets/trust/google-5-stars.png', 'alt' => 'Google five star reviews', 'url' => fenster_data('brand.google_reviews_url', ''), 'external' => true],
+    ['src' => FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png', 'alt' => 'Trustpilot Excellent', 'url' => fenster_data('brand.trustpilot_url', ''), 'external' => true],
     ['src' => FENSTER_THEME_URI . '/assets/trust/fensa.png', 'alt' => 'FENSA approved', 'url' => home_url('/fensa-approved-installers/')],
     ['src' => FENSTER_THEME_URI . '/assets/trust/cpa.png', 'alt' => 'Consumer Protection Association', 'url' => home_url('/consumer-protection-association/')],
 ];
@@ -2698,7 +2698,7 @@ if ($is_commercial_hub) {
                 <div class="fg-home-proof__logos">
                     <?php foreach ($trust_items as $item) : ?>
                         <?php if (! empty($item['url'])) : ?>
-                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $item['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $item['alt'])); ?>">
+                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $item['url']); ?>"<?php echo fenster_trust_link_attrs($item); ?> aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $item['alt'])); ?>">
                         <?php endif; ?>
                         <img src="<?php echo esc_url($item['src']); ?>" alt="<?php echo esc_attr($item['alt']); ?>" loading="lazy">
                         <?php if (! empty($item['url'])) : ?></a><?php endif; ?>

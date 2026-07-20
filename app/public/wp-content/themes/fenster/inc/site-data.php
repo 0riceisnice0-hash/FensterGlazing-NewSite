@@ -27,6 +27,8 @@ function fenster_site_data(): array
                 'Buckinghamshire MK13 9HF',
             ],
             'hours' => 'Monday to Friday, 8.30am to 5pm. Phone lines open 24/7.',
+            'google_reviews_url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+            'trustpilot_url' => 'https://uk.trustpilot.com/review/fensterglazing.com',
         ],
         'customer_reviews' => [
             [
@@ -137,6 +139,8 @@ function fenster_site_data(): array
                             ['label' => 'Aluminium Windows', 'url' => home_url('/aluminium-windows/')],
                             ['label' => 'Aluminium Flush Windows', 'url' => home_url('/aluminium-flush-windows/')],
                             ['label' => 'Heritage Windows', 'url' => home_url('/heritage-windows/')],
+                            ['label' => 'French Casement Windows', 'url' => home_url('/french-casement-windows/')],
+                            ['label' => 'Bow and Bay Windows', 'url' => home_url('/bow-bay-windows/')],
                         ],
                     ],
                     [
@@ -188,6 +192,11 @@ function fenster_site_data(): array
                 'url' => home_url('/commercial-glazing/'),
                 'children' => [
                     ['label' => 'Commercial Glazing', 'url' => home_url('/commercial-glazing/')],
+                    ['label' => 'Commercial Windows and Doors', 'url' => home_url('/commercial-windows-and-doors/')],
+                    ['label' => 'Curtain Walling', 'url' => home_url('/curtain-walling/')],
+                    ['label' => 'Louvre Vents', 'url' => home_url('/louvre-vents/')],
+                    ['label' => 'Commercial Automation', 'url' => home_url('/commercial-automation/')],
+                    ['label' => 'Healthcare', 'url' => home_url('/healthcare-construction/')],
                     ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
                 ],
             ],

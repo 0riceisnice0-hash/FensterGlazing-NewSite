@@ -132,7 +132,7 @@ $location_links = [
                 <?php if (is_array($trust['item'])) : ?>
                     <article class="fg-home-trust-card">
                         <?php if (! empty($trust['item']['url'])) : ?>
-                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $trust['item']['alt'])); ?>">
+                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $trust['item']['url']); ?>"<?php echo fenster_trust_link_attrs($trust['item']); ?> aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) $trust['item']['alt'])); ?>">
                         <?php endif; ?>
                         <img <?php echo fenster_image_attr_string((string) $trust['item']['src'], ['alt' => (string) $trust['item']['alt'], 'loading' => 'lazy']); ?>>
                         <?php if (! empty($trust['item']['url'])) : ?></a><?php endif; ?>
@@ -193,7 +193,6 @@ $location_links = [
                         <?php endforeach; ?>
                         <div class="fg-home-product-theatre__wipe" aria-hidden="true"></div>
                         <div class="fg-home-product-theatre__reflection" aria-hidden="true"></div>
-                        <span class="fg-home-product-theatre__counter" data-fg-product-counter><?php echo esc_html('01 / ' . sprintf('%02d', count($product_routes))); ?></span>
                     </a>
                 </div>
 

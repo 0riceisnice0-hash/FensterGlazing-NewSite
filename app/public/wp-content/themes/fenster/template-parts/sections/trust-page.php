@@ -320,7 +320,7 @@ $team_cards = [
             <div class="fg-trust-accreditations__logos" aria-label="<?php esc_attr_e('Fenster trust logos', 'fenster'); ?>">
                 <?php foreach ($trust_items as $trust_item) : ?>
                     <?php if (! empty($trust_item['url'])) : ?>
-                        <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $trust_item['url']); ?>" aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) ($trust_item['alt'] ?? ''))); ?>">
+                        <a class="fg-accreditation-logo-link" href="<?php echo esc_url((string) $trust_item['url']); ?>"<?php echo fenster_trust_link_attrs($trust_item); ?> aria-label="<?php echo esc_attr(sprintf(__('Learn more about %s', 'fenster'), (string) ($trust_item['alt'] ?? ''))); ?>">
                     <?php endif; ?>
                     <img src="<?php echo esc_url((string) ($trust_item['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($trust_item['alt'] ?? '')); ?>" loading="lazy">
                     <?php if (! empty($trust_item['url'])) : ?></a><?php endif; ?>

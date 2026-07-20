@@ -25,6 +25,22 @@ function fenster_data(string $key, mixed $default = null): mixed
     return $data;
 }
 
+/**
+ * Attribute string for trust/accreditation logo links.
+ *
+ * Review-site logos (Google, Trustpilot) point off-site and should open in a new
+ * tab so the visitor does not lose the page. Internal accreditation pages stay
+ * in the same tab. Returns a leading-space attribute string ready to echo.
+ */
+function fenster_trust_link_attrs(array $item): string
+{
+    if (empty($item['external'])) {
+        return '';
+    }
+
+    return ' target="_blank" rel="noopener"';
+}
+
 function fenster_render_nav_fallback(): void
 {
     $items = fenster_data('primary_nav_fallback', []);

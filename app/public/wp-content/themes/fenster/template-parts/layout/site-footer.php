@@ -46,8 +46,12 @@ $footer_company = [
                 <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/ssip-health-and-safety/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s SSIP health and safety assessment', 'fenster'); ?>">
                     <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/images/imported/cropped-ssip.png'); ?>" alt="<?php esc_attr_e('SSIP health and safety assessed', 'fenster'); ?>">
                 </a>
-                <span class="site-footer__trust-mark"><img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>"></span>
-                <span class="site-footer__trust-mark"><img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>"></span>
+                <a class="fg-accreditation-logo-link site-footer__trust-mark" href="<?php echo esc_url((string) fenster_data('brand.google_reviews_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Google', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
+                </a>
+                <a class="fg-accreditation-logo-link site-footer__trust-mark" href="<?php echo esc_url((string) fenster_data('brand.trustpilot_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Trustpilot', 'fenster'); ?>">
+                    <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot Excellent reviews', 'fenster'); ?>">
+                </a>
             </div>
             <div class="site-footer__socials" aria-label="<?php esc_attr_e('Fenster Glazing social media', 'fenster'); ?>">
                 <a href="https://www.instagram.com/fensterglazing/" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Fenster Glazing on Instagram', 'fenster'); ?>">
