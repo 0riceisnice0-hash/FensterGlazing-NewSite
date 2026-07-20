@@ -15506,7 +15506,7 @@ a.fg-cs-installer:hover {
 /* Founders: copy-led, portraits are a supporting pair on the right. */
 .fg-about-founders__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 29rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
   gap: clamp(1.5rem, 3vw, 2.75rem);
   align-items: center;
 }
@@ -15545,11 +15545,18 @@ a.fg-cs-installer:hover {
   filter: grayscale(1) contrast(1.04);
 }
 
-.fg-about-founder figcaption {
+/* Extra specificity: the shared `.fg-about figure > figcaption` chip rule must
+   not turn founder names into overlay chips across their faces. */
+.fg-about .fg-about-founder > figcaption {
   position: static;
+  bottom: auto;
+  left: auto;
   padding: 0.65rem 0.1rem 0;
+  border-radius: 0;
   background: none;
   color: var(--color-ink);
+  font-size: inherit;
+  font-weight: 400;
   text-transform: none;
   letter-spacing: 0;
 }
