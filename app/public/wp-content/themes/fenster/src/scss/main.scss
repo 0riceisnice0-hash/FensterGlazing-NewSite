@@ -32327,9 +32327,11 @@ html.fg-blinds-reveal-locked {
   line-height: 1.6;
 }
 
+/* auto-fit with a card cap: product routes can match one, two or three
+   studies, and each count should look intentional rather than leave holes. */
 .fg-cs-strip__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 26rem));
   gap: clamp(0.9rem, 2vw, 1.5rem);
 }
 
@@ -32359,13 +32361,15 @@ html.fg-blinds-reveal-locked {
   margin-top: 1rem;
 }
 
+/* Explicit ink: the links band is a dark section, and inherited white text
+   disappears on the white card. */
 .fg-link-card {
   display: block;
   overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: 10px;
   background: #ffffff;
-  color: inherit;
+  color: var(--color-ink);
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
