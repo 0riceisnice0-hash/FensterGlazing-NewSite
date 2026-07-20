@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-20
 
+## 2026-07-20 - About page revision after owner feedback, deployed to test only
+
+Owner feedback on the fifth version: open with the mission rather than selling the quote tool, write better copy, present the traditional consultation route as something we offer rather than mock, note that both routes use the same pricing software so the number is identical, drop "at your kitchen table", improve mobile, and add one wow factor. Test is at `2064ea4`.
+
+- **Hero is now the wow factor:** the mission statement (`Simple, honest glazing.`) sits over the Drayton Parslow install video playing full bleed behind a left-to-right scrim. The video is a background, so it is desktop-only; mobile and reduced-motion users get the poster under a vertical scrim with the copy anchored to the bottom of the stage. Marked with `data-fg-video-bg` in `main.js`.
+- **Pricing section reframed as two equal routes:** `Online` and `In person` step rails, both green, with the in-person route ending `You get the price on the spot`, and a strip across the panel reading `Same software, same price list, same number.` No route is disparaged.
+- **Copy rewritten page-wide** in a tighter voice; the founders section is `Run by the two people who started it.`
+- **Mobile polish:** buttons stack full width below 560px, the mosaic and grids collapse as before, hero stage is `min(78vh, 34rem)`.
+- Bug fixed on the way: a `width: 100%` override on the hero content span killed `.container`'s auto-margin gutters and pinned the copy to the viewport edge.
+- QA note: background tabs produce no frames, so IntersectionObserver-driven video attach and reveals never fire in a hidden automation tab. That is throttling, not a page bug; the video attaches the moment the tab is visible.
+
 ## 2026-07-20 - About page redesign (fifth version), deployed to test only
 
 Full recomposition of `/about/` around the instant-pricing positioning, built after reading `ABOUT-PAGE-HANDOVER.md` and verified in a real browser on the test site. Live is untouched; test is at `6918091`.
