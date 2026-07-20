@@ -15237,6 +15237,7 @@ a.fg-cs-installer:hover {
    intrinsic size into the layout and the box derives the wrong width (498px in
    a 390px viewport, once). */
 .fg-about-hero__stage video,
+.fg-about-hero__image,
 .fg-about-award__media video {
   position: absolute;
   inset: 0;
@@ -15432,20 +15433,6 @@ a.fg-cs-installer:hover {
   font-weight: 800;
 }
 
-/* Both routes are ours; the strip says the number is identical either way. */
-.fg-about-pricing__same {
-  grid-column: 1 / -1;
-  max-width: none;
-  margin: 0;
-  padding: 0.8rem 1.2rem;
-  background: rgba(24, 144, 111, 0.32);
-  color: #ffffff;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-align: center;
-  text-transform: uppercase;
-}
 
 /* Work: deliberate mosaic, fixed cells, aligned edges. Five cells close the
    rectangle: the 2x2 lead plus four singles in a four-column grid. */
@@ -27017,161 +27004,129 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-price-guide__hero {
-  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 4vw, 3rem);
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(2rem, 4vw, 3rem);
 }
 
 .fg-price-guide__hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.48fr);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.46fr);
   gap: clamp(1.2rem, 3vw, 2.6rem);
   align-items: center;
 }
 
 .fg-price-guide__hero-copy h1 {
-  max-width: 12ch;
+  max-width: 14ch;
   margin: 0.45rem 0 0.9rem;
   color: var(--color-steel);
-  font-size: clamp(2.1rem, 3.6vw, 3.6rem);
-  line-height: 1.02;
 }
 
 .fg-price-guide__hero-copy > p:not(.eyebrow) {
-  max-width: 62ch;
-  margin: 0;
-  color: var(--color-muted);
-  font-size: clamp(1.02rem, 1.35vw, 1.16rem);
-  line-height: 1.62;
+  max-width: 46ch;
+  margin: 0 0 1.2rem;
+  font-size: clamp(1.02rem, 1.2vw, 1.1rem);
+  line-height: 1.6;
 }
 
-.fg-price-guide__quote-card {
-  display: grid;
-  gap: 0.8rem;
-  padding: clamp(1.15rem, 2.4vw, 1.7rem);
-  border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
+/* At-a-glance card: the checked prices, scannable before anything else. */
+.fg-price-guide__glance {
+  padding: 1.35rem 1.4rem 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 18px 48px rgba(0, 45, 58, 0.09);
+  box-shadow: 0 24px 56px rgba(0, 45, 58, 0.1);
 }
 
-.fg-price-guide__quote-card span {
-  width: max-content;
-  max-width: 100%;
-  padding: 0.35rem 0.6rem;
-  border-radius: 999px;
-  background: var(--color-soft);
+.fg-price-guide__glance > strong {
+  display: block;
+  margin-bottom: 0.75rem;
   color: var(--color-accent-dark);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.fg-price-guide__quote-card strong {
-  color: var(--color-steel);
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.1;
-}
-
-.fg-price-guide__quote-card p,
-.fg-price-guide__section-head p:not(.eyebrow),
-.fg-price-guide__factors p,
-.fg-price-guide__proof p,
-.fg-price-guide__cta p {
+.fg-price-guide__glance ul {
+  display: grid;
   margin: 0;
-  color: var(--color-muted);
-  line-height: 1.62;
+  padding: 0;
+  list-style: none;
 }
 
-.fg-price-guide__table-section,
+.fg-price-guide__glance li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.fg-price-guide__glance li span {
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.fg-price-guide__glance li em {
+  color: var(--color-steel);
+  font-size: 1.02rem;
+  font-style: normal;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.fg-price-guide__glance > p {
+  margin: 0.8rem 0 0;
+  color: rgba(6, 33, 42, 0.68);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+/* Shared section rhythm */
 .fg-price-guide__examples,
 .fg-price-guide__factors,
-.fg-price-guide__proof,
 .fg-price-guide__faq {
-  padding: clamp(2rem, 4vw, 3.4rem) 0;
+  padding: clamp(2rem, 4vw, 3rem) 0;
 }
 
 .fg-price-guide__section-head {
-  max-width: 780px;
-  margin-bottom: 1.4rem;
+  max-width: 46rem;
+  margin-bottom: clamp(1.25rem, 2.6vw, 2rem);
 }
 
 .fg-price-guide__section-head h2,
 .fg-price-guide__factors h2,
-.fg-price-guide__proof h2,
 .fg-price-guide__faq h2 {
-  margin: 0.45rem 0 0.75rem;
-  color: var(--color-steel);
+  max-width: 24ch;
+  margin: 0.4rem 0 0.75rem;
   font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.14;
+  line-height: 1.12;
 }
 
-.fg-price-guide__table-wrap {
-  overflow-x: auto;
-  border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 18px 48px rgba(0, 45, 58, 0.07);
+.fg-price-guide__section-head p:not(.eyebrow),
+.fg-price-guide__factors-copy p:not(.eyebrow) {
+  max-width: 56ch;
+  margin: 0;
+  font-size: clamp(1rem, 1.05vw, 1.06rem);
+  line-height: 1.6;
 }
 
-.fg-price-guide__table {
-  width: 100%;
-  min-width: 720px;
-  border-collapse: collapse;
-}
-
-.fg-price-guide__table th,
-.fg-price-guide__table td {
-  padding: 1rem;
-  text-align: left;
-  vertical-align: top;
-  border-bottom: 1px solid rgba(0, 45, 58, 0.1);
-}
-
-.fg-price-guide__table thead th {
-  background: var(--color-steel);
-  color: #ffffff;
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fg-price-guide__table tbody th {
-  width: 28%;
-  color: var(--color-steel);
-  font-size: 1rem;
-}
-
-.fg-price-guide__table td {
-  color: var(--color-muted);
-}
-
-.fg-price-guide__table td strong {
-  display: inline-flex;
-  padding: 0.35rem 0.55rem;
-  border-radius: 6px;
-  background: var(--color-soft);
-  color: var(--color-accent-dark);
-}
-
-.fg-price-guide__table tr:last-child th,
-.fg-price-guide__table tr:last-child td {
-  border-bottom: 0;
-}
-
+/* Checked example rows: photo-led, alternating sides. */
 .fg-price-guide__example-stack {
   display: grid;
-  gap: clamp(1rem, 2.4vw, 1.5rem);
+  gap: clamp(1.25rem, 2.6vw, 2rem);
 }
 
 .fg-price-guide__example {
   display: grid;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(1rem, 3vw, 2rem);
-  align-items: stretch;
-}
-
-.fg-price-guide__example--reverse {
-  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: center;
+  padding: clamp(1.25rem, 2.4vw, 1.9rem);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .fg-price-guide__example--reverse .fg-price-guide__example-copy {
@@ -27182,147 +27137,194 @@ html.fg-blinds-reveal-locked {
   order: 1;
 }
 
-.fg-price-guide__example-copy {
-  display: grid;
-  align-content: center;
-  gap: 0.85rem;
-  min-height: 340px;
-  padding: clamp(1.2rem, 2.8vw, 2rem);
-  border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
-  background: #ffffff;
+.fg-price-guide__example-copy .eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--color-accent-dark);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .fg-price-guide__example-copy h3 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  line-height: 1.15;
+}
+
+.fg-price-guide__example-copy > p {
+  max-width: 48ch;
+  margin: 0 0 1rem;
+  color: rgba(6, 33, 42, 0.78);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+
+.fg-price-guide__price {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(46, 172, 102, 0.12);
+  border: 1px solid rgba(46, 172, 102, 0.4);
   color: var(--color-steel);
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.14;
+  font-size: clamp(1.3rem, 1.9vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1;
 }
 
-.fg-price-guide__example-copy p:not(.eyebrow) {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 1.04rem;
-  line-height: 1.62;
-}
-
-.fg-price-guide__example-copy strong {
-  width: max-content;
-  max-width: 100%;
-  padding: 0.45rem 0.65rem;
-  border-radius: 6px;
-  background: var(--color-soft);
+.fg-price-guide__price em {
   color: var(--color-accent-dark);
-  font-size: 1.05rem;
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .fg-price-guide__example-copy small {
-  color: var(--color-muted);
+  display: block;
+  margin-top: 0.6rem;
+  color: rgba(6, 33, 42, 0.62);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+/* The WindowCAD configuration behind a photographed example. */
+.fg-price-guide__config {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+  max-width: 24rem;
+}
+
+.fg-price-guide__config img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: contain;
+}
+
+.fg-price-guide__config figcaption {
+  margin-top: 0.45rem;
+  color: rgba(6, 33, 42, 0.62);
+  font-size: 0.74rem;
   font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .fg-price-guide__example-media {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+  position: relative;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgba(0, 45, 58, 0.1);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 18px 48px rgba(0, 45, 58, 0.07);
+  border-radius: 10px;
+  background: var(--color-steel);
+  aspect-ratio: 16 / 11;
 }
 
 .fg-price-guide__example-media img {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 340px;
-  max-height: 560px;
-  object-fit: contain;
+  object-fit: cover;
+}
+
+/* WindowCAD screenshots are white-background renders: contain them instead of
+   cropping, on a white panel. */
+.fg-price-guide__example-media--config {
   background: #ffffff;
+  border: 1px solid var(--color-line);
 }
 
-.fg-price-guide__example-media img + img {
-  min-height: 240px;
-  border-top: 1px solid rgba(0, 45, 58, 0.1);
+.fg-price-guide__example-media--config img {
+  padding: 1.25rem;
+  object-fit: contain;
 }
 
-.fg-price-guide__factors-grid,
-.fg-price-guide__proof-grid,
-.fg-price-guide__faq-grid {
+.fg-price-guide__example-media figcaption {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 0.85rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-steel);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Factors: copy beside a two-column checklist. */
+.fg-price-guide__factors-grid {
   display: grid;
-  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1fr);
-  gap: clamp(1rem, 3vw, 2rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 3.4vw, 3rem);
+  align-items: center;
+}
+
+.fg-price-guide__factors-copy .button-row {
+  margin-top: 1.2rem;
 }
 
 .fg-price-guide__factor-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.85rem;
-}
-
-.fg-price-guide__factor-list article {
-  min-height: 92px;
-  padding: 1rem;
-  border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 12px 32px rgba(0, 45, 58, 0.06);
-}
-
-.fg-price-guide__factor-list h3 {
-  color: var(--color-steel);
-  font-size: 1.05rem;
-  line-height: 1.2;
-}
-
-.fg-price-guide__proof {
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.fg-price-guide__proof-copy {
-  padding: clamp(1rem, 2.4vw, 1.7rem);
-  border: 1px solid rgba(0, 45, 58, 0.12);
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.fg-price-guide__proof-copy ol {
-  display: grid;
-  gap: 0.55rem;
-  margin: 1.1rem 0 0;
-  padding-left: 1.25rem;
-  color: var(--color-steel);
-  font-weight: 700;
-}
-
-.fg-price-guide__image-stack {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 0.8rem;
-  align-items: stretch;
-}
-
-.fg-price-guide__image-stack figure {
+  gap: 0.6rem;
   margin: 0;
-  overflow: hidden;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-price-guide__factor-list li {
+  position: relative;
+  padding: 0.85rem 1rem 0.85rem 2.5rem;
+  border: 1px solid var(--color-line);
   border-radius: 8px;
-  background: var(--color-soft);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.93rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-.fg-price-guide__image-stack figure:first-child {
-  grid-row: span 2;
+.fg-price-guide__factor-list li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 50%;
+  background:
+    linear-gradient(transparent, transparent),
+    var(--color-accent);
+  transform: translateY(-50%);
 }
 
-.fg-price-guide__image-stack img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 190px;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+.fg-price-guide__factor-list li::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 1.17rem;
+  width: 0.32rem;
+  height: 0.58rem;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: translateY(-64%) rotate(45deg);
+}
+
+/* FAQ + quote station reuse shared component styling. */
+.fg-price-guide__faq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
+  align-items: start;
 }
 
 .fg-price-guide__faq .fg-product-faq__items details {
@@ -27330,29 +27332,23 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-price-guide__quote-station {
-  margin-top: 0;
-  padding-top: clamp(2rem, 4vw, 3.4rem);
+  margin-top: clamp(1rem, 2.5vw, 2rem);
 }
 
-@media (max-width: 900px) {
-  .fg-price-guide__hero-grid,
+@media (max-width: 1040px) {
+  .fg-price-guide__hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-price-guide__glance {
+    max-width: 30rem;
+  }
+}
+
+@media (max-width: 860px) {
   .fg-price-guide__factors-grid,
-  .fg-price-guide__proof-grid,
   .fg-price-guide__faq-grid {
     grid-template-columns: 1fr;
-  }
-
-  .fg-price-guide__factor-list,
-  .fg-price-guide__image-stack {
-    grid-template-columns: 1fr;
-  }
-
-  .fg-price-guide__image-stack figure:first-child {
-    grid-row: auto;
-  }
-
-  .fg-price-guide__image-stack img {
-    min-height: 220px;
   }
 
   .fg-price-guide__example,
@@ -27360,47 +27356,41 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: 1fr;
   }
 
-  .fg-price-guide__example--reverse .fg-price-guide__example-copy,
+  /* Photo first on mobile, copy beneath. */
+  .fg-price-guide__example-media,
   .fg-price-guide__example--reverse .fg-price-guide__example-media {
-    order: initial;
+    order: -1;
   }
 
-  .fg-price-guide__example-copy {
-    min-height: 0;
+  .fg-price-guide__example-copy,
+  .fg-price-guide__example--reverse .fg-price-guide__example-copy {
+    order: 0;
   }
 
-  .fg-price-guide__example-media img {
-    min-height: 240px;
-    max-height: none;
-  }
-
-  .fg-price-guide__table {
-    min-width: 640px;
+  .fg-price-guide__hero {
+    padding-top: clamp(1.75rem, 6vw, 2.4rem);
   }
 }
 
 @media (max-width: 560px) {
-  .fg-price-guide__hero {
-    padding-top: 2.2rem;
+  .fg-price-guide__factor-list {
+    grid-template-columns: 1fr;
   }
 
   .fg-price-guide__hero-copy .button-row,
-  .fg-price-guide__hero-copy .button {
+  .fg-price-guide__factors-copy .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fg-price-guide__hero-copy .button,
+  .fg-price-guide__factors-copy .button {
     width: 100%;
   }
 
-  .fg-price-guide__quote-card,
-  .fg-price-guide__proof-copy {
-    padding: 1rem;
-  }
-
-  .fg-price-guide__table {
-    min-width: 580px;
-  }
-
-  .fg-price-guide__table th,
-  .fg-price-guide__table td {
-    padding: 0.8rem;
+  .fg-price-guide__glance li {
+    flex-direction: column;
+    gap: 0.1rem;
   }
 }
 

@@ -512,11 +512,11 @@ function fenster_price_guide_pages(): array
             'product' => 'windows and doors',
             'product_slug' => 'online-quote',
             'quote_url' => $base_quote_url,
-            'intro' => 'A plain-English guide to what affects the fitted price of replacement windows and doors in Milton Keynes, using Fenster quote examples as the starting point.',
+            'intro' => 'Real fitted prices for windows and doors in Milton Keynes, taken straight from our pricing software. Three checked examples below, and a tool that prices your exact job in minutes.',
             'examples' => [
-                ['spec' => '1200 x 1200 uPVC casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, trickle vent and white Signature handle', 'price' => '£583.61 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-casement-1200x1200.png', 'image_alt' => 'WindowCAD screenshot for a 1200 x 1200 uPVC casement window'],
+                ['spec' => '1200 x 1200 uPVC casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, trickle vent and white Signature handle', 'price' => '£583.61 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-casement-1200x1200.png', 'image_alt' => 'WindowCAD screenshot for a 1200 x 1200 uPVC casement window', 'photo' => '/wp-content/themes/fenster/assets/images/case-studies/cs-leighton-buzzard-casement-street.jpg', 'photo_alt' => 'White uPVC casement windows we fitted in Leighton Buzzard', 'photo_caption' => 'Our install, Leighton Buzzard'],
                 ['spec' => '900 x 2100 composite entrance door', 'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, 150mm composite door cill, clear glass and chrome lever handle', 'price' => '£1,999.20 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-composite-door-900x2100.png', 'image_alt' => 'WindowCAD screenshot for a 900 x 2100 composite entrance door'],
-                ['spec' => '3000 x 2100 aluminium bifold door', 'details' => 'Prestige aluminium 3-pane bifold, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-product-3000x2100.png', 'image_alt' => 'WindowCAD product view for a 3000 x 2100 aluminium bifold door'],
+                ['spec' => '3000 x 2100 aluminium bifold door', 'details' => 'Prestige aluminium 3-pane bifold, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-product-3000x2100.png', 'image_alt' => 'WindowCAD product view for a 3000 x 2100 aluminium bifold door', 'photo' => '/wp-content/themes/fenster/assets/images/case-studies/cs-mk-whitehouse-bifold-open.jpg', 'photo_alt' => 'Anthracite grey aluminium bifold doors we fitted in Whitehouse, Milton Keynes', 'photo_caption' => 'Our install, Whitehouse'],
             ],
             'moves' => [
                 'Size and opening count',
@@ -534,7 +534,7 @@ function fenster_price_guide_pages(): array
             'product' => 'composite doors',
             'product_slug' => 'composite-doors',
             'quote_url' => $base_quote_url . '&productCollection=4',
-            'intro' => 'Composite door prices change with the slab design, colour, glazing, furniture, threshold and survey details. This page will show checked fitted examples once the standard WindowCAD configs are confirmed.',
+            'intro' => 'What a fitted composite door really costs. A checked fitted example below, the choices that move the price, and a tool that prices your exact door in minutes.',
             'examples' => [
                 ['spec' => '900 x 2100 glazed composite door', 'details' => 'Distinction Esteem, anthracite grey outside, white inside, low aluminium threshold, 150mm composite door cill, clear glass and chrome lever handle', 'price' => '£1,999.20 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-composite-door-900x2100.png', 'image_alt' => 'WindowCAD screenshot for a 900 x 2100 composite entrance door'],
                 ['spec' => '950 x 2100 coloured composite front door', 'details' => 'Anthracite or colour finish, chosen glass design, matching furniture', 'price' => 'To confirm from WindowCAD'],
@@ -549,10 +549,10 @@ function fenster_price_guide_pages(): array
             'product' => 'aluminium bifold doors',
             'product_slug' => 'aluminium-bifold-doors',
             'quote_url' => $base_quote_url . '&productCollection=11',
-            'intro' => 'Bifold door cost is mainly driven by width, panel count, colour, glazing, threshold and whether the opening needs extra survey checks such as drainage or structural detail.',
+            'intro' => 'What a fitted aluminium bifold really costs. A checked fitted example below, the choices that move the price, and a tool that prices your exact opening in minutes.',
             'examples' => [
                 ['spec' => '2400 x 2100 small aluminium bifold', 'details' => 'Fewer panels, standard colour, A-rated glazing and standard threshold', 'price' => 'To confirm from WindowCAD'],
-                ['spec' => '3000 x 2100 three-pane bifold', 'details' => 'Prestige aluminium bifold, open in, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-product-3000x2100.png', 'secondary_image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-spec-3000x2100.png', 'image_alt' => 'WindowCAD product view for a 3000 x 2100 aluminium bifold door'],
+                ['spec' => '3000 x 2100 three-pane bifold', 'details' => 'Prestige aluminium bifold, open in, anthracite grey both sides, integral footer, 175mm cill, clear glass, black handles and trickle vent', 'price' => '£3,469.43 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-product-3000x2100.png', 'secondary_image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-bifold-spec-3000x2100.png', 'image_alt' => 'WindowCAD product view for a 3000 x 2100 aluminium bifold door', 'photo' => '/wp-content/themes/fenster/assets/images/case-studies/cs-mk-whitehouse-bifold-open.jpg', 'photo_alt' => 'Anthracite grey aluminium bifold doors we fitted in Whitehouse, Milton Keynes', 'photo_caption' => 'Our install, Whitehouse'],
                 ['spec' => '4800 x 2100 wide bifold opening', 'details' => 'More panels, larger glass area, threshold and drainage details checked at survey', 'price' => 'To confirm from WindowCAD'],
             ],
             'moves' => ['Overall width and height', 'Panel count and traffic door', 'RAL colour', 'Glazing weight and specification', 'Threshold, drainage and cill detail', 'Wind load and exposed openings'],
@@ -564,7 +564,7 @@ function fenster_price_guide_pages(): array
             'product' => 'sliding sash windows',
             'product_slug' => 'sliding-sash-windows',
             'quote_url' => $base_quote_url . '&productCollection=9',
-            'intro' => 'Sash window prices vary by model, size, colour, horn detail, furniture, glazing bars and survey detail around older openings.',
+            'intro' => 'What moves the price of sliding sash windows, from the model and colour to horns, bars and furniture, and a tool that gives you a real figure for your exact windows in minutes.',
             'examples' => [
                 ['spec' => '900 x 1200 standard uPVC sash window', 'details' => 'White finish, A-rated glass, standard furniture and cill', 'price' => 'To confirm from WindowCAD'],
                 ['spec' => '1000 x 1400 heritage-style sash window', 'details' => 'Run-through horns, astragal bars, colour finish and matching furniture', 'price' => 'To confirm from WindowCAD'],
@@ -579,9 +579,9 @@ function fenster_price_guide_pages(): array
             'product' => 'double glazing',
             'product_slug' => 'double-glazing',
             'quote_url' => $base_quote_url . '&productCollection=0',
-            'intro' => 'Double glazing cost depends on the window style, size, glass, ventilation, colour and how many frames are being fitted together.',
+            'intro' => 'What double glazing really costs. A checked fitted example below, the choices that move the price, and a tool that prices your exact windows in minutes.',
             'examples' => [
-                ['spec' => '1200 x 1200 single casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, 5000EA trickle vent and white Signature handle', 'price' => '£583.61 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-casement-1200x1200.png', 'image_alt' => 'WindowCAD screenshot for a 1200 x 1200 uPVC casement window'],
+                ['spec' => '1200 x 1200 single casement window', 'details' => 'Liniar EnergyPlus, white smooth both sides, 150mm cill, Eco Toughened clear glass, 5000EA trickle vent and white Signature handle', 'price' => '£583.61 inc VAT', 'image' => '/wp-content/themes/fenster/assets/images/price-guides/windowcad-casement-1200x1200.png', 'image_alt' => 'WindowCAD screenshot for a 1200 x 1200 uPVC casement window', 'photo' => '/wp-content/themes/fenster/assets/images/case-studies/cs-leighton-buzzard-casement-street.jpg', 'photo_alt' => 'White uPVC casement windows we fitted in Leighton Buzzard', 'photo_caption' => 'Our install, Leighton Buzzard'],
                 ['spec' => '600 x 900 bedroom or bathroom window', 'details' => 'Obscure glass, trickle vent where required, standard fitting', 'price' => 'To confirm from WindowCAD'],
                 ['spec' => 'Eight-window house package', 'details' => 'Typical mix of 600 x 900, 1200 x 1200 and 1800 x 1200 windows, survey-confirmed before order', 'price' => 'To confirm from WindowCAD'],
             ],
@@ -594,7 +594,7 @@ function fenster_price_guide_pages(): array
             'product' => 'aluminium windows',
             'product_slug' => 'aluminium-windows',
             'quote_url' => $base_quote_url . '&productCollection=5',
-            'intro' => 'Aluminium window prices are affected by the frame system, RAL colour, glass area, vents, hardware, thermal performance and wind load checks on larger openings.',
+            'intro' => 'What moves the price of aluminium windows, from the frame system and RAL colour to glass and hardware, and a tool that gives you a real figure for your exact windows in minutes.',
             'examples' => [
                 ['spec' => '1200 x 1200 single aluminium window', 'details' => 'Standard colour, clear glazing, handle and cill', 'price' => 'To confirm from WindowCAD'],
                 ['spec' => '1500 x 1200 aluminium flush window', 'details' => 'Flush styling, chosen colour, A-rated glass and ventilation detail', 'price' => 'To confirm from WindowCAD'],
@@ -609,7 +609,7 @@ function fenster_price_guide_pages(): array
             'product' => 'patio and French doors',
             'product_slug' => 'patio-doors',
             'quote_url' => $base_quote_url . '&productCollection=2',
-            'intro' => 'Patio and French door prices change with opening size, door type, colour, threshold, glass, handles, trickle vents and survey details.',
+            'intro' => 'What moves the price of patio and French doors, from the opening size and colour to glass and thresholds, and a tool that gives you a real figure for your exact doors in minutes.',
             'examples' => [
                 ['spec' => '1800 x 2100 uPVC sliding patio door', 'details' => 'White frame, standard handle, A-rated glass, cill and trickle vent where required', 'price' => 'To confirm from WindowCAD'],
                 ['spec' => '1500 x 2100 uPVC French doors', 'details' => 'Open-in or open-out pair, standard threshold, handle and glass choice', 'price' => 'To confirm from WindowCAD'],

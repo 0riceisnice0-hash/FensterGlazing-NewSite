@@ -2,6 +2,13 @@
 /**
  * Transparent price guide pages.
  *
+ * Customer-facing by owner instruction (2026-07-20): these pages are live, so
+ * nothing on them may read like an internal plan. Placeholder examples with no
+ * confirmed price are never rendered; only checked examples with a real fitted
+ * price appear. The quote-station iframe block must stay intact, including its
+ * data-quote-* attributes and the placeholder markup, because src/js/main.js
+ * owns the deferred loading behaviour.
+ *
  * @package Fenster
  */
 
@@ -16,28 +23,33 @@ $slug = (string) ($page['slug'] ?? '');
 $title = (string) ($page['title'] ?? 'Window and door prices');
 $intro = (string) ($page['intro'] ?? '');
 $product = (string) ($page['product'] ?? 'windows and doors');
-$product_slug = (string) ($page['product_slug'] ?? '');
 $quote_url = (string) ($page['quote_url'] ?? 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing');
 $examples = is_array($page['examples'] ?? null) ? array_values($page['examples']) : [];
 $moves = is_array($page['moves'] ?? null) ? array_values($page['moves']) : [];
 $linked_slugs = is_array($page['links'] ?? null) ? array_values($page['links']) : [];
-$source_product = $product_slug !== '' && function_exists('fenster_get_generated_page') ? fenster_get_generated_page($product_slug) : null;
-$source_images = is_array($source_product['images'] ?? null) ? array_values($source_product['images']) : [];
-$hero_image = $source_images[0] ?? null;
-$detail_images = array_slice($source_images, 1, 3);
-$checked_label = 'First guide examples checked July 2026';
+
+/*
+ * Only examples with a confirmed £ price are shown to customers. The data file
+ * still holds "To confirm from WindowCAD" rows as internal slots; they must
+ * never render publicly.
+ */
+$checked = array_values(array_filter(
+    $examples,
+    static fn (array $example): bool => str_starts_with((string) ($example['price'] ?? ''), '£')
+));
+
 $faqs = [
     [
-        'question' => 'Are Fenster online prices exact?',
-        'answer' => 'They are a strong starting point from the online pricing tool. The final order is confirmed after we check the specification and complete the survey where required.',
+        'question' => 'Are the prices on this page real?',
+        'answer' => 'Yes. Each checked example is a real fitted price from our pricing software for the exact specification shown, including VAT. The same software prices your job in the quote tool.',
     ],
     [
-        'question' => 'Does Fenster include VAT and fitting?',
-        'answer' => 'Fenster public price guidance is intended to explain fitted homeowner projects. VAT, fitting, removal of old frames and survey requirements should be stated clearly on each checked example.',
+        'question' => 'Do the prices include VAT and fitting?',
+        'answer' => 'Yes. Every checked example is a fitted price including VAT. The only thing that can move it is the survey, once we have measured your opening properly, and we tell you before you order.',
     ],
     [
         'question' => 'Why can the same product cost different amounts?',
-        'answer' => 'Size, colour, glass, vents, handles, thresholds, access and survey findings can all change the fitted price.',
+        'answer' => 'Size, colour, glass, vents, handles, thresholds and access all change the fitted price. The quote tool lets you test each choice and watch the number move before anyone visits your home.',
     ],
 ];
 $faq_schema = [
@@ -67,71 +79,66 @@ $faq_schema = [
                 <h1><?php echo esc_html($title); ?></h1>
                 <p><?php echo esc_html($intro); ?></p>
                 <div class="button-row">
-                    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Price this in WindowCAD', 'fenster'); ?></a>
-                    <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Ask Fenster to check it', 'fenster'); ?></a>
+                    <a class="button" href="#fenster-instant-pricing"><?php esc_html_e('Price your own job', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
                 </div>
             </div>
-            <aside class="fg-price-guide__quote-card" aria-label="<?php esc_attr_e('Price guide status', 'fenster'); ?>">
-                <span><?php echo esc_html($checked_label); ?></span>
-                <strong><?php esc_html_e('Real examples, not vague averages.', 'fenster'); ?></strong>
-                <p><?php esc_html_e('Some rows now use checked WindowCAD examples. The remaining rows are placeholders until the exact configs, screenshots and install photos are added.', 'fenster'); ?></p>
+            <aside class="fg-price-guide__glance" aria-label="<?php esc_attr_e('Checked fitted prices at a glance', 'fenster'); ?>">
+                <?php if ($checked !== []) : ?>
+                    <strong><?php esc_html_e('Checked fitted prices', 'fenster'); ?></strong>
+                    <ul>
+                        <?php foreach ($checked as $example) : ?>
+                            <li>
+                                <span><?php echo esc_html((string) ($example['spec'] ?? '')); ?></span>
+                                <em><?php echo esc_html((string) ($example['price'] ?? '')); ?></em>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <p><?php esc_html_e('Fitted prices including VAT, checked July 2026. Full details below.', 'fenster'); ?></p>
+                <?php else : ?>
+                    <strong><?php esc_html_e('Your price in minutes', 'fenster'); ?></strong>
+                    <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours and glass in the quote tool below and it prices as you go, from the same list our office quotes from.', $product)); ?></p>
+                <?php endif; ?>
             </aside>
         </div>
     </section>
 
-    <section class="fg-price-guide__table-section">
-        <div class="container">
-            <div class="fg-price-guide__section-head">
-                <p class="eyebrow"><?php esc_html_e('Example price table', 'fenster'); ?></p>
-                <h2><?php echo esc_html('Typical ' . $product . ' examples'); ?></h2>
-                <p><?php esc_html_e('These rows are the slots we will fill from checked WindowCAD configurations. Each one should use a real spec, show what is included, and say when it was checked.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-price-guide__table-wrap">
-                <table class="fg-price-guide__table">
-                    <thead>
-                        <tr>
-                            <th scope="col"><?php esc_html_e('Example', 'fenster'); ?></th>
-                            <th scope="col"><?php esc_html_e('Specification to show', 'fenster'); ?></th>
-                            <th scope="col"><?php esc_html_e('Fitted guide price', 'fenster'); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($examples as $example) : ?>
-                            <tr>
-                                <th scope="row"><?php echo esc_html((string) ($example['spec'] ?? 'Example configuration')); ?></th>
-                                <td><?php echo esc_html((string) ($example['details'] ?? 'WindowCAD specification to confirm.')); ?></td>
-                                <td><strong><?php echo esc_html((string) ($example['price'] ?? 'To confirm from WindowCAD')); ?></strong></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <?php $visual_examples = array_values(array_filter($examples, static fn (array $example): bool => ! empty($example['image']))); ?>
-    <?php if (! empty($visual_examples)) : ?>
+    <?php if ($checked !== []) : ?>
         <section class="fg-price-guide__examples">
             <div class="container">
                 <div class="fg-price-guide__section-head">
                     <p class="eyebrow"><?php esc_html_e('Checked examples', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('The product behind the price.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('These examples show the actual WindowCAD setup behind the guide price, including size, frame, glass, cill, vents, hardware and colour choices.', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Real products, real fitted prices.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('No vague price ranges. Each example below is a full specification priced in our software, fitted and including VAT, alongside our own installation photos where we have fitted the same product.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-price-guide__example-stack">
-                    <?php foreach ($visual_examples as $index => $example) : ?>
+                    <?php foreach ($checked as $index => $example) : ?>
+                        <?php
+                        $photo = (string) ($example['photo'] ?? '');
+                        $config_image = (string) ($example['image'] ?? '');
+                        $media = $photo !== '' ? $photo : $config_image;
+                        $media_alt = $photo !== ''
+                            ? (string) ($example['photo_alt'] ?? $example['spec'] ?? 'Fenster installation photo')
+                            : (string) ($example['image_alt'] ?? $example['spec'] ?? 'Priced configuration');
+                        ?>
                         <article class="fg-price-guide__example <?php echo esc_attr($index % 2 ? 'fg-price-guide__example--reverse' : ''); ?>">
                             <div class="fg-price-guide__example-copy">
                                 <p class="eyebrow"><?php echo esc_html(sprintf('Example %02d', $index + 1)); ?></p>
                                 <h3><?php echo esc_html((string) ($example['spec'] ?? 'Checked example')); ?></h3>
-                                <p><?php echo esc_html((string) ($example['details'] ?? 'WindowCAD specification checked by Fenster.')); ?></p>
-                                <strong><?php echo esc_html((string) ($example['price'] ?? 'Price to confirm')); ?></strong>
-                                <small><?php esc_html_e('Guide example only. Final specification is checked before order.', 'fenster'); ?></small>
+                                <p><?php echo esc_html((string) ($example['details'] ?? '')); ?></p>
+                                <span class="fg-price-guide__price"><?php echo esc_html((string) ($example['price'] ?? '')); ?><em><?php esc_html_e('fitted', 'fenster'); ?></em></span>
+                                <small><?php esc_html_e('The survey confirms the final details before anything is made.', 'fenster'); ?></small>
+                                <?php if ($photo !== '' && $config_image !== '') : ?>
+                                    <figure class="fg-price-guide__config">
+                                        <img <?php echo fenster_image_attr_string($config_image, ['alt' => (string) ($example['image_alt'] ?? 'The exact configuration we priced'), 'loading' => 'lazy']); ?>>
+                                        <figcaption><?php esc_html_e('The exact configuration behind this price', 'fenster'); ?></figcaption>
+                                    </figure>
+                                <?php endif; ?>
                             </div>
-                            <figure class="fg-price-guide__example-media">
-                                <img <?php echo fenster_image_attr_string((string) $example['image'], ['alt' => (string) ($example['image_alt'] ?? $example['spec'] ?? 'WindowCAD price example'), 'loading' => $index === 0 ? 'eager' : 'lazy']); ?>>
-                                <?php if (! empty($example['secondary_image'])) : ?>
-                                    <img <?php echo fenster_image_attr_string((string) $example['secondary_image'], ['alt' => (string) ($example['image_alt'] ?? $example['spec'] ?? 'WindowCAD specification example'), 'loading' => 'lazy']); ?>>
+                            <figure class="fg-price-guide__example-media<?php echo $photo === '' ? ' fg-price-guide__example-media--config' : ''; ?>">
+                                <img <?php echo fenster_image_attr_string($media, ['alt' => $media_alt, 'loading' => $index === 0 ? 'eager' : 'lazy']); ?>>
+                                <?php if (! empty($example['photo_caption'])) : ?>
+                                    <figcaption><?php echo esc_html((string) $example['photo_caption']); ?></figcaption>
                                 <?php endif; ?>
                             </figure>
                         </article>
@@ -143,48 +150,19 @@ $faq_schema = [
 
     <section class="fg-price-guide__factors">
         <div class="container fg-price-guide__factors-grid">
-            <div>
+            <div class="fg-price-guide__factors-copy">
                 <p class="eyebrow"><?php esc_html_e('What changes the price', 'fenster'); ?></p>
-                <h2><?php esc_html_e('The honest bits customers normally only find out later.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Fenster can use the pricing tool to show how each choice affects the quote before the survey confirms the final details.', 'fenster'); ?></p>
+                <h2><?php esc_html_e('The choices that move the number.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('No two openings are quite the same, which is why one-size price lists are usually fiction. These are the choices that genuinely change the fitted price, and you can test every one of them in the quote tool before anyone visits.', 'fenster'); ?></p>
+                <div class="button-row">
+                    <a class="button" href="#fenster-instant-pricing"><?php esc_html_e('Try it on your job', 'fenster'); ?></a>
+                </div>
             </div>
-            <div class="fg-price-guide__factor-list">
+            <ul class="fg-price-guide__factor-list">
                 <?php foreach ($moves as $move) : ?>
-                    <article>
-                        <h3><?php echo esc_html((string) $move); ?></h3>
-                    </article>
+                    <li><?php echo esc_html((string) $move); ?></li>
                 <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <section class="fg-price-guide__proof">
-        <div class="container fg-price-guide__proof-grid">
-            <div class="fg-price-guide__proof-copy">
-                <p class="eyebrow"><?php esc_html_e('How we should show it', 'fenster'); ?></p>
-                <h2><?php esc_html_e('WindowCAD screenshot, then the real fitted result.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('For each guide, the strongest page will show the configured product, the checked price, the choices that moved the number and a real installation photo where we have one.', 'fenster'); ?></p>
-                <ol>
-                    <li><?php esc_html_e('Build the standard product in WindowCAD.', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Record the exact options: size, colour, glass, vents, cill, threshold and hardware.', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Add the fitted guide price and checked date.', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Pair it with a real Fenster installation photo where possible.', 'fenster'); ?></li>
-                </ol>
-            </div>
-            <div class="fg-price-guide__image-stack">
-                <?php if (is_array($hero_image) && ! empty($hero_image['src'])) : ?>
-                    <figure>
-                        <img <?php echo fenster_image_attr_string((string) $hero_image['src'], ['alt' => (string) ($hero_image['alt'] ?? $title), 'loading' => 'lazy']); ?>>
-                    </figure>
-                <?php endif; ?>
-                <?php foreach ($detail_images as $image) : ?>
-                    <?php if (is_array($image) && ! empty($image['src'])) : ?>
-                        <figure>
-                            <img <?php echo fenster_image_attr_string((string) $image['src'], ['alt' => (string) ($image['alt'] ?? $title), 'loading' => 'lazy']); ?>>
-                        </figure>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
+            </ul>
         </div>
     </section>
 
@@ -192,7 +170,7 @@ $faq_schema = [
         <div class="container fg-price-guide__faq-grid">
             <div>
                 <p class="eyebrow"><?php esc_html_e('Pricing questions', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Clear answers before anyone books a survey.', 'fenster'); ?></h2>
+                <h2><?php esc_html_e('The questions everyone asks about price.', 'fenster'); ?></h2>
             </div>
             <div class="fg-product-faq__items">
                 <?php foreach ($faqs as $index => $faq) : ?>
@@ -210,13 +188,13 @@ $faq_schema = [
     <section id="fenster-instant-pricing" class="fg-home-quote-station fg-home-quote-station--bridge fg-price-guide__quote-station">
         <div class="container fg-home-quote-station__grid">
             <div>
-                <p class="eyebrow"><?php esc_html_e('Ready to see your price?', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Price the real configuration online.', 'fenster'); ?></h2>
-                <p><?php echo esc_html(sprintf('Use the instant pricing tool to choose your %s, style, colour, size and options. Fenster can then check the final details after survey.', $product)); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Ready for your number?', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Price your exact job, right here.', 'fenster'); ?></h2>
+                <p><?php echo esc_html(sprintf('Choose your %s, sizes, colours, glass and hardware, and watch the price build as you go. It is the same software behind every checked example on this page.', $product)); ?></p>
                 <ul class="fg-home-quote-station__points">
-                    <li><?php esc_html_e('See how choices affect the price', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Add details such as vents, glass, colour and hardware', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Final specification checked by Fenster', 'fenster'); ?></li>
+                    <li><?php esc_html_e('A real figure in about ten minutes', 'fenster'); ?></li>
+                    <li><?php esc_html_e('See how each choice moves the price', 'fenster'); ?></li>
+                    <li><?php esc_html_e('We check the final details at survey', 'fenster'); ?></li>
                 </ul>
                 <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                 <a class="button button--light" href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>

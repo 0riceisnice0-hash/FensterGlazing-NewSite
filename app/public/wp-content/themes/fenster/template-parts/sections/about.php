@@ -11,11 +11,11 @@
  * 2. Images carrying real height attributes need an explicit CSS height, or the
  *    attribute beats aspect-ratio and renders them at full natural size. That
  *    once produced 2560px-tall portraits.
- * 3. The case-study videos load deferred: sources carry data-src and the
- *    [data-fg-about-video] handler in src/js/main.js attaches them near the
- *    viewport. The hero video also carries data-fg-video-bg: it is a background,
- *    so it stays a poster on mobile and for reduced-motion users, with no
- *    controls. The award video gets poster plus controls under reduced motion.
+ * 3. The award video loads deferred: sources carry data-src and the
+ *    [data-fg-about-video] handler in src/js/main.js attaches it near the
+ *    viewport, with poster plus controls under reduced motion. The hero is the
+ *    showroom photograph by owner request; the data-fg-video-bg background
+ *    handling remains in main.js should a background video ever return.
  * 4. Videos are absolutely positioned inside aspect-ratio boxes. In flow they
  *    feed intrinsic size into the grid row and the box derives the wrong width.
  * 5. CTAs are buttons. Text links for primary actions are a STYLE.md failure.
@@ -114,11 +114,7 @@ $routes = [
 
     <section class="fg-about-hero">
         <div class="fg-about-hero__stage">
-            <video data-fg-about-video data-fg-video-bg muted playsinline loop preload="none"
-                poster="<?php echo esc_url(fenster_generated_url($cs . 'cs-big-roof-lantern-poster.jpg')); ?>"
-                aria-label="<?php esc_attr_e('Video of a Sheerline roof lantern we installed in Drayton Parslow', 'fenster'); ?>">
-                <source data-src="<?php echo esc_url(fenster_generated_url($video_base . 'cs-big-roof-lantern.mp4')); ?>" type="video/mp4">
-            </video>
+            <img class="fg-about-hero__image" <?php echo $img($about . 'fenster-showroom.png', ['alt' => 'The Fenster Glazing showroom on Alston Drive, Milton Keynes', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
             <span class="fg-about-hero__scrim" aria-hidden="true"></span>
             <div class="container fg-about-hero__content">
                 <p class="eyebrow"><?php esc_html_e('About Fenster Glazing', 'fenster'); ?></p>
@@ -129,7 +125,7 @@ $routes = [
                     <a class="button button--light" href="<?php echo esc_url($consult_url); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
                 </div>
             </div>
-            <span class="fg-about-hero__tag"><?php esc_html_e('Our install, Drayton Parslow', 'fenster'); ?></span>
+            <span class="fg-about-hero__tag"><?php esc_html_e('Our showroom, Milton Keynes', 'fenster'); ?></span>
         </div>
     </section>
 
@@ -154,7 +150,7 @@ $routes = [
                 <p><?php esc_html_e('If you like doing things yourself, build the job on our quote tool: your sizes, styles, colours and glass, priced as you go. Most people have a real figure inside ten minutes.', 'fenster'); ?></p>
                 <p><?php esc_html_e('If you would rather talk it through, book a consultation. We come out, measure the openings properly, answer the awkward questions and price the job before we leave. No waiting a week to find out the number.', 'fenster'); ?></p>
                 <p>
-                    <?php esc_html_e('Both routes run on the same pricing software and the same price list, so the figure is the same whichever you choose. If you want to sense-check us first, we publish', 'fenster'); ?>
+                    <?php esc_html_e('Both run on the same pricing software and the same price list. One number for the job, not an online teaser and a different figure at the door. If you want to sense-check us first, we publish', 'fenster'); ?>
                     <a href="<?php echo esc_url($prices_url); ?>"><?php esc_html_e('example prices for real jobs', 'fenster'); ?></a><?php esc_html_e(', free to browse with no form in the way.', 'fenster'); ?>
                 </p>
                 <div class="button-row">
@@ -179,7 +175,6 @@ $routes = [
                         <?php endforeach; ?>
                     </ol>
                 </div>
-                <p class="fg-about-pricing__same"><?php esc_html_e('Same software, same price list, same number.', 'fenster'); ?></p>
             </div>
         </div>
     </section>
