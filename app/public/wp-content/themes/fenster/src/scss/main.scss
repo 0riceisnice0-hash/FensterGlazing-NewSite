@@ -32331,7 +32331,7 @@ html.fg-blinds-reveal-locked {
    studies, and each count should look intentional rather than leave holes. */
 .fg-cs-strip__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 26rem));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 24rem));
   gap: clamp(0.9rem, 2vw, 1.5rem);
 }
 
