@@ -15150,7 +15150,7 @@ a.fg-cs-installer:hover {
 }
 
 .fg-about section {
-  padding: clamp(2rem, 3.6vw, 3rem) 0;
+  padding: clamp(2rem, 3.4vw, 3rem) 0;
 }
 
 .fg-about .eyebrow {
@@ -15164,19 +15164,19 @@ a.fg-cs-installer:hover {
 
 /* h1 size is owned by the shared page-heading guardrail further down. */
 .fg-about h1 {
-  max-width: 14ch;
+  max-width: 16ch;
   margin: 0 0 0.9rem;
 }
 
 .fg-about h2 {
-  max-width: 22ch;
+  max-width: 24ch;
   margin: 0 0 0.75rem;
   font-size: clamp(1.45rem, 2.2vw, 2rem);
   line-height: 1.12;
 }
 
 .fg-about p {
-  max-width: 54ch;
+  max-width: 56ch;
   margin: 0 0 0.9rem;
   font-size: clamp(1rem, 1.05vw, 1.06rem);
   line-height: 1.6;
@@ -15186,46 +15186,17 @@ a.fg-cs-installer:hover {
   position: relative;
   margin: 0;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
-.fg-about-parallax {
-  display: block;
-  overflow: hidden;
-}
-
-.fg-about-parallax img {
-  display: block;
-  width: 100%;
-  height: 132%;
-  margin-top: -16%;
-  object-fit: cover;
-  transform: translate3d(0, var(--fg-parallax-y, 0), 0);
-  will-change: transform;
-}
-
-.fg-about-hero__media::after,
-.fg-about-visit__media::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  height: 34%;
-  pointer-events: none;
-  background: linear-gradient(transparent, rgba(10, 34, 38, 0.7));
-}
-
-.fg-about-hero__media figcaption,
-.fg-about-visit__media figcaption {
+.fg-about figure > figcaption {
   position: absolute;
   bottom: 0.85rem;
   left: 0.85rem;
   z-index: 2;
   padding: 0.3rem 0.55rem;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--color-steel);
   font-size: 0.7rem;
   font-weight: 700;
@@ -15233,14 +15204,27 @@ a.fg-cs-installer:hover {
   text-transform: uppercase;
 }
 
-/* Hero */
+/* Gentle scroll reveals. The class is only added when JS and full motion are
+   available, so content is never hidden without them. */
+.fg-about-motion [data-fg-about-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.55s ease var(--fg-about-delay, 0s), transform 0.55s ease var(--fg-about-delay, 0s);
+}
+
+.fg-about-motion [data-fg-about-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero: copy beside a real install on video. */
 .fg-about-hero {
   padding-top: clamp(2rem, 3.2vw, 2.75rem);
 }
 
 .fg-about-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   gap: clamp(1.5rem, 3vw, 2.6rem);
   align-items: center;
 }
@@ -15253,8 +15237,30 @@ a.fg-cs-installer:hover {
   margin-top: 1.25rem;
 }
 
-.fg-about-hero__media .fg-about-parallax {
-  aspect-ratio: 16 / 10;
+.fg-about-hero__media {
+  aspect-ratio: 16 / 9;
+  background: var(--color-steel);
+}
+
+.fg-about-hero__media video,
+.fg-about-visit__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-about-hero__media::after,
+.fg-about-visit__media::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 30%;
+  pointer-events: none;
+  background: linear-gradient(transparent, rgba(10, 34, 38, 0.55));
 }
 
 /* Facts */
@@ -15267,8 +15273,8 @@ a.fg-cs-installer:hover {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0;
   border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.86);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.88);
 }
 
 .fg-about-facts__item {
@@ -15294,77 +15300,120 @@ a.fg-cs-installer:hover {
   line-height: 1.35;
 }
 
-/* Founders: copy-led, portraits are a supporting pair. */
-.fg-about-founders__grid {
+/* Pricing: the differentiator gets the page's one dark band. */
+.fg-about-pricing {
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+.fg-about-pricing .eyebrow {
+  color: #7fe0aa;
+}
+
+.fg-about-pricing h2 {
+  color: #ffffff;
+}
+
+.fg-about-pricing p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.fg-about-pricing__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 27rem);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(1.75rem, 3.4vw, 3.25rem);
   align-items: center;
 }
 
-.fg-about-founders__copy p:last-child {
-  margin-bottom: 0;
-}
-
-.fg-about-founders__people {
+/* Panel first on desktop so the band reads media-left in the page cascade. */
+.fg-about-pricing__panel {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 1px;
+  order: -1;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.fg-about-pricing__way {
+  padding: 1.25rem 1.2rem 1.4rem;
+  background: rgba(6, 33, 42, 0.6);
+}
+
+.fg-about-pricing__way--ours {
+  background: rgba(24, 144, 111, 0.24);
+}
+
+.fg-about-pricing__way h3 {
+  margin: 0 0 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fg-about-pricing__way--ours h3 {
+  color: #7fe0aa;
+}
+
+.fg-about-pricing__way--usual h3 {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.fg-about-pricing__way ol {
+  display: grid;
+  gap: 0.85rem;
   margin: 0;
   padding: 0;
   list-style: none;
+  counter-reset: fg-about-way;
 }
 
-.fg-about-founder {
-  overflow: visible;
-  background: none;
+.fg-about-pricing__way li {
+  position: relative;
+  padding-left: 2.1rem;
+  counter-increment: fg-about-way;
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
-.fg-about-founder img {
-  border-radius: 8px;
-  background: var(--color-steel);
-}
-
-/* height:auto is required, not optional. These images carry real width/height
-   attributes, and the height attribute is a presentational hint that wins over
-   aspect-ratio unless one dimension is auto. Without it the portraits render at
-   their full 2560px natural height. */
-.fg-about-founder img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: center 16%;
-  filter: grayscale(1) contrast(1.04);
-}
-
-/* Name sits under the portrait. An overlay caption cropped across their chins. */
-.fg-about-founder {
-  border-radius: 8px 8px 0 0;
-}
-
-.fg-about-founder figcaption {
-  padding: 0.65rem 0.1rem 0;
-  background: none;
-  color: var(--color-ink);
-}
-
-.fg-about-founder figcaption strong {
-  display: block;
-  font-size: 0.95rem;
+.fg-about-pricing__way li::before {
+  content: counter(fg-about-way);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 0.74rem;
   font-weight: 800;
-  line-height: 1.2;
 }
 
-.fg-about-founder figcaption span {
-  display: block;
-  color: var(--color-accent-dark);
-  font-size: 0.78rem;
-  font-weight: 700;
+.fg-about-pricing__way--ours li {
+  color: #ffffff;
 }
 
-/* Work: deliberate mosaic, fixed cells, aligned edges. */
+.fg-about-pricing__way--ours li::before {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.fg-about-pricing__way--usual li {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.fg-about-pricing__way--usual li::before {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Work: deliberate mosaic, fixed cells, aligned edges. Five cells close the
+   rectangle: the 2x2 lead plus four singles in a four-column grid. */
 .fg-about-work__head {
   margin-bottom: clamp(1.15rem, 2.2vw, 1.6rem);
 }
@@ -15386,7 +15435,7 @@ a.fg-cs-installer:hover {
 .fg-about-cell {
   position: relative;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--color-steel);
 }
 
@@ -15424,30 +15473,120 @@ a.fg-cs-installer:hover {
   padding: 2rem 0.85rem 0.7rem;
   background: linear-gradient(transparent, rgba(0, 24, 31, 0.88));
   color: #ffffff;
-  font-size: 0.82rem;
-  font-weight: 700;
   line-height: 1.3;
+}
+
+.fg-about-cell__caption strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.fg-about-cell__caption em {
+  display: block;
+  margin-top: 0.1rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.8rem;
+  font-style: normal;
 }
 
 .fg-about-cell--lead .fg-about-cell__caption {
   padding: 2.5rem 1.1rem 0.95rem;
-  font-size: 0.95rem;
 }
 
-.fg-about-work__more {
-  margin: clamp(1.1rem, 2vw, 1.5rem) 0 0;
+.fg-about-cell--lead .fg-about-cell__caption strong {
+  font-size: 1.1rem;
 }
 
-/* Award */
-.fg-about-award__grid {
+.fg-about-work__cta {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* Founders: copy-led, portraits are a supporting pair on the right. */
+.fg-about-founders__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: clamp(1.5rem, 3vw, 2.6rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 29rem);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
   align-items: center;
 }
 
-.fg-about-award__media .fg-about-parallax {
-  aspect-ratio: 5 / 4;
+.fg-about-founders__copy p:last-child {
+  margin-bottom: 0;
+}
+
+.fg-about-founders__people {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-about-founder {
+  overflow: visible;
+  border-radius: 0;
+}
+
+/* height:auto is required, not optional. These images carry real width/height
+   attributes, and the height attribute is a presentational hint that wins over
+   aspect-ratio unless one dimension is auto. Without it the portraits render at
+   their full 2560px natural height. */
+.fg-about-founder img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: 10px;
+  background: var(--color-steel);
+  object-fit: cover;
+  object-position: center 16%;
+  filter: grayscale(1) contrast(1.04);
+}
+
+.fg-about-founder figcaption {
+  position: static;
+  padding: 0.65rem 0.1rem 0;
+  background: none;
+  color: var(--color-ink);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.fg-about-founder figcaption strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.fg-about-founder figcaption span {
+  display: block;
+  color: var(--color-accent-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Award: the winning job on video, media left. */
+.fg-about-award__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: center;
+}
+
+.fg-about-award__media {
+  aspect-ratio: 1 / 1;
+  max-width: 30rem;
+  background: var(--color-steel);
+}
+
+.fg-about-award__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fg-about-award__copy p:last-child {
@@ -15458,11 +15597,13 @@ a.fg-cs-installer:hover {
   display: flex;
   gap: 0.6rem;
   align-items: center;
+  max-width: none;
   margin: 0.9rem 0;
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--color-line);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.88);
+  width: fit-content;
   font-size: 0.84rem;
   font-weight: 700;
 }
@@ -15471,319 +15612,6 @@ a.fg-cs-installer:hover {
   width: auto;
   height: 20px;
   object-fit: contain;
-}
-
-/* Trust */
-.fg-about-trust__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(1.5rem, 3vw, 2.6rem);
-  align-items: center;
-}
-
-.fg-about-trust__copy p:last-child {
-  margin-bottom: 0;
-}
-
-.fg-about-trust__logos {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.6rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-about-trust__logos li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 74px;
-  padding: 0.75rem;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.fg-about-trust__logos img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 42px;
-  object-fit: contain;
-}
-
-/* Visit */
-.fg-about-visit__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(1.5rem, 3vw, 2.6rem);
-  align-items: center;
-}
-
-.fg-about-visit__media .fg-about-parallax {
-  aspect-ratio: 3 / 2;
-}
-
-.fg-about-visit__address {
-  display: grid;
-  margin: 0 0 0.6rem;
-  font-style: normal;
-  font-size: 0.98rem;
-  line-height: 1.5;
-}
-
-.fg-about-visit__hours {
-  color: rgba(6, 33, 42, 0.72);
-  font-size: 0.9rem;
-}
-
-.fg-about-visit__links {
-  display: flex;
-  gap: 1.1rem;
-  flex-wrap: wrap;
-}
-
-.fg-about-visit__links a {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  font-weight: 700;
-}
-
-/* Routes: compact text cards, no images needed. */
-.fg-about-routes__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.7rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-about-route {
-  display: block;
-  height: 100%;
-  padding: 0.95rem 1.1rem;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  color: inherit;
-  text-decoration: none;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.fg-about-route:hover,
-.fg-about-route:focus-visible {
-  border-color: var(--color-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 32px rgba(0, 45, 58, 0.1);
-}
-
-.fg-about-route strong {
-  display: block;
-  font-size: 0.98rem;
-  font-weight: 800;
-}
-
-.fg-about-route span {
-  display: block;
-  margin-top: 0.2rem;
-  color: rgba(6, 33, 42, 0.7);
-  font-size: 0.88rem;
-  line-height: 1.45;
-}
-
-@media (max-width: 1040px) {
-  .fg-about-founders__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 18rem);
-  }
-}
-
-@media (max-width: 860px) {
-  .fg-about section {
-    padding: clamp(1.75rem, 6vw, 2.4rem) 0;
-  }
-
-  .fg-about h1,
-  .fg-about h2,
-  .fg-about p {
-    max-width: none;
-  }
-
-  .fg-about-hero__grid,
-  .fg-about-founders__grid,
-  .fg-about-award__grid,
-  .fg-about-trust__grid,
-  .fg-about-visit__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .fg-about-award__media,
-  .fg-about-visit__media {
-    order: -1;
-  }
-
-  .fg-about-award__media .fg-about-parallax,
-  .fg-about-visit__media .fg-about-parallax {
-    aspect-ratio: 16 / 10;
-  }
-
-  .fg-about-founders__people {
-    max-width: 22rem;
-  }
-
-  /* Two columns, lead spans the full width and stays first. */
-  .fg-about-work__mosaic {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: clamp(8rem, 30vw, 10rem);
-  }
-
-  .fg-about-cell--lead {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-
-  .fg-about-facts__strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .fg-about-facts__item:nth-child(odd) {
-    border-left: 0;
-  }
-
-  .fg-about-facts__item:nth-child(n + 3) {
-    border-top: 1px solid var(--color-line);
-  }
-
-  .fg-about-trust__logos {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .fg-about-routes__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
-  .fg-about-routes__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .fg-about-trust__logos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 430px) {
-  .fg-about-facts__strip {
-    grid-template-columns: 1fr;
-  }
-
-  .fg-about-facts__item {
-    border-left: 0;
-  }
-
-  .fg-about-facts__item + .fg-about-facts__item {
-    border-top: 1px solid var(--color-line);
-  }
-}
-
-/* Pricing: the differentiator section. */
-.fg-about-pricing__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  align-items: center;
-}
-
-.fg-about-pricing__points {
-  display: grid;
-  gap: 0.6rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-about-pricing__points li {
-  padding: 0.9rem 1.05rem;
-  border: 1px solid var(--color-line);
-  border-left: 3px solid var(--color-accent);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.fg-about-pricing__points strong {
-  display: block;
-  font-size: 0.96rem;
-  font-weight: 800;
-}
-
-.fg-about-pricing__points span {
-  display: block;
-  margin-top: 0.2rem;
-  color: rgba(6, 33, 42, 0.72);
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-
-/* Install coverflow reuses fg-colour-carousel; only spacing is set here. */
-.fg-about-installs__head {
-  margin-bottom: clamp(1.25rem, 2.4vw, 1.85rem);
-}
-
-.fg-about-installs__head p:last-child {
-  margin-bottom: 0;
-}
-
-.fg-about-installs__cta {
-  margin-top: clamp(1rem, 2vw, 1.5rem);
-}
-
-/* Process: numbered rail, borrowed from the roof lantern step list. */
-.fg-about-process__head {
-  margin-bottom: clamp(1.25rem, 2.4vw, 1.85rem);
-}
-
-.fg-about-process__head p:last-child {
-  margin-bottom: 0;
-}
-
-.fg-about-process__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: clamp(0.9rem, 2vw, 1.4rem);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: none;
-}
-
-.fg-about-process__list > li {
-  padding-left: 1.1rem;
-  border-left: 2px solid rgba(24, 144, 111, 0.55);
-}
-
-.fg-about-process__step {
-  display: block;
-  margin-bottom: 0.4rem;
-  color: var(--color-accent-dark);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-}
-
-.fg-about-process__list h3 {
-  margin: 0 0 0.4rem;
-  font-size: 1.08rem;
-  line-height: 1.2;
-}
-
-.fg-about-process__list p {
-  max-width: none;
-  margin: 0;
-  font-size: 0.94rem;
-  line-height: 1.55;
 }
 
 /* Trust badges */
@@ -15859,6 +15687,75 @@ a.fg-cs-installer:hover {
   font-size: 0.94rem;
 }
 
+/* Visit */
+.fg-about-visit__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
+  align-items: center;
+}
+
+.fg-about-visit__media {
+  aspect-ratio: 3 / 2;
+  background: var(--color-steel);
+}
+
+.fg-about-visit__address {
+  display: grid;
+  margin: 0 0 0.6rem;
+  font-style: normal;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.fg-about-visit__hours {
+  color: rgba(6, 33, 42, 0.72);
+  font-size: 0.9rem;
+}
+
+/* Routes: compact text cards, no images needed. */
+.fg-about-routes__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-about-route {
+  display: block;
+  height: 100%;
+  padding: 0.95rem 1.1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fg-about-route:hover,
+.fg-about-route:focus-visible {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 45, 58, 0.1);
+}
+
+.fg-about-route strong {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.fg-about-route span {
+  display: block;
+  margin-top: 0.2rem;
+  color: rgba(6, 33, 42, 0.7);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
 .fg-about-route--primary {
   border-color: var(--color-accent);
   background: #ffffff;
@@ -15866,204 +15763,116 @@ a.fg-cs-installer:hover {
 }
 
 @media (max-width: 1040px) {
+  .fg-about-founders__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 21rem);
+  }
+
   .fg-about-trust__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 860px) {
-  .fg-about-pricing__grid {
+  .fg-about section {
+    padding: clamp(1.75rem, 6vw, 2.4rem) 0;
+  }
+
+  .fg-about h1,
+  .fg-about h2,
+  .fg-about p {
+    max-width: none;
+  }
+
+  .fg-about-hero__grid,
+  .fg-about-pricing__grid,
+  .fg-about-founders__grid,
+  .fg-about-award__grid,
+  .fg-about-visit__grid {
     grid-template-columns: 1fr;
   }
 
-  .fg-about-process__list {
-    grid-template-columns: 1fr;
+  /* Copy first on mobile: the panel returns to DOM order below the copy. */
+  .fg-about-pricing__panel {
+    order: 0;
+  }
+
+  .fg-about-award__media {
+    max-width: 26rem;
+  }
+
+  .fg-about-facts__strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-about-facts__item:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .fg-about-facts__item:nth-child(n + 3) {
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* Two columns, lead spans the full width and stays first. */
+  .fg-about-work__mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: clamp(8rem, 30vw, 10rem);
+  }
+
+  .fg-about-cell--lead {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .fg-about-founders__people {
+    max-width: 24rem;
+  }
+
+  .fg-about-routes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 560px) {
+  .fg-about-pricing__panel {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-about-routes__grid {
+    grid-template-columns: 1fr;
+  }
+
   .fg-about-trust__grid {
     grid-template-columns: 1fr;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .fg-about-badge {
-    transition: none;
-  }
-
-  .fg-about-badge:hover,
-  .fg-about-badge:focus-visible {
-    transform: none;
-  }
-}
-
-/* Cascading rhythm: every other split section puts its media on the far side,
-   so the page reads left, right, left, right rather than one long left column. */
-.fg-about-flip {
-  direction: rtl;
-}
-
-.fg-about-flip > * {
-  direction: ltr;
-}
-
-/* Process: a graphic band of steps, not five columns of prose. */
-.fg-about-process {
-  background: var(--color-steel);
-  color: #ffffff;
-}
-
-.fg-about-process .eyebrow {
-  color: #7fe0aa;
-}
-
-.fg-about-process__head {
-  max-width: 46rem;
-}
-
-.fg-about-process__head p {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.fg-about-process__list {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.fg-about-process__list > li {
-  position: relative;
-  padding: 1.4rem 1.2rem 1.5rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.18);
-  overflow: hidden;
-}
-
-.fg-about-process__list > li:first-child {
-  border-left: 0;
-  padding-left: 0;
-}
-
-.fg-about-process__step {
-  position: absolute;
-  top: 0.35rem;
-  right: 0.5rem;
-  color: rgba(255, 255, 255, 0.09);
-  font-size: 4.2rem;
-  font-weight: 800;
-  line-height: 1;
-  pointer-events: none;
-}
-
-.fg-about-process__list h3 {
-  position: relative;
-  margin: 0 0 0.45rem;
-  color: #ffffff;
-  font-size: 1.08rem;
-  line-height: 1.15;
-}
-
-.fg-about-process__list p {
-  position: relative;
-  max-width: none;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-/* Pricing: give the known-for section a dark stage so it reads as the feature. */
-.fg-about-pricing {
-  position: relative;
-}
-
-.fg-about-pricing__grid {
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  border: 1px solid var(--color-line);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 26px 60px rgba(0, 45, 58, 0.1);
-}
-
-/* Mosaic caption now carries a place line. */
-.fg-about-cell__caption strong {
-  display: block;
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.fg-about-cell__caption em {
-  display: block;
-  margin-top: 0.1rem;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.8rem;
-  font-style: normal;
-}
-
-.fg-about-cell--lead .fg-about-cell__caption strong {
-  font-size: 1.1rem;
-}
-
-@media (max-width: 860px) {
-  .fg-about-flip {
-    direction: ltr;
-  }
-
-  .fg-about-process__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .fg-about-process__list > li:first-child {
-    padding-left: 1.2rem;
-  }
-
-  .fg-about-process__list > li:nth-child(odd) {
-    border-left: 0;
-    padding-left: 0;
-  }
-
-  .fg-about-process__list > li:nth-child(n + 3) {
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
-  }
-}
-
-@media (max-width: 560px) {
-  .fg-about-process__list {
+@media (max-width: 430px) {
+  .fg-about-facts__strip {
     grid-template-columns: 1fr;
   }
 
-  .fg-about-process__list > li {
+  .fg-about-facts__item {
     border-left: 0;
-    padding-left: 0;
   }
 
-  .fg-about-process__list > li + li {
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  .fg-about-facts__item + .fg-about-facts__item {
+    border-top: 1px solid var(--color-line);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fg-about-parallax img {
-    height: 100%;
-    margin-top: 0;
-    transform: none;
-    will-change: auto;
-  }
-
   .fg-about-cell img,
-  .fg-about-route {
+  .fg-about-route,
+  .fg-about-badge {
     transition: none;
   }
 
   .fg-about-cell:hover img,
   .fg-about-cell:focus-within img,
   .fg-about-route:hover,
-  .fg-about-route:focus-visible {
+  .fg-about-route:focus-visible,
+  .fg-about-badge:hover,
+  .fg-about-badge:focus-visible {
     transform: none;
   }
 }

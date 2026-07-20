@@ -4786,3 +4786,68 @@ if (false) {
   renderStudio();
 }
 
+
+// About page: deferred install videos and gentle scroll reveals.
+document.querySelectorAll('.fg-about').forEach((about) => {
+  const aboutReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const aboutVideos = [...about.querySelectorAll('[data-fg-about-video]')];
+
+  const attachAboutVideo = (video) => {
+    if (video.dataset.fgVideoReady) return;
+    video.dataset.fgVideoReady = 'true';
+    [...video.querySelectorAll('source[data-src]')].forEach((source) => {
+      source.src = source.getAttribute('data-src');
+    });
+    if (aboutReduceMotion) {
+      video.controls = true;
+      video.preload = 'metadata';
+      video.load();
+      return;
+    }
+    video.load();
+    const playAttempt = video.play();
+    if (playAttempt && typeof playAttempt.catch === 'function') {
+      playAttempt.catch(() => {
+        video.controls = true;
+      });
+    }
+  };
+
+  if (aboutVideos.length) {
+    if ('IntersectionObserver' in window) {
+      const aboutVideoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          attachAboutVideo(entry.target);
+          aboutVideoObserver.unobserve(entry.target);
+        });
+      }, { rootMargin: '260px 0px' });
+      aboutVideos.forEach((video) => aboutVideoObserver.observe(video));
+    } else {
+      aboutVideos.forEach(attachAboutVideo);
+    }
+  }
+
+  const aboutRevealItems = [...about.querySelectorAll('[data-fg-about-reveal]')];
+  if (!aboutRevealItems.length) return;
+
+  if (aboutReduceMotion || !('IntersectionObserver' in window)) {
+    aboutRevealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  about.classList.add('fg-about-motion');
+
+  const aboutRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      aboutRevealObserver.unobserve(entry.target);
+    });
+  }, {
+    rootMargin: '0px 0px -10% 0px',
+    threshold: 0.12,
+  });
+
+  aboutRevealItems.forEach((item) => aboutRevealObserver.observe(item));
+});
