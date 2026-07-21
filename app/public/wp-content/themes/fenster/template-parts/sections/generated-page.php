@@ -417,15 +417,13 @@ if ($is_composite_doors) {
     // Construction facts sourced from the Distinction technical material and
     // rewritten in the Fenster voice (see TONEOFVOICE.md). Do not invent specs.
     $composite_anatomy = [
-        'image' => $composite_asset_base . 'anatomy/slab-cutaway-428w.webp',
-        'image_alt' => 'Cutaway illustration of a Distinction composite door slab showing the layers behind the GRP skin',
         'layers' => [
-            ['name' => 'GRP skin', 'copy' => 'Compression-moulded glass reinforced polyester with a woodgrain taken from real oak. It does not crack, flake or need repainting.'],
-            ['name' => 'Water-resistant polymer edges', 'copy' => 'The rails bonded to the skin are polymer, not timber, so the door cannot drink rainwater and bow the way solid-timber-core doors can.'],
-            ['name' => 'Engineered wood stiles', 'copy' => 'Engineered rather than sawn timber, so the slab stays stable through wet winters and warm summers.'],
-            ['name' => 'Reinforced central board', 'copy' => 'A reinforced board through the middle keeps the door solid under force.'],
-            ['name' => 'Foam-filled core', 'copy' => 'CFC-free polyurethane insulation fills the slab. It is the main reason the door holds heat so well.'],
-            ['name' => 'Decorative glass', 'copy' => 'Most designs are triple glazed and laminated as standard; Chatsworth and Wentworth are double glazed. We tell you which is which before you order.'],
+            ['name' => 'GRP skin', 'slug' => 'grp-skin', 'image' => $composite_asset_base . 'anatomy/grp-skin-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the GRP skin', 'copy' => 'Compression-moulded glass reinforced polyester with a woodgrain taken from real oak. It does not crack, flake or need repainting.'],
+            ['name' => 'Water-resistant polymer edges', 'slug' => 'polymer-edges', 'image' => $composite_asset_base . 'anatomy/polymer-edges-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the water-resistant polymer rails', 'copy' => 'The rails bonded to the skin are polymer, not timber, so the door cannot drink rainwater and bow the way solid-timber-core doors can.'],
+            ['name' => 'Engineered wood stiles', 'slug' => 'engineered-wood', 'image' => $composite_asset_base . 'anatomy/engineered-wood-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the engineered wood stiles', 'copy' => 'Engineered rather than sawn timber, so the slab stays stable through wet winters and warm summers.'],
+            ['name' => 'Reinforced central board', 'slug' => 'reinforced-board', 'image' => $composite_asset_base . 'anatomy/reinforced-board-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the reinforced central board', 'copy' => 'A reinforced board through the middle keeps the door solid under force.'],
+            ['name' => 'Foam-filled core', 'slug' => 'foam-core', 'image' => $composite_asset_base . 'anatomy/foam-core-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the foam-filled insulating core', 'copy' => 'CFC-free polyurethane insulation fills the slab. It is the main reason the door holds heat so well.'],
+            ['name' => 'Decorative glass', 'slug' => 'decorative-glass', 'image' => $composite_asset_base . 'anatomy/decorative-glass-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the decorative glazing cassette', 'copy' => 'Most designs are triple glazed and laminated as standard; Chatsworth and Wentworth are double glazed. We tell you which is which before you order.'],
         ],
         'stats' => [
             ['value' => '44.5mm', 'label' => 'insulated slab; a typical uPVC door panel is 28mm'],

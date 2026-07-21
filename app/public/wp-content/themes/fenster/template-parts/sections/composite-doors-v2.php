@@ -115,25 +115,32 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
 <?php endif; ?>
 
 <?php if (! empty($anatomy['layers'])) : ?>
-    <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title">
+    <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title" data-fg-cd-anatomy>
         <div class="container">
             <div class="fg-cd3-anatomy__panel">
                 <div class="fg-cd3-anatomy__intro">
                     <p class="eyebrow"><?php esc_html_e('Construction', 'fenster'); ?></p>
                     <h2 id="fg-cd3-anatomy-title"><?php esc_html_e('What is inside the slab.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. This is the actual build of a Distinction slab, layer by layer.', 'fenster'); ?></p>
-                    <figure class="fg-cd3-anatomy__media">
-                        <img
-                            src="<?php echo esc_url(fenster_generated_url((string) $anatomy['image'])); ?>"
-                            alt="<?php echo esc_attr((string) $anatomy['image_alt']); ?>"
-                            loading="lazy" width="428" height="480">
+                    <p><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. Pick a layer and the diagram points at it.', 'fenster'); ?></p>
+                    <figure class="fg-cd3-anatomy__media" aria-live="polite">
+                        <?php foreach ($anatomy['layers'] as $index => $layer) : ?>
+                            <img
+                                src="<?php echo esc_url(fenster_generated_url((string) $layer['image'])); ?>"
+                                alt="<?php echo esc_attr((string) $layer['alt']); ?>"
+                                loading="lazy"
+                                width="428" height="480"
+                                data-fg-cd-anatomy-image="<?php echo esc_attr((string) $index); ?>"
+                                class="<?php echo $index === 0 ? 'is-active' : ''; ?>">
+                        <?php endforeach; ?>
                     </figure>
                 </div>
                 <ol class="fg-cd3-anatomy__layers">
-                    <?php foreach ($anatomy['layers'] as $layer) : ?>
+                    <?php foreach ($anatomy['layers'] as $index => $layer) : ?>
                         <li>
-                            <h3><?php echo esc_html((string) $layer['name']); ?></h3>
-                            <p><?php echo esc_html((string) $layer['copy']); ?></p>
+                            <button type="button" data-fg-cd-anatomy-layer="<?php echo esc_attr((string) $index); ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
+                                <h3><?php echo esc_html((string) $layer['name']); ?></h3>
+                                <p><?php echo esc_html((string) $layer['copy']); ?></p>
+                            </button>
                         </li>
                     <?php endforeach; ?>
                 </ol>
