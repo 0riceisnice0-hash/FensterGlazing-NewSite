@@ -79,6 +79,32 @@ function fenster_adminbase_address_parts(string $address): array
     return ['', $address];
 }
 
+/**
+ * AdminBase renewed its certificate in July 2026 with a chain anchored to the
+ * newer Sectigo R46 root, which WordPress' bundled ca-bundle.crt predates, so
+ * wp_remote_post() failed with cURL error 60 while system curl verified fine.
+ * For AdminBase requests only, point curl at the host system trust store,
+ * which SiteGround keeps current.
+ */
+add_filter('http_request_args', 'fenster_adminbase_http_ssl_args', 10, 2);
+function fenster_adminbase_http_ssl_args(array $args, string $url): array
+{
+    $host = (string) wp_parse_url($url, PHP_URL_HOST);
+    $endpoint_host = (string) wp_parse_url(fenster_adminbase_credentials()['endpoint'], PHP_URL_HOST);
+    if ($host === '' || $host !== $endpoint_host) {
+        return $args;
+    }
+
+    foreach (['/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem', '/etc/ssl/certs/ca-bundle.crt'] as $bundle) {
+        if (is_readable($bundle)) {
+            $args['sslcertificates'] = $bundle;
+            break;
+        }
+    }
+
+    return $args;
+}
+
 function fenster_adminbase_relay(array $lead): array|WP_Error
 {
     $credentials = fenster_adminbase_credentials();
@@ -276,6 +302,23 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         }
     }
 
+    // Record the completion for the dashboard before attempting AdminBase, so
+    // attribution never depends on the office CRM being reachable. The lead
+    // itself is already saved as a private enquiry above.
+    if ($journey_ref !== '') {
+        fenster_dashboard_track_event('quote_completed', [
+            'journey_id' => $journey_ref,
+            'price_amount' => $quote_price,
+            'price_currency' => 'GBP',
+        ]);
+    } else {
+        // No consented FG2 reference: never create a dashboard journey, but do
+        // count the completion in the aggregate-only statistical path so total
+        // WindowCAD completions remain measurable and a broken Tracking field
+        // is visible within a day instead of silently zeroing the tracker.
+        fenster_dashboard_track_stat('quote_completed', '/online-quote/');
+    }
+
     $result = fenster_adminbase_relay([
         'first_name' => $first_name,
         'last_name' => $last_name,
@@ -304,20 +347,6 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             'message' => $result->get_error_message(),
             'enquiry_id' => is_wp_error($enquiry_id) ? 0 : (int) $enquiry_id,
         ], 500);
-    }
-
-    if ($journey_ref !== '') {
-        fenster_dashboard_track_event('quote_completed', [
-            'journey_id' => $journey_ref,
-            'price_amount' => $quote_price,
-            'price_currency' => 'GBP',
-        ]);
-    } else {
-        // No consented FG2 reference: never create a dashboard journey, but do
-        // count the completion in the aggregate-only statistical path so total
-        // WindowCAD completions remain measurable and a broken Tracking field
-        // is visible within a day instead of silently zeroing the tracker.
-        fenster_dashboard_track_stat('quote_completed', '/online-quote/');
     }
 
     fenster_windowcad_log('adminbase relay succeeded', [
