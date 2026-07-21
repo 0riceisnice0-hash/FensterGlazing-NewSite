@@ -40,6 +40,7 @@ function fenster_case_studies(): array
     $flush = esc_url(home_url('/flush-casement-windows/'));
     $bifold = esc_url(home_url('/aluminium-bifold-doors/'));
     $slidefold = esc_url(home_url('/slide-fold-doors/'));
+    $sash = esc_url(home_url('/sliding-sash-windows/'));
     $team = esc_url(home_url('/meet-the-team/'));
     $team_img = FENSTER_THEME_URI . '/assets/images/imported/';
 
@@ -47,6 +48,7 @@ function fenster_case_studies(): array
     $colour_link = static fn (string $material, string $slug): string => home_url('/colour-options/?material=' . $material . '&colour=' . $slug);
     $colour_basalt = $colour_link('upvc', 'basalt-grey');
     $colour_anthracite = $colour_link('aluminium', 'anthracite-grey');
+    $colour_anthracite_upvc = $colour_link('upvc', 'anthracite-grey');
     $colour_white = $colour_link('upvc', 'white');
 
     // The fitters who worked on each job. Each entry links to that person's
@@ -151,6 +153,52 @@ function fenster_case_studies(): array
             'seo' => [
                 'title_tag' => 'uPVC Casement Window Case Study, Milton Keynes | Fenster Glazing',
                 'meta_description' => 'How we replaced a boarded-up dormer window with a single two-tone Liniar casement window for a home in Broughton, Milton Keynes.',
+            ],
+        ],
+
+        'upvc-casement-windows-bolbeck-park-milton-keynes' => [
+            'title' => 'uPVC casement windows, Bolbeck Park',
+            'location' => 'Bolbeck Park, Milton Keynes',
+            'type' => 'Residential',
+            'date' => '2026-03-26',
+            'summary' => 'Anthracite grey Liniar casement windows fitted to a Bolbeck Park home, set against the brickwork.',
+            'lead' => 'We replaced the windows on this Bolbeck Park home with anthracite grey Liniar casements, keeping the new frames sharp against the brick elevation.',
+            'products' => [
+                ['label' => 'uPVC casement windows', 'url' => $casement],
+            ],
+            'colour' => ['label' => 'Anthracite grey', 'url' => $colour_anthracite_upvc],
+            'specs' => [
+                ['label' => 'Product', 'value' => 'uPVC casement windows'],
+                ['label' => 'System', 'value' => 'Liniar EnergyPlus 70mm uPVC'],
+                ['label' => 'Colour', 'value' => 'Anthracite grey'],
+                ['label' => 'Energy rating', 'value' => 'A+ (0.95 W/m²K)'],
+            ],
+            'overview' => [
+                'The old windows on this Bolbeck Park home had reached the point where the frames and glass were letting the elevation down. We replaced them with <a href="' . $casement . '">uPVC casement windows</a> on the 70mm Liniar EnergyPlus system, keeping the proportions familiar while bringing the opening up to a current specification.',
+                'The multi-chambered profile and co-extruded bubble gasket help seal the frame against draughts and rain. With modern double glazing the windows reach a 0.95 W/m²K U-value and an A+ energy rating, with a PAS 24 security option available as part of the Liniar specification.',
+                'The owners chose <a href="' . $colour_anthracite_upvc . '">anthracite grey</a>, a dark neutral that sits neatly against the red brick and the existing roofline. The finish does the visual work here: no extra decoration, just a clear frame colour carried across the elevation.',
+            ],
+            'installed' => [
+                'Liniar EnergyPlus casement windows',
+                'Anthracite grey finish',
+                'A+ rated, energy efficient double glazing',
+                'Multi-point locking with a PAS 24 option',
+            ],
+            'installers' => [$fitter_tom, $fitter_johnnie],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-mk-bolbeck-park-casement.mp4',
+                'poster' => $img . 'cs-mk-bolbeck-park-casement-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Video of the finished anthracite grey casement windows at the Bolbeck Park home',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-mk-bolbeck-park-casement-front.jpg', 'caption' => 'The finished anthracite grey casement windows across the side elevation.'],
+                ['src' => $img . 'cs-mk-bolbeck-park-casement-before.jpg', 'caption' => 'Before: the existing windows on the brick elevation.'],
+                ['src' => $img . 'cs-mk-bolbeck-park-casement-side.jpg', 'caption' => 'A side view showing the new frames and their position against the brickwork.'],
+            ],
+            'seo' => [
+                'title_tag' => 'uPVC Casement Windows Case Study, Bolbeck Park | Fenster Glazing',
+                'meta_description' => 'A real Fenster project in Bolbeck Park, Milton Keynes: anthracite grey Liniar EnergyPlus casement windows fitted to a brick home.',
             ],
         ],
 
@@ -337,6 +385,55 @@ function fenster_case_studies(): array
             'seo' => [
                 'title_tag' => 'Roof Lantern and Heritage Doors Case Study, Northampton | Fenster Glazing',
                 'meta_description' => 'A real Fenster project in Northampton: a Sheerline roof lantern and black steel-look heritage aluminium doors fitted to a brick extension.',
+            ],
+        ],
+
+        'white-charisma-rose-sash-windows-wolverton' => [
+            'title' => 'White Charisma Rose sash windows, Wolverton',
+            'location' => 'Wolverton, Milton Keynes',
+            'type' => 'Residential',
+            'date' => '2025-02-17',
+            'summary' => 'White Roseview Charisma Rose sash windows fitted to a red-brick Wolverton home, with traditional glazing-bar detail.',
+            'lead' => 'We fitted white Charisma Rose sash windows to this Wolverton home, keeping the vertical proportions and glazing-bar detail that belong on the red-brick frontage.',
+            'products' => [
+                ['label' => 'Sliding sash windows', 'url' => $sash],
+                ['label' => 'uPVC casement windows', 'url' => $casement],
+            ],
+            'colour' => ['label' => 'White', 'url' => $colour_white],
+            'specs' => [
+                ['label' => 'Product', 'value' => 'White Charisma Rose sash windows'],
+                ['label' => 'System', 'value' => 'Roseview Charisma Rose'],
+                ['label' => 'Colour', 'value' => 'White'],
+                ['label' => 'Energy rating', 'value' => 'A rated'],
+            ],
+            'overview' => [
+                'This Wolverton job called for sash windows that respected the house rather than flattening its proportions into a generic replacement. We fitted white Charisma Rose windows from <a href="' . $sash . '">Roseview</a>, with vertical sliding sashes, glazing bars and the deep external detail that suits the red brick and existing cills.',
+                'Charisma Rose is the simpler Rose Collection specification, with a 60mm meeting rail and welded uPVC construction. It keeps the familiar sash operation and period shape while giving the house modern sealed double glazing, lower maintenance and an A-rated energy specification.',
+                'The wider project photography also catches a Liniar casement on the same elevation, and the short walkthrough briefly shows another finished composite door. They are left visible because this is the supplied record of the completed property; the case study itself is about the white Charisma Rose sash windows.',
+            ],
+            'installed' => [
+                'White Charisma Rose sash windows',
+                'Vertical sliding sash operation',
+                'Georgian-style glazing bars',
+                'A-rated energy-efficient double glazing',
+            ],
+            'installers' => [$fitter_tom, $fitter_johnnie],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-wolverton-charisma-sash.mp4',
+                'poster' => $img . 'cs-wolverton-charisma-sash-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Video walkthrough of the white Charisma Rose sash windows and finished glazing at the Wolverton home',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-wolverton-charisma-sash-front.jpg', 'caption' => 'A white Charisma Rose sash window fitted into the red-brick frontage.'],
+                ['src' => $img . 'cs-wolverton-charisma-sash-elevation.jpg', 'caption' => 'The wider elevation, with a Liniar casement visible beside the sash window.'],
+                ['src' => $img . 'cs-wolverton-charisma-sash-side.jpg', 'caption' => 'The lower-floor sash window viewed from the side passage.'],
+                ['src' => $img . 'cs-wolverton-charisma-sash-frontage.jpg', 'caption' => 'The upper and lower windows working together across the red-brick frontage.'],
+                ['src' => $img . 'cs-wolverton-charisma-sash-detail.jpg', 'caption' => 'A closer view of the white frame, glazing bars and projecting cill.'],
+            ],
+            'seo' => [
+                'title_tag' => 'White Charisma Rose Sash Windows Case Study, Wolverton | Fenster Glazing',
+                'meta_description' => 'A real Fenster project in Wolverton: white Roseview Charisma Rose sash windows fitted to a red-brick Milton Keynes home.',
             ],
         ],
     ];
