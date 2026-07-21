@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-21
 
+## 2026-07-21 - Live promotion, AdminBase TLS outage fix, and WindowCAD diagnosis corrected (d2d5aa3)
+
+- Promoted the tracking hardening and mobile cookie/Legend fixes to production at `193dc51` (backup `fenster-pre-193dc51-…`), then verified the mobile fixes on live in WebKit iPhone emulation.
+- Corrected the earlier WindowCAD diagnosis after owner pushback and direct testing: the Tracking capture is **invisible and URL-driven** and works with the current WindowCAD configuration. Intercepted (aborted) submissions showed the app storing the `tracking=` URL value under the Tracking property key without any visible form field, and the owner's live test (`FG2-ZACLIVETEST0721`) arrived in WindowCAD, WordPress, the AdminBase notes and the dashboard. Leads without tracking values are office-entered projects or direct/re-opened WindowCAD sessions. No WindowCAD settings change is needed.
+- Found and fixed a genuine outage the live tests exposed: AdminBase renewed its certificate onto the Sectigo R46 root, which WordPress' bundled CA file predates, so every relay since at least 2026-07-21 failed with cURL error 60 (Carol Jarvis's real lead was stranded in WordPress). `fenster_adminbase_http_ssl_args()` now points AdminBase requests at the host system trust store; deployed to test then live (`d2d5aa3`), both stranded leads re-relayed with HTTP 200, and the handler now fires the dashboard `quote_completed` before the AdminBase attempt so attribution survives CRM outages.
+- Remaining cleanups for the office: delete the WindowCAD projects "CLAUDE TEST DO NOT PROCESS" and "Zac - test, delete", and their AdminBase copies.
+
 ## 2026-07-21 - Mobile cookie/Legend tap fixes (test, f2c16ad)
 
 - Investigated the owner's report that people cannot accept cookies on mobile. The accept flow itself passed real-WebKit iPhone and Chromium touch testing against live, and the Fanboy cookie-blocklist has no rule matching `.fg-cookie-consent`. Two genuine defects were found next to it and fixed:
