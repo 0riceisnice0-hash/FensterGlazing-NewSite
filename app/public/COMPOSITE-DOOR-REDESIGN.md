@@ -93,6 +93,18 @@ It reached live unintentionally. The route never had a host gate, so it deployed
 
 Note that the doc previously described V2 as suppressing the inspiration gallery and comparison table. That is out of date: `0610753` and `46a961f` rebuilt the range around the full Distinction set and added a deterministic gallery mosaic, and that is what production serves.
 
+## Door style wall and paint range (2026-07-21)
+
+Two sections are built from the Distinction scrape and committed as theme assets by `scripts/build-composite-door-wall.py`. Re-run that script rather than hand-editing the assets; the scrape must never become a runtime dependency.
+
+- `.fg-cd3-wall` renders 27 real door faces from the Signature and Contemporary catalogues (`assets/images/products/composite-distinction/styles/`). Every door carries its real style name so a customer can ask for it by name. Style names come from the Distinction Signature and Contemporary product pages in the scrape; do not invent names for door codes those pages do not list.
+- The wall list is deliberately rendered twice. The second pass is `aria-hidden` with class `is-clone` and exists only so the desktop marquee loops seamlessly. At `860px` and below, and under `prefers-reduced-motion`, the animation stops, the clone is hidden and the viewport becomes a native scroll-snap rail. Keep all three of those behaviours together; an auto-running marquee fights touch scrolling.
+- `.fg-cd3-palette` renders 23 Distinction paint colours photographed as brush strokes (`assets/images/products/composite-distinction/palette/`), with the RAL and BS references printed in the Distinction brochure. Do not replace these with flat CSS colour blocks; the texture is the point. The blanket "any RAL colour" claim stays excluded per `AI.md`.
+
+The construction section uses one static cutaway. An interactive per-layer version was built and rejected by the owner on 2026-07-21; do not rebuild it.
+
+Every composite section is held inside a single `1440x900` viewport (about `830px` below the header). Measure before and after any change to this route.
+
 ## Maintenance rules
 
 - Keep the sold-range list accurate.

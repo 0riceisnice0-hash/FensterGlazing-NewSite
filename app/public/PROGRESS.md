@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-21
 
+## 2026-07-21 - Composite doors: door style wall and real paint range (test, 81a932c)
+
+- Owner rejected the interactive per-layer construction diagram ("doesn't work at all"): reverted to the single cutaway image, removed the layer buttons, the switching JS and the five extra per-layer assets. Do not rebuild that interaction.
+- Owner's two asks were the colours looking good and using the hundreds of door assets in the Distinction scrape. Both are now built from the scrape and committed as theme assets via `scripts/build-composite-door-wall.py`, so the scrape stays a source, never a runtime dependency.
+- **Door style wall** (`.fg-cd3-wall`, 736px): the `sign_*` files in the scrape turned out to be the complete Signature catalogue as full-bleed door faces, plus a few Contemporary codes. 27 curated styles render as a wall of real door faces, each labelled with its style name and collection so a customer can ask for it by name. Desktop drifts on a 90s CSS marquee (list rendered twice, second pass `aria-hidden` and `is-clone`) with an edge mask and pause on hover/focus. At 860px and below, and under reduced motion, the animation is off, the clone is hidden and the viewport becomes a native scroll-snap rail with a partial next-card peek. Verified on mobile: clones hidden, animation `none`, 3,871px scrollable, no body overflow.
+- **Paint range** (`.fg-cd3-palette`, 742px): 23 real Distinction colours photographed as brush strokes, with the RAL and BS references printed in the Distinction brochure. This replaces flat generated colour blocks as the answer to "the colours section sucks". Copy states plainly that screens shift a shade and that physical samples come to survey, and notes dual-colour inside/out plus single-sided woodgrain stains.
+- Style names come from the Distinction Signature and Contemporary product pages in the scrape; do not invent names for door codes those pages do not list. The blanket "any RAL colour" claim from the brochure is still excluded per `AI.md`.
+- Verified on test at 1440x900: every composite section is inside the ~830px viewport budget (collections 632, wall 736, gallery 782, anatomy 789, types 459, configurator 798, palette 742). No horizontal overflow at 390 or 1440, zero console errors, all 23 paint swatches and door images lazy-load correctly.
+- Open question for the owner: with the door wall now showing the style range, the `Real homes` lifestyle mosaic (782px) may be doing a similar job. It was left in place because removing an established working section needs owner approval under the `AI.md` visual recovery rule.
+
 ## 2026-07-21 - Composite doors: one-viewport sections and colour picker rebuild (test, 140d05b)
 
 - Owner follow-up: every composite section must fit one 1440x900 viewport (no section may take two or more scrolls) and the colours section was rejected. Measured real section heights on test via CDP before and after; the viewport budget below the fixed header is about 830px.
