@@ -221,8 +221,23 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $phone = sanitize_text_field((string) ($fields['Phone'] ?? $fields['Telephone'] ?? ''));
     $postcode = sanitize_text_field((string) ($fields['Post code'] ?? $fields['Postcode'] ?? ''));
     $journey_ref = fenster_windowcad_tracking_from_fields($fields);
+    $tracking_field_present = fenster_windowcad_tracking_field_present($fields);
     $quote_price = fenster_windowcad_price_from_fields($fields);
-    $notes = 'Lead from WindowCAD' . ($journey_ref !== '' ? "\nWebsite tracking: " . $journey_ref : '');
+
+    if (! $tracking_field_present) {
+        // Every website-originated quote URL carries a tracking value, even for
+        // rejected/no-choice visitors. A submission without one means either an
+        // office-entered quote or that the WindowCAD website-form configuration
+        // has lost the Tracking field again (as happened on 2026-07-15/16).
+        fenster_windowcad_log('submission has no Tracking field - check the WindowCAD website designer form still includes the Tracking property');
+    }
+
+    $notes = 'Lead from WindowCAD';
+    if ($journey_ref !== '') {
+        $notes .= "\nWebsite tracking: " . $journey_ref;
+    } elseif (! $tracking_field_present) {
+        $notes .= "\nWebsite tracking: none (WindowCAD submission had no Tracking field)";
+    }
 
     $summary = implode("\n", array_filter([
         'Name: ' . $full_name,
@@ -297,6 +312,12 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             'price_amount' => $quote_price,
             'price_currency' => 'GBP',
         ]);
+    } else {
+        // No consented FG2 reference: never create a dashboard journey, but do
+        // count the completion in the aggregate-only statistical path so total
+        // WindowCAD completions remain measurable and a broken Tracking field
+        // is visible within a day instead of silently zeroing the tracker.
+        fenster_dashboard_track_stat('quote_completed', '/online-quote/');
     }
 
     fenster_windowcad_log('adminbase relay succeeded', [

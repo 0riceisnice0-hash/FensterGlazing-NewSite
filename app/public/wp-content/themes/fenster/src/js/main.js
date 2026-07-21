@@ -1405,24 +1405,11 @@ const storeTrackingValue = (key, value) => {
 
 const journeyReference = () => {
   if (!trackingConsentAccepted()) return '';
-
-  if (trackingConsentAccepted()) {
-    const existing = readStoredTrackingValue(journeyStorageKey, (value) => validTrackingReference(value, 'FG2'));
-    if (existing) return existing;
-    const created = createJourneyReference();
-    storeTrackingValue(journeyStorageKey, created);
-    return created;
-  }
-
-  try {
-    const existing = window.sessionStorage.getItem(journeyStorageKey);
-    if (validTrackingReference(existing, 'FG2')) return existing;
-    const created = createJourneyReference();
-    window.sessionStorage.setItem(journeyStorageKey, created);
-    return created;
-  } catch (_error) {
-    return createJourneyReference();
-  }
+  const existing = readStoredTrackingValue(journeyStorageKey, (value) => validTrackingReference(value, 'FG2'));
+  if (existing) return existing;
+  const created = createJourneyReference();
+  storeTrackingValue(journeyStorageKey, created);
+  return created;
 };
 
 const visitorReference = () => {

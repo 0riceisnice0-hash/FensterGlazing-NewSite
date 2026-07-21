@@ -117,6 +117,40 @@ function fenster_dashboard_track_event(string $event, array $payload = []): void
     }
 }
 
+/**
+ * Relay one aggregate-only statistic bucket to the dashboard.
+ *
+ * This is the documented non-consented statistical path: hourly totals only,
+ * no journey/visitor identifiers. Used server-side so quote completions that
+ * arrive without a consented FG2 reference are still counted as totals.
+ */
+function fenster_dashboard_track_stat(string $event, string $page_path = ''): void
+{
+    $endpoint = fenster_website_dashboard_stat_url();
+    if ($endpoint === '') {
+        return;
+    }
+
+    $response = wp_remote_post($endpoint, [
+        'timeout' => 8,
+        'blocking' => true,
+        'headers' => [
+            'Content-Type' => 'text/plain;charset=UTF-8',
+            'X-Fenster-Website-Secret' => fenster_website_dashboard_secret(),
+        ],
+        'body' => wp_json_encode([
+            'event' => $event,
+            'page_path' => $page_path,
+            'device_type' => 'server',
+            'origin' => home_url('/'),
+        ]),
+    ]);
+
+    if (is_wp_error($response) || wp_remote_retrieve_response_code($response) >= 300) {
+        error_log('Fenster website stat relay failed for event: ' . $event);
+    }
+}
+
 function fenster_windowcad_tracking_from_fields(array $fields): string
 {
     foreach (['Tracking', 'tracking'] as $key) {
@@ -126,7 +160,40 @@ function fenster_windowcad_tracking_from_fields(array $fields): string
         }
     }
 
+    // Defensive fallback: if WindowCAD's form configuration ever renames or
+    // moves the Tracking property, a valid FG2 value in any submitted field
+    // still attributes the quote. Values are read only; the office-owned
+    // Reference field is never written by this site.
+    foreach ($fields as $value) {
+        $value = sanitize_text_field((string) $value);
+        if (preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $value)) {
+            return strtoupper($value);
+        }
+    }
+
     return '';
+}
+
+/**
+ * Whether the WindowCAD submission carried any website tracking value at all,
+ * including the deliberate rejected/no-choice markers. When this is false the
+ * WindowCAD website-form configuration has probably lost the Tracking field.
+ */
+function fenster_windowcad_tracking_field_present(array $fields): bool
+{
+    foreach (['Tracking', 'tracking'] as $key) {
+        if (isset($fields[$key]) && $fields[$key] !== '') {
+            return true;
+        }
+    }
+
+    foreach ($fields as $value) {
+        if (preg_match('/^(FG2-[A-Z0-9-]{8,80}|rejected-cookies|cookie-consent-not-accepted)$/i', (string) $value)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function fenster_windowcad_price_from_fields(array $fields): float
