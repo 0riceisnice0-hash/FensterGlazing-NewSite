@@ -33237,12 +33237,17 @@ html.fg-blinds-reveal-locked {
   width: min(100%, 1060px);
 }
 
+/* Slides are absolutely positioned at top: 50% in a viewport with
+   overflow: visible, so anything taller than this box spills equally above
+   and below it and lands on the heading copy. These portrait door renders
+   are much taller than the landscape roof-lantern ones, so the box has to
+   be sized from the slide, not from vw. Keep it >= the tallest slide. */
 .fg-heritage-door-configurations__carousel .fg-colour-carousel__viewport {
-  min-height: clamp(400px, 34vw, 450px);
+  min-height: 520px;
 }
 
 .fg-heritage-door-configurations__slide {
-  width: min(30%, 250px);
+  width: min(28%, 225px);
 }
 
 /* The nine renders share one crop window so their relative heights stay
@@ -33650,7 +33655,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-heritage-door-configurations__carousel .fg-colour-carousel__viewport {
-    min-height: 380px;
+    min-height: 460px;
   }
 
   .fg-heritage-door-configurations__slide {
