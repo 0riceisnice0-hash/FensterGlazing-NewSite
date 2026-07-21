@@ -399,7 +399,8 @@ if ($is_composite_doors) {
             'image_400' => $composite_asset_base . 'families/signature-400w.webp',
             'image_800' => $composite_asset_base . 'families/signature-800w.webp',
             'alt' => 'Black Signature composite door with decorative glass on a period home',
-            'copy' => 'Classic panels, decorative glass and period detail. The widest choice for established and traditional homes.',
+            'copy' => 'Classic panels, decorative glass and period detail, including the cottage-style Rustic Renown. The widest choice in the range.',
+            'best' => 'Best for period frontages, cottages and streets with some history to respect.',
             'styles' => ['Classical', 'Elegance', 'Esteem', 'Renown', 'Rustic Renown', 'New England'],
         ],
         [
@@ -408,9 +409,31 @@ if ($is_composite_doors) {
             'image_400' => $composite_asset_base . 'collections/contemporary-hall-400w.webp',
             'image_800' => $composite_asset_base . 'collections/contemporary-hall-800w.webp',
             'alt' => 'Anthracite Contemporary composite door with side panels in a modern hallway',
-            'copy' => 'Clean grooves, bold glass layouts and statement shapes for a crisp, modern frontage.',
+            'copy' => 'Clean grooves, bold glass layouts and statement shapes, with dual-colour choices that let the inside face match your hallway.',
+            'best' => 'Best for new builds, rendered frontages and homes that suit clean lines.',
             'styles' => ['Esprit', 'Infinity', 'Venture'],
         ],
+    ];
+    // Construction facts sourced from the Distinction technical material and
+    // rewritten in the Fenster voice (see TONEOFVOICE.md). Do not invent specs.
+    $composite_anatomy = [
+        'image' => $composite_asset_base . 'anatomy/slab-cutaway-428w.webp',
+        'image_alt' => 'Cutaway illustration of a Distinction composite door slab showing the layers behind the GRP skin',
+        'layers' => [
+            ['name' => 'GRP skin', 'copy' => 'Compression-moulded glass reinforced polyester with a woodgrain taken from real oak. It does not crack, flake or need repainting.'],
+            ['name' => 'Water-resistant polymer edges', 'copy' => 'The rails bonded to the skin are polymer, not timber, so the door cannot drink rainwater and bow the way solid-timber-core doors can.'],
+            ['name' => 'Engineered wood stiles', 'copy' => 'Engineered rather than sawn timber, so the slab stays stable through wet winters and warm summers.'],
+            ['name' => 'Reinforced central board', 'copy' => 'A reinforced board through the middle keeps the door solid under force.'],
+            ['name' => 'Foam-filled core', 'copy' => 'CFC-free polyurethane insulation fills the slab. It is the main reason the door holds heat so well.'],
+            ['name' => 'Decorative glass', 'copy' => 'Most designs are triple glazed and laminated as standard; Chatsworth and Wentworth are double glazed. We tell you which is which before you order.'],
+        ],
+        'stats' => [
+            ['value' => '44.5mm', 'label' => 'insulated slab; a typical uPVC door panel is 28mm'],
+            ['value' => '50%', 'label' => 'more thermally efficient than solid timber core*'],
+            ['value' => '£5,000', 'label' => 'security guarantee on our composite doors'],
+            ['value' => '10 years', 'label' => 'insurance-backed installation guarantee'],
+        ],
+        'footnote' => '*Distinction\'s independent testing at the University of Salford\'s Energy House, against a 48mm solid-timber-core composite door and a 44mm timber panelled door.',
     ];
     // Real-home mosaic. Each tile names the finish and the style so it teaches, not just decorates.
     $composite_gallery = [
@@ -546,7 +569,7 @@ $stats = $is_commercial
         ['value' => '100s', 'label' => 'of customer reviews'],
     ];
 
-$cta_label = $is_commercial ? 'Discuss a commercial project' : 'Start your design consultation';
+$cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : 'Start your design consultation');
 $instant_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
 $instant_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
 $product_quote_embeds = [
@@ -2643,7 +2666,7 @@ if ($is_commercial_hub) {
                 <div class="button-row">
                     <a class="button" href="#fenster-enquiry">
                         <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
-                        <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
+                        <span class="fg-hero-cta__short"><?php echo esc_html($is_composite_doors ? __('Send an enquiry', 'fenster') : __('Design consultation', 'fenster')); ?></span>
                     </a>
                     <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
                 </div>
@@ -2872,7 +2895,7 @@ if ($is_commercial_hub) {
                 <span class="fg-composite-approved__mark" aria-hidden="true">&#10003;</span>
                 <div>
                     <strong><?php esc_html_e('Approved Distinction Doors installer', 'fenster'); ?></strong>
-                    <p><?php esc_html_e('We survey, supply and install your complete Distinction composite doorset.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('One in four entrance doors fitted in the UK is a Distinction. We survey, supply and install your complete doorset.', 'fenster'); ?></p>
                 </div>
                 <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager">
             </div>
@@ -2917,6 +2940,7 @@ if ($is_commercial_hub) {
             'colours' => $composite_door_colours,
             'glass' => $composite_door_glass,
             'handles' => $door_handle_finishes,
+            'anatomy' => $composite_anatomy,
             'asset_base' => $composite_asset_base,
         ]);
         ?>

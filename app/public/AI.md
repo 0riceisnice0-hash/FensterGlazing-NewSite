@@ -83,6 +83,7 @@ PHP lint example:
 
 - `AI.md` is for rules about how to work on the codebase.
 - `HANDOVER.md` is for the current site state and architecture an AI needs to get caught up.
+- `TONEOFVOICE.md` is the customer-facing copy voice reference, derived from the owner-approved About page. Read it before writing or rewriting page copy.
 - `AUDIT.md` is for the master audit, remediation table, open launch issues and prioritised backlog from the 2026-07-03 site audit.
 - `STYLE.md` is for site-wide styling, visual direction, gradient/background rules, section rhythm, cards, typography and mobile design expectations.
 - `HOMEPAGE.md` is only for homepage-specific information.

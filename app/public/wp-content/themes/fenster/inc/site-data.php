@@ -1144,7 +1144,7 @@ function fenster_site_data(): array
                 ],
             ],
             'composite-doors' => [
-                'intro' => 'As an approved Distinction Doors installer, we supply Signature and Contemporary composite doors, including the Rustic Renown style. We confirm the colour, glass, hardware and complete doorset after survey.',
+                'intro' => 'We fit Distinction composite doors, the door on one in four UK front entrances: Signature for traditional homes, Contemporary for clean lines. Price yours online in about ten minutes, or come and slam one in the showroom.',
                 'benefits' => [
                     ['title' => 'Strong entrance door construction', 'copy' => 'Composite doors combine a reinforced core, durable skins and secure hardware for a robust front-door upgrade.'],
                     ['title' => 'Wide design choice', 'copy' => 'Fenster can help compare door styles, glass designs, colours and hardware so the entrance suits the property.'],
@@ -1153,11 +1153,11 @@ function fenster_site_data(): array
                     ['title' => 'Surveyed and fitted carefully', 'copy' => 'The frame, threshold, opening and hardware details are checked before ordering so the final door fits properly.'],
                 ],
                 'faqs' => [
-                    ['question' => 'What is a composite door made from?', 'answer' => 'Composite doors use a layered construction, typically combining GRP skins, an insulated core and reinforced structural elements for strength and stability.'],
-                    ['question' => 'Are composite doors more secure than uPVC doors?', 'answer' => 'They can offer a stronger entrance-door feel, especially when specified with secure locks, cylinders, glazing and hardware. Fenster will compare the options with you.'],
-                    ['question' => 'Can I choose the colour and glass design?', 'answer' => 'Yes. Composite doors offer broad style, colour, decorative glass and hardware choices so the entrance can be tailored to the property.'],
-                    ['question' => 'Do composite doors need repainting?', 'answer' => 'No. Composite door skins are designed as a low-maintenance finish and should only need normal cleaning and care.'],
-                    ['question' => 'Why is there no U-value shown for composite doors?', 'answer' => 'A final U-value depends on the complete doorset, including frame, glass and panel design. Fenster avoids publishing invented values before specification.'],
+                    ['question' => 'What is a composite door made from?', 'answer' => 'A 44.5mm slab built in layers: a GRP skin with a woodgrain taken from real oak, water-resistant polymer edges, engineered wood stiles, a reinforced central board and a foam-filled insulating core. A typical uPVC door panel is 28mm, which is why a composite door feels so different the first time you close one.'],
+                    ['question' => 'Are composite doors more secure than uPVC doors?', 'answer' => 'The slab is thicker and stiffer than a uPVC panel, most decorative glass designs are laminated, and every doorset we fit has multi-point locking. Distinction door slabs are accredited by Secured by Design, the police security initiative, and our composite doors carry a £5,000 security guarantee.'],
+                    ['question' => 'Can I choose the colour and glass design?', 'answer' => 'Yes, and you can have one colour outside and a different one inside. Colour, glass and hardware are chosen against your door style, and we confirm the combination with physical samples before anything is ordered.'],
+                    ['question' => 'Do composite doors need repainting?', 'answer' => 'No, and you should not paint one; it voids the surface warranty. Warm water and a soft cloth is the whole maintenance routine. Skip abrasive cleaners, pressure washers and solvents.'],
+                    ['question' => 'Why is there no U-value shown for composite doors?', 'answer' => 'A real U-value belongs to the complete doorset: slab, frame, glass and threshold together. We will not print an invented number before your door is specified. The tested figure worth knowing is Distinction\'s: up to 50% more thermally efficient than a 48mm solid-timber-core composite door in independent testing at the University of Salford\'s Energy House.'],
                 ],
                 'glass_styles' => [
                     'intro' => 'Distinction decorative glass gives a composite entrance more character without turning the choice into guesswork. Most decorative units are triple glazed and laminated as standard; availability still depends on the chosen door style, aperture size and final doorset specification.',

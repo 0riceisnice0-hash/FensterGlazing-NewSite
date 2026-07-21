@@ -31478,6 +31478,150 @@ html.fg-blinds-reveal-locked {
   background: rgba(243, 248, 247, 0.7);
 }
 
+.fg-cd3-collection__best {
+  margin: 0 0 1rem;
+  padding: 0.6rem 0.8rem;
+  border-left: 3px solid var(--fg-green);
+  border-radius: 0 8px 8px 0;
+  color: rgba(2, 43, 53, 0.82);
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.5;
+  background: rgba(63, 185, 127, 0.08);
+}
+
+/* Composite doors: slab construction section */
+.fg-cd3-anatomy {
+  position: relative;
+  padding: clamp(2.75rem, 5vw, 4.25rem) 0;
+  background: transparent;
+}
+
+.fg-cd3-anatomy__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid rgba(2, 43, 53, 0.12);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 22px 60px rgba(2, 43, 53, 0.09);
+  backdrop-filter: blur(14px);
+}
+
+.fg-cd3-anatomy__intro .eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--fg-green);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.095em;
+  text-transform: uppercase;
+}
+
+.fg-cd3-anatomy__intro h2 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.fg-cd3-anatomy__intro > p {
+  margin: 0 0 1.15rem;
+  color: rgba(2, 43, 53, 0.72);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.fg-cd3-anatomy__media {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(2, 43, 53, 0.1);
+  border-radius: 14px;
+  background: #f7f3ea;
+}
+
+.fg-cd3-anatomy__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fg-cd3-anatomy__layers {
+  display: grid;
+  align-content: center;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: fg-cd3-layer;
+}
+
+.fg-cd3-anatomy__layers li {
+  position: relative;
+  padding-left: 2.4rem;
+  counter-increment: fg-cd3-layer;
+}
+
+.fg-cd3-anatomy__layers li::before {
+  content: counter(fg-cd3-layer, decimal-leading-zero);
+  position: absolute;
+  top: 0.12rem;
+  left: 0;
+  color: var(--fg-green);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+}
+
+.fg-cd3-anatomy__layers h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+}
+
+.fg-cd3-anatomy__layers p {
+  margin: 0;
+  color: rgba(2, 43, 53, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.fg-cd3-anatomy__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: clamp(1rem, 2vw, 1.5rem) 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(2, 43, 53, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.fg-cd3-anatomy__stats > div {
+  padding: 1rem 1.15rem;
+}
+
+.fg-cd3-anatomy__stats > div + div {
+  border-left: 1px solid rgba(2, 43, 53, 0.1);
+}
+
+.fg-cd3-anatomy__stats dt {
+  margin: 0 0 0.15rem;
+  color: var(--fg-ink, #022b35);
+  font-size: 1.3rem;
+  font-weight: 750;
+}
+
+.fg-cd3-anatomy__stats dd {
+  margin: 0;
+  color: rgba(2, 43, 53, 0.68);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.fg-cd3-anatomy__footnote {
+  margin: 0.65rem 0 0;
+  color: rgba(2, 43, 53, 0.55);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
 .fg-cd3-mosaic {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -31604,6 +31748,31 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 860px) {
   .fg-cd3-collections__grid {
     grid-template-columns: 1fr;
+  }
+
+  .fg-cd3-anatomy__panel {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+  }
+
+  .fg-cd3-anatomy__media {
+    max-width: 320px;
+  }
+
+  .fg-cd3-anatomy__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-cd3-anatomy__stats > div + div {
+    border-left: 0;
+  }
+
+  .fg-cd3-anatomy__stats > div:nth-child(2n) {
+    border-left: 1px solid rgba(2, 43, 53, 0.1);
+  }
+
+  .fg-cd3-anatomy__stats > div:nth-child(n + 3) {
+    border-top: 1px solid rgba(2, 43, 53, 0.1);
   }
 
   .fg-cd3-mosaic {

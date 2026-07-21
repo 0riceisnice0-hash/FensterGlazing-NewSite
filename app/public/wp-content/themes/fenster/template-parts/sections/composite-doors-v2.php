@@ -15,6 +15,7 @@ $door_types = is_array($args['door_types'] ?? null) ? $args['door_types'] : [];
 $colours = is_array($args['colours'] ?? null) ? array_values($args['colours']) : [];
 $glass_styles = is_array($args['glass'] ?? null) ? array_values($args['glass']) : [];
 $handle_finishes = is_array($args['handles'] ?? null) ? array_values($args['handles']) : [];
+$anatomy = is_array($args['anatomy'] ?? null) ? $args['anatomy'] : [];
 $asset_base = (string) ($args['asset_base'] ?? '');
 
 if (empty($collections) || empty($colours) || empty($glass_styles)) {
@@ -43,8 +44,8 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     <div class="container">
         <header class="fg-cd3-head">
             <p class="eyebrow"><?php esc_html_e('Two collections', 'fenster'); ?></p>
-            <h2 id="fg-cd3-collections-title"><?php esc_html_e('Start with the look, then make it yours.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Every Distinction door sits in one of two collections. Choose the character first. The styles, colour, glass and hardware come next.', 'fenster'); ?></p>
+            <h2 id="fg-cd3-collections-title"><?php esc_html_e('Every door in the range is Signature or Contemporary.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Choose the character first; the exact style, colour, glass and hardware follow. If you cannot place your house in one camp, the fitted doors further down usually settle it.', 'fenster'); ?></p>
         </header>
 
         <div class="fg-cd3-collections__grid">
@@ -63,6 +64,9 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                         <p class="eyebrow"><?php echo esc_html((string) $collection['tagline']); ?></p>
                         <h3><?php echo esc_html((string) $collection['name']); ?></h3>
                         <p><?php echo esc_html((string) $collection['copy']); ?></p>
+                        <?php if (! empty($collection['best'])) : ?>
+                            <p class="fg-cd3-collection__best"><?php echo esc_html((string) $collection['best']); ?></p>
+                        <?php endif; ?>
                         <?php if (! empty($collection['styles'])) : ?>
                             <ul class="fg-cd3-collection__styles" aria-label="<?php echo esc_attr(sprintf(__('%s door styles', 'fenster'), (string) $collection['name'])); ?>">
                                 <?php foreach ($collection['styles'] as $style) : ?>
@@ -82,8 +86,8 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
         <div class="container">
             <header class="fg-cd3-head">
                 <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
-                <h2 id="fg-cd3-gallery-title"><?php esc_html_e('See the style, glass and colour on a real door.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The best way to choose is to see a door fitted. Here is a spread of finishes across both collections.', 'fenster'); ?></p>
+                <h2 id="fg-cd3-gallery-title"><?php esc_html_e('Doors look different on a house than on a swatch.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Here is a spread of styles, glass and colours across both collections, fitted. Each caption names the exact style so you can ask for it by name.', 'fenster'); ?></p>
             </header>
 
             <div class="fg-cd3-mosaic">
@@ -106,6 +110,47 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                     </figure>
                 <?php endforeach; ?>
             </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php if (! empty($anatomy['layers'])) : ?>
+    <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title">
+        <div class="container">
+            <div class="fg-cd3-anatomy__panel">
+                <div class="fg-cd3-anatomy__intro">
+                    <p class="eyebrow"><?php esc_html_e('Construction', 'fenster'); ?></p>
+                    <h2 id="fg-cd3-anatomy-title"><?php esc_html_e('What is inside the slab.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. This is the actual build of a Distinction slab, layer by layer.', 'fenster'); ?></p>
+                    <figure class="fg-cd3-anatomy__media">
+                        <img
+                            src="<?php echo esc_url(fenster_generated_url((string) $anatomy['image'])); ?>"
+                            alt="<?php echo esc_attr((string) $anatomy['image_alt']); ?>"
+                            loading="lazy" width="428" height="480">
+                    </figure>
+                </div>
+                <ol class="fg-cd3-anatomy__layers">
+                    <?php foreach ($anatomy['layers'] as $layer) : ?>
+                        <li>
+                            <h3><?php echo esc_html((string) $layer['name']); ?></h3>
+                            <p><?php echo esc_html((string) $layer['copy']); ?></p>
+                        </li>
+                    <?php endforeach; ?>
+                </ol>
+            </div>
+            <?php if (! empty($anatomy['stats'])) : ?>
+                <dl class="fg-cd3-anatomy__stats">
+                    <?php foreach ($anatomy['stats'] as $stat) : ?>
+                        <div>
+                            <dt><?php echo esc_html((string) $stat['value']); ?></dt>
+                            <dd><?php echo esc_html((string) $stat['label']); ?></dd>
+                        </div>
+                    <?php endforeach; ?>
+                </dl>
+            <?php endif; ?>
+            <?php if (! empty($anatomy['footnote'])) : ?>
+                <p class="fg-cd3-anatomy__footnote"><?php echo esc_html((string) $anatomy['footnote']); ?></p>
+            <?php endif; ?>
         </div>
     </section>
 <?php endif; ?>
@@ -148,10 +193,10 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     <div class="container">
         <header class="fg-cd-v2-heading">
             <div>
-                <p class="eyebrow"><?php esc_html_e('Make it yours', 'fenster'); ?></p>
-                <h2 id="fg-cd-v2-config-title"><?php esc_html_e('Colour, glass and hardware.', 'fenster'); ?></h2>
+                <p class="eyebrow"><?php esc_html_e('Colour, glass and hardware', 'fenster'); ?></p>
+                <h2 id="fg-cd-v2-config-title"><?php esc_html_e('Every colour here is a photographed door.', 'fenster'); ?></h2>
             </div>
-            <p><?php esc_html_e('Change one detail at a time. Pick a colour and see it on the door, browse the decorative glass close up, then coordinate the handle set.', 'fenster'); ?></p>
+            <p><?php esc_html_e('Not a tinted swatch, and the glass close-ups are the real designs. Pick one detail at a time and see it properly before you commit to anything.', 'fenster'); ?></p>
         </header>
 
         <div class="fg-cd-v2-config__tabs" role="tablist" aria-label="<?php esc_attr_e('Composite door design options', 'fenster'); ?>">
@@ -166,7 +211,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                     <div class="fg-cd-v2-selector__controls">
                         <p class="eyebrow"><?php esc_html_e('Photographed colours', 'fenster'); ?></p>
                         <h3><?php esc_html_e('Select a colour.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('More supplier colours and woodgrain finishes are available. We confirm the current palette with physical samples.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('You can have one colour outside and another inside. More colours and woodgrains exist than we can photograph; we confirm the final choice with physical samples.', 'fenster'); ?></p>
                         <div class="fg-cd-v2-options fg-cd-v2-options--colour" aria-label="<?php esc_attr_e('Composite door colour examples', 'fenster'); ?>">
                             <?php foreach ($colours as $index => $colour) : ?>
                                 <?php
@@ -193,7 +238,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                     <div class="fg-cd-v2-selector__controls">
                         <p class="eyebrow"><?php esc_html_e('Decorative glass', 'fenster'); ?></p>
                         <h3><?php esc_html_e('Select a glass design.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('We check the aperture size, privacy and current availability against your selected door.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('Most designs are triple glazed and laminated as standard; Chatsworth and Wentworth are double glazed. We check aperture size, privacy and availability against your chosen door.', 'fenster'); ?></p>
                         <div class="fg-cd-v2-options fg-cd-v2-options--glass" aria-label="<?php esc_attr_e('Composite door decorative glass examples', 'fenster'); ?>">
                             <?php foreach ($glass_styles as $index => $glass) : ?>
                                 <?php
