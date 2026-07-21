@@ -250,6 +250,10 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Flat Rooflights Milton Keynes | Fixed & Opening Rooflights',
             'meta_description' => 'Flat rooflights in Milton Keynes, including fixed, opening, multi-pane and walk-on options with glass, controls and survey-led installation.',
         ],
+        'heritage-aluminium-doors' => [
+            'title_tag' => 'Heritage Aluminium Doors Milton Keynes | Steel-Look Doors',
+            'meta_description' => 'Steel-look heritage aluminium doors in Milton Keynes. Single or French, nine stocked configurations, 60.5mm sightlines and twelve powder-coated colours.',
+        ],
         'aluminium-bifold-doors-milton-keynes' => [
             'title_tag' => 'Bifold Doors Milton Keynes | Aluminium Bifold Installation',
             'meta_description' => 'Aluminium bifold doors in Milton Keynes with slim frames, secure hardware, colour options and survey-led installation from Fenster Glazing.',

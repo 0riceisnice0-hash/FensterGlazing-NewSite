@@ -185,7 +185,7 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'Where used', 'value' => 'External doors and selected internal-style projects, depending on specification'],
                 ['label' => 'Security', 'value' => 'Secured by Design style upgrades available where the full doorset specification supports it'],
             ],
-            'choices' => ['Black steel-look layouts', 'Softer heritage greys and RAL colours', 'Open-in or open-out options', 'Obscure, reeded or laminated glass'],
+            'choices' => ['Single or French door layouts', 'No bars, 2 bar or 4 bar glazing patterns', 'Open-in or open-out options', 'Obscure, reeded or laminated glass'],
         ],
         'composite-doors' => [
             'systems' => [$systems['distinction']],

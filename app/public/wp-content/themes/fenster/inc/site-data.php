@@ -238,9 +238,9 @@ function fenster_site_data(): array
             ],
             'heritage-aluminium-doors' => [
                 ['label' => 'U-value', 'value' => '1.4 W/m²K'],
-                ['label' => 'Colour choice', 'value' => 'Any RAL colour'],
-                ['label' => 'Design', 'value' => 'Classic aesthetic'],
-                ['label' => 'Sightlines', 'value' => 'Ultra slim'],
+                ['label' => 'Sightlines', 'value' => '60.5mm'],
+                ['label' => 'Colour choice', 'value' => '12 standard colours'],
+                ['label' => 'Layouts', 'value' => 'Single or French'],
             ],
             'slide-fold-doors' => [
                 ['label' => 'U-value', 'value' => '1.4 W/m²K'],
@@ -465,10 +465,11 @@ function fenster_site_data(): array
                 ],
             ],
             'heritage-aluminium-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-door.jpg', 'alt' => 'Steel-look aluminium door in a kitchen'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-door-kitchen-1600w.webp', 'alt' => 'Steel-look heritage aluminium door and screen in a green kitchen'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-door.jpg', 'alt' => 'Steel-look aluminium door in a kitchen'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-french-doors.jpg', 'alt' => 'Heritage style French doors on a brick property'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-door-kitchen-1600w.webp', 'alt' => 'Steel-look heritage aluminium door and screen in a green kitchen'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-french-brick-1400w.webp', 'alt' => 'Black heritage aluminium French doors on a red brick courtyard'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-french-open-1400w.webp', 'alt' => 'Heritage aluminium French doors opened into a living room'],
                 ],
             ],
             'upvc-doors' => [
@@ -548,7 +549,7 @@ function fenster_site_data(): array
             'slide-fold-doors' => 'slide_fold_doors',
             'aluminium-sliding-doors' => 'aluminium_sliding_doors',
             'aluminium-doors' => 'aluminium_doors',
-            'heritage-aluminium-doors' => 'aluminium_doors',
+            'heritage-aluminium-doors' => 'heritage_aluminium_doors',
             'composite-doors' => 'composite_doors',
             'upvc-doors' => 'upvc_doors',
             'patio-doors' => 'upvc_patio_doors',
@@ -623,6 +624,16 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium frame profile detail'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2.jpg', 'alt' => 'Modern aluminium entrance door with full-height glazing'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-6.jpg', 'alt' => 'Aluminium door low threshold detail'],
+            ],
+            'heritage_aluminium_doors' => [
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-door-kitchen-1600w.webp', 'alt' => 'Steel-look heritage aluminium door and screen in a green kitchen'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-french-brick-1400w.webp', 'alt' => 'Black heritage aluminium French doors on a red brick courtyard'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-french-open-1400w.webp', 'alt' => 'Heritage aluminium French doors opened into a living room'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-french-courtyard-1100w.webp', 'alt' => 'Heritage aluminium French doors beside a matching window on a rendered wall'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-lockbox-900w.webp', 'alt' => 'Period-style lockbox and lever handles on heritage aluminium French doors'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-glazing-bar-600w.webp', 'alt' => 'Close-up of a stepped glazing bar on a heritage aluminium frame'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/configurations/config-07-french-no-bars-agate-grey.webp', 'alt' => 'Heritage aluminium French doors with no glazing bars in Agate Grey'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/configurations/config-03-single-4-bar-jet-black.webp', 'alt' => 'Single heritage aluminium door with four glazing bars in Jet Black'],
             ],
             'composite_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/distinction-composite-door.jpg', 'alt' => 'Composite front door with half glazing'],
