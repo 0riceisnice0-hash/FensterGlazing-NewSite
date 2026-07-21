@@ -217,6 +217,15 @@ PHP lint example:
 - Product hub system logos must use local theme assets and be rendered through `fenster_generated_url()`. Do not point product hubs at `wp-content\fenster-reference` or raw scrape URLs.
 - `/sliding-sash-windows/` is a Roseview product route, not a Liniar route. Its product hub system is `Roseview`, its local logo is `assets\partners\roseview-logo-new.png`, and its model badges are `Ultimate Rose`, `Heritage Rose` and `Charisma Rose`.
 
+## Heritage Aluminium Doors Rule
+
+- `/heritage-aluminium-doors/` has a dedicated template at `template-parts\sections\heritage-aluminium-doors.php`, not the generic product journey.
+- Assets live under `assets\images\products\heritage-aluminium`. The Sheerline scrape is a source only; runtime code must not depend on the export folder.
+- The route owns a `heritage_aluminium_doors` gallery pool in `inc\site-data.php`. Do not map it back to the shared `aluminium_doors` pool. That pool is modern Prestige entrance doors and is what put uPVC-looking imagery on this page and its town variants in the first place.
+- Product facts on this route come from the Sheerline Classic Heritage Door specification: 60.5mm sightlines, 1.4 W/m²K double glazed, maximum sash 2.2m x 1m, opens in or out, single or French, twelve standard colours. Do not add values the source does not support.
+- Secured by Design is an optional upgrade on this system. Do not present it as the standard specification.
+- The nine configuration renders share one crop window so relative door heights stay truthful. Do not re-trim them individually.
+
 ## Colour Hub Rule
 
 - Colour data belongs in `inc\site-data.php` under `colour_options`.

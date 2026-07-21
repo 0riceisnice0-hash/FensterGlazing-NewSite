@@ -194,7 +194,25 @@ Virtual or explicitly exposed product routes include products such as:
 - `/aluminium-flush-windows/`
 - `/aluminium-sliding-doors/`
 - `/slide-fold-doors/`
-- `/heritage-aluminium-doors/`
+- `/heritage-aluminium-doors/` (dedicated template, see below)
+
+### Heritage Aluminium Doors Page
+
+Route: `/heritage-aluminium-doors/`
+
+Template: `template-parts\sections\heritage-aluminium-doors.php`, dispatched from `template-parts\sections\generated-page.php`.
+
+Current accepted behaviour:
+
+- The page is built around the Sheerline Classic Heritage Door and bypasses the generic product journey, in the same way `/roof-lanterns/` does.
+- Section order is hero, four-fact specification strip, the nine stocked configurations, period lockbox and glazing-bar detail, Thermlock and corner construction, two use cases, the Secured by Design upgrade, the twelve standard colours, shared enquiry form, review showcase.
+- Assets are local WebP copies under `assets\images\products\heritage-aluminium`. Do not point this route at the Sheerline scrape export.
+- The nine configuration renders were cropped through one shared window so their relative heights stay honest. A toplight door must keep reading taller than a plain single door; do not re-trim them individually.
+- Configuration labels state real bar counts and colours. Check any new label against its render before publishing.
+- The route has its own `heritage_aluminium_doors` gallery pool in `inc\site-data.php`. Do not point it back at the shared `aluminium_doors` pool: that pool is modern Prestige entrance doors and put uPVC-looking imagery on this page and its town variants.
+- Secured by Design is an optional upgrade on this system, not the standard specification. Keep that distinction in the copy.
+- Colour is twelve standard powder-coated finishes, with dual and bespoke colours available on request. Do not restore the blanket `Any RAL colour` claim here.
+- The enquiry form sits on a light panel and shares the `.fg-roof-lantern-form` contrast rules through `.fg-heritage-door-form`. If those rules are refactored, keep both classes covered or the inputs render white on white.
 
 Utility and special routes:
 
