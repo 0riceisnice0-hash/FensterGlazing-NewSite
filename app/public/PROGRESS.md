@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-21
 
+## 2026-07-21 - Composite doors: one-viewport sections and colour picker rebuild (test, 140d05b)
+
+- Owner follow-up: every composite section must fit one 1440x900 viewport (no section may take two or more scrolls) and the colours section was rejected. Measured real section heights on test via CDP before and after; the viewport budget below the fixed header is about 830px.
+- Before: collections 1195px, gallery 959px, anatomy 1035px, configurator 922px. After: collections 632px, gallery 782px, anatomy 789px, types 459px, configurator 798px with the stage at exactly 480px. FAQ 632px, quote embed 607px and reviews 562px already fitted.
+- How: desktop collections became horizontal image-beside-copy cards inside a `min-width: 861px` override (mobile keeps the stacked image-first card), gallery mosaic rows dropped to `clamp(140px, 12vw, 172px)`, the anatomy panel/paddings/type scale were compressed, composite section padding tightened to `clamp(2.5rem, 4vw, 3.5rem)`, and the configurator stage went from 520px to 480px including the 641-860px tablet override.
+- Colour panel rebuilt: real colour swatch tiles (46px chips with the colour as the control, green ring + bold label when active, five columns on desktop and three below 640px), a dashed `And more` tile, and a `Selected colour` name/copy block beside the controls. The caption box that covered the photographed door is gone; glass got the same clean-photo treatment with its own selected block. The shared `[data-fg-door-selector]` JS needed no changes because name/copy targets are found anywhere inside the selector container.
+- Verified on test: all composite sections ≤830px at 1440x900, no horizontal overflow at 1440/390, zero console errors, and a CDP interaction pass confirmed tab switching plus Chatsworth/Ruby Red selection updates. Two shared sitewide components still exceed the budget on this route: the case-study strip (849px) and the shared enquiry form (949px, which STYLE.md permits to run taller); changing those affects every page using them, so they were left for an owner decision.
+
 ## 2026-07-21 - TONEOFVOICE.md and composite doors substance pass (test, 54281d4)
 
 - Wrote `TONEOFVOICE.md`, the customer-facing copy voice reference, by reverse-engineering the owner-approved About page copy: facts over adjectives, say the awkward thing first, real people/places/jobs as proof, full-stop sentence-case headings that state a customer truth, no contractions in the About register, one dry aside per page maximum, and a supplier-copy rewrite process. `AI.md` documentation rules now point at it. All future page copy should be checked against it.
