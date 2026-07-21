@@ -31366,7 +31366,7 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-gallery,
 .fg-cd3-types {
   position: relative;
-  padding: clamp(2.75rem, 5vw, 4.25rem) 0;
+  padding: clamp(2.5rem, 4vw, 3.5rem) 0;
   background: transparent;
 }
 
@@ -31376,7 +31376,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-head {
   max-width: 640px;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  margin-bottom: clamp(1.1rem, 2.2vw, 1.5rem);
 }
 
 .fg-cd3-head .eyebrow {
@@ -31493,15 +31493,15 @@ html.fg-blinds-reveal-locked {
 /* Composite doors: slab construction section */
 .fg-cd3-anatomy {
   position: relative;
-  padding: clamp(2.75rem, 5vw, 4.25rem) 0;
+  padding: clamp(2.25rem, 3.5vw, 2.75rem) 0;
   background: transparent;
 }
 
 .fg-cd3-anatomy__panel {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  padding: clamp(1.25rem, 2.2vw, 1.75rem);
   border: 1px solid rgba(2, 43, 53, 0.12);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.82);
@@ -31524,14 +31524,14 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cd3-anatomy__intro > p {
-  margin: 0 0 1.15rem;
+  margin: 0 0 0.9rem;
   color: rgba(2, 43, 53, 0.72);
-  font-size: 1.02rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
 .fg-cd3-anatomy__media {
-  max-width: 460px;
+  max-width: 330px;
   margin: 0;
   overflow: hidden;
   border: 1px solid rgba(2, 43, 53, 0.1);
@@ -31548,7 +31548,7 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-anatomy__layers {
   display: grid;
   align-content: center;
-  gap: 0.85rem;
+  gap: 0.65rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -31580,14 +31580,14 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-anatomy__layers p {
   margin: 0;
   color: rgba(2, 43, 53, 0.72);
-  font-size: 0.88rem;
-  line-height: 1.55;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .fg-cd3-anatomy__stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: clamp(1rem, 2vw, 1.5rem) 0 0;
+  margin: 1rem 0 0;
   overflow: hidden;
   border: 1px solid rgba(2, 43, 53, 0.12);
   border-radius: 14px;
@@ -31595,7 +31595,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cd3-anatomy__stats > div {
-  padding: 1rem 1.15rem;
+  padding: 0.75rem 1rem;
 }
 
 .fg-cd3-anatomy__stats > div + div {
@@ -31605,7 +31605,7 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-anatomy__stats dt {
   margin: 0 0 0.15rem;
   color: var(--fg-ink, #022b35);
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 750;
 }
 
@@ -31626,9 +31626,35 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-mosaic {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: clamp(150px, 15.5vw, 234px);
+  grid-auto-rows: clamp(140px, 12vw, 172px);
   grid-auto-flow: row dense;
   gap: clamp(0.65rem, 1.4vw, 1rem);
+}
+
+/* Desktop collections are horizontal cards so the whole section fits one
+   1440x900 viewport; mobile keeps the stacked image-first card. */
+@media (min-width: 861px) {
+  .fg-cd3-collection {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  }
+
+  .fg-cd3-collection__img {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .fg-cd3-collection__body {
+    padding: clamp(1.1rem, 2vw, 1.5rem);
+  }
+
+  .fg-cd3-collection__body > p {
+    margin-bottom: 0.8rem;
+  }
+
+  .fg-cd3-collection__best {
+    margin-bottom: 0.8rem;
+  }
 }
 
 .fg-cd3-tile {
@@ -31798,7 +31824,7 @@ html.fg-blinds-reveal-locked {
 .fg-cd-v2-range,
 .fg-cd-v2-config {
   position: relative;
-  padding: clamp(3.25rem, 6vw, 5.5rem) 0;
+  padding: clamp(2.5rem, 4vw, 3rem) 0;
   background: transparent;
 }
 
@@ -31811,7 +31837,7 @@ html.fg-blinds-reveal-locked {
   grid-template-columns: minmax(0, 1.2fr) minmax(250px, 0.62fr);
   align-items: end;
   gap: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .fg-cd-v2-heading .eyebrow,
@@ -32096,7 +32122,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cd-v2-config__shell {
-  min-height: 520px;
+  min-height: 480px;
   border-radius: 24px 24px 0 0;
 }
 
@@ -32104,7 +32130,7 @@ html.fg-blinds-reveal-locked {
 .fg-cd-v2-hardware {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(340px, 0.88fr);
-  min-height: 520px;
+  min-height: 480px;
 }
 
 .fg-cd-v2-selector__controls,
@@ -32185,16 +32211,111 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd-v2-selector__preview,
 .fg-cd-v2-hardware__preview {
-  min-height: 520px;
-  height: 520px;
+  min-height: 480px;
+  height: 480px;
 }
 
 .fg-cd-v2-selector__preview > img {
   width: 100%;
-  height: 520px !important;
-  min-height: 520px;
+  height: 480px !important;
+  min-height: 480px;
   object-fit: cover;
   object-position: center;
+}
+
+/* Colour swatch tiles: the colour itself is the control. */
+.fg-cd-v2-swatches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 1.1rem;
+}
+
+.fg-cd-v2-swatches button,
+.fg-cd-v2-swatches__more {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.fg-cd-v2-swatches button i {
+  display: block;
+  height: 46px;
+  border: 1px solid rgba(2, 43, 53, 0.16);
+  border-radius: 10px;
+  background: var(--option-colour);
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.fg-cd-v2-swatches button:hover i {
+  transform: translateY(-1px);
+}
+
+.fg-cd-v2-swatches button[aria-pressed='true'] i {
+  border-color: var(--fg-green);
+  box-shadow: 0 0 0 2px var(--fg-green), inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+}
+
+.fg-cd-v2-swatches button span,
+.fg-cd-v2-swatches__more span {
+  overflow: hidden;
+  color: rgba(2, 43, 53, 0.7);
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fg-cd-v2-swatches button[aria-pressed='true'] span {
+  color: var(--fg-navy);
+  font-weight: 750;
+}
+
+.fg-cd-v2-swatches__more {
+  align-content: center;
+  min-height: 46px;
+  border: 1px dashed rgba(2, 43, 53, 0.25);
+  border-radius: 10px;
+  color: rgba(2, 43, 53, 0.58);
+  font-size: 0.74rem;
+  font-weight: 650;
+  text-align: center;
+  cursor: default;
+}
+
+.fg-cd-v2-selector__selected {
+  display: grid;
+  gap: 0.15rem;
+  max-width: 520px;
+  margin-top: 1.1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(2, 43, 53, 0.1);
+}
+
+.fg-cd-v2-selector__selected > span {
+  color: rgba(2, 43, 53, 0.55);
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-cd-v2-selector__selected strong {
+  color: var(--fg-navy);
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.fg-cd-v2-selector__selected p {
+  margin: 0;
+  color: rgba(2, 43, 53, 0.68);
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .fg-cd-v2-selector__preview figcaption p,
@@ -32395,8 +32516,8 @@ html.fg-blinds-reveal-locked {
   .fg-cd-v2-selector__preview,
   .fg-cd-v2-hardware__preview,
   .fg-cd-v2-selector__preview > img {
-    min-height: 520px;
-    height: 520px !important;
+    min-height: 480px;
+    height: 480px !important;
   }
 
   .fg-cd-v2-config__actions {

@@ -212,7 +212,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                         <p class="eyebrow"><?php esc_html_e('Photographed colours', 'fenster'); ?></p>
                         <h3><?php esc_html_e('Select a colour.', 'fenster'); ?></h3>
                         <p><?php esc_html_e('You can have one colour outside and another inside. More colours and woodgrains exist than we can photograph; we confirm the final choice with physical samples.', 'fenster'); ?></p>
-                        <div class="fg-cd-v2-options fg-cd-v2-options--colour" aria-label="<?php esc_attr_e('Composite door colour examples', 'fenster'); ?>">
+                        <div class="fg-cd-v2-swatches" aria-label="<?php esc_attr_e('Composite door colour examples', 'fenster'); ?>">
                             <?php foreach ($colours as $index => $colour) : ?>
                                 <?php
                                 $stem = $asset_base . 'colours/' . $colour['slug'];
@@ -223,12 +223,16 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                                     <span><?php echo esc_html((string) $colour['name']); ?></span>
                                 </button>
                             <?php endforeach; ?>
-                            <span class="fg-cd-v2-options__more"><?php esc_html_e('And more', 'fenster'); ?></span>
+                            <span class="fg-cd-v2-swatches__more"><?php esc_html_e('And more', 'fenster'); ?></span>
+                        </div>
+                        <div class="fg-cd-v2-selector__selected">
+                            <span><?php esc_html_e('Selected colour', 'fenster'); ?></span>
+                            <strong data-fg-choice-name><?php echo esc_html((string) $first_colour['name']); ?></strong>
+                            <p data-fg-choice-copy><?php echo esc_html((string) $first_colour['copy']); ?></p>
                         </div>
                     </div>
                     <figure class="fg-cd-v2-selector__preview">
                         <img data-fg-choice-image src="<?php echo esc_url(fenster_generated_url($first_colour_stem . '-480w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($first_colour_stem . '-480w.webp') . ' 480w, ' . fenster_generated_url($first_colour_stem . '-800w.webp') . ' 800w'); ?>" sizes="(max-width: 860px) 100vw, 42vw" alt="<?php echo esc_attr((string) $first_colour['alt']); ?>" loading="lazy" width="800" height="1000">
-                        <figcaption><span><?php esc_html_e('Selected colour', 'fenster'); ?></span><strong data-fg-choice-name><?php echo esc_html((string) $first_colour['name']); ?></strong><p data-fg-choice-copy><?php echo esc_html((string) $first_colour['copy']); ?></p></figcaption>
                     </figure>
                 </div>
             </section>
@@ -251,10 +255,14 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                             <?php endforeach; ?>
                             <span class="fg-cd-v2-options__more"><?php esc_html_e('And more', 'fenster'); ?></span>
                         </div>
+                        <div class="fg-cd-v2-selector__selected">
+                            <span><?php esc_html_e('Selected glass', 'fenster'); ?></span>
+                            <strong data-fg-choice-name><?php echo esc_html((string) $first_glass['name']); ?></strong>
+                            <p data-fg-choice-copy><?php echo esc_html((string) $first_glass['copy']); ?></p>
+                        </div>
                     </div>
                     <figure class="fg-cd-v2-selector__preview fg-cd-v2-selector__preview--glass">
                         <img data-fg-choice-image src="<?php echo esc_url(fenster_generated_url($first_glass_stem . '-360w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($first_glass_stem . '-360w.webp') . ' 360w, ' . fenster_generated_url($first_glass_stem . '-720w.webp') . ' 720w'); ?>" sizes="(max-width: 860px) 100vw, 42vw" alt="<?php echo esc_attr((string) $first_glass['name'] . ' decorative glass close-up'); ?>" loading="lazy" width="720" height="720">
-                        <figcaption><span><?php esc_html_e('Selected glass', 'fenster'); ?></span><strong data-fg-choice-name><?php echo esc_html((string) $first_glass['name']); ?></strong><p data-fg-choice-copy><?php echo esc_html((string) $first_glass['copy']); ?></p></figcaption>
                     </figure>
                 </div>
             </section>
