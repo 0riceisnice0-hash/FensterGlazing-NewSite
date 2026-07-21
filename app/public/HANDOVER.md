@@ -17,7 +17,7 @@ Use:
 
 ## Important Updates
 
-- **Live is at `af4cfc2` as of 2026-07-20, and live and test are byte-identical.** There is currently no work sitting on test awaiting promotion. Everything on `main` is on production. Check `git log --oneline -8` and verify the live theme before assuming this is still current.
+- **Live is at `b0ec36a` (branch `release/heritage-doors`) as of 2026-07-21.** It is the previous live state `658ba34` plus the dedicated `/heritage-aluminium-doors/` page. **Everything on `main` is NOT on production:** `main` additionally holds another session's composite-door redesign and two new case studies, which the owner has not approved for release. Read `LIVECHANGES.md` before deploying anything, and verify the live theme rather than trusting this line.
 - **Deploy trap — read before any live deploy.** The live deploy one-liner in `LIVECHANGES.md` runs `git reset --hard origin/main`, so it ships *everything on `main`*, not the specific commit you verified. On 2026-07-18 a deploy of the small Legend iframe fixes swept fourteen unapproved composite-door commits onto production with them. If you need to release one approved commit, reset the server repo cache to that exact SHA instead of `origin/main`.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
