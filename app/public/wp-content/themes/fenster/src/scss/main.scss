@@ -11540,6 +11540,16 @@ a.fg-cs-installer:hover {
   transform: scale(1.04);
 }
 
+.fg-cs-show-more-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.fg-cs-show-more {
+  min-width: 13rem;
+}
+
 .fg-cs-card__body {
   display: grid;
   align-content: start;
@@ -32962,4 +32972,685 @@ html.fg-blinds-reveal-locked {
 [data-fg-colour-material="composite"] .fg-colour-carousel__slide img {
   aspect-ratio: 4 / 5;
   object-position: center top;
+}
+
+/* ---------------------------------------------------------------------------
+   Heritage aluminium doors (/heritage-aluminium-doors/)
+   Dedicated route built around the Sheerline Classic Heritage Door. Follows the
+   roof-lantern page shape: one continuous page gradient, transparent section
+   wrappers, local contrast only where a panel earns it.
+   --------------------------------------------------------------------------- */
+
+.fg-heritage-door-page {
+  background: var(--fg-page-gradient);
+  background-attachment: fixed;
+  overflow: clip;
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+}
+
+.fg-heritage-door-hero,
+.fg-heritage-door-detail,
+.fg-heritage-door-frame,
+.fg-heritage-door-use,
+.fg-heritage-door-security,
+.fg-heritage-door-colours,
+.fg-heritage-door-enquiry {
+  padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
+}
+
+.fg-heritage-door-hero__grid,
+.fg-heritage-door-detail__grid,
+.fg-heritage-door-frame__grid,
+.fg-heritage-door-security__grid,
+.fg-heritage-door-enquiry__grid {
+  display: grid;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+.fg-heritage-door-hero__grid {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.fg-heritage-door-hero h1 {
+  max-width: 15ch;
+  margin-bottom: 0.9rem;
+  color: var(--color-ink);
+  font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max));
+  line-height: 1.02;
+}
+
+.fg-heritage-door-hero__lead {
+  max-width: 46ch;
+  color: var(--color-muted);
+  font-size: clamp(1.02rem, 1.25vw, 1.16rem);
+  line-height: 1.56;
+}
+
+.fg-heritage-door-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.4rem 0 1.15rem;
+}
+
+.fg-heritage-door-hero__call {
+  color: var(--color-ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.fg-heritage-door-hero__call:hover {
+  color: var(--color-accent-dark);
+}
+
+.fg-heritage-door-hero__reassurance,
+.fg-heritage-door-enquiry__copy ul {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-heritage-door-hero__reassurance li,
+.fg-heritage-door-enquiry__copy li {
+  position: relative;
+  padding-left: 1.45rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.fg-heritage-door-hero__reassurance li::before,
+.fg-heritage-door-enquiry__copy li::before {
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  content: '';
+}
+
+.fg-heritage-door-hero__media {
+  position: relative;
+  width: min(100%, 620px);
+  aspect-ratio: 6 / 5;
+  margin: 0;
+  justify-self: end;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-steel);
+}
+
+.fg-heritage-door-hero__media img,
+.fg-heritage-door-security__media img,
+.fg-heritage-door-use figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-heritage-door-hero__media figcaption {
+  position: absolute;
+  z-index: 1;
+  bottom: 1.1rem;
+  left: 1.2rem;
+  display: inline-block;
+  padding: 0.55rem 0.7rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Specification summary strip */
+
+.fg-heritage-door-brief {
+  padding-bottom: clamp(1.5rem, 3.5vh, 2.25rem);
+}
+
+.fg-heritage-door-brief__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid rgba(15, 49, 54, 0.15);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.fg-heritage-door-brief p {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem 1.1rem;
+  margin: 0;
+  border-right: 1px solid rgba(15, 49, 54, 0.12);
+}
+
+.fg-heritage-door-brief p:last-child {
+  border-right: 0;
+}
+
+.fg-heritage-door-brief strong {
+  color: var(--color-ink);
+  font-size: 0.95rem;
+}
+
+.fg-heritage-door-brief span {
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+/* Nine stocked configurations */
+
+.fg-heritage-door-configurations {
+  padding: clamp(2rem, 4vh, 2.75rem) 0;
+}
+
+.fg-heritage-door-configurations__heading,
+.fg-heritage-door-colours__heading,
+.fg-heritage-door-use__heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 6vw, 7rem);
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.fg-heritage-door-configurations__heading .eyebrow,
+.fg-heritage-door-colours__heading .eyebrow,
+.fg-heritage-door-use__heading .eyebrow {
+  grid-column: 1 / -1;
+}
+
+.fg-heritage-door-configurations__heading h2,
+.fg-heritage-door-colours__heading h2,
+.fg-heritage-door-use__heading h2,
+.fg-heritage-door-detail__copy h2,
+.fg-heritage-door-frame__copy h2,
+.fg-heritage-door-security__copy h2,
+.fg-heritage-door-enquiry h2 {
+  max-width: 20ch;
+  margin-bottom: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  line-height: 1.1;
+}
+
+.fg-heritage-door-configurations__heading p:not(.eyebrow),
+.fg-heritage-door-colours__heading p:not(.eyebrow) {
+  max-width: 56ch;
+  margin-bottom: 0.2rem;
+  color: var(--color-muted);
+  line-height: 1.56;
+}
+
+.fg-heritage-door-configurations__carousel {
+  width: min(100%, 1060px);
+}
+
+.fg-heritage-door-configurations__carousel .fg-colour-carousel__viewport {
+  min-height: clamp(400px, 34vw, 450px);
+}
+
+.fg-heritage-door-configurations__slide {
+  width: min(30%, 250px);
+}
+
+/* The nine renders share one crop window so their relative heights stay
+   honest. Contain rather than cover, and match the render background. */
+.fg-heritage-door-configurations__slide img {
+  height: auto;
+  aspect-ratio: 56 / 87;
+  background: #f3f3f3;
+  object-fit: contain;
+}
+
+.fg-heritage-door-configurations__slide > div {
+  min-height: 96px;
+  padding: 0.7rem 0.9rem 0.8rem;
+}
+
+.fg-heritage-door-configurations__slide h3 {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+}
+
+.fg-heritage-door-configurations__slide p {
+  font-size: 0.86rem;
+}
+
+/* Period details: lockbox and glazing bar */
+
+.fg-heritage-door-detail__grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+}
+
+.fg-heritage-door-detail__copy p:not(.eyebrow) {
+  max-width: 52ch;
+  margin-top: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.fg-heritage-door-detail__visuals {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(0.85rem, 1.6vw, 1.25rem);
+  align-items: start;
+}
+
+.fg-heritage-door-detail__visuals figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(15, 49, 54, 0.12);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-heritage-door-detail__visuals img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-heritage-door-detail__lockbox {
+  aspect-ratio: 1;
+}
+
+.fg-heritage-door-detail__bar {
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+  aspect-ratio: 3 / 4;
+}
+
+.fg-heritage-door-detail__visuals figcaption {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* Inside the frame: Thermlock and corner joint */
+
+.fg-heritage-door-frame__grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+}
+
+.fg-heritage-door-frame__copy > p {
+  max-width: 50ch;
+  margin-top: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.fg-heritage-door-frame__visuals {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(0.85rem, 1.6vw, 1.25rem);
+  align-items: center;
+}
+
+.fg-heritage-door-frame__visuals figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #0b1f24;
+}
+
+.fg-heritage-door-frame__visuals img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.fg-heritage-door-frame__points {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.4rem 0 0;
+}
+
+.fg-heritage-door-frame__points div {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(15, 49, 54, 0.14);
+}
+
+.fg-heritage-door-frame__points dt {
+  color: var(--color-ink);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.fg-heritage-door-frame__points dd {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+/* Where they work */
+
+.fg-heritage-door-use__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.fg-heritage-door-use article {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid rgba(15, 49, 54, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.fg-heritage-door-use figure {
+  margin: 0;
+  aspect-ratio: 16 / 10;
+}
+
+.fg-heritage-door-use__copy {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.fg-heritage-door-use__copy span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--color-accent-dark);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-heritage-door-use__copy h3 {
+  margin-bottom: 0.5rem;
+  color: var(--color-ink);
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+  line-height: 1.15;
+}
+
+.fg-heritage-door-use__copy p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+/* Security */
+
+.fg-heritage-door-security__grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+}
+
+.fg-heritage-door-security__copy p:not(.eyebrow) {
+  max-width: 52ch;
+  margin-top: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.fg-heritage-door-security__copy .button {
+  margin-top: 1.35rem;
+}
+
+.fg-heritage-door-security__media {
+  margin: 0;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-steel);
+}
+
+/* Twelve standard colours */
+
+.fg-heritage-door-colours__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.4vw, 1.1rem);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-heritage-door-colours__grid li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.65rem 0.7rem 0.8rem;
+  border: 1px solid rgba(15, 49, 54, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.82);
+  text-align: center;
+}
+
+.fg-heritage-door-colours__grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 44 / 43;
+  margin-bottom: 0.3rem;
+  object-fit: contain;
+}
+
+.fg-heritage-door-colours__grid strong {
+  color: var(--color-ink);
+  font-size: 0.86rem;
+  line-height: 1.25;
+}
+
+.fg-heritage-door-colours__grid span {
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+.fg-heritage-door-colours__note {
+  max-width: 68ch;
+  margin: 1.2rem 0 0;
+  color: var(--color-muted);
+  line-height: 1.58;
+}
+
+/* Enquiry */
+
+.fg-heritage-door-enquiry__grid {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+}
+
+.fg-heritage-door-enquiry__copy p:not(.eyebrow) {
+  max-width: 46ch;
+  margin: 0.9rem 0 1.2rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.fg-heritage-door-enquiry__form {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid rgba(15, 49, 54, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fg-heritage-door-page .fg-review-showcase {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (max-width: 1080px) {
+  .fg-heritage-door-colours__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-heritage-door-hero,
+  .fg-heritage-door-detail,
+  .fg-heritage-door-frame,
+  .fg-heritage-door-use,
+  .fg-heritage-door-security,
+  .fg-heritage-door-colours,
+  .fg-heritage-door-enquiry {
+    padding: 2.5rem 0;
+  }
+
+  .fg-heritage-door-hero__grid,
+  .fg-heritage-door-detail__grid,
+  .fg-heritage-door-frame__grid,
+  .fg-heritage-door-security__grid,
+  .fg-heritage-door-enquiry__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Copy leads on mobile; the frame cut-throughs support it rather than open it. */
+  .fg-heritage-door-frame__visuals {
+    order: 2;
+  }
+
+  .fg-heritage-door-hero__media {
+    width: min(100%, 440px);
+    aspect-ratio: 4 / 3;
+    justify-self: start;
+  }
+
+  .fg-heritage-door-brief__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-heritage-door-brief p:nth-child(2) {
+    border-right: 0;
+  }
+
+  .fg-heritage-door-brief p:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(15, 49, 54, 0.12);
+  }
+
+  .fg-heritage-door-configurations__heading,
+  .fg-heritage-door-colours__heading,
+  .fg-heritage-door-use__heading {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .fg-heritage-door-use__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-heritage-door-security__media {
+    width: min(100%, 440px);
+    aspect-ratio: 4 / 3;
+  }
+
+  .fg-heritage-door-enquiry__form {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .fg-heritage-door-hero {
+    padding: 1.75rem 0;
+  }
+
+  .fg-heritage-door-hero h1 {
+    max-width: 13ch;
+    font-size: clamp(2.2rem, 10.5vw, 3rem);
+  }
+
+  .fg-heritage-door-hero__actions {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .fg-heritage-door-hero__actions .button {
+    width: 100%;
+  }
+
+  .fg-heritage-door-hero__media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .fg-heritage-door-brief__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-heritage-door-brief p,
+  .fg-heritage-door-brief p:nth-child(2) {
+    border-right: 0;
+    border-bottom: 1px solid rgba(15, 49, 54, 0.12);
+  }
+
+  .fg-heritage-door-brief p:last-child {
+    border-bottom: 0;
+  }
+
+  .fg-heritage-door-configurations {
+    padding: 2.25rem 0;
+  }
+
+  .fg-heritage-door-configurations__carousel .fg-colour-carousel__viewport {
+    min-height: 380px;
+  }
+
+  .fg-heritage-door-configurations__slide {
+    width: min(52vw, 210px);
+  }
+
+  .fg-heritage-door-configurations__slide > div {
+    min-height: 84px;
+  }
+
+  /* The bar macro is a supporting crop, so stack it under the lockbox at
+     phone width rather than squeezing two figures into one row. */
+  .fg-heritage-door-detail__visuals {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-heritage-door-detail__bar {
+    margin-top: 0;
+    aspect-ratio: 3 / 2;
+  }
+
+  .fg-heritage-door-frame__visuals {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fg-heritage-door-colours__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fg-heritage-door-security__copy .button {
+    width: 100%;
+  }
+
+  .fg-heritage-door-detail__copy h2,
+  .fg-heritage-door-frame__copy h2,
+  .fg-heritage-door-security__copy h2,
+  .fg-heritage-door-colours__heading h2,
+  .fg-heritage-door-enquiry h2 {
+    max-width: 16ch;
+  }
 }

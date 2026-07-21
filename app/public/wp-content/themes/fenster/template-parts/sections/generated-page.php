@@ -1823,6 +1823,15 @@ if ($slug === 'roof-lanterns') {
     return;
 }
 
+if ($slug === 'heritage-aluminium-doors') {
+    get_template_part('template-parts/sections/heritage-aluminium-doors', null, [
+        'page' => $page,
+        'title' => $title,
+        'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
 if ($slug === 'flat-rooflights') {
     get_template_part('template-parts/sections/flat-rooflights', null, [
         'page' => $page,
