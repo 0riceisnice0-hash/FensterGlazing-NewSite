@@ -417,13 +417,15 @@ if ($is_composite_doors) {
     // Construction facts sourced from the Distinction technical material and
     // rewritten in the Fenster voice (see TONEOFVOICE.md). Do not invent specs.
     $composite_anatomy = [
+        'image' => $composite_asset_base . 'anatomy/slab-cutaway-428w.webp',
+        'image_alt' => 'Cutaway illustration of a Distinction composite door slab showing the layers behind the GRP skin',
         'layers' => [
-            ['name' => 'GRP skin', 'slug' => 'grp-skin', 'image' => $composite_asset_base . 'anatomy/grp-skin-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the GRP skin', 'copy' => 'Compression-moulded glass reinforced polyester with a woodgrain taken from real oak. It does not crack, flake or need repainting.'],
-            ['name' => 'Water-resistant polymer edges', 'slug' => 'polymer-edges', 'image' => $composite_asset_base . 'anatomy/polymer-edges-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the water-resistant polymer rails', 'copy' => 'The rails bonded to the skin are polymer, not timber, so the door cannot drink rainwater and bow the way solid-timber-core doors can.'],
-            ['name' => 'Engineered wood stiles', 'slug' => 'engineered-wood', 'image' => $composite_asset_base . 'anatomy/engineered-wood-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the engineered wood stiles', 'copy' => 'Engineered rather than sawn timber, so the slab stays stable through wet winters and warm summers.'],
-            ['name' => 'Reinforced central board', 'slug' => 'reinforced-board', 'image' => $composite_asset_base . 'anatomy/reinforced-board-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the reinforced central board', 'copy' => 'A reinforced board through the middle keeps the door solid under force.'],
-            ['name' => 'Foam-filled core', 'slug' => 'foam-core', 'image' => $composite_asset_base . 'anatomy/foam-core-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the foam-filled insulating core', 'copy' => 'CFC-free polyurethane insulation fills the slab. It is the main reason the door holds heat so well.'],
-            ['name' => 'Decorative glass', 'slug' => 'decorative-glass', 'image' => $composite_asset_base . 'anatomy/decorative-glass-428w.webp', 'alt' => 'Cutaway of the composite door slab highlighting the decorative glazing cassette', 'copy' => 'Most designs are triple glazed and laminated as standard; Chatsworth and Wentworth are double glazed. We tell you which is which before you order.'],
+            ['name' => 'GRP skin', 'copy' => 'Compression-moulded glass reinforced polyester with a woodgrain taken from real oak. It does not crack, flake or need repainting.'],
+            ['name' => 'Water-resistant polymer edges', 'copy' => 'The rails bonded to the skin are polymer, not timber, so the door cannot drink rainwater and bow the way solid-timber-core doors can.'],
+            ['name' => 'Engineered wood stiles', 'copy' => 'Engineered rather than sawn timber, so the slab stays stable through wet winters and warm summers.'],
+            ['name' => 'Reinforced central board', 'copy' => 'A reinforced board through the middle keeps the door solid under force.'],
+            ['name' => 'Foam-filled core', 'copy' => 'CFC-free polyurethane insulation fills the slab. It is the main reason the door holds heat so well.'],
+            ['name' => 'Decorative glass', 'copy' => 'Most designs are triple glazed and laminated as standard; Chatsworth and Wentworth are double glazed. We tell you which is which before you order.'],
         ],
         'stats' => [
             ['value' => '44.5mm', 'label' => 'insulated slab; a typical uPVC door panel is 28mm'],
@@ -458,6 +460,67 @@ if ($is_composite_doors) {
         (array) fenster_data('colour_options.materials.composite.colours', []),
         static fn ($colour): bool => is_array($colour) && ! empty($colour['slug'])
     ));
+    // The Distinction style catalogue, built from the scrape by
+    // scripts/build-composite-door-wall.py. Names come from the Distinction
+    // Signature and Contemporary product pages; do not invent style names.
+    $composite_styles_base = $composite_asset_base . 'styles/';
+    $composite_door_styles = [
+        ['slug' => 'retail-cottage', 'name' => 'Retail Cottage', 'collection' => 'Signature'],
+        ['slug' => 'elegance', 'name' => 'Elegance', 'collection' => 'Signature'],
+        ['slug' => 'classical', 'name' => 'Classical', 'collection' => 'Signature'],
+        ['slug' => 'renown-diamond', 'name' => 'Renown Diamond', 'collection' => 'Signature'],
+        ['slug' => 'eclat-arch', 'name' => 'Eclat Arch', 'collection' => 'Signature'],
+        ['slug' => 'esteem', 'name' => 'Esteem', 'collection' => 'Signature'],
+        ['slug' => 'infinity-gd12', 'name' => 'Infinity GD12', 'collection' => 'Contemporary'],
+        ['slug' => 'new-england', 'name' => 'New England', 'collection' => 'Signature'],
+        ['slug' => 'elegance-arch-grid', 'name' => 'Elegance Arch with Grid', 'collection' => 'Signature'],
+        ['slug' => 'renown-full-moon', 'name' => 'Renown Full Moon', 'collection' => 'Signature'],
+        ['slug' => '6-panel', 'name' => '6 Panel', 'collection' => 'Signature'],
+        ['slug' => 'eclat', 'name' => 'Eclat', 'collection' => 'Signature'],
+        ['slug' => 'esprit-esc19', 'name' => 'Esprit ESC19', 'collection' => 'Contemporary'],
+        ['slug' => 'renown', 'name' => 'Renown', 'collection' => 'Signature'],
+        ['slug' => 'classical-half-glazed', 'name' => 'Classical Half Glazed', 'collection' => 'Signature'],
+        ['slug' => 'esteem-arch', 'name' => 'Esteem Arch', 'collection' => 'Signature'],
+        ['slug' => 'new-england-quarter', 'name' => 'New England Quarter', 'collection' => 'Signature'],
+        ['slug' => 'infinity-gd01', 'name' => 'Infinity GD01', 'collection' => 'Contemporary'],
+        ['slug' => 'elegance-grid', 'name' => 'Elegance with Grid', 'collection' => 'Signature'],
+        ['slug' => 'renown-top', 'name' => 'Renown Top', 'collection' => 'Signature'],
+        ['slug' => 'eclat-craftsman', 'name' => 'Eclat Craftsman', 'collection' => 'Signature'],
+        ['slug' => '9-panel', 'name' => '9 Panel', 'collection' => 'Signature'],
+        ['slug' => 'elegance-arch', 'name' => 'Elegance Arch', 'collection' => 'Signature'],
+        ['slug' => 'eclat-craftsman-half-glazed', 'name' => 'Eclat Craftsman Half Glazed', 'collection' => 'Signature'],
+        ['slug' => 'esteem-eyebrow', 'name' => 'Esteem Eyebrow', 'collection' => 'Signature'],
+        ['slug' => 'eclat-arch-grid', 'name' => 'Eclat Arch with Grid', 'collection' => 'Signature'],
+        ['slug' => 'esp01-flush', 'name' => 'ESP01 Flush', 'collection' => 'Signature'],
+    ];
+    // Distinction's own paint range, photographed as brush strokes. RAL and BS
+    // references are the ones printed in the Distinction brochure.
+    $composite_palette_base = $composite_asset_base . 'palette/';
+    $composite_palette = [
+        ['slug' => 'standard-black', 'name' => 'Standard Black', 'ref' => ''],
+        ['slug' => 'anthracite-grey', 'name' => 'Anthracite Grey', 'ref' => ''],
+        ['slug' => 'slate-grey', 'name' => 'Slate Grey', 'ref' => ''],
+        ['slug' => 'basalt-grey', 'name' => 'Basalt Grey', 'ref' => ''],
+        ['slug' => 'buckingham-grey', 'name' => 'Buckingham Grey', 'ref' => ''],
+        ['slug' => 'chartwell-green', 'name' => 'Chartwell', 'ref' => ''],
+        ['slug' => 'standard-green', 'name' => 'Standard Green', 'ref' => ''],
+        ['slug' => 'pale-green', 'name' => 'Pale Green', 'ref' => 'RAL 6021'],
+        ['slug' => 'leaf-green', 'name' => 'Leaf Green', 'ref' => 'RAL 6002'],
+        ['slug' => 'standard-blue', 'name' => 'Standard Blue', 'ref' => ''],
+        ['slug' => 'distant-blue', 'name' => 'Distant Blue', 'ref' => 'RAL 5023'],
+        ['slug' => 'steel-blue', 'name' => 'Steel Blue', 'ref' => ''],
+        ['slug' => 'ultramarine-blue', 'name' => 'Ultramarine Blue', 'ref' => 'RAL 5002'],
+        ['slug' => 'turquoise-blue', 'name' => 'Turquoise Blue', 'ref' => 'RAL 5018'],
+        ['slug' => 'standard-red', 'name' => 'Standard Red', 'ref' => ''],
+        ['slug' => 'traffic-red', 'name' => 'Traffic Red', 'ref' => 'RAL 3020'],
+        ['slug' => 'wine-red', 'name' => 'Wine Red', 'ref' => 'RAL 3005'],
+        ['slug' => 'telemagenta', 'name' => 'Telemagenta', 'ref' => 'RAL 4010'],
+        ['slug' => 'purple-violet', 'name' => 'Purple Violet', 'ref' => 'RAL 4007'],
+        ['slug' => 'colza-yellow', 'name' => 'Colza Yellow', 'ref' => 'RAL 1021'],
+        ['slug' => 'black-brown', 'name' => 'Black Brown', 'ref' => ''],
+        ['slug' => 'gold-oak', 'name' => 'Gold Oak', 'ref' => 'Woodgrain stain'],
+        ['slug' => 'rosewood', 'name' => 'Rosewood', 'ref' => 'Woodgrain stain'],
+    ];
     $composite_door_glass = [
         ['name' => 'Lunna', 'slug' => 'lunna', 'copy' => 'Decorative zinc lines and textured glass with a traditional feel.'],
         ['name' => 'Chatsworth', 'slug' => 'chatsworth', 'copy' => 'A restrained satin privacy centre with a fine clear border.'],
@@ -2939,6 +3002,10 @@ if ($is_commercial_hub) {
             'glass' => $composite_door_glass,
             'handles' => $door_handle_finishes,
             'anatomy' => $composite_anatomy,
+            'styles' => $composite_door_styles,
+            'styles_base' => $composite_styles_base,
+            'palette' => $composite_palette,
+            'palette_base' => $composite_palette_base,
             'asset_base' => $composite_asset_base,
         ]);
         ?>

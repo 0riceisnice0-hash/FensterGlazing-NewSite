@@ -16,6 +16,10 @@ $colours = is_array($args['colours'] ?? null) ? array_values($args['colours']) :
 $glass_styles = is_array($args['glass'] ?? null) ? array_values($args['glass']) : [];
 $handle_finishes = is_array($args['handles'] ?? null) ? array_values($args['handles']) : [];
 $anatomy = is_array($args['anatomy'] ?? null) ? $args['anatomy'] : [];
+$door_styles = is_array($args['styles'] ?? null) ? array_values($args['styles']) : [];
+$styles_base = (string) ($args['styles_base'] ?? '');
+$palette = is_array($args['palette'] ?? null) ? array_values($args['palette']) : [];
+$palette_base = (string) ($args['palette_base'] ?? '');
 $asset_base = (string) ($args['asset_base'] ?? '');
 
 if (empty($collections) || empty($colours) || empty($glass_styles)) {
@@ -81,6 +85,45 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     </div>
 </section>
 
+<?php if (! empty($door_styles)) : ?>
+    <?php
+    // The wall drifts on desktop, so the list is rendered twice to make the
+    // loop seamless. The clone is hidden from assistive tech and from mobile,
+    // where the viewport becomes a normal scroll-snap rail instead.
+    $wall_passes = [false, true];
+    ?>
+    <section class="fg-cd3-wall" aria-labelledby="fg-cd3-wall-title">
+        <div class="container">
+            <header class="fg-cd3-head">
+                <p class="eyebrow"><?php esc_html_e('The style range', 'fenster'); ?></p>
+                <h2 id="fg-cd3-wall-title"><?php esc_html_e('The range runs to over 300 door styles.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('These are real Distinction door faces, not illustrations. Every one is made to order in your colour, with your glass and your handles. If one catches your eye, tell us the name and we will price that exact door.', 'fenster'); ?></p>
+            </header>
+        </div>
+        <div class="fg-cd3-wall__viewport">
+            <ul class="fg-cd3-wall__track">
+                <?php foreach ($wall_passes as $is_clone) : ?>
+                    <?php foreach ($door_styles as $style) : ?>
+                        <?php $stem = $styles_base . (string) $style['slug']; ?>
+                        <li class="fg-cd3-door<?php echo $is_clone ? ' is-clone' : ''; ?>"<?php echo $is_clone ? ' aria-hidden="true"' : ''; ?>>
+                            <img
+                                src="<?php echo esc_url(fenster_generated_url($stem . '-300w.webp')); ?>"
+                                srcset="<?php echo esc_attr(fenster_generated_url($stem . '-300w.webp') . ' 300w, ' . fenster_generated_url($stem . '-600w.webp') . ' 600w'); ?>"
+                                sizes="180px"
+                                alt="<?php echo esc_attr(sprintf(__('Distinction %1$s composite door, %2$s collection', 'fenster'), (string) $style['name'], (string) $style['collection'])); ?>"
+                                loading="lazy" width="300" height="734">
+                            <span class="fg-cd3-door__label">
+                                <strong><?php echo esc_html((string) $style['name']); ?></strong>
+                                <small><?php echo esc_html((string) $style['collection']); ?></small>
+                            </span>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </section>
+<?php endif; ?>
+
 <?php if (! empty($gallery)) : ?>
     <section class="fg-cd3-gallery" aria-labelledby="fg-cd3-gallery-title">
         <div class="container">
@@ -115,32 +158,25 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
 <?php endif; ?>
 
 <?php if (! empty($anatomy['layers'])) : ?>
-    <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title" data-fg-cd-anatomy>
+    <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title">
         <div class="container">
             <div class="fg-cd3-anatomy__panel">
                 <div class="fg-cd3-anatomy__intro">
                     <p class="eyebrow"><?php esc_html_e('Construction', 'fenster'); ?></p>
                     <h2 id="fg-cd3-anatomy-title"><?php esc_html_e('What is inside the slab.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. Pick a layer and the diagram points at it.', 'fenster'); ?></p>
-                    <figure class="fg-cd3-anatomy__media" aria-live="polite">
-                        <?php foreach ($anatomy['layers'] as $index => $layer) : ?>
-                            <img
-                                src="<?php echo esc_url(fenster_generated_url((string) $layer['image'])); ?>"
-                                alt="<?php echo esc_attr((string) $layer['alt']); ?>"
-                                loading="lazy"
-                                width="428" height="480"
-                                data-fg-cd-anatomy-image="<?php echo esc_attr((string) $index); ?>"
-                                class="<?php echo $index === 0 ? 'is-active' : ''; ?>">
-                        <?php endforeach; ?>
+                    <p><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. This is the actual build of a Distinction slab, layer by layer.', 'fenster'); ?></p>
+                    <figure class="fg-cd3-anatomy__media">
+                        <img
+                            src="<?php echo esc_url(fenster_generated_url((string) $anatomy['image'])); ?>"
+                            alt="<?php echo esc_attr((string) $anatomy['image_alt']); ?>"
+                            loading="lazy" width="428" height="480">
                     </figure>
                 </div>
                 <ol class="fg-cd3-anatomy__layers">
-                    <?php foreach ($anatomy['layers'] as $index => $layer) : ?>
+                    <?php foreach ($anatomy['layers'] as $layer) : ?>
                         <li>
-                            <button type="button" data-fg-cd-anatomy-layer="<?php echo esc_attr((string) $index); ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
-                                <h3><?php echo esc_html((string) $layer['name']); ?></h3>
-                                <p><?php echo esc_html((string) $layer['copy']); ?></p>
-                            </button>
+                            <h3><?php echo esc_html((string) $layer['name']); ?></h3>
+                            <p><?php echo esc_html((string) $layer['copy']); ?></p>
                         </li>
                     <?php endforeach; ?>
                 </ol>
@@ -311,3 +347,33 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
         </div>
     </div>
 </section>
+
+<?php if (! empty($palette)) : ?>
+    <section class="fg-cd3-palette" aria-labelledby="fg-cd3-palette-title">
+        <div class="container">
+            <header class="fg-cd3-head fg-cd3-head--wide">
+                <p class="eyebrow"><?php esc_html_e('The paint range', 'fenster'); ?></p>
+                <h2 id="fg-cd3-palette-title"><?php esc_html_e('The colours, photographed as actual paint.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Distinction mix their own range rather than buying it in. These are the real colours shot as paint, not flat blocks generated on a screen. Screens still shift a shade or two, so we bring physical samples to your survey before anything is ordered.', 'fenster'); ?></p>
+            </header>
+            <ul class="fg-cd3-palette__grid">
+                <?php foreach ($palette as $colour) : ?>
+                    <?php $stem = $palette_base . (string) $colour['slug']; ?>
+                    <li class="fg-cd3-paint">
+                        <img
+                            src="<?php echo esc_url(fenster_generated_url($stem . '-160w.webp')); ?>"
+                            srcset="<?php echo esc_attr(fenster_generated_url($stem . '-160w.webp') . ' 160w, ' . fenster_generated_url($stem . '-320w.webp') . ' 320w'); ?>"
+                            sizes="120px"
+                            alt="<?php echo esc_attr(sprintf(__('%s composite door paint', 'fenster'), (string) $colour['name'])); ?>"
+                            loading="lazy" width="160" height="160">
+                        <strong><?php echo esc_html((string) $colour['name']); ?></strong>
+                        <?php if (! empty($colour['ref'])) : ?>
+                            <small><?php echo esc_html((string) $colour['ref']); ?></small>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <p class="fg-cd3-palette__note"><?php esc_html_e('You can have one colour on the outside and a different one facing your hallway. Woodgrain stains are single sided.', 'fenster'); ?></p>
+        </div>
+    </section>
+<?php endif; ?>

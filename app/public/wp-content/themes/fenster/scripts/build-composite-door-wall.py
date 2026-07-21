@@ -1,0 +1,124 @@
+"""Build the composite door wall and paint palette assets.
+
+Source: the owner-supplied Distinction Doors scrape at
+    C:\\Users\\zacpl\\Documents\\Codex\\2026-06-04\\i-need-you-to-build-a\\outputs\\distinctiondoors_scrape
+
+Outputs (committed to the theme, so the scrape is never a runtime dependency):
+    assets/images/products/composite-distinction/styles/<slug>-{300,600}w.webp
+    assets/images/products/composite-distinction/palette/<slug>-{160,320}w.webp
+
+Style names are taken from the Distinction Signature and Contemporary product
+pages in the same scrape; do not invent names for door codes that are not
+listed there.
+
+Run:  python scripts/build-composite-door-wall.py
+"""
+
+import os
+
+from PIL import Image
+
+SCRAPE = (
+    r"C:\Users\zacpl\Documents\Codex\2026-06-04\i-need-you-to-build-a"
+    r"\outputs\distinctiondoors_scrape\images"
+)
+THEME = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+STYLES_OUT = os.path.join(
+    THEME, "assets", "images", "products", "composite-distinction", "styles"
+)
+PALETTE_OUT = os.path.join(
+    THEME, "assets", "images", "products", "composite-distinction", "palette"
+)
+
+# (source file, slug, visible style name, collection)
+DOORS = [
+    ("sign_CL01-6panel.jpg", "6-panel", "6 Panel", "Signature"),
+    ("sign_CL02-classical.jpg", "classical", "Classical", "Signature"),
+    ("sign_CL03-classical-half-glazed.jpg", "classical-half-glazed", "Classical Half Glazed", "Signature"),
+    ("sign_EC01-eclat.jpg", "eclat", "Eclat", "Signature"),
+    ("sign_EC02-eclat-arch.jpg", "eclat-arch", "Eclat Arch", "Signature"),
+    ("sign_EC04-eclat-arch.jpg", "eclat-arch-grid", "Eclat Arch with Grid", "Signature"),
+    ("sign_EC05-eclat-craftsman.jpg", "eclat-craftsman", "Eclat Craftsman", "Signature"),
+    ("sign_EC06-eclat-craftsman-half-glaze.jpg", "eclat-craftsman-half-glazed", "Eclat Craftsman Half Glazed", "Signature"),
+    ("sign_EL01-elegance.jpg", "elegance", "Elegance", "Signature"),
+    ("sign_EL02-elegance-arch.jpg", "elegance-arch", "Elegance Arch", "Signature"),
+    ("sign_EL05-elegance-with-grid.jpg", "elegance-grid", "Elegance with Grid", "Signature"),
+    ("sign_EL06-elegance-arch-with-grid.jpg", "elegance-arch-grid", "Elegance Arch with Grid", "Signature"),
+    ("sign_ES01-new-england.jpg", "new-england", "New England", "Signature"),
+    ("sign_ES02-esteem.jpg", "esteem", "Esteem", "Signature"),
+    ("sign_ES03-esteem-arch.jpg", "esteem-arch", "Esteem Arch", "Signature"),
+    ("sign_ES04-esteem-eyebrow-1.jpg", "esteem-eyebrow", "Esteem Eyebrow", "Signature"),
+    ("sign_ES10-new-england-quarter-scaled.jpg", "new-england-quarter", "New England Quarter", "Signature"),
+    ("sign_ESP01-flush.jpg", "esp01-flush", "ESP01 Flush", "Signature"),
+    ("sign_PR01-9panel.jpg", "9-panel", "9 Panel", "Signature"),
+    ("sign_RE01-cottage-scaled.jpg", "retail-cottage", "Retail Cottage", "Signature"),
+    ("sign_RE02-renown-scaled.jpg", "renown", "Renown", "Signature"),
+    ("sign_RE03-renown-diamond-scaled.jpg", "renown-diamond", "Renown Diamond", "Signature"),
+    ("sign_RE04-renown-top-scaled.jpg", "renown-top", "Renown Top", "Signature"),
+    ("sign_RE06-renown-full-moon-horizontal-scaled.jpg", "renown-full-moon", "Renown Full Moon", "Signature"),
+    ("ESC19C_Duck-Egg.jpg", "esprit-esc19", "Esprit ESC19", "Contemporary"),
+    ("GD01-70-Slate.jpg", "infinity-gd01", "Infinity GD01", "Contemporary"),
+    ("GD12-Purple-Violet.jpg", "infinity-gd12", "Infinity GD12", "Contemporary"),
+]
+
+# Distinction's own paint range, photographed as brush strokes.
+# (source file, slug, visible colour name)
+PALETTE = [
+    ("Standard-Black-min.png", "standard-black", "Standard Black"),
+    ("Premium-Anthracite-Grey-min.png", "anthracite-grey", "Anthracite Grey"),
+    ("Distinction-Slate-Grey-min.png", "slate-grey", "Slate Grey"),
+    ("Distinction-Basalt-Grey-min.png", "basalt-grey", "Basalt Grey"),
+    ("Distinction-Buckingham-Grey-min.png", "buckingham-grey", "Buckingham Grey"),
+    ("Premium-Distinction-Chartwell-min.png", "chartwell-green", "Chartwell Green"),
+    ("Standard-Green-min.png", "standard-green", "Standard Green"),
+    ("pale-Green-min.png", "pale-green", "Pale Green"),
+    ("leaf-green-min.png", "leaf-green", "Leaf Green"),
+    ("Standard-Blue-min.png", "standard-blue", "Standard Blue"),
+    ("Distant-Blue-min.png", "distant-blue", "Distant Blue"),
+    ("Distinction-Steel-Blue-min.png", "steel-blue", "Steel Blue"),
+    ("Ultramarine-Blue-min.png", "ultramarine-blue", "Ultramarine Blue"),
+    ("Turquoise-Blue-min.png", "turquoise-blue", "Turquoise Blue"),
+    ("Standard-Red-min.png", "standard-red", "Standard Red"),
+    ("Traffic-Red-min.png", "traffic-red", "Traffic Red"),
+    ("Distinction-Wine-Red-min.png", "wine-red", "Wine Red"),
+    ("Telemagenta-min.png", "telemagenta", "Telemagenta"),
+    ("Purple-Violet-min.png", "purple-violet", "Purple Violet"),
+    ("Colza-Yellow-min.png", "colza-yellow", "Colza Yellow"),
+    ("Distinction-Black-Brown-min.png", "black-brown", "Black Brown"),
+    ("Gold-Oak-Stain-min.png", "gold-oak", "Gold Oak Stain"),
+    ("Rosewood-Stain-min.png", "rosewood", "Rosewood Stain"),
+]
+
+
+def flatten(image):
+    """Composite any alpha onto white so JPEG-style sources stay consistent."""
+    image = image.convert("RGBA")
+    canvas = Image.new("RGBA", image.size, (255, 255, 255, 255))
+    canvas.alpha_composite(image)
+    return canvas.convert("RGB")
+
+
+def build(entries, out_dir, widths, quality=82):
+    os.makedirs(out_dir, exist_ok=True)
+    total = 0
+    for source, slug, *_rest in entries:
+        path = os.path.join(SCRAPE, source)
+        if not os.path.exists(path):
+            print("MISSING", source)
+            continue
+        image = flatten(Image.open(path))
+        for width in widths:
+            height = round(image.height * width / image.width)
+            out = os.path.join(out_dir, f"{slug}-{width}w.webp")
+            image.resize((width, height), Image.LANCZOS).save(
+                out, "WEBP", quality=quality, method=6
+            )
+            total += os.path.getsize(out)
+    return total
+
+
+if __name__ == "__main__":
+    doors = build(DOORS, STYLES_OUT, (300, 600))
+    print(f"{len(DOORS)} door styles -> {STYLES_OUT} ({doors / 1024:.0f} KB)")
+    palette = build(PALETTE, PALETTE_OUT, (160, 320))
+    print(f"{len(PALETTE)} paint colours -> {PALETTE_OUT} ({palette / 1024:.0f} KB)")

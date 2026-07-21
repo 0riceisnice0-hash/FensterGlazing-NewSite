@@ -986,20 +986,6 @@ document.querySelectorAll('[data-fg-cd-config]').forEach((config) => {
   if (tabs.length) activate('colour');
 });
 
-document.querySelectorAll('[data-fg-cd-anatomy]').forEach((section) => {
-  const layers = [...section.querySelectorAll('[data-fg-cd-anatomy-layer]')];
-  const images = [...section.querySelectorAll('[data-fg-cd-anatomy-image]')];
-
-  if (!layers.length || !images.length) return;
-
-  const activate = (target) => {
-    layers.forEach((layer) => layer.setAttribute('aria-pressed', layer.dataset.fgCdAnatomyLayer === target ? 'true' : 'false'));
-    images.forEach((image) => image.classList.toggle('is-active', image.dataset.fgCdAnatomyImage === target));
-  };
-
-  layers.forEach((layer) => layer.addEventListener('click', () => activate(layer.dataset.fgCdAnatomyLayer || '0')));
-});
-
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');
