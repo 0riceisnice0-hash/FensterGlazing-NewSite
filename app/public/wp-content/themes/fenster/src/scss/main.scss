@@ -1546,6 +1546,23 @@ h3 {
   text-underline-offset: 0.2em;
 }
 
+/* While the Legend chat drawer is open it owns the viewport. The banner would
+   otherwise float above the drawer and bury the chat composer on mobile. The
+   choice is only deferred: closing the chat brings the banner straight back,
+   and no optional tracking loads without acceptance in the meantime. */
+.legend-chat-open .fg-cookie-consent {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@media (max-width: 860px) {
+  .fg-cookie-consent .button {
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+  }
+}
+
 /* Legend AI assistant preview. Kept separate from consent controls and enquiry forms. */
 .legend-assistant {
   position: fixed;
@@ -1555,6 +1572,10 @@ h3 {
   display: grid;
   justify-items: end;
   font-family: var(--font-body);
+  /* The wrapper is a transparent positioning box that can cover page content,
+     the cookie banner area and CTAs beneath it. It must never intercept taps;
+     only the visible launcher, prompt and open chat panel take pointer input. */
+  pointer-events: none;
 }
 
 .legend-assistant__launcher-wrap {
@@ -1810,6 +1831,7 @@ h3 {
   bottom: 0;
   display: flex;
   flex-direction: column;
+  pointer-events: auto;
   width: min(420px, 100vw);
   height: 100vh;
   height: 100dvh;
