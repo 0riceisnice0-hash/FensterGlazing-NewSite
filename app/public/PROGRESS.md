@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-21
 
+## 2026-07-21 - Mobile cookie/Legend tap fixes (test, f2c16ad)
+
+- Investigated the owner's report that people cannot accept cookies on mobile. The accept flow itself passed real-WebKit iPhone and Chromium touch testing against live, and the Fanboy cookie-blocklist has no rule matching `.fg-cookie-consent`. Two genuine defects were found next to it and fixed:
+- The `.legend-assistant` fixed wrapper defaulted to `pointer-events: auto`, so its transparent ~280x360px box silently swallowed taps on page content beneath it (its interior sits directly above the cookie banner on phones). The wrapper is now `pointer-events: none` with the launcher, prompt and open chat panel explicitly interactive, restoring the documented rule.
+- With the Legend drawer open, the cookie banner (z 12000) floated on top of the full-screen chat (z 1100) and buried the composer on mobile. The banner now hides while `legend-chat-open` is set and returns when chat closes; consent still gates all optional tracking. Banner buttons also gained 48px tap targets at mobile widths.
+- Verified on the test site in WebKit iPhone emulation and at 1440 desktop: dead zone gone, composer reachable during chat, banner returns after close, accept stores consent at both widths, no horizontal overflow, no page errors. WindowCAD's owner screenshots confirmed the Tracking field definition survives in the account; the missing piece remains its absence from the retail/door designer form field lists.
+
 ## 2026-07-21 - Tracking audit, WindowCAD tracking-number root cause, tracker redesign
 
 - Audited every tracking system end to end: consent banner and gated GTM/Clarity/Meta Pixel, consented `FGV`/`FG2` attribution events, the aggregate statistical path, Legend chat QA relay, WindowCAD URL parameter rewriting (links and deferred iframes verified on live), the `/wp-json/fenster/v1/windowcad` callback, AdminBase relay and the Marketing Dashboard D1 store. All theme-side plumbing was verified working on live.
