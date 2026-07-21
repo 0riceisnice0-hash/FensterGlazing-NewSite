@@ -124,7 +124,7 @@ $door_colours = [
                     <p class="eyebrow"><?php esc_html_e('The period details', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Look at the lockbox and the bars.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Two things separate a heritage door from an ordinary glazed aluminium door. The first is the lockbox, a raised plate around the lock that copies the ironmongery on an original steel door. The second is the bar: stepped rather than flat, so it catches a shadow line the way a real glazing bar does.', 'fenster'); ?></p>
-                    <p><?php esc_html_e('Bars come in 25mm and 40mm, flat or stepped. On a cottage we usually go wider and fewer. On a Georgian elevation we go narrower and more, so the panes stay square. We will set the layout out on paper with you before it is ordered.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Bars come in 25mm and 40mm, flat or stepped. On a cottage we usually go wider and fewer. On a Georgian elevation we go narrower and more, so the panes stay square. We will set the layout out on paper with you before anything is ordered.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-heritage-door-detail__visuals">
                     <figure class="fg-heritage-door-detail__lockbox">
@@ -207,9 +207,9 @@ $door_colours = [
                 <div class="fg-heritage-door-security__copy">
                     <p class="eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Secured by Design is an upgrade, not the standard.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('We would rather say this plainly. The Classic Heritage Door can be built to Secured by Design, the police-backed standard, and in that specification it has passed the scheme testing. It is an optional upgrade, so it is not what you get unless you ask for it.', 'fenster'); ?></p>
-                    <p><?php esc_html_e('Whether it is worth it depends on the door. A back door onto an enclosed courtyard is a different risk from a door onto an unlit side alley. Tell us where the door goes and we will tell you what we would specify.', 'fenster'); ?></p>
-                    <a class="button button--outline" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Ask about the security spec', 'fenster'); ?></a>
+                    <p><?php esc_html_e('Secured by Design is the police service\'s own standard, and the Classic Heritage Door passes it. It does not arrive that way. It is a specification you choose and pay for, and the badge tends to appear on installer websites without that sentence next to it.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Whether you need it depends on the door. A garden door inside a walled courtyard is a different problem from a side door onto an unlit alley. A four bar door breaks the glass into five small panes. A door with no bars is one sheet at chest height.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('So we come and look. Where the door sits, what is behind it, who can see it from the road. Then we tell you whether the upgrade is worth your money on that opening, and we are happy to say no.', 'fenster'); ?></p>
                 </div>
                 <figure class="fg-heritage-door-security__media">
                     <img src="<?php echo esc_url($asset('heritage-french-courtyard-1100w.webp')); ?>" alt="<?php esc_attr_e('Anthracite heritage aluminium French doors beside a matching window on a rendered house', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-courtyard-1100w.webp')); ?>>
