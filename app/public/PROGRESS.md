@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-21
 
+## 2026-07-21 - TONEOFVOICE.md and composite doors substance pass (test, 54281d4)
+
+- Wrote `TONEOFVOICE.md`, the customer-facing copy voice reference, by reverse-engineering the owner-approved About page copy: facts over adjectives, say the awkward thing first, real people/places/jobs as proof, full-stop sentence-case headings that state a customer truth, no contractions in the About register, one dry aside per page maximum, and a supplier-copy rewrite process. `AI.md` documentation rules now point at it. All future page copy should be checked against it.
+- Owner verdict on `/composite-doors/` was "not good enough, redesign or major improvements" with instruction to use the Distinction scrape content. Audit finding: the live V2 was a configurator with no product substance at all, and none of the scrape's construction/thermal/security material was used. Kept the working structure and added the missing substance rather than tearing it down.
+- New `What is inside the slab.` construction section (between the real-homes gallery and the stable-doors panel): a cutaway illustration from the scrape (`anatomy/slab-cutaway-428w.webp`, new theme asset), six numbered layers (GRP skin, water-resistant polymer edges, engineered wood stiles, reinforced central board, foam-filled core, decorative glass), a four-stat strip (44.5mm slab vs 28mm uPVC panel, 50% thermal figure, £5,000 security guarantee, 10 year guarantee) and the Salford Energy House footnote attributing the 50% claim to Distinction's independent testing.
+- Accuracy notes baked into the copy: most Distinction decorative glass is triple glazed and laminated as standard but Chatsworth and Wentworth are double glazed; Secured by Design accreditation applies to the slab (stable doors sit outside the scheme, so SBD lives in the security FAQ with the caveat rather than the stat strip); no invented U-value, the FAQ explains why and gives the tested comparison instead.
+- Page-wide copy rewritten in the About voice: hero CTA is now `Send an enquiry` (route-gated; other product routes keep the sitewide label, verified on `/casement-windows/`), the installer banner carries the one-in-four proof line, collection cards gained `Best for` guidance panels, the collections/gallery/configurator headings state customer truths, and all five FAQs now carry real construction, security, dual-colour, maintenance and U-value answers.
+- QA on the protected test site at 1440x900, 768x1024 and 390x844 via CDP headless Chrome: no horizontal overflow at any width, zero console errors, anatomy panel composed on desktop and cleanly stacked on mobile with a 2x2 stat grid. Local Sites was not running, so all verification was on test. Live is untouched; test is at `54281d4` awaiting owner review.
+
 ## 2026-07-21 - Live promotion, AdminBase TLS outage fix, and WindowCAD diagnosis corrected (d2d5aa3)
 
 - Promoted the tracking hardening and mobile cookie/Legend fixes to production at `193dc51` (backup `fenster-pre-193dc51-…`), then verified the mobile fixes on live in WebKit iPhone emulation.

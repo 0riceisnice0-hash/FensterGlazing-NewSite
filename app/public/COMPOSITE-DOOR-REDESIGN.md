@@ -87,6 +87,8 @@ Protected-test browser QA on theme revision `7aae3b0` confirmed:
 
 **Status: LIVE (verified 2026-07-20).** `/composite-doors/` serves this V2 template on production.
 
+**Update 2026-07-21 (test, `54281d4`).** The owner judged the live page "not good enough" and asked for major improvements using the Distinction scrape content. The substance pass on test adds a `What is inside the slab.` construction section (cutaway asset under `assets/images/products/composite-distinction/anatomy/`, six numbered layers, a four-stat strip and the Salford Energy House thermal-test footnote), `Best for` panels on both collection cards, a one-in-four proof line in the installer banner, a route-gated `Send an enquiry` hero CTA and a page-wide copy rewrite in the `TONEOFVOICE.md` voice, including factual FAQ answers. Accuracy rules from the scrape: Chatsworth and Wentworth glass are double glazed while most other designs are triple glazed and laminated; Secured by Design covers the slab but not stable doors, so SBD is claimed only in the security FAQ with that caveat.
+
 It reached live unintentionally. The route never had a host gate, so it deployed with the theme as soon as live moved past `13e7f95` — see the 2026-07-20 entry in `PROGRESS.md` for the full account. The owner reviewed the live result on 2026-07-20 and decided to keep it up and continue work directly on live rather than pull it back to test.
 
 Note that the doc previously described V2 as suppressing the inspiration gallery and comparison table. That is out of date: `0610753` and `46a961f` rebuilt the range around the full Distinction set and added a deterministic gallery mosaic, and that is what production serves.
