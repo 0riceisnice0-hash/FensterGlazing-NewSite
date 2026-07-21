@@ -4083,6 +4083,29 @@ document.querySelectorAll('.fg-cs video').forEach((video) => {
   }
 });
 
+// Keep the archive compact while preserving the newest-first order from the
+// case-study data. Older cards are only hidden once JavaScript is available,
+// so the complete archive remains usable without it.
+document.querySelectorAll('[data-fg-case-studies-archive]').forEach((archive) => {
+  const cards = [...archive.querySelectorAll('[data-fg-case-study-card]')];
+  const moreButton = archive.parentElement?.querySelector('[data-fg-case-studies-more]');
+  const initialCount = Number.parseInt(archive.dataset.fgCaseStudiesInitial || '6', 10);
+
+  if (!moreButton || cards.length <= initialCount) return;
+
+  const deferredCards = cards.slice(initialCount);
+  deferredCards.forEach((card) => {
+    card.hidden = true;
+  });
+  moreButton.hidden = false;
+  moreButton.addEventListener('click', () => {
+    deferredCards.forEach((card) => {
+      card.hidden = false;
+    });
+    moreButton.remove();
+  });
+});
+
 document.querySelectorAll('[data-fg-window-selector]').forEach((selector) => {
   const options = [...selector.querySelectorAll('[data-fg-window-option]')];
   const images = [...selector.querySelectorAll('[data-fg-window-image]')];

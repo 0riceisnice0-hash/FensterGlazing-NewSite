@@ -57,10 +57,19 @@ if ($is_archive) :
 
         <section class="fg-cs-list">
             <div class="container">
-                <div class="fg-cs-grid">
-                    <?php foreach ($cards as $card) : ?>
-                        <?php $render_card($card); ?>
+                <div class="fg-cs-grid" data-fg-case-studies-archive data-fg-case-studies-initial="6">
+                    <?php foreach (array_values($cards) as $archive_index => $card) : ?>
+                        <?php get_template_part('template-parts/components/case-study-card', null, [
+                            'card' => $card,
+                            'heading' => 'h2',
+                            'archive_index' => $archive_index,
+                        ]); ?>
                     <?php endforeach; ?>
+                </div>
+                <div class="fg-cs-show-more-wrap">
+                    <button class="button button--light fg-cs-show-more" type="button" data-fg-case-studies-more hidden>
+                        <?php esc_html_e('Show more case studies', 'fenster'); ?>
+                    </button>
                 </div>
             </div>
         </section>

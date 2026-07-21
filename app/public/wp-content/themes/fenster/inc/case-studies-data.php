@@ -196,6 +196,7 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-mk-bolbeck-park-casement-before.jpg', 'caption' => 'Before: the existing windows on the brick elevation.'],
                 ['src' => $img . 'cs-mk-bolbeck-park-casement-side.jpg', 'caption' => 'A side view showing the new frames and their position against the brickwork.'],
             ],
+            'card_image' => ['src' => $img . 'cs-mk-bolbeck-park-casement-card.jpg', 'caption' => 'The finished anthracite grey casement windows across the side elevation.'],
             'seo' => [
                 'title_tag' => 'uPVC Casement Windows Case Study, Bolbeck Park | Fenster Glazing',
                 'meta_description' => 'A real Fenster project in Bolbeck Park, Milton Keynes: anthracite grey Liniar EnergyPlus casement windows fitted to a brick home.',
@@ -431,6 +432,7 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-wolverton-charisma-sash-frontage.jpg', 'caption' => 'The upper and lower windows working together across the red-brick frontage.'],
                 ['src' => $img . 'cs-wolverton-charisma-sash-detail.jpg', 'caption' => 'A closer view of the white frame, glazing bars and projecting cill.'],
             ],
+            'card_image' => ['src' => $img . 'cs-wolverton-charisma-sash-card.jpg', 'caption' => 'A white Charisma Rose sash window fitted into the red-brick frontage.'],
             'seo' => [
                 'title_tag' => 'White Charisma Rose Sash Windows Case Study, Wolverton | Fenster Glazing',
                 'meta_description' => 'A real Fenster project in Wolverton: white Roseview Charisma Rose sash windows fitted to a red-brick Milton Keynes home.',
@@ -476,7 +478,9 @@ function fenster_case_study_card(string $short, array $study): array
         'location' => (string) ($study['location'] ?? ''),
         'type' => (string) ($study['type'] ?? 'Residential'),
         'summary' => (string) ($study['summary'] ?? ''),
-        'image' => is_array($study['images'][0] ?? null) ? $study['images'][0] : null,
+        'image' => is_array($study['card_image'] ?? null)
+            ? $study['card_image']
+            : (is_array($study['images'][0] ?? null) ? $study['images'][0] : null),
         'products' => is_array($study['products'] ?? null) ? $study['products'] : [],
         'date' => (string) ($study['date'] ?? ''),
     ];

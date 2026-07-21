@@ -17,12 +17,13 @@ if (! defined('ABSPATH')) {
 
 $card = is_array($args['card'] ?? null) ? $args['card'] : [];
 $heading = in_array($args['heading'] ?? 'h2', ['h2', 'h3'], true) ? (string) $args['heading'] : 'h2';
+$archive_index = isset($args['archive_index']) ? (int) $args['archive_index'] : null;
 
 if ($card === [] || empty($card['url'])) {
     return;
 }
 ?>
-<a class="fg-cs-card" href="<?php echo esc_url((string) $card['url']); ?>">
+<a class="fg-cs-card" href="<?php echo esc_url((string) $card['url']); ?>"<?php echo $archive_index !== null ? ' data-fg-case-study-card data-fg-case-study-index="' . esc_attr((string) $archive_index) . '"' : ''; ?>>
     <div class="fg-cs-card__media">
         <?php if (is_array($card['image'] ?? null)) : ?>
             <img src="<?php echo esc_url((string) ($card['image']['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($card['image']['caption'] ?? $card['title'] ?? '')); ?>" loading="lazy">
