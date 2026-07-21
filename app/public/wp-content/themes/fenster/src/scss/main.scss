@@ -33625,6 +33625,12 @@ html.fg-blinds-reveal-locked {
     width: 100%;
   }
 
+  /* The bullets pushed the door photo below the fold. The guarantee and the
+     measuring promise are both made again further down the page. */
+  .fg-heritage-door-hero__reassurance {
+    display: none;
+  }
+
   .fg-heritage-door-hero__media {
     aspect-ratio: 16 / 10;
   }
