@@ -3107,6 +3107,32 @@ h3 {
   font-size: 1.35rem;
 }
 
+/* Composite doors hero card: a real checked price rather than a generic
+   invitation. The figure and spec must match /composite-door-prices/. */
+.fg-hero-card--price h2 {
+  margin: 0.15rem 0 0.35rem;
+  font-size: clamp(1.35rem, 1.9vw, 1.6rem);
+}
+
+.fg-hero-card__spec {
+  margin: 0 0 0.15rem;
+  color: rgba(2, 43, 53, 0.72);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.fg-product-quote-embed__aside {
+  margin: 0.9rem 0 0;
+  color: rgba(2, 43, 53, 0.68);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.fg-product-quote-embed__aside a {
+  color: var(--fg-navy);
+  font-weight: 650;
+}
+
 .fg-hero-card__logos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

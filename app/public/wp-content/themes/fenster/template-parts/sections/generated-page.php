@@ -4185,10 +4185,18 @@ if ($is_commercial_hub) {
             <div class="container fg-product-quote-embed__grid">
                 <div class="fg-product-quote-embed__copy">
                     <p class="eyebrow"><?php esc_html_e('Instant quote', 'fenster'); ?></p>
-                    <h2><?php echo esc_html('Design and price your ' . $product_quote_embed_label . ' online.'); ?></h2>
-                    <p><?php esc_html_e('Use the Fenster quote tool to choose a style, sizes, colours and options. Final pricing and specification are confirmed after survey.', 'fenster'); ?></p>
+                    <?php if ($is_composite_doors) : ?>
+                        <h2><?php esc_html_e('Build your door and watch the price move.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('Pick the style, size, colour, glass and handles and the figure updates as you go. Most people have a real number inside ten minutes. Nothing is committed and the survey confirms the detail before anything is ordered.', 'fenster'); ?></p>
+                    <?php else : ?>
+                        <h2><?php echo esc_html('Design and price your ' . $product_quote_embed_label . ' online.'); ?></h2>
+                        <p><?php esc_html_e('Use the Fenster quote tool to choose a style, sizes, colours and options. Final pricing and specification are confirmed after survey.', 'fenster'); ?></p>
+                    <?php endif; ?>
                     <?php if ($slug === 'sliding-sash-windows' || $is_composite_doors) : ?>
-                        <a class="button fg-product-quote-embed__sash-mobile-action" href="<?php echo esc_url($product_quote_embed_url); ?>"><?php echo esc_html($is_composite_doors ? 'Design and price your composite door' : 'Design and price your sash windows'); ?></a>
+                        <a class="button fg-product-quote-embed__sash-mobile-action" href="<?php echo esc_url($product_quote_embed_url); ?>"><?php echo esc_html($is_composite_doors ? 'Price my composite door' : 'Design and price your sash windows'); ?></a>
+                    <?php endif; ?>
+                    <?php if ($is_composite_doors) : ?>
+                        <p class="fg-product-quote-embed__aside"><?php esc_html_e('Would rather see a figure first?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('Our composite door prices page', 'fenster'); ?></a> <?php esc_html_e('shows a checked fitted example and what moves it.', 'fenster'); ?></p>
                     <?php endif; ?>
                 </div>
                 <article class="fg-product-quote-embed__card" data-quote-card>

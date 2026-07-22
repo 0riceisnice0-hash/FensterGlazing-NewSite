@@ -77,7 +77,7 @@ $render_stars = static function (float $value): string {
                 <h2><?php esc_html_e('What Milton Keynes homeowners say', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Real reviews from real installations across Milton Keynes and the surrounding towns. Every one is public on Google, so you can check them yourself.', 'fenster'); ?></p>
                 <div class="fg-review-showcase__actions">
-                    <a class="button button--light" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
+                    <a class="button" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
                         <?php esc_html_e('Read all reviews', 'fenster'); ?>
                     </a>
                     <a class="fg-review-showcase__write" href="<?php echo esc_url($write_url); ?>" target="_blank" rel="noopener">
