@@ -144,6 +144,16 @@ PHP lint example:
 - Consent-safe journey detail may include page time, scroll milestones, CTA labels/destinations and form-field *names* that failed validation, but never customer-entered values. Lead status is a dashboard-only manual business outcome tied to an existing consented completed lead.
 - **Narrow exception — Legend QA.** The Legend assistant may send its actual user/assistant transcript to the authenticated Marketing Dashboard when a visitor uses chat. It is retained for 30 days, disclosed in the chat terms and Privacy Policy, and must never be put in `website_events`, AdminBase or general analytics. With optional-cookie acceptance it is linked to `FGV`/`FG2`; after rejection it is chat-only, with no `FGV`/`FG2`, journey or website-event record.
 
+## Email And SMTP Rule
+
+- Authenticated email is configured through Bedrock `.env`: `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_MAIL_FROM`, optional `FENSTER_MAIL_FROM_NAME` and `FENSTER_SMTP_AUTH_TYPE`. Never commit these.
+- **Pin the auth type.** `fenster_configure_smtp()` sets `AuthType` to `LOGIN`. Left to negotiate, PHPMailer picks the most secure mechanism a server advertises, which is CRAM-MD5 on relays such as Brevo. CRAM-MD5 needs the provider to store the password recoverably, which API-key style credentials are not, so authentication fails with `535` against every modern provider. Do not remove this.
+- **Microsoft 365 SMTP is not available to this tenant.** It returns `535 5.7.139 SmtpClientAuthentication is disabled for the Tenant`. Enabling it requires a tenant-wide switch that re-opens basic authentication, and Microsoft is retiring the protocol anyway. The site sends through a transactional relay instead.
+- Brevo's SMTP login is the generated `…@smtp-brevo.com` value shown on its SMTP page, not the account email, and the password must be an SMTP key (`xsmtpsib-…`) rather than an API key (`xkeysib-…`).
+- **`fenster_smtp_is_configured()` only checks that a host is set, and `fenster_configure_smtp()` routes every `wp_mail()` call through SMTP once it is.** Broken credentials therefore break office lead notifications too, not just customer mail. Always prove credentials on the test site before adding them to live.
+- Customer confirmation emails are gated on `fenster_smtp_is_configured()` and switch on automatically once SMTP works. Public copy may promise a confirmation only while that is true.
+- The website cannot know when an installation is complete; that lives in AdminBase. Post-install review requests belong there, not in the theme.
+
 ## Review Showcase Rule
 
 - Live Google reviews are owned by `inc\google-reviews.php` and rendered by `template-parts\components\review-showcase.php`. The rating, review count and latest reviews come from the Google Places API, cached for six hours.

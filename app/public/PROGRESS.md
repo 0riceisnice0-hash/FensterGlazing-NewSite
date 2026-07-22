@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-22
 
+## 2026-07-22 - Authenticated email working (test)
+
+- The website has never sent authenticated email, so customer confirmations have been off since launch and every enquirer got silence. Fixed on test.
+- **Found a real bug in the mail code while debugging.** `fenster_configure_smtp()` never pinned `AuthType`, so PHPMailer negotiated CRAM-MD5, which Brevo advertises but cannot honour for API-key credentials. It failed `535` on every attempt. This would have broken SMTP with **any** modern provider, so nothing configured before today could ever have worked. `AuthType` now defaults to `LOGIN`, overridable via `FENSTER_SMTP_AUTH_TYPE`.
+- Microsoft 365 was tried first and is unavailable: `535 5.7.139 SmtpClientAuthentication is disabled for the Tenant`. Enabling it needs a tenant-wide switch that re-opens basic auth, and Microsoft is retiring the protocol, so the site now relays through Brevo instead. The connection test also proved SiteGround permits outbound 587 with STARTTLS.
+- Brevo domain authentication is in place (DKIM 1 and 2, branded record, redirection records all matching). DMARC needs a `rua` tag added to go green; it does not block sending. A genuine syntax error was also found in the live SPF record: `include:_spf.smtp.com~all` has no space before `~all`, making it an invalid term that can break parsing for all Fenster mail, including Microsoft 365. Owner to fix at the DNS provider.
+- Verified on test: SMTP detected, plain send accepted, and the real `fenster_enquiry_customer_email()` template built and delivered. Customer confirmations are therefore live on test.
+- **Live is deliberately untouched.** `fenster_configure_smtp()` routes every `wp_mail()` through SMTP once a host is set, so bad credentials would silently stop office lead notifications. Live gets these values only after the owner confirms the test messages arrived in the inbox rather than junk.
+
 ## 2026-07-22 - MK search push: town proof, title gaps, guide routing (test)
 
 Four items from `HIGH-INTENT-SEARCH-PLAN.md`, all on test only.
