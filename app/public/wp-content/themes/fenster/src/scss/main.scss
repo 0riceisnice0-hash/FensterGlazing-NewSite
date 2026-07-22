@@ -32285,12 +32285,21 @@ html.fg-blinds-reveal-locked {
   /* Every door is a different shape (0.406 to 0.453 wide-to-tall), so a fixed
      card either crops one or leaves the row ragged. The image area is a fixed
      portrait panel and each door is contained inside it, which lands them all
-     at the same height like a proper lineup. Caption sits underneath rather
-     than over the door, so nothing is hidden and contrast is not a fight. */
+     at the same height like a proper lineup.
+
+     Both rows are a fixed height rather than content-driven: the caption box
+     is the same size on every card whatever the copy runs to, so the doors
+     stay level without the track having to stretch to the longest paragraph.
+     The caption overlaps the base of the image panel to buy that height back,
+     which works because the figure reserves the overlap as bottom padding, so
+     the caption rides over the tint and never over the door itself. */
   .fg-cd3-collection {
+    --fg-card-caption: 8.5rem;
+    --fg-card-overlap: 1.6rem;
+
     display: grid;
     grid-template-columns: none;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto var(--fg-card-caption);
     flex: 0 0 min(66vw, 280px);
     min-height: 0;
     overflow: hidden;
@@ -32311,8 +32320,8 @@ html.fg-blinds-reveal-locked {
     z-index: auto;
     inset: auto;
     height: auto;
-    aspect-ratio: 100 / 188;
-    padding: 0.9rem 0.9rem 0;
+    aspect-ratio: 100 / 150;
+    padding: 0.9rem 0.9rem calc(var(--fg-card-overlap) + 0.4rem);
     background: linear-gradient(180deg, #f5f8f7 0%, #e6edeb 100%);
   }
 
@@ -32327,19 +32336,35 @@ html.fg-blinds-reveal-locked {
 
   .fg-cd3-collection__body {
     position: static;
+    z-index: 2;
     display: grid;
     align-content: start;
-    gap: 0.28rem;
-    padding: 0.9rem 1rem 1.05rem;
-    border-top: 1px solid rgba(2, 43, 53, 0.1);
+    gap: 0.2rem;
+    height: calc(var(--fg-card-caption) + var(--fg-card-overlap));
+    margin-top: calc(var(--fg-card-overlap) * -1);
+    padding: 0.75rem 1rem 0.9rem;
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
+    background: #fff;
   }
 
   .fg-cd3-collection__body h3 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
   }
 
+  /* The box is fixed, so the paragraph is clamped to what fits rather than
+     being allowed to spill out of the bottom of the card. */
   .fg-cd3-collection__body > p {
-    font-size: 0.84rem;
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+  }
+
+  .fg-cd3-collection__slab {
+    -webkit-line-clamp: 2;
   }
 
   .fg-cd3-collections__dots {
