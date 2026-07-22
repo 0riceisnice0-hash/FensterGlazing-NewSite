@@ -1,7 +1,12 @@
 <?php
 /**
- * Composite Doors: collections, the door style wall, construction, door types,
- * the finish configurator and the Distinction paint range.
+ * Composite Doors: collections, the door style wall, slab construction, the
+ * £5,000 break-in guarantee and the colour wall.
+ *
+ * The tabbed colour/glass/hardware configurator was removed on 2026-07-22 at
+ * the owner's request and replaced by the colour wall, where hovering a paint
+ * colour shows that colour on a real door. Decorative glass and hardware no
+ * longer appear on this route; restore from git history if they are wanted back.
  *
  * @package Fenster
  */
@@ -12,36 +17,16 @@ if (! defined('ABSPATH')) {
 
 $collections = is_array($args['collections'] ?? null) ? array_values($args['collections']) : [];
 $security = is_array($args['security'] ?? null) ? array_values($args['security']) : [];
-$colours = is_array($args['colours'] ?? null) ? array_values($args['colours']) : [];
-$glass_styles = is_array($args['glass'] ?? null) ? array_values($args['glass']) : [];
-$handle_finishes = is_array($args['handles'] ?? null) ? array_values($args['handles']) : [];
 $anatomy = is_array($args['anatomy'] ?? null) ? $args['anatomy'] : [];
 $door_styles = is_array($args['styles'] ?? null) ? array_values($args['styles']) : [];
 $styles_base = (string) ($args['styles_base'] ?? '');
-$palette = is_array($args['palette'] ?? null) ? array_values($args['palette']) : [];
+$colour_wall = is_array($args['colour_wall'] ?? null) ? array_values($args['colour_wall']) : [];
 $palette_base = (string) ($args['palette_base'] ?? '');
-$asset_base = (string) ($args['asset_base'] ?? '');
+$colours_base = (string) ($args['colours_base'] ?? '');
 
-if (empty($collections) || empty($colours) || empty($glass_styles)) {
+if (empty($collections)) {
     return;
 }
-
-/**
- * Build a srcset string from an asset stem and a list of widths.
- */
-$cd_srcset = static function (string $stem, array $widths) use ($asset_base): string {
-    $parts = [];
-    foreach ($widths as $width) {
-        $width = (int) $width;
-        $parts[] = fenster_generated_url($asset_base . $stem . '-' . $width . 'w.webp') . ' ' . $width . 'w';
-    }
-    return implode(', ', $parts);
-};
-
-$first_colour = $colours[0];
-$first_colour_stem = $asset_base . 'colours/' . $first_colour['slug'];
-$first_glass = $glass_styles[0];
-$first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
 ?>
 
 <section class="fg-cd3-collections" aria-labelledby="fg-cd3-collections-title">
@@ -211,148 +196,79 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     </section>
 <?php endif; ?>
 
-<section class="fg-cd-v2-config" aria-labelledby="fg-cd-v2-config-title" data-fg-cd-config>
-    <div class="container">
-        <header class="fg-cd-v2-heading">
-            <div>
-                <p class="eyebrow"><?php esc_html_e('Colour, glass and hardware', 'fenster'); ?></p>
-                <h2 id="fg-cd-v2-config-title"><?php esc_html_e('Every colour here is a photographed door.', 'fenster'); ?></h2>
-            </div>
-            <p><?php esc_html_e('Not a tinted swatch, and the glass close-ups are the real designs. Pick one detail at a time and see it properly before you commit to anything.', 'fenster'); ?></p>
-        </header>
-
-        <div class="fg-cd-v2-config__tabs" role="tablist" aria-label="<?php esc_attr_e('Composite door design options', 'fenster'); ?>">
-            <button type="button" role="tab" data-fg-cd-config-tab="colour" aria-selected="true"><?php esc_html_e('Colour', 'fenster'); ?></button>
-            <button type="button" role="tab" data-fg-cd-config-tab="glass" aria-selected="false"><?php esc_html_e('Glass', 'fenster'); ?></button>
-            <button type="button" role="tab" data-fg-cd-config-tab="hardware" aria-selected="false"><?php esc_html_e('Hardware', 'fenster'); ?></button>
-        </div>
-
-        <div class="fg-cd-v2-config__shell">
-            <section class="fg-cd-v2-config__panel" data-fg-cd-config-panel="colour">
-                <div class="fg-cd-v2-selector" data-fg-door-selector>
-                    <div class="fg-cd-v2-selector__controls">
-                        <p class="eyebrow"><?php esc_html_e('Photographed colours', 'fenster'); ?></p>
-                        <h3><?php esc_html_e('Select a colour.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('You can have one colour outside and another inside. More colours and woodgrains exist than we can photograph; we confirm the final choice with physical samples.', 'fenster'); ?></p>
-                        <div class="fg-cd-v2-swatches" aria-label="<?php esc_attr_e('Composite door colour examples', 'fenster'); ?>">
-                            <?php foreach ($colours as $index => $colour) : ?>
-                                <?php
-                                $stem = $asset_base . 'colours/' . $colour['slug'];
-                                $source = fenster_generated_url($stem . '-480w.webp');
-                                ?>
-                                <button type="button" data-fg-choice-option data-preview-src="<?php echo esc_url($source); ?>" data-preview-srcset="<?php echo esc_attr($source . ' 480w, ' . fenster_generated_url($stem . '-800w.webp') . ' 800w'); ?>" data-preview-alt="<?php echo esc_attr((string) $colour['alt']); ?>" data-preview-name="<?php echo esc_attr((string) $colour['name']); ?>" data-preview-copy="<?php echo esc_attr((string) $colour['copy']); ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
-                                    <i style="--option-colour: <?php echo esc_attr((string) $colour['hex']); ?>" aria-hidden="true"></i>
-                                    <span><?php echo esc_html((string) $colour['name']); ?></span>
-                                </button>
-                            <?php endforeach; ?>
-                            <span class="fg-cd-v2-swatches__more"><?php esc_html_e('And more', 'fenster'); ?></span>
-                        </div>
-                        <div class="fg-cd-v2-selector__selected">
-                            <span><?php esc_html_e('Selected colour', 'fenster'); ?></span>
-                            <strong data-fg-choice-name><?php echo esc_html((string) $first_colour['name']); ?></strong>
-                            <p data-fg-choice-copy><?php echo esc_html((string) $first_colour['copy']); ?></p>
-                        </div>
-                    </div>
-                    <figure class="fg-cd-v2-selector__preview">
-                        <img data-fg-choice-image src="<?php echo esc_url(fenster_generated_url($first_colour_stem . '-480w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($first_colour_stem . '-480w.webp') . ' 480w, ' . fenster_generated_url($first_colour_stem . '-800w.webp') . ' 800w'); ?>" sizes="(max-width: 860px) 100vw, 42vw" alt="<?php echo esc_attr((string) $first_colour['alt']); ?>" loading="lazy" width="800" height="1000">
-                    </figure>
-                </div>
-            </section>
-
-            <section class="fg-cd-v2-config__panel" data-fg-cd-config-panel="glass" hidden>
-                <div class="fg-cd-v2-selector" data-fg-door-selector>
-                    <div class="fg-cd-v2-selector__controls">
-                        <p class="eyebrow"><?php esc_html_e('Decorative glass', 'fenster'); ?></p>
-                        <h3><?php esc_html_e('Select a glass design.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Most designs are triple glazed and laminated as standard; Chatsworth and Wentworth are double glazed. We check aperture size, privacy and availability against your chosen door.', 'fenster'); ?></p>
-                        <div class="fg-cd-v2-options fg-cd-v2-options--glass" aria-label="<?php esc_attr_e('Composite door decorative glass examples', 'fenster'); ?>">
-                            <?php foreach ($glass_styles as $index => $glass) : ?>
-                                <?php
-                                $stem = $asset_base . 'glass/' . $glass['slug'];
-                                $source = fenster_generated_url($stem . '-360w.webp');
-                                ?>
-                                <button type="button" data-fg-choice-option data-preview-src="<?php echo esc_url($source); ?>" data-preview-srcset="<?php echo esc_attr($source . ' 360w, ' . fenster_generated_url($stem . '-720w.webp') . ' 720w'); ?>" data-preview-alt="<?php echo esc_attr((string) $glass['name'] . ' decorative glass close-up'); ?>" data-preview-name="<?php echo esc_attr((string) $glass['name']); ?>" data-preview-copy="<?php echo esc_attr((string) $glass['copy']); ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
-                                    <?php echo esc_html((string) $glass['name']); ?>
-                                </button>
-                            <?php endforeach; ?>
-                            <span class="fg-cd-v2-options__more"><?php esc_html_e('And more', 'fenster'); ?></span>
-                        </div>
-                        <div class="fg-cd-v2-selector__selected">
-                            <span><?php esc_html_e('Selected glass', 'fenster'); ?></span>
-                            <strong data-fg-choice-name><?php echo esc_html((string) $first_glass['name']); ?></strong>
-                            <p data-fg-choice-copy><?php echo esc_html((string) $first_glass['copy']); ?></p>
-                        </div>
-                    </div>
-                    <figure class="fg-cd-v2-selector__preview fg-cd-v2-selector__preview--glass">
-                        <img data-fg-choice-image src="<?php echo esc_url(fenster_generated_url($first_glass_stem . '-360w.webp')); ?>" srcset="<?php echo esc_attr(fenster_generated_url($first_glass_stem . '-360w.webp') . ' 360w, ' . fenster_generated_url($first_glass_stem . '-720w.webp') . ' 720w'); ?>" sizes="(max-width: 860px) 100vw, 42vw" alt="<?php echo esc_attr((string) $first_glass['name'] . ' decorative glass close-up'); ?>" loading="lazy" width="720" height="720">
-                    </figure>
-                </div>
-            </section>
-
-            <?php if (! empty($handle_finishes)) : ?>
-                <section class="fg-cd-v2-config__panel" data-fg-cd-config-panel="hardware" hidden>
-                    <div class="fg-cd-v2-hardware" data-fg-window-handles>
-                        <div class="fg-cd-v2-hardware__controls">
-                            <p class="eyebrow"><?php esc_html_e('Hardware finish', 'fenster'); ?></p>
-                            <h3><?php esc_html_e('Select a handle finish.', 'fenster'); ?></h3>
-                            <p><?php esc_html_e('We coordinate the compatible handle, letterplate, cylinder and threshold as one set.', 'fenster'); ?></p>
-                            <div class="fg-cd-v2-options fg-cd-v2-options--hardware" role="list" aria-label="<?php esc_attr_e('Composite door handle finishes', 'fenster'); ?>">
-                                <?php foreach ($handle_finishes as $index => $finish) : ?>
-                                    <button type="button" role="listitem" style="<?php echo esc_attr('--option-colour:' . (string) ($finish['hex'] ?? '#ffffff')); ?>" data-fg-handle-finish="<?php echo esc_attr((string) $index); ?>" class="<?php echo $index === 0 ? 'is-active' : ''; ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
-                                        <i aria-hidden="true"></i><span><?php echo esc_html((string) $finish['name']); ?></span>
-                                    </button>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                        <figure class="fg-cd-v2-hardware__preview">
-                            <?php foreach ($handle_finishes as $index => $finish) : ?>
-                                <img src="<?php echo esc_url(fenster_generated_url((string) $finish['image'])); ?>" alt="<?php echo esc_attr((string) $finish['label']); ?>" loading="lazy" data-fg-handle-image="<?php echo esc_attr((string) $index); ?>" class="<?php echo $index === 0 ? 'is-active' : ''; ?>">
-                            <?php endforeach; ?>
-                            <figcaption>
-                                <span><?php esc_html_e('Selected finish', 'fenster'); ?></span>
-                                <?php foreach ($handle_finishes as $index => $finish) : ?>
-                                    <article data-fg-handle-panel="<?php echo esc_attr((string) $index); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>><strong><?php echo esc_html((string) $finish['name']); ?></strong><p><?php echo esc_html((string) $finish['copy']); ?></p></article>
-                                <?php endforeach; ?>
-                            </figcaption>
-                        </figure>
-                    </div>
-                </section>
-            <?php endif; ?>
-        </div>
-
-        <div class="fg-cd-v2-config__actions">
-            <p><?php esc_html_e('Your final colour, glass and hardware combination is confirmed after survey.', 'fenster'); ?></p>
-            <div><a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a><a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book consultation', 'fenster'); ?></a></div>
-        </div>
-    </div>
-</section>
-
-<?php if (! empty($palette)) : ?>
-    <section class="fg-cd3-palette" aria-labelledby="fg-cd3-palette-title">
+<?php if (! empty($colour_wall)) : ?>
+    <?php
+    $cw_first = $colour_wall[0];
+    $cw_preview = static function (array $entry) use ($colours_base, $palette_base): array {
+        if (! empty($entry['door'])) {
+            $stem = $colours_base . $entry['door'];
+            return [
+                'src' => fenster_generated_url($stem . '-480w.webp'),
+                'srcset' => fenster_generated_url($stem . '-480w.webp') . ' 480w, ' . fenster_generated_url($stem . '-800w.webp') . ' 800w',
+                'alt' => sprintf(__('A %s composite front door', 'fenster'), (string) $entry['name']),
+                'kind' => __('On a door we fitted', 'fenster'),
+            ];
+        }
+        $stem = $palette_base . $entry['swatch'];
+        return [
+            'src' => fenster_generated_url($stem . '-320w.webp'),
+            'srcset' => fenster_generated_url($stem . '-160w.webp') . ' 160w, ' . fenster_generated_url($stem . '-320w.webp') . ' 320w',
+            'alt' => sprintf(__('%s composite door paint', 'fenster'), (string) $entry['name']),
+            'kind' => __('Paint sample', 'fenster'),
+        ];
+    };
+    $cw_first_preview = $cw_preview($cw_first);
+    ?>
+    <section class="fg-cd3-colour" aria-labelledby="fg-cd3-colour-title">
         <div class="container">
             <header class="fg-cd3-head fg-cd3-head--wide">
                 <p class="eyebrow"><?php esc_html_e('The paint range', 'fenster'); ?></p>
-                <h2 id="fg-cd3-palette-title"><?php esc_html_e('The colours, photographed as actual paint.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Distinction mix their own range rather than buying it in. These are the real colours shot as paint, not flat blocks generated on a screen. Screens still shift a shade or two, so we bring physical samples to your survey before anything is ordered.', 'fenster'); ?></p>
+                <h2 id="fg-cd3-colour-title"><?php esc_html_e('Pick a colour and see it on a real door.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Distinction mix their own paint rather than buying it in. Hover or tap any colour below. Nine of them we have photographed on a finished door; the rest show the paint itself, because we would rather show you the real thing than tint a picture and hope.', 'fenster'); ?></p>
             </header>
-            <ul class="fg-cd3-palette__grid">
-                <?php foreach ($palette as $colour) : ?>
-                    <?php $stem = $palette_base . (string) $colour['slug']; ?>
-                    <li class="fg-cd3-paint">
-                        <img
-                            src="<?php echo esc_url(fenster_generated_url($stem . '-160w.webp')); ?>"
-                            srcset="<?php echo esc_attr(fenster_generated_url($stem . '-160w.webp') . ' 160w, ' . fenster_generated_url($stem . '-320w.webp') . ' 320w'); ?>"
-                            sizes="120px"
-                            alt="<?php echo esc_attr(sprintf(__('%s composite door paint', 'fenster'), (string) $colour['name'])); ?>"
-                            loading="lazy" width="160" height="160">
-                        <strong><?php echo esc_html((string) $colour['name']); ?></strong>
-                        <?php if (! empty($colour['ref'])) : ?>
-                            <small><?php echo esc_html((string) $colour['ref']); ?></small>
-                        <?php endif; ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <p class="fg-cd3-palette__note"><?php esc_html_e('You can have one colour on the outside and a different one facing your hallway. Woodgrain stains are single sided.', 'fenster'); ?></p>
+
+            <div class="fg-cd3-colour__layout" data-fg-door-selector data-fg-colour-wall>
+                <div class="fg-cd3-colour__swatches">
+                    <?php foreach ($colour_wall as $index => $entry) : ?>
+                        <?php $preview = $cw_preview($entry); ?>
+                        <button
+                            type="button"
+                            class="fg-cd3-swatch"
+                            data-fg-choice-option
+                            data-preview-src="<?php echo esc_url($preview['src']); ?>"
+                            data-preview-srcset="<?php echo esc_attr($preview['srcset']); ?>"
+                            data-preview-alt="<?php echo esc_attr($preview['alt']); ?>"
+                            data-preview-name="<?php echo esc_attr((string) $entry['name']); ?>"
+                            data-preview-copy="<?php echo esc_attr(trim((string) ($entry['ref'] ?? '') . ' ' . $preview['kind'])); ?>"
+                            aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
+                            <?php if (! empty($entry['swatch'])) : ?>
+                                <img
+                                    src="<?php echo esc_url(fenster_generated_url($palette_base . $entry['swatch'] . '-160w.webp')); ?>"
+                                    alt="" aria-hidden="true" loading="lazy" width="160" height="160">
+                            <?php else : ?>
+                                <i style="--option-colour: <?php echo esc_attr((string) $entry['hex']); ?>" aria-hidden="true"></i>
+                            <?php endif; ?>
+                            <span><?php echo esc_html((string) $entry['name']); ?></span>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+
+                <figure class="fg-cd3-colour__preview">
+                    <img
+                        data-fg-choice-image
+                        src="<?php echo esc_url($cw_first_preview['src']); ?>"
+                        srcset="<?php echo esc_attr($cw_first_preview['srcset']); ?>"
+                        sizes="(max-width: 860px) 92vw, 40vw"
+                        alt="<?php echo esc_attr($cw_first_preview['alt']); ?>"
+                        loading="lazy" width="800" height="1000">
+                    <figcaption>
+                        <strong data-fg-choice-name><?php echo esc_html((string) $cw_first['name']); ?></strong>
+                        <span data-fg-choice-copy><?php echo esc_html(trim((string) ($cw_first['ref'] ?? '') . ' ' . $cw_first_preview['kind'])); ?></span>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <p class="fg-cd3-colour__note"><?php esc_html_e('You can have one colour on the outside and a different one facing your hallway. Woodgrain stains are single sided, and we bring physical samples to your survey before anything is ordered.', 'fenster'); ?></p>
         </div>
     </section>
 <?php endif; ?>

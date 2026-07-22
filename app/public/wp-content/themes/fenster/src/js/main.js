@@ -1163,6 +1163,23 @@ document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
     });
   });
 
+  // The colour wall also previews on hover and on keyboard focus. Click still
+  // works, so a touch device is never left without a way to change the preview.
+  if (selector.hasAttribute('data-fg-colour-wall')) {
+    options.forEach((option) => {
+      const show = () => {
+        if (option === selectedOption) return;
+        selectedOption = option;
+        updatePreview();
+      };
+      option.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'touch') return;
+        show();
+      });
+      option.addEventListener('focus', show);
+    });
+  }
+
   modeButtons.forEach((button) => {
     button.addEventListener('click', () => {
       selectedMode = button.dataset.fgChoiceMode || 'door';

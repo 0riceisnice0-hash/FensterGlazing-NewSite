@@ -512,8 +512,40 @@ if ($is_composite_doors) {
         ['slug' => 'esp01-flush', 'name' => 'Flush', 'collection' => 'Esprit'],
         ['slug' => 'eclat-arch-grid', 'name' => 'Eclat Arch with Grid', 'collection' => 'Traditional'],
     ];
-    // Distinction's own paint range, photographed as brush strokes. RAL and BS
-    // references are the ones printed in the Distinction brochure.
+    // The colour wall. Nine colours have a photographed door, so those lead and
+    // hovering one shows the real door; the rest of the Distinction paint range
+    // follows and shows the paint itself. Nothing here is a tinted swatch, and
+    // no colour is faked: if there is no door photograph, we show the paint.
+    // 'door' is a stem under colours/, 'swatch' a stem under palette/.
+    $composite_colour_wall = [
+        ['name' => 'Anthracite Grey', 'ref' => '', 'swatch' => 'anthracite-grey', 'door' => 'anthracite-grey'],
+        ['name' => 'Black', 'ref' => '', 'swatch' => 'standard-black', 'door' => 'black'],
+        ['name' => 'Chartwell Green', 'ref' => '', 'swatch' => 'chartwell-green', 'door' => 'chartwell-green'],
+        ['name' => 'Distant Blue', 'ref' => 'RAL 5023', 'swatch' => 'distant-blue', 'door' => 'distant-blue'],
+        ['name' => 'Standard Green', 'ref' => '', 'swatch' => 'standard-green', 'door' => 'green'],
+        ['name' => 'Light Grey', 'ref' => '', 'hex' => '#a8aaa5', 'door' => 'light-grey'],
+        ['name' => 'Pale Blue', 'ref' => '', 'hex' => '#9fbec0', 'door' => 'pale-blue'],
+        ['name' => 'Ruby Red', 'ref' => 'RAL 3003', 'hex' => '#8c1f2b', 'door' => 'ruby-red'],
+        ['name' => 'White', 'ref' => '', 'hex' => '#f2f0e8', 'door' => 'white'],
+        ['name' => 'Slate Grey', 'ref' => '', 'swatch' => 'slate-grey'],
+        ['name' => 'Basalt Grey', 'ref' => '', 'swatch' => 'basalt-grey'],
+        ['name' => 'Buckingham Grey', 'ref' => '', 'swatch' => 'buckingham-grey'],
+        ['name' => 'Pale Green', 'ref' => 'RAL 6021', 'swatch' => 'pale-green'],
+        ['name' => 'Leaf Green', 'ref' => 'RAL 6002', 'swatch' => 'leaf-green'],
+        ['name' => 'Standard Blue', 'ref' => '', 'swatch' => 'standard-blue'],
+        ['name' => 'Steel Blue', 'ref' => '', 'swatch' => 'steel-blue'],
+        ['name' => 'Ultramarine Blue', 'ref' => 'RAL 5002', 'swatch' => 'ultramarine-blue'],
+        ['name' => 'Turquoise Blue', 'ref' => 'RAL 5018', 'swatch' => 'turquoise-blue'],
+        ['name' => 'Standard Red', 'ref' => '', 'swatch' => 'standard-red'],
+        ['name' => 'Traffic Red', 'ref' => 'RAL 3020', 'swatch' => 'traffic-red'],
+        ['name' => 'Wine Red', 'ref' => 'RAL 3005', 'swatch' => 'wine-red'],
+        ['name' => 'Telemagenta', 'ref' => 'RAL 4010', 'swatch' => 'telemagenta'],
+        ['name' => 'Purple Violet', 'ref' => 'RAL 4007', 'swatch' => 'purple-violet'],
+        ['name' => 'Colza Yellow', 'ref' => 'RAL 1021', 'swatch' => 'colza-yellow'],
+        ['name' => 'Black Brown', 'ref' => '', 'swatch' => 'black-brown'],
+        ['name' => 'Gold Oak', 'ref' => 'Woodgrain stain', 'swatch' => 'gold-oak'],
+        ['name' => 'Rosewood', 'ref' => 'Woodgrain stain', 'swatch' => 'rosewood'],
+    ];
     $composite_palette_base = $composite_asset_base . 'palette/';
     $composite_palette = [
         ['slug' => 'standard-black', 'name' => 'Standard Black', 'ref' => ''],
@@ -3054,14 +3086,12 @@ if ($is_commercial_hub) {
         get_template_part('template-parts/sections/composite-doors-v2', null, [
             'collections' => $composite_collections,
             'security' => $composite_security,
-            'colours' => $composite_door_colours,
-            'glass' => $composite_door_glass,
-            'handles' => $door_handle_finishes,
             'anatomy' => $composite_anatomy,
             'styles' => $composite_door_styles,
             'styles_base' => $composite_styles_base,
-            'palette' => $composite_palette,
+            'colour_wall' => $composite_colour_wall,
             'palette_base' => $composite_palette_base,
+            'colours_base' => $composite_asset_base . 'colours/',
             'asset_base' => $composite_asset_base,
         ]);
         ?>

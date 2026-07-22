@@ -31903,58 +31903,130 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
-/* Composite doors: the Distinction paint range. */
-.fg-cd3-palette {
+/* Composite doors: the colour wall. Swatches on the left, a live preview on the
+   right showing that colour on a real door where we have photographed one. */
+.fg-cd3-colour {
   position: relative;
   padding: clamp(2rem, 3vw, 2.5rem) 0;
   background: transparent;
 }
 
-.fg-cd3-palette__grid {
+.fg-cd3-colour__layout {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: clamp(0.6rem, 1.2vw, 0.9rem);
-  margin: 0;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  align-items: start;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.fg-cd3-colour__swatches {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.5rem, 1vw, 0.75rem);
+}
+
+.fg-cd3-swatch {
+  display: grid;
+  gap: 0.3rem;
   padding: 0;
-  list-style: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
 }
 
-.fg-cd3-paint {
-  min-width: 0;
-}
-
-.fg-cd3-paint img {
+.fg-cd3-swatch img,
+.fg-cd3-swatch i {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  margin-bottom: 0.35rem;
+  height: 52px;
+  overflow: hidden;
+  border: 1px solid rgba(2, 43, 53, 0.14);
+  border-radius: 9px;
+  object-fit: cover;
+  transition: box-shadow 150ms ease, transform 150ms ease;
+}
+
+.fg-cd3-swatch i {
+  background: var(--option-colour);
+}
+
+.fg-cd3-swatch:hover img,
+.fg-cd3-swatch:hover i,
+.fg-cd3-swatch:focus-visible img,
+.fg-cd3-swatch:focus-visible i {
+  transform: translateY(-2px);
+}
+
+.fg-cd3-swatch[aria-pressed='true'] img,
+.fg-cd3-swatch[aria-pressed='true'] i {
+  border-color: var(--fg-green);
+  box-shadow: 0 0 0 2px var(--fg-green), inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+}
+
+.fg-cd3-swatch span {
+  overflow: hidden;
+  color: rgba(2, 43, 53, 0.68);
+  font-size: 0.7rem;
+  font-weight: 650;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fg-cd3-swatch[aria-pressed='true'] span {
+  color: var(--fg-navy);
+  font-weight: 750;
+}
+
+.fg-cd3-colour__preview {
+  position: relative;
+  margin: 0;
   overflow: hidden;
   border: 1px solid rgba(2, 43, 53, 0.12);
-  border-radius: 10px;
+  border-radius: 16px;
+  background: #e6ecea;
+  box-shadow: 0 22px 60px rgba(2, 43, 53, 0.12);
+}
+
+.fg-cd3-colour__preview img {
+  display: block;
+  width: 100%;
+  height: clamp(360px, 46vh, 460px);
   object-fit: cover;
-  box-shadow: 0 10px 24px rgba(2, 43, 53, 0.08);
+  object-position: center;
 }
 
-.fg-cd3-paint strong {
-  display: block;
-  color: var(--fg-navy);
-  font-size: 0.78rem;
+.fg-cd3-colour__preview figcaption {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  left: 0.9rem;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 11px;
+  color: #fff;
+  background: rgba(2, 43, 53, 0.88);
+  backdrop-filter: blur(10px);
+}
+
+.fg-cd3-colour__preview figcaption strong {
+  font-size: 1rem;
+}
+
+.fg-cd3-colour__preview figcaption span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.74rem;
   font-weight: 650;
-  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.fg-cd3-paint small {
-  display: block;
-  color: rgba(2, 43, 53, 0.52);
-  font-size: 0.68rem;
-  font-weight: 600;
-}
-
-.fg-cd3-palette__note {
-  margin: clamp(0.8rem, 1.5vw, 1.1rem) 0 0;
+.fg-cd3-colour__note {
+  margin: clamp(0.9rem, 1.8vw, 1.2rem) 0 0;
   color: rgba(2, 43, 53, 0.62);
   font-size: 0.86rem;
+  line-height: 1.6;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -32115,8 +32187,8 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 1180px) {
-  .fg-cd3-palette__grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  .fg-cd3-colour__swatches {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .fg-cd3-collections__grid {
@@ -32155,8 +32227,17 @@ html.fg-blinds-reveal-locked {
     display: none;
   }
 
-  .fg-cd3-palette__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Preview leads on a phone, then the swatches under it. */
+  .fg-cd3-colour__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-cd3-colour__preview {
+    order: -1;
+  }
+
+  .fg-cd3-colour__swatches {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .fg-cd3-collections__grid {
