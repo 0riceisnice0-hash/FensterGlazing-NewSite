@@ -118,7 +118,26 @@ Owner asked for the mobile layout to be made properly nice, with the collections
 - The style-range wall drift stays desktop-only (`min-width: 861px`), which is deliberate: on a touch device the rail is swipeable and a moving track fights the user's finger. Verified drift still runs at 1440 (60px to 141px in 1.5s).
 - **Open item for the owner:** the "Real installs, photographed on the day" strip on this page shows uPVC casement window and aluminium bifold case studies, because no case study is tagged to composite doors and `fenster_case_studies_for_product()` falls back to all studies. Only seven product pages have their own studies, so every other product page makes the same mismatched claim. Left alone here because the fix is site-wide, not a composite-doors change.
 
-## 2026-07-22 - STYLE.md rewritten around the five reference pages (test)
+## 2026-07-22 - Live release: 5672fb9
+
+Deployed on owner instruction ("push everything to live"). Previous live commit was `1cffd68`.
+
+Range check before deploying, per `LIVECHANGES.md`:
+
+```
+5672fb9 Docs: record the STYLE.md rewrite and the H1 rule
+496e54f Heritage and roof lanterns: make the hero phone a button
+b5396a4 Style: product H1s are the product name, and adopt the five reference pages
+1675b9e Docs: record the MK suburb local knowledge and why link shuffling was skipped
+8cd9a95 Docs: record that the composite work is already live at 1cffd68
+64a2173 MK suburb pages: real local knowledge instead of interchangeable copy
+```
+
+Two of the six (`64a2173`, `1675b9e`) were the concurrent session's MK suburb work, not verified by this session. Rather than ship them silently, the choice was put to the owner, who confirmed shipping everything. Recording that here because the previous two releases carried unreviewed commits by accident; this one carried them by decision.
+
+Verified on production after deploy: live `main.css` matches the deployed commit byte for byte; all three product H1s serve the product name; both hero phone numbers are `.button--steel`; the Wolverton suburb copy renders; and the composite doors page passes its regression checks (layer accordion opens one at a time, collection cards all 521px with 337px doors, no clipped copy, no horizontal overflow).
+
+## 2026-07-22 - STYLE.md rewritten around the five reference pages (live, 5672fb9)
 
 Owner: STYLE.md should follow the About, composite doors, sliding sash, heritage aluminium and roof lantern pages, with a nod to tone of voice, plus a new rule that a page title should name the product rather than carry a tagline.
 
@@ -138,7 +157,7 @@ Asked to push the composite doors work live, the range check found there was not
 - **What would actually prevent it** is not sharing `main` between two concurrent sessions. Until the work is branched, any live release from either session ships whatever the other has merged. Worth deciding before the next unrelated hotfix.
 - No rollback proposed: the composite work was verified on test at each step and the owner asked for it to go live. Recording it so the release history is accurate.
 
-## 2026-07-22 - Composite doors: construction rebuilt as a layer explorer (live)
+## 2026-07-22 - Composite doors: construction rebuilt as a layer explorer (live, 1cffd68)
 
 Owner: the construction section was massive on mobile and looked poor on desktop too, and wanted it changed rather than compressed.
 
