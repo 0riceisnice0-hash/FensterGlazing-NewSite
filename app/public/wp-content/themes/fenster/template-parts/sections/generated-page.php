@@ -2719,7 +2719,7 @@ if ($is_commercial_hub) {
         <div class="container fg-cd3-hero__grid">
             <div class="fg-cd3-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('Composite doors in Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('A front door you never have to paint.', 'fenster'); ?></h1>
+                <h1><?php esc_html_e('Distinction composite doors', 'fenster'); ?></h1>
                 <p class="fg-cd3-hero__lead"><?php esc_html_e('A 44.5mm insulated slab under a tough GRP skin, fitted across Milton Keynes by our own installers. It holds its heat, shrugs off the weather and keeps its colour without a paintbrush.', 'fenster'); ?></p>
                 <div class="fg-cd3-hero__actions">
                     <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>

@@ -175,15 +175,28 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     <section class="fg-cd3-security" aria-labelledby="fg-cd3-security-title">
         <div class="container fg-cd3-security__inner">
             <div class="fg-cd3-security__lead">
-                <p class="fg-cd3-security__figure">
-                    <span><?php esc_html_e('£5,000', 'fenster'); ?></span>
-                    <small><?php esc_html_e('break-in guarantee', 'fenster'); ?></small>
-                </p>
-                <h2 id="fg-cd3-security-title"><?php esc_html_e('If the lock fails in a break-in, you are covered.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Every Distinction door we fit is secured with AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. Should either fail in a break-in, you are covered for up to £5,000 in compensation. Terms apply, and we go through them with you before you order rather than after.', 'fenster'); ?></p>
-                <div class="button-row">
-                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('How we back our work', 'fenster'); ?></a>
+                <?php
+                // The guarantee badge, drawn rather than an image so it stays sharp
+                // and needs no asset. Swap for the supplier artwork if it is ever
+                // supplied as a file; there is no APECS or badge asset in the repo.
+                ?>
+                <span class="fg-cd3-shield" aria-hidden="true">
+                    <svg viewBox="0 0 120 132" role="presentation" focusable="false">
+                        <path d="M6 12C28 4 46 0 60 0s32 4 54 12v76c0 22-30 36-54 44-24-8-54-22-54-44V12Z" fill="#12306b"/>
+                        <path d="M13 18c22-7 36-10 47-10s25 3 47 10v70c0 18-26 30-47 37-21-7-47-19-47-37V18Z" fill="none" stroke="#ffffff" stroke-width="3"/>
+                        <rect x="6" y="56" width="108" height="30" fill="#ffffff"/>
+                        <text x="60" y="44" text-anchor="middle" font-family="Gibson, Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">£5000</text>
+                        <text x="60" y="78" text-anchor="middle" font-family="Gibson, Arial, sans-serif" font-size="17" font-weight="700" fill="#12306b" letter-spacing="0.4">GUARANTEE</text>
+                    </svg>
+                </span>
+                <div class="fg-cd3-security__words">
+                    <p class="eyebrow"><?php esc_html_e('£5,000 break-in guarantee', 'fenster'); ?></p>
+                    <h2 id="fg-cd3-security-title"><?php esc_html_e('If the lock fails in a break-in, you are covered.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Every Distinction door we fit is secured with AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. Should either fail in a break-in, you are covered for up to £5,000 in compensation. Terms apply, and we go through them with you before you order rather than after.', 'fenster'); ?></p>
+                    <div class="button-row">
+                        <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('How we back our work', 'fenster'); ?></a>
+                    </div>
                 </div>
             </div>
             <ul class="fg-cd3-security__points">

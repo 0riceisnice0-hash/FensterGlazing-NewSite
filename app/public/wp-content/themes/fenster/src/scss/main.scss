@@ -31509,31 +31509,25 @@ html.fg-blinds-reveal-locked {
   box-shadow: 0 28px 70px rgba(2, 43, 53, 0.22);
 }
 
-/* The guarantee figure is the badge. A drawn shield read as a pasted-on
-   sticker, so the number itself is the graphic. */
-.fg-cd3-security__figure {
-  display: flex;
-  align-items: baseline;
-  gap: 0.65rem;
-  margin: 0 0 0.65rem;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid rgba(127, 224, 171, 0.32);
+/* Badge and words sit as one lockup. Floating the badge above the copy was
+   what made it look pasted on. */
+.fg-cd3-security__lead {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1rem, 2.2vw, 1.75rem);
 }
 
-.fg-cd3-security__figure span {
-  color: #fff;
-  font-size: clamp(3rem, 5vw, 4.2rem);
-  font-weight: 750;
-  letter-spacing: -0.03em;
-  line-height: 0.9;
+.fg-cd3-shield {
+  display: block;
+  width: clamp(84px, 8vw, 108px);
+  filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.32));
 }
 
-.fg-cd3-security__figure small {
-  color: #7fe0ab;
-  font-size: 0.8rem;
-  font-weight: 750;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+.fg-cd3-shield svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .fg-cd3-security__lead .eyebrow {
@@ -32161,8 +32155,13 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cd3-security__inner,
-  .fg-cd3-security__points {
+  .fg-cd3-security__points,
+  .fg-cd3-security__lead {
     grid-template-columns: 1fr;
+  }
+
+  .fg-cd3-security__lead {
+    justify-items: start;
   }
 
   .fg-cd3-anatomy__panel {
