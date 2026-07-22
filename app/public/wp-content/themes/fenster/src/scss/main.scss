@@ -31742,9 +31742,12 @@ html.fg-blinds-reveal-locked {
 
 /* Read the list as a section through the slab: each layer is a band, stacked
    in the order you meet them going from the weather inwards. */
+/* The stack fills the height the illustration sets, so the panel has no dead
+   corner under it and the rows breathe rather than bunching at the top. */
 .fg-cd3-anatomy__layers {
   display: grid;
-  align-content: start;
+  align-self: stretch;
+  align-content: stretch;
   margin: 0;
   padding: 0;
   overflow: hidden;
