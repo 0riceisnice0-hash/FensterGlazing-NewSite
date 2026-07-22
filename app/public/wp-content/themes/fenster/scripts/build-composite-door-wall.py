@@ -57,11 +57,13 @@ DOORS = [
     ("sign_PR01-9panel.jpg", "9-panel", "9 Panel", "Traditional"),
     ("sign_ESP01-flush.jpg", "esp01-flush", "Flush", "Esprit"),
     ("ESC19C_Duck-Egg.jpg", "esprit-esc19", "Esprit ESC19", "Esprit"),
-    # RES05 is the stable door, owner-confirmed 2026-07-22, and it has no bar
-    # across the middle. The other RES renders DO carry that bar, so whatever
-    # they are they are not stable doors; they are deliberately left off the
-    # wall rather than guessed at a third time.
-    ("sign_RES05-scaled.jpg", "stable-half-glazed", "Stable, half glazed", "Stable Doors"),
+    # Stable doors. The horizontal bar across the middle IS the stable split,
+    # confirmed by the owner picking RES05_02 (which has it) over RES05 (which
+    # does not). RES05 itself is therefore not a stable door and is left out.
+    ("sign_RES05_02-scaled.jpg", "stable-half-glazed", "Stable, half glazed", "Stable Doors"),
+    ("sign_RES03-scaled.jpg", "stable-diamond", "Stable, diamond glass", "Stable Doors"),
+    ("sign_RES01-scaled.jpg", "stable-solid", "Stable, solid", "Stable Doors"),
+    ("door-sign-stable.jpg", "stable-cottage", "Stable, cottage", "Stable Doors"),
     # Rustic Renown: tongue and groove boards inside a border. This is RR03
     # Diamond in Basalt Grey, taken from the Rustic Renown pages of the
     # Distinction brochure, which are flat renders rather than photographs.
@@ -74,8 +76,6 @@ DOORS = [
     ("sign_RE06-renown-full-moon-horizontal-scaled.jpg", "renown-full-moon", "Renown Full Moon", "Renown"),
     ("GD01-70-Slate.jpg", "infinity-gd01", "Infinity GD01", "Infinity"),
     ("GD12-Purple-Violet.jpg", "infinity-gd12", "Infinity GD12", "Infinity"),
-    # door-sign-stable.jpg also carries the horizontal bar, so it is held back
-    # with the other RES renders until the owner confirms what that bar is.
 ]
 
 # Distinction's own paint range, photographed as brush strokes.
