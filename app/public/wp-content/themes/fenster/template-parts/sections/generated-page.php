@@ -2680,7 +2680,7 @@ if ($is_commercial_hub) {
         </div>
     </section>
     <?php else : ?>
-    <section class="fg-hero <?php echo esc_attr($use_product_journey ? 'fg-hero--compact' : ''); ?>">
+    <section class="fg-hero <?php echo esc_attr(trim(($use_product_journey ? 'fg-hero--compact' : '') . ($is_composite_doors ? ' fg-hero--composite' : ''))); ?>">
         <?php if ($is_home) : ?>
             <video class="fg-hero__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url(fenster_generated_url($hero_media_src)); ?>">
                 <source src="<?php echo esc_url($sick_video); ?>" type="video/mp4">
