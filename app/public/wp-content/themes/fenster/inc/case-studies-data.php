@@ -68,7 +68,7 @@ function fenster_case_studies(): array
     $fitter_andy = $fitter('Andy McCullagh', 'Service Engineer', '7.png');
     $fitter_zac = $fitter('Zac Rugman', 'Installer', '8.png');
     $fitter_shane = $fitter('Shane Gowing', 'Installer', '20250617_1628580-scaled.jpg');
-    $fitter_aaron = $fitter('Aaron Isaacs', 'Fitter', 'aaron-isaacs-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
+    $fitter_aaron = $fitter('Aaron Isaacs', 'Installer', 'aaron-isaacs-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
 
     $cache = [
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
