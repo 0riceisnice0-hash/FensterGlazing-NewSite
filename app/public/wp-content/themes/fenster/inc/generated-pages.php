@@ -105,6 +105,92 @@ function fenster_location_matrix_products(): array
     ];
 }
 
+/**
+ * Genuine local detail for the Milton Keynes suburbs.
+ *
+ * These are the routes where being based in Bradwell Abbey is a real
+ * advantage, so they get real local knowledge instead of interchangeable
+ * copy. Everything here is about the age and type of the housing stock and
+ * what that means for glazing, which is verifiable and useful to a customer.
+ *
+ * Deliberately no claims about work completed in a given area: the case-study
+ * section carries proof where it genuinely exists, and stays empty where it
+ * does not.
+ *
+ * 'homes'  what the housing stock actually is
+ * 'means'  what that tends to mean for windows and doors
+ * 'check'  the practical thing worth knowing before ordering
+ */
+function fenster_mk_suburb_profiles(): array
+{
+    $conservation = 'Some streets here sit in a conservation area, which can limit frame styles, materials and colours. It is worth checking with Milton Keynes City Council before you order, and we can suggest styles that usually suit.';
+    $grid_square = 'Original frames and first-generation replacements are now well past their best. Misted units, stiff handles and draughty openers are the usual reasons people call.';
+    $new_build = 'Builder-standard windows and doors are fitted to a budget rather than to your taste. Most upgrades here are about better glass, a colour that suits the house, or opening up the back for an extension.';
+
+    return [
+        'bletchley' => [
+            'homes' => 'Bletchley was a town long before Milton Keynes was drawn around it. You get Victorian and Edwardian terraces near the old station, 1930s bay-fronted semis, and post-war and modern estates further out.',
+            'means' => 'The mix matters. A bay-fronted semi needs the bay rebuilt properly with the right structural support, while a post-war estate house is usually a straight replacement.',
+            'check' => 'Bay windows carry load. Anyone quoting for a bay should be talking to you about how it is supported, not just the frame colour.',
+        ],
+        'wolverton' => [
+            'homes' => 'Wolverton was built for the railway works from 1838, and it still reads that way: long, regular terraces on a tight grid, with later housing around the edges.',
+            'means' => 'Terraced fronts look best when the replacement keeps the original proportions. Flush casements and sliding sash styles usually sit better on these houses than a chunky modern frame.',
+            'check' => $conservation,
+        ],
+        'stony-stratford' => [
+            'homes' => 'A Georgian coaching town on the old Watling Street, with listed buildings, a historic high street and period properties running back from it.',
+            'means' => 'Character comes first here. Sliding sash and flush casement styles, heritage colours and slim sightlines matter more than they would on a modern estate.',
+            'check' => $conservation,
+        ],
+        'newport-pagnell' => [
+            'homes' => 'An old market town with a historic centre, then post-war and modern estates spreading out from it.',
+            'means' => 'Two quite different jobs depending on where you are. Older properties near the centre need sympathetic styling; the estates are usually straightforward replacements.',
+            'check' => $conservation,
+        ],
+        'woburn-sands' => [
+            'homes' => 'Victorian and Edwardian villas alongside later houses and modern extensions, on the Bedfordshire edge of Milton Keynes.',
+            'means' => 'Older villas often have tall, narrow openings that suit a slim frame and a taller glass area. Extensions are usually where bifolds or a roof lantern come in.',
+            'check' => 'If you are glazing an extension as well as replacing windows, price them together. The colour and glass should match across the house.',
+        ],
+        'great-linford' => [
+            'homes' => 'A historic village core with a manor and church, wrapped in 1970s and 1980s new town housing.',
+            'means' => 'Most of the work is on the estate housing, where the original frames or their first replacements are now failing.',
+            'check' => $grid_square,
+        ],
+        'shenley-church-end' => [
+            'homes' => 'Mainly 1980s estate housing built around an older village centre, west of the city.',
+            'means' => 'Consistent house types, so replacements are usually predictable and tidy. Colour choice is where most people spend their time.',
+            'check' => $grid_square,
+        ],
+        'furzton' => [
+            'homes' => '1980s estate housing arranged around Furzton Lake, with a lot of similar house types.',
+            'means' => 'Straightforward replacement work in most cases. Homes facing the lake and open ground get more weather, so seals and drainage matter.',
+            'check' => $grid_square,
+        ],
+        'oldbrook' => [
+            'homes' => '1970s housing close to Central Milton Keynes, among the earlier parts of the new town.',
+            'means' => 'Some of the oldest glazing in the city sits here. Replacing it usually makes an obvious difference to warmth and noise.',
+            'check' => $grid_square,
+        ],
+        'monkston' => [
+            'homes' => '1990s and 2000s estate housing on the eastern side of Milton Keynes.',
+            'means' => 'The original uPVC is now reaching the end of its life. Hardware, hinges and failed units tend to go before the frames look tired.',
+            'check' => 'If only a few units have misted, replacing the glass rather than the whole window is often the sensible option. We will tell you when that is the case.',
+        ],
+        'brooklands' => [
+            'homes' => 'One of the newer parts of Milton Keynes, built from the 2010s onward on the eastern flank.',
+            'means' => 'Houses are recent, so this is upgrade and extension work rather than replacement.',
+            'check' => $new_build,
+        ],
+        'whitehouse' => [
+            'homes' => 'A recent development on the western side of Milton Keynes, built from the 2010s onward.',
+            'means' => 'Newer houses, so the work is usually about improving on the builder specification or glazing an extension.',
+            'check' => $new_build,
+        ],
+    ];
+}
+
 function fenster_location_matrix_town_profiles(): array
 {
     return [

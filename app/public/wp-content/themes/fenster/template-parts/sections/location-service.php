@@ -1697,6 +1697,43 @@ $product_links = [
     </section>
 
     <?php
+    // Genuine local knowledge, Milton Keynes suburbs only. This is what makes
+    // a Bletchley page different from a Furzton one rather than the same copy
+    // with the name swapped. Renders nothing for towns we have no real
+    // knowledge of, which is most of the outer ring.
+    $mk_suburb = function_exists('fenster_mk_suburb_profiles')
+        ? (fenster_mk_suburb_profiles()[$location_slug] ?? null)
+        : null;
+    ?>
+    <?php if (is_array($mk_suburb)) : ?>
+        <section class="fg-location-knowledge" aria-label="<?php echo esc_attr(sprintf(__('About homes in %s', 'fenster'), $location_name)); ?>">
+            <div class="container">
+                <div class="fg-location-knowledge__head">
+                    <p class="eyebrow"><?php esc_html_e('Local knowledge', 'fenster'); ?></p>
+                    <h2><?php echo esc_html(sprintf(__('What we see on %s homes', 'fenster'), $location_name)); ?></h2>
+                </div>
+                <div class="fg-location-knowledge__grid">
+                    <article>
+                        <h3><?php echo esc_html(sprintf(__('The homes in %s', 'fenster'), $location_name)); ?></h3>
+                        <p><?php echo esc_html((string) $mk_suburb['homes']); ?></p>
+                    </article>
+                    <article>
+                        <h3><?php esc_html_e('What that usually means', 'fenster'); ?></h3>
+                        <p><?php echo esc_html((string) $mk_suburb['means']); ?></p>
+                    </article>
+                    <article class="fg-location-knowledge__note">
+                        <h3><?php esc_html_e('Worth knowing before you order', 'fenster'); ?></h3>
+                        <p><?php echo esc_html((string) $mk_suburb['check']); ?></p>
+                    </article>
+                </div>
+                <p class="fg-location-knowledge__foot">
+                    <?php echo esc_html(sprintf(__('Our showroom is on Alston Drive in Bradwell Abbey, a short drive from %s, so we survey and fit here ourselves rather than sending a subcontractor.', 'fenster'), $location_name)); ?>
+                </p>
+            </div>
+        </section>
+    <?php endif; ?>
+
+    <?php
     // Real jobs in this town, immediately before the FAQs and enquiry. Renders
     // nothing when there is no honest local match, so no page carries filler
     // proof from a town we have not worked in.
