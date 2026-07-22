@@ -63,6 +63,7 @@ if ($is_archive) :
                             'card' => $card,
                             'heading' => 'h2',
                             'archive_index' => $archive_index,
+                            'archive_initial' => 4,
                         ]); ?>
                     <?php endforeach; ?>
                 </div>
