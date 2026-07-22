@@ -40,7 +40,7 @@ $roof_styles = [
             <div class="container fg-roof-lantern-hero__grid">
                 <div class="fg-roof-lantern-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Roof lanterns in Milton Keynes', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Bring more daylight into your extension.', 'fenster'); ?></h1>
+                    <h1><?php esc_html_e('Sheerline S1 roof lanterns', 'fenster'); ?></h1>
                     <p class="fg-roof-lantern-hero__lead"><?php esc_html_e('We supply and install Sheerline S1 aluminium roof lanterns across Milton Keynes. We check the roof opening, glass specification, ventilation and finish before the lantern is ordered.', 'fenster'); ?></p>
                     <div class="fg-roof-lantern-hero__actions">
                         <a class="button" href="#fenster-roof-lantern-enquiry"><?php esc_html_e('Get a roof lantern quote', 'fenster'); ?></a>

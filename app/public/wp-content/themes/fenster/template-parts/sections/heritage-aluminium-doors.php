@@ -57,7 +57,7 @@ $door_colours = [
             <div class="container fg-heritage-door-hero__grid">
                 <div class="fg-heritage-door-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Heritage aluminium doors in Milton Keynes', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('The steel-door look, without the steel.', 'fenster'); ?></h1>
+                    <h1><?php esc_html_e('Sheerline heritage aluminium doors', 'fenster'); ?></h1>
                     <p class="fg-heritage-door-hero__lead"><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
                     <div class="fg-heritage-door-hero__actions">
                         <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>

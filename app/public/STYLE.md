@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-07-15
+Last updated: 2026-07-22
 
 This file is the source of truth for how the site should look and feel.
 
@@ -8,10 +8,26 @@ Read this before changing any page layout, section styling, hero, card, form, re
 
 Use:
 
+- `TONEOFVOICE.md` for how the words should sound. This file governs how a page looks; that one governs what it says. A page is not finished until it passes both. Where a rule here is about wording, `TONEOFVOICE.md` is the fuller version and wins on detail.
 - `AI.md` for coding rules, build rules, QA gates and implementation constraints.
 - `HANDOVER.md` for the current site architecture and route/template context.
 - `HOMEPAGE.md` for homepage-only layout, order and interaction details.
 - `PROGRESS.md` for dated work logs.
+
+## The Reference Pages
+
+Five pages are the standard. When this file and one of them disagree, look at the page first: it is usually the newer thinking, and the rule here is what needs updating.
+
+- `/about/` — the voice. `TONEOFVOICE.md` was derived from this page's copy.
+- `/composite-doors/` — hero pattern, collection cards, the interactive layer explorer, full-size colour chips, the green-then-dark CTA pair.
+- `/sliding-sash-windows/` — the richer product page: model comparison, spec comparison, image-led detail sections.
+- `/heritage-aluminium-doors/` — a focused single-system product page.
+- `/roof-lanterns/` — hero pattern and image-led proof.
+
+Two cautions before copying from them:
+
+- **They are not uniformly ahead of this file.** The heritage and roof lantern pages still render the hero phone number as a text link and use `button--outline` / `button--ghost` / `button--light` as secondary actions. Both of those contradict the owner's instruction of 2026-07-22 recorded under Customer-Facing Copy. There the rule is newer than the page, and the rule wins. Copy their composition, not their CTA markup.
+- Check the dated entry in `PROGRESS.md` before treating any detail as deliberate. Some of what is on these pages is simply older than the current standard.
 
 ## Important Updates
 
@@ -26,6 +42,9 @@ Use:
 - Product page redesign rules are now in place as a regression standard: no generated product section may create horizontal body scroll; product pages should use visible information cards, full-width specification check cards and FAQ-only accordions; colour hub hero imagery can be removed on mobile if it weakens the page; sash comparison/model sections need a designed mobile layout, not squeezed desktop tables/images.
 - The loading screen has been removed for lead performance. Do not add another blocking entrance animation before the page content.
 - Enquiry email HTML is part of the customer experience. Keep it simple, table-based and email-client-safe; the launch template uses a light header so the Fenster logo remains visible.
+- **Product and service page H1s are the product name, not a tagline.** Owner instruction, 2026-07-22. Applied to `/heritage-aluminium-doors/` and `/roof-lanterns/` on the same day. Full rule under Customer-Facing Copy.
+- `TONEOFVOICE.md` now exists and is a required read alongside this file. It was derived from the About page, which the owner considers the best copy on the site.
+- The five reference pages are listed near the top of this file. Prefer copying from them over inventing a new pattern, but check their CTA markup against the current rule rather than assuming it is current.
 
 ## Design North Star
 
@@ -212,10 +231,25 @@ Type should be bold and confident, but sized for its container.
 
 ## Customer-Facing Copy
 
+`TONEOFVOICE.md` is the full account of how Fenster sounds, taken from the About page. Read it before writing any customer-facing words. The short version, because it changes layout decisions too:
+
+- Facts do the persuading, not adjectives. `A 44.5mm insulated slab, against 28mm for a uPVC door panel` beats `exceptionally robust`. This is why the reference pages give real numbers so much room: the design has to leave space for a specific fact where a template would have put a claim.
+- Say the awkward thing first. Naming the limitation before the benefit is what makes the rest believable.
+- Respect the reader's way of doing things: `If you like X... If you would rather Y...`.
+- One dry aside at most per page, and never in a hero.
+- British English. No em dashes, no exclamation marks.
+- If a section needs a superlative to justify its existence, the section is the problem.
+
 - Write from Fenster to the customer: `We supply and install...`, `Tell us...`, `You can choose...`.
 - Prefer short declarative sentences and ordinary punctuation. Do not use em dashes.
 - Avoid talking about Fenster as `the installer`, `the company`, `your local specialist` or another third-person entity unless the sentence genuinely refers to a separate party.
-- Headings should state a useful customer truth, not advertise the writing. Avoid headings such as `Designed around you`, `The perfect finishing touch`, `Explore the possibilities` and `Everything you need to know`.
+- **The H1 on a product or service page is the name of the thing, not a line about it.** Owner instruction, 2026-07-22. `Sheerline heritage aluminium doors`, not `The steel-door look, without the steel.` `Distinction composite doors`, not `A front door you never have to paint.` `Sheerline S1 roof lanterns`, not `Bring more daylight into your extension.` Someone landing from a search wants confirmation they are in the right place before they want persuading.
+  - Include the system or brand name when the page is sold around one, in the form the customer would recognise it. Otherwise use the plain product name.
+  - No closing full stop on an H1. It is a name, not a sentence. This is the one place `TONEOFVOICE.md`'s full-stop rule does not apply.
+  - The persuading moves down one level: the eyebrow carries the location line, and the lead paragraph directly under the H1 does the selling. Nothing is lost, it just stops being the headline.
+  - This applies to the H1 only. Section headings below it still state a customer truth, in sentence case, with the closing full stop.
+  - Non-product pages keep a voice H1 where it is genuinely the point. `/about/` opens with `Simple, honest glazing.` and should stay that way.
+- Headings below the H1 should state a useful customer truth, not advertise the writing. Avoid headings such as `Designed around you`, `The perfect finishing touch`, `Explore the possibilities` and `Everything you need to know`.
 - Buttons state the next action. Good labels include `Get a quote`, `Call 01908 429200`, `View flat rooflights`, `See colour options` and `Send an enquiry`.
 - **Anything that acts as a call to action is a button, never a text link.** That includes phone numbers. Owner instruction, 2026-07-22.
 - **The CTA pair is green then dark, taken from the header:** primary `.button` (green, `--color-accent`), secondary `.button--steel` (dark, `--color-steel`), matching `Instant Quote` and `Book consultation` in the navigation. Use this pairing for every two-action row. The one exception is a dark panel, where a dark secondary disappears into the background: use `.button--light` there instead.
@@ -265,7 +299,9 @@ There is one shared live customer form:
 - Do not restore the product-hub survey summary, common choices strip, quote option card or separate accreditations/systems filler section.
 - Product-gallery thumbnails should open a dark in-page lightbox with no visible alt/caption text, no white background card and previous/next controls. They should not open a raw image URL in a new tab.
 - Product-specific sections should show the real product system, not generic hardware or supplier filler.
-- `/sliding-sash-windows/` is the accepted reference for a richer product detail page: model comparison, spec comparison, image-led detail sections and sash-specific furniture.
+- `/sliding-sash-windows/` is the accepted reference for a richer product detail page: model comparison, spec comparison, image-led detail sections and sash-specific furniture. `/composite-doors/`, `/heritage-aluminium-doors/` and `/roof-lanterns/` are the other three references; see The Reference Pages near the top of this file.
+- **The product hero pattern** is the one shared by composite doors, heritage doors and roof lanterns: eyebrow carrying the product and location, H1 naming the product, one lead paragraph that does the selling, the CTA pair, then a short reassurance list of three concrete facts, with a single real installation photograph alongside. Verify the hero image yourself at the actual viewport. A crop that cuts the product out of frame is a defect, not a detail.
+- **Prefer opening a detail to hiding it.** The composite doors construction section shows six slab layers one at a time rather than as six stacked paragraphs. Use that pattern when a section is genuinely a list of technical detail: it keeps every word on the page while removing the wall. This does not reopen the no-accordions-outside-FAQs rule for ordinary content; it is for spec detail, and the first item must be open in the markup so the section still reads with JavaScript off.
 - Sash model cards should keep their `Best for` panels and spec grids visually aligned so Ultimate, Heritage and Charisma can be compared without a chaotic card rhythm.
 - Detail image panels that pair with copy cards should match the height of the copy card on desktop, with sensible static stacking on mobile.
 - Sash furniture cards should use clean product-object imagery, equal-height range cards and local white/soft panels against the continuous page canvas.
