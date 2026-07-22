@@ -76,7 +76,7 @@ if ($insert_after === false) {
 $aaron_member = [
     'name' => 'Aaron Isaacs',
     'role' => 'Installer',
-    'copy' => 'Aaron Isaacs is an experienced installer at Fenster Glazing, with over 10 years in the trade. Known for his practical approach and reliable workmanship, Aaron takes pride in completing installations cleanly and to a high standard. Away from site, he loves hiking, spending time with his family and getting outdoors, and has climbed High Cup Nick.',
+    'copy' => 'Aaron Isaacs is a skilled installer at Fenster Glazing, bringing over 10 years of experience in the trade. Reliable and detail-focused, he takes pride in completing every installation cleanly, efficiently and to a high standard. Outside of work, Aaron enjoys hiking, spending time with his family and exploring the outdoors, including completing the challenging climb up High Cup Nick.',
     'image' => '/wp-content/themes/fenster/assets/team/aaron-isaacs-cropped-bw.jpg',
     'alt' => 'Aaron Isaacs',
 ];
