@@ -105,6 +105,32 @@ The construction section uses one static cutaway. An interactive per-layer versi
 
 Every composite section is held inside a single `1440x900` viewport (about `830px` below the header). Measure before and after any change to this route.
 
+## Collections: WindowCAD is the source of truth (2026-07-22)
+
+The business owner's decision is that the quote tool and the website must name the same collections, and that Distinction's own Signature/Contemporary split is not used anywhere customer-facing.
+
+Fenster's composite collections, read from the live WindowCAD retail designer:
+
+| Collection | What defines it |
+| --- | --- |
+| Traditional | Panelled, with the glazed section cut into the panel. By far the biggest group. |
+| Esprit | One flat woodgrain panel, no panel detail. |
+| Rustic Renown | Shiplap boards inside a plain border. |
+| Renown | Full shiplap edge to edge, no border. |
+| Infinity | Long horizontal grooves, the most modern end. |
+| Stable Doors | Split across the middle, top half opens alone. |
+
+Rules:
+
+- **Within a collection the panel is the constant and the glass varies.** That is the useful thing to tell a customer and the reason the collections exist; say it rather than listing style codes.
+- Side panels are a configuration option that attaches to any collection, not a collection. Keep them as a note.
+- To verify or update this list, open `https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing&productCollection=4`, advance one step past Sizes, and read the `Door style` group headings. Change `scripts/build-composite-door-wall.py` and `$composite_collections` together, then rebuild the assets.
+- Do not reintroduce Signature, Contemporary, Venture, Grandeur or nxt-gen as customer-facing groupings. Distinction style *names* (Elegance, Esteem, Renown Diamond) are fine; their *collections* are not.
+
+## The £5,000 security guarantee
+
+It is the headline USP on this route and has its own dark band. The supporting points must stay verifiable: Secured by Design covers the door slabs but **not** stable doors, and most decorative glass is triple glazed and laminated while Chatsworth and Wentworth are double glazed. The copy deliberately does not state what the guarantee pays out or under what conditions, because those terms are not recorded in this repo. **Confirm the written terms with the owner before promoting this page to production**; `AUDIT.md` still lists the claim as one to substantiate.
+
 ## Conversion model (2026-07-22)
 
 The route is built around the question visitors actually arrive with, which is what a fitted door costs.
