@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-22
 
+## 2026-07-22 - MK search push: town proof, title gaps, guide routing (test)
+
+Four items from `HIGH-INTENT-SEARCH-PLAN.md`, all on test only.
+
+- **Town pages now carry real local proof.** `fenster_case_studies_for_town()` matches the study `location` field, exact town first, then the wider Milton Keynes area for the twelve MK suburb routes. Renders through the existing shared card above the FAQs. Verified: Whitehouse and Wolverton lead with their own job, Bletchley borrows the MK studies, Leighton Buzzard shows both of its own, Northampton shows its one, and Luton and Hitchin correctly show nothing rather than passing off a distant job as local.
+- **Brand result investigated and closed with no work.** From a Milton Keynes location the site is already #1 organic for `fenster glazing` with sitelinks and a knowledge panel. The GSC 4.0 average is non-local and international impressions (`fenster` is German for window; the bare query is 545 impressions at position 8.2). Brand CTR is 20.37%. Recorded in the plan so nobody re-opens it.
+- **Title and meta gaps closed.** `aluminium-windows` had no override and was serving imported scrape wording ("Aluminium Windows Supply") on 521 impressions at position 18.6. `windows-milton-keynes` is also the landing page for "replacement windows", "uPVC windows" and "window installer" in MK, 1,813 impressions between them, so the title now carries that intent. Both MK head terms lead on instant online pricing. Pages already ranking (`composite-doors` 7.9, `casement-windows` 10.0) were left alone rather than churned. All titles under 60 characters, metas under 160, no em dashes.
+- **Guide traffic routed to money pages.** Four guides drawing 32,500 impressions a quarter had no next-steps block: soundproofing, U-values, triple vs acoustic glazing and winter condensation. Each now routes to the commercially correct answer; the condensation guide separates ventilation from a failed sealed unit, which is a repair we sell.
+- Verified on test at 1440x950 and iPhone 13: blocks render, all link targets return 200, no horizontal overflow, no console errors.
+
 ## 2026-07-22 - Review summary polish to live (ef2b6c3)
 
 - Owner feedback on the new review section: drop `Leave a review`, make Trustpilot a real second button in the site's usual green-then-steel pairing, and reduce the height of the summary panel.

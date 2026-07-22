@@ -209,6 +209,8 @@ Fenster is physically in Milton Keynes. Tier 1 is where proximity — the strong
 
 ### Tier 2 — Put real proof on the town pages
 
+> **Status 2026-07-22: done.** `fenster_case_studies_for_town()` is live in `inc/case-studies-data.php` and renders through the shared card on `location-service.php`. Exact-town matches lead; the twelve MK suburb routes share the Milton Keynes studies. It deliberately renders nothing where there is no honest local match, so Luton and Hitchin show no proof rather than a Northampton job pretending to be local.
+
 The single biggest quality gap between a templated town page and a page Google promotes is evidence that the work happened there.
 
 `inc/case-studies-data.php` already carries a `location` per study:
@@ -246,14 +248,16 @@ Update the `AI.md` rule in the same commit so the reasoning is recorded, not sil
 
 Every review-showcase "read reviews" link across the site therefore sends people to a search results page rather than the Fenster review panel. `AUDIT.md` §3.9 flagged this and it is still live. Replace it with the real Google Business Profile review URL, and use the same canonical profile URL in the schema `sameAs` block (currently a `maps/place` coordinate link, `inc/generated-pages.php:2021`). One line, and it strengthens both the customer journey and the site↔GBP association that feeds the map pack.
 
-**3.2 Brand result.** Investigate what outranks `fensterglazing.com` for `fenster glazing`. Likely candidates: directory listings, the old site's residue, Companies House. Cheapest click gain available.
+**3.2 Brand result — checked 2026-07-22, no work needed.** From a Milton Keynes location `fensterglazing.com` is already **#1 organic** for `fenster glazing`, with sitelinks and a full knowledge panel above it. The GSC average of 4.0 is dragged down by non-local and international impressions: `fenster` is German for window, and the bare query carries 545 impressions at position 8.2 that will never convert. Brand CTR is already 20.37%. Do not spend effort here.
 
-**3.3 Titles for the striking-distance ten.** The MK cluster in §5 sits at positions 8–19. Review each target page's title and meta against the live SERP competition before touching anything else — these are the pages where a CTR gain compounds with a ranking gain.
+**3.3 Titles for the striking-distance ten — done 2026-07-22.** `aluminium-windows` had no override at all and was serving imported scrape wording; `windows-milton-keynes` now carries the replacement/uPVC/installer intent behind 1,813 quarterly impressions; both MK head terms lead on instant online pricing, the one differentiator no competitor in that SERP offers. Pages already ranking well (`composite-doors` at 7.9, `casement-windows` at 10.0) were deliberately left alone.
+
+**3.3a Original note.** Titles for the striking-distance ten. The MK cluster in §5 sits at positions 8–19. Review each target page's title and meta against the live SERP competition before touching anything else — these are the pages where a CTR gain compounds with a ranking gain.
 
 ### Tier 4 — Stop feeding the wrong audience
 
 The imported informational guides draw 126,739 non-UK impressions. They are not harmful, but they should work for the business:
-- add a prominent, geographically explicit CTA into the top-traffic guides (`/what-is-a-door-lintel/`, `/different-types-of-window-frame-materials/`, `/what-are-double-glazed-glass-windows/`) pointing at the MK money pages;
+- **Done 2026-07-22.** Those three already had next-steps blocks; the gap was elsewhere. Added blocks to `/soundproof-windows/` (14,514 impressions), `/a-guide-to-understanding-u-values/` (12,092), `/which-is-better-triple-or-acoustic-glazing/` (3,488) and `/how-to-prevent-window-condensation-in-winter/` (2,416) — 32,500 impressions a quarter that previously had no route into a money page. Each answers the question commercially rather than carrying a generic CTA; the condensation guide correctly separates ventilation from a failed sealed unit we can replace.
 - do not commission more non-local informational content until local commercial is winning.
 
 ---
