@@ -31981,47 +31981,44 @@ html.fg-blinds-reveal-locked {
   font-weight: 750;
 }
 
+/* The door stands next to the chips rather than sitting in a cropping box, so
+   the whole door is visible. The caption goes underneath for the same reason. */
 .fg-cd3-colour__preview {
-  position: relative;
+  position: sticky;
+  top: clamp(84px, 12vh, 120px);
+  display: grid;
+  justify-items: center;
+  gap: 0.8rem;
   margin: 0;
-  overflow: hidden;
-  border: 1px solid rgba(2, 43, 53, 0.12);
-  border-radius: 16px;
-  background: #e6ecea;
-  box-shadow: 0 22px 60px rgba(2, 43, 53, 0.12);
 }
 
 .fg-cd3-colour__preview img {
   display: block;
-  width: 100%;
-  height: clamp(380px, 52vh, 540px);
-  object-fit: cover;
-  object-position: center;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: clamp(380px, 56vh, 560px);
+  object-fit: contain;
+  filter: drop-shadow(0 22px 40px rgba(2, 43, 53, 0.22));
 }
 
 .fg-cd3-colour__preview figcaption {
-  position: absolute;
-  right: 0.9rem;
-  bottom: 0.9rem;
-  left: 0.9rem;
   display: grid;
   gap: 0.1rem;
-  padding: 0.7rem 0.9rem;
-  border-radius: 11px;
-  color: #fff;
-  background: rgba(2, 43, 53, 0.88);
-  backdrop-filter: blur(10px);
+  justify-items: center;
+  text-align: center;
 }
 
 .fg-cd3-colour__preview figcaption strong {
-  font-size: 1rem;
+  color: var(--fg-navy, #002d3a);
+  font-size: 1.05rem;
 }
 
 .fg-cd3-colour__preview figcaption span {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.74rem;
-  font-weight: 650;
-  letter-spacing: 0.04em;
+  color: rgba(2, 43, 53, 0.55);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
@@ -32237,6 +32234,7 @@ html.fg-blinds-reveal-locked {
 
   .fg-cd3-colour__preview {
     order: -1;
+    position: static;
   }
 
   .fg-cd3-colour__swatches {
