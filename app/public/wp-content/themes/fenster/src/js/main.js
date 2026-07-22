@@ -1124,6 +1124,41 @@ document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
   start();
 });
 
+/*
+ * Composite collections: dots for the mobile swipe carousel. The track is a
+ * plain scroll-snap rail, so the dots only have to report which card is
+ * nearest the start edge.
+ */
+document.querySelectorAll('[data-fg-collection-carousel]').forEach((carousel) => {
+  const track = carousel.querySelector('.fg-cd3-collections__grid');
+  const dots = [...carousel.querySelectorAll('[data-fg-collection-dot]')];
+  const cards = track ? [...track.children] : [];
+  if (!track || !dots.length || !cards.length) return;
+
+  let ticking = false;
+  const sync = () => {
+    ticking = false;
+    let nearest = 0;
+    let best = Infinity;
+    cards.forEach((card, index) => {
+      const distance = Math.abs(card.offsetLeft - track.scrollLeft - track.clientLeft);
+      if (distance < best) {
+        best = distance;
+        nearest = index;
+      }
+    });
+    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === nearest));
+  };
+
+  track.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(sync);
+  }, { passive: true });
+
+  sync();
+});
+
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');

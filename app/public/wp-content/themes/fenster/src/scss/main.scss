@@ -31055,13 +31055,20 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 860px) {
   .fg-composite-approved__inner {
     grid-template-columns: 1fr;
-    justify-items: start;
+    justify-items: stretch;
     gap: 0.85rem;
   }
 
+  .fg-composite-approved__logo {
+    justify-self: start;
+  }
+
+  /* The number stayed on one line and pushed itself past the panel edge. */
   .fg-composite-approved__call {
     width: 100%;
+    min-width: 0;
     text-align: center;
+    white-space: normal;
   }
 }
 
@@ -31474,6 +31481,11 @@ html.fg-blinds-reveal-locked {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.fg-cd3-collections__cue,
+.fg-cd3-collections__dots {
+  display: none;
 }
 
 .fg-cd3-collections__note {
@@ -32241,8 +32253,114 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
+  /* Collections become an image-led swipe carousel, matching how the homepage
+     presents the product range on a phone. Stacking six cards made the section
+     about 1,400px tall and nobody scrolled it. */
+  .fg-cd3-collections__cue {
+    display: block;
+    margin: 0 0 0.9rem;
+    color: rgba(2, 43, 53, 0.6);
+    font-size: 0.9rem;
+  }
+
+  .fg-cd3-collections__carousel {
+    position: relative;
+    margin-inline: calc(50% - 50vw);
+  }
+
   .fg-cd3-collections__grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    grid-template-columns: none;
+    gap: 0.9rem;
+    padding: 0.25rem max(1rem, calc((100vw - var(--container)) / 2)) 0.25rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: max(1rem, calc((100vw - var(--container)) / 2));
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .fg-cd3-collections__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fg-cd3-collection {
+    position: relative;
+    display: grid;
+    grid-template-columns: none;
+    flex: 0 0 min(78vw, 340px);
+    min-height: clamp(420px, 62vw, 480px);
+    border-radius: 4px 44px 4px 4px;
+    background: var(--color-steel);
+    color: #fff;
+    isolation: isolate;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .fg-cd3-collection::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 24, 31, 0.94) 0%, rgba(0, 24, 31, 0.42) 56%, rgba(0, 24, 31, 0.06) 100%);
+  }
+
+  .fg-cd3-collection__img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    height: auto;
+  }
+
+  .fg-cd3-collection__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .fg-cd3-collection__body {
+    align-self: end;
+    gap: 0.3rem;
+    padding: 1.15rem 1.25rem 1.35rem;
+  }
+
+  .fg-cd3-collection__body h3 {
+    color: #fff;
+    font-size: 1.35rem;
+  }
+
+  .fg-cd3-collection__slab {
+    color: #7fe0ab;
+  }
+
+  .fg-cd3-collection__body > p {
+    color: rgba(233, 244, 241, 0.86);
+    font-size: 0.88rem;
+  }
+
+  .fg-cd3-collections__dots {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 0 0;
+  }
+
+  .fg-cd3-collections__dots span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(2, 43, 53, 0.24);
+    transition: width 180ms ease, background 180ms ease;
+  }
+
+  .fg-cd3-collections__dots span.is-active {
+    width: 20px;
+    background: var(--color-accent);
   }
 
   .fg-cd3-security__inner,

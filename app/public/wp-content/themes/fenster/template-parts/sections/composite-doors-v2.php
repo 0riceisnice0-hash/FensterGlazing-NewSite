@@ -38,6 +38,8 @@ if (empty($collections)) {
             <p><?php esc_html_e('Within a collection the slab stays the same and the glass changes, so pick the slab you like the look of and the glass design comes later. These are the same six you will meet in our quote tool, in the same order, so nothing is renamed between here and your price.', 'fenster'); ?></p>
         </header>
 
+        <p class="fg-cd3-collections__cue"><?php esc_html_e('Swipe through the six.', 'fenster'); ?></p>
+        <div class="fg-cd3-collections__carousel" data-fg-collection-carousel>
         <ul class="fg-cd3-collections__grid">
             <?php foreach ($collections as $index => $collection) : ?>
                 <?php $stem = $styles_base . (string) $collection['slug']; ?>
@@ -59,6 +61,12 @@ if (empty($collections)) {
                 </li>
             <?php endforeach; ?>
         </ul>
+            <div class="fg-cd3-collections__dots" aria-hidden="true">
+                <?php foreach ($collections as $index => $collection) : ?>
+                    <span data-fg-collection-dot="<?php echo esc_attr((string) $index); ?>" class="<?php echo $index === 0 ? 'is-active' : ''; ?>"></span>
+                <?php endforeach; ?>
+            </div>
+        </div>
         <p class="fg-cd3-collections__note"><?php esc_html_e('Matching glazed side panels can go either side of any of them, which is how we widen a narrow opening and get more daylight into a dark hallway.', 'fenster'); ?></p>
     </div>
 </section>
