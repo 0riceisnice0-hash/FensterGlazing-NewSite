@@ -32486,6 +32486,7 @@ html.fg-blinds-reveal-locked {
   /* Capped, or the band grows with the viewport and by tablet width it is a
      400px close-up of one corner of the illustration. */
   .fg-cd3-anatomy__media {
+    width: 100%;
     aspect-ratio: 16 / 9;
     max-height: 260px;
   }
