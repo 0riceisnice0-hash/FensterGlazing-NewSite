@@ -166,13 +166,24 @@ function fenster_location_matrix_product_profiles(): array
 function fenster_gsc_seo_overrides(): array
 {
     return [
+        // The Milton Keynes cluster leads with instant online pricing. It is
+        // the one thing no competitor in this SERP offers, it is substantiable
+        // (the quote tool really does return a guide price), and it gives the
+        // listing a reason to be clicked over four older, larger local firms.
         'double-glazing-milton-keynes' => [
-            'title_tag' => 'Double Glazing Milton Keynes | Local Window & Door Quotes',
-            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Compare windows, doors and roof lanterns, then get a local quote.',
+            'title_tag' => 'Double Glazing Milton Keynes | See Your Price Online',
+            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Design your windows or doors online and see a guide price straight away, or book a consultation.',
         ],
+        // Also the landing page for "replacement windows", "uPVC windows" and
+        // "window installer" in Milton Keynes, so the title carries the intent
+        // those searches use rather than the bare category word.
         'windows-milton-keynes' => [
-            'title_tag' => 'Windows Milton Keynes | Double Glazed Window Installers',
-            'meta_description' => 'Double glazed windows in Milton Keynes from Fenster Glazing. Compare uPVC, aluminium, flush, sash and heritage styles with local survey-led installation.',
+            'title_tag' => 'Replacement Windows Milton Keynes | uPVC & Aluminium',
+            'meta_description' => 'Replacement windows in Milton Keynes: uPVC, aluminium, flush, sash and heritage. See your price online in minutes, or book a survey with our local fitters.',
+        ],
+        'aluminium-windows' => [
+            'title_tag' => 'Aluminium Windows Milton Keynes | Instant Online Price',
+            'meta_description' => 'Aluminium windows in Milton Keynes with slim frames, RAL colour choices and warm double glazing. See a price online in minutes or book a survey with our team.',
         ],
         'doors-milton-keynes' => [
             'title_tag' => 'Doors Milton Keynes | Front, Patio, Bifold & French Doors',

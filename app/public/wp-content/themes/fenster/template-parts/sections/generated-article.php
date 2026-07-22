@@ -24,6 +24,51 @@ $phone_href = preg_replace('/\s+/', '', $phone);
 $slug = trim((string) ($page['slug'] ?? ''), '/');
 
 $article_next_steps_map = [
+    // These four guides draw large impression volumes with almost no route
+    // into a money page: soundproofing 14.5k, U-values 12.1k, acoustic vs
+    // triple 3.5k and condensation 2.4k impressions a quarter between them.
+    // Each next step is the genuine commercial answer to the question asked,
+    // not a generic CTA.
+    'soundproof-windows' => [
+        'eyebrow' => 'Want a quieter room?',
+        'title' => 'Cutting road and neighbour noise at the window.',
+        'copy' => 'Noise usually gets in through the glass, the frame seals or the gaps around them. We can look at which of those is the problem in your room before you spend money on the wrong fix.',
+        'links' => [
+            ['label' => 'Secondary glazing', 'url' => home_url('/secondary-glazing/'), 'meta' => 'A second internal pane for noise'],
+            ['label' => 'Replacement windows', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Thicker units and better seals'],
+            ['label' => 'Window and door repairs', 'url' => home_url('/window-and-door-repairs/'), 'meta' => 'When the seals are the problem'],
+        ],
+    ],
+    'a-guide-to-understanding-u-values' => [
+        'eyebrow' => 'Comparing efficiency?',
+        'title' => 'What the U-value means for your rooms and your bills.',
+        'copy' => 'A lower U-value means less heat escaping. We can tell you the real figure for each window we fit, so you can compare like with like rather than headline claims.',
+        'links' => [
+            ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/'), 'meta' => 'Windows, doors and replacement glass'],
+            ['label' => 'Casement windows', 'url' => home_url('/casement-windows/'), 'meta' => 'A+ rated options with real figures'],
+            ['label' => 'See your price online', 'url' => home_url('/online-quote/'), 'meta' => 'A guide price in minutes'],
+        ],
+    ],
+    'which-is-better-triple-or-acoustic-glazing' => [
+        'eyebrow' => 'Noise or heat?',
+        'title' => 'Choose the glazing for the problem you actually have.',
+        'copy' => 'Triple glazing and acoustic glass solve different things. Tell us which room, which noise and which direction it faces, and we can point you at the right specification.',
+        'links' => [
+            ['label' => 'Replacement windows', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Compare glazing specifications'],
+            ['label' => 'Secondary glazing', 'url' => home_url('/secondary-glazing/'), 'meta' => 'Often the better answer for noise'],
+            ['label' => 'See your price online', 'url' => home_url('/online-quote/'), 'meta' => 'A guide price in minutes'],
+        ],
+    ],
+    'how-to-prevent-window-condensation-in-winter' => [
+        'eyebrow' => 'Condensation between the panes?',
+        'title' => 'Misting inside the glass is a failed unit, not condensation.',
+        'copy' => 'Condensation on the inside face is usually ventilation. Misting sealed between the panes means the unit itself has failed, and that we can replace without changing the whole window.',
+        'links' => [
+            ['label' => 'Window and door repairs', 'url' => home_url('/window-and-door-repairs/'), 'meta' => 'Misted units, seals and hardware'],
+            ['label' => 'Replacement windows', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'When the frame has gone too'],
+            ['label' => 'See your price online', 'url' => home_url('/online-quote/'), 'meta' => 'A guide price in minutes'],
+        ],
+    ],
     'what-is-a-door-lintel' => [
         'eyebrow' => 'Planning door work?',
         'title' => 'Need a doorway checked before new doors or glazing?',
