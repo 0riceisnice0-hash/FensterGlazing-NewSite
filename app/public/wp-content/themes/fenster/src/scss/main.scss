@@ -31817,11 +31817,31 @@ html.fg-blinds-reveal-locked {
   margin: 1rem 0 0;
 }
 
+/* The wall is a real scroller so it can be dragged, and the drift is driven by
+   scrollLeft in main.js rather than a CSS animation. Pausing on hover, during a
+   drag, and briefly after a drag is handled there too. */
 .fg-cd3-wall__viewport {
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.fg-cd3-wall__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.fg-cd3-wall__viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.fg-cd3-wall__viewport:focus-visible {
+  outline: 2px solid var(--fg-green);
+  outline-offset: 3px;
 }
 
 .fg-cd3-wall__track {
@@ -31831,17 +31851,12 @@ html.fg-blinds-reveal-locked {
   margin: 0;
   padding: 0.35rem 0;
   list-style: none;
-  animation: fg-cd3-wall-drift 90s linear infinite;
 }
 
-@keyframes fg-cd3-wall-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(calc(-50% - 0.425rem), 0, 0); }
-}
-
-.fg-cd3-wall__viewport:hover .fg-cd3-wall__track,
-.fg-cd3-wall__viewport:focus-within .fg-cd3-wall__track {
-  animation-play-state: paused;
+/* Dragging a door image must pan the wall, not start a native image drag. */
+.fg-cd3-wall__viewport img {
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .fg-cd3-door {
@@ -31943,14 +31958,8 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fg-cd3-wall__track {
-    animation: none;
-  }
-
-  .fg-cd3-wall__viewport {
-    overflow-x: auto;
-  }
-
+  /* No drift, but the wall stays draggable and scrollable. main.js honours the
+     same query and never starts the loop. */
   .fg-cd3-door.is-clone {
     display: none;
   }

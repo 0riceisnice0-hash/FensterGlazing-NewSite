@@ -96,7 +96,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                 </p>
             </header>
         </div>
-        <div class="fg-cd3-wall__viewport">
+        <div class="fg-cd3-wall__viewport" data-fg-door-wall tabindex="0" role="region" aria-label="<?php esc_attr_e('Composite door styles. Drag or scroll sideways to explore.', 'fenster'); ?>">
             <ul class="fg-cd3-wall__track">
                 <?php foreach ($wall_passes as $is_clone) : ?>
                     <?php foreach ($door_styles as $style) : ?>

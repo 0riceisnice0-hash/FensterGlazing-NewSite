@@ -986,6 +986,136 @@ document.querySelectorAll('[data-fg-cd-config]').forEach((config) => {
   if (tabs.length) activate('colour');
 });
 
+/*
+ * Composite door wall: a soft continuous drift you can also grab and explore.
+ *
+ * The track is rendered twice, so scrolling past the halfway point can be
+ * rewound by exactly half the scroll width and the loop never shows a seam.
+ * Drift is driven by scrollLeft rather than a CSS animation so a drag and the
+ * automatic movement act on the same property and cannot fight each other.
+ * It pauses on hover, while dragging, and for a moment after a drag, then
+ * eases back to drifting once the pointer has left.
+ */
+document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
+  const track = viewport.querySelector('.fg-cd3-wall__track');
+  if (!track) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const canDrift = window.matchMedia('(min-width: 861px)');
+  const SPEED = 0.35;
+  const RESUME_DELAY = 1400;
+
+  let frame = null;
+  let hovering = false;
+  let dragging = false;
+  let resumeTimer = null;
+  let visible = true;
+
+  const halfway = () => track.scrollWidth / 2;
+
+  // Keep the scroll position inside the first copy of the list.
+  const rewind = () => {
+    const half = halfway();
+    if (half <= 0) return;
+    if (viewport.scrollLeft >= half) viewport.scrollLeft -= half;
+    else if (viewport.scrollLeft < 0) viewport.scrollLeft += half;
+  };
+
+  const shouldDrift = () =>
+    visible && !hovering && !dragging && canDrift.matches && !reduceMotion.matches;
+
+  const stop = () => {
+    if (frame === null) return;
+    cancelAnimationFrame(frame);
+    frame = null;
+  };
+
+  const tick = () => {
+    if (!shouldDrift()) {
+      frame = null;
+      return;
+    }
+    viewport.scrollLeft += SPEED;
+    rewind();
+    frame = requestAnimationFrame(tick);
+  };
+
+  const start = () => {
+    if (frame !== null || !shouldDrift()) return;
+    frame = requestAnimationFrame(tick);
+  };
+
+  const resumeSoon = () => {
+    window.clearTimeout(resumeTimer);
+    resumeTimer = window.setTimeout(start, RESUME_DELAY);
+  };
+
+  viewport.addEventListener('pointerenter', () => {
+    hovering = true;
+    stop();
+  });
+
+  viewport.addEventListener('pointerleave', () => {
+    hovering = false;
+    if (!dragging) resumeSoon();
+  });
+
+  let startX = 0;
+  let startScroll = 0;
+
+  viewport.addEventListener('pointerdown', (event) => {
+    // Touch keeps native momentum scrolling; only pointer dragging is handled.
+    if (event.pointerType === 'touch') return;
+    dragging = true;
+    startX = event.clientX;
+    startScroll = viewport.scrollLeft;
+    stop();
+    viewport.classList.add('is-dragging');
+    viewport.setPointerCapture(event.pointerId);
+  });
+
+  viewport.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    event.preventDefault();
+    viewport.scrollLeft = startScroll - (event.clientX - startX);
+    rewind();
+  });
+
+  const endDrag = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    viewport.classList.remove('is-dragging');
+    if (viewport.hasPointerCapture?.(event.pointerId)) {
+      viewport.releasePointerCapture(event.pointerId);
+    }
+    resumeSoon();
+  };
+
+  viewport.addEventListener('pointerup', endDrag);
+  viewport.addEventListener('pointercancel', endDrag);
+
+  // Wheel, trackpad and keyboard scrolling should pause it in the same way.
+  viewport.addEventListener('scroll', () => {
+    if (dragging || frame !== null) return;
+    rewind();
+  }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        visible = entry.isIntersecting;
+        if (visible) start();
+        else stop();
+      });
+    }, { threshold: 0 }).observe(viewport);
+  }
+
+  reduceMotion.addEventListener?.('change', () => (shouldDrift() ? start() : stop()));
+  canDrift.addEventListener?.('change', () => (shouldDrift() ? start() : stop()));
+
+  start();
+});
+
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');
