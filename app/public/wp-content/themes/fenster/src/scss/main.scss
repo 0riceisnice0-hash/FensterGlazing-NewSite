@@ -32272,7 +32272,7 @@ html.fg-blinds-reveal-locked {
     scroll-padding-inline: max(1rem, calc((100vw - var(--container)) / 2));
     scroll-snap-type: inline mandatory;
     scrollbar-width: none;
-    align-items: start;
+    align-items: stretch;
     -webkit-overflow-scrolling: touch;
   }
 
