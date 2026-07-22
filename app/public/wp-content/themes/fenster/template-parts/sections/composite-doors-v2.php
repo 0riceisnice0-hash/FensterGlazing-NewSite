@@ -48,8 +48,8 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     <div class="container">
         <header class="fg-cd3-head fg-cd3-head--wide">
             <p class="eyebrow"><?php esc_html_e('Our collections', 'fenster'); ?></p>
-            <h2 id="fg-cd3-collections-title"><?php esc_html_e('Six collections, and it is the panel that separates them.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Within a collection the panel stays the same and the glass changes, so pick the panel you like the look of and the glass design comes later. These are the same six you will meet in our quote tool, in the same order, so nothing is renamed between here and your price.', 'fenster'); ?></p>
+            <h2 id="fg-cd3-collections-title"><?php esc_html_e('Six collections, and it is the slab that separates them.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Within a collection the slab stays the same and the glass changes, so pick the slab you like the look of and the glass design comes later. These are the same six you will meet in our quote tool, in the same order, so nothing is renamed between here and your price.', 'fenster'); ?></p>
         </header>
 
         <ul class="fg-cd3-collections__grid">
@@ -67,7 +67,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                     </figure>
                     <div class="fg-cd3-collection__body">
                         <h3><?php echo esc_html((string) $collection['name']); ?></h3>
-                        <p class="fg-cd3-collection__panel"><?php echo esc_html((string) $collection['panel']); ?></p>
+                        <p class="fg-cd3-collection__slab"><?php echo esc_html((string) $collection['slab']); ?></p>
                         <p><?php echo esc_html((string) $collection['copy']); ?></p>
                     </div>
                 </li>

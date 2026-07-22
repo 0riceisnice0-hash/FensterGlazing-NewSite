@@ -395,43 +395,43 @@ if ($is_composite_doors) {
     // Fenster's own composite collections, matching the door-style groups in the
     // WindowCAD retail designer so the website and the quote tool agree. This is
     // deliberately NOT Distinction's Signature/Contemporary split. Within a
-    // collection the panel is fixed and the glass varies, which is the useful
+    // collection the slab is fixed and the glass varies, which is the useful
     // thing to tell a customer. If WindowCAD's groups change, change these.
     $composite_collections = [
         [
             'name' => 'Traditional',
             'slug' => 'esteem',
-            'panel' => 'Panelled, glass cut into the panel',
-            'copy' => 'Raised panels with the glazed section cut into them. Much the biggest group, and where most period and estate frontages end up.',
+            'slab' => 'Panelled slab, glass cut into it',
+            'copy' => 'A moulded slab with raised detail and the glazed section cut into it. Much the biggest group, and where most period and estate frontages end up.',
         ],
         [
             'name' => 'Esprit',
             'slug' => 'esprit-esc19',
-            'panel' => 'One flat woodgrain panel',
-            'copy' => 'A single flat face with no panel detail at all, so the glass shape does the work. Clean without feeling cold.',
+            'slab' => 'One flat woodgrain slab',
+            'copy' => 'A single flat face with no moulded detail at all, so the glass shape does the work. Clean without feeling cold.',
         ],
         [
             'name' => 'Rustic Renown',
             'slug' => 'rustic-renown-rr03',
-            'panel' => 'Shiplap boards inside a border',
+            'slab' => 'Shiplap boards inside a border',
             'copy' => 'Tongue and groove boards framed by a plain border. It reads like a cottage door on a cottage and like a design choice on a new build.',
         ],
         [
             'name' => 'Renown',
             'slug' => 'renown',
-            'panel' => 'Full shiplap, no border',
+            'slab' => 'Full shiplap, no border',
             'copy' => 'The same boards running edge to edge with nothing framing them. The most flexible door we fit: it suits a Victorian terrace and a new build equally.',
         ],
         [
             'name' => 'Infinity',
             'slug' => 'infinity-gd01',
-            'panel' => 'Long horizontal grooves',
+            'slab' => 'Long horizontal grooves',
             'copy' => 'The most modern end of the range. Wide grooves, bold glass shapes and long bar handles rather than a lever.',
         ],
         [
             'name' => 'Stable Doors',
             'slug' => 'stable-half-glazed',
-            'panel' => 'Split across the middle',
+            'slab' => 'Split across the middle',
             'copy' => 'The top half opens on its own while the bottom stays shut and locked. Kitchens, utility rooms and anyone with a dog or small children.',
         ],
     ];

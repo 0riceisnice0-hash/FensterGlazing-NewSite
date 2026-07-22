@@ -111,10 +111,12 @@ The business owner's decision is that the quote tool and the website must name t
 
 Fenster's composite collections, read from the live WindowCAD retail designer:
 
+**Terminology: a composite door has a slab, not a panel.** Owner correction, 2026-07-22. A uPVC door has a panel; that word is only correct in the 44.5mm slab versus 28mm uPVC panel comparison, and in "side panels". Everywhere else on this route the word is slab.
+
 | Collection | What defines it |
 | --- | --- |
-| Traditional | Panelled, with the glazed section cut into the panel. By far the biggest group. |
-| Esprit | One flat woodgrain panel, no panel detail. |
+| Traditional | A moulded slab with raised detail and the glass cut into it. By far the biggest group. |
+| Esprit | One flat woodgrain slab, no moulded detail. |
 | Rustic Renown | Shiplap boards inside a plain border. |
 | Renown | Full shiplap edge to edge, no border. |
 | Infinity | Long horizontal grooves, the most modern end. |
@@ -135,7 +137,7 @@ Representative door per collection, set by the owner on 2026-07-22:
 
 Rules:
 
-- **Within a collection the panel is the constant and the glass varies.** That is the useful thing to tell a customer and the reason the collections exist; say it rather than listing style codes.
+- **Within a collection the slab is the constant and the glass varies.** That is the useful thing to tell a customer and the reason the collections exist; say it rather than listing style codes.
 - Side panels are a configuration option that attaches to any collection, not a collection. Keep them as a note.
 - To verify or update this list, open `https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing&productCollection=4`, advance one step past Sizes, and read the `Door style` group headings. Change `scripts/build-composite-door-wall.py` and `$composite_collections` together, then rebuild the assets.
 - Do not reintroduce Signature, Contemporary, Venture, Grandeur or nxt-gen as customer-facing groupings. Distinction style *names* (Elegance, Esteem, Renown Diamond) are fine; their *collections* are not.
