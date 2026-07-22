@@ -30979,11 +30979,10 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* Composite doors: approved range correction and one continuous canvas. */
-.generated-page--composite-doors {
-  background: var(--fg-page-gradient);
-}
-
+/* Composite doors: approved range correction and one continuous canvas.
+   The canvas is painted once on `body` with background-attachment: fixed.
+   Do not repaint --fg-page-gradient here: a second, scrolling copy over the
+   fixed one is what produced the visible banding reported on 2026-07-22. */
 .generated-page--composite-doors .fg-hero__image {
   object-position: 50% 50%;
 }
@@ -31388,11 +31387,8 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* Composite doors V2: one range studio and one finish configurator. */
-.generated-page--composite-doors {
-  background: var(--fg-page-gradient);
-}
-
+/* Composite doors V2: one range studio and one finish configurator.
+   The page canvas lives on `body`; see the note above. */
 .generated-page--composite-doors h2 {
   max-width: 680px;
   font-size: clamp(1.55rem, 2vw, 2rem) !important;

@@ -435,15 +435,6 @@ if ($is_composite_doors) {
         ],
         'footnote' => '*Distinction\'s independent testing at the University of Salford\'s Energy House, against a 48mm solid-timber-core composite door and a 44mm timber panelled door.',
     ];
-    // Real-home mosaic. Each tile names the finish and the style so it teaches, not just decorates.
-    $composite_gallery = [
-        ['stem' => 'gallery/black-chatsworth-entrance', 'widths' => [480, 800], 'class' => 'is-anchor', 'caption' => 'Twin Chatsworth glass on a black entrance', 'sub' => 'Signature, three-quarter lite'],
-        ['stem' => 'gallery/anthracite-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'Anthracite grey with a diagonal groove', 'sub' => 'Contemporary Infinity'],
-        ['stem' => 'gallery/ruby-red-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'A ruby red statement door', 'sub' => 'Contemporary Infinity'],
-        ['stem' => 'gallery/chartwell-entrance', 'widths' => [480, 800], 'class' => '', 'caption' => 'Chartwell green with an arched top light', 'sub' => 'Signature Eclat Arch'],
-        ['stem' => 'families/rustic-renown', 'widths' => [400, 800], 'class' => '', 'caption' => 'Basalt grey cottage door', 'sub' => 'Signature Rustic Renown'],
-        ['stem' => 'gallery/blue-door-interior', 'widths' => [480, 800, 1400], 'class' => '', 'caption' => 'A dual-colour door from the hallway side', 'sub' => 'Different colours inside and out'],
-    ];
     // Door types that are not a plain single door.
     $composite_door_types = [
         'image_stem' => 'types/stable-kitchen',
@@ -3005,7 +2996,6 @@ if ($is_commercial_hub) {
         <?php
         get_template_part('template-parts/sections/composite-doors-v2', null, [
             'collections' => $composite_collections,
-            'gallery' => $composite_gallery,
             'door_types' => $composite_door_types,
             'colours' => $composite_door_colours,
             'glass' => $composite_door_glass,

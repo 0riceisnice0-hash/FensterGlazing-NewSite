@@ -1,6 +1,7 @@
 <?php
 /**
- * Composite Doors: collections, real-home gallery, door types and finish configurator.
+ * Composite Doors: collections, the door style wall, construction, door types,
+ * the finish configurator and the Distinction paint range.
  *
  * @package Fenster
  */
@@ -10,7 +11,6 @@ if (! defined('ABSPATH')) {
 }
 
 $collections = is_array($args['collections'] ?? null) ? array_values($args['collections']) : [];
-$gallery = is_array($args['gallery'] ?? null) ? array_values($args['gallery']) : [];
 $door_types = is_array($args['door_types'] ?? null) ? $args['door_types'] : [];
 $colours = is_array($args['colours'] ?? null) ? array_values($args['colours']) : [];
 $glass_styles = is_array($args['glass'] ?? null) ? array_values($args['glass']) : [];
@@ -124,38 +124,15 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     </section>
 <?php endif; ?>
 
-<?php if (! empty($gallery)) : ?>
-    <section class="fg-cd3-gallery" aria-labelledby="fg-cd3-gallery-title">
-        <div class="container">
-            <header class="fg-cd3-head">
-                <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
-                <h2 id="fg-cd3-gallery-title"><?php esc_html_e('Doors look different on a house than on a swatch.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Here is a spread of styles, glass and colours across both collections, fitted. Each caption names the exact style so you can ask for it by name.', 'fenster'); ?></p>
-            </header>
-
-            <div class="fg-cd3-mosaic">
-                <?php foreach ($gallery as $tile) : ?>
-                    <?php
-                    $widths = is_array($tile['widths'] ?? null) ? $tile['widths'] : [800];
-                    $smallest = (int) min($widths);
-                    ?>
-                    <figure class="fg-cd3-tile <?php echo esc_attr((string) ($tile['class'] ?? '')); ?>">
-                        <img
-                            src="<?php echo esc_url(fenster_generated_url($asset_base . (string) $tile['stem'] . '-' . $smallest . 'w.webp')); ?>"
-                            srcset="<?php echo esc_attr($cd_srcset((string) $tile['stem'], $widths)); ?>"
-                            sizes="(max-width: 860px) 50vw, 33vw"
-                            alt="<?php echo esc_attr((string) $tile['caption']); ?>"
-                            loading="lazy">
-                        <figcaption>
-                            <strong><?php echo esc_html((string) $tile['caption']); ?></strong>
-                            <small><?php echo esc_html((string) $tile['sub']); ?></small>
-                        </figcaption>
-                    </figure>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
+<?php
+/*
+ * The "Real homes" supplier mosaic was removed on 2026-07-22. The door wall
+ * above now teaches style, glass and colour using cleaner catalogue renders,
+ * and the case-study strip further down proves real installs with Fenster's
+ * own photography rather than Distinction's stock lifestyle shots. Restore
+ * from git history if the owner wants it back.
+ */
+?>
 
 <?php if (! empty($anatomy['layers'])) : ?>
     <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title">
