@@ -144,7 +144,7 @@ if (empty($collections)) {
                     <img
                         src="<?php echo esc_url(fenster_generated_url((string) $anatomy['image'])); ?>"
                         alt="<?php echo esc_attr((string) $anatomy['image_alt']); ?>"
-                        loading="lazy" width="428" height="480">
+                        loading="lazy" width="341" height="480">
                 </figure>
                 <ol class="fg-cd3-anatomy__layers">
                     <?php foreach ($anatomy['layers'] as $layer_index => $layer) : ?>

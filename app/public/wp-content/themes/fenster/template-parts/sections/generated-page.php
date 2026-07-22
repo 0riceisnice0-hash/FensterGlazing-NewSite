@@ -438,7 +438,9 @@ if ($is_composite_doors) {
     // Construction facts sourced from the Distinction technical material and
     // rewritten in the Fenster voice (see TONEOFVOICE.md). Do not invent specs.
     $composite_anatomy = [
-        'image' => $composite_asset_base . 'anatomy/slab-cutaway-428w.webp',
+        // Trimmed copy: the 428w original carries ~43px of flat white either
+        // side, which reads as a mis-sized image against the panel's tint.
+        'image' => $composite_asset_base . 'anatomy/slab-cutaway-trim-341w.webp',
         'image_alt' => 'Cutaway illustration of a Distinction composite door slab showing the layers behind the GRP skin',
         'layers' => [
             ['name' => 'GRP skin', 'copy' => 'Compression-moulded glass reinforced polyester with a woodgrain taken from real oak. It does not crack, flake or need repainting.'],

@@ -31710,9 +31710,9 @@ html.fg-blinds-reveal-locked {
    layer sets, so neither side is padding out the other. */
 .fg-cd3-anatomy__explorer {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr);
   gap: clamp(1.25rem, 2.4vw, 2.25rem);
-  align-items: stretch;
+  align-items: start;
   padding: clamp(1.25rem, 2.2vw, 1.75rem);
   border: 1px solid rgba(2, 43, 53, 0.12);
   border-radius: 20px;
@@ -31721,8 +31721,11 @@ html.fg-blinds-reveal-locked {
   backdrop-filter: blur(14px);
 }
 
+/* The illustration's own proportion, so nothing is cropped on a wide screen
+   and the column sits close to the height of the layer stack beside it. */
 .fg-cd3-anatomy__media {
   margin: 0;
+  aspect-ratio: 341 / 480;
   overflow: hidden;
   border: 1px solid rgba(2, 43, 53, 0.1);
   border-radius: 14px;
@@ -31741,7 +31744,7 @@ html.fg-blinds-reveal-locked {
    in the order you meet them going from the weather inwards. */
 .fg-cd3-anatomy__layers {
   display: grid;
-  align-content: center;
+  align-content: start;
   margin: 0;
   padding: 0;
   overflow: hidden;
