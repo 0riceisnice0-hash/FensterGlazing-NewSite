@@ -57,9 +57,15 @@ DOORS = [
     ("sign_PR01-9panel.jpg", "9-panel", "9 Panel", "Traditional"),
     ("sign_ESP01-flush.jpg", "esp01-flush", "Flush", "Esprit"),
     ("ESC19C_Duck-Egg.jpg", "esprit-esc19", "Esprit ESC19", "Esprit"),
-    ("sign_RES03-scaled.jpg", "rustic-renown-diamond", "Rustic Renown Diamond", "Rustic Renown"),
-    ("sign_RES01-scaled.jpg", "rustic-renown", "Rustic Renown", "Rustic Renown"),
-    ("sign_RES05-scaled.jpg", "rustic-renown-glazed", "Rustic Renown Glazed", "Rustic Renown"),
+    # RES* doors carry the horizontal split across the middle: they are stable
+    # doors, not Rustic Renown. Owner confirmed 2026-07-22 (RES05 = stable).
+    # Names describe what is visibly true rather than asserting a style code.
+    ("sign_RES05-scaled.jpg", "stable-half-glazed", "Stable, half glazed", "Stable Doors"),
+    ("sign_RES03-scaled.jpg", "stable-diamond", "Stable, diamond glass", "Stable Doors"),
+    ("sign_RES01-scaled.jpg", "stable-solid", "Stable, solid", "Stable Doors"),
+    # The only Rustic Renown asset in the scrape is a lifestyle photograph, so it
+    # is cropped to the door face. Replace with a flat render if one is supplied.
+    ("Diamond-rustic-Renown-Basalt-Grey@2x.jpg", "rustic-renown-rr03", "Rustic Renown RR03", "Rustic Renown", (0.38, 0.14, 0.62, 0.88)),
     ("sign_RE01-cottage-scaled.jpg", "retail-cottage", "Cottage", "Renown"),
     ("sign_RE02-renown-scaled.jpg", "renown", "Renown", "Renown"),
     ("sign_RE03-renown-diamond-scaled.jpg", "renown-diamond", "Renown Diamond", "Renown"),
@@ -110,12 +116,21 @@ def flatten(image):
 def build(entries, out_dir, widths, quality=82):
     os.makedirs(out_dir, exist_ok=True)
     total = 0
-    for source, slug, *_rest in entries:
+    for source, slug, *rest in entries:
         path = os.path.join(SCRAPE, source)
         if not os.path.exists(path):
             print("MISSING", source)
             continue
         image = flatten(Image.open(path))
+        # An optional trailing (left, top, right, bottom) fraction box crops a
+        # door out of a lifestyle photograph.
+        crop = rest[2] if len(rest) > 2 and isinstance(rest[2], tuple) else None
+        if crop:
+            width, height = image.size
+            image = image.crop((
+                int(width * crop[0]), int(height * crop[1]),
+                int(width * crop[2]), int(height * crop[3]),
+            ))
         for width in widths:
             height = round(image.height * width / image.width)
             out = os.path.join(out_dir, f"{slug}-{width}w.webp")
