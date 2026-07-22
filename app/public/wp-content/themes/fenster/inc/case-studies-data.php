@@ -499,6 +499,82 @@ function fenster_case_study_card(string $short, array $study): array
  * @param int    $limit Cards to return.
  * @return array<int, array<string, mixed>> Card arrays for the card partial.
  */
+/**
+ * Milton Keynes suburbs covered by the location matrix.
+ *
+ * A study in one MK suburb is still genuine local proof for another, so these
+ * routes can share the Milton Keynes studies. Towns outside this list only ever
+ * show a study from their own town.
+ */
+function fenster_milton_keynes_town_slugs(): array
+{
+    return [
+        'bletchley' => true,
+        'wolverton' => true,
+        'stony-stratford' => true,
+        'newport-pagnell' => true,
+        'woburn-sands' => true,
+        'great-linford' => true,
+        'shenley-church-end' => true,
+        'furzton' => true,
+        'oldbrook' => true,
+        'monkston' => true,
+        'brooklands' => true,
+        'whitehouse' => true,
+    ];
+}
+
+/**
+ * Case-study cards that are genuine local proof for a town route.
+ *
+ * Matches the study `location` field, exact town first, then the wider Milton
+ * Keynes area for MK suburbs. Deliberately returns nothing when there is no
+ * honest local match: a Northampton job is not proof of work in Luton, and a
+ * filler card would undermine the page rather than support it.
+ */
+function fenster_case_studies_for_town(string $town_slug, int $limit = 2): array
+{
+    $town_slug = sanitize_key($town_slug);
+    if ($town_slug === '') {
+        return [];
+    }
+
+    $studies = fenster_case_studies();
+    $town_words = str_replace('-', ' ', $town_slug);
+    $is_mk_suburb = isset(fenster_milton_keynes_town_slugs()[$town_slug]);
+
+    $exact = [];
+    $area = [];
+
+    foreach ($studies as $short => $study) {
+        $location = strtolower((string) ($study['location'] ?? ''));
+        if ($location === '') {
+            continue;
+        }
+
+        if (str_contains($location, $town_words)) {
+            $exact[$short] = $study;
+            continue;
+        }
+
+        if ($is_mk_suburb && str_contains($location, 'milton keynes')) {
+            $area[$short] = $study;
+        }
+    }
+
+    $matched = $exact + $area;
+    if ($matched === []) {
+        return [];
+    }
+
+    $cards = [];
+    foreach (array_slice($matched, 0, max(1, $limit), true) as $short => $study) {
+        $cards[] = fenster_case_study_card((string) $short, $study);
+    }
+
+    return $cards;
+}
+
 function fenster_case_studies_for_product(string $slug, int $limit = 3): array
 {
     $studies = fenster_case_studies();

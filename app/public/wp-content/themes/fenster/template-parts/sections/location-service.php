@@ -1696,6 +1696,37 @@ $product_links = [
         </div>
     </section>
 
+    <?php
+    // Real jobs in this town, immediately before the FAQs and enquiry. Renders
+    // nothing when there is no honest local match, so no page carries filler
+    // proof from a town we have not worked in.
+    $town_case_studies = function_exists('fenster_case_studies_for_town')
+        ? fenster_case_studies_for_town($location_slug, 2)
+        : [];
+    ?>
+    <?php if ($town_case_studies !== []) : ?>
+        <section class="fg-location-cases" aria-label="<?php echo esc_attr(sprintf(__('Recent work in %s', 'fenster'), $location_name)); ?>">
+            <div class="container">
+                <div class="fg-location-cases__head">
+                    <p class="eyebrow"><?php esc_html_e('Recent work nearby', 'fenster'); ?></p>
+                    <h2><?php echo esc_html(sprintf(__('Jobs we have finished in %s', 'fenster'), $location_name)); ?></h2>
+                    <p><?php esc_html_e('Real installations with our own photographs, the products fitted and the finish chosen. Have a look at what we have already done close to you.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-location-cases__grid">
+                    <?php foreach ($town_case_studies as $case_card) : ?>
+                        <?php get_template_part('template-parts/components/case-study-card', null, [
+                            'card' => $case_card,
+                            'heading' => 'h3',
+                        ]); ?>
+                    <?php endforeach; ?>
+                </div>
+                <a class="fg-location-cases__all" href="<?php echo esc_url(home_url('/case-studies/')); ?>">
+                    <?php esc_html_e('See all case studies', 'fenster'); ?>
+                </a>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <section class="fg-location-faq">
         <div class="container fg-location-faq__grid">
             <div>
