@@ -32404,8 +32404,48 @@ html.fg-blinds-reveal-locked {
     padding: 1.25rem;
   }
 
+  /* Stacked, this section ran to 1,474px against an 844px screen, and the
+     portrait cutaway was 357px of it. The illustration is a peeled-back
+     corner: the part that carries the meaning is the top, where the skin
+     lifts off the core and the timber stile. Cropping to a band keeps that
+     at full width and drops the repeated door face underneath it. */
   .fg-cd3-anatomy__media {
-    max-width: 320px;
+    max-width: none;
+    aspect-ratio: 16 / 9;
+  }
+
+  .fg-cd3-anatomy__media img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+  }
+
+  /* Six numbered layers is a lot of stacked copy on a phone, so the number
+     sits on the heading line rather than in its own gutter, and the text
+     tightens. Nothing is clamped or hidden: this is spec detail people
+     genuinely read before buying. */
+  .fg-cd3-anatomy__layers {
+    gap: 0.7rem;
+  }
+
+  .fg-cd3-anatomy__layers li {
+    padding-left: 0;
+  }
+
+  .fg-cd3-anatomy__layers li::before {
+    position: static;
+    margin-right: 0.45rem;
+  }
+
+  .fg-cd3-anatomy__layers h3 {
+    display: inline;
+    font-size: 0.98rem;
+  }
+
+  .fg-cd3-anatomy__layers p {
+    margin-top: 0.15rem;
+    font-size: 0.82rem;
+    line-height: 1.42;
   }
 
   .fg-cd3-anatomy__stats {
