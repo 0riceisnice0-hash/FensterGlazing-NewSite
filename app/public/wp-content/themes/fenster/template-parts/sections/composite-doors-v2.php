@@ -127,23 +127,44 @@ if (empty($collections)) {
 <?php if (! empty($anatomy['layers'])) : ?>
     <section class="fg-cd3-anatomy" aria-labelledby="fg-cd3-anatomy-title">
         <div class="container">
-            <div class="fg-cd3-anatomy__panel">
-                <div class="fg-cd3-anatomy__intro">
-                    <p class="eyebrow"><?php esc_html_e('Construction', 'fenster'); ?></p>
-                    <h2 id="fg-cd3-anatomy-title"><?php esc_html_e('What is inside the slab.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. This is the actual build of a Distinction slab, layer by layer.', 'fenster'); ?></p>
-                    <figure class="fg-cd3-anatomy__media">
-                        <img
-                            src="<?php echo esc_url(fenster_generated_url((string) $anatomy['image'])); ?>"
-                            alt="<?php echo esc_attr((string) $anatomy['image_alt']); ?>"
-                            loading="lazy" width="428" height="480">
-                    </figure>
-                </div>
+            <div class="fg-cd3-anatomy__head">
+                <p class="eyebrow"><?php esc_html_e('Construction', 'fenster'); ?></p>
+                <h2 id="fg-cd3-anatomy-title"><?php esc_html_e('What is inside the slab.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('A composite door looks like timber and is deliberately nothing like one inside. Open a layer to see what it is doing.', 'fenster'); ?></p>
+            </div>
+            <?php
+            // Six layers used to render as six stacked headings and paragraphs,
+            // which was a wall of text on any screen and 1,474px tall on a
+            // phone. They open one at a time instead. The order is the order
+            // you meet them going from the weather into the slab, so the list
+            // reads as a section through the door rather than as six facts.
+            ?>
+            <div class="fg-cd3-anatomy__explorer" data-fg-anatomy>
+                <figure class="fg-cd3-anatomy__media">
+                    <img
+                        src="<?php echo esc_url(fenster_generated_url((string) $anatomy['image'])); ?>"
+                        alt="<?php echo esc_attr((string) $anatomy['image_alt']); ?>"
+                        loading="lazy" width="428" height="480">
+                </figure>
                 <ol class="fg-cd3-anatomy__layers">
-                    <?php foreach ($anatomy['layers'] as $layer) : ?>
-                        <li>
-                            <h3><?php echo esc_html((string) $layer['name']); ?></h3>
-                            <p><?php echo esc_html((string) $layer['copy']); ?></p>
+                    <?php foreach ($anatomy['layers'] as $layer_index => $layer) : ?>
+                        <?php $layer_id = 'fg-cd3-layer-' . $layer_index; ?>
+                        <li class="fg-cd3-layer">
+                            <h3>
+                                <button
+                                    type="button"
+                                    class="fg-cd3-layer__toggle"
+                                    data-fg-anatomy-toggle
+                                    aria-expanded="<?php echo $layer_index === 0 ? 'true' : 'false'; ?>"
+                                    aria-controls="<?php echo esc_attr($layer_id); ?>">
+                                    <span class="fg-cd3-layer__num" aria-hidden="true"><?php echo esc_html(str_pad((string) ($layer_index + 1), 2, '0', STR_PAD_LEFT)); ?></span>
+                                    <span class="fg-cd3-layer__name"><?php echo esc_html((string) $layer['name']); ?></span>
+                                    <span class="fg-cd3-layer__mark" aria-hidden="true"></span>
+                                </button>
+                            </h3>
+                            <div class="fg-cd3-layer__body" id="<?php echo esc_attr($layer_id); ?>" <?php echo $layer_index === 0 ? '' : 'hidden'; ?>>
+                                <p><?php echo esc_html((string) $layer['copy']); ?></p>
+                            </div>
                         </li>
                     <?php endforeach; ?>
                 </ol>

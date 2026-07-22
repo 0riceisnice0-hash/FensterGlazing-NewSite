@@ -1159,6 +1159,28 @@ document.querySelectorAll('[data-fg-collection-carousel]').forEach((carousel) =>
   sync();
 });
 
+// The slab layers open one at a time. Only one can be open, so the block never
+// grows back into the wall of text it replaced, and the panel keeps a steady
+// height instead of shunting the stats down the page as you read.  The first
+// layer is open in the markup, so this works as a plain list with JS off.
+document.querySelectorAll('[data-fg-anatomy]').forEach((explorer) => {
+  const toggles = [...explorer.querySelectorAll('[data-fg-anatomy-toggle]')];
+  if (!toggles.length) return;
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+      toggles.forEach((other) => {
+        const body = document.getElementById(other.getAttribute('aria-controls'));
+        const open = other === toggle && !isOpen;
+        other.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (body) body.hidden = !open;
+      });
+    });
+  });
+});
+
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');

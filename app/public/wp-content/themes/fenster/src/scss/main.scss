@@ -31678,19 +31678,12 @@ html.fg-blinds-reveal-locked {
   background: transparent;
 }
 
-.fg-cd3-anatomy__panel {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: clamp(1.25rem, 2.4vw, 2.25rem);
-  padding: clamp(1.25rem, 2.2vw, 1.75rem);
-  border: 1px solid rgba(2, 43, 53, 0.12);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 22px 60px rgba(2, 43, 53, 0.09);
-  backdrop-filter: blur(14px);
+.fg-cd3-anatomy__head {
+  max-width: 44rem;
+  margin: 0 0 clamp(1.1rem, 2vw, 1.6rem);
 }
 
-.fg-cd3-anatomy__intro .eyebrow {
+.fg-cd3-anatomy__head .eyebrow {
   margin: 0 0 0.5rem;
   color: var(--fg-green);
   font-size: 0.72rem;
@@ -31699,20 +31692,36 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
-.fg-cd3-anatomy__intro h2 {
+.fg-cd3-anatomy__head h2 {
   margin: 0 0 0.55rem;
   font-size: clamp(1.5rem, 2.4vw, 2rem);
 }
 
-.fg-cd3-anatomy__intro > p {
-  margin: 0 0 0.9rem;
+.fg-cd3-anatomy__head > p {
+  margin: 0;
   color: rgba(2, 43, 53, 0.72);
   font-size: 0.98rem;
   line-height: 1.6;
 }
 
+/* The cutaway used to sit in a 330px box with the layer list beside it, which
+   left a column of dead white under the image and a six-paragraph wall down
+   the right. The image now fills its own column at whatever height the open
+   layer sets, so neither side is padding out the other. */
+.fg-cd3-anatomy__explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  align-items: stretch;
+  padding: clamp(1.25rem, 2.2vw, 1.75rem);
+  border: 1px solid rgba(2, 43, 53, 0.12);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 22px 60px rgba(2, 43, 53, 0.09);
+  backdrop-filter: blur(14px);
+}
+
 .fg-cd3-anatomy__media {
-  max-width: 330px;
   margin: 0;
   overflow: hidden;
   border: 1px solid rgba(2, 43, 53, 0.1);
@@ -31723,46 +31732,107 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-anatomy__media img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
 }
 
+/* Read the list as a section through the slab: each layer is a band, stacked
+   in the order you meet them going from the weather inwards. */
 .fg-cd3-anatomy__layers {
   display: grid;
   align-content: center;
-  gap: 0.65rem;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(2, 43, 53, 0.12);
+  border-radius: 14px;
   list-style: none;
-  counter-reset: fg-cd3-layer;
 }
 
-.fg-cd3-anatomy__layers li {
-  position: relative;
-  padding-left: 2.4rem;
-  counter-increment: fg-cd3-layer;
+.fg-cd3-layer + .fg-cd3-layer {
+  border-top: 1px solid rgba(2, 43, 53, 0.1);
 }
 
-.fg-cd3-anatomy__layers li::before {
-  content: counter(fg-cd3-layer, decimal-leading-zero);
-  position: absolute;
-  top: 0.12rem;
-  left: 0;
+.fg-cd3-layer h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.fg-cd3-layer__toggle {
+  display: grid;
+  grid-template-columns: 1.9rem minmax(0, 1fr) 1.1rem;
+  gap: 0.35rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.72rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.fg-cd3-layer__toggle:hover {
+  background: rgba(2, 43, 53, 0.04);
+}
+
+.fg-cd3-layer__num {
   color: var(--fg-green);
   font-size: 0.78rem;
   font-weight: 750;
   letter-spacing: 0.04em;
 }
 
-.fg-cd3-anatomy__layers h3 {
-  margin: 0 0 0.2rem;
-  font-size: 1rem;
+.fg-cd3-layer__name {
+  font-weight: 700;
 }
 
-.fg-cd3-anatomy__layers p {
+/* A plus that becomes a minus, drawn rather than shipped as an icon. */
+.fg-cd3-layer__mark {
+  position: relative;
+  width: 0.85rem;
+  height: 0.85rem;
+  justify-self: end;
+}
+
+.fg-cd3-layer__mark::before,
+.fg-cd3-layer__mark::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--fg-green);
+  transform: translateY(-50%);
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.fg-cd3-layer__mark::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.fg-cd3-layer__toggle[aria-expanded='true'] {
+  background: rgba(2, 43, 53, 0.045);
+}
+
+.fg-cd3-layer__toggle[aria-expanded='true'] .fg-cd3-layer__mark::after {
+  opacity: 0;
+  transform: translateY(-50%) rotate(0deg);
+}
+
+.fg-cd3-layer__body {
+  padding: 0 0.9rem 0.85rem 3.15rem;
+  background: rgba(2, 43, 53, 0.045);
+}
+
+.fg-cd3-layer__body p {
   margin: 0;
-  color: rgba(2, 43, 53, 0.72);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  color: rgba(2, 43, 53, 0.74);
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
 .fg-cd3-anatomy__stats {
@@ -32399,53 +32469,20 @@ html.fg-blinds-reveal-locked {
     justify-items: start;
   }
 
-  .fg-cd3-anatomy__panel {
+  .fg-cd3-anatomy__explorer {
     grid-template-columns: 1fr;
-    padding: 1.25rem;
+    padding: 1rem;
   }
 
-  /* Stacked, this section ran to 1,474px against an 844px screen, and the
-     portrait cutaway was 357px of it. The illustration is a peeled-back
-     corner: the part that carries the meaning is the top, where the skin
-     lifts off the core and the timber stile. Cropping to a band keeps that
-     at full width and drops the repeated door face underneath it. */
+  /* The cutaway is a peeled-back corner: the meaning is at the top, where the
+     skin lifts off the core and the timber stile. Stacked, a band crop shows
+     that at full width instead of 357px of repeated door face below it. */
   .fg-cd3-anatomy__media {
-    max-width: none;
     aspect-ratio: 16 / 9;
   }
 
   .fg-cd3-anatomy__media img {
-    height: 100%;
-    object-fit: cover;
     object-position: center 22%;
-  }
-
-  /* Six numbered layers is a lot of stacked copy on a phone, so the number
-     sits on the heading line rather than in its own gutter, and the text
-     tightens. Nothing is clamped or hidden: this is spec detail people
-     genuinely read before buying. */
-  .fg-cd3-anatomy__layers {
-    gap: 0.7rem;
-  }
-
-  .fg-cd3-anatomy__layers li {
-    padding-left: 0;
-  }
-
-  .fg-cd3-anatomy__layers li::before {
-    position: static;
-    margin-right: 0.45rem;
-  }
-
-  .fg-cd3-anatomy__layers h3 {
-    display: inline;
-    font-size: 0.98rem;
-  }
-
-  .fg-cd3-anatomy__layers p {
-    margin-top: 0.15rem;
-    font-size: 0.82rem;
-    line-height: 1.42;
   }
 
   .fg-cd3-anatomy__stats {
