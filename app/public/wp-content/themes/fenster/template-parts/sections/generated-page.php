@@ -2710,7 +2710,9 @@ if ($is_commercial_hub) {
     // Composite doors follows the light, boxed-image hero used by
     // /roof-lanterns/ and /heritage-aluminium-doors/ rather than the shared
     // dark photo hero. Styling is shared with those routes in main.scss.
-    $composite_hero_img = '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp';
+    // Chosen by rendering every candidate at the real 6/5 hero crop: this is the
+    // only one where a whole door sits centred and uncut in frame.
+    $composite_hero_img = '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/black-lunna-entrance-800w.webp';
     $composite_phone = (string) ($brand['phone'] ?? '01908 429200');
     ?>
     <section class="fg-cd3-hero">
@@ -2718,20 +2720,15 @@ if ($is_commercial_hub) {
             <div class="fg-cd3-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('Composite doors in Milton Keynes', 'fenster'); ?></p>
                 <h1><?php esc_html_e('A front door you never have to paint.', 'fenster'); ?></h1>
-                <p class="fg-cd3-hero__lead"><?php esc_html_e('We are approved Distinction Doors installers, fitting composite front doors across Milton Keynes and the surrounding towns. A 44.5mm insulated slab under a tough GRP skin, so it holds its heat, shrugs off the weather and keeps its colour without a paintbrush.', 'fenster'); ?></p>
+                <p class="fg-cd3-hero__lead"><?php esc_html_e('A 44.5mm insulated slab under a tough GRP skin, fitted across Milton Keynes by our own installers. It holds its heat, shrugs off the weather and keeps its colour without a paintbrush.', 'fenster'); ?></p>
                 <div class="fg-cd3-hero__actions">
                     <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="fg-cd3-hero__call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call us on %s', 'fenster'), $composite_phone)); ?></a>
+                    <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
                 </div>
-                <ul class="fg-cd3-hero__reassurance" aria-label="<?php esc_attr_e('Composite door reassurance', 'fenster'); ?>">
-                    <li><?php esc_html_e('A £5,000 break-in guarantee on every door we fit', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Six collections and over 300 styles, priced in about ten minutes', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Surveyed and hung by our own fitters, with a 10 year guarantee', 'fenster'); ?></li>
-                </ul>
             </div>
             <figure class="fg-cd3-hero__media">
                 <img <?php echo fenster_image_attr_string($composite_hero_img, [
-                    'alt' => 'A dark modern composite front door with a long glazed panel and bar handle, set in a red brick frontage',
+                    'alt' => 'A black composite front door with arched decorative glass, set between white pillars on a brick frontage',
                     'loading' => 'eager',
                     'fetchpriority' => 'high',
                 ]); ?>>
@@ -3011,16 +3008,12 @@ if ($is_commercial_hub) {
     <?php if ($is_composite_doors) : ?>
         <section class="fg-composite-approved" aria-label="<?php esc_attr_e('Approved Distinction Doors installer', 'fenster'); ?>">
             <div class="container fg-composite-approved__inner">
-                <span class="fg-composite-approved__mark" aria-hidden="true">&#10003;</span>
-                <div>
+                <img class="fg-composite-approved__logo" src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
+                <div class="fg-composite-approved__copy">
                     <strong><?php esc_html_e('Approved Distinction Doors installer', 'fenster'); ?></strong>
                     <p><?php esc_html_e('One in four front doors fitted in Britain is a Distinction. We survey, supply and hang yours ourselves, with our own fitters rather than subcontractors.', 'fenster'); ?></p>
                 </div>
-                <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager">
-                <a class="fg-composite-approved__call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908 429200'))); ?>">
-                    <span><?php esc_html_e('Talk it through', 'fenster'); ?></span>
-                    <strong><?php echo esc_html((string) ($brand['phone'] ?? '01908 429200')); ?></strong>
-                </a>
+                <a class="button button--steel fg-composite-approved__call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908 429200'))); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), (string) ($brand['phone'] ?? '01908 429200'))); ?></a>
             </div>
         </section>
     <?php endif; ?>
@@ -4231,7 +4224,7 @@ if ($is_commercial_hub) {
                     <?php endif; ?>
                     <?php if ($is_composite_doors) : ?>
                         <p class="fg-product-quote-embed__aside"><?php esc_html_e('Would rather see a figure before opening a tool? One we fitted recently came to £2,000, and the guide breaks down what moves that.', 'fenster'); ?></p>
-                        <a class="button button--ghost" href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('See example prices', 'fenster'); ?></a>
+                        <a class="button button--steel" href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('See example prices', 'fenster'); ?></a>
                     <?php endif; ?>
                 </div>
                 <article class="fg-product-quote-embed__card" data-quote-card>

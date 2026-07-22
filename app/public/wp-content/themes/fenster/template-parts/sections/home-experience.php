@@ -150,39 +150,6 @@ $location_links = [
         </div>
     </section>
 
-    <?php if (function_exists('fenster_case_studies') && function_exists('fenster_case_study_card')) : ?>
-        <?php
-        $home_case_cards = [];
-        foreach (array_slice(fenster_case_studies(), 0, 3, true) as $home_case_short => $home_case_study) {
-            $home_case_cards[] = fenster_case_study_card((string) $home_case_short, $home_case_study);
-        }
-        ?>
-        <?php if ($home_case_cards !== []) : ?>
-            <section class="fg-cs-strip fg-cs-strip--home" aria-label="<?php esc_attr_e('Recent case studies', 'fenster'); ?>">
-                <div class="container">
-                    <div class="fg-cs-strip__head">
-                        <p class="eyebrow"><?php esc_html_e('Case studies', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('The latest jobs, straight off the tools.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('Real installations by our own fitters, each with the full specification, the colours and the people who did the work.', 'fenster'); ?></p>
-                    </div>
-                    <div class="fg-cs-strip__grid">
-                        <?php foreach ($home_case_cards as $home_case_card) : ?>
-                            <?php
-                            get_template_part('template-parts/components/case-study-card', null, [
-                                'card' => $home_case_card,
-                                'heading' => 'h3',
-                            ]);
-                            ?>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="button-row fg-cs-strip__cta">
-                        <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('See all case studies', 'fenster'); ?></a>
-                    </div>
-                </div>
-            </section>
-        <?php endif; ?>
-    <?php endif; ?>
-
     <section
         id="fenster-products"
         class="fg-home-product-theatre"

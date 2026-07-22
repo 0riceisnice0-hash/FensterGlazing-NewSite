@@ -91,8 +91,8 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                 <h2 id="fg-cd3-wall-title"><?php esc_html_e('The range runs to over 300 door styles.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('These are real Distinction door faces, not illustrations. Every one is made to order in your colour, with your glass and your handles. If one catches your eye, send us the name and we will price that exact door.', 'fenster'); ?></p>
                 <p class="fg-cd3-wall__action">
-                    <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Send us a style name', 'fenster'); ?></a>
-                    <a class="button button--ghost" href="#fenster-product-quote"><?php esc_html_e('Price one yourself', 'fenster'); ?></a>
+                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Price one yourself', 'fenster'); ?></a>
+                    <a class="button button--steel" href="#fenster-enquiry"><?php esc_html_e('Send us a style name', 'fenster'); ?></a>
                 </p>
             </header>
         </div>
@@ -175,21 +175,15 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     <section class="fg-cd3-security" aria-labelledby="fg-cd3-security-title">
         <div class="container fg-cd3-security__inner">
             <div class="fg-cd3-security__lead">
-                <span class="fg-cd3-shield" aria-hidden="true">
-                    <svg viewBox="0 0 120 132" role="presentation" focusable="false">
-                        <path d="M6 12C28 4 46 0 60 0s32 4 54 12v76c0 22-30 36-54 44-24-8-54-22-54-44V12Z" fill="#0d2f6b"/>
-                        <path d="M13 18c22-7 36-10 47-10s25 3 47 10v70c0 18-26 30-47 37-21-7-47-19-47-37V18Z" fill="none" stroke="#ffffff" stroke-width="3"/>
-                        <rect x="6" y="56" width="108" height="30" fill="#ffffff"/>
-                        <text x="60" y="44" text-anchor="middle" font-family="Gibson, Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">£5000</text>
-                        <text x="60" y="78" text-anchor="middle" font-family="Gibson, Arial, sans-serif" font-size="18" font-weight="700" fill="#0d2f6b" letter-spacing="0.5">GUARANTEE</text>
-                    </svg>
-                </span>
-                <p class="eyebrow"><?php esc_html_e('£5,000 break-in guarantee', 'fenster'); ?></p>
+                <p class="fg-cd3-security__figure">
+                    <span><?php esc_html_e('£5,000', 'fenster'); ?></span>
+                    <small><?php esc_html_e('break-in guarantee', 'fenster'); ?></small>
+                </p>
                 <h2 id="fg-cd3-security-title"><?php esc_html_e('If the lock fails in a break-in, you are covered.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Every Distinction door we fit is secured with AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. Should either fail in a break-in, you are covered for up to £5,000 in compensation. Terms apply, and we go through them with you before you order rather than after.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--ghost" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('How we back our work', 'fenster'); ?></a>
+                    <a class="button button--steel" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('How we back our work', 'fenster'); ?></a>
                 </div>
             </div>
             <ul class="fg-cd3-security__points">
@@ -315,7 +309,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
 
         <div class="fg-cd-v2-config__actions">
             <p><?php esc_html_e('Your final colour, glass and hardware combination is confirmed after survey.', 'fenster'); ?></p>
-            <div><a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a><a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book consultation', 'fenster'); ?></a></div>
+            <div><a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a><a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book consultation', 'fenster'); ?></a></div>
         </div>
     </div>
 </section>
