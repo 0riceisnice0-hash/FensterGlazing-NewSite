@@ -120,6 +120,19 @@ Fenster's composite collections, read from the live WindowCAD retail designer:
 | Infinity | Long horizontal grooves, the most modern end. |
 | Stable Doors | Split across the middle, top half opens alone. |
 
+Representative door per collection, set by the owner on 2026-07-22:
+
+| Collection | Owner's door | What is actually rendering |
+| --- | --- | --- |
+| Traditional | Esteem | Esteem |
+| Esprit | ESC09 | **ESC19** — ESC09 is not in the scrape |
+| Rustic Renown | RR03 | RR03, cropped from a lifestyle photograph |
+| Renown | (unchanged) | Renown RE02 |
+| Infinity | GD02C | **GD01** — GD02C is not in the scrape |
+| Stable Doors | RES05 | RES05 |
+
+**`RES*` codes are stable doors, not Rustic Renown.** They carry the horizontal split across the middle. Three door-wall entries were mislabelled as Rustic Renown until the owner corrected it; do not reintroduce that mapping. The only Rustic Renown asset anywhere in the scrape is `Diamond-rustic-Renown-Basalt-Grey@2x.jpg`, a lifestyle photograph, cropped to the door face by the build script. Replace it with a flat render the moment one is supplied.
+
 Rules:
 
 - **Within a collection the panel is the constant and the glass varies.** That is the useful thing to tell a customer and the reason the collections exist; say it rather than listing style codes.
