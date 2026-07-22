@@ -11,7 +11,7 @@ if (! defined('ABSPATH')) {
 }
 
 $collections = is_array($args['collections'] ?? null) ? array_values($args['collections']) : [];
-$door_types = is_array($args['door_types'] ?? null) ? $args['door_types'] : [];
+$security = is_array($args['security'] ?? null) ? array_values($args['security']) : [];
 $colours = is_array($args['colours'] ?? null) ? array_values($args['colours']) : [];
 $glass_styles = is_array($args['glass'] ?? null) ? array_values($args['glass']) : [];
 $handle_finishes = is_array($args['handles'] ?? null) ? array_values($args['handles']) : [];
@@ -46,42 +46,34 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
 
 <section class="fg-cd3-collections" aria-labelledby="fg-cd3-collections-title">
     <div class="container">
-        <header class="fg-cd3-head">
-            <p class="eyebrow"><?php esc_html_e('Two collections', 'fenster'); ?></p>
-            <h2 id="fg-cd3-collections-title"><?php esc_html_e('Every door in the range is Signature or Contemporary.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Choose the character first; the exact style, colour, glass and hardware follow. If you cannot place your house in one camp, the wall of doors below usually settles it.', 'fenster'); ?></p>
+        <header class="fg-cd3-head fg-cd3-head--wide">
+            <p class="eyebrow"><?php esc_html_e('Our collections', 'fenster'); ?></p>
+            <h2 id="fg-cd3-collections-title"><?php esc_html_e('Six collections, and it is the panel that separates them.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Within a collection the panel stays the same and the glass changes, so pick the panel you like the look of and the glass design comes later. These are the same six you will meet in our quote tool, in the same order, so nothing is renamed between here and your price.', 'fenster'); ?></p>
         </header>
 
-        <div class="fg-cd3-collections__grid">
+        <ul class="fg-cd3-collections__grid">
             <?php foreach ($collections as $index => $collection) : ?>
-                <article class="fg-cd3-collection">
+                <?php $stem = $styles_base . (string) $collection['slug']; ?>
+                <li class="fg-cd3-collection">
                     <figure class="fg-cd3-collection__img">
                         <img
-                            src="<?php echo esc_url(fenster_generated_url((string) $collection['image_400'])); ?>"
-                            srcset="<?php echo esc_attr(fenster_generated_url((string) $collection['image_400']) . ' 400w, ' . fenster_generated_url((string) $collection['image_800']) . ' 800w'); ?>"
-                            sizes="(max-width: 860px) 100vw, 44vw"
-                            alt="<?php echo esc_attr((string) $collection['alt']); ?>"
-                            loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
-                            width="800" height="800">
+                            src="<?php echo esc_url(fenster_generated_url($stem . '-300w.webp')); ?>"
+                            srcset="<?php echo esc_attr(fenster_generated_url($stem . '-300w.webp') . ' 300w, ' . fenster_generated_url($stem . '-600w.webp') . ' 600w'); ?>"
+                            sizes="(max-width: 860px) 45vw, 200px"
+                            alt="<?php echo esc_attr(sprintf(__('A %s composite door', 'fenster'), (string) $collection['name'])); ?>"
+                            loading="<?php echo $index < 3 ? 'eager' : 'lazy'; ?>"
+                            width="300" height="734">
                     </figure>
                     <div class="fg-cd3-collection__body">
-                        <p class="eyebrow"><?php echo esc_html((string) $collection['tagline']); ?></p>
                         <h3><?php echo esc_html((string) $collection['name']); ?></h3>
+                        <p class="fg-cd3-collection__panel"><?php echo esc_html((string) $collection['panel']); ?></p>
                         <p><?php echo esc_html((string) $collection['copy']); ?></p>
-                        <?php if (! empty($collection['best'])) : ?>
-                            <p class="fg-cd3-collection__best"><?php echo esc_html((string) $collection['best']); ?></p>
-                        <?php endif; ?>
-                        <?php if (! empty($collection['styles'])) : ?>
-                            <ul class="fg-cd3-collection__styles" aria-label="<?php echo esc_attr(sprintf(__('%s door styles', 'fenster'), (string) $collection['name'])); ?>">
-                                <?php foreach ($collection['styles'] as $style) : ?>
-                                    <li><?php echo esc_html((string) $style); ?></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
                     </div>
-                </article>
+                </li>
             <?php endforeach; ?>
-        </div>
+        </ul>
+        <p class="fg-cd3-collections__note"><?php esc_html_e('Matching glazed side panels can go either side of any of them, which is how we widen a narrow opening and get more daylight into a dark hallway.', 'fenster'); ?></p>
     </div>
 </section>
 
@@ -179,36 +171,26 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
     </section>
 <?php endif; ?>
 
-<?php if (! empty($door_types['items'])) : ?>
-    <section class="fg-cd3-types" aria-labelledby="fg-cd3-types-title">
-        <div class="container">
-            <div class="fg-cd3-types__panel">
-                <figure class="fg-cd3-types__img">
-                    <?php
-                    $type_widths = is_array($door_types['image_widths'] ?? null) ? $door_types['image_widths'] : [800];
-                    $type_smallest = (int) min($type_widths);
-                    ?>
-                    <img
-                        src="<?php echo esc_url(fenster_generated_url($asset_base . (string) $door_types['image_stem'] . '-' . $type_smallest . 'w.webp')); ?>"
-                        srcset="<?php echo esc_attr($cd_srcset((string) $door_types['image_stem'], $type_widths)); ?>"
-                        sizes="(max-width: 860px) 100vw, 48vw"
-                        alt="<?php echo esc_attr((string) $door_types['image_alt']); ?>"
-                        loading="lazy">
-                </figure>
-                <div class="fg-cd3-types__body">
-                    <p class="eyebrow"><?php esc_html_e('More than single doors', 'fenster'); ?></p>
-                    <h2 id="fg-cd3-types-title"><?php esc_html_e('Stable doors and side panels.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Not every opening is a plain single door. We fit the full Distinction range of door types.', 'fenster'); ?></p>
-                    <div class="fg-cd3-types__grid">
-                        <?php foreach ($door_types['items'] as $item) : ?>
-                            <div>
-                                <h3><?php echo esc_html((string) $item['name']); ?></h3>
-                                <p><?php echo esc_html((string) $item['copy']); ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+<?php if (! empty($security)) : ?>
+    <section class="fg-cd3-security" aria-labelledby="fg-cd3-security-title">
+        <div class="container fg-cd3-security__inner">
+            <div class="fg-cd3-security__lead">
+                <p class="eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
+                <h2 id="fg-cd3-security-title"><?php esc_html_e('Every composite door we fit carries a £5,000 security guarantee.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('A front door is the one part of the house a burglar actually tests, so this is the number we put our name to rather than a line in a brochure. The written terms come with your doorset, and we will go through them at survey before you order.', 'fenster'); ?></p>
+                <div class="button-row">
+                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                    <a class="button button--ghost" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('How we back our work', 'fenster'); ?></a>
                 </div>
             </div>
+            <ul class="fg-cd3-security__points">
+                <?php foreach ($security as $point) : ?>
+                    <li>
+                        <strong><?php echo esc_html((string) $point['title']); ?></strong>
+                        <span><?php echo esc_html((string) $point['copy']); ?></span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </section>
 <?php endif; ?>

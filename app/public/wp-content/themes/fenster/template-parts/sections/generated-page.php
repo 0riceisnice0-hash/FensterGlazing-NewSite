@@ -392,26 +392,47 @@ $composite_door_glass = [];
 if ($is_composite_doors) {
     $composite_asset_base = '/wp-content/themes/fenster/assets/images/products/composite-distinction/';
     // Two Distinction collections, each holding the styles Fenster fits within it.
+    // Fenster's own composite collections, matching the door-style groups in the
+    // WindowCAD retail designer so the website and the quote tool agree. This is
+    // deliberately NOT Distinction's Signature/Contemporary split. Within a
+    // collection the panel is fixed and the glass varies, which is the useful
+    // thing to tell a customer. If WindowCAD's groups change, change these.
     $composite_collections = [
         [
-            'name' => 'Signature',
-            'tagline' => 'Traditional',
-            'image_400' => $composite_asset_base . 'families/signature-400w.webp',
-            'image_800' => $composite_asset_base . 'families/signature-800w.webp',
-            'alt' => 'Black Signature composite door with decorative glass on a period home',
-            'copy' => 'Classic panels, decorative glass and period detail, including the cottage-style Rustic Renown. The widest choice in the range.',
-            'best' => 'Best for period frontages, cottages and streets with some history to respect.',
-            'styles' => ['Classical', 'Elegance', 'Esteem', 'Renown', 'Rustic Renown', 'New England'],
+            'name' => 'Traditional',
+            'slug' => 'elegance',
+            'panel' => 'Panelled, glass cut into the panel',
+            'copy' => 'Raised panels with the glazed section cut into them. Much the biggest group, and where most period and estate frontages end up.',
         ],
         [
-            'name' => 'Contemporary',
-            'tagline' => 'Modern',
-            'image_400' => $composite_asset_base . 'collections/contemporary-hall-400w.webp',
-            'image_800' => $composite_asset_base . 'collections/contemporary-hall-800w.webp',
-            'alt' => 'Anthracite Contemporary composite door with side panels in a modern hallway',
-            'copy' => 'Clean grooves, bold glass layouts and statement shapes, with dual-colour choices that let the inside face match your hallway.',
-            'best' => 'Best for new builds, rendered frontages and homes that suit clean lines.',
-            'styles' => ['Esprit', 'Infinity', 'Venture'],
+            'name' => 'Esprit',
+            'slug' => 'esprit-esc19',
+            'panel' => 'One flat woodgrain panel',
+            'copy' => 'A single flat face with no panel detail at all, so the glass shape does the work. Clean without feeling cold.',
+        ],
+        [
+            'name' => 'Rustic Renown',
+            'slug' => 'rustic-renown-diamond',
+            'panel' => 'Shiplap boards inside a border',
+            'copy' => 'Tongue and groove boards framed by a plain border. It reads like a cottage door on a cottage and like a design choice on a new build.',
+        ],
+        [
+            'name' => 'Renown',
+            'slug' => 'renown',
+            'panel' => 'Full shiplap, no border',
+            'copy' => 'The same boards running edge to edge with nothing framing them. The most flexible door we fit: it suits a Victorian terrace and a new build equally.',
+        ],
+        [
+            'name' => 'Infinity',
+            'slug' => 'infinity-gd01',
+            'panel' => 'Long horizontal grooves',
+            'copy' => 'The most modern end of the range. Wide grooves, bold glass shapes and long bar handles rather than a lever.',
+        ],
+        [
+            'name' => 'Stable Doors',
+            'slug' => 'stable-door',
+            'panel' => 'Split across the middle',
+            'copy' => 'The top half opens on its own while the bottom stays shut and locked. Kitchens, utility rooms and anyone with a dog or small children.',
         ],
     ];
     // Construction facts sourced from the Distinction technical material and
@@ -435,15 +456,16 @@ if ($is_composite_doors) {
         ],
         'footnote' => '*Distinction\'s independent testing at the University of Salford\'s Energy House, against a 48mm solid-timber-core composite door and a 44mm timber panelled door.',
     ];
-    // Door types that are not a plain single door.
-    $composite_door_types = [
-        'image_stem' => 'types/stable-kitchen',
-        'image_widths' => [800, 1200],
-        'image_alt' => 'Pastel blue Signature stable door open at the top in a cottage kitchen',
-        'items' => [
-            ['name' => 'Stable doors', 'copy' => 'Open the top half for light and fresh air while the bottom stays shut and secure. A favourite for kitchens, utility rooms and cottage frontages.'],
-            ['name' => 'Side panels', 'copy' => 'Matching glazed side panels widen a narrow opening and bring more daylight into the hallway, framed to suit the door you choose.'],
-        ],
+    // The £5,000 security guarantee is the headline USP on this route. Keep the
+    // supporting points to things that are verifiable: Secured by Design covers
+    // the door slab but explicitly excludes stable and double-rebated doors, and
+    // most decorative glass is laminated while Chatsworth and Wentworth are not
+    // triple glazed. Do not describe guarantee terms we cannot evidence.
+    $composite_security = [
+        ['title' => 'Secured by Design slabs', 'copy' => 'The police-backed standard, tested by a UKAS-accredited body. It covers the door slabs, though not the stable doors.'],
+        ['title' => 'Laminated decorative glass', 'copy' => 'Most designs are triple glazed and laminated as standard, so the glass holds together rather than letting go.'],
+        ['title' => 'Multi-point locking', 'copy' => 'The lock engages at several points up the frame, not just at the handle, on every doorset we fit.'],
+        ['title' => 'Ten year guarantee', 'copy' => 'Insurance-backed through the Consumer Protection Association, so it still stands if we ever stop trading.'],
     ];
     // Shared with the colours hub: the palette lives in inc/site-data.php under
     // colour_options.materials.composite so both surfaces stay in sync.
@@ -456,33 +478,37 @@ if ($is_composite_doors) {
     // Signature and Contemporary product pages; do not invent style names.
     $composite_styles_base = $composite_asset_base . 'styles/';
     $composite_door_styles = [
-        ['slug' => 'retail-cottage', 'name' => 'Retail Cottage', 'collection' => 'Signature'],
-        ['slug' => 'elegance', 'name' => 'Elegance', 'collection' => 'Signature'],
-        ['slug' => 'classical', 'name' => 'Classical', 'collection' => 'Signature'],
-        ['slug' => 'renown-diamond', 'name' => 'Renown Diamond', 'collection' => 'Signature'],
-        ['slug' => 'eclat-arch', 'name' => 'Eclat Arch', 'collection' => 'Signature'],
-        ['slug' => 'esteem', 'name' => 'Esteem', 'collection' => 'Signature'],
-        ['slug' => 'infinity-gd12', 'name' => 'Infinity GD12', 'collection' => 'Contemporary'],
-        ['slug' => 'new-england', 'name' => 'New England', 'collection' => 'Signature'],
-        ['slug' => 'elegance-arch-grid', 'name' => 'Elegance Arch with Grid', 'collection' => 'Signature'],
-        ['slug' => 'renown-full-moon', 'name' => 'Renown Full Moon', 'collection' => 'Signature'],
-        ['slug' => '6-panel', 'name' => '6 Panel', 'collection' => 'Signature'],
-        ['slug' => 'eclat', 'name' => 'Eclat', 'collection' => 'Signature'],
-        ['slug' => 'esprit-esc19', 'name' => 'Esprit ESC19', 'collection' => 'Contemporary'],
-        ['slug' => 'renown', 'name' => 'Renown', 'collection' => 'Signature'],
-        ['slug' => 'classical-half-glazed', 'name' => 'Classical Half Glazed', 'collection' => 'Signature'],
-        ['slug' => 'esteem-arch', 'name' => 'Esteem Arch', 'collection' => 'Signature'],
-        ['slug' => 'new-england-quarter', 'name' => 'New England Quarter', 'collection' => 'Signature'],
-        ['slug' => 'infinity-gd01', 'name' => 'Infinity GD01', 'collection' => 'Contemporary'],
-        ['slug' => 'elegance-grid', 'name' => 'Elegance with Grid', 'collection' => 'Signature'],
-        ['slug' => 'renown-top', 'name' => 'Renown Top', 'collection' => 'Signature'],
-        ['slug' => 'eclat-craftsman', 'name' => 'Eclat Craftsman', 'collection' => 'Signature'],
-        ['slug' => '9-panel', 'name' => '9 Panel', 'collection' => 'Signature'],
-        ['slug' => 'elegance-arch', 'name' => 'Elegance Arch', 'collection' => 'Signature'],
-        ['slug' => 'eclat-craftsman-half-glazed', 'name' => 'Eclat Craftsman Half Glazed', 'collection' => 'Signature'],
-        ['slug' => 'esteem-eyebrow', 'name' => 'Esteem Eyebrow', 'collection' => 'Signature'],
-        ['slug' => 'eclat-arch-grid', 'name' => 'Eclat Arch with Grid', 'collection' => 'Signature'],
-        ['slug' => 'esp01-flush', 'name' => 'ESP01 Flush', 'collection' => 'Signature'],
+        ['slug' => 'retail-cottage', 'name' => 'Cottage', 'collection' => 'Renown'],
+        ['slug' => 'elegance', 'name' => 'Elegance', 'collection' => 'Traditional'],
+        ['slug' => 'classical', 'name' => 'Classical', 'collection' => 'Traditional'],
+        ['slug' => 'rustic-renown-diamond', 'name' => 'Rustic Renown Diamond', 'collection' => 'Rustic Renown'],
+        ['slug' => 'eclat-arch', 'name' => 'Eclat Arch', 'collection' => 'Traditional'],
+        ['slug' => 'esteem', 'name' => 'Esteem', 'collection' => 'Traditional'],
+        ['slug' => 'infinity-gd12', 'name' => 'Infinity GD12', 'collection' => 'Infinity'],
+        ['slug' => 'new-england', 'name' => 'New England', 'collection' => 'Traditional'],
+        ['slug' => 'elegance-arch-grid', 'name' => 'Elegance Arch with Grid', 'collection' => 'Traditional'],
+        ['slug' => 'renown-full-moon', 'name' => 'Renown Full Moon', 'collection' => 'Renown'],
+        ['slug' => '6-panel', 'name' => '6 Panel', 'collection' => 'Traditional'],
+        ['slug' => 'stable-door', 'name' => 'Stable Door', 'collection' => 'Stable Doors'],
+        ['slug' => 'esprit-esc19', 'name' => 'Esprit ESC19', 'collection' => 'Esprit'],
+        ['slug' => 'renown', 'name' => 'Renown', 'collection' => 'Renown'],
+        ['slug' => 'classical-half-glazed', 'name' => 'Classical Half Glazed', 'collection' => 'Traditional'],
+        ['slug' => 'rustic-renown', 'name' => 'Rustic Renown', 'collection' => 'Rustic Renown'],
+        ['slug' => 'esteem-arch', 'name' => 'Esteem Arch', 'collection' => 'Traditional'],
+        ['slug' => 'new-england-quarter', 'name' => 'New England Quarter', 'collection' => 'Traditional'],
+        ['slug' => 'infinity-gd01', 'name' => 'Infinity GD01', 'collection' => 'Infinity'],
+        ['slug' => 'elegance-grid', 'name' => 'Elegance with Grid', 'collection' => 'Traditional'],
+        ['slug' => 'renown-top', 'name' => 'Renown Top', 'collection' => 'Renown'],
+        ['slug' => 'eclat-craftsman', 'name' => 'Eclat Craftsman', 'collection' => 'Traditional'],
+        ['slug' => 'rustic-renown-glazed', 'name' => 'Rustic Renown Glazed', 'collection' => 'Rustic Renown'],
+        ['slug' => '9-panel', 'name' => '9 Panel', 'collection' => 'Traditional'],
+        ['slug' => 'elegance-arch', 'name' => 'Elegance Arch', 'collection' => 'Traditional'],
+        ['slug' => 'eclat', 'name' => 'Eclat', 'collection' => 'Traditional'],
+        ['slug' => 'renown-diamond', 'name' => 'Renown Diamond', 'collection' => 'Renown'],
+        ['slug' => 'eclat-craftsman-half-glazed', 'name' => 'Eclat Craftsman Half Glazed', 'collection' => 'Traditional'],
+        ['slug' => 'esteem-eyebrow', 'name' => 'Esteem Eyebrow', 'collection' => 'Traditional'],
+        ['slug' => 'esp01-flush', 'name' => 'Flush', 'collection' => 'Esprit'],
+        ['slug' => 'eclat-arch-grid', 'name' => 'Eclat Arch with Grid', 'collection' => 'Traditional'],
     ];
     // Distinction's own paint range, photographed as brush strokes. RAL and BS
     // references are the ones printed in the Distinction brochure.
@@ -2700,15 +2726,16 @@ if ($is_commercial_hub) {
                     'sizes' => '100vw',
                 ]); ?>>
             <?php elseif ($is_composite_doors) : ?>
-                <img <?php echo fenster_image_attr_string($hero_media_src, [
+                <?php // A wide, whole-door composition. The old hero cropped so tightly you could not see the door. ?>
+                <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp', [
                     'class' => 'fg-hero__image',
-                    'alt' => 'Pale blue Signature composite front door with decorative glass',
+                    'alt' => 'A dark modern composite front door with a long glazed panel and bar handle, set in a red brick frontage',
                     'loading' => 'eager',
                     'fetchpriority' => 'high',
                     'srcset' => implode(', ', [
-                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-signature-entrance-480w.webp') . ' 480w',
-                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-signature-entrance-960w.webp') . ' 960w',
-                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-signature-entrance-1920w.webp') . ' 1920w',
+                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-480w.webp') . ' 480w',
+                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-800w.webp') . ' 800w',
+                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp') . ' 1400w',
                     ]),
                     'sizes' => '100vw',
                 ]); ?>>
@@ -2754,15 +2781,9 @@ if ($is_commercial_hub) {
                         // The checked WindowCAD example published on /composite-door-prices/.
                         // Keep this figure and its specification in step with that page.
                         ?>
-                        <p class="fg-hero-card__kicker"><?php esc_html_e('What they cost', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('One we fitted came to £2,000.', 'fenster'); ?></h2>
-                        <p class="fg-hero-card__spec"><?php esc_html_e('A 900 x 2100 Distinction Esteem, anthracite grey outside and white inside, with clear glass and a chrome lever. Supplied, fitted and including VAT.', 'fenster'); ?></p>
-                        <div class="fg-hero-card__logos">
-                            <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
-                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
-                                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
-                            </a>
-                        </div>
+                        <p class="fg-hero-card__kicker"><?php esc_html_e('A door we actually fitted', 'fenster'); ?></p>
+                        <p class="fg-hero-card__figure"><span><?php esc_html_e('£2,000', 'fenster'); ?></span><small><?php esc_html_e('fitted, including VAT', 'fenster'); ?></small></p>
+                        <p class="fg-hero-card__spec"><?php esc_html_e('900 x 2100 Distinction Esteem. Anthracite grey outside, white inside, clear glass, chrome lever.', 'fenster'); ?></p>
                         <div class="fg-hero-form">
                             <a class="button" href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('See what moves the price', 'fenster'); ?></a>
                             <a class="text-link" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908 429200'))); ?>"><?php echo esc_html(sprintf(__('Or call %s', 'fenster'), (string) ($brand['phone'] ?? '01908 429200'))); ?></a>
@@ -3026,7 +3047,7 @@ if ($is_commercial_hub) {
         <?php
         get_template_part('template-parts/sections/composite-doors-v2', null, [
             'collections' => $composite_collections,
-            'door_types' => $composite_door_types,
+            'security' => $composite_security,
             'colours' => $composite_door_colours,
             'glass' => $composite_door_glass,
             'handles' => $door_handle_finishes,

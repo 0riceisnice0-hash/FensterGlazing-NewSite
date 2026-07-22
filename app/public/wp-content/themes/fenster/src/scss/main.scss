@@ -3121,17 +3121,41 @@ h3 {
 }
 
 /* Composite doors hero card: a real checked price rather than a generic
-   invitation. The figure and spec must match /composite-door-prices/. */
-.fg-hero-card--price h2 {
-  margin: 0.15rem 0 0.35rem;
-  font-size: clamp(1.35rem, 1.9vw, 1.6rem);
+   invitation, with the figure doing the work instead of a stack of logos.
+   The figure and spec must match /composite-door-prices/. */
+.fg-hero-card--price {
+  padding: 1.15rem 1.25rem 1.25rem;
+  border-radius: 14px;
+}
+
+.fg-hero-card__figure {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.fg-hero-card__figure span {
+  color: var(--fg-navy, #002d3a);
+  font-size: clamp(2.4rem, 3.4vw, 3rem);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.fg-hero-card__figure small {
+  color: rgba(2, 43, 53, 0.6);
+  font-size: 0.78rem;
+  font-weight: 650;
 }
 
 .fg-hero-card__spec {
-  margin: 0 0 0.15rem;
-  color: rgba(2, 43, 53, 0.72);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  margin: 0 0 1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(2, 43, 53, 0.12);
+  color: rgba(2, 43, 53, 0.7);
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 
 .fg-product-quote-embed__aside {
@@ -31515,8 +31539,94 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-collections__grid {
   display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.4vw, 1.1rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-cd3-collections__note {
+  margin: clamp(1rem, 2vw, 1.35rem) 0 0;
+  color: rgba(2, 43, 53, 0.62);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.fg-cd3-collection__panel {
+  margin: 0 0 0.4rem;
+  color: var(--fg-green);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+/* The £5,000 security guarantee, given the weight of a full band. */
+.fg-cd3-security {
+  position: relative;
+  padding: clamp(2.25rem, 3.5vw, 3rem) 0;
+  background: transparent;
+}
+
+.fg-cd3-security__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 22px;
+  color: #eaf3f1;
+  background: var(--fg-navy, #002d3a);
+  box-shadow: 0 28px 70px rgba(2, 43, 53, 0.22);
+}
+
+.fg-cd3-security__lead .eyebrow {
+  margin: 0 0 0.5rem;
+  color: #7fe0ab;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.095em;
+  text-transform: uppercase;
+}
+
+.fg-cd3-security__lead h2 {
+  margin: 0 0 0.6rem;
+  color: #fff;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.fg-cd3-security__lead > p {
+  margin: 0 0 1.25rem;
+  color: rgba(214, 232, 230, 0.82);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.fg-cd3-security__points {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.5rem);
+  align-content: center;
+  gap: clamp(0.85rem, 1.8vw, 1.35rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-cd3-security__points li {
+  display: grid;
+  gap: 0.2rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid rgba(127, 224, 171, 0.5);
+}
+
+.fg-cd3-security__points strong {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.fg-cd3-security__points span {
+  color: rgba(214, 232, 230, 0.76);
+  font-size: 0.84rem;
+  line-height: 1.5;
 }
 
 .fg-cd3-collection {
@@ -31902,30 +32012,27 @@ html.fg-blinds-reveal-locked {
   gap: clamp(0.65rem, 1.4vw, 1rem);
 }
 
-/* Desktop collections are horizontal cards so the whole section fits one
-   1440x900 viewport; mobile keeps the stacked image-first card. */
-@media (min-width: 861px) {
-  .fg-cd3-collection {
-    display: grid;
-    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-  }
+/* Six collection cards across on desktop: door image on top, then the panel
+   rule and one line of guidance. */
+.fg-cd3-collection__img {
+  aspect-ratio: 300 / 420;
+}
 
-  .fg-cd3-collection__img {
-    height: 100%;
-    aspect-ratio: auto;
-  }
+.fg-cd3-collection__img img {
+  object-position: center top;
+}
 
-  .fg-cd3-collection__body {
-    padding: clamp(1.1rem, 2vw, 1.5rem);
-  }
+.fg-cd3-collection__body {
+  padding: 0.8rem 0.85rem 0.95rem;
+}
 
-  .fg-cd3-collection__body > p {
-    margin-bottom: 0.8rem;
-  }
+.fg-cd3-collection__body h3 {
+  font-size: 1.05rem;
+}
 
-  .fg-cd3-collection__best {
-    margin-bottom: 0.8rem;
-  }
+.fg-cd3-collection__body > p {
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .fg-cd3-tile {
@@ -32047,6 +32154,10 @@ html.fg-blinds-reveal-locked {
   .fg-cd3-palette__grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
+
+  .fg-cd3-collections__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 860px) {
@@ -32085,6 +32196,11 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cd3-collections__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-cd3-security__inner,
+  .fg-cd3-security__points {
     grid-template-columns: 1fr;
   }
 
