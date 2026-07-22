@@ -105,6 +105,16 @@ The construction section uses one static cutaway. An interactive per-layer versi
 
 Every composite section is held inside a single `1440x900` viewport (about `830px` below the header). Measure before and after any change to this route.
 
+## Conversion model (2026-07-22)
+
+The route is built around the question visitors actually arrive with, which is what a fitted door costs.
+
+- The hero card carries the checked WindowCAD example published on `/composite-door-prices/`. **If that guide's figure or specification changes, change it here too**; a price that disagrees with the guide is worse than no price.
+- `fg-hero--composite` exists purely to opt this route back into the hero card, which `.fg-hero--compact` hides everywhere else. Do not remove the modifier without moving the price anchor somewhere equally prominent.
+- Primary hero action is the instant quote tool, not the enquiry form. The quote tool is what generates priced WindowCAD leads on this route.
+- The page carries seven lead routes on purpose: instant price, enquiry, prices guide, phone in the proof bar, phone in the hero card, the door wall action row, and the quote embed. Do not collapse these into one CTA.
+- Composite allows six FAQs rather than the usual five so the price question and the U-value answer can both render. Check `$product_faq_limit` before adding another.
+
 ## Maintenance rules
 
 - Keep the sold-range list accurate.
