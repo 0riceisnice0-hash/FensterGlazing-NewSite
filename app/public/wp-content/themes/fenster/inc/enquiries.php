@@ -164,11 +164,11 @@ function fenster_configure_smtp(PHPMailer\PHPMailer\PHPMailer $mailer): void
     $mailer->Password = fenster_mail_config_value('FENSTER_SMTP_PASSWORD');
     $mailer->SMTPAuth = $mailer->Username !== '';
     $mailer->SMTPSecure = fenster_mail_config_value('FENSTER_SMTP_SECURE', 'tls');
-    // Pin the authentication mechanism. Left to negotiate, PHPMailer picks the
-    // "most secure" method the server advertises, which is CRAM-MD5 on relays
-    // such as Brevo. CRAM-MD5 needs the password stored recoverably at the
-    // provider, which API-key style credentials are not, so it always fails
-    // with 535. LOGIN is what these relays actually expect. Override with
+    // Pin the authentication mechanism for determinism. Left unset, PHPMailer
+    // picks whichever mechanism the relay advertises first, which can vary
+    // between environments and makes failures harder to reason about. Brevo
+    // authenticates with both CRAM-MD5 and LOGIN, so this is hardening rather
+    // than a fix: a 535 is almost always wrong credentials. Override with
     // FENSTER_SMTP_AUTH_TYPE if a provider ever needs something else.
     $mailer->AuthType = fenster_mail_config_value('FENSTER_SMTP_AUTH_TYPE', 'LOGIN');
     $mailer->From = fenster_mail_config_value('FENSTER_MAIL_FROM', 'info@fensterglazing.com');
