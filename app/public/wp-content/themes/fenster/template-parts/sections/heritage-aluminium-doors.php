@@ -61,7 +61,7 @@ $door_colours = [
                     <p class="fg-heritage-door-hero__lead"><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
                     <div class="fg-heritage-door-hero__actions">
                         <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
-                        <a class="fg-heritage-door-hero__call" href="tel:01908429200"><?php esc_html_e('Call us on 01908 429200', 'fenster'); ?></a>
+                        <a class="button button--steel" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
                     </div>
                     <ul class="fg-heritage-door-hero__reassurance" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
                         <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>

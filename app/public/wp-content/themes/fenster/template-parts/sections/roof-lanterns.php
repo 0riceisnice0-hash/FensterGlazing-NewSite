@@ -44,7 +44,7 @@ $roof_styles = [
                     <p class="fg-roof-lantern-hero__lead"><?php esc_html_e('We supply and install Sheerline S1 aluminium roof lanterns across Milton Keynes. We check the roof opening, glass specification, ventilation and finish before the lantern is ordered.', 'fenster'); ?></p>
                     <div class="fg-roof-lantern-hero__actions">
                         <a class="button" href="#fenster-roof-lantern-enquiry"><?php esc_html_e('Get a roof lantern quote', 'fenster'); ?></a>
-                        <a class="fg-roof-lantern-hero__call" href="tel:01908429200"><?php esc_html_e('Call us on 01908 429200', 'fenster'); ?></a>
+                        <a class="button button--steel" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
                     </div>
                     <ul class="fg-roof-lantern-hero__reassurance" aria-label="<?php esc_attr_e('Roof lantern reassurance', 'fenster'); ?>">
                         <li><?php esc_html_e('Opening measured and checked before order', 'fenster'); ?></li>
