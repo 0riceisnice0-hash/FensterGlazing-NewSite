@@ -31476,12 +31476,6 @@ html.fg-blinds-reveal-locked {
   list-style: none;
 }
 
-.fg-cd3-collection {
-  display: grid;
-  grid-template-columns: 104px minmax(0, 1fr);
-  align-items: stretch;
-}
-
 .fg-cd3-collections__note {
   margin: clamp(1rem, 2vw, 1.35rem) 0 0;
   color: rgba(2, 43, 53, 0.62);
@@ -31593,11 +31587,12 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cd3-collection {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  align-items: stretch;
   overflow: hidden;
   border: 1px solid rgba(2, 43, 53, 0.12);
-  border-radius: 18px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.82);
   box-shadow: 0 22px 60px rgba(2, 43, 53, 0.09);
   backdrop-filter: blur(14px);
