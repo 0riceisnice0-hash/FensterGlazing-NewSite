@@ -236,7 +236,7 @@ if (empty($collections)) {
             <header class="fg-cd3-head fg-cd3-head--wide">
                 <p class="eyebrow"><?php esc_html_e('The paint range', 'fenster'); ?></p>
                 <h2 id="fg-cd3-colour-title"><?php esc_html_e('Pick a colour and see it on a real door.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Distinction mix their own paint rather than buying it in. Hover or tap any colour below. Nine of them we have photographed on a finished door; the rest show the paint itself, because we would rather show you the real thing than tint a picture and hope.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Distinction mix their own paint rather than buying it in. Hover or tap any colour below and most of them will show you a door in it. The few we have no door for show the paint itself, because we would rather show you the real thing than tint a picture and hope.', 'fenster'); ?></p>
             </header>
 
             <div class="fg-cd3-colour__layout" data-fg-door-selector data-fg-colour-wall>
