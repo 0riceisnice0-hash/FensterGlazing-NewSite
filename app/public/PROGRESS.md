@@ -110,7 +110,17 @@ Owner asked for the mobile layout to be made properly nice, with the collections
 - The style-range wall drift stays desktop-only (`min-width: 861px`), which is deliberate: on a touch device the rail is swipeable and a moving track fights the user's finger. Verified drift still runs at 1440 (60px to 141px in 1.5s).
 - **Open item for the owner:** the "Real installs, photographed on the day" strip on this page shows uPVC casement window and aluminium bifold case studies, because no case study is tagged to composite doors and `fenster_case_studies_for_product()` falls back to all studies. Only seven product pages have their own studies, so every other product page makes the same mismatched claim. Left alone here because the fix is site-wide, not a composite-doors change.
 
-## 2026-07-22 - Composite doors: construction rebuilt as a layer explorer (test)
+## 2026-07-22 - Composite doors work reached live without its own deploy
+
+Asked to push the composite doors work live, the range check found there was nothing to push: production was already serving all of it.
+
+- **Live is at `1cffd68`.** Its `main.css` and `main.js` match the committed tree byte for byte (`dd22b30e` and `7618f443`), the layer explorer markup and the trimmed cutaway asset are both present on the live server, and the accordion behaves correctly on the production URL.
+- **It got there on the back of the mail fix.** The other session committed `71423ee` (SMTP auth) directly on top of `23f3ea8`, the last composite commit, then released. Everything between was carried along: `git merge-base --is-ancestor 23f3ea8 f4ad6fb` confirms the whole composite redesign sits inside the live release.
+- **This is the second time.** `LIVECHANGES.md` records the same thing on 2026-07-18, when four Legend fixes took fourteen unapproved composite commits to production with them. Deploying an explicit SHA does not prevent it: the explicit SHA still carries every ancestor. The rule stops you shipping commits that land *after* the one you verified, not ones already underneath it.
+- **What would actually prevent it** is not sharing `main` between two concurrent sessions. Until the work is branched, any live release from either session ships whatever the other has merged. Worth deciding before the next unrelated hotfix.
+- No rollback proposed: the composite work was verified on test at each step and the owner asked for it to go live. Recording it so the release history is accurate.
+
+## 2026-07-22 - Composite doors: construction rebuilt as a layer explorer (live)
 
 Owner: the construction section was massive on mobile and looked poor on desktop too, and wanted it changed rather than compressed.
 
