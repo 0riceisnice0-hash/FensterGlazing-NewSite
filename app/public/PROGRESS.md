@@ -1,6 +1,15 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-21
+Last updated: 2026-07-22
+
+## 2026-07-22 - Live Google reviews released, plus the accumulated main branch (79c464b)
+
+- Replaced the hardcoded review showcase with live Google data. `inc/google-reviews.php` reads the rating, review count and latest reviews from the Places API (New), caches for six hours, resolves and stores the Place ID once, and falls back to the curated set plus owner-verified figures when no key is configured. The API key lives in Bedrock `.env` as `FENSTER_GOOGLE_PLACES_API_KEY` alongside the OpenAI key and is never committed.
+- Rebuilt the section: rating panel with half-step gold stars and the real review count, Google branding, reviewer photos and names as Google's terms require, relative dates ("4 weeks ago"), clamped card text, and genuine read/write-review links built from the Place ID. The pre-existing bug where every review link pointed at a Google *search query* instead of the review panel is fixed at the data source; the stale 2025 curated URLs were cleared.
+- Schema: `hasOfferCatalog` now lists the real 20-service product range mirroring the Google Business Profile, `areaServed` leads with Milton Keynes and its suburbs before the counties, and `foundingDate`/`currenciesAccepted` were added. `hasMap`/`sameAs` use the canonical `?cid=` place URL with the Places API's per-request `g_mp` tracking parameter stripped. **`aggregateRating` was deliberately not added** — Google does not show review rich results for self-serving reviews about the business itself, so it would carry risk without producing stars.
+- **Live incident during setup.** The instructions given for adding the key were written as a shell block beginning with `ssh …`, and were pasted into the live `.env` verbatim. Bedrock's phpdotenv parser throws on any line that is not `NAME=value`, so every production page returned 500. Recovered by backing the file up (`~/env-backup-live-*.bak`) and stripping non-assignment lines. Lesson recorded: when asking the owner to edit `.env`, give exactly one `NAME=value` line and say explicitly that nothing else belongs in the file.
+- Live deploy: range-checked `b0ec36a..79c464b` (35 commits) and surfaced that only six were the review work; the owner explicitly approved shipping the rest. Backed up (`fenster-pre-79c464b-20260722-105406.tar.gz`, 348M), pinned the server repo cache to the explicit SHA rather than `origin/main`, rsynced theme-only, flushed WP and SiteGround caches. **This release therefore also promoted composite doors V2, the Bolbeck Park and Wolverton case studies, the archive show-more, the Aaron Isaacs team profile and the heritage door refinements.**
+- Production verification: live Places API returns 4.9 from 133 reviews with five live review cards; eleven key routes return 200 (`/`, `/online-quote/`, `/composite-doors/`, `/casement-windows/`, `/heritage-aluminium-doors/`, `/case-studies/`, `/why-trust-fenster/`, `/contact/`, `/double-glazing-milton-keynes/`, `/meet-the-team/`, `/sitemap.xml`). Browser QA at 1440x950 and iPhone 13: real reviewer names and photos, no horizontal overflow, zero console errors.
 
 ## 2026-07-21 - Heritage aluminium doors promoted to live (b0ec36a)
 
