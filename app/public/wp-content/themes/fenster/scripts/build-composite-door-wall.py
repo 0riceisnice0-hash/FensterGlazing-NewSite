@@ -65,7 +65,7 @@ DOORS = [
     ("sign_RES01-scaled.jpg", "stable-solid", "Stable, solid", "Stable Doors"),
     # The only Rustic Renown asset in the scrape is a lifestyle photograph, so it
     # is cropped to the door face. Replace with a flat render if one is supplied.
-    ("Diamond-rustic-Renown-Basalt-Grey@2x.jpg", "rustic-renown-rr03", "Rustic Renown RR03", "Rustic Renown", (0.38, 0.14, 0.62, 0.88)),
+    ("Diamond-rustic-Renown-Basalt-Grey@2x.jpg", "rustic-renown-rr03", "Rustic Renown RR03", "Rustic Renown", (0.35, 0.215, 0.65, 0.945)),
     ("sign_RE01-cottage-scaled.jpg", "retail-cottage", "Cottage", "Renown"),
     ("sign_RE02-renown-scaled.jpg", "renown", "Renown", "Renown"),
     ("sign_RE03-renown-diamond-scaled.jpg", "renown-diamond", "Renown Diamond", "Renown"),
