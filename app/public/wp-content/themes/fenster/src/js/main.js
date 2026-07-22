@@ -1002,7 +1002,8 @@ document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const canDrift = window.matchMedia('(min-width: 861px)');
-  const SPEED = 0.35;
+  // Pixels per frame, so roughly SPEED x 60 per second. Tune here.
+  const SPEED = 0.9;
   const RESUME_DELAY = 1400;
 
   let frame = null;
