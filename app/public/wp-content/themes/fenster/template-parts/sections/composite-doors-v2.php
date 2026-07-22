@@ -183,7 +183,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
                 <p><?php esc_html_e('Every Distinction door we fit is secured with AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock. Should either fail in a break-in, you are covered for up to £5,000 in compensation. Terms apply, and we go through them with you before you order rather than after.', 'fenster'); ?></p>
                 <div class="button-row">
                     <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--steel" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('How we back our work', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/why-trust-fenster/')); ?>"><?php esc_html_e('How we back our work', 'fenster'); ?></a>
                 </div>
             </div>
             <ul class="fg-cd3-security__points">
@@ -309,7 +309,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
 
         <div class="fg-cd-v2-config__actions">
             <p><?php esc_html_e('Your final colour, glass and hardware combination is confirmed after survey.', 'fenster'); ?></p>
-            <div><a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a><a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book consultation', 'fenster'); ?></a></div>
+            <div><a class="button" href="#fenster-product-quote"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a><a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book consultation', 'fenster'); ?></a></div>
         </div>
     </div>
 </section>
