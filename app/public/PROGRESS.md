@@ -87,6 +87,18 @@ Owner asked for the mobile layout to be made properly nice, with the collections
 - The style-range wall drift stays desktop-only (`min-width: 861px`), which is deliberate: on a touch device the rail is swipeable and a moving track fights the user's finger. Verified drift still runs at 1440 (60px to 141px in 1.5s).
 - **Open item for the owner:** the "Real installs, photographed on the day" strip on this page shows uPVC casement window and aluminium bifold case studies, because no case study is tagged to composite doors and `fenster_case_studies_for_product()` falls back to all studies. Only seven product pages have their own studies, so every other product page makes the same mismatched claim. Left alone here because the fix is site-wide, not a composite-doors change.
 
+## 2026-07-22 - Composite doors: construction rebuilt as a layer explorer (test)
+
+Owner: the construction section was massive on mobile and looked poor on desktop too, and wanted it changed rather than compressed.
+
+- **Six stacked headings and paragraphs became a stack that opens one layer at a time.** The wall of text is gone on both breakpoints; only one explanation is visible at a time and the stack can be fully collapsed. Verified the behaviour on test: starts with 01 open, opening another closes the first, re-clicking closes it, never more than one open, `aria-expanded` and `hidden` stay in step.
+- **The first layer is open in the markup**, so with JavaScript off it degrades to a plain readable list rather than six headings with no copy.
+- **The layers are ordered as a section through the door**, outside in, so the list reads as construction rather than as six loose facts.
+- **Desktop no longer has a dead column.** The illustration keeps its own proportion and the layer stack stretches to match it, instead of a 330px image marooned in white beside a six-paragraph column.
+- **The cutaway asset was carrying ~43px of flat white either side**, which read as a mis-sized image against the panel tint. Trimmed copy saved as `slab-cutaway-trim-341w.webp`; the original is untouched. No build script produces this asset, so a regenerated one will need trimming again.
+- Section height on a 390px phone came down from 1,474px to 1,149px, and the collections section from 1,144px to 996px. No horizontal overflow at 390, 768 or 1440.
+- I first tried compressing this section (band crop plus tighter type) and it only reached 1,245px while still reading as a wall. Compression was the wrong instinct; recorded here so it is not retried.
+
 ## 2026-07-22 - Composite doors: our own collections, and the £5,000 guarantee promoted (test, 783d8dc)
 
 Owner relayed a decision from the business owner: WindowCAD and the website must present the **same** door collections, and the site should stop using Distinction's Signature/Contemporary split. Also: the hero looked poor and ignored the good assets, and the £5,000 security guarantee needed to be a major USP rather than one small stat.

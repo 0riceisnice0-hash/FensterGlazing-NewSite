@@ -181,6 +181,17 @@ Any link that acts as a call to action on this route is a button, not a text lin
 - **Stitched full-page screenshots lie about images.** `loading="lazy"` assets well below the fold come back blank in a `captureBeyondViewport` capture, which reads as broken swatches and empty case-study cards. Verify in-viewport, or query `naturalWidth`, before chasing a rendering fault that is not there.
 - Watch for stale small-phone rules when a section is redesigned. The old dark installer bar left a `560px` block that forced a two-column grid and hid the Distinction logo; it survived two redesigns and pushed the call button off the panel before it was spotted. Grep the whole stylesheet for a renamed component's old selectors, not just the block you are editing.
 
+## Construction: the layer explorer (2026-07-22)
+
+The six slab layers used to render as six stacked headings and paragraphs beside a 330px cutaway. It was a wall of text on any screen, 1,474px tall on a phone, and left a column of dead white under the illustration on desktop.
+
+- **The layers open one at a time**, driven by `[data-fg-anatomy]` in `main.js`. Clicking the open one closes it, so the stack can be fully collapsed. Only ever one is open, which is what stops the block growing back into the wall it replaced.
+- **The first layer is open in the markup and the rest carry `hidden`**, so with JavaScript off the section degrades to a readable list rather than six headings with no copy. Do not move the initial state into JS.
+- **The order is the order you meet the layers going from the weather inwards**, so the stack reads as a section through the door. If a layer is added, put it in physical order, not importance order.
+- **The list stretches to the illustration's height** (`align-self: stretch` plus `align-content: stretch`) and the illustration keeps its own proportion. That is what removes the dead corner: neither column pads the other out.
+- **The cutaway asset carried ~43px of flat white either side.** `slab-cutaway-trim-341w.webp` is the trimmed copy and is what the page uses; the 428w original is still in the folder. Neither is produced by a build script, so a regenerated asset will need trimming again.
+- **Stacked, the illustration becomes a 16:9 band capped at 260px** and needs its explicit `width: 100%`. Without the width, the height cap makes `aspect-ratio` drive the width instead and the band shrinks away from the panel edge.
+
 ## Conversion model (2026-07-22)
 
 The route is built around the question visitors actually arrive with, which is what a fitted door costs.
