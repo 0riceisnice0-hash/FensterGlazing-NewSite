@@ -31972,14 +31972,16 @@ html.fg-blinds-reveal-locked {
   box-shadow: 0 0 0 2px var(--fg-green), inset 0 0 0 2px rgba(255, 255, 255, 0.85);
 }
 
+/* The name has to be readable in full. Ten of these colours have no door
+   photograph, so the label is the only thing identifying the paint, and
+   "Anthracite G..." is no use to someone reading a colour list. Two lines,
+   with the row height reserved either way so the grid stays square. */
 .fg-cd3-swatch span {
-  overflow: hidden;
+  min-height: 2.5em;
   color: rgba(2, 43, 53, 0.68);
   font-size: 0.74rem;
   font-weight: 650;
   line-height: 1.25;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .fg-cd3-swatch[aria-pressed='true'] span {
