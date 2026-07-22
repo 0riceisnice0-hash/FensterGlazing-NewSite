@@ -135,7 +135,8 @@ Terms confirmed by the owner on 2026-07-22, so this is settled and is also recor
 - Name the three lock components wherever the claim is made prominently; they are what the guarantee rests on.
 - Keep the terms-apply caveat, and do not invent payout conditions beyond the above.
 - Secured by Design covers the door slabs but **not** stable doors. Keep that exclusion stated.
-- The band uses an inline SVG shield (`.fg-cd3-shield`) rather than an image, so it stays sharp at any size and needs no asset pipeline.
+- The band uses an inline SVG shield (`.fg-cd3-shield`) rather than an image, so it stays sharp at any size and needs no asset pipeline. It sits in a two-column lockup beside the copy; floating it above the copy is what made it look pasted on, and removing it altogether was a mistake the owner corrected on 2026-07-22. **Keep the badge.**
+- **There is no APECS logo asset anywhere in this project** and there never has been: not in `assets/`, not in uploads, not in the Distinction scrape, not in git history. The only APECS material is two scraped content pages (`apecs-ingenious-locks-and-hardware`, `apecs-terms-conditions`). If the owner wants an APECS mark on this band, the artwork has to be supplied first.
 
 ## Hero pattern
 
