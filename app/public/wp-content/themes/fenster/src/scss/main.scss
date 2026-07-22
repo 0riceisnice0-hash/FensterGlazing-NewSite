@@ -32272,6 +32272,7 @@ html.fg-blinds-reveal-locked {
     scroll-padding-inline: max(1rem, calc((100vw - var(--container)) / 2));
     scroll-snap-type: inline mandatory;
     scrollbar-width: none;
+    align-items: start;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -32279,12 +32280,16 @@ html.fg-blinds-reveal-locked {
     display: none;
   }
 
+  /* The card takes the door's own height so the whole door shows. The six
+     renders run 0.406 to 0.453 wide-to-tall, so any fixed card height would
+     crop one of them; cards are top-aligned instead. */
   .fg-cd3-collection {
     position: relative;
-    display: grid;
+    display: block;
     grid-template-columns: none;
-    flex: 0 0 min(78vw, 340px);
-    min-height: clamp(420px, 62vw, 480px);
+    flex: 0 0 min(64vw, 270px);
+    min-height: 0;
+    height: auto;
     border-radius: 4px 44px 4px 4px;
     background: var(--color-steel);
     color: #fff;
@@ -32302,23 +32307,28 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cd3-collection__img {
-    position: absolute;
+    position: static;
     z-index: -2;
-    inset: 0;
+    inset: auto;
     height: auto;
+    aspect-ratio: auto;
   }
 
   .fg-cd3-collection__img img {
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    height: auto;
+    object-fit: fill;
   }
 
   .fg-cd3-collection__body {
-    align-self: end;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
     gap: 0.3rem;
-    padding: 1.15rem 1.25rem 1.35rem;
+    padding: 1.15rem 1.15rem 1.25rem;
   }
 
   .fg-cd3-collection__body h3 {
