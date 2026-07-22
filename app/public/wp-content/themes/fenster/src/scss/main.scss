@@ -32280,42 +32280,28 @@ html.fg-blinds-reveal-locked {
     display: none;
   }
 
-  /* The card takes the door's own height so the whole door shows. The six
-     renders run 0.406 to 0.453 wide-to-tall, so any fixed card height would
-     crop one of them; cards are top-aligned instead. */
+  /* Every door is a different shape (0.406 to 0.453 wide-to-tall), so a fixed
+     card either crops one or leaves the row ragged. The image area is a fixed
+     portrait panel and each door is contained inside it, which lands them all
+     at the same height like a proper lineup. Caption sits underneath rather
+     than over the door, so nothing is hidden and contrast is not a fight. */
   .fg-cd3-collection {
-    position: relative;
-    display: block;
+    display: grid;
     grid-template-columns: none;
-    flex: 0 0 min(64vw, 270px);
+    grid-template-rows: auto 1fr;
+    flex: 0 0 min(66vw, 280px);
     min-height: 0;
-    height: auto;
-    border-radius: 4px 44px 4px 4px;
-    background: var(--color-steel);
-    color: #fff;
-    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid rgba(2, 43, 53, 0.12);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 18px 44px rgba(2, 43, 53, 0.1);
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
 
-  /* Several of these doors are pale, so the scrim has to stay solid behind the
-     whole caption rather than fading through it. White on a pale door is a
-     contrast failure under STYLE.md. */
   .fg-cd3-collection::after {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      0deg,
-      rgba(0, 24, 31, 0.97) 0%,
-      rgba(0, 24, 31, 0.94) 24%,
-      rgba(0, 24, 31, 0.78) 36%,
-      rgba(0, 24, 31, 0.34) 52%,
-      rgba(0, 24, 31, 0.04) 72%,
-      transparent 100%
-    );
+    display: none;
   }
 
   .fg-cd3-collection__img {
@@ -32323,39 +32309,35 @@ html.fg-blinds-reveal-locked {
     z-index: auto;
     inset: auto;
     height: auto;
-    aspect-ratio: auto;
+    aspect-ratio: 100 / 188;
+    padding: 0.9rem 0.9rem 0;
+    background: linear-gradient(180deg, #f5f8f7 0%, #e6edeb 100%);
   }
 
   .fg-cd3-collection__img img {
     display: block;
     width: 100%;
-    height: auto;
-    object-fit: fill;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 10px 18px rgba(2, 43, 53, 0.16));
   }
 
   .fg-cd3-collection__body {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    position: static;
     display: grid;
-    gap: 0.3rem;
-    padding: 1.15rem 1.15rem 1.25rem;
+    align-content: start;
+    gap: 0.28rem;
+    padding: 0.9rem 1rem 1.05rem;
+    border-top: 1px solid rgba(2, 43, 53, 0.1);
   }
 
   .fg-cd3-collection__body h3 {
-    color: #fff;
-    font-size: 1.35rem;
-  }
-
-  .fg-cd3-collection__slab {
-    color: #7fe0ab;
+    font-size: 1.15rem;
   }
 
   .fg-cd3-collection__body > p {
-    color: rgba(233, 244, 241, 0.86);
-    font-size: 0.88rem;
+    font-size: 0.84rem;
   }
 
   .fg-cd3-collections__dots {
