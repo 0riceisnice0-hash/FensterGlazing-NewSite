@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-22
 
+## 2026-07-22 - Authenticated email live
+
+- Brevo SMTP is now configured on **live** as well as test. Verified on production: the transport sends, and the customer confirmation template builds and delivers. The owner confirmed the test messages arrived in the **inbox** (not junk) and correctly from `info@fensterglazing.com` rather than a generic no-reply, which is the Brevo domain authentication working.
+- Customer confirmation emails are therefore live for real enquirers for the first time since launch. Public copy may now promise a confirmation.
+- Office lead notifications now also route through Brevo as `info@` instead of unauthenticated `wordpress@`. The transport was tested explicitly on live before sign-off because a broken relay would silently stop lead delivery.
+- Note for future testing: `fenster_enquiry_office_email()` takes `(array $data, int $enquiry_id, array $attachments)` and its rows are strictly typed, so a partial `$data` array throws. Build a complete record, or test the transport with a plain `wp_mail()` call, rather than passing a stub.
+
 ## 2026-07-22 - Authenticated email working (test)
 
 - The website has never sent authenticated email, so customer confirmations have been off since launch and every enquirer got silence. Fixed on test.
