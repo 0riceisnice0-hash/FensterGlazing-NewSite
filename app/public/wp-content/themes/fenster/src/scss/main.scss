@@ -3043,18 +3043,6 @@ h3 {
   display: none;
 }
 
-/* Composite doors is the one product route that brings the hero card back.
-   It carries the checked fitted price, which is the question this page's
-   visitors actually arrive with, so it earns the first viewport. */
-.fg-hero--compact.fg-hero--composite .fg-hero__inner {
-  grid-template-columns: minmax(0, 1.18fr) minmax(310px, 0.82fr);
-  align-items: center;
-  gap: clamp(1.5rem, 3vw, 3rem);
-}
-
-.fg-hero--compact.fg-hero--composite .fg-hero__panel {
-  display: block;
-}
 
 .fg-hero.fg-hero--compact h1 {
   font-size: clamp(2.1rem, 3.35vw, 3.4rem);
@@ -3118,44 +3106,6 @@ h3 {
 
 .fg-hero-card h2 {
   font-size: 1.35rem;
-}
-
-/* Composite doors hero card: a real checked price rather than a generic
-   invitation, with the figure doing the work instead of a stack of logos.
-   The figure and spec must match /composite-door-prices/. */
-.fg-hero-card--price {
-  padding: 1.15rem 1.25rem 1.25rem;
-  border-radius: 14px;
-}
-
-.fg-hero-card__figure {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin: 0.2rem 0 0.4rem;
-}
-
-.fg-hero-card__figure span {
-  color: var(--fg-navy, #002d3a);
-  font-size: clamp(2.4rem, 3.4vw, 3rem);
-  font-weight: 750;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.fg-hero-card__figure small {
-  color: rgba(2, 43, 53, 0.6);
-  font-size: 0.78rem;
-  font-weight: 650;
-}
-
-.fg-hero-card__spec {
-  margin: 0 0 1rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid rgba(2, 43, 53, 0.12);
-  color: rgba(2, 43, 53, 0.7);
-  font-size: 0.82rem;
-  line-height: 1.55;
 }
 
 .fg-product-quote-embed__aside {
@@ -31041,9 +30991,12 @@ html.fg-blinds-reveal-locked {
 .fg-composite-approved {
   position: relative;
   z-index: 2;
-  padding: 0.7rem 0;
-  background: var(--color-steel);
+  padding: 1rem 0;
   color: #fff;
+  background:
+    radial-gradient(120% 180% at 12% 0%, rgba(63, 185, 127, 0.22), transparent 58%),
+    linear-gradient(96deg, #04323d 0%, var(--color-steel) 52%, #06394a 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), inset 0 -1px 0 rgba(0, 0, 0, 0.22);
 }
 
 .fg-composite-approved__inner {
@@ -31104,37 +31057,44 @@ html.fg-blinds-reveal-locked {
 
 .fg-composite-approved__mark {
   display: grid;
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 2.5rem;
+  height: 2.5rem;
   place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 50%;
-  background: var(--color-accent);
+  background: linear-gradient(160deg, var(--color-accent), #1c8f5c);
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
+  box-shadow: 0 6px 18px rgba(35, 173, 101, 0.32);
 }
 
 .fg-composite-approved strong {
   display: block;
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
   line-height: 1.2;
 }
 
 .fg-composite-approved p {
-  margin: 0.16rem 0 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.76rem;
-  line-height: 1.35;
+  margin: 0.22rem 0 0;
+  max-width: 68ch;
+  color: rgba(233, 244, 241, 0.76);
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 .fg-composite-approved img {
-  width: 118px;
-  max-height: 42px;
-  padding: 0.35rem 0.5rem;
-  border-radius: 4px;
+  width: 128px;
+  max-height: 46px;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 7px;
   background: #fff;
   object-fit: contain;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
 }
 
 .fg-composite-choice-selector {
@@ -31577,6 +31537,19 @@ html.fg-blinds-reveal-locked {
   color: #eaf3f1;
   background: var(--fg-navy, #002d3a);
   box-shadow: 0 28px 70px rgba(2, 43, 53, 0.22);
+}
+
+.fg-cd3-shield {
+  display: block;
+  width: 74px;
+  margin-bottom: 0.9rem;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.3));
+}
+
+.fg-cd3-shield svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .fg-cd3-security__lead .eyebrow {
@@ -33221,6 +33194,7 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+.fg-cd3-hero,
 .fg-heritage-door-hero,
 .fg-heritage-door-detail,
 .fg-heritage-door-frame,
@@ -33231,6 +33205,7 @@ html.fg-blinds-reveal-locked {
   padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
 }
 
+.fg-cd3-hero__grid,
 .fg-heritage-door-hero__grid,
 .fg-heritage-door-detail__grid,
 .fg-heritage-door-frame__grid,
@@ -33241,10 +33216,12 @@ html.fg-blinds-reveal-locked {
   gap: clamp(2rem, 4vw, 4rem);
 }
 
+.fg-cd3-hero__grid,
 .fg-heritage-door-hero__grid {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
+.fg-cd3-hero h1,
 .fg-heritage-door-hero h1 {
   max-width: 15ch;
   margin-bottom: 0.9rem;
@@ -33253,6 +33230,7 @@ html.fg-blinds-reveal-locked {
   line-height: 1.02;
 }
 
+.fg-cd3-hero__lead,
 .fg-heritage-door-hero__lead {
   max-width: 46ch;
   color: var(--color-muted);
@@ -33260,6 +33238,7 @@ html.fg-blinds-reveal-locked {
   line-height: 1.56;
 }
 
+.fg-cd3-hero__actions,
 .fg-heritage-door-hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -33268,16 +33247,19 @@ html.fg-blinds-reveal-locked {
   margin: 1.4rem 0 1.15rem;
 }
 
+.fg-cd3-hero__call,
 .fg-heritage-door-hero__call {
   color: var(--color-ink);
   font-weight: 700;
   text-decoration: none;
 }
 
+.fg-cd3-hero__call:hover,
 .fg-heritage-door-hero__call:hover {
   color: var(--color-accent-dark);
 }
 
+.fg-cd3-hero__reassurance,
 .fg-heritage-door-hero__reassurance,
 .fg-heritage-door-enquiry__copy ul {
   display: grid;
@@ -33287,6 +33269,7 @@ html.fg-blinds-reveal-locked {
   list-style: none;
 }
 
+.fg-cd3-hero__reassurance li,
 .fg-heritage-door-hero__reassurance li,
 .fg-heritage-door-enquiry__copy li {
   position: relative;
@@ -33295,6 +33278,7 @@ html.fg-blinds-reveal-locked {
   line-height: 1.5;
 }
 
+.fg-cd3-hero__reassurance li::before,
 .fg-heritage-door-hero__reassurance li::before,
 .fg-heritage-door-enquiry__copy li::before {
   position: absolute;
@@ -33307,6 +33291,7 @@ html.fg-blinds-reveal-locked {
   content: '';
 }
 
+.fg-cd3-hero__media,
 .fg-heritage-door-hero__media {
   position: relative;
   width: min(100%, 620px);
@@ -33318,6 +33303,7 @@ html.fg-blinds-reveal-locked {
   background: var(--color-steel);
 }
 
+.fg-cd3-hero__media img,
 .fg-heritage-door-hero__media img,
 .fg-heritage-door-security__media img,
 .fg-heritage-door-use figure img {
@@ -33326,6 +33312,7 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
+.fg-cd3-hero__media figcaption,
 .fg-heritage-door-hero__media figcaption {
   position: absolute;
   z-index: 1;
@@ -33344,10 +33331,12 @@ html.fg-blinds-reveal-locked {
 
 /* Specification summary strip */
 
+.fg-cd3-brief,
 .fg-heritage-door-brief {
   padding-bottom: clamp(1.5rem, 3.5vh, 2.25rem);
 }
 
+.fg-cd3-brief__grid,
 .fg-heritage-door-brief__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -33357,6 +33346,7 @@ html.fg-blinds-reveal-locked {
   background: rgba(255, 255, 255, 0.62);
 }
 
+.fg-cd3-brief p,
 .fg-heritage-door-brief p {
   display: grid;
   gap: 0.45rem;
@@ -33365,15 +33355,18 @@ html.fg-blinds-reveal-locked {
   border-right: 1px solid rgba(15, 49, 54, 0.12);
 }
 
+.fg-cd3-brief p:last-child,
 .fg-heritage-door-brief p:last-child {
   border-right: 0;
 }
 
+.fg-cd3-brief strong,
 .fg-heritage-door-brief strong {
   color: var(--color-ink);
   font-size: 0.95rem;
 }
 
+.fg-cd3-brief span,
 .fg-heritage-door-brief span {
   color: var(--color-muted);
   font-size: 0.86rem;
@@ -33735,6 +33728,7 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 860px) {
+  .fg-cd3-hero,
   .fg-heritage-door-hero,
   .fg-heritage-door-detail,
   .fg-heritage-door-frame,
@@ -33745,6 +33739,7 @@ html.fg-blinds-reveal-locked {
     padding: 2.5rem 0;
   }
 
+  .fg-cd3-hero__grid,
   .fg-heritage-door-hero__grid,
   .fg-heritage-door-detail__grid,
   .fg-heritage-door-frame__grid,
@@ -33759,20 +33754,24 @@ html.fg-blinds-reveal-locked {
     order: 2;
   }
 
+  .fg-cd3-hero__media,
   .fg-heritage-door-hero__media {
     width: min(100%, 440px);
     aspect-ratio: 4 / 3;
     justify-self: start;
   }
 
+  .fg-cd3-brief__grid,
   .fg-heritage-door-brief__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .fg-cd3-brief p:nth-child(2),
   .fg-heritage-door-brief p:nth-child(2) {
     border-right: 0;
   }
 
+  .fg-cd3-brief p:nth-child(-n + 2),
   .fg-heritage-door-brief p:nth-child(-n + 2) {
     border-bottom: 1px solid rgba(15, 49, 54, 0.12);
   }
@@ -33799,20 +33798,24 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 560px) {
+  .fg-cd3-hero,
   .fg-heritage-door-hero {
     padding: 1.75rem 0;
   }
 
+  .fg-cd3-hero h1,
   .fg-heritage-door-hero h1 {
     max-width: 13ch;
     font-size: clamp(2.2rem, 10.5vw, 3rem);
   }
 
+  .fg-cd3-hero__actions,
   .fg-heritage-door-hero__actions {
     display: grid;
     gap: 0.85rem;
   }
 
+  .fg-cd3-hero__actions .button,
   .fg-heritage-door-hero__actions .button {
     width: 100%;
   }

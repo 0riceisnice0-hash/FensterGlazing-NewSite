@@ -456,16 +456,16 @@ if ($is_composite_doors) {
         ],
         'footnote' => '*Distinction\'s independent testing at the University of Salford\'s Energy House, against a 48mm solid-timber-core composite door and a 44mm timber panelled door.',
     ];
-    // The £5,000 security guarantee is the headline USP on this route. Keep the
-    // supporting points to things that are verifiable: Secured by Design covers
-    // the door slab but explicitly excludes stable and double-rebated doors, and
-    // most decorative glass is laminated while Chatsworth and Wentworth are not
-    // triple glazed. Do not describe guarantee terms we cannot evidence.
+    // The £5,000 break-in guarantee is the headline USP on this route. The
+    // hardware named here is the guarantee's actual basis, confirmed by the
+    // owner on 2026-07-22: AI Secure locking, an APECS 3-star cylinder and an
+    // ILH Duplex multipoint lock, with up to £5,000 compensation if either
+    // fails in a break-in. Terms apply. Do not restate the terms beyond this.
     $composite_security = [
+        ['title' => 'AI Secure locking', 'copy' => 'Fitted to every Distinction door we hang, not offered as an upgrade on the ones that can afford it.'],
+        ['title' => 'APECS 3-star cylinder', 'copy' => 'The cylinder is the part a thief attacks first, which is why it is the part worth rating.'],
+        ['title' => 'ILH Duplex multipoint lock', 'copy' => 'Engages at several points up the frame rather than only behind the handle.'],
         ['title' => 'Secured by Design slabs', 'copy' => 'The police-backed standard, tested by a UKAS-accredited body. It covers the door slabs, though not the stable doors.'],
-        ['title' => 'Laminated decorative glass', 'copy' => 'Most designs are triple glazed and laminated as standard, so the glass holds together rather than letting go.'],
-        ['title' => 'Multi-point locking', 'copy' => 'The lock engages at several points up the frame, not just at the handle, on every doorset we fit.'],
-        ['title' => 'Ten year guarantee', 'copy' => 'Insurance-backed through the Consumer Protection Association, so it still stands if we ever stop trading.'],
     ];
     // Shared with the colours hub: the palette lives in inc/site-data.php under
     // colour_options.materials.composite so both surfaces stay in sync.
@@ -2705,8 +2705,53 @@ if ($is_commercial_hub) {
             <p class="fg-aw-story__scroll-cue"><?php esc_html_e('Scroll to explore', 'fenster'); ?></p>
         </div>
     </section>
+    <?php elseif ($is_composite_doors) : ?>
+    <?php
+    // Composite doors follows the light, boxed-image hero used by
+    // /roof-lanterns/ and /heritage-aluminium-doors/ rather than the shared
+    // dark photo hero. Styling is shared with those routes in main.scss.
+    $composite_hero_img = '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp';
+    $composite_phone = (string) ($brand['phone'] ?? '01908 429200');
+    ?>
+    <section class="fg-cd3-hero">
+        <div class="container fg-cd3-hero__grid">
+            <div class="fg-cd3-hero__copy">
+                <p class="eyebrow"><?php esc_html_e('Composite doors in Milton Keynes', 'fenster'); ?></p>
+                <h1><?php esc_html_e('A front door you never have to paint.', 'fenster'); ?></h1>
+                <p class="fg-cd3-hero__lead"><?php esc_html_e('We are approved Distinction Doors installers, fitting composite front doors across Milton Keynes and the surrounding towns. A 44.5mm insulated slab under a tough GRP skin, so it holds its heat, shrugs off the weather and keeps its colour without a paintbrush.', 'fenster'); ?></p>
+                <div class="fg-cd3-hero__actions">
+                    <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                    <a class="fg-cd3-hero__call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call us on %s', 'fenster'), $composite_phone)); ?></a>
+                </div>
+                <ul class="fg-cd3-hero__reassurance" aria-label="<?php esc_attr_e('Composite door reassurance', 'fenster'); ?>">
+                    <li><?php esc_html_e('A £5,000 break-in guarantee on every door we fit', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Six collections and over 300 styles, priced in about ten minutes', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Surveyed and hung by our own fitters, with a 10 year guarantee', 'fenster'); ?></li>
+                </ul>
+            </div>
+            <figure class="fg-cd3-hero__media">
+                <img <?php echo fenster_image_attr_string($composite_hero_img, [
+                    'alt' => 'A dark modern composite front door with a long glazed panel and bar handle, set in a red brick frontage',
+                    'loading' => 'eager',
+                    'fetchpriority' => 'high',
+                ]); ?>>
+                <figcaption><?php esc_html_e('Distinction composite door', 'fenster'); ?></figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="fg-cd3-brief" aria-label="<?php esc_attr_e('Composite door specification summary', 'fenster'); ?>">
+        <div class="container">
+            <div class="fg-cd3-brief__grid">
+                <p><strong><?php esc_html_e('44.5mm slab', 'fenster'); ?></strong><span><?php esc_html_e('Insulated GRP, against 28mm for a uPVC door panel', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('£5,000', 'fenster'); ?></strong><span><?php esc_html_e('Break-in guarantee, terms confirmed before you order', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('Six collections', 'fenster'); ?></strong><span><?php esc_html_e('The same six you meet in our quote tool', 'fenster'); ?></span></p>
+                <p><strong><?php esc_html_e('10 years', 'fenster'); ?></strong><span><?php esc_html_e('Insurance-backed installation guarantee', 'fenster'); ?></span></p>
+            </div>
+        </div>
+    </section>
     <?php else : ?>
-    <section class="fg-hero <?php echo esc_attr(trim(($use_product_journey ? 'fg-hero--compact' : '') . ($is_composite_doors ? ' fg-hero--composite' : ''))); ?>">
+    <section class="fg-hero <?php echo esc_attr($use_product_journey ? 'fg-hero--compact' : ''); ?>">
         <?php if ($is_home) : ?>
             <video class="fg-hero__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url(fenster_generated_url($hero_media_src)); ?>">
                 <source src="<?php echo esc_url($sick_video); ?>" type="video/mp4">
@@ -2725,20 +2770,6 @@ if ($is_commercial_hub) {
                     ]),
                     'sizes' => '100vw',
                 ]); ?>>
-            <?php elseif ($is_composite_doors) : ?>
-                <?php // A wide, whole-door composition. The old hero cropped so tightly you could not see the door. ?>
-                <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp', [
-                    'class' => 'fg-hero__image',
-                    'alt' => 'A dark modern composite front door with a long glazed panel and bar handle, set in a red brick frontage',
-                    'loading' => 'eager',
-                    'fetchpriority' => 'high',
-                    'srcset' => implode(', ', [
-                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-480w.webp') . ' 480w',
-                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-800w.webp') . ' 800w',
-                        fenster_generated_url('/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/venture-urban-entrance-1400w.webp') . ' 1400w',
-                    ]),
-                    'sizes' => '100vw',
-                ]); ?>>
             <?php else : ?>
                 <img <?php echo fenster_image_attr_string($hero_media_src, ['class' => 'fg-hero__image', 'alt' => $title, 'loading' => 'eager', 'fetchpriority' => 'high']); ?>>
             <?php endif; ?>
@@ -2752,17 +2783,11 @@ if ($is_commercial_hub) {
                     <p class="fg-hero__intro"><?php echo esc_html($hero_intro); ?></p>
                 </div>
                 <div class="button-row">
-                    <?php if ($is_composite_doors) : ?>
-                        <?php // Instant pricing is the strongest lead route on this page, so it leads. ?>
-                        <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                        <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Send an enquiry', 'fenster'); ?></a>
-                    <?php else : ?>
-                        <a class="button" href="#fenster-enquiry">
-                            <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
-                            <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
-                        </a>
-                        <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
-                    <?php endif; ?>
+                    <a class="button" href="#fenster-enquiry">
+                        <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
+                        <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
+                    </a>
+                    <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
                 </div>
             </div>
             <?php if ($is_home) : ?>
@@ -2775,33 +2800,19 @@ if ($is_commercial_hub) {
                     </div>
                 </aside>
             <?php else : ?>
-                <aside class="fg-hero__panel fg-hero-card<?php echo $is_composite_doors ? ' fg-hero-card--price' : ''; ?>" aria-label="<?php esc_attr_e('Project enquiry', 'fenster'); ?>">
-                    <?php if ($is_composite_doors) : ?>
-                        <?php
-                        // The checked WindowCAD example published on /composite-door-prices/.
-                        // Keep this figure and its specification in step with that page.
-                        ?>
-                        <p class="fg-hero-card__kicker"><?php esc_html_e('A door we actually fitted', 'fenster'); ?></p>
-                        <p class="fg-hero-card__figure"><span><?php esc_html_e('£2,000', 'fenster'); ?></span><small><?php esc_html_e('fitted, including VAT', 'fenster'); ?></small></p>
-                        <p class="fg-hero-card__spec"><?php esc_html_e('900 x 2100 Distinction Esteem. Anthracite grey outside, white inside, clear glass, chrome lever.', 'fenster'); ?></p>
-                        <div class="fg-hero-form">
-                            <a class="button" href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('See what moves the price', 'fenster'); ?></a>
-                            <a class="text-link" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908 429200'))); ?>"><?php echo esc_html(sprintf(__('Or call %s', 'fenster'), (string) ($brand['phone'] ?? '01908 429200'))); ?></a>
-                        </div>
-                    <?php else : ?>
-                        <p class="fg-hero-card__kicker"><?php esc_html_e('Start here', 'fenster'); ?></p>
-                        <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : 'Get pricing or book a design chat.'); ?></h2>
-                        <div class="fg-hero-card__logos">
-                            <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
-                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
-                                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
-                            </a>
-                        </div>
-                        <div class="fg-hero-form">
-                            <a class="button" href="#fenster-enquiry"><?php esc_html_e('Start your project', 'fenster'); ?></a>
-                            <a class="text-link" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Use the instant quote tool', 'fenster'); ?></a>
-                        </div>
-                    <?php endif; ?>
+                <aside class="fg-hero__panel fg-hero-card" aria-label="<?php esc_attr_e('Project enquiry', 'fenster'); ?>">
+                    <p class="fg-hero-card__kicker"><?php esc_html_e('Start here', 'fenster'); ?></p>
+                    <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : 'Get pricing or book a design chat.'); ?></h2>
+                    <div class="fg-hero-card__logos">
+                        <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
+                        <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                            <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
+                        </a>
+                    </div>
+                    <div class="fg-hero-form">
+                        <a class="button" href="#fenster-enquiry"><?php esc_html_e('Start your project', 'fenster'); ?></a>
+                        <a class="text-link" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Use the instant quote tool', 'fenster'); ?></a>
+                    </div>
                 </aside>
             <?php endif; ?>
             <?php if ($product_scroll_video_src) : ?>
@@ -4219,7 +4230,8 @@ if ($is_commercial_hub) {
                         <a class="button fg-product-quote-embed__sash-mobile-action" href="<?php echo esc_url($product_quote_embed_url); ?>"><?php echo esc_html($is_composite_doors ? 'Price my composite door' : 'Design and price your sash windows'); ?></a>
                     <?php endif; ?>
                     <?php if ($is_composite_doors) : ?>
-                        <p class="fg-product-quote-embed__aside"><?php esc_html_e('Would rather see a figure first?', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('Our composite door prices page', 'fenster'); ?></a> <?php esc_html_e('shows a checked fitted example and what moves it.', 'fenster'); ?></p>
+                        <p class="fg-product-quote-embed__aside"><?php esc_html_e('Would rather see a figure before opening a tool? One we fitted recently came to £2,000, and the guide breaks down what moves that.', 'fenster'); ?></p>
+                        <a class="button button--ghost" href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('See example prices', 'fenster'); ?></a>
                     <?php endif; ?>
                 </div>
                 <article class="fg-product-quote-embed__card" data-quote-card>
