@@ -262,11 +262,13 @@ function fenster_site_data(): array
                 ['label' => 'Track options', 'value' => 'Dual or triple'],
                 ['label' => 'Security', 'value' => 'Flush hook-locks'],
             ],
+            // Collections match the WindowCAD door-style groups, not Distinction's
+            // Signature/Contemporary split. See COMPOSITE-DOOR-REDESIGN.md.
             'composite-doors' => [
-                ['label' => 'Door ranges', 'value' => 'Signature & Contemporary'],
-                ['label' => 'Popular style', 'value' => 'Rustic Renown'],
+                ['label' => 'Collections', 'value' => 'Six to choose from'],
                 ['label' => 'Door slab', 'value' => '44.5mm insulated GRP'],
-                ['label' => 'Security guarantee', 'value' => '£5,000'],
+                ['label' => 'Break-in guarantee', 'value' => '£5,000'],
+                ['label' => 'Guarantee', 'value' => '10 years'],
             ],
             'integral-blinds' => [
                 ['label' => 'Maintenance', 'value' => 'Maintenance-free'],
