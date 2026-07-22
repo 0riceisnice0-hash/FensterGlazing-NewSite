@@ -143,13 +143,40 @@ function fenster_google_place_details(): array
     $details = [
         'rating' => round((float) ($body['rating'] ?? 0), 1),
         'count' => (int) ($body['userRatingCount'] ?? 0),
-        'maps_url' => esc_url_raw((string) ($body['googleMapsUri'] ?? '')),
+        'maps_url' => fenster_google_clean_maps_url((string) ($body['googleMapsUri'] ?? '')),
         'reviews' => fenster_google_normalise_reviews($body['reviews'] ?? []),
     ];
 
     set_transient(FENSTER_GOOGLE_REVIEWS_TRANSIENT, $details, 6 * HOUR_IN_SECONDS);
 
     return $details;
+}
+
+/**
+ * Strip the API's per-request tracking parameter from a Google Maps URL.
+ *
+ * The Places response appends `g_mp`, which identifies the API call rather
+ * than the place. Schema and customer-facing links should carry the stable
+ * `?cid=` form only.
+ */
+function fenster_google_clean_maps_url(string $url): string
+{
+    if ($url === '') {
+        return '';
+    }
+
+    $parts = wp_parse_url($url);
+    if (! is_array($parts) || empty($parts['host'])) {
+        return esc_url_raw($url);
+    }
+
+    parse_str((string) ($parts['query'] ?? ''), $query);
+    $cid = (string) ($query['cid'] ?? '');
+    if ($cid === '') {
+        return esc_url_raw($url);
+    }
+
+    return esc_url_raw('https://maps.google.com/?cid=' . rawurlencode($cid));
 }
 
 /**
