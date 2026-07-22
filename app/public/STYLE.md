@@ -217,6 +217,8 @@ Type should be bold and confident, but sized for its container.
 - Avoid talking about Fenster as `the installer`, `the company`, `your local specialist` or another third-person entity unless the sentence genuinely refers to a separate party.
 - Headings should state a useful customer truth, not advertise the writing. Avoid headings such as `Designed around you`, `The perfect finishing touch`, `Explore the possibilities` and `Everything you need to know`.
 - Buttons state the next action. Good labels include `Get a quote`, `Call 01908 429200`, `View flat rooflights`, `See colour options` and `Send an enquiry`.
+- **Anything that acts as a call to action is a button, never a text link.** That includes phone numbers. Owner instruction, 2026-07-22.
+- **The CTA pair is green then dark, taken from the header:** primary `.button` (green, `--color-accent`), secondary `.button--steel` (dark, `--color-steel`), matching `Instant Quote` and `Book consultation` in the navigation. Use this pairing for every two-action row. The one exception is a dark panel, where a dark secondary disappears into the background: use `.button--light` there instead.
 - Do not turn product configuration into role-play copy. Avoid `Plan my roof lantern`, `Build my dream`, `Find my perfect...` and similar phrasing.
 - Keep SEO terms inside natural sentences. Repeating a location or product phrase is not worth making the page sound as if it was written about Fenster by somebody else.
 
