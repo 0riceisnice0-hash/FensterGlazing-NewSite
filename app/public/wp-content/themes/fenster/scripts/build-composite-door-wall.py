@@ -29,6 +29,9 @@ STYLES_OUT = os.path.join(
 PALETTE_OUT = os.path.join(
     THEME, "assets", "images", "products", "composite-distinction", "palette"
 )
+COLOUR_DOORS_OUT = os.path.join(
+    THEME, "assets", "images", "products", "composite-distinction", "colour-doors"
+)
 
 # (source file, slug, visible style name, collection)
 #
@@ -76,6 +79,22 @@ DOORS = [
     ("sign_RE06-renown-full-moon-horizontal-scaled.jpg", "renown-full-moon", "Renown Full Moon", "Renown"),
     ("GD01-70-Slate.jpg", "infinity-gd01", "Infinity GD01", "Infinity"),
     ("GD12-Purple-Violet.jpg", "infinity-gd12", "Infinity GD12", "Infinity"),
+]
+
+# Doors photographed in a named Distinction paint colour, for the colour wall
+# preview. The slug matches the PALETTE slug below so the two line up. Only add
+# a door here when the source filename names the colour: never guess a colour
+# from a render, and never tint one.
+COLOUR_DOORS = [
+    ("GD01-70-Slate.jpg", "slate-grey"),
+    ("REC05-70-Distinction-Buckingham-Grey.jpg", "buckingham-grey"),
+    ("EL01-70-Elegance-Green-1.jpg", "standard-green"),
+    ("REC09C-70-Traffic-Red-scaled-1.jpg", "traffic-red"),
+    ("Cottage-Distinction-Wine-Red-1.jpg", "wine-red"),
+    ("GD12-Purple-Violet.jpg", "purple-violet"),
+    ("CL01-70-Colza-Yellow.jpg", "colza-yellow"),
+    ("RE06-70-Distinction-Black-Brown.jpg", "black-brown"),
+    ("Diamond-rustic-Renown-Basalt-Grey@2x.jpg", "basalt-grey", "", "", (0.35, 0.215, 0.65, 0.945)),
 ]
 
 # Distinction's own paint range, photographed as brush strokes.
@@ -148,3 +167,5 @@ if __name__ == "__main__":
     print(f"{len(DOORS)} door styles -> {STYLES_OUT} ({doors / 1024:.0f} KB)")
     palette = build(PALETTE, PALETTE_OUT, (160, 320))
     print(f"{len(PALETTE)} paint colours -> {PALETTE_OUT} ({palette / 1024:.0f} KB)")
+    doors = build(COLOUR_DOORS, COLOUR_DOORS_OUT, (400, 800))
+    print(f"{len(COLOUR_DOORS)} colour doors -> {COLOUR_DOORS_OUT} ({doors / 1024:.0f} KB)")

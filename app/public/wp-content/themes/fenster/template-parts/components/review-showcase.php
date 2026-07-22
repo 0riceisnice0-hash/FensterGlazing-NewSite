@@ -32,7 +32,6 @@ if (empty($reviews)) {
 $rating = (float) $summary['rating'];
 $review_count = (int) $summary['count'];
 $read_url = fenster_google_reviews_url();
-$write_url = fenster_google_write_review_url();
 $trustpilot_url = (string) fenster_data('brand.trustpilot_url', '');
 
 /** Five stars, filled to the nearest half. */
@@ -80,12 +79,9 @@ $render_stars = static function (float $value): string {
                     <a class="button" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
                         <?php esc_html_e('Read all reviews', 'fenster'); ?>
                     </a>
-                    <a class="fg-review-showcase__write" href="<?php echo esc_url($write_url); ?>" target="_blank" rel="noopener">
-                        <?php esc_html_e('Leave a review', 'fenster'); ?>
-                    </a>
                     <?php if ($trustpilot_url !== '') : ?>
-                        <a class="fg-review-showcase__write" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
-                            <?php esc_html_e('We are on Trustpilot too', 'fenster'); ?>
+                        <a class="button button--steel" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
+                            <?php esc_html_e('See us on Trustpilot', 'fenster'); ?>
                         </a>
                     <?php endif; ?>
                 </div>

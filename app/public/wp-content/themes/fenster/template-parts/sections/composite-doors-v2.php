@@ -23,6 +23,7 @@ $styles_base = (string) ($args['styles_base'] ?? '');
 $colour_wall = is_array($args['colour_wall'] ?? null) ? array_values($args['colour_wall']) : [];
 $palette_base = (string) ($args['palette_base'] ?? '');
 $colours_base = (string) ($args['colours_base'] ?? '');
+$colour_doors_base = (string) ($args['colour_doors_base'] ?? '');
 
 if (empty($collections)) {
     return;
@@ -199,7 +200,9 @@ if (empty($collections)) {
 <?php if (! empty($colour_wall)) : ?>
     <?php
     $cw_first = $colour_wall[0];
-    $cw_preview = static function (array $entry) use ($colours_base, $palette_base): array {
+    $cw_preview = static function (array $entry) use ($colours_base, $colour_doors_base, $palette_base): array {
+        // A photographed door we fitted comes first, then a Distinction render
+        // of a door in that named colour, then the paint itself.
         if (! empty($entry['door'])) {
             $stem = $colours_base . $entry['door'];
             return [
@@ -207,6 +210,15 @@ if (empty($collections)) {
                 'srcset' => fenster_generated_url($stem . '-480w.webp') . ' 480w, ' . fenster_generated_url($stem . '-800w.webp') . ' 800w',
                 'alt' => sprintf(__('A %s composite front door', 'fenster'), (string) $entry['name']),
                 'kind' => __('On a door we fitted', 'fenster'),
+            ];
+        }
+        if (! empty($entry['colour_door'])) {
+            $stem = $colour_doors_base . $entry['colour_door'];
+            return [
+                'src' => fenster_generated_url($stem . '-400w.webp'),
+                'srcset' => fenster_generated_url($stem . '-400w.webp') . ' 400w, ' . fenster_generated_url($stem . '-800w.webp') . ' 800w',
+                'alt' => sprintf(__('A composite door in %s', 'fenster'), (string) $entry['name']),
+                'kind' => __('On a door', 'fenster'),
             ];
         }
         $stem = $palette_base . $entry['swatch'];
