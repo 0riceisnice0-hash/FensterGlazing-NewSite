@@ -168,6 +168,13 @@ Composite no longer uses the shared `.fg-hero` at all. Other product routes are 
 
 Any link that acts as a call to action on this route is a button, not a text link.
 
+## Mobile
+
+- **Collections are a swipe carousel below `860px`**, deliberately matching how the homepage presents the product range: door photo behind, name and slab rule over a gradient, next card peeking, dots underneath. Stacking the six cards made the section about 1,400px tall. Dots are driven by `[data-fg-collection-carousel]` in `main.js`, which just reports whichever card is nearest the start edge.
+- The colour wall puts the preview **above** the chips on a phone and drops its sticky positioning.
+- The door wall keeps native touch scrolling with the drift off and the clone hidden.
+- Watch for stale small-phone rules when a section is redesigned. The old dark installer bar left a `560px` block that forced a two-column grid and hid the Distinction logo; it survived two redesigns and pushed the call button off the panel before it was spotted. Grep the whole stylesheet for a renamed component's old selectors, not just the block you are editing.
+
 ## Conversion model (2026-07-22)
 
 The route is built around the question visitors actually arrive with, which is what a fitted door costs.
