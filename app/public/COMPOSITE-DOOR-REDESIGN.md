@@ -170,9 +170,14 @@ Any link that acts as a call to action on this route is a button, not a text lin
 
 ## Mobile
 
-- **Collections are a swipe carousel below `860px`**, deliberately matching how the homepage presents the product range: door photo behind, name and slab rule over a gradient, next card peeking, dots underneath. Stacking the six cards made the section about 1,400px tall. Dots are driven by `[data-fg-collection-carousel]` in `main.js`, which just reports whichever card is nearest the start edge.
+- **Collections are a swipe carousel below `860px`**, deliberately matching how the homepage presents the product range: next card peeking, snap points, dots underneath. Stacking the six cards made the section about 1,400px tall. Dots are driven by `[data-fg-collection-carousel]` in `main.js`, which just reports whichever card is nearest the start edge.
+- **The six door renders are not the same shape** (0.406 to 0.453 wide-to-tall). Sizing a card to its own door leaves the row ragged, and cropping to a fixed box cuts the door off, which the owner rejected. The image area is a fixed portrait panel (`aspect-ratio: 100 / 188`) on a soft tint, with the door `object-fit: contain`, bottom-aligned and drop-shadowed. Every door then lands at the same height with none cropped. **Do not swap this back to `cover`.**
+- **The caption sits below the door on white**, not over it. The overlay scrim is off (`.fg-cd3-collection::after { display: none }`). Text over a door hides part of the product and turns contrast into a fight against whatever colour the door happens to be.
+- **Card heights are levelled with `align-items: stretch` on the track**, so collection descriptions can differ in length without the row going uneven. Do not fix this by trimming copy.
+- **Colour wall labels wrap to two lines** with `min-height: 2.5em` reserved. They must not ellipse: ten of the twenty-seven colours have no door photograph, so the name is the only thing identifying the paint, and "Anthracite G..." is useless in a colour list.
 - The colour wall puts the preview **above** the chips on a phone and drops its sticky positioning.
-- The door wall keeps native touch scrolling with the drift off and the clone hidden.
+- The door wall keeps native touch scrolling with the drift off (`min-width: 861px` gate) and the clone hidden. This is deliberate: on a touch device the rail is swipeable, and a moving track fights the user's finger.
+- **Stitched full-page screenshots lie about images.** `loading="lazy"` assets well below the fold come back blank in a `captureBeyondViewport` capture, which reads as broken swatches and empty case-study cards. Verify in-viewport, or query `naturalWidth`, before chasing a rendering fault that is not there.
 - Watch for stale small-phone rules when a section is redesigned. The old dark installer bar left a `560px` block that forced a two-column grid and hid the Distinction logo; it survived two redesigns and pushed the call button off the panel before it was spotted. Grep the whole stylesheet for a renamed component's old selectors, not just the block you are editing.
 
 ## Conversion model (2026-07-22)
