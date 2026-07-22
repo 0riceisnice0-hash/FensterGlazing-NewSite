@@ -4089,7 +4089,7 @@ document.querySelectorAll('.fg-cs video').forEach((video) => {
 document.querySelectorAll('[data-fg-case-studies-archive]').forEach((archive) => {
   const cards = [...archive.querySelectorAll('[data-fg-case-study-card]')];
   const moreButton = archive.parentElement?.querySelector('[data-fg-case-studies-more]');
-  const initialCount = Number.parseInt(archive.dataset.fgCaseStudiesInitial || '6', 10);
+  const initialCount = Number.parseInt(archive.dataset.fgCaseStudiesInitial || '4', 10);
 
   if (!moreButton || cards.length <= initialCount) return;
 
