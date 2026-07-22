@@ -32483,8 +32483,11 @@ html.fg-blinds-reveal-locked {
   /* The cutaway is a peeled-back corner: the meaning is at the top, where the
      skin lifts off the core and the timber stile. Stacked, a band crop shows
      that at full width instead of 357px of repeated door face below it. */
+  /* Capped, or the band grows with the viewport and by tablet width it is a
+     400px close-up of one corner of the illustration. */
   .fg-cd3-anatomy__media {
     aspect-ratio: 16 / 9;
+    max-height: 260px;
   }
 
   .fg-cd3-anatomy__media img {
