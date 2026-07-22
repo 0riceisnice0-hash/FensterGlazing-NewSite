@@ -118,6 +118,16 @@ Owner asked for the mobile layout to be made properly nice, with the collections
 - The style-range wall drift stays desktop-only (`min-width: 861px`), which is deliberate: on a touch device the rail is swipeable and a moving track fights the user's finger. Verified drift still runs at 1440 (60px to 141px in 1.5s).
 - **Open item for the owner:** the "Real installs, photographed on the day" strip on this page shows uPVC casement window and aluminium bifold case studies, because no case study is tagged to composite doors and `fenster_case_studies_for_product()` falls back to all studies. Only seven product pages have their own studies, so every other product page makes the same mismatched claim. Left alone here because the fix is site-wide, not a composite-doors change.
 
+## 2026-07-22 - STYLE.md rewritten around the five reference pages (test)
+
+Owner: STYLE.md should follow the About, composite doors, sliding sash, heritage aluminium and roof lantern pages, with a nod to tone of voice, plus a new rule that a page title should name the product rather than carry a tagline.
+
+- **New rule, enforced immediately: a product or service page H1 is the name of the thing.** `/heritage-aluminium-doors/` went from `The steel-door look, without the steel.` to `Sheerline heritage aluminium doors`, and `/roof-lanterns/` from `Bring more daylight into your extension.` to `Sheerline S1 roof lanterns`. Composite doors and sliding sash already complied. The persuading moves to the lead paragraph, which was already doing that job on all three. No closing full stop on an H1, which is the one place the tone-of-voice full-stop rule does not apply. `/about/` keeps `Simple, honest glazing.` because it is not a product page.
+- **STYLE.md now names the five reference pages up front** and tells the reader to trust the page over the file when they disagree.
+- **TONEOFVOICE.md is now a required read from STYLE.md**, with a short summary of the parts that change layout decisions, chiefly that facts rather than adjectives do the persuading, so the design has to leave room for a specific number where a template would put a claim.
+- **Recorded the product hero pattern** shared by composite, heritage and roof lanterns, and the open-a-detail pattern from the composite construction section, with the caveat that it does not reopen the no-accordions-outside-FAQs rule for ordinary content.
+- **Found the reference pages are not uniformly ahead of STYLE.md, and did not weaken the file to match them.** Heritage and roof lanterns still rendered the hero phone number as a bare text link and used mixed secondary button variants, both of which contradict the owner's own CTA instruction from earlier the same day. There the rule was newer than the pages, so the pages were fixed instead: both hero phones are now `.button--steel`, giving the green-then-dark pair. STYLE.md carries a caution to check their CTA markup rather than copy it.
+
 ## 2026-07-22 - Composite doors work reached live without its own deploy
 
 Asked to push the composite doors work live, the range check found there was nothing to push: production was already serving all of it.
