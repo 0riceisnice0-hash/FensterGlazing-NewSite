@@ -1010,6 +1010,9 @@ document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
   let dragging = false;
   let resumeTimer = null;
   let visible = true;
+  // The drift is sub-pixel per frame, and reading scrollLeft back rounds that
+  // away, so the position is tracked here and written to the element.
+  let offset = viewport.scrollLeft;
 
   const halfway = () => track.scrollWidth / 2;
 
@@ -1017,8 +1020,8 @@ document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
   const rewind = () => {
     const half = halfway();
     if (half <= 0) return;
-    if (viewport.scrollLeft >= half) viewport.scrollLeft -= half;
-    else if (viewport.scrollLeft < 0) viewport.scrollLeft += half;
+    if (offset >= half) offset -= half;
+    else if (offset < 0) offset += half;
   };
 
   const shouldDrift = () =>
@@ -1035,13 +1038,15 @@ document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
       frame = null;
       return;
     }
-    viewport.scrollLeft += SPEED;
+    offset += SPEED;
     rewind();
+    viewport.scrollLeft = offset;
     frame = requestAnimationFrame(tick);
   };
 
   const start = () => {
     if (frame !== null || !shouldDrift()) return;
+    offset = viewport.scrollLeft;
     frame = requestAnimationFrame(tick);
   };
 
@@ -1077,8 +1082,9 @@ document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
   viewport.addEventListener('pointermove', (event) => {
     if (!dragging) return;
     event.preventDefault();
-    viewport.scrollLeft = startScroll - (event.clientX - startX);
+    offset = startScroll - (event.clientX - startX);
     rewind();
+    viewport.scrollLeft = offset;
   });
 
   const endDrag = (event) => {
@@ -1094,10 +1100,11 @@ document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
   viewport.addEventListener('pointerup', endDrag);
   viewport.addEventListener('pointercancel', endDrag);
 
-  // Wheel, trackpad and keyboard scrolling should pause it in the same way.
+  // Wheel, trackpad and keyboard scrolling move it too; keep our offset in step
+  // so the drift picks up from wherever the visitor left it.
   viewport.addEventListener('scroll', () => {
     if (dragging || frame !== null) return;
-    rewind();
+    offset = viewport.scrollLeft;
   }, { passive: true });
 
   if ('IntersectionObserver' in window) {
