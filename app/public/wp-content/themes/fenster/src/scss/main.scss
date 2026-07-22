@@ -31913,15 +31913,15 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-colour__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  grid-template-columns: minmax(0, 2.1fr) minmax(250px, 0.9fr);
   align-items: start;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
+  gap: clamp(1.25rem, 3vw, 2.25rem);
 }
 
 .fg-cd3-colour__swatches {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(0.5rem, 1vw, 0.75rem);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
 }
 
 .fg-cd3-swatch {
@@ -31934,15 +31934,18 @@ html.fg-blinds-reveal-locked {
   text-align: left;
 }
 
+/* Proper paint chips, not thin strips: the brush stroke needs room to read. */
 .fg-cd3-swatch img,
 .fg-cd3-swatch i {
   display: block;
   width: 100%;
-  height: 52px;
+  height: auto;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border: 1px solid rgba(2, 43, 53, 0.14);
-  border-radius: 9px;
+  border-radius: 10px;
   object-fit: cover;
+  box-shadow: 0 10px 24px rgba(2, 43, 53, 0.08);
   transition: box-shadow 150ms ease, transform 150ms ease;
 }
 
@@ -31966,7 +31969,7 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-swatch span {
   overflow: hidden;
   color: rgba(2, 43, 53, 0.68);
-  font-size: 0.7rem;
+  font-size: 0.74rem;
   font-weight: 650;
   line-height: 1.25;
   text-overflow: ellipsis;
@@ -31991,7 +31994,7 @@ html.fg-blinds-reveal-locked {
 .fg-cd3-colour__preview img {
   display: block;
   width: 100%;
-  height: clamp(360px, 46vh, 460px);
+  height: clamp(380px, 52vh, 540px);
   object-fit: cover;
   object-position: center;
 }
