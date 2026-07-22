@@ -137,6 +137,8 @@ For pages using `--fg-page-gradient`:
 
 If a page looks like stacked coloured bands, repeated gradient panels or disconnected template sections, fix the page canvas before tuning individual cards.
 
+**The canvas is already painted on `body`, with `background-attachment: fixed`.** A route wrapper that sets `background: var(--fg-page-gradient)` again therefore stacks a second, *scrolling* gradient over the fixed one, which reads as banding between sections. This was the cause of the visible gradient bug on `/composite-doors/` fixed on 2026-07-22, where the wrapper repainted it twice. Before adding a gradient to any page wrapper, check whether `body` is already providing it. Several older route wrappers still repaint it (`.fg-heritage-door-page`, `.fg-roof-lantern-page`, `.fg-fensa-page`, `.fg-flat-rooflight-page`, `.fg-consultation-page`) and should be checked for the same defect when those pages are next worked on.
+
 ## Section Continuity
 
 Sections should feel like parts of one composed page.
