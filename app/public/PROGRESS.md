@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-22
 
+## 2026-07-22 - MK search push and authenticated email promoted to live (f4ad6fb)
+
+- Range-checked `ef2b6c3..f4ad6fb`: 28 commits, of which seven were this session's (town case-study proof, MK titles and metas, guide routing, the SMTP auth pin and its correction) and the rest the concurrent session's composite-doors mobile and construction work. Owner approved the whole range, consistent with the two earlier releases today.
+- Backup `fenster-pre-f4ad6fb-20260722-152836.tar.gz` (361M), server repo cache pinned to the explicit SHA, theme-only rsync, WP and SiteGround caches purged.
+- Production verification: authenticated email still sends after the deploy (`AuthType: LOGIN`, send SENT), live Google reviews still return 4.9 from 133 with five cards, and ten routes return 200. Browser QA confirmed the Whitehouse town page renders two real local case studies and the soundproofing guide renders its new next-steps block, with no overflow and no console errors.
+- Live and `main` are level at `f4ad6fb`.
+
 ## 2026-07-22 - Authenticated email live
 
 - Brevo SMTP is now configured on **live** as well as test. Verified on production: the transport sends, and the customer confirmation template builds and delivers. The owner confirmed the test messages arrived in the **inbox** (not junk) and correctly from `info@fensterglazing.com` rather than a generic no-reply, which is the Brevo domain authentication working.
