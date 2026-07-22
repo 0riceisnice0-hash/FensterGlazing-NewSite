@@ -4019,7 +4019,9 @@ if ($is_commercial_hub) {
 
         <?php if (! empty($product_faqs)) : ?>
             <?php
-            $product_faq_limit = $slug === 'sliding-sash-windows' ? 6 : 5;
+            // Composite doors carries six: the price question was added in front
+            // of the existing five, and the U-value answer must not drop off.
+            $product_faq_limit = ($slug === 'sliding-sash-windows' || $is_composite_doors) ? 6 : 5;
             $faq_schema = [
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',
