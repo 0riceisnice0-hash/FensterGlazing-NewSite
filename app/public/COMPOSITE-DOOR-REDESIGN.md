@@ -127,9 +127,23 @@ Rules:
 - To verify or update this list, open `https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing&productCollection=4`, advance one step past Sizes, and read the `Door style` group headings. Change `scripts/build-composite-door-wall.py` and `$composite_collections` together, then rebuild the assets.
 - Do not reintroduce Signature, Contemporary, Venture, Grandeur or nxt-gen as customer-facing groupings. Distinction style *names* (Elegance, Esteem, Renown Diamond) are fine; their *collections* are not.
 
-## The £5,000 security guarantee
+## The £5,000 break-in guarantee
 
-It is the headline USP on this route and has its own dark band. The supporting points must stay verifiable: Secured by Design covers the door slabs but **not** stable doors, and most decorative glass is triple glazed and laminated while Chatsworth and Wentworth are double glazed. The copy deliberately does not state what the guarantee pays out or under what conditions, because those terms are not recorded in this repo. **Confirm the written terms with the owner before promoting this page to production**; `AUDIT.md` still lists the claim as one to substantiate.
+Terms confirmed by the owner on 2026-07-22, so this is settled and is also recorded in `AI.md`. Every Distinction door we fit is secured with **AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock**. Should either fail in a break-in the customer is covered for **up to £5,000 in compensation**, terms and conditions apply.
+
+- Call it a **break-in guarantee**, not a vague "security guarantee".
+- Name the three lock components wherever the claim is made prominently; they are what the guarantee rests on.
+- Keep the terms-apply caveat, and do not invent payout conditions beyond the above.
+- Secured by Design covers the door slabs but **not** stable doors. Keep that exclusion stated.
+- The band uses an inline SVG shield (`.fg-cd3-shield`) rather than an image, so it stays sharp at any size and needs no asset pipeline.
+
+## Hero pattern
+
+The hero follows `/roof-lanterns/` and `/heritage-aluminium-doors/`: light page canvas, copy left, boxed image with a caption chip right, three ticked reassurance bullets, then a four-item specification strip. **The styling is shared, not duplicated** — `.fg-cd3-hero*` and `.fg-cd3-brief*` are added to the same selector lists as `.fg-heritage-door-hero*` and `.fg-heritage-door-brief*` in `main.scss`, so the three routes stay in step. If you restyle one, you restyle all three; that is deliberate.
+
+Composite no longer uses the shared `.fg-hero` at all. Other product routes are untouched and keep the dark photo hero.
+
+Any link that acts as a call to action on this route is a button, not a text link.
 
 ## Conversion model (2026-07-22)
 
