@@ -17,7 +17,7 @@ Use:
 
 ## Important Updates
 
-- **Live is at `79c464b` as of 2026-07-22, and live and `main` are level.** The 2026-07-22 release shipped live Google reviews plus the previously unreleased composite doors V2, Bolbeck Park and Wolverton case studies, archive show-more, Aaron Isaacs profile and heritage door refinements, all approved by the owner after an explicit range check. Backup: `fenster-pre-79c464b-20260722-105406.tar.gz`. Verify the live theme before assuming this is still current.
+- **Live is at `ef2b6c3` as of 2026-07-22, and live and `main` are level.** Live Google reviews (Places API, see `AI.md` Review Showcase Rule) plus the concurrent session's composite-doors work are on production. Backup: `fenster-pre-ef2b6c3-20260722-132742.tar.gz`. Verify the live theme before assuming this is still current.
 - **Deploy trap — read before any live deploy.** The live deploy one-liner in `LIVECHANGES.md` runs `git reset --hard origin/main`, so it ships *everything on `main`*, not the specific commit you verified. On 2026-07-18 a deploy of the small Legend iframe fixes swept fourteen unapproved composite-door commits onto production with them. If you need to release one approved commit, reset the server repo cache to that exact SHA instead of `origin/main`.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.

@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-22
 
+## 2026-07-22 - Review summary polish to live (ef2b6c3)
+
+- Owner feedback on the new review section: drop `Leave a review`, make Trustpilot a real second button in the site's usual green-then-steel pairing, and reduce the height of the summary panel.
+- Removed the leave-a-review action (it targets existing customers on a section meant to convert new ones), promoted Trustpilot to `.button--steel`, and trimmed the panel padding, score figure, heading scale and action-row spacing together rather than squeezing one element. Desktop summary now measures 228px.
+- Range-checked `79c464b..ef2b6c3`: 28 commits, only one the review tweak, the rest the other session's composite-doors work from the same day (colour wall replacing the configurator, draggable door wall, collection corrections). The owner again approved shipping the whole range, so this release also promoted that work.
+- Backup `fenster-pre-ef2b6c3-20260722-132742.tar.gz` (360M). Verified on production: live Google data still 4.9 from 133 with five cards, eight key routes 200, both buttons rendering the correct green/steel, no overflow and no console errors at 1440 and iPhone 13.
+
 ## 2026-07-22 - Live Google reviews released, plus the accumulated main branch (79c464b)
 
 - Replaced the hardcoded review showcase with live Google data. `inc/google-reviews.php` reads the rating, review count and latest reviews from the Places API (New), caches for six hours, resolves and stores the Place ID once, and falls back to the curated set plus owner-verified figures when no key is configured. The API key lives in Bedrock `.env` as `FENSTER_GOOGLE_PLACES_API_KEY` alongside the OpenAI key and is never committed.
