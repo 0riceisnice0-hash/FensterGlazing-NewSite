@@ -103,10 +103,30 @@ Checked 22 July with location-encoded searches (`uule`) from each town.
 | Custom Glaze | 4.4 (92) | Double glazing installer | 1 (sponsored) |
 | Martindale Windows | 4.9 (316) | Double glazing installer | 1 (sponsored) |
 
-Two findings:
+### The map-pack gap is NOT a configuration problem — verified 22 July
 
-1. **Elements beats you with 92 reviews against your 133.** They are categorised *Window supplier*; you are categorised *Double glazing installer* — and you appear only for the term that matches your category exactly. Category relevance is doing work that review volume is not overcoming.
-2. **Gallaghers appears everywhere and has 40 more reviews than you.** They are the business to displace.
+The obvious explanation would be a thin Google Business Profile. It was checked directly and that theory is **wrong**. The profile is well built:
+
+- **Primary category:** Double glazing installer. **Additional:** Door shop, Door supplier, Window supplier, Window installation service — already covering the missed queries.
+- **Products populated** and categorised: Composite Doors, Patio Doors, Aluminium Doors, Casement Windows, French Casement Windows, Aluminium Windows, Roof Lanterns, Integral Blinds, Replacement Glazing, Cat and Dog Flaps.
+- Full description naming MK suburbs, all four social profiles, service areas, hours, parking and amenities complete.
+
+Which forces a harder conclusion. Compare Fenster with **Infinite Windows & Doors**, who *are* in the composite doors pack:
+
+| | Fenster | Infinite |
+| --- | --- | --- |
+| Address | 98 Alston Drive | **Unit 51, Alston Drive** — same street |
+| Reviews | **4.9 (133)** | 4.8 (52) |
+| Relevant category | Window supplier ✅ | Window supplier ✅ |
+| In composite doors pack | ❌ | ✅ |
+
+Same street, so proximity is not the cause. Right categories, so relevance configuration is not the cause. Two and a half times the reviews, so volume alone is not the cause. The pack is identical whether searched from the MK centroid or from Wolverton, a mile from the showroom.
+
+**What remains is prominence** — Google's third local ranking pillar, and the one that cannot be edited in a dashboard: off-site citations, links, press, brand mentions and review velocity. `SEO-AUDIT.md` F6 identified this in July and it is still the long pole. Competitors trading 25–45 years have accumulated it; Fenster has been trading since 2018.
+
+One controllable detail worth acting on: **your review excerpts are all generic.** Google surfaces the review text that matches the query, and it shows for Fenster *"We couldn't have been happier with their service and quality of the products"*, *"Excellent experience from start to finish"*. For Gallaghers on the composite door search it shows *"Very happy with our new and distinctive composite front door."* Reviews that name the product are a relevance signal you can legitimately encourage by asking customers what they had fitted.
+
+Also worth testing: the knowledge panel describes Fenster as *"Double glazing installer in **England**"* rather than in Milton Keynes. The service area currently spans 11 towns plus four whole counties. Trimming it to the genuine working radius may sharpen local anchoring. This is a hypothesis, not a certainty — change it and watch, do not assume.
 
 Competitors are also buying sponsored map placements (Custom Glaze, Martindale, Double Glazing Direct, British Glass). On `windows milton keynes` two Local Services Ads sit above everything.
 
@@ -147,7 +167,7 @@ There are also **64 local commercial terms already on page 1** producing 15 clic
 
 Ranked by how much high-intent traffic each is costing:
 
-1. **Not in the map pack for 2 of the 3 biggest MK terms.** Highest cost, cheapest fix. Category configuration and review volume, not code.
+1. **Not in the map pack for 2 of the 3 biggest MK terms.** Highest cost, and — now that the GBP has been verified as correctly configured — **not a quick fix**. It is a prominence problem: reviews, citations and authority against competitors with decades of accumulated signals. Treat as a sustained programme, not a task.
 2. **The 205-page town matrix is spread too thin.** 64,607 impressions, 60 clicks. Google ranks these pages at positions 19–66 — it sees them and declines to promote them. Meanwhile `/composite-doors/`, with no town in the URL at all, ranks 7.9 for `composite doors milton keynes`. Google is telling you it prefers one strong product page to 205 templated town pages.
 3. **No review stars in organic snippets.** T&K (5.0/124), Aspire (5.0/97) and Checkatrade (5.0/332) all show ratings on these searches; Fenster does not. Star ratings lift CTR everywhere you already rank.
 4. **Brand result at position 4.**
@@ -157,13 +177,19 @@ Ranked by how much high-intent traffic each is costing:
 
 ## 7. The plan
 
-### Tier 0 — Owner actions, no code, biggest return
+### Strategic consequence of the GBP finding
 
-**0.1 Google Business Profile categories.** Primary stays *Double glazing installer*. Add secondary categories: **Window supplier**, **Window installation service**, **Door supplier**, **Conservatory construction contractor** (only if sold). Populate Services and Products with the real product range and the MK suburbs served. This is the direct lever on the two map packs currently missed.
+Because the profile is already correct, **the map pack is a slow authority grind, not a quick fix.** That reverses the priority order this plan started with. The faster route to high-intent clicks is **organic page 1 for the Milton Keynes cluster**, where Fenster's genuine advantage lives: the best technical site in the market, real case studies, and 94 terms already in striking distance. Win organic first; let the pack follow the reviews and citations.
 
-**0.2 Review velocity — target 200+.** Gallaghers has 173 and appears in every pack. Every completed install becomes a review request, with a direct GBP review link in the aftercare email. The case-study customers (Whitehouse, Broughton, Bolbeck Park, Leighton Buzzard ×2, Drayton Parslow, Wolverton) are the warmest asks and are already photographed and documented.
+### Tier 0 — Owner actions, no code
 
-**0.3 Decide on paid local placement.** Competitors are buying sponsored map slots on exactly the terms where Fenster is absent. This is a budget decision, not an SEO one, but on `windows milton keynes` it is currently the only route to the top of the page.
+**0.1 Review velocity — target 200+, with product names in them.** Gallaghers has 173 and appears in every pack. Two things matter: the count, and the words. Ask customers what was fitted — "our new composite front door", "the bifolds" — because that text is what Google matches to product queries. Every completed install becomes a review request with a direct review link in the aftercare email. The case-study customers (Whitehouse, Broughton, Bolbeck Park, Leighton Buzzard ×2, Drayton Parslow, Wolverton) are the warmest asks and are already photographed and documented.
+
+**0.2 Citations and authority — the long pole.** This is the one thing separating Fenster from firms trading since 1978–2001, and no code change substitutes for it. Work the list in `SEO-AUDIT.md` F6: Bing Places, Apple Business Connect, Yell, FreeIndex, MK Chamber of Commerce, Destination Milton Keynes, supplier directories (Liniar, Sheerline, Roseview, Distinction installer finders — these are high-relevance and free), FENSA and CPA directory entries, plus local press around real installs.
+
+**0.3 Test the service area.** Currently 11 towns plus four counties, and Google describes the business as "in England" rather than in Milton Keynes. Consider trimming to the realistic working radius and watch whether local anchoring sharpens.
+
+**0.4 Decide on paid local placement.** Competitors are buying sponsored map slots on exactly the terms where Fenster is absent. This is a budget decision, not an SEO one, but on `windows milton keynes` it is currently the only fast route to the top of the page.
 
 ### Tier 1 — Concentrate the matrix on ground you can hold
 
@@ -251,9 +277,12 @@ Re-export GSC monthly and re-run the intent classification. The scripts used for
 
 Milton Keynes is contested by firms trading 20–45 years with 92–316 reviews each. Fenster has been trading since 2018. Nothing here produces a step change in weeks.
 
+The GBP check removed the one shortcut that looked available. There is no configuration switch left to flip; what remains is proof, authority and patience.
+
 What is realistic:
-- **Weeks 1–4:** GBP categories and review push land. Map pack presence is the first thing that can move, because it does not depend on Google recrawling anything.
-- **Months 2–3:** town pages carrying real proof begin to be re-evaluated. Striking-distance terms move a few positions.
+- **Weeks 1–4:** website work lands — review schema, brand result, the Google review link, case-study proof on Tier 1 town pages. Review and citation programmes start; they compound rather than spike.
+- **Months 2–3:** town pages carrying real proof get re-evaluated. The striking-distance MK terms are where movement should show first, because organic is where Fenster's advantages actually apply.
 - **Month 3+:** the 49-clicks-per-quarter local commercial number is the one that proves it worked. Doubling it is a realistic first target; it would still only be 22% of your click mix.
+- **Map pack:** measured in quarters, not weeks. The gate is passing Gallaghers on review count and closing a 20-year citation gap.
 
 The floor is genuinely solid: technically the site is ahead of every competitor checked, the lead plumbing is verified end to end, and the attribution to prove what works is live. The gap is visibility and proof, and both are buildable.
