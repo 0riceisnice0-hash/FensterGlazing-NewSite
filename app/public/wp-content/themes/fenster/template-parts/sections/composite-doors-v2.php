@@ -49,7 +49,7 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
         <header class="fg-cd3-head">
             <p class="eyebrow"><?php esc_html_e('Two collections', 'fenster'); ?></p>
             <h2 id="fg-cd3-collections-title"><?php esc_html_e('Every door in the range is Signature or Contemporary.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Choose the character first; the exact style, colour, glass and hardware follow. If you cannot place your house in one camp, the fitted doors further down usually settle it.', 'fenster'); ?></p>
+            <p><?php esc_html_e('Choose the character first; the exact style, colour, glass and hardware follow. If you cannot place your house in one camp, the wall of doors below usually settles it.', 'fenster'); ?></p>
         </header>
 
         <div class="fg-cd3-collections__grid">
@@ -97,7 +97,11 @@ $first_glass_stem = $asset_base . 'glass/' . $first_glass['slug'];
             <header class="fg-cd3-head">
                 <p class="eyebrow"><?php esc_html_e('The style range', 'fenster'); ?></p>
                 <h2 id="fg-cd3-wall-title"><?php esc_html_e('The range runs to over 300 door styles.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('These are real Distinction door faces, not illustrations. Every one is made to order in your colour, with your glass and your handles. If one catches your eye, tell us the name and we will price that exact door.', 'fenster'); ?></p>
+                <p><?php esc_html_e('These are real Distinction door faces, not illustrations. Every one is made to order in your colour, with your glass and your handles. If one catches your eye, send us the name and we will price that exact door.', 'fenster'); ?></p>
+                <p class="fg-cd3-wall__action">
+                    <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Send us a style name', 'fenster'); ?></a>
+                    <a class="text-link" href="#fenster-product-quote"><?php esc_html_e('Or price one yourself', 'fenster'); ?></a>
+                </p>
             </header>
         </div>
         <div class="fg-cd3-wall__viewport">

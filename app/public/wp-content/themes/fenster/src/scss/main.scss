@@ -31728,6 +31728,14 @@ html.fg-blinds-reveal-locked {
   background: transparent;
 }
 
+.fg-cd3-wall__action {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin: 1rem 0 0;
+}
+
 .fg-cd3-wall__viewport {
   position: relative;
   overflow: hidden;
