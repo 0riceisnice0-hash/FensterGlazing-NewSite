@@ -1,6 +1,11 @@
 <?php
 /**
- * Curated customer review showcase.
+ * Customer review showcase.
+ *
+ * Renders live Google reviews when the Places API is configured (see
+ * `inc/google-reviews.php`) and falls back to the owner-curated set otherwise.
+ * Google's terms require attribution, so each card carries the reviewer's own
+ * name and photo and links to the review on Google.
  *
  * @package Fenster
  */
@@ -16,41 +21,74 @@ $args = wp_parse_args($args ?? [], [
     'prioritise_context' => '',
 ]);
 
-$reviews = fenster_data('customer_reviews', []);
-$reviews = is_array($reviews) ? array_values($reviews) : [];
-$prioritise_context = strtolower(trim((string) $args['prioritise_context']));
-if ($prioritise_context !== '') {
-    usort($reviews, static function (array $left, array $right) use ($prioritise_context): int {
-        $left_match = str_contains(strtolower((string) ($left['context'] ?? '')), $prioritise_context);
-        $right_match = str_contains(strtolower((string) ($right['context'] ?? '')), $prioritise_context);
-        return (int) $right_match <=> (int) $left_match;
-    });
-}
-$reviews = array_slice($reviews, 0, max(1, (int) $args['limit']));
+$summary = fenster_review_summary();
+$reviews = fenster_review_cards((int) $args['limit'], (string) $args['prioritise_context']);
 $classes = trim('fg-review-showcase ' . (string) $args['class']);
 
 if (empty($reviews)) {
     return;
 }
+
+$rating = (float) $summary['rating'];
+$review_count = (int) $summary['count'];
+$read_url = fenster_google_reviews_url();
+$write_url = fenster_google_write_review_url();
+$trustpilot_url = (string) fenster_data('brand.trustpilot_url', '');
+
+/** Five stars, filled to the nearest half. */
+$render_stars = static function (float $value): string {
+    $markup = '';
+    for ($index = 1; $index <= 5; $index++) {
+        $state = $value >= $index ? 'is-full' : ($value >= $index - 0.5 ? 'is-half' : '');
+        $markup .= '<i class="fg-stars__star ' . esc_attr($state) . '" aria-hidden="true"></i>';
+    }
+
+    return $markup;
+};
 ?>
 
 <section class="<?php echo esc_attr($classes); ?>" data-fg-review-carousel aria-label="<?php esc_attr_e('Customer reviews', 'fenster'); ?>">
     <div class="container">
         <header class="fg-review-showcase__summary">
-            <strong><?php esc_html_e('EXCELLENT', 'fenster'); ?></strong>
-            <span class="fg-review-showcase__summary-stars" role="img" aria-label="<?php esc_attr_e('5 out of 5 stars', 'fenster'); ?>"></span>
-            <div class="fg-review-showcase__sources" role="group" aria-label="<?php esc_attr_e('Review sources', 'fenster'); ?>">
-                <a class="fg-review-showcase__source-pill" href="<?php echo esc_url((string) fenster_data('brand.google_reviews_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Google', 'fenster'); ?>">
-                    <span class="fg-review-showcase__google" role="img" aria-label="<?php esc_attr_e('Google', 'fenster'); ?>">
+            <div class="fg-review-showcase__score">
+                <span class="fg-review-showcase__score-value"><?php echo esc_html(number_format($rating, 1)); ?></span>
+                <span class="fg-stars fg-stars--lg" role="img" aria-label="<?php echo esc_attr(sprintf(__('%s out of 5 stars', 'fenster'), number_format($rating, 1))); ?>">
+                    <?php echo $render_stars($rating); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                </span>
+                <span class="fg-review-showcase__score-meta">
+                    <?php if ($review_count > 0) : ?>
+                        <?php printf(
+                            esc_html__('Rated by %s customers on Google', 'fenster'),
+                            '<strong>' . esc_html(number_format_i18n($review_count)) . '</strong>'
+                        ); ?>
+                    <?php else : ?>
+                        <?php esc_html_e('Verified customer reviews on Google', 'fenster'); ?>
+                    <?php endif; ?>
+                </span>
+            </div>
+
+            <div class="fg-review-showcase__intro">
+                <span class="fg-review-showcase__badge">
+                    <span class="fg-review-showcase__gmark" aria-hidden="true">
                         <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
                     </span>
-                    <b><?php esc_html_e('Customer reviews', 'fenster'); ?></b>
-                </a>
-                <a class="fg-review-showcase__source-pill fg-review-showcase__source-pill--trustpilot" href="<?php echo esc_url((string) fenster_data('brand.trustpilot_url', '')); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e('Read Fenster Glazing reviews on Trustpilot', 'fenster'); ?>">
-                    <span class="fg-review-showcase__trustpilot-mark" aria-hidden="true">★</span>
-                    <span class="fg-review-showcase__trustpilot-word"><?php esc_html_e('Trustpilot', 'fenster'); ?></span>
-                    <b><?php esc_html_e('Customer reviews', 'fenster'); ?></b>
-                </a>
+                    <?php esc_html_e('Reviews', 'fenster'); ?>
+                </span>
+                <h2><?php esc_html_e('What Milton Keynes homeowners say', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Real reviews from real installations across Milton Keynes and the surrounding towns. Every one is public on Google, so you can check them yourself.', 'fenster'); ?></p>
+                <div class="fg-review-showcase__actions">
+                    <a class="button button--light" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
+                        <?php esc_html_e('Read all reviews', 'fenster'); ?>
+                    </a>
+                    <a class="fg-review-showcase__write" href="<?php echo esc_url($write_url); ?>" target="_blank" rel="noopener">
+                        <?php esc_html_e('Leave a review', 'fenster'); ?>
+                    </a>
+                    <?php if ($trustpilot_url !== '') : ?>
+                        <a class="fg-review-showcase__write" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
+                            <?php esc_html_e('We are on Trustpilot too', 'fenster'); ?>
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </header>
 
@@ -61,27 +99,47 @@ if (empty($reviews)) {
                     <?php
                     $source = (string) ($review['source'] ?? 'Google');
                     $is_google = strtolower($source) === 'google';
-                    $initial = strtoupper(substr((string) ($review['author'] ?? 'R'), 0, 1));
-                    $review_date_raw = (string) ($review['date'] ?? '');
-                    $review_date_ts = $review_date_raw !== '' ? strtotime($review_date_raw) : false;
-                    $review_date = $review_date_ts ? date_i18n('j M Y', $review_date_ts) : $review_date_raw;
+                    $author = (string) ($review['author'] ?? 'Customer');
+                    $initial = strtoupper(mb_substr($author, 0, 1));
+                    $photo = (string) ($review['author_photo'] ?? '');
+                    $card_rating = max(1, min(5, (int) ($review['rating'] ?? 5)));
+
+                    $relative = trim((string) ($review['relative_date'] ?? ''));
+                    if ($relative === '') {
+                        $raw_date = (string) ($review['date'] ?? '');
+                        $timestamp = $raw_date !== '' ? strtotime($raw_date) : false;
+                        $relative = $timestamp ? date_i18n('j M Y', $timestamp) : $raw_date;
+                    }
+
+                    $url = (string) ($review['url'] ?? '');
+                    if ($url === '') {
+                        $url = $is_google ? $read_url : $trustpilot_url;
+                    }
                     ?>
-                    <a class="fg-review-showcase__card" href="<?php echo esc_url((string) ($review['url'] ?? '#')); ?>" target="_blank" rel="noopener">
-                        <span class="fg-review-showcase__avatar" aria-hidden="true"><?php echo esc_html($initial); ?></span>
-                        <span class="fg-review-showcase__name"><?php echo esc_html((string) ($review['author'] ?? 'Customer')); ?></span>
-                        <span class="fg-review-showcase__date"><?php echo esc_html($review_date); ?></span>
-                        <span class="<?php echo esc_attr($is_google ? 'fg-review-showcase__platform fg-review-showcase__platform--google' : 'fg-review-showcase__platform fg-review-showcase__platform--trustpilot'); ?>">
-                            <?php if ($is_google) : ?>
-                                <span class="fg-review-showcase__gmark" aria-hidden="true">G</span>
-                                <span><?php esc_html_e('Google', 'fenster'); ?></span>
+                    <a class="fg-review-showcase__card" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener">
+                        <span class="fg-review-showcase__head">
+                            <?php if ($photo !== '') : ?>
+                                <img class="fg-review-showcase__avatar fg-review-showcase__avatar--photo" src="<?php echo esc_url($photo); ?>" alt="" width="44" height="44" loading="lazy" decoding="async">
                             <?php else : ?>
-                                <span class="fg-review-showcase__trustpilot-mark" aria-hidden="true">★</span>
-                                <span><?php esc_html_e('Trustpilot', 'fenster'); ?></span>
+                                <span class="fg-review-showcase__avatar" aria-hidden="true"><?php echo esc_html($initial); ?></span>
                             <?php endif; ?>
+                            <span class="fg-review-showcase__identity">
+                                <span class="fg-review-showcase__name"><?php echo esc_html($author); ?></span>
+                                <span class="fg-review-showcase__date"><?php echo esc_html($relative); ?></span>
+                            </span>
+                            <span class="fg-review-showcase__platform" aria-label="<?php echo esc_attr($is_google ? __('Review on Google', 'fenster') : __('Review on Trustpilot', 'fenster')); ?>">
+                                <?php if ($is_google) : ?>
+                                    <span class="fg-review-showcase__glyph" aria-hidden="true">G</span>
+                                <?php else : ?>
+                                    <span class="fg-review-showcase__glyph fg-review-showcase__glyph--trustpilot" aria-hidden="true">★</span>
+                                <?php endif; ?>
+                            </span>
                         </span>
-                        <span class="fg-review-showcase__stars" role="img" aria-label="<?php echo esc_attr(sprintf('%d out of 5 stars', max(0, min(5, (int) ($review['rating'] ?? 5))))); ?>"></span>
+                        <span class="fg-stars" role="img" aria-label="<?php echo esc_attr(sprintf(__('%d out of 5 stars', 'fenster'), $card_rating)); ?>">
+                            <?php echo $render_stars((float) $card_rating); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        </span>
                         <p><?php echo esc_html((string) ($review['quote'] ?? '')); ?></p>
-                        <span class="fg-review-showcase__read"><?php esc_html_e('Read more', 'fenster'); ?></span>
+                        <span class="fg-review-showcase__read"><?php esc_html_e('Read on Google', 'fenster'); ?></span>
                     </a>
                 <?php endforeach; ?>
             </div>

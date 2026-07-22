@@ -2725,11 +2725,17 @@ if ($is_commercial_hub) {
                     <p class="fg-hero__intro"><?php echo esc_html($hero_intro); ?></p>
                 </div>
                 <div class="button-row">
-                    <a class="button" href="#fenster-enquiry">
-                        <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
-                        <span class="fg-hero-cta__short"><?php echo esc_html($is_composite_doors ? __('Send an enquiry', 'fenster') : __('Design consultation', 'fenster')); ?></span>
-                    </a>
-                    <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
+                    <?php if ($is_composite_doors) : ?>
+                        <?php // Instant pricing is the strongest lead route on this page, so it leads. ?>
+                        <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                        <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Send an enquiry', 'fenster'); ?></a>
+                    <?php else : ?>
+                        <a class="button" href="#fenster-enquiry">
+                            <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
+                            <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
+                        </a>
+                        <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
+                    <?php endif; ?>
                 </div>
             </div>
             <?php if ($is_home) : ?>
@@ -2742,19 +2748,39 @@ if ($is_commercial_hub) {
                     </div>
                 </aside>
             <?php else : ?>
-                <aside class="fg-hero__panel fg-hero-card" aria-label="<?php esc_attr_e('Project enquiry', 'fenster'); ?>">
-                    <p class="fg-hero-card__kicker"><?php esc_html_e('Start here', 'fenster'); ?></p>
-                    <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : 'Get pricing or book a design chat.'); ?></h2>
-                    <div class="fg-hero-card__logos">
-                        <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
-                        <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
-                            <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
-                        </a>
-                    </div>
-                    <div class="fg-hero-form">
-                        <a class="button" href="#fenster-enquiry"><?php esc_html_e('Start your project', 'fenster'); ?></a>
-                        <a class="text-link" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Use the instant quote tool', 'fenster'); ?></a>
-                    </div>
+                <aside class="fg-hero__panel fg-hero-card<?php echo $is_composite_doors ? ' fg-hero-card--price' : ''; ?>" aria-label="<?php esc_attr_e('Project enquiry', 'fenster'); ?>">
+                    <?php if ($is_composite_doors) : ?>
+                        <?php
+                        // The checked WindowCAD example published on /composite-door-prices/.
+                        // Keep this figure and its specification in step with that page.
+                        ?>
+                        <p class="fg-hero-card__kicker"><?php esc_html_e('What they cost', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('One we fitted came to £2,000.', 'fenster'); ?></h2>
+                        <p class="fg-hero-card__spec"><?php esc_html_e('A 900 x 2100 Distinction Esteem, anthracite grey outside and white inside, with clear glass and a chrome lever. Supplied, fitted and including VAT.', 'fenster'); ?></p>
+                        <div class="fg-hero-card__logos">
+                            <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
+                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
+                            </a>
+                        </div>
+                        <div class="fg-hero-form">
+                            <a class="button" href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('See what moves the price', 'fenster'); ?></a>
+                            <a class="text-link" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908 429200'))); ?>"><?php echo esc_html(sprintf(__('Or call %s', 'fenster'), (string) ($brand['phone'] ?? '01908 429200'))); ?></a>
+                        </div>
+                    <?php else : ?>
+                        <p class="fg-hero-card__kicker"><?php esc_html_e('Start here', 'fenster'); ?></p>
+                        <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : 'Get pricing or book a design chat.'); ?></h2>
+                        <div class="fg-hero-card__logos">
+                            <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
+                            <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
+                                <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/fensa.png'); ?>" alt="<?php esc_attr_e('FENSA approved', 'fenster'); ?>">
+                            </a>
+                        </div>
+                        <div class="fg-hero-form">
+                            <a class="button" href="#fenster-enquiry"><?php esc_html_e('Start your project', 'fenster'); ?></a>
+                            <a class="text-link" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Use the instant quote tool', 'fenster'); ?></a>
+                        </div>
+                    <?php endif; ?>
                 </aside>
             <?php endif; ?>
             <?php if ($product_scroll_video_src) : ?>
@@ -2956,9 +2982,13 @@ if ($is_commercial_hub) {
                 <span class="fg-composite-approved__mark" aria-hidden="true">&#10003;</span>
                 <div>
                     <strong><?php esc_html_e('Approved Distinction Doors installer', 'fenster'); ?></strong>
-                    <p><?php esc_html_e('One in four entrance doors fitted in the UK is a Distinction. We survey, supply and install your complete doorset.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('One in four front doors fitted in Britain is a Distinction. We survey, supply and hang yours ourselves, with our own fitters rather than subcontractors.', 'fenster'); ?></p>
                 </div>
                 <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager">
+                <a class="fg-composite-approved__call" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908 429200'))); ?>">
+                    <span><?php esc_html_e('Talk it through', 'fenster'); ?></span>
+                    <strong><?php echo esc_html((string) ($brand['phone'] ?? '01908 429200')); ?></strong>
+                </a>
             </div>
         </section>
     <?php endif; ?>

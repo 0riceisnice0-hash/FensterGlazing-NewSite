@@ -2046,8 +2046,74 @@ function fenster_render_site_schema(): void
                 'closes' => '17:00',
             ],
         ],
-        'areaServed' => ['Milton Keynes', 'Buckinghamshire', 'Bedfordshire', 'Northamptonshire', 'Hertfordshire'],
+        // Milton Keynes leads, then its own suburbs, then the wider ring. The
+        // suburbs are where proximity is a genuine advantage and where the
+        // case-study proof exists, so they are named explicitly.
+        'areaServed' => [
+            'Milton Keynes',
+            'Bletchley',
+            'Wolverton',
+            'Stony Stratford',
+            'Newport Pagnell',
+            'Woburn Sands',
+            'Great Linford',
+            'Shenley Church End',
+            'Whitehouse',
+            'Broughton',
+            'Buckinghamshire',
+            'Bedfordshire',
+            'Northamptonshire',
+            'Hertfordshire',
+        ],
+        'foundingDate' => '2018-08',
+        'currenciesAccepted' => 'GBP',
+        // The real product range, so Google can match product queries to the
+        // business rather than inferring it from page copy alone. Mirrors the
+        // Products list on the Google Business Profile.
+        'hasOfferCatalog' => [
+            '@type' => 'OfferCatalog',
+            'name' => 'Windows, doors and glazing',
+            'itemListElement' => array_map(
+                static fn (string $item): array => [
+                    '@type' => 'Offer',
+                    'itemOffered' => ['@type' => 'Service', 'name' => $item],
+                ],
+                [
+                    'Double glazing installation',
+                    'uPVC casement windows',
+                    'Flush casement windows',
+                    'Sliding sash windows',
+                    'Tilt and turn windows',
+                    'Bow and bay windows',
+                    'Aluminium windows',
+                    'Heritage windows',
+                    'Composite doors',
+                    'uPVC doors',
+                    'French doors',
+                    'Patio doors',
+                    'Aluminium bifold doors',
+                    'Aluminium sliding doors',
+                    'Roof lanterns',
+                    'Flat rooflights',
+                    'Integral blinds',
+                    'Secondary glazing',
+                    'Replacement glazed units',
+                    'Window and door repairs',
+                ]
+            ),
+        ],
     ];
+
+    // Prefer the canonical Google Maps URL for this place when the Places API
+    // has resolved it: a place-anchored URL is a stronger site-to-profile
+    // association than a coordinate search link.
+    if (function_exists('fenster_google_place_details')) {
+        $place_maps_url = (string) (fenster_google_place_details()['maps_url'] ?? '');
+        if ($place_maps_url !== '') {
+            $business_schema['hasMap'] = $place_maps_url;
+            $business_schema['sameAs'][0] = $place_maps_url;
+        }
+    }
 
     printf(
         "<script type=\"application/ld+json\">%s</script>\n",

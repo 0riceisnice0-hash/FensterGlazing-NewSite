@@ -27,8 +27,16 @@ function fenster_site_data(): array
                 'Buckinghamshire MK13 9HF',
             ],
             'hours' => 'Monday to Friday, 8.30am to 5pm. Phone lines open 24/7.',
-            'google_reviews_url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+            // Fallback only. When the Places API is configured, the canonical
+            // review and write-review URLs are built from the place ID in
+            // inc/google-reviews.php. Never point these at a Google search
+            // query: it sends customers to results, not the review panel.
+            'google_reviews_url' => 'https://www.google.com/maps/place/Fenster+Glazing+-+Windows+%26+Doors+Showroom/@52.0467571,-0.7936423,17z',
             'trustpilot_url' => 'https://uk.trustpilot.com/review/fensterglazing.com',
+            // Owner-verified fallback figures, used only when the live Google
+            // rating is unavailable. Check against the profile quarterly.
+            'google_rating' => 4.9,
+            'google_review_count' => 133,
         ],
         'customer_reviews' => [
             [
@@ -39,7 +47,7 @@ function fenster_site_data(): array
                 'title' => 'Cannot recommend higher',
                 'quote' => 'Cannot recommend higher! Nick and Perry were really helpful in getting my windows sorted ASAP.',
                 'context' => 'Windows',
-                'url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+                'url' => '',
             ],
             [
                 'source' => 'Google',
@@ -49,7 +57,7 @@ function fenster_site_data(): array
                 'title' => 'Great workmen',
                 'quote' => 'The best service ever, great workmen, very high standard and in the finish, excellent eye to detail.',
                 'context' => 'Installation',
-                'url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+                'url' => '',
             ],
             [
                 'source' => 'Google',
@@ -59,7 +67,7 @@ function fenster_site_data(): array
                 'title' => 'Very happy',
                 'quote' => 'Tom and Radu were great with our install. Very happy with the work done.',
                 'context' => 'Installation',
-                'url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+                'url' => '',
             ],
             [
                 'source' => 'Google',
@@ -69,7 +77,7 @@ function fenster_site_data(): array
                 'title' => 'Very pleased',
                 'quote' => 'Shane and James fitted two sash windows for us at the front of our house and we are so pleased.',
                 'context' => 'Sash windows',
-                'url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+                'url' => '',
             ],
             [
                 'source' => 'Trustpilot',
@@ -99,7 +107,7 @@ function fenster_site_data(): array
                 'title' => 'Highly recommended',
                 'quote' => 'I cannot recommend this company enough.',
                 'context' => 'Bifold doors',
-                'url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+                'url' => '',
             ],
             [
                 'source' => 'Google',
@@ -109,7 +117,7 @@ function fenster_site_data(): array
                 'title' => 'Everything went perfectly',
                 'quote' => 'Everything went perfectly with our windows supplied and fitted.',
                 'context' => 'Windows',
-                'url' => 'https://www.google.com/search?q=Fenster+Glazing+Milton+Keynes+reviews',
+                'url' => '',
             ],
             [
                 'source' => 'Trustpilot',
