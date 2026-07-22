@@ -73,6 +73,20 @@ if ($insert_after === false) {
     array_splice($members, $insert_after + 1, 0, [$steve_member]);
 }
 
+$aaron_member = [
+    'name' => 'Aaron Isaacs',
+    'role' => 'Fitter',
+    'copy' => 'Aaron Isaacs is a skilled fitter at Fenster Glazing with more than 10 years of hands-on experience in the trade. Practical, steady and detail focused, Aaron brings a calm approach to site and takes pride in a clean, well-finished installation. Outside work, he loves hiking, spending time with his family and getting outdoors, including climbing High Cup Nick.',
+    'image' => '/wp-content/themes/fenster/assets/team/aaron-isaacs-cropped-bw.jpg',
+    'alt' => 'Aaron Isaacs',
+];
+$insert_after = array_search('Zac Rugman', array_column($members, 'name'), true);
+if ($insert_after === false) {
+    $members[] = $aaron_member;
+} else {
+    array_splice($members, $insert_after + 1, 0, [$aaron_member]);
+}
+
 $members[] = [
     'name' => 'Legend',
     'role' => 'Chief Meow Officer',

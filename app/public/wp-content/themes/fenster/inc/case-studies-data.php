@@ -53,13 +53,15 @@ function fenster_case_studies(): array
 
     // The fitters who worked on each job. Each entry links to that person's
     // anchor on Meet the Team, so clicking a name scrolls to their profile.
-    // The role must match their job title on Meet the Team. Aaron has no team
-    // profile yet, so he is shown as a name only.
-    $fitter = static function (string $name, string $role, string $image = '') use ($team_img): array {
-        $person = ['name' => $name, 'role' => $role];
+    // The role must match their job title on Meet the Team.
+    $fitter = static function (string $name, string $role, string $image = '', string $image_base = '') use ($team_img): array {
+        $person = [
+            'name' => $name,
+            'role' => $role,
+            'url' => home_url('/meet-the-team/#' . sanitize_title($name)),
+        ];
         if ($image !== '') {
-            $person['image'] = $team_img . $image;
-            $person['url'] = home_url('/meet-the-team/#' . sanitize_title($name));
+            $person['image'] = ($image_base !== '' ? $image_base : $team_img) . $image;
         }
         return $person;
     };
@@ -68,7 +70,7 @@ function fenster_case_studies(): array
     $fitter_andy = $fitter('Andy McCullagh', 'Service Engineer', '7.png');
     $fitter_zac = $fitter('Zac Rugman', 'Installer', '8.png');
     $fitter_shane = $fitter('Shane Gowing', 'Installer', '20250617_1628580-scaled.jpg');
-    $fitter_aaron = $fitter('Aaron', 'Installer');
+    $fitter_aaron = $fitter('Aaron Isaacs', 'Fitter', 'aaron-isaacs-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
 
     $cache = [
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
