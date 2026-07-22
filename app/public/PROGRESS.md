@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-22
 
+## 2026-07-22 - Real local knowledge on the MK suburb pages (test)
+
+- The twelve Milton Keynes suburb routes were interchangeable: swapping the town name changed nothing. `fenster_mk_suburb_profiles()` in `inc/generated-pages.php` now carries genuine local substance per suburb, rendered as a "What we see on {town} homes" section above the case studies.
+- The detail is property age and type, which is verifiable and commercially useful: Bletchley's pre-new-town terraces and 1930s bay-fronted semis (and the structural point about bays), Wolverton's 1838 railway terraces wanting their proportions kept, Stony Stratford as a Georgian conservation town, Newport Pagnell's split between historic centre and estates, the 1970s and 1980s grid squares (Oldbrook, Great Linford, Shenley Church End, Furzton) on failing first-generation replacements, Monkston's 1990s uPVC where reglazing often beats replacement, and Whitehouse and Brooklands as new-build upgrade and extension work.
+- **Makes no claim about jobs completed in any area.** The case-study section already provides proof where it genuinely exists and renders nothing where it does not; inventing local credibility would undo the point of both sections.
+- Renders only on the twelve MK suburbs. Verified on test: Bletchley, Wolverton and Whitehouse each show their own copy, Luton correctly shows none, word count up from roughly 1,440 to 1,570, no overflow and no console errors.
+- The other half of plan Tier 1, redistributing internal links away from the far ring, was deliberately skipped: those pages rank 19–66, so link shuffling would be tidying rather than winning. Recorded in the plan.
+
 ## 2026-07-22 - MK search push and authenticated email promoted to live (f4ad6fb)
 
 - Range-checked `ef2b6c3..f4ad6fb`: 28 commits, of which seven were this session's (town case-study proof, MK titles and metas, guide routing, the SMTP auth pin and its correction) and the rest the concurrent session's composite-doors mobile and construction work. Owner approved the whole range, consistent with the two earlier releases today.

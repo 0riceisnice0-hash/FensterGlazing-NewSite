@@ -205,6 +205,10 @@ Split it into three tiers by winnability, and put the effort where proximity is 
 
 Fenster is physically in Milton Keynes. Tier 1 is where proximity — the strongest local ranking factor there is — actually works for you. It is also where the case studies already exist.
 
+> **Status 2026-07-22: Tier 1 content investment done.** `fenster_mk_suburb_profiles()` gives each of the twelve MK suburb routes genuine local substance — the actual housing stock, what it means for glazing, and the practical thing to know before ordering — rendered as a "What we see on {town} homes" section in `location-service.php`. Wolverton's 1838 railway terraces, Stony Stratford as a Georgian conservation town, the 1970s–80s grid squares on failing first-generation replacements, and Whitehouse and Brooklands as new-build upgrade work. It renders only on those twelve routes and makes no claim about jobs completed anywhere; the case-study section carries proof where it genuinely exists.
+>
+> **Not done, and deliberately:** the internal-link redistribution away from the far ring. Those pages sit at positions 19–66, so Google is nowhere near promoting them and moving internal links would be tidying rather than winning. Revisit only if the MK cluster starts moving and the far ring is measurably holding it back.
+
 **Do not mass-delete Tier 3.** `SEO-AUDIT.md` F5 is right that rebuilding the matrix is not the answer; the change is where the *effort and internal links* point.
 
 ### Tier 2 — Put real proof on the town pages
