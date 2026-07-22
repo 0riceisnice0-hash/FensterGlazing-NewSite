@@ -236,6 +236,8 @@ Result: `/casement-windows-whitehouse/` stops being templated copy and starts ca
 
 Update the `AI.md` rule in the same commit so the reasoning is recorded, not silently reversed.
 
+> **Status 2026-07-22:** 3.1a is **done**, and 3.1 was resolved differently — see the note below. The review showcase now runs on live Google data via `inc/google-reviews.php`, with MK-first framing and the real review/write-review links. `aggregateRating` was deliberately **not** added: Google does not show review rich results for self-serving reviews about the business itself, so it would carry risk without producing stars. Star ratings in organic snippets require a genuine third-party source. The LocalBusiness schema instead gained `hasOfferCatalog` (the real product range, mirroring the GBP Products list), MK suburbs first in `areaServed`, and `foundingDate`.
+
 **3.1a Fix the Google review link — small, and overdue.** `inc/site-data.php:30` sets `google_reviews_url` to a Google *search* query:
 
 ```

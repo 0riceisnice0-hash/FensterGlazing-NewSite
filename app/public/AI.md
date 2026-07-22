@@ -142,6 +142,16 @@ PHP lint example:
 - Consent-safe journey detail may include page time, scroll milestones, CTA labels/destinations and form-field *names* that failed validation, but never customer-entered values. Lead status is a dashboard-only manual business outcome tied to an existing consented completed lead.
 - **Narrow exception — Legend QA.** The Legend assistant may send its actual user/assistant transcript to the authenticated Marketing Dashboard when a visitor uses chat. It is retained for 30 days, disclosed in the chat terms and Privacy Policy, and must never be put in `website_events`, AdminBase or general analytics. With optional-cookie acceptance it is linked to `FGV`/`FG2`; after rejection it is chat-only, with no `FGV`/`FG2`, journey or website-event record.
 
+## Review Showcase Rule
+
+- Live Google reviews are owned by `inc\google-reviews.php` and rendered by `template-parts\components\review-showcase.php`. The rating, review count and latest reviews come from the Google Places API, cached for six hours.
+- **Configuration (server-side only, never committed):** set `FENSTER_GOOGLE_PLACES_API_KEY` in Bedrock `.env` — the same place as `FENSTER_OPENAI_API_KEY`. `FENSTER_GOOGLE_PLACE_ID` is optional; without it the place is resolved once from the business name/address and stored in the `fenster_google_place_id` option. The key must never reach JavaScript, HTML, screenshots or documentation. Restrict it to the Places API in Google Cloud.
+- Without a key the section still renders from the curated `customer_reviews` in `inc\site-data.php` plus the owner-verified `brand.google_rating` / `brand.google_review_count`. Those fallback figures are checked by hand; review them quarterly or they rot.
+- Google's terms require attribution for review content. Keep the reviewer's own name and photo on each card and keep the card linking to the review on Google. Do not strip attribution to tidy the design.
+- Review links must point at the real review panel (`search.google.com/local/reviews?placeid=…`) or the write-review form, both built from the place ID. **Never point a review link at a Google search query** — that was the pre-2026-07-22 bug and it sent customers to search results instead of the reviews.
+- Do not add `aggregateRating` to the LocalBusiness/Organization schema. Google does not show review rich results for self-serving reviews about the business itself, so it adds risk without producing stars. Star ratings in organic snippets need a genuine third-party source, not self-published markup.
+- `fenster_review_cards()` accepts a context string so a page can lead with relevant proof. Use the town or product name on local and product pages.
+
 ## Legend AI Assistant Rule
 
 - Legend's backend lives in `inc\legend-assistant.php` and uses the theme REST route `POST /wp-json/fenster/v1/legend/chat`. Keep the OpenAI key server-only in Bedrock `.env` as `FENSTER_OPENAI_API_KEY`; never expose it to JavaScript, HTML, version control, screenshots or documentation. `FENSTER_OPENAI_MODEL` is optional and currently defaults to `gpt-5.4-mini`.
