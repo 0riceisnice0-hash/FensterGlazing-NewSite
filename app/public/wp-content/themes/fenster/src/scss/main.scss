@@ -32298,12 +32298,23 @@ html.fg-blinds-reveal-locked {
     scroll-snap-stop: always;
   }
 
+  /* Several of these doors are pale, so the scrim has to stay solid behind the
+     whole caption rather than fading through it. White on a pale door is a
+     contrast failure under STYLE.md. */
   .fg-cd3-collection::after {
     content: "";
     position: absolute;
     z-index: -1;
     inset: 0;
-    background: linear-gradient(0deg, rgba(0, 24, 31, 0.94) 0%, rgba(0, 24, 31, 0.42) 56%, rgba(0, 24, 31, 0.06) 100%);
+    background: linear-gradient(
+      0deg,
+      rgba(0, 24, 31, 0.97) 0%,
+      rgba(0, 24, 31, 0.94) 24%,
+      rgba(0, 24, 31, 0.78) 36%,
+      rgba(0, 24, 31, 0.34) 52%,
+      rgba(0, 24, 31, 0.04) 72%,
+      transparent 100%
+    );
   }
 
   .fg-cd3-collection__img {
