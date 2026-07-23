@@ -874,7 +874,11 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'images' => [],
             'links' => [],
         ];
-        $page['title'] = 'Fenster Glazing in Milton Keynes';
+        // The homepage H1. The eyebrow directly above it already reads
+        // "Fenster Glazing", so this must say something rather than repeat the
+        // brand and trail off, which is what "Fenster Glazing in Milton Keynes"
+        // did. It states what we do, for whom and where, in one sentence.
+        $page['title'] = 'Windows and doors, fitted properly across Milton Keynes';
         $page['seo']['title_tag'] = 'Fenster Glazing | Windows & Doors Milton Keynes';
         $page['seo']['meta_description'] = 'Fenster Glazing in Milton Keynes for windows, doors, bifolds, roof lanterns and replacement glazing. Get online pricing and survey-led fitting.';
         $page['seo']['canonical'] = 'https://fensterglazing.com/';
