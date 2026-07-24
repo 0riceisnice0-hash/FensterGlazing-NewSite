@@ -364,7 +364,7 @@ function fenster_site_data(): array
                 ],
             ],
             'aluminium-flush-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Flush aluminium window frame detail'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-flush-open-1200w.webp', 'alt' => 'Grey aluminium flush windows opened outwards on a rendered wall'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Flush aluminium window frame detail'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Aluminium windows installed on a coastal home'],
@@ -453,7 +453,7 @@ function fenster_site_data(): array
                 ],
             ],
             'aluminium-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Slim aluminium windows installed on a coastal property'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-windows-black-house-1600w.webp', 'alt' => 'Black aluminium windows across the front of a modern brick and render house'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Slim aluminium windows installed on a coastal property'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium window frame profile detail'],
@@ -520,7 +520,7 @@ function fenster_site_data(): array
                 ],
             ],
             'secondary-glazing' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'White uPVC window section showing the sealed glass unit'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/imported/Joined-Vertical-Slider-Bay.jpg', 'alt' => 'Original sliding sash bay window seen from inside a dining room'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'White uPVC window section showing the sealed glass unit'],
                     ['src' => '/wp-content/themes/fenster/assets/images/imported/window-repair-milton-keynes-scaled.jpg', 'alt' => 'Existing window opening checked for glazing upgrade work'],
