@@ -124,6 +124,7 @@ Never use:
 - premium, luxury, stunning, bespoke solutions, market-leading, unrivalled, hassle-free, dream home, transform, elevate, discover, journey, perfect, exceptional, state-of-the-art
 - superlative claims that cannot be substantiated
 - supplier brochure phrasing of any kind (see below)
+- **any wording that positions one of our own products as the weaker choice on specification.** Owner instruction, 2026-07-24. A comparison between two things we both sell is a comparison, not a verdict: give each the thing it is genuinely best at, in parallel phrasing, and let the figures separate them. "uPVC reaches the lower U-value, aluminium holds the slimmest frame" is right. "Aluminium is not the warmer of the two" is not, even though it is true.
 - **budget, cheap, or any wording that positions one of our own products as the low-cost option.** Owner instruction, 2026-07-24, after a product hub card led with "Folding, on a budget". Every product we sell is one we would fit on our own house, and framing one as the compromise sells against it. This covers the softer forms too: "at a lower cost than", "warmer for the money", "costs less". Say what the product *does* differently instead. Slide and fold doors are not a cheaper bifold, they are doors whose panels each open on their own. Prices belong on the price guides and the quote tool, where they come with a real figure.
 
 ## Rewriting Supplier / Scrape Content
