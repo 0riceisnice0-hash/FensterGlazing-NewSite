@@ -205,9 +205,9 @@ Template: `template-parts\sections\heritage-aluminium-doors.php`, dispatched fro
 Current accepted behaviour:
 
 - The page is built around the Sheerline Classic Heritage Door and bypasses the generic product journey, in the same way `/roof-lanterns/` does.
-- Section order is hero, four-fact specification strip, the nine stocked configurations, period lockbox and glazing-bar detail, Thermlock and corner construction, two use cases, the Secured by Design upgrade, the twelve standard colours, shared enquiry form, review showcase.
+- Section order is hero, four-fact specification strip, the six stocked configurations, period lockbox and glazing-bar detail, Thermlock and corner construction, two use cases, the Secured by Design upgrade, the twelve standard colours, shared enquiry form, review showcase.
 - Assets are local WebP copies under `assets\images\products\heritage-aluminium`. Do not point this route at the Sheerline scrape export.
-- The nine configuration renders were cropped through one shared window so their relative heights stay honest. A toplight door must keep reading taller than a plain single door; do not re-trim them individually.
+- The configuration renders were cropped through one shared window so their relative heights stay honest; do not re-trim them individually. Six are shown as of 2026-07-24, single and French with no bars, 2 bar and 4 bar. The three toplight renders were removed on owner instruction; the assets remain on disk.
 - Configuration labels state real bar counts and colours. Check any new label against its render before publishing.
 - The route has its own `heritage_aluminium_doors` gallery pool in `inc\site-data.php`. Do not point it back at the shared `aluminium_doors` pool: that pool is modern Prestige entrance doors and put uPVC-looking imagery on this page and its town variants.
 - Secured by Design is an optional upgrade on this system, not the standard specification. Keep that distinction in the copy.
