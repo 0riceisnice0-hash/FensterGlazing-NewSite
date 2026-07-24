@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Second release of the day promoted to live (4458fc6)
+
+- Live re-established by checksum first, as the rule now requires: six theme files matched `94e7d0f` byte for byte, confirming the pointer written earlier the same day was still accurate.
+- Range check `94e7d0f..4458fc6` returned six commits, all this session's, 16 files, 183 insertions and 239 deletions. Nothing from a concurrent session, so no cherry-picking. Compiled assets were confirmed to carry the changes before shipping, since a stale build has shipped before on this project.
+- Backup `fenster-pre-4458fc6-20260724-102814.tar.gz` (364M), server repo cache pinned to the explicit SHA, theme-only rsync, WP and SiteGround caches purged.
+- Production verification: six theme files match the committed tree byte for byte; fourteen routes return 200; `/double-glazing-milton-keynes/` still carries its head-term marker. Each change confirmed on live rather than assumed: no `Step 2 of 2` anywhere, the audience gate pre-selected, heritage at six slides with `01 / 06` and no remaining `toplight` string, the lantern wall present with the old carousel slides gone, the colour hero photograph in with the old tiles gone, and the `max-width:none` fix present in the served CSS.
+- Browser QA on the live URLs across six routes at 1440x900 and 390x844: no horizontal overflow anywhere, zero console errors, every heading inside the 57.6px cap.
+
 ## 2026-07-24 - Roof lantern S1 selector rebuilt on the composite door wall (test, 474e39d)
 
 Owner: the heritage configurations look good now, but the roof lantern selector needs revamping, "maybe do it like the composite door page has it, the slow moving side to side bit".
