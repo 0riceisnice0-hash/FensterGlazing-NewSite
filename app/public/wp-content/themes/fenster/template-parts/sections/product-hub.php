@@ -5,9 +5,9 @@
  *
  * This is a routing page, not a product page. The customer's job is to work out
  * which of our products they need, so the whole range is on screen as real
- * photographs rather than hidden behind a tab control. Card imagery comes from
- * the curated product_media heroes, so a hub card and the page it links to can
- * never show different pictures of the same product.
+ * photographs and the filter narrows it rather than hiding it. Card imagery
+ * comes from the curated product_media entries, so a hub card and the page it
+ * links to can never show different pictures of the same product.
  *
  * @package Fenster
  */
@@ -39,28 +39,24 @@ $instant_quote_preview = (string) $args['instant_quote_preview'];
 $trust_items = is_array($args['trust_items']) ? $args['trust_items'] : [];
 $guide = is_array($group['guide'] ?? null) ? $group['guide'] : [];
 
-/*
- * Resolve each card's picture from the product's own curated hero. An explicit
- * 'image' is only for routes with no product_media entry, currently just
- * /flat-rooflights/, which has its own template.
+/**
+ * Build one card from a hub item plus the curated data the product already owns.
+ *
+ * Imagery: product_media.card is a closer crop for this 4:3 cell, falling back
+ * to the hero. Specs: the first two product_usps, so the card carries a real
+ * number rather than another adjective. System: from the manufacturer data that
+ * drives the product pages, so there is no second mapping to keep in step.
  */
-$cards = [];
-foreach ($products as $product) {
-    $slug = (string) ($product['slug'] ?? '');
+$build_card = static function (array $item): ?array {
+    $slug = (string) ($item['slug'] ?? '');
     if ($slug === '') {
-        continue;
+        return null;
     }
 
     $media = fenster_data('product_media.' . $slug, []);
     $media = is_array($media) ? $media : [];
 
-    /*
-     * A hero is a wide banner and a card is a 4:3 cell, so where the hero is a
-     * correct but wide establishing shot the product carries a closer 'card'
-     * image for the grid. Both live in product_media, so there is still one
-     * place to look.
-     */
-    $image = (string) ($product['image'] ?? '');
+    $image = (string) ($item['image'] ?? '');
     $alt = '';
     if ($image === '') {
         $image = (string) ($media['card']['src'] ?? $media['hero']['src'] ?? '');
@@ -68,76 +64,124 @@ foreach ($products as $product) {
     }
 
     if ($image === '') {
-        continue;
+        return null;
     }
 
-    // The system this product is built on, from the manufacturer data that
-    // already drives the product pages. Services and unmapped routes get no
-    // badge rather than an invented one.
+    $usps = fenster_data('product_usps.' . $slug, []);
+    $specs = [];
+    foreach (is_array($usps) ? array_slice($usps, 0, 2) : [] as $usp) {
+        if (! is_array($usp) || trim((string) ($usp['value'] ?? '')) === '') {
+            continue;
+        }
+
+        $specs[] = [
+            'label' => (string) ($usp['label'] ?? ''),
+            'value' => (string) $usp['value'],
+        ];
+    }
+
     $hub = function_exists('fenster_product_hub_data') ? fenster_product_hub_data($slug) : [];
     $system = is_array($hub['systems'][0] ?? null) ? $hub['systems'][0] : [];
-    $system_logo = trim((string) ($system['logo'] ?? ''));
 
-    $cards[] = [
+    return [
         'slug' => $slug,
-        'name' => (string) ($product['name'] ?? $slug),
-        'fit' => (string) ($product['fit'] ?? ''),
-        'copy' => (string) ($product['copy'] ?? ''),
+        'name' => (string) ($item['name'] ?? $slug),
+        'fit' => (string) ($item['fit'] ?? ''),
+        'copy' => (string) ($item['copy'] ?? ''),
         'url' => home_url('/' . $slug . '/'),
         'image' => $image,
-        'alt' => $alt !== '' ? $alt : (string) ($product['name'] ?? ''),
-        'system_logo' => $system_logo,
+        'alt' => $alt !== '' ? $alt : (string) ($item['name'] ?? ''),
+        'specs' => $specs,
+        'system_logo' => trim((string) ($system['logo'] ?? '')),
         'system_label' => (string) ($system['label'] ?? ''),
     ];
-}
+};
 
+$cards = array_values(array_filter(array_map($build_card, $products)));
 if ($cards === []) {
     return;
 }
 
+$configurations = array_values(array_filter(array_map($build_card, (array) ($group['configurations'] ?? []))));
+
 /*
- * Group the cards into the bands declared for this hub. Anything a band does
- * not claim still renders, in one unlabelled band at the end, so a product
- * added to 'products' can never silently vanish from the page.
+ * Filters are the same groupings the range already had, but as controls rather
+ * than fixed headings, so the whole range stays on one grid. Any product no
+ * filter claims still appears under "All", so it can never be lost.
  */
-$cards_by_slug = [];
-foreach ($cards as $card) {
-    $cards_by_slug[$card['slug']] = $card;
-}
-
-$bands = [];
-$claimed = [];
-foreach ((array) ($group['bands'] ?? []) as $band) {
-    $band_cards = [];
-    foreach ((array) ($band['slugs'] ?? []) as $slug) {
-        if (isset($cards_by_slug[$slug])) {
-            $band_cards[] = $cards_by_slug[$slug];
-            $claimed[$slug] = true;
+$filters = [];
+foreach ((array) ($group['filters'] ?? []) as $filter) {
+    $slugs = array_values(array_filter((array) ($filter['slugs'] ?? []), static function ($slug) use ($cards): bool {
+        foreach ($cards as $card) {
+            if ($card['slug'] === $slug) {
+                return true;
+            }
         }
-    }
 
-    if ($band_cards !== []) {
-        $bands[] = [
-            'label' => (string) ($band['label'] ?? ''),
-            'note' => (string) ($band['note'] ?? ''),
-            'cards' => $band_cards,
+        return false;
+    }));
+
+    if ($slugs !== []) {
+        $filters[] = [
+            'key' => sanitize_title((string) ($filter['label'] ?? '')),
+            'label' => (string) ($filter['label'] ?? ''),
+            'note' => (string) ($filter['note'] ?? ''),
+            'slugs' => $slugs,
         ];
     }
 }
 
-$unclaimed = array_values(array_filter($cards, static function (array $card) use ($claimed): bool {
-    return ! isset($claimed[$card['slug']]);
-}));
-
-if ($unclaimed !== []) {
-    $bands[] = ['label' => '', 'note' => '', 'cards' => $unclaimed];
+$filter_of = [];
+foreach ($filters as $filter) {
+    foreach ($filter['slugs'] as $slug) {
+        $filter_of[$slug] = $filter['key'];
+    }
 }
 
-$suppliers = array_values(array_filter((array) ($group['suppliers'] ?? []), 'is_array'));
-
 $case_studies = function_exists('fenster_case_studies_for_product_group')
-    ? fenster_case_studies_for_product_group(array_column($cards, 'slug'), 3)
+    ? fenster_case_studies_for_product_group(array_merge(array_column($cards, 'slug'), array_column($configurations, 'slug')), 3)
     : [];
+
+/** Card markup, shared by the range grid and the configurations row. */
+$render_card = static function (array $card, string $filter_key, bool $eager = false): void {
+    ?>
+    <li class="fg-ph-card__wrap" data-fg-hub-item data-filter="<?php echo esc_attr($filter_key); ?>">
+        <a class="fg-ph-card" href="<?php echo esc_url($card['url']); ?>">
+            <span class="fg-ph-card__media">
+                <img <?php echo fenster_image_attr_string($card['image'], [
+                    'alt' => $card['alt'],
+                    'loading' => $eager ? 'eager' : 'lazy',
+                ]); ?>>
+                <?php if ($card['specs'] !== []) : ?>
+                    <span class="fg-ph-card__specs">
+                        <?php foreach ($card['specs'] as $spec) : ?>
+                            <span>
+                                <b><?php echo esc_html($spec['value']); ?></b>
+                                <i><?php echo esc_html($spec['label']); ?></i>
+                            </span>
+                        <?php endforeach; ?>
+                    </span>
+                <?php endif; ?>
+            </span>
+            <span class="fg-ph-card__body">
+                <span class="fg-ph-card__fit"><?php echo esc_html($card['fit']); ?></span>
+                <strong><?php echo esc_html($card['name']); ?></strong>
+                <span class="fg-ph-card__copy"><?php echo esc_html($card['copy']); ?></span>
+                <span class="fg-ph-card__foot">
+                    <?php if ($card['system_logo'] !== '') : ?>
+                        <span class="fg-ph-card__system">
+                            <img src="<?php echo esc_url(fenster_generated_url($card['system_logo'])); ?>" alt="<?php echo esc_attr(sprintf(__('%s system', 'fenster'), $card['system_label'])); ?>" loading="lazy">
+                        </span>
+                    <?php else : ?>
+                        <span class="fg-ph-card__system" aria-hidden="true"></span>
+                    <?php endif; ?>
+                    <span class="fg-ph-card__more"><?php esc_html_e('View', 'fenster'); ?></span>
+                </span>
+            </span>
+        </a>
+    </li>
+    <?php
+};
 ?>
 
 <article class="fg-product-hub fg-product-hub--<?php echo esc_attr($group_key); ?>">
@@ -154,6 +198,7 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
                 </p>
             </div>
 
+            <?php $suppliers = array_values(array_filter((array) ($group['suppliers'] ?? []), 'is_array')); ?>
             <?php if ($suppliers !== []) : ?>
                 <aside class="fg-product-hub__systems">
                     <p class="fg-product-hub__systems-title"><?php esc_html_e('The systems we fit', 'fenster'); ?></p>
@@ -179,48 +224,53 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
         </div>
     </section>
 
-    <section class="fg-product-hub__range">
+    <section class="fg-product-hub__range" data-fg-product-hub>
         <div class="container">
-            <?php foreach ($bands as $band_index => $band) : ?>
-                <?php $band_id = 'fg-hub-band-' . $band_index; ?>
-                <div class="fg-product-hub__band"<?php echo $band['label'] !== '' ? ' role="group" aria-labelledby="' . esc_attr($band_id) . '"' : ''; ?>>
-                    <?php if ($band['label'] !== '') : ?>
-                        <header class="fg-product-hub__band-head">
-                            <h2 id="<?php echo esc_attr($band_id); ?>"><?php echo esc_html($band['label']); ?></h2>
-                            <?php if ($band['note'] !== '') : ?>
-                                <p><?php echo esc_html($band['note']); ?></p>
-                            <?php endif; ?>
-                        </header>
-                    <?php endif; ?>
-                    <ul class="fg-product-hub__grid">
-                        <?php foreach ($band['cards'] as $card) : ?>
-                            <li>
-                                <a class="fg-product-hub__card" href="<?php echo esc_url($card['url']); ?>">
-                                    <span class="fg-product-hub__media">
-                                        <img <?php echo fenster_image_attr_string($card['image'], [
-                                            'alt' => $card['alt'],
-                                            'loading' => 'lazy',
-                                        ]); ?>>
-                                        <?php if ($card['system_logo'] !== '') : ?>
-                                            <span class="fg-product-hub__system-mark">
-                                                <img src="<?php echo esc_url(fenster_generated_url($card['system_logo'])); ?>" alt="<?php echo esc_attr(sprintf(__('%s system', 'fenster'), $card['system_label'])); ?>" loading="lazy">
-                                            </span>
-                                        <?php endif; ?>
-                                    </span>
-                                    <span class="fg-product-hub__body">
-                                        <span class="fg-product-hub__fit"><?php echo esc_html($card['fit']); ?></span>
-                                        <strong><?php echo esc_html($card['name']); ?></strong>
-                                        <span class="fg-product-hub__copy"><?php echo esc_html($card['copy']); ?></span>
-                                        <span class="fg-product-hub__more"><?php echo esc_html(sprintf(__('View %s', 'fenster'), $card['name'])); ?></span>
-                                    </span>
-                                </a>
-                            </li>
+            <?php if ($filters !== []) : ?>
+                <div class="fg-ph-filters">
+                    <div class="fg-ph-filters__row" role="group" aria-label="<?php esc_attr_e('Narrow the range', 'fenster'); ?>">
+                        <button type="button" class="is-active" data-fg-hub-filter="all" aria-pressed="true">
+                            <?php esc_html_e('All', 'fenster'); ?>
+                            <span><?php echo esc_html((string) count($cards)); ?></span>
+                        </button>
+                        <?php foreach ($filters as $filter) : ?>
+                            <button type="button" data-fg-hub-filter="<?php echo esc_attr($filter['key']); ?>" aria-pressed="false">
+                                <?php echo esc_html($filter['label']); ?>
+                                <span><?php echo esc_html((string) count($filter['slugs'])); ?></span>
+                            </button>
                         <?php endforeach; ?>
-                    </ul>
+                    </div>
+                    <p class="fg-ph-filters__note" data-fg-hub-note aria-live="polite"><?php esc_html_e('The whole range. Narrow it if you already know roughly what you want.', 'fenster'); ?></p>
                 </div>
-            <?php endforeach; ?>
+                <?php foreach ($filters as $filter) : ?>
+                    <template data-fg-hub-note-for="<?php echo esc_attr($filter['key']); ?>"><?php echo esc_html($filter['note']); ?></template>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <ul class="fg-ph-grid" data-fg-hub-grid>
+                <?php foreach ($cards as $index => $card) : ?>
+                    <?php $render_card($card, (string) ($filter_of[$card['slug']] ?? ''), $index < 3); ?>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </section>
+
+    <?php if ($configurations !== []) : ?>
+        <section class="fg-product-hub__configs">
+            <div class="container">
+                <header class="fg-product-hub__configs-head">
+                    <p class="eyebrow"><?php esc_html_e('Configurations', 'fenster'); ?></p>
+                    <h2><?php echo esc_html((string) ($group['configurations_heading'] ?? '')); ?></h2>
+                    <p><?php echo esc_html((string) ($group['configurations_intro'] ?? '')); ?></p>
+                </header>
+                <ul class="fg-ph-grid fg-ph-grid--configs">
+                    <?php foreach ($configurations as $card) : ?>
+                        <?php $render_card($card, ''); ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </section>
+    <?php endif; ?>
 
     <?php if ($guide !== []) : ?>
         <section class="fg-product-hub__guide">

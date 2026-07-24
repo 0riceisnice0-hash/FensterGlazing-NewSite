@@ -593,9 +593,15 @@ function fenster_site_data(): array
                 ],
                 // Bands answer the guide's third question with the layout rather
                 // than only in prose. Every slug here must exist in 'products'.
-                'bands' => [
-                    ['label' => 'uPVC windows', 'note' => 'The widest choice of styles, and A++ ratings without triple glazing.', 'slugs' => ['casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'tilt-turn-windows', 'french-casement-windows', 'bow-bay-windows']],
-                    ['label' => 'Aluminium windows', 'note' => 'Thinner frames and more glass, in any RAL colour.', 'slugs' => ['aluminium-windows', 'aluminium-flush-windows', 'heritage-windows']],
+                'filters' => [
+                    ['label' => 'uPVC', 'note' => 'The widest choice of styles, and A++ ratings without triple glazing.', 'slugs' => ['casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'tilt-turn-windows']],
+                    ['label' => 'Aluminium', 'note' => 'Thinner frames and more glass, in any RAL colour.', 'slugs' => ['aluminium-windows', 'aluminium-flush-windows', 'heritage-windows']],
+                ],
+                'configurations_heading' => 'Two of these are not styles of their own.',
+                'configurations_intro' => 'A bay and a French window are shapes you can build from the styles above, not separate windows. Worth knowing before you go looking for a bow window that does not exist as its own product.',
+                'configurations' => [
+                    ['slug' => 'bow-bay-windows', 'name' => 'Bow and Bay Windows', 'fit' => 'A shape, not a style', 'copy' => 'A bay turns at angles and a bow curves. Either can be built from the casement, flush sash or sliding sash styles.'],
+                    ['slug' => 'french-casement-windows', 'name' => 'French Casement Windows', 'fit' => 'An opening, not a style', 'copy' => 'Two sashes meeting with no fixed mullion between them. Available on casement, flush sash and tilt and turn.'],
                 ],
                 'products' => [
                     ['slug' => 'casement-windows', 'name' => 'Casement Windows', 'fit' => 'The everyday all-rounder', 'copy' => 'Side or top hung, in almost any combination. Most of the homes we work on end up with these.'],
@@ -605,8 +611,6 @@ function fenster_site_data(): array
                     ['slug' => 'aluminium-windows', 'name' => 'Aluminium Windows', 'fit' => 'Slim frames, more glass', 'copy' => 'Thinner sightlines than uPVC for the same opening, powder coated in the RAL colour you choose.'],
                     ['slug' => 'aluminium-flush-windows', 'name' => 'Aluminium Flush Windows', 'fit' => 'Flat outside face', 'copy' => 'The aluminium version of a flush sash, where the sash and the frame finish on the same plane.'],
                     ['slug' => 'heritage-windows', 'name' => 'Heritage Windows', 'fit' => 'The steel-window look', 'copy' => 'Slim sections and stepped bars that read like original steel, in thermally broken aluminium.'],
-                    ['slug' => 'french-casement-windows', 'name' => 'French Casement Windows', 'fit' => 'No bar down the middle', 'copy' => 'Two sashes meeting in the centre with no fixed mullion, so the whole opening is clear. Often specified as an upstairs escape route.'],
-                    ['slug' => 'bow-bay-windows', 'name' => 'Bow and Bay Windows', 'fit' => 'Projects out from the wall', 'copy' => 'A bay turns at angles, a bow curves. Both add floor area and light to the room behind.'],
                 ],
             ],
             'doors' => [
@@ -629,16 +633,20 @@ function fenster_site_data(): array
                 ],
                 // Grouped by where the door goes, which is the first question we
                 // ask on the phone and the one that rules most of the list out.
-                'bands' => [
-                    ['label' => 'Front, back and side doors', 'note' => 'One opening, hinged, where security and insulation matter most.', 'slugs' => ['composite-doors', 'upvc-doors', 'aluminium-doors']],
-                    ['label' => 'Doors onto the garden', 'note' => 'Wider openings, where the question is how the panels get out of the way.', 'slugs' => ['heritage-aluminium-doors', 'french-doors', 'patio-doors', 'aluminium-sliding-doors', 'aluminium-bifold-doors', 'slide-fold-doors']],
+                'filters' => [
+                    ['label' => 'Front and back', 'note' => 'One opening, hinged, where security and insulation matter most.', 'slugs' => ['composite-doors', 'upvc-doors', 'aluminium-doors', 'heritage-aluminium-doors']],
+                    ['label' => 'Onto the garden', 'note' => 'Wider openings, where the question is how the panels get out of the way.', 'slugs' => ['patio-doors', 'aluminium-sliding-doors', 'aluminium-bifold-doors', 'slide-fold-doors']],
+                ],
+                'configurations_heading' => 'French doors are a configuration, not a system.',
+                'configurations_intro' => 'A pair opening from the centre is something we can build in more than one of the ranges above, which is why it sits on its own here.',
+                'configurations' => [
+                    ['slug' => 'french-doors', 'name' => 'French Doors', 'fit' => 'A pair, not a system', 'copy' => 'Two doors opening from the centre, with the option of fixed side panels. Available in uPVC, aluminium and the heritage range.'],
                 ],
                 'products' => [
                     ['slug' => 'composite-doors', 'name' => 'Composite Doors', 'fit' => 'The usual front door choice', 'copy' => 'A 44.5mm insulated slab, against 28mm for a uPVC door panel, with the break-in guarantee behind it.'],
                     ['slug' => 'upvc-doors', 'name' => 'uPVC Doors', 'fit' => 'Straightforward and low upkeep', 'copy' => 'Front, back and utility doors that need washing rather than painting.'],
                     ['slug' => 'aluminium-doors', 'name' => 'Aluminium Doors', 'fit' => 'Matches aluminium windows', 'copy' => 'A front, back or side door in the same frames and powder-coated colours as the windows around it.'],
                     ['slug' => 'heritage-aluminium-doors', 'name' => 'Heritage Aluminium Doors', 'fit' => 'The steel-door look', 'copy' => 'The Sheerline Classic door at 60.5mm sightlines, single or French, opening in or out.'],
-                    ['slug' => 'french-doors', 'name' => 'French Doors', 'fit' => 'A pair, opening from the centre', 'copy' => 'Two doors swinging open together, with the option of fixed side panels either side.'],
                     ['slug' => 'patio-doors', 'name' => 'Patio Doors', 'fit' => 'Nothing swings into the room', 'copy' => 'Up to four panes sliding past each other, so the floor space either side of the opening stays usable.'],
                     ['slug' => 'aluminium-sliding-doors', 'name' => 'Aluminium Sliding Doors', 'fit' => 'The largest panes', 'copy' => 'Sheerline lift and slide, with interlocks as slim as 52mm, so the frame gets out of the way of the view.'],
                     ['slug' => 'aluminium-bifold-doors', 'name' => 'Aluminium Bifold Doors', 'fit' => 'Folds right back', 'copy' => 'Panels stack to one or both sides, so in summer the opening is almost entirely clear.'],
@@ -662,7 +670,7 @@ function fenster_site_data(): array
                     ['logo' => 'sheerline.png', 'name' => 'Sheerline', 'role' => 'Roof lanterns'],
                     ['logo' => 'liniar.png', 'name' => 'Liniar', 'role' => 'uPVC frames'],
                 ],
-                'bands' => [
+                'filters' => [
                     ['label' => 'Roof glazing', 'note' => 'Daylight into a room with no wall left to take a window.', 'slugs' => ['roof-lanterns', 'flat-rooflights']],
                     ['label' => 'Glass and blinds', 'note' => 'Work on the glass itself, with the frames staying where they are.', 'slugs' => ['integral-blinds', 'double-glazing-replacement', 'secondary-glazing']],
                     ['label' => 'Keeping it working', 'note' => 'The smaller jobs, including on windows we did not fit.', 'slugs' => ['window-and-door-repairs', 'roofline']],

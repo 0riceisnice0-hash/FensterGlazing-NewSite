@@ -31167,132 +31167,6 @@ html.fg-blinds-reveal-locked {
   padding-top: clamp(1.5rem, 2.5vw, 2rem);
 }
 
-.fg-product-hub__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.9rem, 1.6vw, 1.35rem);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-product-hub__card {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  height: 100%;
-  overflow: hidden;
-  border: 1px solid rgba(0, 45, 58, 0.1);
-  border-radius: 8px;
-  background: #ffffff;
-  color: inherit;
-  text-decoration: none;
-  box-shadow: 0 14px 34px rgba(2, 43, 53, 0.08);
-  transition:
-    transform 220ms ease,
-    box-shadow 220ms ease,
-    border-color 220ms ease;
-}
-
-.fg-product-hub__card:hover,
-.fg-product-hub__card:focus-visible {
-  transform: translateY(-3px);
-  border-color: rgba(46, 172, 102, 0.45);
-  box-shadow: 0 20px 44px rgba(2, 43, 53, 0.14);
-}
-
-.fg-product-hub__media {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  background: var(--color-soft);
-  aspect-ratio: 4 / 3;
-}
-
-/* The system the product is built on, bottom right of the photograph. A white
-   pill because the supplier marks are all dark-on-transparent and would vanish
-   into a dark corner of a photograph. */
-.fg-product-hub__system-mark {
-  position: absolute;
-  right: 0.55rem;
-  bottom: 0.55rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 94px;
-  height: 32px;
-  padding: 0.3rem 0.45rem;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 4px 14px rgba(2, 43, 53, 0.18);
-}
-
-/* Sized by the box, not by the image. A flex item keeps `min-width: auto`, so
-   `max-width` alone will not shrink a wide mark and Sheerline was clipping. */
-.fg-product-hub__system-mark img {
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  object-fit: contain;
-  object-position: center;
-}
-
-/* Direct child only. The system mark is also an img inside .__media, and at
-   equal specificity a `cover` rule here would win on source order and crop it. */
-.fg-product-hub__media > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.fg-product-hub__body {
-  display: grid;
-  align-content: start;
-  gap: 0.3rem;
-  /* The link is pinned to the bottom so it sits on the same line across a row. */
-  grid-template-rows: auto auto 1fr auto;
-  padding: clamp(0.95rem, 1.5vw, 1.2rem);
-}
-
-.fg-product-hub__fit {
-  color: var(--color-accent);
-  font-size: 0.72rem;
-  font-weight: 850;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fg-product-hub__card strong {
-  color: var(--color-steel);
-  font-size: 1.12rem;
-  font-weight: 800;
-  line-height: 1.22;
-}
-
-/* Clamped so every text block in a row is the same height and the View links
-   line up, rather than each card ending wherever its sentence happens to. */
-.fg-product-hub__copy {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  color: rgba(2, 43, 53, 0.72);
-  font-size: 0.92rem;
-  line-height: 1.55;
-}
-
-.fg-product-hub__more {
-  margin-top: 0.45rem;
-  color: var(--color-accent);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
-.fg-product-hub__more::after {
-  content: " \2192";
-}
-
 /* Hero. The lead column is one block (eyebrow, H1, one paragraph, then the
    action pair) with the supplier panel beside it, rather than a loose
    paragraph floating opposite the heading with the buttons crowding it. */
@@ -31403,38 +31277,7 @@ html.fg-blinds-reveal-locked {
   color: rgba(2, 43, 53, 0.66);
   font-size: 0.84rem;
   line-height: 1.5;
-}
-
-/* Bands. Grouping the range answers the "which of these am I even looking at"
-   question with the layout instead of leaving it to the copy. */
-.fg-product-hub__band + .fg-product-hub__band {
-  margin-top: clamp(1.75rem, 3vw, 2.6rem);
-}
-
-.fg-product-hub__band-head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 1rem;
-  align-items: baseline;
-  margin-bottom: clamp(0.85rem, 1.6vw, 1.15rem);
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid rgba(0, 45, 58, 0.12);
-}
-
-.fg-product-hub__band-head h2 {
-  margin: 0;
-  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
-  line-height: 1.2;
-}
-
-.fg-product-hub__band-head p {
-  margin: 0;
-  color: rgba(2, 43, 53, 0.66);
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-
-@media (max-width: 1180px) {
+}@media (max-width: 1180px) {
   .fg-product-hub__intro-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: clamp(1.25rem, 3vw, 2rem);
@@ -31470,14 +31313,359 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: 120px minmax(0, 1fr);
     gap: 0.9rem;
     align-items: center;
+  }}
+
+/* Filter row. The groupings are controls now rather than fixed headings, so the
+   whole range stays on one grid and narrowing it is the customer's choice. */
+.fg-ph-filters {
+  margin-bottom: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+.fg-ph-filters__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fg-ph-filters__row button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(0, 45, 58, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-steel);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.fg-ph-filters__row button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: rgba(0, 45, 58, 0.08);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.fg-ph-filters__row button:hover {
+  border-color: rgba(46, 172, 102, 0.5);
+}
+
+.fg-ph-filters__row button.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.fg-ph-filters__row button.is-active span {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.fg-ph-filters__note {
+  margin: 0.85rem 0 0;
+  color: rgba(2, 43, 53, 0.68);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* The range grid. */
+.fg-ph-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.6vw, 1.35rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-ph-grid--configs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 780px;
+}
+
+.fg-ph-card__wrap {
+  display: block;
+  min-width: 0;
+}
+
+.fg-ph-grid.is-revealing > .fg-ph-card__wrap {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.fg-ph-grid.is-revealing > .fg-ph-card__wrap.is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 520ms cubic-bezier(0.16, 0.72, 0.2, 1) var(--fg-reveal-delay, 0ms),
+    transform 520ms cubic-bezier(0.16, 0.72, 0.2, 1) var(--fg-reveal-delay, 0ms);
+}
+
+.fg-ph-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(0, 45, 58, 0.1);
+  border-radius: 10px;
+  background: #ffffff;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 14px 34px rgba(2, 43, 53, 0.08);
+  transition:
+    transform 260ms cubic-bezier(0.16, 0.72, 0.2, 1),
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+.fg-ph-card:hover,
+.fg-ph-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(46, 172, 102, 0.45);
+  box-shadow: 0 24px 52px rgba(2, 43, 53, 0.16);
+}
+
+.fg-ph-card__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--color-soft);
+  aspect-ratio: 4 / 3;
+}
+
+/* Direct child only. The spec chips sit inside .__media too. */
+.fg-ph-card__media > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 620ms cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+
+.fg-ph-card:hover .fg-ph-card__media > img,
+.fg-ph-card:focus-visible .fg-ph-card__media > img {
+  transform: scale(1.06);
+}
+
+/* Two real numbers from the product's own specification, over the photograph.
+   Always visible on touch, because an interaction must never depend on hover. */
+.fg-ph-card__specs {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.fg-ph-card__specs > span {
+  display: grid;
+  gap: 0.05rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.93);
+  box-shadow: 0 4px 14px rgba(2, 43, 53, 0.18);
+}
+
+.fg-ph-card__specs b {
+  color: var(--color-steel);
+  font-size: 0.82rem;
+  font-weight: 850;
+  line-height: 1.1;
+}
+
+.fg-ph-card__specs i {
+  color: rgba(2, 43, 53, 0.6);
+  font-size: 0.62rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.fg-ph-card__body {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 0.3rem;
+  padding: clamp(0.95rem, 1.5vw, 1.2rem);
+}
+
+.fg-ph-card__fit {
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-ph-card strong {
+  color: var(--color-steel);
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 1.22;
+}
+
+.fg-ph-card__copy {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  color: rgba(2, 43, 53, 0.72);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* The system mark lives down here with the words, not on the photograph. */
+.fg-ph-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.09);
+}
+
+.fg-ph-card__system {
+  display: flex;
+  align-items: center;
+  width: 84px;
+  height: 24px;
+}
+
+.fg-ph-card__system img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.fg-ph-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.fg-ph-card__more::after {
+  content: "\2192";
+  transition: transform 260ms cubic-bezier(0.16, 0.72, 0.2, 1);
+}
+
+.fg-ph-card:hover .fg-ph-card__more::after,
+.fg-ph-card:focus-visible .fg-ph-card__more::after {
+  transform: translateX(4px);
+}
+
+/* Configurations sit apart from the range because they are not products. */
+.fg-product-hub__configs-head {
+  max-width: 46rem;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.fg-product-hub__configs-head h2 {
+  margin: 0.3rem 0 0.5rem;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  line-height: 1.16;
+}
+
+.fg-product-hub__configs-head p:not(.eyebrow) {
+  margin: 0;
+  color: var(--color-steel);
+  line-height: 1.62;
+}
+
+@media (max-width: 1180px) {
+  .fg-ph-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-ph-grid,
+  .fg-ph-grid--configs {
+    grid-template-columns: 1fr;
+    max-width: none;
   }
 
-  .fg-product-hub__band-head {
-    display: block;
+  .fg-ph-card {
+    grid-template-columns: 148px minmax(0, 1fr);
+    grid-template-rows: none;
   }
 
-  .fg-product-hub__band-head p {
-    margin-top: 0.25rem;
+  .fg-ph-card__media {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  /* No room for chips beside a 148px thumbnail; the numbers move under the copy. */
+  .fg-ph-card__specs {
+    position: static;
+    margin-top: 0.5rem;
+    padding: 0;
+  }
+
+  .fg-ph-card__specs > span {
+    padding: 0.3rem 0.5rem;
+    background: rgba(0, 45, 58, 0.05);
+    box-shadow: none;
+  }
+
+  .fg-ph-card__body {
+    grid-template-rows: auto auto auto 1fr auto;
+  }
+
+  .fg-ph-filters__row {
+    gap: 0.4rem;
+  }
+
+  .fg-ph-filters__row button {
+    padding: 0.45rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 460px) {
+  .fg-ph-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .fg-ph-card__media {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-ph-grid.is-revealing > .fg-ph-card__wrap {
+    opacity: 1;
+    transform: none;
+  }
+
+  .fg-ph-card,
+  .fg-ph-card__media > img,
+  .fg-ph-card__more::after {
+    transition: none;
   }
 }
 
@@ -31650,7 +31838,6 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 1180px) {
-  .fg-product-hub__grid,
   .fg-product-hub__studies {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -31663,18 +31850,15 @@ html.fg-blinds-reveal-locked {
     align-items: start;
   }
 
-  .fg-product-hub__grid,
   .fg-product-hub__studies {
     grid-template-columns: 1fr;
   }
 
-  .fg-product-hub__card,
   .fg-product-hub__studies a {
     grid-template-columns: 132px minmax(0, 1fr);
     grid-template-rows: none;
   }
 
-  .fg-product-hub__media,
   .fg-product-hub__studies img {
     height: 100%;
     aspect-ratio: auto;
@@ -31688,13 +31872,11 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 460px) {
   /* Below this the side-by-side card leaves the copy too narrow to read. */
-  .fg-product-hub__card,
   .fg-product-hub__studies a {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
   }
 
-  .fg-product-hub__media,
   .fg-product-hub__studies img {
     aspect-ratio: 16 / 10;
   }

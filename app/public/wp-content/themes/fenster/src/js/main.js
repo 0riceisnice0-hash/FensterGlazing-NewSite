@@ -996,6 +996,108 @@ document.querySelectorAll('[data-fg-cd-config]').forEach((config) => {
  * It pauses on hover, while dragging, and for a moment after a drag, then
  * eases back to drifting once the pointer has left.
  */
+/*
+ * Product hub: filtering the range, and revealing it on first sight.
+ *
+ * Filtering uses FLIP so the cards that stay on screen glide to their new
+ * positions instead of teleporting: measure, change the DOM, measure again,
+ * then animate each card from its old box to its new one. Reduced motion gets
+ * the same result with no movement.
+ */
+document.querySelectorAll('[data-fg-product-hub]').forEach((hub) => {
+  const grid = hub.querySelector('[data-fg-hub-grid]');
+  const buttons = [...hub.querySelectorAll('[data-fg-hub-filter]')];
+  if (!grid || !buttons.length) return;
+
+  const items = [...grid.querySelectorAll('[data-fg-hub-item]')];
+  const note = hub.querySelector('[data-fg-hub-note]');
+  const defaultNote = note ? note.textContent : '';
+  const notes = new Map();
+  hub.querySelectorAll('[data-fg-hub-note-for]').forEach((tpl) => {
+    notes.set(tpl.dataset.fgHubNoteFor, tpl.textContent.trim());
+  });
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const apply = (key) => {
+    const first = new Map();
+    if (!reduceMotion.matches) {
+      items.forEach((item) => {
+        if (!item.hidden) first.set(item, item.getBoundingClientRect());
+      });
+    }
+
+    items.forEach((item) => {
+      const show = key === 'all' || item.dataset.filter === key;
+      item.hidden = !show;
+      item.classList.toggle('is-filtered-out', !show);
+    });
+
+    if (reduceMotion.matches) return;
+
+    items.forEach((item) => {
+      if (item.hidden) return;
+      const last = item.getBoundingClientRect();
+      const prev = first.get(item);
+
+      if (!prev) {
+        // Newly shown: fade and lift in rather than appearing mid-air.
+        item.animate(
+          [
+            { opacity: 0, transform: 'translateY(10px) scale(0.97)' },
+            { opacity: 1, transform: 'none' },
+          ],
+          { duration: 260, easing: 'cubic-bezier(0.16, 0.72, 0.2, 1)' },
+        );
+        return;
+      }
+
+      const dx = prev.left - last.left;
+      const dy = prev.top - last.top;
+      if (!dx && !dy) return;
+
+      item.animate(
+        [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }],
+        { duration: 340, easing: 'cubic-bezier(0.16, 0.72, 0.2, 1)' },
+      );
+    });
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const key = button.dataset.fgHubFilter || 'all';
+      buttons.forEach((other) => {
+        const active = other === button;
+        other.classList.toggle('is-active', active);
+        other.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      if (note) note.textContent = key === 'all' ? defaultNote : notes.get(key) || defaultNote;
+      apply(key);
+    });
+  });
+
+  // Reveal on first sight, stagger by position in the row.
+  if (!reduceMotion.matches && 'IntersectionObserver' in window) {
+    grid.classList.add('is-revealing');
+    const seen = new WeakSet();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || seen.has(entry.target)) return;
+          seen.add(entry.target);
+          const row = [...grid.children].indexOf(entry.target) % 3;
+          entry.target.style.setProperty('--fg-reveal-delay', `${row * 70}ms`);
+          entry.target.classList.add('is-revealed');
+          io.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+    );
+    items.forEach((item) => io.observe(item));
+  }
+});
+
 document.querySelectorAll('[data-fg-door-wall]').forEach((viewport) => {
   const track = viewport.querySelector('.fg-cd3-wall__track');
   if (!track) return;
