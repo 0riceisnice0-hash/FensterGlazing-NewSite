@@ -602,3 +602,48 @@ function fenster_case_studies_for_product(string $slug, int $limit = 3): array
 
     return $cards;
 }
+
+/**
+ * Case studies matching any product in a group, for the product-selector hubs.
+ *
+ * Deliberately has no fallback. fenster_case_studies_for_product() returns every
+ * study when nothing matches, which is why product pages with no study of their
+ * own show unrelated jobs under a heading claiming they are that product. On a
+ * hub we would rather render nothing than make that claim.
+ *
+ * @param string[] $slugs Product route slugs in the group.
+ * @return array<int, array<string, mixed>> Case study cards, empty when none match.
+ */
+function fenster_case_studies_for_product_group(array $slugs, int $limit = 3): array
+{
+    if ($slugs === []) {
+        return [];
+    }
+
+    $targets = [];
+    foreach ($slugs as $slug) {
+        $targets['/' . trim((string) $slug, '/') . '/'] = true;
+    }
+
+    $matched = [];
+    foreach (fenster_case_studies() as $short => $study) {
+        foreach ((array) ($study['products'] ?? []) as $product) {
+            $path = (string) wp_parse_url((string) ($product['url'] ?? ''), PHP_URL_PATH);
+            if ($path === '') {
+                continue;
+            }
+
+            if (isset($targets[rtrim($path, '/') . '/'])) {
+                $matched[$short] = $study;
+                break;
+            }
+        }
+    }
+
+    $cards = [];
+    foreach (array_slice($matched, 0, max(1, $limit), true) as $short => $study) {
+        $cards[] = fenster_case_study_card((string) $short, $study);
+    }
+
+    return $cards;
+}

@@ -275,6 +275,12 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Doors Milton Keynes | Front, Patio, Bifold & French Doors',
             'meta_description' => 'Doors in Milton Keynes from Fenster Glazing, including composite, uPVC, aluminium, French, patio and bifold doors with local survey-led installation.',
         ],
+        // The third product-selector hub. Its imported metadata was a scrape
+        // leftover that opened with "Discover our other services".
+        'other-services' => [
+            'title_tag' => 'Roof Lanterns, Blinds, Roofline & Repairs | Fenster Glazing',
+            'meta_description' => 'Roof lanterns, flat rooflights, integral blinds, replacement glass, secondary glazing, roofline and repairs across Milton Keynes and the nearby towns.',
+        ],
         'composite-doors' => [
             'title_tag' => 'Composite Doors Milton Keynes | Secure Front Doors',
             'meta_description' => 'Composite doors with insulated slabs, secure locking, colour choices and survey-led fitting across Milton Keynes, Northampton and nearby towns.',

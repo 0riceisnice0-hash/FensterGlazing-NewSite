@@ -550,6 +550,92 @@ function fenster_site_data(): array
                 ],
             ],
         ],
+        /*
+         * The three product-selector hubs: /windows-milton-keynes/,
+         * /doors-milton-keynes/ and /other-services/.
+         *
+         * Card imagery is NOT stored here. It is read from product_media[slug].hero
+         * so a hub card and its product page can never show different photographs.
+         * Only set 'image' for a route that has no product_media entry.
+         *
+         * 'fit' is the one-line reason to pick this over its siblings, and 'copy'
+         * is the fact that backs it up. Both are for choosing, not for selling;
+         * the product page does the selling.
+         */
+        'product_hub_groups' => [
+            'windows' => [
+                'eyebrow' => 'Windows',
+                // Theme-owned H1s. The windows and doors values are the ones already
+                // ranking; do not churn them. No closing full stop, per the H1 rule.
+                'h1' => 'Double glazed windows in Milton Keynes',
+                'intro' => 'Nine styles, in uPVC and aluminium. The differences that matter are how it looks from the street, how it opens, and how slim the frame is. Pick the one that sounds like your house and we will confirm the specification at survey.',
+                'guide_heading' => 'Three questions narrow it down.',
+                'guide_intro' => 'Most people arrive knowing they want new windows and not much else. These are the three things we ask on the phone.',
+                'guide' => [
+                    ['title' => 'What does it need to look like?', 'copy' => 'Modern flat lines, a flush timber look, or period proportions with horns and glazing bars.'],
+                    ['title' => 'How should it open?', 'copy' => 'Everyday ventilation, a clear opening with no centre bar, or inward so you can clean the outside from an upstairs room.'],
+                    ['title' => 'uPVC or aluminium?', 'copy' => 'Aluminium buys thinner frames and more glass for the same hole in the wall. uPVC costs less and insulates well.'],
+                ],
+                'quote_heading' => 'Price a window before you speak to anyone.',
+                'products' => [
+                    ['slug' => 'casement-windows', 'name' => 'Casement Windows', 'fit' => 'The everyday all-rounder', 'copy' => 'Side or top hung, in almost any combination. Most of the homes we work on end up with these.'],
+                    ['slug' => 'flush-casement-windows', 'name' => 'Flush Casement Windows', 'fit' => 'Sits level with the frame', 'copy' => 'The sash closes flush into the outer frame rather than sitting proud of it, which is how timber windows were made.'],
+                    ['slug' => 'sliding-sash-windows', 'name' => 'Sliding Sash Windows', 'fit' => 'Period proportions', 'copy' => 'Vertical sliders on the Roseview system, with the horns and bar layouts a period frontage needs.'],
+                    ['slug' => 'tilt-turn-windows', 'name' => 'Tilt and Turn Windows', 'fit' => 'Two ways to open', 'copy' => 'Tilt the top inwards for ventilation without unlocking, or swing the whole sash in to clean the outside from indoors.'],
+                    ['slug' => 'aluminium-windows', 'name' => 'Aluminium Windows', 'fit' => 'Slim frames, more glass', 'copy' => 'Thinner sightlines than uPVC for the same opening, powder coated in the RAL colour you choose.'],
+                    ['slug' => 'aluminium-flush-windows', 'name' => 'Aluminium Flush Windows', 'fit' => 'Flat outside face', 'copy' => 'The aluminium version of a flush sash, where the sash and the frame finish on the same plane.'],
+                    ['slug' => 'heritage-windows', 'name' => 'Heritage Windows', 'fit' => 'The steel-window look', 'copy' => 'Slim sections and stepped bars that read like original steel, in thermally broken aluminium.'],
+                    ['slug' => 'french-casement-windows', 'name' => 'French Casement Windows', 'fit' => 'No bar down the middle', 'copy' => 'Two sashes meeting in the centre with no fixed mullion, so the whole opening is clear. Often specified as an upstairs escape route.'],
+                    ['slug' => 'bow-bay-windows', 'name' => 'Bow and Bay Windows', 'fit' => 'Projects out from the wall', 'copy' => 'A bay turns at angles, a bow curves. Both add floor area and light to the room behind.'],
+                ],
+            ],
+            'doors' => [
+                'eyebrow' => 'Doors',
+                'h1' => 'Doors in Milton Keynes',
+                'intro' => 'Front doors, back doors and the wide openings onto a garden. The first thing to settle is where it is going and how it needs to open, because that rules most of this list in or out straight away.',
+                'guide_heading' => 'Three questions narrow it down.',
+                'guide_intro' => 'A front door and a garden opening are different problems. These are the three things we ask before quoting either.',
+                'guide' => [
+                    ['title' => 'Where is it going?', 'copy' => 'A front entrance, a back or utility door, or a wide opening onto the garden.'],
+                    ['title' => 'How should it open?', 'copy' => 'Hinged, folding back on itself, or sliding past. Folding and sliding need the space either to stack or to slide into.'],
+                    ['title' => 'What matters most?', 'copy' => 'Security and insulation at the front. Glass area and threshold height at the back.'],
+                ],
+                'quote_heading' => 'Price a door before you speak to anyone.',
+                'products' => [
+                    ['slug' => 'composite-doors', 'name' => 'Composite Doors', 'fit' => 'The usual front door choice', 'copy' => 'A 44.5mm insulated slab, against 28mm for a uPVC door panel, with the break-in guarantee behind it.'],
+                    ['slug' => 'upvc-doors', 'name' => 'uPVC Doors', 'fit' => 'Straightforward and low upkeep', 'copy' => 'Front, back and utility doors that need washing rather than painting.'],
+                    ['slug' => 'aluminium-doors', 'name' => 'Aluminium Doors', 'fit' => 'Matches aluminium windows', 'copy' => 'A front, back or side door in the same frames and powder-coated colours as the windows around it.'],
+                    ['slug' => 'heritage-aluminium-doors', 'name' => 'Heritage Aluminium Doors', 'fit' => 'The steel-door look', 'copy' => 'The Sheerline Classic door at 60.5mm sightlines, single or French, opening in or out.'],
+                    ['slug' => 'french-doors', 'name' => 'French Doors', 'fit' => 'A pair, opening from the centre', 'copy' => 'Two doors swinging open together, with the option of fixed side panels either side.'],
+                    ['slug' => 'patio-doors', 'name' => 'Patio Doors', 'fit' => 'Sliding, in uPVC', 'copy' => 'Panels sliding past each other, at a lower cost than the aluminium equivalent, and nothing swings into the room.'],
+                    ['slug' => 'aluminium-sliding-doors', 'name' => 'Aluminium Sliding Doors', 'fit' => 'The largest panes', 'copy' => 'Sheerline lift and slide, with interlocks as slim as 52mm, so the frame gets out of the way of the view.'],
+                    ['slug' => 'aluminium-bifold-doors', 'name' => 'Aluminium Bifold Doors', 'fit' => 'Folds right back', 'copy' => 'Panels stack to one or both sides, so in summer the opening is almost entirely clear.'],
+                    ['slug' => 'slide-fold-doors', 'name' => 'Slide and Fold Doors', 'fit' => 'Folding, on a budget', 'copy' => 'The folding action of a bifold where the opening or the budget does not suit an aluminium set.'],
+                ],
+            ],
+            'other-services' => [
+                'eyebrow' => 'Other services',
+                'h1' => 'Roof glazing, blinds, roofline and repairs',
+                'intro' => 'Roof glazing, blinds sealed inside the glass, the boards around the roof edge, and the smaller jobs. Some of this we do on its own, and some of it makes sense to do while the scaffolding is already up.',
+                'guide_heading' => 'Start with what is actually wrong.',
+                'guide_intro' => 'Half the calls we take about these are solvable more cheaply than the caller expects. It is worth working out which problem you have first.',
+                'guide' => [
+                    ['title' => 'Is it the frame, or the glass?', 'copy' => 'If the frames are sound and the units have misted, the glass can be changed on its own and the frames stay where they are.'],
+                    ['title' => 'Is it about light, or about noise?', 'copy' => 'Roof glazing brings daylight into a room with no wall to take a window. Secondary glazing is for sound, and for frontages that have to stay as they are.'],
+                    ['title' => 'Is it a whole job, or a small one?', 'copy' => 'We take on handle, hinge, lock and glass repairs as well as full installations, including on windows we did not fit.'],
+                ],
+                'quote_heading' => 'Not sure which of these you need?',
+                'products' => [
+                    ['slug' => 'roof-lanterns', 'name' => 'Roof Lanterns', 'fit' => 'Daylight from above', 'copy' => 'Sheerline S1 in square, 2-way and 3-way layouts, up to 3.2 x 6m without tie bars.'],
+                    ['slug' => 'flat-rooflights', 'name' => 'Flat Rooflights', 'fit' => 'Flat roof, flat glass', 'copy' => 'Glazing that sits close to the roof line, for extensions where a lantern would stand too tall.', 'image' => '/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/fixed-flat-rooflights-installed-pair.jpg'],
+                    ['slug' => 'integral-blinds', 'name' => 'Integral Blinds', 'fit' => 'Blinds inside the glass', 'copy' => 'Sealed between the panes, so there is nothing to dust and nothing to catch. Magnetic or electric control.'],
+                    ['slug' => 'double-glazing-replacement', 'name' => 'Replacement Glazing', 'fit' => 'New glass, same frames', 'copy' => 'Misted or broken sealed units changed on their own, without replacing the window around them.'],
+                    ['slug' => 'secondary-glazing', 'name' => 'Secondary Glazing', 'fit' => 'A second pane, added inside', 'copy' => 'For listed frontages and noisy roads, where the existing window has to stay exactly as it is.'],
+                    ['slug' => 'window-and-door-repairs', 'name' => 'Window and Door Repairs', 'fit' => 'Handles, hinges, locks and glass', 'copy' => 'Small jobs on windows and doors, including ones we did not fit ourselves.'],
+                    ['slug' => 'roofline', 'name' => 'Roofline', 'fit' => 'Fascias, soffits and guttering', 'copy' => 'The boards and gutters along the roof edge, usually worth doing while the scaffolding is already up.'],
+                ],
+            ],
+        ],
         'product_gallery_groups' => [
             'double-glazing' => 'upvc_windows',
             'casement-windows' => 'casement_windows',

@@ -163,7 +163,11 @@ $is_constructionline_page = $slug === 'constructionline-gold';
 $is_ssip_page = $slug === 'ssip-health-and-safety';
 $is_windows_hub = $slug === 'windows-milton-keynes';
 $is_doors_hub = $slug === 'doors-milton-keynes';
-$is_product_selector_hub = $is_windows_hub || $is_doors_hub;
+// /other-services/ used to fall through to the generated utility layout, which
+// rendered it as a scrape shell. It is a product-selector hub like the other two.
+$is_services_hub = $slug === 'other-services';
+$product_hub_group = $is_doors_hub ? 'doors' : ($is_services_hub ? 'other-services' : 'windows');
+$is_product_selector_hub = $is_windows_hub || $is_doors_hub || $is_services_hub;
 $is_commercial_hub = $slug === 'commercial-glazing';
 $commercial_county_pages = function_exists('fenster_commercial_county_pages') ? fenster_commercial_county_pages() : [];
 $is_commercial_county = isset($commercial_county_pages[$slug]);
@@ -184,7 +188,7 @@ $price_guide_pages = function_exists('fenster_price_guide_pages') ? fenster_pric
 $is_price_guide = isset($price_guide_pages[$slug]) || ! empty($page['is_price_guide']);
 $is_quote_tool = in_array($slug, ['online-quote', '3d-visualiser', 'instant-pricing', 'instant-pricing-meta-ads', 'pricing-gads', 'design-your-windows-and-doors', 'door-designer'], true);
 $is_archive_page = $slug === 'blog' || str_starts_with($slug, 'blog/page/') || str_starts_with($slug, 'category/') || str_starts_with($slug, 'tag/') || str_starts_with($slug, 'author/');
-$is_utility_page = in_array($slug, ['privacy-policy', 'cookie-policy', 'terms-conditions', 'why-trust-fenster', 'brochures', 'downloads', 'gallery', 'customer-portal', 'careers', 'refer-a-friend', 'fenster-partners', 'videos', 'apecs-terms-conditions', 'other-services'], true);
+$is_utility_page = in_array($slug, ['privacy-policy', 'cookie-policy', 'terms-conditions', 'why-trust-fenster', 'brochures', 'downloads', 'gallery', 'customer-portal', 'careers', 'refer-a-friend', 'fenster-partners', 'videos', 'apecs-terms-conditions'], true);
 $location_matrix_towns = function_exists('fenster_location_matrix_towns') ? fenster_location_matrix_towns() : [];
 $location_matrix_products = function_exists('fenster_location_matrix_products') ? fenster_location_matrix_products() : [];
 // '/double-glazing-milton-keynes/' is no longer a matrix route (Milton Keynes
@@ -1895,13 +1899,10 @@ if ($slug === 'flat-rooflights') {
 }
 
 if ($is_product_selector_hub) {
-    get_template_part('template-parts/sections/windows-hub', null, [
-        'asset_base' => $asset_base,
+    get_template_part('template-parts/sections/product-hub', null, [
         'brand' => $brand,
+        'group' => $product_hub_group,
         'instant_quote_preview' => $instant_quote_preview,
-        'page' => $page,
-        'related_links' => $related_links,
-        'selector_type' => $is_doors_hub ? 'doors' : 'windows',
         'title' => $title,
         'trust_items' => $trust_items,
     ]);
