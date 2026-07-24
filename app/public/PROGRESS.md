@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Distinction in the doors panel, no cost framing, even rows (test, 673c6bc)
+
+Owner: add Distinction to the doors hero spec list, lay the products out better, and be careful with the wording, because "Folding, on a budget" for slide and fold is very bad and we should never say budget.
+
+- **Distinction leads the doors systems panel** ahead of Liniar and Sheerline, since composite is the first card on the page.
+- **The wording rule is now in `TONEOFVOICE.md`**, because it is durable and applies to every page, not just this one: never position one of our own products as the low-cost option, including the softer forms. Swept the whole hub block against the banned list and found four: "Folding, on a budget", "at a lower cost than the aluminium equivalent" on patio doors, "Warmer for the money" on the uPVC band, and "uPVC costs less" in the windows guide. A fifth, "solvable more cheaply than the caller expects", was friendly rather than damaging but reads better as scope than as price.
+- **Slide and fold now says what it actually does.** Its real difference from a bifold, taken from the product intro, is that each panel slides and opens on its own, so a wide opening is not an all-or-nothing choice. That is a reason to choose it, where the old line was a reason not to.
+- **Rows are even now.** The doors bands ran four then five, leaving one card alone on a row at three columns. The heritage door is single or French and its own page sells it to a garden, so it moved to the garden set: three then six, no orphan. Windows were already six then three, services two, three and two, all of which sit as complete rows.
+- **Card text blocks are the same height.** Copy is clamped to three lines and the View link is pinned to the bottom of the card, so the links across a row land on one line rather than wherever each sentence happened to end.
+- Verified on test at 1440, 768 and 390: no horizontal overflow, zero console errors, all cards and images present, badges uncropped.
+
 ## 2026-07-24 - Hub cards: close-ups and the system mark (test, 31b83bd)
 
 Owner: put a small system logo in the bottom right of each product image, and make sure the images are close-ups, heritage being a bad example.
