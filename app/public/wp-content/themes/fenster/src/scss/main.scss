@@ -31158,7 +31158,15 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-product-hub__intro {
-  padding-top: clamp(1.75rem, 3vw, 2.5rem);
+  padding-bottom: clamp(1rem, 1.6vw, 1.4rem);
+}
+
+.fg-product-hub__range {
+  padding-top: 0;
+}
+
+.fg-product-hub__intro {
+  padding-top: clamp(1.25rem, 2.2vw, 1.9rem);
 }
 
 /* The range. Fixed-ratio cells so a portrait door render and a landscape
@@ -31182,16 +31190,18 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-product-hub__intro h1 {
-  margin: 0.4rem 0 0;
-  font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max));
-  line-height: 1.06;
+  margin: 0.3rem 0 0;
+  /* Deliberately below the page-heading default: every 10px here is 10px the
+     range moves down, and the range is what the page is for. */
+  font-size: clamp(1.9rem, 2.9vw, 2.9rem);
+  line-height: 1.08;
 }
 
 .fg-product-hub__lead-copy {
-  margin: clamp(0.9rem, 1.6vw, 1.15rem) 0 0;
+  margin: clamp(0.6rem, 1.1vw, 0.85rem) 0 0;
   color: var(--color-steel);
-  font-size: clamp(1rem, 1.15vw, 1.1rem);
-  line-height: 1.62;
+  font-size: clamp(0.95rem, 1.05vw, 1.02rem);
+  line-height: 1.55;
 }
 
 .fg-product-hub__actions {
@@ -31199,12 +31209,12 @@ html.fg-blinds-reveal-locked {
   flex-wrap: wrap;
   gap: 0.75rem;
   /* Clear air between the sentence and the buttons; they were touching. */
-  margin: clamp(1.6rem, 2.6vw, 2.1rem) 0 0;
+  margin: clamp(1rem, 1.8vw, 1.4rem) 0 0;
 }
 
 /* The systems panel. */
 .fg-product-hub__systems {
-  padding: clamp(1.15rem, 2vw, 1.5rem);
+  padding: clamp(0.9rem, 1.5vw, 1.15rem);
   border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.9);
@@ -31222,7 +31232,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-product-hub__systems ul {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.55rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -31230,10 +31240,10 @@ html.fg-blinds-reveal-locked {
 
 .fg-product-hub__systems li {
   display: grid;
-  grid-template-columns: 132px minmax(0, 1fr);
-  gap: 1rem;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 0.85rem;
   align-items: center;
-  padding-bottom: 0.7rem;
+  padding-bottom: 0.55rem;
   border-bottom: 1px solid rgba(0, 45, 58, 0.08);
 }
 
@@ -31249,7 +31259,7 @@ html.fg-blinds-reveal-locked {
   /* Tall enough that the squarer marks are not squeezed to a thumbnail. The
      three logos run from 2.2:1 to 8:1, so height is what governs the small
      ones and width governs Sheerline. */
-  height: 40px;
+  height: 34px;
 }
 
 /* Supplier marks arrive at very different aspect ratios, so contain them in a
@@ -31339,15 +31349,15 @@ html.fg-blinds-reveal-locked {
 .fg-ph-tile {
   position: relative;
   display: block;
-  height: 100%;
-  min-height: 0;
   overflow: hidden;
   border-radius: 10px;
   background: var(--color-soft);
   color: #ffffff;
   text-decoration: none;
   box-shadow: 0 12px 30px rgba(2, 43, 53, 0.12);
-  aspect-ratio: 4 / 5;
+  /* Sized from the viewport, not from a ratio, because the requirement is that
+     two rows plus the hero fit on one screen. */
+  height: clamp(146px, 25vh, 250px);
   transition:
     transform 260ms cubic-bezier(0.16, 0.72, 0.2, 1),
     box-shadow 260ms ease;
@@ -31439,7 +31449,8 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .fg-ph-tile {
+    .fg-ph-tile {
+    height: auto;
     aspect-ratio: 1 / 1;
   }
 
