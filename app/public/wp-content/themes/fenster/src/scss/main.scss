@@ -27468,29 +27468,50 @@ html.fg-blinds-reveal-locked {
   line-height: 1.58;
 }
 
-.fg-roof-lantern-configurations__carousel {
-  width: min(100%, 1060px);
+/* The S1 layouts reuse the composite door wall: same `.fg-cd3-wall__viewport`,
+   same track, same drift controller in main.js, so the two cannot drift apart.
+   Only the card differs. A lantern render is a wide product shot floating on
+   white, so it is contained on a soft panel with the label underneath rather
+   than cover-cropped under a dark gradient the way a door photograph is. */
+.fg-lantern-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 300px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(2, 43, 53, 0.13);
 }
 
-.fg-roof-lantern-configurations__carousel .fg-colour-carousel__viewport {
-  min-height: clamp(340px, 33vw, 375px);
-}
-
-.fg-roof-lantern-configurations__slide {
-  width: min(62%, 500px);
-}
-
-.fg-roof-lantern-configurations__slide img {
-  height: auto;
-  aspect-ratio: 16 / 9;
-  padding: clamp(0.5rem, 1.5vw, 1rem);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), var(--color-soft));
+.fg-lantern-card img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  padding: 0.55rem 0.7rem 0;
+  background: linear-gradient(180deg, #eef4f3, #ffffff);
   object-fit: contain;
 }
 
-.fg-roof-lantern-configurations__slide > div {
-  min-height: 88px;
-  padding: 0.75rem 1rem 0.85rem;
+.fg-lantern-card__label {
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.7rem 0.9rem 0.8rem;
+  border-top: 1px solid rgba(2, 43, 53, 0.1);
+}
+
+.fg-lantern-card__label strong {
+  color: var(--color-steel);
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.fg-lantern-card__label small {
+  color: rgba(2, 43, 53, 0.6);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .fg-roof-lantern-views {
@@ -28119,18 +28140,6 @@ html.fg-blinds-reveal-locked {
 
   .fg-roof-lantern-configurations {
     padding: 2.25rem 0;
-  }
-
-  .fg-roof-lantern-configurations__carousel .fg-colour-carousel__viewport {
-    min-height: 315px;
-  }
-
-  .fg-roof-lantern-configurations__slide {
-    width: min(84vw, 330px);
-  }
-
-  .fg-roof-lantern-configurations__slide > div {
-    min-height: 82px;
   }
 
   .fg-roof-lantern-views__grid {
@@ -31999,7 +32008,8 @@ html.fg-blinds-reveal-locked {
 @media (prefers-reduced-motion: reduce) {
   /* No drift, but the wall stays draggable and scrollable. main.js honours the
      same query and never starts the loop. */
-  .fg-cd3-door.is-clone {
+  .fg-cd3-door.is-clone,
+  .fg-lantern-card.is-clone {
     display: none;
   }
 }
@@ -32190,8 +32200,18 @@ html.fg-blinds-reveal-locked {
     height: 360px;
   }
 
-  .fg-cd3-door.is-clone {
+  .fg-cd3-door.is-clone,
+  .fg-lantern-card.is-clone {
     display: none;
+  }
+
+  .fg-lantern-card {
+    width: 250px;
+    scroll-snap-align: start;
+  }
+
+  .fg-lantern-card img {
+    height: 150px;
   }
 
   /* Preview leads on a phone, then the swatches under it. */

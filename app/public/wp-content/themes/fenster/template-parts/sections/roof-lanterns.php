@@ -129,27 +129,30 @@ $roof_styles = [
                     <h2><?php esc_html_e('Compare all 13 roof lantern layouts.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('S1 is available in square, 2-way and 3-way layouts up to 3.2 x 6m without tie bars. We will confirm which layouts suit the opening before you choose the frame colour and glass.', 'fenster'); ?></p>
                 </div>
-                <div class="fg-colour-carousel fg-roof-lantern-configurations__carousel" data-fg-colour-carousel>
-                    <div class="fg-colour-carousel__viewport">
-                        <div class="fg-colour-carousel__track" data-fg-colour-carousel-track>
-                            <?php foreach ($roof_styles as $index => $roof_style) : ?>
-                                <article class="fg-colour-carousel__slide fg-roof-lantern-configurations__slide" data-fg-colour-slide>
-                                    <img src="<?php echo esc_url($asset('configurations/' . $roof_style['image'])); ?>" alt="<?php echo esc_attr($roof_style['layout'] . ' ' . $roof_style['style'] . ' roof lantern in ' . $roof_style['colour']); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/configurations/' . $roof_style['image']); ?>>
-                                    <div>
-                                        <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
-                                        <h3><?php echo esc_html($roof_style['layout'] . ' ' . $roof_style['style']); ?></h3>
-                                        <p><?php echo esc_html($roof_style['colour']); ?></p>
-                                    </div>
-                                </article>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <div class="fg-colour-carousel__controls">
-                        <button type="button" data-fg-colour-prev aria-label="<?php esc_attr_e('Previous roof lantern configuration', 'fenster'); ?>">&#8249;</button>
-                        <span data-fg-colour-count><?php echo esc_html('01 / ' . sprintf('%02d', count($roof_styles))); ?></span>
-                        <button type="button" data-fg-colour-next aria-label="<?php esc_attr_e('Next roof lantern configuration', 'fenster'); ?>">&#8250;</button>
-                    </div>
-                </div>
+            </div>
+            <?php
+            /*
+             * Rendered twice so the drift in main.js can rewind by exactly half the
+             * scroll width without showing a seam. The second pass is hidden from
+             * assistive tech, and from everyone at 860px and under reduced motion,
+             * where the wall becomes a plain swipe rail.
+             */
+            $wall_passes = [false, true];
+            ?>
+            <div class="fg-cd3-wall__viewport" data-fg-door-wall tabindex="0" role="region" aria-label="<?php esc_attr_e('Sheerline S1 roof lantern layouts. Drag or scroll sideways to explore.', 'fenster'); ?>">
+                <ul class="fg-cd3-wall__track">
+                    <?php foreach ($wall_passes as $is_clone) : ?>
+                        <?php foreach ($roof_styles as $roof_style) : ?>
+                            <li class="fg-lantern-card<?php echo $is_clone ? ' is-clone' : ''; ?>"<?php echo $is_clone ? ' aria-hidden="true"' : ''; ?>>
+                                <img src="<?php echo esc_url($asset('configurations/' . $roof_style['image'])); ?>" alt="<?php echo esc_attr(sprintf('%1$s %2$s roof lantern in %3$s', $roof_style['layout'], $roof_style['style'], $roof_style['colour'])); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/configurations/' . $roof_style['image']); ?>>
+                                <span class="fg-lantern-card__label">
+                                    <strong><?php echo esc_html($roof_style['layout'] . ' ' . $roof_style['style']); ?></strong>
+                                    <small><?php echo esc_html($roof_style['colour']); ?></small>
+                                </span>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         </section>
 
