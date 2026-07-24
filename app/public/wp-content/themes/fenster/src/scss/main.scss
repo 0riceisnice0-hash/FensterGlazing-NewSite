@@ -31250,6 +31250,8 @@ html.fg-blinds-reveal-locked {
   display: grid;
   align-content: start;
   gap: 0.3rem;
+  /* The link is pinned to the bottom so it sits on the same line across a row. */
+  grid-template-rows: auto auto 1fr auto;
   padding: clamp(0.95rem, 1.5vw, 1.2rem);
 }
 
@@ -31268,7 +31270,13 @@ html.fg-blinds-reveal-locked {
   line-height: 1.22;
 }
 
+/* Clamped so every text block in a row is the same height and the View links
+   line up, rather than each card ending wherever its sentence happens to. */
 .fg-product-hub__copy {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   color: rgba(2, 43, 53, 0.72);
   font-size: 0.92rem;
   line-height: 1.55;

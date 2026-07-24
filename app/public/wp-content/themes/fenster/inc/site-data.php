@@ -582,7 +582,7 @@ function fenster_site_data(): array
                 'guide' => [
                     ['title' => 'What does it need to look like?', 'copy' => 'Modern flat lines, a flush timber look, or period proportions with horns and glazing bars.'],
                     ['title' => 'How should it open?', 'copy' => 'Everyday ventilation, a clear opening with no centre bar, or inward so you can clean the outside from an upstairs room.'],
-                    ['title' => 'uPVC or aluminium?', 'copy' => 'Aluminium buys thinner frames and more glass for the same hole in the wall. uPVC costs less and insulates well.'],
+                    ['title' => 'uPVC or aluminium?', 'copy' => 'Aluminium gives thinner frames and more glass for the same hole in the wall. uPVC gives the wider choice of styles, colours and shapes.'],
                 ],
                 'quote_heading' => 'Price a window before you speak to anyone.',
                 'suppliers_note' => 'Three systems, so a specification conversation is about products we fit every week.',
@@ -594,7 +594,7 @@ function fenster_site_data(): array
                 // Bands answer the guide's third question with the layout rather
                 // than only in prose. Every slug here must exist in 'products'.
                 'bands' => [
-                    ['label' => 'uPVC windows', 'note' => 'Warmer for the money, and the widest choice of styles.', 'slugs' => ['casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'tilt-turn-windows', 'french-casement-windows', 'bow-bay-windows']],
+                    ['label' => 'uPVC windows', 'note' => 'The widest choice of styles, and A++ ratings without triple glazing.', 'slugs' => ['casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'tilt-turn-windows', 'french-casement-windows', 'bow-bay-windows']],
                     ['label' => 'Aluminium windows', 'note' => 'Thinner frames and more glass, in any RAL colour.', 'slugs' => ['aluminium-windows', 'aluminium-flush-windows', 'heritage-windows']],
                 ],
                 'products' => [
@@ -621,16 +621,17 @@ function fenster_site_data(): array
                     ['title' => 'What matters most?', 'copy' => 'Security and insulation at the front. Glass area and threshold height at the back.'],
                 ],
                 'quote_heading' => 'Price a door before you speak to anyone.',
-                'suppliers_note' => 'The two systems behind most of what we hang.',
+                'suppliers_note' => 'The three systems behind everything we hang.',
                 'suppliers' => [
+                    ['logo' => 'distinction-doors.png', 'name' => 'Distinction Doors', 'role' => 'Composite doors'],
                     ['logo' => 'liniar.png', 'name' => 'Liniar', 'role' => 'uPVC doors'],
                     ['logo' => 'sheerline.png', 'name' => 'Sheerline', 'role' => 'Aluminium doors'],
                 ],
                 // Grouped by where the door goes, which is the first question we
                 // ask on the phone and the one that rules most of the list out.
                 'bands' => [
-                    ['label' => 'Front, back and side doors', 'note' => 'One opening, hinged, where security and insulation matter most.', 'slugs' => ['composite-doors', 'upvc-doors', 'aluminium-doors', 'heritage-aluminium-doors']],
-                    ['label' => 'Doors onto the garden', 'note' => 'Wider openings, where the question is how the panels get out of the way.', 'slugs' => ['french-doors', 'patio-doors', 'aluminium-sliding-doors', 'aluminium-bifold-doors', 'slide-fold-doors']],
+                    ['label' => 'Front, back and side doors', 'note' => 'One opening, hinged, where security and insulation matter most.', 'slugs' => ['composite-doors', 'upvc-doors', 'aluminium-doors']],
+                    ['label' => 'Doors onto the garden', 'note' => 'Wider openings, where the question is how the panels get out of the way.', 'slugs' => ['heritage-aluminium-doors', 'french-doors', 'patio-doors', 'aluminium-sliding-doors', 'aluminium-bifold-doors', 'slide-fold-doors']],
                 ],
                 'products' => [
                     ['slug' => 'composite-doors', 'name' => 'Composite Doors', 'fit' => 'The usual front door choice', 'copy' => 'A 44.5mm insulated slab, against 28mm for a uPVC door panel, with the break-in guarantee behind it.'],
@@ -638,10 +639,10 @@ function fenster_site_data(): array
                     ['slug' => 'aluminium-doors', 'name' => 'Aluminium Doors', 'fit' => 'Matches aluminium windows', 'copy' => 'A front, back or side door in the same frames and powder-coated colours as the windows around it.'],
                     ['slug' => 'heritage-aluminium-doors', 'name' => 'Heritage Aluminium Doors', 'fit' => 'The steel-door look', 'copy' => 'The Sheerline Classic door at 60.5mm sightlines, single or French, opening in or out.'],
                     ['slug' => 'french-doors', 'name' => 'French Doors', 'fit' => 'A pair, opening from the centre', 'copy' => 'Two doors swinging open together, with the option of fixed side panels either side.'],
-                    ['slug' => 'patio-doors', 'name' => 'Patio Doors', 'fit' => 'Sliding, in uPVC', 'copy' => 'Panels sliding past each other, at a lower cost than the aluminium equivalent, and nothing swings into the room.'],
+                    ['slug' => 'patio-doors', 'name' => 'Patio Doors', 'fit' => 'Nothing swings into the room', 'copy' => 'Up to four panes sliding past each other, so the floor space either side of the opening stays usable.'],
                     ['slug' => 'aluminium-sliding-doors', 'name' => 'Aluminium Sliding Doors', 'fit' => 'The largest panes', 'copy' => 'Sheerline lift and slide, with interlocks as slim as 52mm, so the frame gets out of the way of the view.'],
                     ['slug' => 'aluminium-bifold-doors', 'name' => 'Aluminium Bifold Doors', 'fit' => 'Folds right back', 'copy' => 'Panels stack to one or both sides, so in summer the opening is almost entirely clear.'],
-                    ['slug' => 'slide-fold-doors', 'name' => 'Slide and Fold Doors', 'fit' => 'Folding, on a budget', 'copy' => 'The folding action of a bifold where the opening or the budget does not suit an aluminium set.'],
+                    ['slug' => 'slide-fold-doors', 'name' => 'Slide and Fold Doors', 'fit' => 'Fold one, or fold them all', 'copy' => 'Each panel slides and opens on its own, so a wide opening stops being an all-or-nothing choice. Ten point locking.'],
                 ],
             ],
             'other-services' => [
@@ -649,7 +650,7 @@ function fenster_site_data(): array
                 'h1' => 'Roof glazing, blinds, roofline and repairs',
                 'intro' => 'Roof glazing, blinds sealed inside the glass, the boards around the roof edge, and the smaller jobs. Some of this we do on its own, and some of it makes sense to do while the scaffolding is already up.',
                 'guide_heading' => 'Start with what is actually wrong.',
-                'guide_intro' => 'Half the calls we take about these are solvable more cheaply than the caller expects. It is worth working out which problem you have first.',
+                'guide_intro' => 'Half the calls we take about these turn out to need less work than the caller expects. It is worth working out which problem you actually have first.',
                 'guide' => [
                     ['title' => 'Is it the frame, or the glass?', 'copy' => 'If the frames are sound and the units have misted, the glass can be changed on its own and the frames stay where they are.'],
                     ['title' => 'Is it about light, or about noise?', 'copy' => 'Roof glazing brings daylight into a room with no wall to take a window. Secondary glazing is for sound, and for frontages that have to stay as they are.'],
