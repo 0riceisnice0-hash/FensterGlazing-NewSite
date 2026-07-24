@@ -2,6 +2,12 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Notan logo for integral blinds (test, 60004d3)
+
+- The `notan` system had an empty logo path, so integral blinds was the one product tile on the services hub with no mark while Liniar and Sheerline sat on the others.
+- **The only Notan lockup in the scrape is the reversed one**, whose wordmark is white and would have disappeared completely on the white chip. That is the exact case `STYLE.md` warns about, so the positive variant was built from it: green mark untouched, only the wordmark pixels recoloured, alpha kept so the letter edges stay smooth. The macron on the O survives. Saved as `assets/partners/notan.png` and recorded in `AI.md` so nobody swaps the scrape file back in.
+- Verified on test: seven service tiles, three carrying a mark (Sheerline, Notan, Liniar), none broken. The four without one are the services with no manufacturer system, plus flat rooflights, which is still unmapped.
+
 ## 2026-07-24 - Product hubs stripped back to a one-viewport grid (test, a3d2174)
 
 Owner: the detail boxes were over-complicating it. The whole range should sit in one viewport so a product can be picked without scrolling, with no categorisation, because there are only nine.
