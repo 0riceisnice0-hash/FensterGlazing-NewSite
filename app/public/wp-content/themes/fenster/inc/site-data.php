@@ -593,16 +593,6 @@ function fenster_site_data(): array
                 ],
                 // Bands answer the guide's third question with the layout rather
                 // than only in prose. Every slug here must exist in 'products'.
-                'filters' => [
-                    ['label' => 'uPVC', 'note' => 'The widest choice of styles, and A++ ratings without triple glazing.', 'slugs' => ['casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'tilt-turn-windows']],
-                    ['label' => 'Aluminium', 'note' => 'Thinner frames and more glass, in any RAL colour.', 'slugs' => ['aluminium-windows', 'aluminium-flush-windows', 'heritage-windows']],
-                ],
-                'configurations_heading' => 'Two of these are not styles of their own.',
-                'configurations_intro' => 'A bay and a French window are shapes you can build from the styles above, not separate windows. Worth knowing before you go looking for a bow window that does not exist as its own product.',
-                'configurations' => [
-                    ['slug' => 'bow-bay-windows', 'name' => 'Bow and Bay Windows', 'fit' => 'A shape, not a style', 'copy' => 'A bay turns at angles and a bow curves. Either can be built from the casement, flush sash or sliding sash styles.'],
-                    ['slug' => 'french-casement-windows', 'name' => 'French Casement Windows', 'fit' => 'An opening, not a style', 'copy' => 'Two sashes meeting with no fixed mullion between them. Available on casement, flush sash and tilt and turn.'],
-                ],
                 'products' => [
                     ['slug' => 'casement-windows', 'name' => 'Casement Windows', 'fit' => 'The everyday all-rounder', 'copy' => 'Side or top hung, in almost any combination. Most of the homes we work on end up with these.'],
                     ['slug' => 'flush-casement-windows', 'name' => 'Flush Casement Windows', 'fit' => 'Sits level with the frame', 'copy' => 'The sash closes flush into the outer frame rather than sitting proud of it, which is how timber windows were made.'],
@@ -611,6 +601,8 @@ function fenster_site_data(): array
                     ['slug' => 'aluminium-windows', 'name' => 'Aluminium Windows', 'fit' => 'Slim frames, more glass', 'copy' => 'Thinner sightlines than uPVC for the same opening, powder coated in the RAL colour you choose.'],
                     ['slug' => 'aluminium-flush-windows', 'name' => 'Aluminium Flush Windows', 'fit' => 'Flat outside face', 'copy' => 'The aluminium version of a flush sash, where the sash and the frame finish on the same plane.'],
                     ['slug' => 'heritage-windows', 'name' => 'Heritage Windows', 'fit' => 'The steel-window look', 'copy' => 'Slim sections and stepped bars that read like original steel, in thermally broken aluminium.'],
+                    ['slug' => 'bow-bay-windows', 'name' => 'Bow and Bay Windows', 'fit' => 'A shape, not a style', 'copy' => 'A bay turns at angles and a bow curves. Either is built from the casement, flush sash or sliding sash styles.'],
+                    ['slug' => 'french-casement-windows', 'name' => 'French Casement Windows', 'fit' => 'An opening, not a style', 'copy' => 'Two sashes meeting with no fixed mullion between them.'],
                 ],
             ],
             'doors' => [
@@ -633,15 +625,6 @@ function fenster_site_data(): array
                 ],
                 // Grouped by where the door goes, which is the first question we
                 // ask on the phone and the one that rules most of the list out.
-                'filters' => [
-                    ['label' => 'Front and back', 'note' => 'One opening, hinged, where security and insulation matter most.', 'slugs' => ['composite-doors', 'upvc-doors', 'aluminium-doors', 'heritage-aluminium-doors']],
-                    ['label' => 'Onto the garden', 'note' => 'Wider openings, where the question is how the panels get out of the way.', 'slugs' => ['patio-doors', 'aluminium-sliding-doors', 'aluminium-bifold-doors', 'slide-fold-doors']],
-                ],
-                'configurations_heading' => 'French doors are a configuration, not a system.',
-                'configurations_intro' => 'A pair opening from the centre is something we can build in more than one of the ranges above, which is why it sits on its own here.',
-                'configurations' => [
-                    ['slug' => 'french-doors', 'name' => 'French Doors', 'fit' => 'A pair, not a system', 'copy' => 'Two doors opening from the centre, with the option of fixed side panels. Available in uPVC, aluminium and the heritage range.'],
-                ],
                 'products' => [
                     ['slug' => 'composite-doors', 'name' => 'Composite Doors', 'fit' => 'The usual front door choice', 'copy' => 'A 44.5mm insulated slab, against 28mm for a uPVC door panel, with the break-in guarantee behind it.'],
                     ['slug' => 'upvc-doors', 'name' => 'uPVC Doors', 'fit' => 'Straightforward and low upkeep', 'copy' => 'Front, back and utility doors that need washing rather than painting.'],
@@ -650,6 +633,7 @@ function fenster_site_data(): array
                     ['slug' => 'patio-doors', 'name' => 'Patio Doors', 'fit' => 'Nothing swings into the room', 'copy' => 'Up to four panes sliding past each other, so the floor space either side of the opening stays usable.'],
                     ['slug' => 'aluminium-sliding-doors', 'name' => 'Aluminium Sliding Doors', 'fit' => 'The largest panes', 'copy' => 'Sheerline lift and slide, with interlocks as slim as 52mm, so the frame gets out of the way of the view.'],
                     ['slug' => 'aluminium-bifold-doors', 'name' => 'Aluminium Bifold Doors', 'fit' => 'Folds right back', 'copy' => 'Panels stack to one or both sides, so in summer the opening is almost entirely clear.'],
+                    ['slug' => 'french-doors', 'name' => 'French Doors', 'fit' => 'A pair, opening from the centre', 'copy' => 'Two doors opening together, with the option of fixed side panels. Built in uPVC, aluminium or heritage.'],
                     ['slug' => 'slide-fold-doors', 'name' => 'Slide and Fold Doors', 'fit' => 'Fold one, or fold them all', 'copy' => 'Each panel slides and opens on its own, so a wide opening stops being an all-or-nothing choice. Ten point locking.'],
                 ],
             ],
@@ -669,11 +653,6 @@ function fenster_site_data(): array
                 'suppliers' => [
                     ['logo' => 'sheerline.png', 'name' => 'Sheerline', 'role' => 'Roof lanterns'],
                     ['logo' => 'liniar.png', 'name' => 'Liniar', 'role' => 'uPVC frames'],
-                ],
-                'filters' => [
-                    ['label' => 'Roof glazing', 'note' => 'Daylight into a room with no wall left to take a window.', 'slugs' => ['roof-lanterns', 'flat-rooflights']],
-                    ['label' => 'Glass and blinds', 'note' => 'Work on the glass itself, with the frames staying where they are.', 'slugs' => ['integral-blinds', 'double-glazing-replacement', 'secondary-glazing']],
-                    ['label' => 'Keeping it working', 'note' => 'The smaller jobs, including on windows we did not fit.', 'slugs' => ['window-and-door-repairs', 'roofline']],
                 ],
                 'products' => [
                     ['slug' => 'roof-lanterns', 'name' => 'Roof Lanterns', 'fit' => 'Daylight from above', 'copy' => 'Sheerline S1 in square, 2-way and 3-way layouts, up to 3.2 x 6m without tie bars.'],

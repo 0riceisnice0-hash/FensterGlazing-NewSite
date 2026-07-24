@@ -31315,140 +31315,51 @@ html.fg-blinds-reveal-locked {
     align-items: center;
   }}
 
-/* Filter row. The groupings are controls now rather than fixed headings, so the
-   whole range stays on one grid and narrowing it is the customer's choice. */
-.fg-ph-filters {
-  margin-bottom: clamp(1.1rem, 2vw, 1.6rem);
-}
-
-.fg-ph-filters__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.fg-ph-filters__row button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  min-height: 44px;
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(0, 45, 58, 0.16);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--color-steel);
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition:
-    background 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease;
-}
-
-.fg-ph-filters__row button span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.35rem;
-  height: 1.35rem;
-  padding: 0 0.3rem;
-  border-radius: 999px;
-  background: rgba(0, 45, 58, 0.08);
-  font-size: 0.72rem;
-  font-weight: 850;
-}
-
-.fg-ph-filters__row button:hover {
-  border-color: rgba(46, 172, 102, 0.5);
-}
-
-.fg-ph-filters__row button.is-active {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: #ffffff;
-}
-
-.fg-ph-filters__row button.is-active span {
-  background: rgba(255, 255, 255, 0.24);
-}
-
-.fg-ph-filters__note {
-  margin: 0.85rem 0 0;
-  color: rgba(2, 43, 53, 0.68);
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-
-/* The range grid. */
-.fg-ph-grid {
+/* The range: one grid of photographs, sized so the whole set sits in a single
+   desktop viewport. Nine tiles go five then four, seven go four then three, so
+   nothing needs scrolling or filtering to be seen. */
+.fg-ph-tiles {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.9rem, 1.6vw, 1.35rem);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.55rem, 1vw, 0.85rem);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.fg-ph-grid--configs {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 780px;
+.fg-ph-tiles[data-count="7"],
+.fg-ph-tiles[data-count="8"] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.fg-ph-card__wrap {
-  display: block;
+.fg-ph-tiles > li {
   min-width: 0;
 }
 
-.fg-ph-grid.is-revealing > .fg-ph-card__wrap {
-  opacity: 0;
-  transform: translateY(14px);
-}
-
-.fg-ph-grid.is-revealing > .fg-ph-card__wrap.is-revealed {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 520ms cubic-bezier(0.16, 0.72, 0.2, 1) var(--fg-reveal-delay, 0ms),
-    transform 520ms cubic-bezier(0.16, 0.72, 0.2, 1) var(--fg-reveal-delay, 0ms);
-}
-
-.fg-ph-card {
-  position: relative;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  height: 100%;
-  overflow: hidden;
-  border: 1px solid rgba(0, 45, 58, 0.1);
-  border-radius: 10px;
-  background: #ffffff;
-  color: inherit;
-  text-decoration: none;
-  box-shadow: 0 14px 34px rgba(2, 43, 53, 0.08);
-  transition:
-    transform 260ms cubic-bezier(0.16, 0.72, 0.2, 1),
-    box-shadow 260ms ease,
-    border-color 260ms ease;
-}
-
-.fg-ph-card:hover,
-.fg-ph-card:focus-visible {
-  transform: translateY(-4px);
-  border-color: rgba(46, 172, 102, 0.45);
-  box-shadow: 0 24px 52px rgba(2, 43, 53, 0.16);
-}
-
-.fg-ph-card__media {
+.fg-ph-tile {
   position: relative;
   display: block;
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
+  border-radius: 10px;
   background: var(--color-soft);
-  aspect-ratio: 4 / 3;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(2, 43, 53, 0.12);
+  aspect-ratio: 4 / 5;
+  transition:
+    transform 260ms cubic-bezier(0.16, 0.72, 0.2, 1),
+    box-shadow 260ms ease;
 }
 
-/* Direct child only. The spec chips sit inside .__media too. */
-.fg-ph-card__media > img {
+.fg-ph-tile:hover,
+.fg-ph-tile:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 50px rgba(2, 43, 53, 0.22);
+}
+
+.fg-ph-tile > img {
   display: block;
   width: 100%;
   height: 100%;
@@ -31457,214 +31368,93 @@ html.fg-blinds-reveal-locked {
   transition: transform 620ms cubic-bezier(0.16, 0.72, 0.2, 1);
 }
 
-.fg-ph-card:hover .fg-ph-card__media > img,
-.fg-ph-card:focus-visible .fg-ph-card__media > img {
+.fg-ph-tile:hover > img,
+.fg-ph-tile:focus-visible > img {
   transform: scale(1.06);
 }
 
-/* Two real numbers from the product's own specification, over the photograph.
-   Always visible on touch, because an interaction must never depend on hover. */
-.fg-ph-card__specs {
+/* The name sits on the photograph, so the tile is all picture and no card. */
+.fg-ph-tile__label {
   position: absolute;
-  right: 0.6rem;
-  bottom: 0.6rem;
-  left: 0.6rem;
-  display: flex;
-  gap: 0.4rem;
-  pointer-events: none;
-}
-
-.fg-ph-card__specs > span {
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: grid;
-  gap: 0.05rem;
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.93);
-  box-shadow: 0 4px 14px rgba(2, 43, 53, 0.18);
+  gap: 0.1rem;
+  padding: 2.4rem 0.85rem 0.8rem;
+  background: linear-gradient(transparent, rgba(1, 20, 26, 0.86) 62%);
 }
 
-.fg-ph-card__specs b {
-  color: var(--color-steel);
-  font-size: 0.82rem;
-  font-weight: 850;
-  line-height: 1.1;
-}
-
-.fg-ph-card__specs i {
-  color: rgba(2, 43, 53, 0.6);
-  font-size: 0.62rem;
-  font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.fg-ph-card__body {
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  gap: 0.3rem;
-  padding: clamp(0.95rem, 1.5vw, 1.2rem);
-}
-
-.fg-ph-card__fit {
-  color: var(--color-accent);
-  font-size: 0.72rem;
-  font-weight: 850;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fg-ph-card strong {
-  color: var(--color-steel);
-  font-size: 1.12rem;
+.fg-ph-tile__label strong {
+  font-size: 0.98rem;
   font-weight: 800;
-  line-height: 1.22;
+  line-height: 1.2;
 }
 
-.fg-ph-card__copy {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  color: rgba(2, 43, 53, 0.72);
-  font-size: 0.92rem;
-  line-height: 1.55;
+.fg-ph-tile__label small {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.25;
 }
 
-/* The system mark lives down here with the words, not on the photograph. */
-.fg-ph-card__foot {
+/* The system mark, top right, on a white chip because every supplier logo is
+   dark on transparent and would disappear into the photograph. */
+.fg-ph-tile__system {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: 0.7rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid rgba(0, 45, 58, 0.09);
+  justify-content: center;
+  width: 62px;
+  height: 22px;
+  padding: 0.2rem 0.3rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 3px 10px rgba(2, 43, 53, 0.18);
 }
 
-.fg-ph-card__system {
-  display: flex;
-  align-items: center;
-  width: 84px;
-  height: 24px;
-}
-
-.fg-ph-card__system img {
+/* Sized by the chip, not the image: a flex item keeps min-width auto, so
+   max-width alone will not shrink a wide mark and it clips. */
+.fg-ph-tile__system img {
   width: 100%;
   height: 100%;
   min-width: 0;
   object-fit: contain;
-  object-position: left center;
-}
-
-.fg-ph-card__more {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  color: var(--color-accent);
-  font-size: 0.85rem;
-  font-weight: 850;
-  white-space: nowrap;
-}
-
-.fg-ph-card__more::after {
-  content: "\2192";
-  transition: transform 260ms cubic-bezier(0.16, 0.72, 0.2, 1);
-}
-
-.fg-ph-card:hover .fg-ph-card__more::after,
-.fg-ph-card:focus-visible .fg-ph-card__more::after {
-  transform: translateX(4px);
-}
-
-/* Configurations sit apart from the range because they are not products. */
-.fg-product-hub__configs-head {
-  max-width: 46rem;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
-.fg-product-hub__configs-head h2 {
-  margin: 0.3rem 0 0.5rem;
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.16;
-}
-
-.fg-product-hub__configs-head p:not(.eyebrow) {
-  margin: 0;
-  color: var(--color-steel);
-  line-height: 1.62;
 }
 
 @media (max-width: 1180px) {
-  .fg-ph-grid {
+  .fg-ph-tiles,
+  .fg-ph-tiles[data-count="7"],
+  .fg-ph-tiles[data-count="8"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 780px) {
+  .fg-ph-tiles,
+  .fg-ph-tiles[data-count="7"],
+  .fg-ph-tiles[data-count="8"] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-}
 
-@media (max-width: 860px) {
-  .fg-ph-grid,
-  .fg-ph-grid--configs {
-    grid-template-columns: 1fr;
-    max-width: none;
+  .fg-ph-tile {
+    aspect-ratio: 1 / 1;
   }
 
-  .fg-ph-card {
-    grid-template-columns: 148px minmax(0, 1fr);
-    grid-template-rows: none;
+  .fg-ph-tile__label {
+    padding: 2rem 0.7rem 0.65rem;
   }
 
-  .fg-ph-card__media {
-    height: 100%;
-    aspect-ratio: auto;
-  }
-
-  /* No room for chips beside a 148px thumbnail; the numbers move under the copy. */
-  .fg-ph-card__specs {
-    position: static;
-    margin-top: 0.5rem;
-    padding: 0;
-  }
-
-  .fg-ph-card__specs > span {
-    padding: 0.3rem 0.5rem;
-    background: rgba(0, 45, 58, 0.05);
-    box-shadow: none;
-  }
-
-  .fg-ph-card__body {
-    grid-template-rows: auto auto auto 1fr auto;
-  }
-
-  .fg-ph-filters__row {
-    gap: 0.4rem;
-  }
-
-  .fg-ph-filters__row button {
-    padding: 0.45rem 0.8rem;
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 460px) {
-  .fg-ph-card {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-  }
-
-  .fg-ph-card__media {
-    aspect-ratio: 16 / 10;
+  .fg-ph-tile__label strong {
+    font-size: 0.9rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fg-ph-grid.is-revealing > .fg-ph-card__wrap {
-    opacity: 1;
-    transform: none;
-  }
-
-  .fg-ph-card,
-  .fg-ph-card__media > img,
-  .fg-ph-card__more::after {
+  .fg-ph-tile,
+  .fg-ph-tile > img {
     transition: none;
   }
 }
