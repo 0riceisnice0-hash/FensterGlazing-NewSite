@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Hub decision panel and FAQs, replacing the guide (test, 97ac969)
+
+Owner, before the release: beef the pages out, the "Narrowing it down" section is poor, use `STYLE.md` and put whatever I think belongs there.
+
+- **The guide was three numbered cards asking vague questions.** The shape was not the fault, the vagueness was: it told nobody anything they could act on. Replaced with the one comparison that genuinely narrows the range, built from figures already in `product_usps`.
+- **Windows opens by correcting the assumption we hear most:** aluminium is not the warmer of the two. Our uPVC reaches 0.95 W/m²K against 1.0 for aluminium, because metal conducts and plastic does not, and what aluminium actually buys is a thinner frame and more glass. That is the tone-of-voice principle of saying the awkward thing first, and it is also just true. Doors compare the three ways a door gets out of the way with pane counts and the space each needs; services compare the three things that are actually wrong when somebody rings.
+- **No photograph in that section, on purpose.** The range above is already the image section, and `STYLE.md` is explicit that an image whose only job is to break up white space should not be used.
+- **Four FAQs per hub**, answered from data we hold rather than generalities, including one that names what the ten year guarantee does not cover. The live price guides sit alongside them, so anyone wanting a figure before speaking to a person has one, and three money pages gain internal links.
+- Two copy defects caught in QA: a `'` escape that PHP does not interpret inside single quotes had put a literal backslash sequence in an answer, and the new figures were written `W/m2K` and "5,000 pounds" where the rest of the site uses a superscript two and a pound sign.
+- Verified on test at 1440, 768 and 390: the range still fits one desktop viewport on all three hubs, decision figures render from the real data, four FAQs each with the first open, price links present, no guide markup left, no horizontal overflow, zero console errors.
+
 ## 2026-07-24 - Notan logo for integral blinds (test, 60004d3)
 
 - The `notan` system had an empty logo path, so integral blinds was the one product tile on the services hub with no mark while Liniar and Sheerline sat on the others.
