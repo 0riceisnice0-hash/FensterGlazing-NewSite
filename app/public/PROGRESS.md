@@ -2,6 +2,20 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - One real product-selector template for windows, doors and services (test, 55d15bc)
+
+Owner: `/other-services/` needs to be an actual page rather than a scraped template, the windows and doors pages need redesigning, and all three should share one main product selector built from what the good pages (about, sash, composite, roof lanterns) and `STYLE.md` established.
+
+- **`/other-services/` was in `$is_utility_page`**, which is why it rendered as a scrape shell: H1 "Other Services", 1,801 words of imported filler, and a meta description opening with "Discover our other services". It is a product-selector hub like the other two and now runs the same template with theme-owned SEO.
+- **The old `windows-hub.php` served windows and doors through a tab control** that showed one product and hid the other eight behind a click. On a page whose only job is to route someone to the right product page, that is the wrong shape. The range is now a grid with every product visible, each carrying the reason to pick it over its siblings.
+- **Card imagery reads from `product_media[slug].hero`** rather than being stored a third time. The old template held its own hardcoded list still pointing at scrape assets (`Casement_03.jpg`, `Flush_Sash_001.jpg`), which is exactly how hub and product pages drift apart. Only `/flat-rooflights/` sets an explicit image, because it has no `product_media` entry.
+- **H1s are theme-owned now.** They were inherited from the scraped page record. The windows and doors values are byte-identical to what was already ranking; only `/other-services/` changed, to "Roof glazing, blinds, roofline and repairs".
+- **Case studies use a new `fenster_case_studies_for_product_group()` with no fallback.** `fenster_case_studies_for_product()` returns every study when nothing matches, which is the documented reason product pages with no study of their own show unrelated jobs. The hub renders nothing rather than making that claim. Windows and doors matched 3 studies each, other services 2.
+- **The grid immediately exposed three weak heroes** that were survivable in isolation. Replacement Glazing and Secondary Glazing shared one photograph, so the two cards sat side by side showing the identical window; secondary glazing now leads with an original sash bay from inside, which is the situation that work is for. Aluminium Windows led with a coastal cottage where the windows were not the subject, and Aluminium Flush Windows led with a CGI corner profile on white that read as a diagram beside eight photographs. Both now use Sheerline Prestige photography. Verified afterwards that no product shares a hero with any other.
+- Removed rather than left dead: the 66-line tab controller in `src/js/main.js` (compiled JS 97.8kb to 96.4kb) and 119 lines of SCSS across five blocks.
+- **SCSS removal method worth repeating.** A first attempt with a naive brace scanner left the file two closing braces out of balance, because it counted braces inside comments. Reverted and redone with a pass that maps comment and string spans first, then only scans real code. `AI.md` already warns against index slicing on this file; naive brace matching fails the same way.
+- Verified on test at 1440x900, 768x1024 and 390x844 across all three routes: 9, 9 and 7 cards with every image loaded, no horizontal overflow at any width, zero console errors, headings inside the cap, and no trace of the old selector.
+
 ## 2026-07-24 - Second release of the day promoted to live (4458fc6)
 
 - Live re-established by checksum first, as the rule now requires: six theme files matched `94e7d0f` byte for byte, confirming the pointer written earlier the same day was still accurate.

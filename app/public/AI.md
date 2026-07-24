@@ -254,6 +254,15 @@ PHP lint example:
 - The configuration renders share one crop window so relative door heights stay truthful. Do not re-trim them individually. The section shows **six** as of 2026-07-24: single and French, each with no bars, 2 bar and 4 bar. The three toplight renders were removed on owner instruction and their assets are still in `assets\images\products\heritage-aluminium\configurations` (`config-04`, `config-05`, `config-06`) if they are ever wanted back. Toplights remain listed as an available layout in `inc\product-hub-data.php`; that is deliberate, because stocked and available are different things.
 - Configuration slides carry no `01`/`02`/`03` index numbers. The carousel's own position counter stays.
 
+## Product Hub Rule
+
+- `/windows-milton-keynes/`, `/doors-milton-keynes/` and `/other-services/` are the three product-selector hubs. They share `template-parts\sections\product-hub.php` and are driven by `product_hub_groups` in `inc\site-data.php`. `/other-services/` used to sit in `$is_utility_page` and render as a scrape shell; do not put it back there.
+- **Hub card imagery is read from `product_media[slug].hero`, never stored in the hub data.** A hub card and the product page it links to must never show different photographs of the same product. Only set an explicit `image` on a hub item for a route with no `product_media` entry, currently just `/flat-rooflights/`.
+- Hub H1s live in `product_hub_groups[group].h1`, not in the scraped page record. The windows and doors values are the ones already ranking; do not churn them for style.
+- The hub shows the whole range at once. Do not put the products back behind a tab, coverflow or one-at-a-time preview: this page exists to send someone to the right product page, and hiding eight of nine options behind a click works against that.
+- Use `fenster_case_studies_for_product_group()` on hubs, not `fenster_case_studies_for_product()`. The latter returns **every** study when nothing matches, which is why product pages with no study of their own show unrelated jobs under a heading claiming they are that product. The group version has no fallback and renders nothing instead.
+- A hub grid is also the best defect detector on the site: nine heroes side by side make a shared image, a stock lifestyle shot or a CGI render obvious in a way a single product page never does. After changing `product_media`, look at the hub.
+
 ## Configuration Wall Rule
 
 - `/roof-lanterns/` and `/composite-doors/` share one browsing component: the `.fg-cd3-wall__viewport` / `.fg-cd3-wall__track` markup plus the `[data-fg-door-wall]` controller in `src\js\main.js`. It is a slow sideways drift driven by `scrollLeft` (not a CSS animation) that pauses on hover, during a drag and briefly after one. The track is rendered twice so the loop rewinds by half the scroll width without a seam.
