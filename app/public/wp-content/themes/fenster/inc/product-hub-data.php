@@ -58,6 +58,15 @@ function fenster_product_hub_data(string $slug): array
             ],
             'choices' => ['Mechanical-style or welded corner detailing depending on system', 'Astragal or Georgian bar options', 'Cream, Chartwell Green, Irish Oak, Anthracite Grey and other foils', 'Locking handle finishes'],
         ],
+        // Systems only, no specs or choices, so the product hub section on the
+        // page stays gated off. This exists so the selector hub can show the
+        // right mark: both are Liniar uPVC, like every other uPVC window route.
+        'bow-bay-windows' => [
+            'systems' => [$systems['liniar']],
+        ],
+        'french-casement-windows' => [
+            'systems' => [$systems['liniar']],
+        ],
         'tilt-turn-windows' => [
             'systems' => [$systems['liniar']],
             'badges' => ['Secure ventilation', 'Easy cleaning', 'Large opening option'],
