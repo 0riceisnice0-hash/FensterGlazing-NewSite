@@ -2,6 +2,18 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Product hubs stripped back to a one-viewport grid (test, a3d2174)
+
+Owner: the detail boxes were over-complicating it. The whole range should sit in one viewport so a product can be picked without scrolling, with no categorisation, because there are only nine.
+
+- **Removed, all of it mine from earlier in the day:** the filter chips and their FLIP controller, the spec chips over each photograph, the separate configurations section, and the card body with its paragraph. Configuration items went back into the same list; their wording already says what they are, so the distinction survives without a section.
+- **The range is now one grid of photographs**, five across then four, with the name and one line on each and the system mark as a chip. Nothing else.
+- **Fitting one viewport took measuring, not styling.** The first attempt ended 1131px down a 900px screen. Tiles are now sized from the viewport with `clamp(146px, 25vh, 250px)` rather than an aspect ratio, because a ratio cannot know how tall the screen is, and the hero was trimmed to what it needs.
+- **The last 104px came from a specificity bug.** `.fg-product-hub > section` is (0,1,1), so the plain-class padding overrides on the intro and range never applied no matter where they sat in the file, leaving 52px of padding at three points. Child selectors fixed it. That is the third time today the same trap has cost time; it is now written into `AI.md`.
+- Final: 870, 801 and 846 against a 900px viewport at 1440, and 855, 794 and 831 at 1280. All three hubs show their whole range without scrolling.
+- Bow/bay and French casement were mapped to Liniar so their tiles carry a mark like the seven around them. Systems only, no specs or choices, so the product hub section on those two pages stays gated off; both still return 200.
+- Verified: no horizontal overflow at 1440, 1280, 768 or 390, zero console errors, all images loaded, no filter or spec markup left in the DOM.
+
 ## 2026-07-24 - Distinction in the doors panel, no cost framing, even rows (test, 673c6bc)
 
 Owner: add Distinction to the doors hero spec list, lay the products out better, and be careful with the wording, because "Folding, on a budget" for slide and fold is very bad and we should never say budget.
