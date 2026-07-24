@@ -31161,33 +31161,6 @@ html.fg-blinds-reveal-locked {
   padding-top: clamp(1.75rem, 3vw, 2.5rem);
 }
 
-.fg-product-hub__intro-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.25rem, 3vw, 2.75rem);
-  align-items: end;
-}
-
-.fg-product-hub__intro h1 {
-  margin: 0.35rem 0 0;
-  font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max));
-  line-height: 1.06;
-}
-
-.fg-product-hub__intro-copy p {
-  margin: 0;
-  color: var(--color-steel);
-  font-size: clamp(1rem, 1.15vw, 1.1rem);
-  line-height: 1.62;
-}
-
-.fg-product-hub__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 1.15rem 0 0;
-}
-
 /* The range. Fixed-ratio cells so a portrait door render and a landscape
    window photograph sit in the same grid without one stretching the row. */
 .fg-product-hub__range {
@@ -31279,6 +31252,191 @@ html.fg-blinds-reveal-locked {
 
 .fg-product-hub__more::after {
   content: " \2192";
+}
+
+/* Hero. The lead column is one block (eyebrow, H1, one paragraph, then the
+   action pair) with the supplier panel beside it, rather than a loose
+   paragraph floating opposite the heading with the buttons crowding it. */
+.fg-product-hub__intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.fg-product-hub__lead {
+  max-width: 40rem;
+}
+
+.fg-product-hub__intro h1 {
+  margin: 0.4rem 0 0;
+  font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max));
+  line-height: 1.06;
+}
+
+.fg-product-hub__lead-copy {
+  margin: clamp(0.9rem, 1.6vw, 1.15rem) 0 0;
+  color: var(--color-steel);
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  line-height: 1.62;
+}
+
+.fg-product-hub__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  /* Clear air between the sentence and the buttons; they were touching. */
+  margin: clamp(1.6rem, 2.6vw, 2.1rem) 0 0;
+}
+
+/* The systems panel. */
+.fg-product-hub__systems {
+  padding: clamp(1.15rem, 2vw, 1.5rem);
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 44px rgba(2, 43, 53, 0.08);
+}
+
+.fg-product-hub__systems-title {
+  margin: 0 0 0.85rem;
+  color: var(--color-steel);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.fg-product-hub__systems ul {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-product-hub__systems li {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: center;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(0, 45, 58, 0.08);
+}
+
+.fg-product-hub__systems li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.fg-product-hub__systems-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 30px;
+}
+
+/* Supplier marks arrive at very different aspect ratios, so contain them in a
+   fixed box rather than letting each set its own height. */
+.fg-product-hub__systems-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.fg-product-hub__systems-role {
+  color: rgba(2, 43, 53, 0.72);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.fg-product-hub__systems-note {
+  margin: 0.9rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.08);
+  color: rgba(2, 43, 53, 0.66);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+/* Bands. Grouping the range answers the "which of these am I even looking at"
+   question with the layout instead of leaving it to the copy. */
+.fg-product-hub__band + .fg-product-hub__band {
+  margin-top: clamp(1.75rem, 3vw, 2.6rem);
+}
+
+.fg-product-hub__band-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  align-items: baseline;
+  margin-bottom: clamp(0.85rem, 1.6vw, 1.15rem);
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(0, 45, 58, 0.12);
+}
+
+.fg-product-hub__band-head h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  line-height: 1.2;
+}
+
+.fg-product-hub__band-head p {
+  margin: 0;
+  color: rgba(2, 43, 53, 0.66);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1180px) {
+  .fg-product-hub__intro-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  .fg-product-hub__lead {
+    max-width: none;
+  }
+
+  /* Side by side once the panel is full width, so it stays a strip rather
+     than a tall stack of three rows. */
+  .fg-product-hub__systems ul {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+
+  .fg-product-hub__systems li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+    align-items: start;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .fg-product-hub__systems ul {
+    grid-auto-flow: row;
+  }
+
+  .fg-product-hub__systems li {
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .fg-product-hub__band-head {
+    display: block;
+  }
+
+  .fg-product-hub__band-head p {
+    margin-top: 0.25rem;
+  }
 }
 
 /* How to narrow it down. */
@@ -31457,7 +31615,6 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 860px) {
-  .fg-product-hub__intro-grid,
   .fg-product-hub__guide-grid,
   .fg-product-hub__quote-grid {
     grid-template-columns: 1fr;

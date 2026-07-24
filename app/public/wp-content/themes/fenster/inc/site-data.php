@@ -577,6 +577,18 @@ function fenster_site_data(): array
                     ['title' => 'uPVC or aluminium?', 'copy' => 'Aluminium buys thinner frames and more glass for the same hole in the wall. uPVC costs less and insulates well.'],
                 ],
                 'quote_heading' => 'Price a window before you speak to anyone.',
+                'suppliers_note' => 'Three systems, so a specification conversation is about products we fit every week.',
+                'suppliers' => [
+                    ['logo' => 'liniar.png', 'name' => 'Liniar', 'role' => 'uPVC windows'],
+                    ['logo' => 'sheerline.png', 'name' => 'Sheerline', 'role' => 'Aluminium windows'],
+                    ['logo' => 'roseview-logo-new.png', 'name' => 'Roseview', 'role' => 'Sliding sash'],
+                ],
+                // Bands answer the guide's third question with the layout rather
+                // than only in prose. Every slug here must exist in 'products'.
+                'bands' => [
+                    ['label' => 'uPVC windows', 'note' => 'Warmer for the money, and the widest choice of styles.', 'slugs' => ['casement-windows', 'flush-casement-windows', 'sliding-sash-windows', 'tilt-turn-windows', 'french-casement-windows', 'bow-bay-windows']],
+                    ['label' => 'Aluminium windows', 'note' => 'Thinner frames and more glass, in any RAL colour.', 'slugs' => ['aluminium-windows', 'aluminium-flush-windows', 'heritage-windows']],
+                ],
                 'products' => [
                     ['slug' => 'casement-windows', 'name' => 'Casement Windows', 'fit' => 'The everyday all-rounder', 'copy' => 'Side or top hung, in almost any combination. Most of the homes we work on end up with these.'],
                     ['slug' => 'flush-casement-windows', 'name' => 'Flush Casement Windows', 'fit' => 'Sits level with the frame', 'copy' => 'The sash closes flush into the outer frame rather than sitting proud of it, which is how timber windows were made.'],
@@ -601,6 +613,17 @@ function fenster_site_data(): array
                     ['title' => 'What matters most?', 'copy' => 'Security and insulation at the front. Glass area and threshold height at the back.'],
                 ],
                 'quote_heading' => 'Price a door before you speak to anyone.',
+                'suppliers_note' => 'The two systems behind most of what we hang.',
+                'suppliers' => [
+                    ['logo' => 'liniar.png', 'name' => 'Liniar', 'role' => 'uPVC doors'],
+                    ['logo' => 'sheerline.png', 'name' => 'Sheerline', 'role' => 'Aluminium doors'],
+                ],
+                // Grouped by where the door goes, which is the first question we
+                // ask on the phone and the one that rules most of the list out.
+                'bands' => [
+                    ['label' => 'Front, back and side doors', 'note' => 'One opening, hinged, where security and insulation matter most.', 'slugs' => ['composite-doors', 'upvc-doors', 'aluminium-doors', 'heritage-aluminium-doors']],
+                    ['label' => 'Doors onto the garden', 'note' => 'Wider openings, where the question is how the panels get out of the way.', 'slugs' => ['french-doors', 'patio-doors', 'aluminium-sliding-doors', 'aluminium-bifold-doors', 'slide-fold-doors']],
+                ],
                 'products' => [
                     ['slug' => 'composite-doors', 'name' => 'Composite Doors', 'fit' => 'The usual front door choice', 'copy' => 'A 44.5mm insulated slab, against 28mm for a uPVC door panel, with the break-in guarantee behind it.'],
                     ['slug' => 'upvc-doors', 'name' => 'uPVC Doors', 'fit' => 'Straightforward and low upkeep', 'copy' => 'Front, back and utility doors that need washing rather than painting.'],
@@ -625,6 +648,16 @@ function fenster_site_data(): array
                     ['title' => 'Is it a whole job, or a small one?', 'copy' => 'We take on handle, hinge, lock and glass repairs as well as full installations, including on windows we did not fit.'],
                 ],
                 'quote_heading' => 'Not sure which of these you need?',
+                'suppliers_note' => 'The two systems behind the roof glazing and the frames.',
+                'suppliers' => [
+                    ['logo' => 'sheerline.png', 'name' => 'Sheerline', 'role' => 'Roof lanterns'],
+                    ['logo' => 'liniar.png', 'name' => 'Liniar', 'role' => 'uPVC frames'],
+                ],
+                'bands' => [
+                    ['label' => 'Roof glazing', 'note' => 'Daylight into a room with no wall left to take a window.', 'slugs' => ['roof-lanterns', 'flat-rooflights']],
+                    ['label' => 'Glass and blinds', 'note' => 'Work on the glass itself, with the frames staying where they are.', 'slugs' => ['integral-blinds', 'double-glazing-replacement', 'secondary-glazing']],
+                    ['label' => 'Keeping it working', 'note' => 'The smaller jobs, including on windows we did not fit.', 'slugs' => ['window-and-door-repairs', 'roofline']],
+                ],
                 'products' => [
                     ['slug' => 'roof-lanterns', 'name' => 'Roof Lanterns', 'fit' => 'Daylight from above', 'copy' => 'Sheerline S1 in square, 2-way and 3-way layouts, up to 3.2 x 6m without tie bars.'],
                     ['slug' => 'flat-rooflights', 'name' => 'Flat Rooflights', 'fit' => 'Flat roof, flat glass', 'copy' => 'Glazing that sits close to the roof line, for extensions where a lantern would stand too tall.', 'image' => '/wp-content/themes/fenster/assets/images/products/roof-lanterns/flat-rooflights/fixed-flat-rooflights-installed-pair.jpg'],

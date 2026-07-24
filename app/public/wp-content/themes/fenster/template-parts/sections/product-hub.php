@@ -76,6 +76,46 @@ if ($cards === []) {
     return;
 }
 
+/*
+ * Group the cards into the bands declared for this hub. Anything a band does
+ * not claim still renders, in one unlabelled band at the end, so a product
+ * added to 'products' can never silently vanish from the page.
+ */
+$cards_by_slug = [];
+foreach ($cards as $card) {
+    $cards_by_slug[$card['slug']] = $card;
+}
+
+$bands = [];
+$claimed = [];
+foreach ((array) ($group['bands'] ?? []) as $band) {
+    $band_cards = [];
+    foreach ((array) ($band['slugs'] ?? []) as $slug) {
+        if (isset($cards_by_slug[$slug])) {
+            $band_cards[] = $cards_by_slug[$slug];
+            $claimed[$slug] = true;
+        }
+    }
+
+    if ($band_cards !== []) {
+        $bands[] = [
+            'label' => (string) ($band['label'] ?? ''),
+            'note' => (string) ($band['note'] ?? ''),
+            'cards' => $band_cards,
+        ];
+    }
+}
+
+$unclaimed = array_values(array_filter($cards, static function (array $card) use ($claimed): bool {
+    return ! isset($claimed[$card['slug']]);
+}));
+
+if ($unclaimed !== []) {
+    $bands[] = ['label' => '', 'note' => '', 'cards' => $unclaimed];
+}
+
+$suppliers = array_values(array_filter((array) ($group['suppliers'] ?? []), 'is_array'));
+
 $case_studies = function_exists('fenster_case_studies_for_product_group')
     ? fenster_case_studies_for_product_group(array_column($cards, 'slug'), 3)
     : [];
@@ -84,43 +124,77 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
 <article class="fg-product-hub fg-product-hub--<?php echo esc_attr($group_key); ?>">
     <section class="fg-product-hub__intro">
         <div class="container fg-product-hub__intro-grid">
-            <div>
+            <div class="fg-product-hub__lead">
                 <p class="eyebrow"><?php echo esc_html((string) ($group['eyebrow'] ?? '')); ?></p>
                 <?php /* Theme-owned, so the H1 no longer depends on the scraped page record. */ ?>
                 <h1><?php echo esc_html((string) ($group['h1'] ?? $args['title'])); ?></h1>
-            </div>
-            <div class="fg-product-hub__intro-copy">
-                <p><?php echo esc_html((string) ($group['intro'] ?? '')); ?></p>
+                <p class="fg-product-hub__lead-copy"><?php echo esc_html((string) ($group['intro'] ?? '')); ?></p>
                 <p class="fg-product-hub__actions">
                     <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
                 </p>
             </div>
+
+            <?php if ($suppliers !== []) : ?>
+                <aside class="fg-product-hub__systems">
+                    <p class="fg-product-hub__systems-title"><?php esc_html_e('The systems we fit', 'fenster'); ?></p>
+                    <ul>
+                        <?php foreach ($suppliers as $supplier) : ?>
+                            <?php $logo = '/wp-content/themes/fenster/assets/partners/' . (string) ($supplier['logo'] ?? ''); ?>
+                            <li>
+                                <span class="fg-product-hub__systems-logo">
+                                    <img <?php echo fenster_image_attr_string($logo, [
+                                        'alt' => (string) ($supplier['name'] ?? ''),
+                                        'loading' => 'lazy',
+                                    ]); ?>>
+                                </span>
+                                <span class="fg-product-hub__systems-role"><?php echo esc_html((string) ($supplier['role'] ?? '')); ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php if (! empty($group['suppliers_note'])) : ?>
+                        <p class="fg-product-hub__systems-note"><?php echo esc_html((string) $group['suppliers_note']); ?></p>
+                    <?php endif; ?>
+                </aside>
+            <?php endif; ?>
         </div>
     </section>
 
-    <section class="fg-product-hub__range" aria-label="<?php echo esc_attr(sprintf(__('The %s range', 'fenster'), $group_key === 'other-services' ? __('services', 'fenster') : $group_key)); ?>">
+    <section class="fg-product-hub__range">
         <div class="container">
-            <ul class="fg-product-hub__grid">
-                <?php foreach ($cards as $card) : ?>
-                    <li>
-                        <a class="fg-product-hub__card" href="<?php echo esc_url($card['url']); ?>">
-                            <span class="fg-product-hub__media">
-                                <img <?php echo fenster_image_attr_string($card['image'], [
-                                    'alt' => $card['alt'],
-                                    'loading' => 'lazy',
-                                ]); ?>>
-                            </span>
-                            <span class="fg-product-hub__body">
-                                <span class="fg-product-hub__fit"><?php echo esc_html($card['fit']); ?></span>
-                                <strong><?php echo esc_html($card['name']); ?></strong>
-                                <span class="fg-product-hub__copy"><?php echo esc_html($card['copy']); ?></span>
-                                <span class="fg-product-hub__more"><?php echo esc_html(sprintf(__('View %s', 'fenster'), $card['name'])); ?></span>
-                            </span>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+            <?php foreach ($bands as $band_index => $band) : ?>
+                <?php $band_id = 'fg-hub-band-' . $band_index; ?>
+                <div class="fg-product-hub__band"<?php echo $band['label'] !== '' ? ' role="group" aria-labelledby="' . esc_attr($band_id) . '"' : ''; ?>>
+                    <?php if ($band['label'] !== '') : ?>
+                        <header class="fg-product-hub__band-head">
+                            <h2 id="<?php echo esc_attr($band_id); ?>"><?php echo esc_html($band['label']); ?></h2>
+                            <?php if ($band['note'] !== '') : ?>
+                                <p><?php echo esc_html($band['note']); ?></p>
+                            <?php endif; ?>
+                        </header>
+                    <?php endif; ?>
+                    <ul class="fg-product-hub__grid">
+                        <?php foreach ($band['cards'] as $card) : ?>
+                            <li>
+                                <a class="fg-product-hub__card" href="<?php echo esc_url($card['url']); ?>">
+                                    <span class="fg-product-hub__media">
+                                        <img <?php echo fenster_image_attr_string($card['image'], [
+                                            'alt' => $card['alt'],
+                                            'loading' => 'lazy',
+                                        ]); ?>>
+                                    </span>
+                                    <span class="fg-product-hub__body">
+                                        <span class="fg-product-hub__fit"><?php echo esc_html($card['fit']); ?></span>
+                                        <strong><?php echo esc_html($card['name']); ?></strong>
+                                        <span class="fg-product-hub__copy"><?php echo esc_html($card['copy']); ?></span>
+                                        <span class="fg-product-hub__more"><?php echo esc_html(sprintf(__('View %s', 'fenster'), $card['name'])); ?></span>
+                                    </span>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endforeach; ?>
         </div>
     </section>
 
