@@ -37,7 +37,9 @@ $brand = is_array($args['brand']) ? $args['brand'] : [];
 $phone = (string) ($brand['phone'] ?? '01908 429200');
 $instant_quote_preview = (string) $args['instant_quote_preview'];
 $trust_items = is_array($args['trust_items']) ? $args['trust_items'] : [];
-$guide = is_array($group['guide'] ?? null) ? $group['guide'] : [];
+$decision_columns = is_array($group['decision_columns'] ?? null) ? $group['decision_columns'] : [];
+$faqs = is_array($group['faqs'] ?? null) ? $group['faqs'] : [];
+$prices = is_array($group['prices'] ?? null) ? $group['prices'] : [];
 
 /**
  * One tile: the product's own curated card image, its name, and the system it
@@ -153,25 +155,58 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
         </div>
     </section>
 
-    <?php if ($guide !== []) : ?>
-        <section class="fg-product-hub__guide">
-            <div class="container fg-product-hub__guide-grid">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Narrowing it down', 'fenster'); ?></p>
-                    <h2><?php echo esc_html((string) ($group['guide_heading'] ?? '')); ?></h2>
-                    <p><?php echo esc_html((string) ($group['guide_intro'] ?? '')); ?></p>
-                </div>
-                <ol>
-                    <?php foreach ($guide as $index => $step) : ?>
+    <?php if ($decision_columns !== []) : ?>
+        <section class="fg-ph-decision">
+            <div class="container">
+                <header class="fg-ph-decision__head">
+                    <p class="eyebrow"><?php echo esc_html((string) ($group['decision_eyebrow'] ?? '')); ?></p>
+                    <h2><?php echo esc_html((string) ($group['decision_heading'] ?? '')); ?></h2>
+                    <p><?php echo esc_html((string) ($group['decision_intro'] ?? '')); ?></p>
+                </header>
+                <ul class="fg-ph-decision__cols">
+                    <?php foreach ($decision_columns as $col) : ?>
                         <li>
-                            <span aria-hidden="true"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
-                            <div>
-                                <strong><?php echo esc_html((string) ($step['title'] ?? '')); ?></strong>
-                                <p><?php echo esc_html((string) ($step['copy'] ?? '')); ?></p>
-                            </div>
+                            <p class="fg-ph-decision__title"><?php echo esc_html((string) ($col['title'] ?? '')); ?></p>
+                            <p class="fg-ph-decision__meta"><?php echo esc_html((string) ($col['meta'] ?? '')); ?></p>
+                            <dl>
+                                <?php foreach ((array) ($col['points'] ?? []) as $point) : ?>
+                                    <div>
+                                        <dt><?php echo esc_html((string) ($point['label'] ?? '')); ?></dt>
+                                        <dd><?php echo esc_html((string) ($point['value'] ?? '')); ?></dd>
+                                    </div>
+                                <?php endforeach; ?>
+                            </dl>
+                            <p class="fg-ph-decision__note"><?php echo esc_html((string) ($col['note'] ?? '')); ?></p>
                         </li>
                     <?php endforeach; ?>
-                </ol>
+                </ul>
+            </div>
+        </section>
+    <?php endif; ?>
+
+    <?php if ($faqs !== []) : ?>
+        <section class="fg-ph-faq">
+            <div class="container fg-ph-faq__grid">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Before you ask', 'fenster'); ?></p>
+                    <h2><?php echo esc_html((string) ($group['faq_heading'] ?? '')); ?></h2>
+                    <?php if ($prices !== []) : ?>
+                        <p class="fg-ph-faq__prices">
+                            <span><?php echo esc_html((string) ($group['prices_intro'] ?? '')); ?></span>
+                            <?php foreach ($prices as $price) : ?>
+                                <a href="<?php echo esc_url(home_url((string) ($price['url'] ?? '/'))); ?>"><?php echo esc_html((string) ($price['label'] ?? '')); ?></a>
+                            <?php endforeach; ?>
+                        </p>
+                    <?php endif; ?>
+                </div>
+                <div class="fg-ph-faq__list">
+                    <?php foreach ($faqs as $index => $faq) : ?>
+                        <details<?php echo $index === 0 ? ' open' : ''; ?>>
+                            <summary><?php echo esc_html((string) ($faq['q'] ?? '')); ?></summary>
+                            <p><?php echo esc_html((string) ($faq['a'] ?? '')); ?></p>
+                        </details>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </section>
     <?php endif; ?>
