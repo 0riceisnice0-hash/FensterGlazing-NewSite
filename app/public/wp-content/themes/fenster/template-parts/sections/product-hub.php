@@ -234,7 +234,7 @@ $render_card = static function (array $card, string $filter_key, bool $eager = f
                             <span><?php echo esc_html((string) count($cards)); ?></span>
                         </button>
                         <?php foreach ($filters as $filter) : ?>
-                            <button type="button" data-fg-hub-filter="<?php echo esc_attr($filter['key']); ?>" aria-pressed="false">
+                            <button type="button" data-fg-hub-filter="<?php echo esc_attr($filter['key']); ?>" data-note="<?php echo esc_attr($filter['note']); ?>" aria-pressed="false">
                                 <?php echo esc_html($filter['label']); ?>
                                 <span><?php echo esc_html((string) count($filter['slugs'])); ?></span>
                             </button>
@@ -242,9 +242,6 @@ $render_card = static function (array $card, string $filter_key, bool $eager = f
                     </div>
                     <p class="fg-ph-filters__note" data-fg-hub-note aria-live="polite"><?php esc_html_e('The whole range. Narrow it if you already know roughly what you want.', 'fenster'); ?></p>
                 </div>
-                <?php foreach ($filters as $filter) : ?>
-                    <template data-fg-hub-note-for="<?php echo esc_attr($filter['key']); ?>"><?php echo esc_html($filter['note']); ?></template>
-                <?php endforeach; ?>
             <?php endif; ?>
 
             <ul class="fg-ph-grid" data-fg-hub-grid>

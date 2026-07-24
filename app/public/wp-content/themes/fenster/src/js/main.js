@@ -1012,9 +1012,11 @@ document.querySelectorAll('[data-fg-product-hub]').forEach((hub) => {
   const items = [...grid.querySelectorAll('[data-fg-hub-item]')];
   const note = hub.querySelector('[data-fg-hub-note]');
   const defaultNote = note ? note.textContent : '';
+  // Carried on the button itself. A <template> looked tidier but its children
+  // live in .content, so textContent on the element is always empty.
   const notes = new Map();
-  hub.querySelectorAll('[data-fg-hub-note-for]').forEach((tpl) => {
-    notes.set(tpl.dataset.fgHubNoteFor, tpl.textContent.trim());
+  buttons.forEach((button) => {
+    if (button.dataset.note) notes.set(button.dataset.fgHubFilter, button.dataset.note);
   });
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
