@@ -31157,15 +31157,17 @@ html.fg-blinds-reveal-locked {
   padding: clamp(2.25rem, 4vw, 3.25rem) 0;
 }
 
-.fg-product-hub__intro {
+/* Child selectors, because `.fg-product-hub > section` above is (0,1,1) and
+   would otherwise beat a plain class no matter where it sits in the file. */
+.fg-product-hub > .fg-product-hub__intro {
   padding-bottom: clamp(1rem, 1.6vw, 1.4rem);
 }
 
-.fg-product-hub__range {
+.fg-product-hub > .fg-product-hub__range {
   padding-top: 0;
 }
 
-.fg-product-hub__intro {
+.fg-product-hub > .fg-product-hub__intro {
   padding-top: clamp(1.25rem, 2.2vw, 1.9rem);
 }
 
