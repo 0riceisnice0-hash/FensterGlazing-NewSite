@@ -31236,7 +31236,9 @@ html.fg-blinds-reveal-locked {
   object-position: center;
 }
 
-.fg-product-hub__media img {
+/* Direct child only. The system mark is also an img inside .__media, and at
+   equal specificity a `cover` rule here would win on source order and crop it. */
+.fg-product-hub__media > img {
   display: block;
   width: 100%;
   height: 100%;
