@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Product hub hero and banded range (test, bf7759b)
+
+Owner feedback on the first pass: the hero needs fixing and styling, add a box with the systems (Liniar, Sheerline and Roseview for windows, Liniar and Sheerline for doors and services), the text box is awkwardly placed and too close to the CTAs, and is there a better way to lay the products out.
+
+- **The hero was a heading in one column and a loose paragraph in the other**, bottom-aligned, with the buttons at `1.15rem` under the sentence. It read as a floating text box rather than a composition. The lead is now one block, eyebrow through to the action pair, capped at `40rem` so the line length is readable, with `clamp(1.6rem, 2.6vw, 2.1rem)` of air above the buttons.
+- **The opposite column is now a defined panel** rather than stray text: the systems we fit, each with what it is for. Logos sit in a fixed box because the three marks run from 2.2:1 to 8:1, so height governs Liniar and Roseview while width governs Sheerline. A first attempt at 96x30 squeezed the squarer two to a thumbnail; 132x40 lets all three read.
+- **The range is banded rather than one flat list.** Windows split uPVC from aluminium, which is the guide's own third question answered by the layout. Doors split by where the door goes, which is the first thing we ask on the phone and the one that rules most of the list out. Services split roof glazing, glass and blinds, and maintenance. This turns nine equal cards into two or three scannable decisions.
+- **Bands cannot drop a product.** Anything no band claims still renders in an unlabelled band at the end, so adding to `products` without touching `bands` fails visibly rather than silently.
+- Responsive behaviour: the panel sits beside the lead above 1180, becomes a full-width three-across strip between 620 and 1180, and returns to stacked rows below 620 where three columns would be too narrow for a logo.
+- Verified on test at 1440, 900, 768 and 390: no horizontal overflow at any width, zero console errors, all cards and images present, headings inside the cap.
+
 ## 2026-07-24 - One real product-selector template for windows, doors and services (test, 55d15bc)
 
 Owner: `/other-services/` needs to be an actual page rather than a scraped template, the windows and doors pages need redesigning, and all three should share one main product selector built from what the good pages (about, sash, composite, roof lanterns) and `STYLE.md` established.
