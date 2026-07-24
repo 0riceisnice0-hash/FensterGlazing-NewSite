@@ -2,6 +2,16 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Roof lantern S1 selector rebuilt on the composite door wall (test, 474e39d)
+
+Owner: the heritage configurations look good now, but the roof lantern selector needs revamping, "maybe do it like the composite door page has it, the slow moving side to side bit".
+
+- **The S1 layouts were running on `fg-colour-carousel`**, the coverflow built for scrubbing paint swatches. Thirteen layouts is a range to browse, not a value to pick, which is why it read wrong. It now uses the composite door wall: a slow sideways drift you can also grab, pausing on hover and for a moment after a drag.
+- **Shared, not copied.** Same `.fg-cd3-wall__viewport`, same track, same `[data-fg-door-wall]` controller, so the two walls cannot drift apart. Only the card is new. A lantern render is a wide product shot floating on white, so `.fg-lantern-card` contains it on a soft panel with the label underneath, rather than cover-cropping it under the dark gradient a portrait door photograph wants. The clone-hiding rules for `860px` and reduced motion now name both card classes.
+- The old carousel styles were deleted rather than left dead, and the per-slide `01`/`02` numbers went with them.
+- Verified on test. Desktop: drift running at ~54px/s (`scrollLeft` 50 to 185 over 2.5s, matching `SPEED 0.9` x 60), 13 real cards plus 13 clones, cards 300x241. Mobile at 390: drift off, clones hidden, cards 250x211, native swipe rail with a partial next-card peek. No horizontal body overflow at either width, zero console errors.
+- **A QA trap worth recording.** A first pass reported only 6 of 13 images loaded after scrolling the wall through. That was the test, not the page: the drift writes `viewport.scrollLeft` every frame, so it immediately overwrote the scroll position the test set. Pausing the drift with a `pointerenter` first gave 13 of 13 loaded, 0 broken. Pause the drift before measuring anything that depends on scroll position.
+
 ## 2026-07-24 - Four fixes: form audience, heritage configs, colour hub hero, card edge (test, 75245fc)
 
 Four items picked off the owner's backlog. EnergyPlus/Thermlock was explicitly deferred as too broad; the homepage window photo was kept as-is with only the edge defect fixed.

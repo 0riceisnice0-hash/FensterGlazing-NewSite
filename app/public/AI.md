@@ -254,6 +254,14 @@ PHP lint example:
 - The configuration renders share one crop window so relative door heights stay truthful. Do not re-trim them individually. The section shows **six** as of 2026-07-24: single and French, each with no bars, 2 bar and 4 bar. The three toplight renders were removed on owner instruction and their assets are still in `assets\images\products\heritage-aluminium\configurations` (`config-04`, `config-05`, `config-06`) if they are ever wanted back. Toplights remain listed as an available layout in `inc\product-hub-data.php`; that is deliberate, because stocked and available are different things.
 - Configuration slides carry no `01`/`02`/`03` index numbers. The carousel's own position counter stays.
 
+## Configuration Wall Rule
+
+- `/roof-lanterns/` and `/composite-doors/` share one browsing component: the `.fg-cd3-wall__viewport` / `.fg-cd3-wall__track` markup plus the `[data-fg-door-wall]` controller in `src\js\main.js`. It is a slow sideways drift driven by `scrollLeft` (not a CSS animation) that pauses on hover, during a drag and briefly after one. The track is rendered twice so the loop rewinds by half the scroll width without a seam.
+- Extend the shared selector lists rather than copying the component. Only the card differs per route: `.fg-cd3-door` cover-crops a portrait door photograph under a dark gradient label; `.fg-lantern-card` contains a wide product render on a soft panel with the label underneath. A new caller should add a card class, not a second wall.
+- The clone-hiding rules for `860px` and `prefers-reduced-motion` must name every card class. Miss one and that route keeps a duplicate list on phones and fights the user's finger.
+- Do not use `fg-colour-carousel` for product configurations. It is the colour hub's coverflow, built for picking one value from a list of finishes, and it was the wrong shape for browsing 13 lantern layouts.
+- QA note: the drift owns `scrollLeft`, so a test that writes `scrollLeft` without first pausing the drift measures nothing and will report images as unloaded. Dispatch `pointerenter` on the viewport first.
+
 ## Colour Hub Rule
 
 - Colour data belongs in `inc\site-data.php` under `colour_options`.
