@@ -20,7 +20,22 @@ $args = wp_parse_args($args ?? [], [
     'compact' => false,
     'lock_project_type' => false,
     'consultation_booking' => false,
+    'audience' => '',
 ]);
+
+/*
+ * The enquiry-type gate defaults to the audience the page is already speaking to:
+ * homeowner everywhere except commercial routes, which pass show_company. Both
+ * buttons stay available so a visitor who landed on the wrong page can switch.
+ */
+$audience = in_array($args['audience'], ['homeowner', 'business'], true)
+    ? $args['audience']
+    : (! empty($args['show_company']) ? 'business' : 'homeowner');
+$business_project_type = 'Commercial glazing';
+$homeowner_project_type = (string) $args['project_type'] !== $business_project_type
+    ? (string) $args['project_type']
+    : 'Residential windows and doors';
+$default_project_type = $audience === 'business' ? $business_project_type : $homeowner_project_type;
 
 $project_options = is_array($args['project_options']) && ! empty($args['project_options'])
     ? $args['project_options']
@@ -171,18 +186,18 @@ $notices = [
             </div>
         </div>
     <?php else : ?>
-    <input type="hidden" name="project_type" value="<?php echo esc_attr((string) $args['project_type']); ?>" data-fg-project-type>
+    <input type="hidden" name="project_type" value="<?php echo esc_attr(empty($args['lock_project_type']) ? $default_project_type : (string) $args['project_type']); ?>" data-fg-project-type>
     <?php if (empty($args['lock_project_type'])) : ?>
         <fieldset class="fg-enquiry-form__audience" data-fg-audience-gate>
             <legend><?php esc_html_e('Choose enquiry type', 'fenster'); ?></legend>
             <div class="fg-enquiry-form__audience-options">
-                <button type="button" data-fg-audience-choice data-project-type="Residential windows and doors" aria-pressed="false">
+                <button type="button" class="<?php echo esc_attr($audience === 'homeowner' ? 'is-active' : ''); ?>" data-fg-audience-choice data-project-type="<?php echo esc_attr($homeowner_project_type); ?>" aria-pressed="<?php echo esc_attr($audience === 'homeowner' ? 'true' : 'false'); ?>">
                     <b aria-hidden="true">01</b>
                     <span><?php esc_html_e('Homeowner', 'fenster'); ?></span>
                     <small><?php esc_html_e('Windows, doors, glass, repairs or home improvements for your property.', 'fenster'); ?></small>
                     <i aria-hidden="true"><?php esc_html_e('Continue', 'fenster'); ?></i>
                 </button>
-                <button type="button" data-fg-audience-choice data-project-type="Commercial glazing" aria-pressed="false">
+                <button type="button" class="<?php echo esc_attr($audience === 'business' ? 'is-active' : ''); ?>" data-fg-audience-choice data-project-type="<?php echo esc_attr($business_project_type); ?>" aria-pressed="<?php echo esc_attr($audience === 'business' ? 'true' : 'false'); ?>">
                     <b aria-hidden="true">02</b>
                     <span><?php esc_html_e('Business', 'fenster'); ?></span>
                     <small><?php esc_html_e('Commercial sites, schools, offices, shopfronts, schedules or tender work.', 'fenster'); ?></small>

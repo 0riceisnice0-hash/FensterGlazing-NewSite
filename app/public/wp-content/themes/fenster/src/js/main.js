@@ -1923,7 +1923,7 @@ enquiryForms.forEach((form) => {
   if (audienceGate && audienceBody && audienceChoices.length && projectTypeField) {
     form.classList.add('fg-enquiry-form--audience-gated');
 
-    const chooseAudience = (choice) => {
+    const chooseAudience = (choice, moveFocus = true) => {
       audienceChoices.forEach((button) => {
         const active = button === choice;
         button.classList.toggle('is-active', active);
@@ -1934,12 +1934,17 @@ enquiryForms.forEach((form) => {
       projectTypeField.value = projectType;
       form.classList.add('is-audience-selected');
       audienceBody.removeAttribute('hidden');
-      audienceBody.querySelector('input, select, textarea')?.focus?.({ preventScroll: true });
+      if (moveFocus) audienceBody.querySelector('input, select, textarea')?.focus?.({ preventScroll: true });
     };
 
     audienceChoices.forEach((choice) => {
       choice.addEventListener('click', () => chooseAudience(choice));
     });
+
+    // The template pre-selects the audience the page is already speaking to, so
+    // open straight onto the form rather than making everyone answer it first.
+    const preselected = audienceChoices.find((choice) => choice.getAttribute('aria-pressed') === 'true');
+    if (preselected) chooseAudience(preselected, false);
   }
 
   const validateContactField = (field) => {

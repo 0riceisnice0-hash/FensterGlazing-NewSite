@@ -2059,8 +2059,6 @@ if ($is_window_handles) {
 
 if ($is_colour_options) {
     $active_material = $slug === 'aluminium-colours' ? 'aluminium' : ($slug === 'upvc-colours' ? 'upvc' : 'upvc');
-    $hero_upvc_colours = array_slice(array_values((array) ($colour_materials['upvc']['colours'] ?? [])), 0, 4);
-    $hero_aluminium_colours = array_slice(array_values((array) ($colour_materials['aluminium']['colours'] ?? [])), 0, 4);
     $render_colour_material = static function (string $material_key, array $material, string $active_material): void {
         $colours = is_array($material['colours'] ?? null) ? array_values($material['colours']) : [];
         ?>
@@ -2114,30 +2112,16 @@ if ($is_colour_options) {
                     <h1><?php esc_html_e('Colour options for Fenster windows and doors.', 'fenster'); ?></h1>
                     <p><?php echo esc_html((string) ($colour_options['intro'] ?? $hero_intro)); ?></p>
                 </div>
-                <div class="fg-colour-hub-hero__visual" aria-label="<?php esc_attr_e('Frame colour sample board', 'fenster'); ?>">
-                    <div class="fg-colour-hub-hero__frame">
-                        <?php foreach (array_slice($hero_upvc_colours, 0, 3) as $index => $colour) : ?>
-                            <?php if (! empty($colour['image'])) : ?>
-                                <figure class="fg-colour-hub-hero__tile fg-colour-hub-hero__tile--<?php echo esc_attr((string) ($index + 1)); ?>" style="<?php echo esc_attr('--swatch:' . (string) ($colour['hex'] ?? '#ffffff')); ?>">
-                                    <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour finish')); ?>" loading="eager">
-                                    <figcaption><?php echo esc_html((string) ($colour['name'] ?? 'uPVC colour')); ?></figcaption>
-                                </figure>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                        <?php foreach (array_slice($hero_aluminium_colours, 0, 2) as $index => $colour) : ?>
-                            <?php if (! empty($colour['image'])) : ?>
-                                <figure class="fg-colour-hub-hero__tile fg-colour-hub-hero__tile--metal-<?php echo esc_attr((string) ($index + 1)); ?>" style="<?php echo esc_attr('--swatch:' . (string) ($colour['hex'] ?? '#ffffff')); ?>">
-                                    <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour finish')); ?>" loading="eager">
-                                    <figcaption><?php echo esc_html((string) ($colour['name'] ?? 'Aluminium colour')); ?></figcaption>
-                                </figure>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="fg-colour-hub-hero__swatches" aria-hidden="true">
-                        <span><?php esc_html_e('uPVC colours', 'fenster'); ?></span>
-                        <span><?php esc_html_e('Aluminium colours', 'fenster'); ?></span>
-                        <span><?php esc_html_e('Sample-led selection', 'fenster'); ?></span>
-                    </div>
+                <div class="fg-colour-hub-hero__visual">
+                    <figure class="fg-colour-hub-hero__photo">
+                        <?php $colour_hero_image = '/wp-content/themes/fenster/assets/images/products/colours/colour-hub-hero-dual-colour-1400w.webp'; ?>
+                        <img <?php echo fenster_image_attr_string($colour_hero_image, [
+                            'alt' => __('Flush casement window finished black on the outside and white on the inside', 'fenster'),
+                            'loading' => 'eager',
+                            'fetchpriority' => 'high',
+                        ]); ?>>
+                        <figcaption><?php esc_html_e('One frame, two finishes. Black outside, white inside.', 'fenster'); ?></figcaption>
+                    </figure>
                 </div>
             </div>
         </section>

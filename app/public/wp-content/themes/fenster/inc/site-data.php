@@ -1488,13 +1488,13 @@ function fenster_site_data(): array
             ],
         ],
         'colour_options' => [
-            'intro' => 'Frame colour changes how a window or door sits against brick, render, roofline and hardware. Use this hub to compare core uPVC foils, aluminium powder-coated finishes and where dual colour or RAL matching usually fits.',
+            'intro' => 'Frame colour changes how a window or door sits against brick, render, roofline and hardware. The two materials get their colour in completely different ways, which is worth knowing before you choose: uPVC is finished with a foil bonded to the profile, aluminium is powder coated. Both can be a different colour inside and out.',
             'materials' => [
                 'upvc' => [
                     'label' => 'uPVC colours',
                     'slug' => 'upvc-colours',
                     'headline' => 'uPVC colours.',
-                    'copy' => 'Browse popular uPVC frame finishes for windows and doors.',
+                    'copy' => 'A uPVC colour is a foil, bonded to the profile at the factory rather than painted on afterwards. That is why the woodgrains have a grain you can feel, and why the colour does not need repainting. The frame underneath stays white, so you will see white on the rebate when the window is open unless the foil is specified on both faces.',
                     'colours' => [
                         ['name' => 'Smooth White', 'hex' => '#ffffff', 'finish' => 'No foil', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-swatches/colours_page_image-White-weiss.webp'],
                         ['name' => 'White', 'hex' => '#f7f6ef', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-swatches/colours_page_image-White-weiss.webp'],
@@ -1519,7 +1519,7 @@ function fenster_site_data(): array
                     'label' => 'Aluminium colours',
                     'slug' => 'aluminium-colours',
                     'headline' => 'Aluminium colours.',
-                    'copy' => 'Browse popular aluminium frame finishes for windows and doors.',
+                    'copy' => 'Aluminium is powder coated: dry pigment sprayed onto the profile and baked on, so the colour is part of the surface rather than a layer sitting on it. The finish is quoted as a RAL number with a matt, satin or gloss level, which is why these read as codes rather than names. Dual colour means two separate coats, one on each face.',
                     'colours' => [
                         ['name' => 'Agate Grey', 'hex' => '#b4bbb3', 'finish' => 'RAL 7018 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Agate-600.jpg'],
                         ['name' => 'Anthracite Grey', 'hex' => '#353b3f', 'finish' => 'RAL 7016 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Anthracite-600.jpg'],

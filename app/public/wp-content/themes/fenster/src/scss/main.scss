@@ -7866,120 +7866,35 @@ html.fg-gallery-lightbox-open body {
 
 .fg-colour-hub-hero__visual {
   position: relative;
-  display: grid;
-  gap: 0.85rem;
   align-self: center;
-  min-height: clamp(360px, 38vw, 500px);
-  padding: clamp(0.85rem, 1.8vw, 1.15rem);
-  border: 1px solid rgba(0, 45, 58, 0.11);
-  border-radius: 8px;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(46, 172, 102, 0.12), transparent 34%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(245, 250, 248, 0.76)),
-    rgba(255, 255, 255, 0.82);
-  box-shadow: 0 24px 62px rgba(0, 45, 58, 0.1);
 }
 
-.fg-colour-hub-hero__frame {
+.fg-colour-hub-hero__photo {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  height: clamp(290px, 30vw, 390px);
-  min-height: 0;
-  overflow: hidden;
-  border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(245, 250, 248, 0.42));
-}
-
-.fg-colour-hub-hero__tile {
-  position: relative;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
   margin: 0;
   overflow: hidden;
   border: 1px solid rgba(0, 45, 58, 0.11);
   border-radius: 8px;
   background: #ffffff;
-  box-shadow: 0 14px 32px rgba(0, 45, 58, 0.1);
+  box-shadow: 0 24px 62px rgba(0, 45, 58, 0.12);
 }
 
-.fg-colour-hub-hero__tile::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
-}
-
-.fg-colour-hub-hero__tile img {
+.fg-colour-hub-hero__photo img {
   display: block;
   width: 100%;
-  height: 100%;
-  min-height: 0;
-  padding: 0.2rem;
-  background: color-mix(in srgb, var(--swatch) 10%, #ffffff);
-  object-fit: contain;
+  height: clamp(320px, 34vw, 460px);
+  object-fit: cover;
   object-position: center;
 }
 
-.fg-colour-hub-hero__tile figcaption {
-  padding: 0.62rem 0.75rem;
-  background: rgba(255, 255, 255, 0.94);
+.fg-colour-hub-hero__photo figcaption {
+  padding: 0.85rem 1rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.1);
+  background: rgba(255, 255, 255, 0.96);
   color: var(--color-steel);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 850;
-  line-height: 1.15;
-}
-
-.fg-colour-hub-hero__tile--1 {
-  grid-row: span 2;
-}
-
-.fg-colour-hub-hero__tile--2 {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.fg-colour-hub-hero__tile--3 {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.fg-colour-hub-hero__tile--metal-1 {
-  display: none;
-}
-
-.fg-colour-hub-hero__tile--metal-2 {
-  display: none;
-}
-
-.fg-colour-hub-hero__tile--metal-1 img,
-.fg-colour-hub-hero__tile--metal-2 img {
-  object-position: center;
-}
-
-.fg-colour-hub-hero__swatches {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: center;
-}
-
-.fg-colour-hub-hero__swatches span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid rgba(0, 45, 58, 0.14);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.78);
-  color: var(--color-steel);
-  font-size: 0.76rem;
-  font-weight: 850;
+  line-height: 1.25;
 }
 
 .fg-colour-hub__tabs {
@@ -8269,42 +8184,6 @@ html.fg-gallery-lightbox-open body {
 
   .fg-colour-hub-hero__visual {
     display: none;
-  }
-
-  .fg-colour-hub-hero__frame {
-    grid-template-columns: 1fr 1fr;
-    height: 310px;
-    min-height: 0;
-  }
-
-  .fg-colour-hub-hero__tile figcaption {
-    padding: 0.62rem 0.68rem;
-    font-size: 0.74rem;
-  }
-
-  .fg-colour-hub-hero__tile--1 {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-
-  .fg-colour-hub-hero__tile--2 {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .fg-colour-hub-hero__tile--3 {
-    grid-column: 2;
-    grid-row: 2;
-  }
-
-  .fg-colour-hub-hero__swatches {
-    justify-content: flex-start;
-  }
-
-  .fg-colour-hub-hero__swatches span {
-    min-height: 30px;
-    padding: 0.38rem 0.55rem;
-    font-size: 0.7rem;
   }
 
   .fg-colour-carousel__slide {
@@ -18150,6 +18029,10 @@ a.fg-cs-installer:hover {
 .fg-home-product-theatre__frame > img {
   position: absolute;
   inset: -3%;
+  /* The global `img { max-width: 100% }` reset clamps this to 100%, which leaves
+     the left offset from `inset: -3%` in place and exposes a strip of the dark
+     frame background down the right edge. Opt out so the image really overfills. */
+  max-width: none;
   width: 106%;
   height: 106%;
   object-fit: cover;

@@ -27,9 +27,6 @@ $door_configurations = [
     ['leaf' => 'Single door', 'bars' => 'No bars', 'colour' => 'Anthracite Grey', 'image' => 'config-01-single-no-bars-anthracite.webp'],
     ['leaf' => 'Single door', 'bars' => '2 bar', 'colour' => 'Pure White', 'image' => 'config-02-single-2-bar-pure-white.webp'],
     ['leaf' => 'Single door', 'bars' => '4 bar', 'colour' => 'Jet Black', 'image' => 'config-03-single-4-bar-jet-black.webp'],
-    ['leaf' => 'Single door with toplight', 'bars' => 'No bars', 'colour' => 'Squirrel Grey', 'image' => 'config-04-toplight-single-no-bars-squirrel-grey.webp'],
-    ['leaf' => 'Single door with toplight', 'bars' => '2 bar', 'colour' => 'Pastel Turquoise', 'image' => 'config-05-toplight-single-2-bar-pastel-turquoise.webp'],
-    ['leaf' => 'Single door with toplight', 'bars' => '4 bar', 'colour' => 'Black Metallic', 'image' => 'config-06-toplight-single-4-bar-black-metallic.webp'],
     ['leaf' => 'French doors', 'bars' => 'No bars', 'colour' => 'Agate Grey', 'image' => 'config-07-french-no-bars-agate-grey.webp'],
     ['leaf' => 'French doors', 'bars' => '2 bar', 'colour' => 'Cream', 'image' => 'config-08-french-2-bar-cream.webp'],
     ['leaf' => 'French doors', 'bars' => '4 bar', 'colour' => 'Silver Metallic', 'image' => 'config-09-french-4-bar-silver-metallic.webp'],
@@ -92,16 +89,15 @@ $door_colours = [
                 <div class="fg-heritage-door-configurations__heading">
                     <p class="eyebrow"><?php esc_html_e('Configurations', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Two decisions make the door.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('First, single or French. Then how many glazing bars, and whether the opening needs a toplight above the door. These nine are the stocked combinations. Bar spacing changes the character more than anything else, so it is worth looking at all three.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('First, single or French. Then how many glazing bars. These six are the stocked combinations. Bar spacing changes the character more than anything else, so it is worth looking at all three.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-colour-carousel fg-heritage-door-configurations__carousel" data-fg-colour-carousel>
                     <div class="fg-colour-carousel__viewport">
                         <div class="fg-colour-carousel__track" data-fg-colour-carousel-track>
-                            <?php foreach ($door_configurations as $index => $configuration) : ?>
+                            <?php foreach ($door_configurations as $configuration) : ?>
                                 <article class="fg-colour-carousel__slide fg-heritage-door-configurations__slide" data-fg-colour-slide>
                                     <img src="<?php echo esc_url($asset('configurations/' . $configuration['image'])); ?>" alt="<?php echo esc_attr(sprintf('%1$s heritage aluminium door, %2$s, in %3$s', $configuration['leaf'], strtolower($configuration['bars']), $configuration['colour'])); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('configurations/' . $configuration['image'])); ?>>
                                     <div>
-                                        <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
                                         <h3><?php echo esc_html($configuration['leaf']); ?></h3>
                                         <p><?php echo esc_html($configuration['bars'] . ', ' . $configuration['colour']); ?></p>
                                     </div>
@@ -242,7 +238,7 @@ $door_colours = [
                 <div class="fg-heritage-door-enquiry__copy">
                     <p class="eyebrow"><?php esc_html_e('Request a quote', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Tell us about the opening.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Heritage doors are not on the instant quote tool, because the bar layout and the toplight change the price too much to guess at. Send us the details instead and we will come back with a real figure.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Heritage doors are not on the instant quote tool, because the size, the bar layout and the colour change the price too much to guess at. Send us the details instead and we will come back with a real figure.', 'fenster'); ?></p>
                     <ul>
                         <li><?php esc_html_e('A photo of the existing door or opening, if there is one', 'fenster'); ?></li>
                         <li><?php esc_html_e('Rough width and height, and whether you want single or French', 'fenster'); ?></li>
