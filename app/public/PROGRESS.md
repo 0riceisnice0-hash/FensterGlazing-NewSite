@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Product imagery promoted to live (94e7d0f)
+
+- **Establishing what live actually ran took a checksum sweep again**, because every doc pointer was stale: `LIVECHANGES.md` still claimed `b0ec36a` on the retired `release/heritage-doors` branch, and `AI.md`/`HANDOVER.md` claimed `f4ad6fb`. Production was `fa6596b`. Six of the usual theme files were identical across `5672fb9..fa6596b`; the only discriminators were `inc/generated-pages.php` (the homepage H1 change) and `assets/email/google-reviews.png` (re-exported in `fa6596b`). All four pointers are now corrected.
+- Range check `git log --oneline fa6596b..94e7d0f` returned exactly two commits, both this session's, touching one PHP file, 23 new images and three docs. Nothing from a concurrent session.
+- Backup `fenster-pre-94e7d0f-20260724-085656.tar.gz` (361M), server repo cache pinned to the explicit SHA, theme-only rsync, WP and SiteGround caches purged.
+- Production verification: deployed `inc/site-data.php` matches the committed tree byte for byte; fifteen routes return 200 including all six changed pages, `/`, `/online-quote/`, the three MK head terms, `/areas-we-cover/` and `/sitemap.xml`; `/double-glazing-milton-keynes/` still contains its `Choose the product family first` marker; all ten spot-checked WebP assets serve `200 image/webp`. Browser QA at 1440x900 and 390x844 on the live URLs: no horizontal overflow, zero console errors, max heading 57.6px at the cap, none of the new assets broken, and the six heroes are visibly six different products.
+
 ## 2026-07-24 - Six product routes get their own photographs (test, 29f666b)
 
 Owner report: several product pages carry the wrong or the same images, with the instruction to match Sheerline's own products to ours (lift and slide goes to aluminium sliding doors) and to look at every image rather than pick by filename.
