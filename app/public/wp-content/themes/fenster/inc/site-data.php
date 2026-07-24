@@ -585,7 +585,7 @@ function fenster_site_data(): array
                         'title' => 'uPVC',
                         'meta' => 'Liniar, 70mm multi-chamber',
                         'points' => [
-                            ['label' => 'U-value from', 'value' => '0.95 W/m2K'],
+                            ['label' => 'U-value from', 'value' => '0.95 W/m²K'],
                             ['label' => 'Colours', 'value' => '16 foils'],
                             ['label' => 'Security', 'value' => 'PAS 24'],
                         ],
@@ -595,7 +595,7 @@ function fenster_site_data(): array
                         'title' => 'Aluminium',
                         'meta' => 'Sheerline, 72mm outer frame',
                         'points' => [
-                            ['label' => 'U-value from', 'value' => '1.0 W/m2K'],
+                            ['label' => 'U-value from', 'value' => '1.0 W/m²K'],
                             ['label' => 'Colours', 'value' => 'Any RAL'],
                             ['label' => 'Sightlines', 'value' => 'Slimmer'],
                         ],
@@ -604,7 +604,7 @@ function fenster_site_data(): array
                 ],
                 'faq_heading' => 'The questions we get asked on the phone.',
                 'faqs' => [
-                    ['q' => 'Which of these is actually the warmest?', 'a' => 'Our uPVC, at 0.95 W/m2K against 1.0 for the aluminium. Frame material does most of that: metal conducts heat and plastic does not, which is why aluminium needs a thermal break to get close at all.'],
+                    ['q' => 'Which of these is actually the warmest?', 'a' => 'Our uPVC, at 0.95 W/m²K against 1.0 for the aluminium. Frame material does most of that: metal conducts heat and plastic does not, which is why aluminium needs a thermal break to get close at all.'],
                     ['q' => 'Can I have one colour outside and another inside?', 'a' => 'Yes, in both materials. On uPVC the colour is a foil bonded to the profile, on aluminium it is a powder coat, so a dual finish means two separate treatments rather than one.'],
                     ['q' => 'How secure are they?', 'a' => 'The uPVC range is PAS 24 accredited, which is the enhanced security standard, with multi-point locking as standard. We confirm the exact hardware at survey against where the window is and what it opens onto.'],
                     ['q' => 'What does the guarantee cover?', 'a' => 'Ten years on a new window installation. Repairs, replacement glass on its own, roofline, integral blinds and pet flaps sit outside it. We would rather say that here than leave it in the small print.'],
@@ -649,7 +649,7 @@ function fenster_site_data(): array
                         'meta' => 'Front, back, side and French',
                         'points' => [
                             ['label' => 'Door slab', 'value' => '44.5mm'],
-                            ['label' => 'Break-in cover', 'value' => 'Up to 5,000 pounds'],
+                            ['label' => 'Break-in cover', 'value' => 'Up to £5,000'],
                             ['label' => 'Opening', 'value' => 'One or two leaves'],
                         ],
                         'note' => 'Needs the swing space, inside or out. Where security and insulation matter most.',
@@ -669,7 +669,7 @@ function fenster_site_data(): array
                         'meta' => 'Aluminium bifold and slide and fold',
                         'points' => [
                             ['label' => 'Panes', 'value' => 'Up to 7'],
-                            ['label' => 'U-value from', 'value' => '1.0 W/m2K'],
+                            ['label' => 'U-value from', 'value' => '1.0 W/m²K'],
                             ['label' => 'Opening', 'value' => 'Nearly all of it'],
                         ],
                         'note' => 'Panels stack to one side. You get the whole opening, but the stack needs somewhere to sit.',
@@ -677,7 +677,7 @@ function fenster_site_data(): array
                 ],
                 'faq_heading' => 'The questions we get asked on the phone.',
                 'faqs' => [
-                    ['q' => 'Which door is the most secure?', 'a' => 'The composite. Every Distinction door we fit has AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock, and if either fails in a break-in you are covered for up to 5,000 pounds in compensation, terms applying.'],
+                    ['q' => 'Which door is the most secure?', 'a' => 'The composite. Every Distinction door we fit has AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock, and if either fails in a break-in you are covered for up to £5,000 in compensation, terms applying.'],
                     ['q' => 'How wide can a garden opening go?', 'a' => 'Bifolds run to seven panes and sliding doors to four, on dual or triple tracks. The honest limit is usually the structure above the opening rather than the doors, which is what the survey is for.'],
                     ['q' => 'Sliding or folding for a garden door?', 'a' => 'Folding gives you nearly the whole opening but the panels have to stack somewhere. Sliding gives you a bigger pane of glass and takes no room at all, but half the opening stays glazed. Neither is the better answer until we have seen the wall.'],
                     ['q' => 'What does the guarantee cover?', 'a' => 'Ten years on a new door installation, and the composite doors carry a separate break-in guarantee on top. Repairs and replacement glass on their own sit outside the ten years.'],
@@ -731,7 +731,7 @@ function fenster_site_data(): array
                         'title' => 'The room is cold or loud',
                         'meta' => 'Where the window has to stay',
                         'points' => [
-                            ['label' => 'U-value from', 'value' => '1.8 W/m2K'],
+                            ['label' => 'U-value from', 'value' => '1.8 W/m²K'],
                             ['label' => 'Frames', 'value' => 'Slim aluminium'],
                             ['label' => 'Colours', 'value' => 'Full RAL range'],
                         ],
