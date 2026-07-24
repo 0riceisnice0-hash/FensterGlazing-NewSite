@@ -209,7 +209,8 @@ $notices = [
 
     <div class="fg-enquiry-form__body" data-fg-audience-body>
     <div class="fg-enquiry-form__body-head">
-        <span><?php echo esc_html(empty($args['lock_project_type']) ? __('Step 2 of 2', 'fenster') : __('Project enquiry', 'fenster')); ?></span>
+        <?php /* Not a step: the enquiry-type gate above is pre-selected, so there is nothing to complete first. */ ?>
+        <span><?php esc_html_e('Project enquiry', 'fenster'); ?></span>
         <strong><?php esc_html_e('Tell us the basics.', 'fenster'); ?></strong>
         <p><?php esc_html_e('A few useful details are enough. Fenster can confirm the exact specification after survey.', 'fenster'); ?></p>
     </div>
