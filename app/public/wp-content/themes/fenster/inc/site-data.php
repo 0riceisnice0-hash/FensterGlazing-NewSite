@@ -454,6 +454,7 @@ function fenster_site_data(): array
             ],
             'aluminium-windows' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-windows-black-house-1600w.webp', 'alt' => 'Black aluminium windows across the front of a modern brick and render house'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-windows-card-1000w.webp', 'alt' => 'Black aluminium windows in a rendered and brick gable'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Slim aluminium windows installed on a coastal property'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium window frame profile detail'],
@@ -461,6 +462,7 @@ function fenster_site_data(): array
             ],
             'heritage-windows' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage style aluminium windows on a traditional property'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/C08-Classic-Windows-Heritage-Style-Anthracite-2048x1366-1.jpg', 'alt' => 'Steel-look heritage aluminium windows seen from inside a living room'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage style aluminium windows on a traditional property'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Slim heritage glazing bar detail'],
@@ -468,6 +470,7 @@ function fenster_site_data(): array
             ],
             'slide-fold-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors.jpg', 'alt' => 'Closed slide and fold doors across a wide opening'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/Slide-Fold.png', 'alt' => 'Anthracite slide and fold doors across the front of a garden room'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors.jpg', 'alt' => 'Closed slide and fold doors across a wide opening'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors-open.jpg', 'alt' => 'Slide and fold doors partly opened to the garden'],
@@ -475,6 +478,7 @@ function fenster_site_data(): array
             ],
             'aluminium-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden view'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2.jpg', 'alt' => 'Dark aluminium entrance door with full-height glazing beside it'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden view'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-door.jpg', 'alt' => 'Steel-look aluminium door in a kitchen'],
@@ -482,6 +486,7 @@ function fenster_site_data(): array
             ],
             'heritage-aluminium-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-door-kitchen-1600w.webp', 'alt' => 'Steel-look heritage aluminium door and screen in a green kitchen'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-french-brick-1400w.webp', 'alt' => 'Black heritage aluminium French doors on a red brick courtyard'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-door-kitchen-1600w.webp', 'alt' => 'Steel-look heritage aluminium door and screen in a green kitchen'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-french-brick-1400w.webp', 'alt' => 'Black heritage aluminium French doors on a red brick courtyard'],
@@ -506,6 +511,7 @@ function fenster_site_data(): array
             ],
             'french-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_02.jpg', 'alt' => 'White uPVC French doors opened to a garden'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/French_30.jpg', 'alt' => 'Cream uPVC French doors with glazed side panels'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_02.jpg', 'alt' => 'White uPVC French doors opened to a garden'],
                     ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_03.jpg', 'alt' => 'uPVC French doors with glazed panels'],
@@ -514,6 +520,7 @@ function fenster_site_data(): array
             ],
             'integral-blinds' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide sliding doors'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Close-up of a blind sealed between the panes of a glazed door'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide sliding doors'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Close-up of integral blinds between glass panes'],
@@ -528,6 +535,7 @@ function fenster_site_data(): array
             ],
             'roof-lanterns' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/imported/S1-Lantern-Kitchen-A-min-scaled.jpg', 'alt' => 'Roof lantern bringing daylight into a kitchen extension'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-roof-lantern.jpg', 'alt' => 'Aluminium roof lantern on a flat roof'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/imported/S1-Lantern-Kitchen-A-min-scaled.jpg', 'alt' => 'Roof lantern bringing daylight into a kitchen extension'],
                     ['src' => '/wp-content/themes/fenster/assets/images/imported/S1-Lantern-Kitchen-B-min-scaled.jpg', 'alt' => 'Roof lantern over a bright living space'],

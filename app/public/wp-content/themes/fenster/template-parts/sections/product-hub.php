@@ -52,14 +52,31 @@ foreach ($products as $product) {
     }
 
     $media = fenster_data('product_media.' . $slug, []);
+    $media = is_array($media) ? $media : [];
+
+    /*
+     * A hero is a wide banner and a card is a 4:3 cell, so where the hero is a
+     * correct but wide establishing shot the product carries a closer 'card'
+     * image for the grid. Both live in product_media, so there is still one
+     * place to look.
+     */
     $image = (string) ($product['image'] ?? '');
-    if ($image === '' && is_array($media)) {
-        $image = (string) ($media['hero']['src'] ?? '');
+    $alt = '';
+    if ($image === '') {
+        $image = (string) ($media['card']['src'] ?? $media['hero']['src'] ?? '');
+        $alt = (string) ($media['card']['alt'] ?? $media['hero']['alt'] ?? '');
     }
 
     if ($image === '') {
         continue;
     }
+
+    // The system this product is built on, from the manufacturer data that
+    // already drives the product pages. Services and unmapped routes get no
+    // badge rather than an invented one.
+    $hub = function_exists('fenster_product_hub_data') ? fenster_product_hub_data($slug) : [];
+    $system = is_array($hub['systems'][0] ?? null) ? $hub['systems'][0] : [];
+    $system_logo = trim((string) ($system['logo'] ?? ''));
 
     $cards[] = [
         'slug' => $slug,
@@ -68,7 +85,9 @@ foreach ($products as $product) {
         'copy' => (string) ($product['copy'] ?? ''),
         'url' => home_url('/' . $slug . '/'),
         'image' => $image,
-        'alt' => (string) ($media['hero']['alt'] ?? ($product['name'] ?? '')),
+        'alt' => $alt !== '' ? $alt : (string) ($product['name'] ?? ''),
+        'system_logo' => $system_logo,
+        'system_label' => (string) ($system['label'] ?? ''),
     ];
 }
 
@@ -182,6 +201,11 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
                                             'alt' => $card['alt'],
                                             'loading' => 'lazy',
                                         ]); ?>>
+                                        <?php if ($card['system_logo'] !== '') : ?>
+                                            <span class="fg-product-hub__system-mark">
+                                                <img src="<?php echo esc_url(fenster_generated_url($card['system_logo'])); ?>" alt="<?php echo esc_attr(sprintf(__('%s system', 'fenster'), $card['system_label'])); ?>" loading="lazy">
+                                            </span>
+                                        <?php endif; ?>
                                     </span>
                                     <span class="fg-product-hub__body">
                                         <span class="fg-product-hub__fit"><?php echo esc_html($card['fit']); ?></span>
