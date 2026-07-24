@@ -2,6 +2,18 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-24 - Hub cards: close-ups and the system mark (test, 31b83bd)
+
+Owner: put a small system logo in the bottom right of each product image, and make sure the images are close-ups, heritage being a bad example.
+
+- **Audited all 25 card images by rendering them at the real 4:3 card ratio**, not by looking at the source files. Eight were wide establishing shots where the product was small or not the subject: heritage aluminium doors showed a green kitchen with the door at the edge, aluminium doors a room with a door in the distance, heritage windows a row of cottages across a field with a phone box, plus roof lanterns, integral blinds, French doors, slide and fold, and aluminium windows.
+- **`product_media[slug].card` added as an optional closer crop**, falling back to `hero`. A hero is a wide banner where an establishing shot works and a card is a small cell where it does not, so they want different pictures. Replacing the heroes would have fixed the grid and broken the pages. Both still live in `product_media`.
+- Seven of the eight were solved with photography already in the theme. Aluminium windows had nothing suitable, so its existing hero was re-cropped onto one window stack.
+- **Each card now carries its system mark bottom right**, read from `fenster_product_hub_data()` so there is no second product-to-system map to keep in step. Services and unmapped routes get no badge rather than an invented one. White pill, because every supplier mark is dark on transparent and would vanish into a dark corner of a photograph.
+- **Two CSS traps, both found by looking rather than by measuring.** A flex item keeps `min-width: auto`, so `max-width: 100%` did not shrink the 8:1 Sheerline mark and it clipped mid-word; sizing from the box with `object-fit: contain` fixed it. Then `.fg-product-hub__media img` turned out to match the badge as well as the photograph, and at equal specificity its `object-fit: cover` won on source order, cutting Distinction down to "ISTINCTIO". The photo rule is now scoped to the direct child. Worth remembering before putting an image inside another image's container.
+- Verified on test at 1440, 768 and 390: 9, 9 and 7 cards with every image loaded, all eight system marks rendering inside their pill uncropped, no horizontal overflow, zero console errors.
+- **Open for the owner:** `/slide-fold-doors/` and `/flat-rooflights/` have no system mapped in `product-hub-data.php`, so those two cards carry no badge.
+
 ## 2026-07-24 - Product hub hero and banded range (test, bf7759b)
 
 Owner feedback on the first pass: the hero needs fixing and styling, add a box with the systems (Liniar, Sheerline and Roseview for windows, Liniar and Sheerline for doors and services), the text box is awkwardly placed and too close to the CTAs, and is there a better way to lay the products out.
