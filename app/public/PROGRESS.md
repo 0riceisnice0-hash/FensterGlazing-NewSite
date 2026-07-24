@@ -1,6 +1,21 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-22
+Last updated: 2026-07-24
+
+## 2026-07-24 - Six product routes get their own photographs (test, 29f666b)
+
+Owner report: several product pages carry the wrong or the same images, with the instruction to match Sheerline's own products to ours (lift and slide goes to aluminium sliding doors) and to look at every image rather than pick by filename.
+
+- **Confirmed by fetching the pages, not by reading the data.** `/flush-casement-windows/`, `/tilt-turn-windows/`, `/french-casement-windows/` and `/bow-bay-windows/` rendered the *same thirteen* images as each other, because all four were mapped to the one `upvc_windows` gallery pool. `/aluminium-sliding-doors/` had exactly one sliding door on it and otherwise showed composite, uPVC and bifold doors from the shared aluminium pools.
+- **Each route now has its own pool** in `inc/site-data.php`: `flush_casement_windows`, `french_casement_windows`, `tilt_turn_windows`, `bow_bay_windows`, `casement_windows`, plus a rebuilt `aluminium_sliding_doors`. `upvc_windows` stays as the deliberately mixed pool for `/double-glazing/` only.
+- **`/aluminium-sliding-doors/` is now Sheerline Prestige Lift & Slide**, which is the system this page sells. Hero is the real anthracite install on brick; the pool adds the three-pane interior, the timber-clad run, the handle with its flush hook-lock, the track and threshold.
+- **Two heroes were plainly the wrong product.** `/tilt-turn-windows/` led with a casement handle close-up; it now leads with a tilted sash and shows the tilt hardware twice. `/french-casement-windows/` led with a Sheerline *aluminium* window on a uPVC page; it now leads with a French casement opened from the centre and shows the mullion and shootbolts. `/casement-windows/` led with a bay window, which has moved to the bay pool where it belongs.
+- **Resolution was a second, quieter problem.** The flush, bay and casement heroes were 600px and 1080px crops standing in for photography that exists at 5,000 to 6,700px in the Liniar source. Those are regenerated at 1400-1600px WebP.
+- 23 new assets under `assets/images/products/{aluminium-sliding,flush-casement,casement,tilt-turn,bow-bay,french-casement}/`, every one under 400KB. Sources are the Sheerline and Liniar scrapes plus `product_image_bank_20260710`; runtime code does not touch the exports. Alt text is written from what is in the frame.
+- **Found unused correct imagery already in the theme.** `assets/images/imported/` was carrying five tilt and turn photos, five French casement details and five bow/bay shots that nothing referenced, while the pages they belong to showed generic casement stock. Those are now wired up rather than re-imported.
+- **One defect caught by looking at the rendered page.** The Liniar French casement bedroom shot put the window in the top-right corner, so the portrait body cell cropped the window out entirely. Re-cropped around the window before shipping. This is the case for viewing the page rather than trusting the image list.
+- Verified on test at 1440x900 and 390x844 over CDP: no horizontal overflow at either width, zero console errors, max heading 57.6px at the cap, and all six routes now render distinct product-correct imagery. The remaining shared images on each page are `fg-link-card` thumbnails for *other* products, which is what that component is for.
+- The 13-town product matrix shares these pools, so the correction lands on the location variants too. Live is untouched.
 
 ## 2026-07-22 - Real local knowledge on the MK suburb pages (test)
 
