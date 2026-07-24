@@ -16,7 +16,7 @@ function fenster_product_hub_data(string $slug): array
         'roseview' => ['label' => 'Roseview', 'logo' => '/wp-content/themes/fenster/assets/partners/roseview-logo-new.png', 'alt' => 'Roseview'],
         'sheerline' => ['label' => 'Sheerline', 'logo' => FENSTER_THEME_URI . '/assets/partners/sheerline.png', 'alt' => 'Sheerline'],
         'distinction' => ['label' => 'Distinction Doors', 'logo' => FENSTER_THEME_URI . '/assets/partners/distinction-doors.png', 'alt' => 'Distinction Doors'],
-        'notan' => ['label' => 'Notan Integrated Blinds', 'logo' => '', 'alt' => 'Notan Integrated Blinds'],
+        'notan' => ['label' => 'Notan Integrated Blinds', 'logo' => '/wp-content/themes/fenster/assets/partners/notan.png', 'alt' => 'Notan Integrated Blinds'],
     ];
     $energyplus_badge = ['label' => 'EnergyPlus', 'image' => FENSTER_THEME_URI . '/assets/partners/liniar-energyplus.png', 'alt' => 'EnergyPlus by Liniar'];
     $thermlock_badge = ['label' => 'Thermlock', 'image' => FENSTER_THEME_URI . '/assets/partners/sheerline-thermlock.png', 'alt' => 'Thermlock'];

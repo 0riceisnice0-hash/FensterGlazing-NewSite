@@ -61,6 +61,7 @@ What this means:
 2. **Price-intent terms are wide open.** The searches with the highest buying intent are being answered by aggregators, while Fenster is the only local firm that actually publishes fitted prices (£600 window / £2,000 composite door / £3,500 bifold, checked WindowCAD figures, live on the seven price-guide routes).
 3. **Ads patch your two measured organic holes**: absent from organic page 1 on "double glazing milton keynes" and "windows milton keynes" (GSC positions 16.1 / 31.5), and absent from the map pack on the door terms. Paid presence covers exactly the gap the organic plan says will take quarters to close.
 4. Dovista's arrival (new showroom + sponsored placements) means the quiet local ad market may not stay quiet. Being first matters.
+5. **Crown (checked 24 Jul via both ad libraries):** on Google, Crown Conservatories Windows and Doors Ltd has 41 lifetime ads, 9 active in the last 30 days, all Text format, last shown 23–24 Jul — yet they surfaced on none of four MK SERPs checked (double glazing, composite doors, prices, even conservatories), so their search spend is light, narrow or heavily dayparted. Their real paid channel is **Meta**: ~35 active ads, video-led, a fresh wave launched 14 Jul with town-split variants for Bicester, Aylesbury, Buckingham and Leighton Buzzard, "Book Your FREE Quote" CTA, 10-year guarantee, and a celebrity install (Zoe Birkett). Two implications: the MK search auction remains effectively uncontested by locals, and Crown is pushing awareness into Fenster's Tier 2 ring towns via Meta rather than fighting on search intent.
 
 ---
 
@@ -78,11 +79,18 @@ This is the entire difference between this year and last year. Build the measure
 | Consultation booked | Primary | One per lead | £60 |
 | **Qualified lead / job won (offline import)** | Primary once volume exists | See 3c | Real job value |
 
-### 3b. Implementation (theme + GTM)
+### 3b. Implementation (theme + GTM) — corrected 2026-07-24 after a full tracker audit
 
-- Add `dataLayer.push({event: 'enquiry_submitted', ...})` in the AJAX success handler in `src/js/main.js` (the fetch success block already exists), plus events for `tel:` clicks, consultation submissions and quote-tool opens. This closes the audit's long-open L6 finding.
-- WindowCAD completions already reach WordPress via `/wp-json/fenster/v1/windowcad`; fire a follow-up event or use a server-side conversion for those.
-- GTM (`GTM-K89BCS9` is already consent-gated in `inc/consent.php`) gets triggers on these events feeding **Google Ads conversion tags**, with **Consent Mode v2** enabled so rejected-cookie visitors are respected and Google models the gap. Do not weaken the consent layer.
+The tracker is further along than this plan first credited. For **consented** visitors, `trackWebsiteEvent()` in `src/js/main.js` already pushes every event to `window.dataLayer` as `fenster_*` events — `fenster_phone_click`, `fenster_quote_opened`, `fenster_form_started`, `fenster_cta_click`, `fenster_page_view` all exist today. GTM can trigger Ads conversion tags on those with zero theme changes.
+
+Four real gaps remain:
+
+1. **The form-submit conversion never reaches the browser.** On success, consented submissions are relayed server-side to the dashboard (`inc/enquiries.php:544`); the JS success handler (`src/js/main.js:~2152`) only fires an aggregate stat for *non*-consented users. So GTM cannot see the single most important conversion. Fix: one `dataLayer.push({event: 'fenster_form_submitted', ...})` in the AJAX success block — a plain push, **not** `trackWebsiteEvent()`, which would double-count `form_submitted` in the dashboard.
+2. **GTM only exists after Accept.** `inc/consent.php` loads gtm.js post-acceptance with no Google Consent Mode defaults, so conversions from reject/no-choice visitors are invisible and unmodelled. Minimum path: accept the undercount and size it from the dashboard's consent accept/reject counters. Full path: Consent Mode v2 with denied-state pings — an architecture change to a deliberately strict consent layer, so it is an owner decision, not a default.
+3. **No gclid capture.** Needed for offline conversion import (3c). Hidden field on the enquiry form → `fenster_enquiry` post meta. The tracker's first-touch context stores UTMs only, and Google auto-tagging uses gclid, not UTMs — so also add manual UTMs to all ads via the account tracking template (`utm_source=google&utm_medium=cpc&utm_campaign={campaignid}`) or the dashboard will file ad clicks as organic Google.
+4. **WindowCAD completions are dashboard-only** (`inc/adminbase.php:309`). Use `fenster_quote_opened` as a secondary conversion now; feed completions to Google later via offline import when they become jobs.
+
+- Calls from ads need Google forwarding numbers (account-side setting, no site change); `fenster_phone_click` already covers dial-taps by consented visitors.
 - **Privacy boundary (already documented, keep it):** ad click IDs never enter the Marketing Dashboard. Everything here lives in Google's tags and WordPress only.
 
 ### 3c. Capture the GCLID and close the loop — the real fix for "leads that never convert"
