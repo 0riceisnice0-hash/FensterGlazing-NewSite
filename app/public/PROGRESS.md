@@ -1547,3 +1547,8 @@ Do not use this as the primary rulebook or handover. Use:
 - Built and linted the theme, deployed revision `bfc3e11` to the Basic Auth protected test site, purged caches and verified the page at desktop and `390 x 844`.
 - QA confirmed one H1, no horizontal overflow, no broken images after a full-page scan, correct tab keyboard behaviour, ten working FAQs, correct form routing and `200` responses for representative window, door, rooflight and contact routes.
 - Test deployment only. No live-site deployment was performed.
+- Owner rejected the first card-heavy visual pass. Follow-up revision `b9d5388` replaced it with an image-led editorial design while retaining the researched EnergyPlus information.
+- Removed the secondary sticky navigation, abstract CSS window diagrams and repeated boxed-card treatment.
+- Reduced the visible journey to nine stronger chapters: introduction, real-image opening selector, EnergyPlus engineering, specification workspace, finishes, product clarity, survey, related styles and conversion/proof.
+- Opening and specification controls now swap real product imagery and grouped information without creating a long series of equal-looking sections.
+- Rechecked desktop and `390 x 844`: one H1, no horizontal overflow, no broken local images, keyboard-accessible tabs, correct WindowCAD collection `0`, working FAQ schema and unchanged shared hero.
