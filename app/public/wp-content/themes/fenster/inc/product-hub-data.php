@@ -545,7 +545,9 @@ function fenster_tech_banner_args(string $slug): array
 
     if (in_array($slug, $thermlock_routes, true)) {
         return [
-            'logo' => '/wp-content/themes/fenster/assets/partners/sheerline-thermlock.png',
+            // Ink variant: the supplied mark is pale grey and disappears on a
+            // white panel. Same monochrome wordmark, legible tone.
+            'logo' => '/wp-content/themes/fenster/assets/partners/sheerline-thermlock-ink.png',
             'logo_alt' => 'Thermlock by Sheerline',
             'eyebrow' => 'Inside every Sheerline frame',
             'title' => 'Sheerline Thermlock',
