@@ -34504,8 +34504,12 @@ html.fg-blinds-reveal-locked {
   background: var(--color-soft);
 }
 
+/* The profile cutaway runs to the edge of its own frame, so it needs padding
+   inside the tile rather than bleeding off it. */
 .fg-cw-tiles__wide {
-  aspect-ratio: 1 / 1;
+  padding: clamp(0.85rem, 1.8vw, 1.5rem);
+  aspect-ratio: 4 / 3;
+  background: #ffffff;
 }
 
 .fg-cw-tiles__narrow {
@@ -34556,11 +34560,17 @@ html.fg-blinds-reveal-locked {
   color: #ffffff;
 }
 
+/* Top-aligned rather than centred: the panel copy is short by design, so
+   centring it against the photograph strands it in the middle of the column. */
 .fg-cw-opening {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.fg-cw-opening .fg-cw-media {
+  aspect-ratio: 4 / 3;
 }
 
 .fg-cw-opening[hidden] {
