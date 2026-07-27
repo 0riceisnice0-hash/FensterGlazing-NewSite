@@ -120,9 +120,9 @@ $gallery = [
 ];
 
 $related = [
-    ['url' => '/flush-casement-windows/', 'name' => 'Flush casement windows', 'copy' => 'The sash closes level with the frame instead of sitting proud of it.'],
-    ['url' => '/french-casement-windows/', 'name' => 'French casement windows', 'copy' => 'Two sashes and no post between them, for one uninterrupted opening.'],
-    ['url' => '/tilt-turn-windows/', 'name' => 'Tilt and turn windows', 'copy' => 'Tilts in at the top for air, or swings fully inwards for cleaning.'],
+    ['url' => '/flush-casement-windows/', 'name' => 'Flush casement windows', 'view' => 'View flush casements', 'copy' => 'The sash closes level with the frame instead of sitting proud of it.'],
+    ['url' => '/french-casement-windows/', 'name' => 'French casement windows', 'view' => 'View French casements', 'copy' => 'Two sashes and no post between them, for one uninterrupted opening.'],
+    ['url' => '/tilt-turn-windows/', 'name' => 'Tilt and turn windows', 'view' => 'View tilt and turn', 'copy' => 'Tilts in at the top for air, or swings fully inwards for cleaning.'],
 ];
 
 $faqs = [
@@ -438,7 +438,7 @@ $faq_schema = [
                     <a href="<?php echo esc_url(home_url($item['url'])); ?>">
                         <h3><?php echo esc_html($item['name']); ?></h3>
                         <p><?php echo esc_html($item['copy']); ?></p>
-                        <span class="fg-cw-link"><?php echo esc_html(sprintf(__('View %s', 'fenster'), strtolower($item['name']))); ?></span>
+                        <span class="fg-cw-link"><?php echo esc_html($item['view']); ?></span>
                     </a>
                 <?php endforeach; ?>
             </div>
