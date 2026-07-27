@@ -34537,6 +34537,27 @@ html.fg-blinds-reveal-locked {
 
 /* Opening styles: all four visible and comparable, as on the sash page.
    No tabs, so nothing is hidden behind a control. */
+.fg-cw-styles__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.9rem);
+}
+
+.fg-cw-note {
+  padding: clamp(1.1rem, 2vw, 1.45rem);
+  border: 1px solid var(--cw-line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-cw .fg-cw-note p:last-child {
+  max-width: none;
+  margin: 0;
+  font-size: 0.93rem;
+}
+
 .fg-cw-styles__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -34568,6 +34589,11 @@ html.fg-blinds-reveal-locked {
   object-position: 50% 22%;
 }
 
+/* Crops the operating handle out, so the cell reads as glass and cill. */
+.fg-cw-style figure[data-position="right"] img {
+  object-position: 82% 55%;
+}
+
 .fg-cw-style__body {
   display: flex;
   flex: 1;
@@ -34584,6 +34610,12 @@ html.fg-blinds-reveal-locked {
   max-width: none;
   font-size: 0.91rem;
   line-height: 1.5;
+}
+
+/* Four lines is the longest of the four descriptions, so reserving it keeps
+   every Works well in panel on the same line. */
+.fg-cw .fg-cw-style__body > p {
+  min-height: 6em;
 }
 
 .fg-cw .fg-cw-style__best {
@@ -34882,6 +34914,7 @@ html.fg-blinds-reveal-locked {
     max-width: none;
   }
 
+  .fg-cw-styles__head,
   .fg-cw-split,
   .fg-cw-related__grid,
   .fg-cw-cta__panel {
@@ -34900,6 +34933,10 @@ html.fg-blinds-reveal-locked {
   .fg-cw-style {
     flex: 0 0 78%;
     scroll-snap-align: center;
+  }
+
+  .fg-cw .fg-cw-style__body > p {
+    min-height: 0;
   }
 
   .fg-cw-cta__actions .button {

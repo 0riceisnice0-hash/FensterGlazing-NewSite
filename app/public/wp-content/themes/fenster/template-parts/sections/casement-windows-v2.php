@@ -56,7 +56,7 @@ $opening_styles = [
         'image' => 'casement-sill-interior-1200w.webp',
         'width' => 1200,
         'height' => 800,
-        'position' => 'center',
+        'position' => 'right',
         'alt' => 'White uPVC casement window and cill seen from inside a room',
         'copy' => 'No hinges, no handle, more light, and it costs less than an opener the same size. Ventilation has to come from elsewhere in the frame.',
         'best' => 'Picture windows, bays and wide frames',
@@ -186,10 +186,17 @@ $faq_schema = [
 
     <section id="casement-opening-styles" class="fg-cw-styles" aria-labelledby="fg-cw-styles-title">
         <div class="container">
-            <div class="fg-cw-copy fg-cw-copy--lead">
+            <div class="fg-cw-styles__head">
+            <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Opening styles', 'fenster'); ?></p>
                 <h2 id="fg-cw-styles-title"><?php esc_html_e('Four layouts, four different jobs.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Each one changes how the room is aired, how far you reach and how much uninterrupted glass you get. Most houses end up using more than one.', 'fenster'); ?></p>
+            </div>
+
+            <aside class="fg-cw-note">
+                <p class="eyebrow"><?php esc_html_e('What we settle at survey', 'fenster'); ?></p>
+                <p><?php esc_html_e('Which panes open, where they hinge, how far a sash swings out over a path, and whether the sightlines line up with the windows either side. We draw the elevation before anything is ordered.', 'fenster'); ?></p>
+            </aside>
             </div>
 
             <div class="fg-cw-styles__grid">
