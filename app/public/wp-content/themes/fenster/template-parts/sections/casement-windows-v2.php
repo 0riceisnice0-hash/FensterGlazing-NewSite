@@ -99,6 +99,16 @@ $swatches = [
     ['name' => 'Rosewood', 'file' => 'colours_page_image-Rosewood.webp'],
 ];
 
+// Mosaic order matters: the first image takes the large cell.
+$gallery = [
+    ['file' => 'casement-cottage-arch', 'width' => 1200, 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
+    ['file' => 'casement-stone-elevation', 'width' => 1200, 'caption' => 'White casements across a full elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
+    ['file' => 'casement-brick-bay', 'width' => 1400, 'caption' => 'Casements in a bay', 'alt' => 'White uPVC casement windows with glazing bars set into a brick bay'],
+    ['file' => 'casement-new-build', 'width' => 1200, 'caption' => 'Three lights on new cladding', 'alt' => 'Grey uPVC casement window with three lights and glazing bars on a clad new build'],
+    ['file' => 'casement-apartment-block', 'width' => 1200, 'caption' => 'Repeated openings on an apartment block', 'alt' => 'Dark uPVC casement windows repeated across an apartment block elevation'],
+    ['file' => 'casement-open-interior', 'width' => 1400, 'caption' => 'A sash open from inside', 'alt' => 'White uPVC casement sash opened outwards, seen from inside the room'],
+];
+
 $related = [
     ['url' => '/flush-casement-windows/', 'name' => 'Flush casement windows', 'copy' => 'The sash closes level with the frame instead of sitting proud of it.'],
     ['url' => '/french-casement-windows/', 'name' => 'French casement windows', 'copy' => 'Two sashes and no post between them, for one uninterrupted opening.'],
@@ -318,6 +328,55 @@ $faq_schema = [
                 <?php // /upvc-colours/ is 301'd to /colour-options/ in fenster_redirect_target(); link straight there. ?>
                 <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all uPVC colours', 'fenster'); ?></a>
             </p>
+        </div>
+    </section>
+
+    <section class="fg-cw-gallery" aria-labelledby="fg-cw-gallery-title">
+        <div class="container">
+            <div class="fg-cw-gallery__head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
+                    <h2 id="fg-cw-gallery-title"><?php esc_html_e('Liniar casements on real houses.', 'fenster'); ?></h2>
+                </div>
+                <p>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Stone cottages, brick bays, full elevations and new build. Click any image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished installations. Tap any image for a closer look.', 'fenster'); ?></span>
+                </p>
+            </div>
+
+            <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Casement window gallery', 'fenster'); ?>">
+                <?php foreach ($gallery as $index => $image) : ?>
+                    <?php
+                    $stem = $asset_base . 'gallery/' . $image['file'];
+                    $sources = [
+                        fenster_generated_url($stem . '-480w.webp') . ' 480w',
+                        fenster_generated_url($stem . '-800w.webp') . ' 800w',
+                    ];
+                    if ((int) $image['width'] >= 1400) {
+                        $sources[] = fenster_generated_url($stem . '-1400w.webp') . ' 1400w';
+                    }
+                    $sources[] = fenster_generated_url($stem . '.webp') . ' ' . (int) $image['width'] . 'w';
+                    ?>
+                    <figure>
+                        <a
+                            href="<?php echo esc_url(fenster_generated_url($stem . '.webp')); ?>"
+                            data-fg-gallery-lightbox
+                            aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $image['alt'])); ?>"
+                        >
+                            <img
+                                src="<?php echo esc_url(fenster_generated_url($stem . '-800w.webp')); ?>"
+                                srcset="<?php echo esc_attr(implode(', ', $sources)); ?>"
+                                sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '38vw' : '20vw'; ?>"
+                                alt="<?php echo esc_attr($image['alt']); ?>"
+                                loading="lazy"
+                            >
+                            <figcaption><?php echo esc_html($image['caption']); ?></figcaption>
+                        </a>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+
+            <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
         </div>
     </section>
 

@@ -34650,6 +34650,107 @@ html.fg-blinds-reveal-locked {
   font-size: 0.93rem;
 }
 
+/* Real-homes gallery.
+   Same feature as the sliding-sash page: dark proof band, mosaic on desktop,
+   scroll-snap rail on mobile, thumbnails opening the shared dark lightbox via
+   the global [data-fg-gallery-lightbox] handler. */
+.fg-cw-gallery {
+  background: var(--color-steel);
+}
+
+.fg-cw-gallery__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.9rem);
+}
+
+.fg-cw .fg-cw-gallery h2 {
+  color: #ffffff;
+}
+
+.fg-cw .fg-cw-gallery__head > p {
+  max-width: 46ch;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-cw-gallery__copy--mobile {
+  display: none;
+}
+
+.fg-cw-gallery__mosaic {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: clamp(0.6rem, 1.2vw, 1rem);
+  height: clamp(420px, 44vw, 560px);
+}
+
+.fg-cw-gallery__mosaic figure {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-steel-90);
+}
+
+.fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
+.fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 6 / 9; }
+.fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 9 / 13; }
+.fg-cw-gallery__mosaic figure:nth-child(4) { grid-column: 6 / 8; }
+.fg-cw-gallery__mosaic figure:nth-child(5) { grid-column: 8 / 11; }
+.fg-cw-gallery__mosaic figure:nth-child(6) { grid-column: 11 / 13; }
+
+.fg-cw-gallery__mosaic a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.fg-cw-gallery__mosaic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.fg-cw-gallery__mosaic a:hover img,
+.fg-cw-gallery__mosaic a:focus-visible img {
+  transform: scale(1.04);
+}
+
+.fg-cw-gallery__mosaic figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2.5rem 0.9rem 0.8rem;
+  background: linear-gradient(to top, rgba(0, 20, 26, 0.82), transparent);
+  color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.fg-cw-gallery__mosaic a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.fg-cw .fg-cw-gallery__hint {
+  display: none;
+  max-width: none;
+  margin: 0.85rem 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* Nearby styles */
 
 .fg-cw-related__grid {
@@ -34729,6 +34830,45 @@ html.fg-blinds-reveal-locked {
   .fg-cw-swatches {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.6rem;
+  }
+
+  /* Mosaic becomes a scroll-snap rail, as on the sliding-sash page. */
+  .fg-cw-gallery__head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .fg-cw-gallery__copy--desktop {
+    display: none;
+  }
+
+  .fg-cw-gallery__copy--mobile {
+    display: inline;
+  }
+
+  .fg-cw-gallery__mosaic {
+    display: flex;
+    height: auto;
+    padding-bottom: 0.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .fg-cw-gallery__mosaic figure {
+    flex: 0 0 82%;
+    aspect-ratio: 4 / 3;
+    scroll-snap-align: center;
+  }
+
+  .fg-cw-gallery__mosaic figure:nth-child(n) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .fg-cw .fg-cw-gallery__hint {
+    display: block;
   }
 
   .fg-cw-swatches span {
