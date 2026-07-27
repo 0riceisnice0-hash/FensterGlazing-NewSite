@@ -34382,13 +34382,17 @@ html.fg-blinds-reveal-locked {
     gap: 0.9rem;
   }
 
+  /* Wrapped flex items kept their left border and stepped; a grid reads as
+     one tidy row of facts instead. */
   .fg-tech-banner__facts {
-    flex-wrap: wrap;
-    gap: 0.9rem 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+    gap: 0.9rem;
   }
 
   .fg-tech-banner__facts div {
-    padding-left: 1.25rem;
+    padding-left: 0;
+    border-left: 0;
   }
 
   .fg-tech-banner__facts dd {
