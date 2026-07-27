@@ -34613,8 +34613,9 @@ html.fg-blinds-reveal-locked {
 }
 
 /* Four lines is the longest of the four descriptions, so reserving it keeps
-   every Works well in panel on the same line. */
-.fg-cw .fg-cw-style__body > p {
+   every Works well in panel on the same line. Must target the description
+   only: the eyebrow is also a direct child paragraph. */
+.fg-cw .fg-cw-style h3 + p {
   min-height: 6em;
 }
 
@@ -34935,7 +34936,7 @@ html.fg-blinds-reveal-locked {
     scroll-snap-align: center;
   }
 
-  .fg-cw .fg-cw-style__body > p {
+  .fg-cw .fg-cw-style h3 + p {
     min-height: 0;
   }
 
