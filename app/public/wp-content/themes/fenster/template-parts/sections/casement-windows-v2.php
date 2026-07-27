@@ -160,9 +160,9 @@ $faq_schema = [
                 <p><?php esc_html_e('A casement is hinged at the side or the top and opens outwards. Because the openers and the fixed panes are made into one frame, a single window can give you a wide opening where you need one and uninterrupted glass where you do not.', 'fenster'); ?></p>
                 <p><?php esc_html_e('We fit the 70mm Liniar EnergyPlus system. We work out the layout room by room first, then match the glass, the locking and the handles to it.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
-                    <li><?php esc_html_e('70mm six-chamber profile, made to measure', 'fenster'); ?></li>
-                    <li><?php esc_html_e('0.95 W/m²K on our listed specification, A+ rated', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Surveyed and fitted by our own installers', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Side-hung, top-hung and fixed lights in any combination', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Made to measure, in sixteen colours inside and out', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Fitted by our own installers, with a ten year guarantee', 'fenster'); ?></li>
                 </ul>
                 <div class="fg-cw-actions">
                     <?php if ($quote_url !== '') : ?>
@@ -317,6 +317,12 @@ $faq_schema = [
 
 
 
+    <?php
+    // Rendered here rather than by generated-page.php so the banner sits with
+    // the construction section instead of stacking on the spec strip.
+    get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows'));
+    ?>
+
     <section class="fg-cw-frame" aria-labelledby="fg-cw-frame-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
             <div class="fg-cw-tiles">
@@ -391,9 +397,11 @@ $faq_schema = [
 
     <section class="fg-cw-finish" aria-labelledby="fg-cw-finish-title">
         <div class="container">
-            <div class="fg-cw-copy fg-cw-copy--lead">
-                <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
-                <h2 id="fg-cw-finish-title"><?php esc_html_e('Sixteen colours, and eight of them here.', 'fenster'); ?></h2>
+            <div class="fg-cw-head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
+                    <h2 id="fg-cw-finish-title"><?php esc_html_e('Sixteen colours, and eight of them here.', 'fenster'); ?></h2>
+                </div>
                 <p><?php esc_html_e('A uPVC colour is a foil bonded to the profile at the factory, so it has a grain you can feel and never needs repainting. You can have a different colour inside and out.', 'fenster'); ?></p>
             </div>
 
@@ -430,6 +438,7 @@ $faq_schema = [
                     <a href="<?php echo esc_url(home_url($item['url'])); ?>">
                         <h3><?php echo esc_html($item['name']); ?></h3>
                         <p><?php echo esc_html($item['copy']); ?></p>
+                        <span class="fg-cw-link"><?php echo esc_html(sprintf(__('View %s', 'fenster'), strtolower($item['name']))); ?></span>
                     </a>
                 <?php endforeach; ?>
             </div>
@@ -473,6 +482,25 @@ $faq_schema = [
         </section>
     <?php endif; ?>
 
+    <script type="application/ld+json"><?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
+    <section class="fg-product-faq" aria-labelledby="fg-cw-faq-title">
+        <div class="container fg-product-faq__grid">
+            <div>
+                <p class="eyebrow"><?php esc_html_e('Casement window questions', 'fenster'); ?></p>
+                <h2 id="fg-cw-faq-title"><?php esc_html_e('The details worth settling before you order.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('All of these refer to the 70mm Liniar EnergyPlus system on this page.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-product-faq__items">
+                <?php foreach ($faqs as $index => $faq) : ?>
+                    <details <?php echo $index === 0 ? 'open' : ''; ?>>
+                        <summary><?php echo esc_html($faq['question']); ?></summary>
+                        <div class="fg-product-faq__answer"><p><?php echo esc_html($faq['answer']); ?></p></div>
+                    </details>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
     <section id="fenster-enquiry" class="fg-enquiry">
         <div class="container fg-enquiry__grid">
             <div class="fg-enquiry__copy">
@@ -508,22 +536,3 @@ $faq_schema = [
         'prioritise_context' => 'windows',
     ]);
     ?>
-
-    <script type="application/ld+json"><?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
-    <section class="fg-product-faq" aria-labelledby="fg-cw-faq-title">
-        <div class="container fg-product-faq__grid">
-            <div>
-                <p class="eyebrow"><?php esc_html_e('Casement window questions', 'fenster'); ?></p>
-                <h2 id="fg-cw-faq-title"><?php esc_html_e('The details worth settling before you order.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('All of these refer to the 70mm Liniar EnergyPlus system on this page.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-product-faq__items">
-                <?php foreach ($faqs as $index => $faq) : ?>
-                    <details <?php echo $index === 0 ? 'open' : ''; ?>>
-                        <summary><?php echo esc_html($faq['question']); ?></summary>
-                        <div class="fg-product-faq__answer"><p><?php echo esc_html($faq['answer']); ?></p></div>
-                    </details>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>

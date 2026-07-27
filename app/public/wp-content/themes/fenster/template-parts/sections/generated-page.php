@@ -3068,16 +3068,6 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
-    <?php
-    // EnergyPlus on the Liniar routes, Thermlock on the Sheerline ones.
-    // Roof lanterns and heritage aluminium doors return earlier, so they call
-    // the banner from their own templates.
-    $tech_banner = fenster_tech_banner_args($slug);
-    if (! empty($tech_banner)) {
-        get_template_part('template-parts/components/tech-banner', null, $tech_banner);
-    }
-    ?>
-
     <?php if ($slug === 'casement-windows') : ?>
         <?php
         get_template_part('template-parts/sections/casement-windows-v2', null, [
@@ -3090,6 +3080,17 @@ if ($is_commercial_hub) {
         </article>
         <?php return; ?>
     <?php endif; ?>
+
+    <?php
+    // EnergyPlus on the Liniar routes, Thermlock on the Sheerline ones.
+    // Routes that return earlier (casement, roof lanterns, heritage aluminium
+    // doors) place the banner themselves, where it sits beside the section
+    // that explains the technology instead of stacking on the spec strip.
+    $tech_banner = fenster_tech_banner_args($slug);
+    if (! empty($tech_banner)) {
+        get_template_part('template-parts/components/tech-banner', null, $tech_banner);
+    }
+    ?>
 
     <?php if ($is_composite_doors) : ?>
         <?php

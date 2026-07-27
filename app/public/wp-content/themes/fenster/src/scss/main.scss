@@ -34411,6 +34411,12 @@ html.fg-blinds-reveal-locked {
   padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
 }
 
+/* The technology banner renders inside this wrapper mid-page; keep its own
+   compact rhythm rather than inheriting full section padding. */
+.fg-cw .fg-tech-banner {
+  padding: clamp(1rem, 2vh, 1.6rem) 0;
+}
+
 .fg-cw h2 {
   max-width: 20ch;
   margin: 0 0 0.85rem;
@@ -35004,12 +35010,14 @@ html.fg-blinds-reveal-locked {
   font-size: 0.93rem;
 }
 
-.fg-cw-related__grid a::after {
-  display: inline-block;
+/* The label span reuses .fg-cw-link; hover has to come from the card. */
+.fg-cw-related__grid .fg-cw-link {
   margin-top: 0.55rem;
-  color: var(--color-accent-dark);
-  font-weight: 800;
-  content: '\2192';
+}
+
+.fg-cw-related__grid a:hover .fg-cw-link::after,
+.fg-cw-related__grid a:focus-visible .fg-cw-link::after {
+  transform: translateX(3px);
 }
 
 @media (max-width: 1024px) {
