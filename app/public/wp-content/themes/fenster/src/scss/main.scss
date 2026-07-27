@@ -34506,7 +34506,9 @@ html.fg-blinds-reveal-locked {
 
 /* The profile cutaway runs to the edge of its own frame, so it needs padding
    inside the tile rather than bleeding off it. */
-.fg-cw-tiles__wide {
+/* Scoped past `.fg-cw-tiles figure`, which is (0,1,1) and would otherwise keep
+   the soft tint behind an image that has its own white background. */
+.fg-cw-tiles .fg-cw-tiles__wide {
   padding: clamp(0.85rem, 1.8vw, 1.5rem);
   aspect-ratio: 4 / 3;
   background: #ffffff;
