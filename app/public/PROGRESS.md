@@ -1583,3 +1583,14 @@ Do not use this as the primary rulebook or handover. Use:
 - Verified on test: banner present on all fifteen intended routes and absent from patio doors, slide and fold, roofline, sliding sash and composite doors. No horizontal overflow, no oversized text, no broken images and no console errors at `1440 x 900` and `390 x 844` on the pages touched.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-27 - Casement Page: Repetition, Ending And Consistency Pass
+
+- The top of the page said the same figures three times inside 1.5 viewports: the key-specification strip, the EnergyPlus banner stacked directly beneath it, and the intro bullets repeating both. The banner now renders from the casement template just before Inside the frame, so the mark names the technology and the section that follows explains it. `generated-page.php` keeps auto-placing the banner for the generic routes, whose templates have no construction section; the auto-render moved below the casement dispatch so it cannot double up.
+- Intro bullets replaced with facts nothing else on the page says: layout combinations, sixteen colours inside and out, own installers with the ten year guarantee.
+- Ending reordered from quote, enquiry, reviews, FAQ to quote, FAQ, enquiry, reviews: answers before the form, and the page closes on proof like the heritage page, not on an accordion.
+- The colour section head referenced `fg-cw-head`, a class that no longer existed after the second rebuild, so it stacked single-column with the right half empty. Defined the shared two-column head and it now matches the gallery and styles heads.
+- Related cards get hand-written `View ...` labels instead of a bare floating arrow (and French keeps its capital, which `strtolower` had eaten).
+- Tech banner mobile facts switched from stepped flex wrapping (wrapped items kept their left border and indented) to a plain grid.
+- QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors. Banner confirmed still present once on the generic Liniar and Sheerline routes.
+- Test deployment only. No live-site deployment was performed.
+
