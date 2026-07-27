@@ -75,6 +75,15 @@ $opening_styles = [
     ],
 ];
 
+// Comparison rows, in the same order as the cards above.
+$style_table = [
+    ['label' => 'How it opens', 'values' => ['Outwards, side hinges', 'Outwards from the bottom', 'Does not open', 'Any combination']],
+    ['label' => 'Clear opening', 'values' => ['The widest available', 'Partial', 'None', 'Set by the layout']],
+    ['label' => 'Handle', 'values' => ['On the closing edge', 'On the bottom rail', 'None', 'One per opening sash']],
+    ['label' => 'Escape route', 'values' => ['Yes, at the right size', 'Not usually', 'No', 'Where a sash allows it']],
+    ['label' => 'Rain when open', 'values' => ['Comes in', 'Mostly kept out', 'Not applicable', 'Depends on the sash']],
+];
+
 $frame_points = [
     ['title' => 'Six chambers', 'copy' => 'Each one interrupts the route heat takes through the uPVC. On our listed specification that comes out at 0.95 W/m²K, A+ rated.'],
     ['title' => 'A seal that cannot fall out', 'copy' => 'The weather gasket is co-extruded, formed as part of the profile rather than pushed into a groove. It cannot shrink back at a corner.'],
@@ -175,40 +184,18 @@ $faq_schema = [
         </div>
     </section>
 
-    <section id="casement-opening-styles" class="fg-cw-openings" data-fg-product-intel aria-labelledby="fg-cw-openings-title">
+    <section id="casement-opening-styles" class="fg-cw-styles" aria-labelledby="fg-cw-styles-title">
         <div class="container">
             <div class="fg-cw-copy fg-cw-copy--lead">
                 <p class="eyebrow"><?php esc_html_e('Opening styles', 'fenster'); ?></p>
-                <h2 id="fg-cw-openings-title"><?php esc_html_e('Four layouts, four different jobs.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Each one changes how the room is aired, how far you reach and how much uninterrupted glass you get.', 'fenster'); ?></p>
+                <h2 id="fg-cw-styles-title"><?php esc_html_e('Four layouts, four different jobs.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Each one changes how the room is aired, how far you reach and how much uninterrupted glass you get. Most houses end up using more than one.', 'fenster'); ?></p>
             </div>
 
-            <div class="fg-cw-openings__tabs" role="tablist" aria-label="<?php esc_attr_e('Casement opening styles', 'fenster'); ?>">
-                <?php foreach ($opening_styles as $index => $style) : ?>
-                    <button
-                        type="button"
-                        role="tab"
-                        id="fg-cw-tab-<?php echo esc_attr($style['id']); ?>"
-                        aria-controls="fg-cw-panel-<?php echo esc_attr($style['id']); ?>"
-                        aria-selected="<?php echo $index === 0 ? 'true' : 'false'; ?>"
-                        tabindex="<?php echo $index === 0 ? '0' : '-1'; ?>"
-                        class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
-                        data-fg-product-intel-tab
-                    ><?php echo esc_html($style['name']); ?></button>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="fg-cw-openings__stage">
-                <?php foreach ($opening_styles as $index => $style) : ?>
-                    <article
-                        id="fg-cw-panel-<?php echo esc_attr($style['id']); ?>"
-                        role="tabpanel"
-                        aria-labelledby="fg-cw-tab-<?php echo esc_attr($style['id']); ?>"
-                        class="fg-cw-opening"
-                        data-fg-product-intel-panel
-                        <?php echo $index === 0 ? '' : 'hidden'; ?>
-                    >
-                        <figure class="fg-cw-media" data-position="<?php echo esc_attr($style['position']); ?>">
+            <div class="fg-cw-styles__grid">
+                <?php foreach ($opening_styles as $style) : ?>
+                    <article class="fg-cw-style">
+                        <figure data-position="<?php echo esc_attr($style['position']); ?>">
                             <img
                                 src="<?php echo esc_url(fenster_generated_url($asset_base . $style['image'])); ?>"
                                 alt="<?php echo esc_attr($style['alt']); ?>"
@@ -216,19 +203,111 @@ $faq_schema = [
                                 width="<?php echo esc_attr((string) $style['width']); ?>"
                                 height="<?php echo esc_attr((string) $style['height']); ?>"
                             >
-                            <figcaption><?php echo esc_html($style['name']); ?></figcaption>
                         </figure>
-                        <div class="fg-cw-opening__copy">
+                        <div class="fg-cw-style__body">
                             <p class="eyebrow"><?php echo esc_html($style['label']); ?></p>
                             <h3><?php echo esc_html($style['name']); ?></h3>
                             <p><?php echo esc_html($style['copy']); ?></p>
-                            <p class="fg-cw-opening__best"><strong><?php esc_html_e('Works well in', 'fenster'); ?></strong><?php echo esc_html($style['best']); ?></p>
+                            <p class="fg-cw-style__best">
+                                <strong><?php esc_html_e('Works well in', 'fenster'); ?></strong>
+                                <?php echo esc_html($style['best']); ?>
+                            </p>
                         </div>
                     </article>
                 <?php endforeach; ?>
             </div>
+
+            <div class="fg-cw-compare" role="region" aria-label="<?php esc_attr_e('Casement opening styles compared', 'fenster'); ?>" tabindex="0">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col"><?php esc_html_e('Difference', 'fenster'); ?></th>
+                            <?php foreach ($opening_styles as $style) : ?>
+                                <th scope="col"><?php echo esc_html($style['name']); ?></th>
+                            <?php endforeach; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($style_table as $row) : ?>
+                            <tr>
+                                <th scope="row"><?php echo esc_html($row['label']); ?></th>
+                                <?php foreach ($row['values'] as $value) : ?>
+                                    <td><?php echo esc_html($value); ?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
+
+    <section class="fg-cw-gallery" aria-labelledby="fg-cw-gallery-title">
+        <div class="container">
+            <div class="fg-cw-gallery__head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
+                    <h2 id="fg-cw-gallery-title"><?php esc_html_e('Liniar casements on real houses.', 'fenster'); ?></h2>
+                </div>
+                <p>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Stone cottages, brick bays, full elevations and new build. Click any image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished installations. Tap any image for a closer look.', 'fenster'); ?></span>
+                </p>
+            </div>
+
+            <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Casement window gallery', 'fenster'); ?>">
+                <?php foreach ($gallery as $index => $image) : ?>
+                    <?php
+                    $stem = $asset_base . 'gallery/' . $image['file'];
+                    $sources = [
+                        fenster_generated_url($stem . '-480w.webp') . ' 480w',
+                        fenster_generated_url($stem . '-800w.webp') . ' 800w',
+                    ];
+                    if ((int) $image['width'] >= 1400) {
+                        $sources[] = fenster_generated_url($stem . '-1400w.webp') . ' 1400w';
+                    }
+                    $sources[] = fenster_generated_url($stem . '.webp') . ' ' . (int) $image['width'] . 'w';
+                    ?>
+                    <figure>
+                        <a
+                            href="<?php echo esc_url(fenster_generated_url($stem . '.webp')); ?>"
+                            data-fg-gallery-lightbox
+                            aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $image['alt'])); ?>"
+                        >
+                            <img
+                                src="<?php echo esc_url(fenster_generated_url($stem . '-800w.webp')); ?>"
+                                srcset="<?php echo esc_attr(implode(', ', $sources)); ?>"
+                                sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '38vw' : '20vw'; ?>"
+                                alt="<?php echo esc_attr($image['alt']); ?>"
+                                loading="lazy"
+                                style="object-position: <?php echo esc_attr($image['focus']); ?>;"
+                            >
+                            <figcaption><?php echo esc_html($image['caption']); ?></figcaption>
+                        </a>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+
+            <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
+        </div>
+    </section>
+
+    <section class="fg-cw-cta" aria-label="<?php esc_attr_e('Casement window quote options', 'fenster'); ?>">
+        <div class="container">
+            <div class="fg-cw-cta__panel">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Your project', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Ready to price your casement windows?', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Get an instant figure from the quote tool, or have us come and measure up properly.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-cw-cta__actions">
+                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get a casement quote', 'fenster'); ?></a>
+                    <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a survey', 'fenster'); ?></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <section class="fg-cw-frame" aria-labelledby="fg-cw-frame-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
@@ -329,56 +408,6 @@ $faq_schema = [
                 <?php // /upvc-colours/ is 301'd to /colour-options/ in fenster_redirect_target(); link straight there. ?>
                 <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all uPVC colours', 'fenster'); ?></a>
             </p>
-        </div>
-    </section>
-
-    <section class="fg-cw-gallery" aria-labelledby="fg-cw-gallery-title">
-        <div class="container">
-            <div class="fg-cw-gallery__head">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
-                    <h2 id="fg-cw-gallery-title"><?php esc_html_e('Liniar casements on real houses.', 'fenster'); ?></h2>
-                </div>
-                <p>
-                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Stone cottages, brick bays, full elevations and new build. Click any image for a closer look.', 'fenster'); ?></span>
-                    <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished installations. Tap any image for a closer look.', 'fenster'); ?></span>
-                </p>
-            </div>
-
-            <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Casement window gallery', 'fenster'); ?>">
-                <?php foreach ($gallery as $index => $image) : ?>
-                    <?php
-                    $stem = $asset_base . 'gallery/' . $image['file'];
-                    $sources = [
-                        fenster_generated_url($stem . '-480w.webp') . ' 480w',
-                        fenster_generated_url($stem . '-800w.webp') . ' 800w',
-                    ];
-                    if ((int) $image['width'] >= 1400) {
-                        $sources[] = fenster_generated_url($stem . '-1400w.webp') . ' 1400w';
-                    }
-                    $sources[] = fenster_generated_url($stem . '.webp') . ' ' . (int) $image['width'] . 'w';
-                    ?>
-                    <figure>
-                        <a
-                            href="<?php echo esc_url(fenster_generated_url($stem . '.webp')); ?>"
-                            data-fg-gallery-lightbox
-                            aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $image['alt'])); ?>"
-                        >
-                            <img
-                                src="<?php echo esc_url(fenster_generated_url($stem . '-800w.webp')); ?>"
-                                srcset="<?php echo esc_attr(implode(', ', $sources)); ?>"
-                                sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '38vw' : '20vw'; ?>"
-                                alt="<?php echo esc_attr($image['alt']); ?>"
-                                loading="lazy"
-                                style="object-position: <?php echo esc_attr($image['focus']); ?>;"
-                            >
-                            <figcaption><?php echo esc_html($image['caption']); ?></figcaption>
-                        </a>
-                    </figure>
-                <?php endforeach; ?>
-            </div>
-
-            <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
         </div>
     </section>
 

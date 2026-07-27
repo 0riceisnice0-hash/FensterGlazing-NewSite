@@ -34535,73 +34535,145 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
-/* Opening styles */
-
-.fg-cw-openings__tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
-.fg-cw-openings__tabs button {
-  min-height: 44px;
-  padding: 0.6rem 1.1rem;
-  border: 1px solid var(--cw-line);
-  border-radius: 999px;
-  background: var(--cw-panel);
-  color: var(--color-ink);
-  font: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
-}
-
-.fg-cw-openings__tabs button:hover {
-  border-color: var(--color-accent);
-}
-
-.fg-cw-openings__tabs button.is-active {
-  border-color: var(--color-steel);
-  background: var(--color-steel);
-  color: #ffffff;
-}
-
-/* Top-aligned rather than centred: the panel copy is short by design, so
-   centring it against the photograph strands it in the middle of the column. */
-.fg-cw-opening {
+/* Opening styles: all four visible and comparable, as on the sash page.
+   No tabs, so nothing is hidden behind a control. */
+.fg-cw-styles__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  align-items: start;
-  gap: clamp(1.5rem, 3vw, 3rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.85rem, 1.6vw, 1.25rem);
 }
 
-.fg-cw-opening .fg-cw-media {
+.fg-cw-style {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--cw-line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-cw-style figure {
+  overflow: hidden;
   aspect-ratio: 4 / 3;
+  background: var(--color-soft);
 }
 
-.fg-cw-opening[hidden] {
-  display: none;
+.fg-cw-style img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.fg-cw .fg-cw-opening__best {
+.fg-cw-style figure[data-position="top"] img {
+  object-position: 50% 22%;
+}
+
+.fg-cw-style__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(0.9rem, 1.6vw, 1.2rem);
+}
+
+.fg-cw-style h3 {
+  margin-bottom: 0.45rem;
+  font-size: 1.1rem;
+}
+
+.fg-cw .fg-cw-style p {
   max-width: none;
-  margin: 1rem 0 0;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--cw-line);
-  font-size: 0.93rem;
+  font-size: 0.91rem;
+  line-height: 1.5;
 }
 
-.fg-cw .fg-cw-opening__best strong {
+.fg-cw .fg-cw-style__best {
+  margin: auto 0 0;
+  padding: 0.7rem 0.8rem;
+  border-radius: 6px;
+  background: var(--color-soft);
+  color: var(--color-ink);
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.fg-cw .fg-cw-style__best strong {
   display: block;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
   color: var(--color-accent-dark);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* Comparison table, matching the sash model table. */
+.fg-cw-compare {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  overflow-x: auto;
+  border: 1px solid var(--cw-line);
+  border-radius: 8px;
+  background: #ffffff;
+  overscroll-behavior-x: contain;
+}
+
+.fg-cw-compare table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.fg-cw-compare thead th {
+  padding: 0.85rem 1rem;
+  background: var(--color-steel);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.fg-cw-compare tbody th {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.fg-cw-compare tbody th,
+.fg-cw-compare tbody td {
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--cw-line);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: left;
+  vertical-align: top;
+}
+
+.fg-cw-compare:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Compact CTA panel between the gallery and the technical run. */
+.fg-cw-cta__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  padding: clamp(1.4rem, 2.6vw, 2rem);
+  border: 1px solid var(--cw-line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-cw .fg-cw-cta__panel h2 {
+  margin-bottom: 0.5rem;
+}
+
+.fg-cw-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 
 /* Colour */
 
@@ -34811,9 +34883,28 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cw-split,
-  .fg-cw-opening,
-  .fg-cw-related__grid {
+  .fg-cw-related__grid,
+  .fg-cw-cta__panel {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Style cards become a scroll-snap rail so all four stay comparable. */
+  .fg-cw-styles__grid {
+    display: flex;
+    padding-bottom: 0.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+
+  .fg-cw-style {
+    flex: 0 0 78%;
+    scroll-snap-align: center;
+  }
+
+  .fg-cw-cta__actions .button {
+    flex: 1 1 auto;
+    text-align: center;
   }
 
   /* Image before copy on mobile, so the product is visible first. */
