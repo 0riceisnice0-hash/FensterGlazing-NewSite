@@ -70,6 +70,10 @@ $roof_styles = [
             </div>
         </section>
 
+        <?php
+        get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('roof-lanterns'));
+        ?>
+
         <section class="fg-roof-lantern-views">
             <div class="container">
                 <div class="fg-roof-lantern-views__heading">

@@ -3068,6 +3068,16 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
+    <?php
+    // EnergyPlus on the Liniar routes, Thermlock on the Sheerline ones.
+    // Roof lanterns and heritage aluminium doors return earlier, so they call
+    // the banner from their own templates.
+    $tech_banner = fenster_tech_banner_args($slug);
+    if (! empty($tech_banner)) {
+        get_template_part('template-parts/components/tech-banner', null, $tech_banner);
+    }
+    ?>
+
     <?php if ($slug === 'casement-windows') : ?>
         <?php
         get_template_part('template-parts/sections/casement-windows-v2', null, [

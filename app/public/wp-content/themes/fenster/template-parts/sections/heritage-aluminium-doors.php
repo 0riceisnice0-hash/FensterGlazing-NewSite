@@ -84,6 +84,10 @@ $door_colours = [
             </div>
         </section>
 
+        <?php
+        get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('heritage-aluminium-doors'));
+        ?>
+
         <section id="heritage-door-configurations" class="fg-heritage-door-configurations">
             <div class="container">
                 <div class="fg-heritage-door-configurations__heading">

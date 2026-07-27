@@ -34349,11 +34349,11 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-tech-banner__facts dt {
+  max-width: 14ch;
   color: var(--color-ink);
-  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
   font-weight: 800;
   line-height: 1.05;
-  white-space: nowrap;
 }
 
 .fg-tech-banner__facts dd {

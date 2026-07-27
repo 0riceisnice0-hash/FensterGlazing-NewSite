@@ -491,3 +491,71 @@ function fenster_product_hub_data(string $slug): array
 
     return $hub;
 }
+
+/**
+ * Named-technology banner arguments for a product route.
+ *
+ * Owner instruction, 2026-07-27: Thermlock on every aluminium product
+ * including roof lanterns but not slide and fold; EnergyPlus on every Liniar
+ * product except patio doors.
+ *
+ * Roofline is Liniar but is deliberately absent: EnergyPlus is a glazed-profile
+ * technology and roofline has no chambers and no glass.
+ *
+ * @param string $slug Product route slug.
+ * @return array<string, mixed> Args for template-parts/components/tech-banner, or [] for none.
+ */
+function fenster_tech_banner_args(string $slug): array
+{
+    $energyplus_routes = [
+        'casement-windows',
+        'flush-casement-windows',
+        'bow-bay-windows',
+        'french-casement-windows',
+        'tilt-turn-windows',
+        'upvc-doors',
+        'french-doors',
+    ];
+
+    $thermlock_routes = [
+        'aluminium-windows',
+        'aluminium-flush-windows',
+        'heritage-windows',
+        'aluminium-bifold-doors',
+        'aluminium-sliding-doors',
+        'aluminium-doors',
+        'heritage-aluminium-doors',
+        'roof-lanterns',
+    ];
+
+    if (in_array($slug, $energyplus_routes, true)) {
+        return [
+            'logo' => '/wp-content/themes/fenster/assets/partners/liniar-energyplus.png',
+            'logo_alt' => 'EnergyPlus by Liniar',
+            'eyebrow' => 'The profile we specify',
+            'title' => 'Liniar EnergyPlus',
+            'copy' => 'Liniar\'s six-chamber profile. The chambers sit inside the frame where you never see them, and the weather seal is extruded as part of the profile rather than pushed into a groove afterwards, so it cannot work loose at a corner.',
+            'facts' => [
+                ['value' => '6', 'label' => 'chambers through the frame'],
+                ['value' => '0.8', 'label' => 'W/m²K, Liniar published best case'],
+                ['value' => 'Lead-free', 'label' => 'profile formulation'],
+            ],
+        ];
+    }
+
+    if (in_array($slug, $thermlock_routes, true)) {
+        return [
+            'logo' => '/wp-content/themes/fenster/assets/partners/sheerline-thermlock.png',
+            'logo_alt' => 'Thermlock by Sheerline',
+            'eyebrow' => 'Inside every Sheerline frame',
+            'title' => 'Sheerline Thermlock',
+            'copy' => 'Most aluminium systems break the cold bridge with a polyamide strip. Sheerline designed their own multi-chamber core instead and put it at close to double the insulation. It is built into every Sheerline product we fit.',
+            'facts' => [
+                ['value' => 'Multi-chamber', 'label' => 'thermal core, not a polyamide strip'],
+                ['value' => 'Verified', 'label' => 'independent U-value reports'],
+            ],
+        ];
+    }
+
+    return [];
+}

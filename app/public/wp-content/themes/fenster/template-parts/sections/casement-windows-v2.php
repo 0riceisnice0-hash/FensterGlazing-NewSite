@@ -316,20 +316,6 @@ $faq_schema = [
     </section>
 
 
-    <?php
-    get_template_part('template-parts/components/tech-banner', null, [
-        'logo' => '/wp-content/themes/fenster/assets/partners/liniar-energyplus.png',
-        'logo_alt' => 'EnergyPlus by Liniar',
-        'eyebrow' => 'The profile we specify',
-        'title' => 'Liniar EnergyPlus',
-        'copy' => 'The six-chamber profile every casement on this page is built on. Lead-free, with the weather seal extruded into the frame rather than pushed into a groove afterwards.',
-        'facts' => [
-            ['value' => '6', 'label' => 'chambers through the frame'],
-            ['value' => '70mm', 'label' => 'profile depth'],
-            ['value' => '0.8', 'label' => 'W/m²K, Liniar published best case'],
-        ],
-    ]);
-    ?>
 
     <section class="fg-cw-frame" aria-labelledby="fg-cw-frame-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
