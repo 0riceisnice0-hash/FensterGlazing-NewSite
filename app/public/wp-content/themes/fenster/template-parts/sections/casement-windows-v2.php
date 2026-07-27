@@ -99,14 +99,15 @@ $swatches = [
     ['name' => 'Rosewood', 'file' => 'colours_page_image-Rosewood.webp'],
 ];
 
-// Mosaic order matters: the first image takes the large cell.
+// Mosaic order matters: the first image takes the large portrait cell, so it
+// needs a focal point or a landscape source loses its subject to the crop.
 $gallery = [
-    ['file' => 'casement-cottage-arch', 'width' => 1200, 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
-    ['file' => 'casement-stone-elevation', 'width' => 1200, 'caption' => 'White casements across a full elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
-    ['file' => 'casement-brick-bay', 'width' => 1400, 'caption' => 'Casements in a bay', 'alt' => 'White uPVC casement windows with glazing bars set into a brick bay'],
-    ['file' => 'casement-new-build', 'width' => 1200, 'caption' => 'Three lights on new cladding', 'alt' => 'Grey uPVC casement window with three lights and glazing bars on a clad new build'],
-    ['file' => 'casement-apartment-block', 'width' => 1200, 'caption' => 'Repeated openings on an apartment block', 'alt' => 'Dark uPVC casement windows repeated across an apartment block elevation'],
-    ['file' => 'casement-open-interior', 'width' => 1400, 'caption' => 'A sash open from inside', 'alt' => 'White uPVC casement sash opened outwards, seen from inside the room'],
+    ['file' => 'casement-cottage-arch', 'width' => 1200, 'focus' => '76% 50%', 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
+    ['file' => 'casement-stone-elevation', 'width' => 1200, 'focus' => '50% 45%', 'caption' => 'White casements across a full elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
+    ['file' => 'casement-brick-bay', 'width' => 1400, 'focus' => '40% 50%', 'caption' => 'Casements in a bay', 'alt' => 'White uPVC casement windows with glazing bars set into a brick bay'],
+    ['file' => 'casement-new-build', 'width' => 1200, 'focus' => '50% 50%', 'caption' => 'Three lights on new cladding', 'alt' => 'Grey uPVC casement window with three lights and glazing bars on a clad new build'],
+    ['file' => 'casement-apartment-block', 'width' => 1200, 'focus' => '50% 50%', 'caption' => 'Repeated openings on an apartment block', 'alt' => 'Dark uPVC casement windows repeated across an apartment block elevation'],
+    ['file' => 'casement-open-interior', 'width' => 1400, 'focus' => '35% 50%', 'caption' => 'A sash open from inside', 'alt' => 'White uPVC casement sash opened outwards, seen from inside the room'],
 ];
 
 $related = [
@@ -369,6 +370,7 @@ $faq_schema = [
                                 sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '38vw' : '20vw'; ?>"
                                 alt="<?php echo esc_attr($image['alt']); ?>"
                                 loading="lazy"
+                                style="object-position: <?php echo esc_attr($image['focus']); ?>;"
                             >
                             <figcaption><?php echo esc_html($image['caption']); ?></figcaption>
                         </a>
