@@ -34514,6 +34514,12 @@ html.fg-blinds-reveal-locked {
   background: #ffffff;
 }
 
+/* The cutaway sits on white, so its caption chip needs an outline to read. */
+.fg-cw-tiles__wide figcaption {
+  border: 1px solid var(--cw-line);
+  background: var(--color-soft);
+}
+
 .fg-cw-tiles__narrow {
   aspect-ratio: 4 / 5;
   background: var(--color-steel);

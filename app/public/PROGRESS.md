@@ -1552,3 +1552,18 @@ Do not use this as the primary rulebook or handover. Use:
 - Reduced the visible journey to nine stronger chapters: introduction, real-image opening selector, EnergyPlus engineering, specification workspace, finishes, product clarity, survey, related styles and conversion/proof.
 - Opening and specification controls now swap real product imagery and grouped information without creating a long series of equal-looking sections.
 - Rechecked desktop and `390 x 844`: one H1, no horizontal overflow, no broken local images, keyboard-accessible tabs, correct WindowCAD collection `0`, working FAQ schema and unchanged shared hero.
+
+## 2026-07-27 - Casement Windows Page Recomposed
+
+- Rebuilt `/casement-windows/` after the owner rejected the previous pass as too wordy and unlike the reference pages.
+- Composed on the `/heritage-aluminium-doors/` vocabulary: copy column one side, photography the other, two or three short paragraphs per section, divided detail lists, white uppercase caption chips, offset image pair on the construction section.
+- Type back to the site scale. The superseded pass used `clamp(2.4rem, 5vw, var(--fg-font-size-max))` on every section H2 and 72px stat figures, above the 57.6px ceiling; H2 is now `clamp(1.5rem, 2.2vw, 1.95rem)`.
+- Removed the full-width dark bands, the decorative background arcs, the second tab widget, the bare room-plan data table and the uniform `clamp(5rem, 9vw, 8.5rem)` section padding.
+- Six body sections: intro, opening styles, inside the frame, glass/locking/hardware, colour, nearby styles. Then quote tool, enquiry, reviews and FAQs.
+- **Zero|90 removed on owner instruction: Fenster supplies the 70mm EnergyPlus system only.** The comparison section, its FAQ and its CSS are gone. The caveat that Liniar's published 0.8 W/m²K is a best case stays in the construction section.
+- Seven photographs, each used once, none repeating the page hero. Added `casement-bay-white-1080w.webp`. Dropped the duplicated handle crop and stopped a bifold-fronted elevation illustrating a casement layout.
+- Real Liniar foil swatches replace flat CSS colour chips, cropped 3/2 from the top so the supplier foil reference does not show.
+- Reuses the existing `data-fg-product-intel` tab controller instead of a second copy, and deleted 2,915 lines of superseded casement CSS that had been left in the stylesheet.
+- Page height at 1440 went from 15,474px to 7,600px; sections from 1,183-1,664px to 364-779px, matching the heritage-door reference range.
+- QA on the test site at `1440 x 900`, `768 x 1024` and `390 x 844`: one H1, no horizontal body overflow, nothing above 57.6px, no broken images, no console errors, tabs working by mouse and keyboard, correct WindowCAD collection and enquiry routing. The only elements extending past the viewport are inside the shared review scroll rail, as on the reference pages.
+- Test deployment only. No live-site deployment was performed.
