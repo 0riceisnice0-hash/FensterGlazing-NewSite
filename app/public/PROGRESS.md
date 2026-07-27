@@ -1569,3 +1569,17 @@ Do not use this as the primary rulebook or handover. Use:
 - Page height at 1440 went from 15,474px to 7,600px; sections from 1,183-1,664px to 364-779px, matching the heritage-door reference range.
 - QA on the test site at `1440 x 900`, `768 x 1024` and `390 x 844`: one H1, no horizontal body overflow, nothing above 57.6px, no broken images, no console errors, tabs working by mouse and keyboard, correct WindowCAD collection and enquiry routing. The only elements extending past the viewport are inside the shared review scroll rail, as on the reference pages.
 - Test deployment only. No live-site deployment was performed.
+
+## 2026-07-27 - Named Technology Banners
+
+- Added `template-parts/components/tech-banner.php`: partner mark, eyebrow, technology name, one plain sentence and up to four figures, following the existing `fg-composite-approved` partner-banner pattern.
+- `fenster_tech_banner_args()` in `inc/product-hub-data.php` owns the route lists, so the rule lives in one place rather than being repeated per template.
+- **Owner instruction, 2026-07-27: Thermlock on every aluminium product including roof lanterns but not slide and fold; EnergyPlus on every Liniar product except patio doors.**
+- EnergyPlus routes: casement, flush casement, bow and bay, French casement, tilt and turn, uPVC doors, French doors.
+- Thermlock routes: aluminium windows, aluminium flush windows, heritage windows, aluminium bifold doors, aluminium sliding doors, aluminium doors, heritage aluminium doors, roof lanterns.
+- `generated-page.php` renders the banner after the key-specification strip. Roof lanterns and heritage aluminium doors return earlier from that template, so they call the component themselves.
+- Roofline is a Liniar product but is deliberately excluded: EnergyPlus is a glazed-profile technology and fascia, soffit and guttering have no chambers and no glass. Flagged rather than assumed.
+- The supplied Thermlock mark is pale grey (174,176,173) on transparency and disappeared on the white panel, which `STYLE.md` calls out. Added `sheerline-thermlock-ink.png`, the same monochrome wordmark at a legible tone.
+- Verified on test: banner present on all fifteen intended routes and absent from patio doors, slide and fold, roofline, sliding sash and composite doors. No horizontal overflow, no oversized text, no broken images and no console errors at `1440 x 900` and `390 x 844` on the pages touched.
+- Test deployment only. No live-site deployment was performed.
+
