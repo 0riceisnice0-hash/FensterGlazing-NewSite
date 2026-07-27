@@ -113,7 +113,6 @@ $faqs = [
     ['question' => 'Can I have triple glazing?', 'answer' => 'It depends on the frame, the sash size and what you are trying to improve. We will compare the benefit, the weight and the cost with you rather than treating it as an automatic upgrade.'],
     ['question' => 'Will new casements make the house quieter?', 'answer' => 'They can, when the whole specification is designed for it. Acoustic glass, pane thicknesses, frame seals and the ventilation path all affect the result, and the ventilation path is the one people forget.'],
     ['question' => 'How many colours are there?', 'answer' => 'Sixteen, inside, outside or both. Liniar publish a wider foil catalogue, but availability, lead time and cost depend on the exact profile and the fabricator, so we confirm before you order.'],
-    ['question' => 'What is the difference between EnergyPlus and Zero|90?', 'answer' => 'EnergyPlus is the 70mm six-chamber system this page describes. Zero|90 is a separate 90mm Passivhaus-certified system with its own glass capacity and test figures. Zero|90 performance is not part of a standard EnergyPlus quote.'],
     ['question' => 'Can you copy my existing window layout?', 'answer' => 'Usually, though an exact copy is not always the best answer. At survey we check escape, ventilation, handle reach, outside clearance and how the sightlines sit before the drawing is signed off.'],
     ['question' => 'Are the frames recyclable?', 'answer' => 'Liniar describe their uPVC profiles as lead-free and recyclable at the end of their useful life. The profiles are designed, extruded and tested in Derbyshire, and independent fabricators make the finished windows.'],
 ];
@@ -319,37 +318,6 @@ $faq_schema = [
                 <?php // /upvc-colours/ is 301'd to /colour-options/ in fenster_redirect_target(); link straight there. ?>
                 <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all uPVC colours', 'fenster'); ?></a>
             </p>
-        </div>
-    </section>
-
-    <section class="fg-cw-systems" aria-labelledby="fg-cw-systems-title">
-        <div class="container">
-            <div class="fg-cw-copy fg-cw-copy--lead">
-                <p class="eyebrow"><?php esc_html_e('What is in the quote', 'fenster'); ?></p>
-                <h2 id="fg-cw-systems-title"><?php esc_html_e('EnergyPlus and Zero|90 are not the same system.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Liniar publish figures for both, and the best of them belong to the one we are not quoting here. Worth knowing before you compare us with anybody else.', 'fenster'); ?></p>
-            </div>
-
-            <div class="fg-cw-compare">
-                <article class="fg-cw-compare__card is-ours">
-                    <p class="fg-cw-compare__tag"><?php esc_html_e('The system on this page', 'fenster'); ?></p>
-                    <h3><?php esc_html_e('70mm EnergyPlus', 'fenster'); ?></h3>
-                    <dl>
-                        <div><dt><?php esc_html_e('Profile', 'fenster'); ?></dt><dd><?php esc_html_e('Six-chamber uPVC', 'fenster'); ?></dd></div>
-                        <div><dt><?php esc_html_e('Published best case', 'fenster'); ?></dt><dd>0.8 W/m²K</dd></div>
-                        <div><dt><?php esc_html_e('Quote tool', 'fenster'); ?></dt><dd><?php esc_html_e('Further down this page', 'fenster'); ?></dd></div>
-                    </dl>
-                </article>
-                <article class="fg-cw-compare__card">
-                    <p class="fg-cw-compare__tag"><?php esc_html_e('A separate Liniar platform', 'fenster'); ?></p>
-                    <h3><?php esc_html_e('90mm Zero|90', 'fenster'); ?></h3>
-                    <dl>
-                        <div><dt><?php esc_html_e('Profile', 'fenster'); ?></dt><dd><?php esc_html_e('90mm Passivhaus-certified', 'fenster'); ?></dd></div>
-                        <div><dt><?php esc_html_e('Published best case', 'fenster'); ?></dt><dd><?php esc_html_e('Its own test figures', 'fenster'); ?></dd></div>
-                        <div><dt><?php esc_html_e('Quote tool', 'fenster'); ?></dt><dd><?php esc_html_e('Ask us, it is not assumed', 'fenster'); ?></dd></div>
-                    </dl>
-                </article>
-            </div>
         </div>
     </section>
 

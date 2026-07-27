@@ -34642,95 +34642,6 @@ html.fg-blinds-reveal-locked {
   font-size: 0.93rem;
 }
 
-/* EnergyPlus against Zero|90 */
-
-.fg-cw-compare {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.5rem);
-}
-
-.fg-cw-compare__card {
-  padding: clamp(1.25rem, 2.2vw, 1.75rem);
-  border: 1px solid var(--cw-line);
-  border-radius: 8px;
-  background: var(--cw-panel);
-}
-
-.fg-cw-compare__card.is-ours {
-  border-color: transparent;
-  background: var(--color-steel);
-}
-
-.fg-cw .fg-cw-compare__tag {
-  max-width: none;
-  margin: 0 0 0.3rem;
-  color: var(--color-accent-dark);
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-
-.fg-cw .fg-cw-compare__card.is-ours .fg-cw-compare__tag {
-  color: #6fdf9f;
-}
-
-.fg-cw-compare__card h3 {
-  margin-bottom: 0.9rem;
-  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
-}
-
-.fg-cw-compare__card.is-ours h3 {
-  color: #ffffff;
-}
-
-.fg-cw-compare__card dl {
-  display: grid;
-  margin: 0;
-}
-
-.fg-cw-compare__card dl div {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 1rem;
-  padding: 0.7rem 0;
-  border-top: 1px solid var(--cw-line);
-}
-
-.fg-cw-compare__card dl div:last-child {
-  padding-bottom: 0;
-}
-
-.fg-cw-compare__card.is-ours dl div {
-  border-top-color: rgba(255, 255, 255, 0.18);
-}
-
-.fg-cw-compare__card dt {
-  color: var(--color-muted);
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.fg-cw-compare__card dd {
-  margin: 0;
-  color: var(--color-ink);
-  font-size: 0.94rem;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.fg-cw-compare__card.is-ours dt {
-  color: rgba(255, 255, 255, 0.66);
-}
-
-.fg-cw-compare__card.is-ours dd {
-  color: #ffffff;
-}
-
 /* Nearby styles */
 
 .fg-cw-related__grid {
@@ -34792,7 +34703,6 @@ html.fg-blinds-reveal-locked {
 
   .fg-cw-split,
   .fg-cw-opening,
-  .fg-cw-compare,
   .fg-cw-related__grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -34828,8 +34738,4 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .fg-cw-compare__card dl div {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.2rem;
-  }
 }
