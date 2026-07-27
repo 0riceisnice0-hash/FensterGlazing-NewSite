@@ -337,6 +337,13 @@ $faq_schema = [
             </div>
         </div>
     </section>
+</div>
+
+<?php
+// The .fg-cw wrapper closes here on purpose. Its base type rules are (0,1,1)
+// and would otherwise repaint the shared quote, enquiry, review and FAQ
+// components, which put ink-coloured headings on the dark enquiry panel.
+?>
 
     <?php if ($quote_url !== '') : ?>
         <section id="fenster-product-quote" class="fg-product-quote-embed" aria-label="<?php echo esc_attr($quote_label . ' instant quote'); ?>">
@@ -422,4 +429,3 @@ $faq_schema = [
             </div>
         </div>
     </section>
-</div>
