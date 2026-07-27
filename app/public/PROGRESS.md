@@ -1536,3 +1536,14 @@ Do not use this as the primary rulebook or handover. Use:
 - Follow-up: replaced the sash hero with a visually approved Roseview bay-window photograph and responsive 480/960/1920 WebP sources, with product-specific desktop/mobile crops.
 - Removed the generic frame-colour panel from the sash page because the Roseview range differs; retained privacy glass and the dedicated furniture selector.
 - Replaced the inaccurate `Colour choice / Full RAL range` hero specification tile with `Sash models / 3 Rose options`.
+
+## 2026-07-27 - Casement Windows EnergyPlus Redesign
+
+- Rebuilt `/casement-windows/` as a dedicated long-form 70mm Liniar EnergyPlus product journey while preserving the approved shared hero and four specification tiles exactly.
+- Added detailed sections for opening layouts, room-by-room planning, six-chamber construction, whole-window thermal performance, weather sealing, glazing, security, visual proportions, colours, handles, sustainability, survey decisions, installation stages and related window styles.
+- Added an explicit EnergyPlus versus Zero|90 comparison so Passivhaus, acoustic and 90mm product claims cannot be mistaken for the standard 70mm offer.
+- Added five locally hosted, optimised manufacturer images from the approved Liniar scrape and kept Zero|90 imagery off the 70mm page.
+- Added a keyboard-accessible opening-style selector, ten accordion FAQs with FAQ schema, the correct WindowCAD `productCollection=0` quote journey, review proof and a casement-specific shared enquiry form.
+- Built and linted the theme, deployed revision `bfc3e11` to the Basic Auth protected test site, purged caches and verified the page at desktop and `390 x 844`.
+- QA confirmed one H1, no horizontal overflow, no broken images after a full-page scan, correct tab keyboard behaviour, ten working FAQs, correct form routing and `200` responses for representative window, door, rooflight and contact routes.
+- Test deployment only. No live-site deployment was performed.
