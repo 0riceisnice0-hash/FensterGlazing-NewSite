@@ -34991,9 +34991,13 @@ html.fg-blinds-reveal-locked {
   gap: clamp(1.75rem, 4vw, 3.5rem);
 }
 
+/* height: auto is required, not tidiness. The img carries a height attribute,
+   which lands as a presentational hint and otherwise beats aspect-ratio, so the
+   frame renders 478x600 instead of 478x319. */
 .fg-cw-survey__media img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 2;
   border-radius: 8px;
   object-fit: cover;
