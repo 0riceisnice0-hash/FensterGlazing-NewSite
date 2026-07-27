@@ -34729,8 +34729,9 @@ html.fg-blinds-reveal-locked {
     font-size: 0.76rem;
   }
 
-  .fg-cw-tiles__wide,
-  .fg-cw-tiles__narrow {
+  /* Scoped to match the (0,2,0) desktop rule above, so both tiles square up. */
+  .fg-cw-tiles .fg-cw-tiles__wide,
+  .fg-cw-tiles .fg-cw-tiles__narrow {
     aspect-ratio: 1 / 1;
   }
 }
