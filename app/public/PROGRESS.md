@@ -2,6 +2,14 @@
 
 Last updated: 2026-07-24
 
+## 2026-07-27 - Product-selector hubs promoted to live (984e89c)
+
+- Live re-established by checksum first: six theme files matched `4458fc6` byte for byte, confirming the pointer. Range check `4458fc6..984e89c` returned 26 commits, all one author, no concurrent-session work; `windows-hub.php` removed and `product-hub.php` added as expected. Compiled CSS confirmed to carry the new classes before shipping.
+- Backup `fenster-pre-984e89c-20260727-083131.tar.gz` (364M), server repo cache pinned to the explicit SHA, theme-only rsync, WP and SiteGround caches purged.
+- Production verification: six deployed files match the committed tree byte for byte and `windows-hub.php` is gone; fourteen routes return 200 including all three hubs and the products that moved into the range; `/double-glazing-milton-keynes/` still carries its head-term marker; `/other-services/` serves its theme-owned H1; `notan.png` serves `200 image/png`; the aluminium window card asset serves `200 image/webp`.
+- Browser QA on the live URLs at 1440 and 390: all three hubs render 9, 9 and 7 tiles with every image loaded, the range fits one desktop viewport, the decision panel and four FAQs render, no horizontal overflow, zero console errors.
+- This release folds in everything since 2026-07-24: the six-route product imagery split, the three hubs on one template with `/other-services/` no longer a scrape shell, the one-viewport tile grid, the Notan mark, and the even-handed comparison copy.
+
 ## 2026-07-24 - Hub decision panel and FAQs, replacing the guide (test, 97ac969)
 
 Owner, before the release: beef the pages out, the "Narrowing it down" section is poor, use `STYLE.md` and put whatever I think belongs there.

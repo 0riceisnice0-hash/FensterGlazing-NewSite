@@ -20,6 +20,6 @@ The GitHub repo is:
 
 `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
 
-Latest known live commit when this pointer was updated: `4458fc6` (2026-07-24).
+Latest known live commit when this pointer was updated: `984e89c` (2026-07-27).
 
 If you are working from the home PC rather than the work machine, also read `app/public/WORK-AT-HOME.md`.
