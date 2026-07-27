@@ -34433,7 +34433,7 @@ html.fg-blinds-reveal-locked {
   overflow: hidden;
   border-radius: 8px;
   background: var(--color-steel);
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 16 / 10;
 }
 
 .fg-cw-intro__media img {
@@ -34827,13 +34827,16 @@ html.fg-blinds-reveal-locked {
   min-width: 0;
 }
 
+/* The source swatches carry a supplier foil reference across the bottom 28%.
+   A 3/2 box with the crop pinned to the top shows only the foil itself. */
 .fg-cw-swatches img {
   display: block;
   width: 100%;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 3 / 2;
   border: 1px solid var(--cw-line);
   border-radius: 6px;
   object-fit: cover;
+  object-position: 50% 0;
 }
 
 .fg-cw-swatches span {

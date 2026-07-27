@@ -189,13 +189,13 @@ $faq_schema = [
             </div>
             <figure class="fg-cw-intro__media">
                 <img
-                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-open-brick-1400w.webp')); ?>"
-                    alt="<?php esc_attr_e('White uPVC casement windows opened outwards on a brick house', 'fenster'); ?>"
+                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-bay-white-1080w.webp')); ?>"
+                    alt="<?php esc_attr_e('White uPVC casement windows with glazing bars and top opening lights on a bay', 'fenster'); ?>"
                     loading="lazy"
-                    width="1400"
-                    height="933"
+                    width="1080"
+                    height="608"
                 >
-                <figcaption><?php esc_html_e('Liniar EnergyPlus casements, Milton Keynes', 'fenster'); ?></figcaption>
+                <figcaption><?php esc_html_e('70mm Liniar EnergyPlus', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </section>
