@@ -213,9 +213,6 @@ PHP lint example:
 - Product USP/specification data belongs in `inc\site-data.php` under `product_usps`.
 - Product visible copy overrides for generated product pages belong in `inc\site-data.php` under `product_content`.
 - Manufacturer-backed product hub system/badge/spec data belongs in `inc\product-hub-data.php`.
-- The eight dedicated legacy window routes (`casement-windows`, `flush-casement-windows`, `french-casement-windows`, `tilt-turn-windows`, `bow-bay-windows`, `aluminium-windows`, `aluminium-flush-windows`, `heritage-windows`) are the exception to the generic product data path. They use `inc\window-product-data.php` and `template-parts\sections\window-product.php`. Keep their route-specific decision content there and do not send them back through the generic generated product journey.
-- Dedicated window facts are manufacturer-backed: Liniar for the five uPVC routes and Sheerline Prestige or Classic for the three aluminium routes. Runtime images live under `assets\images\products`; the research scrape is a source only and must never be referenced by a page URL.
-- Published performance values must retain their configuration caveat. Sheerline has 12 stocked finishes plus bespoke options, not an unrestricted standard `Any RAL colour` claim.
 - Use `product_content` when scraped content is correct in broad source data but the generated template would otherwise surface aliases, brochure prompts, FAQ intro text, footer/social debris or generic fallback copy.
 - Product pages should render the shared four-tile `Key specifications` strip.
 - Do not invent product values such as U-values.
