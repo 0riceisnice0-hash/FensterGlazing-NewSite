@@ -34619,8 +34619,11 @@ html.fg-blinds-reveal-locked {
   min-height: 6em;
 }
 
+/* Fixed block rather than bottom-aligned: a one-line entry would otherwise
+   start lower than the two-line ones and stagger the row. */
 .fg-cw .fg-cw-style__best {
-  margin: auto 0 0;
+  min-height: 4.9em;
+  margin: 0.9rem 0 0;
   padding: 0.7rem 0.8rem;
   border-radius: 6px;
   background: var(--color-soft);
