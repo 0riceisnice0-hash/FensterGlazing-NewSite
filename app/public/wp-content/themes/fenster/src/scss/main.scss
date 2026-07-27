@@ -34458,6 +34458,21 @@ html.fg-blinds-reveal-locked {
   margin: 0;
 }
 
+/* Shared two-column section head: heading block left, supporting line right.
+   The gallery and styles heads are variants of the same shape. */
+.fg-cw-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: end;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.9rem);
+}
+
+.fg-cw .fg-cw-head > p {
+  max-width: 46ch;
+  margin: 0;
+}
+
 /* Two-column split: copy one side, media the other. */
 .fg-cw-split {
   display: grid;
@@ -35036,6 +35051,7 @@ html.fg-blinds-reveal-locked {
     max-width: none;
   }
 
+  .fg-cw-head,
   .fg-cw-styles__head,
   .fg-cw-split,
   .fg-cw-related__grid,
