@@ -5021,3 +5021,37 @@ document.querySelectorAll('.fg-about').forEach((about) => {
 
   aboutRevealItems.forEach((item) => aboutRevealObserver.observe(item));
 });
+
+// Window product pages: accessible, route-specific option switchers.
+document.querySelectorAll('[data-fg-window-selector]').forEach((selector) => {
+  const tabs = [...selector.querySelectorAll('[data-fg-window-tab]')];
+  const panels = [...selector.querySelectorAll('[data-fg-window-panel]')];
+  if (!tabs.length || tabs.length !== panels.length) return;
+
+  const activate = (index, moveFocus = false) => {
+    tabs.forEach((tab, tabIndex) => {
+      const active = tabIndex === index;
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      tab.tabIndex = active ? 0 : -1;
+      panels[tabIndex].hidden = !active;
+    });
+    if (moveFocus) tabs[index].focus();
+  };
+
+  selector.classList.add('is-enhanced');
+  activate(0);
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(index));
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      activate(next, true);
+    });
+  });
+});

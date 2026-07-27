@@ -1,6 +1,13 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-24
+Last updated: 2026-07-27
+
+## 2026-07-27 - Eight legacy window product pages rebuilt (test)
+
+- Replaced the generic generated-product journey on eight older routes with one dedicated, data-driven window renderer: Casement, Flush Casement, French Casement, Tilt and Turn, Bow and Bay, Aluminium, Aluminium Flush and Heritage Windows. `/windows-milton-keynes/` and the existing Roseview `/sliding-sash-windows/` page remain separate and unchanged.
+- Added `inc\window-product-data.php` for route-owned facts, decision content, system detail, choices and FAQs, plus `template-parts\sections\window-product.php` for the shared page structure. The pages now lead with the actual product name, four useful facts, a route-specific keyboard-accessible option selector, two image-led explanations, system specifications, linked colour/glass/handle choices, visible FAQs with schema, the correct WindowCAD collection, the shared enquiry form and reviews.
+- Rechecked the source claims against the manufacturer archives. The five uPVC routes use Liniar facts; the aluminium routes use Sheerline Prestige or Classic facts. Published U-values are labelled as configuration dependent, and the old blanket `Any RAL colour` claim has been corrected to Sheerline's 12 stocked finishes plus bespoke options.
+- Imported eight route-relevant manufacturer visuals into `assets\images\products\window-systems` as local WebP assets. Runtime markup does not depend on the research export folders.
 
 ## 2026-07-27 - Product-selector hubs promoted to live (984e89c)
 

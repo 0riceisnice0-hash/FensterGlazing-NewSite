@@ -1898,6 +1898,14 @@ if ($slug === 'flat-rooflights') {
     return;
 }
 
+if (function_exists('fenster_window_product_page') && ! empty(fenster_window_product_page($slug))) {
+    get_template_part('template-parts/sections/window-product', null, [
+        'slug' => $slug,
+        'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
 if ($is_product_selector_hub) {
     get_template_part('template-parts/sections/product-hub', null, [
         'brand' => $brand,
