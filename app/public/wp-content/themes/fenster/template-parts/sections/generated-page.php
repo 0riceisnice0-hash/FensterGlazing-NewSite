@@ -3068,6 +3068,19 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
+    <?php if ($slug === 'casement-windows') : ?>
+        <?php
+        get_template_part('template-parts/sections/casement-windows-v2', null, [
+            'brand' => $brand,
+            'trust_items' => $trust_items,
+            'quote_url' => $product_quote_embed_url,
+            'quote_label' => $product_quote_embed_label,
+        ]);
+        ?>
+        </article>
+        <?php return; ?>
+    <?php endif; ?>
+
     <?php if ($is_composite_doors) : ?>
         <?php
         get_template_part('template-parts/sections/composite-doors-v2', null, [
