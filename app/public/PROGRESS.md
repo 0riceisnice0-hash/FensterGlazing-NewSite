@@ -1546,6 +1546,7 @@ Do not use this as the primary rulebook or handover. Use:
 - Added a keyboard-accessible opening-style selector, ten accordion FAQs with FAQ schema, the correct WindowCAD `productCollection=0` quote journey, review proof and a casement-specific shared enquiry form.
 - Built and linted the theme, deployed revision `bfc3e11` to the Basic Auth protected test site, purged caches and verified the page at desktop and `390 x 844`.
 - QA confirmed one H1, no horizontal overflow, no broken images after a full-page scan, correct tab keyboard behaviour, ten working FAQs, correct form routing and `200` responses for representative window, door, rooflight and contact routes.
+- Trap worth knowing: a page wrapper with base `h2`/`p` rules must close before the shared quote, enquiry, review and FAQ partials. Those rules are `(0,1,1)` and beat the components' own styling, which put an ink-coloured heading on the dark enquiry panel and shrank the quote heading from 48px to 24px until the wrapper was closed early.
 - Test deployment only. No live-site deployment was performed.
 - Owner rejected the first card-heavy visual pass. Follow-up revision `b9d5388` replaced it with an image-led editorial design while retaining the researched EnergyPlus information.
 - Removed the secondary sticky navigation, abstract CSS window diagrams and repeated boxed-card treatment.
