@@ -48,43 +48,51 @@ $render_stars = static function (float $value): string {
 
 <section class="<?php echo esc_attr($classes); ?>" data-fg-review-carousel aria-label="<?php esc_attr_e('Customer reviews', 'fenster'); ?>">
     <div class="container">
+        <?php /* One flat row: copy on the left, both platforms in a proof cluster on
+                 the right. The score used to sit in its own tinted, padded box inside
+                 this white panel, which STYLE.md rules out (no cards inside cards) and
+                 was most of why it read as bulky. */ ?>
         <header class="fg-review-showcase__summary">
-            <div class="fg-review-showcase__score">
-                <span class="fg-review-showcase__score-value"><?php echo esc_html(number_format($rating, 1)); ?></span>
-                <span class="fg-stars fg-stars--lg" role="img" aria-label="<?php echo esc_attr(sprintf(__('%s out of 5 stars', 'fenster'), number_format($rating, 1))); ?>">
-                    <?php echo $render_stars($rating); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                </span>
-                <span class="fg-review-showcase__score-meta">
-                    <?php if ($review_count > 0) : ?>
-                        <?php printf(
-                            esc_html__('Rated by %s customers on Google', 'fenster'),
-                            '<strong>' . esc_html(number_format_i18n($review_count)) . '</strong>'
-                        ); ?>
-                    <?php else : ?>
-                        <?php esc_html_e('Verified customer reviews on Google', 'fenster'); ?>
-                    <?php endif; ?>
-                </span>
-            </div>
-
             <div class="fg-review-showcase__intro">
-                <span class="fg-review-showcase__badge">
-                    <span class="fg-review-showcase__gmark" aria-hidden="true">
-                        <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
-                    </span>
-                    <?php esc_html_e('Reviews', 'fenster'); ?>
-                </span>
+                <span class="fg-review-showcase__badge"><?php esc_html_e('Google and Trustpilot', 'fenster'); ?></span>
                 <h2><?php esc_html_e('What Milton Keynes homeowners say', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Real reviews from real installations across Milton Keynes and the surrounding towns. Every one is public on Google, so you can check them yourself.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Real reviews from real installations. Every one is public, so you can go and check them yourself.', 'fenster'); ?></p>
                 <div class="fg-review-showcase__actions">
                     <a class="button" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
                         <?php esc_html_e('Read all reviews', 'fenster'); ?>
                     </a>
-                    <?php if ($trustpilot_url !== '') : ?>
-                        <a class="button button--steel" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
-                            <?php esc_html_e('See us on Trustpilot', 'fenster'); ?>
-                        </a>
-                    <?php endif; ?>
                 </div>
+            </div>
+
+            <div class="fg-review-showcase__proof">
+                <div class="fg-review-showcase__score">
+                    <span class="fg-review-showcase__gmark" aria-hidden="true">
+                        <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+                    </span>
+                    <span class="fg-review-showcase__score-row">
+                        <span class="fg-review-showcase__score-value"><?php echo esc_html(number_format($rating, 1)); ?></span>
+                        <span class="fg-stars fg-stars--lg" role="img" aria-label="<?php echo esc_attr(sprintf(__('%s out of 5 stars', 'fenster'), number_format($rating, 1))); ?>">
+                            <?php echo $render_stars($rating); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                        </span>
+                    </span>
+                    <span class="fg-review-showcase__score-meta">
+                        <?php if ($review_count > 0) : ?>
+                            <?php printf(
+                                esc_html__('Rated by %s customers', 'fenster'),
+                                '<strong>' . esc_html(number_format_i18n($review_count)) . '</strong>'
+                            ); ?>
+                        <?php else : ?>
+                            <?php esc_html_e('Verified customer reviews', 'fenster'); ?>
+                        <?php endif; ?>
+                    </span>
+                </div>
+
+                <?php if ($trustpilot_url !== '') : ?>
+                    <a class="fg-review-showcase__trustpilot" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
+                        <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot, rated Excellent', 'fenster'); ?>" width="355" height="150" loading="lazy" decoding="async">
+                        <span><?php esc_html_e('See our Trustpilot reviews', 'fenster'); ?></span>
+                    </a>
+                <?php endif; ?>
             </div>
         </header>
 

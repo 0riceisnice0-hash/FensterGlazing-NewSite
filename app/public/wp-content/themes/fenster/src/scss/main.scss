@@ -17260,27 +17260,64 @@ a.fg-cs-installer:hover {
   background: linear-gradient(90deg, #f5a623 50%, #dfe4e6 50%);
 }
 
+/* Copy left, both platforms in one proof cluster right. The score used to sit
+   in its own tinted, padded box inside this white panel: a card inside a card,
+   which STYLE.md forbids, and the main reason the panel read as bulky. The
+   shadow was also doing too much at 18px/44px. */
 .fg-review-showcase__summary {
   display: grid;
-  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
-  gap: clamp(1.1rem, 2.4vw, 1.9rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
   align-items: center;
   margin-bottom: clamp(1.5rem, 2.6vw, 2.1rem);
-  padding: clamp(1rem, 1.8vw, 1.35rem);
+  padding: clamp(1.1rem, 2vw, 1.55rem) clamp(1.2rem, 2.2vw, 1.85rem);
   border: 1px solid rgba(17, 24, 39, 0.09);
   border-radius: 8px;
   background: #ffffff;
-  box-shadow: 0 18px 44px rgba(0, 45, 58, 0.07);
+  box-shadow: 0 10px 28px rgba(0, 45, 58, 0.05);
+}
+
+.fg-review-showcase__proof {
+  display: flex;
+  gap: clamp(1rem, 2.4vw, 2rem);
+  align-items: center;
 }
 
 .fg-review-showcase__score {
   display: grid;
-  justify-items: center;
+  justify-items: start;
   gap: 0.3rem;
-  padding: clamp(0.8rem, 1.4vw, 1.05rem);
-  border-radius: 8px;
-  background: linear-gradient(160deg, #f4fbf8, #eef6f9);
-  text-align: center;
+  text-align: left;
+}
+
+.fg-review-showcase__score-row {
+  display: inline-flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.fg-review-showcase__trustpilot {
+  display: grid;
+  justify-items: start;
+  gap: 0.45rem;
+  padding-left: clamp(1rem, 2.4vw, 2rem);
+  border-left: 1px solid rgba(17, 24, 39, 0.1);
+  text-decoration: none;
+}
+
+.fg-review-showcase__trustpilot img {
+  width: clamp(122px, 11vw, 150px);
+  height: auto;
+}
+
+.fg-review-showcase__trustpilot span {
+  color: #1c6b50;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.fg-review-showcase__trustpilot:hover span {
+  text-decoration: underline;
 }
 
 .fg-review-showcase__score-value {
@@ -23667,6 +23704,22 @@ html.fg-blinds-reveal-locked {
 
   .fg-review-showcase__score-meta {
     grid-column: 1 / -1;
+  }
+
+  /* The cluster is a row with a hairline between on desktop. At this width the
+     two platforms will not sit side by side, so the divider becomes a rule
+     above the Trustpilot block instead. */
+  .fg-review-showcase__proof {
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: stretch;
+  }
+
+  .fg-review-showcase__trustpilot {
+    padding-top: 0.9rem;
+    padding-left: 0;
+    border-top: 1px solid rgba(17, 24, 39, 0.1);
+    border-left: 0;
   }
 
   .fg-review-showcase__intro h2 {
