@@ -201,7 +201,7 @@ function fenster_case_studies(): array
                 'Phased so the home kept operating throughout',
             ],
             'images' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/668a13f5-3500-420d-8e15-47834268084b.jpg', 'caption' => 'Sunrise Care Home after the window and door replacement.'],
+                ['src' => $team_img . '668a13f5-3500-420d-8e15-47834268084b.jpg', 'caption' => 'Sunrise Care Home after the window and door replacement.'],
             ],
             'seo' => [
                 'title_tag' => 'Sunrise Care Home, Kettering: Window Replacement',
@@ -237,7 +237,7 @@ function fenster_case_studies(): array
                 'Mechanically jointed, with astragal bars and monkey tail handles',
             ],
             'images' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/3-1-3.png', 'caption' => 'The Green Man after the window replacement, with the three part bay to the right.'],
+                ['src' => $team_img . '3-1-3.png', 'caption' => 'The Green Man after the window replacement, with the three part bay to the right.'],
             ],
             'seo' => [
                 'title_tag' => 'The Green Man, Eversholt: Period Pub Window Replacement',
@@ -272,7 +272,7 @@ function fenster_case_studies(): array
                 'Completed to the practice opening date',
             ],
             'images' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/ROKA-Dental-Post-Fitting-2-scaled.jpg', 'caption' => 'Roka Dental, Woburn Sands, after the doors were fitted.'],
+                ['src' => $team_img . 'ROKA-Dental-Post-Fitting-2-scaled.jpg', 'caption' => 'Roka Dental, Woburn Sands, after the doors were fitted.'],
             ],
             'seo' => [
                 'title_tag' => 'Roka Dental, Woburn Sands: Commercial Door Replacement',
@@ -307,7 +307,7 @@ function fenster_case_studies(): array
                 'Phased around live clinical services',
             ],
             'images' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/fe2513f8-d557-4972-bb3f-bc0cc6a9d5f3.jpg', 'caption' => 'The Kitwood Unit at Herts and Essex Community Hospital after the glazing works.'],
+                ['src' => $team_img . 'fe2513f8-d557-4972-bb3f-bc0cc6a9d5f3.jpg', 'caption' => 'The Kitwood Unit at Herts and Essex Community Hospital after the glazing works.'],
             ],
             'seo' => [
                 'title_tag' => 'Herts & Essex Community Hospital: Aluminium Glazing',
