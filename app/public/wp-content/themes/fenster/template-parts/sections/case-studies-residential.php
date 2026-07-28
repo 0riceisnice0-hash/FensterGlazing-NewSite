@@ -135,18 +135,31 @@ if ($video && ! $is_wide_video) {
     $gallery_images = array_slice($images, 1);
 }
 
+/* Related work stays within the same type. A commercial project page was
+   offering a domestic bifold as the next thing to read, which is the wrong
+   audience and the wrong sale. Same type first, then anything else only if
+   there are not enough to fill the row. */
 $related = [];
+$related_other = [];
 foreach ($cards as $short => $card) {
-    if ($short !== $short_slug) {
-        $related[] = $card;
+    if ($short === $short_slug) {
+        continue;
     }
+    if (strtolower((string) ($card['type'] ?? '')) === strtolower($type)) {
+        $related[] = $card;
+    } else {
+        $related_other[] = $card;
+    }
+}
+if (count($related) < 3) {
+    $related = array_merge($related, $related_other);
 }
 $related = array_slice($related, 0, 3);
 ?>
 <?php
 ob_start();
 ?>
-<a class="fg-cs-back" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
+<a class="fg-cs-back" href="<?php echo esc_url(home_url($is_commercial ? '/commercial-projects/' : '/case-studies/')); ?>"><?php echo esc_html($is_commercial ? __('All commercial projects', 'fenster') : __('All case studies', 'fenster')); ?></a>
 <p class="eyebrow"><?php echo esc_html(trim($type . ' • ' . $location, ' ')); ?></p>
 <h1><?php echo esc_html($title); ?></h1>
 <p class="fg-cs-hero__lead"><?php echo esc_html($lead); ?></p>
