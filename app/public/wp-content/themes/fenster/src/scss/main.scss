@@ -23690,17 +23690,12 @@ html.fg-blinds-reveal-locked {
     padding: 1.1rem;
   }
 
+  /* This used to force two columns, from when the block was value, stars and
+     meta. With the wordmark and link added it stranded the 57px Google mark
+     alone in a 121px column beside the 4.9. One column, like the Trustpilot
+     block beside it. */
   .fg-review-showcase__score {
-    grid-template-columns: auto auto;
-    justify-items: start;
-    justify-content: start;
-    gap: 0.2rem 0.75rem;
-    align-items: center;
-    text-align: left;
-  }
-
-  .fg-review-showcase__score-meta {
-    grid-column: 1 / -1;
+    gap: 0.25rem;
   }
 
   /* The cluster is a row with a hairline between on desktop. At this width the
