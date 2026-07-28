@@ -12,6 +12,7 @@ if (! defined('ABSPATH')) {
 function fenster_commercial_product_pages(): array
 {
     $asset_base = '/wp-content/themes/fenster/assets/images/imported/';
+    $sector_base = '/wp-content/themes/fenster/assets/images/commercial-sectors/';
 
     return [
         'commercial-windows-and-doors' => [
@@ -189,6 +190,190 @@ function fenster_commercial_product_pages(): array
                 ],
             ],
             'use_cases' => ['Retail entrances', 'Office receptions', 'Healthcare buildings', 'Public access routes', 'Education estates', 'High-traffic doors'],
+        ],
+        /*
+         * Sector pages, added 2026-07-28. Each is written around the constraint that
+         * actually differs by sector, not a templated capability list with the noun
+         * swapped: `AUDIT.md` flags doorway-page risk on the county set and the same
+         * trap applies here. Photography is real Fenster work pulled from the owner's
+         * image bank. Industrial and logistics was asked for but is deliberately not
+         * built: there is no completed job, no photograph and nothing to write from.
+         */
+        'school-and-education-glazing' => [
+            'eyebrow' => 'Education',
+            'title' => 'School and education glazing',
+            'subtitle' => 'Window, door and curtain walling replacement for schools, academies and colleges, planned around the school year rather than against it.',
+            'intro_heading' => 'Most school glazing is decided by the calendar before it is decided by the specification.',
+            'hero_image' => $sector_base . 'sector-education-glazed-run-1400w.webp',
+            'hero_alt' => 'New glazed window run being installed in a school building',
+            'intro_image' => $sector_base . 'sector-education-window-fitted-1000w.webp',
+            'intro_alt' => 'Aluminium window fitted into a school elevation',
+            'summary' => [
+                'A school is only empty for a few weeks a year, and those weeks are when almost every other trade wants to be on site too. The specification usually turns out to be the easy part. What decides the job is how much of it can be finished before the pupils come back.',
+                'We have worked on school sites including Shaftesbury School, Witchford Village College, Merchant Taylor and Leagrave SEN. Send us the elevations and the term dates together, because we cannot price the second one out of the first.',
+            ],
+            'stats' => [
+                ['value' => 'Term time', 'label' => 'or holidays, planned either way'],
+                ['value' => 'Occupied', 'label' => 'buildings, phased by block'],
+                ['value' => 'DBS', 'label' => 'and site induction as required'],
+            ],
+            'capabilities' => [
+                ['title' => 'Classroom windows', 'copy' => 'Replacement windows in teaching spaces, with restrictors and safety glass where the opening needs them.'],
+                ['title' => 'Entrances and screens', 'copy' => 'Glazed entrance screens and doors, coordinated with access control where the school already has it.'],
+                ['title' => 'Curtain walling', 'copy' => 'Larger glazed elevations on halls, atria and newer teaching blocks.'],
+                ['title' => 'Phased programmes', 'copy' => 'Work split by block or by holiday so the school keeps running around it.'],
+            ],
+            'detail_sections' => [
+                [
+                    'eyebrow' => 'Working around a live school',
+                    'title' => 'The awkward part is not the glazing, it is the safeguarding.',
+                    'copy' => 'On an occupied school site the route from the compound to the elevation matters as much as the elevation. Pupil separation, signing in, supervised access and where the skip goes all get agreed before we start rather than argued about on day one.',
+                    'image' => $sector_base . 'sector-education-window-fitted-1000w.webp',
+                    'alt' => 'Window installation in progress on a school building',
+                    'points' => ['Segregated working areas', 'Site induction and sign-in', 'Agreed access and storage'],
+                ],
+                [
+                    'eyebrow' => 'What to send us',
+                    'title' => 'Term dates are part of the specification.',
+                    'copy' => 'Elevations, a window schedule and the dates the school is empty are enough to start. If the work has to happen in term time we will say so, and we will tell you what realistically fits into a holiday rather than promising the lot and running over into September.',
+                    'image' => $sector_base . 'sector-education-glazed-run-1400w.webp',
+                    'alt' => 'Glazed run installed in a school block',
+                    'points' => ['Elevations and schedule', 'Term and holiday dates', 'Access constraints on site'],
+                ],
+            ],
+            'use_cases' => ['Primary schools', 'Secondary schools', 'Academies', 'Sixth form and colleges', 'SEN settings', 'Teaching blocks'],
+        ],
+        'hotel-and-hospitality-glazing' => [
+            'eyebrow' => 'Hospitality',
+            'title' => 'Hotel and hospitality glazing',
+            'subtitle' => 'Windows and doors for hotels, pubs and restaurants, phased so the rooms and the covers you lose are the ones you chose to lose.',
+            'intro_heading' => 'Every room we are working in is a room you are not selling.',
+            'hero_image' => '/wp-content/themes/fenster/assets/images/case-studies/cs-barn-hotel-exterior-1400w.webp',
+            'hero_alt' => 'The Barn Hotel, timber-clad elevation with black aluminium windows',
+            'intro_image' => $sector_base . 'sector-hospitality-holiday-inn-1400w.webp',
+            'intro_alt' => 'Hotel elevation surveyed before window replacement',
+            'summary' => [
+                'Hospitality glazing is priced in rooms and covers, not just in frames. A floor closed for three weeks is three weeks of lost bookings, so the programme is worth as much argument as the specification.',
+                'We have done the work: The Barn Hotel in Coventry, the Holiday Inn at Newport Pagnell and The Green Man at Eversholt. Tell us what you can afford to close and when, and we will build the phasing around that.',
+            ],
+            'stats' => [
+                ['value' => 'Phased', 'label' => 'by floor, wing or room'],
+                ['value' => 'Trading', 'label' => 'buildings, guests on site'],
+                ['value' => 'Acoustic', 'label' => 'glass where the road is the problem'],
+            ],
+            'capabilities' => [
+                ['title' => 'Bedroom windows', 'copy' => 'Replacement windows room by room, with the room handed back clean and usable the same day where the programme allows.'],
+                ['title' => 'Bar and restaurant glazing', 'copy' => 'Frontages, bay windows and garden doors on pubs and restaurants, including period buildings.'],
+                ['title' => 'Entrances', 'copy' => 'Glazed entrance screens and doors on the arrival elevation, where the first impression is.'],
+                ['title' => 'Acoustic and thermal', 'copy' => 'Glass specified for road noise or for guests who control their own heating.'],
+            ],
+            'detail_sections' => [
+                [
+                    'eyebrow' => 'Phasing',
+                    'title' => 'We would rather take longer and cost you fewer rooms.',
+                    'copy' => 'The fastest programme is almost never the cheapest one for a hotel, because the cost that matters is the rooms out of service. We will price the quick version and the phased version and let you decide which is actually cheaper for your business.',
+                    'image' => $sector_base . 'sector-hospitality-holiday-inn-1400w.webp',
+                    'alt' => 'Hotel elevation with windows due for replacement',
+                    'points' => ['Room, floor or wing at a time', 'Agreed handback each day', 'Quiet hours respected'],
+                ],
+                [
+                    'eyebrow' => 'Period buildings',
+                    'title' => 'A pub built in 1835 does not have square openings.',
+                    'copy' => 'Older hospitality buildings need surveying opening by opening rather than off a drawing, and the answer is often a sympathetic replacement rather than a modern one. The Green Man kept its bay and its proportions; that was the point of the job.',
+                    'image' => '/wp-content/themes/fenster/assets/images/imported/3-1-3.png',
+                    'alt' => 'The Green Man, Eversholt, after its window replacement',
+                    'points' => ['Opening by opening survey', 'Proportions and bars kept', 'Listed and conservation advice'],
+                ],
+            ],
+            'use_cases' => ['Hotels', 'Pubs', 'Restaurants', 'Period inns', 'Function venues', 'Guest houses'],
+        ],
+        'care-home-glazing' => [
+            'eyebrow' => 'Care',
+            'title' => 'Care home glazing',
+            'subtitle' => 'Window and door replacement in care homes and supported living, carried out around residents who are at home all day.',
+            'intro_heading' => 'Nobody moves out while we work.',
+            'hero_image' => '/wp-content/themes/fenster/assets/images/imported/668a13f5-3500-420d-8e15-47834268084b.jpg',
+            'hero_alt' => 'Sunrise Care Home after its window replacement',
+            'intro_image' => $sector_base . 'sector-offices-courtyard-1000w.webp',
+            'intro_alt' => 'Traditional brick elevation with replacement windows',
+            'summary' => [
+                'A care home is the hardest kind of occupied building to work in, because the occupants are there all day, some of them are unwell, and a room without a window in it is not a room anybody can sit in. The work has to be planned in single rooms and finished the same day.',
+                'We replaced the windows at Sunrise Care Home. The specification questions that came up were the ones you would expect: restrictors, safe opening, and keeping rooms warm while the frame is out.',
+            ],
+            'stats' => [
+                ['value' => 'Room by room', 'label' => 'opened and closed the same day'],
+                ['value' => 'Restrictors', 'label' => 'where the opening needs them'],
+                ['value' => 'Occupied', 'label' => 'throughout, residents in place'],
+            ],
+            'capabilities' => [
+                ['title' => 'Bedroom windows', 'copy' => 'One room opened at a time, glazed and made good before we leave it.'],
+                ['title' => 'Communal areas', 'copy' => 'Lounges, dining rooms and conservatory glazing where the residents actually spend the day.'],
+                ['title' => 'Safe opening', 'copy' => 'Restrictors and controlled opening where a resident could otherwise open a window fully.'],
+                ['title' => 'Doors and entrances', 'copy' => 'Entrance doors and screens, coordinated with the access control the home already uses.'],
+            ],
+            'detail_sections' => [
+                [
+                    'eyebrow' => 'Working around residents',
+                    'title' => 'One room open at a time, closed before we go home.',
+                    'copy' => 'We do not strip a corridor of windows and come back tomorrow. A room is opened, glazed, sealed and cleaned within the day so the resident sleeps in it that night. It is slower and it is the only way that works.',
+                    'image' => '/wp-content/themes/fenster/assets/images/imported/668a13f5-3500-420d-8e15-47834268084b.jpg',
+                    'alt' => 'Care home elevation with replacement windows',
+                    'points' => ['Single room working', 'Same day handback', 'Dust and noise kept down'],
+                ],
+                [
+                    'eyebrow' => 'Safe opening',
+                    'title' => 'The restrictor question comes up on every care job.',
+                    'copy' => 'How far a window should open in a care setting is a decision for you and your own risk assessment, not for us. Tell us what the assessment says and we will fit hardware that matches it, rather than choosing a limit on your behalf.',
+                    'image' => $sector_base . 'sector-offices-courtyard-1000w.webp',
+                    'alt' => 'Window detail on a residential care building',
+                    'points' => ['Restrictors to your assessment', 'Consistent across the home', 'Serviceable hardware'],
+                ],
+            ],
+            'use_cases' => ['Care homes', 'Nursing homes', 'Supported living', 'Sheltered housing', 'Extra care schemes', 'Residential settings'],
+        ],
+        'office-and-retail-glazing' => [
+            'eyebrow' => 'Offices and retail',
+            'title' => 'Office and retail glazing',
+            'subtitle' => 'Windows, entrance screens and curtain walling for offices, shops and workplaces, worked around your trading and working hours.',
+            'intro_heading' => 'The building has to keep earning while we are on it.',
+            'hero_image' => $sector_base . 'sector-offices-water-end-barn-1400w.webp',
+            'hero_alt' => 'Converted barn office complex with replacement windows',
+            'intro_image' => $sector_base . 'sector-offices-courtyard-1000w.webp',
+            'intro_alt' => 'Office courtyard elevation with new glazing',
+            'summary' => [
+                'Offices and shops have the same problem from opposite ends of the day: an office needs its desks usable from nine, a shop needs its frontage clear from opening. Both usually mean working early, late or at a weekend, and that belongs in the price rather than as a surprise later.',
+                'The work ranges from a converted barn office at Water End Barn to commercial buildings such as Franklin House and Orient House. Tell us the hours the building has to work and we will price around them.',
+            ],
+            'stats' => [
+                ['value' => 'Out of hours', 'label' => 'where trading demands it'],
+                ['value' => 'Occupied', 'label' => 'floors kept usable'],
+                ['value' => 'Frontages', 'label' => 'entrances and shopfront glazing'],
+            ],
+            'capabilities' => [
+                ['title' => 'Office windows', 'copy' => 'Replacement windows floor by floor, with desks moved back and the floor usable the next morning.'],
+                ['title' => 'Entrance screens', 'copy' => 'Glazed entrances and reception screens, coordinated with automatic doors and access control.'],
+                ['title' => 'Curtain walling', 'copy' => 'Larger glazed elevations, replacement facade panels and phased facade works.'],
+                ['title' => 'Shopfronts', 'copy' => 'Retail frontages and doors, with the unit trading around the work where it can be.'],
+            ],
+            'detail_sections' => [
+                [
+                    'eyebrow' => 'Working hours',
+                    'title' => 'Say when the building has to be usable and we will work to it.',
+                    'copy' => 'Most office and retail jobs come down to when we can be noisy and when we cannot. Early starts, evening work and weekend possessions all cost differently, so it is worth agreeing them at quote stage rather than discovering the constraint in week two.',
+                    'image' => $sector_base . 'sector-offices-courtyard-1000w.webp',
+                    'alt' => 'Office building elevation during glazing works',
+                    'points' => ['Out of hours where needed', 'Floor by floor possession', 'Agreed noisy hours'],
+                ],
+                [
+                    'eyebrow' => 'Older commercial buildings',
+                    'title' => 'A converted building rarely matches its own drawings.',
+                    'copy' => 'Barn conversions, mills and older commercial premises tend to have openings that have moved over a century and a half. We survey them individually rather than working off the original drawing, because the drawing is usually optimistic.',
+                    'image' => $sector_base . 'sector-offices-water-end-barn-1400w.webp',
+                    'alt' => 'Converted barn office building with traditional glazing',
+                    'points' => ['Individual opening survey', 'Sympathetic replacements', 'Conservation constraints checked'],
+                ],
+            ],
+            'use_cases' => ['Offices', 'Business parks', 'Converted buildings', 'Retail units', 'Shopfronts', 'Workplaces'],
         ],
         /*
          * AOV. The owner confirmed on 2026-07-28 that we supply and install these.
