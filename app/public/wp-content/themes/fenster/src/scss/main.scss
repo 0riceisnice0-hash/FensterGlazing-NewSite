@@ -1357,6 +1357,35 @@ a {
 
 .fg-consultation-page__faq-items { display: grid !important; }
 
+/* Eleven dropdowns in a right-hand column left the left one empty from the
+   heading down, and everything worth putting there is already said in the
+   section above. Centring removes the imbalance rather than padding it out,
+   and gives this section a different shape from the two-column one before it.
+   Needs the extra class: the two-column rule above is the same specificity. */
+.fg-consultation-page__faq .fg-consultation-page__faq-grid {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.fg-consultation-page__faq .fg-consultation-page__section-head {
+  max-width: 40rem;
+  text-align: center;
+}
+
+.fg-consultation-page__faq .fg-consultation-page__faq-items {
+  width: min(100%, 52rem);
+}
+
+/* Give the rows something to respond to, and mark the open one. */
+.fg-consultation-page__faq .fg-product-faq__items summary:hover {
+  color: var(--color-accent-dark);
+}
+
+.fg-consultation-page__faq .fg-product-faq__items details[open] {
+  background: rgba(0, 45, 58, 0.025);
+}
+
 @media (max-width: 1050px) {
   .fg-consultation-page__hero-grid { grid-template-columns: minmax(0, 0.72fr) minmax(450px, 1fr); }
 }
