@@ -19,6 +19,11 @@ $is_archive = ! empty($args['is_archive']);
 $is_commercial = ! empty($args['is_commercial']);
 $short_slug = (string) ($args['short_slug'] ?? '');
 $quote_url = (string) ($args['quote_url'] ?? home_url('/online-quote/'));
+/* The instant quote tool prices domestic windows and doors. It cannot price a
+   facade, so it is kept off commercial pages entirely: a contractor sent to a
+   retail quote engine learns we have not understood the job. Commercial work
+   routes to the project enquiry instead. Owner instruction, 2026-07-28. */
+$commercial_enquiry_url = home_url('/commercial-glazing/#commercial-enquiry');
 
 /* One renderer, two archives. Commercial work lists at /commercial-projects/
    and residential at /case-studies/, so each archive only builds cards for its
@@ -88,12 +93,19 @@ if ($is_archive) :
         <section class="fg-cs-cta">
             <div class="container fg-cs-cta__inner">
                 <div>
-                    <h2><?php esc_html_e('Want windows or doors like these?', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Price your project in minutes with our instant quote tool, or talk it through with the team first.', 'fenster'); ?></p>
+                    <h2><?php echo esc_html($is_commercial ? __('Have a building that needs glazing?', 'fenster') : __('Want windows or doors like these?', 'fenster')); ?></h2>
+                    <p><?php echo esc_html($is_commercial
+                        ? __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster')
+                        : __('Price your project in minutes with our instant quote tool, or talk it through with the team first.', 'fenster')); ?></p>
                 </div>
                 <div class="fg-cs-cta__actions">
-                    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
+                    <?php if ($is_commercial) : ?>
+                        <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/commercial-glazing/')); ?>"><?php esc_html_e('Commercial glazing', 'fenster'); ?></a>
+                    <?php else : ?>
+                        <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
@@ -179,7 +191,11 @@ ob_start();
     <p class="fg-cs-hero__date"><?php echo esc_html($date_label); ?> <time datetime="<?php echo esc_attr($is_commercial ? substr($date_iso, 0, 7) : $date_iso); ?>"><?php echo esc_html($date_display); ?></time></p>
 <?php endif; ?>
 <div class="fg-cs-hero__actions">
-    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+    <?php if ($is_commercial) : ?>
+        <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
+    <?php else : ?>
+        <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+    <?php endif; ?>
     <?php $first_product = $products[0] ?? null; ?>
     <?php if (is_array($first_product)) : ?>
         <a class="button button--light" href="<?php echo esc_url((string) ($first_product['url'] ?? '#')); ?>"><?php echo esc_html((string) ($first_product['label'] ?? '')); ?></a>
@@ -268,15 +284,17 @@ $hero_intro_html = ob_get_clean();
                 <?php foreach ($overview as $paragraph) : ?>
                     <p><?php echo wp_kses((string) $paragraph, $allowed_overview_html); ?></p>
                 <?php endforeach; ?>
-                <p class="fg-cs-quote-note">
-                    <?php
-                    printf(
-                        /* translators: %s: instant quote tool link */
-                        esc_html__('This customer got their price from our %s.', 'fenster'),
-                        '<a href="' . esc_url($quote_url) . '">' . esc_html__('instant quote tool', 'fenster') . '</a>'
-                    );
-                    ?>
-                </p>
+                <?php if (! $is_commercial) : ?>
+                    <p class="fg-cs-quote-note">
+                        <?php
+                        printf(
+                            /* translators: %s: instant quote tool link */
+                            esc_html__('This customer got their price from our %s.', 'fenster'),
+                            '<a href="' . esc_url($quote_url) . '">' . esc_html__('instant quote tool', 'fenster') . '</a>'
+                        );
+                        ?>
+                    </p>
+                <?php endif; ?>
 
                 <?php if ($review && ! empty($review['quote'])) : ?>
                     <figure class="fg-cs-review">
@@ -297,7 +315,11 @@ $hero_intro_html = ob_get_clean();
                     <?php if ($colour) : ?>
                         <a class="fg-cs-link" href="<?php echo esc_url((string) ($colour['url'] ?? home_url('/colour-options/'))); ?>"><?php echo esc_html((string) ($colour['label'] ?? '')); ?></a>
                     <?php endif; ?>
-                    <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                    <?php if ($is_commercial) : ?>
+                        <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
+                    <?php else : ?>
+                        <a class="fg-cs-link fg-cs-link--quote" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                    <?php endif; ?>
                 </div>
 
                 <?php if (! empty($installed)) : ?>
@@ -379,13 +401,19 @@ $hero_intro_html = ob_get_clean();
     <section class="fg-cs-cta">
         <div class="container fg-cs-cta__inner">
             <div>
-                <h2><?php esc_html_e('Want the same for your home?', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Price it in minutes with our instant quote tool, or explore the products used on this project.', 'fenster'); ?></p>
+                <h2><?php echo esc_html($is_commercial ? __('Have a project like this?', 'fenster') : __('Want the same for your home?', 'fenster')); ?></h2>
+                <p><?php echo esc_html($is_commercial
+                    ? __('Send the drawings, the schedule or a short scope note and we will review what is needed.', 'fenster')
+                    : __('Price it in minutes with our instant quote tool, or explore the products used on this project.', 'fenster')); ?></p>
             </div>
             <div class="fg-cs-cta__actions">
-                <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
-                <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
-            </div>
+                <?php if ($is_commercial) : ?>
+                    <a class="button" href="<?php echo esc_url($commercial_enquiry_url); ?>"><?php esc_html_e('Send project details', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/commercial-projects/')); ?>"><?php esc_html_e('All commercial projects', 'fenster'); ?></a>
+                <?php else : ?>
+                    <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('All case studies', 'fenster'); ?></a>
+                <?php endif; ?>
         </div>
     </section>
 </article>
