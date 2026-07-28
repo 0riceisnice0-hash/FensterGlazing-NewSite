@@ -1637,3 +1637,13 @@ Do not use this as the primary rulebook or handover. Use:
 - QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors. Probed directly: all six patterns, five handles and the duo photo load; the anatomy accordion opens one item at a time; the strip renders exactly the three casement studies.
 - Test deployment only. No live-site deployment was performed, and must not be until both placeholders are resolved.
 
+## 2026-07-28 - Casement Page: Price And Colour Section Removed
+
+- Owner instruction: remove the price estimate and the colour section; it did not read like the other pages, and a wall of small tiles said nothing the photographs were not already saying.
+- The `fg-cw-finish` section is gone entirely: swatch grid, RAL codes, the Broughton two-tone feature and the awaiting-foils placeholder, plus all their CSS. The price placeholder cell left the anchor band, now guarantee and PAS 24 only.
+- Colour keeps one route: a `See all sixteen colours` link in the glass-and-handles row, and the sixteen-colours intro fact.
+- **Both placeholders are gone, so the earlier block on deploying this page live is lifted.**
+- Rebased over five consultation-page commits from the parallel session; only the compiled `main.css` conflicted and was regenerated from the merged SCSS.
+- QA on test at `1440 x 900` and `390 x 844`: fourteen sections in order, no body overflow, one H1, nothing above 57.6px, no broken images, no console errors.
+- Test deployment only. No live-site deployment was performed.
+
