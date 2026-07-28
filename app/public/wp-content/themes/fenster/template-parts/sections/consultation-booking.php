@@ -40,7 +40,7 @@ $faq_schema = [
         <div class="container fg-consultation-page__hero-grid">
             <div class="fg-consultation-page__hero-copy">
                 <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Book a free window and door consultation in Milton Keynes.', 'fenster'); ?></h1>
+                <h1><?php esc_html_e('Book a free consultation in Milton Keynes.', 'fenster'); ?></h1>
                 <p><?php esc_html_e('Choose a weekday and a preferred time, and we will come to you. The visit is free, whether you go ahead with us or not. We will confirm your appointment directly.', 'fenster'); ?></p>
             </div>
 
