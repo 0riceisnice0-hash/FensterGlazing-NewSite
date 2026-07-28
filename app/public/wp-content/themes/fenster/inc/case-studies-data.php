@@ -156,6 +156,7 @@ function fenster_case_studies(): array
                 'The hotel had been stripped back to shell condition for redevelopment. Our package was the building envelope: 37 <a href="' . esc_url(home_url('/aluminium-windows/')) . '">aluminium windows</a> to survey dimensions, plus the commercial entrance doors.',
                 'The complication was not the glazing, it was getting to it. When we began there were no internal staircases in the building, so there was no way of carrying units to the upper floors. Every first floor unit went up on an industrial crane, and each lift had to be booked into the main contractor\'s programme in advance rather than called for on the day.',
                 'Aluminium was specified for the sightlines and the service life, which is what a hotel wants from a window it is not going to touch again for twenty years. The frames were made to measurements taken at survey, so they went into an envelope that was still being finished around them.',
+                'Aluminium and modern double glazing also cut the heat loss through the envelope, which on a hotel shows up as steadier room temperatures and lower running costs rather than as a number anyone quotes at you.',
                 'Most of our commercial work happens at this stage, months before anyone sees the building. It is rare to get back and photograph the finished thing.',
             ],
             'installed' => [
@@ -166,6 +167,7 @@ function fenster_case_studies(): array
             ],
             'images' => [
                 ['src' => $img . 'cs-barn-hotel-exterior-1400w.webp', 'caption' => 'The Barn Hotel after completion, with the aluminium window line across the timber-clad elevation.'],
+                ['src' => $img . 'cs-barn-hotel-entrance.webp', 'caption' => 'The entrance, where the new commercial doors sit under the hotel sign.'],
             ],
             'seo' => [
                 'title_tag' => 'Barn Hotel, Coventry: Commercial Window Installation',
@@ -228,7 +230,8 @@ function fenster_case_studies(): array
             'overview' => [
                 'The brief was the one every period building gives you: better performance without the building looking like it has had modern windows put in. On a pub with an 1835 datestone, getting that wrong is obvious from the street.',
                 'We fitted six Residence R9 windows, a three part R9 bay, and five white woodgrain C70 <a href="' . esc_url(home_url('/flush-casement-windows/')) . '">flush casements</a>. All of them are mechanically jointed rather than welded, which is what gives the frame a timber style corner instead of a rounded plastic one, and all carry astragal bars and black monkey tail handles.',
-                'The work covered the front and rear elevations, upper and ground floors, on a venue that was still trading. The pub was commissioned by its owner Simon, who we had already worked with at Water End Barn, so the programme was agreed rather than negotiated.',
+                'The work covered the front and rear elevations, upper and ground floors, on a venue that was still trading. It was commissioned by Simon, the pub\'s owner, who we had already worked with at Water End Barn, so the programme was agreed rather than negotiated.',
+                'For a pub the practical gains matter as much as the look. The new units cut draughts and hold heat, which is the difference between a bar you can seat people in through winter and one where the window tables go unused. Low maintenance frames and modern locking also mean less to deal with on a building that is open seven days a week.',
             ],
             'installed' => [
                 'Six Residence R9 windows',
@@ -237,7 +240,11 @@ function fenster_case_studies(): array
                 'Mechanically jointed, with astragal bars and monkey tail handles',
             ],
             'images' => [
-                ['src' => $team_img . '3-1-3.png', 'caption' => 'The Green Man after the window replacement, with the three part bay to the right.'],
+                ['src' => $img . 'cs-green-man-front-bay.webp', 'caption' => 'The front elevation, with the three part Residence R9 bay to the right of the entrance.'],
+                ['src' => $team_img . '3-1-3.png', 'caption' => 'The pub from the road, showing the astragal bars and the white woodgrain finish against the brick.'],
+                ['src' => $img . 'cs-green-man-frontage.webp', 'caption' => 'The frontage as customers see it, with the bay and the ground floor windows replaced.'],
+                ['src' => $img . 'cs-green-man-rear.webp', 'caption' => 'The rear elevation, where the upper floor windows were replaced alongside the front.'],
+                ['src' => $img . 'cs-green-man-side.webp', 'caption' => 'The side and rear of the building, showing the full run of replacement windows.'],
             ],
             'seo' => [
                 'title_tag' => 'The Green Man, Eversholt: Period Pub Window Replacement',
@@ -272,7 +279,7 @@ function fenster_case_studies(): array
                 'Completed to the practice opening date',
             ],
             'images' => [
-                ['src' => $team_img . 'ROKA-Dental-Post-Fitting-2-scaled.jpg', 'caption' => 'Roka Dental, Woburn Sands, after the doors were fitted.'],
+                ['src' => $team_img . 'ROKA-Dental-Post-Fitting-2-1-scaled.jpg', 'caption' => 'Roka Dental, Woburn Sands, after the doors were fitted.'],
             ],
             'seo' => [
                 'title_tag' => 'Roka Dental, Woburn Sands: Commercial Door Replacement',
