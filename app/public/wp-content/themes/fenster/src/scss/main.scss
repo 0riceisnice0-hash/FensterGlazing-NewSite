@@ -17285,7 +17285,7 @@ a.fg-cs-installer:hover {
 
 /* Two matched platform blocks. Each links to its own platform and carries the
    same size of link, so neither reads as the primary action over the other. */
-.fg-review-showcase__platform {
+.fg-review-showcase__source {
   display: grid;
   align-content: space-between;
   justify-items: start;
@@ -17311,14 +17311,14 @@ a.fg-cs-installer:hover {
   height: auto;
 }
 
-.fg-review-showcase__platform-link {
+.fg-review-showcase__source-link {
   margin-top: 0.15rem;
   color: #1c6b50;
   font-size: 0.86rem;
   font-weight: 800;
 }
 
-.fg-review-showcase__platform:hover .fg-review-showcase__platform-link {
+.fg-review-showcase__source:hover .fg-review-showcase__source-link {
   text-decoration: underline;
 }
 

@@ -64,7 +64,7 @@ $render_stars = static function (float $value): string {
                      different weights, and "all reviews" was misleading anyway: it only
                      ever went to Google. Each block now links to its own platform. */ ?>
             <div class="fg-review-showcase__proof">
-                <a class="fg-review-showcase__platform fg-review-showcase__score" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
+                <a class="fg-review-showcase__source fg-review-showcase__score" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
                     <span class="fg-review-showcase__gmark" aria-hidden="true">
                         <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
                     </span>
@@ -84,13 +84,13 @@ $render_stars = static function (float $value): string {
                             <?php esc_html_e('Verified customer reviews', 'fenster'); ?>
                         <?php endif; ?>
                     </span>
-                    <span class="fg-review-showcase__platform-link"><?php esc_html_e('Read our Google reviews', 'fenster'); ?></span>
+                    <span class="fg-review-showcase__source-link"><?php esc_html_e('Read our Google reviews', 'fenster'); ?></span>
                 </a>
 
                 <?php if ($trustpilot_url !== '') : ?>
-                    <a class="fg-review-showcase__platform fg-review-showcase__trustpilot" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
+                    <a class="fg-review-showcase__source fg-review-showcase__trustpilot" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
                         <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot, rated Excellent', 'fenster'); ?>" width="355" height="150" loading="lazy" decoding="async">
-                        <span class="fg-review-showcase__platform-link"><?php esc_html_e('Read our Trustpilot reviews', 'fenster'); ?></span>
+                        <span class="fg-review-showcase__source-link"><?php esc_html_e('Read our Trustpilot reviews', 'fenster'); ?></span>
                     </a>
                 <?php endif; ?>
             </div>
