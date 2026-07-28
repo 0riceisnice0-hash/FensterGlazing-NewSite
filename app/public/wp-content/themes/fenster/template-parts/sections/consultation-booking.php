@@ -42,8 +42,8 @@ $faq_schema = [
             <div class="fg-consultation-page__hero-copy">
                 <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes and surrounding areas', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Book a free consultation with an expert.', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Choose a weekday and a preferred time, and one of our experts will come to you. They measure the openings properly, answer the awkward questions and price the job before they leave. The visit is free, whether you go ahead with us or not.', 'fenster'); ?></p>
-                <p><?php esc_html_e('We cover Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. We will confirm your appointment directly.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Choose a weekday and a preferred time, and one of our experts will come to you, measure up and price the job before they leave. The visit is free, whether you go ahead with us or not.', 'fenster'); ?></p>
+                <p><?php esc_html_e('We cover Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire, and we will confirm your appointment directly.', 'fenster'); ?></p>
             </div>
 
             <div class="fg-consultation-page__booking">

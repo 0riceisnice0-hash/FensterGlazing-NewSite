@@ -907,6 +907,13 @@ a {
   line-height: 1.6;
 }
 
+/* margin: 0 above means a second hero paragraph butts straight onto the first
+   and the two read as one block of grey. Space them from each other only, so a
+   single-paragraph hero is unaffected. */
+.fg-consultation-page__hero-copy > p:not(.eyebrow) + p {
+  margin-top: 0.85rem;
+}
+
 .fg-consultation-page__hero-actions {
   display: flex;
   flex-wrap: wrap;
