@@ -1647,3 +1647,14 @@ Do not use this as the primary rulebook or handover. Use:
 - QA on test at `1440 x 900` and `390 x 844`: fourteen sections in order, no body overflow, one H1, nothing above 57.6px, no broken images, no console errors.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-28 - Casement Page: One Grammar
+
+- The owner's structure critique stood after the colour removal because it was about the whole page. Counted honestly, the body held nearly thirty small bordered components across six different layout grammars; the heritage reference page is one repeated grammar, a big real photograph with copy beside it.
+- Opening styles: cards, fact chips, five-row comparison table and survey note box became one split section, the real Leighton Buzzard window photograph beside a divided list of the four layouts, each keeping its regulation or hardware fact.
+- New details section in the heritage period-details shape: friction stay and top rail hinge photographs as a pair, easy-clean and gasket facts as copy.
+- The glass-and-handles tile section, the related-cards section and the anatomy stat band are gone. Their facts already lived elsewhere (survey list, intro facts, spec strip); the survey section regains the three option links.
+- Body now runs: intro, layouts, details, real homes, CTA, EnergyPlus banner, construction explorer, survey, quote, FAQ, case studies, enquiry, reviews. Every section is the split-with-photograph grammar or an approved shared pattern. 9,873px at 1440, down from 11,554px at the audit build's peak.
+- All CSS for deleted components removed with the markup; nothing left dead.
+- QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors.
+- Test deployment only. No live-site deployment was performed.
+
