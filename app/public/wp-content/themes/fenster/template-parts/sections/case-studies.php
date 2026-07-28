@@ -403,31 +403,37 @@ if (! function_exists('fenster_commercial_case_image')) {
      * photograph. The Green Man was identified by the owner on 2026-07-28 from
      * the loose archive pool.
      *
-     * The Barn Hotel, Coventry is deliberately absent and falls through to the
-     * neutral commercial image: no photograph of it exists anywhere in the
-     * export. The other loose archive photograph, `5-1.png`, is Water End Barn,
+     * The Barn Hotel photograph came from the owner's OneDrive image bank on
+     * 2026-07-28 (Marketing/Image Bank/Projects/Berryfields Barn Hotel), not the
+     * scrape: the building carries a "THE BARN HOTEL" sign, so the pairing is
+     * certain. The other loose archive photograph, `5-1.png`, is Water End Barn,
      * Woburn, whose case study is retired and returns 410, so it must not be
-     * borrowed for the hotel. A wrong building is worse than none on a page
-     * whose whole job is proof.
+     * borrowed for anything. A wrong building is worse than none on a page whose
+     * whole job is proof.
      */
     function fenster_commercial_case_image(string $slug): ?array
     {
-        $base = '/wp-content/themes/fenster/assets/images/imported/';
+        $imported = '/wp-content/themes/fenster/assets/images/imported/';
+        $studies = '/wp-content/themes/fenster/assets/images/case-studies/';
         $map = [
+            'case-studies/barn-hotel-windows-coventry' => [
+                $studies . 'cs-barn-hotel-exterior-1400w.webp',
+                'The Barn Hotel, timber-clad elevation with black aluminium windows',
+            ],
             'case-studies/pub-windows-eversholt' => [
-                '3-1-3.png',
+                $imported . '3-1-3.png',
                 'The Green Man, Eversholt, after its window replacement',
             ],
             'case-studies/care-home-window-replacement' => [
-                '668a13f5-3500-420d-8e15-47834268084b.jpg',
+                $imported . '668a13f5-3500-420d-8e15-47834268084b.jpg',
                 'Sunrise Care Home after its window replacement',
             ],
             'case-studies/replacement-aluminium-windows-herts-and-essex-community-hospital' => [
-                'fe2513f8-d557-4972-bb3f-bc0cc6a9d5f3.jpg',
+                $imported . 'fe2513f8-d557-4972-bb3f-bc0cc6a9d5f3.jpg',
                 'Herts and Essex Community Hospital after its aluminium window replacement',
             ],
             'case-studies/dental-practice-door-replacement' => [
-                'ROKA-Dental-Post-Fitting-2-scaled.jpg',
+                $imported . 'ROKA-Dental-Post-Fitting-2-scaled.jpg',
                 'Roka Dental Clinic, Woburn Sands, after fitting',
             ],
         ];
@@ -437,7 +443,7 @@ if (! function_exists('fenster_commercial_case_image')) {
             return null;
         }
 
-        return ['src' => $base . $map[$slug][0], 'alt' => $map[$slug][1]];
+        return ['src' => $map[$slug][0], 'alt' => $map[$slug][1]];
     }
 }
 
