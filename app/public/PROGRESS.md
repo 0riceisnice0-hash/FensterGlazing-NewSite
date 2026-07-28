@@ -1619,3 +1619,16 @@ Do not use this as the primary rulebook or handover. Use:
 - QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-28 - Casement Page: The Audit Build
+
+- Implemented the full audit of `/casement-windows/` against the four reference pages. Every addition uses assets that already existed in the theme unused.
+- **Local proof.** Case-study strip before the enquiry with the three real casement jobs (Broughton, Bolbeck Park, Leighton Buzzard) via the shared `fenster_case_studies_for_product` + card component. The Real homes mosaic now leads with our own installs: Bolbeck Park in the large cell, Leighton Buzzard in a landscape cell, captioned with the towns, and the head says which images are ours and which are Liniar photography.
+- **Construction explorer.** Inside the frame is now the composite-style open-one-part explorer on the EnergyPlus cutaway (chambers, co-extruded gasket, reinforcement, sealed unit, installation), first item open in the markup, driven by the existing `data-fg-anatomy` controller. No new JavaScript.
+- **Anchor band** beneath it: 10 year insurance-backed installation guarantee, PAS 24, and a price cell.
+- **Glass and handles section.** Six Pilkington obscure patterns with their one-to-five privacy ratings, and the S2 Signature handle in its five finishes, both from image sets already in the theme.
+- **Colour.** Swatches carry RAL codes read off the Renolit foil cards (9010, 9001, 7038, 7016, 7015, 8001; Chartwell Green and Rosewood have no RAL on the card so show none), plus the Broughton two-tone feature: basalt grey RAL 7012 outside, white inside, photo of the actual dormer, linking to the case study.
+- **Two amber dashed placeholders await owner facts and are a deliberate block on any live deploy of this page:** a real recent casement job price (anchor band) and which foils most casement orders actually come in (colour section). Styled unmistakably as placeholders so they cannot pass a review as finished copy.
+- Rebased over `fb02ac7` (sitewide free-consultation copy change) which touched the same files; both intents verified present after the rebase.
+- QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors. Probed directly: all six patterns, five handles and the duo photo load; the anatomy accordion opens one item at a time; the strip renders exactly the three casement studies.
+- Test deployment only. No live-site deployment was performed, and must not be until both placeholders are resolved.
+
