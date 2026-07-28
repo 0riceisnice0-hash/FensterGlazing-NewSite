@@ -116,7 +116,11 @@ $date_iso = (string) ($study['date'] ?? '');
    thinks in handover months, and we do not hold a reliable install date for the
    migrated projects, so printing an exact day would be inventing one. Domestic
    jobs keep the full date, which is real and useful to a homeowner. */
-$date_display = $date_iso !== ''
+/* A study can carry a date purely as a sort key. Where the office is not sure
+   of the month, `date_confirmed => false` keeps the ordering but prints nothing,
+   because a guessed month on a proof page is worse than no month. */
+$date_confirmed = ($study['date_confirmed'] ?? true) !== false;
+$date_display = ($date_iso !== '' && $date_confirmed)
     ? date_i18n($is_commercial ? 'F Y' : 'j F Y', (int) strtotime($date_iso))
     : '';
 $date_label = $is_commercial ? __('Completed', 'fenster') : __('Installed', 'fenster');

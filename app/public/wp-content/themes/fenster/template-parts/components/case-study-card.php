@@ -70,7 +70,7 @@ endif;
     <div class="fg-cs-card__body">
         <span class="fg-cs-card__meta">
             <?php echo esc_html(trim((string) ($card['type'] ?? '') . ' • ' . (string) ($card['location'] ?? ''), ' •')); ?>
-            <?php if (! empty($card['date'])) : ?>
+            <?php if (! empty($card['date']) && ($card['date_confirmed'] ?? true) !== false) : ?>
                 <span class="fg-cs-card__date"><?php echo esc_html(date_i18n(strtolower((string) ($card['type'] ?? '')) === 'commercial' ? 'M Y' : 'j M Y', (int) strtotime((string) $card['date']))); ?></span>
             <?php endif; ?>
         </span>

@@ -135,18 +135,21 @@ function fenster_case_studies(): array
          * the colour match on the Kitwood Unit. The old records are left in
          * place; their routes now 301 to /commercial-projects/.
          *
-         * The `date` on these five is a sort key, not a verified completion
-         * date: the imported records carried none. Only Headrow Court is
-         * confirmed (October 2025, from the main contractor's announcement).
-         * That is why commercial studies print the month and year and are
-         * labelled "Completed" rather than showing an exact day we do not know.
-         * Correct the months when the office confirms them.
+         * Completion months confirmed by the owner on 2026-07-28: Roka Dental
+         * October 2022, Herts and Essex April 2023, The Green Man November 2025,
+         * Headrow Court October 2025 (from the contractor's announcement). The
+         * Barn Hotel and Sunrise are only approximate, so they carry
+         * `date_confirmed => false`: the date still orders the archive but the
+         * page prints nothing rather than a guessed month. Commercial studies
+         * show the month and year only, labelled "Completed".
          */
         'barn-hotel-coventry' => [
             'title' => 'Aluminium windows, The Barn Hotel, Coventry',
             'location' => 'Coventry',
             'type' => 'Commercial',
-            'date' => '2025-06-01',
+            'date' => '2025-05-01',
+            /* Owner is not certain of the month, so the page shows no date. */
+            'date_confirmed' => false,
             'summary' => '37 aluminium windows and new entrance doors, craned into a hotel that was still a shell with no stairs in it.',
             'lead' => 'We fitted 37 aluminium windows and the entrance doors on this Coventry hotel refurbishment. When we started, the building was a shell with no internal staircases, so the glazing went up by crane.',
             'products' => [
@@ -185,7 +188,9 @@ function fenster_case_studies(): array
             'title' => 'Windows and doors, Sunrise Care Home, Kettering',
             'location' => 'Kettering',
             'type' => 'Commercial',
-            'date' => '2025-05-01',
+            'date' => '2023-07-01',
+            /* Owner has it only as "before July 2023", so the page shows no date. */
+            'date_confirmed' => false,
             'summary' => 'Every window and door replaced in a working dementia care home, phased around residents who were in the building throughout.',
             'lead' => 'We replaced all the windows and doors at Sunrise Care Home in Kettering. It is a dementia specific setting, so the specification and the way we worked in the building both had to suit that.',
             'products' => [
@@ -221,7 +226,7 @@ function fenster_case_studies(): array
             'title' => 'Period-style windows, The Green Man, Eversholt',
             'location' => 'Eversholt, Bedfordshire',
             'type' => 'Commercial',
-            'date' => '2025-04-01',
+            'date' => '2025-11-01',
             'summary' => 'Twelve windows in a village pub, mechanically jointed with astragal bars so they read as timber rather than plastic.',
             'lead' => 'The Green Man is a village pub and restaurant near Woburn. We replaced twelve windows across the front and rear, upper and ground floor, in a style that keeps the building looking its age.',
             'products' => [
@@ -262,7 +267,7 @@ function fenster_case_studies(): array
             'title' => 'Entrance doors, Roka Dental, Woburn Sands',
             'location' => 'Woburn Sands',
             'type' => 'Commercial',
-            'date' => '2025-04-15',
+            'date' => '2022-10-01',
             'summary' => 'Aluminium and uPVC doors for a new dental practice, specified around the brand rather than the catalogue.',
             'lead' => 'Roka Dental were opening new premises in Woburn Sands. We supplied and fitted the external doors, chosen to match the way the practice presents itself.',
             'products' => [
@@ -297,7 +302,7 @@ function fenster_case_studies(): array
             'title' => 'Aluminium windows, Herts and Essex Community Hospital',
             'location' => 'Bishop\'s Stortford',
             'type' => 'Commercial',
-            'date' => '2025-03-01',
+            'date' => '2023-04-01',
             'summary' => 'Colour-matched aluminium windows and doors for the Kitwood Unit, fitted in a working hospital without interrupting it.',
             'lead' => 'The Kitwood Unit is the newest part of Herts and Essex Community Hospital. We supplied and fitted the aluminium windows and doors, matched to what was already on the estate.',
             'products' => [
@@ -770,6 +775,7 @@ function fenster_case_study_card(string $short, array $study): array
             : (is_array($study['images'][0] ?? null) ? $study['images'][0] : null),
         'products' => is_array($study['products'] ?? null) ? $study['products'] : [],
         'date' => (string) ($study['date'] ?? ''),
+        'date_confirmed' => ($study['date_confirmed'] ?? true) !== false,
     ];
 }
 
