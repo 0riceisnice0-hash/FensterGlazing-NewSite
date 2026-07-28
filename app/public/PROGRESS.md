@@ -1659,4 +1659,5 @@ Do not use this as the primary rulebook or handover. Use:
 - All CSS for deleted components removed with the markup; nothing left dead.
 - QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors.
 - Test deployment only. No live-site deployment was performed.
+- Follow-up: the one-grammar CSS cleanup had swallowed the construction explorer styles (a deletion cut spanned the region the audit build had inserted them into), so the explorer shipped unstyled and the owner caught it. Styles restored, and QA now includes a template-classes-versus-compiled-CSS diff so a section cannot ship unstyled again.
 
