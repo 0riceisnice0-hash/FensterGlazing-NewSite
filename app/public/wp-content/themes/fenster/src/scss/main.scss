@@ -11461,6 +11461,118 @@ a.fg-cs-installer:hover {
   gap: clamp(1rem, 2.2vw, 1.75rem);
 }
 
+/* Commercial archive: the photograph is the card and the title sits on it. A
+   facilities manager recognises the building before they read the words, and
+   these are proper architectural photographs rather than product shots, so
+   cropping them into a thumbnail above a paragraph wastes them. White type
+   over a photograph needs a real scrim, not a hopeful one: the gradient below
+   is opaque at the base where the text sits. */
+.fg-cs-grid--overlay {
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.fg-cs-card--overlay {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  background: var(--color-steel, #002d3a);
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.fg-cs-card--overlay .fg-cs-card__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 480ms ease;
+}
+
+.fg-cs-card--overlay:hover .fg-cs-card__photo,
+.fg-cs-card--overlay:focus-visible .fg-cs-card__photo {
+  transform: scale(1.03);
+}
+
+.fg-cs-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 26, 33, 0.92) 0%,
+    rgba(0, 26, 33, 0.72) 26%,
+    rgba(0, 26, 33, 0.16) 58%,
+    rgba(0, 26, 33, 0.05) 100%
+  );
+}
+
+.fg-cs-card__pills {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.fg-cs-card__pill {
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(0, 26, 33, 0.62);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.fg-cs-card__overlay {
+  position: absolute;
+  right: clamp(1rem, 2vw, 1.6rem);
+  bottom: clamp(1rem, 2vw, 1.5rem);
+  left: clamp(1rem, 2vw, 1.6rem);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.fg-cs-card__overlay-title {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.15rem, 1.7vw, 1.55rem);
+  line-height: 1.2;
+}
+
+.fg-cs-card__overlay-location {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .fg-cs-grid--overlay {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-cs-card--overlay {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cs-card--overlay .fg-cs-card__photo {
+    transition: none;
+  }
+
+  .fg-cs-card--overlay:hover .fg-cs-card__photo {
+    transform: none;
+  }
+}
+
 .fg-cs-card {
   display: grid;
   grid-template-rows: auto 1fr;

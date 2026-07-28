@@ -18,10 +18,48 @@ if (! defined('ABSPATH')) {
 $card = is_array($args['card'] ?? null) ? $args['card'] : [];
 $heading = in_array($args['heading'] ?? 'h2', ['h2', 'h3'], true) ? (string) $args['heading'] : 'h2';
 $archive_index = isset($args['archive_index']) ? (int) $args['archive_index'] : null;
+/* 'overlay' is the commercial archive treatment: the photograph is the card and
+   the title sits on it, because a facilities manager recognises the building
+   before they read the words. Everywhere else keeps the photo-above-copy card. */
+$variant = ($args['variant'] ?? '') === 'overlay' ? 'overlay' : '';
 
 if ($card === [] || empty($card['url'])) {
     return;
 }
+
+if ($variant === 'overlay') :
+    $tags = [];
+    if (! empty($card['type'])) {
+        $tags[] = (string) $card['type'];
+    }
+    foreach (array_slice((array) ($card['products'] ?? []), 0, 1) as $product) {
+        if (! empty($product['label'])) {
+            $tags[] = (string) $product['label'];
+        }
+    }
+    ?>
+    <a class="fg-cs-card fg-cs-card--overlay" href="<?php echo esc_url((string) $card['url']); ?>"<?php echo $archive_index !== null ? ' data-fg-case-study-card data-fg-case-study-index="' . esc_attr((string) $archive_index) . '"' : ''; ?>>
+        <?php if (is_array($card['image'] ?? null)) : ?>
+            <img class="fg-cs-card__photo" src="<?php echo esc_url((string) ($card['image']['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($card['image']['caption'] ?? $card['title'] ?? '')); ?>" loading="lazy">
+        <?php endif; ?>
+        <span class="fg-cs-card__scrim" aria-hidden="true"></span>
+        <?php if ($tags !== []) : ?>
+            <span class="fg-cs-card__pills">
+                <?php foreach ($tags as $tag) : ?>
+                    <span class="fg-cs-card__pill"><?php echo esc_html($tag); ?></span>
+                <?php endforeach; ?>
+            </span>
+        <?php endif; ?>
+        <span class="fg-cs-card__overlay">
+            <<?php echo $heading; ?> class="fg-cs-card__overlay-title"><?php echo esc_html((string) ($card['title'] ?? '')); ?></<?php echo $heading; ?>>
+            <?php if (! empty($card['location'])) : ?>
+                <span class="fg-cs-card__overlay-location"><?php echo esc_html((string) $card['location']); ?></span>
+            <?php endif; ?>
+        </span>
+    </a>
+    <?php
+    return;
+endif;
 ?>
 <a class="fg-cs-card" href="<?php echo esc_url((string) $card['url']); ?>"<?php echo $archive_index !== null ? ' data-fg-case-study-card data-fg-case-study-index="' . esc_attr((string) $archive_index) . '"' : ''; ?>>
     <div class="fg-cs-card__media">
