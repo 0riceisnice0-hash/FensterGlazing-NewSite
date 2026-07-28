@@ -57,15 +57,14 @@ $render_stars = static function (float $value): string {
                 <span class="fg-review-showcase__badge"><?php esc_html_e('Google and Trustpilot', 'fenster'); ?></span>
                 <h2><?php esc_html_e('What Milton Keynes homeowners say', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Real reviews from real installations. Every one is public, so you can go and check them yourself.', 'fenster'); ?></p>
-                <div class="fg-review-showcase__actions">
-                    <a class="button" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
-                        <?php esc_html_e('Read all reviews', 'fenster'); ?>
-                    </a>
-                </div>
             </div>
 
+            <?php /* Both platforms get identical treatment. A big "Read all reviews"
+                     button beside a small Trustpilot link put the same job at two very
+                     different weights, and "all reviews" was misleading anyway: it only
+                     ever went to Google. Each block now links to its own platform. */ ?>
             <div class="fg-review-showcase__proof">
-                <div class="fg-review-showcase__score">
+                <a class="fg-review-showcase__platform fg-review-showcase__score" href="<?php echo esc_url($read_url); ?>" target="_blank" rel="noopener">
                     <span class="fg-review-showcase__gmark" aria-hidden="true">
                         <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
                     </span>
@@ -85,12 +84,13 @@ $render_stars = static function (float $value): string {
                             <?php esc_html_e('Verified customer reviews', 'fenster'); ?>
                         <?php endif; ?>
                     </span>
-                </div>
+                    <span class="fg-review-showcase__platform-link"><?php esc_html_e('Read our Google reviews', 'fenster'); ?></span>
+                </a>
 
                 <?php if ($trustpilot_url !== '') : ?>
-                    <a class="fg-review-showcase__trustpilot" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
+                    <a class="fg-review-showcase__platform fg-review-showcase__trustpilot" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
                         <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot, rated Excellent', 'fenster'); ?>" width="355" height="150" loading="lazy" decoding="async">
-                        <span><?php esc_html_e('See our Trustpilot reviews', 'fenster'); ?></span>
+                        <span class="fg-review-showcase__platform-link"><?php esc_html_e('Read our Trustpilot reviews', 'fenster'); ?></span>
                     </a>
                 <?php endif; ?>
             </div>

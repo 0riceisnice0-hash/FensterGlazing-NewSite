@@ -17280,14 +17280,18 @@ a.fg-cs-installer:hover {
 .fg-review-showcase__proof {
   display: flex;
   gap: clamp(1rem, 2.4vw, 2rem);
-  align-items: center;
+  align-items: stretch;
 }
 
-.fg-review-showcase__score {
+/* Two matched platform blocks. Each links to its own platform and carries the
+   same size of link, so neither reads as the primary action over the other. */
+.fg-review-showcase__platform {
   display: grid;
+  align-content: space-between;
   justify-items: start;
   gap: 0.3rem;
   text-align: left;
+  text-decoration: none;
 }
 
 .fg-review-showcase__score-row {
@@ -17297,12 +17301,9 @@ a.fg-cs-installer:hover {
 }
 
 .fg-review-showcase__trustpilot {
-  display: grid;
-  justify-items: start;
-  gap: 0.45rem;
+  gap: 0.6rem;
   padding-left: clamp(1rem, 2.4vw, 2rem);
   border-left: 1px solid rgba(17, 24, 39, 0.1);
-  text-decoration: none;
 }
 
 .fg-review-showcase__trustpilot img {
@@ -17310,13 +17311,14 @@ a.fg-cs-installer:hover {
   height: auto;
 }
 
-.fg-review-showcase__trustpilot span {
+.fg-review-showcase__platform-link {
+  margin-top: 0.15rem;
   color: #1c6b50;
   font-size: 0.86rem;
   font-weight: 800;
 }
 
-.fg-review-showcase__trustpilot:hover span {
+.fg-review-showcase__platform:hover .fg-review-showcase__platform-link {
   text-decoration: underline;
 }
 
@@ -17383,13 +17385,6 @@ a.fg-cs-installer:hover {
   line-height: 1.45;
 }
 
-.fg-review-showcase__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 0.7rem;
-  align-items: center;
-  margin-top: 0.85rem;
-}
 
 .fg-review-showcase__write {
   color: #1c6b50;
@@ -23724,14 +23719,6 @@ html.fg-blinds-reveal-locked {
 
   .fg-review-showcase__intro h2 {
     font-size: 1.35rem;
-  }
-
-  .fg-review-showcase__actions {
-    gap: 0.6rem 0.9rem;
-  }
-
-  .fg-review-showcase__actions .button {
-    width: 100%;
   }
 
   .fg-review-showcase__cards {
