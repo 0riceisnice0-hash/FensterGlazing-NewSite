@@ -90,6 +90,11 @@ $render_stars = static function (float $value): string {
                 <?php if ($trustpilot_url !== '') : ?>
                     <a class="fg-review-showcase__source fg-review-showcase__trustpilot" href="<?php echo esc_url($trustpilot_url); ?>" target="_blank" rel="noopener">
                         <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/trustpilot-excellent.png'); ?>" alt="<?php esc_attr_e('Trustpilot, rated Excellent', 'fenster'); ?>" width="355" height="150" loading="lazy" decoding="async">
+                        <?php /* Mirrors the Google block's count line so this column has
+                                 three rows against four and stops reading as a logo with a
+                                 hole under it. No score or count: only Google's figures
+                                 come from a live feed. */ ?>
+                        <span class="fg-review-showcase__score-meta"><?php esc_html_e('Independent customer feedback', 'fenster'); ?></span>
                         <span class="fg-review-showcase__source-link"><?php esc_html_e('Read our Trustpilot reviews', 'fenster'); ?></span>
                     </a>
                 <?php endif; ?>
