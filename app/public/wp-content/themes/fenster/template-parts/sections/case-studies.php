@@ -367,7 +367,12 @@ if (! function_exists('fenster_case_archive_cards')) {
                 continue;
             }
 
-            $image = $case_page['images'][0] ?? $archive_images[$index] ?? $archive_images[max(0, $index - 1)] ?? null;
+            /* Was `$archive_images[$index] ?? $archive_images[$index - 1]`, which
+               gave a study whatever photograph happened to sit at its position in
+               the links list. Nothing connected the two, so studies with no image
+               of their own displayed other people's buildings. Own image first,
+               then the verified pairing, then nothing. */
+            $image = $case_page['images'][0] ?? fenster_commercial_case_image($path);
             $details = fenster_case_project_details($case_page);
             $cards[] = [
                 'page' => $case_page,
@@ -385,6 +390,47 @@ if (! function_exists('fenster_case_archive_cards')) {
     }
 }
 
+if (! function_exists('fenster_commercial_case_image')) {
+    /**
+     * Photograph for a commercial case study, keyed by its own route.
+     *
+     * These five studies carry no image in `images[]`, so the archive card
+     * builder used to hand them `$archive_images[$index]`: a photograph picked
+     * by the study's position in the links list, with nothing tying it to the
+     * job. That is why the Barn Hotel page was showing the Sunrise Care Home
+     * building. Three of the five can be paired from their own social metadata
+     * in `data/pages.json`, which is the only place the imported records name a
+     * photograph. The other two have no photograph anywhere in the export and
+     * are deliberately absent here rather than guessed at: a wrong building is
+     * worse than none on a page whose whole job is proof.
+     */
+    function fenster_commercial_case_image(string $slug): ?array
+    {
+        $base = '/wp-content/themes/fenster/assets/images/imported/';
+        $map = [
+            'case-studies/care-home-window-replacement' => [
+                '668a13f5-3500-420d-8e15-47834268084b.jpg',
+                'Sunrise Care Home after its window replacement',
+            ],
+            'case-studies/replacement-aluminium-windows-herts-and-essex-community-hospital' => [
+                'fe2513f8-d557-4972-bb3f-bc0cc6a9d5f3.jpg',
+                'Herts and Essex Community Hospital after its aluminium window replacement',
+            ],
+            'case-studies/dental-practice-door-replacement' => [
+                'ROKA-Dental-Post-Fitting-2-scaled.jpg',
+                'Roka Dental Clinic, Woburn Sands, after fitting',
+            ],
+        ];
+
+        $slug = trim($slug, '/');
+        if (! isset($map[$slug])) {
+            return null;
+        }
+
+        return ['src' => $base . $map[$slug][0], 'alt' => $map[$slug][1]];
+    }
+}
+
 if (! function_exists('fenster_case_image_for_page')) {
     function fenster_case_image_for_page(array $case_page, array $archive_cards, string $fallback): array
     {
@@ -394,6 +440,12 @@ if (! function_exists('fenster_case_image_for_page')) {
         }
 
         $case_slug = (string) ($case_page['slug'] ?? '');
+
+        $verified = fenster_commercial_case_image($case_slug);
+        if (is_array($verified)) {
+            return $verified;
+        }
+
         foreach ($archive_cards as $card) {
             if (($card['page']['slug'] ?? '') === $case_slug && is_array($card['image'])) {
                 return $card['image'];
