@@ -1594,3 +1594,15 @@ Do not use this as the primary rulebook or handover. Use:
 - QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors. Banner confirmed still present once on the generic Liniar and Sheerline routes.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-27 - Casement Opening Styles: Factual Rewrite On Fenster Photography
+
+- Owner feedback: the section explained things everyone knows and needed to be factual and image-based, sourced from the old Fenster site rather than Liniar.
+- The old-site export lives in the theme at `assets/images/imported/`, including a full Flitwick casement job. Converted four of those photographs to WebP: a friction stay on an open sash, a top rail hinge, an anthracite fixed pane and a real three-light in a stone wall.
+- Card copy replaced with checkable facts: egress hinges swinging to 90 degrees against the Building Regulations escape minimum of 0.33m² and at least 450mm each way; top-hung sashes shedding rain clear of the opening; a fixed pane costing less than an opener the same size; transoms and mullions deciding sightlines.
+- The "Works well in" truism chips became one hard fact per card (escape minimum, restrictors to around 100mm, glass area, elevation drawing).
+- Comparison table rows are now hardware facts (hinges, handle position, escape, cleaning route, rain behaviour) instead of restating what the names mean. The honest limitation stays in: top-hung is usually cleaned from outside.
+- Survey note carries the regulation detail: escape openings, safety glass below 800mm, and trickle vents required on most replacement windows since June 2022.
+- Card eyebrows kept to one line so the fact chips align; the side-hung eyebrow wrapping was pushing its chip a line lower than the rest.
+- QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors.
+- Test deployment only. No live-site deployment was performed.
+
