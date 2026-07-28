@@ -28,13 +28,20 @@ if ($card === [] || empty($card['url'])) {
 }
 
 if ($variant === 'overlay') :
-    $tags = [];
-    if (! empty($card['type'])) {
-        $tags[] = (string) $card['type'];
-    }
-    foreach (array_slice((array) ($card['products'] ?? []), 0, 1) as $product) {
-        if (! empty($product['label'])) {
-            $tags[] = (string) $product['label'];
+    /* Sector then service. "Commercial" was the first pill, which told a reader
+       of the commercial archive nothing they had not already worked out. These
+       two answer the questions a commercial buyer actually arrives with: have
+       you done my kind of building, and did you do my kind of work. They use the
+       same vocabulary as the Sectors and Services columns in the menu. */
+    $tags = array_values(array_filter([
+        (string) ($card['sector'] ?? ''),
+        (string) ($card['service'] ?? ''),
+    ]));
+    if ($tags === []) {
+        foreach (array_slice((array) ($card['products'] ?? []), 0, 1) as $product) {
+            if (! empty($product['label'])) {
+                $tags[] = (string) $product['label'];
+            }
         }
     }
     ?>

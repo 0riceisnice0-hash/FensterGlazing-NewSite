@@ -90,6 +90,8 @@ function fenster_case_studies(): array
             'title' => 'Aluminium windows, Headrow Court, Leeds',
             'location' => 'Leeds city centre',
             'type' => 'Commercial',
+            'sector' => 'Student accommodation',
+            'service' => 'Aluminium windows',
             'date' => '2025-10-01',
             'summary' => 'Aluminium windows for the conversion of four former office buildings into 108 student studios opposite Leeds Town Hall.',
             'lead' => 'Four tired office buildings in the middle of Leeds became 108 student studios. We supplied and fitted the aluminium windows across the new facade, including the projecting bays that give the building its face on The Headrow.',
@@ -147,6 +149,8 @@ function fenster_case_studies(): array
             'title' => 'Aluminium windows, The Barn Hotel, Coventry',
             'location' => 'Coventry',
             'type' => 'Commercial',
+            'sector' => 'Hospitality',
+            'service' => 'Windows and entrance doors',
             'date' => '2025-05-01',
             /* Owner is not certain of the month, so the page shows no date. */
             'date_confirmed' => false,
@@ -188,6 +192,8 @@ function fenster_case_studies(): array
             'title' => 'Windows and doors, Sunrise Care Home, Kettering',
             'location' => 'Kettering',
             'type' => 'Commercial',
+            'sector' => 'Care homes',
+            'service' => 'Windows and doors',
             'date' => '2023-07-01',
             /* Owner has it only as "before July 2023", so the page shows no date. */
             'date_confirmed' => false,
@@ -226,6 +232,8 @@ function fenster_case_studies(): array
             'title' => 'Period-style windows, The Green Man, Eversholt',
             'location' => 'Eversholt, Bedfordshire',
             'type' => 'Commercial',
+            'sector' => 'Hospitality',
+            'service' => 'Period-style windows',
             'date' => '2025-11-01',
             'summary' => 'Twelve windows in a village pub, mechanically jointed with astragal bars so they read as timber rather than plastic.',
             'lead' => 'The Green Man is a village pub and restaurant near Woburn. We replaced twelve windows across the front and rear, upper and ground floor, in a style that keeps the building looking its age.',
@@ -267,6 +275,8 @@ function fenster_case_studies(): array
             'title' => 'Entrance doors, Roka Dental, Woburn Sands',
             'location' => 'Woburn Sands',
             'type' => 'Commercial',
+            'sector' => 'Healthcare',
+            'service' => 'Entrance doors',
             'date' => '2022-10-01',
             'summary' => 'Aluminium and uPVC doors for a new dental practice, specified around the brand rather than the catalogue.',
             'lead' => 'Roka Dental were opening new premises in Woburn Sands. We supplied and fitted the external doors, chosen to match the way the practice presents itself.',
@@ -302,6 +312,8 @@ function fenster_case_studies(): array
             'title' => 'Aluminium windows, Herts and Essex Community Hospital',
             'location' => 'Bishop\'s Stortford',
             'type' => 'Commercial',
+            'sector' => 'Healthcare',
+            'service' => 'Aluminium windows and doors',
             'date' => '2023-04-01',
             'summary' => 'Colour-matched aluminium windows and doors for the Kitwood Unit, fitted in a working hospital without interrupting it.',
             'lead' => 'The Kitwood Unit is the newest part of Herts and Essex Community Hospital. We supplied and fitted the aluminium windows and doors, matched to what was already on the estate.',
@@ -776,6 +788,8 @@ function fenster_case_study_card(string $short, array $study): array
         'products' => is_array($study['products'] ?? null) ? $study['products'] : [],
         'date' => (string) ($study['date'] ?? ''),
         'date_confirmed' => ($study['date_confirmed'] ?? true) !== false,
+        'sector' => (string) ($study['sector'] ?? ''),
+        'service' => (string) ($study['service'] ?? ''),
     ];
 }
 
