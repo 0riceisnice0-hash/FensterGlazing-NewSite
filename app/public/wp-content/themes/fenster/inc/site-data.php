@@ -233,6 +233,7 @@ function fenster_site_data(): array
                         'items' => [
                             ['label' => 'Healthcare', 'url' => home_url('/healthcare-construction/')],
                             ['label' => 'Education', 'url' => home_url('/school-and-education-glazing/')],
+                            ['label' => 'Student Accommodation', 'url' => home_url('/student-accommodation-glazing/')],
                             ['label' => 'Hospitality', 'url' => home_url('/hotel-and-hospitality-glazing/')],
                             ['label' => 'Care Homes', 'url' => home_url('/care-home-glazing/')],
                             ['label' => 'Offices and Retail', 'url' => home_url('/office-and-retail-glazing/')],

@@ -92,11 +92,13 @@ function fenster_case_studies(): array
             'type' => 'Commercial',
             'sector' => 'Student accommodation',
             'service' => 'Aluminium windows',
+            'sector_url' => home_url('/student-accommodation-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
             'date' => '2025-10-01',
             'summary' => 'Aluminium windows for the conversion of four former office buildings into 108 student studios opposite Leeds Town Hall.',
             'lead' => 'Four tired office buildings in the middle of Leeds became 108 student studios. We supplied and fitted the aluminium windows across the new facade, including the projecting bays that give the building its face on The Headrow.',
             'products' => [
-                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+                ['label' => 'Student accommodation glazing', 'url' => home_url('/student-accommodation-glazing/')],
                 ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
             ],
             'specs' => [
@@ -151,6 +153,8 @@ function fenster_case_studies(): array
             'type' => 'Commercial',
             'sector' => 'Hospitality',
             'service' => 'Windows and entrance doors',
+            'sector_url' => home_url('/hotel-and-hospitality-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
             'date' => '2025-05-01',
             /* Owner is not certain of the month, so the page shows no date. */
             'date_confirmed' => false,
@@ -194,6 +198,8 @@ function fenster_case_studies(): array
             'type' => 'Commercial',
             'sector' => 'Care homes',
             'service' => 'Windows and doors',
+            'sector_url' => home_url('/care-home-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
             'date' => '2023-07-01',
             /* Owner has it only as "before July 2023", so the page shows no date. */
             'date_confirmed' => false,
@@ -234,6 +240,8 @@ function fenster_case_studies(): array
             'type' => 'Commercial',
             'sector' => 'Hospitality',
             'service' => 'Period-style windows',
+            'sector_url' => home_url('/hotel-and-hospitality-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
             'date' => '2025-11-01',
             'summary' => 'Twelve windows in a village pub, mechanically jointed with astragal bars so they read as timber rather than plastic.',
             'lead' => 'The Green Man is a village pub and restaurant near Woburn. We replaced twelve windows across the front and rear, upper and ground floor, in a style that keeps the building looking its age.',
@@ -277,6 +285,8 @@ function fenster_case_studies(): array
             'type' => 'Commercial',
             'sector' => 'Healthcare',
             'service' => 'Entrance doors',
+            'sector_url' => home_url('/healthcare-construction/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
             'date' => '2022-10-01',
             'summary' => 'Aluminium and uPVC doors for a new dental practice, specified around the brand rather than the catalogue.',
             'lead' => 'Roka Dental were opening new premises in Woburn Sands. We supplied and fitted the external doors, chosen to match the way the practice presents itself.',
@@ -314,6 +324,8 @@ function fenster_case_studies(): array
             'type' => 'Commercial',
             'sector' => 'Healthcare',
             'service' => 'Aluminium windows and doors',
+            'sector_url' => home_url('/healthcare-construction/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
             'date' => '2023-04-01',
             'summary' => 'Colour-matched aluminium windows and doors for the Kitwood Unit, fitted in a working hospital without interrupting it.',
             'lead' => 'The Kitwood Unit is the newest part of Herts and Essex Community Hospital. We supplied and fitted the aluminium windows and doors, matched to what was already on the estate.',
@@ -789,7 +801,9 @@ function fenster_case_study_card(string $short, array $study): array
         'date' => (string) ($study['date'] ?? ''),
         'date_confirmed' => ($study['date_confirmed'] ?? true) !== false,
         'sector' => (string) ($study['sector'] ?? ''),
+        'sector_url' => (string) ($study['sector_url'] ?? ''),
         'service' => (string) ($study['service'] ?? ''),
+        'service_url' => (string) ($study['service_url'] ?? ''),
     ];
 }
 

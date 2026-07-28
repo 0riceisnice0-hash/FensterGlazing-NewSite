@@ -28,42 +28,55 @@ if ($card === [] || empty($card['url'])) {
 }
 
 if ($variant === 'overlay') :
-    /* Sector then service. "Commercial" was the first pill, which told a reader
-       of the commercial archive nothing they had not already worked out. These
-       two answer the questions a commercial buyer actually arrives with: have
-       you done my kind of building, and did you do my kind of work. They use the
-       same vocabulary as the Sectors and Services columns in the menu. */
-    $tags = array_values(array_filter([
-        (string) ($card['sector'] ?? ''),
-        (string) ($card['service'] ?? ''),
-    ]));
+    /* Sector then service, both linked. "Commercial" was the first pill, which
+       told a reader of the commercial archive nothing they had not worked out.
+       These two answer what a commercial buyer arrives with, in the vocabulary
+       of the Sectors and Services columns in the menu.
+
+       The card is an <article>, not an <a>, because a link inside a link is
+       invalid and swallows the pill clicks. The title carries the real link and
+       stretches over the whole card with ::after, so the card still behaves as
+       one target while the pills stay independently clickable above it. */
+    $tags = [];
+    if (! empty($card['sector'])) {
+        $tags[] = ['label' => (string) $card['sector'], 'url' => (string) ($card['sector_url'] ?? '')];
+    }
+    if (! empty($card['service'])) {
+        $tags[] = ['label' => (string) $card['service'], 'url' => (string) ($card['service_url'] ?? '')];
+    }
     if ($tags === []) {
         foreach (array_slice((array) ($card['products'] ?? []), 0, 1) as $product) {
             if (! empty($product['label'])) {
-                $tags[] = (string) $product['label'];
+                $tags[] = ['label' => (string) $product['label'], 'url' => (string) ($product['url'] ?? '')];
             }
         }
     }
     ?>
-    <a class="fg-cs-card fg-cs-card--overlay" href="<?php echo esc_url((string) $card['url']); ?>"<?php echo $archive_index !== null ? ' data-fg-case-study-card data-fg-case-study-index="' . esc_attr((string) $archive_index) . '"' : ''; ?>>
+    <article class="fg-cs-card fg-cs-card--overlay"<?php echo $archive_index !== null ? ' data-fg-case-study-card data-fg-case-study-index="' . esc_attr((string) $archive_index) . '"' : ''; ?>>
         <?php if (is_array($card['image'] ?? null)) : ?>
             <img class="fg-cs-card__photo" src="<?php echo esc_url((string) ($card['image']['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($card['image']['caption'] ?? $card['title'] ?? '')); ?>" loading="lazy">
         <?php endif; ?>
         <span class="fg-cs-card__scrim" aria-hidden="true"></span>
         <?php if ($tags !== []) : ?>
-            <span class="fg-cs-card__pills">
+            <p class="fg-cs-card__pills">
                 <?php foreach ($tags as $tag) : ?>
-                    <span class="fg-cs-card__pill"><?php echo esc_html($tag); ?></span>
+                    <?php if ($tag['url'] !== '') : ?>
+                        <a class="fg-cs-card__pill" href="<?php echo esc_url($tag['url']); ?>"><?php echo esc_html($tag['label']); ?></a>
+                    <?php else : ?>
+                        <span class="fg-cs-card__pill"><?php echo esc_html($tag['label']); ?></span>
+                    <?php endif; ?>
                 <?php endforeach; ?>
-            </span>
+            </p>
         <?php endif; ?>
-        <span class="fg-cs-card__overlay">
-            <<?php echo $heading; ?> class="fg-cs-card__overlay-title"><?php echo esc_html((string) ($card['title'] ?? '')); ?></<?php echo $heading; ?>>
+        <div class="fg-cs-card__overlay">
+            <<?php echo $heading; ?> class="fg-cs-card__overlay-title">
+                <a class="fg-cs-card__stretch" href="<?php echo esc_url((string) $card['url']); ?>"><?php echo esc_html((string) ($card['title'] ?? '')); ?></a>
+            </<?php echo $heading; ?>>
             <?php if (! empty($card['location'])) : ?>
                 <span class="fg-cs-card__overlay-location"><?php echo esc_html((string) $card['location']); ?></span>
             <?php endif; ?>
-        </span>
-    </a>
+        </div>
+    </article>
     <?php
     return;
 endif;

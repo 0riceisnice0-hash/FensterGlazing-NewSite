@@ -188,6 +188,7 @@ $commercial_route_slugs = [
     'healthcare-construction',
     'automatic-opening-vents',
     'school-and-education-glazing',
+    'student-accommodation-glazing',
     'hotel-and-hospitality-glazing',
     'care-home-glazing',
     'office-and-retail-glazing',

@@ -904,6 +904,10 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ],
         /* Virtual route: AOV has no imported record, so this override is what
            creates the page. Its content comes from inc/commercial-product-data.php. */
+        'student-accommodation-glazing' => [
+            'title_tag' => 'Student Accommodation Glazing | PBSA Windows',
+            'meta_description' => 'Windows and facade glazing for purpose built student accommodation, worked to a September handover that cannot move. Headrow Court, Leeds: 108 studios.',
+        ],
         'school-and-education-glazing' => [
             'title_tag' => 'School & Education Glazing | Windows and Doors',
             'meta_description' => 'Window, door and curtain walling replacement for schools, academies and colleges, planned around term dates and phased so the school keeps running.',
@@ -1946,7 +1950,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing'], $case_study_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
