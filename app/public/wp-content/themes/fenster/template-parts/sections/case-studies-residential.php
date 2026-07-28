@@ -112,7 +112,14 @@ $title = (string) ($study['title'] ?? 'Case study');
 $location = (string) ($study['location'] ?? '');
 $type = (string) ($study['type'] ?? 'Residential');
 $date_iso = (string) ($study['date'] ?? '');
-$date_display = $date_iso !== '' ? date_i18n('j F Y', (int) strtotime($date_iso)) : '';
+/* Commercial work is dated to the month and labelled "Completed": a contractor
+   thinks in handover months, and we do not hold a reliable install date for the
+   migrated projects, so printing an exact day would be inventing one. Domestic
+   jobs keep the full date, which is real and useful to a homeowner. */
+$date_display = $date_iso !== ''
+    ? date_i18n($is_commercial ? 'F Y' : 'j F Y', (int) strtotime($date_iso))
+    : '';
+$date_label = $is_commercial ? __('Completed', 'fenster') : __('Installed', 'fenster');
 $lead = (string) ($study['lead'] ?? ($study['summary'] ?? ''));
 $overview = is_array($study['overview'] ?? null) ? $study['overview'] : [];
 $specs = is_array($study['specs'] ?? null) ? $study['specs'] : [];
@@ -165,7 +172,7 @@ ob_start();
 <h1><?php echo esc_html($title); ?></h1>
 <p class="fg-cs-hero__lead"><?php echo esc_html($lead); ?></p>
 <?php if ($date_display !== '') : ?>
-    <p class="fg-cs-hero__date"><?php esc_html_e('Installed', 'fenster'); ?> <time datetime="<?php echo esc_attr($date_iso); ?>"><?php echo esc_html($date_display); ?></time></p>
+    <p class="fg-cs-hero__date"><?php echo esc_html($date_label); ?> <time datetime="<?php echo esc_attr($is_commercial ? substr($date_iso, 0, 7) : $date_iso); ?>"><?php echo esc_html($date_display); ?></time></p>
 <?php endif; ?>
 <div class="fg-cs-hero__actions">
     <a class="button" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>

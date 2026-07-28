@@ -134,6 +134,13 @@ function fenster_case_studies(): array
          * dementia setting at Sunrise, the R9 and C70 counts at the Green Man,
          * the colour match on the Kitwood Unit. The old records are left in
          * place; their routes now 301 to /commercial-projects/.
+         *
+         * The `date` on these five is a sort key, not a verified completion
+         * date: the imported records carried none. Only Headrow Court is
+         * confirmed (October 2025, from the main contractor's announcement).
+         * That is why commercial studies print the month and year and are
+         * labelled "Completed" rather than showing an exact day we do not know.
+         * Correct the months when the office confirms them.
          */
         'barn-hotel-coventry' => [
             'title' => 'Aluminium windows, The Barn Hotel, Coventry',

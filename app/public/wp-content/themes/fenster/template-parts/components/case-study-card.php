@@ -71,7 +71,7 @@ endif;
         <span class="fg-cs-card__meta">
             <?php echo esc_html(trim((string) ($card['type'] ?? '') . ' • ' . (string) ($card['location'] ?? ''), ' •')); ?>
             <?php if (! empty($card['date'])) : ?>
-                <span class="fg-cs-card__date"><?php echo esc_html(date_i18n('j M Y', (int) strtotime((string) $card['date']))); ?></span>
+                <span class="fg-cs-card__date"><?php echo esc_html(date_i18n(strtolower((string) ($card['type'] ?? '')) === 'commercial' ? 'M Y' : 'j M Y', (int) strtotime((string) $card['date']))); ?></span>
             <?php endif; ?>
         </span>
         <<?php echo $heading; ?> class="fg-cs-card__title"><?php echo esc_html((string) ($card['title'] ?? '')); ?></<?php echo $heading; ?>>
