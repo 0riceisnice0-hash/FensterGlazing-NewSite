@@ -223,6 +223,12 @@ function fenster_render_mobile_nav_fallback(array $items): void
         if (in_array('site-nav__quote', $item['classes'] ?? [], true)) {
             $link_classes[] = 'site-mobile-nav__row--quote';
         }
+        /* The consultation CTA had no mobile modifier, so it dropped to a plain
+           row while the quote button stayed green. The two are a pair in the
+           header and should read as one on a phone too. */
+        if (in_array('site-nav__consultation', $item['classes'] ?? [], true)) {
+            $link_classes[] = 'site-mobile-nav__row--consultation';
+        }
 
         printf(
             '<a class="%s" href="%s"><span>%s</span></a>',

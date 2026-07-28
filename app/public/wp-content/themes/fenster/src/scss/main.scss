@@ -20917,6 +20917,19 @@ a.fg-cs-card__pill:focus-visible {
     color: #ffffff;
   }
 
+  /* Matches .site-nav__consultation on desktop: the dark steel half of the
+     green-then-dark pair the header uses. */
+  .site-mobile-nav > .site-mobile-nav__row--consultation {
+    border-color: var(--color-steel);
+    background: var(--color-steel);
+    color: #ffffff;
+  }
+
+  .site-mobile-nav > .site-mobile-nav__row--consultation::after {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+  }
+
   .site-nav__quote > a {
     width: auto;
     margin: 0.35rem 0 0;
