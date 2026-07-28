@@ -887,11 +887,16 @@ a {
 }
 
 .fg-consultation-page__hero h1 {
-  max-width: 12ch;
+  /* 12ch strangled this into four ragged lines with "door" orphaned on its own,
+     and left the heading far narrower than the 39rem paragraph beneath it, so the
+     two read as different columns. Sized to sit with the paragraph instead, and
+     balanced so the remaining lines come out even rather than stepped. */
+  max-width: 20ch;
   margin: 0.3rem 0 1rem;
   color: var(--color-steel);
   font-size: clamp(2.1rem, 3.6vw, 3.6rem);
-  line-height: 1.02;
+  line-height: 1.05;
+  text-wrap: balance;
 }
 
 .fg-consultation-page__hero-copy > p:not(.eyebrow) {
@@ -1156,7 +1161,7 @@ a {
   }
 
   .fg-consultation-page__hero h1 {
-    max-width: 15ch;
+    max-width: 18ch;
   }
 
 }
