@@ -906,7 +906,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
            creates the page. Its content comes from inc/commercial-product-data.php. */
         'student-accommodation-glazing' => [
             'title_tag' => 'Student Accommodation Glazing | PBSA Windows',
-            'meta_description' => 'Windows and facade glazing for purpose built student accommodation, worked to a September handover that cannot move. Headrow Court, Leeds: 108 studios.',
+            'meta_description' => 'Windows, bays and facade glazing for purpose built student accommodation and office to PBSA conversions, worked to a September handover that cannot move.',
         ],
         'school-and-education-glazing' => [
             'title_tag' => 'School & Education Glazing | Windows and Doors',
