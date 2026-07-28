@@ -400,14 +400,24 @@ if (! function_exists('fenster_commercial_case_image')) {
      * job. That is why the Barn Hotel page was showing the Sunrise Care Home
      * building. Three of the five can be paired from their own social metadata
      * in `data/pages.json`, which is the only place the imported records name a
-     * photograph. The other two have no photograph anywhere in the export and
-     * are deliberately absent here rather than guessed at: a wrong building is
-     * worse than none on a page whose whole job is proof.
+     * photograph. The Green Man was identified by the owner on 2026-07-28 from
+     * the loose archive pool.
+     *
+     * The Barn Hotel, Coventry is deliberately absent and falls through to the
+     * neutral commercial image: no photograph of it exists anywhere in the
+     * export. The other loose archive photograph, `5-1.png`, is Water End Barn,
+     * Woburn, whose case study is retired and returns 410, so it must not be
+     * borrowed for the hotel. A wrong building is worse than none on a page
+     * whose whole job is proof.
      */
     function fenster_commercial_case_image(string $slug): ?array
     {
         $base = '/wp-content/themes/fenster/assets/images/imported/';
         $map = [
+            'case-studies/pub-windows-eversholt' => [
+                '3-1-3.png',
+                'The Green Man, Eversholt, after its window replacement',
+            ],
             'case-studies/care-home-window-replacement' => [
                 '668a13f5-3500-420d-8e15-47834268084b.jpg',
                 'Sunrise Care Home after its window replacement',
