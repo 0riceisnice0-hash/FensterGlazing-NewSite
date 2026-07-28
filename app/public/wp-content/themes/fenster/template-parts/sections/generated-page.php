@@ -146,7 +146,13 @@ $is_aluminium_windows = $slug === 'aluminium-windows';
 $is_integral_blinds = $slug === 'integral-blinds';
 $is_composite_doors = $slug === 'composite-doors';
 $is_home = $slug === 'home';
-$is_case_study = in_array($slug, ['case-studies', 'commercial-projects'], true) || str_starts_with($slug, 'case-studies/');
+/* Both archives and both detail prefixes. Without the commercial-projects/
+   prefix a migrated study fell through to the generic generated-page template,
+   which rendered one image and no gallery because it knows nothing about the
+   curated data. */
+$is_case_study = in_array($slug, ['case-studies', 'commercial-projects'], true)
+    || str_starts_with($slug, 'case-studies/')
+    || str_starts_with($slug, 'commercial-projects/');
 $is_team = $slug === 'meet-the-team';
 $is_obscure_glass = $slug === 'obscured-glass';
 $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'aluminium-colours'], true);
