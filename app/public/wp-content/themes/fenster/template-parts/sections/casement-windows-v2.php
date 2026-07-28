@@ -88,10 +88,30 @@ $style_table = [
     ['label' => 'Rain with the sash ajar', 'values' => ['Comes in', 'Sheds clear of the opening', 'Not applicable', 'Depends on the sash']],
 ];
 
-$frame_points = [
-    ['title' => 'Six chambers', 'copy' => 'Each one interrupts the route heat takes through the uPVC. On our listed specification that comes out at 0.95 W/m²K, A+ rated.'],
-    ['title' => 'A seal that cannot fall out', 'copy' => 'The weather gasket is co-extruded, formed as part of the profile rather than pushed into a groove. It cannot shrink back at a corner.'],
-    ['title' => 'The figure follows the window', 'copy' => 'Liniar publish 0.8 W/m²K for a suitable build-up. Size, layout and glass all move it, so the number we agree is yours, not the brochure\'s.'],
+$anatomy_items = [
+    ['name' => 'Six chambers', 'copy' => 'Six sealed air pockets run the length of every frame section. Each one interrupts the route heat takes through the uPVC; on our listed specification the whole window comes out at 0.95 W/m²K, A+ rated.'],
+    ['name' => 'Co-extruded gasket', 'copy' => 'The weather seal is formed with the profile as it is extruded, not pushed into a groove afterwards. It cannot shrink back or fall out at a corner, which is where pushed-in gaskets fail.'],
+    ['name' => 'Reinforcement', 'copy' => 'Sized for each window, so a large dark sash on an exposed elevation is stiffened differently from a small white one in a sheltered wall.'],
+    ['name' => 'The sealed unit', 'copy' => 'Panes, coatings, argon fill and a warm-edge spacer decide most of the whole-window figure. Liniar publish 0.8 W/m²K for a suitable build-up; the number we agree follows your glass, not the brochure.'],
+    ['name' => 'Installation', 'copy' => 'Fixing, sealing and finishing are what connect a tested window to your actual wall. Our own installers do it, which is why the guarantee below is ours to give.'],
+];
+
+// Pilkington rate every obscure pattern for privacy, one to five.
+$glass_patterns = [
+    ['name' => 'Minster', 'privacy' => 2, 'file' => 'Minster-privacy-2.webp'],
+    ['name' => 'Reeded', 'privacy' => 2, 'file' => 'Reeded-privacy-2.webp'],
+    ['name' => 'Taffeta', 'privacy' => 3, 'file' => 'Taffeta-privacy-3.webp'],
+    ['name' => 'Contora', 'privacy' => 4, 'file' => 'Contora-privacy-4.webp'],
+    ['name' => 'Oak', 'privacy' => 4, 'file' => 'Oak-privacy-4.webp'],
+    ['name' => 'Cotswold', 'privacy' => 5, 'file' => 'Cotswold-privacy-5.webp'],
+];
+
+$handle_finishes = [
+    ['name' => 'White', 'file' => 's2-white-finish.png'],
+    ['name' => 'Black', 'file' => 's2-black-finish.png'],
+    ['name' => 'Chrome', 'file' => 's2-chrome-finish.png'],
+    ['name' => 'Gold', 'file' => 's2-gold-finish.png'],
+    ['name' => 'Titanium', 'file' => 's2-titanium-finish.png'],
 ];
 
 $spec_points = [
@@ -102,24 +122,24 @@ $spec_points = [
 ];
 
 $swatches = [
-    ['name' => 'White', 'file' => 'colours_page_image-White-weiss.webp'],
-    ['name' => 'Cream', 'file' => 'colours_page_image-Cream-Cremeweiss.webp'],
-    ['name' => 'Chartwell Green', 'file' => 'colours_page_image-Chartwell-green.webp'],
-    ['name' => 'Agate Grey', 'file' => 'colours_page_image-Agate-grey-7038.webp'],
-    ['name' => 'Anthracite Grey', 'file' => 'colours_page_image-7016-SM-Grey.webp'],
-    ['name' => 'Slate Grey', 'file' => 'colours_page_image-Slate-grey-7015-grey.webp'],
-    ['name' => 'Golden Oak', 'file' => 'colours_page_image-Golden-Oak.webp'],
-    ['name' => 'Rosewood', 'file' => 'colours_page_image-Rosewood.webp'],
+    ['name' => 'White', 'code' => 'RAL 9010', 'file' => 'colours_page_image-White-weiss.webp'],
+    ['name' => 'Cream', 'code' => 'RAL 9001', 'file' => 'colours_page_image-Cream-Cremeweiss.webp'],
+    ['name' => 'Chartwell Green', 'code' => '', 'file' => 'colours_page_image-Chartwell-green.webp'],
+    ['name' => 'Agate Grey', 'code' => 'RAL 7038', 'file' => 'colours_page_image-Agate-grey-7038.webp'],
+    ['name' => 'Anthracite Grey', 'code' => 'RAL 7016', 'file' => 'colours_page_image-7016-SM-Grey.webp'],
+    ['name' => 'Slate Grey', 'code' => 'RAL 7015', 'file' => 'colours_page_image-Slate-grey-7015-grey.webp'],
+    ['name' => 'Golden Oak', 'code' => 'RAL 8001', 'file' => 'colours_page_image-Golden-Oak.webp'],
+    ['name' => 'Rosewood', 'code' => '', 'file' => 'colours_page_image-Rosewood.webp'],
 ];
 
 // Mosaic order matters: the first image takes the large portrait cell, so it
 // needs a focal point or a landscape source loses its subject to the crop.
 $gallery = [
-    ['file' => 'casement-cottage-arch', 'width' => 1200, 'focus' => '76% 50%', 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
+    ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'alt' => 'Anthracite Liniar casement windows stacked on a corner elevation in Bolbeck Park, fitted by Fenster'],
     ['file' => 'casement-stone-elevation', 'width' => 1200, 'focus' => '50% 45%', 'caption' => 'White casements across a full elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
     ['file' => 'casement-brick-bay', 'width' => 1400, 'focus' => '40% 50%', 'caption' => 'Casements in a bay', 'alt' => 'White uPVC casement windows with glazing bars set into a brick bay'],
-    ['file' => 'casement-new-build', 'width' => 1200, 'focus' => '50% 50%', 'caption' => 'Three lights on new cladding', 'alt' => 'Grey uPVC casement window with three lights and glazing bars on a clad new build'],
-    ['file' => 'casement-apartment-block', 'width' => 1200, 'focus' => '50% 50%', 'caption' => 'Repeated openings on an apartment block', 'alt' => 'Dark uPVC casement windows repeated across an apartment block elevation'],
+    ['file' => 'casement-leighton-buzzard', 'width' => 1400, 'focus' => '50% 55%', 'caption' => 'Leighton Buzzard', 'alt' => 'White Liniar casement windows fitted by Fenster across a Leighton Buzzard terrace'],
+    ['file' => 'casement-cottage-arch', 'width' => 1200, 'focus' => '76% 50%', 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
     ['file' => 'casement-open-interior', 'width' => 1400, 'focus' => '35% 50%', 'caption' => 'A sash open from inside', 'alt' => 'White uPVC casement sash opened outwards, seen from inside the room'],
 ];
 
@@ -261,7 +281,7 @@ $faq_schema = [
                     <h2 id="fg-cw-gallery-title"><?php esc_html_e('Liniar casements on real houses.', 'fenster'); ?></h2>
                 </div>
                 <p>
-                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Stone cottages, brick bays, full elevations and new build. Click any image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Bolbeck Park and Leighton Buzzard are our own installs; the rest are Liniar photography of the same system. Click any image for a closer look.', 'fenster'); ?></span>
                     <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished installations. Tap any image for a closer look.', 'fenster'); ?></span>
                 </p>
             </div>
@@ -327,43 +347,61 @@ $faq_schema = [
     get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows'));
     ?>
 
-    <section class="fg-cw-frame" aria-labelledby="fg-cw-frame-title">
-        <div class="container fg-cw-split fg-cw-split--media-first">
-            <div class="fg-cw-tiles">
-                <figure class="fg-cw-tiles__wide">
+    <section class="fg-cw-anatomy" aria-labelledby="fg-cw-anatomy-title">
+        <div class="container">
+            <div class="fg-cw-head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Inside the frame', 'fenster'); ?></p>
+                    <h2 id="fg-cw-anatomy-title"><?php esc_html_e('What is inside an EnergyPlus frame.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('The cutaway is the actual profile. Open a part to see the job it does.', 'fenster'); ?></p>
+            </div>
+
+            <div class="fg-cw-anatomy__explorer" data-fg-anatomy>
+                <figure class="fg-cw-anatomy__media">
                     <img
                         src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-energyplus-thermal-600w.webp')); ?>"
                         alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus profile with a thermal overlay', 'fenster'); ?>"
-                        loading="lazy"
-                        width="600"
-                        height="400"
-                    >
-                    <figcaption><?php esc_html_e('Six-chamber profile', 'fenster'); ?></figcaption>
+                        loading="lazy" width="600" height="400">
                 </figure>
-                <figure class="fg-cw-tiles__narrow">
-                    <img
-                        src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-open-detail-1600w.webp')); ?>"
-                        alt="<?php esc_attr_e('Casement window opened on its hinges with the handle and gearing visible', 'fenster'); ?>"
-                        loading="lazy"
-                        width="1600"
-                        height="1068"
-                    >
-                    <figcaption><?php esc_html_e('Sash and seal', 'fenster'); ?></figcaption>
-                </figure>
-            </div>
-            <div class="fg-cw-copy">
-                <p class="eyebrow"><?php esc_html_e('Inside the frame', 'fenster'); ?></p>
-                <h2 id="fg-cw-frame-title"><?php esc_html_e('Where the warmth actually comes from.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Three things do the work, and only one of them is the profile.', 'fenster'); ?></p>
-                <dl class="fg-cw-list">
-                    <?php foreach ($frame_points as $point) : ?>
-                        <div>
-                            <dt><?php echo esc_html($point['title']); ?></dt>
-                            <dd><?php echo esc_html($point['copy']); ?></dd>
-                        </div>
+                <ol class="fg-cw-anatomy__items">
+                    <?php foreach ($anatomy_items as $item_index => $item) : ?>
+                        <?php $item_id = 'fg-cw-anatomy-' . $item_index; ?>
+                        <li class="fg-cw-anatomy__item">
+                            <h3>
+                                <button
+                                    type="button"
+                                    class="fg-cw-anatomy__toggle"
+                                    data-fg-anatomy-toggle
+                                    aria-expanded="<?php echo $item_index === 0 ? 'true' : 'false'; ?>"
+                                    aria-controls="<?php echo esc_attr($item_id); ?>">
+                                    <span class="fg-cw-anatomy__num" aria-hidden="true"><?php echo esc_html(sprintf('%02d', $item_index + 1)); ?></span>
+                                    <span class="fg-cw-anatomy__name"><?php echo esc_html($item['name']); ?></span>
+                                    <span class="fg-cw-anatomy__mark" aria-hidden="true"></span>
+                                </button>
+                            </h3>
+                            <div class="fg-cw-anatomy__body" id="<?php echo esc_attr($item_id); ?>" <?php echo $item_index === 0 ? '' : 'hidden'; ?>>
+                                <p><?php echo esc_html($item['copy']); ?></p>
+                            </div>
+                        </li>
                     <?php endforeach; ?>
-                </dl>
+                </ol>
             </div>
+
+            <dl class="fg-cw-anatomy__stats">
+                <div class="fg-cw-placeholder">
+                    <dt>&pound;&mdash;&mdash;</dt>
+                    <dd><?php esc_html_e('what a recent casement job came to. Awaiting a real figure from Fenster.', 'fenster'); ?></dd>
+                </div>
+                <div>
+                    <dt><?php esc_html_e('10 years', 'fenster'); ?></dt>
+                    <dd><?php esc_html_e('insurance-backed installation guarantee', 'fenster'); ?></dd>
+                </div>
+                <div>
+                    <dt><?php esc_html_e('PAS 24', 'fenster'); ?></dt>
+                    <dd><?php esc_html_e('tested security specification where you want it', 'fenster'); ?></dd>
+                </div>
+            </dl>
         </div>
     </section>
 
@@ -381,10 +419,6 @@ $faq_schema = [
                         </div>
                     <?php endforeach; ?>
                 </dl>
-                <p class="fg-cw-links">
-                    <a class="fg-cw-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
-                    <a class="fg-cw-link" href="<?php echo esc_url(home_url('/window-handles/')); ?>"><?php esc_html_e('Handle finishes', 'fenster'); ?></a>
-                </p>
             </div>
             <figure class="fg-cw-media fg-cw-media--tall">
                 <img
@@ -396,6 +430,55 @@ $faq_schema = [
                 >
                 <figcaption><?php esc_html_e('Our own installers', 'fenster'); ?></figcaption>
             </figure>
+        </div>
+    </section>
+
+    <section class="fg-cw-choices" aria-labelledby="fg-cw-choices-title">
+        <div class="container">
+            <div class="fg-cw-head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Glass and handles', 'fenster'); ?></p>
+                    <h2 id="fg-cw-choices-title"><?php esc_html_e('Privacy is rated one to five.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('Pilkington rate every obscure pattern for privacy. The higher the number, the less anyone can see through it: a hallway can take a 2, a bathroom usually wants a 4 or 5.', 'fenster'); ?></p>
+            </div>
+
+            <ul class="fg-cw-patterns">
+                <?php foreach ($glass_patterns as $pattern) : ?>
+                    <li>
+                        <img
+                            src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/obscure-glass/' . $pattern['file'])); ?>"
+                            alt="<?php echo esc_attr(sprintf(__('%s obscure glass pattern', 'fenster'), $pattern['name'])); ?>"
+                            loading="lazy"
+                        >
+                        <span><strong><?php echo esc_html($pattern['name']); ?></strong> <?php echo esc_html(sprintf(__('Privacy %d of 5', 'fenster'), (int) $pattern['privacy'])); ?></span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+
+            <div class="fg-cw-hardware-row">
+                <div class="fg-cw-hardware-row__copy">
+                    <h3><?php esc_html_e('One handle, five finishes.', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('The S2 Signature handle, finished to match or contrast the frame. Locking and restrictors are specified with it.', 'fenster'); ?></p>
+                </div>
+                <ul class="fg-cw-handles">
+                    <?php foreach ($handle_finishes as $finish) : ?>
+                        <li>
+                            <img
+                                src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/handles/' . $finish['file'])); ?>"
+                                alt="<?php echo esc_attr(sprintf(__('S2 Signature window handle in %s', 'fenster'), strtolower($finish['name']))); ?>"
+                                loading="lazy"
+                            >
+                            <span><?php echo esc_html($finish['name']); ?></span>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+            <p class="fg-cw-choices__links">
+                <a class="fg-cw-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('See all glass patterns', 'fenster'); ?></a>
+                <a class="fg-cw-link" href="<?php echo esc_url(home_url('/window-handles/')); ?>"><?php esc_html_e('See all handle options', 'fenster'); ?></a>
+            </p>
         </div>
     </section>
 
@@ -419,15 +502,32 @@ $faq_schema = [
                             aria-hidden="true"
                         >
                         <span><?php echo esc_html($swatch['name']); ?></span>
+                        <?php if ($swatch['code'] !== '') : ?>
+                            <small><?php echo esc_html($swatch['code']); ?></small>
+                        <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
 
-            <p class="fg-cw-foot">
-                <?php esc_html_e('None of these look the same on a screen as they do on a sample, so ask us to bring the ones you are considering.', 'fenster'); ?>
-                <?php // /upvc-colours/ is 301'd to /colour-options/ in fenster_redirect_target(); link straight there. ?>
-                <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all uPVC colours', 'fenster'); ?></a>
-            </p>
+<div class="fg-cw-duo">
+                <figure>
+                    <img
+                        src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-broughton-two-tone-900w.webp')); ?>"
+                        alt="<?php esc_attr_e('Two-tone Liniar casement dormer window in basalt grey, fitted by Fenster in Broughton', 'fenster'); ?>"
+                        loading="lazy" width="900" height="1200">
+                    <figcaption><?php esc_html_e('Broughton, Milton Keynes', 'fenster'); ?></figcaption>
+                </figure>
+                <div class="fg-cw-duo__copy">
+                    <h3><?php esc_html_e('A different colour each side.', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('This Broughton dormer is basalt grey (RAL 7012) outside and white inside: the dark frame the street sees, without a dark room behind it.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('None of the foils look the same on a screen as they do on a sample, so ask us to bring the ones you are considering.', 'fenster'); ?></p>
+                    <p class="fg-cw-placeholder-line"><?php esc_html_e('Awaiting from Fenster: the two or three foils most casement orders actually come in.', 'fenster'); ?></p>
+                    <span class="fg-cw-duo__links">
+                        <a class="fg-cw-link" href="<?php echo esc_url(home_url('/case-studies/upvc-casement-windows-broughton-milton-keynes/')); ?>"><?php esc_html_e('See the Broughton job', 'fenster'); ?></a>
+                        <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all uPVC colours', 'fenster'); ?></a>
+                    </span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -504,6 +604,33 @@ $faq_schema = [
             </div>
         </div>
     </section>
+
+    <?php if (function_exists('fenster_case_studies_for_product')) : ?>
+        <?php $cw_case_cards = fenster_case_studies_for_product('casement-windows', 3); ?>
+        <?php if ($cw_case_cards !== []) : ?>
+            <section class="fg-cs-strip">
+                <div class="container">
+                    <div class="fg-cs-strip__head">
+                        <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('Three casement jobs, photographed on the day.', 'fenster'); ?></h2>
+                    </div>
+                    <div class="fg-cs-strip__grid">
+                        <?php foreach ($cw_case_cards as $cw_case_card) : ?>
+                            <?php
+                            get_template_part('template-parts/components/case-study-card', null, [
+                                'card' => $cw_case_card,
+                                'heading' => 'h3',
+                            ]);
+                            ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="button-row fg-cs-strip__cta">
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('See all case studies', 'fenster'); ?></a>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+    <?php endif; ?>
 
     <section id="fenster-enquiry" class="fg-enquiry">
         <div class="container fg-enquiry__grid">
