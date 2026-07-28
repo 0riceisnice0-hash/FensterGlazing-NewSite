@@ -28,7 +28,7 @@ $opening_styles = [
     [
         'id' => 'side-hung',
         'name' => 'Side-hung',
-        'label' => 'Friction stays and egress hinges',
+        'label' => 'Egress hinge option',
         'image' => 'casement-friction-stay-1200w.webp',
         'width' => 1200,
         'height' => 823,
@@ -41,7 +41,7 @@ $opening_styles = [
     [
         'id' => 'top-hung',
         'name' => 'Top-hung',
-        'label' => 'Hinged from the top rail',
+        'label' => 'Top rail hinges',
         'image' => 'casement-top-hinge-1200w.webp',
         'width' => 1200,
         'height' => 823,
