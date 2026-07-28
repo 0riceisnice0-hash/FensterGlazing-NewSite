@@ -20,7 +20,6 @@ $quote_url = (string) ($args['quote_url'] ?? '');
 $quote_label = (string) ($args['quote_label'] ?? 'uPVC Windows');
 $phone = (string) ($brand['phone'] ?? '01908 429200');
 $asset_base = '/wp-content/themes/fenster/assets/images/products/casement/';
-$swatch_base = '/wp-content/themes/fenster/assets/images/products/colours/liniar-swatches/';
 
 // The page hero already uses casement-stone-cottage-1600w.webp. Every image
 // below is used exactly once.
@@ -119,17 +118,6 @@ $spec_points = [
     ['title' => 'Locking', 'copy' => 'Multi-point locking, reinforcement sized for the window, and PAS 24 or Secured by Design where you want it. Those approvals belong to a tested window, not to a profile name.'],
     ['title' => 'Handles', 'copy' => 'S2 Signature handles, finished to match the frame, with restrictors where they are sensible.'],
     ['title' => 'Ventilation', 'copy' => 'Trickle vents and background ventilation are set at survey, alongside handle reach and how far the sash swings outside.'],
-];
-
-$swatches = [
-    ['name' => 'White', 'code' => 'RAL 9010', 'file' => 'colours_page_image-White-weiss.webp'],
-    ['name' => 'Cream', 'code' => 'RAL 9001', 'file' => 'colours_page_image-Cream-Cremeweiss.webp'],
-    ['name' => 'Chartwell Green', 'code' => '', 'file' => 'colours_page_image-Chartwell-green.webp'],
-    ['name' => 'Agate Grey', 'code' => 'RAL 7038', 'file' => 'colours_page_image-Agate-grey-7038.webp'],
-    ['name' => 'Anthracite Grey', 'code' => 'RAL 7016', 'file' => 'colours_page_image-7016-SM-Grey.webp'],
-    ['name' => 'Slate Grey', 'code' => 'RAL 7015', 'file' => 'colours_page_image-Slate-grey-7015-grey.webp'],
-    ['name' => 'Golden Oak', 'code' => 'RAL 8001', 'file' => 'colours_page_image-Golden-Oak.webp'],
-    ['name' => 'Rosewood', 'code' => '', 'file' => 'colours_page_image-Rosewood.webp'],
 ];
 
 // Mosaic order matters: the first image takes the large portrait cell, so it
@@ -389,10 +377,6 @@ $faq_schema = [
             </div>
 
             <dl class="fg-cw-anatomy__stats">
-                <div class="fg-cw-placeholder">
-                    <dt>&pound;&mdash;&mdash;</dt>
-                    <dd><?php esc_html_e('what a recent casement job came to. Awaiting a real figure from Fenster.', 'fenster'); ?></dd>
-                </div>
                 <div>
                     <dt><?php esc_html_e('10 years', 'fenster'); ?></dt>
                     <dd><?php esc_html_e('insurance-backed installation guarantee', 'fenster'); ?></dd>
@@ -478,56 +462,8 @@ $faq_schema = [
             <p class="fg-cw-choices__links">
                 <a class="fg-cw-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('See all glass patterns', 'fenster'); ?></a>
                 <a class="fg-cw-link" href="<?php echo esc_url(home_url('/window-handles/')); ?>"><?php esc_html_e('See all handle options', 'fenster'); ?></a>
+                <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all sixteen colours', 'fenster'); ?></a>
             </p>
-        </div>
-    </section>
-
-    <section class="fg-cw-finish" aria-labelledby="fg-cw-finish-title">
-        <div class="container">
-            <div class="fg-cw-head">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
-                    <h2 id="fg-cw-finish-title"><?php esc_html_e('Sixteen colours, and eight of them here.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('A uPVC colour is a foil bonded to the profile at the factory, so it has a grain you can feel and never needs repainting. You can have a different colour inside and out.', 'fenster'); ?></p>
-            </div>
-
-            <ul class="fg-cw-swatches">
-                <?php foreach ($swatches as $swatch) : ?>
-                    <li>
-                        <img
-                            src="<?php echo esc_url(fenster_generated_url($swatch_base . $swatch['file'])); ?>"
-                            alt=""
-                            loading="lazy"
-                            aria-hidden="true"
-                        >
-                        <span><?php echo esc_html($swatch['name']); ?></span>
-                        <?php if ($swatch['code'] !== '') : ?>
-                            <small><?php echo esc_html($swatch['code']); ?></small>
-                        <?php endif; ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-<div class="fg-cw-duo">
-                <figure>
-                    <img
-                        src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-broughton-two-tone-900w.webp')); ?>"
-                        alt="<?php esc_attr_e('Two-tone Liniar casement dormer window in basalt grey, fitted by Fenster in Broughton', 'fenster'); ?>"
-                        loading="lazy" width="900" height="1200">
-                    <figcaption><?php esc_html_e('Broughton, Milton Keynes', 'fenster'); ?></figcaption>
-                </figure>
-                <div class="fg-cw-duo__copy">
-                    <h3><?php esc_html_e('A different colour each side.', 'fenster'); ?></h3>
-                    <p><?php esc_html_e('This Broughton dormer is basalt grey (RAL 7012) outside and white inside: the dark frame the street sees, without a dark room behind it.', 'fenster'); ?></p>
-                    <p><?php esc_html_e('None of the foils look the same on a screen as they do on a sample, so ask us to bring the ones you are considering.', 'fenster'); ?></p>
-                    <p class="fg-cw-placeholder-line"><?php esc_html_e('Awaiting from Fenster: the two or three foils most casement orders actually come in.', 'fenster'); ?></p>
-                    <span class="fg-cw-duo__links">
-                        <a class="fg-cw-link" href="<?php echo esc_url(home_url('/case-studies/upvc-casement-windows-broughton-milton-keynes/')); ?>"><?php esc_html_e('See the Broughton job', 'fenster'); ?></a>
-                        <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all uPVC colours', 'fenster'); ?></a>
-                    </span>
-                </div>
-            </div>
         </div>
     </section>
 
