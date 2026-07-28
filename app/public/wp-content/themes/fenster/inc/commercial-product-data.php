@@ -249,17 +249,18 @@ function fenster_commercial_product_pages(): array
             'subtitle' => 'Windows and facade glazing for purpose built student accommodation, worked to a handover date that cannot move.',
             'intro_heading' => 'The students arrive in September whether the building is ready or not.',
             'hero_image' => '/wp-content/themes/fenster/assets/images/case-studies/cs-headrow-court-oriels.webp',
-            'hero_alt' => 'Projecting bay windows on a student accommodation building in Leeds city centre',
+            'hero_alt' => 'Projecting bay windows on a city centre student accommodation building',
             'intro_image' => '/wp-content/themes/fenster/assets/images/case-studies/cs-headrow-court-gables.webp',
-            'intro_alt' => 'Gabled upper floors of a converted student accommodation building',
+            'intro_alt' => 'Upper floors of a converted student accommodation building',
             'summary' => [
                 'Every other sector can slip a fortnight. Student accommodation cannot. The academic year fixes the handover date before the drawings are finished, and a scheme that misses it is not late, it is empty for a year.',
-                'We fitted the aluminium windows at Headrow Court in Leeds, a £12.5m conversion of four former office buildings into 108 studios, completed in October 2025. That is the shape most of this work takes: an existing commercial building with a new facade in front of it.',
+                'Most of this work is conversion: a commercial building given a new facade and a new use, or an operator upgrading a block in the weeks between academic years. Either way the glazing is one detail repeated across every room, on a building whose openings were never meant to match.',
+                'We supply and install the windows, the bays and the facade glazing that goes with them, working to the main contractor\'s programme. Our most recent scheme of this type was <a href="' . esc_url(home_url('/commercial-projects/headrow-court-student-accommodation-leeds/')) . '">Headrow Court in Leeds</a>.',
             ],
             'stats' => [
                 ['value' => 'September', 'label' => 'the date everything works back from'],
-                ['value' => '108 studios', 'label' => 'at Headrow Court, Leeds'],
-                ['value' => 'Conversions', 'label' => 'offices into occupied buildings'],
+                ['value' => 'Repeatable', 'label' => 'one detail, every room'],
+                ['value' => 'Conversions', 'label' => 'commercial buildings into homes'],
             ],
             'capabilities' => [
                 ['title' => 'Studio windows', 'copy' => 'One window per room, repeated hundreds of times, so the detail that works has to work everywhere.'],
@@ -273,7 +274,7 @@ function fenster_commercial_product_pages(): array
                     'title' => 'The programme is set by the academic year, not by the trades.',
                     'copy' => 'On a conversion the glazing usually sits on the critical path, because nothing inside can be finished until the building is watertight. We would rather agree a realistic sequence early and hold it than promise the whole facade and hand back late in the one sector where late has no recovery.',
                     'image' => '/wp-content/themes/fenster/assets/images/case-studies/cs-headrow-court-elevation.webp',
-                    'alt' => 'Completed student accommodation elevation in Leeds city centre',
+                    'alt' => 'Completed student accommodation elevation in a city centre',
                     'points' => ['Sequenced against handover', 'Watertight before internal trades', 'Lifts and access booked ahead'],
                 ],
                 [

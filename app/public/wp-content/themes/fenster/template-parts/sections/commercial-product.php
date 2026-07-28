@@ -79,8 +79,14 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
             <div class="fg-commercial-product-intro__copy">
                 <p class="eyebrow"><?php esc_html_e('Scope of works', 'fenster'); ?></p>
                 <h2><?php echo esc_html($intro_heading); ?></h2>
+                <?php
+                /* Summary copy is curated in inc/commercial-product-data.php, not user
+                   input, but it is still filtered. Links are allowed so a sector page can
+                   point at the project or product page that proves the claim. */
+                $summary_tags = ['a' => ['href' => [], 'title' => []], 'strong' => [], 'em' => []];
+                ?>
                 <?php foreach ($summary as $line) : ?>
-                    <p><?php echo esc_html((string) $line); ?></p>
+                    <p><?php echo wp_kses((string) $line, $summary_tags); ?></p>
                 <?php endforeach; ?>
             </div>
         </div>
