@@ -189,7 +189,9 @@ function fenster_site_data(): array
                     ],
                     [
                         'label' => 'Book a free consultation',
-                        'badge' => 'Free',
+                        /* Was 'Free', which the label and the copy underneath both already
+                           say. The badge earns its place by naming what you get. */
+                        'badge' => 'Expert advice',
                         'variant' => 'accent',
                         'url' => home_url('/book-a-consultation/'),
                         'copy' => 'An expert comes to you, measures up and prices the job. The visit costs nothing.',
