@@ -1,6 +1,19 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-24
+Last updated: 2026-07-28
+
+## 2026-07-28 - Consultations stated as free sitewide (test)
+
+Owner instruction from Nick: wherever the site mentions booking a consultation, make clear it is free.
+
+- **Recorded as an owner-confirmed fact first**, in `AI.md` and `LIVECHAT.md`, so no later session strips the word back out as an unsubstantiated claim.
+- Visible label is now `Book a free consultation` across the mega menu, footer, About, product hubs, price guides, case studies, contact and the sliding sash route. The header CTA is `Free Consultation`: it is the same 17 characters as the `Book consultation` it replaces, so the header cannot reflow, and it matches the title case of `Instant Quote` sitting beside it.
+- The booking page leads on it: H1 is now `Book a free window and door consultation in Milton Keynes.`, the lead says the visit is free whether you go ahead or not, and a new first FAQ answers `Is the consultation free?` directly, so the answer is in the FAQPage schema and can win the snippet. Route title and meta rewritten to lead on free, at 47 and 147 characters.
+- **`Start your design consultation` and the short `Design consultation` were deliberately left alone.** Both point at `#fenster-enquiry` on the same page rather than the booking route, so they are enquiry-form CTAs, not an offer of a free visit, and adding "free" would have described the wrong thing. Worth noting they are also the invented journey language `STYLE.md` bans, which is a separate fix needing owner sign-off.
+- `casement-windows-v2.php` said `Book a survey` while linking to the booking route, so it became `Book a free survey`. The About page already describes the survey as free, so the two agree.
+- The same fact was added to `fenster_legend_verified_business_context()`. Without it Legend would have kept answering cost questions from older page copy and contradicted every button on the site.
+- No SCSS or JS changed, so the compiled assets are untouched and no rebuild was needed. Thirteen changed PHP files linted clean on PHP 8.2.32, matching the server.
+- Test deployment only. No live-site deployment was performed.
 
 ## 2026-07-27 - Product-selector hubs promoted to live (984e89c)
 

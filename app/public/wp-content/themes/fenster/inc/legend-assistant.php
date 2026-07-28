@@ -371,6 +371,7 @@ function fenster_legend_verified_business_context(): string
         'Opening hours: Monday to Friday, 8.30am to 5pm. Phone lines are open 24/7. Fenster is closed at weekends.',
         'Residential service area: Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire.',
         'Commercial service area: nationwide across England and Wales.',
+        'Consultations are free. Fenster visits the property, measures up and prices the job at no charge, and there is nothing to pay if the customer decides against the work. Say so plainly if asked about cost.',
         'Consultation requests are not instant confirmed bookings. The visitor chooses a preferred weekday and time, then the Fenster team confirms by phone or email.',
         'Every new Fenster window and door installation receives a 10-year insurance-backed guarantee through the Consumer Protection Association. This does not automatically include repairs, replacement glass, roofline, integral blinds or pet flaps.',
         'The Fenster written guarantee is the first point of contact for covered issues while Fenster is trading. CPA insurance backs that guarantee if Fenster permanently ceases trading, subject to the policy terms.',

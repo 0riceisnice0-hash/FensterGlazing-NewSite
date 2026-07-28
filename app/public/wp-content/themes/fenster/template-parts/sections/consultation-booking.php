@@ -19,7 +19,8 @@ $booking_trust = [
     ['title' => 'FENSA approved', 'copy' => 'Registered window and door installations.', 'item' => $trust_items[2] ?? null],
 ];
 $faqs = [
-    ['question' => 'How do I book a consultation?', 'answer' => 'Choose an available weekday, select a preferred time and leave your contact details. We will then confirm the appointment directly with you.'],
+    ['question' => 'Is the consultation free?', 'answer' => 'Yes. The visit, the measuring and the price we give you are free, and they stay free whether you go ahead with us or not. There is no charge for coming out and no fee to pay if you decide against the job.'],
+    ['question' => 'How do I book a free consultation?', 'answer' => 'Choose an available weekday, select a preferred time and leave your contact details. We will then confirm the appointment directly with you.'],
     ['question' => 'Is my chosen time confirmed immediately?', 'answer' => 'No. Your selected date and time are a preferred appointment request. The Fenster team checks availability and confirms the appointment by phone or email.'],
     ['question' => 'What can I discuss at a consultation?', 'answer' => 'You can discuss windows, doors, glazing, repairs, roof lanterns, colour choices, project plans or a showroom visit with the Fenster team.'],
 ];
@@ -39,8 +40,8 @@ $faq_schema = [
         <div class="container fg-consultation-page__hero-grid">
             <div class="fg-consultation-page__hero-copy">
                 <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Book a window and door consultation in Milton Keynes.', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Choose a weekday and preferred time to talk through your project with the Fenster team. We will confirm your appointment directly.', 'fenster'); ?></p>
+                <h1><?php esc_html_e('Book a free window and door consultation in Milton Keynes.', 'fenster'); ?></h1>
+                <p><?php esc_html_e('Choose a weekday and a preferred time, and we will come to you. The visit is free, whether you go ahead with us or not. We will confirm your appointment directly.', 'fenster'); ?></p>
             </div>
 
             <div class="fg-consultation-page__booking">
@@ -77,7 +78,7 @@ $faq_schema = [
             <div class="fg-consultation-page__story-copy">
                 <p class="eyebrow"><?php esc_html_e('Advice before decisions', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Bring the questions that are hard to answer online.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Whether you are replacing one door or planning a larger extension, a consultation gives you time to compare the options that matter before you commit.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Whether you are replacing one door or planning a larger extension, a free consultation gives you time to compare the options that matter before you commit.', 'fenster'); ?></p>
                 <ul>
                     <li><?php esc_html_e('Compare products, colour, glazing and practical details.', 'fenster'); ?></li>
                     <li><?php esc_html_e('Talk through your home, your plans and the right next step.', 'fenster'); ?></li>

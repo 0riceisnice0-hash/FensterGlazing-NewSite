@@ -3491,11 +3491,11 @@ if ($is_commercial_hub) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Your project', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Ready to price your sash windows?', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Start an instant estimate or book a design consultation to compare the Roseview options for your property.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Start an instant estimate or book a free consultation to compare the Roseview options for your property.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-sash-gallery-cta__actions">
                     <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get a sash window quote', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a design consultation', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
                 </div>
             </div>
         </section>

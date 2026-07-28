@@ -80,7 +80,7 @@ $faq_schema = [
                 <p><?php echo esc_html($intro); ?></p>
                 <div class="button-row">
                     <a class="button" href="#fenster-instant-pricing"><?php esc_html_e('Price your own job', 'fenster'); ?></a>
-                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
+                    <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
                 </div>
             </div>
             <aside class="fg-price-guide__glance" aria-label="<?php esc_attr_e('Checked fitted prices at a glance', 'fenster'); ?>">

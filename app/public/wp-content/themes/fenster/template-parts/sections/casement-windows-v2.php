@@ -313,7 +313,7 @@ $faq_schema = [
                 </div>
                 <div class="fg-cw-cta__actions">
                     <a class="button" href="#fenster-product-quote"><?php esc_html_e('Get a casement quote', 'fenster'); ?></a>
-                    <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a survey', 'fenster'); ?></a>
+                    <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free survey', 'fenster'); ?></a>
                 </div>
             </div>
         </div>

@@ -188,10 +188,10 @@ function fenster_site_data(): array
                         'copy' => 'Price windows and doors through the online quote tool.',
                     ],
                     [
-                        'label' => 'Book a consultation',
-                        'badge' => 'Explore',
+                        'label' => 'Book a free consultation',
+                        'badge' => 'Free',
                         'url' => home_url('/book-a-consultation/'),
-                        'copy' => 'Talk through your project with the Fenster team.',
+                        'copy' => 'We come to you, measure up and price the job. The visit costs nothing.',
                     ],
                 ],
             ],
@@ -211,7 +211,7 @@ function fenster_site_data(): array
             ['label' => 'About Us', 'url' => home_url('/about/')],
             ['label' => 'Contact', 'url' => home_url('/contact/')],
             ['label' => 'Instant Quote', 'url' => home_url('/online-quote/'), 'classes' => ['site-nav__quote']],
-            ['label' => 'Book consultation', 'url' => home_url('/book-a-consultation/'), 'classes' => ['site-nav__consultation']],
+            ['label' => 'Free Consultation', 'url' => home_url('/book-a-consultation/'), 'classes' => ['site-nav__consultation']],
         ],
         'product_usps' => [
             'aluminium-bifold-doors' => [

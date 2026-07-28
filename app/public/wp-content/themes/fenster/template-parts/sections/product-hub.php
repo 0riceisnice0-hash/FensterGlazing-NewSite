@@ -102,7 +102,7 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
                 <p class="fg-product-hub__lead-copy"><?php echo esc_html((string) ($group['intro'] ?? '')); ?></p>
                 <p class="fg-product-hub__actions">
                     <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
+                    <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
                 </p>
             </div>
 
@@ -246,7 +246,7 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
             <div>
                 <p class="eyebrow"><?php esc_html_e('How pricing works', 'fenster'); ?></p>
                 <h2><?php echo esc_html((string) ($group['quote_heading'] ?? '')); ?></h2>
-                <p><?php esc_html_e('If you like doing things yourself, build the job on the quote tool and see the number on the spot. If you would rather talk it through, book a consultation and we will come to you.', 'fenster'); ?></p>
+                <p><?php esc_html_e('If you like doing things yourself, build the job on the quote tool and see the number on the spot. If you would rather talk it through, book a free consultation and we will come to you.', 'fenster'); ?></p>
                 <p class="fg-product-hub__actions">
                     <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $phone)); ?></a>

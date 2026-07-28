@@ -258,7 +258,7 @@ function fenster_gsc_seo_overrides(): array
         // listing a reason to be clicked over four older, larger local firms.
         'double-glazing-milton-keynes' => [
             'title_tag' => 'Double Glazing Milton Keynes | See Your Price Online',
-            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Design your windows or doors online and see a guide price straight away, or book a consultation.',
+            'meta_description' => 'Double glazing in Milton Keynes from Fenster Glazing. Design your windows or doors online and see a guide price straight away, or book a free consultation.',
         ],
         // Also the landing page for "replacement windows", "uPVC windows" and
         // "window installer" in Milton Keynes, so the title carries the intent
@@ -903,8 +903,8 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'meta_description' => 'Start an online quote for Fenster Glazing windows, doors, bifolds and roof lanterns, then our team can confirm survey details and next steps.',
         ],
         'book-a-consultation' => [
-            'title_tag' => 'Book a Window & Door Consultation | Milton Keynes',
-            'meta_description' => 'Book a window, door or glazing consultation with Fenster Glazing in Milton Keynes. Pick a weekday and preferred time; our team will confirm it.',
+            'title_tag' => 'Free Window & Door Consultation | Milton Keynes',
+            'meta_description' => 'Book a free window, door or glazing consultation with Fenster Glazing in Milton Keynes. We measure up and price the job at your home, at no charge.',
         ],
     ];
     $launch_seo_overrides = array_merge($launch_seo_overrides, fenster_gsc_static_seo_overrides());
