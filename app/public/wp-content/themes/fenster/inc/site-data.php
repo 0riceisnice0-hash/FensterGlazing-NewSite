@@ -219,6 +219,7 @@ function fenster_site_data(): array
                         'label' => 'Services',
                         'url' => home_url('/commercial-glazing/'),
                         'items' => [
+                            ['label' => 'Commercial Glazing', 'url' => home_url('/commercial-glazing/')],
                             ['label' => 'Commercial Windows and Doors', 'url' => home_url('/commercial-windows-and-doors/')],
                             ['label' => 'Curtain Walling', 'url' => home_url('/curtain-walling/')],
                             ['label' => 'Louvre Vents', 'url' => home_url('/louvre-vents/')],
