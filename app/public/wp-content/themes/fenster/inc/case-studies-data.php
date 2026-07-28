@@ -73,6 +73,59 @@ function fenster_case_studies(): array
     $fitter_aaron = $fitter('Aaron Isaacs', 'Installer', 'aaron-isaacs-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
 
     $cache = [
+        /*
+         * Headrow Court is the first Commercial entry in this system; the other
+         * commercial studies still sit in the legacy pages.json records. Project
+         * facts (108 studios, £12.5m, 16 months, four former office buildings,
+         * completed October 2025) are the main contractor's own published figures,
+         * and the scope line is deliberately narrow: Fortis Vision replaced the
+         * whole facade, we did the aluminium windows within it. Do not widen that
+         * into a claim that we delivered the scheme.
+         *
+         * Photography is by Ben Harrison Photography, supplied through Fortis
+         * Vision. Credit is kept in the caption. Confirm the licence covers our
+         * own marketing use before this goes to production.
+         */
+        'headrow-court-student-accommodation-leeds' => [
+            'title' => 'Aluminium windows, Headrow Court, Leeds',
+            'location' => 'Leeds city centre',
+            'type' => 'Commercial',
+            'date' => '2025-10-01',
+            'summary' => 'Aluminium windows for the conversion of four former office buildings into 108 student studios opposite Leeds Town Hall.',
+            'lead' => 'Four tired office buildings in the middle of Leeds became 108 student studios. We supplied and fitted the aluminium windows across the new facade, including the projecting bays that give the building its face on The Headrow.',
+            'products' => [
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+            ],
+            'specs' => [
+                ['label' => 'Building', 'value' => '108 student studios'],
+                ['label' => 'Was', 'value' => 'Four former office buildings'],
+                ['label' => 'Product', 'value' => 'Aluminium windows'],
+                ['label' => 'Completed', 'value' => 'October 2025'],
+            ],
+            'overview' => [
+                'Headrow Court sits opposite Leeds Town Hall, and until recently it was four separate office buildings. Fortis Vision took the scheme on as main contractor for a £12.5m, sixteen month conversion into 108 purpose built student studios with reception, study and dining space, finishing in October 2025.',
+                'The facade was replaced rather than patched, and our part of that was the <a href="' . esc_url(home_url('/aluminium-windows/')) . '">aluminium windows</a>. On a city centre building of this age that is less about the product and more about the openings: four buildings that were never built to match, brought into one elevation, with the window line expected to read as one thing from the street.',
+                'The projecting bays are the part people notice. They wrap the corner of the building in dark framing above the shopfronts, and they are the reason the elevation reads as a single new building rather than four old ones stitched together. Behind them, every studio needed a window that opens safely, keeps street noise down and holds heat in a building now lived in all year rather than occupied nine to five.',
+                'The wider scheme connects to the Leeds Pipes district heating network and diverted 98% of its site waste from landfill. That is the contractor\'s achievement rather than ours, but it is the kind of scheme our commercial work tends to sit inside: an existing building kept and upgraded instead of demolished.',
+            ],
+            'installed' => [
+                'Aluminium windows across the replacement facade',
+                'Projecting bay windows to the principal elevation',
+                'City centre site, four buildings brought into one elevation',
+                'Part of a £12.5m conversion into 108 student studios',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-headrow-court-elevation.webp', 'caption' => 'Headrow Court from The Headrow, opposite Leeds Town Hall, after the facade replacement. Photograph by Ben Harrison Photography.'],
+                ['src' => $img . 'cs-headrow-court-oriels.webp', 'caption' => 'The projecting bays wrapping the corner above the shopfronts. Photograph by Ben Harrison Photography.'],
+                ['src' => $img . 'cs-headrow-court-gables.webp', 'caption' => 'The gabled upper floors, where the window line runs across what were once four separate buildings. Photograph by Ben Harrison Photography.'],
+                ['src' => $img . 'cs-headrow-court-bay-detail.webp', 'caption' => 'A closer view of a bay, showing the dark framing against the red brick. Photograph by Ben Harrison Photography.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Headrow Court, Leeds: Student Accommodation Glazing',
+                'meta_description' => 'A Fenster commercial project: aluminium windows for the conversion of four former Leeds office buildings into 108 student studios, completed October 2025.',
+            ],
+        ],
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
             'title' => 'Aluminium bifold doors, Whitehouse',
             'location' => 'Whitehouse, Milton Keynes',

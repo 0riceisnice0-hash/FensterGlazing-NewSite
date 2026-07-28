@@ -949,6 +949,15 @@ function fenster_get_generated_page(?string $slug = null): ?array
             $page['title'] = 'Book a Consultation';
         }
 
+        /* The imported H1 here was the scraped listicle headline, "Commercial
+           Glazing Leeds: 5 Powerful Proven Strategies to Control Cost, Compliance
+           and Heat Loss in Office Refurbishment". The title tag was cleaned up in
+           July 2026 but the heading was left, so the page still opened on copy
+           STYLE.md rules out. */
+        if ($slug === 'commercial-glazing-leeds') {
+            $page['title'] = 'Commercial glazing in Leeds';
+        }
+
         return $page_cache[$slug] = $page;
     }
 
