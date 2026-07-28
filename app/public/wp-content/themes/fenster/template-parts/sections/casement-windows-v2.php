@@ -28,60 +28,64 @@ $opening_styles = [
     [
         'id' => 'side-hung',
         'name' => 'Side-hung',
-        'label' => 'The wide opening',
-        'image' => 'casement-open-brick-1400w.webp',
-        'width' => 1400,
-        'height' => 933,
+        'label' => 'Friction stays and egress hinges',
+        'image' => 'casement-friction-stay-1200w.webp',
+        'width' => 1200,
+        'height' => 823,
         'position' => 'center',
-        'alt' => 'White uPVC casement windows opened outwards on a brick house',
-        'copy' => 'Hinged at the side, opening outwards. It gives the widest clear opening and, at the right size, a usable escape route.',
-        'best' => 'Bedrooms, living rooms and larger openings',
+        'alt' => 'Friction stay holding a white uPVC casement sash open',
+        'copy' => 'Friction stays hold the sash at any angle. For bedrooms we fit egress hinges, which swing clear to 90 degrees to meet the escape minimum.',
+        'chip_label' => 'Bedroom escape',
+        'chip' => 'Building Regulations ask for 0.33m², at least 450mm each way',
     ],
     [
         'id' => 'top-hung',
         'name' => 'Top-hung',
-        'label' => 'Air without the gap',
-        'image' => 'casement-mockhorn-detail-600w.webp',
-        'width' => 600,
-        'height' => 600,
+        'label' => 'Hinged from the top rail',
+        'image' => 'casement-top-hinge-1200w.webp',
+        'width' => 1200,
+        'height' => 823,
         'position' => 'center',
-        'alt' => 'Top-hung white uPVC casement openers above fixed panes, with mock horns',
-        'copy' => 'Hinged along the top so the bottom swings out. You can leave it open in the rain, and it sits neatly above a fixed pane.',
-        'best' => 'Bathrooms, kitchens and fanlights',
+        'alt' => 'Top rail hinge and gasket on an open white uPVC casement sash',
+        'copy' => 'The stays sit in the top rail and the handle on the bottom one. The open sash sheds rain clear of the opening, so it can stand ajar in weather.',
+        'chip_label' => 'Child safety',
+        'chip' => 'Restrictors hold the first opening to around 100mm',
     ],
     [
         'id' => 'fixed-pane',
         'name' => 'Fixed pane',
-        'label' => 'More glass',
-        'image' => 'casement-sill-interior-1200w.webp',
-        'width' => 1200,
-        'height' => 800,
-        'position' => 'right',
-        'alt' => 'White uPVC casement window and cill seen from inside a room',
-        'copy' => 'No hinges, no handle, more light, and it costs less than an opener the same size. Ventilation has to come from elsewhere in the frame.',
-        'best' => 'Picture windows, bays and wide frames',
+        'label' => 'No gearing, no handle',
+        'image' => 'casement-anthracite-fixed-600w.webp',
+        'width' => 600,
+        'height' => 450,
+        'position' => 'center',
+        'alt' => 'Fixed anthracite uPVC window pane with a glazing bar cross',
+        'copy' => 'No hinges, gearing or handle, so it costs less than an opener the same size. Ventilation and escape have to come from the openers around it.',
+        'chip_label' => 'Glass area',
+        'chip' => 'No sash frame inside the outer frame, so more glass per opening',
     ],
     [
         'id' => 'mixed-layout',
         'name' => 'Mixed layout',
-        'label' => 'One frame, several jobs',
-        'image' => 'casement-house-rear-1600w.webp',
-        'width' => 1600,
-        'height' => 900,
-        'position' => 'top',
-        'alt' => 'Rear elevation of a house with grey uPVC casement windows',
-        'copy' => 'All three in one frame. This is where the thinking goes: it has to work for the room and still look deliberate from the pavement.',
-        'best' => 'Whole-house replacements and wide windows',
+        'label' => 'One outer frame',
+        'image' => 'casement-three-light-stone-600w.webp',
+        'width' => 600,
+        'height' => 450,
+        'position' => 'center',
+        'alt' => 'Three-light white uPVC casement with two openers around a fixed centre, set in a stone wall',
+        'copy' => 'Openers and fixed panes share one outer frame. Transom and mullion positions decide whether the glass lines up across the elevation.',
+        'chip_label' => 'Before ordering',
+        'chip' => 'We draw the elevation with every sightline marked',
     ],
 ];
 
 // Comparison rows, in the same order as the cards above.
 $style_table = [
-    ['label' => 'How it opens', 'values' => ['Outwards, side hinges', 'Outwards from the bottom', 'Does not open', 'Any combination']],
-    ['label' => 'Clear opening', 'values' => ['The widest available', 'Partial', 'None', 'Set by the layout']],
-    ['label' => 'Handle', 'values' => ['On the closing edge', 'On the bottom rail', 'None', 'One per opening sash']],
-    ['label' => 'Escape route', 'values' => ['Yes, at the right size', 'Not usually', 'No', 'Where a sash allows it']],
-    ['label' => 'Rain when open', 'values' => ['Comes in', 'Mostly kept out', 'Not applicable', 'Depends on the sash']],
+    ['label' => 'Hinges', 'values' => ['Friction stays, egress or easy-clean options', 'Friction stays in the top rail', 'None', 'Chosen per sash']],
+    ['label' => 'Handle', 'values' => ['On the closing edge', 'On the bottom rail', 'None', 'One per opener']],
+    ['label' => 'Bedroom escape', 'values' => ['Yes, with egress hinges', 'Rarely tall enough to qualify', 'No', 'Through a side-hung sash']],
+    ['label' => 'Cleaning the outside', 'values' => ['From inside, with easy-clean stays', 'Usually from outside', 'From the opener beside it', 'Planned at survey']],
+    ['label' => 'Rain with the sash ajar', 'values' => ['Comes in', 'Sheds clear of the opening', 'Not applicable', 'Depends on the sash']],
 ];
 
 $frame_points = [
@@ -190,12 +194,12 @@ $faq_schema = [
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Opening styles', 'fenster'); ?></p>
                 <h2 id="fg-cw-styles-title"><?php esc_html_e('Four layouts, four different jobs.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Each one changes how the room is aired, how far you reach and how much uninterrupted glass you get. Most houses end up using more than one.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The names are obvious; the hardware is the actual difference. Most houses end up using at least three of the four.', 'fenster'); ?></p>
             </div>
 
             <aside class="fg-cw-note">
                 <p class="eyebrow"><?php esc_html_e('What we settle at survey', 'fenster'); ?></p>
-                <p><?php esc_html_e('Which panes open, where they hinge, how far a sash swings out over a path, and whether the sightlines line up with the windows either side. We draw the elevation before anything is ordered.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Which panes open, where they hinge, and what Building Regulations ask of the frame: escape openings for bedrooms, safety glass below 800mm, and trickle vents, which most replacement windows have needed since June 2022.', 'fenster'); ?></p>
             </aside>
             </div>
 
@@ -216,8 +220,8 @@ $faq_schema = [
                             <h3><?php echo esc_html($style['name']); ?></h3>
                             <p><?php echo esc_html($style['copy']); ?></p>
                             <p class="fg-cw-style__best">
-                                <strong><?php esc_html_e('Works well in', 'fenster'); ?></strong>
-                                <?php echo esc_html($style['best']); ?>
+                                <strong><?php echo esc_html($style['chip_label']); ?></strong>
+                                <?php echo esc_html($style['chip']); ?>
                             </p>
                         </div>
                     </article>
