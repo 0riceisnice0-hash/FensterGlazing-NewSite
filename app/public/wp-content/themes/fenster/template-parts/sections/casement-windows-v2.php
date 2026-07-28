@@ -23,68 +23,11 @@ $asset_base = '/wp-content/themes/fenster/assets/images/products/casement/';
 
 // The page hero already uses casement-stone-cottage-1600w.webp. Every image
 // below is used exactly once.
-$opening_styles = [
-    [
-        'id' => 'side-hung',
-        'name' => 'Side-hung',
-        'label' => 'Egress hinge option',
-        'image' => 'casement-friction-stay-1200w.webp',
-        'width' => 1200,
-        'height' => 823,
-        'position' => 'center',
-        'alt' => 'Friction stay holding a white uPVC casement sash open',
-        'copy' => 'Friction stays hold the sash at any angle. For bedrooms we fit egress hinges, which swing clear to 90 degrees to meet the escape minimum.',
-        'chip_label' => 'Bedroom escape',
-        'chip' => 'Building Regulations ask for 0.33m², at least 450mm each way',
-    ],
-    [
-        'id' => 'top-hung',
-        'name' => 'Top-hung',
-        'label' => 'Top rail hinges',
-        'image' => 'casement-top-hinge-1200w.webp',
-        'width' => 1200,
-        'height' => 823,
-        'position' => 'center',
-        'alt' => 'Top rail hinge and gasket on an open white uPVC casement sash',
-        'copy' => 'The stays sit in the top rail and the handle on the bottom one. The open sash sheds rain clear of the opening, so it can stand ajar in weather.',
-        'chip_label' => 'Child safety',
-        'chip' => 'Restrictors hold the first opening to around 100mm',
-    ],
-    [
-        'id' => 'fixed-pane',
-        'name' => 'Fixed pane',
-        'label' => 'No gearing, no handle',
-        'image' => 'casement-anthracite-fixed-600w.webp',
-        'width' => 600,
-        'height' => 450,
-        'position' => 'center',
-        'alt' => 'Fixed anthracite uPVC window pane with a glazing bar cross',
-        'copy' => 'No hinges, gearing or handle, so it costs less than an opener the same size. Ventilation and escape have to come from the openers around it.',
-        'chip_label' => 'Glass area',
-        'chip' => 'No sash frame inside the outer frame, so more glass per opening',
-    ],
-    [
-        'id' => 'mixed-layout',
-        'name' => 'Mixed layout',
-        'label' => 'One outer frame',
-        'image' => 'casement-three-light-stone-600w.webp',
-        'width' => 600,
-        'height' => 450,
-        'position' => 'center',
-        'alt' => 'Three-light white uPVC casement with two openers around a fixed centre, set in a stone wall',
-        'copy' => 'Openers and fixed panes share one outer frame. Transom and mullion positions decide whether the glass lines up across the elevation.',
-        'chip_label' => 'Before ordering',
-        'chip' => 'We draw the elevation with every sightline marked',
-    ],
-];
-
-// Comparison rows, in the same order as the cards above.
-$style_table = [
-    ['label' => 'Hinges', 'values' => ['Friction stays, egress or easy-clean options', 'Friction stays in the top rail', 'None', 'Chosen per sash']],
-    ['label' => 'Handle', 'values' => ['On the closing edge', 'On the bottom rail', 'None', 'One per opener']],
-    ['label' => 'Bedroom escape', 'values' => ['Yes, with egress hinges', 'Rarely tall enough to qualify', 'No', 'Through a side-hung sash']],
-    ['label' => 'Cleaning the outside', 'values' => ['From inside, with easy-clean stays', 'Usually from outside', 'From the opener beside it', 'Planned at survey']],
-    ['label' => 'Rain with the sash ajar', 'values' => ['Comes in', 'Sheds clear of the opening', 'Not applicable', 'Depends on the sash']],
+$layout_points = [
+    ['name' => 'Side-hung', 'copy' => 'Friction stays hold the sash at any angle. Bedrooms get egress hinges, which swing to 90 degrees so the opening meets the Building Regulations escape minimum: 0.33m², at least 450mm each way.'],
+    ['name' => 'Top-hung', 'copy' => 'Hinged in the top rail with the handle on the bottom one. The open sash sheds rain clear of the opening, and a restrictor holds the first opening to around 100mm where children sleep.'],
+    ['name' => 'Fixed pane', 'copy' => 'No hinges, gearing or handle, so it costs less than an opener the same size and holds more glass. Ventilation and escape come from the openers around it.'],
+    ['name' => 'Mixed layout', 'copy' => 'All three share one outer frame. Transom and mullion positions decide whether the glass lines up, so we draw the elevation with every sightline marked before anything is ordered.'],
 ];
 
 $anatomy_items = [
@@ -93,24 +36,6 @@ $anatomy_items = [
     ['name' => 'Reinforcement', 'copy' => 'Sized for each window, so a large dark sash on an exposed elevation is stiffened differently from a small white one in a sheltered wall.'],
     ['name' => 'The sealed unit', 'copy' => 'Panes, coatings, argon fill and a warm-edge spacer decide most of the whole-window figure. Liniar publish 0.8 W/m²K for a suitable build-up; the number we agree follows your glass, not the brochure.'],
     ['name' => 'Installation', 'copy' => 'Fixing, sealing and finishing are what connect a tested window to your actual wall. Our own installers do it, which is why the guarantee below is ours to give.'],
-];
-
-// Pilkington rate every obscure pattern for privacy, one to five.
-$glass_patterns = [
-    ['name' => 'Minster', 'privacy' => 2, 'file' => 'Minster-privacy-2.webp'],
-    ['name' => 'Reeded', 'privacy' => 2, 'file' => 'Reeded-privacy-2.webp'],
-    ['name' => 'Taffeta', 'privacy' => 3, 'file' => 'Taffeta-privacy-3.webp'],
-    ['name' => 'Contora', 'privacy' => 4, 'file' => 'Contora-privacy-4.webp'],
-    ['name' => 'Oak', 'privacy' => 4, 'file' => 'Oak-privacy-4.webp'],
-    ['name' => 'Cotswold', 'privacy' => 5, 'file' => 'Cotswold-privacy-5.webp'],
-];
-
-$handle_finishes = [
-    ['name' => 'White', 'file' => 's2-white-finish.png'],
-    ['name' => 'Black', 'file' => 's2-black-finish.png'],
-    ['name' => 'Chrome', 'file' => 's2-chrome-finish.png'],
-    ['name' => 'Gold', 'file' => 's2-gold-finish.png'],
-    ['name' => 'Titanium', 'file' => 's2-titanium-finish.png'],
 ];
 
 $spec_points = [
@@ -196,67 +121,54 @@ $faq_schema = [
         </div>
     </section>
 
-    <section id="casement-opening-styles" class="fg-cw-styles" aria-labelledby="fg-cw-styles-title">
-        <div class="container">
-            <div class="fg-cw-styles__head">
+    <section id="casement-opening-styles" class="fg-cw-layouts" aria-labelledby="fg-cw-layouts-title">
+        <div class="container fg-cw-split fg-cw-split--media-first">
+            <figure class="fg-cw-media fg-cw-media--tall">
+                <img
+                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-leighton-front-1400w.webp')); ?>"
+                    alt="<?php esc_attr_e('White Liniar casement window with opening and fixed lights, fitted by Fenster in Leighton Buzzard', 'fenster'); ?>"
+                    loading="lazy" width="1400" height="1050">
+                <figcaption><?php esc_html_e('Leighton Buzzard', 'fenster'); ?></figcaption>
+            </figure>
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Opening styles', 'fenster'); ?></p>
-                <h2 id="fg-cw-styles-title"><?php esc_html_e('Four layouts, four different jobs.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The names are obvious; the hardware is the actual difference. Most houses end up using at least three of the four.', 'fenster'); ?></p>
-            </div>
-
-            <aside class="fg-cw-note">
-                <p class="eyebrow"><?php esc_html_e('What we settle at survey', 'fenster'); ?></p>
-                <p><?php esc_html_e('Which panes open, where they hinge, and what Building Regulations ask of the frame: escape openings for bedrooms, safety glass below 800mm, and trickle vents, which most replacement windows have needed since June 2022.', 'fenster'); ?></p>
-            </aside>
-            </div>
-
-            <div class="fg-cw-styles__grid">
-                <?php foreach ($opening_styles as $style) : ?>
-                    <article class="fg-cw-style">
-                        <figure data-position="<?php echo esc_attr($style['position']); ?>">
-                            <img
-                                src="<?php echo esc_url(fenster_generated_url($asset_base . $style['image'])); ?>"
-                                alt="<?php echo esc_attr($style['alt']); ?>"
-                                loading="lazy"
-                                width="<?php echo esc_attr((string) $style['width']); ?>"
-                                height="<?php echo esc_attr((string) $style['height']); ?>"
-                            >
-                        </figure>
-                        <div class="fg-cw-style__body">
-                            <p class="eyebrow"><?php echo esc_html($style['label']); ?></p>
-                            <h3><?php echo esc_html($style['name']); ?></h3>
-                            <p><?php echo esc_html($style['copy']); ?></p>
-                            <p class="fg-cw-style__best">
-                                <strong><?php echo esc_html($style['chip_label']); ?></strong>
-                                <?php echo esc_html($style['chip']); ?>
-                            </p>
+                <h2 id="fg-cw-layouts-title"><?php esc_html_e('Four layouts, four different jobs.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The names are obvious; the hardware is the actual difference. This Leighton Buzzard window uses three of the four.', 'fenster'); ?></p>
+                <dl class="fg-cw-list">
+                    <?php foreach ($layout_points as $point) : ?>
+                        <div>
+                            <dt><?php echo esc_html($point['name']); ?></dt>
+                            <dd><?php echo esc_html($point['copy']); ?></dd>
                         </div>
-                    </article>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </dl>
             </div>
+        </div>
+    </section>
 
-            <div class="fg-cw-compare" role="region" aria-label="<?php esc_attr_e('Casement opening styles compared', 'fenster'); ?>" tabindex="0">
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col"><?php esc_html_e('Difference', 'fenster'); ?></th>
-                            <?php foreach ($opening_styles as $style) : ?>
-                                <th scope="col"><?php echo esc_html($style['name']); ?></th>
-                            <?php endforeach; ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($style_table as $row) : ?>
-                            <tr>
-                                <th scope="row"><?php echo esc_html($row['label']); ?></th>
-                                <?php foreach ($row['values'] as $value) : ?>
-                                    <td><?php echo esc_html($value); ?></td>
-                                <?php endforeach; ?>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+    <section class="fg-cw-details" aria-labelledby="fg-cw-details-title">
+        <div class="container fg-cw-split">
+            <div class="fg-cw-copy">
+                <p class="eyebrow"><?php esc_html_e('The moving parts', 'fenster'); ?></p>
+                <h2 id="fg-cw-details-title"><?php esc_html_e('Look at the stays and the seal.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Every opener rides on stainless friction stays like these. Easy-clean versions let the sash slide along its track, so you can reach the outside of the glass from indoors on an upper floor.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The black line around the sash is the co-extruded gasket, formed with the profile rather than pushed into a groove afterwards. Hinges, gearing and locking are specified window by window at survey.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-cw-tiles fg-cw-tiles--pair">
+                <figure>
+                    <img
+                        src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-friction-stay-1200w.webp')); ?>"
+                        alt="<?php esc_attr_e('Friction stay holding a white uPVC casement sash open', 'fenster'); ?>"
+                        loading="lazy" width="1200" height="823">
+                    <figcaption><?php esc_html_e('Friction stay', 'fenster'); ?></figcaption>
+                </figure>
+                <figure>
+                    <img
+                        src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-top-hinge-1200w.webp')); ?>"
+                        alt="<?php esc_attr_e('Top rail hinge and gasket on an open white uPVC casement sash', 'fenster'); ?>"
+                        loading="lazy" width="1200" height="823">
+                    <figcaption><?php esc_html_e('Top rail hinge', 'fenster'); ?></figcaption>
+                </figure>
             </div>
         </div>
     </section>
@@ -376,16 +288,6 @@ $faq_schema = [
                 </ol>
             </div>
 
-            <dl class="fg-cw-anatomy__stats">
-                <div>
-                    <dt><?php esc_html_e('10 years', 'fenster'); ?></dt>
-                    <dd><?php esc_html_e('insurance-backed installation guarantee', 'fenster'); ?></dd>
-                </div>
-                <div>
-                    <dt><?php esc_html_e('PAS 24', 'fenster'); ?></dt>
-                    <dd><?php esc_html_e('tested security specification where you want it', 'fenster'); ?></dd>
-                </div>
-            </dl>
         </div>
     </section>
 
@@ -403,6 +305,11 @@ $faq_schema = [
                         </div>
                     <?php endforeach; ?>
                 </dl>
+                <p class="fg-cw-links">
+                    <a class="fg-cw-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
+                    <a class="fg-cw-link" href="<?php echo esc_url(home_url('/window-handles/')); ?>"><?php esc_html_e('Handle finishes', 'fenster'); ?></a>
+                    <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('All sixteen colours', 'fenster'); ?></a>
+                </p>
             </div>
             <figure class="fg-cw-media fg-cw-media--tall">
                 <img
@@ -417,73 +324,6 @@ $faq_schema = [
         </div>
     </section>
 
-    <section class="fg-cw-choices" aria-labelledby="fg-cw-choices-title">
-        <div class="container">
-            <div class="fg-cw-head">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Glass and handles', 'fenster'); ?></p>
-                    <h2 id="fg-cw-choices-title"><?php esc_html_e('Privacy is rated one to five.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('Pilkington rate every obscure pattern for privacy. The higher the number, the less anyone can see through it: a hallway can take a 2, a bathroom usually wants a 4 or 5.', 'fenster'); ?></p>
-            </div>
-
-            <ul class="fg-cw-patterns">
-                <?php foreach ($glass_patterns as $pattern) : ?>
-                    <li>
-                        <img
-                            src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/obscure-glass/' . $pattern['file'])); ?>"
-                            alt="<?php echo esc_attr(sprintf(__('%s obscure glass pattern', 'fenster'), $pattern['name'])); ?>"
-                            loading="lazy"
-                        >
-                        <span><strong><?php echo esc_html($pattern['name']); ?></strong> <?php echo esc_html(sprintf(__('Privacy %d of 5', 'fenster'), (int) $pattern['privacy'])); ?></span>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-            <div class="fg-cw-hardware-row">
-                <div class="fg-cw-hardware-row__copy">
-                    <h3><?php esc_html_e('One handle, five finishes.', 'fenster'); ?></h3>
-                    <p><?php esc_html_e('The S2 Signature handle, finished to match or contrast the frame. Locking and restrictors are specified with it.', 'fenster'); ?></p>
-                </div>
-                <ul class="fg-cw-handles">
-                    <?php foreach ($handle_finishes as $finish) : ?>
-                        <li>
-                            <img
-                                src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/handles/' . $finish['file'])); ?>"
-                                alt="<?php echo esc_attr(sprintf(__('S2 Signature window handle in %s', 'fenster'), strtolower($finish['name']))); ?>"
-                                loading="lazy"
-                            >
-                            <span><?php echo esc_html($finish['name']); ?></span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-
-            <p class="fg-cw-choices__links">
-                <a class="fg-cw-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('See all glass patterns', 'fenster'); ?></a>
-                <a class="fg-cw-link" href="<?php echo esc_url(home_url('/window-handles/')); ?>"><?php esc_html_e('See all handle options', 'fenster'); ?></a>
-                <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See all sixteen colours', 'fenster'); ?></a>
-            </p>
-        </div>
-    </section>
-
-    <section class="fg-cw-related" aria-labelledby="fg-cw-related-title">
-        <div class="container">
-            <div class="fg-cw-copy fg-cw-copy--lead">
-                <p class="eyebrow"><?php esc_html_e('Nearby styles', 'fenster'); ?></p>
-                <h2 id="fg-cw-related-title"><?php esc_html_e('Three windows worth comparing first.', 'fenster'); ?></h2>
-            </div>
-            <div class="fg-cw-related__grid">
-                <?php foreach ($related as $item) : ?>
-                    <a href="<?php echo esc_url(home_url($item['url'])); ?>">
-                        <h3><?php echo esc_html($item['name']); ?></h3>
-                        <p><?php echo esc_html($item['copy']); ?></p>
-                        <span class="fg-cw-link"><?php echo esc_html($item['view']); ?></span>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
 </div>
 
 <?php
