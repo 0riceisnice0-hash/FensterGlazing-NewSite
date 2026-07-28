@@ -223,6 +223,7 @@ function fenster_site_data(): array
                             ['label' => 'Commercial Windows and Doors', 'url' => home_url('/commercial-windows-and-doors/')],
                             ['label' => 'Curtain Walling', 'url' => home_url('/curtain-walling/')],
                             ['label' => 'Louvre Vents', 'url' => home_url('/louvre-vents/')],
+                            ['label' => 'AOV Smoke Ventilation', 'url' => home_url('/automatic-opening-vents/')],
                             ['label' => 'Commercial Automation', 'url' => home_url('/commercial-automation/')],
                         ],
                     ],

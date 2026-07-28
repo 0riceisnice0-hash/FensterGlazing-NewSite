@@ -190,6 +190,60 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases' => ['Retail entrances', 'Office receptions', 'Healthcare buildings', 'Public access routes', 'Education estates', 'High-traffic doors'],
         ],
+        /*
+         * AOV. The owner confirmed on 2026-07-28 that we supply and install these.
+         * Deliberately not claimed here, because they were not confirmed: any named
+         * standard (BS 7346, EN 12101), servicing or maintenance intervals, third
+         * party certification, and design of the detection or control strategy. The
+         * supplier reference the owner supplied named no standards either, so
+         * nothing here is carried over from it. Add those claims only once the
+         * owner confirms them; this is life safety and a wrong claim is worse than
+         * a missing one.
+         */
+        'automatic-opening-vents' => [
+            'eyebrow' => 'AOV smoke ventilation',
+            'title' => 'Automatic opening vents',
+            'subtitle' => 'AOV units supplied and installed as part of the commercial glazing package, for the stairwells, corridors and lobbies where smoke has to be cleared from an escape route.',
+            'intro_heading' => 'A window that opens itself when the building fills with smoke.',
+            'hero_image' => $asset_base . 'Airbus-Commercial.jpg',
+            'hero_alt' => 'Large commercial building with a fully glazed facade',
+            'intro_image' => $asset_base . 'curtain-walling-6-1.jpeg',
+            'intro_alt' => 'Commercial glazed elevation on a dealership building',
+            'summary' => [
+                'An automatic opening vent is a window or roof vent built into the building that opens on its own when smoke or heat is detected. Its job is to keep the escape route usable: the smoke goes out, the stairwell or corridor stays clear enough to walk down, and the fire service can see what they are walking into.',
+                'We supply and install them. An AOV is a window before it is anything else, so it is worth specifying alongside the rest of the glazing rather than cutting one into a finished elevation afterwards.',
+            ],
+            'stats' => [
+                ['value' => 'Supply', 'label' => 'and install, both by us'],
+                ['value' => 'Escape routes', 'label' => 'stairwells, corridors and lobbies'],
+                ['value' => 'Handover', 'label' => 'documentation for what we fit'],
+            ],
+            'capabilities' => [
+                ['title' => 'Vents in the elevation', 'copy' => 'Opening vents formed within the window or screen line so the facade still reads as one system.'],
+                ['title' => 'Roof and stairwell vents', 'copy' => 'Vents at the head of a stair or in the roof, where the smoke needs somewhere to go.'],
+                ['title' => 'Fitted with the glazing', 'copy' => 'Installed as part of the window and door package rather than cut in as a separate trade afterwards.'],
+                ['title' => 'Tested on completion', 'copy' => 'The vents we install are tested before handover and the paperwork for them goes to you.'],
+            ],
+            'detail_sections' => [
+                [
+                    'eyebrow' => 'Specify it early',
+                    'title' => 'An AOV decided late becomes a hole cut in a finished elevation.',
+                    'copy' => 'The vent has to sit somewhere that works structurally, keeps the sightlines and still opens far enough to do its job. Knowing where it goes before the frames are made is the difference between a vent that looks like part of the building and one that looks like an afterthought.',
+                    'image' => $asset_base . 'curtain-walling-4.jpg',
+                    'alt' => 'Commercial curtain walling elevation',
+                    'points' => ['Position agreed before manufacture', 'Sightlines kept across the elevation', 'Opening area checked against the brief'],
+                ],
+                [
+                    'eyebrow' => 'What we need from you',
+                    'title' => 'Send the fire strategy and we will work to it.',
+                    'copy' => 'Where the vents go, how much they open and what triggers them come out of the building fire strategy, not out of a glazing quote. Send us that strategy or the specification written from it and we will price and fit to it. If it has not been written yet, tell us and we will hold the vent positions open rather than guess at them.',
+                    'image' => $asset_base . 'SM-033-006.jpg',
+                    'alt' => 'Commercial aluminium glazing system detail',
+                    'points' => ['Fire strategy or specification', 'Vent positions and opening area', 'Programme and access on site'],
+                ],
+            ],
+            'use_cases' => ['Stairwells', 'Corridors and lobbies', 'Apartment blocks', 'Offices', 'Schools', 'Care settings'],
+        ],
         'healthcare-construction' => [
             'eyebrow' => 'Healthcare glazing',
             'title' => 'Healthcare construction glazing',

@@ -180,6 +180,7 @@ $commercial_route_slugs = [
     'commercial-automation',
     'commercial-projects',
     'healthcare-construction',
+    'automatic-opening-vents',
 ];
 $is_commercial = in_array($slug, $commercial_route_slugs, true) || str_starts_with($slug, 'commercial-glazing-');
 $commercial_product = function_exists('fenster_commercial_product_page') ? fenster_commercial_product_page($slug) : null;

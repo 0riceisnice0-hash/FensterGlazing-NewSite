@@ -902,6 +902,12 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'title_tag' => 'Online Window and Door Quote | Fenster Glazing',
             'meta_description' => 'Start an online quote for Fenster Glazing windows, doors, bifolds and roof lanterns, then our team can confirm survey details and next steps.',
         ],
+        /* Virtual route: AOV has no imported record, so this override is what
+           creates the page. Its content comes from inc/commercial-product-data.php. */
+        'automatic-opening-vents' => [
+            'title_tag' => 'AOV Smoke Ventilation | Automatic Opening Vents',
+            'meta_description' => 'Automatic opening vents supplied and installed with your commercial glazing, for stairwells, corridors and lobbies that need smoke cleared from an escape route.',
+        ],
         'book-a-consultation' => [
             'title_tag' => 'Free Expert Window & Door Consultation | Milton Keynes',
             'meta_description' => 'Book a free window and door consultation with a Fenster Glazing expert. We measure and price at your home across Milton Keynes and the surrounding counties.',
@@ -1881,7 +1887,7 @@ function fenster_maybe_render_generated_sitemap(): void
         array_keys(fenster_case_studies())
     ) : [];
 
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights'], $case_study_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents'], $case_study_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
