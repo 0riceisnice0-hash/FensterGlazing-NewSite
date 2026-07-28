@@ -203,15 +203,15 @@ function fenster_site_data(): array
                  * Same shape as the Products mega menu, so both run through the one
                  * renderer in inc/template-tags.php.
                  *
-                 * Sectors currently holds one page. Healthcare is the only sector
-                 * route that exists; the other four commercial routes are services.
-                 * Approving more sector pages (education, offices and retail, care
-                 * settings are all named as use cases in inc/commercial-product-data.php)
-                 * fills this column without touching the renderer.
-                 *
-                 * Credentials is here because Constructionline Gold and SSIP are what a
-                 * main contractor asks for before they will take a quote seriously. They
-                 * were only reachable from footer badges before.
+                 * Sectors holds one page. Healthcare is the only sector landing page on
+                 * the site: a sweep of all 695 sitemap URLs on 2026-07-28 found nothing
+                 * for education, offices, retail, leisure or industrial. There is real
+                 * completed work in two more sectors though, at
+                 * /case-studies/barn-hotel-windows-coventry/ and
+                 * /case-studies/care-home-window-replacement/, so hospitality and care
+                 * are the two sector pages that could be written with genuine proof
+                 * rather than invented. Adding them fills this column without touching
+                 * the renderer.
                  */
                 'columns' => [
                     [
@@ -229,14 +229,6 @@ function fenster_site_data(): array
                         'url' => home_url('/healthcare-construction/'),
                         'items' => [
                             ['label' => 'Healthcare', 'url' => home_url('/healthcare-construction/')],
-                        ],
-                    ],
-                    [
-                        'label' => 'Credentials',
-                        'url' => home_url('/why-trust-fenster/'),
-                        'items' => [
-                            ['label' => 'Constructionline Gold', 'url' => home_url('/constructionline-gold/')],
-                            ['label' => 'SSIP Health and Safety', 'url' => home_url('/ssip-health-and-safety/')],
                         ],
                     ],
                 ],
