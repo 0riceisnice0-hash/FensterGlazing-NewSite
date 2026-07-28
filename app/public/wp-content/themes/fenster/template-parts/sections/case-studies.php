@@ -511,15 +511,27 @@ if (! function_exists('fenster_case_related_cards')) {
  * legacy pages.json commercial logic runs. The commercial-projects archive
  * and commercial detail pages continue to use the pages.json data below.
  */
-$case_short_slug = str_starts_with($slug, 'case-studies/') ? substr($slug, strlen('case-studies/')) : '';
-$is_residential_archive = $slug === 'case-studies';
-$is_residential_detail = $case_short_slug !== '' && function_exists('fenster_case_study') && fenster_case_study($case_short_slug) !== null;
+$curated_base = '';
+foreach (['case-studies/', 'commercial-projects/'] as $candidate) {
+    if (str_starts_with($slug, $candidate)) {
+        $curated_base = $candidate;
+        break;
+    }
+}
+$case_short_slug = $curated_base !== '' ? substr($slug, strlen($curated_base)) : '';
+$is_curated_archive = in_array($slug, ['case-studies', 'commercial-projects'], true);
+$curated_study = $case_short_slug !== '' && function_exists('fenster_case_study') ? fenster_case_study($case_short_slug) : null;
+/* Only render a study on its own base, so a commercial slug under
+   /case-studies/ is left to the redirect rather than served twice. */
+$is_curated_detail = is_array($curated_study) && fenster_case_study_base($curated_study) . '/' === $curated_base;
+$curated_is_commercial = $slug === 'commercial-projects' || str_starts_with($slug, 'commercial-projects/');
 
-if ($is_residential_archive || $is_residential_detail) {
+if ($is_curated_archive || $is_curated_detail) {
     get_template_part('template-parts/sections/case-studies-residential', null, [
         'slug' => $slug,
         'short_slug' => $case_short_slug,
-        'is_archive' => $is_residential_archive,
+        'is_archive' => $is_curated_archive,
+        'is_commercial' => $curated_is_commercial,
         'quote_url' => home_url('/online-quote/'),
         'phone' => $phone,
         'email' => $email,

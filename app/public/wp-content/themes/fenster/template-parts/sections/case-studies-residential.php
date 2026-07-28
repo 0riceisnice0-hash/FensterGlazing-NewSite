@@ -16,10 +16,18 @@ if (! defined('ABSPATH')) {
 
 $args = is_array($args ?? null) ? $args : [];
 $is_archive = ! empty($args['is_archive']);
+$is_commercial = ! empty($args['is_commercial']);
 $short_slug = (string) ($args['short_slug'] ?? '');
 $quote_url = (string) ($args['quote_url'] ?? home_url('/online-quote/'));
 
-$studies = function_exists('fenster_case_studies') ? fenster_case_studies() : [];
+/* One renderer, two archives. Commercial work lists at /commercial-projects/
+   and residential at /case-studies/, so each archive only builds cards for its
+   own type. A detail page still needs the full set for related links. */
+if ($is_archive && function_exists('fenster_case_studies_of_type')) {
+    $studies = fenster_case_studies_of_type($is_commercial ? 'commercial' : 'residential');
+} else {
+    $studies = function_exists('fenster_case_studies') ? fenster_case_studies() : [];
+}
 if (! is_array($studies) || empty($studies)) {
     return;
 }
@@ -49,9 +57,11 @@ if ($is_archive) :
     <article class="fg-cs fg-cs--archive">
         <header class="fg-cs-head">
             <div class="container">
-                <p class="eyebrow"><?php esc_html_e('Case studies', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Recent installations', 'fenster'); ?></h1>
-                <p class="fg-cs-head__lead"><?php esc_html_e('See the most recent of our 1,000+ installations in the case studies below.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php echo esc_html($is_commercial ? __('Commercial projects', 'fenster') : __('Case studies', 'fenster')); ?></p>
+                <h1><?php echo esc_html($is_commercial ? __('Commercial projects', 'fenster') : __('Recent installations', 'fenster')); ?></h1>
+                <p class="fg-cs-head__lead"><?php echo esc_html($is_commercial
+                    ? __('Buildings we have glazed for other businesses, with the scope, the constraints and what was actually fitted.', 'fenster')
+                    : __('See the most recent of our 1,000+ installations in the case studies below.', 'fenster')); ?></p>
             </div>
         </header>
 

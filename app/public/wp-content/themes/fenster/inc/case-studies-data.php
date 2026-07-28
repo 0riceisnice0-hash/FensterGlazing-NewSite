@@ -126,6 +126,194 @@ function fenster_case_studies(): array
                 'meta_description' => 'A Fenster commercial project: aluminium windows for the conversion of four former Leeds office buildings into 108 student studios, completed October 2025.',
             ],
         ],
+        /*
+         * The five studies below were migrated out of the imported pages.json
+         * records on 2026-07-28 so all commercial work runs on this system and
+         * this format. Facts are carried over from those records rather than
+         * rewritten: 37 windows craned into a shell at the Barn Hotel, the
+         * dementia setting at Sunrise, the R9 and C70 counts at the Green Man,
+         * the colour match on the Kitwood Unit. The old records are left in
+         * place; their routes now 301 to /commercial-projects/.
+         */
+        'barn-hotel-coventry' => [
+            'title' => 'Aluminium windows, The Barn Hotel, Coventry',
+            'location' => 'Coventry',
+            'type' => 'Commercial',
+            'date' => '2025-06-01',
+            'summary' => '37 aluminium windows and new entrance doors, craned into a hotel that was still a shell with no stairs in it.',
+            'lead' => 'We fitted 37 aluminium windows and the entrance doors on this Coventry hotel refurbishment. When we started, the building was a shell with no internal staircases, so the glazing went up by crane.',
+            'products' => [
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+            ],
+            'specs' => [
+                ['label' => 'Windows', 'value' => '37 aluminium units'],
+                ['label' => 'Also fitted', 'value' => 'Commercial entrance doors'],
+                ['label' => 'Building', 'value' => 'Stripped to shell'],
+                ['label' => 'Access', 'value' => 'Crane lift to first floor'],
+            ],
+            'overview' => [
+                'The hotel had been stripped back to shell condition for redevelopment. Our package was the building envelope: 37 <a href="' . esc_url(home_url('/aluminium-windows/')) . '">aluminium windows</a> to survey dimensions, plus the commercial entrance doors.',
+                'The complication was not the glazing, it was getting to it. When we began there were no internal staircases in the building, so there was no way of carrying units to the upper floors. Every first floor unit went up on an industrial crane, and each lift had to be booked into the main contractor\'s programme in advance rather than called for on the day.',
+                'Aluminium was specified for the sightlines and the service life, which is what a hotel wants from a window it is not going to touch again for twenty years. The frames were made to measurements taken at survey, so they went into an envelope that was still being finished around them.',
+                'Most of our commercial work happens at this stage, months before anyone sees the building. It is rare to get back and photograph the finished thing.',
+            ],
+            'installed' => [
+                '37 aluminium windows to survey dimensions',
+                'New commercial entrance doors',
+                'Crane lifts sequenced with the main contractor',
+                'Fitted from shell stage through to completion',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-barn-hotel-exterior-1400w.webp', 'caption' => 'The Barn Hotel after completion, with the aluminium window line across the timber-clad elevation.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Barn Hotel, Coventry: Commercial Window Installation',
+                'meta_description' => 'A Fenster commercial project: 37 aluminium windows and entrance doors fitted to a Coventry hotel refurbishment, craned in while the building was still a shell.',
+            ],
+        ],
+        'sunrise-care-home-kettering' => [
+            'title' => 'Windows and doors, Sunrise Care Home, Kettering',
+            'location' => 'Kettering',
+            'type' => 'Commercial',
+            'date' => '2025-05-01',
+            'summary' => 'Every window and door replaced in a working dementia care home, phased around residents who were in the building throughout.',
+            'lead' => 'We replaced all the windows and doors at Sunrise Care Home in Kettering. It is a dementia specific setting, so the specification and the way we worked in the building both had to suit that.',
+            'products' => [
+                ['label' => 'Care home glazing', 'url' => home_url('/care-home-glazing/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+            ],
+            'specs' => [
+                ['label' => 'Scope', 'value' => 'All windows and doors'],
+                ['label' => 'Setting', 'value' => 'Dementia care, occupied'],
+                ['label' => 'Product', 'value' => 'uPVC windows and doors'],
+                ['label' => 'Programme', 'value' => 'Phased around residents'],
+            ],
+            'overview' => [
+                'The home was refurbishing while it kept running, and the glazing was part of that. Every existing window and door was replaced to improve thermal performance and security across the building.',
+                'A dementia setting changes the brief. Safe opening was specified rather than assumed, and the way our teams worked in the building mattered as much as what we fitted: tools controlled, access controlled, and a calm environment kept for residents who were there the whole time.',
+                'The work was phased so the home could carry on operating. That is slower than clearing a floor and working through it, and on an occupied care building it is the only sensible way. See our <a href="' . esc_url(home_url('/care-home-glazing/')) . '">care home glazing</a> page for how we approach these sites.',
+            ],
+            'installed' => [
+                'Full replacement of windows and doors',
+                'uPVC systems suited to a care environment',
+                'Safe opening specified for a dementia setting',
+                'Phased so the home kept operating throughout',
+            ],
+            'images' => [
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/668a13f5-3500-420d-8e15-47834268084b.jpg', 'caption' => 'Sunrise Care Home after the window and door replacement.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Sunrise Care Home, Kettering: Window Replacement',
+                'meta_description' => 'A Fenster commercial project: all windows and doors replaced at a dementia care home in Kettering, phased around residents living in the building throughout.',
+            ],
+        ],
+        'the-green-man-eversholt' => [
+            'title' => 'Period-style windows, The Green Man, Eversholt',
+            'location' => 'Eversholt, Bedfordshire',
+            'type' => 'Commercial',
+            'date' => '2025-04-01',
+            'summary' => 'Twelve windows in a village pub, mechanically jointed with astragal bars so they read as timber rather than plastic.',
+            'lead' => 'The Green Man is a village pub and restaurant near Woburn. We replaced twelve windows across the front and rear, upper and ground floor, in a style that keeps the building looking its age.',
+            'products' => [
+                ['label' => 'Hotel and hospitality glazing', 'url' => home_url('/hotel-and-hospitality-glazing/')],
+                ['label' => 'Flush casement windows', 'url' => home_url('/flush-casement-windows/')],
+            ],
+            'specs' => [
+                ['label' => 'Windows', 'value' => '6 Residence R9'],
+                ['label' => 'Bay', 'value' => '1 three-part, R9'],
+                ['label' => 'Flush casements', 'value' => '5 in white woodgrain C70'],
+                ['label' => 'Detail', 'value' => 'Astragal bars, monkey tail handles'],
+            ],
+            'overview' => [
+                'The brief was the one every period building gives you: better performance without the building looking like it has had modern windows put in. On a pub with an 1835 datestone, getting that wrong is obvious from the street.',
+                'We fitted six Residence R9 windows, a three part R9 bay, and five white woodgrain C70 <a href="' . esc_url(home_url('/flush-casement-windows/')) . '">flush casements</a>. All of them are mechanically jointed rather than welded, which is what gives the frame a timber style corner instead of a rounded plastic one, and all carry astragal bars and black monkey tail handles.',
+                'The work covered the front and rear elevations, upper and ground floors, on a venue that was still trading. The pub was commissioned by its owner Simon, who we had already worked with at Water End Barn, so the programme was agreed rather than negotiated.',
+            ],
+            'installed' => [
+                'Six Residence R9 windows',
+                'One three part bay window in Residence R9',
+                'Five white woodgrain C70 flush casements',
+                'Mechanically jointed, with astragal bars and monkey tail handles',
+            ],
+            'images' => [
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/3-1-3.png', 'caption' => 'The Green Man after the window replacement, with the three part bay to the right.'],
+            ],
+            'seo' => [
+                'title_tag' => 'The Green Man, Eversholt: Period Pub Window Replacement',
+                'meta_description' => 'A Fenster commercial project: twelve period-style uPVC windows fitted to a trading village pub near Woburn, mechanically jointed with astragal bars.',
+            ],
+        ],
+        'roka-dental-woburn-sands' => [
+            'title' => 'Entrance doors, Roka Dental, Woburn Sands',
+            'location' => 'Woburn Sands',
+            'type' => 'Commercial',
+            'date' => '2025-04-15',
+            'summary' => 'Aluminium and uPVC doors for a new dental practice, specified around the brand rather than the catalogue.',
+            'lead' => 'Roka Dental were opening new premises in Woburn Sands. We supplied and fitted the external doors, chosen to match the way the practice presents itself.',
+            'products' => [
+                ['label' => 'Healthcare glazing', 'url' => home_url('/healthcare-construction/')],
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+            ],
+            'specs' => [
+                ['label' => 'Scope', 'value' => 'External doors'],
+                ['label' => 'Materials', 'value' => 'Aluminium and uPVC'],
+                ['label' => 'Setting', 'value' => 'New dental practice'],
+                ['label' => 'Driver', 'value' => 'Brand and daily use'],
+            ],
+            'overview' => [
+                'A new practice gets one first impression, and on a high street unit the door is most of it. The brief was doors that matched the practice\'s branding and stood up to the traffic a clinical building gets every day.',
+                'We used a combination of aluminium and uPVC systems, chosen for proportion and finish rather than picked off a list, so the entrance reads as part of the building rather than a replacement part. The work was done by our own installers to a fixed date, because the practice had an opening to hit.',
+            ],
+            'installed' => [
+                'Aluminium and uPVC external doors',
+                'Finishes matched to the practice branding',
+                'Fitted by our own installation teams',
+                'Completed to the practice opening date',
+            ],
+            'images' => [
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/ROKA-Dental-Post-Fitting-2-scaled.jpg', 'caption' => 'Roka Dental, Woburn Sands, after the doors were fitted.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Roka Dental, Woburn Sands: Commercial Door Replacement',
+                'meta_description' => 'A Fenster commercial project: aluminium and uPVC entrance doors for a new dental practice in Woburn Sands, matched to the practice branding.',
+            ],
+        ],
+        'herts-and-essex-community-hospital' => [
+            'title' => 'Aluminium windows, Herts and Essex Community Hospital',
+            'location' => 'Bishop\'s Stortford',
+            'type' => 'Commercial',
+            'date' => '2025-03-01',
+            'summary' => 'Colour-matched aluminium windows and doors for the Kitwood Unit, fitted in a working hospital without interrupting it.',
+            'lead' => 'The Kitwood Unit is the newest part of Herts and Essex Community Hospital. We supplied and fitted the aluminium windows and doors, matched to what was already on the estate.',
+            'products' => [
+                ['label' => 'Healthcare glazing', 'url' => home_url('/healthcare-construction/')],
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+            ],
+            'specs' => [
+                ['label' => 'Building', 'value' => 'Kitwood Unit'],
+                ['label' => 'Product', 'value' => 'Aluminium windows and doors'],
+                ['label' => 'Requirement', 'value' => 'Colour and profile match'],
+                ['label' => 'Site', 'value' => 'Live clinical environment'],
+            ],
+            'overview' => [
+                'The requirement was like for like. A new unit that meets existing hospital buildings has to look like it belongs to them, so the <a href="' . esc_url(home_url('/aluminium-windows/')) . '">aluminium windows</a> and doors were matched on both colour and profile rather than simply specified to performance.',
+                'The bigger constraint was the site. A hospital does not stop, so the works ran to approved RAMS and site specific protocols, phased so patient care, staff access and hospital services carried on around us. That is normal for <a href="' . esc_url(home_url('/healthcare-construction/')) . '">healthcare work</a> and it is the part that decides the programme.',
+            ],
+            'installed' => [
+                'Aluminium windows and doors to the Kitwood Unit',
+                'Colour and profile matched to the existing estate',
+                'Approved RAMS and site specific protocols',
+                'Phased around live clinical services',
+            ],
+            'images' => [
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/fe2513f8-d557-4972-bb3f-bc0cc6a9d5f3.jpg', 'caption' => 'The Kitwood Unit at Herts and Essex Community Hospital after the glazing works.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Herts & Essex Community Hospital: Aluminium Glazing',
+                'meta_description' => 'A Fenster commercial project: colour-matched aluminium windows and doors for the Kitwood Unit, fitted around live clinical services.',
+            ],
+        ],
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
             'title' => 'Aluminium bifold doors, Whitehouse',
             'location' => 'Whitehouse, Milton Keynes',
@@ -524,11 +712,41 @@ function fenster_case_study(string $short_slug): ?array
  * @param array<string, mixed> $study Full study entry.
  * @return array<string, mixed>
  */
+/**
+ * Route segment a study lives under.
+ *
+ * Commercial work sits at /commercial-projects/, residential at /case-studies/.
+ * Owner instruction, 2026-07-28: the two audiences are different and a facilities
+ * manager should not have to read past a bungalow to find a hospital. Both use
+ * the same renderer, only the base differs.
+ */
+function fenster_case_study_base(array $study): string
+{
+    return strtolower((string) ($study['type'] ?? 'Residential')) === 'commercial'
+        ? 'commercial-projects'
+        : 'case-studies';
+}
+
+/**
+ * Studies of one type, keyed by short slug.
+ *
+ * @return array<string, array<string, mixed>>
+ */
+function fenster_case_studies_of_type(string $type): array
+{
+    $type = strtolower($type);
+
+    return array_filter(
+        fenster_case_studies(),
+        static fn (array $study): bool => strtolower((string) ($study['type'] ?? 'Residential')) === $type
+    );
+}
+
 function fenster_case_study_card(string $short, array $study): array
 {
     return [
         'short' => $short,
-        'url' => home_url('/case-studies/' . $short . '/'),
+        'url' => home_url('/' . fenster_case_study_base($study) . '/' . $short . '/'),
         'title' => (string) ($study['title'] ?? ''),
         'location' => (string) ($study['location'] ?? ''),
         'type' => (string) ($study['type'] ?? 'Residential'),

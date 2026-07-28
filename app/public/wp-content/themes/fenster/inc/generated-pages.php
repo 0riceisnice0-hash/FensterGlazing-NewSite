@@ -1348,6 +1348,11 @@ function fenster_get_generated_page(?string $slug = null): ?array
         $og_image = (string) ($first['images'][0]['src'] ?? '');
         $links = [];
         foreach ($studies as $short_slug => $study) {
+            /* Commercial work lives at /commercial-projects/ now, so it is not
+               listed here. Owner instruction, 2026-07-28. */
+            if (fenster_case_study_base($study) !== 'case-studies') {
+                continue;
+            }
             $links[] = ['url' => home_url('/case-studies/' . $short_slug . '/'), 'label' => (string) ($study['title'] ?? '')];
         }
 
@@ -1368,10 +1373,14 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
-    if (str_starts_with($slug, 'case-studies/') && function_exists('fenster_case_study')) {
-        $short_slug = substr($slug, strlen('case-studies/'));
+    if ((str_starts_with($slug, 'case-studies/') || str_starts_with($slug, 'commercial-projects/')) && function_exists('fenster_case_study')) {
+        $base = str_starts_with($slug, 'commercial-projects/') ? 'commercial-projects/' : 'case-studies/';
+        $short_slug = substr($slug, strlen($base));
         $study = fenster_case_study($short_slug);
-        if (is_array($study)) {
+        /* A study only answers on its own base, so a commercial slug under
+           /case-studies/ falls through to the redirect map rather than
+           resolving on both routes and duplicating itself. */
+        if (is_array($study) && fenster_case_study_base($study) . '/' === $base) {
             return $page_cache[$slug] = [
                 'slug' => $slug,
                 'title' => (string) ($study['title'] ?? 'Case Study'),
@@ -1562,6 +1571,27 @@ function fenster_gone_slugs(): array
  */
 function fenster_redirect_target(string $slug): string
 {
+    /* Commercial studies moved from /case-studies/ to /commercial-projects/ on
+       2026-07-28. The old routes are indexed, so they 301 rather than 404. Both
+       the imported slugs and the new short slugs are covered, because the
+       migrated entries were renamed at the same time. */
+    $moved_commercial = [
+        'case-studies/barn-hotel-windows-coventry' => 'commercial-projects/barn-hotel-coventry',
+        'case-studies/barn-hotel-coventry' => 'commercial-projects/barn-hotel-coventry',
+        'case-studies/care-home-window-replacement' => 'commercial-projects/sunrise-care-home-kettering',
+        'case-studies/sunrise-care-home-kettering' => 'commercial-projects/sunrise-care-home-kettering',
+        'case-studies/pub-windows-eversholt' => 'commercial-projects/the-green-man-eversholt',
+        'case-studies/the-green-man-eversholt' => 'commercial-projects/the-green-man-eversholt',
+        'case-studies/dental-practice-door-replacement' => 'commercial-projects/roka-dental-woburn-sands',
+        'case-studies/roka-dental-woburn-sands' => 'commercial-projects/roka-dental-woburn-sands',
+        'case-studies/replacement-aluminium-windows-herts-and-essex-community-hospital' => 'commercial-projects/herts-and-essex-community-hospital',
+        'case-studies/herts-and-essex-community-hospital' => 'commercial-projects/herts-and-essex-community-hospital',
+        'case-studies/headrow-court-student-accommodation-leeds' => 'commercial-projects/headrow-court-student-accommodation-leeds',
+    ];
+    if (isset($moved_commercial[$slug])) {
+        return $moved_commercial[$slug];
+    }
+
     // Main product pages already own Milton Keynes intent. Keep legacy matrix
     // URLs useful for visitors, but consolidate their equity to that parent.
     // '/double-glazing-milton-keynes/' is exempt: it is the deliberate
@@ -1907,10 +1937,14 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    $case_study_slugs = function_exists('fenster_case_studies') ? array_map(
-        static fn (string $short): string => 'case-studies/' . $short,
-        array_keys(fenster_case_studies())
-    ) : [];
+    /* Each study is listed under its own base, so commercial work appears in the
+       sitemap at /commercial-projects/ and residential at /case-studies/. */
+    $case_study_slugs = [];
+    if (function_exists('fenster_case_studies')) {
+        foreach (fenster_case_studies() as $short => $study) {
+            $case_study_slugs[] = fenster_case_study_base($study) . '/' . $short;
+        }
+    }
 
     foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing'], $case_study_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
