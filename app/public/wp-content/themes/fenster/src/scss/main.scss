@@ -34732,6 +34732,118 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
+/* Construction explorer: the composite anatomy pattern on the EnergyPlus
+   cutaway. Driven by the shared [data-fg-anatomy] controller; first item is
+   open in the markup so the section reads with JavaScript off. */
+.fg-cw-anatomy__explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  padding: clamp(1.25rem, 2.4vw, 2rem);
+  border: 1px solid var(--cw-line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-cw-anatomy__media {
+  position: sticky;
+  top: calc(var(--site-header-main-height) + 16px);
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+  border-radius: 8px;
+  background: var(--color-soft);
+}
+
+.fg-cw-anatomy__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fg-cw-anatomy__items {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-cw-anatomy__item {
+  border-top: 1px solid var(--cw-line);
+}
+
+.fg-cw-anatomy__item:first-child {
+  border-top: 0;
+}
+
+.fg-cw-anatomy__item h3 {
+  margin: 0;
+}
+
+.fg-cw-anatomy__toggle {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.85rem 0.25rem;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fg-cw-anatomy__num {
+  color: var(--color-accent-dark);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.fg-cw-anatomy__mark {
+  position: relative;
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.fg-cw-anatomy__mark::before,
+.fg-cw-anatomy__mark::after {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: var(--color-accent-dark);
+  content: '';
+}
+
+.fg-cw-anatomy__mark::before {
+  width: 100%;
+  height: 2px;
+}
+
+.fg-cw-anatomy__mark::after {
+  width: 2px;
+  height: 100%;
+  transition: transform 0.18s ease;
+}
+
+.fg-cw-anatomy__toggle[aria-expanded="true"] .fg-cw-anatomy__mark::after {
+  transform: scaleY(0);
+}
+
+.fg-cw-anatomy__body {
+  padding: 0 0.25rem 1rem 2.7rem;
+}
+
+.fg-cw .fg-cw-anatomy__body p {
+  max-width: 58ch;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
 /* Compact CTA panel between the gallery and the technical run. */
 .fg-cw-cta__panel {
   display: grid;
