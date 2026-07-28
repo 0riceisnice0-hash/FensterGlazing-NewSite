@@ -19,10 +19,14 @@ $booking_trust = [
     ['title' => 'FENSA approved', 'copy' => 'Registered window and door installations.', 'item' => $trust_items[2] ?? null],
 ];
 $faqs = [
-    ['question' => 'Is the consultation free?', 'answer' => 'Yes. The visit, the measuring and the price we give you are free, and they stay free whether you go ahead with us or not. There is no charge for coming out and no fee to pay if you decide against the job.'],
-    ['question' => 'How do I book a free consultation?', 'answer' => 'Choose an available weekday, select a preferred time and leave your contact details. We will then confirm the appointment directly with you.'],
-    ['question' => 'Is my chosen time confirmed immediately?', 'answer' => 'No. Your selected date and time are a preferred appointment request. The Fenster team checks availability and confirms the appointment by phone or email.'],
-    ['question' => 'What can I discuss at a consultation?', 'answer' => 'You can discuss windows, doors, glazing, repairs, roof lanterns, colour choices, project plans or a showroom visit with the Fenster team.'],
+    ['question' => 'Is the consultation free?', 'answer' => 'Yes. The visit, the measuring and the price are free, and they stay free whether you go ahead with us or not. There is no charge for coming out and no fee to pay if you decide against the job.'],
+    ['question' => 'Will I get a hard sell?', 'answer' => 'No. It is a friendly visit rather than a pitch. We go through the options, price the job and leave the decision with you. We do not do pressure selling, and nothing needs deciding while we are in the room.'],
+    ['question' => 'Who comes out, and what will we go through?', 'answer' => 'A window and door expert, who will go through the options with you: which style suits the opening, how the glass, colour and hardware choices change things, and what is worth doing now against later. Windows, doors, glazing, repairs and roof lanterns are all fair game.'],
+    ['question' => 'Will I get a price on the day?', 'answer' => 'Yes. We measure the openings, then build and price the job in front of you on an iPad, using the same software as the online quote tool. You are not waiting a week to find out the number.'],
+    ['question' => 'Is the price different from the online one?', 'answer' => 'No. The consultation runs on the same pricing software and the same price list as the quote tool on this site, so it is one number for the job rather than an online figure and a different one at the door.'],
+    ['question' => 'Can I get a price without booking a visit?', 'answer' => 'Yes. The online quote tool prices your sizes, styles, colours and glass as you go, and most people have a real figure inside ten minutes. A consultation is worth it when the opening is awkward, the choice is not obvious, or you would rather talk it through with someone.'],
+    ['question' => 'When can I book an appointment?', 'answer' => 'Weekdays, between 9am and 4pm. We are closed at weekends, and England and Wales bank holidays are excluded, so those dates cannot be selected on the calendar above.'],
+    ['question' => 'Is my chosen time confirmed immediately?', 'answer' => 'No. Your selected date and time are a preferred appointment request. We check availability and confirm the appointment with you by phone or email.'],
     ['question' => 'Which areas do you cover?', 'answer' => 'We visit homes across Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. Our showroom is in Milton Keynes, but the consultation happens at your property.'],
 ];
 $faq_schema = [
@@ -80,11 +84,12 @@ $faq_schema = [
             <div class="fg-consultation-page__story-copy">
                 <p class="eyebrow"><?php esc_html_e('Advice before decisions', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Bring the questions that are hard to answer online.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Whether you are replacing one door or planning a larger extension, a free consultation gives you time to compare the options that matter before you commit, with an expert who fits these for a living.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Whether you are replacing one door or planning a larger extension, a free consultation gives you time to compare the options that matter before you commit. It is a friendly conversation with a window and door expert, not a sales visit.', 'fenster'); ?></p>
                 <ul>
-                    <li><?php esc_html_e('Compare products, colour, glazing and practical details.', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Talk through your home, your plans and the right next step.', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Ask about a showroom visit, survey or installation timing.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('An expert goes through the options with you, and what suits the opening.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('The job is measured, then built and priced in front of you on an iPad.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('It is the same pricing software as the online quote tool, so the number matches.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('No pressure to decide anything while we are there.', 'fenster'); ?></li>
                 </ul>
                 <div class="fg-consultation-page__story-contact">
                     <span><?php esc_html_e('Prefer to speak now?', 'fenster'); ?></span>
@@ -107,9 +112,18 @@ $faq_schema = [
                 <p class="eyebrow"><?php esc_html_e('Booking questions', 'fenster'); ?></p>
                 <h2><?php esc_html_e('What to expect from your request.', 'fenster'); ?></h2>
             </div>
-            <div class="fg-consultation-page__faq-items">
-                <?php foreach ($faqs as $faq) : ?>
-                    <article><h3><?php echo esc_html($faq['question']); ?></h3><p><?php echo esc_html($faq['answer']); ?></p></article>
+            <?php /* Shares .fg-product-faq__items with the product pages so the one
+                     accordion controller in main.js drives these too, rather than a
+                     second copy. First item open so the section still reads with
+                     JavaScript off. */ ?>
+            <div class="fg-consultation-page__faq-items fg-product-faq__items">
+                <?php foreach ($faqs as $index => $faq) : ?>
+                    <details <?php echo $index === 0 ? 'open' : ''; ?>>
+                        <summary><?php echo esc_html($faq['question']); ?></summary>
+                        <div class="fg-product-faq__answer">
+                            <p><?php echo esc_html($faq['answer']); ?></p>
+                        </div>
+                    </details>
                 <?php endforeach; ?>
             </div>
         </div>

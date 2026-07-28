@@ -1139,18 +1139,21 @@ a {
   background: #ffffff;
 }
 
-.fg-consultation-page__faq article {
-  padding: 1.25rem 1.4rem;
+/* The questions are dropdowns now, sharing .fg-product-faq__items with the
+   product pages so one accordion controller in main.js drives both. The card
+   around them sets gap: 0, so each row carries its own divider instead. These
+   need the extra class in the selector: .fg-product-faq__items details is the
+   same specificity and sits later in the file, so a plainer selector loses. */
+.fg-consultation-page__faq .fg-product-faq__items details {
+  padding: 1.15rem 1.4rem;
   border-bottom: 1px solid rgba(0, 45, 58, 0.12);
 }
 
-.fg-consultation-page__faq article:last-child {
+.fg-consultation-page__faq .fg-product-faq__items details:last-child {
   border-bottom: 0;
 }
 
-.fg-consultation-page__faq h3 {
-  margin: 0 0 0.45rem;
-  color: var(--color-steel);
+.fg-consultation-page__faq .fg-product-faq__items summary {
   font-size: 1rem;
 }
 
