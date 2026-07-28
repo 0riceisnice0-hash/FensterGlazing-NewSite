@@ -11511,7 +11511,7 @@ a.fg-cs-installer:hover {
 
 .fg-cs-card__pills {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: 0.9rem;
   left: 0.9rem;
   display: flex;
@@ -11533,7 +11533,8 @@ a.fg-cs-installer:hover {
 
 .fg-cs-card__overlay {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
+  pointer-events: none;
   right: clamp(1rem, 2vw, 1.6rem);
   bottom: clamp(1rem, 2vw, 1.5rem);
   left: clamp(1rem, 2vw, 1.6rem);
@@ -11541,19 +11542,15 @@ a.fg-cs-installer:hover {
   gap: 0.25rem;
 }
 
-/* The title is the card's link. Its ::after covers the whole card so the card
-   still behaves as one target, while the pills sit above it on z-index 2 and
-   stay clickable in their own right. */
+/* The card's own link is a transparent layer over the whole card. It has to be
+   a sibling of the overlay, not a child: the overlay is positioned, so a
+   stretched pseudo-element inside it measures the overlay box rather than the
+   card and only the bottom strip stays clickable. Pills sit above it. */
 .fg-cs-card__stretch {
-  color: inherit;
-  text-decoration: none;
-}
-
-.fg-cs-card__stretch::after {
-  content: "";
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   inset: 0;
+  border-radius: inherit;
 }
 
 .fg-cs-card--overlay:focus-within {

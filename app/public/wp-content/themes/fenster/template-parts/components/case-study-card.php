@@ -68,14 +68,17 @@ if ($variant === 'overlay') :
                 <?php endforeach; ?>
             </p>
         <?php endif; ?>
+        <?php $title_id = 'cs-card-' . sanitize_title((string) ($card['short'] ?? $card['title'] ?? 'project')); ?>
         <div class="fg-cs-card__overlay">
-            <<?php echo $heading; ?> class="fg-cs-card__overlay-title">
-                <a class="fg-cs-card__stretch" href="<?php echo esc_url((string) $card['url']); ?>"><?php echo esc_html((string) ($card['title'] ?? '')); ?></a>
-            </<?php echo $heading; ?>>
+            <<?php echo $heading; ?> class="fg-cs-card__overlay-title" id="<?php echo esc_attr($title_id); ?>"><?php echo esc_html((string) ($card['title'] ?? '')); ?></<?php echo $heading; ?>>
             <?php if (! empty($card['location'])) : ?>
                 <span class="fg-cs-card__overlay-location"><?php echo esc_html((string) $card['location']); ?></span>
             <?php endif; ?>
         </div>
+        <?php /* The card's own link: a transparent layer over the whole card, named
+                 by the title so it is not an empty link. It sits under the pills,
+                 which keep their own targets. */ ?>
+        <a class="fg-cs-card__stretch" href="<?php echo esc_url((string) $card['url']); ?>" aria-labelledby="<?php echo esc_attr($title_id); ?>"></a>
     </article>
     <?php
     return;
