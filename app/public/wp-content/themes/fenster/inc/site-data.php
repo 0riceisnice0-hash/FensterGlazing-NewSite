@@ -198,14 +198,61 @@ function fenster_site_data(): array
             [
                 'label' => 'Commercial',
                 'url' => home_url('/commercial-glazing/'),
-                'children' => [
-                    ['label' => 'Commercial Glazing', 'url' => home_url('/commercial-glazing/')],
-                    ['label' => 'Commercial Windows and Doors', 'url' => home_url('/commercial-windows-and-doors/')],
-                    ['label' => 'Curtain Walling', 'url' => home_url('/curtain-walling/')],
-                    ['label' => 'Louvre Vents', 'url' => home_url('/louvre-vents/')],
-                    ['label' => 'Commercial Automation', 'url' => home_url('/commercial-automation/')],
-                    ['label' => 'Healthcare', 'url' => home_url('/healthcare-construction/')],
-                    ['label' => 'Commercial Projects', 'url' => home_url('/commercial-projects/')],
+                'mega' => true,
+                /*
+                 * Same shape as the Products mega menu, so both run through the one
+                 * renderer in inc/template-tags.php.
+                 *
+                 * Sectors currently holds one page. Healthcare is the only sector
+                 * route that exists; the other four commercial routes are services.
+                 * Approving more sector pages (education, offices and retail, care
+                 * settings are all named as use cases in inc/commercial-product-data.php)
+                 * fills this column without touching the renderer.
+                 *
+                 * Credentials is here because Constructionline Gold and SSIP are what a
+                 * main contractor asks for before they will take a quote seriously. They
+                 * were only reachable from footer badges before.
+                 */
+                'columns' => [
+                    [
+                        'label' => 'Services',
+                        'url' => home_url('/commercial-glazing/'),
+                        'items' => [
+                            ['label' => 'Commercial Windows and Doors', 'url' => home_url('/commercial-windows-and-doors/')],
+                            ['label' => 'Curtain Walling', 'url' => home_url('/curtain-walling/')],
+                            ['label' => 'Louvre Vents', 'url' => home_url('/louvre-vents/')],
+                            ['label' => 'Commercial Automation', 'url' => home_url('/commercial-automation/')],
+                        ],
+                    ],
+                    [
+                        'label' => 'Sectors',
+                        'url' => home_url('/healthcare-construction/'),
+                        'items' => [
+                            ['label' => 'Healthcare', 'url' => home_url('/healthcare-construction/')],
+                        ],
+                    ],
+                    [
+                        'label' => 'Credentials',
+                        'url' => home_url('/why-trust-fenster/'),
+                        'items' => [
+                            ['label' => 'Constructionline Gold', 'url' => home_url('/constructionline-gold/')],
+                            ['label' => 'SSIP Health and Safety', 'url' => home_url('/ssip-health-and-safety/')],
+                        ],
+                    ],
+                ],
+                'ctas' => [
+                    [
+                        'label' => 'See our commercial projects',
+                        'badge' => 'Our work',
+                        'url' => home_url('/commercial-projects/'),
+                        'copy' => 'Real buildings we have glazed, with the scope and the systems used.',
+                    ],
+                    [
+                        'label' => 'Send a commercial enquiry',
+                        'badge' => 'Talk to us',
+                        'url' => home_url('/commercial-glazing/#commercial-enquiry'),
+                        'copy' => 'Drawings, schedules and site details welcome. We will come back with next steps.',
+                    ],
                 ],
             ],
             ['label' => 'About Us', 'url' => home_url('/about/')],
