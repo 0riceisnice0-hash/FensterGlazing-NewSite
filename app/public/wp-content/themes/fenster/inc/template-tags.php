@@ -83,7 +83,9 @@ function fenster_render_nav_fallback(): void
             );
             echo '</div>';
             echo '<div class="site-nav__mega-grid">';
-            echo '<div class="site-nav__mega-columns">';
+            /* The grid was hardcoded to three tracks, so a two-column menu left an
+               empty third and read as a missing column. Driven by the real count now. */
+            printf('<div class="site-nav__mega-columns" style="--fg-mega-columns: %d;">', count($item['columns']));
             foreach ($item['columns'] as $column) {
                 echo '<section class="site-nav__mega-column">';
                 printf(
@@ -116,8 +118,15 @@ function fenster_render_nav_fallback(): void
                 echo '<div class="site-nav__mega-ctas">';
                 foreach ($item['ctas'] as $cta) {
                     $cta_badge = (string) ($cta['badge'] ?? '');
+                    /* Green used to be whichever CTA came second. That made the colour a
+                       side effect of the order, so reordering a menu silently recoloured
+                       it. It is declared per CTA now. */
+                    $cta_class = 'site-nav__mega-cta';
+                    if (($cta['variant'] ?? '') === 'accent') {
+                        $cta_class .= ' site-nav__mega-cta--accent';
+                    }
                     printf(
-                        '<a class="site-nav__mega-cta" href="%s">%s<strong>%s</strong><span>%s</span></a>',
+                        '<a class="' . esc_attr($cta_class) . '" href="%s">%s<strong>%s</strong><span>%s</span></a>',
                         esc_url($cta['url'] ?? '#'),
                         $cta_badge !== '' ? '<span class="site-nav__mega-cta-badge">' . esc_html($cta_badge) . '</span>' : '',
                         esc_html($cta['label'] ?? ''),

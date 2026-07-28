@@ -683,7 +683,9 @@ a {
 
 .site-nav__mega-columns {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Count comes from the renderer. Hardcoding three left the Commercial menu,
+     which has two, with an empty track that read as a missing column. */
+  grid-template-columns: repeat(var(--fg-mega-columns, 3), minmax(0, 1fr));
   gap: 1.9rem;
 }
 
@@ -747,7 +749,9 @@ a {
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
-.site-nav .site-nav__mega-cta:nth-child(2) {
+/* Was :nth-child(2), which tied the colour to the order: reordering a menu
+   recoloured it as a side effect. Declared per CTA in the nav data now. */
+.site-nav .site-nav__mega-cta--accent {
   background:
     radial-gradient(circle at 88% 6%, rgba(255, 255, 255, 0.34), transparent 34%),
     linear-gradient(135deg, #31b86e, var(--color-accent-dark));

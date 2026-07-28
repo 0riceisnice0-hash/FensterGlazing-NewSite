@@ -190,6 +190,7 @@ function fenster_site_data(): array
                     [
                         'label' => 'Book a free consultation',
                         'badge' => 'Free',
+                        'variant' => 'accent',
                         'url' => home_url('/book-a-consultation/'),
                         'copy' => 'An expert comes to you, measures up and prices the job. The visit costs nothing.',
                     ],
@@ -234,16 +235,17 @@ function fenster_site_data(): array
                 ],
                 'ctas' => [
                     [
+                        'label' => 'Send a commercial enquiry',
+                        'badge' => 'Talk to us',
+                        'variant' => 'accent',
+                        'url' => home_url('/commercial-glazing/#commercial-enquiry'),
+                        'copy' => 'Drawings, schedules and site details welcome. We will come back with next steps.',
+                    ],
+                    [
                         'label' => 'See our commercial projects',
                         'badge' => 'Our work',
                         'url' => home_url('/commercial-projects/'),
                         'copy' => 'Real buildings we have glazed, with the scope and the systems used.',
-                    ],
-                    [
-                        'label' => 'Send a commercial enquiry',
-                        'badge' => 'Talk to us',
-                        'url' => home_url('/commercial-glazing/#commercial-enquiry'),
-                        'copy' => 'Drawings, schedules and site details welcome. We will come back with next steps.',
                     ],
                 ],
             ],
