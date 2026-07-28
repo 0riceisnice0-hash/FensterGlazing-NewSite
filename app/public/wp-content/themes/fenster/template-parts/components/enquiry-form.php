@@ -94,7 +94,7 @@ $notices = [
                 <div class="fg-consultation-booking__intro">
                     <span><?php esc_html_e('Step 1 of 3', 'fenster'); ?></span>
                     <strong><?php esc_html_e('Pick a date for your free consultation.', 'fenster'); ?></strong>
-                    <p><?php esc_html_e('Pick a preferred time and the Fenster team will confirm the appointment with you. The visit is free.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Pick a preferred time and the Fenster team will confirm the appointment with you. One of our experts visits, and the visit is free.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-consultation-booking__calendar" data-fg-consultation-calendar aria-live="polite"></div>
                 <p class="fg-consultation-booking__availability" aria-label="<?php esc_attr_e('Consultation availability', 'fenster'); ?>">

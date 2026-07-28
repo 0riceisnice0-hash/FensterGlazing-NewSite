@@ -903,8 +903,8 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'meta_description' => 'Start an online quote for Fenster Glazing windows, doors, bifolds and roof lanterns, then our team can confirm survey details and next steps.',
         ],
         'book-a-consultation' => [
-            'title_tag' => 'Free Window & Door Consultation | Milton Keynes',
-            'meta_description' => 'Book a free window, door or glazing consultation with Fenster Glazing in Milton Keynes. We measure up and price the job at your home, at no charge.',
+            'title_tag' => 'Free Expert Window & Door Consultation | Milton Keynes',
+            'meta_description' => 'Book a free window and door consultation with a Fenster Glazing expert. We measure and price at your home across Milton Keynes and the surrounding counties.',
         ],
     ];
     $launch_seo_overrides = array_merge($launch_seo_overrides, fenster_gsc_static_seo_overrides());

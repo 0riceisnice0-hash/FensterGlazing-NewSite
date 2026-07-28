@@ -191,7 +191,7 @@ function fenster_site_data(): array
                         'label' => 'Book a free consultation',
                         'badge' => 'Free',
                         'url' => home_url('/book-a-consultation/'),
-                        'copy' => 'We come to you, measure up and price the job. The visit costs nothing.',
+                        'copy' => 'An expert comes to you, measures up and prices the job. The visit costs nothing.',
                     ],
                 ],
             ],

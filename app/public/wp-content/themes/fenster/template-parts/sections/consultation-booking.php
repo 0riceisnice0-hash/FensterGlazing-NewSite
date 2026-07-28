@@ -23,6 +23,7 @@ $faqs = [
     ['question' => 'How do I book a free consultation?', 'answer' => 'Choose an available weekday, select a preferred time and leave your contact details. We will then confirm the appointment directly with you.'],
     ['question' => 'Is my chosen time confirmed immediately?', 'answer' => 'No. Your selected date and time are a preferred appointment request. The Fenster team checks availability and confirms the appointment by phone or email.'],
     ['question' => 'What can I discuss at a consultation?', 'answer' => 'You can discuss windows, doors, glazing, repairs, roof lanterns, colour choices, project plans or a showroom visit with the Fenster team.'],
+    ['question' => 'Which areas do you cover?', 'answer' => 'We visit homes across Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. Our showroom is in Milton Keynes, but the consultation happens at your property.'],
 ];
 $faq_schema = [
     '@context' => 'https://schema.org',
@@ -39,9 +40,10 @@ $faq_schema = [
     <section class="fg-consultation-page__hero">
         <div class="container fg-consultation-page__hero-grid">
             <div class="fg-consultation-page__hero-copy">
-                <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes', 'fenster'); ?></p>
-                <h1><?php esc_html_e('Book a free consultation in Milton Keynes.', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Choose a weekday and a preferred time, and we will come to you. The visit is free, whether you go ahead with us or not. We will confirm your appointment directly.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes and surrounding areas', 'fenster'); ?></p>
+                <h1><?php esc_html_e('Book a free consultation with an expert.', 'fenster'); ?></h1>
+                <p><?php esc_html_e('Choose a weekday and a preferred time, and one of our experts will come to you. They measure the openings properly, answer the awkward questions and price the job before they leave. The visit is free, whether you go ahead with us or not.', 'fenster'); ?></p>
+                <p><?php esc_html_e('We cover Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. We will confirm your appointment directly.', 'fenster'); ?></p>
             </div>
 
             <div class="fg-consultation-page__booking">
@@ -78,7 +80,7 @@ $faq_schema = [
             <div class="fg-consultation-page__story-copy">
                 <p class="eyebrow"><?php esc_html_e('Advice before decisions', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Bring the questions that are hard to answer online.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Whether you are replacing one door or planning a larger extension, a free consultation gives you time to compare the options that matter before you commit.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Whether you are replacing one door or planning a larger extension, a free consultation gives you time to compare the options that matter before you commit, with an expert who fits these for a living.', 'fenster'); ?></p>
                 <ul>
                     <li><?php esc_html_e('Compare products, colour, glazing and practical details.', 'fenster'); ?></li>
                     <li><?php esc_html_e('Talk through your home, your plans and the right next step.', 'fenster'); ?></li>

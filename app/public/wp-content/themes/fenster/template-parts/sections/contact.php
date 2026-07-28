@@ -156,7 +156,7 @@ $form_notes = [
             <div class="fg-contact-form-section__copy">
                 <p class="eyebrow"><?php esc_html_e('Book a free consultation', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Choose a time to talk things through.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Start with a weekday, choose your preferred time, then leave the details Fenster needs to confirm the appointment. The visit is free and there is nothing to pay if you decide against the job.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Start with a weekday, choose your preferred time, then leave the details Fenster needs to confirm the appointment. One of our experts comes to you anywhere across Milton Keynes and the surrounding counties. The visit is free and there is nothing to pay if you decide against the job.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
                     <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>
