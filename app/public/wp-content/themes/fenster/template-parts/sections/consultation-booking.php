@@ -110,7 +110,7 @@ $faq_schema = [
         <div class="container fg-consultation-page__faq-grid">
             <div class="fg-consultation-page__section-head">
                 <p class="eyebrow"><?php esc_html_e('Booking questions', 'fenster'); ?></p>
-                <h2><?php esc_html_e('What to expect from your request.', 'fenster'); ?></h2>
+                <h2><?php esc_html_e('What to expect from the visit.', 'fenster'); ?></h2>
             </div>
             <?php /* Shares .fg-product-faq__items with the product pages so the one
                      accordion controller in main.js drives these too, rather than a
