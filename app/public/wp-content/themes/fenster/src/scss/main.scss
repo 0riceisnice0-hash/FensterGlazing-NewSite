@@ -8170,8 +8170,10 @@ html.fg-gallery-lightbox-open body {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* Height is what limits these on a phone, not card width: at 22vw the image
+     was still 86px tall after the cards were widened. */
   .fg-colour-next__handle img {
-    height: clamp(84px, 22vw, 130px);
+    height: clamp(96px, 30vw, 150px);
   }
 }
 
