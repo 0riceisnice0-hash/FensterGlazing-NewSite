@@ -1131,11 +1131,18 @@ if ($is_commercial) {
     ];
 }
 
+/* Corrected against the real process on 2026-07-29. The old version had the
+   survey as a design conversation, which is the consultation's job, not the
+   survey's. Facts here are the owner-confirmed ones in AI.md and LIVECHAT.md:
+   the consultation prices on the same list as the online tool, the technical
+   survey happens after you go ahead and before anything is made, fitters are
+   in-house, and the guarantee is deliberately scoped to new window and door
+   installations because this rail also renders on repairs and roofline. */
 $product_order_steps = [
-    ['step' => '01', 'title' => 'Quotation', 'copy' => 'Tell us what you want to change and get clear pricing guidance for the product.'],
-    ['step' => '02', 'title' => 'Design & Survey', 'copy' => 'We check measurements, styles, colours, thresholds, hardware and installation details.'],
-    ['step' => '03', 'title' => 'Installation', 'copy' => 'Your product is installed by our experienced fitters with the right preparation and care on site.'],
-    ['step' => '04', 'title' => 'Aftercare', 'copy' => 'We support the installation with guarantee guidance, maintenance advice and aftercare.'],
+    ['step' => '01', 'title' => 'Your price', 'copy' => 'Price it yourself on the online tool, or book a free consultation and we build the same quote with you. Both run on the same price list, so the figure matches.'],
+    ['step' => '02', 'title' => 'Technical survey', 'copy' => 'Once you go ahead we survey before anything is made. Not a second sales visit: the measurements, thresholds and fixings the factory needs to build it right.'],
+    ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, with the preparation and care on site that the job needs.'],
+    ['step' => '04', 'title' => 'Aftercare', 'copy' => 'New window and door installations carry a ten year insurance-backed guarantee through the CPA, and eligible work is registered with FENSA, who send your certificate directly. If anything needs attention afterwards you deal with us, not a call centre.'],
 ];
 
 if ($is_commercial) {
@@ -4043,7 +4050,6 @@ if ($is_commercial_hub) {
                         <article>
                             <span class="fg-order-process__number"><?php echo esc_html($step['step']); ?></span>
                             <div class="fg-order-process__card">
-                                <span class="fg-order-process__icon" aria-hidden="true"></span>
                                 <h3><?php echo esc_html($step['title']); ?></h3>
                                 <p><?php echo esc_html($step['copy']); ?></p>
                             </div>

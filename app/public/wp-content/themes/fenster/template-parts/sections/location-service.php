@@ -1354,7 +1354,6 @@ $product_links = [
                     <article>
                         <span class="fg-order-process__number"><?php echo esc_html($step['step']); ?></span>
                         <div class="fg-order-process__card">
-                            <span class="fg-order-process__icon" aria-hidden="true"></span>
                             <h3><?php echo esc_html($step['title']); ?></h3>
                             <p><?php echo esc_html($step['copy']); ?></p>
                         </div>

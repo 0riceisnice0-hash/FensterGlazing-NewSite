@@ -278,7 +278,6 @@ $team_cards = [
                     <article>
                         <span class="fg-order-process__number"><?php echo esc_html($process_step['step']); ?></span>
                         <div class="fg-order-process__card">
-                            <span class="fg-order-process__icon" aria-hidden="true"></span>
                             <h3><?php echo esc_html($process_step['title']); ?></h3>
                             <p><?php echo esc_html($process_step['copy']); ?></p>
                         </div>
