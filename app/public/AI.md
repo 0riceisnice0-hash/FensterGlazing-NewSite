@@ -181,6 +181,15 @@ PHP lint example:
 - Legend is an AI assistant, not a staffed live-chat channel. It must not claim to submit enquiries, book appointments, check accounts or pass messages to the team. Direct users to the real contact routes when human action is required.
 - Legend's scope is strictly Fenster Glazing and directly related customer questions. It must refuse programming, homework, general knowledge, entertainment and other unrelated requests with a brief Fenster redirect. Preserve server-side profanity redaction on both conversation input and assistant output so it cannot repeat or generate abusive language, including when asked to recall an earlier message.
 
+## Order Process Rule
+
+- **There is one process rail and one set of steps.** Owner instruction, 2026-07-29. The steps live in `inc\site-data.php` under `order_process` and render through `template-parts\components\order-process.php`. Before this there were six step sets across three templates, and the town pages had their own markup as well, so the same job was described six different ways and looked different in two of them.
+- Pass `steps` to the component only where the journey is genuinely a different one. That is currently commercial and pet flaps, and nothing else should qualify without the owner saying so.
+- **The step 4 guarantee wording is scoped on purpose.** The rail renders on `/window-and-door-repairs/`, `/roofline/`, `/integral-blinds/` and `/cat-and-dog-flaps/`, all of which sit outside the ten year insurance-backed guarantee. It says "on new windows and doors" for that reason. Do not shorten it to "your installation carries".
+- Keep the four cards within a few words of each other. Emphasis on this rail comes from what a card says, not from how long it runs; the aftercare step was rewritten twice on 2026-07-29 for exactly that.
+- The rail is a supporting strip, not a major section. Its H2 shares no clamp with the trust band and should stay near `clamp(1.6rem, 2.4vw, 2.1rem)`.
+- **The commercial step set may now be unreachable.** Every commercial route checked on 2026-07-29 renders no rail at all, because the commercial templates return before the shared product tail. It was left in place because the owner excluded commercial from the alignment; confirm before deleting it.
+
 ## Related Links Rule
 
 - Do not restore the old generic related-link merge.

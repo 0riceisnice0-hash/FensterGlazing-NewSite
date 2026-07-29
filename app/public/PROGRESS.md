@@ -21,6 +21,18 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - One process rail, site wide (test)
+
+Owner: bring all the process rails in line site wide, excluding commercial, and make the installation step read as expertly fitted with care rather than as survey logic.
+
+- **There were six step sets, not one.** Product, About and pet flaps in `generated-page.php`; the MK head-term rail and the town-page rail in `location-service.php`, the second of which had its own `.fg-location-process` markup and so did not even look like the others; and the trust page. Every one described the same job differently, and four of the six were in the third-person "Fenster does X" voice that `STYLE.md` bans.
+- **Now one source and one component:** `order_process` in `inc/site-data.php`, rendered by `template-parts/components/order-process.php`. Three copies of the markup and five step arrays are gone rather than left dead.
+- **Held back deliberately, and flagged:** commercial, as instructed, and pet flaps. A pet flap is a genuinely different job. Nothing is manufactured to survey sizes, and it sits outside the ten year guarantee, so the canonical steps would describe work we are not doing on that route.
+- **The commercial set may be unreachable.** Every commercial route checked renders no rail at all, because those templates return before the shared product tail. Left alone, since commercial was excluded, but worth confirming before anyone deletes it.
+- **Installation reworded** away from the survey-measurements logic to the craft: trained on the systems we sell, working carefully in a house someone lives in, and clearing up. Word counts across the four cards are 31, 27, 31 and 28.
+- Verified on test: `/upvc-doors/`, `/double-glazing-bletchley/`, `/double-glazing-milton-keynes/`, `/why-trust-fenster/` and `/roofline/` all render the same four steps; `/cat-and-dog-flaps/` keeps its own; no `fg-location-process` markup remains anywhere; seven routes 200. Town page checked at 1440 and at a true 390, cards level at 138, 138, 158, 158.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - Order process: the real sequence, and a rail that fits a phone (test)
 
 Owner: the section is way too big, especially on mobile, and the steps are off compared with the real process. Entry is either the instant online price or a consultation visit; then the technical survey, which is about getting it right to manufacture rather than choosing options; installation is fine; aftercare needs to say how good it actually is.
