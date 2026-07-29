@@ -2094,11 +2094,12 @@ if ($is_colour_options) {
                     </li>
                         <?php endforeach; ?>
                 </ul>
-                <div class="fg-colour-rail__controls">
-                    <button type="button" data-fg-colour-rail-prev aria-label="<?php esc_attr_e('Previous colours', 'fenster'); ?>">&#8249;</button>
-                    <span data-fg-colour-rail-count><?php echo esc_html('01 / ' . sprintf('%02d', max(1, count($colours)))); ?></span>
-                    <button type="button" data-fg-colour-rail-next aria-label="<?php esc_attr_e('More colours', 'fenster'); ?>">&#8250;</button>
-                </div>
+                <?php /* No buttons: the owner asked for swipe. Touch and trackpad
+                         get it natively from scroll-snap, and the controller adds
+                         click-drag so a mouse can do the same. The counter stays,
+                         because a rail with no affordance does not say how much
+                         more there is. */ ?>
+                <p class="fg-colour-rail__hint"><span data-fg-colour-rail-count><?php echo esc_html('01 / ' . sprintf('%02d', max(1, count($colours)))); ?></span><?php esc_html_e('Drag or swipe to see more', 'fenster'); ?></p>
             </div>
         </article>
         <?php

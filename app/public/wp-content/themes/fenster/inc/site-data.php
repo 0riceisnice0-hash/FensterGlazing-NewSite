@@ -1960,7 +1960,7 @@ function fenster_site_data(): array
                         ['name' => 'Chocolate Brown', 'hex' => '#4d352b', 'finish' => 'RAL 8017 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Brown-600.jpg'],
                         ['name' => 'Cream', 'hex' => '#efe6d0', 'finish' => 'RAL 9001 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Cream-600.jpg'],
                         ['name' => 'Pure White', 'hex' => '#f7f7f2', 'finish' => 'RAL 9010 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Pure-White-600.jpg'],
-                        ['name' => 'Hipca Gloss White', 'hex' => '#ffffff', 'finish' => 'RAL 9910 Gloss'],
+                        ['name' => 'Hipca Gloss White', 'hex' => '#ffffff', 'finish' => 'RAL 9910 Gloss', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Gloss-White-600.jpg'],
                         ['name' => 'Squirrel Grey', 'hex' => '#8f9187', 'finish' => 'RAL 7000 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Squirrel-600.jpg'],
                         ['name' => 'Pastel Turquoise', 'hex' => '#7facad', 'finish' => 'RAL 6034 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Turquoise-600.jpg'],
                         ['name' => 'Silver Metallic', 'hex' => '#a7acaf', 'finish' => 'Metallic effect', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Silver-Metallic-Effect-600.jpg'],

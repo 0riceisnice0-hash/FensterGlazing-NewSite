@@ -5082,8 +5082,6 @@ document.querySelectorAll('.fg-about').forEach((about) => {
 document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
   const viewport = rail.querySelector('[data-fg-colour-rail-viewport]');
   const slides = [...rail.querySelectorAll('[data-fg-colour-slide]')];
-  const prev = rail.querySelector('[data-fg-colour-rail-prev]');
-  const next = rail.querySelector('[data-fg-colour-rail-next]');
   const count = rail.querySelector('[data-fg-colour-rail-count]');
 
   if (!viewport || !slides.length) return;
@@ -5106,9 +5104,6 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
 
   const update = () => {
     if (count) count.textContent = `${pad(firstVisible() + 1)} / ${pad(slides.length)}`;
-    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
-    if (prev) prev.disabled = viewport.scrollLeft <= 1;
-    if (next) next.disabled = viewport.scrollLeft >= maxScroll - 1;
   };
 
   const step = () => {
@@ -5121,8 +5116,56 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
     viewport.scrollBy({ left: step() * direction, behavior: 'smooth' });
   };
 
-  prev?.addEventListener('click', () => scrollBySlides(-1));
-  next?.addEventListener('click', () => scrollBySlides(1));
+  /* Click-drag for a mouse. Touch and trackpad already scroll natively, so
+     this only claims the pointer once a drag has actually travelled: a plain
+     click on a swatch must still behave like a click. Snapping is turned off
+     mid-drag so the rail follows the hand rather than fighting it. */
+  let dragging = false;
+  let startX = 0;
+  let startScroll = 0;
+  let moved = 0;
+
+  viewport.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'touch' || event.button !== 0) return;
+    dragging = true;
+    moved = 0;
+    startX = event.clientX;
+    startScroll = viewport.scrollLeft;
+  });
+
+  viewport.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    const delta = event.clientX - startX;
+    if (Math.abs(delta) > 3) {
+      moved = Math.abs(delta);
+      if (!viewport.classList.contains('is-dragging')) {
+        viewport.classList.add('is-dragging');
+        viewport.setPointerCapture?.(event.pointerId);
+      }
+      viewport.scrollLeft = startScroll - delta;
+    }
+  });
+
+  const endDrag = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    viewport.classList.remove('is-dragging');
+    if (event?.pointerId !== undefined) viewport.releasePointerCapture?.(event.pointerId);
+    update();
+  };
+
+  viewport.addEventListener('pointerup', endDrag);
+  viewport.addEventListener('pointercancel', endDrag);
+  viewport.addEventListener('pointerleave', endDrag);
+
+  // Suppress the click that ends a real drag, so dragging never opens anything.
+  viewport.addEventListener('click', (event) => {
+    if (moved > 4) {
+      event.preventDefault();
+      event.stopPropagation();
+      moved = 0;
+    }
+  }, true);
 
   viewport.addEventListener('scroll', () => {
     window.clearTimeout(viewport._fgRailTimer);
