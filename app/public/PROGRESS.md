@@ -22,6 +22,13 @@ Owner instruction from Nick: wherever the site mentions booking a consultation, 
 - **A live promotion was asked for and deliberately declined by the owner.** Live was re-established by checksum as `984e89c`, unchanged. The range `984e89c..HEAD` was 55 commits, of which only 10 were this session's consultation work; the other 45 were the concurrent session's casement rebuild and the Thermlock/EnergyPlus banner across roughly fifteen product routes, still being committed at the time and never submitted for live approval. Rather than repeat the 2026-07-18 and 2026-07-22 incidents, the range was put to the owner, who chose to hold everything on test until the casement work is finished and reviewed. **Nothing was deployed to production; the only commands run against live were read-only checksums.**
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Docs brought current for a fresh session
+
+- Live pointer moved to `8052f65` in `LIVECHANGES.md`, `HANDOVER.md` and `AI.md`. `AI.md` had been left on `984e89c` and was four releases stale, which is exactly the line a new session reads first.
+- **The test deploy one-liner in `LIVECHANGES.md` only ran `wp cache flush`**, while the note six lines above it says to run `wp sg purge` after every deploy. The command now matches the rule. That mismatch is what let a deployed footer change look unshipped on 2026-07-29.
+- `nick.md` corrected and extended: the PATH trap that makes the Homebrew tooling look uninstalled, the headless Chrome verification recipe, and a short statement of where the work is up to with the owner-confirmed product facts and the open questions.
+- **Correction recorded against this session's own work.** The swatch labels were cropped in CSS on the stated grounds that the machine had no `cwebp` or ImageMagick. Both are installed; they were invisible because `/opt/homebrew/bin` is absent from a non-interactive shell's PATH. The CSS crop is still defensible, since it is reversible and leaves assets shared with the colour options page untouched, but the reason given for it was wrong.
+
 ## 2026-07-29 - Handle finishes on the page, live (8052f65)
 
 - The six S2 Signature finishes now render on casement, flush casement, aluminium windows, aluminium flush windows and heritage windows, and the card linking to `/window-handles/` is dropped where they do. Scope is `window_handles.slugs`, the list that already decided which pages got the handle card, so no page gained hardware it had not previously claimed.

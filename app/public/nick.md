@@ -1,6 +1,6 @@
 # Nick's Laptop (macOS)
 
-Last updated: 2026-07-28
+Last updated: 2026-07-29
 
 ## Read this first
 
@@ -49,8 +49,11 @@ The private key never goes into this repo, into a commit, into a document or int
 - **PHP 8.2.32**, keg-only at `/opt/homebrew/opt/php@8.2/bin`, already on the PATH. This deliberately matches the version SiteGround runs, so a clean lint here means the same thing it means on the server.
 - Node 26 and npm, with the theme's dependencies installed
 - `gh`, authenticated as `0riceisnice0-hash` with git wired in through `gh auth setup-git`
-- ImageMagick (`magick`) and `cwebp` for the image work this project does constantly
+- ImageMagick (`magick`, `convert`) and `cwebp`/`dwebp` for the image work this project does constantly
 - GNU coreutils, so `gmd5sum` is available when you want output that matches the server's `md5sum`
+- Google Chrome at `/Applications/Google Chrome.app`, which is the reliable way to see a page on this project (see below)
+
+All verified present on 2026-07-29, but only once `/opt/homebrew/bin` is on the PATH. See the first trap.
 
 ## The commands you actually need
 
@@ -75,8 +78,10 @@ find app/public/wp-content/themes/fenster -name '*.php' ! -path '*/node_modules/
 Deploy to test, which is the same command as the docs with this machine's key path:
 
 ```bash
-ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard origin/main && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/test.fensterglazing.com/public_html && wp cache flush"
+ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard origin/main && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/test.fensterglazing.com/public_html && wp cache flush && wp sg purge"
 ```
+
+**`wp sg purge` is not optional on test.** `wp cache flush` alone leaves SiteGround's optimiser serving the previous stylesheet over HTTP while the file on disk is already correct. On 2026-07-29 that made a deployed footer change look like it had never shipped, and cost a round of wrong diagnosis. Purge both, on both environments.
 
 Deploy to live, only after the range check and explicit owner approval, replacing `<SHA>` with the exact commit verified on test. Never `origin/main`:
 
@@ -98,6 +103,14 @@ Use the apex host and keep `-L`. The live site 301s `www` to apex, so dropping e
 
 ## Traps specific to this machine
 
+**`/opt/homebrew/bin` is not on the PATH in a non-interactive shell.** It is added by `~/.zprofile`, which a login shell reads and a command run through a tool does not. So `npm`, `magick`, `cwebp` and `gh` all appear to be missing when they are installed and working. On 2026-07-29 this led to a written conclusion that the machine had no image tooling, and a workaround built on that false premise. Export the PATH at the start of any command that needs them:
+
+```bash
+export PATH="/opt/homebrew/bin:/opt/homebrew/opt/php@8.2/bin:$PATH"
+```
+
+If a tool reports as missing, check with that export before believing it.
+
 **zsh eats `$sha:path`.** The shell here is zsh, where `$sha:a` is a parameter modifier. Writing `git show "$sha:app/public/..."` silently produces a mangled argument, `git show` returns nothing, and a checksum loop then reports the md5 of an empty string (`d41d8cd98f00b204e9800998ecf8427e`) for every commit. It looks like a working table of results. Always brace it:
 
 ```bash
@@ -112,6 +125,24 @@ If any verification loop returns the same hash for every input, check for that e
 
 **A rebuild alone changes the compiled JavaScript.** The esbuild version here is newer than the one the previous machine used, so `npm run build` with no source change still produces a byte-different `assets/js/main.js`. If you built only to check the toolchain, `git checkout` the compiled assets so the tree matches `main`. If you built because you genuinely changed source, commit it as normal.
 
+**The in-app browser is not reliable on this site, and headless Chrome is.** Two things defeat it: the site uses Lenis smooth scrolling, so `scrollTo` and `scrollIntoView` move the DOM position without moving what is painted, and the test site's Basic Auth session drops on its own, returning a `401` page that reads as a working page unless you check. Both produce confident, wrong answers.
+
+The dependable route is to pull the real markup and the real deployed stylesheet, point the asset URLs at the local theme so nothing needs authentication, and render it:
+
+```bash
+curl -s -u fenster:Fenster -L "https://test.fensterglazing.com/casement-windows/" -o page.html
+curl -s -u fenster:Fenster -L "https://test.fensterglazing.com/app/themes/fenster/assets/css/main.css" -o page.css
+# extract the section you care about, rewrite
+# https://test.fensterglazing.com/app/themes/fenster -> file:///<theme path>
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+  --allow-file-access-from-files --hide-scrollbars --window-size=1280,900 \
+  --virtual-time-budget=5000 --screenshot=out.png "file://$PWD/fragment.html"
+```
+
+For measurements rather than a picture, link a small script that writes results into a `<pre>` and read them back with `--dump-dom`. That is how the footer swatch overflow was found: the tiles looked fine and were measurably 87px tall inside a 64px box. Note `document.styleSheets[..].cssRules` throws on a `file://` stylesheet, so read CSS from the file with `grep`, not from the DOM.
+
+**A whole-page Chrome render can hang** on the heavier pages. Extract the one section into a fragment instead of rendering the whole document.
+
 **Full-page screenshots lie about lazy-loaded images.** Already recorded in `PROGRESS.md`, still true here: scroll the section into view and read `naturalWidth` rather than trusting a stitched capture.
 
 ## What has not changed
@@ -121,3 +152,21 @@ If any verification loop returns the same hash for every input, check for that e
 - Re-establish the live commit by checksum before any deploy rather than trusting a doc, then run `git log --oneline <LIVE_SHA>..<SHA>` and confirm every commit in the range is approved.
 - Two sessions have shared `main` on this project, so check `git status` before staging and never assume the range is only your work.
 - The factual claims on the site are load-bearing. The 24/7 phone line is a real answering service and sash windows are A rated, not A+.
+
+## Where the work is up to
+
+Live is `8052f65` as of 2026-07-29, with live, `main` and test all level. `LIVECHANGES.md` carries the pointer and `PROGRESS.md` the detail; re-establish it by checksum anyway rather than trusting either.
+
+Owner-confirmed product facts, worth not re-deriving:
+
+- Casement windows are the 70mm Liniar EnergyPlus system, sculptured only. **Glazing is 28mm double or 36mm triple. 40mm is not offered on any uPVC**, which is why 0.95 W/m2K on the 36mm triple is the ceiling and the page must not quote Liniar's lower published figure.
+- The uPVC foil range is sixteen colours. **The colour is the external face, with the same colour or smooth white inside.** Mixing freely is not offered and is deliberately not mentioned either way.
+- Smooth white is RAL 9003 and is the unfoiled profile, so it has no swatch photograph.
+- uPVC doors and patio doors share the window foil range. Sliding sash is Roseview and secondary glazing is aluminium, so neither carries it.
+
+Open, and needing the owner rather than a decision from you:
+
+- The Ben Harrison Photography licence for the Headrow Court images is unconfirmed, and those images are live.
+- Tilt and turn and bow and bay carry the colour grid but not the handle grid, because they never qualified for the handle card. If they take the same S2 handles, they are two pages short.
+- The Barn Hotel and Sunrise Care Home completion months are still unconfirmed, so those two case studies print no date.
+- Whether Fenster takes industrial and logistics work. The sector page was deliberately not built.
