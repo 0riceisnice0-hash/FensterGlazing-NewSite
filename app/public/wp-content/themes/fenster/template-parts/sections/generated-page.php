@@ -235,6 +235,19 @@ $product_usps = fenster_data('product_usps.' . $slug, []);
 $product_usps = is_array($product_usps) ? array_slice($product_usps, 0, 4) : [];
 $product_content = fenster_data('product_content.' . $slug, []);
 $product_content = is_array($product_content) ? $product_content : [];
+
+/* Routes that lay the Liniar foil range out in full. Sliding sash is Roseview
+   and secondary glazing is aluminium, so neither carries this range. Casement
+   has its own template and includes the same component directly. */
+$upvc_colour_routes = [
+    'flush-casement-windows' => 'flush casement window',
+    'french-casement-windows' => 'French casement window',
+    'tilt-turn-windows' => 'tilt and turn window',
+    'bow-bay-windows' => 'bow or bay window',
+    'upvc-doors' => 'door',
+    'patio-doors' => 'patio door',
+];
+$shows_upvc_colour_grid = isset($upvc_colour_routes[$slug]) || $slug === 'casement-windows';
 $product_media = fenster_data('product_media.' . $slug, []);
 $product_media = is_array($product_media) ? $product_media : [];
 $sash_furniture = fenster_data('sash_furniture', []);
@@ -3801,14 +3814,15 @@ if ($is_commercial_hub) {
                     <h2><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.'); ?></h2>
                     <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.'); ?></p>
                 </div>
+                <?php $option_card_number = 0; ?>
                 <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?>">
                     <div class="fg-product-options fg-product-options--hub">
-                    <?php if ($slug !== 'sliding-sash-windows') : ?>
+                    <?php if ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid) : ?>
                     <a
                         class="fg-product-option-card fg-product-option-card--colour"
                         href="<?php echo esc_url(home_url('/colour-options/')); ?>"
                     >
-                        <span><?php esc_html_e('01', 'fenster'); ?></span>
+                        <span><?php echo esc_html(sprintf('%02d', ++$option_card_number)); ?></span>
                         <h3><?php esc_html_e('Frame colours', 'fenster'); ?></h3>
                         <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare Roseview foils, woodgrain finishes, dual colours and special colour options.' : 'Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.'); ?></p>
                         <strong><?php esc_html_e('Open colour hub', 'fenster'); ?></strong>
@@ -3818,7 +3832,7 @@ if ($is_commercial_hub) {
                         class="fg-product-option-card fg-product-option-card--glass"
                         href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"
                     >
-                        <span><?php echo esc_html($slug === 'sliding-sash-windows' ? '01' : '02'); ?></span>
+                        <span><?php echo esc_html(sprintf('%02d', ++$option_card_number)); ?></span>
                         <h3><?php esc_html_e('Privacy glass', 'fenster'); ?></h3>
                         <p><?php esc_html_e('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
                         <strong><?php esc_html_e('Compare glass patterns', 'fenster'); ?></strong>
@@ -3828,7 +3842,7 @@ if ($is_commercial_hub) {
                             class="fg-product-option-card fg-product-option-card--handles"
                             href="<?php echo esc_url(home_url('/window-handles/')); ?>"
                         >
-                            <span><?php esc_html_e('03', 'fenster'); ?></span>
+                            <span><?php echo esc_html(sprintf('%02d', ++$option_card_number)); ?></span>
                             <h3><?php esc_html_e('Window handles', 'fenster'); ?></h3>
                             <p><?php esc_html_e('Compare white, black, chrome, gold, satin silver and monkey tail handle options on one focused page.', 'fenster'); ?></p>
                             <strong><?php esc_html_e('Open handle hub', 'fenster'); ?></strong>
@@ -3840,18 +3854,6 @@ if ($is_commercial_hub) {
         </section>
         <?php endif; ?>
 
-        <?php
-        /* The Liniar foil range, on the uPVC window routes that actually carry
-           it. Sliding sash is Roseview and secondary glazing is aluminium, so
-           neither belongs here. Casement has its own template and includes the
-           same component directly. */
-        $upvc_colour_routes = [
-            'flush-casement-windows' => 'flush casement window',
-            'french-casement-windows' => 'French casement window',
-            'tilt-turn-windows' => 'tilt and turn window',
-            'bow-bay-windows' => 'bow or bay window',
-        ];
-        ?>
         <?php if (isset($upvc_colour_routes[$slug])) : ?>
             <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_colour_routes[$slug]]); ?>
         <?php endif; ?>
