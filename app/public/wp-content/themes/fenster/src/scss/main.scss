@@ -33751,17 +33751,10 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* Composite door slides in the colours hub are portrait full-door photographs
-   (480x600), unlike the square uPVC/aluminium swatch tiles. Give them their
-   natural 4:5 crop on a slightly narrower slide so the row height stays sane. */
-[data-fg-colour-material="composite"] .fg-colour-carousel__slide {
-  width: min(48%, 330px);
-}
-
-[data-fg-colour-material="composite"] .fg-colour-carousel__slide img {
-  aspect-ratio: 4 / 5;
-  object-position: center top;
-}
+/* The composite slides used to be portrait full-door photographs and needed
+   their own 4:5 crop on a narrower slide. They are square painted tiles now,
+   the same shape as the uPVC and aluminium swatches, so the override is gone
+   and they take the shared slide sizing. Owner instruction, 2026-07-29. */
 
 /* ---------------------------------------------------------------------------
    Heritage aluminium doors (/heritage-aluminium-doors/)
