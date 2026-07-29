@@ -35,6 +35,16 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
+
+Owner: make the sliders better on this page, not grabby.
+
+- **Scoped to the colour rails.** The other rails on the site keep `mandatory`; only `.fg-colour-rail__track` changed, confirmed in the compiled CSS.
+- **Two separate causes, and the CSS one was the bigger.** `scroll-snap-type: x mandatory` forces a snap on every scroll, so a touch swipe can never coast and a small nudge is pulled to a boundary it was nowhere near. `proximity` only takes over when the scroll already stopped near a slide. Note Chrome serialises `x proximity` as plain `x`, because proximity is the default strictness, so a computed-style check reading `x` is the change having worked, not the property being dropped.
+- **The drag release was the other.** It aligned to the nearest slide every time, however small the drag. It now aligns only when the throw already ended within a third of a slide; past that it keeps where it landed.
+- Verified by intercepting `scrollTo` and driving two real drags against a 284px slide step: a 24px nudge releases to 94px and does not sit on a boundary, and a 240px fling releases to 964px rather than being yanked to 851. **A rail that can rest mid-slide is the point, not a regression** — it is what stops it feeling grabby, and proximity still tidies up anything that lands close.
+- Test deployment only. Live is `41ffb83`.
+
 ## 2026-07-29 - Promoted to live (41ffb83)
 
 - Live re-established by checksum first; three theme files matched `8940ef6..4cd1925`, all theme-identical, so `8940ef6` was the range base to yield a superset. The recorded pointer was accurate for the second release running. Empty-input hash printed alongside the sweep so a silent miss could not read as a match.
