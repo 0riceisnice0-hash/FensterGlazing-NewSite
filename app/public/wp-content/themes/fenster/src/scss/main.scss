@@ -8109,8 +8109,9 @@ html.fg-gallery-lightbox-open body {
     padding-top: 0;
   }
 
-  /* The intro ran to 179px of a 850px viewport on its own. Same words, less
-     of the screen. */
+  /* The intro ran to 179px of an 850px viewport on its own. Same words, less
+     of the screen. It is not collapsed: the owner wanted that on the
+     collections copy below, not here. */
   .fg-colour-hub-hero p:not(.eyebrow) {
     margin: 0.55rem 0 0;
     font-size: 0.95rem;
@@ -8216,14 +8217,14 @@ html.fg-gallery-lightbox-open body {
 
 /* Clamp is added by the controller, never by the markup, so a page without
    JavaScript shows the paragraph in full. */
-.fg-colour-hub-hero p.is-clamped {
+.fg-colour-hub-page p.is-clamped {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
 
-.fg-colour-hub-hero__more {
+.fg-colour-readmore {
   margin-top: 0.5rem;
   padding: 0;
   border: 0;
@@ -8236,7 +8237,7 @@ html.fg-gallery-lightbox-open body {
   cursor: pointer;
 }
 
-.fg-colour-hub-hero__more[hidden] {
+.fg-colour-readmore[hidden] {
   display: none;
 }
 

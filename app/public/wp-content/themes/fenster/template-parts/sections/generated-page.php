@@ -2061,7 +2061,20 @@ if ($is_colour_options) {
             <div class="fg-colour-hub__material-copy">
                 <p class="eyebrow"><?php echo esc_html((string) ($material['label'] ?? 'Frame colours')); ?></p>
                 <h2><?php echo esc_html((string) ($material['headline'] ?? 'Compare colour options.')); ?></h2>
-                <p><?php echo esc_html((string) ($material['copy'] ?? '')); ?></p>
+                <?php
+                /* Each collection's explainer runs long on a phone and pushes
+                   the swatches themselves off the screen, which is what people
+                   came for. It collapses there, not on desktop.
+
+                   No clamp in the markup or the base stylesheet: the controller
+                   adds it, so a page where the script never runs shows the
+                   paragraph in full rather than cut off with no way to open. */
+                $material_copy_id = 'fg-colour-copy-' . sanitize_html_class($material_key);
+                ?>
+                <p id="<?php echo esc_attr($material_copy_id); ?>"><?php echo esc_html((string) ($material['copy'] ?? '')); ?></p>
+                <button class="fg-colour-readmore" type="button" data-fg-readmore aria-controls="<?php echo esc_attr($material_copy_id); ?>" aria-expanded="false" hidden>
+                    <span data-fg-readmore-label><?php esc_html_e('Read more', 'fenster'); ?></span>
+                </button>
             </div>
             <?php
             /* Equal-width swipeable rail, replacing the coverflow on 2026-07-29.
@@ -2193,21 +2206,7 @@ if ($is_colour_options) {
                 <div class="fg-colour-hub-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Specification hub', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Colour options for Fenster windows and doors.', 'fenster'); ?></h1>
-                    <?php
-                    /* The intro runs to six lines on a phone and dominates the
-                       screen. It collapses there, not on desktop. Safe to
-                       collapse because the two facts it turns on, uPVC is a
-                       bonded foil and aluminium is powder coated, are repeated
-                       in each material's own copy further down the page.
-
-                       No clamp in the markup or the base CSS: the JS adds it,
-                       so if the script never runs the whole paragraph is
-                       simply there rather than cut off with no way to open. */
-                    ?>
-                    <p id="fg-colour-hero-intro"><?php echo esc_html((string) ($colour_options['intro'] ?? $hero_intro)); ?></p>
-                    <button class="fg-colour-hub-hero__more" type="button" data-fg-readmore aria-controls="fg-colour-hero-intro" aria-expanded="false" hidden>
-                        <span data-fg-readmore-label><?php esc_html_e('Read more', 'fenster'); ?></span>
-                    </button>
+                    <p><?php echo esc_html((string) ($colour_options['intro'] ?? $hero_intro)); ?></p>
                     <div class="fg-colour-hub-hero__actions">
                         <a class="button" href="<?php echo esc_url($instant_quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                         <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
