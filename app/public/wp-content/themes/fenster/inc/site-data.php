@@ -1711,22 +1711,25 @@ function fenster_site_data(): array
            Imagery: see the note in AI.md before replacing it. */
         'tilt_turn_handles' => [
             'slugs' => ['tilt-turn-windows'],
-            /* The handle position decides how the window opens; the key only
-               locks and unlocks the handle. Owner correction, 2026-07-29,
-               after an earlier draft had the key choosing tilt or turn. The
-               VBH bulletin does describe a "Tilt Safe" key position that
-               limits the handle to the tilt range, but that is not claimed
-               anywhere here until the owner confirms we fit them that way. */
+            /* Two things are true and the copy has to hold both. The handle
+               position selects tilt or turn; the key does not. But the key has
+               a middle position that limits how far the handle can go, so the
+               window will tilt and will not swing open. Owner correction on
+               the first, owner-verified on the second: he tested the tilt-safe
+               setting on a real window on 2026-07-29 after the VBH bulletin
+               described it. Do not let a later edit collapse these back into
+               "the key decides how far the window opens", which is what was
+               wrong the first time. */
             'intro' => 'Tilt and turn windows take their own handle, because one lever has to do two jobs. Turn it one way and the top tilts inwards for air. Turn it further and the whole sash swings in.',
             'features' => [
-                ['title' => 'Two positions, one lever', 'copy' => 'A quarter turn tilts the top inwards for ventilation. Carry on turning and the whole sash swings in, so the outside face can be cleaned from indoors.'],
-                ['title' => 'The key locks the handle', 'copy' => 'We fit the locking version only. The key holds the handle where you left it, so the window can be left secured rather than just closed.'],
-                ['title' => 'Secured by Design', 'copy' => 'The handle carries the Police Preferred Specification, with a twenty year surface guarantee and a ten year mechanical guarantee from greenteQ.'],
+                ['title' => 'Two positions, one lever', 'copy' => 'A quarter turn tilts the top inwards for ventilation. Carry on turning and the whole sash swings right in, so the outside face can be cleaned from indoors.'],
+                ['title' => 'It can tilt without opening', 'copy' => 'Leave the key a quarter turn and the handle still reaches tilt, but it will not go round to the full opening. The window airs and cannot be swung open, which is the setting for a bedroom or anything above a drop.'],
+                ['title' => 'Locked means locked', 'copy' => 'Turned fully, the key stops the handle moving at all and blocks the hardware being worked from outside. The handle carries the Police Preferred Specification for Secured by Design.'],
             ],
             'technical_intro' => 'greenteQ Alpha TBT, locking version. We do not fit the non-locking one.',
             'technical' => [
                 ['label' => 'Operation', 'value' => 'Tilt and turn from one lever'],
-                ['label' => 'Locking', 'value' => 'Key-locking handle'],
+                ['label' => 'Key settings', 'value' => 'Unlocked, tilt only, locked'],
                 ['label' => 'Spindle', 'value' => '40mm as standard'],
                 ['label' => 'Fixing centres', 'value' => '43mm, Eurogroove'],
                 ['label' => 'Security', 'value' => 'Secured by Design, Police Preferred Specification'],
