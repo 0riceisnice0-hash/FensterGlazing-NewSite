@@ -8112,6 +8112,19 @@ html.fg-gallery-lightbox-open body {
     margin-top: 0;
   }
 
+  /* The page's own green wash lives on the body, so a hero filled with solid
+     white ended in a hard line against it. The white fades out at the bottom
+     of the hero instead, and the wash comes through underneath. */
+  .fg-colour-hub-hero--wall {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 84%,
+      rgba(255, 255, 255, 0.55) 94%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
   /* The intro ran to 179px of an 850px viewport on its own. Same words, less
      of the screen. It is not collapsed: the owner wanted that on the
      collections copy below, not here. */
