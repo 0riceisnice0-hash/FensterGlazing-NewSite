@@ -1966,8 +1966,8 @@ if ($is_window_handles) {
             <div class="container fg-window-handle-hero__grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Specification hub', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Window handle options for Fenster windows.', 'fenster'); ?></h1>
-                    <p><?php echo esc_html($window_handle_intro); ?></p>
+                    <h1><?php esc_html_e('Window and door handle options.', 'fenster'); ?></h1>
+                    <p><?php esc_html_e('Every handle finish we fit, for windows and for doors, on one page. Windows take the S2 Signature range; doors take a long backplate that carries the lever and the cylinder together. We confirm what a given system can take at specification stage.', 'fenster'); ?></p>
                     <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about handles', 'fenster'); ?></a>
                 </div>
                 <?php if (! empty($window_handle_finishes[0]['image'])) : ?>
@@ -1978,91 +1978,37 @@ if ($is_window_handles) {
             </div>
         </section>
 
-        <?php if (! empty($window_handle_finishes)) : ?>
-            <section id="window-handle-finishes" class="fg-window-handles fg-window-handles--hub" data-fg-window-handles>
-                <div class="container">
-                    <div class="fg-window-handles__shell">
-                        <div class="fg-window-handles__intro">
-                            <p class="eyebrow"><?php esc_html_e('Finishes and styles', 'fenster'); ?></p>
-                            <h2><?php esc_html_e('Choose the handle look without crowding the product page.', 'fenster'); ?></h2>
-                            <p><?php esc_html_e('All standard window handle finishes are lockable as standard. Monkey tail is included as the more traditional option where the selected window system allows it.', 'fenster'); ?></p>
-                        </div>
+        <?php
+        /* Both handle families render through the same component, so the hub
+           presents them identically. Doors moved here from the product pages on
+           2026-07-29; those pages now carry the compact grid instead. */
+        get_template_part('template-parts/components/handle-chooser', null, [
+            'id' => 'window-handle-finishes',
+            'modifier' => 'fg-window-handles--hub',
+            'eyebrow' => 'Window handles',
+            'heading' => 'Choose the handle look without crowding the product page.',
+            'intro' => 'All standard window handle finishes are lockable as standard. Monkey tail is included as the more traditional option where the selected window system allows it.',
+            'data' => $window_handles,
+            'alt_pattern' => '%s window handle',
+            'details_heading' => 'Technical specification',
+            'swatches_label' => 'Window handle finish options',
+            'features_label' => 'Window handle features',
+            'eager_first' => true,
+        ]);
 
-                        <div class="fg-window-handles__visual" aria-live="polite">
-                            <?php foreach ($window_handle_finishes as $index => $finish) : ?>
-                                <?php $finish_name = (string) ($finish['name'] ?? 'Handle finish'); ?>
-                                <img
-                                    src="<?php echo esc_url(fenster_generated_url((string) ($finish['image'] ?? ''))); ?>"
-                                    alt="<?php echo esc_attr($finish_name . ' window handle'); ?>"
-                                    loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
-                                    data-fg-handle-image="<?php echo esc_attr((string) $index); ?>"
-                                    class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
-                                >
-                            <?php endforeach; ?>
-                        </div>
-
-                        <div class="fg-window-handles__chooser">
-                            <div class="fg-window-handles__swatches" role="list" aria-label="<?php esc_attr_e('Handle finish options', 'fenster'); ?>">
-                                <?php foreach ($window_handle_finishes as $index => $finish) : ?>
-                                    <button
-                                        type="button"
-                                        role="listitem"
-                                        class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
-                                        style="<?php echo esc_attr('--swatch:' . (string) ($finish['hex'] ?? '#ffffff')); ?>"
-                                        data-fg-handle-finish="<?php echo esc_attr((string) $index); ?>"
-                                        aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
-                                    >
-                                        <i aria-hidden="true"></i>
-                                        <span><?php echo esc_html((string) ($finish['name'] ?? 'Finish')); ?></span>
-                                    </button>
-                                <?php endforeach; ?>
-                            </div>
-
-                            <div class="fg-window-handles__finish-copy">
-                                <?php foreach ($window_handle_finishes as $index => $finish) : ?>
-                                    <article data-fg-handle-panel="<?php echo esc_attr((string) $index); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
-                                        <span><?php echo esc_html((string) ($finish['label'] ?? $finish['name'] ?? 'Handle finish')); ?></span>
-                                        <p><?php echo esc_html((string) ($finish['copy'] ?? '')); ?></p>
-                                    </article>
-                                <?php endforeach; ?>
-                            </div>
-
-                            <?php if (! empty($window_handles['technical']) && is_array($window_handles['technical'])) : ?>
-                                <aside class="fg-window-handles__details" aria-label="<?php esc_attr_e('Technical specification', 'fenster'); ?>">
-                                    <div class="fg-window-handles__details-card">
-                                        <h3><?php esc_html_e('Technical specification', 'fenster'); ?></h3>
-                                        <div class="fg-window-handles__detail-panel">
-                                            <?php if (! empty($window_handles['technical_intro'])) : ?>
-                                                <p><?php echo esc_html((string) $window_handles['technical_intro']); ?></p>
-                                            <?php endif; ?>
-                                            <dl class="fg-window-handles__specs">
-                                                <?php foreach ($window_handles['technical'] as $spec) : ?>
-                                                    <div>
-                                                        <dt><?php echo esc_html((string) ($spec['label'] ?? '')); ?></dt>
-                                                        <dd><?php echo esc_html((string) ($spec['value'] ?? '')); ?></dd>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </aside>
-                            <?php endif; ?>
-                        </div>
-
-                        <?php if (! empty($window_handles['features']) && is_array($window_handles['features'])) : ?>
-                            <div class="fg-window-handles__features" aria-label="<?php esc_attr_e('Window handle features', 'fenster'); ?>">
-                                <?php foreach ($window_handles['features'] as $feature) : ?>
-                                    <article>
-                                        <h3><?php echo esc_html((string) ($feature['title'] ?? '')); ?></h3>
-                                        <p><?php echo esc_html((string) ($feature['copy'] ?? '')); ?></p>
-                                    </article>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </section>
-        <?php endif; ?>
+        get_template_part('template-parts/components/handle-chooser', null, [
+            'id' => 'door-handle-finishes',
+            'modifier' => 'fg-window-handles--hub fg-door-handles',
+            'eyebrow' => 'Door handles',
+            'heading' => 'Door handles in finishes that match the frame and letterplate.',
+            'intro' => (string) ($door_handles['intro'] ?? ''),
+            'data' => $door_handles,
+            'alt_pattern' => 'Long-plate door handle in %s',
+            'details_heading' => 'Door hardware note',
+            'swatches_label' => 'Door handle finish options',
+            'features_label' => 'Door handle features',
+        ]);
+        ?>
 
         <section id="fenster-enquiry" class="fg-obscure-enquiry">
             <div class="container fg-obscure-enquiry__grid">
@@ -3865,6 +3811,10 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/window-handle-grid'); ?>
         <?php endif; ?>
 
+        <?php if ($show_door_handles) : ?>
+            <?php get_template_part('template-parts/components/door-handle-grid'); ?>
+        <?php endif; ?>
+
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
             <?php
             $sash_furniture_base = '/wp-content/themes/fenster/assets/images/products/sash-roseview/furniture-guide/';
@@ -4034,94 +3984,6 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($show_door_handles && ! empty($door_handle_finishes)) : ?>
-            <section id="fenster-door-handles" class="fg-window-handles fg-door-handles" data-fg-window-handles>
-                <div class="container">
-                    <div class="fg-window-handles__shell">
-                        <div class="fg-window-handles__intro">
-                            <p class="eyebrow"><?php esc_html_e('Door handles', 'fenster'); ?></p>
-                            <h2><?php esc_html_e('Door handles in finishes that match the frame and letterplate.', 'fenster'); ?></h2>
-                            <?php if (! empty($door_handles['intro'])) : ?>
-                                <p><?php echo esc_html((string) $door_handles['intro']); ?></p>
-                            <?php endif; ?>
-                        </div>
-
-                        <div class="fg-window-handles__visual" aria-live="polite">
-                            <?php foreach ($door_handle_finishes as $index => $finish) : ?>
-                                <?php $finish_name = (string) ($finish['name'] ?? 'Door handle finish'); ?>
-                                <img
-                                    src="<?php echo esc_url(fenster_generated_url((string) ($finish['image'] ?? ''))); ?>"
-                                    alt="<?php echo esc_attr('Long-plate door handle in ' . strtolower($finish_name)); ?>"
-                                    loading="lazy"
-                                    data-fg-handle-image="<?php echo esc_attr((string) $index); ?>"
-                                    class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
-                                >
-                            <?php endforeach; ?>
-                        </div>
-
-                        <div class="fg-window-handles__chooser">
-                            <div class="fg-window-handles__swatches" role="list" aria-label="<?php esc_attr_e('Door handle finish options', 'fenster'); ?>">
-                                <?php foreach ($door_handle_finishes as $index => $finish) : ?>
-                                    <button
-                                        type="button"
-                                        role="listitem"
-                                        class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
-                                        style="<?php echo esc_attr('--swatch:' . (string) ($finish['hex'] ?? '#ffffff')); ?>"
-                                        data-fg-handle-finish="<?php echo esc_attr((string) $index); ?>"
-                                        aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
-                                    >
-                                        <i aria-hidden="true"></i>
-                                        <span><?php echo esc_html((string) ($finish['name'] ?? 'Finish')); ?></span>
-                                    </button>
-                                <?php endforeach; ?>
-                            </div>
-
-                            <div class="fg-window-handles__finish-copy">
-                                <?php foreach ($door_handle_finishes as $index => $finish) : ?>
-                                    <article data-fg-handle-panel="<?php echo esc_attr((string) $index); ?>" <?php echo $index === 0 ? '' : 'hidden'; ?>>
-                                        <span><?php echo esc_html((string) ($finish['label'] ?? $finish['name'] ?? 'Door handle finish')); ?></span>
-                                        <p><?php echo esc_html((string) ($finish['copy'] ?? '')); ?></p>
-                                    </article>
-                                <?php endforeach; ?>
-                            </div>
-
-                            <?php if (! empty($door_handles['technical']) && is_array($door_handles['technical'])) : ?>
-                                <aside class="fg-window-handles__details" aria-label="<?php esc_attr_e('Door handle specification', 'fenster'); ?>">
-                                    <div class="fg-window-handles__details-card">
-                                        <h3><?php esc_html_e('Door hardware note', 'fenster'); ?></h3>
-                                        <div class="fg-window-handles__detail-panel">
-                                            <?php if (! empty($door_handles['technical_intro'])) : ?>
-                                                <p><?php echo esc_html((string) $door_handles['technical_intro']); ?></p>
-                                            <?php endif; ?>
-                                            <dl class="fg-window-handles__specs">
-                                                <?php foreach ($door_handles['technical'] as $spec) : ?>
-                                                    <div>
-                                                        <dt><?php echo esc_html((string) ($spec['label'] ?? '')); ?></dt>
-                                                        <dd><?php echo esc_html((string) ($spec['value'] ?? '')); ?></dd>
-                                                    </div>
-                                                <?php endforeach; ?>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </aside>
-                            <?php endif; ?>
-                        </div>
-
-                        <?php if (! empty($door_handles['features']) && is_array($door_handles['features'])) : ?>
-                            <div class="fg-window-handles__features" aria-label="<?php esc_attr_e('Door handle features', 'fenster'); ?>">
-                                <?php foreach ($door_handles['features'] as $feature) : ?>
-                                    <article>
-                                        <h3><?php echo esc_html((string) ($feature['title'] ?? '')); ?></h3>
-                                        <p><?php echo esc_html((string) ($feature['copy'] ?? '')); ?></p>
-                                    </article>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-
-                    </div>
-                </div>
-            </section>
-        <?php endif; ?>
 
         <?php if (! empty($product_faqs)) : ?>
             <?php

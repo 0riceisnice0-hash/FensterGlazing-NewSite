@@ -34278,6 +34278,14 @@ html.fg-blinds-reveal-locked {
   list-style: none;
 }
 
+/* Windows have six finishes and doors have eight, so one column count cannot
+   serve both without leaving an orphan row. Four gives doors two even rows.
+   This selector is (0,2,0) and beats the breakpoint overrides below, so the
+   doors case has to be named in each of them as well. */
+.fg-handle-finishes--doors .fg-handle-finishes__grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .fg-heritage-door-colours__grid li,
 .fg-upvc-colours__grid li,
 .fg-handle-finishes__grid li {
@@ -34577,6 +34585,12 @@ html.fg-blinds-reveal-locked {
   .fg-upvc-colours__grid,
   .fg-handle-finishes__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Eight over three would leave a row of two. Two keeps the rows even and
+     the long backplate readable on a phone. */
+  .fg-handle-finishes--doors .fg-handle-finishes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .fg-heritage-door-detail__copy h2,

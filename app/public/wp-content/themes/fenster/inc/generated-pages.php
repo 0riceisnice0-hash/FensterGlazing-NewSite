@@ -1272,11 +1272,14 @@ function fenster_get_generated_page(?string $slug = null): ?array
     if ($slug === 'window-handles') {
         return $page_cache[$slug] = [
             'slug' => 'window-handles',
-            'title' => 'Window Handles',
+            'title' => 'Window and Door Handles',
             'url' => home_url('/window-handles/'),
+            /* The route stays /window-handles/ deliberately. It is indexed and
+               linked from every window and door page, and renaming it would
+               trade that for a redirect. Worth revisiting only with the owner. */
             'seo' => [
-                'title_tag' => 'Window Handle Options | Fenster Glazing',
-                'meta_description' => 'Compare Fenster Glazing window handle finishes including white, black, chrome, gold, satin silver and monkey tail styles.',
+                'title_tag' => 'Window and Door Handle Options | Fenster Glazing',
+                'meta_description' => 'Compare every Fenster handle finish for windows and doors, from white, black and chrome to gold, satin silver, brushed steel and monkey tail.',
                 'canonical' => 'https://fensterglazing.com/window-handles/',
                 'robots' => 'max-image-preview:large',
             ],
