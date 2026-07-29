@@ -34273,14 +34273,28 @@ html.fg-blinds-reveal-locked {
   text-align: center;
 }
 
-.fg-heritage-door-colours__grid img,
-.fg-cw-colours__grid img {
+.fg-heritage-door-colours__grid img {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 44 / 43;
   margin-bottom: 0.3rem;
   object-fit: contain;
+}
+
+/* The Liniar swatches carry Renolit's own label burnt into the bottom of the
+   artwork: foil part number, German name and RAL code. The RAL is worth having,
+   so it moves into the caption, and the label band is cropped off by showing
+   only the top 70% of a square source. Cropping in CSS rather than re-cutting
+   the files keeps it reversible and leaves the shared assets untouched. */
+.fg-cw-colours__grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.42;
+  margin-bottom: 0.3rem;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .fg-heritage-door-colours__grid strong,
@@ -34298,12 +34312,12 @@ html.fg-blinds-reveal-locked {
 }
 
 /* The one colour with no swatch photograph is the unfoiled white profile, so
-   it renders as a flat block sized to match the photographed swatches. */
+   it renders as a flat block sized to match the cropped swatches. */
 .fg-cw-colours__grid i {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 44 / 43;
+  aspect-ratio: 1.42;
   margin-bottom: 0.3rem;
   border: 1px solid rgba(15, 49, 54, 0.14);
   border-radius: 4px;

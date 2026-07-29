@@ -337,7 +337,7 @@ $faq_schema = [
             <div class="container">
                 <div class="fg-cw-colours__heading">
                     <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
-                    <h2 id="fg-cw-colours-title"><?php esc_html_e('Sixteen foils, and the white profile underneath.', 'fenster'); ?></h2>
+                    <h2 id="fg-cw-colours-title"><?php esc_html_e('Sixteen foils, inside, outside or both.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The frame under the foil stays white, so an open window shows white on the rebate unless you have the foil specified on both faces.', 'fenster'); ?></p>
                 </div>
                 <ul class="fg-cw-colours__grid">
