@@ -33799,7 +33799,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-use,
 .fg-heritage-door-security,
 .fg-heritage-door-colours,
-.fg-cw-colours,
+.fg-upvc-colours,
 .fg-heritage-door-enquiry {
   padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
 }
@@ -33980,7 +33980,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-configurations__heading,
 .fg-heritage-door-colours__heading,
-.fg-cw-colours__heading,
+.fg-upvc-colours__heading,
 .fg-heritage-door-use__heading {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
@@ -33991,14 +33991,14 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-configurations__heading .eyebrow,
 .fg-heritage-door-colours__heading .eyebrow,
-.fg-cw-colours__heading .eyebrow,
+.fg-upvc-colours__heading .eyebrow,
 .fg-heritage-door-use__heading .eyebrow {
   grid-column: 1 / -1;
 }
 
 .fg-heritage-door-configurations__heading h2,
 .fg-heritage-door-colours__heading h2,
-.fg-cw-colours__heading h2,
+.fg-upvc-colours__heading h2,
 .fg-heritage-door-use__heading h2,
 .fg-heritage-door-detail__copy h2,
 .fg-heritage-door-frame__copy h2,
@@ -34013,7 +34013,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-configurations__heading p:not(.eyebrow),
 .fg-heritage-door-colours__heading p:not(.eyebrow),
-.fg-cw-colours__heading p:not(.eyebrow) {
+.fg-upvc-colours__heading p:not(.eyebrow) {
   max-width: 56ch;
   margin-bottom: 0.2rem;
   color: var(--color-muted);
@@ -34253,7 +34253,7 @@ html.fg-blinds-reveal-locked {
 /* Twelve standard colours */
 
 .fg-heritage-door-colours__grid,
-.fg-cw-colours__grid {
+.fg-upvc-colours__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: clamp(0.7rem, 1.4vw, 1.1rem);
@@ -34263,7 +34263,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-heritage-door-colours__grid li,
-.fg-cw-colours__grid li {
+.fg-upvc-colours__grid li {
   display: grid;
   gap: 0.2rem;
   padding: 0.65rem 0.7rem 0.8rem;
@@ -34287,7 +34287,7 @@ html.fg-blinds-reveal-locked {
    so it moves into the caption, and the label band is cropped off by showing
    only the top 70% of a square source. Cropping in CSS rather than re-cutting
    the files keeps it reversible and leaves the shared assets untouched. */
-.fg-cw-colours__grid img {
+.fg-upvc-colours__grid img {
   display: block;
   width: 100%;
   height: auto;
@@ -34298,14 +34298,14 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-heritage-door-colours__grid strong,
-.fg-cw-colours__grid strong {
+.fg-upvc-colours__grid strong {
   color: var(--color-ink);
   font-size: 0.86rem;
   line-height: 1.25;
 }
 
 .fg-heritage-door-colours__grid span,
-.fg-cw-colours__grid span {
+.fg-upvc-colours__grid span {
   color: var(--color-muted);
   font-size: 0.74rem;
   line-height: 1.3;
@@ -34313,7 +34313,7 @@ html.fg-blinds-reveal-locked {
 
 /* The one colour with no swatch photograph is the unfoiled white profile, so
    it renders as a flat block sized to match the cropped swatches. */
-.fg-cw-colours__grid i {
+.fg-upvc-colours__grid i {
   display: block;
   width: 100%;
   height: auto;
@@ -34325,7 +34325,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-heritage-door-colours__note,
-.fg-cw-colours__note {
+.fg-upvc-colours__note {
   max-width: 68ch;
   margin: 1.2rem 0 0;
   color: var(--color-muted);
@@ -34359,7 +34359,7 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 1080px) {
   .fg-heritage-door-colours__grid,
-  .fg-cw-colours__grid {
+  .fg-upvc-colours__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
@@ -34513,7 +34513,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-heritage-door-colours__grid,
-  .fg-cw-colours__grid {
+  .fg-upvc-colours__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 

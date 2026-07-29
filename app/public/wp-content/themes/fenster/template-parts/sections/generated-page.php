@@ -3840,6 +3840,22 @@ if ($is_commercial_hub) {
         </section>
         <?php endif; ?>
 
+        <?php
+        /* The Liniar foil range, on the uPVC window routes that actually carry
+           it. Sliding sash is Roseview and secondary glazing is aluminium, so
+           neither belongs here. Casement has its own template and includes the
+           same component directly. */
+        $upvc_colour_routes = [
+            'flush-casement-windows' => 'flush casement window',
+            'french-casement-windows' => 'French casement window',
+            'tilt-turn-windows' => 'tilt and turn window',
+            'bow-bay-windows' => 'bow or bay window',
+        ];
+        ?>
+        <?php if (isset($upvc_colour_routes[$slug])) : ?>
+            <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_colour_routes[$slug]]); ?>
+        <?php endif; ?>
+
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
             <?php
             $sash_furniture_base = '/wp-content/themes/fenster/assets/images/products/sash-roseview/furniture-guide/';
