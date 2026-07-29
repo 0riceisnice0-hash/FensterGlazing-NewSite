@@ -7764,11 +7764,32 @@ html.fg-gallery-lightbox-open body {
   padding: 0;
 }
 
+/* A lone card spans the row. It looked empty when it was only holding copy;
+   with the etched pane filling the space to the right of the text it has
+   something to be wide for. */
 .fg-product-choice-map--single {
-  /* One card left of a centred heading reads as lopsided, and stretched across
-     the row it reads as empty. Centred at its own width, it reads as intended. */
-  grid-template-columns: minmax(min(100%, 280px), 380px);
-  justify-content: center;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fg-product-choice-map--single .fg-product-option-card {
+  min-height: 260px;
+}
+
+.fg-product-choice-map--single .fg-product-option-card h3,
+.fg-product-choice-map--single .fg-product-option-card p,
+.fg-product-choice-map--single .fg-product-option-card strong {
+  max-width: min(100%, 34rem);
+}
+
+@media (max-width: 720px) {
+  /* The mark would sit under the copy at this width, so it moves out to the
+     bottom corner and shrinks rather than fighting the text. */
+  .fg-product-option-card.is-glazed::before {
+    mask-position: center, right -3rem bottom -2rem;
+    mask-size: cover, auto 78%;
+    -webkit-mask-position: center, right -3rem bottom -2rem;
+    -webkit-mask-size: cover, auto 78%;
+  }
 }
 
 .fg-product-choice-map::before {
@@ -7870,55 +7891,89 @@ html.fg-gallery-lightbox-open body {
   background: var(--color-steel);
 }
 
-/* The privacy glass card wears the real Satin texture from the obscure glass
-   data, so the card and the page it links to show the same glass. A white wash
-   sits over it: the raw texture is busy enough to fight the body copy.
+/* The privacy glass card is a pane of satin glass.
 
-   The heading is engraved rather than frosted. A true etched-glass title is
-   lighter than its background, which on a pale pane means text nobody with
-   less than perfect sight can read. Dark type with a crisp white highlight
-   under it reads as cut into the surface and keeps full contrast. */
+   Satin is a sandblasted finish, so it is grain, not stripes. The data's own
+   Satin swatch is built from repeating gradients, which is a fair shorthand at
+   swatch size and wrong at card size: the first attempt used it and read as
+   pinstripe. This uses feTurbulence instead, which is what actually looks
+   sandblasted.
+
+   The mark is cut clear through the frost rather than drawn on top of it. That
+   is how etched signage works and it is why the card reads as glass: the frost
+   layer is masked by a full-cover gradient minus the brand mark, so wherever
+   the mark is, the smooth pane underneath shows through. Where mask-composite
+   is unsupported the mask falls back to covering everything, which loses the
+   mark and keeps a plain frosted pane rather than breaking. */
 .fg-product-option-card.is-glazed {
-  border-color: rgba(84, 124, 134, 0.32);
-  background: linear-gradient(160deg, #f6fbfb, #e4eff0);
+  border-color: rgba(84, 124, 134, 0.34);
+  /* The clear pane. This is what shows through the etched mark. */
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 34%),
+    linear-gradient(160deg, #dfeeef 0%, #cfe4e6 46%, #dbebec 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 18px 44px rgba(0, 45, 58, 0.1);
+    inset 0 -1px 0 rgba(255, 255, 255, 0.5),
+    0 18px 44px rgba(0, 45, 58, 0.12);
 }
 
-/* The corner swatch stood in for the glass; the whole card is the glass now,
-   so that pseudo-element is reused as the pane itself.
-
-   The texture is drawn at 200px rather than at its own scale. Satin is built
-   from 1px dots and 3px stripes, sized for a small swatch: left alone on a
-   card this size it disappears into noise, which is what the first attempt
-   looked like. */
 .fg-product-option-card.is-glazed::before {
   inset: 0;
   width: auto;
   height: auto;
   border: 0;
   border-radius: inherit;
-  background-color: transparent;
-  background-image: var(--fg-glass-texture, none);
-  background-size: 200px 200px;
-  opacity: 0.85;
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.62);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.42'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mask-image:
+    linear-gradient(#000, #000),
+    url("../brand/fenster-mark-etch.png");
+  mask-repeat: no-repeat, no-repeat;
+  mask-position: center, right clamp(-2rem, -1vw, -0.5rem) center;
+  mask-size: cover, auto 132%;
+  mask-composite: exclude;
+  -webkit-mask-image:
+    linear-gradient(#000, #000),
+    url("../brand/fenster-mark-etch.png");
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-position: center, right -1rem center;
+  -webkit-mask-size: cover, auto 132%;
+  -webkit-mask-composite: xor;
 }
 
-/* The pane is a positioned pseudo-element, so the text needs lifting over it. */
+/* A hairline of catch-light around the cut, which is what makes an etched edge
+   read as an edge rather than a printed shape. */
+.fg-product-option-card.is-glazed::after {
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.4), transparent 38%);
+  opacity: 1;
+}
+
 .fg-product-option-card.is-glazed > * {
   position: relative;
   z-index: 1;
 }
 
+/* Clear glass sits deeper and glossier than the frost around it. */
 .fg-product-option-card.is-glazed h3 {
-  color: #2c4f57;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.92);
+  color: #123b44;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95),
+    0 -1px 0 rgba(0, 45, 58, 0.14);
+}
+
+.fg-product-option-card.is-glazed p {
+  color: #3f6169;
 }
 
 .fg-product-option-card.is-glazed:hover,
 .fg-product-option-card.is-glazed:focus-visible {
-  background: linear-gradient(160deg, #ffffff, #eaf4f4);
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 36%),
+    linear-gradient(160deg, #e7f4f5 0%, #d6eaec 46%, #e2f0f1 100%);
 }
 
 .fg-product-option-card:hover,
