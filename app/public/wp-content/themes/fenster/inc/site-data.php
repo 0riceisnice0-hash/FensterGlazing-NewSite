@@ -528,7 +528,7 @@ function fenster_site_data(): array
             ],
             'aluminium-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden view'],
-                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2.jpg', 'alt' => 'Dark aluminium entrance door with full-height glazing beside it'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2-1.jpg', 'alt' => 'Sage green aluminium entrance door with a full-height bar handle and a glazed side screen'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden view'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-door.jpg', 'alt' => 'Steel-look aluminium door in a kitchen'],
