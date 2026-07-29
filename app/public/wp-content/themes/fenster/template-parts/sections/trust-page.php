@@ -40,12 +40,6 @@ $reasons = [
     ],
 ];
 
-$process_steps = [
-    ['step' => '01', 'title' => __('Talk it through', 'fenster'), 'copy' => __('Tell us what you are looking at, what matters most and whether you want a showroom visit, online quote or a home survey conversation first.')],
-    ['step' => '02', 'title' => __('Choose the right option', 'fenster'), 'copy' => __('We help narrow the product, glass, colour and hardware choices around your property, budget and the way the room or entrance will be used.')],
-    ['step' => '03', 'title' => __('Survey and confirm', 'fenster'), 'copy' => __('Before anything is made, the practical details are checked properly: sizes, access, thresholds, openings, fixing points and site conditions.')],
-    ['step' => '04', 'title' => __('Install and support', 'fenster'), 'copy' => __('Your installation is fitted by trained people, with clear contact options afterwards if you have a question or need support after the job is complete.')],
-];
 
 $standards = [
     __('We explain what is included in the price, including supply, delivery, installation and VAT where relevant.', 'fenster'),
@@ -266,26 +260,11 @@ $team_cards = [
 
     <?php get_template_part('template-parts/components/review-showcase', null, ['class' => 'fg-trust-reviews', 'limit' => 9]); ?>
 
-    <section class="fg-order-process fg-trust-order-process">
-        <div class="container">
-            <div class="section-heading section-heading--wide">
-                <p class="eyebrow"><?php esc_html_e('Order process', 'fenster'); ?></p>
-                <h2><?php esc_html_e('A clear process from first conversation to aftercare.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('This is the usual flow. Some jobs are very simple, others need more detail, but the aim is always to keep the next step clear.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-order-process__rail">
-                <?php foreach ($process_steps as $process_step) : ?>
-                    <article>
-                        <span class="fg-order-process__number"><?php echo esc_html($process_step['step']); ?></span>
-                        <div class="fg-order-process__card">
-                            <h3><?php echo esc_html($process_step['title']); ?></h3>
-                            <p><?php echo esc_html($process_step['copy']); ?></p>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+    <?php
+    get_template_part('template-parts/components/order-process', null, [
+        'class' => 'fg-trust-order-process',
+    ]);
+    ?>
 
     <section class="fg-trust-info">
         <div class="container fg-trust-info__grid">

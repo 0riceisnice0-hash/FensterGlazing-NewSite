@@ -1131,19 +1131,10 @@ if ($is_commercial) {
     ];
 }
 
-/* Corrected against the real process on 2026-07-29. The old version had the
-   survey as a design conversation, which is the consultation's job, not the
-   survey's. Facts here are the owner-confirmed ones in AI.md and LIVECHAT.md:
-   the consultation prices on the same list as the online tool, the technical
-   survey happens after you go ahead and before anything is made, fitters are
-   in-house, and the guarantee is deliberately scoped to new window and door
-   installations because this rail also renders on repairs and roofline. */
-$product_order_steps = [
-    ['step' => '01', 'title' => 'Your price', 'copy' => 'Price it yourself on the online tool, or book a free consultation and we build the same quote with you. Both run on the same price list, so the figure matches.'],
-    ['step' => '02', 'title' => 'Technical survey', 'copy' => 'Once you go ahead we survey before anything is made. Not a second sales visit: the measurements, thresholds and fixings the factory needs to build it right.'],
-    ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, working to the survey measurements so the units go in as made. We clear up after ourselves before we leave.'],
-    ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
-];
+/* Null means the canonical set in inc/site-data.php, which is what every
+   non-commercial route now uses. Only override where the journey is genuinely
+   a different one. */
+$product_order_steps = null;
 
 if ($is_commercial) {
     $product_order_steps = [
@@ -1152,14 +1143,11 @@ if ($is_commercial) {
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Commercial installation is planned around site coordination, safety, sequencing and programme needs.'],
         ['step' => '04', 'title' => 'Aftercare', 'copy' => 'The team remains available for documentation, maintenance guidance and practical project support.'],
     ];
-} elseif ($is_about) {
-    $product_order_steps = [
-        ['step' => '01', 'title' => 'Conversation', 'copy' => 'We start by understanding the property, the people involved and what needs to change.'],
-        ['step' => '02', 'title' => 'Survey', 'copy' => 'The team checks details properly so the recommendation is based on real site conditions.'],
-        ['step' => '03', 'title' => 'Installation', 'copy' => 'Experienced installers manage the work with care for the property and the finished detail.'],
-        ['step' => '04', 'title' => 'Aftercare', 'copy' => 'We support the installation after completion with guarantee guidance and practical advice.'],
-    ];
 } elseif ($is_pet_flap_page) {
+    /* Held back from the canonical set deliberately. A pet flap is a different
+       job: nothing is manufactured to survey sizes, and it sits outside the ten
+       year guarantee, so the canonical steps would describe work we are not
+       doing here. Flagged to the owner on 2026-07-29. */
     $product_order_steps = [
         ['step' => '01', 'title' => 'Check the opening', 'copy' => 'We confirm whether the flap is going into a suitable panel or a replacement sealed glass unit.'],
         ['step' => '02', 'title' => 'Choose the flap', 'copy' => 'Manual, lockable and microchip options are matched to the pet, opening size and access-control need.'],
@@ -4038,29 +4026,16 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
         <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors) : ?>
-        <section class="fg-order-process">
-            <div class="container">
-                <div class="section-heading section-heading--wide">
-                    <p class="eyebrow"><?php echo esc_html($journey_order_eyebrow); ?></p>
-                    <h2><?php echo esc_html($journey_order_heading); ?></h2>
-                    <p><?php echo esc_html($journey_order_copy); ?></p>
-                </div>
-                <div class="fg-order-process__rail">
-                    <?php foreach ($product_order_steps as $step) : ?>
-                        <article>
-                            <span class="fg-order-process__number"><?php echo esc_html($step['step']); ?></span>
-                            <div class="fg-order-process__card">
-                                <h3><?php echo esc_html($step['title']); ?></h3>
-                                <p><?php echo esc_html($step['copy']); ?></p>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
-                </div>
-                <div class="fg-order-process__action">
-                    <a class="button" href="#fenster-enquiry"><?php echo esc_html($journey_order_action); ?></a>
-                </div>
-            </div>
-        </section>
+        <?php
+        get_template_part('template-parts/components/order-process', null, [
+            'eyebrow' => $journey_order_eyebrow,
+            'heading' => $journey_order_heading,
+            'copy' => $journey_order_copy,
+            'steps' => $product_order_steps,
+            'action_label' => $journey_order_action,
+            'action_href' => '#fenster-enquiry',
+        ]);
+        ?>
         <?php endif; ?>
     <?php endif; ?>
 

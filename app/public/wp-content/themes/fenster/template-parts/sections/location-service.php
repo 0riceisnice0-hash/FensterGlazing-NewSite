@@ -910,12 +910,6 @@ $local_decision_cards = [
         'copy' => 'Use the instant quote tool if you know the rough product and size, or send photos first if you need help choosing before survey.',
     ],
 ];
-$process_steps = [
-    ['step' => '01', 'title' => 'Tell us about the property', 'copy' => 'Share the product, rough sizes, photos or plans and what you want to improve.'],
-    ['step' => '02', 'title' => $copy_variant['process_review'], 'copy' => 'We talk through ' . $product_profile['choices'] . ' and narrow the options around your ' . $location_name . ' home.'],
-    ['step' => '03', 'title' => 'Survey the details', 'copy' => $town_profile['survey']],
-    ['step' => '04', 'title' => 'Fit and support', 'copy' => 'The installation is completed carefully, then supported with aftercare and guarantee guidance.'],
-];
 $faqs = [
     [
         'question' => 'Can Fenster quote for ' . $service_name . ' in ' . $location_name . '?',
@@ -949,12 +943,6 @@ if ($is_mk_double_glazing_page) {
             'title' => 'Made for Milton Keynes homes',
             'copy' => 'Fenster works with older estates, newer developments, extensions and larger glazed openings across MK, so the product choice is matched to the property instead of treated as a one-size job.',
         ],
-    ];
-    $process_steps = [
-        ['step' => '01', 'title' => 'Price the likely products', 'copy' => 'Use the instant pricing tool or send photos, rough sizes and the product type you want. Fenster can help compare uPVC, aluminium, composite, sash, bifold, sliding and roof lantern options.'],
-        ['step' => '02', 'title' => 'Check what changes the price', 'copy' => 'Colour, glass, opening style, trickle vents, cill choice, hardware, threshold, access and the number of products all affect the final price.'],
-        ['step' => '03', 'title' => 'Survey before manufacture', 'copy' => 'A survey confirms exact sizes, fitting method, safety requirements, ventilation and the finish around the opening before the order is placed.'],
-        ['step' => '04', 'title' => 'Install and support', 'copy' => 'The products are fitted by the Fenster team and supported with the relevant certification, guarantee information and aftercare guidance.'],
     ];
     $faqs = [
         [
@@ -1030,12 +1018,6 @@ $mk_cascade_sections = [
     ['eyebrow' => 'Roof glazing', 'title' => 'Roof lanterns for flat roof extensions and brighter kitchens', 'copy' => 'A roof lantern can change how a room feels without filling the walls with extra frames. Fenster helps check size, shape, frame colour, glass and upstand details so the lantern works with the extension rather than looking like an afterthought.', 'bullets' => ['Aluminium lanterns for kitchens, dining rooms and open-plan extensions', 'Glass and frame colour choices matched to the room', 'Survey checks the opening before the lantern is ordered'], 'image' => FENSTER_THEME_URI . '/assets/images/imported/S1-Lantern-Lounge-with-LEDs-min-scaled.jpg', 'url' => home_url('/roof-lanterns/'), 'action' => 'View roof lanterns'],
     ['eyebrow' => 'Glass only', 'title' => 'Replacement glazing when the frame can stay', 'copy' => 'Not every problem needs a full frame replacement. If the frame is sound, Fenster can look at misted glass, cracked units, obscure glass, cat flap glass, integral blinds and other sealed unit options that solve the problem more directly.', 'bullets' => ['Misted, cracked and failed sealed units', 'Obscure glass, pet flap glass and integral blind options', 'A practical route when the existing frame is still worth keeping'], 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'url' => home_url('/double-glazing-replacement/'), 'action' => 'View replacement glass'],
     ['eyebrow' => 'Showroom support', 'title' => 'Use the page, then use the team', 'copy' => 'The page should help you narrow the project before you speak to anyone. The team can then use photos, rough sizes, the instant price tool or a showroom conversation to move from browsing to a realistic route forward.', 'bullets' => ['Start with the instant price tool if you know the product and size', 'Send photos if you need help choosing first', 'Visit or contact the showroom when finishes and details matter'], 'image' => FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png', 'url' => home_url('/contact/'), 'action' => 'Talk to Fenster'],
-];
-$mk_order_steps = [
-    ['step' => '01', 'title' => 'Online price or enquiry', 'copy' => 'Use the instant quote tool for a guide price, or send photos and rough sizes if you want Fenster to help choose the product first.'],
-    ['step' => '02', 'title' => 'Product specification', 'copy' => 'Fenster checks the likely frame, glass, colour, handles, vents, cills, thresholds and fitting details before the order is confirmed.'],
-    ['step' => '03', 'title' => 'Survey before manufacture', 'copy' => 'A survey confirms exact sizes, access, safety glass, ventilation requirements and the finish around each opening.'],
-    ['step' => '04', 'title' => 'Installation and aftercare', 'copy' => 'The products are fitted by Fenster installers, with guarantee information and aftercare support after completion.'],
 ];
 $mk_option_groups = [
     ['title' => 'Product decisions', 'items' => ['Window style', 'Door type', 'Bifold or slider', 'Roof lantern size', 'Glass-only replacement']],
@@ -1342,29 +1324,13 @@ $product_links = [
         </div>
     </section>
 
-    <section class="fg-order-process fg-mk-order-process">
-        <div class="container">
-            <div class="section-heading section-heading--wide">
-                <p class="eyebrow"><?php esc_html_e('Order process', 'fenster'); ?></p>
-                <h2><?php esc_html_e('From guide price to fitted double glazing.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Start with a guide price or enquiry, then Fenster confirms the specification, surveys the openings and fits the made-to-measure products.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-order-process__rail">
-                <?php foreach ($mk_order_steps as $step) : ?>
-                    <article>
-                        <span class="fg-order-process__number"><?php echo esc_html($step['step']); ?></span>
-                        <div class="fg-order-process__card">
-                            <h3><?php echo esc_html($step['title']); ?></h3>
-                            <p><?php echo esc_html($step['copy']); ?></p>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-            <div class="fg-order-process__action">
-                <a class="button" href="#fenster-mk-enquiry"><?php esc_html_e('Start your enquiry', 'fenster'); ?></a>
-            </div>
-        </div>
-    </section>
+    <?php
+    get_template_part('template-parts/components/order-process', null, [
+        'class' => 'fg-mk-order-process',
+        'action_label' => 'Start your enquiry',
+        'action_href' => '#fenster-mk-enquiry',
+    ]);
+    ?>
 
     <section class="fg-mk-areas">
         <div class="container fg-mk-areas__grid">
@@ -1665,23 +1631,13 @@ $product_links = [
         </div>
     </section>
 
-    <section class="fg-location-process">
-        <div class="container">
-            <div class="fg-location-section-head">
-                <p class="eyebrow"><?php esc_html_e('How it works', 'fenster'); ?></p>
-                <h2><?php echo esc_html('From ' . $location_name . ' enquiry to installed ' . $service_name . '.'); ?></h2>
-            </div>
-            <div class="fg-location-process__rail">
-                <?php foreach ($process_steps as $step) : ?>
-                    <article>
-                        <span><?php echo esc_html($step['step']); ?></span>
-                        <h3><?php echo esc_html($step['title']); ?></h3>
-                        <p><?php echo esc_html($step['copy']); ?></p>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+    <?php
+    get_template_part('template-parts/components/order-process', null, [
+        'class' => 'fg-location-order-process',
+        'action_label' => 'Start your enquiry',
+        'action_href' => '#fenster-enquiry',
+    ]);
+    ?>
 
     <section class="fg-location-gallery">
         <div class="container fg-location-gallery__grid">

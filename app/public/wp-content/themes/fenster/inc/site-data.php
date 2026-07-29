@@ -1680,6 +1680,27 @@ function fenster_site_data(): array
             ],
             'technical_intro' => 'The S2 Signature handle is tested and specified as proper window hardware, not a decorative afterthought.',
         ],
+        /* The canonical order process. One source, because this rail appears on
+           product pages, town pages, the MK head-term page, About and the trust
+           page, and those had drifted into six different descriptions of the
+           same job. Corrected against the real process on 2026-07-29: two ways
+           in, then a technical survey that exists to get manufacture right
+           rather than to revisit choices, then installation, then aftercare.
+           The guarantee line is scoped to new windows and doors on purpose,
+           because this rail also renders on repairs, roofline, integral blinds
+           and pet flaps, which sit outside it. Commercial and pet flaps pass
+           their own steps; everything else uses these. */
+        'order_process' => [
+            'eyebrow' => 'Order process',
+            'heading' => 'A clear process from first quote to aftercare.',
+            'intro' => 'Four steps. The first one has two ways in: price it yourself online, or have us come out. After that it runs the same either way.',
+            'steps' => [
+                ['step' => '01', 'title' => 'Your price', 'copy' => 'Price it yourself on the online tool, or book a free consultation and we build the same quote with you. Both run on the same price list, so the figure matches.'],
+                ['step' => '02', 'title' => 'Technical survey', 'copy' => 'Once you go ahead we survey before anything is made. Not a second sales visit: the measurements, thresholds and fixings the factory needs to build it right.'],
+                ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, trained on the systems we sell and working carefully in a house someone lives in. We clear up after ourselves before we leave.'],
+                ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
+            ],
+        ],
         'door_handles' => [
             /* Owner instruction, 2026-07-29: these four routes only. French
                doors and aluminium sliding doors came off, because those
