@@ -1040,13 +1040,10 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Patio-door-threshold.png', 'alt' => 'Patio door threshold section'],
             ],
             'upvc_french_doors' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_02.jpg', 'alt' => 'White uPVC French doors opened to a garden'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_03.jpg', 'alt' => 'uPVC French doors with glazed panels'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_16.jpg', 'alt' => 'Irish oak uPVC French doors with side panels'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/French_30.jpg', 'alt' => 'Cream French doors with glazed side panels'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/french-door-cgi-1440x960-1.png', 'alt' => 'uPVC French door product view'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/French-door-inset-threshold.jpeg', 'alt' => 'French door threshold detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/French-door-inset-restrictor.jpeg', 'alt' => 'French door restrictor detail'],
+                /* Imported scrape images replaced with real Fenster installs,
+                   2026-07-29. */
+                ['src' => '/wp-content/themes/fenster/assets/images/products/french-doors/french-doors-white-brick.webp', 'alt' => 'White uPVC French doors opening onto a patio from a brick home'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/french-doors/french-doors-rosewood-patio.webp', 'alt' => 'uPVC French doors in a rosewood woodgrain finish, opening onto a paved patio'],
             ],
             'replacement_glazing' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Double glazed unit showing sealed glass construction'],
@@ -1070,9 +1067,12 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Replace-old-windows.jpeg', 'alt' => 'Older window reviewed for repair or replacement'],
             ],
             'pet_flaps' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-cat-flap-glass.jpg', 'alt' => 'Pet flap fitted into glass'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/SureFlap_Microchip_Cat_Flap_Glass.webp', 'alt' => 'Microchip pet flap fitted into a glass unit'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Replacement glass unit prepared for pet flap fitting'],
+                /* Was roofline boards and a sealed-unit sample. Real installs
+                   since 2026-07-29; the pool feeds the town matrix too. */
+                ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-coming-through.webp', 'alt' => 'Black cat coming through a pet flap fitted into a glazed unit'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-in-glazed-unit.webp', 'alt' => 'Pet flap fitted into a sealed glass unit beside a brick wall'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-conservatory-door.webp', 'alt' => 'Pet flap fitted into a conservatory door panel'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-in-glass.webp', 'alt' => 'Round pet flap fitted into a glazed door panel'],
             ],
             'integral_blinds' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Blind sealed between panes of glass'],
