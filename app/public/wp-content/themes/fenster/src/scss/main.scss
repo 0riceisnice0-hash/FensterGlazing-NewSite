@@ -7935,6 +7935,12 @@ html.fg-gallery-lightbox-open body {
   mask-position: center, right clamp(-2rem, -1vw, -0.5rem) center;
   mask-size: cover, auto 132%;
   mask-composite: exclude;
+  /* The frost layer's alpha shape is the pane minus the mark, so a drop shadow
+     on it lands along the inside of the cut. That catch-light is what stops an
+     etched edge reading as a printed one. */
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.85))
+    drop-shadow(0 -1px 0 rgba(11, 58, 66, 0.12));
   -webkit-mask-image:
     linear-gradient(#000, #000),
     url("../brand/fenster-mark-etch.png");
