@@ -1701,6 +1701,69 @@ function fenster_site_data(): array
                 ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
             ],
         ],
+        /* greenteQ Alpha TBT, the tilt and turn handle. Facts are from the VBH
+           product bulletin PB_CUS_greenteQ_Alpha_TBT_Handle_101125 (10/11/25).
+           We fit the locking version only, owner instruction 2026-07-29, and
+           only these five of the eight greenteQ Suite finishes. The two
+           guarantees are greenteQ's on the handle itself and are nothing to do
+           with the Fenster ten year installation guarantee: keep them
+           attributed so the two are never read as the same thing.
+           Imagery: see the note in AI.md before replacing it. */
+        'tilt_turn_handles' => [
+            'slugs' => ['tilt-turn-windows'],
+            'intro' => 'Tilt and turn windows take their own handle, because one lever has to do two jobs. We fit the locking greenteQ Alpha TBT, which decides with the key how far the window is allowed to open.',
+            'features' => [
+                ['title' => 'Tilt safe with the key', 'copy' => 'Turned to 90 degrees the window tilts for ventilation but cannot be opened fully, which is the setting that matters in a bedroom or above a drop.'],
+                ['title' => 'Locked means locked', 'copy' => 'At 180 degrees the window will not open in any position, and the handle blocks the hardware being manipulated from outside.'],
+                ['title' => 'One handle, two actions', 'copy' => 'Tilt the top in for air without unlocking, or turn the whole sash in to clean the outside face from indoors.'],
+            ],
+            'technical_intro' => 'greenteQ Alpha TBT, locking version. We do not fit the non-locking one.',
+            'technical' => [
+                ['label' => 'Settings', 'value' => 'Unlocked, tilt safe, locked'],
+                ['label' => 'Spindle', 'value' => '40mm as standard'],
+                ['label' => 'Fixing centres', 'value' => '43mm, Eurogroove'],
+                ['label' => 'Security', 'value' => 'Secured by Design, Police Preferred Specification'],
+                ['label' => 'Surface guarantee', 'value' => '20 years, from greenteQ'],
+                ['label' => 'Mechanical guarantee', 'value' => '10 years, from greenteQ'],
+            ],
+            'finishes' => [
+                [
+                    'name' => 'White',
+                    'label' => 'White tilt and turn handle',
+                    'hex' => '#f4f4f1',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-tilt-turn/tilt-turn-white.png',
+                    'copy' => 'The default on white frames, and the one that disappears against them.',
+                ],
+                [
+                    'name' => 'Black',
+                    'label' => 'Black tilt and turn handle',
+                    'hex' => '#141414',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-tilt-turn/tilt-turn-black.png',
+                    'copy' => 'Reads as deliberate against anthracite and black foiled frames rather than as a compromise.',
+                ],
+                [
+                    'name' => 'Gold',
+                    'label' => 'PVD gold tilt and turn handle',
+                    'hex' => '#c8a13c',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-tilt-turn/tilt-turn-gold.png',
+                    'copy' => 'A warm brass tone for period frontages, on a PVD finish rather than a lacquer.',
+                ],
+                [
+                    'name' => 'Chrome',
+                    'label' => 'Polished chrome tilt and turn handle',
+                    'hex' => '#d5d8da',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-tilt-turn/tilt-turn-chrome.png',
+                    'copy' => 'Bright and reflective, which suits a room where the other ironmongery is polished.',
+                ],
+                [
+                    'name' => 'Satin Silver',
+                    'label' => 'Satin tilt and turn handle',
+                    'hex' => '#a9adb0',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-tilt-turn/tilt-turn-satin-silver.png',
+                    'copy' => 'The muted metallic, bright without the mirror. The most common choice on grey frames.',
+                ],
+            ],
+        ],
         'door_handles' => [
             /* Owner instruction, 2026-07-29: these four routes only. French
                doors and aluminium sliding doors came off, because those

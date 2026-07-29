@@ -272,6 +272,11 @@ $door_handle_slugs = $door_handles['slugs'] ?? [];
 /* Composite is no longer excluded. Its old inline hardware picker went with
    the tabbed configurator on 2026-07-22 and renders nowhere, so the route had
    no handle content at all until the owner asked for the grid on 2026-07-29. */
+$tilt_turn_handles = fenster_data('tilt_turn_handles', []);
+$tilt_turn_handles = is_array($tilt_turn_handles) ? $tilt_turn_handles : [];
+$tt_handle_slugs = $tilt_turn_handles['slugs'] ?? [];
+$show_tilt_turn_handles = $use_product_journey && is_array($tt_handle_slugs) && in_array($slug, $tt_handle_slugs, true);
+
 $show_door_handles = $use_product_journey && $is_door_product && is_array($door_handle_slugs) && in_array($slug, $door_handle_slugs, true);
 $door_handle_finishes = $door_handles['finishes'] ?? [];
 $door_handle_finishes = is_array($door_handle_finishes) ? array_values($door_handle_finishes) : [];
@@ -1992,6 +1997,19 @@ if ($is_window_handles) {
             'swatches_label' => 'Window handle finish options',
             'features_label' => 'Window handle features',
             'eager_first' => true,
+        ]);
+
+        get_template_part('template-parts/components/handle-chooser', null, [
+            'id' => 'tilt-turn-handle-finishes',
+            'modifier' => 'fg-window-handles--hub fg-tilt-turn-handles',
+            'eyebrow' => 'Tilt and turn handles',
+            'heading' => 'One lever, and the key decides how far the window opens.',
+            'intro' => (string) ($tilt_turn_handles['intro'] ?? ''),
+            'data' => $tilt_turn_handles,
+            'alt_pattern' => 'greenteQ Alpha TBT tilt and turn window handle in %s',
+            'details_heading' => 'Handle specification',
+            'swatches_label' => 'Tilt and turn handle finish options',
+            'features_label' => 'Tilt and turn handle features',
         ]);
 
         get_template_part('template-parts/components/handle-chooser', null, [
@@ -3806,11 +3824,25 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
         <?php if ($shows_handle_grid) : ?>
-            <?php get_template_part('template-parts/components/window-handle-grid'); ?>
+            <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
+        <?php endif; ?>
+
+        <?php if ($show_tilt_turn_handles) : ?>
+            <?php get_template_part('template-parts/components/handle-grid', null, [
+                'data' => $tilt_turn_handles,
+                'id' => 'tilt-turn-handle-finishes',
+                'eyebrow' => 'Handles',
+                'heading' => 'Five finishes on the locking tilt and turn handle.',
+                'intro' => (string) ($tilt_turn_handles['intro'] ?? ''),
+                'note' => 'The key setting is chosen at survey: tilt safe suits a bedroom or anywhere above a drop, where the window should ventilate but not open.',
+                'alt_pattern' => 'greenteQ Alpha TBT tilt and turn window handle in %s',
+                'columns' => 'fg-handle-finishes--five',
+                'link_href' => home_url('/window-handles/#tilt-turn-handle-finishes'),
+            ]); ?>
         <?php endif; ?>
 
         <?php if ($show_door_handles) : ?>
-            <?php get_template_part('template-parts/components/door-handle-grid'); ?>
+            <?php get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args()); ?>
         <?php endif; ?>
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>

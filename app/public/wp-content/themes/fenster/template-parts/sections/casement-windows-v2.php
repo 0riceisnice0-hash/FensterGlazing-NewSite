@@ -327,7 +327,7 @@ $faq_schema = [
 
     <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
 
-    <?php get_template_part('template-parts/components/window-handle-grid'); ?>
+    <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
 
 </div>
 

@@ -34268,6 +34268,12 @@ html.fg-blinds-reveal-locked {
   grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
+/* Tilt and turn has five finishes. Five in the six-column default would leave
+   a hole at the end of the row. */
+.fg-handle-finishes--five .fg-handle-finishes__grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .fg-heritage-door-colours__grid li,
 .fg-upvc-colours__grid li,
 .fg-handle-finishes__grid li {
@@ -34419,6 +34425,10 @@ html.fg-blinds-reveal-locked {
      the rule above it. */
   .fg-handle-finishes--doors .fg-handle-finishes__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fg-handle-finishes--five .fg-handle-finishes__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -34578,7 +34588,8 @@ html.fg-blinds-reveal-locked {
 
   /* Eight over three would leave a row of two. Two keeps the rows even and
      the long backplate readable on a phone. */
-  .fg-handle-finishes--doors .fg-handle-finishes__grid {
+  .fg-handle-finishes--doors .fg-handle-finishes__grid,
+  .fg-handle-finishes--five .fg-handle-finishes__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

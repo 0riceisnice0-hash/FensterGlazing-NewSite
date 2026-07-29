@@ -242,7 +242,7 @@ $door_colours = [
            handle grid itself, the same way it calls the tech banner above.
            Sits after colour because handle finish is the decision that
            follows frame colour. */
-        get_template_part('template-parts/components/door-handle-grid');
+        get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args());
         ?>
 
         <section id="fenster-heritage-door-enquiry" class="fg-heritage-door-enquiry">

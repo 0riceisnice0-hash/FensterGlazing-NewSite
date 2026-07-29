@@ -561,3 +561,48 @@ function fenster_tech_banner_args(string $slug): array
 
     return [];
 }
+
+/**
+ * Args for the shared handle grid, per handle family.
+ *
+ * Kept here rather than at the call sites because each family renders from
+ * more than one template: windows from the generic journey and the casement
+ * page, doors from the generic journey and the heritage page. Two copies of
+ * the same heading is how they drift apart.
+ */
+function fenster_window_handle_grid_args(): array
+{
+    $data = fenster_data('window_handles', []);
+
+    return [
+        'data' => is_array($data) ? $data : [],
+        'id' => 'window-handle-finishes',
+        'eyebrow' => 'Handles',
+        'heading' => 'Six handle finishes, lockable as standard.',
+        'intro' => 'The S2 Signature range, in left and right hand versions so the operation matches the way the window opens. The release button and the screw cover cap come in the finish you choose rather than defaulting to white.',
+        'note' => 'Handing, restrictors and key-locking are settled at survey, alongside how far the sash swings and whether the handle can be reached comfortably.',
+        'alt_pattern' => 'S2 Signature window handle in %s',
+        'sub_label' => true,
+    ];
+}
+
+function fenster_door_handle_grid_args(): array
+{
+    $data = fenster_data('door_handles', []);
+    $finishes = is_array($data['finishes'] ?? null) ? $data['finishes'] : [];
+    /* Spelled out because TONEOFVOICE.md wants small numbers as words. */
+    $words = [2 => 'Two', 3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six', 7 => 'Seven', 8 => 'Eight', 9 => 'Nine', 10 => 'Ten'];
+    $count = count($finishes);
+
+    return [
+        'data' => is_array($data) ? $data : [],
+        'id' => 'door-handle-finishes',
+        'eyebrow' => 'Door handles',
+        'heading' => sprintf('%s handle finishes on a long backplate.', $words[$count] ?? (string) $count),
+        'intro' => 'The backplate carries the lever and the cylinder aperture together, so the lock and the handle are settled as one decision rather than two. The finish you pick runs through the letterplate, hinges and threshold as well.',
+        'note' => 'Which handles a door can take depends on the slab, the lock set and the colour package, so we confirm the exact hardware at specification stage.',
+        'alt_pattern' => 'Long-plate door handle in %s',
+        'columns' => 'fg-handle-finishes--doors',
+        'link_href' => home_url('/window-handles/#door-handle-finishes'),
+    ];
+}
