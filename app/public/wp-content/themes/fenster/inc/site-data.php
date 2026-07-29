@@ -1723,15 +1723,17 @@ function fenster_site_data(): array
             'intro' => 'Tilt and turn windows take their own handle, because one lever has to do two jobs. Turn it one way and the top tilts inwards for air. Turn it further and the whole sash swings in.',
             'features' => [
                 ['title' => 'Two positions, one lever', 'copy' => 'A quarter turn tilts the top inwards for ventilation. Carry on turning and the whole sash swings right in, so the outside face can be cleaned from indoors.'],
-                ['title' => 'It can tilt without opening', 'copy' => 'Leave the key a quarter turn and the handle still reaches tilt, but it will not go round to the full opening. The window airs and cannot be swung open, which is the setting for a bedroom or anything above a drop.'],
+                ['title' => 'It can tilt without opening', 'copy' => 'Leave the key a quarter turn and the handle still reaches tilt, but it will not go round to the full opening. The window ventilates without being able to swing open, which is the setting for a bedroom or anything above a drop.'],
                 ['title' => 'Locked means locked', 'copy' => 'Turned fully, the key stops the handle moving at all and blocks the hardware being worked from outside. The handle carries the Police Preferred Specification for Secured by Design.'],
             ],
-            'technical_intro' => 'greenteQ Alpha TBT, locking version. We do not fit the non-locking one.',
+            'technical_intro' => 'greenteQ Alpha TBT, locking version.',
+            /* Spindle length and fixing centres were dropped on owner
+               instruction, 2026-07-29. They are fitter numbers, not customer
+               ones, and nobody choosing a handle needs them. They stay in the
+               bulletin if they are ever wanted. */
             'technical' => [
                 ['label' => 'Operation', 'value' => 'Tilt and turn from one lever'],
                 ['label' => 'Key settings', 'value' => 'Unlocked, tilt only, locked'],
-                ['label' => 'Spindle', 'value' => '40mm as standard'],
-                ['label' => 'Fixing centres', 'value' => '43mm, Eurogroove'],
                 ['label' => 'Security', 'value' => 'Secured by Design, Police Preferred Specification'],
                 ['label' => 'Surface guarantee', 'value' => '20 years, from greenteQ'],
                 ['label' => 'Mechanical guarantee', 'value' => '10 years, from greenteQ'],
