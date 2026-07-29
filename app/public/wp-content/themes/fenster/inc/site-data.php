@@ -1006,16 +1006,17 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/composite-doors-milton-keynes-3.jpg', 'alt' => 'Red traditional composite door with decorative glass'],
             ],
             'upvc_doors' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'Golden oak front door with decorative glazed side panels'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_01.jpg', 'alt' => 'Black panel front door with decorative glazed side screens'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/front-door.jpeg', 'alt' => 'Blue six-panel front door with brass letterplate'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Front-door-threshold.jpeg', 'alt' => 'Low threshold detail on a uPVC door'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Chartwell Green with twin glazed top panels'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Golden-Oak-Golden-Oak-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Golden Oak woodgrain finish'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Blue-Blue-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in blue with glazed top panels'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Cream-Woodgrain-Cream-Woodgrain-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in cream woodgrain finish'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Rosewood-Rosewood-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in rosewood woodgrain finish'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-White-White-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in white with glazed top panels'],
+                /* Same real installs as product_media. The pool fed the town
+                   matrix pages as well, so the composite-looking slab was on
+                   every /upvc-doors-<town>/ route too, not just the product
+                   page. Replaced 2026-07-29. */
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-anthracite-brick.webp', 'alt' => 'Anthracite uPVC door with two glazed panes, fitted in a brick opening'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-half-glazed.webp', 'alt' => 'White uPVC back door, half glazed over a solid lower panel'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-rosewood-woodgrain.webp', 'alt' => 'uPVC door in a rosewood woodgrain foil with a glazed upper panel'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-arched-leaded.webp', 'alt' => 'White uPVC front door with leaded glass under a brick arch'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-garden-room.webp', 'alt' => 'White uPVC door and windows onto a garden room'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-cream-from-inside.webp', 'alt' => 'Cream uPVC glazed door and window seen from inside the room'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-arch-frame-detail.webp', 'alt' => 'Close detail of a white uPVC arched frame and obscured glass'],
             ],
             'upvc_patio_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-patio-door.jpg', 'alt' => 'uPVC sliding patio doors in a kitchen extension'],
