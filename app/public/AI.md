@@ -334,6 +334,14 @@ otan.png` is a **positive variant built in this repo**, not a supplier file. The
 - Use local copied Roseview scrape assets only. The source scrape can inform copy/assets, but runtime code must not depend on the scrape export folder.
 - The visible sash detail sections should stay sash-specific: meeting rails, mechanical/welded joints, sash furniture and Roseview model differences. Remove or rewrite generic non-sash hardware/specification content if it appears on this page.
 
+## Tilt And Turn Handle Rule
+
+- Tilt and turn takes its own handle family, `tilt_turn_handles` in `inc\site-data.php`. It is the **greenteQ Alpha TBT, locking version only** (owner instruction, 2026-07-29). Do not merge it into `window_handles`: that is the S2 Signature range and a tilt and turn window cannot take it.
+- Facts come from the VBH product bulletin `PB_CUS_greenteQ_Alpha_TBT_Handle_101125` (10/11/25): four settings, 40mm spindle as standard, 43mm Eurogroove fixing centres, Secured by Design Police Preferred Specification, and greenteQ's own 20 year surface and 10 year mechanical guarantees. **Keep those two guarantees attributed to greenteQ.** They cover the handle, not the installation, and must never be read as the Fenster ten year insurance-backed guarantee.
+- **We fit five of the eight greenteQ Suite finishes**: White, Black, Gold, Chrome and Satin Silver. The bulletin also lists Anthracite Grey, Smokey Chrome and Enduro Steel in the locking range; those are deliberately not offered. VBH's own names for two of ours are PVD Gold and Satin Chrome, so do not "correct" the customer-facing names against the bulletin.
+- **The finish images are AI-generated, not supplier photography.** The owner supplied a single generated sheet on 2026-07-29 and the five assets under `assets\images\products\handles-tilt-turn` were cut from it. They are a likeness, not a photograph of the Alpha TBT, and they have not been checked against the real product. Replace them with VBH photography when it is available, and do not cite them as evidence of what a finish looks like.
+- The five were cut through **one shared crop window** and scaled together, so the handles stay the same size as each other, matching the rule already recorded for the heritage door configuration renders. Do not re-trim them individually.
+
 ## Door Handle Section Rule
 
 - Door handle data belongs in `inc\site-data.php` under `door_handles`.

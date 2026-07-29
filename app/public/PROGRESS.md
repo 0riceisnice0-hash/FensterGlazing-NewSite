@@ -21,6 +21,20 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Tilt and turn handles, on the page and the hub (test)
+
+Owner supplied the finish sheet as one image, plus the VBH product bulletin, and confirmed the locking version only and five finishes.
+
+- **Five assets cut from one sheet**, through a single shared crop window rather than trimming each to its own bounding box, so the handles stay the same size as one another; then scaled together to about 715px to match the existing S2 assets. Each lands at 141x715 and 60-68K, in the same range as the S2 set. The source already had a clean alpha channel.
+- **`tilt_turn_handles` is its own family.** A tilt and turn window cannot take the S2 Signature range, so merging it into `window_handles` would have been wrong even though both are windows.
+- **Specification is from the bulletin, not invented:** four settings, 40mm spindle, 43mm Eurogroove centres, Secured by Design Police Preferred Specification, and greenteQ's 20 year surface and 10 year mechanical guarantees. Those two are **attributed to greenteQ on purpose**: they cover the handle, and the site already promises a ten year insurance-backed guarantee on the installation. Two different things, and they must not blur.
+- **The bulletin lists eight locking finishes; we offer five.** Anthracite Grey, Smokey Chrome and Enduro Steel are deliberately not shown. VBH calls two of ours PVD Gold and Satin Chrome, so a later pass should not "correct" the customer-facing names against the source.
+- **Provenance flagged, and recorded in `AI.md`: the supplied sheet is AI-generated**, not supplier photography. It is a likeness of the Alpha TBT that has not been checked against the real product. The bulletin does contain genuine photography, but only of the black handle, and it needs alpha recomposition. Worth replacing with VBH's own finish photography when it exists.
+- **Folded three grids into one.** Rather than adding a third near-identical grid file, `window-handle-grid.php` and `door-handle-grid.php` were replaced by a shared `handle-grid.php`, with per-family args in `fenster_window_handle_grid_args()` and `fenster_door_handle_grid_args()`. Both families render from two templates each, which is exactly how the headings would have drifted.
+- Five finishes needed their own column count as well, `fg-handle-finishes--five`, named in each breakpoint for the specificity reason now recorded twice in `AI.md`.
+- Verified on test: `/tilt-turn-windows/` renders the grid, `/window-handles/` renders all three choosers in order, `/casement-windows/` and `/upvc-doors/` and `/heritage-aluminium-doors/` unchanged, all five assets serve `200 image/png`, and the section was checked by rendering it.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - One process rail, site wide (test)
 
 Owner: bring all the process rails in line site wide, excluding commercial, and make the installation step read as expertly fitted with care rather than as survey logic.
