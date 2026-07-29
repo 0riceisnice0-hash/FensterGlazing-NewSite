@@ -239,7 +239,7 @@ $product_content = is_array($product_content) ? $product_content : [];
 /* Routes that lay the Liniar foil range out in full. Sliding sash is Roseview
    and secondary glazing is aluminium, so neither carries this range. Casement
    has its own template and includes the same component directly. */
-$upvc_colour_routes = [
+$upvc_foil_routes = [
     'flush-casement-windows' => 'flush casement window',
     'french-casement-windows' => 'French casement window',
     'tilt-turn-windows' => 'tilt and turn window',
@@ -247,7 +247,7 @@ $upvc_colour_routes = [
     'upvc-doors' => 'door',
     'patio-doors' => 'patio door',
 ];
-$shows_upvc_colour_grid = isset($upvc_colour_routes[$slug]) || $slug === 'casement-windows';
+$shows_upvc_colour_grid = isset($upvc_foil_routes[$slug]) || $slug === 'casement-windows';
 $product_media = fenster_data('product_media.' . $slug, []);
 $product_media = is_array($product_media) ? $product_media : [];
 $sash_furniture = fenster_data('sash_furniture', []);
@@ -3854,8 +3854,8 @@ if ($is_commercial_hub) {
         </section>
         <?php endif; ?>
 
-        <?php if (isset($upvc_colour_routes[$slug])) : ?>
-            <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_colour_routes[$slug]]); ?>
+        <?php if (isset($upvc_foil_routes[$slug])) : ?>
+            <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_foil_routes[$slug]]); ?>
         <?php endif; ?>
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
