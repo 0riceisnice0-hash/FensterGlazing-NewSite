@@ -1798,7 +1798,12 @@ function fenster_site_data(): array
                     'headline' => 'uPVC colours.',
                     'copy' => 'A uPVC colour is a foil, bonded to the profile at the factory rather than painted on afterwards. That is why the woodgrains have a grain you can feel, and why the colour does not need repainting. The frame underneath stays white, so you will see white on the rebate when the window is open unless the foil is specified on both faces.',
                     'colours' => [
-                        ['name' => 'Smooth White', 'hex' => '#ffffff', 'finish' => 'No foil', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-swatches/colours_page_image-White-weiss.webp'],
+                        /* Smooth white is the unfoiled profile, so there is no swatch
+                           photograph of it. It was borrowing the foiled White image,
+                           which showed the wrong finish under the wrong name. No image
+                           means the carousel falls back to the flat hex block, the same
+                           way Hipca Gloss White already does. */
+                        ['name' => 'Smooth White', 'hex' => '#ffffff', 'finish' => 'RAL 9003, no foil'],
                         ['name' => 'White', 'hex' => '#f7f6ef', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-swatches/colours_page_image-White-weiss.webp'],
                         ['name' => 'Cream', 'hex' => '#efe6d0', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-swatches/colours_page_image-Cream-Cremeweiss.webp'],
                         ['name' => 'Anthracite Grey', 'hex' => '#353b3f', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-swatches/colours_page_image-7016-SM-Grey.webp'],
