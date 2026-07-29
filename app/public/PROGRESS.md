@@ -22,6 +22,14 @@ Owner instruction from Nick: wherever the site mentions booking a consultation, 
 - **A live promotion was asked for and deliberately declined by the owner.** Live was re-established by checksum as `984e89c`, unchanged. The range `984e89c..HEAD` was 55 commits, of which only 10 were this session's consultation work; the other 45 were the concurrent session's casement rebuild and the Thermlock/EnergyPlus banner across roughly fifteen product routes, still being committed at the time and never submitted for live approval. Rather than repeat the 2026-07-18 and 2026-07-22 incidents, the range was put to the owner, who chose to hold everything on test until the casement work is finished and reviewed. **Nothing was deployed to production; the only commands run against live were read-only checksums.**
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Handle finishes on the page, live (8052f65)
+
+- The six S2 Signature finishes now render on casement, flush casement, aluminium windows, aluminium flush windows and heritage windows, and the card linking to `/window-handles/` is dropped where they do. Scope is `window_handles.slugs`, the list that already decided which pages got the handle card, so no page gained hardware it had not previously claimed.
+- Handles are portrait product shots on white rather than flat swatches, so the tile is 3:4 with `object-fit: contain`. Cropping like a colour swatch would cut the handle off.
+- **The supplied finish labels are prefixed "Premium"**, which TONEOFVOICE.md rules out and which would have appeared five times in one row. The component strips the prefix and keeps the rest, because the remainder names the real finish method. If the exact S2 wording is ever needed commercially, that is one line in `window-handle-grid.php`.
+- Tiles lift 2px and scale 3% on hover, behind `@media (hover: hover)` so a tap does not stick, and cancelled under `prefers-reduced-motion`. None of these tiles are links, so the movement is deliberately too small to read as a button.
+- **Open question left with the owner.** Tilt and turn and bow and bay are uPVC casement-family windows that have never carried the handle card and so do not get the grid. If they take the same S2 handles, they are two pages missing it. Pre-existing gap, not introduced here.
+
 ## 2026-07-29 - Leeds, casement technical data and the uPVC colour grid, live (5b7a612)
 
 - Two live releases today. `2f78837` (footer trust tiles and social links) and `5b7a612` (this work). Both checksum-verified against live before deploying, both backed up first, both explicit SHA with `wp cache flush` and `wp sg purge`.
