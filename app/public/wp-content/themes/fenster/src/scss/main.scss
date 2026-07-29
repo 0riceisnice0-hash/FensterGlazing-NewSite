@@ -2629,9 +2629,12 @@ h3 {
 
 .site-footer__trust img {
   width: 100%;
-  height: 100%;
+  height: auto;
   max-width: 100%;
-  max-height: 100%;
+  /* Absolute, not 100%: the tile's height comes from aspect-ratio, which is not
+     a definite height, so a percentage here resolves to the image's intrinsic
+     size and a square mark renders at full tile width. */
+  max-height: 2.3rem;
   padding: 0;
   border-radius: 0;
   background: transparent;
@@ -22969,9 +22972,9 @@ a.fg-cs-card__pill:focus-visible {
 
   .site-footer__trust img {
     width: 100%;
-    height: 100%;
+    height: auto;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 2rem;
     min-width: 0;
     padding: 0;
   }
@@ -26244,9 +26247,9 @@ html.fg-blinds-reveal-locked {
 /* Final shared polish for the 2026-07-06 product/form/footer test batch. */
 .site-footer__trust img {
   width: 100%;
-  height: 100%;
+  height: auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 2.3rem;
   object-fit: contain;
 }
 
@@ -26258,9 +26261,9 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 860px) {
   .site-footer__trust img {
     width: 100%;
-    height: 100%;
+    height: auto;
     max-width: 100%;
-    max-height: 100%;
+    max-height: 2.1rem;
   }
 
   .site-footer__trust-mark {
@@ -28885,12 +28888,14 @@ html.fg-blinds-reveal-locked {
   display: grid;
   width: 100%;
   min-width: 0;
-  place-items: center;
-  /* .fg-accreditation-logo-link sets width: fit-content, which made every tile
-     shrink to its own logo and left the grid columns ragged. */
+  /* Stretch, not centre. Centring content-sizes the grid item, so the image's
+     height: 100% never resolves against the tile and a square mark like SSIP
+     rendered at its own width and spilled 35px out of the box. Stretching gives
+     every logo the same content area to be letterboxed into. */
+  place-items: stretch;
   aspect-ratio: 5 / 3;
   min-height: 0;
-  padding: 0.5rem 0.6rem;
+  padding: 0.62rem 0.6rem;
   border-radius: var(--fg-tag-radius-sm);
   background: #ffffff;
 }
@@ -29063,15 +29068,15 @@ html.fg-blinds-reveal-locked {
     width: 100%;
     aspect-ratio: 5 / 3;
     min-height: 0;
-    padding: 0.45rem 0.55rem;
+    padding: 0.62rem 0.55rem;
     border-radius: var(--fg-tag-radius-sm);
     background: #ffffff;
   }
 
   .site-footer__trust img {
     width: 100%;
-    height: 100%;
-    max-height: 100%;
+    height: auto;
+    max-height: 2rem;
     padding: 0;
     background: transparent;
   }
