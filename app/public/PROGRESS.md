@@ -21,6 +21,21 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - uPVC door configurations, and the image bank sweep (test)
+
+Owner: uPVC doors should say they come as a French pair, a single or a stable door. And look through the whole Legacy Marketing folder for anything good or needed.
+
+- **uPVC doors now says what it actually is.** The intro led on "practical, efficient and highly customisable", which describes nothing. It now says the same Liniar system makes a single leaf, a French pair or a stable door, with a benefit card and a new lead FAQ carrying the same. Owner instruction.
+- **The worst find in the sweep: `/cat-and-dog-flaps/` was illustrated with roofline fascia and soffit boards**, a different product entirely, plus a sealed-unit sample. Four real pet-flap installs are in, including a black cat halfway through a flap, and it is now the hero.
+- **French doors** dropped four imported scrape images for two real installs, one of them the rosewood woodgrain that also does a job showing the foil range.
+- **Aluminium windows** gained the single real Fenster aluminium install in the bank, closing a standing `PHOTO-CHECKLIST` gap.
+- **The pool lesson repeated.** `product_media` fixed the product pages while the gallery pools still fed the old images to every town route; both pet flaps and French doors needed the pool fixing as well. That is the second time today. The three places are `product_media`, `product_gallery_pools` and `fenster_link_card_image()`.
+- **One apparent defect that was not one:** `/cat-and-dog-flaps/` still shows a roofline photograph, in a related-link card pointing at `/roofline/`. Correct there.
+- **Empty folders, so these gaps stay open:** aluminium doors, aluminium sliders, uPVC sliding, tilt and turn, heritage windows and heritage doors all have folders in the bank with nothing in them. `/aluminium-doors/` therefore keeps the interior white-door hero the owner chose to leave.
+- **Not yet mined:** `Photos.old` (261 files), `Misc` (30), `Doors/Composite` (51), `Windows/uPVC casement` (22), `bifolds` (13), `uPVC flush` (10), sash (11), roof lanterns and showroom. Those are seams worth a session of their own rather than a skim.
+- `PHOTO-CHECKLIST.md` rewritten around what is now closed, still open, and newly discovered, with a pointer to the bank so the next person looks there first.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - Real uPVC door photography, and five owner decisions closed (test)
 
 Owner pointed at OneDrive `Marketing/Image Bank/Legacy Marketing/Doors/uPVC Doors` and asked for the gaps on the uPVC doors page to be filled from it.

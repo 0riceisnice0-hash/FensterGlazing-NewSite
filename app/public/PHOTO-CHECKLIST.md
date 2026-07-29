@@ -27,8 +27,14 @@ Why: the website's biggest content gap is real photos of our own installs. The i
 
 ## Current wishlist (fills known gaps)
 
-- uPVC panel doors (front and back doors) — the page currently leans on Liniar renders.
-- Aluminium windows on a local home — no real Fenster install photo exists on the site.
-- Secondary glazing — no genuine product image at all.
-- Sliding sash installs in towns other than Flitwick.
-- Any before/after pair (same angle) for the repairs and replacement-glazing pages.
+**Updated 2026-07-29.** Much of this was already sitting in OneDrive at
+`Marketing/Image Bank/Legacy Marketing`, which nobody had mined. Check there before
+adding anything to this list.
+
+- ~~uPVC panel doors (front and back doors)~~ — **closed.** Seven real installs pulled in.
+- ~~Aluminium windows on a local home~~ — **closed**, though only one photograph exists. More would help.
+- **Secondary glazing — still open.** No genuine product image, and no folder for it in the image bank either.
+- **Sliding sash installs in towns other than Flitwick — still open.** The bank has three plus a social post set that are worth a look.
+- **Any before/after pair (same angle) for the repairs and replacement-glazing pages — still open.**
+- **Aluminium doors — new gap.** `/aluminium-doors/` has an interior kitchen shot of a white single door as its hero, which reads as uPVC. The bank's `Doors/aluminium` folder is empty.
+- Tilt and turn, heritage windows, heritage doors, aluminium sliders and uPVC sliding all have **empty folders** in the bank, so those pages stay on supplier imagery.
