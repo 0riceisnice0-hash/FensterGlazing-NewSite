@@ -2094,12 +2094,11 @@ if ($is_colour_options) {
                     </li>
                         <?php endforeach; ?>
                 </ul>
-                <?php /* No buttons: the owner asked for swipe. Touch and trackpad
-                         get it natively from scroll-snap, and the controller adds
-                         click-drag so a mouse can do the same. The counter stays,
-                         because a rail with no affordance does not say how much
-                         more there is. */ ?>
-                <p class="fg-colour-rail__hint"><span data-fg-colour-rail-count><?php echo esc_html('01 / ' . sprintf('%02d', max(1, count($colours)))); ?></span><?php esc_html_e('Drag or swipe to see more', 'fenster'); ?></p>
+                <?php /* No buttons and no counter: the owner asked for swipe and
+                         said the numbers were not needed. Touch and trackpad get
+                         it natively from scroll-snap, and the controller adds
+                         click-drag with a glide so a mouse can do the same. */ ?>
+                <p class="fg-colour-rail__hint"><?php esc_html_e('Drag or swipe to see more', 'fenster'); ?></p>
             </div>
         </article>
         <?php

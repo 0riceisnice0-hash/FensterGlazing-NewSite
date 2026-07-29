@@ -35484,6 +35484,8 @@ html.fg-blinds-reveal-locked {
    the obscured-glass picker. */
 .fg-colour-rail__track {
   display: grid;
+  user-select: none;
+  -webkit-user-select: none;
   grid-auto-flow: column;
   grid-auto-columns: calc((100% - (var(--fg-rail-gap) * (var(--fg-rail-per-view) - 1))) / var(--fg-rail-per-view));
   gap: var(--fg-rail-gap);
@@ -35527,16 +35529,16 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* 1.42 anchored to the top, matching the uPVC colour grid. The Renolit swatch
-   assets carry a supplier label strip along the bottom edge, and this crop is
-   what removes it; a square box put "RENOLIT FOIL S3030700005" on the page,
-   which AI.md forbids. Harmless on the composite and aluminium swatches, which
-   are flat colour. */
+/* Every source is square. Only the Renolit uPVC swatches carry a supplier
+   label strip along the bottom edge, so only they get the 1.42 crop that
+   removes it. Aluminium is a Sheerline frame corner and composite is a paint
+   tile: cropping those just cuts the product off, which is what happened when
+   the crop was applied to all three. */
 .fg-colour-rail__media {
   display: block;
   overflow: hidden;
   border-radius: 7px;
-  aspect-ratio: 1.42;
+  aspect-ratio: 1 / 1;
   background: var(--swatch, #ffffff);
 }
 
@@ -35545,6 +35547,17 @@ html.fg-blinds-reveal-locked {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  /* A drag must scroll the rail, not lift a ghost image or select the tile. */
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+[data-fg-colour-material="upvc"] .fg-colour-rail__media {
+  aspect-ratio: 1.42;
+}
+
+[data-fg-colour-material="upvc"] .fg-colour-rail__media img {
   object-position: center top;
 }
 
@@ -35575,18 +35588,9 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-colour-rail__hint {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
   margin: clamp(0.6rem, 1.2vw, 0.9rem) 0 0;
   color: var(--color-muted);
   font-size: 0.82rem;
-}
-
-.fg-colour-rail__hint span {
-  color: var(--color-steel);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
 }
 
 /* Grab cursor only where a pointer can actually drag. */

@@ -5082,29 +5082,13 @@ document.querySelectorAll('.fg-about').forEach((about) => {
 document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
   const viewport = rail.querySelector('[data-fg-colour-rail-viewport]');
   const slides = [...rail.querySelectorAll('[data-fg-colour-slide]')];
-  const count = rail.querySelector('[data-fg-colour-rail-count]');
 
   if (!viewport || !slides.length) return;
 
-  const pad = (n) => String(n).padStart(2, '0');
-
-  const firstVisible = () => {
-    const left = viewport.scrollLeft;
-    let best = 0;
-    let bestGap = Infinity;
-    slides.forEach((slide, index) => {
-      const gap = Math.abs(slide.offsetLeft - viewport.offsetLeft - left);
-      if (gap < bestGap) {
-        bestGap = gap;
-        best = index;
-      }
-    });
-    return best;
-  };
-
-  const update = () => {
-    if (count) count.textContent = `${pad(firstVisible() + 1)} / ${pad(slides.length)}`;
-  };
+  // A native image drag beats any pointer handling, so switch it off first.
+  viewport.querySelectorAll('img').forEach((img) => {
+    img.draggable = false;
+  });
 
   const step = () => {
     const a = slides[0];
@@ -5125,12 +5109,24 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
   let startScroll = 0;
   let moved = 0;
 
+  let lastX = 0;
+  let lastT = 0;
+  let velocity = 0;
+  let glide = 0;
+
   viewport.addEventListener('pointerdown', (event) => {
     if (event.pointerType === 'touch' || event.button !== 0) return;
+    // Stops the browser starting its own text/image selection instead.
+    event.preventDefault();
+    window.cancelAnimationFrame(glide);
     dragging = true;
     moved = 0;
+    velocity = 0;
     startX = event.clientX;
+    lastX = event.clientX;
+    lastT = event.timeStamp;
     startScroll = viewport.scrollLeft;
+    viewport.style.scrollSnapType = 'none';
   });
 
   viewport.addEventListener('pointermove', (event) => {
@@ -5143,15 +5139,43 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
         viewport.setPointerCapture?.(event.pointerId);
       }
       viewport.scrollLeft = startScroll - delta;
+      const dt = event.timeStamp - lastT;
+      if (dt > 0) velocity = (lastX - event.clientX) / dt;
+      lastX = event.clientX;
+      lastT = event.timeStamp;
     }
   });
 
+  /* Let go and the rail keeps going, decaying, then hands snapping back. A rail
+     that stops dead the instant the mouse lifts feels stuck. */
   const endDrag = (event) => {
     if (!dragging) return;
     dragging = false;
     viewport.classList.remove('is-dragging');
     if (event?.pointerId !== undefined) viewport.releasePointerCapture?.(event.pointerId);
-    update();
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let v = velocity * 16;
+
+    const settle = () => {
+      viewport.style.scrollSnapType = '';
+      };
+
+    if (reduced || Math.abs(v) < 0.4) {
+      settle();
+      return;
+    }
+
+    const stepGlide = () => {
+      viewport.scrollLeft += v;
+      v *= 0.94;
+      if (Math.abs(v) > 0.4) {
+        glide = window.requestAnimationFrame(stepGlide);
+      } else {
+        settle();
+      }
+    };
+    glide = window.requestAnimationFrame(stepGlide);
   };
 
   viewport.addEventListener('pointerup', endDrag);
@@ -5167,11 +5191,6 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
     }
   }, true);
 
-  viewport.addEventListener('scroll', () => {
-    window.clearTimeout(viewport._fgRailTimer);
-    viewport._fgRailTimer = window.setTimeout(update, 80);
-  }, { passive: true });
-
   viewport.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight') {
       event.preventDefault();
@@ -5181,8 +5200,6 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
       scrollBySlides(-1);
     }
   });
-
-  window.addEventListener('resize', update, { passive: true });
 
   /* Deep links such as /colour-options/?material=upvc&colour=basalt-grey bring
      the swatch into the rail and the material section into the page. Carried
@@ -5230,8 +5247,7 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
               if (!cancelled) {
                 settle();
                 lenis?.start?.();
-                update();
-              }
+                          }
             }, 950);
           };
           if (document.readyState === 'complete') {
@@ -5246,5 +5262,4 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
     /* deep link is best-effort */
   }
 
-  update();
 });
