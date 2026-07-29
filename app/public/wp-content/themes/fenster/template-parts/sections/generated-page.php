@@ -1082,7 +1082,7 @@ $journey_order_copy = $is_commercial
     ? 'We keep commercial projects moving through brief, specification, coordination, installation and aftercare.'
     : ($is_about
         ? 'We keep enquiries straightforward: understand the need, check the details, install carefully and support the work afterwards.'
-        : 'We keep the process simple: understand the brief, survey properly, install carefully and support the product afterwards.');
+        : 'Four steps, and you can start at either end of the first one: price it yourself online, or have us come out. The rest is the same either way.');
 $journey_order_action = $is_commercial ? 'Start a commercial conversation' : ($is_about ? 'Start a conversation' : 'Start your enquiry');
 $journey_trust_heading = $is_about ? 'A local glazing team backed by recognised accreditations.' : 'Reviewed, accredited and backed by proven product systems.';
 $journey_trust_copy = $is_about
