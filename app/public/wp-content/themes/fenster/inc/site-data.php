@@ -842,6 +842,12 @@ function fenster_site_data(): array
                     ['slug' => 'integral-blinds', 'name' => 'Integral Blinds', 'fit' => 'Blinds inside the glass', 'copy' => 'Sealed between the panes, so there is nothing to dust and nothing to catch. Magnetic or electric control.'],
                     ['slug' => 'double-glazing-replacement', 'name' => 'Replacement Glazing', 'fit' => 'New glass, same frames', 'copy' => 'Misted or broken sealed units changed on their own, without replacing the window around them.'],
                     ['slug' => 'secondary-glazing', 'name' => 'Secondary Glazing', 'fit' => 'A second pane, added inside', 'copy' => 'For listed frontages and noisy roads, where the existing window has to stay exactly as it is.'],
+                    /* Missing from this hub until 2026-07-29 even though the
+                       homepage product theatre has always said Other Services
+                       covers cat and dog flaps. Sits with the glass work,
+                       because the job is a flap into a panel or a new sealed
+                       unit. Eight tiles still fill two even rows of four. */
+                    ['slug' => 'cat-and-dog-flaps', 'name' => 'Cat and Dog Flaps', 'fit' => 'Into a panel or new glass', 'copy' => 'Fitted into a door panel, or into a new sealed unit made with the aperture already in it.'],
                     ['slug' => 'window-and-door-repairs', 'name' => 'Window and Door Repairs', 'fit' => 'Handles, hinges, locks and glass', 'copy' => 'Small jobs on windows and doors, including ones we did not fit ourselves.'],
                     ['slug' => 'roofline', 'name' => 'Roofline', 'fit' => 'Fascias, soffits and guttering', 'copy' => 'The boards and gutters along the roof edge, usually worth doing while the scaffolding is already up.'],
                 ],
