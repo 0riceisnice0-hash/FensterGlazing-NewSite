@@ -1141,7 +1141,7 @@ if ($is_commercial) {
 $product_order_steps = [
     ['step' => '01', 'title' => 'Your price', 'copy' => 'Price it yourself on the online tool, or book a free consultation and we build the same quote with you. Both run on the same price list, so the figure matches.'],
     ['step' => '02', 'title' => 'Technical survey', 'copy' => 'Once you go ahead we survey before anything is made. Not a second sales visit: the measurements, thresholds and fixings the factory needs to build it right.'],
-    ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, working to the survey measurements so the units go in as they were made rather than adjusted on site.'],
+    ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, working to the survey measurements so the units go in as made. We clear up after ourselves before we leave.'],
     ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
 ];
 
