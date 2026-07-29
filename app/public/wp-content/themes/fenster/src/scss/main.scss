@@ -8101,7 +8101,7 @@ html.fg-gallery-lightbox-open body {
   }
 
   .fg-colour-hub-page .fg-colour-hub {
-    padding-top: clamp(1.8rem, 5vw, 2.4rem);
+    padding-top: clamp(3rem, 9vw, 3.8rem);
   }
 
   .fg-colour-hub-page .fg-colour-hub__material:first-child {
@@ -8118,7 +8118,7 @@ html.fg-gallery-lightbox-open body {
   }
 
   .fg-colour-hub-hero__actions {
-    margin-top: clamp(0.9rem, 3vw, 1.2rem);
+    margin-top: clamp(1.1rem, 3.4vw, 1.5rem);
   }
 }
 
@@ -8212,6 +8212,32 @@ html.fg-gallery-lightbox-open body {
   .fg-colour-next__handle:nth-child(5) {
     display: none;
   }
+}
+
+/* Clamp is added by the controller, never by the markup, so a page without
+   JavaScript shows the paragraph in full. */
+.fg-colour-hub-hero p.is-clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.fg-colour-hub-hero__more {
+  margin-top: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-forest, #1c8a4d);
+  font: inherit;
+  font-weight: 850;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.fg-colour-hub-hero__more[hidden] {
+  display: none;
 }
 
 .fg-colour-hub__tabs {

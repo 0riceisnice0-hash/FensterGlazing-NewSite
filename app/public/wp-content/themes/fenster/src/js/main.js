@@ -5283,3 +5283,49 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
   }
 
 });
+
+
+/* Read more on the colour hub intro, phones only. The clamp is applied here
+   rather than in the stylesheet so that a page without JavaScript shows the
+   whole paragraph instead of a cut-off one with no control to open it. The
+   button also stays hidden when the text is short enough not to need it, which
+   is what happens on a tall phone or once the user has opened it on desktop
+   width after a rotate. */
+document.querySelectorAll('[data-fg-readmore]').forEach((button) => {
+  const target = document.getElementById(button.getAttribute('aria-controls') || '');
+  const label = button.querySelector('[data-fg-readmore-label]');
+  if (!target || !label) return;
+
+  const phone = window.matchMedia('(max-width: 900px)');
+  const readMore = label.textContent || 'Read more';
+  const readLess = 'Read less';
+  let open = false;
+
+  const apply = () => {
+    if (!phone.matches) {
+      target.classList.remove('is-clamped');
+      button.hidden = true;
+      return;
+    }
+    if (open) {
+      target.classList.remove('is-clamped');
+      button.hidden = false;
+      return;
+    }
+    target.classList.add('is-clamped');
+    // Measured with the clamp on, which is the only state where it overflows.
+    const overflows = target.scrollHeight - target.clientHeight > 4;
+    if (!overflows) target.classList.remove('is-clamped');
+    button.hidden = !overflows;
+  };
+
+  button.addEventListener('click', () => {
+    open = !open;
+    label.textContent = open ? readLess : readMore;
+    button.setAttribute('aria-expanded', String(open));
+    apply();
+  });
+
+  apply();
+  window.addEventListener('resize', apply, { passive: true });
+});

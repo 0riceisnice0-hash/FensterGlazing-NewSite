@@ -2193,7 +2193,21 @@ if ($is_colour_options) {
                 <div class="fg-colour-hub-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Specification hub', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Colour options for Fenster windows and doors.', 'fenster'); ?></h1>
-                    <p><?php echo esc_html((string) ($colour_options['intro'] ?? $hero_intro)); ?></p>
+                    <?php
+                    /* The intro runs to six lines on a phone and dominates the
+                       screen. It collapses there, not on desktop. Safe to
+                       collapse because the two facts it turns on, uPVC is a
+                       bonded foil and aluminium is powder coated, are repeated
+                       in each material's own copy further down the page.
+
+                       No clamp in the markup or the base CSS: the JS adds it,
+                       so if the script never runs the whole paragraph is
+                       simply there rather than cut off with no way to open. */
+                    ?>
+                    <p id="fg-colour-hero-intro"><?php echo esc_html((string) ($colour_options['intro'] ?? $hero_intro)); ?></p>
+                    <button class="fg-colour-hub-hero__more" type="button" data-fg-readmore aria-controls="fg-colour-hero-intro" aria-expanded="false" hidden>
+                        <span data-fg-readmore-label><?php esc_html_e('Read more', 'fenster'); ?></span>
+                    </button>
                     <div class="fg-colour-hub-hero__actions">
                         <a class="button" href="<?php echo esc_url($instant_quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                         <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
