@@ -7753,6 +7753,7 @@ html.fg-gallery-lightbox-open body {
 /* auto-fill, not auto-fit: auto-fit collapses the empty tracks and stretches a
    lone card across the whole 980px row, which on the routes that show only the
    glass card left a very wide, very empty pane. */
+
 .fg-product-choice-map {
   position: relative;
   display: grid;
@@ -7762,6 +7763,13 @@ html.fg-gallery-lightbox-open body {
   max-width: 980px;
   margin-top: clamp(1.6rem, 3vw, 2.6rem);
   padding: 0;
+}
+
+.fg-product-choice-map--single {
+  /* One card left of a centred heading reads as lopsided, and stretched across
+     the row it reads as empty. Centred at its own width, it reads as intended. */
+  grid-template-columns: minmax(min(100%, 280px), 380px);
+  justify-content: center;
 }
 
 .fg-product-choice-map::before {

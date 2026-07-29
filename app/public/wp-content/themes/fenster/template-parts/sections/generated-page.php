@@ -3973,7 +3973,7 @@ if ($is_commercial_hub) {
 
                 $number_cards = count($option_cards) > 1;
                 ?>
-                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?>">
+                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? '' : 'fg-product-choice-map--single'); ?>">
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <a
