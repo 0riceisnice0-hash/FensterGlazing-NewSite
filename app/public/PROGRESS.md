@@ -35,6 +35,17 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Handle options box, and a mobile hero worth having (test, 62f1099)
+
+Owner: a box leading to handle options after all the colour options, and the header looks amazing on desktop but not great on mobile.
+
+- **The box sits after all three ranges, before the enquiry form.** Finishes come from `window_handles.finishes` rather than being hardcoded, so the strip cannot fall out of step with the hub it links to. The whole box is the anchor and the button inside it is a `span`, not a nested link.
+- **The mobile hero was weak because the colour arrived late.** The band sat under the copy, so the first thing on a phone was a plain white text block. The desktop idea now runs vertically instead: the wall is full strength directly under the header and fades down into white, with the copy pulled up into the tail of the fade so it reads as a backdrop rather than a stripe.
+- **Two sizing mistakes, both caught by measuring rather than looking.** The handle photographs are tall and narrow, so card width limited them, not height: five in a 0.85fr column drew at 108px inside a 128px box. Then, after widening the cards, the phone case did not improve at all, because a 22vw height clamp was still capping the image at 86px. Widening had fixed the wrong axis. **The first fix looked right on desktop and did nothing on the size that prompted it.**
+- Four handles on a phone rather than five: at 390 five put each at 49px wide, too small to tell the finishes apart.
+- Verified on test at 1440, 1000 and a true 390: handles drawn at 90x172, 63x120 and 62x117, five visible on desktop and four on the phone, no horizontal overflow at any width.
+- Test deployment only. Live is `6ea0dba`.
+
 ## 2026-07-29 - Promoted to live (6ea0dba)
 
 - **Live re-established by checksum before anything was touched.** Five theme files matched `54451c2..4822e92`, four commits all theme-identical, so `54451c2` was used as the range base to yield a superset. The recorded pointer was accurate this time, ending a run of three releases where it was not. Empty-input hash checked against the sweep so a silent miss could not read as a match.
