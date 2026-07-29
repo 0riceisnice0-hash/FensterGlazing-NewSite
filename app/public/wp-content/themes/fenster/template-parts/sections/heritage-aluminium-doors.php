@@ -237,6 +237,14 @@ $door_colours = [
             </div>
         </section>
 
+        <?php
+        /* This route returns before the shared product tail, so it calls the
+           handle grid itself, the same way it calls the tech banner above.
+           Sits after colour because handle finish is the decision that
+           follows frame colour. */
+        get_template_part('template-parts/components/door-handle-grid');
+        ?>
+
         <section id="fenster-heritage-door-enquiry" class="fg-heritage-door-enquiry">
             <div class="container fg-heritage-door-enquiry__grid">
                 <div class="fg-heritage-door-enquiry__copy">

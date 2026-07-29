@@ -34279,11 +34279,12 @@ html.fg-blinds-reveal-locked {
 }
 
 /* Windows have six finishes and doors have eight, so one column count cannot
-   serve both without leaving an orphan row. Four gives doors two even rows.
+   serve both. Doors run all eight on a single row (owner instruction,
+   2026-07-29), which makes each tile narrower and the handle image smaller.
    This selector is (0,2,0) and beats the breakpoint overrides below, so the
    doors case has to be named in each of them as well. */
 .fg-handle-finishes--doors .fg-handle-finishes__grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
 .fg-heritage-door-colours__grid li,
@@ -34429,6 +34430,13 @@ html.fg-blinds-reveal-locked {
   .fg-heritage-door-colours__grid,
   .fg-upvc-colours__grid,
   .fg-handle-finishes__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Eight on one row stops being legible below this, so doors rejoin the
+     four-column layout. Named explicitly because the doors selector outranks
+     the rule above it. */
+  .fg-handle-finishes--doors .fg-handle-finishes__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

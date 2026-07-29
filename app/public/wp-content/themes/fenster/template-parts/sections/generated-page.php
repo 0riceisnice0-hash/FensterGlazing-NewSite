@@ -269,7 +269,10 @@ $window_handle_finishes = is_array($window_handle_finishes) ? array_values($wind
 $door_handles = fenster_data('door_handles', []);
 $door_handles = is_array($door_handles) ? $door_handles : [];
 $door_handle_slugs = $door_handles['slugs'] ?? [];
-$show_door_handles = $use_product_journey && ! $is_composite_doors && $is_door_product && is_array($door_handle_slugs) && in_array($slug, $door_handle_slugs, true);
+/* Composite is no longer excluded. Its old inline hardware picker went with
+   the tabbed configurator on 2026-07-22 and renders nowhere, so the route had
+   no handle content at all until the owner asked for the grid on 2026-07-29. */
+$show_door_handles = $use_product_journey && $is_door_product && is_array($door_handle_slugs) && in_array($slug, $door_handle_slugs, true);
 $door_handle_finishes = $door_handles['finishes'] ?? [];
 $door_handle_finishes = is_array($door_handle_finishes) ? array_values($door_handle_finishes) : [];
 $obscure_glass = fenster_data('obscure_glass', []);

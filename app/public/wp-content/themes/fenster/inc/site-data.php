@@ -1681,13 +1681,14 @@ function fenster_site_data(): array
             'technical_intro' => 'The S2 Signature handle is tested and specified as proper window hardware, not a decorative afterthought.',
         ],
         'door_handles' => [
+            /* Owner instruction, 2026-07-29: these four routes only. French
+               doors and aluminium sliding doors came off, because those
+               systems do not take the long-plate handle. */
             'slugs' => [
                 'composite-doors',
                 'upvc-doors',
-                'french-doors',
-                'aluminium-sliding-doors',
-                'heritage-aluminium-doors',
                 'aluminium-doors',
+                'heritage-aluminium-doors',
             ],
             'intro' => 'Pick a handle finish that works with your frame colour, letterplate and locking needs. These long-plate handles cover the popular finishes; we confirm the exact compatible hardware with your chosen door system before ordering.',
             'features' => [
