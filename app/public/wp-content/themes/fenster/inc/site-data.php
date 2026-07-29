@@ -544,11 +544,20 @@ function fenster_site_data(): array
                 ],
             ],
             'upvc-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'Golden oak front door with decorative glazed side panels'],
+                /* Real Fenster installs, from the Marketing image bank on
+                   2026-07-29. Replaces a golden oak slab that read composite
+                   and had been representing uPVC since launch; the July image
+                   audit pulled it from the gallery but left it as the hero,
+                   which is what the hub tile falls back to. Every file here
+                   was opened before it was chosen. */
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-anthracite-brick.webp', 'alt' => 'Anthracite uPVC door with two glazed panes, fitted in a brick opening'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg', 'alt' => 'Golden oak front door with decorative glazed side panels'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Residential_Door_01.jpg', 'alt' => 'Black panel front door with decorative glazed side screens'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/colours/liniar-door/door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp', 'alt' => 'Liniar uPVC door in Chartwell Green with twin glazed top panels'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-half-glazed.webp', 'alt' => 'White uPVC back door, half glazed over a solid lower panel'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-rosewood-woodgrain.webp', 'alt' => 'uPVC door in a rosewood woodgrain foil with a glazed upper panel'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-arched-leaded.webp', 'alt' => 'White uPVC front door with leaded glass under a brick arch'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-garden-room.webp', 'alt' => 'White uPVC door and windows onto a garden room'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-cream-from-inside.webp', 'alt' => 'Cream uPVC glazed door and window seen from inside the room'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-arch-frame-detail.webp', 'alt' => 'Close detail of a white uPVC arched frame and obscured glass'],
                 ],
             ],
             'patio-doors' => [
