@@ -1776,6 +1776,31 @@ document.querySelectorAll('[data-fg-visitor-id]').forEach((field) => {
   field.value = visitorReference();
 });
 
+// Google Ads click ids identify the ad click behind a lead, so a job we win can
+// be reported back to Google as an offline conversion and bidding can learn what
+// actually sells. The value travels with the enquiry to WordPress only: it is
+// never added to a dashboard payload, per the tracker's privacy boundary.
+const adClickStorageKey = 'fenster_ad_click_id';
+const validAdClickValue = (value) => /^(gclid|gbraid|wbraid):[A-Za-z0-9_\-.]{10,200}$/.test(value || '');
+
+const adClickReference = () => {
+  const parameters = new URLSearchParams(window.location.search);
+  for (const key of ['gclid', 'gbraid', 'wbraid']) {
+    const captured = `${key}:${(parameters.get(key) || '').trim()}`;
+    if (validAdClickValue(captured)) {
+      // storeTrackingValue is consent gated, so a rejected visitor keeps the id
+      // for this page load without it ever being persisted.
+      storeTrackingValue(adClickStorageKey, captured);
+      return captured;
+    }
+  }
+  return readStoredTrackingValue(adClickStorageKey, validAdClickValue);
+};
+
+document.querySelectorAll('[data-fg-ad-click-id]').forEach((field) => {
+  field.value = adClickReference();
+});
+
 let consentedPageRecorded = false;
 if (trackingConsentAccepted()) {
   consentedPageRecorded = true;
@@ -2149,7 +2174,22 @@ enquiryForms.forEach((form) => {
         result.message || 'Thanks — your enquiry has been received.',
         result.copy || 'Your project details are safely with the Fenster team.',
       );
-      if (!trackingConsentAccepted()) trackAggregateStat('form_submitted');
+      if (trackingConsentAccepted()) {
+        // Google Tag Manager can only fire an Ads conversion from something it
+        // sees in the browser. The dashboard already receives form_submitted
+        // server-side from inc/enquiries.php, so this is a dataLayer push only:
+        // routing it through trackWebsiteEvent would double count the lead.
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: form.querySelector('[data-fg-consultation-booking]')
+            ? 'fenster_consultation_booked'
+            : 'fenster_form_submitted',
+          form_context: formContext(),
+          page_path: window.location.pathname,
+        });
+      } else {
+        trackAggregateStat('form_submitted');
+      }
       const restoreSubmissionPosition = () => {
         smoothScroll?.scrollTo?.(submittedScrollY, { immediate: true, force: true });
         window.scrollTo({ top: submittedScrollY, left: window.scrollX, behavior: 'auto' });

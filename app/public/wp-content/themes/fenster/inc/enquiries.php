@@ -41,6 +41,7 @@ function fenster_enquiry_admin_columns(array $columns): array
         'fenster_project' => __('Project', 'fenster'),
         'fenster_contact' => __('Contact', 'fenster'),
         'fenster_source' => __('Source', 'fenster'),
+        'fenster_ad' => __('Ad click', 'fenster'),
         'fenster_delivery' => __('Email', 'fenster'),
         'date' => __('Received', 'fenster'),
     ];
@@ -57,6 +58,22 @@ function fenster_render_enquiry_admin_column(string $column, int $post_id): void
         echo esc_html(implode(' · ', array_filter([$email, $phone])));
     } elseif ($column === 'fenster_source') {
         echo esc_html((string) get_post_meta($post_id, '_fenster_source', true));
+    } elseif ($column === 'fenster_ad') {
+        $click_id = (string) get_post_meta($post_id, '_fenster_ad_click_id', true);
+        $click_type = (string) get_post_meta($post_id, '_fenster_ad_click_type', true);
+        if ($click_id === '') {
+            echo '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . esc_html__('Not from an ad', 'fenster') . '</span>';
+            return;
+        }
+
+        // The full value is what an offline conversion upload needs, so keep it
+        // selectable in the title attribute rather than only showing a stub.
+        printf(
+            '<code title="%1$s">%2$s: %3$s</code>',
+            esc_attr($click_id),
+            esc_html($click_type),
+            esc_html(strlen($click_id) > 16 ? substr($click_id, 0, 16) . '...' : $click_id)
+        );
     } elseif ($column === 'fenster_delivery') {
         $sent = (bool) get_post_meta($post_id, '_fenster_email_sent', true);
         echo esc_html($sent ? __('Sent', 'fenster') : __('Saved only', 'fenster'));
@@ -404,11 +421,25 @@ function fenster_process_enquiry(): array|WP_Error
         'page_url' => esc_url_raw(wp_unslash($_POST['page_url'] ?? '')),
         'journey_ref' => sanitize_text_field(wp_unslash($_POST['journey_ref'] ?? '')),
         'visitor_id' => sanitize_text_field(wp_unslash($_POST['visitor_id'] ?? '')),
+        'ad_click_id' => sanitize_text_field(wp_unslash($_POST['ad_click_id'] ?? '')),
         'appointment_date' => sanitize_text_field(wp_unslash($_POST['appointment_date'] ?? '')),
         'appointment_time' => sanitize_text_field(wp_unslash($_POST['appointment_time'] ?? '')),
     ];
     $data['journey_ref'] = preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $data['journey_ref']) ? strtoupper($data['journey_ref']) : '';
     $data['visitor_id'] = preg_match('/^FGV-[A-Z0-9-]{8,80}$/i', $data['visitor_id']) ? strtoupper($data['visitor_id']) : '';
+
+    /*
+     * Google Ads click identifiers arrive as "gclid:value", "gbraid:value" or
+     * "wbraid:value". Split the type from the value so an offline conversion
+     * export can put each in the column Google expects. Anything else is dropped.
+     */
+    $data['ad_click_type'] = '';
+    if (preg_match('/^(gclid|gbraid|wbraid):([A-Za-z0-9_\-\.]{10,200})$/', $data['ad_click_id'], $click_parts)) {
+        $data['ad_click_type'] = $click_parts[1];
+        $data['ad_click_id'] = $click_parts[2];
+    } else {
+        $data['ad_click_id'] = '';
+    }
     $privacy = ! empty($_POST['privacy']);
 
     if ($data['name'] === '' || $data['email'] === '' || $data['phone'] === '' || $data['location'] === '' || $data['project_type'] === '' || $data['message'] === '' || ! $privacy) {
@@ -494,6 +525,8 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_page_url' => $data['page_url'],
         '_fenster_journey_ref' => $data['journey_ref'],
         '_fenster_visitor_id' => $data['visitor_id'],
+        '_fenster_ad_click_type' => $data['ad_click_type'],
+        '_fenster_ad_click_id' => $data['ad_click_id'],
         '_fenster_appointment_date' => $data['appointment_date'],
         '_fenster_appointment_time' => $data['appointment_time'],
         '_fenster_appointment_display' => $data['appointment_display'],
