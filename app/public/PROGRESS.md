@@ -21,6 +21,20 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Colour hub: an equal-size swipeable rail (test)
+
+Owner: the colour UI should work like the Sheerline frame-corner display, everything the same size and swipeable. At the moment the front one is massive and they stack too much. Apply to all collections.
+
+- **Reference read from the source rather than guessed.** A text fetch of the Sheerline page missed the component entirely, so the markup was inspected instead: a Swiper rail at `w-7/12 lg:w-4/12 xl:w-3/12`, equal slides, no centred hero. That is four across, three at tablet and about 1.7 on a phone, which is what was built.
+- **Built as `.fg-colour-rail`, a new component.** `.fg-colour-carousel` and its 225-line coverflow controller are shared with the heritage door configurations, which was not in scope; rewriting the shared class would have changed a page nobody asked about.
+- **Then the owner asked for swipe rather than buttons.** Touch and trackpad already scroll natively; the controller adds click-drag for a mouse, disables snapping mid-drag so the rail follows the hand, and suppresses the click that ends a real drag so dragging cannot open a swatch. The counter stays as the affordance.
+- **Two sizing bugs, both found by measuring at three widths rather than one.** A percentage flex basis inside an overflowing flex row resolves against the track's scroll width, so slides hit 848px; the list is now the scroller and a column grid. Then the mobile override used `grid-template-columns: 1fr`, whose implicit auto minimum stopped the rail shrinking, so it sized itself to its slide count and each collection came out a different width. `minmax(0, 1fr)` fixed it. **At 1440 both bugs were invisible.**
+- **Two content faults the rail exposed.** The Renolit swatches carry a supplier label strip along the bottom, so a square crop published "RENOLIT FOIL S3030700005"; the existing grid already cropped it at `1.42` from the top and the rail now matches. And smooth white, which has no swatch photograph, was rendering white on a white card and reading as an empty tile.
+- **Hipca Gloss White had no `image` key at all**, so it fell back to a flat hex while every other aluminium colour showed a Sheerline corner. `Classic-Corner-Gloss-White-600.jpg` was already in the theme and had simply never been wired up. Owner spotted it.
+- The colour deep links case studies rely on are carried over intact, including the Lenis pause-and-reassert dance.
+- Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
+- Test deployment only. Live is still `834b424`.
+
 ## 2026-07-29 - The day's work promoted to live (834b424)
 
 - **Live established by checksum first, and the pointer was wrong again.** `LIVECHANGES.md` said `8052f65`; six theme files checksummed to `d3600ad`, the docs commit immediately after it. Theme content was identical, so nothing was at risk, but that is three releases running where the recorded SHA was not the deployed one. The check took under a minute and is worth doing every time.
