@@ -2614,19 +2614,26 @@ h3 {
   font-style: normal;
 }
 
+/* Six third-party marks, all drawn for a white background, so the light plate
+   has to stay: knocking them onto the steel would break the artwork and the
+   brand rules that come with it. What made them read as scattered bubbles was
+   that every plate was a different size, radius and border. One grid of
+   identical tiles instead, on the same small radius as the tags. */
 .site-footer__trust {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.35rem;
+  max-width: 330px;
+  margin-top: 1.35rem;
 }
 
 .site-footer__trust img {
-  max-width: 112px;
-  max-height: 44px;
-  padding: 0.35rem;
-  border-radius: 6px;
-  background: #ffffff;
+  width: 100%;
+  max-width: 100%;
+  max-height: 28px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
   object-fit: contain;
 }
 
@@ -22961,10 +22968,10 @@ a.fg-cs-card__pill:focus-visible {
 
   .site-footer__trust img {
     width: 100%;
-    max-width: none;
-    height: 40px;
+    max-width: 100%;
+    max-height: 26px;
     min-width: 0;
-    padding: 0.25rem;
+    padding: 0;
   }
 
   .site-footer__trust-mark {
@@ -26234,33 +26241,22 @@ html.fg-blinds-reveal-locked {
 
 /* Final shared polish for the 2026-07-06 product/form/footer test batch. */
 .site-footer__trust img {
-  width: auto;
-  max-width: 118px;
-  max-height: 46px;
+  width: 100%;
+  max-width: 100%;
+  max-height: 28px;
   object-fit: contain;
 }
 
 .site-footer__trust-mark {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  padding: 0.35rem 0.6rem;
-  border: 1px solid rgba(214, 172, 67, 0.55);
-  border-radius: 6px;
-  background: #ffffff;
-  color: #6b4a00;
-  font-size: 0.7rem;
-  font-weight: 900;
-  line-height: 1.05;
-  text-align: center;
-  text-transform: uppercase;
+  border: 0;
+  color: inherit;
 }
 
 @media (max-width: 860px) {
   .site-footer__trust img {
     width: 100%;
-    max-width: none;
-    height: 40px;
+    max-width: 100%;
+    max-height: 26px;
   }
 
   .site-footer__trust-mark {
@@ -28885,16 +28881,22 @@ html.fg-blinds-reveal-locked {
   display: grid;
   min-width: 0;
   place-items: center;
+  min-height: 50px;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--fg-tag-radius-sm);
+  background: #ffffff;
 }
 
-/* White chips that echo the trust-logo tiles above them; icons read in steel
-   with the label. The Instagram mark is outline shapes, so it is stroked, not
-   filled, or the camera frame renders as a solid blob. */
+/* These were white pills, which put three more bright blobs under the logo
+   tiles and gave the social links more weight than the footer navigation they
+   sit beside. They are links, so they look like links now. The Instagram mark
+   is outline shapes, so it is stroked, not filled, or the camera frame renders
+   as a solid blob. */
 .site-footer__socials {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.25rem;
+  gap: 1.35rem;
+  margin-top: 1.5rem;
 }
 
 .site-footer__socials a {
@@ -28902,22 +28904,20 @@ html.fg-blinds-reveal-locked {
   gap: 0.5rem;
   align-items: center;
   min-height: 44px;
-  padding: 0.5rem 1.05rem;
+  padding: 0;
   border: 0;
-  border-radius: 999px;
-  background: #ffffff;
-  color: var(--color-steel);
-  font-size: 0.85rem;
-  font-weight: 800;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .site-footer__socials a:hover,
 .site-footer__socials a:focus-visible {
-  background: var(--color-accent);
+  background: transparent;
   color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
 }
 
 .site-footer__socials svg {
@@ -29047,38 +29047,42 @@ html.fg-blinds-reveal-locked {
   }
 
   .site-footer__trust {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 300px;
   }
 
   .site-footer__trust > * {
-    min-height: 58px;
-    padding: 0.35rem;
-    border-radius: 8px;
+    min-height: 48px;
+    padding: 0.4rem 0.5rem;
+    border-radius: var(--fg-tag-radius-sm);
     background: #ffffff;
   }
 
   .site-footer__trust img {
     width: 100%;
-    height: 42px;
+    max-height: 26px;
     padding: 0;
     background: transparent;
   }
 
+  /* No pill to squeeze into any more, so the labels stay readable rather than
+     being ellipsised down to "Insta…". */
   .site-footer__socials {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
   }
 
   .site-footer__socials a {
-    justify-content: center;
+    justify-content: flex-start;
     min-width: 0;
-    padding-inline: 0.35rem;
+    padding-inline: 0;
   }
 
   .site-footer__socials span {
-    overflow: hidden;
-    font-size: 0.7rem;
-    text-overflow: ellipsis;
+    overflow: visible;
+    font-size: 0.85rem;
+    text-overflow: clip;
   }
 }
 
