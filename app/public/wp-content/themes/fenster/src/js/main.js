@@ -5112,13 +5112,11 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
   let lastX = 0;
   let lastT = 0;
   let velocity = 0;
-  let glide = 0;
 
   viewport.addEventListener('pointerdown', (event) => {
     if (event.pointerType === 'touch' || event.button !== 0) return;
     // Stops the browser starting its own text/image selection instead.
     event.preventDefault();
-    window.cancelAnimationFrame(glide);
     dragging = true;
     moved = 0;
     velocity = 0;
@@ -5146,36 +5144,58 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
     }
   });
 
-  /* Let go and the rail keeps going, decaying, then hands snapping back. A rail
-     that stops dead the instant the mouse lifts feels stuck. */
+  const nearestSlideOffset = (target) => {
+    const base = slides[0].offsetLeft;
+    let best = target;
+    let bestGap = Infinity;
+    slides.forEach((slide) => {
+      const offset = slide.offsetLeft - base;
+      const gap = Math.abs(offset - target);
+      if (gap < bestGap) {
+        bestGap = gap;
+        best = offset;
+      }
+    });
+    return best;
+  };
+
+  /* Let go and the rail carries on to the nearest slide rather than stopping
+     dead under the finger. How far it throws comes from how fast the drag was
+     moving, and the travel is the browser's own smooth scroll rather than a
+     hand-rolled animation loop: it keeps working when frames are throttled and
+     it already honours a reduced-motion setting. */
   const endDrag = (event) => {
     if (!dragging) return;
     dragging = false;
     viewport.classList.remove('is-dragging');
     if (event?.pointerId !== undefined) viewport.releasePointerCapture?.(event.pointerId);
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let v = velocity * 16;
+    const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    const projected = viewport.scrollLeft + velocity * 140;
+    const target = Math.max(0, Math.min(max, nearestSlideOffset(projected)));
 
-    const settle = () => {
+    /* Snapping stays off until the scroll has finished, or it fights the
+       animation and drops the rail back where the finger left it. */
+    const restoreSnap = () => {
       viewport.style.scrollSnapType = '';
-      };
+    };
 
-    if (reduced || Math.abs(v) < 0.4) {
-      settle();
+    if (Math.abs(target - viewport.scrollLeft) < 1) {
+      restoreSnap();
       return;
     }
 
-    const stepGlide = () => {
-      viewport.scrollLeft += v;
-      v *= 0.94;
-      if (Math.abs(v) > 0.4) {
-        glide = window.requestAnimationFrame(stepGlide);
-      } else {
-        settle();
-      }
+    viewport.scrollTo({ left: target, behavior: 'smooth' });
+
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      viewport.removeEventListener('scrollend', finish);
+      restoreSnap();
     };
-    glide = window.requestAnimationFrame(stepGlide);
+    viewport.addEventListener('scrollend', finish);
+    window.setTimeout(finish, 700);
   };
 
   viewport.addEventListener('pointerup', endDrag);
@@ -5247,7 +5267,7 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
               if (!cancelled) {
                 settle();
                 lenis?.start?.();
-                          }
+              }
             }, 950);
           };
           if (document.readyState === 'complete') {
