@@ -31647,9 +31647,10 @@ html.fg-blinds-reveal-locked {
     align-items: center;
   }}
 
-/* The range: one grid of photographs, sized so the whole set sits in a single
-   desktop viewport. Nine tiles go five then four, seven go four then three, so
-   nothing needs scrolling or filtering to be seen. */
+/* The range: one grid of photographs showing the whole set at once, with no
+   filtering and nothing behind a click. Nine tiles go three by three (owner
+   instruction, 2026-07-29, over the earlier five-then-four); seven go four
+   then three. */
 .fg-ph-tiles {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -31662,6 +31663,10 @@ html.fg-blinds-reveal-locked {
 .fg-ph-tiles[data-count="7"],
 .fg-ph-tiles[data-count="8"] {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fg-ph-tiles[data-count="9"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .fg-ph-tiles > li {

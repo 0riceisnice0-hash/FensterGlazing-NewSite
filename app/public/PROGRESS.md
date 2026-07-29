@@ -1,6 +1,14 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-28
+Last updated: 2026-07-29
+
+## 2026-07-29 - Two open handle questions closed by the owner (docs only)
+
+- **Tilt and turn takes a different handle family, not S2.** The open item read as though the page was missing something; it was not. Adding the S2 grid there would have put the wrong hardware on the page, which is the more expensive mistake of the two. Details to follow from the owner, so the grid stays off until they arrive.
+- **Bow and bay is a configuration, not a product.** A bay can be built from most of the range and from every window style, so the route owns no handle, no system and no specification of its own. Closed the same open item on that basis.
+- Both recorded in `AI.md`, the handle fact under the Window Handle Section Rule and the bay fact under Owner-Confirmed Business Facts, so a later session cannot reopen them as gaps. `nick.md`'s open list struck through rather than deleted, since the reasoning is the useful part.
+- **Found while checking, not fixed:** the product hub card for bow and bay says a bay is built from "the casement, flush sash or sliding sash styles". That is narrower than what we offer and is customer-facing copy on a live page. Flagged to the owner rather than changed, because it needs a deploy and was not part of the question asked.
+- No code change, no build, no deployment.
 
 ## 2026-07-28 - Consultations stated as free sitewide (test)
 

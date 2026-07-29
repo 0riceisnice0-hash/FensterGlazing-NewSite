@@ -167,6 +167,6 @@ Owner-confirmed product facts, worth not re-deriving:
 Open, and needing the owner rather than a decision from you:
 
 - The Ben Harrison Photography licence for the Headrow Court images is unconfirmed, and those images are live.
-- Tilt and turn and bow and bay carry the colour grid but not the handle grid, because they never qualified for the handle card. If they take the same S2 handles, they are two pages short.
+- ~~Tilt and turn and bow and bay carry the colour grid but not the handle grid.~~ **Closed 2026-07-29.** Neither page is short. Tilt and turn takes a different handle family, not S2, so the S2 grid would be wrong there; the owner is sending the details. Bow and bay is a configuration rather than a product, so it carries no handle of its own. See the owner-confirmed facts in `AI.md`.
 - The Barn Hotel and Sunrise Care Home completion months are still unconfirmed, so those two case studies print no date.
 - Whether Fenster takes industrial and logistics work. The sector page was deliberately not built.

@@ -682,7 +682,7 @@ function fenster_site_data(): array
                     ['slug' => 'aluminium-windows', 'name' => 'Aluminium Windows', 'fit' => 'Slim frames, more glass', 'copy' => 'Thinner sightlines than uPVC for the same opening, powder coated in the RAL colour you choose.'],
                     ['slug' => 'aluminium-flush-windows', 'name' => 'Aluminium Flush Windows', 'fit' => 'Flat outside face', 'copy' => 'The aluminium version of a flush sash, where the sash and the frame finish on the same plane.'],
                     ['slug' => 'heritage-windows', 'name' => 'Heritage Windows', 'fit' => 'The steel-window look', 'copy' => 'Slim sections and stepped bars that read like original steel, in thermally broken aluminium.'],
-                    ['slug' => 'bow-bay-windows', 'name' => 'Bow and Bay Windows', 'fit' => 'A shape, not a style', 'copy' => 'A bay turns at angles and a bow curves. Either is built from the casement, flush sash or sliding sash styles.'],
+                    ['slug' => 'bow-bay-windows', 'name' => 'Bow and Bay Windows', 'fit' => 'A shape, not a style', 'copy' => 'A bay turns at angles and a bow curves. Both are a shape rather than a system, built from any of the window styles on this page.'],
                     ['slug' => 'french-casement-windows', 'name' => 'French Casement Windows', 'fit' => 'An opening, not a style', 'copy' => 'Two sashes meeting with no fixed mullion between them.'],
                 ],
             ],
