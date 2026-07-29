@@ -3962,7 +3962,7 @@ if ($is_commercial_hub) {
                    rather than an effect invented in the stylesheet. Curated for
                    variety, lines against florals against stipple, but anything
                    missing simply falls through to whatever else has a photo. */
-                $glass_patch_order = ['Reeded', 'Cotswold', 'Stippolyte', 'Contora', 'Chantilly', 'Digital', 'Everglade', 'Taffeta'];
+                $glass_patch_order = ['Reeded', 'Cotswold', 'Stippolyte', 'Contora', 'Everglade'];
                 $glass_patch_by_name = [];
                 $glass_patch_rest = [];
                 foreach ((array) $obscure_glass_textures as $glass_texture) {
@@ -3979,21 +3979,21 @@ if ($is_commercial_hub) {
                     }
                 }
                 foreach ($glass_patch_rest as $glass_texture) {
-                    if (count($glass_patch) >= 8) {
+                    if (count($glass_patch) >= 5) {
                         break;
                     }
                     if (! in_array($glass_texture, $glass_patch, true)) {
                         $glass_patch[] = $glass_texture;
                     }
                 }
-                $glass_patch = array_slice($glass_patch, 0, 8);
+                $glass_patch = array_slice($glass_patch, 0, 5);
 
                 $number_cards = count($option_cards) > 1;
                 ?>
                 <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? '' : 'fg-product-choice-map--single'); ?>">
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
-                        <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 4; ?>
+                        <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 3; ?>
                         <a
                             class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo $is_patched_glass ? ' is-glazed' : ''; ?>"
                             href="<?php echo esc_url($option_card['url']); ?>"
@@ -4006,6 +4006,13 @@ if ($is_commercial_hub) {
                                    width: fit-content and collapsed to 15px. */
                                 ?>
                                 <i class="fg-glass-patch" aria-hidden="true">
+                                    <?php
+                                    /* The mark sits behind the panes and shifts
+                                       against them as the page scrolls, so it
+                                       reads as something on the far side of the
+                                       glass rather than printed on it. */
+                                    ?>
+                                    <i class="fg-glass-patch__mark" data-fg-parallax style="<?php echo esc_attr('background-image:url(' . fenster_generated_url('/wp-content/themes/fenster/assets/brand/fenster-mark.png') . ')'); ?>"></i>
                                     <?php foreach ($glass_patch as $glass_pane) : ?>
                                         <span style="<?php echo esc_attr('background-image:url(' . fenster_generated_url((string) $glass_pane['image']) . ')'); ?>"></span>
                                     <?php endforeach; ?>

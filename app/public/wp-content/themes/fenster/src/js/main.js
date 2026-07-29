@@ -5337,3 +5337,47 @@ document.querySelectorAll('[data-fg-readmore]').forEach((button) => {
   apply();
   window.addEventListener('resize', apply, { passive: true });
 });
+
+
+/* Parallax on the mark behind the glass panel. It shifts against the panes as
+   the page scrolls, which is what sells it as being on the far side of the
+   glass rather than printed on it.
+
+   Driven by scroll rather than requestAnimationFrame: there is nothing to
+   animate when the page is still, so a permanent frame loop would burn work to
+   do nothing. An IntersectionObserver keeps the listener idle until the card is
+   actually on screen. */
+(() => {
+  const marks = [...document.querySelectorAll('[data-fg-parallax]')];
+  if (!marks.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const visible = new Set();
+  const DEPTH = 26;
+
+  const place = (mark) => {
+    const host = mark.parentElement || mark;
+    const box = host.getBoundingClientRect();
+    const middle = box.top + box.height / 2;
+    // -1 when the card is entering at the bottom, +1 when it is leaving the top.
+    const travel = (window.innerHeight / 2 - middle) / window.innerHeight;
+    mark.style.transform = `translate3d(0, ${(travel * DEPTH).toFixed(2)}px, 0)`;
+  };
+
+  const update = () => visible.forEach(place);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        visible.add(entry.target);
+        place(entry.target);
+      } else {
+        visible.delete(entry.target);
+      }
+    });
+  }, { rootMargin: '120px 0px' });
+
+  marks.forEach((mark) => observer.observe(mark));
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+})();
