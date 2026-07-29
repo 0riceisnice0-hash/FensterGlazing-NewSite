@@ -262,7 +262,7 @@ function fenster_legend_search_documents(): array
         'terms-conditions',
         'why-trust-fenster',
         'obscured-glass',
-        'window-handles',
+        'handle-options',
         'colour-options',
         'commercial-projects',
         'aluminium-flush-windows',

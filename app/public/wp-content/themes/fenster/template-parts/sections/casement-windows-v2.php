@@ -308,7 +308,7 @@ $faq_schema = [
                 </dl>
                 <p class="fg-cw-links">
                     <a class="fg-cw-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
-                    <a class="fg-cw-link" href="<?php echo esc_url(home_url('/window-handles/')); ?>"><?php esc_html_e('Handle finishes', 'fenster'); ?></a>
+                    <a class="fg-cw-link" href="<?php echo esc_url(home_url('/handle-options/')); ?>"><?php esc_html_e('Handle finishes', 'fenster'); ?></a>
                     <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('All sixteen colours', 'fenster'); ?></a>
                 </p>
             </div>

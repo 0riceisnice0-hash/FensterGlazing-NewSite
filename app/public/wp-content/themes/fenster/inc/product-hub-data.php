@@ -603,6 +603,6 @@ function fenster_door_handle_grid_args(): array
         'note' => 'Which handles a door can take depends on the slab, the lock set and the colour package, so we confirm the exact hardware at specification stage.',
         'alt_pattern' => 'Long-plate door handle in %s',
         'columns' => 'fg-handle-finishes--doors',
-        'link_href' => home_url('/window-handles/#door-handle-finishes'),
+        'link_href' => home_url('/handle-options/#door-handle-finishes'),
     ];
 }

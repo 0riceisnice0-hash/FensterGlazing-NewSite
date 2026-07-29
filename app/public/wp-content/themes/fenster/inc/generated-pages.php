@@ -1269,18 +1269,21 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ];
     }
 
-    if ($slug === 'window-handles') {
+    if ($slug === 'handle-options') {
         return $page_cache[$slug] = [
-            'slug' => 'window-handles',
+            'slug' => 'handle-options',
             'title' => 'Window and Door Handles',
-            'url' => home_url('/window-handles/'),
-            /* The route stays /window-handles/ deliberately. It is indexed and
-               linked from every window and door page, and renaming it would
-               trade that for a redirect. Worth revisiting only with the owner. */
+            'url' => home_url('/handle-options/'),
+            /* Renamed from /window-handles/ on 2026-07-29, owner decision. The
+               hub covers windows, tilt and turn and doors, with patio to come,
+               so the old name had stopped being true. /handle-options/ also
+               pairs with /colour-options/, and the two sit side by side as
+               sibling cards in the Specification choices group. The old route
+               301s; see fenster_redirect_target(). */
             'seo' => [
                 'title_tag' => 'Window and Door Handle Options | Fenster Glazing',
                 'meta_description' => 'Compare every Fenster handle finish for windows and doors, from white, black and chrome to gold, satin silver, brushed steel and monkey tail.',
-                'canonical' => 'https://fensterglazing.com/window-handles/',
+                'canonical' => 'https://fensterglazing.com/handle-options/',
                 'robots' => 'max-image-preview:large',
             ],
             'sections' => [],
@@ -1622,6 +1625,7 @@ function fenster_redirect_target(string $slug): string
         'upvc-colours' => 'colour-options',
         'aluminium-colours' => 'colour-options',
         'door-designer' => 'online-quote',
+        'window-handles' => 'handle-options',
     ];
 
     if (isset($map[$slug])) {
@@ -1953,7 +1957,7 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'window-handles', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

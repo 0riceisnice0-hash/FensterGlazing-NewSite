@@ -156,7 +156,7 @@ $is_case_study = in_array($slug, ['case-studies', 'commercial-projects'], true)
 $is_team = $slug === 'meet-the-team';
 $is_obscure_glass = $slug === 'obscured-glass';
 $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'aluminium-colours'], true);
-$is_window_handles = $slug === 'window-handles';
+$is_window_handles = $slug === 'handle-options';
 $is_trust_page = $slug === 'why-trust-fenster';
 $is_about_page = $slug === 'about';
 $is_about = in_array($slug, ['about', 'meet-the-team'], true);
@@ -3805,7 +3805,7 @@ if ($is_commercial_hub) {
                     <?php if ($show_window_handle_card && ! $shows_handle_grid) : ?>
                         <a
                             class="fg-product-option-card fg-product-option-card--handles"
-                            href="<?php echo esc_url(home_url('/window-handles/')); ?>"
+                            href="<?php echo esc_url(home_url('/handle-options/')); ?>"
                         >
                             <span><?php echo esc_html(sprintf('%02d', ++$option_card_number)); ?></span>
                             <h3><?php esc_html_e('Window handles', 'fenster'); ?></h3>
@@ -3837,7 +3837,7 @@ if ($is_commercial_hub) {
                 'note' => 'We fit the locking version on every tilt and turn window, so the tilt-only setting is there whether or not you ask for it.',
                 'alt_pattern' => 'greenteQ Alpha TBT tilt and turn window handle in %s',
                 'columns' => 'fg-handle-finishes--five',
-                'link_href' => home_url('/window-handles/#tilt-turn-handle-finishes'),
+                'link_href' => home_url('/handle-options/#tilt-turn-handle-finishes'),
             ]); ?>
         <?php endif; ?>
 

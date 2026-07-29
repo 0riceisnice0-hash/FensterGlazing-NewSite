@@ -40,7 +40,7 @@ $alt_pattern = (string) ($args['alt_pattern'] ?? '%s handle');
 $sub_label   = ! empty($args['sub_label']);
 $columns     = (string) ($args['columns'] ?? '');
 $link_label  = (string) ($args['link_label'] ?? 'See the full handle specification');
-$link_href   = (string) ($args['link_href'] ?? home_url('/window-handles/'));
+$link_href   = (string) ($args['link_href'] ?? home_url('/handle-options/'));
 $title_id    = 'fg-' . $section_id . '-title';
 ?>
 <section id="<?php echo esc_attr($section_id); ?>" class="fg-handle-finishes<?php echo $columns !== '' ? ' ' . esc_attr($columns) : ''; ?>" aria-labelledby="<?php echo esc_attr($title_id); ?>">
