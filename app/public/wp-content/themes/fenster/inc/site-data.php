@@ -1314,7 +1314,7 @@ function fenster_site_data(): array
                 'benefits' => [
                     ['title' => 'More light and outlook', 'copy' => 'Projecting window layouts bring more glass area into the room and can make living spaces feel brighter and more open.'],
                     ['title' => 'Bow or bay configuration', 'copy' => 'Bow windows usually create a softer curve, while bay windows form a more angular projection with a stronger architectural shape.'],
-                    ['title' => 'Choice of window styles', 'copy' => 'Casement, flush casement and other suitable uPVC window styles can be combined depending on the look and ventilation required.'],
+                    ['title' => 'Choice of window styles', 'copy' => 'A bay is a shape rather than a system, so we can build it from any of our window styles, in uPVC or aluminium, mixing fixed panes and openers to suit the room.'],
                     ['title' => 'Survey-led structure check', 'copy' => 'Fenster checks existing supports, angles, cills, roof details and installation conditions before specifying replacement bow or bay windows.'],
                     ['title' => 'Coordinated colours and handles', 'copy' => 'Frame finish, handle colour, obscured glass and trickle ventilation can be coordinated with the rest of the home.'],
                 ],
