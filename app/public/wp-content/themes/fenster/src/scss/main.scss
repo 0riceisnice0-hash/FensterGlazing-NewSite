@@ -8101,12 +8101,15 @@ html.fg-gallery-lightbox-open body {
   }
 
   .fg-colour-hub-page .fg-colour-hub {
-    padding-top: clamp(3rem, 9vw, 3.8rem);
+    padding-top: clamp(2rem, 6vw, 2.6rem);
   }
 
+  /* Only the outer margin goes. Zeroing the card's own padding as well left
+     the first collection's content flush against its top border while the
+     other two sat 17.6px in, which read as a broken card rather than a
+     tighter one. */
   .fg-colour-hub-page .fg-colour-hub__material:first-child {
     margin-top: 0;
-    padding-top: 0;
   }
 
   /* The intro ran to 179px of an 850px viewport on its own. Same words, less

@@ -2059,7 +2059,12 @@ if ($is_colour_options) {
             data-fg-colour-material="<?php echo esc_attr($material_key); ?>"
         >
             <div class="fg-colour-hub__material-copy">
-                <p class="eyebrow"><?php echo esc_html((string) ($material['label'] ?? 'Frame colours')); ?></p>
+                <?php
+                /* No eyebrow here. Every label in the data repeats its own
+                   heading word for word, so the card said "uPVC colours" twice
+                   before it said anything. The label is still used for the
+                   rail's accessible name. */
+                ?>
                 <h2><?php echo esc_html((string) ($material['headline'] ?? 'Compare colour options.')); ?></h2>
                 <?php
                 /* Each collection's explainer runs long on a phone and pushes
