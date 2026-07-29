@@ -31761,10 +31761,14 @@ html.fg-blinds-reveal-locked {
   object-fit: contain;
 }
 
+/* Every count has to be named in these two lists. An attribute selector is
+   (0,2,1) and beats the bare class, so a missing one silently keeps its
+   desktop column count all the way down to a phone. */
 @media (max-width: 1180px) {
   .fg-ph-tiles,
   .fg-ph-tiles[data-count="7"],
-  .fg-ph-tiles[data-count="8"] {
+  .fg-ph-tiles[data-count="8"],
+  .fg-ph-tiles[data-count="9"] {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
@@ -31772,7 +31776,8 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 780px) {
   .fg-ph-tiles,
   .fg-ph-tiles[data-count="7"],
-  .fg-ph-tiles[data-count="8"] {
+  .fg-ph-tiles[data-count="8"],
+  .fg-ph-tiles[data-count="9"] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
