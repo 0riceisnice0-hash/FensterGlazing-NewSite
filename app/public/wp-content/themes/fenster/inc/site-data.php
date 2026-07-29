@@ -1080,6 +1080,31 @@ function fenster_site_data(): array
             ],
         ],
         'product_content' => [
+            /* This page came in from a scrape as a listicle, "5 Powerful Proven
+               Strategies to Control Cost, Compliance and Heat Loss in Office
+               Refurbishment". The H1 was corrected in July 2026 but the body was
+               left, so the numbered headings were still being fed into both the
+               benefit cards and the FAQs, which is why they rendered twice. The
+               scrape also called Headrow Court an office refurbishment. It is a
+               conversion of former offices into student accommodation, and the
+               windows are the part Fenster did. Authored copy replaces it. */
+            'commercial-glazing-leeds' => [
+                'intro' => 'Fenster carries out commercial glazing in Leeds: window and door replacement, curtain walling, facade glazing and replacement units. In Leeds we fitted the aluminium windows at Headrow Court, a conversion of four former office buildings into 108 student studios, completed in October 2025.',
+                'benefits' => [
+                    ['title' => 'Surveyed before anything is priced', 'copy' => 'Openings on older commercial buildings rarely match the drawings. We check sizes, structural openings, access and existing frames before specifying, so the price reflects the building rather than an assumption about it.'],
+                    ['title' => 'Repair or replace, answered honestly', 'copy' => 'Not every failed window needs a new frame. A blown unit or worn hardware can often be dealt with on its own. We will say so when that is the cheaper answer, and say plainly when it is not.'],
+                    ['title' => 'Buildings that stay open', 'copy' => 'Most commercial work happens around staff, tenants or trading hours. Sequence, access routes and which elevations come out in which order get agreed before the first frame is removed.'],
+                    ['title' => 'Aluminium for larger openings', 'copy' => 'Thermally broken aluminium carries the spans and glass weights that commercial elevations need, in any RAL colour. Where uPVC is the better fit for the building and the budget, we will specify that instead.'],
+                    ['title' => 'Compliance settled at specification', 'copy' => 'Part L, safety glazing and any acoustic requirement belong in the specification, not in a variation after contract. We would rather have that conversation early than reprice the job later.'],
+                ],
+                'faqs' => [
+                    ['question' => 'Do you actually work in Leeds, or just cover it?', 'answer' => 'We work there. Fenster is based in Milton Keynes and travels for commercial projects. The Leeds job we can point you at is Headrow Court, where we fitted the aluminium windows on a conversion of four former office buildings into 108 student studios, completed in October 2025.'],
+                    ['question' => 'What kind of commercial buildings do you glaze?', 'answer' => 'Offices, retail units, hotels, care homes, schools, healthcare buildings and student accommodation. The building type matters less than the openings, the access and the programme.'],
+                    ['question' => 'Can the work happen while the building is occupied?', 'answer' => 'Usually yes, and most commercial jobs are. It is planned in phases around access, working hours and the parts of the building that have to keep running. The sequence is agreed before work starts rather than settled on site.'],
+                    ['question' => 'Do we have to replace every window?', 'answer' => 'No. A survey may find that some openings need new frames, others need new sealed units, and others need nothing. Phased replacement across more than one budget year is a normal way to run this.'],
+                    ['question' => 'How do you price a commercial job?', 'answer' => 'From drawings, a window schedule, photographs or a site visit, depending on what exists. The online quote tool is for domestic windows and doors and will not price commercial work, so commercial enquiries come to us directly.'],
+                ],
+            ],
             'aluminium-bifold-doors' => [
                 'intro' => 'Aluminium bifold doors open up kitchens, extensions and living spaces with slim frames, flexible pane layouts and strong weather protection. Fenster specifies the configuration, traffic door, threshold, colour and glazing around how the room will be used.',
                 'benefits' => [
