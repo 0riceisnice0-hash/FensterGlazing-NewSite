@@ -34271,6 +34271,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__grid li,
 .fg-upvc-colours__grid li,
 .fg-handle-finishes__grid li {
+  position: relative;
   display: grid;
   gap: 0.2rem;
   padding: 0.65rem 0.7rem 0.8rem;
@@ -34278,6 +34279,36 @@ html.fg-blinds-reveal-locked {
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.82);
   text-align: center;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+/* Hover only lifts the tile a little. These are not links, so the movement is
+   feedback for the swatch you are looking at rather than an invitation to
+   click. Guarded on hover: hover so a touch device does not stick in the
+   hovered state after a tap. */
+@media (hover: hover) {
+  .fg-heritage-door-colours__grid li:hover,
+  .fg-upvc-colours__grid li:hover,
+  .fg-handle-finishes__grid li:hover {
+    z-index: 1;
+    transform: translateY(-2px) scale(1.03);
+    border-color: rgba(15, 49, 54, 0.2);
+    box-shadow: 0 12px 26px rgba(0, 45, 58, 0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-heritage-door-colours__grid li,
+  .fg-upvc-colours__grid li,
+  .fg-handle-finishes__grid li {
+    transition: none;
+  }
+
+  .fg-heritage-door-colours__grid li:hover,
+  .fg-upvc-colours__grid li:hover,
+  .fg-handle-finishes__grid li:hover {
+    transform: none;
+  }
 }
 
 .fg-heritage-door-colours__grid img {
