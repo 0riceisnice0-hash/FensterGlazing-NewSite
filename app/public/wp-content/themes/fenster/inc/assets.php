@@ -301,7 +301,11 @@ function fenster_link_card_image(string $url): string
             'aluminium-windows' => $curated . 'sheerline-aluminium-window.jpg',
             'heritage-windows' => $curated . 'sheerline-heritage-windows.jpg',
             'composite-doors' => $curated . 'distinction-composite-door-installed.jpg',
-            'upvc-doors' => $curated . 'fenster-upvc-door.jpg',
+            /* Was the golden oak slab that reads composite. The related-link
+               card is a third place that image lived, after product_media
+               and the gallery pool; the doc comment above says a
+               wrong-material thumbnail is worse than none, and it was one. */
+            'upvc-doors' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-anthracite-brick.webp',
             'aluminium-doors' => $curated . 'sheerline-aluminium-door.jpg',
             'heritage-aluminium-doors' => $curated . 'sheerline-heritage-door.jpg',
             'aluminium-bifold-doors' => $curated . 'sheerline-bifold-exterior.jpg',
