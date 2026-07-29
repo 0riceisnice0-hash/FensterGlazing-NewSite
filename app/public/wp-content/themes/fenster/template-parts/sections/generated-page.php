@@ -260,6 +260,9 @@ $window_handles = fenster_data('window_handles', []);
 $window_handles = is_array($window_handles) ? $window_handles : [];
 $window_handle_slugs = $window_handles['slugs'] ?? [];
 $show_window_handle_card = $use_product_journey && is_array($window_handle_slugs) && in_array($slug, $window_handle_slugs, true);
+/* Where the finishes are laid out in full, the card that links to the hub is
+   redundant. Same rule the colour grid follows. */
+$shows_handle_grid = is_array($window_handle_slugs) && in_array($slug, $window_handle_slugs, true) && $slug !== 'casement-windows';
 $show_window_handles = false;
 $window_handle_finishes = $window_handles['finishes'] ?? [];
 $window_handle_finishes = is_array($window_handle_finishes) ? array_values($window_handle_finishes) : [];
@@ -3837,7 +3840,7 @@ if ($is_commercial_hub) {
                         <p><?php esc_html_e('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
                         <strong><?php esc_html_e('Compare glass patterns', 'fenster'); ?></strong>
                     </a>
-                    <?php if ($show_window_handle_card) : ?>
+                    <?php if ($show_window_handle_card && ! $shows_handle_grid) : ?>
                         <a
                             class="fg-product-option-card fg-product-option-card--handles"
                             href="<?php echo esc_url(home_url('/window-handles/')); ?>"
@@ -3856,6 +3859,10 @@ if ($is_commercial_hub) {
 
         <?php if (isset($upvc_foil_routes[$slug])) : ?>
             <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_foil_routes[$slug]]); ?>
+        <?php endif; ?>
+
+        <?php if ($shows_handle_grid) : ?>
+            <?php get_template_part('template-parts/components/window-handle-grid'); ?>
         <?php endif; ?>
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
