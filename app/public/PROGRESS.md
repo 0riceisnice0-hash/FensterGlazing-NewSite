@@ -52,6 +52,10 @@ Owner: the privacy glass box on product pages has a 01 that makes no sense now, 
 - Where `mask-composite` is unsupported the mask falls back to covering everything: the mark is lost and a plain frosted pane remains, rather than the card breaking.
 - The lone card spans the row again, per the owner. It read as empty when it held only copy; with the pane beside the text it has a reason to be wide.
 - Verified on test at 1440: card 980x260, two mask layers composited `xor`, turbulence serving, no horizontal overflow, and the pinstripe gradient returning zero matches on the glass page.
+- **Owner rejected the etched version too: not working, and the F behind is glitchy.** The verdict was right and the cause was predictable. Cutting the mark out of a frost layer needed `mask-composite` plus a `drop-shadow` filter applied to a masked pseudo-element, which is exactly the combination browsers implement inconsistently. **Two clever techniques stacked on one element is a bet, not a design.**
+- **Rebuilt as a panel of the real patterns.** Eight photographs from `obscure_glass`, curated for variety, gaps reading as the leading between panes, fading into the card on a single-layer linear mask. No compositing, no filters, no invented texture, and it shows the actual product. Four panes as a bottom strip under 720px. The extracted mark asset was deleted rather than left behind.
+- **One collision, found by measuring not looking.** The card styles its number badge as `> span`, so the panel, also a span, inherited `position: relative` and `width: fit-content` and collapsed to 15x9px with zero-sized panes. On the render it was a faint dot in a corner and easy to read as "the images did not load". It is an `<i>` now. **A generic child selector on a component is a trap for the next element added to it.**
+- Verified on test: panel 587x258 with eight 143x125 panes at 1440, 364x119 with four panes at a true 390, no horizontal overflow at either.
 - Test deployment only. Live is `572fe3c`.
 
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
