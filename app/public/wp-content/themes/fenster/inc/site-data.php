@@ -327,7 +327,7 @@ function fenster_site_data(): array
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
             'casement-windows' => [
-                ['label' => 'U-value*', 'value' => '0.95 W/m²K'],
+                ['label' => 'U-value', 'value' => '0.95 W/m²K'],
                 ['label' => 'Colour choice', 'value' => '16 options'],
                 ['label' => 'Energy rating', 'value' => 'A+ rated'],
                 ['label' => 'Security', 'value' => 'PAS 24'],

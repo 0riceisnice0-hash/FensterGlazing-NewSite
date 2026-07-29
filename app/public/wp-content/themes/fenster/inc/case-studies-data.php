@@ -420,7 +420,7 @@ function fenster_case_studies(): array
             ],
             'overview' => [
                 'The dormer window at the top of the house had been boarded up. We replaced it with a single <a href="' . $casement . '">uPVC casement window</a> on the 70mm Liniar EnergyPlus system, an A+ rated, multi-chambered profile with a co-extruded bubble gasket that seals continuously around the frame against draughts and driving rain.',
-                'With modern double glazing the window reaches a 0.95 W/m²K U-value and locks with a PAS 24 security option, so the room behind it is warmer, quieter and far more secure than the boarded opening it replaced.',
+                'The system is A+ rated, reaching 0.95 W/m²K with a 36mm triple glazed unit, and locks with a PAS 24 security option, so the room behind it is warmer, quieter and far more secure than the boarded opening it replaced.',
                 'The owner chose a two-tone finish: <a href="' . $colour_basalt . '">basalt grey (RAL 7012)</a> on the outside to match the other frames on the house, with a white interior so the room stays bright. It is a popular way to get a dark modern frame without darkening the room inside.',
             ],
             'installed' => [
@@ -461,7 +461,7 @@ function fenster_case_studies(): array
             ],
             'overview' => [
                 'The old windows on this Bolbeck Park home had reached the point where the frames and glass were letting the elevation down. We replaced them with <a href="' . $casement . '">uPVC casement windows</a> on the 70mm Liniar EnergyPlus system, keeping the proportions familiar while bringing the opening up to a current specification.',
-                'The multi-chambered profile and co-extruded bubble gasket help seal the frame against draughts and rain. With modern double glazing the windows reach a 0.95 W/m²K U-value and an A+ energy rating, with a PAS 24 security option available as part of the Liniar specification.',
+                'The multi-chambered profile and co-extruded bubble gasket help seal the frame against draughts and rain. The system is A+ rated and reaches 0.95 W/m²K with a 36mm triple glazed unit, with a PAS 24 security option available as part of the Liniar specification.',
                 'The owners chose <a href="' . $colour_anthracite_upvc . '">anthracite grey</a>, a dark neutral that sits neatly against the red brick and the existing roofline. The finish does the visual work here: no extra decoration, just a clear frame colour carried across the elevation.',
             ],
             'installed' => [
@@ -551,7 +551,7 @@ function fenster_case_studies(): array
                 ['label' => 'Energy rating', 'value' => 'A+ (0.95 W/m²K)'],
             ],
             'overview' => [
-                'The owners wanted a straightforward, well-fitted set of white windows that would make the rooms brighter and hold their heat far better than the old units. We fitted <a href="' . $casement . '">uPVC casement windows</a> on the 70mm Liniar EnergyPlus system, which is A+ rated and reaches a 0.95 W/m²K U-value with modern double glazing.',
+                'The owners wanted a straightforward, well-fitted set of white windows that would make the rooms brighter and hold their heat far better than the old units. We fitted <a href="' . $casement . '">uPVC casement windows</a> on the 70mm Liniar EnergyPlus system, which is A+ rated and reaches 0.95 W/m²K with a 36mm triple glazed unit.',
                 'A co-extruded bubble gasket seals continuously around each frame against draughts and rain, and the windows lock at several points with a PAS 24 security option. We combined side and top opening sashes to suit each room, on smooth, quality hardware.',
                 'The frames are finished in classic <a href="' . $colour_white . '">white</a>, which keeps the frontage clean and bright, though the same window is available in 16 colours and foiled woodgrain finishes. uPVC frames never need repainting and simply wipe clean.',
             ],

@@ -537,7 +537,7 @@ function fenster_tech_banner_args(string $slug): array
             'copy' => 'Liniar\'s six-chamber profile. The chambers sit inside the frame where you never see them, and the weather seal is extruded as part of the profile rather than pushed into a groove afterwards, so it cannot work loose at a corner.',
             'facts' => [
                 ['value' => '6', 'label' => 'chambers through the frame'],
-                ['value' => '0.8', 'label' => 'W/m²K, Liniar published best case'],
+                ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
                 ['value' => 'Lead-free', 'label' => 'profile formulation'],
             ],
         ];
