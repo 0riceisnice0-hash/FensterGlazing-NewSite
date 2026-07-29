@@ -5344,45 +5344,33 @@ document.querySelectorAll('[data-fg-readmore]').forEach((button) => {
    glass rather than printed on it.
 
    Driven by scroll rather than requestAnimationFrame: there is nothing to
-   animate when the page is still, so a permanent frame loop would burn work to
-   do nothing. An IntersectionObserver keeps the listener idle until the card is
-   actually on screen. */
+   animate while the page is still, so a permanent frame loop would burn work to
+   do nothing. There is no IntersectionObserver either. The first version gated
+   the updates on one, and when the observer did not fire the mark kept whatever
+   offset it was given at startup; a single getBoundingClientRect per scroll for
+   one element is not worth guarding against.
+
+   Travel is clamped to one viewport in each direction. Unclamped, a card far
+   down a long page computed an offset of 120px before it was ever on screen. */
 (() => {
   const marks = [...document.querySelectorAll('[data-fg-parallax]')];
   if (!marks.length) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const visible = new Set();
   const DEPTH = 26;
 
   const place = (mark) => {
     const host = mark.parentElement || mark;
     const box = host.getBoundingClientRect();
     const middle = box.top + box.height / 2;
-    // -1 when the card is entering at the bottom, +1 when it is leaving the top.
-    const travel = (window.innerHeight / 2 - middle) / window.innerHeight;
+    // -1 as the card enters at the bottom, +1 as it leaves the top.
+    const travel = Math.max(-1, Math.min(1, (window.innerHeight / 2 - middle) / window.innerHeight));
     mark.style.transform = `translate3d(0, ${(travel * DEPTH).toFixed(2)}px, 0)`;
   };
 
-  const update = () => visible.forEach(place);
+  const update = () => marks.forEach(place);
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        visible.add(entry.target);
-        place(entry.target);
-      } else {
-        visible.delete(entry.target);
-      }
-    });
-  }, { rootMargin: '120px 0px' });
-
-  /* Positioned once up front as well as on observe, so the mark is never left
-     untransformed if the observer does not fire. */
-  marks.forEach((mark) => {
-    place(mark);
-    observer.observe(mark);
-  });
+  update();
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update, { passive: true });
 })();
