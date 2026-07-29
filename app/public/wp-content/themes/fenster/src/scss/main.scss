@@ -35527,23 +35527,36 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+/* 1.42 anchored to the top, matching the uPVC colour grid. The Renolit swatch
+   assets carry a supplier label strip along the bottom edge, and this crop is
+   what removes it; a square box put "RENOLIT FOIL S3030700005" on the page,
+   which AI.md forbids. Harmless on the composite and aluminium swatches, which
+   are flat colour. */
 .fg-colour-rail__media {
   display: block;
   overflow: hidden;
   border-radius: 7px;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1.42;
   background: var(--swatch, #ffffff);
 }
 
-.fg-colour-rail__media img,
-.fg-colour-rail__media i {
+.fg-colour-rail__media img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
 }
 
+/* Smooth white is the unfoiled profile and has no swatch photograph, so it
+   falls back to the hex. Without a border that is white on a white card and
+   the tile reads as empty. */
 .fg-colour-rail__media i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(15, 49, 54, 0.16);
+  border-radius: 6px;
   background: var(--swatch, #ffffff);
 }
 
