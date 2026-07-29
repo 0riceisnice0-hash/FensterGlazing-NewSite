@@ -35771,7 +35771,11 @@ html.fg-blinds-reveal-locked {
   gap: var(--fg-rail-gap);
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  /* Proximity, not mandatory. Mandatory forces a snap on every scroll, so a
+     touch swipe can never coast and a small nudge is yanked to a boundary,
+     which is the grabby feel the owner reported. Proximity only takes over
+     when the scroll already stopped near a slide. */
+  scroll-snap-type: x proximity;
   scroll-behavior: smooth;
   scrollbar-width: none;
   margin: 0;

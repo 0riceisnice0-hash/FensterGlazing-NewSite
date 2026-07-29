@@ -5159,11 +5159,15 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
     return best;
   };
 
-  /* Let go and the rail carries on to the nearest slide rather than stopping
-     dead under the finger. How far it throws comes from how fast the drag was
-     moving, and the travel is the browser's own smooth scroll rather than a
-     hand-rolled animation loop: it keeps working when frames are throttled and
-     it already honours a reduced-motion setting. */
+  /* Let go and the rail carries on rather than stopping dead under the finger.
+     How far it throws comes from how fast the drag was moving, and the travel
+     is the browser's own smooth scroll rather than a hand-rolled animation
+     loop: it keeps working when frames are throttled and it already honours a
+     reduced-motion setting.
+
+     It only lands on a slide when the throw already ended near one. Forcing
+     the nearest slide every time was the grabby part: a small nudge got yanked
+     to a boundary it was nowhere near. */
   const endDrag = (event) => {
     if (!dragging) return;
     dragging = false;
@@ -5172,7 +5176,11 @@ document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
 
     const max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
     const projected = viewport.scrollLeft + velocity * 140;
-    const target = Math.max(0, Math.min(max, nearestSlideOffset(projected)));
+    const aligned = nearestSlideOffset(projected);
+    // A third of a slide. Past that the throw keeps whatever it landed on.
+    const pull = step() * 0.33;
+    const wanted = Math.abs(aligned - projected) <= pull ? aligned : projected;
+    const target = Math.max(0, Math.min(max, wanted));
 
     /* Snapping stays off until the scroll has finished, or it fights the
        animation and drops the rail back where the finger left it. */
