@@ -69,7 +69,7 @@ $faqs = [
     ['question' => 'Are casement windows secure?', 'answer' => 'They can be specified with reinforced frames, multi-point locking and PAS 24 or Secured by Design options. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we will specify to it. Those approvals belong to a tested complete window rather than to the profile name, so we confirm what applies to your configuration.'],
     ['question' => 'Can I have triple glazing?', 'answer' => 'Yes. The 70mm frame takes a 28mm double glazed unit or a 36mm triple. Whether triple is worth it depends on the sash size, the weight and what you are actually trying to improve, so we will compare it with you rather than treating it as an automatic upgrade.'],
     ['question' => 'Will new casements make the house quieter?', 'answer' => 'They can, when the whole specification is designed for it. Liniar publish around 33 decibels for a standard double glazed unit and up to 37 decibels, rated 37 (-2;-5), where the window is built for acoustics. Reaching the higher figure is the glass doing the work rather than the frame. Pane thicknesses, frame seals and the ventilation path all affect the result, and the ventilation path is the one people forget.'],
-    ['question' => 'How many colours are there?', 'answer' => 'Sixteen, inside, outside or both. Liniar publish a wider foil catalogue, but availability, lead time and cost depend on the exact profile and the fabricator, so we confirm before you order.'],
+    ['question' => 'How many colours are there?', 'answer' => 'Sixteen. The colour you pick is the external face, with the same colour or smooth white on the inside. Liniar publish a wider foil catalogue, but availability, lead time and cost depend on the exact profile and the fabricator, so we confirm before you order.'],
     ['question' => 'Can you copy my existing window layout?', 'answer' => 'Usually, though an exact copy is not always the best answer. At survey we check escape, ventilation, handle reach, outside clearance and how the sightlines sit before the drawing is signed off.'],
     ['question' => 'What guarantee comes with them?', 'answer' => 'Two separate ones. Liniar guarantee the frame for ten years, and we guarantee our installation for ten years. They cover different things and come from different people, which is worth knowing if something ever needs putting right.'],
     ['question' => 'Are the frames recyclable?', 'answer' => 'Liniar describe their uPVC profiles as lead-free and recyclable at the end of their useful life. The profiles are designed, extruded and tested in Derbyshire, and independent fabricators make the finished windows.'],
@@ -99,7 +99,7 @@ $faq_schema = [
                 <p><?php esc_html_e('We fit the 70mm Liniar EnergyPlus system. We work out the layout room by room first, then match the glass, the locking and the handles to it.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('Side-hung, top-hung and fixed lights in any combination', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Made to measure, in sixteen colours inside and out', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Made to measure, in sixteen external colours', 'fenster'); ?></li>
                     <li><?php esc_html_e('Fitted by our own installers, with a ten year guarantee', 'fenster'); ?></li>
                 </ul>
                 <div class="fg-cw-actions">
@@ -337,8 +337,8 @@ $faq_schema = [
             <div class="container">
                 <div class="fg-cw-colours__heading">
                     <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
-                    <h2 id="fg-cw-colours-title"><?php esc_html_e('Sixteen foils, inside, outside or both.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The frame under the foil stays white, so an open window shows white on the rebate unless you have the foil specified on both faces.', 'fenster'); ?></p>
+                    <h2 id="fg-cw-colours-title"><?php esc_html_e('Sixteen colours outside, matched or white inside.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the external face, with the same colour or smooth white on the inside.', 'fenster'); ?></p>
                 </div>
                 <ul class="fg-cw-colours__grid">
                     <?php foreach ($casement_colours as $colour) : ?>
@@ -359,7 +359,7 @@ $faq_schema = [
                     <?php endforeach; ?>
                 </ul>
                 <p class="fg-cw-colours__note">
-                    <?php esc_html_e('You can have one colour outside and a different one inside. Availability, lead time and cost depend on the exact profile and the fabricator, so we confirm all three before you order rather than after.', 'fenster'); ?>
+                    <?php esc_html_e('Availability, lead time and cost depend on the exact profile and the fabricator, so we confirm all three before you order rather than after.', 'fenster'); ?>
                     <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Compare colours across every material', 'fenster'); ?></a>
                 </p>
             </div>
