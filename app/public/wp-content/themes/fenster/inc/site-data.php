@@ -176,6 +176,7 @@ function fenster_site_data(): array
                             ['label' => 'Integral Blinds', 'url' => home_url('/integral-blinds/')],
                             ['label' => 'Replacement Glazing', 'url' => home_url('/double-glazing-replacement/')],
                             ['label' => 'Secondary Glazing', 'url' => home_url('/secondary-glazing/')],
+                            ['label' => 'Cat & Dog Flaps', 'url' => home_url('/cat-and-dog-flaps/')],
                             ['label' => 'Repairs', 'url' => home_url('/window-and-door-repairs/')],
                         ],
                     ],
