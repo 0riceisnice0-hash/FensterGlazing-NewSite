@@ -8102,8 +8102,8 @@ html.fg-gallery-lightbox-open body {
 
 .fg-colour-next__box {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-  gap: clamp(1.5rem, 4vw, 3.4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 3vw, 2.6rem);
   align-items: center;
   padding: clamp(1.5rem, 3.4vw, 2.6rem);
   border: 1px solid rgba(0, 45, 58, 0.12);
@@ -8145,13 +8145,15 @@ html.fg-gallery-lightbox-open body {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 1fr);
-  gap: clamp(0.4rem, 1.2vw, 0.9rem);
+  gap: clamp(0.35rem, 0.9vw, 0.65rem);
   align-items: center;
 }
 
+/* The handle photographs are tall and narrow, so the card width is what limits
+   them, not its height. Padding stays tight for that reason. */
 .fg-colour-next__handle {
   display: block;
-  padding: clamp(0.5rem, 1.4vw, 0.9rem);
+  padding: clamp(0.3rem, 0.7vw, 0.5rem);
   border-radius: 8px;
   background: #ffffff;
 }
@@ -8159,7 +8161,7 @@ html.fg-gallery-lightbox-open body {
 .fg-colour-next__handle img {
   display: block;
   width: 100%;
-  height: clamp(74px, 9vw, 128px);
+  height: clamp(96px, 12vw, 172px);
   object-fit: contain;
 }
 
@@ -8169,7 +8171,7 @@ html.fg-gallery-lightbox-open body {
   }
 
   .fg-colour-next__handle img {
-    height: clamp(58px, 14vw, 92px);
+    height: clamp(84px, 22vw, 130px);
   }
 }
 
