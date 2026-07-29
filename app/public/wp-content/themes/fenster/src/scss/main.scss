@@ -35468,38 +35468,38 @@ html.fg-blinds-reveal-locked {
   margin-top: clamp(1.25rem, 2.4vw, 2rem);
 }
 
-.fg-colour-rail__viewport {
+/* The list is the scroll container and the grid. A percentage flex-basis
+   inside an overflowing flex row resolves against the track's own scroll
+   width, not the viewport, so slides ballooned at the narrow breakpoint where
+   the per-view value is fractional. grid-auto-columns on the scroller itself
+   resolves against the visible width, which is the same fix already applied to
+   the obscured-glass picker. */
+.fg-colour-rail__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--fg-rail-gap) * (var(--fg-rail-per-view) - 1))) / var(--fg-rail-per-view));
+  gap: var(--fg-rail-gap);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  /* Room for the lift on hover, otherwise the top of a raised card clips. */
+  margin: 0;
   padding: 4px 0 10px;
-  margin-inline: calc(var(--fg-rail-gap) * -0.5);
-  padding-inline: calc(var(--fg-rail-gap) * 0.5);
+  list-style: none;
 }
 
-.fg-colour-rail__viewport::-webkit-scrollbar {
+.fg-colour-rail__track::-webkit-scrollbar {
   display: none;
 }
 
-.fg-colour-rail__viewport:focus-visible {
+.fg-colour-rail__track:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 10px;
 }
 
-.fg-colour-rail__track {
-  display: flex;
-  gap: var(--fg-rail-gap);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .fg-colour-rail__slide {
-  flex: 0 0 calc((100% - (var(--fg-rail-gap) * (var(--fg-rail-per-view) - 1))) / var(--fg-rail-per-view));
   scroll-snap-align: start;
   min-width: 0;
   display: grid;

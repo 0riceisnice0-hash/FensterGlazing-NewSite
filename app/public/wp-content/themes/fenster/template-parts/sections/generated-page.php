@@ -2076,26 +2076,24 @@ if ($is_colour_options) {
                and was not part of this instruction. */
             ?>
             <div class="fg-colour-rail" data-fg-colour-rail>
-                <div class="fg-colour-rail__viewport" data-fg-colour-rail-viewport tabindex="0" role="region" aria-label="<?php echo esc_attr(sprintf(__('%s. Scroll or swipe sideways.', 'fenster'), (string) ($material['label'] ?? 'Colours'))); ?>">
-                    <ul class="fg-colour-rail__track">
+                <ul class="fg-colour-rail__track" data-fg-colour-rail-viewport tabindex="0" role="region" aria-label="<?php echo esc_attr(sprintf(__('%s. Scroll or swipe sideways.', 'fenster'), (string) ($material['label'] ?? 'Colours'))); ?>">
                         <?php foreach ($colours as $colour) : ?>
-                            <?php $swatch = (string) ($colour['hex'] ?? '#ffffff'); ?>
-                            <li class="fg-colour-rail__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
-                                <span class="fg-colour-rail__media">
-                                    <?php if (! empty($colour['image'])) : ?>
-                                        <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour')); ?>" loading="lazy">
-                                    <?php else : ?>
-                                        <i aria-hidden="true"></i>
-                                    <?php endif; ?>
-                                </span>
-                                <h3><?php echo esc_html((string) ($colour['name'] ?? 'Colour')); ?></h3>
-                                <?php if (! empty($colour['finish'])) : ?>
-                                    <p><?php echo esc_html((string) $colour['finish']); ?></p>
+                        <?php $swatch = (string) ($colour['hex'] ?? '#ffffff'); ?>
+                    <li class="fg-colour-rail__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
+                            <span class="fg-colour-rail__media">
+                                <?php if (! empty($colour['image'])) : ?>
+                                    <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour')); ?>" loading="lazy">
+                                <?php else : ?>
+                                    <i aria-hidden="true"></i>
                                 <?php endif; ?>
-                            </li>
+                            </span>
+                            <h3><?php echo esc_html((string) ($colour['name'] ?? 'Colour')); ?></h3>
+                            <?php if (! empty($colour['finish'])) : ?>
+                                <p><?php echo esc_html((string) $colour['finish']); ?></p>
+                            <?php endif; ?>
+                    </li>
                         <?php endforeach; ?>
-                    </ul>
-                </div>
+                </ul>
                 <div class="fg-colour-rail__controls">
                     <button type="button" data-fg-colour-rail-prev aria-label="<?php esc_attr_e('Previous colours', 'fenster'); ?>">&#8249;</button>
                     <span data-fg-colour-rail-count><?php echo esc_html('01 / ' . sprintf('%02d', max(1, count($colours)))); ?></span>
