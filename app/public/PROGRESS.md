@@ -35,6 +35,18 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Composite white added, made from the set (test, 51c7c50)
+
+Owner: fabricate a white for composite, white is white, use the same tone as Smooth White uPVC. Then: add the same texture as the other composite tiles so they are a set.
+
+- **Distinction supplied no white in the sampled range**, which is why the reorder could not place the owner's first composite colour. Added as Standard White, RAL 9003 tone, first in the list.
+- **The tiles are photographed brush strokes, not flat colour.** The first pass read them as flat because it sampled a centre crop and the stroke runs across a corner: the numbers said standard deviation 3 to 4 and the eye said paint. **Statistics agreed with a wrong conclusion, and only a screenshot of the rendered rail settled it.**
+- **The tile is therefore made from a real tile rather than drawn.** Chartwell Green greyscaled, despeckled and mapped so the mean lands at 250 with a grain deviation near the rest of the palette, neutral across R, G and B. Crop zoomed and offset so it is not a visual twin of Chartwell Green, which appears in the same rail.
+- **A near-white swatch on a white card reads as an empty slot**, so pale tiles take a hairline in the rail. Five tiles qualify across the three ranges.
+- **Owner-asserted, not supplier-confirmed.** If Distinction's white carries a tint the tile should be replaced with a real sample. Recorded in the data alongside the entry.
+- Verified on test: composite serves 24 colours with Standard White first, the tile returns 200, five pale tiles carry the hairline.
+- Test deployment only. Live is still `834b424`.
+
 ## 2026-07-29 - Colour ranges put in the owner's order (test, b446687)
 
 - Owner supplied an explicit sequence for all three ranges. Applied as a pure line permutation and asserted as one, so no entry could be silently altered or dropped, with comment lines moving alongside the colour they describe.
