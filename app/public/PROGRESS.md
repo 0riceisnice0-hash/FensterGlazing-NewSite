@@ -21,6 +21,17 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Doors hub imagery: one tile fixed, one blocked on an asset
+
+Owner report: the uPVC doors and aluminium doors tiles are the wrong pictures for those products. Both confirmed by opening the files, not by reading filenames or alt text.
+
+- **Aluminium doors was a CGI render.** `aluminium-doors-northampton-2.jpg` is a dusk render of a dark modern house with a lit interior. On a grid of nine photographs a render is the first thing the eye lands on, which is the defect the hub was always going to expose. Replaced with `aluminium-doors-northampton-2-1.jpg`, an actual aluminium entrance door with a bar handle and glazed side screen. It is supplier photography, not ours, so the alt says what is in the frame and claims no install.
+- **uPVC doors is a composite door and is blocked on an asset.** The tile serves the hero, `fenster-upvc-door.jpg`, a golden oak moulded slab with leaded side screens. Every other candidate in the theme was opened and rejected: `Residential_Door_01` is another moulded slab, `Residential_Door_08` duplicates the hero, `house-front-door` is a stock collage of five painted timber doors, `front-door` is a stock timber-look door on Cotswold stone, `Front-door-double-rebate` is a profile diagram. The only correct-product assets are the thirteen white-background Liniar renders. The owner is supplying an asset; there is no scrape on this Mac to pull one from.
+- **The July image audit did not catch this because it audited pools, not tiles.** `fenster-upvc-door.jpg` was pulled from the `/upvc-doors/` gallery on 2026-07-16 as reading composite, and left in place as the hero, which is what the hub tile falls back to. Recorded in `AI.md` so a future audit checks the tile source too.
+- **Found and left alone on the owner's instruction:** `/aluminium-doors/` has the same problem in its hero. `sheerline-aluminium-door.jpg` is an interior kitchen shot of a white single door, already noted on 2026-07-21 as reading uPVC. The only correct replacements are 600x450, too small for a hero, so it needs a better asset rather than a swap. Recorded in `nick.md`.
+- Verified on test: the render is gone from `/doors-milton-keynes/` and the replacement is serving.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-28 - Consultations stated as free sitewide (test)
 
 Owner instruction from Nick: wherever the site mentions booking a consultation, make clear it is free.
