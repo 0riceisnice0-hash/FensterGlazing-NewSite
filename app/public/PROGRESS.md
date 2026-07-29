@@ -35,6 +35,13 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Promoted to live (41ffb83)
+
+- Live re-established by checksum first; three theme files matched `8940ef6..4cd1925`, all theme-identical, so `8940ef6` was the range base to yield a superset. The recorded pointer was accurate for the second release running. Empty-input hash printed alongside the sweep so a silent miss could not read as a match.
+- Range `8940ef6..41ffb83`: **19 commits, all one author.** The handle options box, the mobile hero rebuild, the read more on the three collections, and the composite white tile reframe.
+- Backup `fenster-pre-41ffb83-20260729-183206.tar.gz` confirmed present at 375M and 1,738 entries before deploying. Theme-only rsync at an explicit SHA, `wp cache flush`, `wp sg purge`.
+- **Verified on production at both widths, not just by status code.** Four theme files byte-identical, six routes 200, the box linking to `/handle-options/` with five finishes, three read more controls with matching ids, zero duplicate eyebrows, 336 hero tiles, all three ranges in the owner's order. At a true 390 the collection paragraphs collapse to 51px with their controls showing and the hero carries the fade; at 1440 nothing is clamped, the controls stay hidden and the hero background is `none`. **The mobile-only work needed proving mobile-only, which a desktop check alone would have missed.**
+
 ## 2026-07-29 - Handle options box, and a mobile hero worth having (test, 62f1099)
 
 Owner: a box leading to handle options after all the colour options, and the header looks amazing on desktop but not great on mobile.
