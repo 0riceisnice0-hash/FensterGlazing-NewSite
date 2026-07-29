@@ -1981,6 +1981,11 @@ function fenster_site_data(): array
                        paint instead of being eyeballed. */
                     'copy' => 'A mix of standard colours and RAL matches, shown as the paint itself rather than as a flat colour. The standard range runs wider than this, and any RAL colour can be matched beyond it, so if you have a shade in mind it is worth asking. A screen will always shift a tone, so the doors are worth seeing at the showroom.',
                     'colours' => [
+                        /* Owner instruction, 2026-07-29: "white is white". Distinction did not
+                           supply a white in the sampled range, so this is a flat swatch at the
+                           same tone as Smooth White uPVC, RAL 9003. Replace it if their white
+                           turns out to carry a tint. */
+                        ['name' => 'Standard White', 'hex' => '#ffffff', 'slug' => 'standard-white', 'finish' => 'Standard colour', 'alt' => 'Standard White paint sample for composite doors', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/palette/standard-white-320w.webp'],
                         ['name' => 'Standard Black', 'hex' => '#181818', 'slug' => 'standard-black', 'finish' => 'Standard colour', 'alt' => 'Standard Black paint sample for composite doors', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/palette/standard-black-320w.webp'],
                         ['name' => 'Standard Blue', 'hex' => '#333d49', 'slug' => 'standard-blue', 'finish' => 'Standard colour', 'alt' => 'Standard Blue paint sample for composite doors', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/palette/standard-blue-320w.webp'],
                         ['name' => 'Standard Green', 'hex' => '#233a27', 'slug' => 'standard-green', 'finish' => 'Standard colour', 'alt' => 'Standard Green paint sample for composite doors', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/palette/standard-green-320w.webp'],

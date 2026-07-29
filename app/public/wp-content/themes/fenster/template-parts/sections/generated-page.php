@@ -2080,7 +2080,19 @@ if ($is_colour_options) {
                         <?php foreach ($colours as $colour) : ?>
                         <?php $swatch = (string) ($colour['hex'] ?? '#ffffff'); ?>
                     <li class="fg-colour-rail__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
-                            <span class="fg-colour-rail__media">
+                            <?php
+                            /* A near-white swatch on a white card reads as an
+                               empty slot rather than a colour, so it takes a
+                               hairline. Composite white is the case that forced
+                               this; it applies to any pale tile. */
+                            $is_pale_swatch = (bool) preg_match('/^#[0-9a-f]{6}$/i', $swatch)
+                                && min(
+                                    hexdec(substr($swatch, 1, 2)),
+                                    hexdec(substr($swatch, 3, 2)),
+                                    hexdec(substr($swatch, 5, 2))
+                                ) > 228;
+                            ?>
+                            <span class="fg-colour-rail__media<?php echo $is_pale_swatch ? ' is-pale' : ''; ?>">
                                 <?php if (! empty($colour['image'])) : ?>
                                     <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour')); ?>" loading="lazy">
                                 <?php else : ?>

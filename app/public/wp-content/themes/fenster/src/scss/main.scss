@@ -35658,6 +35658,10 @@ html.fg-blinds-reveal-locked {
   user-select: none;
 }
 
+.fg-colour-rail__media.is-pale {
+  box-shadow: inset 0 0 0 1px rgba(15, 49, 54, 0.16);
+}
+
 [data-fg-colour-material="upvc"] .fg-colour-rail__media {
   aspect-ratio: 1.42;
 }
