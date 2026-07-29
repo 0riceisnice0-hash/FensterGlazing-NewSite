@@ -35,6 +35,19 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Privacy glass card: the lone 01, and glass that looks like glass (test, a8428b1)
+
+Owner: the privacy glass box on product pages has a 01 that makes no sense now, and could it be styled like satin glass with the title etched in, might look bad.
+
+- **The number was a real bug.** The three specification cards numbered themselves as they printed, which reads fine at three. On the routes that show the uPVC colour grid and the handle grid inline, both of those cards are suppressed, leaving the glass card alone and labelled "01". A single numbered step is not a sequence. The cards are built as a list first now and numbered only when there is more than one.
+- **The card wears the real Satin texture from `obscure_glass`**, not a pattern invented in the stylesheet, so it shows the same glass as the page it links to.
+- **Engraved, not etched, and that was a deliberate refusal.** A true etched title is lighter than its background; on a pale pane that is text nobody without good sight can read. Dark type with a crisp white highlight beneath reads as cut into the surface and keeps full contrast.
+- **The first attempt was nearly invisible.** Satin is built from 1px dots and 3px stripes, sized for a small swatch. Dropped on a card at its own scale, under a white wash, it read as faint noise. Drawn at 200px on the pane itself with the wash removed, it reads as glass.
+- **Two layout faults the card exposed, one of them self-inflicted.** `auto-fit` collapses empty tracks, so the lone card stretched across the full 980px row and looked like an empty pane. Switching the base to `auto-fill` fixed that and broke the two-card case, leaving them at 305px with an empty 337px track hanging off the row. The base is back to `auto-fit` and the one-card case belongs to a `--single` modifier. **The fix for one count broke another count, which measuring only the page that prompted the change would have missed.**
+- The modifier is written after the base rule, not above it. Both are single-class selectors, so source order decides, and above it the base `grid-template-columns` simply won.
+- Verified on test at 1440: one card centred at 380px with no number, two cards at 474px each filling the row and numbered 01 and 02, no horizontal overflow.
+- Test deployment only. Live is `572fe3c`.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
