@@ -21,6 +21,17 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - The day's work promoted to live (834b424)
+
+- **Live established by checksum first, and the pointer was wrong again.** `LIVECHANGES.md` said `8052f65`; six theme files checksummed to `d3600ad`, the docs commit immediately after it. Theme content was identical, so nothing was at risk, but that is three releases running where the recorded SHA was not the deployed one. The check took under a minute and is worth doing every time.
+- Range `d3600ad..834b424`: **54 commits, 52 from this session and 2 from the concurrent one** adding Google Ads conversion tracking. The owner was told twice that the batch contained both before approving it.
+- **The other session's code was read before shipping it**, since deploying it made it mine to answer for. It respects the documented consent boundary: the ad click id is held for the page load but not persisted when consent is refused, and the `dataLayer` push is gated on `trackingConsentAccepted()`. Click ids go to WordPress only, never the dashboard, which is what `GOOGLE-ADS-PLAN.md` specifies.
+- Backup `fenster-pre-834b424-20260729-161416.tar.gz` (371M) taken and **confirmed to exist** before deploying. A plain `ls | tail` did not show it, because the backups sort alphabetically and this one sorts early; grep for the SHA instead of trusting the tail.
+- Deployed with an explicit SHA, theme-only rsync, `wp cache flush` and `wp sg purge`.
+- **Verified on production:** six theme files match the committed tree byte for byte; fifteen routes return 200 including the new `/handle-options/`; `/window-handles/` 301s to it; `/double-glazing-milton-keynes/` still carries its head-term marker, which status alone does not prove. Each change confirmed individually rather than assumed: real uPVC photography with zero references to the old composite slab, four pet-flap installs, the flush casement banner reading 1.2 with 28mm double, three chooser sections on the handle hub, 23 paint tiles on the colour hub, the cat flap tile and menu entry, and the corrected process rail.
+- Browser QA at 1440 and 390 on two live pages: every theme image loaded, no heading above the 57.6px cap, no horizontal overflow. The five images reported broken were the external URLs the test harness deliberately blocks, confirmed by printing their `src` rather than assuming.
+- Live, `main` and test are now level at `834b424`.
+
 ## 2026-07-29 - Cat and dog flaps was missing from its hub (test)
 
 Owner spotted it: the route was not on `/other-services/`.
