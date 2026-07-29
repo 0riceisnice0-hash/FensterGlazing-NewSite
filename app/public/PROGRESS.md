@@ -21,6 +21,18 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - EnergyPlus banner contradiction, and the real composite colour range (test)
+
+Owner: the key specifications and the EnergyPlus banner contradict each other on flush uPVC windows, which can only be 28mm double at 1.2. And make clear the composite colour range is much wider than the swatches shown: the standard range, of which the tiles are a mix, plus any RAL.
+
+- **The banner was quoting the casement best case on all seven EnergyPlus routes.** On `/flush-casement-windows/` that put "0.95 W/m²K with 36mm triple glazing" directly above a key-specification strip reading 1.2, on a sash that cannot take triple at all. The figure is now route-aware: 1.2 with 28mm double on flush casement, and the shared 0.95 stays on casement, tilt and turn, bow and bay and French casement.
+- **The same check found a second contradiction the owner had not reported:** `/upvc-doors/` carried the 0.95 window figure against its own 1.0. It now shows 1.0 on the door. `/french-doors/` has no confirmed U-value anywhere in `product_usps`, so it renders **no** glazing figure rather than inheriting one; a wrong number is worse than an absent one.
+- Verified against every EnergyPlus route on test: banner figure and key specification now agree on all six that carry a figure.
+- **Composite colours: the range is wider than the tiles.** Owner-confirmed, and it reverses the July removal of the blanket RAL claim, which came off as unsubstantiated at the time. Both `/composite-doors/` and `/colour-options/` now say the swatches are a selection of the standard range and that any RAL can be matched beyond it. `AI.md` and `COMPOSITE-DOOR-REDESIGN.md` both carry the correction, the latter struck through rather than deleted so the reversal is legible.
+- **This also resolves the four-colour gap from earlier today.** White, Light Grey, Pale Blue and Ruby Red having no painted tile is a presentation gap, not a gap in what we sell, now the copy says the range runs wider. Still do not tint a swatch to close it.
+- **Explicitly not extended to heritage aluminium doors**, which stay at twelve standard powder-coated finishes with dual and bespoke on request. That restriction is a separate owner instruction about a different product.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - Composite colours on the hub become paint, not doors (test)
 
 Owner: the composite colours on `/colour-options/` should use the painted tiles from the composite doors page rather than photographs of doors.
