@@ -3957,32 +3957,54 @@ if ($is_commercial_hub) {
                     ];
                 }
 
-                /* The glass card wears the real Satin texture from the obscure
-                   glass data rather than a pattern invented here, so the card
-                   and the page it links to show the same glass. */
-                $satin_texture = '';
+                /* The glass card is panelled with the real pattern photographs
+                   from the obscure glass data, so it shows the actual product
+                   rather than an effect invented in the stylesheet. Curated for
+                   variety, lines against florals against stipple, but anything
+                   missing simply falls through to whatever else has a photo. */
+                $glass_patch_order = ['Reeded', 'Cotswold', 'Stippolyte', 'Contora', 'Chantilly', 'Digital', 'Everglade', 'Taffeta'];
+                $glass_patch_by_name = [];
+                $glass_patch_rest = [];
                 foreach ((array) $obscure_glass_textures as $glass_texture) {
-                    if (! is_array($glass_texture)) {
+                    if (! is_array($glass_texture) || trim((string) ($glass_texture['image'] ?? '')) === '') {
                         continue;
                     }
-                    if (strtolower((string) ($glass_texture['name'] ?? '')) === 'satin') {
-                        $satin_texture = trim((string) ($glass_texture['texture'] ?? ''));
-                        break;
+                    $glass_patch_by_name[(string) ($glass_texture['name'] ?? '')] = $glass_texture;
+                    $glass_patch_rest[] = $glass_texture;
+                }
+                $glass_patch = [];
+                foreach ($glass_patch_order as $glass_patch_name) {
+                    if (isset($glass_patch_by_name[$glass_patch_name])) {
+                        $glass_patch[] = $glass_patch_by_name[$glass_patch_name];
                     }
                 }
+                foreach ($glass_patch_rest as $glass_texture) {
+                    if (count($glass_patch) >= 8) {
+                        break;
+                    }
+                    if (! in_array($glass_texture, $glass_patch, true)) {
+                        $glass_patch[] = $glass_texture;
+                    }
+                }
+                $glass_patch = array_slice($glass_patch, 0, 8);
 
                 $number_cards = count($option_cards) > 1;
                 ?>
                 <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? '' : 'fg-product-choice-map--single'); ?>">
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
+                        <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 4; ?>
                         <a
-                            class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo ($option_card['modifier'] === 'glass' && $satin_texture !== '') ? ' is-glazed' : ''; ?>"
+                            class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo $is_patched_glass ? ' is-glazed' : ''; ?>"
                             href="<?php echo esc_url($option_card['url']); ?>"
-                            <?php if ($option_card['modifier'] === 'glass' && $satin_texture !== '') : ?>
-                                style="<?php echo esc_attr('--fg-glass-texture:' . $satin_texture); ?>"
-                            <?php endif; ?>
                         >
+                            <?php if ($is_patched_glass) : ?>
+                                <span class="fg-glass-patch" aria-hidden="true">
+                                    <?php foreach ($glass_patch as $glass_pane) : ?>
+                                        <span style="<?php echo esc_attr('background-image:url(' . fenster_generated_url((string) $glass_pane['image']) . ')'); ?>"></span>
+                                    <?php endforeach; ?>
+                                </span>
+                            <?php endif; ?>
                             <?php if ($number_cards) : ?>
                                 <span><?php echo esc_html(sprintf('%02d', $card_index + 1)); ?></span>
                             <?php endif; ?>
