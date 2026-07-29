@@ -1797,9 +1797,21 @@ const adClickReference = () => {
   return readStoredTrackingValue(adClickStorageKey, validAdClickValue);
 };
 
-document.querySelectorAll('[data-fg-ad-click-id]').forEach((field) => {
-  field.value = adClickReference();
-});
+const populateAdClickFields = () => {
+  const captured = adClickReference();
+  document.querySelectorAll('[data-fg-ad-click-id]').forEach((field) => {
+    field.value = captured;
+  });
+};
+
+populateAdClickFields();
+
+// A visitor arriving from an ad meets the cookie banner before they reach a
+// form, and accepting is what allows the id to be stored at all. Without this
+// second pass the click id is captured into the field but never persisted, so
+// it is lost the moment they open a second page. The banner dispatches on
+// window, not document.
+window.addEventListener('fenster:tracking-consent-accepted', populateAdClickFields);
 
 let consentedPageRecorded = false;
 if (trackingConsentAccepted()) {
