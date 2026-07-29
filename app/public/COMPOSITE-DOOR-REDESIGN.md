@@ -22,7 +22,7 @@ Fenster is an approved installer of Distinction Doors. The page only presents th
 - Contemporary for cleaner grooves and glass layouts;
 - Rustic Renown as the cottage-style Signature design.
 
-`nxt-gen` and Grandeur are not sold and must not be reintroduced. Rustic Renown is not described as a separate manufacturer collection. The old blanket `Any RAL colour` claim is also removed. Current colour, glass and compatible hardware availability is confirmed during consultation and survey.
+`nxt-gen` and Grandeur are not sold and must not be reintroduced. Rustic Renown is not described as a separate manufacturer collection. ~~The old blanket `Any RAL colour` claim is also removed.~~ **Reversed 2026-07-29:** the owner confirmed the standard range plus any RAL, so both the door page and the colour hub now say the swatches are a selection and that RAL matching is available. Current colour, glass and compatible hardware availability is confirmed during consultation and survey.
 
 ## V2 design model
 

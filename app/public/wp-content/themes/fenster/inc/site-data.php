@@ -1950,7 +1950,7 @@ function fenster_site_data(): array
                        than a shortlist of photographed doors. Hex values are
                        sampled from each tile, so the fallback chip matches the
                        paint instead of being eyeballed. */
-                    'copy' => 'The Distinction paint range, shown as the paint itself. A screen will always shift a shade, so we bring samples to the survey.',
+                    'copy' => 'A selection of the standard Distinction range, shown as the paint itself rather than as a flat colour. The standard range is wider than this, and beyond it we can match any RAL colour, so if you have a shade in mind ask us. A screen will always shift a tone, so samples come to the survey.',
                     'colours' => [
                         ['name' => 'Standard Black', 'hex' => '#181818', 'slug' => 'standard-black', 'finish' => 'Distinction paint finish', 'alt' => 'Standard Black paint sample for composite doors', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/palette/standard-black-320w.webp'],
                         ['name' => 'Anthracite Grey', 'hex' => '#384145', 'slug' => 'anthracite-grey', 'finish' => 'Distinction paint finish', 'alt' => 'Anthracite Grey paint sample for composite doors', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-distinction/palette/anthracite-grey-320w.webp'],

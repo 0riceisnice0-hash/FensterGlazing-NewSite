@@ -266,6 +266,11 @@ if (empty($collections)) {
                 <p class="eyebrow"><?php esc_html_e('The paint range', 'fenster'); ?></p>
                 <h2 id="fg-cd3-colour-title"><?php esc_html_e('Pick a colour and see it on a real door.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Distinction mix their own paint rather than buying it in. Hover or tap any colour below and most of them will show you a door in it. The few we have no door for show the paint itself, because we would rather show you the real thing than tint a picture and hope.', 'fenster'); ?></p>
+                <?php /* Owner-confirmed 2026-07-29: these are a selection of the
+                         standard range, not the whole of it, and any RAL can be
+                         matched beyond it. See the confirmed facts in AI.md
+                         before trimming this back. */ ?>
+                <p><?php esc_html_e('What is below is a selection rather than the full list. The standard range runs wider than this, and past it we can match any RAL colour, so if you have a shade in mind it is worth asking rather than settling for the nearest one here.', 'fenster'); ?></p>
             </header>
 
             <div class="fg-cd3-colour__layout" data-fg-door-selector data-fg-colour-wall>

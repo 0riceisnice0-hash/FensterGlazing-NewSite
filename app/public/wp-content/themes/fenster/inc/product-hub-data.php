@@ -529,17 +529,36 @@ function fenster_tech_banner_args(string $slug): array
     ];
 
     if (in_array($slug, $energyplus_routes, true)) {
+        /* The banner is shared across seven routes but the glazing figure is
+           not. Quoting the casement best case everywhere put 0.95 W/m²K with
+           36mm triple directly above a key-specification strip reading 1.2 on
+           flush casement, which cannot take triple at all, and above 1.0 on
+           uPVC doors. Owner-reported contradiction, 2026-07-29. A route with
+           no confirmed figure gets no figure rather than an inherited one. */
+        $glazing_fact = ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'];
+
+        if ($slug === 'flush-casement-windows') {
+            // Owner-confirmed: 28mm double is the only unit this sash takes.
+            $glazing_fact = ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'];
+        } elseif ($slug === 'upvc-doors') {
+            $glazing_fact = ['value' => '1.0', 'label' => 'W/m²K on the door'];
+        } elseif ($slug === 'french-doors') {
+            $glazing_fact = null;
+        }
+
+        $facts = [['value' => '6', 'label' => 'chambers through the frame']];
+        if ($glazing_fact !== null) {
+            $facts[] = $glazing_fact;
+        }
+        $facts[] = ['value' => 'Lead-free', 'label' => 'profile formulation'];
+
         return [
             'logo' => '/wp-content/themes/fenster/assets/partners/liniar-energyplus.png',
             'logo_alt' => 'EnergyPlus by Liniar',
             'eyebrow' => 'The profile we specify',
             'title' => 'Liniar EnergyPlus',
             'copy' => 'Liniar\'s six-chamber profile. The chambers sit inside the frame where you never see them, and the weather seal is extruded as part of the profile rather than pushed into a groove afterwards, so it cannot work loose at a corner.',
-            'facts' => [
-                ['value' => '6', 'label' => 'chambers through the frame'],
-                ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
-                ['value' => 'Lead-free', 'label' => 'profile formulation'],
-            ],
+            'facts' => $facts,
         ];
     }
 
