@@ -1082,7 +1082,7 @@ $journey_order_copy = $is_commercial
     ? 'We keep commercial projects moving through brief, specification, coordination, installation and aftercare.'
     : ($is_about
         ? 'We keep enquiries straightforward: understand the need, check the details, install carefully and support the work afterwards.'
-        : 'Four steps, and you can start at either end of the first one: price it yourself online, or have us come out. The rest is the same either way.');
+        : 'Four steps. The first one has two ways in: price it yourself online, or have us come out. After that it runs the same either way.');
 $journey_order_action = $is_commercial ? 'Start a commercial conversation' : ($is_about ? 'Start a conversation' : 'Start your enquiry');
 $journey_trust_heading = $is_about ? 'A local glazing team backed by recognised accreditations.' : 'Reviewed, accredited and backed by proven product systems.';
 $journey_trust_copy = $is_about
@@ -1141,7 +1141,7 @@ if ($is_commercial) {
 $product_order_steps = [
     ['step' => '01', 'title' => 'Your price', 'copy' => 'Price it yourself on the online tool, or book a free consultation and we build the same quote with you. Both run on the same price list, so the figure matches.'],
     ['step' => '02', 'title' => 'Technical survey', 'copy' => 'Once you go ahead we survey before anything is made. Not a second sales visit: the measurements, thresholds and fixings the factory needs to build it right.'],
-    ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, with the preparation and care on site that the job needs.'],
+    ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, working to the survey measurements so the units go in as they were made rather than adjusted on site.'],
     ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
 ];
 
