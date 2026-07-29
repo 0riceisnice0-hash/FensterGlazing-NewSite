@@ -3999,11 +3999,17 @@ if ($is_commercial_hub) {
                             href="<?php echo esc_url($option_card['url']); ?>"
                         >
                             <?php if ($is_patched_glass) : ?>
-                                <span class="fg-glass-patch" aria-hidden="true">
+                                <?php
+                                /* An <i>, not a <span>: the card styles its
+                                   number badge as `> span`, so a span here
+                                   inherited position: relative and
+                                   width: fit-content and collapsed to 15px. */
+                                ?>
+                                <i class="fg-glass-patch" aria-hidden="true">
                                     <?php foreach ($glass_patch as $glass_pane) : ?>
                                         <span style="<?php echo esc_attr('background-image:url(' . fenster_generated_url((string) $glass_pane['image']) . ')'); ?>"></span>
                                     <?php endforeach; ?>
-                                </span>
+                                </i>
                             <?php endif; ?>
                             <?php if ($number_cards) : ?>
                                 <span><?php echo esc_html(sprintf('%02d', $card_index + 1)); ?></span>
