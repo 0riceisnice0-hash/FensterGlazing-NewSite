@@ -35,6 +35,23 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Colour hub hero built from the range itself (test, 4d72959)
+
+Owner: the header looks unexciting, maybe a big colourful hero, imagining a paint splat with tonnes of colour.
+
+- **Argued against the splat and said why.** The frames are not painted: uPVC is a bonded foil and aluminium is powder coated, which is the distinction the page's own opening paragraph turns on. A splat also reads as decorator rather than glazier and would show colours that are not for sale. The instinct was right though, and the material for it was already on the page.
+- **The hero is now the range.** 53 real colours pulled from `colour_options`, so the hero cannot drift out of step with the rail below it and a new colour appears in both. Nothing invented, nothing hand-placed.
+- **An even shuffle of this range reads almost black.** Most of it is grey, charcoal and dark green; the bright end is nearly all composite. Tiles are weighted by lightness and saturation, which is what made the difference between the first attempt and the one the owner approved.
+- **Owner steered the panel from dark teal to white**, so the text sits on white fading into the wall rather than on a dark scrim. Contrast still does not depend on which colours land behind the heading, which is the thing that normally breaks a busy hero.
+- **The heading was left alone deliberately.** A mockup headline read "All of them real", the owner called it dumb, and he was right: it is exactly the adjective `TONEOFVOICE.md` says to cut. A count would also contradict the page, which states the composite range is the standard set plus any RAL. The existing heading already works, so the change is the picture and not the words.
+- **Two faults found by measuring rather than by looking.** At 1440 a fourteen-column grid made each tile 103px, far chunkier than the proportion the design was approved at; it is 26 columns on a wide screen, 18 at tablet, 12 in the mobile band. And the near-white foils were originally steered away from the fade columns, which only worked while PHP and CSS agreed on a column count. They now carry a hairline instead, so a white tile reads as a tile wherever it lands.
+- **Rows are a fixed height with more tiles than the widest grid needs**, so the wall runs off the bottom and clips rather than leaving a bald patch when the column count changes.
+- Under 900px the wall becomes a full-strength band beneath the copy. The wall is before the copy in the DOM so it can be the backdrop on a wide screen, so the mobile band is ordered rather than assumed.
+- Adds the instant price and consultation buttons, which the hero did not carry.
+- Verified on test at 1440, 1000 and a true 390: no horizontal overflow at any width, tiles 55px / 56px / 33px, the wall fully covered at every width, 28 pale tiles carrying the hairline.
+- **Not done, and the owner should decide:** the old hero photo of a dual-colour flush casement is now unused, and its caption made a real point ("One frame, two finishes. Black outside, white inside."). That fact no longer appears on the page.
+- Test deployment only. Live is still `834b424`.
+
 ## 2026-07-29 - Colour rail: the four faults the owner found (test, 3900ff6)
 
 Owner, on the new rail: dragging the image highlights it instead of swiping, the aluminium colours are cropped, it should scroll smoothly, and it does not need the numbers below.
