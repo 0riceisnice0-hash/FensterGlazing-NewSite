@@ -7,8 +7,19 @@ Last updated: 2026-07-29
 - **Tilt and turn takes a different handle family, not S2.** The open item read as though the page was missing something; it was not. Adding the S2 grid there would have put the wrong hardware on the page, which is the more expensive mistake of the two. Details to follow from the owner, so the grid stays off until they arrive.
 - **Bow and bay is a configuration, not a product.** A bay can be built from most of the range and from every window style, so the route owns no handle, no system and no specification of its own. Closed the same open item on that basis.
 - Both recorded in `AI.md`, the handle fact under the Window Handle Section Rule and the bay fact under Owner-Confirmed Business Facts, so a later session cannot reopen them as gaps. `nick.md`'s open list struck through rather than deleted, since the reasoning is the useful part.
-- **Found while checking, not fixed:** the product hub card for bow and bay says a bay is built from "the casement, flush sash or sliding sash styles". That is narrower than what we offer and is customer-facing copy on a live page. Flagged to the owner rather than changed, because it needs a deploy and was not part of the question asked.
+- **Found while checking:** the bow and bay hub entry named only casement, flush sash and sliding sash. Flagged to the owner, then fixed the same day. See the entry below, including the correction to where that copy actually lives.
 - No code change, no build, no deployment.
+
+## 2026-07-29 - Hub range three by three, and the bay claim corrected (test, 9234ca5 + follow-up)
+
+Owner instruction: nine tiles over two uneven rows would look better as a square.
+
+- **Nine tiles now go 3x3** via `.fg-ph-tiles[data-count="9"]`. Seven are untouched at four then three. Tiles measure 384x225 at 1440, a 1.7:1 landscape crop that the photography takes without a problem.
+- **A bug introduced and caught before reporting.** An attribute selector is (0,2,1) and beats the bare `.fg-ph-tiles` in the two mobile media queries, so the nine-tile hubs would have kept three columns all the way down to a phone. Every count must be named in both breakpoint lists; there is now a comment saying so. This is the same specificity trap already recorded against `.fg-product-hub > section`, in a second place.
+- **Correction on the bay copy, recorded because the first diagnosis was reported to the owner before it was checked.** The hub tile renders only `name` and `fit`; the card paragraph came out on 2026-07-24, so `product_hub_groups[*].products[].copy` is dead data and editing it changes nothing a customer sees. The claim a customer actually reads is the `/bow-bay-windows/` benefit card in `product_content`, and it was narrower still: "other suitable **uPVC** window styles", which excludes the aluminium range outright. That is the one now fixed. The hub field was left corrected as well so it cannot mislead if that paragraph ever returns.
+- **The 3x3 grid costs the one-viewport rule, and that needs an owner decision.** Measured at a true 900px viewport: windows ends 1108px down (over by 208), doors 1040px (over by 140). Services is unchanged and still fits at 846px. Three rows plus the hero cannot fit 900px unless tile height drops to about 155px, which is a 2.5:1 letterbox. `AI.md` still carries the 2026-07-24 one-viewport instruction; it has not been rewritten, because reversing an owner rule is the owner's call.
+- Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
+- Test deployment only. No live-site deployment was performed.
 
 ## 2026-07-28 - Consultations stated as free sitewide (test)
 
