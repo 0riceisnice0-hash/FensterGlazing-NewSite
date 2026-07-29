@@ -429,9 +429,15 @@ function fenster_site_data(): array
                 ],
             ],
             'cat-and-dog-flaps' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-cat-flap-glass.jpg', 'alt' => 'Cat flap fitted neatly into a glazed door panel'],
+                /* Was showing roofline fascia and soffit boards, which belong to
+                   a different product entirely, plus a sealed-unit sample. These
+                   are real Fenster pet-flap installs from the Marketing image
+                   bank, added 2026-07-29. */
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-coming-through.webp', 'alt' => 'Black cat coming through a pet flap fitted into a glazed unit'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-cat-flap-glass.jpg', 'alt' => 'Cat flap fitted neatly into a glazed door panel'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-in-glazed-unit.webp', 'alt' => 'Pet flap fitted into a sealed glass unit beside a brick wall'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-conservatory-door.webp', 'alt' => 'Pet flap fitted into a conservatory door panel'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-in-glass.webp', 'alt' => 'Round pet flap fitted into a glazed door panel'],
                 ],
             ],
             'roofline' => [
@@ -506,6 +512,10 @@ function fenster_site_data(): array
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-windows-black-house-1600w.webp', 'alt' => 'Black aluminium windows across the front of a modern brick and render house'],
                 'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-windows-card-1000w.webp', 'alt' => 'Black aluminium windows in a rendered and brick gable'],
                 'gallery' => [
+                    /* The only photograph of a Fenster aluminium install in the
+                       image bank. PHOTO-CHECKLIST listed 'aluminium windows on a
+                       local home' as a standing gap; this closes it. */
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-window-grey-stone.webp', 'alt' => 'Grey aluminium window in a stone elevation, fitted on a local home'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Slim aluminium windows installed on a coastal property'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium window frame profile detail'],
                 ],
@@ -569,12 +579,13 @@ function fenster_site_data(): array
                 ],
             ],
             'french-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_02.jpg', 'alt' => 'White uPVC French doors opened to a garden'],
-                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/French_30.jpg', 'alt' => 'Cream uPVC French doors with glazed side panels'],
+                /* Real Fenster French door installs lead; the imported scrape
+                   images are gone. Added 2026-07-29 from the Marketing image
+                   bank. */
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/french-doors/french-doors-white-brick.webp', 'alt' => 'White uPVC French doors opening onto a patio from a brick home'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_02.jpg', 'alt' => 'White uPVC French doors opened to a garden'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_03.jpg', 'alt' => 'uPVC French doors with glazed panels'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/French_Door_16.jpg', 'alt' => 'French doors fitted to a brick home'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/french-doors/french-doors-rosewood-patio.webp', 'alt' => 'uPVC French doors in a rosewood woodgrain finish, opening onto a paved patio'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/french-doors/french-doors-white-brick.webp', 'alt' => 'White uPVC French doors opening onto a patio from a brick home'],
                 ],
             ],
             'integral-blinds' => [
@@ -1422,15 +1433,16 @@ function fenster_site_data(): array
                 ],
             ],
             'upvc-doors' => [
-                'intro' => 'uPVC doors are a practical, efficient and highly customisable choice for front, side and rear entrances. Fenster specifies Liniar door systems around security, colour, glazing, threshold and day-to-day use.',
+                'intro' => 'A uPVC door is not one thing. The same Liniar system makes a single front or back door, a French pair that opens from the centre, or a stable door split across the middle so the top half opens on its own. Which one suits you is usually decided by the opening and how the room is used, not by the price.',
                 'benefits' => [
                     ['title' => 'Efficient Liniar profiles', 'copy' => 'Multi-chambered uPVC profiles help reduce heat transfer and support a warmer entrance specification.'],
-                    ['title' => 'Fully customisable design', 'copy' => 'Choose door style, panel design, glass, colour, handles, letterplates and accessories around the property.'],
+                    ['title' => 'Single, French or stable', 'copy' => 'One leaf for a front or back door, a French pair for a wider opening onto a garden, or a stable door where you want air in without the whole thing open. All on the same system.'],
                     ['title' => 'Secure locking options', 'copy' => 'uPVC doors can include multi-point locking, secure cylinders and reinforced hardware for everyday peace of mind.'],
                     ['title' => 'Low threshold choices', 'copy' => 'Threshold details can be reviewed where easier access, garden access or trip reduction is important.'],
                     ['title' => 'Low-maintenance finish', 'copy' => 'uPVC doors do not need painting and can be cleaned easily, with foiled finishes available for a timber-style look.'],
                 ],
                 'faqs' => [
+                    ['question' => 'What configurations do uPVC doors come in?', 'answer' => 'A single leaf for a front, back or side entrance; a French pair that opens from the centre for a wider opening; or a stable door split across the middle, so the top half can open on its own. Panel design, glass, colour, handles and letterplates are chosen on top of whichever you pick.'],
                     ['question' => 'Are uPVC doors good for front doors?', 'answer' => 'Yes. uPVC doors can be specified for front, rear or side entrances with secure locking, glazing and panel choices.'],
                     ['question' => 'How secure are uPVC doors?', 'answer' => 'uPVC doors can include multi-point locking, with hardware and cylinder options confirmed during the quote and survey process.'],
                     ['question' => 'Can uPVC doors be coloured?', 'answer' => 'Yes. uPVC doors can be specified in white, woodgrain-style foils and selected colours depending on the system.'],
