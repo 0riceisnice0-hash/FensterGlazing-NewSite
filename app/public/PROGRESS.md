@@ -21,6 +21,20 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Order process: the real sequence, and a rail that fits a phone (test)
+
+Owner: the section is way too big, especially on mobile, and the steps are off compared with the real process. Entry is either the instant online price or a consultation visit; then the technical survey, which is about getting it right to manufacture rather than choosing options; installation is fine; aftercare needs to say how good it actually is.
+
+- **Steps rewritten** on the product routes. Step 1 now carries both ways in and the fact that the consultation prices on the same list as the online tool, so the figure matches. Step 2 is the technical survey, explicitly not a second sales visit. Step 4 names the CPA-backed ten year guarantee and FENSA registration, and that you deal with us afterwards.
+- **The guarantee wording is scoped on purpose.** This rail renders on `/window-and-door-repairs/`, `/roofline/`, `/integral-blinds/` and `/cat-and-dog-flaps/`, and those sit outside the ten year insurance-backed guarantee. The copy says "new window and door installations carry", which stays true on every route it appears on. Do not simplify it to "your installation carries".
+- **The four CSS-drawn icons are gone.** They were abstract shapes rather than recognisable marks, and the third drew two crossed bars, so Installation carried what reads as an error icon. The numbered discs already carry the sequence, and `STYLE.md` is clear that an image with no job should not be there.
+- **The heading was rendering at 57.6px**, the site-wide ceiling, because it shared a clamp with the trust band. On a supporting strip that is a `STYLE.md` breach, not a style choice; it is now 34px. Section padding also came off a flat `5rem`.
+- **Measured against live, which still runs the old version.** At a true 390: 1576px to 1115px, a 29% cut, and that is with noticeably more copy in the aftercare card. At 1440: 826px to 722px. The disc drops from 88px to 52px on a phone.
+- **Method note.** Headless Chrome on this Mac clamps `--window-size` to a 500px minimum, so anything reported as "390" from a plain window-size run is really 500. Measure true phone widths through a 390px iframe, and check `innerWidth` in the probe rather than trusting the flag.
+- **Left alone:** `location-service.php` and `trust-page.php` render the same component with their own step sets and were not part of the report. The trust page has the same structural fault, a "choose the right option" step before the survey. Worth raising with the owner.
+- Verified on test: no horizontal overflow at 390 or 1440, nothing clipped, five routes 200.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - Door handle grid: four routes, eight finishes on one row (test)
 
 Owner: put the images on one line, and the applicable products are aluminium doors, heritage, uPVC and composite.

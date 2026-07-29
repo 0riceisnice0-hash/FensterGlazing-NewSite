@@ -143,6 +143,8 @@ For measurements rather than a picture, link a small script that writes results 
 
 **A whole-page Chrome render can hang** on the heavier pages. Extract the one section into a fragment instead of rendering the whole document.
 
+**Headless Chrome here will not go below a 500px viewport.** `--window-size=390,844` reports `innerWidth` of 500, so a run that claims to be a phone check is really a 500px one, and any conclusion about a sub-500 breakpoint from it is unverified. Load the page inside a 390px iframe and measure through `contentWindow`, and have the probe print `innerWidth` so the number is proved rather than assumed. To photograph a section rather than the top of the page, walk up from it and `display: none` the preceding siblings at each level: that keeps the ancestor chain intact so the cascade still applies.
+
 **Full-page screenshots lie about lazy-loaded images.** Already recorded in `PROGRESS.md`, still true here: scroll the section into view and read `naturalWidth` rather than trusting a stitched capture.
 
 ## What has not changed
