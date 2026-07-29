@@ -6550,9 +6550,16 @@ h3 {
   padding: clamp(1.5rem, 3vw, 3rem);
 }
 
-.fg-order-process h2,
 .fg-product-trust h2 {
   font-size: clamp(2.2rem, 4vw, var(--fg-font-size-max));
+}
+
+/* The order process shared that hero clamp and rendered at 57.6px, the
+   site-wide ceiling, on a supporting section. STYLE.md puts an ordinary H2
+   around clamp(1.45rem, 2.2vw, 2rem) and says only an art-directed product
+   section may push toward 2.5rem. This is neither. */
+.fg-order-process h2 {
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
 }
 
 .fg-product-faq h2 {
@@ -9714,6 +9721,10 @@ html.fg-gallery-lightbox-open body {
   overflow: hidden;
   position: relative;
   background: transparent;
+  /* Overrides the shared 5rem in the product-section group above. This is a
+     supporting strip, and 160px of vertical padding was a large part of why
+     it read as a major section. */
+  padding: clamp(2.5rem, 4.5vw, 3.5rem) 0;
 }
 
 .fg-order-process::before {
@@ -9839,7 +9850,7 @@ html.fg-gallery-lightbox-open body {
 .fg-order-process__action {
   display: flex;
   justify-content: center;
-  margin-top: 2.4rem;
+  margin-top: 1.8rem;
 }
 
 .fg-product-trust {
