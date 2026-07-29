@@ -21,6 +21,18 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Composite colours on the hub become paint, not doors (test)
+
+Owner: the composite colours on `/colour-options/` should use the painted tiles from the composite doors page rather than photographs of doors.
+
+- **Eight photographed doors replaced by the twenty-three painted tiles**, the same set `/composite-doors/` already shows. The hub had been a curated shortlist while the product page carried the real range, which is the sort of drift that makes two pages disagree about what we sell.
+- **Four of the old eight have no painted tile at all**: White, Light Grey, Pale Blue and Ruby Red. They exist in the Distinction material as photographed doors only. Raised with the owner rather than papered over: tinting a swatch to stand in for a colour is precisely what the composite door wall notes forbid, and it is the one thing that would have made the change look complete while being false.
+- **Hex fallbacks are sampled from each tile**, taking the median of the flat half of the image, so the chip behind a slow-loading swatch matches the paint rather than being eyeballed.
+- The portrait `4:5` slide override went with the door photographs. Composite images now measure 458x458 at 1440, identical to the uPVC and aluminium swatches, which was the point.
+- Verified the composite page is unaffected: it reads `$composite_colour_wall`, not `colour_options`, confirmed by its alt text being absent from the hub data. Twenty-three slides, twenty-three tiles, zero door photographs, no horizontal overflow at 1440 or 390.
+- **Method note.** A first splice cut the wrong closing bracket and broke the file; PHP lint caught it before anything shipped. Find an array's bounds by counting bracket depth, not by searching for the next `],`, which `AI.md` already says for `main.scss` and is just as true here.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - Tilt and turn handles, on the page and the hub (test)
 
 Owner supplied the finish sheet as one image, plus the VBH product bulletin, and confirmed the locking version only and five finishes.

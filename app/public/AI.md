@@ -304,6 +304,9 @@ otan.png` is a **positive variant built in this repo**, not a supplier file. The
 ## Colour Hub Rule
 
 - Colour data belongs in `inc\site-data.php` under `colour_options`.
+- **Composite shows the paint, not photographs of doors.** Owner instruction, 2026-07-29. The hub carried eight photographed Distinction doors while `/composite-doors/` showed the real paint range as painted tiles; the hub now shows the same twenty-three from `assets\images\products\composite-distinction\palette`. The slides are square like the uPVC and aluminium swatches, so the old portrait 4:5 override is gone; do not reintroduce it.
+- **Four colours have no painted tile and are therefore not on the hub: White, Light Grey, Pale Blue and Ruby Red.** They exist as photographed doors only. Do not tint a swatch or generate a tile to fill the gap, which is the same rule the composite door wall already carries. If the owner wants them back, the tile has to come from Distinction.
+- Hex values on the composite colours are **sampled from each tile**, not chosen by eye, so the fallback chip matches the paint. Re-sample if the assets are ever regenerated.
 - The colour hub routes are `/colour-options/`, `/upvc-colours/` and `/aluminium-colours/`.
 - The colour hub is customer-facing. Do not expose supplier names, scrape folder names, manufacturer scrape labels, internal provenance or applicability dumps unless the owner explicitly asks for public supplier branding.
 - Use simple visible labels: `uPVC colours`, `Aluminium colours`, finish names and short customer-useful details only.
