@@ -8091,6 +8091,35 @@ html.fg-gallery-lightbox-open body {
   .fg-colour-hub-hero__wall span.is-pale {
     box-shadow: inset 0 0 0 1px rgba(15, 49, 54, 0.12);
   }
+
+  /* The gap under the buttons was 123px at 390, built from four separate
+     spacings stacking: the hero's own bottom padding, the hub's top padding,
+     and the first material's margin and padding. The fade already separates
+     the hero from what follows, so only one of them is needed. */
+  .fg-colour-hub-hero--wall {
+    padding-bottom: 0;
+  }
+
+  .fg-colour-hub-page .fg-colour-hub {
+    padding-top: clamp(1.8rem, 5vw, 2.4rem);
+  }
+
+  .fg-colour-hub-page .fg-colour-hub__material:first-child {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  /* The intro ran to 179px of a 850px viewport on its own. Same words, less
+     of the screen. */
+  .fg-colour-hub-hero p:not(.eyebrow) {
+    margin: 0.55rem 0 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .fg-colour-hub-hero__actions {
+    margin-top: clamp(0.9rem, 3vw, 1.2rem);
+  }
 }
 
 /* Cross-link to the handle hub, sitting after all three colour ranges. The
