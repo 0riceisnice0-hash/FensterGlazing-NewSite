@@ -39,16 +39,16 @@ $finish_word = $finish_words[$finish_count] ?? (string) $finish_count;
         </div>
         <ul class="fg-handle-finishes__grid">
             <?php foreach ($handle_finishes as $finish) : ?>
-                <?php
-                $finish_name = (string) ($finish['name'] ?? '');
-                $finish_label = (string) ($finish['label'] ?? '');
-                ?>
+                <?php $finish_name = (string) ($finish['name'] ?? ''); ?>
                 <li>
                     <?php if (! empty($finish['image'])) : ?>
                         <img src="<?php echo esc_url(fenster_generated_url((string) $finish['image'])); ?>" alt="<?php echo esc_attr(sprintf('Long-plate door handle in %s', strtolower($finish_name))); ?>" loading="lazy">
                     <?php endif; ?>
+                    <?php /* No sub-label here. Every door label reads "<name> long-plate
+                             handle", which the heading has already said, and the repeat
+                             wrapped to two lines and made the row taller. The window grid
+                             keeps its sub-label because there it names the finish method. */ ?>
                     <strong><?php echo esc_html($finish_name); ?></strong>
-                    <span><?php echo esc_html($finish_label); ?></span>
                 </li>
             <?php endforeach; ?>
         </ul>
