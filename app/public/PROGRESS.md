@@ -35,6 +35,14 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Colour ranges put in the owner's order (test, b446687)
+
+- Owner supplied an explicit sequence for all three ranges. Applied as a pure line permutation and asserted as one, so no entry could be silently altered or dropped, with comment lines moving alongside the colour they describe.
+- **Three gaps in the instruction, resolved rather than guessed at and all flagged to the owner.** The composite list opened with "white", but there is no white in the composite range at all, so it could not be placed. The aluminium list named twelve of thirteen, omitting "Any RAL Colour", which went last on the same logic as the RALs. Five composite standards were not named individually (Slate Grey, Basalt Grey, Buckingham Grey, Steel Blue, Black Brown) and sit after the named ones, before the RALs.
+- **Two other surfaces read these lists and reorder with them**: the uPVC colour grid on product pages, and the composite palette on the composite doors page. Neither was named in the instruction, and neither takes a colour by index, so nothing broke; but the change is wider than the colour hub.
+- Verified against the served markup on test rather than the source: all three rails print in the requested order.
+- Test deployment only. Live is still `834b424`.
+
 ## 2026-07-29 - Colour hub hero built from the range itself (test, 4d72959)
 
 Owner: the header looks unexciting, maybe a big colourful hero, imagining a paint splat with tonnes of colour.
