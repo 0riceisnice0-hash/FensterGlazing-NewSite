@@ -3207,7 +3207,7 @@ if ($is_commercial_hub) {
                     <div class="fg-composite-choice-controls">
                         <p class="eyebrow"><?php esc_html_e('Colour direction', 'fenster'); ?></p>
                         <h3><?php esc_html_e('Choose a colour to preview it.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('These are photographed examples. We confirm the full current palette and show physical samples before order.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('These are photographed examples. We confirm the full current palette before order, and colour swatches come out to a consultation.', 'fenster'); ?></p>
                         <div class="fg-composite-choice-options fg-composite-choice-options--colours" aria-label="<?php esc_attr_e('Popular composite door colour directions', 'fenster'); ?>">
                             <?php foreach ($composite_door_colours as $index => $colour) : ?>
                                 <?php

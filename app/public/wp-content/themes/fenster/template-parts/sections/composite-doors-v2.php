@@ -314,7 +314,7 @@ if (empty($collections)) {
                 </figure>
             </div>
 
-            <p class="fg-cd3-colour__note"><?php esc_html_e('You can have one colour on the outside and a different one facing your hallway. Woodgrain stains are single sided, and we bring physical samples to your survey before anything is ordered.', 'fenster'); ?></p>
+            <p class="fg-cd3-colour__note"><?php esc_html_e('You can have one colour on the outside and a different one facing your hallway. Woodgrain stains are single sided. Colour swatches come out to a consultation, and the doors themselves are at the showroom, which is the only way to see a finish properly.', 'fenster'); ?></p>
         </div>
     </section>
 <?php endif; ?>
