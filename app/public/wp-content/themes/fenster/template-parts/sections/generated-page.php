@@ -2136,8 +2136,10 @@ if ($is_colour_options) {
         $max = max($r, $g, $b);
         return ($max * 0.55) + (($max - min($r, $g, $b)) * 0.85);
     };
-    /* Three of the foils are effectively white. Anywhere they land under the
-       fade they read as a hole in the wall rather than a colour. */
+    /* Three of the foils are effectively white. Rather than keep them out of
+       the pale part of the fade, which only works if PHP knows the column count
+       the CSS chose, they carry a hairline so a white tile still reads as a
+       tile wherever it lands. */
     $colour_wall_is_near_white = static function (string $hex) use ($colour_wall_channels): bool {
         return min($colour_wall_channels($hex)) > 228;
     };
@@ -2153,21 +2155,15 @@ if ($is_colour_options) {
             $colour_wall_pool[] = $wall_hex;
         }
     }
-    $colour_wall_solid = array_values(array_filter($colour_wall_pool, static function ($hex) use ($colour_wall_is_near_white) {
-        return ! $colour_wall_is_near_white($hex);
-    }));
 
-    $colour_wall_columns = 14;
+    /* Deliberately more tiles than the widest grid needs. Rows are a fixed
+       height and the section clips, so the wall always runs off the bottom
+       rather than leaving a bald patch when the column count changes. */
     $colour_wall_tiles = [];
     if ($colour_wall_pool !== []) {
-        for ($i = 0; $i < 126; $i++) {
-            $column = $i % $colour_wall_columns;
-            $row = intdiv($i, $colour_wall_columns);
-            /* The white panel fades out across roughly the middle third of the
-               wall, so those columns take from the solid pool only. */
-            $in_fade = $column >= 4 && $column <= 8;
-            $source = ($in_fade && $colour_wall_solid !== []) ? $colour_wall_solid : $colour_wall_pool;
-            $colour_wall_tiles[] = $source[(($i * 11) + ($row * 4)) % count($source)];
+        $colour_wall_count = count($colour_wall_pool);
+        for ($i = 0; $i < 336; $i++) {
+            $colour_wall_tiles[] = $colour_wall_pool[(($i * 11) + (intdiv($i, 28) * 5)) % $colour_wall_count];
         }
     }
     ?>
@@ -2176,7 +2172,7 @@ if ($is_colour_options) {
             <?php if ($colour_wall_tiles !== []) : ?>
                 <div class="fg-colour-hub-hero__wall" aria-hidden="true">
                     <?php foreach ($colour_wall_tiles as $wall_tile) : ?>
-                        <span style="<?php echo esc_attr('background:' . $wall_tile); ?>"></span>
+                        <span class="<?php echo $colour_wall_is_near_white($wall_tile) ? 'is-pale' : ''; ?>" style="<?php echo esc_attr('background:' . $wall_tile); ?>"></span>
                     <?php endforeach; ?>
                 </div>
                 <div class="fg-colour-hub-hero__veil" aria-hidden="true"></div>

@@ -7991,12 +7991,23 @@ html.fg-gallery-lightbox-open body {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(26, minmax(0, 1fr));
+  grid-auto-rows: clamp(38px, 3.6vw, 56px);
 }
 
 .fg-colour-hub-hero__wall span {
   display: block;
+}
+
+/* Three foils are effectively white and would read as a gap in the wall. */
+.fg-colour-hub-hero__wall span.is-pale {
+  box-shadow: inset 0 0 0 1px rgba(15, 49, 54, 0.09);
+}
+
+@media (max-width: 1200px) and (min-width: 901px) {
+  .fg-colour-hub-hero__wall {
+    grid-template-columns: repeat(18, minmax(0, 1fr));
+  }
 }
 
 .fg-colour-hub-hero__veil {
@@ -8047,9 +8058,11 @@ html.fg-gallery-lightbox-open body {
     order: 2;
     position: relative;
     inset: auto;
-    grid-template-columns: repeat(9, 1fr);
-    height: clamp(120px, 26vw, 190px);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: clamp(30px, 8vw, 46px);
+    height: clamp(120px, 26vw, 184px);
     margin-top: clamp(1.6rem, 4vw, 2.4rem);
+    overflow: hidden;
   }
 
   .fg-colour-hub-hero__veil {
@@ -8058,6 +8071,10 @@ html.fg-gallery-lightbox-open body {
 
   .fg-colour-hub-hero--wall .fg-colour-hub-hero__grid {
     padding-bottom: 0;
+  }
+
+  .fg-colour-hub-hero__wall span.is-pale {
+    box-shadow: inset 0 0 0 1px rgba(15, 49, 54, 0.12);
   }
 
   .fg-colour-hub-hero__copy {
