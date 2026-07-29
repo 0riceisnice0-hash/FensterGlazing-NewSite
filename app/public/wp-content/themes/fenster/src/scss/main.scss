@@ -7860,6 +7860,43 @@ html.fg-gallery-lightbox-open body {
   background: var(--color-steel);
 }
 
+/* The privacy glass card wears the real Satin texture from the obscure glass
+   data, so the card and the page it links to show the same glass. A white wash
+   sits over it: the raw texture is busy enough to fight the body copy.
+
+   The heading is engraved rather than frosted. A true etched-glass title is
+   lighter than its background, which on a pale pane means text nobody with
+   less than perfect sight can read. Dark type with a crisp white highlight
+   under it reads as cut into the surface and keeps full contrast. */
+.fg-product-option-card.is-glazed {
+  border-color: rgba(84, 124, 134, 0.3);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.68)),
+    var(--fg-glass-texture, none),
+    #eef5f5;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 18px 44px rgba(0, 45, 58, 0.1);
+}
+
+/* The corner swatch stood in for the glass. The whole card is the glass now. */
+.fg-product-option-card.is-glazed::before {
+  display: none;
+}
+
+.fg-product-option-card.is-glazed h3 {
+  color: #2c4f57;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.fg-product-option-card.is-glazed:hover,
+.fg-product-option-card.is-glazed:focus-visible {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.6)),
+    var(--fg-glass-texture, none),
+    #eef5f5;
+}
+
 .fg-product-option-card:hover,
 .fg-product-option-card:focus-visible {
   transform: translateY(-4px);

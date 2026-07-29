@@ -3919,41 +3919,78 @@ if ($is_commercial_hub) {
                     <h2><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.'); ?></h2>
                     <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.'); ?></p>
                 </div>
-                <?php $option_card_number = 0; ?>
+                <?php
+                /* Built as a list before rendering so the count is known. The
+                   cards used to number themselves as they printed, which was
+                   fine at three but left a lone "01" on the routes that show
+                   the colour grid and handle grid inline and so suppress both
+                   of those cards. A single numbered step is not a sequence. */
+                $option_cards = [];
+
+                if ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid) {
+                    $option_cards[] = [
+                        'modifier' => 'colour',
+                        'url' => home_url('/colour-options/'),
+                        'title' => __('Frame colours', 'fenster'),
+                        'copy' => $slug === 'sliding-sash-windows'
+                            ? __('Compare Roseview foils, woodgrain finishes, dual colours and special colour options.', 'fenster')
+                            : __('Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.', 'fenster'),
+                        'cta' => __('Open colour hub', 'fenster'),
+                    ];
+                }
+
+                $option_cards[] = [
+                    'modifier' => 'glass',
+                    'url' => home_url('/obscured-glass/'),
+                    'title' => __('Privacy glass', 'fenster'),
+                    'copy' => __('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'),
+                    'cta' => __('Compare glass patterns', 'fenster'),
+                ];
+
+                if ($show_window_handle_card && ! $shows_handle_grid) {
+                    $option_cards[] = [
+                        'modifier' => 'handles',
+                        'url' => home_url('/handle-options/'),
+                        'title' => __('Window handles', 'fenster'),
+                        'copy' => __('Compare white, black, chrome, gold, satin silver and monkey tail handle options on one focused page.', 'fenster'),
+                        'cta' => __('Open handle hub', 'fenster'),
+                    ];
+                }
+
+                /* The glass card wears the real Satin texture from the obscure
+                   glass data rather than a pattern invented here, so the card
+                   and the page it links to show the same glass. */
+                $satin_texture = '';
+                foreach ((array) $obscure_glass_textures as $glass_texture) {
+                    if (! is_array($glass_texture)) {
+                        continue;
+                    }
+                    if (strtolower((string) ($glass_texture['name'] ?? '')) === 'satin') {
+                        $satin_texture = trim((string) ($glass_texture['texture'] ?? ''));
+                        break;
+                    }
+                }
+
+                $number_cards = count($option_cards) > 1;
+                ?>
                 <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?>">
                     <div class="fg-product-options fg-product-options--hub">
-                    <?php if ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid) : ?>
-                    <a
-                        class="fg-product-option-card fg-product-option-card--colour"
-                        href="<?php echo esc_url(home_url('/colour-options/')); ?>"
-                    >
-                        <span><?php echo esc_html(sprintf('%02d', ++$option_card_number)); ?></span>
-                        <h3><?php esc_html_e('Frame colours', 'fenster'); ?></h3>
-                        <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare Roseview foils, woodgrain finishes, dual colours and special colour options.' : 'Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.'); ?></p>
-                        <strong><?php esc_html_e('Open colour hub', 'fenster'); ?></strong>
-                    </a>
-                    <?php endif; ?>
-                    <a
-                        class="fg-product-option-card fg-product-option-card--glass"
-                        href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"
-                    >
-                        <span><?php echo esc_html(sprintf('%02d', ++$option_card_number)); ?></span>
-                        <h3><?php esc_html_e('Privacy glass', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'); ?></p>
-                        <strong><?php esc_html_e('Compare glass patterns', 'fenster'); ?></strong>
-                    </a>
-                    <?php if ($show_window_handle_card && ! $shows_handle_grid) : ?>
+                    <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <a
-                            class="fg-product-option-card fg-product-option-card--handles"
-                            href="<?php echo esc_url(home_url('/handle-options/')); ?>"
+                            class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo ($option_card['modifier'] === 'glass' && $satin_texture !== '') ? ' is-glazed' : ''; ?>"
+                            href="<?php echo esc_url($option_card['url']); ?>"
+                            <?php if ($option_card['modifier'] === 'glass' && $satin_texture !== '') : ?>
+                                style="<?php echo esc_attr('--fg-glass-texture:' . $satin_texture); ?>"
+                            <?php endif; ?>
                         >
-                            <span><?php echo esc_html(sprintf('%02d', ++$option_card_number)); ?></span>
-                            <h3><?php esc_html_e('Window handles', 'fenster'); ?></h3>
-                            <p><?php esc_html_e('Compare white, black, chrome, gold, satin silver and monkey tail handle options on one focused page.', 'fenster'); ?></p>
-                            <strong><?php esc_html_e('Open handle hub', 'fenster'); ?></strong>
+                            <?php if ($number_cards) : ?>
+                                <span><?php echo esc_html(sprintf('%02d', $card_index + 1)); ?></span>
+                            <?php endif; ?>
+                            <h3><?php echo esc_html($option_card['title']); ?></h3>
+                            <p><?php echo esc_html($option_card['copy']); ?></p>
+                            <strong><?php echo esc_html($option_card['cta']); ?></strong>
                         </a>
-                    <?php endif; ?>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
