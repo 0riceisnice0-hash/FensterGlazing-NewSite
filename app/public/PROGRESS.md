@@ -35,6 +35,16 @@ Owner: the colour UI should work like the Sheerline frame-corner display, everyt
 - Verified on test: three rails, identical slide widths at 1440, 1000 and a true 390, every image loaded, scrollable at every width, no horizontal overflow, no buttons left in the markup.
 - Test deployment only. Live is still `834b424`.
 
+## 2026-07-29 - Promoted to live (6ea0dba)
+
+- **Live re-established by checksum before anything was touched.** Five theme files matched `54451c2..4822e92`, four commits all theme-identical, so `54451c2` was used as the range base to yield a superset. The recorded pointer was accurate this time, ending a run of three releases where it was not. Empty-input hash checked against the sweep so a silent miss could not read as a match.
+- Range `54451c2..6ea0dba`: **20 commits, all one author.** No concurrent-session work in this batch, unlike the previous release.
+- Backup `fenster-pre-6ea0dba-20260729-175517.tar.gz` taken and confirmed present at 375M and 1,736 entries before deploying. Theme-only rsync at an explicit SHA, `wp cache flush`, `wp sg purge`.
+- **Verified on production**, each item individually rather than by status alone: five theme files byte-identical to the committed tree, seven routes 200, the hero wall serving 336 tiles with both CTAs, the old boxed hero photo gone, zero counter markup, five pale tiles carrying the hairline, all three ranges in the owner's order, the composite white tile returning 200, and the uPVC colour grid reordered on `/casement-windows/`.
+- **A claim made earlier in the day was wrong and was caught during this verification.** The composite doors page does **not** read `colour_options.materials.composite`: it carries its own hardcoded `$composite_colour_wall` and `$composite_palette` lists in `generated-page.php`. It therefore did not reorder and does not show the new white. The reorder note has been corrected above.
+- **Related, and needing the owner:** that hardcoded wall already contains a composite White, with a real photographed door, at `#f2f0e8` rather than `#ffffff`. So composite white already existed on the site. The two surfaces now disagree on tone, and the composite doors page has photographic evidence the colour hub does not.
+- **Dead code found, not touched.** `generated-page.php:3187` guards a composite choice selector with `! $is_composite_doors && ! empty($composite_door_families)`, which cannot be satisfied because the families array is only populated when the route *is* composite doors. It renders nowhere, confirmed against three live routes. It also takes `$composite_door_colours[0]`, so had it been reachable the new first-position white would have pointed at a door photograph that does not exist. Left alone as out of scope for this release.
+
 ## 2026-07-29 - Composite white added, made from the set (test, 51c7c50)
 
 Owner: fabricate a white for composite, white is white, use the same tone as Smooth White uPVC. Then: add the same texture as the other composite tiles so they are a set.
@@ -51,7 +61,7 @@ Owner: fabricate a white for composite, white is white, use the same tone as Smo
 
 - Owner supplied an explicit sequence for all three ranges. Applied as a pure line permutation and asserted as one, so no entry could be silently altered or dropped, with comment lines moving alongside the colour they describe.
 - **Three gaps in the instruction, resolved rather than guessed at and all flagged to the owner.** The composite list opened with "white", but there is no white in the composite range at all, so it could not be placed. The aluminium list named twelve of thirteen, omitting "Any RAL Colour", which went last on the same logic as the RALs. Five composite standards were not named individually (Slate Grey, Basalt Grey, Buckingham Grey, Steel Blue, Black Brown) and sit after the named ones, before the RALs.
-- **Two other surfaces read these lists and reorder with them**: the uPVC colour grid on product pages, and the composite palette on the composite doors page. Neither was named in the instruction, and neither takes a colour by index, so nothing broke; but the change is wider than the colour hub.
+- **One other surface reads these lists and reorders with it**: the uPVC colour grid on product pages, confirmed on live. **The claim that the composite doors page also reorders was wrong** and is corrected in the release entry below: that page carries its own hardcoded colour lists and does not read `colour_options` at all.
 - Verified against the served markup on test rather than the source: all three rails print in the requested order.
 - Test deployment only. Live is still `834b424`.
 
