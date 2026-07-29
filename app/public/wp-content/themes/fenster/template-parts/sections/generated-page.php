@@ -3834,7 +3834,7 @@ if ($is_commercial_hub) {
                 'eyebrow' => 'Handles',
                 'heading' => 'Five finishes on the locking tilt and turn handle.',
                 'intro' => (string) ($tilt_turn_handles['intro'] ?? ''),
-                'note' => 'The key setting is chosen at survey: tilt safe suits a bedroom or anywhere above a drop, where the window should ventilate but not open.',
+                'note' => 'Tilt safe matters most in a bedroom or anywhere above a drop, where the window should ventilate without being able to swing right in. Worth raising at survey, because it changes how the handle is fitted.',
                 'alt_pattern' => 'greenteQ Alpha TBT tilt and turn window handle in %s',
                 'columns' => 'fg-handle-finishes--five',
                 'link_href' => home_url('/window-handles/#tilt-turn-handle-finishes'),

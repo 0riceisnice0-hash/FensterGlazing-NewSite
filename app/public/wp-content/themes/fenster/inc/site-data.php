@@ -1711,10 +1711,10 @@ function fenster_site_data(): array
            Imagery: see the note in AI.md before replacing it. */
         'tilt_turn_handles' => [
             'slugs' => ['tilt-turn-windows'],
-            'intro' => 'Tilt and turn windows take their own handle, because one lever has to do two jobs. We fit the locking greenteQ Alpha TBT, which decides with the key how far the window is allowed to open.',
+            'intro' => 'Tilt and turn windows take their own handle, because one lever has to do two jobs. We fit the locking greenteQ Alpha TBT, so where you leave the key sets how far the window will open.',
             'features' => [
-                ['title' => 'Tilt safe with the key', 'copy' => 'Turned to 90 degrees the window tilts for ventilation but cannot be opened fully, which is the setting that matters in a bedroom or above a drop.'],
-                ['title' => 'Locked means locked', 'copy' => 'At 180 degrees the window will not open in any position, and the handle blocks the hardware being manipulated from outside.'],
+                ['title' => 'Tilt safe with the key', 'copy' => 'With the key turned a quarter turn the window still tilts for ventilation but will not open fully, which is the setting that matters in a bedroom or above a drop.'],
+                ['title' => 'Locked means locked', 'copy' => 'With the key turned all the way the window will not open in any position, and the handle blocks the hardware being worked from outside.'],
                 ['title' => 'One handle, two actions', 'copy' => 'Tilt the top in for air without unlocking, or turn the whole sash in to clean the outside face from indoors.'],
             ],
             'technical_intro' => 'greenteQ Alpha TBT, locking version. We do not fit the non-locking one.',
