@@ -17,7 +17,7 @@ Use:
 
 ## Important Updates
 
-- **Live is at `8052f65` as of 2026-07-29, and live, `main` and test are all level.** **Two shared grid components** now drive the product pages: `template-parts/components/upvc-colour-grid.php` (Liniar foils, gated by `$upvc_foil_routes` in `generated-page.php`, on seven uPVC routes) and `template-parts/components/window-handle-grid.php` (S2 Signature finishes, gated by `window_handles.slugs`, on five window routes). Both share styling with `.fg-heritage-door-colours__grid`, so a change to one grid rule affects all three. Where a grid renders, the matching option card that linked to the hub is suppressed and the card numbers re-sequence. Sliding sash (Roseview) and secondary glazing (aluminium) carry neither grid on purpose. **A third grid joined them on 2026-07-29:** `template-parts/components/door-handle-grid.php` on the four door routes, when the full door-handle chooser moved onto `/window-handles/`. That hub now covers windows and doors, both rendered through `template-parts/components/handle-chooser.php`.
+- **Live is at `8052f65` as of 2026-07-29, and live, `main` and test are all level.** **Two shared grid components** now drive the product pages: `template-parts/components/upvc-colour-grid.php` (Liniar foils, gated by `$upvc_foil_routes` in `generated-page.php`, on seven uPVC routes) and `template-parts/components/handle-grid.php`, which serves all three handle families: S2 Signature on five window routes, the long-plate on four door routes, and greenteQ Alpha TBT on tilt and turn. Both share styling with `.fg-heritage-door-colours__grid`, so a change to one grid rule affects all three. Where a grid renders, the matching option card that linked to the hub is suppressed and the card numbers re-sequence. Sliding sash (Roseview) and secondary glazing (aluminium) carry neither grid on purpose. **The hub moved to `/handle-options/` on 2026-07-29** and now covers windows, tilt and turn and doors, all rendered through `template-parts/components/handle-chooser.php`. The old `/window-handles/` slug 301s.
 - **Deploy trap — read before any live deploy.** The live deploy one-liner in `LIVECHANGES.md` runs `git reset --hard origin/main`, so it ships *everything on `main`*, not the specific commit you verified. On 2026-07-18 a deploy of the small Legend iframe fixes swept fourteen unapproved composite-door commits onto production with them. If you need to release one approved commit, reset the server repo cache to that exact SHA instead of `origin/main`.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
@@ -54,7 +54,7 @@ Use:
 - Legend persists whether the drawer is open and whether the visitor has sent a message in `fenster_legend_chat_v1`. Same-site links therefore restore the drawer immediately without replaying the entrance animation, while an explicit close stores the closed state. The full pre-use disclosure hides after the first sent message, but the compact accuracy, QA-retention, sensitive-data and Privacy Policy notice remains. The panel carries `data-lenis-prevent`; the transcript uses native contained wheel/touch scrolling and always returns to the newest message when opened or restored.
 - The drawer header is intentionally one continuous deep-teal surface. `.legend-assistant__stage` adds only a soft mint floor glow and line, not a separate background block. Preserve the `224px` desktop and `190px` mobile stage widths plus their current roam distances so standing, running and curled sleep frames remain contained.
 - Residential case studies are LIVE (2026-07-17). `/case-studies/` is a curated, data-driven system: add a study in `inc/case-studies-data.php` and it generates its archive card, detail page, routing, SEO and sitemap entry. See `CASESTUDIES.md` for the full guide. The retired scrape-era residential routes (`double-glazing-rushden`, `water-stratford`, `bespoke-windows-woburn-water-end-barn`, `test`, `template-new`) still return 410. Commercial project records under `/commercial-projects/` remain on the separate legacy pages.json system.
-- The current shared product-page redesign is deployed on live. Product pages now use a clearer image-and-copy flow, visible `Product information` cards, `More information on [product]` hubs, full-width specification check cards, FAQ-only accordions, a standalone `/window-handles/` hub, and an in-page product-gallery lightbox. The old survey summary, common choices strip, quote option card, accreditations/systems filler block and inline handle chooser should stay removed.
+- The current shared product-page redesign is deployed on live. Product pages now use a clearer image-and-copy flow, visible `Product information` cards, `More information on [product]` hubs, full-width specification check cards, FAQ-only accordions, a standalone `/handle-options/` hub, and an in-page product-gallery lightbox. The old survey summary, common choices strip, quote option card, accreditations/systems filler block and inline handle chooser should stay removed.
 - The mobile nav touch-layer fix is deployed on live. At `860px` and below, the open fixed header/nav owns the full viewport so page hero content cannot intercept taps on menu rows.
 - Commercial hub v2 is deployed on live. The main commercial page was simplified and rebuilt for clearer lead generation: project proof now uses commercial-project imagery, the product/services imagery was corrected from theme assets rather than scrape-reference paths, the useless tiny parallax motion was removed, the "where this fits" section was made more practical, and the commercial form area was restyled so inputs are visible and the copy is not oversized.
 - Performance baseline was improved on live without degrading the premium visuals. Heavy media and quote iframes are deferred: the homepage hero video waits for idle, quote iframes load near viewport or on click, product theatre media avoids eager-loading everything, and quote-tool pages keep a usable placeholder/action state until the iframe loads. Future performance work should continue this approach before compressing/removing signature visuals.
@@ -245,7 +245,7 @@ Current product page model:
 - Product galleries open an in-page lightbox, not a raw image URL or new tab. The lightbox uses a dark overlay, no visible alt/caption text, no white image card, close/backdrop/Escape handling, previous/next arrows and keyboard left/right navigation.
 - Optional product-specific WindowCAD quote embed placed after the main product journey/trust content.
 - Product narrative/content sections from generated data.
-- A compact `Specification choices` section linking to focused colour, privacy-glass and hardware decisions, including the standalone `/window-handles/` hub where relevant.
+- A compact `Specification choices` section linking to focused colour, privacy-glass and hardware decisions, including the standalone `/handle-options/` hub where relevant.
 - Shared enquiry form.
 - Context-aware related products/service areas.
 
@@ -316,11 +316,11 @@ The standalone hub renders from:
 
 Route:
 
-`/window-handles/`
+`/handle-options/`
 
 Current accepted behaviour:
 
-- Product pages no longer render the full window-handle chooser inline. Selected window routes link to `/window-handles/` from the `Specification choices` card grid.
+- Product pages no longer render the full window-handle chooser inline. Selected window routes link to `/handle-options/` from the `Specification choices` card grid.
 - Tilt & Turn Windows is intentionally excluded.
 - Uses supplied S2 finish images from `assets\images\products\handles`.
 - Includes an interactive finish selector for White, Black, Chrome, Gold, Satin Silver and Monkey Tail.
