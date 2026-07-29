@@ -5073,3 +5073,135 @@ document.querySelectorAll('.fg-about').forEach((about) => {
 
   aboutRevealItems.forEach((item) => aboutRevealObserver.observe(item));
 });
+
+/* Colour hub rail. Native scroll-snap, so the buttons scroll the viewport
+   rather than driving a separate index: a swipe and a button press can never
+   disagree about where the rail is. Replaced the coverflow on 2026-07-29.
+   The coverflow controller above is still live for the heritage door
+   configurations, which share .fg-colour-carousel. */
+document.querySelectorAll('[data-fg-colour-rail]').forEach((rail) => {
+  const viewport = rail.querySelector('[data-fg-colour-rail-viewport]');
+  const slides = [...rail.querySelectorAll('[data-fg-colour-slide]')];
+  const prev = rail.querySelector('[data-fg-colour-rail-prev]');
+  const next = rail.querySelector('[data-fg-colour-rail-next]');
+  const count = rail.querySelector('[data-fg-colour-rail-count]');
+
+  if (!viewport || !slides.length) return;
+
+  const pad = (n) => String(n).padStart(2, '0');
+
+  const firstVisible = () => {
+    const left = viewport.scrollLeft;
+    let best = 0;
+    let bestGap = Infinity;
+    slides.forEach((slide, index) => {
+      const gap = Math.abs(slide.offsetLeft - viewport.offsetLeft - left);
+      if (gap < bestGap) {
+        bestGap = gap;
+        best = index;
+      }
+    });
+    return best;
+  };
+
+  const update = () => {
+    if (count) count.textContent = `${pad(firstVisible() + 1)} / ${pad(slides.length)}`;
+    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+    if (prev) prev.disabled = viewport.scrollLeft <= 1;
+    if (next) next.disabled = viewport.scrollLeft >= maxScroll - 1;
+  };
+
+  const step = () => {
+    const a = slides[0];
+    const b = slides[1];
+    return b ? Math.abs(b.offsetLeft - a.offsetLeft) : a.getBoundingClientRect().width;
+  };
+
+  const scrollBySlides = (direction) => {
+    viewport.scrollBy({ left: step() * direction, behavior: 'smooth' });
+  };
+
+  prev?.addEventListener('click', () => scrollBySlides(-1));
+  next?.addEventListener('click', () => scrollBySlides(1));
+
+  viewport.addEventListener('scroll', () => {
+    window.clearTimeout(viewport._fgRailTimer);
+    viewport._fgRailTimer = window.setTimeout(update, 80);
+  }, { passive: true });
+
+  viewport.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollBySlides(1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      scrollBySlides(-1);
+    }
+  });
+
+  window.addEventListener('resize', update, { passive: true });
+
+  /* Deep links such as /colour-options/?material=upvc&colour=basalt-grey bring
+     the swatch into the rail and the material section into the page. Carried
+     over from the coverflow controller unchanged in behaviour: Lenis keeps the
+     page pinned at the top while the hero images size, so it is paused, the
+     jump is re-asserted a few times, then smooth scrolling is handed back. */
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const wantColour = params.get('colour');
+    if (wantColour) {
+      const material = rail.closest('[data-fg-colour-material]');
+      const materialKey = material?.getAttribute('data-fg-colour-material') || '';
+      const wantMaterial = params.get('material');
+      if (!wantMaterial || wantMaterial === materialKey) {
+        const target = slides.find((slide) => slide.getAttribute('data-colour-slug') === wantColour);
+        if (target) {
+          const section = material || rail;
+          const lenis = window.fensterLenis;
+          let cancelled = false;
+          const release = () => {
+            cancelled = true;
+            lenis?.start?.();
+          };
+          ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((eventName) => {
+            window.addEventListener(eventName, release, { once: true, passive: true });
+          });
+          const settle = () => {
+            if (cancelled) return;
+            viewport.scrollLeft = Math.max(0, target.offsetLeft - viewport.offsetLeft);
+            const y = Math.max(0, section.getBoundingClientRect().top + window.scrollY - 96);
+            if (lenis?.scrollTo) {
+              lenis.scrollTo(y, { immediate: true, force: true });
+            } else {
+              window.scrollTo(0, y);
+            }
+          };
+          const run = () => {
+            if (cancelled) return;
+            lenis?.stop?.();
+            settle();
+            [120, 350, 700].forEach((delay) => window.setTimeout(() => {
+              if (!cancelled) settle();
+            }, delay));
+            window.setTimeout(() => {
+              if (!cancelled) {
+                settle();
+                lenis?.start?.();
+                update();
+              }
+            }, 950);
+          };
+          if (document.readyState === 'complete') {
+            window.setTimeout(run, 60);
+          } else {
+            window.addEventListener('load', () => window.setTimeout(run, 60), { once: true });
+          }
+        }
+      }
+    }
+  } catch (error) {
+    /* deep link is best-effort */
+  }
+
+  update();
+});

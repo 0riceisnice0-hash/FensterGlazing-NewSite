@@ -2063,32 +2063,43 @@ if ($is_colour_options) {
                 <h2><?php echo esc_html((string) ($material['headline'] ?? 'Compare colour options.')); ?></h2>
                 <p><?php echo esc_html((string) ($material['copy'] ?? '')); ?></p>
             </div>
-            <div class="fg-colour-carousel" data-fg-colour-carousel>
-                <div class="fg-colour-carousel__viewport">
-                    <div class="fg-colour-carousel__track" data-fg-colour-carousel-track>
-                        <?php foreach ($colours as $index => $colour) : ?>
+            <?php
+            /* Equal-width swipeable rail, replacing the coverflow on 2026-07-29.
+               Owner instruction: the front slide was massive and the rest stacked
+               behind it. Modelled on the Sheerline frame-corner rail, which runs
+               four across on a wide screen, three at tablet and about one and a
+               half on a phone so the next one peeks.
+
+               Deliberately its own component rather than a rewrite of
+               .fg-colour-carousel: that class and its controller are shared with
+               the heritage door configurations carousel, which is a different job
+               and was not part of this instruction. */
+            ?>
+            <div class="fg-colour-rail" data-fg-colour-rail>
+                <div class="fg-colour-rail__viewport" data-fg-colour-rail-viewport tabindex="0" role="region" aria-label="<?php echo esc_attr(sprintf(__('%s. Scroll or swipe sideways.', 'fenster'), (string) ($material['label'] ?? 'Colours'))); ?>">
+                    <ul class="fg-colour-rail__track">
+                        <?php foreach ($colours as $colour) : ?>
                             <?php $swatch = (string) ($colour['hex'] ?? '#ffffff'); ?>
-                            <article class="fg-colour-carousel__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
-                                <?php if (! empty($colour['image'])) : ?>
-                                    <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour')); ?>" loading="lazy">
-                                <?php else : ?>
-                                    <i aria-hidden="true"></i>
-                                <?php endif; ?>
-                                <div>
-                                    <span><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
-                                    <h3><?php echo esc_html((string) ($colour['name'] ?? 'Colour')); ?></h3>
-                                    <?php if (! empty($colour['finish'])) : ?>
-                                        <p><?php echo esc_html((string) $colour['finish']); ?></p>
+                            <li class="fg-colour-rail__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
+                                <span class="fg-colour-rail__media">
+                                    <?php if (! empty($colour['image'])) : ?>
+                                        <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr((string) ($colour['name'] ?? 'Colour')); ?>" loading="lazy">
+                                    <?php else : ?>
+                                        <i aria-hidden="true"></i>
                                     <?php endif; ?>
-                                </div>
-                            </article>
+                                </span>
+                                <h3><?php echo esc_html((string) ($colour['name'] ?? 'Colour')); ?></h3>
+                                <?php if (! empty($colour['finish'])) : ?>
+                                    <p><?php echo esc_html((string) $colour['finish']); ?></p>
+                                <?php endif; ?>
+                            </li>
                         <?php endforeach; ?>
-                    </div>
+                    </ul>
                 </div>
-                <div class="fg-colour-carousel__controls">
-                    <button type="button" data-fg-colour-prev aria-label="<?php esc_attr_e('Previous colour', 'fenster'); ?>">&#8249;</button>
-                    <span data-fg-colour-count><?php echo esc_html('01 / ' . sprintf('%02d', max(1, count($colours)))); ?></span>
-                    <button type="button" data-fg-colour-next aria-label="<?php esc_attr_e('Next colour', 'fenster'); ?>">&#8250;</button>
+                <div class="fg-colour-rail__controls">
+                    <button type="button" data-fg-colour-rail-prev aria-label="<?php esc_attr_e('Previous colours', 'fenster'); ?>">&#8249;</button>
+                    <span data-fg-colour-rail-count><?php echo esc_html('01 / ' . sprintf('%02d', max(1, count($colours)))); ?></span>
+                    <button type="button" data-fg-colour-rail-next aria-label="<?php esc_attr_e('More colours', 'fenster'); ?>">&#8250;</button>
                 </div>
             </div>
         </article>
