@@ -2104,24 +2104,92 @@ if ($is_colour_options) {
         <?php
     };
     ?>
+    <?php
+    /* Hero colour wall, 2026-07-29. Owner: the header looked unexciting and
+       wanted "tonnes of colour". Built from the real range rather than
+       decoration, so every tile is a finish that can actually be ordered and
+       adding a colour to the data adds it to the hero.
+
+       Weighted toward the lighter and more saturated finishes: an even shuffle
+       of this range reads almost black, because most of it is grey, charcoal
+       and dark green. The bright end is nearly all composite. */
+    $colour_wall = [];
+    foreach ($colour_materials as $wall_material) {
+        foreach ((array) ($wall_material['colours'] ?? []) as $wall_colour) {
+            $wall_hex = strtolower((string) ($wall_colour['hex'] ?? ''));
+            if (preg_match('/^#[0-9a-f]{6}$/', $wall_hex)) {
+                $colour_wall[$wall_hex] = $wall_hex;
+            }
+        }
+    }
+    $colour_wall = array_values($colour_wall);
+
+    $colour_wall_channels = static function (string $hex): array {
+        return [
+            hexdec(substr($hex, 1, 2)),
+            hexdec(substr($hex, 3, 2)),
+            hexdec(substr($hex, 5, 2)),
+        ];
+    };
+    $colour_wall_score = static function (string $hex) use ($colour_wall_channels): float {
+        [$r, $g, $b] = $colour_wall_channels($hex);
+        $max = max($r, $g, $b);
+        return ($max * 0.55) + (($max - min($r, $g, $b)) * 0.85);
+    };
+    /* Three of the foils are effectively white. Anywhere they land under the
+       fade they read as a hole in the wall rather than a colour. */
+    $colour_wall_is_near_white = static function (string $hex) use ($colour_wall_channels): bool {
+        return min($colour_wall_channels($hex)) > 228;
+    };
+
+    usort($colour_wall, static function ($a, $b) use ($colour_wall_score) {
+        return $colour_wall_score($b) <=> $colour_wall_score($a);
+    });
+
+    $colour_wall_pool = [];
+    foreach ($colour_wall as $wall_index => $wall_hex) {
+        $repeat = $wall_index < 20 ? 3 : ($wall_index < 32 ? 2 : 1);
+        for ($n = 0; $n < $repeat; $n++) {
+            $colour_wall_pool[] = $wall_hex;
+        }
+    }
+    $colour_wall_solid = array_values(array_filter($colour_wall_pool, static function ($hex) use ($colour_wall_is_near_white) {
+        return ! $colour_wall_is_near_white($hex);
+    }));
+
+    $colour_wall_columns = 14;
+    $colour_wall_tiles = [];
+    if ($colour_wall_pool !== []) {
+        for ($i = 0; $i < 126; $i++) {
+            $column = $i % $colour_wall_columns;
+            $row = intdiv($i, $colour_wall_columns);
+            /* The white panel fades out across roughly the middle third of the
+               wall, so those columns take from the solid pool only. */
+            $in_fade = $column >= 4 && $column <= 8;
+            $source = ($in_fade && $colour_wall_solid !== []) ? $colour_wall_solid : $colour_wall_pool;
+            $colour_wall_tiles[] = $source[(($i * 11) + ($row * 4)) % count($source)];
+        }
+    }
+    ?>
     <main class="fg-colour-hub-page">
-        <section class="fg-colour-hub-hero">
+        <section class="fg-colour-hub-hero fg-colour-hub-hero--wall">
+            <?php if ($colour_wall_tiles !== []) : ?>
+                <div class="fg-colour-hub-hero__wall" aria-hidden="true">
+                    <?php foreach ($colour_wall_tiles as $wall_tile) : ?>
+                        <span style="<?php echo esc_attr('background:' . $wall_tile); ?>"></span>
+                    <?php endforeach; ?>
+                </div>
+                <div class="fg-colour-hub-hero__veil" aria-hidden="true"></div>
+            <?php endif; ?>
             <div class="container fg-colour-hub-hero__grid">
-                <div>
+                <div class="fg-colour-hub-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Specification hub', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Colour options for Fenster windows and doors.', 'fenster'); ?></h1>
                     <p><?php echo esc_html((string) ($colour_options['intro'] ?? $hero_intro)); ?></p>
-                </div>
-                <div class="fg-colour-hub-hero__visual">
-                    <figure class="fg-colour-hub-hero__photo">
-                        <?php $colour_hero_image = '/wp-content/themes/fenster/assets/images/products/colours/colour-hub-hero-dual-colour-1400w.webp'; ?>
-                        <img <?php echo fenster_image_attr_string($colour_hero_image, [
-                            'alt' => __('Flush casement window finished black on the outside and white on the inside', 'fenster'),
-                            'loading' => 'eager',
-                            'fetchpriority' => 'high',
-                        ]); ?>>
-                        <figcaption><?php esc_html_e('One frame, two finishes. Black outside, white inside.', 'fenster'); ?></figcaption>
-                    </figure>
+                    <div class="fg-colour-hub-hero__actions">
+                        <a class="button" href="<?php echo esc_url($instant_quote_url); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                        <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
+                    </div>
                 </div>
             </div>
         </section>

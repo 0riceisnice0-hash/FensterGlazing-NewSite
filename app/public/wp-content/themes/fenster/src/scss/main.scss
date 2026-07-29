@@ -7977,6 +7977,94 @@ html.fg-gallery-lightbox-open body {
   line-height: 1.25;
 }
 
+/* Hero colour wall. The tiles come from the colour data, so the hero cannot
+   drift out of step with the range below it. Text sits on a white panel that
+   fades into the wall rather than over the colour itself, which keeps contrast
+   independent of whichever colours land behind the heading. */
+.fg-colour-hub-hero--wall {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.fg-colour-hub-hero__wall {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  grid-auto-rows: 1fr;
+}
+
+.fg-colour-hub-hero__wall span {
+  display: block;
+}
+
+.fg-colour-hub-hero__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 40%,
+    rgba(255, 255, 255, 0.94) 50%,
+    rgba(255, 255, 255, 0.6) 60%,
+    rgba(255, 255, 255, 0) 70%
+  );
+}
+
+.fg-colour-hub-hero--wall .fg-colour-hub-hero__grid {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fg-colour-hub-hero__copy {
+  max-width: 34rem;
+}
+
+.fg-colour-hub-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+/* Narrower screens cannot spare the width for a side-by-side fade, so the wall
+   becomes a band under the copy and shows at full strength. */
+@media (max-width: 900px) {
+  /* The wall is before the copy in the DOM so it can be the backdrop on a wide
+     screen. As a band it belongs after the copy, hence the ordering. */
+  .fg-colour-hub-hero--wall {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+  }
+
+  .fg-colour-hub-hero--wall .fg-colour-hub-hero__grid {
+    order: 1;
+  }
+
+  .fg-colour-hub-hero__wall {
+    order: 2;
+    position: relative;
+    inset: auto;
+    grid-template-columns: repeat(9, 1fr);
+    height: clamp(120px, 26vw, 190px);
+    margin-top: clamp(1.6rem, 4vw, 2.4rem);
+  }
+
+  .fg-colour-hub-hero__veil {
+    display: none;
+  }
+
+  .fg-colour-hub-hero--wall .fg-colour-hub-hero__grid {
+    padding-bottom: 0;
+  }
+
+  .fg-colour-hub-hero__copy {
+    max-width: none;
+  }
+}
+
 .fg-colour-hub__tabs {
   display: flex;
   flex-wrap: wrap;
