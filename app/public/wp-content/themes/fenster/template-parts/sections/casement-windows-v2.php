@@ -34,7 +34,7 @@ $anatomy_items = [
     ['name' => 'Six chambers', 'copy' => 'Six sealed air pockets run the length of every frame section. Each one interrupts the route heat takes through the uPVC; on our listed specification the whole window comes out at 0.95 W/m²K, A+ rated.'],
     ['name' => 'Co-extruded gasket', 'copy' => 'The weather seal is formed with the profile as it is extruded, not pushed into a groove afterwards. It cannot shrink back or fall out at a corner, which is where pushed-in gaskets fail.'],
     ['name' => 'Reinforcement', 'copy' => 'Sized for each window, so a large dark sash on an exposed elevation is stiffened differently from a small white one in a sheltered wall.'],
-    ['name' => 'The sealed unit', 'copy' => 'Panes, coatings, argon fill and a warm-edge spacer decide most of the whole-window figure. Liniar publish 0.8 W/m²K for a suitable build-up; the number we agree follows your glass, not the brochure.'],
+    ['name' => 'The sealed unit', 'copy' => 'Panes, coatings, argon fill and a warm-edge spacer decide most of the whole-window figure. We supply a 28mm double or a 36mm triple unit, and the triple is what reaches 0.95 W/m²K; the number we agree follows your glass, not the brochure.'],
     ['name' => 'Installation', 'copy' => 'Fixing, sealing and finishing are what connect a tested window to your actual wall. Our own installers do it, which is why the guarantee below is ours to give.'],
 ];
 
