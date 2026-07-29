@@ -28,7 +28,8 @@ Owner spotted it: the route was not on `/other-services/`.
 - **It had a page, its own copy, its own SEO and, as of an hour earlier, its own photography, but it was never added to `product_hub_groups['other-services']`.** So the only ways to reach it were a direct link or search. The homepage product theatre has described Other Services as covering cat and dog flaps since launch, which is what makes it a genuine omission rather than a deliberate exclusion.
 - Placed with the glass work rather than maintenance: the job is a flap into a door panel or into a new sealed unit made with the aperture already in it.
 - **Eight tiles keep the range's shape.** Seven ran four then three; eight runs four then four. Measured at 1440 the range still ends at 846px against a 900px viewport, so this hub continues to meet the one-viewport rule that windows and doors now knowingly break.
-- Recorded in `AI.md`: a route having a page, copy and imagery does not mean it is on its hub. Check `product_hub_groups` too.
+- **Then the owner found it was missing from the Products menu too.** `primary_nav_fallback` is a third registry, separate again from the hub, and it drives both the mega menu and the mobile drawer. So the route genuinely had no navigational way in: not the menu, not the hub, only a direct link or search.
+- **Cross-checked both lists afterwards rather than fixing only what was reported.** Every hub slug against every menu URL: nothing else is in a hub and missing from the menu, and the only thing in the menu without a hub is `/commercial-projects/`, which is an archive rather than a product. That check is now written into `AI.md` so it can be repeated.
 - Verified on test: eight tiles, four columns, two even rows, all eleven images loaded including the system marks.
 - Test deployment only. No live-site deployment was performed.
 
