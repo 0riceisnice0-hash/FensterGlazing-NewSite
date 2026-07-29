@@ -21,6 +21,17 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Door handle grid: four routes, eight finishes on one row (test)
+
+Owner: put the images on one line, and the applicable products are aluminium doors, heritage, uPVC and composite.
+
+- **Route list is now those four**, set in `door_handles.slugs`. French doors and aluminium sliding doors came off; they had been carrying the section since the door handles were first built.
+- **Two of the four needed more than a data change.** `/heritage-aluminium-doors/` returns before the shared product tail, so its own template now calls the grid, sitting after colour because handle finish is the decision that follows frame colour. Composite reaches the tail but was excluded by an explicit `! $is_composite_doors` guard: its inline hardware picker died with the tabbed configurator on 2026-07-22 and renders nowhere, so composite had no handle content at all. Guard removed.
+- **Eight tiles on one row** on desktop, dropping to four below `1080px` and two below `560px`. Tiles measure 132x195 with the handle image at 108x144, against 251x371 at the previous four-column layout.
+- **Dropped the repeated sub-label** while shortening the row. Every tile read "<name> long-plate handle" under a heading that already says long backplate, it wrapped to two lines on the narrower tile, and it set the row height for no information. The window grid keeps its sub-label, which names the finish method rather than repeating the name.
+- Verified on test: the grid renders on exactly the four intended routes and returns zero matches on French doors and aluminium sliding doors; at 1440 and 1280 all eight tiles sit on one row with every image loaded; four columns at 1080 and two at 390; no horizontal overflow at any width. Checked by rendering the section, not only by measuring it.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - The handle hub becomes a real hub, product pages get the grid (test)
 
 Owner instruction: move the door-handle box off the uPVC doors page and onto the handle hub in the same format with all its information, so the hub covers every product, then put the casement-style compact grid on the door pages in its place.
@@ -29,7 +40,7 @@ Owner instruction: move the door-handle box off the uPVC doors page and onto the
 - **Door routes render `door-handle-grid.php`**, the doors counterpart of the window grid, on `/upvc-doors/`, `/french-doors/`, `/aluminium-doors/` and `/aluminium-sliding-doors/`. `/composite-doors/` is excluded as it always was, since it has its own hardware section.
 - **Eight finishes needed their own column count.** The shared grid is six across, which would have left doors as six then two, the exact orphan-row problem raised on the product hub the same day. Doors are four across, and two below `560px`. The doors selector is (0,2,0) and beats the breakpoint overrides, so it is named in the media query it needs to change in as well; that is the third instance of this specificity trap on this project and it is now in `AI.md` twice.
 - Hub H1, title tag and meta description rewritten to cover both. **The route stays `/window-handles/`** rather than becoming something like `/handles/`: it is indexed and linked from every window and door page, so a rename buys a redirect and loses the equity. Flagged for the owner rather than decided here.
-- **`/heritage-aluminium-doors/` still renders no handle section.** It is in `door_handles.slugs` but its dedicated template returns before the grid, so it never showed the old chooser either. Pre-existing, not a regression, and adding one would change an approved page composition, so it is an owner call.
+- **`/heritage-aluminium-doors/` rendered no handle section at first**, because its dedicated template returns before the shared tail. Corrected later the same day, below.
 - Verified on test at 1440 and 390: hub renders two independent choosers with six and eight swatches and matching panels; `/upvc-doors/` renders eight tiles at four then two columns with all eight images loaded; the old `fenster-door-handles` section returns zero matches on every door route; `/casement-windows/` keeps its window grid; eight routes 200; no horizontal overflow at either width.
 - Test deployment only. No live-site deployment was performed.
 
