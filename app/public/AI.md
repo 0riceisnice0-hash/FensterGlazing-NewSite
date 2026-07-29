@@ -307,7 +307,8 @@ otan.png` is a **positive variant built in this repo**, not a supplier file. The
 ## Window Handle Section Rule
 
 - Window handle data belongs in `inc\site-data.php` under `window_handles`.
-- Window handles are now a standalone specification hub at `/window-handles/`, registered in `inc\generated-pages.php` and rendered from `template-parts\sections\generated-page.php`.
+- **`/window-handles/` is the handle hub for the whole site, windows and doors.** Owner instruction, 2026-07-29. Both families render through one shared component, `template-parts\components\handle-chooser.php`, so they are presented identically and there is only one copy of that markup. The route name is deliberately unchanged: it is indexed and linked from every window and door page, so renaming it would trade that for a redirect. Raise it with the owner rather than renaming it in passing.
+- Window handles are registered in `inc\generated-pages.php` and rendered from `template-parts\sections\generated-page.php`.
 - Handle finish images live under `wp-content\themes\fenster\assets\images\products\handles`.
 - Product pages no longer render the full handle chooser inline. Selected window routes link to `/window-handles/` from the specification choice cards.
 - Tilt & Turn Windows and Sliding Sash Windows should not get the generic inline handle chooser because there is no inline chooser anymore.
@@ -327,8 +328,9 @@ otan.png` is a **positive variant built in this repo**, not a supplier file. The
 
 - Door handle data belongs in `inc\site-data.php` under `door_handles`.
 - Door handle crop assets live under `wp-content\themes\fenster\assets\images\products\door-handles`.
-- The door handle section renders from `template-parts\sections\generated-page.php` on selected door routes.
-- The accepted model uses the same compact selector pattern as window handles: finish swatches, active handle image/copy, three feature tiles and a static compatibility note.
+- **The full door-handle chooser lives on the hub only.** Owner instruction, 2026-07-29. Door routes render `template-parts\components\door-handle-grid.php`, the compact finish grid, exactly as the window routes render `window-handle-grid.php`. Do not put the chooser back on a product page; the point of the hub is that the detail is in one place.
+- **Doors have eight finishes where windows have six, so the door grid takes its own column count** (four on desktop, two below `560px`). Six columns would leave an orphan row of two. `.fg-handle-finishes--doors .fg-handle-finishes__grid` is (0,2,0) and beats the breakpoint overrides, so the doors case must be named in each media query it needs to change in.
+- `/heritage-aluminium-doors/` is listed in `door_handles.slugs` but has a dedicated template that returns before the grid, so it renders no handle section. That predates the 2026-07-29 move and is not a regression; adding one is an owner decision, because that page has its own approved composition.
 - Do not show the long-plate door handle selector on `/patio-doors/`, `/aluminium-bifold-doors/` or `/slide-fold-doors/`; those systems use different handle families and should not share the entrance/French door handle section.
 - Do not replace the cropped handle assets with the original nine-handle sheet in templates.
 

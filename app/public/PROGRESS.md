@@ -21,6 +21,18 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - The handle hub becomes a real hub, product pages get the grid (test)
+
+Owner instruction: move the door-handle box off the uPVC doors page and onto the handle hub in the same format with all its information, so the hub covers every product, then put the casement-style compact grid on the door pages in its place.
+
+- **`/window-handles/` now carries windows and doors**, both through a new `template-parts\components\handle-chooser.php`. The window block was inline markup and the door block was a near-identical eighty-line copy inside `generated-page.php`; presenting them identically meant either a third copy or a component, so it is a component. The JS controller already scoped every query to its own block, so two choosers on one page needed no JavaScript change.
+- **Door routes render `door-handle-grid.php`**, the doors counterpart of the window grid, on `/upvc-doors/`, `/french-doors/`, `/aluminium-doors/` and `/aluminium-sliding-doors/`. `/composite-doors/` is excluded as it always was, since it has its own hardware section.
+- **Eight finishes needed their own column count.** The shared grid is six across, which would have left doors as six then two, the exact orphan-row problem raised on the product hub the same day. Doors are four across, and two below `560px`. The doors selector is (0,2,0) and beats the breakpoint overrides, so it is named in the media query it needs to change in as well; that is the third instance of this specificity trap on this project and it is now in `AI.md` twice.
+- Hub H1, title tag and meta description rewritten to cover both. **The route stays `/window-handles/`** rather than becoming something like `/handles/`: it is indexed and linked from every window and door page, so a rename buys a redirect and loses the equity. Flagged for the owner rather than decided here.
+- **`/heritage-aluminium-doors/` still renders no handle section.** It is in `door_handles.slugs` but its dedicated template returns before the grid, so it never showed the old chooser either. Pre-existing, not a regression, and adding one would change an approved page composition, so it is an owner call.
+- Verified on test at 1440 and 390: hub renders two independent choosers with six and eight swatches and matching panels; `/upvc-doors/` renders eight tiles at four then two columns with all eight images loaded; the old `fenster-door-handles` section returns zero matches on every door route; `/casement-windows/` keeps its window grid; eight routes 200; no horizontal overflow at either width.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - Doors hub imagery: one tile fixed, one blocked on an asset
 
 Owner report: the uPVC doors and aluminium doors tiles are the wrong pictures for those products. Both confirmed by opening the files, not by reading filenames or alt text.
