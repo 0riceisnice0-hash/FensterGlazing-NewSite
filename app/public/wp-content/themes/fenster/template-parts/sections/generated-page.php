@@ -2210,6 +2210,43 @@ if ($is_colour_options) {
             </div>
         </section>
 
+        <?php
+        /* Owner instruction, 2026-07-29: send people to the handle hub once they
+           have been through the colours. Handles are the same kind of decision
+           one step on, so the finishes are pulled from the S2 data rather than
+           hardcoded here: the strip cannot fall out of step with the hub it
+           links to. */
+        $handle_finishes = (array) fenster_data('window_handles.finishes', []);
+        $handle_finishes = array_values(array_filter(
+            $handle_finishes,
+            static fn ($finish): bool => is_array($finish) && ! empty($finish['image'])
+        ));
+        ?>
+        <?php if ($handle_finishes !== []) : ?>
+            <section class="fg-colour-next">
+                <div class="container">
+                    <a class="fg-colour-next__box" href="<?php echo esc_url(home_url('/handle-options/')); ?>">
+                        <span class="fg-colour-next__copy">
+                            <span class="eyebrow"><?php esc_html_e('Next choice', 'fenster'); ?></span>
+                            <span class="fg-colour-next__title"><?php esc_html_e('Handle options.', 'fenster'); ?></span>
+                            <span class="fg-colour-next__text"><?php esc_html_e('Frame colour is one half of how a window reads. The handle is the part you touch every day, and it comes in its own set of finishes for windows, doors and patio doors.', 'fenster'); ?></span>
+                            <span class="button"><?php esc_html_e('See handle options', 'fenster'); ?></span>
+                        </span>
+                        <span class="fg-colour-next__strip" aria-hidden="true">
+                            <?php foreach (array_slice($handle_finishes, 0, 5) as $handle_finish) : ?>
+                                <span class="fg-colour-next__handle">
+                                    <img <?php echo fenster_image_attr_string((string) $handle_finish['image'], [
+                                        'alt' => '',
+                                        'loading' => 'lazy',
+                                    ]); ?>>
+                                </span>
+                            <?php endforeach; ?>
+                        </span>
+                    </a>
+                </div>
+            </section>
+        <?php endif; ?>
+
         <section id="fenster-enquiry" class="fg-obscure-enquiry">
             <div class="container fg-obscure-enquiry__grid">
                 <div>

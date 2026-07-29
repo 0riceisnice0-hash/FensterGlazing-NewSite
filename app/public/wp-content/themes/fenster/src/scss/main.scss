@@ -8041,44 +8041,135 @@ html.fg-gallery-lightbox-open body {
 
 /* Narrower screens cannot spare the width for a side-by-side fade, so the wall
    becomes a band under the copy and shows at full strength. */
+/* On a phone there is no width for a side-by-side fade, so the same idea runs
+   vertically: the wall is the first thing under the header at full strength and
+   fades down into white, with the copy on the white. Ordering matters because
+   the wall sits before the copy in the DOM to work as a backdrop on desktop. */
 @media (max-width: 900px) {
-  /* The wall is before the copy in the DOM so it can be the backdrop on a wide
-     screen. As a band it belongs after the copy, hence the ordering. */
   .fg-colour-hub-hero--wall {
     display: flex;
     flex-direction: column;
-    padding-bottom: 0;
-  }
-
-  .fg-colour-hub-hero--wall .fg-colour-hub-hero__grid {
-    order: 1;
+    padding-top: 0;
   }
 
   .fg-colour-hub-hero__wall {
-    order: 2;
+    order: 0;
     position: relative;
     inset: auto;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-auto-rows: clamp(30px, 8vw, 46px);
-    height: clamp(120px, 26vw, 184px);
-    margin-top: clamp(1.6rem, 4vw, 2.4rem);
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    grid-auto-rows: clamp(38px, 11vw, 62px);
+    height: clamp(190px, 52vw, 300px);
     overflow: hidden;
   }
 
   .fg-colour-hub-hero__veil {
-    display: none;
+    display: block;
+    top: 0;
+    bottom: auto;
+    height: clamp(190px, 52vw, 300px);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 38%,
+      rgba(255, 255, 255, 0.72) 76%,
+      #ffffff 100%
+    );
   }
 
   .fg-colour-hub-hero--wall .fg-colour-hub-hero__grid {
+    order: 1;
+    position: relative;
+    /* Pulls the copy up into the tail of the fade so the wall reads as a
+       backdrop rather than a stripe with a gap under it. */
+    margin-top: clamp(-3.4rem, -9vw, -2rem);
     padding-bottom: 0;
+  }
+
+  .fg-colour-hub-hero__copy {
+    max-width: none;
   }
 
   .fg-colour-hub-hero__wall span.is-pale {
     box-shadow: inset 0 0 0 1px rgba(15, 49, 54, 0.12);
   }
+}
 
-  .fg-colour-hub-hero__copy {
-    max-width: none;
+/* Cross-link to the handle hub, sitting after all three colour ranges. The
+   whole box is the link, so the button inside is presentational and must not
+   be a nested anchor. */
+.fg-colour-next {
+  padding: 0 0 clamp(2.75rem, 5vw, 4.6rem);
+}
+
+.fg-colour-next__box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: clamp(1.5rem, 4vw, 3.4rem);
+  align-items: center;
+  padding: clamp(1.5rem, 3.4vw, 2.6rem);
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 10px;
+  background: var(--color-mist, #f4f7f6);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.fg-colour-next__box:hover,
+.fg-colour-next__box:focus-visible {
+  border-color: rgba(0, 45, 58, 0.3);
+  transform: translateY(-2px);
+}
+
+.fg-colour-next__copy {
+  display: block;
+}
+
+.fg-colour-next__title {
+  display: block;
+  margin: 0.35rem 0 0.6rem;
+  font-size: clamp(1.5rem, 2.4vw, 2.15rem);
+  font-weight: 850;
+  line-height: 1.06;
+}
+
+.fg-colour-next__text {
+  display: block;
+  max-width: 46ch;
+  margin-bottom: clamp(1rem, 2vw, 1.4rem);
+  color: var(--color-muted);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.55;
+}
+
+.fg-colour-next__strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: clamp(0.4rem, 1.2vw, 0.9rem);
+  align-items: center;
+}
+
+.fg-colour-next__handle {
+  display: block;
+  padding: clamp(0.5rem, 1.4vw, 0.9rem);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-colour-next__handle img {
+  display: block;
+  width: 100%;
+  height: clamp(74px, 9vw, 128px);
+  object-fit: contain;
+}
+
+@media (max-width: 860px) {
+  .fg-colour-next__box {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-colour-next__handle img {
+    height: clamp(58px, 14vw, 92px);
   }
 }
 
