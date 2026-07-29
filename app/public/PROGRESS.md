@@ -21,6 +21,17 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Cat and dog flaps was missing from its hub (test)
+
+Owner spotted it: the route was not on `/other-services/`.
+
+- **It had a page, its own copy, its own SEO and, as of an hour earlier, its own photography, but it was never added to `product_hub_groups['other-services']`.** So the only ways to reach it were a direct link or search. The homepage product theatre has described Other Services as covering cat and dog flaps since launch, which is what makes it a genuine omission rather than a deliberate exclusion.
+- Placed with the glass work rather than maintenance: the job is a flap into a door panel or into a new sealed unit made with the aperture already in it.
+- **Eight tiles keep the range's shape.** Seven ran four then three; eight runs four then four. Measured at 1440 the range still ends at 846px against a 900px viewport, so this hub continues to meet the one-viewport rule that windows and doors now knowingly break.
+- Recorded in `AI.md`: a route having a page, copy and imagery does not mean it is on its hub. Check `product_hub_groups` too.
+- Verified on test: eight tiles, four columns, two even rows, all eleven images loaded including the system marks.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - uPVC door configurations, and the image bank sweep (test)
 
 Owner: uPVC doors should say they come as a French pair, a single or a stable door. And look through the whole Legacy Marketing folder for anything good or needed.
