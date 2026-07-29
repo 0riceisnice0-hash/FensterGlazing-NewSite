@@ -8235,7 +8235,11 @@ html.fg-gallery-lightbox-open body {
 @media (max-width: 860px) {
   .fg-colour-hub-hero__grid,
   .fg-colour-hub__material {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr), not 1fr: a bare 1fr track has an implicit auto minimum,
+       so the scrolling colour rail inside it could not shrink below its own
+       content and sized itself to the slide count instead of the viewport.
+       Same family as the min-width: auto trap on flex items. */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .fg-colour-hub__notes {
@@ -35466,6 +35470,10 @@ html.fg-blinds-reveal-locked {
   --fg-rail-gap: clamp(0.7rem, 1.4vw, 1.25rem);
   --fg-rail-per-view: 4;
   margin-top: clamp(1.25rem, 2.4vw, 2rem);
+  /* Belt and braces: the rail must never be sized by its own content, whatever
+     grid or flex context it is dropped into. */
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* The list is the scroll container and the grid. A percentage flex-basis
