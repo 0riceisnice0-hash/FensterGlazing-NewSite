@@ -7750,14 +7750,13 @@ html.fg-gallery-lightbox-open body {
   display: contents;
 }
 
-/* auto-fill, not auto-fit: auto-fit collapses the empty tracks and stretches a
-   lone card across the whole 980px row, which on the routes that show only the
-   glass card left a very wide, very empty pane. */
-
+/* auto-fit, so two or three cards share the row evenly. The one-card case is
+   handled by the --single modifier below rather than by the track keyword:
+   auto-fill leaves an empty track hanging off the end when there are two. */
 .fg-product-choice-map {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: clamp(1.1rem, 2.4vw, 2rem);
   align-items: stretch;
   max-width: 980px;
