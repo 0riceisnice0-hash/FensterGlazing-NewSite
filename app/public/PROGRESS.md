@@ -21,6 +21,19 @@ Owner instruction: nine tiles over two uneven rows would look better as a square
 - Verified on test at 1440, 768 and 390: 3 / 2 / 2 columns, no horizontal overflow at any width, the new bay copy serving and the old uPVC-only string returning zero matches, six key routes 200.
 - Test deployment only. No live-site deployment was performed.
 
+## 2026-07-29 - Real uPVC door photography, and five owner decisions closed (test)
+
+Owner pointed at OneDrive `Marketing/Image Bank/Legacy Marketing/Doors/uPVC Doors` and asked for the gaps on the uPVC doors page to be filled from it.
+
+- **Seven real installs are now in the theme** under `assets/images/products/upvc-doors`, replacing a golden oak slab that reads composite and had represented uPVC since launch. Every file in the folder was opened first; the folder name is not evidence, which is the whole reason the wrong image survived a previous audit.
+- **The image was in three separate places, not one.** `product_media` fed the product page and the hub tile; `product_gallery_pools['upvc_doors']` fed those *and the whole town matrix*, so every `/upvc-doors-<town>/` route carried it; and `fenster_link_card_image()` in `inc/assets.php` used it for related-link thumbnails, under a doc comment saying a wrong-material thumbnail is worse than none. **When a product's imagery is wrong, check all three.**
+- The pool also held a black door that reads composite and a stock blue timber door. Both gone.
+- **Three images in that folder were left out**: a sage green boarded door, an anthracite boarded door with a diamond light, and the same sage door again. They may be composite rather than uPVC and the owner's eye is worth more than my guess.
+- **The hub card is the hero centre-cropped, deliberately.** The tile is a wide 384x225 cell rather than the 4:3 the older notes describe, and this door is tall and narrow, so any tighter crop cuts its head or its threshold. The wide crop shows the whole door with its context, which is the better of the two.
+- **Five owner decisions recorded in `AI.md` so they are not reopened:** the AI-generated tilt and turn handle images are accepted as the best available; the one-viewport rule is superseded by the 3x3 and the slight scroll is fine; pet flaps keep their own process rail; French casement is a configuration available on every window except tilt and turn and sliding sash; and the uPVC photography question is closed.
+- Verified on test: `/upvc-doors/`, `/doors-milton-keynes/` and `/upvc-doors-bletchley/` all serve the real photography with zero references to any of the three replaced assets.
+- Test deployment only. No live-site deployment was performed.
+
 ## 2026-07-29 - EnergyPlus banner contradiction, and the real composite colour range (test)
 
 Owner: the key specifications and the EnergyPlus banner contradict each other on flush uPVC windows, which can only be 28mm double at 1.2. And make clear the composite colour range is much wider than the swatches shown: the standard range, of which the tiles are a mix, plus any RAL.
