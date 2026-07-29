@@ -7913,13 +7913,13 @@ html.fg-gallery-lightbox-open body {
   inset: 0 0 0 auto;
   z-index: 0;
   overflow: hidden;
-  display: grid;
-  width: min(58%, 620px);
-  /* One pane high, per the owner. The panes stay square by taking their height
-     from the card and their width from the column count. */
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-rows: minmax(0, 1fr);
-  align-content: center;
+  /* Flex with a square aspect on each pane, not a column grid. A grid divides
+     the width by the column count, which made the panes 113 wide by 178 tall.
+     Taking the width from the height instead keeps them actually square, and
+     however many fit, fit: the rest run off the left and the fade hides it. */
+  display: flex;
+  justify-content: flex-end;
+  width: min(66%, 700px);
   /* A single-layer fade, not a composite: the panel dissolves into the card
      rather than ending on a line. */
   mask-image: linear-gradient(90deg, transparent 0%, #000 44%);
@@ -7928,6 +7928,9 @@ html.fg-gallery-lightbox-open body {
 
 .fg-glass-patch > span {
   display: block;
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 1;
   background-position: center;
   background-size: cover;
   /* The leading between panes is drawn inside each one rather than as a grid
@@ -7978,14 +7981,10 @@ html.fg-gallery-lightbox-open body {
   .fg-glass-patch {
     inset: auto 0 0 0;
     width: auto;
-    height: 42%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    height: clamp(76px, 22vw, 104px);
+    justify-content: center;
     mask-image: linear-gradient(180deg, transparent 0%, #000 56%);
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 56%);
-  }
-
-  .fg-glass-patch > span:nth-child(n + 5) {
-    display: none;
   }
 
   .fg-glass-patch__mark {

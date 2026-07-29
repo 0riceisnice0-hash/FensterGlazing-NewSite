@@ -5377,7 +5377,12 @@ document.querySelectorAll('[data-fg-readmore]').forEach((button) => {
     });
   }, { rootMargin: '120px 0px' });
 
-  marks.forEach((mark) => observer.observe(mark));
+  /* Positioned once up front as well as on observe, so the mark is never left
+     untransformed if the observer does not fire. */
+  marks.forEach((mark) => {
+    place(mark);
+    observer.observe(mark);
+  });
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update, { passive: true });
 })();
