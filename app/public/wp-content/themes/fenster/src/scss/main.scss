@@ -8175,6 +8175,14 @@ html.fg-gallery-lightbox-open body {
   }
 }
 
+/* Five across a phone puts each handle at about 49px wide, which is too small
+   to tell the finishes apart. Four is enough for a teaser. */
+@media (max-width: 540px) {
+  .fg-colour-next__handle:nth-child(5) {
+    display: none;
+  }
+}
+
 .fg-colour-hub__tabs {
   display: flex;
   flex-wrap: wrap;
