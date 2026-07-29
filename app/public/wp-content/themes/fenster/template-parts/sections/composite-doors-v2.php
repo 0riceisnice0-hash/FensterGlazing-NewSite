@@ -270,7 +270,7 @@ if (empty($collections)) {
                          standard range, not the whole of it, and any RAL can be
                          matched beyond it. See the confirmed facts in AI.md
                          before trimming this back. */ ?>
-                <p><?php esc_html_e('What is below is a selection rather than the full list. The standard range runs wider than this, and past it we can match any RAL colour, so if you have a shade in mind it is worth asking rather than settling for the nearest one here.', 'fenster'); ?></p>
+                <p><?php esc_html_e('What is below is a mix of standard colours and RAL matches, not the full list. The standard range runs wider, and past it we can match any RAL colour, so if you have a shade in mind it is worth asking rather than settling for the nearest one here.', 'fenster'); ?></p>
             </header>
 
             <div class="fg-cd3-colour__layout" data-fg-door-selector data-fg-colour-wall>

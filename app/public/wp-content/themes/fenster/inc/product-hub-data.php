@@ -535,16 +535,21 @@ function fenster_tech_banner_args(string $slug): array
            flush casement, which cannot take triple at all, and above 1.0 on
            uPVC doors. Owner-reported contradiction, 2026-07-29. A route with
            no confirmed figure gets no figure rather than an inherited one. */
-        $glazing_fact = ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'];
-
-        if ($slug === 'flush-casement-windows') {
+        /* Explicit, and it defaults to nothing. Inheriting the casement figure
+           is what produced the contradiction in the first place, so a route
+           only gets a number if that number is confirmed for that route.
+           French doors, French casement and bow and bay are configurations
+           rather than products (owner, 2026-07-29): the glazing follows
+           whichever system the pair or the bay is built from, so there is no
+           single figure to print. */
+        $glazing_by_route = [
+            'casement-windows' => ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
+            'tilt-turn-windows' => ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
             // Owner-confirmed: 28mm double is the only unit this sash takes.
-            $glazing_fact = ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'];
-        } elseif ($slug === 'upvc-doors') {
-            $glazing_fact = ['value' => '1.0', 'label' => 'W/m²K on the door'];
-        } elseif ($slug === 'french-doors') {
-            $glazing_fact = null;
-        }
+            'flush-casement-windows' => ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
+            'upvc-doors' => ['value' => '1.0', 'label' => 'W/m²K on the door'],
+        ];
+        $glazing_fact = $glazing_by_route[$slug] ?? null;
 
         $facts = [['value' => '6', 'label' => 'chambers through the frame']];
         if ($glazing_fact !== null) {
