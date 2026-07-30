@@ -7971,15 +7971,18 @@ html.fg-gallery-lightbox-open body {
     z-index: auto;
     order: 1;
     width: auto;
-    height: clamp(56px, 15vw, 76px);
-    margin-top: 0.85rem;
+    height: clamp(64px, 17vw, 88px);
+    margin-top: 0.7rem;
     justify-content: flex-start;
-    /* The squares filled the strip and then stopped dead against blank space,
-       which read as disjointed rather than as a sample of glass. A fade on the
-       last pane, not a full removal, softens that edge without bringing back
-       the vertical mask that hid text behind it before. */
-    mask-image: linear-gradient(90deg, #000 0%, #000 72%, transparent 100%);
-    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 72%, transparent 100%);
+    /* The squares filled the strip and then stopped at a hard top edge right
+       under the copy, which read as two pasted-together blocks. A fade on the
+       right-hand pane alone was too subtle to register. The row now fades in
+       from its own top, so it dissolves into the space above rather than
+       starting on a line, and stays clear of the text: the fade is on the
+       strip's own top edge, well below where the copy ends, not a return to
+       the absolute overlay that used to sit behind the text. */
+    mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
   }
 }
 
