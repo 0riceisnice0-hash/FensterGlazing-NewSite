@@ -10,6 +10,7 @@ Last updated: 2026-07-30
 - Split the tracking boundary. Analytics permits Microsoft Clarity, `FGV`/`FG2` website journeys and analytics tags. Marketing permits Meta, advertising tags, persisted ad click IDs and browser-side advertising conversion events. Google Tag Manager loads only when one of those categories is granted and receives category-specific Consent Mode defaults and updates first.
 - Withdrawing a category sends denied signals, removes its known first-party cookies and local identifiers, then reloads without the withdrawn scripts. The Clarity replay stylesheet still loads before Clarity itself.
 - Updated the generated Privacy Policy and Cookie Policy with the category purposes, providers, 90-day site identifier retention, 180-day preference duration and withdrawal behaviour.
+- **The first protected-site browser pass caught a bypass before handoff.** The close button carried `hidden`, but its later component rule declared `display: grid` and overrode the browser default, so it still appeared on the mandatory first layer. A component-specific hidden rule now wins; the close control appears only when a visitor with a saved choice reopens settings.
 - PHP lint, JavaScript syntax checking and the production CSS/JavaScript build pass. Test deployment and browser verification follow in this entry before handoff.
 
 ## 2026-07-29 - Two open handle questions closed by the owner (docs only)
