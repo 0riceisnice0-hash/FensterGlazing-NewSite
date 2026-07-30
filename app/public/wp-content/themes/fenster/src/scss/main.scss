@@ -1681,6 +1681,10 @@ h3 {
   cursor: pointer;
 }
 
+.fg-cookie-consent__close[hidden] {
+  display: none;
+}
+
 .fg-cookie-consent__close:hover,
 .fg-cookie-consent__close:focus-visible {
   border-color: var(--color-primary);
