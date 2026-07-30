@@ -448,6 +448,7 @@ Left menu **Goals → Conversions → Summary → + New conversion action**:
 2. **"Phone number clicked"** — same flow → category **Phone call lead** · Value £40 · Count One → note ID + label.
 3. **"Instant quote submitted"** — Import → CRM or other data sources → track conversions from clicks → manual upload · Category **Submit lead form** · Value £25 · Count One · Attribution **Data-driven** if offered → **Primary**. Import only WindowCAD callbacks that have a stored `gclid`, `gbraid` or `wbraid`.
    - If the old **"Quote tool opened"** action exists, keep it Secondary or remove it from campaign goals. The tool auto-loads on quote-enabled pages, so an open is not buying intent and must never drive bidding.
+   - **Live 2026-07-30:** this is now connected to the site's private HTTPS feed and runs daily. The feed exports no customer PII, filters out its schema-only row, and maps GCLID, completion time, transaction ID, £25 value and GBP currency. Do not replace it with quote-tool-open tracking.
 4. **"Consultation booked"** — category **Book appointment** · Value £60 · Count One → note ID + label.
 5. **"Calls from ads"** — + New conversion action → **Phone calls** → "Calls from ads using call assets" → Call length: **60 seconds** · Value £40 → Save.
 
@@ -478,7 +479,7 @@ Known limitation, accepted for now: GTM loads only after cookie acceptance, so G
 2. Select all three campaigns → **Enable**.
 3. **72 hours later:** Campaigns → Insights & reports → **Search terms** → scan every query. Anything off-intent → add to `Fenster master negatives`. This is the single most important habit.
 4. **Weekly, 20 minutes:** search terms → negatives; CPL per ad group; pause any ad group at 2× target CPL (£120+) with no qualified lead; check every lead got a 15-minute callback and a recorded disposition (no answer / not our area / supply-only / survey booked / quoted / won).
-5. **End of month 1:** offline import of qualified leads (Goals → Conversions → Uploads) keyed by the stored gclids; rebalance budget toward whichever campaign produced *qualified* leads.
+5. **End of month 1:** review the automated `Instant quote submitted` import diagnostics and rebalance budget toward whichever campaign produced *qualified* leads.
 6. **After ~30 conversions:** switch each campaign's bidding to **Maximise Conversions**, then add a target CPA ≈ your observed CPL after two more weeks.
 
 ## Do-not reminders

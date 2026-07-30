@@ -1992,3 +1992,11 @@ Do not use this as the primary rulebook or handover. Use:
 - Test deployment only. No live-site deployment was performed.
 - Follow-up: the one-grammar CSS cleanup had swallowed the construction explorer styles (a deletion cut spanned the region the audit build had inserted them into), so the explorer shipped unstyled and the owner caught it. Styles restored, and QA now includes a template-classes-versus-compiled-CSS diff so a section cannot ship unstyled again.
 
+## 2026-07-30 - Google Ads Launch And WindowCAD Conversion Import
+
+- Enabled the three approved search campaigns: `MK — Windows` (£12/day), `MK — Doors` (£12/day) and `MK — Price Intent` (£9/day).
+- Added the missing responsive search ad to the `Double Glazing MK` ad group with 15 headlines, four descriptions, the dedicated Milton Keynes landing page, inherited sitelinks and the approved image set.
+- Added a private, token-protected HTTPS CSV feed for completed WindowCAD quotes. It exports only consented Google click identifiers, completion time, a stable non-PII transaction ID, £25 value and GBP currency.
+- Connected the feed to the Primary `Instant quote submitted` conversion action in Google Ads Data Manager. It runs daily, filters `record_type = conversion`, and excludes the schema-only row used to establish the connection before the first real ad-attributed quote exists.
+- Verified live: unauthorised feed requests return 401, the tokenized feed returns CSV with `no-store` and `noindex`, and the existing homepage, quote, product and Milton Keynes routes remain healthy.
+
