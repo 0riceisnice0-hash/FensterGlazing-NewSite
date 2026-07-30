@@ -249,6 +249,16 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $journey_ref = fenster_windowcad_tracking_from_fields($fields);
     $tracking_field_present = fenster_windowcad_tracking_field_present($fields);
     $quote_price = fenster_windowcad_price_from_fields($fields);
+    $windowcad_ads_tracker = fenster_windowcad_ads_tracker_from_fields($fields);
+    $ad_attribution = $journey_ref !== ''
+        ? fenster_ad_attribution_for_journey($journey_ref)
+        : [];
+    $ads_tracker = (string) ($ad_attribution['ads_tracker'] ?? '');
+    if ($ads_tracker === '') {
+        $ads_tracker = $windowcad_ads_tracker;
+    }
+    $ad_click_type = (string) ($ad_attribution['click_type'] ?? '');
+    $ad_click_id = (string) ($ad_attribution['click_id'] ?? '');
 
     if (! $tracking_field_present) {
         // Every website-originated quote URL carries a tracking value, even for
@@ -264,6 +274,9 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     } elseif (! $tracking_field_present) {
         $notes .= "\nWebsite tracking: none (WindowCAD submission had no Tracking field)";
     }
+    if ($ads_tracker !== '') {
+        $notes .= "\nAds tracker: " . $ads_tracker;
+    }
 
     $summary = implode("\n", array_filter([
         'Name: ' . $full_name,
@@ -273,6 +286,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         $house_number !== '' ? 'House number: ' . $house_number : '',
         $street !== '' ? 'Street: ' . $street : '',
         'Source: WindowCAD',
+        $ads_tracker !== '' ? 'Ads tracker: ' . $ads_tracker : '',
         '',
         'Raw WindowCAD fields:',
         wp_json_encode($fields, JSON_PRETTY_PRINT),
@@ -295,6 +309,9 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             '_fenster_source' => 'WindowCAD',
             '_fenster_page_url' => home_url('/online-quote/'),
             '_fenster_journey_ref' => $journey_ref,
+            '_fenster_ad_click_type' => $ad_click_type,
+            '_fenster_ad_click_id' => $ad_click_id,
+            '_fenster_ads_tracker' => $ads_tracker,
             '_fenster_windowcad_fields' => wp_json_encode($fields),
         ];
         foreach ($meta as $key => $value) {

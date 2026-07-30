@@ -61,6 +61,87 @@ function fenster_windowcad_reference_parameter(): string
         : 'tracking';
 }
 
+function fenster_ad_attribution_endpoint(): string
+{
+    return esc_url_raw(rest_url('fenster/v1/ad-attribution'));
+}
+
+function fenster_ad_attribution_key(string $journey_id): string
+{
+    return 'fenster_ad_' . substr(hash_hmac('sha256', strtoupper($journey_id), wp_salt('auth')), 0, 40);
+}
+
+function fenster_ad_attribution_for_journey(string $journey_id): array
+{
+    if (! preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $journey_id)) {
+        return [];
+    }
+
+    $record = get_transient(fenster_ad_attribution_key($journey_id));
+    if (! is_array($record)) {
+        return [];
+    }
+
+    $click_type = sanitize_key((string) ($record['click_type'] ?? ''));
+    $click_id = sanitize_text_field((string) ($record['click_id'] ?? ''));
+    $ads_tracker = sanitize_text_field((string) ($record['ads_tracker'] ?? ''));
+    if (! in_array($click_type, ['gclid', 'gbraid', 'wbraid'], true)
+        || ! preg_match('/^[A-Za-z0-9_.-]{10,200}$/', $click_id)
+    ) {
+        return [];
+    }
+
+    return [
+        'click_type' => $click_type,
+        'click_id' => $click_id,
+        'ads_tracker' => preg_match('/^[A-Za-z0-9 _.-]{1,80}$/', $ads_tracker) ? $ads_tracker : '',
+    ];
+}
+
+add_action('rest_api_init', 'fenster_register_ad_attribution_route');
+function fenster_register_ad_attribution_route(): void
+{
+    register_rest_route('fenster/v1', '/ad-attribution', [
+        'methods' => WP_REST_Server::CREATABLE,
+        'callback' => 'fenster_store_ad_attribution',
+        'permission_callback' => 'fenster_ad_attribution_request_allowed',
+    ]);
+}
+
+function fenster_ad_attribution_request_allowed(WP_REST_Request $request): bool
+{
+    $origin_host = strtolower((string) wp_parse_url((string) $request->get_header('origin'), PHP_URL_HOST));
+    $site_host = strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST));
+
+    return $origin_host !== '' && $site_host !== '' && hash_equals($site_host, $origin_host);
+}
+
+function fenster_store_ad_attribution(WP_REST_Request $request): WP_REST_Response
+{
+    $data = $request->get_json_params();
+    $journey_id = strtoupper(sanitize_text_field((string) ($data['journey_id'] ?? '')));
+    $ad_click_id = sanitize_text_field((string) ($data['ad_click_id'] ?? ''));
+    $ads_tracker = sanitize_text_field((string) ($data['ads_tracker'] ?? ''));
+
+    if (! preg_match('/^FG2-[A-Z0-9-]{8,80}$/', $journey_id)
+        || ! preg_match('/^(gclid|gbraid|wbraid):([A-Za-z0-9_.-]{10,200})$/', $ad_click_id, $click_parts)
+        || ($ads_tracker !== '' && ! preg_match('/^[A-Za-z0-9 _.-]{1,80}$/', $ads_tracker))
+    ) {
+        return new WP_REST_Response([
+            'status' => 'error',
+            'message' => 'Invalid ad attribution payload.',
+        ], 422);
+    }
+
+    set_transient(fenster_ad_attribution_key($journey_id), [
+        'click_type' => $click_parts[1],
+        'click_id' => $click_parts[2],
+        'ads_tracker' => $ads_tracker,
+    ], 90 * DAY_IN_SECONDS);
+
+    return new WP_REST_Response(null, 204);
+}
+
 function fenster_dashboard_track_event(string $event, array $payload = []): void
 {
     $endpoint = fenster_website_dashboard_url();
@@ -209,6 +290,22 @@ function fenster_windowcad_price_from_fields(array $fields): float
     return 0.0;
 }
 
+function fenster_windowcad_ads_tracker_from_fields(array $fields): string
+{
+    foreach ($fields as $name => $value) {
+        if (! preg_match('/^(ads?|advert(?:ising)?)(?: (?:source|tracker|number))?$/i', (string) $name)) {
+            continue;
+        }
+
+        $tracker = sanitize_text_field((string) $value);
+        if (preg_match('/^[A-Za-z0-9 _.-]{1,80}$/', $tracker)) {
+            return $tracker;
+        }
+    }
+
+    return '';
+}
+
 add_action('wp_enqueue_scripts', 'fenster_enqueue_website_tracking_config', 20);
 function fenster_enqueue_website_tracking_config(): void
 {
@@ -217,6 +314,7 @@ function fenster_enqueue_website_tracking_config(): void
         'consentEndpoint' => fenster_website_dashboard_consent_url(),
         'statEndpoint' => fenster_website_dashboard_stat_url(),
         'chatEndpoint' => fenster_website_dashboard_chat_url(),
+        'adAttributionEndpoint' => fenster_ad_attribution_endpoint(),
         'referenceParameter' => fenster_windowcad_reference_parameter(),
     ];
 

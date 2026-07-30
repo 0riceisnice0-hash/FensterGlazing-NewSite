@@ -316,6 +316,7 @@ $notices = [
     <input type="hidden" name="visitor_id" value="" data-fg-visitor-id>
     <?php /* Google Ads click id, so a won job can be reported back as an offline conversion. Stays in WordPress; never relayed to the Marketing Dashboard. */ ?>
     <input type="hidden" name="ad_click_id" value="" data-fg-ad-click-id>
+    <input type="hidden" name="ad_tracker" value="" data-fg-ad-tracker>
     <input type="hidden" name="fenster_started_at" value="<?php echo esc_attr((string) time()); ?>">
     <?php wp_nonce_field('fenster_submit_enquiry', 'fenster_enquiry_nonce'); ?>
 </form>

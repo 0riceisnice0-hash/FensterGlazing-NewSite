@@ -153,7 +153,7 @@ Campaigns → **+ New campaign**.
     - **Broad match keywords:** if a toggle "Use broad match" appears — **OFF**.
     - **Automatically created assets:** Off (both text and final URL).
     - **Campaign URL options → Final URL suffix:**
-      `utm_source=google&utm_medium=cpc&utm_campaign=mk-windows&utm_term={keyword}`
+      `utm_source=google&utm_medium=cpc&utm_campaign=mk-windows&utm_term={keyword}&utm_content={creative}&ads={adgroupid}`
 11. **Budget:** `£12` per day.
 
 **Now the ad groups.** Create these five (during the wizard or after via Campaigns → MK — Windows → Ad groups → +). Default ad group bid: £2.50.
@@ -246,7 +246,7 @@ RSA: H1 `Sash Windows Milton Keynes` (26), `Roseview uPVC Sash Windows` (26), `F
 Repeat the Part 2 wizard identically except:
 - **Campaign name:** `MK — Doors`
 - **Budget:** `£12` per day
-- **Final URL suffix:** `utm_source=google&utm_medium=cpc&utm_campaign=mk-doors&utm_term={keyword}`
+- **Final URL suffix:** `utm_source=google&utm_medium=cpc&utm_campaign=mk-doors&utm_term={keyword}&utm_content={creative}&ads={adgroupid}`
 - Everything else (bidding £4 cap, networks off, locations, presence, schedule, exclusions) identical.
 
 ### Ad group 1: Composite & Front Doors MK
@@ -324,7 +324,7 @@ RSA: H1 `uPVC Doors Milton Keynes` (24) + shared proof set. Description:
 Repeat the wizard again:
 - **Campaign name:** `MK — Price Intent`
 - **Budget:** `£9` per day
-- **Final URL suffix:** `utm_source=google&utm_medium=cpc&utm_campaign=mk-prices&utm_term={keyword}`
+- **Final URL suffix:** `utm_source=google&utm_medium=cpc&utm_campaign=mk-prices&utm_term={keyword}&utm_content={creative}&ads={adgroupid}`
 - All other settings identical. The geo targeting is what makes the non-geo price keywords safe: only people physically in the radius ever see them.
 
 ### Ad group 1: Double Glazing & Window Prices
@@ -434,7 +434,8 @@ Then:
 
 1. `dataLayer.push({ event: 'fenster_form_submitted', form_context: ... })` in the enquiry AJAX success handler in `src/js/main.js` — a plain push, **not** `trackWebsiteEvent()` (which would double-count `form_submitted` in the Marketing Dashboard, since the server already relays it).
 2. The same for consultation-booking success (`fenster_consultation_booked`).
-3. A hidden `gclid` field on the shared enquiry form, populated from the landing URL and persisted (90-day localStorage, consented visitors only), saved to `fenster_enquiry` post meta by `inc/enquiries.php`. WordPress-only — never sent to the Marketing Dashboard.
+3. Hidden ad-click and `ads` tracker fields on the shared enquiry form, populated from the landing URL and persisted for 90 days for consented visitors, saved to `fenster_enquiry` post meta by `inc/enquiries.php`. WordPress-only — never sent to the Marketing Dashboard.
+4. The same accepted click ID is stored server-side against the opaque `FG2` journey. Every WindowCAD URL receives both `tracking=FG2-...` and `ads={adgroupid}`; the completed WindowCAD callback joins the click ID and tracker to the private enquiry. Quote-tool opens and iframe loads are starts, not conversions.
 4. Build, lint, deploy to test, verify with GTM Preview, then owner-approved live deploy per `LIVECHANGES.md`.
 
 ### 6b. Conversion actions in Google Ads (you, ~20 minutes)
@@ -445,7 +446,8 @@ Left menu **Goals → Conversions → Summary → + New conversion action**:
    - Goal category: **Submit lead form** · Value: **£40** (same for each) · Count: **One** · Click-through window: 90 days · Attribution: Data-driven → Save.
    - On the "Tag setup" step choose **Use Google Tag Manager** → note down the **Conversion ID** (`AW-XXXXXXXXX`) and **Conversion label**.
 2. **"Phone number clicked"** — same flow → category **Phone call lead** · Value £40 · Count One → note ID + label.
-3. **"Quote tool opened"** — same flow → category **Page view** (or "Other") · Value £5 · Count One → after saving, open it → Settings → **Goal: Secondary** (so it's observed, not optimised toward).
+3. **"Instant quote submitted"** — Import → CRM or other data sources → track conversions from clicks → manual upload · Category **Submit lead form** · Value £25 · Count One · Attribution **Data-driven** if offered → **Primary**. Import only WindowCAD callbacks that have a stored `gclid`, `gbraid` or `wbraid`.
+   - If the old **"Quote tool opened"** action exists, keep it Secondary or remove it from campaign goals. The tool auto-loads on quote-enabled pages, so an open is not buying intent and must never drive bidding.
 4. **"Consultation booked"** — category **Book appointment** · Value £60 · Count One → note ID + label.
 5. **"Calls from ads"** — + New conversion action → **Phone calls** → "Calls from ads using call assets" → Call length: **60 seconds** · Value £40 → Save.
 
