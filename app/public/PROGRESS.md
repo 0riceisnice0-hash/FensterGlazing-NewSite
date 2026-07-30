@@ -1,6 +1,16 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-29
+Last updated: 2026-07-30
+
+## 2026-07-30 - Mandatory, granular cookie choices (test)
+
+- Replaced the dismissible bottom banner with a native first-visit modal. The page remains inert until the visitor chooses **Use necessary only**, **Customise** or **Accept all**; Escape cannot dismiss the mandatory state. The Cookie Policy remains reachable from inside the modal.
+- Kept refusal as easy as acceptance. Necessary-only and accept-all have equal-size controls, the custom analytics and marketing switches start off, and no optional category is required to use the website.
+- Versioned `fenster_cookie_consent` as a granular JSON preference lasting 180 days. Old accepted/rejected strings are invalidated so existing visitors see the clearer choice once. Footer **Cookie settings** reopens the same panel, with a close control only after a valid choice already exists.
+- Split the tracking boundary. Analytics permits Microsoft Clarity, `FGV`/`FG2` website journeys and analytics tags. Marketing permits Meta, advertising tags, persisted ad click IDs and browser-side advertising conversion events. Google Tag Manager loads only when one of those categories is granted and receives category-specific Consent Mode defaults and updates first.
+- Withdrawing a category sends denied signals, removes its known first-party cookies and local identifiers, then reloads without the withdrawn scripts. The Clarity replay stylesheet still loads before Clarity itself.
+- Updated the generated Privacy Policy and Cookie Policy with the category purposes, providers, 90-day site identifier retention, 180-day preference duration and withdrawal behaviour.
+- PHP lint, JavaScript syntax checking and the production CSS/JavaScript build pass. Test deployment and browser verification follow in this entry before handoff.
 
 ## 2026-07-29 - Two open handle questions closed by the owner (docs only)
 

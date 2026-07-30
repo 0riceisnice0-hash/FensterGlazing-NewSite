@@ -1548,83 +1548,256 @@ h3 {
   color: #ffffff;
 }
 
-.fg-cookie-consent {
-  position: fixed;
-  z-index: 12000;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 18px 54px rgba(0, 45, 58, 0.22);
-}
-
 .fg-cookie-consent[hidden],
 .site-footer__cookie-settings[hidden] {
   display: none;
 }
 
+.fg-cookie-consent-open {
+  overflow: hidden;
+}
+
 .fg-cookie-consent {
-  left: 1rem;
-  right: 1rem;
-  bottom: 1rem;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  gap: 1rem;
-  align-items: center;
-  width: min(calc(100% - 2rem), 920px);
-  margin: 0 auto;
-  padding: 1rem;
+  width: min(calc(100% - 2rem), 760px);
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
   border-radius: 8px;
-  background: rgba(0, 45, 58, 0.96);
-  color: #ffffff;
+  background: transparent;
+  color: var(--color-ink);
+  box-shadow: 0 28px 90px rgba(0, 28, 36, 0.34);
 }
 
-.fg-cookie-consent__copy {
-  min-width: 0;
+.fg-cookie-consent:not([open]) {
+  display: none;
 }
 
-.fg-cookie-consent__copy strong {
-  display: block;
+.fg-cookie-consent::backdrop {
+  background: rgba(0, 28, 36, 0.76);
+  backdrop-filter: blur(4px);
+}
+
+.fg-cookie-consent__panel {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-cookie-consent__eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fg-cookie-consent h2 {
+  max-width: 650px;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  line-height: 1.08;
+}
+
+.fg-cookie-consent h2 + p {
+  margin: 0.85rem 0 0;
+  color: var(--color-steel);
   font-size: 1rem;
-  line-height: 1.2;
+  line-height: 1.58;
 }
 
-.fg-cookie-consent__copy p {
-  margin: 0.2rem 0 0;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.92rem;
-  line-height: 1.42;
+.fg-cookie-consent__note {
+  margin: 0.65rem 0 0;
+  color: var(--color-steel);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .fg-cookie-consent__actions {
-  display: flex;
-  gap: 0.55rem;
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+
+.fg-cookie-consent__actions--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .fg-cookie-consent .button {
-  min-height: 42px;
-  padding: 0.65rem 0.9rem;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 0.8rem;
+  text-align: center;
 }
 
-.fg-cookie-consent > a {
-  color: #ffffff;
+.fg-cookie-consent .button--light {
+  border-color: rgba(0, 45, 58, 0.3);
+  background: #f3f7f7;
+  color: var(--color-ink);
+}
+
+.fg-cookie-consent .button--light:hover,
+.fg-cookie-consent .button--light:focus-visible {
+  border-color: var(--color-primary);
+  background: #e5efee;
+  color: var(--color-ink);
+}
+
+.fg-cookie-consent__policy {
+  margin: 1rem 0 0;
+  text-align: center;
+}
+
+.fg-cookie-consent__policy a {
+  color: var(--color-steel);
   font-size: 0.9rem;
   font-weight: 800;
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 
-/* While the Legend chat drawer is open it owns the viewport. The banner would
-   otherwise float above the drawer and bury the chat composer on mobile. The
-   choice is only deferred: closing the chat brings the banner straight back,
-   and no optional tracking loads without acceptance in the meantime. */
-.legend-chat-open .fg-cookie-consent {
-  visibility: hidden;
-  pointer-events: none;
-  opacity: 0;
+.fg-cookie-consent__close {
+  position: absolute;
+  z-index: 1;
+  top: 0.8rem;
+  right: 0.8rem;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(0, 45, 58, 0.2);
+  border-radius: 50%;
+  background: #f3f7f7;
+  color: var(--color-ink);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fg-cookie-consent__close:hover,
+.fg-cookie-consent__close:focus-visible {
+  border-color: var(--color-primary);
+  background: #e5efee;
+}
+
+.fg-cookie-consent__choices {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.fg-cookie-consent__choice {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 76px;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(0, 45, 58, 0.16);
+  border-radius: 8px;
+  background: #f8faf9;
+}
+
+.fg-cookie-consent__choice strong,
+.fg-cookie-consent__choice span {
+  display: block;
+}
+
+.fg-cookie-consent__choice strong {
+  color: var(--color-ink);
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.fg-cookie-consent__choice p,
+.fg-cookie-consent__choice span > span {
+  margin: 0.25rem 0 0;
+  color: var(--color-steel);
+  font-size: 0.86rem;
+  line-height: 1.42;
+}
+
+.fg-cookie-consent__always {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  background: #e5efee;
+  color: var(--color-primary);
+  font-size: 0.76rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.fg-cookie-consent__choice input[role="switch"] {
+  position: relative;
+  flex: 0 0 auto;
+  width: 52px;
+  height: 30px;
+  margin: 0;
+  appearance: none;
+  border: 2px solid #6c7b80;
+  border-radius: 999px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.fg-cookie-consent__choice input[role="switch"]::before {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #6c7b80;
+  content: "";
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.fg-cookie-consent__choice input[role="switch"]:checked {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+}
+
+.fg-cookie-consent__choice input[role="switch"]:checked::before {
+  background: #ffffff;
+  transform: translateX(22px);
+}
+
+.fg-cookie-consent__choice input[role="switch"]:focus-visible {
+  outline: 3px solid rgba(231, 114, 38, 0.45);
+  outline-offset: 3px;
 }
 
 @media (max-width: 860px) {
-  .fg-cookie-consent .button {
-    min-height: 48px;
-    padding: 0.75rem 1rem;
+  .fg-cookie-consent__actions--three {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .fg-cookie-consent {
+    width: min(calc(100% - 1rem), 760px);
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .fg-cookie-consent__panel {
+    padding: 1.25rem;
+  }
+
+  .fg-cookie-consent__close:not([hidden]) ~ div h2 {
+    padding-right: 2.6rem;
+  }
+
+  .fg-cookie-consent__choice {
+    min-height: 72px;
+    padding: 0.8rem;
   }
 }
 
@@ -21406,20 +21579,6 @@ a.fg-cs-card__pill:focus-visible {
   .generated-details-grid,
   .generated-gallery {
     grid-template-columns: 1fr;
-  }
-
-  .fg-cookie-consent {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-    align-items: start;
-  }
-
-  .fg-cookie-consent__actions {
-    width: 100%;
-  }
-
-  .fg-cookie-consent .button {
-    flex: 1 1 0;
   }
 
   .generated-feature--reverse .generated-feature__copy,

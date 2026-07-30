@@ -43,7 +43,7 @@ The current experience includes:
 
 On desktop the drawer is `420px` wide, limited by the available viewport width, and covers the viewport from top to bottom. On mobile the drawer becomes full width and full height.
 
-There is no persistent floating Cookies button. The `Cookie settings` control lives in the footer and reopens the consent banner from there. Legend observes only the actual consent banner for launcher positioning. The launcher's large positioning wrapper does not accept pointer events; only the visible Legend button and speech bubble do, so its transparent area cannot block footer or cookie controls.
+There is no persistent floating Cookies button. The `Cookie settings` control lives in the footer and reopens the consent modal from there. On a first visit the modal owns the viewport until the visitor makes a choice, so Legend cannot open over it. The launcher's large positioning wrapper does not accept pointer events; only the visible Legend button and speech bubble do, so its transparent area cannot block footer or cookie controls.
 
 Opening or using chat must never accept, reject or overwrite the visitor's optional-cookie choice.
 
