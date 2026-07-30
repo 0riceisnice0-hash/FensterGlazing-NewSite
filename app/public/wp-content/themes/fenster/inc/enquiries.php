@@ -41,7 +41,7 @@ function fenster_enquiry_admin_columns(array $columns): array
         'fenster_project' => __('Project', 'fenster'),
         'fenster_contact' => __('Contact', 'fenster'),
         'fenster_source' => __('Source', 'fenster'),
-        'fenster_ad' => __('Ad click', 'fenster'),
+        'fenster_ad' => __('Ad attribution', 'fenster'),
         'fenster_delivery' => __('Email', 'fenster'),
         'date' => __('Received', 'fenster'),
     ];
@@ -61,19 +61,26 @@ function fenster_render_enquiry_admin_column(string $column, int $post_id): void
     } elseif ($column === 'fenster_ad') {
         $click_id = (string) get_post_meta($post_id, '_fenster_ad_click_id', true);
         $click_type = (string) get_post_meta($post_id, '_fenster_ad_click_type', true);
-        if ($click_id === '') {
+        $ads_tracker = (string) get_post_meta($post_id, '_fenster_ads_tracker', true);
+        if ($click_id === '' && $ads_tracker === '') {
             echo '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . esc_html__('Not from an ad', 'fenster') . '</span>';
             return;
         }
 
-        // The full value is what an offline conversion upload needs, so keep it
-        // selectable in the title attribute rather than only showing a stub.
-        printf(
-            '<code title="%1$s">%2$s: %3$s</code>',
-            esc_attr($click_id),
-            esc_html($click_type),
-            esc_html(strlen($click_id) > 16 ? substr($click_id, 0, 16) . '...' : $click_id)
-        );
+        if ($ads_tracker !== '') {
+            echo '<code>' . esc_html('ads: ' . $ads_tracker) . '</code>';
+        }
+        if ($click_id !== '') {
+            // The full value is what an offline conversion upload needs, so keep
+            // it selectable in the title attribute rather than only showing a stub.
+            printf(
+                '%1$s<code title="%2$s">%3$s: %4$s</code>',
+                $ads_tracker !== '' ? '<br>' : '',
+                esc_attr($click_id),
+                esc_html($click_type),
+                esc_html(strlen($click_id) > 16 ? substr($click_id, 0, 16) . '...' : $click_id)
+            );
+        }
     } elseif ($column === 'fenster_delivery') {
         $sent = (bool) get_post_meta($post_id, '_fenster_email_sent', true);
         echo esc_html($sent ? __('Sent', 'fenster') : __('Saved only', 'fenster'));
@@ -422,6 +429,7 @@ function fenster_process_enquiry(): array|WP_Error
         'journey_ref' => sanitize_text_field(wp_unslash($_POST['journey_ref'] ?? '')),
         'visitor_id' => sanitize_text_field(wp_unslash($_POST['visitor_id'] ?? '')),
         'ad_click_id' => sanitize_text_field(wp_unslash($_POST['ad_click_id'] ?? '')),
+        'ad_tracker' => sanitize_text_field(wp_unslash($_POST['ad_tracker'] ?? '')),
         'appointment_date' => sanitize_text_field(wp_unslash($_POST['appointment_date'] ?? '')),
         'appointment_time' => sanitize_text_field(wp_unslash($_POST['appointment_time'] ?? '')),
     ];
@@ -440,6 +448,9 @@ function fenster_process_enquiry(): array|WP_Error
     } else {
         $data['ad_click_id'] = '';
     }
+    $data['ad_tracker'] = preg_match('/^[A-Za-z0-9 _.-]{1,80}$/', $data['ad_tracker'])
+        ? $data['ad_tracker']
+        : '';
     $privacy = ! empty($_POST['privacy']);
 
     if ($data['name'] === '' || $data['email'] === '' || $data['phone'] === '' || $data['location'] === '' || $data['project_type'] === '' || $data['message'] === '' || ! $privacy) {
@@ -527,6 +538,7 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_visitor_id' => $data['visitor_id'],
         '_fenster_ad_click_type' => $data['ad_click_type'],
         '_fenster_ad_click_id' => $data['ad_click_id'],
+        '_fenster_ads_tracker' => $data['ad_tracker'],
         '_fenster_appointment_date' => $data['appointment_date'],
         '_fenster_appointment_time' => $data['appointment_time'],
         '_fenster_appointment_display' => $data['appointment_display'],

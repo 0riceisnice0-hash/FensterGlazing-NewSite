@@ -1,6 +1,15 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-29
+Last updated: 2026-07-30
+
+## 2026-07-30 - Google Ads quote-completion attribution (test release)
+
+- Owner clarified that the quote iframe auto-loads on quote-enabled pages, so `quote_opened` and `quote_iframe_loaded` are funnel diagnostics, not conversions. The paid goal is a completed WindowCAD submission.
+- Google campaign suffixes now use `ads={adgroupid}`. The theme preserves that real ad-group number across a consented visit and copies it into every WindowCAD URL while keeping the existing `tracking=FG2-...` journey reference separate.
+- Accepted `gclid`, `gbraid` and `wbraid` values are joined to the opaque FG2 journey in WordPress for 90 days through the same-origin `/wp-json/fenster/v1/ad-attribution` endpoint. The WindowCAD callback writes the click ID and `ads` tracker to the private enquiry for offline Google Ads import. Click IDs never enter the Marketing Dashboard or AdminBase notes.
+- Website forms now save the same `ads` tracker beside their existing click ID. The enquiry list shows both under `Ad attribution`.
+- Corrected the dataLayer event construction so its intended `fenster_*` name cannot be overwritten by the unprefixed payload event, and moved the post-accept visitor/page listener from `document` to the `window` that actually dispatches the consent event.
+- Built the compiled JS and PHP-linted every changed include/template. Deployment and end-to-end test-site verification are recorded below once complete.
 
 ## 2026-07-29 - Two open handle questions closed by the owner (docs only)
 
@@ -289,7 +298,6 @@ Owner report: the uPVC doors and aluminium doors tiles are the wrong pictures fo
 - **Found and left alone on the owner's instruction:** `/aluminium-doors/` has the same problem in its hero. `sheerline-aluminium-door.jpg` is an interior kitchen shot of a white single door, already noted on 2026-07-21 as reading uPVC. The only correct replacements are 600x450, too small for a hero, so it needs a better asset rather than a swap. Recorded in `nick.md`.
 - Verified on test: the render is gone from `/doors-milton-keynes/` and the replacement is serving.
 - Test deployment only. No live-site deployment was performed.
-
 ## 2026-07-28 - Consultations stated as free sitewide (test)
 
 Owner instruction from Nick: wherever the site mentions booking a consultation, make clear it is free.

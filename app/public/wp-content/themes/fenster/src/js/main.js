@@ -1633,6 +1633,21 @@ const visitorReference = () => {
   return created;
 };
 
+// WindowCAD's `ads` URL field is its own source tracker, separate from the
+// consented FG2 journey carried in `tracking`. Google Ads supplies the real
+// ad-group ID through its {adgroupid} ValueTrack parameter. Preserve a legacy
+// text label too so the existing Meta/Google quote links continue to work.
+const adTrackerStorageKey = 'fenster_ads_tracker';
+const validAdTrackerValue = (value) => /^[A-Za-z0-9 _.-]{1,80}$/.test(value || '');
+const adTrackerReference = () => {
+  const current = (new URLSearchParams(window.location.search).get('ads') || '').trim();
+  if (validAdTrackerValue(current)) {
+    storeTrackingValue(adTrackerStorageKey, current);
+    return current;
+  }
+  return readStoredTrackingValue(adTrackerStorageKey, validAdTrackerValue);
+};
+
 const currentCampaignContext = () => {
   const parameters = new URLSearchParams(window.location.search);
   return {
@@ -1723,7 +1738,7 @@ const trackWebsiteEvent = (event, detail = {}) => {
   if (!trackingConsentAccepted()) return payload.journey_id;
 
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: `fenster_${event}`, ...payload });
+  window.dataLayer.push({ ...payload, event: `fenster_${event}` });
   window.clarity?.('event', `fenster_${event}`);
 
   if (websiteTracking.endpoint) {
@@ -1751,6 +1766,8 @@ const windowCadUrlWithReference = (value) => {
     const url = new URL(value, window.location.href);
     const trackingValue = trackingConsentRejected() ? 'rejected-cookies' : (journeyReference() || 'cookie-consent-not-accepted');
     url.searchParams.set(websiteTracking.referenceParameter || 'reference', trackingValue);
+    const adsTracker = adTrackerReference();
+    if (adsTracker) url.searchParams.set('ads', adsTracker);
     return url.toString();
   } catch (_error) {
     return value;
@@ -1802,16 +1819,51 @@ const populateAdClickFields = () => {
   document.querySelectorAll('[data-fg-ad-click-id]').forEach((field) => {
     field.value = captured;
   });
+  const adsTracker = adTrackerReference();
+  document.querySelectorAll('[data-fg-ad-tracker]').forEach((field) => {
+    field.value = adsTracker;
+  });
 };
 
 populateAdClickFields();
+
+let lastAdAttributionSync = '';
+const syncAdAttribution = () => {
+  if (!trackingConsentAccepted() || !websiteTracking.adAttributionEndpoint) return;
+  const journeyId = journeyReference();
+  const clickId = adClickReference();
+  const adsTracker = adTrackerReference();
+  if (!validTrackingReference(journeyId, 'FG2') || !validAdClickValue(clickId)) return;
+
+  const syncKey = `${journeyId}:${clickId}:${adsTracker}`;
+  if (syncKey === lastAdAttributionSync) return;
+  lastAdAttributionSync = syncKey;
+
+  window.fetch(websiteTracking.adAttributionEndpoint, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      journey_id: journeyId,
+      ad_click_id: clickId,
+      ads_tracker: adsTracker,
+    }),
+  }).catch(() => {
+    lastAdAttributionSync = '';
+  });
+};
+
+syncAdAttribution();
 
 // A visitor arriving from an ad meets the cookie banner before they reach a
 // form, and accepting is what allows the id to be stored at all. Without this
 // second pass the click id is captured into the field but never persisted, so
 // it is lost the moment they open a second page. The banner dispatches on
 // window, not document.
-window.addEventListener('fenster:tracking-consent-accepted', populateAdClickFields);
+window.addEventListener('fenster:tracking-consent-accepted', () => {
+  populateAdClickFields();
+  syncAdAttribution();
+});
 
 let consentedPageRecorded = false;
 if (trackingConsentAccepted()) {
@@ -1822,7 +1874,7 @@ if (trackingConsentAccepted()) {
   trackAggregateStat('page_view');
 }
 
-document.addEventListener('fenster:tracking-consent-accepted', () => {
+window.addEventListener('fenster:tracking-consent-accepted', () => {
   if (consentedPageRecorded || !trackingConsentAccepted()) return;
   consentedPageRecorded = true;
   trackWebsiteEvent('visitor_seen');
