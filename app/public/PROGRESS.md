@@ -11,7 +11,8 @@ Last updated: 2026-07-30
 - Withdrawing a category sends denied signals, removes its known first-party cookies and local identifiers, then reloads without the withdrawn scripts. The Clarity replay stylesheet still loads before Clarity itself.
 - Updated the generated Privacy Policy and Cookie Policy with the category purposes, providers, 90-day site identifier retention, 180-day preference duration and withdrawal behaviour.
 - **The first protected-site browser pass caught a bypass before handoff.** The close button carried `hidden`, but its later component rule declared `display: grid` and overrode the browser default, so it still appeared on the mandatory first layer. A component-specific hidden rule now wins; the close control appears only when a visitor with a saved choice reopens settings.
-- PHP lint, JavaScript syntax checking and the production CSS/JavaScript build pass. Test deployment and browser verification follow in this entry before handoff.
+- Shipped to the protected test site through theme commit `37222a2`. PHP lint, JavaScript syntax checking and the production CSS/JavaScript build pass. Five representative routes return 200.
+- Browser QA passed at 1280x720 and a true 390x844: mandatory Escape leaves the first modal open, the first layer has no close control, all mobile controls fit with no horizontal overflow, the custom switches are off on a fresh choice, necessary-only loads no optional scripts, analytics-only loads Clarity but not Meta, marketing-only loads Meta but not Clarity, accept-all loads both, the Clarity replay stylesheet precedes Clarity, withdrawal reloads without the removed category, footer settings reopens with saved values, and the updated policy sections render. No browser console errors.
 
 ## 2026-07-29 - Two open handle questions closed by the owner (docs only)
 

@@ -4,7 +4,7 @@ Last updated: 2026-07-30
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
-- **Test is ahead with a new granular cookie-consent modal, awaiting approval.** A first visit now opens a native modal that cannot be dismissed until the visitor chooses Use necessary only, Customise or Accept all. Analytics and marketing are separate and off by default, necessary-only and accept-all are equally accessible, valid choices last 180 days, and footer Cookie settings supports withdrawal. Analytics gates Clarity and `FGV`/`FG2`; marketing gates Meta, advertising tags and persisted ad click IDs. Google Tag Manager receives category-specific Consent Mode signals before it loads. Legacy accepted/rejected strings are intentionally re-prompted. Live has not been changed.
+- **Test is ahead at theme commit `37222a2` with a new granular cookie-consent modal, awaiting approval.** A first visit now opens a native modal that cannot be dismissed until the visitor chooses Use necessary only, Customise or Accept all. Analytics and marketing are separate and off by default, necessary-only and accept-all are equally accessible, valid choices last 180 days, and footer Cookie settings supports withdrawal. Analytics gates Clarity and `FGV`/`FG2`; marketing gates Meta, advertising tags and persisted ad click IDs. Google Tag Manager receives category-specific Consent Mode signals before it loads. Legacy accepted/rejected strings are intentionally re-prompted. Live has not been changed.
 
 ## Current Truth
 
