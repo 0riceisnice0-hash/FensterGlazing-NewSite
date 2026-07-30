@@ -541,6 +541,12 @@ function fenster_render_cookie_consent(): void
             });
         }
 
+        if (settings) {
+            settings.addEventListener('click', function () {
+                openDialog(false);
+            });
+        }
+
         document.addEventListener('click', function (event) {
             if (event.target.closest('[data-fg-cookie-accept-all]')) {
                 saveChoice(true, true);
@@ -559,10 +565,6 @@ function fenster_render_cookie_consent(): void
                     Boolean(analyticsInput && analyticsInput.checked),
                     Boolean(marketingInput && marketingInput.checked)
                 );
-            }
-
-            if (event.target.closest('[data-fg-cookie-settings]')) {
-                openDialog(false);
             }
 
             if (event.target.closest('[data-fg-cookie-close]')) {
