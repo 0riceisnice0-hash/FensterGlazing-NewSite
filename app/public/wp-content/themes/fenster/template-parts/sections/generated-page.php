@@ -4006,13 +4006,6 @@ if ($is_commercial_hub) {
                                    width: fit-content and collapsed to 15px. */
                                 ?>
                                 <i class="fg-glass-patch" aria-hidden="true">
-                                    <?php
-                                    /* The mark sits behind the panes and shifts
-                                       against them as the page scrolls, so it
-                                       reads as something on the far side of the
-                                       glass rather than printed on it. */
-                                    ?>
-                                    <i class="fg-glass-patch__mark" data-fg-parallax style="<?php echo esc_attr('background-image:url(' . fenster_generated_url('/wp-content/themes/fenster/assets/brand/fenster-mark.png') . ')'); ?>"></i>
                                     <?php foreach ($glass_patch as $glass_pane) : ?>
                                         <span style="<?php echo esc_attr('background-image:url(' . fenster_generated_url((string) $glass_pane['image']) . ')'); ?>"></span>
                                     <?php endforeach; ?>
