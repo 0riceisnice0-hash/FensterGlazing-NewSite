@@ -63,6 +63,8 @@ Owner: the privacy glass box on product pages has a 01 that makes no sense now, 
 - **Two faults in the first parallax, both mine.** Travel was unclamped, so a card far down a long page computed a 120px offset before it had ever been on screen. And updates were gated on an IntersectionObserver, so when the observer did not fire the mark kept its startup offset and never moved. Clamped to one viewport, observer dropped: one `getBoundingClientRect` per scroll for one element is not worth guarding.
 - **Verified against geometry, not scroll position.** `window.scrollTo` does not move this page, because Lenis owns the scroll, exactly as `nick.md` warns. Moving the card through the viewport instead and reading the transform gives -5.64, 13.55 then 26: monotonic, within the clamp, and responding to the thing a real scroll actually changes.
 - 980x180 card with five 178x178 panes at 1440; 366x163 with 86x86 panes at a true 390; no horizontal overflow at either.
+- **Owner: the F icon ruins it, remove it and leave the rest.** Dropped cleanly: the mark element and its background image, the parallax script in full (nothing else read `data-fg-parallax`, confirmed by grep before deleting), the mark's own CSS including its mobile and reduced-motion rules, and the extracted `fenster-mark.png` asset, confirmed unused first. The five-pane panel, its square aspect, the inner leading, the fade into the card, the slim height and the wide single-card layout are all unchanged.
+- Verified on test: mark markup absent, panel still serving five real pattern photographs.
 - Test deployment only. Live is `572fe3c`.
 
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
