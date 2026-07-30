@@ -30,6 +30,14 @@ function fenster_google_ads_feed_password(): string
     );
 }
 
+function fenster_google_ads_feed_token(): string
+{
+    return fenster_adminbase_config_value(
+        'FENSTER_GOOGLE_ADS_FEED_TOKEN',
+        'fenster_google_ads_feed_token'
+    );
+}
+
 function fenster_google_ads_feed_request_credentials(WP_REST_Request $request): array
 {
     $username = sanitize_text_field((string) ($_SERVER['PHP_AUTH_USER'] ?? ''));
@@ -56,8 +64,17 @@ function fenster_google_ads_feed_is_authorized(WP_REST_Request $request): bool|W
 {
     $expected_username = fenster_google_ads_feed_username();
     $expected_password = fenster_google_ads_feed_password();
+    $expected_token = fenster_google_ads_feed_token();
+    $request_token = sanitize_text_field((string) $request->get_param('feed_token'));
 
-    if ($expected_username === '' || $expected_password === '') {
+    if ($expected_token !== ''
+        && $request_token !== ''
+        && hash_equals($expected_token, $request_token)
+    ) {
+        return true;
+    }
+
+    if (($expected_username === '' || $expected_password === '') && $expected_token === '') {
         return new WP_Error(
             'fenster_google_ads_feed_not_configured',
             'The Google Ads conversion feed is not configured.',
@@ -87,6 +104,17 @@ add_action('rest_api_init', 'fenster_register_google_ads_conversion_feed');
 function fenster_register_google_ads_conversion_feed(): void
 {
     register_rest_route('fenster/v1', '/google-ads-conversions\.csv', [
+        'methods' => WP_REST_Server::READABLE,
+        'callback' => 'fenster_google_ads_conversion_feed',
+        'permission_callback' => 'fenster_google_ads_feed_is_authorized',
+    ]);
+
+    /*
+     * Google Ads Data Manager's Java fetcher reaches SiteGround without the
+     * Authorization header supplied in its HTTPS connection form. The opaque
+     * path token is the fallback for that host-level header stripping.
+     */
+    register_rest_route('fenster/v1', '/google-ads-conversions/(?P<feed_token>[A-Fa-f0-9]{64})\.csv', [
         'methods' => WP_REST_Server::READABLE,
         'callback' => 'fenster_google_ads_conversion_feed',
         'permission_callback' => 'fenster_google_ads_feed_is_authorized',
@@ -212,7 +240,7 @@ function fenster_serve_google_ads_conversion_csv(
     WP_REST_Request $request,
     WP_REST_Server $server
 ): bool {
-    if ($request->get_route() !== '/fenster/v1/google-ads-conversions.csv'
+    if (! preg_match('#^/fenster/v1/google-ads-conversions(?:/[A-Fa-f0-9]{64})?\.csv$#', $request->get_route())
         || $result->get_status() !== 200
         || ! is_string($result->get_data())
     ) {
