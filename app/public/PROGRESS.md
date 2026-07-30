@@ -65,6 +65,10 @@ Owner: the privacy glass box on product pages has a 01 that makes no sense now, 
 - 980x180 card with five 178x178 panes at 1440; 366x163 with 86x86 panes at a true 390; no horizontal overflow at either.
 - **Owner: the F icon ruins it, remove it and leave the rest.** Dropped cleanly: the mark element and its background image, the parallax script in full (nothing else read `data-fg-parallax`, confirmed by grep before deleting), the mark's own CSS including its mobile and reduced-motion rules, and the extracted `fenster-mark.png` asset, confirmed unused first. The five-pane panel, its square aspect, the inner leading, the fade into the card, the slim height and the wide single-card layout are all unchanged.
 - Verified on test: mark markup absent, panel still serving five real pattern photographs.
+- **Owner: mobile text is hard to see, desktop box is not wide enough for the screen.** Two independent faults, both measured before touching CSS.
+  - **Desktop:** the choice map caps at 980px so two or three cards do not stretch into empty padding, and a lone card inherited that cap for no reason, sitting 200px narrower than the 1180px container around it. The `--single` modifier now lifts the cap.
+  - **Mobile:** measured the actual overlap rather than guessing at it. The CTA line sat 115-141px from the card top; the patch's own fade left the band visible only from about 124px down, so "Compare glass patterns" was printed directly over visible glass texture, dark green on a busy grey pattern. The panel now drops into normal document flow below the copy instead of overlaying it, moved there with `order` since the markup puts it first so it can act as a right-hand backdrop on desktop.
+- Verified at both real widths: 1180x180 card exactly filling the container at 1440, zero rectangle overlap between the panel and any of the heading, copy or CTA at a true 390. The desktop bounding boxes still overlap by design, since the panel is a right-hand backdrop that fades to invisible under the text, and that was true before this fix too.
 - Test deployment only. Live is `572fe3c`.
 
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
