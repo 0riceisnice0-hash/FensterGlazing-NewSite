@@ -185,6 +185,7 @@ function fenster_google_ads_conversion_rows(): array
         $identifiers[$click_type] = $click_id;
 
         $rows[] = [
+            'conversion',
             $identifiers['gclid'],
             $identifiers['gbraid'],
             $identifiers['wbraid'],
@@ -207,6 +208,7 @@ function fenster_google_ads_conversion_feed(): WP_REST_Response
     }
 
     fputcsv($stream, [
+        'record_type',
         'gclid',
         'gbraid',
         'wbraid',
@@ -217,7 +219,27 @@ function fenster_google_ads_conversion_feed(): WP_REST_Response
         'order_id',
     ]);
 
-    foreach (fenster_google_ads_conversion_rows() as $row) {
+    $rows = fenster_google_ads_conversion_rows();
+    if (empty($rows)) {
+        /*
+         * Data Manager will not create a connection from a header-only file.
+         * This row exists only for schema discovery and must be excluded by the
+         * connection's record_type = conversion filter.
+         */
+        $rows[] = [
+            'schema_sample',
+            'EXCLUDED_SCHEMA_SAMPLE',
+            '',
+            '',
+            'Instant quote submitted',
+            '2020-01-01T00:00:00Z',
+            '0.00',
+            'GBP',
+            'schema-sample',
+        ];
+    }
+
+    foreach ($rows as $row) {
         fputcsv($stream, $row);
     }
 
