@@ -7974,8 +7974,12 @@ html.fg-gallery-lightbox-open body {
     height: clamp(56px, 15vw, 76px);
     margin-top: 0.85rem;
     justify-content: flex-start;
-    mask-image: none;
-    -webkit-mask-image: none;
+    /* The squares filled the strip and then stopped dead against blank space,
+       which read as disjointed rather than as a sample of glass. A fade on the
+       last pane, not a full removal, softens that edge without bringing back
+       the vertical mask that hid text behind it before. */
+    mask-image: linear-gradient(90deg, #000 0%, #000 72%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 72%, transparent 100%);
   }
 }
 
