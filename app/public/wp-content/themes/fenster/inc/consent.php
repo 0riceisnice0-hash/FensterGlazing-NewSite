@@ -96,8 +96,7 @@ function fenster_render_cookie_consent(): void
                 <p class="fg-cookie-consent__note">
                     <?php esc_html_e('Optional cookies stay off unless you choose them. You can change your choice at any time.', 'fenster'); ?>
                 </p>
-                <div class="fg-cookie-consent__actions fg-cookie-consent__actions--three">
-                    <button type="button" class="button button--steel" data-fg-cookie-necessary><?php esc_html_e('Use necessary only', 'fenster'); ?></button>
+                <div class="fg-cookie-consent__actions fg-cookie-consent__actions--two">
                     <button type="button" class="button button--light" data-fg-cookie-customise><?php esc_html_e('Customise', 'fenster'); ?></button>
                     <button type="button" class="button" data-fg-cookie-accept-all><?php esc_html_e('Accept all', 'fenster'); ?></button>
                 </div>
