@@ -67,6 +67,12 @@ function fenster_google_ads_feed_is_authorized(WP_REST_Request $request): bool|W
 
     [$username, $password] = fenster_google_ads_feed_request_credentials($request);
     if (! hash_equals($expected_username, $username) || ! hash_equals($expected_password, $password)) {
+        error_log('Fenster Google Ads feed: unauthorized request ' . wp_json_encode([
+            'authorization_header' => $request->get_header('authorization') !== '' ? 'present' : 'absent',
+            'username_match' => $username !== '' && hash_equals($expected_username, $username),
+            'user_agent' => substr(sanitize_text_field((string) $request->get_header('user-agent')), 0, 180),
+        ]));
+
         return new WP_Error(
             'fenster_google_ads_feed_unauthorized',
             'Valid feed credentials are required.',
