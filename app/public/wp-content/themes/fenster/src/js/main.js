@@ -1568,20 +1568,34 @@ const visitorStorageKey = 'fenster_website_visitor_id';
 const firstTouchStorageKey = 'fenster_website_first_touch';
 const trackingStorageLifetime = 90 * 24 * 60 * 60 * 1000;
 
-const trackingConsentAccepted = () => {
+const cookieConsentPreferences = () => {
   try {
-    return window.localStorage.getItem('fenster_cookie_consent') === 'accepted';
-  } catch (_error) {
-    return false;
-  }
+    const raw = window.localStorage.getItem('fenster_cookie_consent');
+    const stored = raw ? JSON.parse(raw) : null;
+    if (
+      stored
+      && stored.version === 2
+      && typeof stored.analytics === 'boolean'
+      && typeof stored.marketing === 'boolean'
+      && Number(stored.expires_at) > Date.now()
+    ) return stored;
+  } catch (_error) {}
+  return null;
+};
+
+const trackingConsentAccepted = () => {
+  const preferences = cookieConsentPreferences();
+  return Boolean(preferences && preferences.analytics);
+};
+
+const marketingConsentAccepted = () => {
+  const preferences = cookieConsentPreferences();
+  return Boolean(preferences && preferences.marketing);
 };
 
 const trackingConsentRejected = () => {
-  try {
-    return window.localStorage.getItem('fenster_cookie_consent') === 'rejected';
-  } catch (_error) {
-    return false;
-  }
+  const preferences = cookieConsentPreferences();
+  return Boolean(preferences && !preferences.analytics);
 };
 
 const createJourneyReference = () => {
@@ -1610,6 +1624,13 @@ const readStoredTrackingValue = (key, validator) => {
 
 const storeTrackingValue = (key, value) => {
   if (!trackingConsentAccepted()) return;
+  try {
+    window.localStorage.setItem(key, JSON.stringify({ value, expires_at: Date.now() + trackingStorageLifetime }));
+  } catch (_error) {}
+};
+
+const storeMarketingValue = (key, value) => {
+  if (!marketingConsentAccepted()) return;
   try {
     window.localStorage.setItem(key, JSON.stringify({ value, expires_at: Date.now() + trackingStorageLifetime }));
   } catch (_error) {}
@@ -1805,12 +1826,14 @@ const adClickReference = () => {
   for (const key of ['gclid', 'gbraid', 'wbraid']) {
     const captured = `${key}:${(parameters.get(key) || '').trim()}`;
     if (validAdClickValue(captured)) {
-      // storeTrackingValue is consent gated, so a rejected visitor keeps the id
+      // storeMarketingValue is consent gated, so a visitor without marketing
+      // consent keeps the id
       // for this page load without it ever being persisted.
-      storeTrackingValue(adClickStorageKey, captured);
+      storeMarketingValue(adClickStorageKey, captured);
       return captured;
     }
   }
+  if (!marketingConsentAccepted()) return '';
   return readStoredTrackingValue(adClickStorageKey, validAdClickValue);
 };
 
@@ -1864,6 +1887,7 @@ window.addEventListener('fenster:tracking-consent-accepted', () => {
   populateAdClickFields();
   syncAdAttribution();
 });
+window.addEventListener('fenster:cookie-preferences-updated', populateAdClickFields);
 
 let consentedPageRecorded = false;
 if (trackingConsentAccepted()) {
@@ -1923,7 +1947,7 @@ document.addEventListener('click', (event) => {
 // and destinations only: never form values or other customer-entered data.
 document.addEventListener('click', (event) => {
   const action = event.target.closest('a.button, button.button, [data-fg-audience-choice]');
-  if (!action || action.matches('[data-fg-cookie-accept], [data-fg-cookie-decline]') || action.matches('[type="submit"]')) return;
+  if (!action || action.closest('[data-fg-cookie-consent]') || action.matches('[type="submit"]')) return;
   const label = (action.textContent || action.getAttribute('aria-label') || 'Website action').trim().replace(/\s+/g, ' ').slice(0, 120);
   let target = '';
   if (action instanceof HTMLAnchorElement && action.href) {
@@ -2238,7 +2262,7 @@ enquiryForms.forEach((form) => {
         result.message || 'Thanks — your enquiry has been received.',
         result.copy || 'Your project details are safely with the Fenster team.',
       );
-      if (trackingConsentAccepted()) {
+      if (marketingConsentAccepted()) {
         // Google Tag Manager can only fire an Ads conversion from something it
         // sees in the browser. The dashboard already receives form_submitted
         // server-side from inc/enquiries.php, so this is a dataLayer push only:

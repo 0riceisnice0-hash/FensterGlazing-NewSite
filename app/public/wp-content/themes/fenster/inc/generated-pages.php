@@ -1048,15 +1048,15 @@ function fenster_get_generated_page(?string $slug = null): ?array
                 [
                     'heading' => 'Cookies, analytics and tracking',
                     'body' => [
-                        'The website uses necessary cookies for basic site functions. Optional analytics and marketing tools, such as Google Tag Manager, Microsoft Clarity or Meta Pixel, should only run after you accept optional cookies through the site cookie banner.',
-                        'Analytics tools can help Fenster understand page views, clicks, scroll behaviour, quote-tool use and form performance. Marketing tools may help measure advertising performance. You can reject optional cookies and still use the website.',
+                        'The website uses strictly necessary cookies or browser storage for basic functions and to remember your cookie choice. On your first visit, the site asks you to choose before you continue. Optional categories are off unless you choose them.',
+                        'You can accept all optional cookies, use strictly necessary storage only, or customise analytics and marketing separately. Analytics can help Fenster understand page views, clicks, scroll behaviour, quote-tool use and form performance. Marketing tools can help measure advertising and enquiries from ads.',
                     ],
                 ],
                 [
                     'heading' => 'Legal reasons for using information',
                     'body' => [
                         'Fenster usually uses enquiry information because it is necessary to respond before entering into a contract, to perform a contract, or because Fenster has a legitimate interest in managing customer enquiries and business records.',
-                        'Where optional analytics or marketing cookies are used, Fenster relies on your consent. You can change your cookie choice using the cookie settings control on the website where available.',
+                        'Where optional analytics or marketing cookies are used, Fenster relies on your consent. You can change or withdraw that consent at any time using Cookie settings in the website footer.',
                     ],
                 ],
                 [
@@ -1077,7 +1077,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'heading' => 'Keeping this policy current',
                     'body' => [
                         'This policy may be updated when the website, lead systems, cookie tools, analytics setup or business processes change. The latest version should always be available from the website footer.',
-                        'Last updated: 15 July 2026.',
+                        'Last updated: 30 July 2026.',
                     ],
                 ],
             ],
@@ -1113,15 +1113,23 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'heading' => 'Strictly necessary cookies and storage',
                     'body' => [
                         'Some cookies or browser storage may be needed for basic website functions, security, spam prevention, form handling, embedded quote tools or remembering your cookie choice.',
-                        'The cookie banner stores your choice in your browser using local storage under the name fenster_cookie_consent. This lets the site remember whether you accepted or rejected optional tracking.',
+                        'The cookie panel stores your choice in your browser using local storage under the name fenster_cookie_consent. It records separate analytics and marketing choices for up to 180 days, then the website asks again. This preference storage is strictly necessary because it remembers the privacy choice you requested.',
                         'If you use Legend chat, the site uses local storage named fenster_legend_chat_v1 to keep recent chat history available across Fenster pages and browser tabs for up to 24 hours from the latest activity. This assistant storage does not accept optional analytics or marketing cookies and can be cleared using Clear chat. If optional cookies have been accepted, a separate restricted quality-assurance copy of the transcript is retained in the Marketing Dashboard for up to 30 days as described in the Legend AI assistant section.',
                     ],
                 ],
                 [
-                    'heading' => 'Optional analytics and marketing tools',
+                    'heading' => 'Optional analytics',
                     'body' => [
-                        'If you accept optional cookies, the site may load Google Tag Manager, Microsoft Clarity and Meta Pixel. These tools can help Fenster understand which pages are useful, how visitors move through the site, how quote tools and forms perform, and whether advertising is working.',
-                        'These optional tools are blocked until you accept them through the cookie banner. You can reject them and still use the website, read pages, call Fenster, email the team or send an enquiry.',
+                        'If you switch on analytics, the site may load Microsoft Clarity and analytics tags managed through Google Tag Manager. Fenster also creates anonymous website visitor and journey references in local storage for up to 90 days. These tools help Fenster understand which pages are useful, how visitors move through the site, and how quote tools and forms perform.',
+                        'Microsoft and Google may receive technical information such as your device, browser, pages viewed and interactions. Their services may set analytics cookies, including names beginning _cl or _ga, with retention periods set by those providers and the site configuration.',
+                    ],
+                ],
+                [
+                    'heading' => 'Optional marketing',
+                    'body' => [
+                        'If you switch on marketing, the site may load Google advertising tags through Google Tag Manager and Meta Pixel. These tools help Fenster measure whether advertising leads to an enquiry. Advertising click references may be kept in local storage for up to 90 days.',
+                        'Google and Meta may receive technical information about visits and enquiries and may set advertising cookies, including names beginning _gcl, _fbp or _fbc. Their own privacy information explains how they use information they receive.',
+                        'Analytics and marketing are blocked until you choose them. You can leave both off and still use the website, read pages, call Fenster, email the team or send an enquiry.',
                     ],
                 ],
                 [
@@ -1142,7 +1150,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                 [
                     'heading' => 'Changing your choice',
                     'body' => [
-                        'You can use the Cookie settings button in the website footer to open the cookie banner again and change your choice.',
+                        'You can use Cookie settings in the website footer to reopen the panel and change or withdraw your choice. If you switch an optional category off, the website signals withdrawal to loaded tools, removes known first-party optional cookies and reloads the page without that category.',
                         'You can also clear cookies and site data in your browser settings. Browser controls vary, but most browsers let you delete cookies, block cookies for specific sites, or clear local storage.',
                     ],
                 ],
@@ -1150,7 +1158,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'heading' => 'More information',
                     'body' => [
                         'For more detail on how Fenster uses personal information from enquiries, quote tools and analytics, read the Privacy Policy.',
-                        'Last updated: 16 July 2026.',
+                        'Last updated: 30 July 2026.',
                     ],
                 ],
             ],
