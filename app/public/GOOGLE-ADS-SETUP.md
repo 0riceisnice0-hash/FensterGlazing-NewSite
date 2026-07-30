@@ -419,7 +419,7 @@ Do this once at **account level** (left menu: Assets → + ):
    - `Casement Window` — £600 — "1200x1200, fitted inc VAT" → `/window-door-prices-milton-keynes/`
    - `Composite Door` — £2,000 — "900x2100, fitted inc VAT" → `/composite-door-prices/`
    - `Aluminium Bifold` — £3,500 — "3000x2100, fitted inc VAT" → `/bifold-door-cost/`
-7. **Image assets:** upload 4–6 case-study photos (square 1200x1200 + landscape 1200x628 crops) from `assets/images/case-studies/` — real installs only.
+7. **Image assets:** the rebuild uses nine real case-study sources, each in square and landscape crops (18 assets per campaign). They cover Roka Dental, Whitehouse, Leighton Buzzard flush casements, Wolverton sash windows, Drayton Parslow roof lantern, Bolbeck Park, Leighton Buzzard slide-and-fold doors, Sunrise Care Home and The Green Man. Do not replace them with site-scan auto-crops.
 
 Then:
 
@@ -464,6 +464,16 @@ In tagmanager.google.com, open the container → Workspace:
 5. **Submit → Publish** the container version, named `Ads conversions v1`.
 
 Known limitation, accepted for now: GTM loads only after cookie acceptance, so Google sees conversions from accepters only. Read the accept rate off the Marketing Dashboard's consent counters and mentally gross CPL down by it. Upgrading to Consent Mode v2 (denied-state pings + modelling) is a separate owner decision because it loosens the deliberately strict consent layer.
+
+### 6e. Rebuild state confirmed 30 July 2026
+
+- `Instant quote submitted` is the Primary `Request quotes` action, imported from clicks, counted once, with a £25 fallback value and a 90-day click window.
+- `Quote tool opened` remains Secondary because the tool auto-loads.
+- All campaign URL suffixes include `utm_content={creative}&ads={adgroupid}`.
+- The website hand-off was verified on the protected test site: a consented test click produced an `FG2` journey, preserved the Google click ID server-side and rendered the WindowCAD link with `ads=12345678901`.
+- Twelve replacement responsive search ads passed Google Ads bulk preview with 12 successful rows and 0 errors. Every ad includes 135-review proof and an explicit build-and-send quote CTA.
+- The three campaigns remain Paused. Their intended ads are enabled inside the paused campaigns so there is one responsive search ad per intended ad group.
+- Production website deployment is still pending owner approval under `LIVECHANGES.md`.
 
 ### 6d. Verify end to end
 

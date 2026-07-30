@@ -1687,3 +1687,17 @@ Do not use this as the primary rulebook or handover. Use:
 - Test deployment only. No live-site deployment was performed.
 - Follow-up: the one-grammar CSS cleanup had swallowed the construction explorer styles (a deletion cut spanned the region the audit build had inserted them into), so the explorer shipped unstyled and the owner caught it. Styles restored, and QA now includes a template-classes-versus-compiled-CSS diff so a section cannot ship unstyled again.
 
+## 2026-07-30 - Google Ads Quote-Completion Rebuild
+
+- Added the `ads` tracker hand-off across every WindowCAD URL while retaining the separate consented `FG2` journey and Google click ID.
+- Added a same-origin attribution endpoint and a 90-day server-side join so a completed WindowCAD callback can recover the click ID and ad-group tracker without sending click IDs to AdminBase or the Marketing Dashboard.
+- Corrected the two new data-layer event names and the consent-accepted listener while building the attribution path.
+- Built and linted the theme, pushed commit `5eead78`, deployed that exact commit to the Basic Auth protected test site and purged the test cache. Production was not deployed.
+- Test URL used `utm_campaign=mk-prices&ads=12345678901&gclid=TESTCLICKID1234567890`. After consent, the rendered quote link contained `tracking=FG2-284F8566C4E94E7DAC&ads=12345678901`; the hidden form fields and server transient held the same tracker, FG2 journey and test gclid.
+- Renamed the existing offline click-import conversion to `Instant quote submitted`; it is Primary under `Request quotes`, Count One, different values with a £25 fallback, 90-day click window and data-driven attribution. `Quote tool opened` remains Secondary.
+- Added `utm_content={creative}&ads={adgroupid}` to the final URL suffix of all three rebuilt campaigns.
+- Removed the earlier four site-scan image sources and their weak auto-crops. Added nine real case-study sources with reviewed square and 1.91:1 crops: 18 image assets on each campaign.
+- Replaced the responsive search ads with twelve validated rows: current 4.9/135 review proof, explicit `Build & Send Your Quote` and `Get Your Fitted Price` headlines, and a submit-focused description. Google Ads preview returned 12 successful rows and 0 errors.
+- Removed the superseded ads, including one extra legacy Windows ad, then enabled the replacement ads inside the paused campaigns. Final structure: four intended ads in Windows, four in Doors and four in Price Intent.
+- Re-verified Windows and Doors at 18 image associations each, all three campaign URL suffixes, the conversion settings and the campaign status. All three campaigns remain Paused with £0 spend.
+
