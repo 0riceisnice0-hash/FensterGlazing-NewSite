@@ -419,7 +419,7 @@ Do this once at **account level** (left menu: Assets → + ):
    - `Casement Window` — £600 — "1200x1200, fitted inc VAT" → `/window-door-prices-milton-keynes/`
    - `Composite Door` — £2,000 — "900x2100, fitted inc VAT" → `/composite-door-prices/`
    - `Aluminium Bifold` — £3,500 — "3000x2100, fitted inc VAT" → `/bifold-door-cost/`
-7. **Image assets:** the rebuild uses nine real case-study sources, each in square and landscape crops (18 assets per campaign). They cover Roka Dental, Whitehouse, Leighton Buzzard flush casements, Wolverton sash windows, Drayton Parslow roof lantern, Bolbeck Park, Leighton Buzzard slide-and-fold doors, Sunrise Care Home and The Green Man. Do not replace them with site-scan auto-crops.
+7. **Image assets:** use the product-matched, campaign-level case-study sets now in the account: Windows has 10 square/landscape assets from five window projects, Doors has 10 from five entrance/bifold/slide-and-fold projects, and Price Intent has 12 from six mixed high-intent projects. These crops were visually reviewed in the picker and replace the mismatched site-scan auto-crops.
 
 Then:
 

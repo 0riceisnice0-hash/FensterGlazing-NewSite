@@ -1696,8 +1696,9 @@ Do not use this as the primary rulebook or handover. Use:
 - Test URL used `utm_campaign=mk-prices&ads=12345678901&gclid=TESTCLICKID1234567890`. After consent, the rendered quote link contained `tracking=FG2-284F8566C4E94E7DAC&ads=12345678901`; the hidden form fields and server transient held the same tracker, FG2 journey and test gclid.
 - Renamed the existing offline click-import conversion to `Instant quote submitted`; it is Primary under `Request quotes`, Count One, different values with a £25 fallback, 90-day click window and data-driven attribution. `Quote tool opened` remains Secondary.
 - Added `utm_content={creative}&ads={adgroupid}` to the final URL suffix of all three rebuilt campaigns.
-- Removed the earlier four site-scan image sources and their weak auto-crops. Added nine real case-study sources with reviewed square and 1.91:1 crops: 18 image assets on each campaign.
+- Removed the earlier site-scan images and weak auto-crops. Rebuilt the image associations from product-relevant case-study photography with reviewed square and 1.91:1 crops: 10 assets on Windows, 10 on Doors and 12 on Price Intent, all attached at campaign level so every intended ad group has coverage.
 - Replaced the responsive search ads with twelve validated rows: current 4.9/135 review proof, explicit `Build & Send Your Quote` and `Get Your Fitted Price` headlines, and a submit-focused description. Google Ads preview returned 12 successful rows and 0 errors.
 - Removed the superseded ads, including one extra legacy Windows ad, then enabled the replacement ads inside the paused campaigns. Final structure: four intended ads in Windows, four in Doors and four in Price Intent.
-- Re-verified Windows and Doors at 18 image associations each, all three campaign URL suffixes, the conversion settings and the campaign status. All three campaigns remain Paused with £0 spend.
+- Re-verified Windows at 10 image associations, Doors at 10 and Price Intent at 12, plus the conversion settings and campaign status. All three campaigns remain Paused with £0 spend while the replacement images are under review.
+- Live production still emits a WindowCAD URL without the `ads` tracker, so the attribution commit remains test-only and the campaigns should not be enabled until that commit is approved for production and the completed-quote import path is operational.
 
