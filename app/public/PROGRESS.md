@@ -2,6 +2,13 @@
 
 Last updated: 2026-07-30
 
+## 2026-07-30 - Cookie consent live release rolled back (814b8bf)
+
+- Owner asked to revert production to the state immediately before the granular consent promotion. Test and source history were left intact.
+- Confirmed live was still byte-identical to `23d31c4`, then reset the server repo to explicit pre-release Ads production commit `814b8bf`, performed a theme-only rsync and purged WordPress and SiteGround caches.
+- Twelve representative live theme files match `814b8bf`. Homepage, quote, casement, Milton Keynes, Cookie Policy and Privacy Policy routes all return 200.
+- Browser verification confirms the previous non-modal Cookie choices banner is restored with Reject and Accept, no Customise control, no inert page, no optional scripts before acceptance, zero horizontal overflow and no console errors.
+
 ## 2026-07-30 - Granular cookie consent promoted to live (23d31c4)
 
 - The live checksum preflight found a mixed but coherent production state: the previous `572fe3c` visual baseline plus the separately released Ads attribution/feed work, theme-equivalent to the Ads release tip. Deploying `main` would have removed that live Ads work and shipped the unrelated privacy-glass test batch.

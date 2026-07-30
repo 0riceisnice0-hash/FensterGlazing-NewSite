@@ -17,7 +17,7 @@ Use:
 
 ## Important Updates
 
-- **Live theme is at `23d31c4` on `codex/cookie-consent-live` as of 2026-07-30.** It preserves the checksum-confirmed Ads production work and adds only the approved granular cookie consent. `main` remains ahead with the separate privacy-glass test batch, so do not deploy it wholesale. Verify by checksum rather than trusting this line.
+- **Live theme was rolled back to `814b8bf` on `codex/ads-production-release` on 2026-07-30.** Production again has the earlier dismissible Accept/Reject cookie banner. The granular consent work remains on test/`main`, alongside the separate privacy-glass test batch, so do not deploy `main` wholesale. Verify by checksum rather than trusting this line.
 - **Deploy trap — read before any live deploy.** The live deploy one-liner in `LIVECHANGES.md` runs `git reset --hard origin/main`, so it ships *everything on `main`*, not the specific commit you verified. On 2026-07-18 a deploy of the small Legend iframe fixes swept fourteen unapproved composite-door commits onto production with them. If you need to release one approved commit, reset the server repo cache to that exact SHA instead of `origin/main`.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.
