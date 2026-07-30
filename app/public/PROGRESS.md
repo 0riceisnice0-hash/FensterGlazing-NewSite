@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-30
 
+## 2026-07-30 - Granular cookie consent promoted to live (23d31c4)
+
+- The live checksum preflight found a mixed but coherent production state: the previous `572fe3c` visual baseline plus the separately released Ads attribution/feed work, theme-equivalent to the Ads release tip. Deploying `main` would have removed that live Ads work and shipped the unrelated privacy-glass test batch.
+- Rebuilt the approved cookie work as scoped branch `codex/cookie-consent-live` from `814b8bf`. Range `814b8bf..23d31c4` is five commits, one author, and only six theme files: consent markup/logic, generated policy copy, consent-aware JavaScript, consent styles and their compiled assets.
+- The final phone pass also gave the footer Cookie settings control a direct listener instead of relying only on delegated page clicks. PHP lint and the combined production CSS/JavaScript build passed.
+- Deployed the exact candidate to protected test first. All six changed files matched by SHA-256, five routes returned 200, necessary-only loaded no optional scripts, accept-all loaded GTM/Clarity/Meta, no browser console errors appeared, and the 390x844 modal fitted at 374px wide without page overflow.
+- Confirmed fresh rollback archive `~/backups/fenster-theme/fenster-pre-23d31c4-20260730-145622.tar.gz` before live deployment (375M, 1,739 entries). Production used an explicit-SHA theme-only rsync followed by `wp cache flush` and `wp sg purge`.
+- Live verification passed: six changed files byte-identical to `23d31c4`; homepage, quote, casement, Milton Keynes, Cookie Policy and Privacy Policy routes all 200; a clean first visit exposed exactly Customise and Accept all with no close control or optional scripts; Escape stayed blocked; Customise started both optional switches off; necessary-only and accept-all behaved correctly; footer settings reopened; no console errors; and the 390x844 dialog fitted without horizontal overflow.
+
 ## 2026-07-30 - Mandatory, granular cookie choices (test)
 
 - **Owner follow-up: only Customise and Accept all on the first layer.** Use necessary only remains inside Customise with both switches off by default. This is one more click to refuse than to accept and is therefore weaker than the ICO's equal-ease recommendation; the durable docs say that plainly rather than mislabelling it as equivalent.

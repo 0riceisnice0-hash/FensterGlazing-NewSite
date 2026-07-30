@@ -20,6 +20,6 @@ The GitHub repo is:
 
 `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
 
-Latest known live commit when this pointer was updated: `8052f65` (2026-07-29). Re-establish it by checksum before any deploy rather than trusting this line.
+Latest known live theme commit when this pointer was updated: `23d31c4` on `codex/cookie-consent-live` (2026-07-30). Re-establish it by checksum before any deploy rather than trusting this line.
 
 If you are working from the home PC rather than the work machine, also read `app/public/WORK-AT-HOME.md`.
