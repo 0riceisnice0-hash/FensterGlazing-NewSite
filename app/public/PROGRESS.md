@@ -2,14 +2,17 @@
 
 Last updated: 2026-07-30
 
-## 2026-07-30 - Google Ads quote-completion attribution (test release)
+## 2026-07-30 - Google Ads quote-completion attribution (live release)
 
 - Owner clarified that the quote iframe auto-loads on quote-enabled pages, so `quote_opened` and `quote_iframe_loaded` are funnel diagnostics, not conversions. The paid goal is a completed WindowCAD submission.
 - Google campaign suffixes now use `ads={adgroupid}`. The theme preserves that real ad-group number across a consented visit and copies it into every WindowCAD URL while keeping the existing `tracking=FG2-...` journey reference separate.
 - Accepted `gclid`, `gbraid` and `wbraid` values are joined to the opaque FG2 journey in WordPress for 90 days through the same-origin `/wp-json/fenster/v1/ad-attribution` endpoint. The WindowCAD callback writes the click ID and `ads` tracker to the private enquiry for offline Google Ads import. Click IDs never enter the Marketing Dashboard or AdminBase notes.
 - Website forms now save the same `ads` tracker beside their existing click ID. The enquiry list shows both under `Ad attribution`.
 - Corrected the dataLayer event construction so its intended `fenster_*` name cannot be overwritten by the unprefixed payload event, and moved the post-accept visitor/page listener from `document` to the `window` that actually dispatches the consent event.
-- Built the compiled JS and PHP-linted every changed include/template. Deployment and end-to-end test-site verification are recorded below once complete.
+- Isolated the production release directly on the checksummed live runtime `572fe3c`, avoiding the unrelated visual commits in the original test branch. Built the compiled JS and PHP-linted every changed include/template.
+- Deployed exact commit `c87391f` to the protected test site first. The quote link carried `tracking=FG2-284F8566C4E94E7DAC&ads=12345678901`, and WordPress stored the matching test `gclid` and ad-group tracker.
+- Took the verified rollback archive `~/backups/fenster-theme/fenster-pre-c87391f-20260730-120759.tar.gz` (375M, 1,738 entries), deployed the same commit to production, and flushed both WordPress and SiteGround caches.
+- Production verification passed: all six changed runtime files matched the commit byte for byte; eight representative routes returned `200`; the dedicated head-term marker remained present; and a cache-busted browser test produced `tracking=FG2-AAEEB743178E4E16B3&ads=12345678901` with the matching `gclid` and tracker recoverable server-side.
 
 ## 2026-07-29 - Two open handle questions closed by the owner (docs only)
 
