@@ -30,6 +30,7 @@ $fenster_required_files = [
     'inc/website-tracking.php',
     'inc/enquiries.php',
     'inc/adminbase.php',
+    'inc/google-ads-conversions.php',
     'inc/generated-pages.php',
 ];
 
