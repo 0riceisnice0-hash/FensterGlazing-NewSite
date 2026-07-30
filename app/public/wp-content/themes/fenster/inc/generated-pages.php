@@ -1049,7 +1049,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
                     'heading' => 'Cookies, analytics and tracking',
                     'body' => [
                         'The website uses strictly necessary cookies or browser storage for basic functions and to remember your cookie choice. On your first visit, the site asks you to choose before you continue. Optional categories are off unless you choose them.',
-                        'You can accept all optional cookies, use strictly necessary storage only, or customise analytics and marketing separately. Analytics can help Fenster understand page views, clicks, scroll behaviour, quote-tool use and form performance. Marketing tools can help measure advertising and enquiries from ads.',
+                        'You can accept all optional cookies or customise analytics and marketing separately. Within Customise, you can leave both categories off and use strictly necessary storage only. Analytics can help Fenster understand page views, clicks, scroll behaviour, quote-tool use and form performance. Marketing tools can help measure advertising and enquiries from ads.',
                     ],
                 ],
                 [
