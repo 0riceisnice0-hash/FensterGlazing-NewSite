@@ -7765,9 +7765,13 @@ html.fg-gallery-lightbox-open body {
 }
 
 /* A lone card spans the row. It looked empty when it was only holding copy;
-   with the etched pane filling the space to the right of the text it has
-   something to be wide for. */
+   with the pane filling the space to the right of the text it has something to
+   be wide for. The 980px cap above exists so two or three cards do not stretch
+   into empty padding; a single card has content to fill the space, so it is
+   allowed the full container width instead of sitting narrower than the page
+   around it. */
 .fg-product-choice-map--single {
+  max-width: none;
   grid-template-columns: minmax(0, 1fr);
 }
 
@@ -7954,15 +7958,24 @@ html.fg-gallery-lightbox-open body {
 }
 
 @media (max-width: 720px) {
-  /* No width to run a panel beside the copy, so it becomes a strip along the
-     bottom and fades upward instead of sideways. */
+  /* On a phone the panel stopped being a backdrop and became an overlay the
+     text had to compete with: the CTA line sat directly on the one part of the
+     band the fade left visible, dark green on a busy grey pattern. There is no
+     width here to run it beside the copy either, so it drops into the normal
+     flow below the text instead of layering over it. order pushes it after the
+     copy regardless of source position, since the mark-up puts it first so it
+     can be a right-hand backdrop on desktop. */
   .fg-glass-patch {
-    inset: auto 0 0 0;
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    order: 1;
     width: auto;
-    height: clamp(76px, 22vw, 104px);
-    justify-content: center;
-    mask-image: linear-gradient(180deg, transparent 0%, #000 56%);
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 56%);
+    height: clamp(56px, 15vw, 76px);
+    margin-top: 0.85rem;
+    justify-content: flex-start;
+    mask-image: none;
+    -webkit-mask-image: none;
   }
 }
 
