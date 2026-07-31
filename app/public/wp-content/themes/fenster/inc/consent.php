@@ -120,14 +120,20 @@ function fenster_render_cookie_consent(): void
                             <strong><?php esc_html_e('Analytics', 'fenster'); ?></strong>
                             <span><?php esc_html_e('Microsoft Clarity and Fenster website measurement help us understand page use and individual journeys.', 'fenster'); ?></span>
                         </span>
-                        <input type="checkbox" role="switch" data-fg-cookie-analytics>
+                        <span class="fg-cookie-consent__switch">
+                            <input type="checkbox" role="switch" data-fg-cookie-analytics>
+                            <span class="fg-cookie-consent__switch-track" aria-hidden="true"></span>
+                        </span>
                     </label>
                     <label class="fg-cookie-consent__choice">
                         <span>
                             <strong><?php esc_html_e('Marketing', 'fenster'); ?></strong>
                             <span><?php esc_html_e('Google and Meta tools help us measure advertising and enquiries from ads.', 'fenster'); ?></span>
                         </span>
-                        <input type="checkbox" role="switch" data-fg-cookie-marketing>
+                        <span class="fg-cookie-consent__switch">
+                            <input type="checkbox" role="switch" data-fg-cookie-marketing>
+                            <span class="fg-cookie-consent__switch-track" aria-hidden="true"></span>
+                        </span>
                     </label>
                 </div>
 
