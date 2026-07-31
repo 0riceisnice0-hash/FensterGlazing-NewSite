@@ -1573,8 +1573,10 @@ const aggregateStatEvents = new Set([
 ]);
 const journeyStorageKey = 'fenster_quote_journey_ref';
 const visitorStorageKey = 'fenster_website_visitor_id';
+const marketingAttributionStorageKey = 'fenster_marketing_attribution_ref';
 const firstTouchStorageKey = 'fenster_website_first_touch';
 const trackingStorageLifetime = 90 * 24 * 60 * 60 * 1000;
+const journeySessionTimeout = Math.max(5, Number(websiteTracking.sessionTimeoutMinutes) || 30) * 60 * 1000;
 
 const cookieConsentPreferences = () => {
   try {
@@ -1601,10 +1603,7 @@ const marketingConsentAccepted = () => {
   return Boolean(preferences && preferences.marketing);
 };
 
-const trackingConsentRejected = () => {
-  const preferences = cookieConsentPreferences();
-  return Boolean(preferences && !preferences.analytics);
-};
+const cookieConsentChoiceMade = () => Boolean(cookieConsentPreferences());
 
 const createJourneyReference = () => {
   const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
@@ -1616,6 +1615,12 @@ const createVisitorReference = () => {
   const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
     || `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
   return `FGV-${random.toUpperCase()}`;
+};
+
+const createMarketingAttributionReference = () => {
+  const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
+    || `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
+  return `FGA-${random.toUpperCase()}`;
 };
 
 const validTrackingReference = (value, prefix) => new RegExp(`^${prefix}-[A-Z0-9-]{8,80}$`, 'i').test(value || '');
@@ -1637,6 +1642,38 @@ const storeTrackingValue = (key, value) => {
   } catch (_error) {}
 };
 
+const readJourneyReference = () => {
+  try {
+    const raw = window.localStorage.getItem(journeyStorageKey);
+    const record = raw ? JSON.parse(raw) : null;
+    const now = Date.now();
+    if (
+      record
+      && validTrackingReference(record.value, 'FG2')
+      && Number(record.expires_at) > now
+      && now - Number(record.last_seen_at || 0) <= journeySessionTimeout
+    ) {
+      record.last_seen_at = now;
+      window.localStorage.setItem(journeyStorageKey, JSON.stringify(record));
+      return record.value;
+    }
+    window.localStorage.removeItem(journeyStorageKey);
+  } catch (_error) {}
+  return '';
+};
+
+const storeJourneyReference = (value) => {
+  if (!trackingConsentAccepted()) return;
+  const now = Date.now();
+  try {
+    window.localStorage.setItem(journeyStorageKey, JSON.stringify({
+      value,
+      last_seen_at: now,
+      expires_at: now + trackingStorageLifetime,
+    }));
+  } catch (_error) {}
+};
+
 const storeMarketingValue = (key, value) => {
   if (!marketingConsentAccepted()) return;
   try {
@@ -1646,10 +1683,10 @@ const storeMarketingValue = (key, value) => {
 
 const journeyReference = () => {
   if (!trackingConsentAccepted()) return '';
-  const existing = readStoredTrackingValue(journeyStorageKey, (value) => validTrackingReference(value, 'FG2'));
+  const existing = readJourneyReference();
   if (existing) return existing;
   const created = createJourneyReference();
-  storeTrackingValue(journeyStorageKey, created);
+  storeJourneyReference(created);
   return created;
 };
 
@@ -1662,6 +1699,18 @@ const visitorReference = () => {
   return created;
 };
 
+const marketingAttributionReference = () => {
+  if (!marketingConsentAccepted()) return '';
+  const existing = readStoredTrackingValue(
+    marketingAttributionStorageKey,
+    (value) => validTrackingReference(value, 'FGA'),
+  );
+  if (existing) return existing;
+  const created = createMarketingAttributionReference();
+  storeMarketingValue(marketingAttributionStorageKey, created);
+  return created;
+};
+
 // WindowCAD's `ads` URL field is its own source tracker, separate from the
 // consented FG2 journey carried in `tracking`. Google Ads supplies the real
 // ad-group ID through its {adgroupid} ValueTrack parameter. Preserve a legacy
@@ -1669,9 +1718,10 @@ const visitorReference = () => {
 const adTrackerStorageKey = 'fenster_ads_tracker';
 const validAdTrackerValue = (value) => /^[A-Za-z0-9 _.-]{1,80}$/.test(value || '');
 const adTrackerReference = () => {
+  if (!marketingConsentAccepted()) return '';
   const current = (new URLSearchParams(window.location.search).get('ads') || '').trim();
   if (validAdTrackerValue(current)) {
-    storeTrackingValue(adTrackerStorageKey, current);
+    storeMarketingValue(adTrackerStorageKey, current);
     return current;
   }
   return readStoredTrackingValue(adTrackerStorageKey, validAdTrackerValue);
@@ -1697,13 +1747,18 @@ const campaignContext = () => {
   if (!trackingConsentAccepted()) return { page_path: window.location.pathname, ...current };
 
   try {
+    const journeyId = journeyReference();
     const raw = window.localStorage.getItem(firstTouchStorageKey);
     const stored = raw ? JSON.parse(raw) : null;
-    if (stored && Number(stored.expires_at) > Date.now() && stored.context) {
+    if (stored && stored.journey_id === journeyId && Number(stored.expires_at) > Date.now() && stored.context) {
       return { page_path: window.location.pathname, ...stored.context };
     }
     const context = { ...current };
-    window.localStorage.setItem(firstTouchStorageKey, JSON.stringify({ context, expires_at: Date.now() + trackingStorageLifetime }));
+    window.localStorage.setItem(firstTouchStorageKey, JSON.stringify({
+      journey_id: journeyId,
+      context,
+      expires_at: Date.now() + trackingStorageLifetime,
+    }));
     return { page_path: window.location.pathname, ...context };
   } catch (_error) {
     return { page_path: window.location.pathname, ...current };
@@ -1729,6 +1784,7 @@ const trackAggregateStat = (event, detail = {}) => {
     })(),
     device_type: aggregateStatDevice(),
     origin: window.location.origin,
+    environment: websiteTracking.environment || '',
     ...detail,
   });
   if (navigator.sendBeacon) {
@@ -1754,46 +1810,147 @@ document.querySelectorAll('[data-fg-statistics-optout]').forEach((button) => {
   });
 });
 
+const websiteEventQueueKey = 'fenster_website_event_queue';
+const createWebsiteEventId = () => window.crypto?.randomUUID?.()
+  || `FGE-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+
+const queueWebsiteEvent = (payload) => {
+  if (!trackingConsentAccepted()) return;
+  try {
+    const queued = JSON.parse(window.localStorage.getItem(websiteEventQueueKey) || '[]');
+    const events = Array.isArray(queued) ? queued : [];
+    if (!events.some((item) => item?.event_id === payload.event_id)) events.push(payload);
+    window.localStorage.setItem(websiteEventQueueKey, JSON.stringify(events.slice(-50)));
+  } catch (_error) {}
+};
+
+const sendWebsiteEvent = (payload) => {
+  if (!websiteTracking.endpoint) return;
+  const body = JSON.stringify(payload);
+
+  if (window.fetch) {
+    window.fetch(websiteTracking.endpoint, {
+      method: 'POST',
+      mode: 'cors',
+      keepalive: true,
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body,
+    }).then((response) => {
+      if (!response.ok) throw new Error(`Tracking endpoint returned ${response.status}`);
+    }).catch(() => queueWebsiteEvent(payload));
+    return;
+  }
+
+  if (!navigator.sendBeacon?.(websiteTracking.endpoint, new Blob([body], { type: 'text/plain;charset=UTF-8' }))) {
+    queueWebsiteEvent(payload);
+  }
+};
+
+const flushWebsiteEventQueue = () => {
+  if (!trackingConsentAccepted() || !websiteTracking.endpoint || !window.fetch) return;
+  let queued = [];
+  try {
+    queued = JSON.parse(window.localStorage.getItem(websiteEventQueueKey) || '[]');
+    window.localStorage.removeItem(websiteEventQueueKey);
+  } catch (_error) {}
+  if (Array.isArray(queued)) queued.slice(-50).forEach(sendWebsiteEvent);
+};
+
+const sendGoogleAdsConversion = (type, eventId = createWebsiteEventId()) => {
+  if (!marketingConsentAccepted() || typeof window.gtag !== 'function') return;
+  const ads = websiteTracking.googleAds || {};
+  const label = {
+    enquiry: ads.enquiryLabel,
+    consultation: ads.consultationLabel,
+    phone: ads.phoneLabel,
+    quote: ads.quoteLabel,
+  }[type];
+  if (!ads.conversionId || !label) return;
+  window.gtag('event', 'conversion', {
+    send_to: `${ads.conversionId}/${label}`,
+    event_id: eventId,
+  });
+};
+
 const trackWebsiteEvent = (event, detail = {}) => {
-  if (!trackingConsentAccepted()) trackAggregateStat(event, detail);
+  const analyticsAccepted = trackingConsentAccepted();
+  const marketingAccepted = marketingConsentAccepted();
+  if (!analyticsAccepted) trackAggregateStat(event, detail);
   const payload = {
+    event_id: createWebsiteEventId(),
     event,
     journey_id: journeyReference(),
     visitor_id: visitorReference(),
+    environment: websiteTracking.environment || '',
     ...campaignContext(),
     ...detail,
   };
 
-  if (!trackingConsentAccepted()) return payload.journey_id;
-
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ ...payload, event: `fenster_${event}` });
-  window.clarity?.('event', `fenster_${event}`);
-
-  if (websiteTracking.endpoint) {
-    const body = JSON.stringify(payload);
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(websiteTracking.endpoint, new Blob([body], { type: 'text/plain;charset=UTF-8' }));
-    } else {
-      window.fetch(websiteTracking.endpoint, {
-        method: 'POST',
-        mode: 'cors',
-        keepalive: true,
-        headers: { 'Content-Type': 'application/json' },
-        body,
-      }).catch(() => {});
+  if (marketingAccepted) {
+    if (event === 'phone_click') sendGoogleAdsConversion('phone', payload.event_id);
+    if (event === 'quote_opened') sendGoogleAdsConversion('quote', payload.event_id);
+    if (typeof window.fbq === 'function') {
+      const metaEvent = {
+        phone_click: 'Contact',
+        email_click: 'Contact',
+        quote_opened: 'InitiateCheckout',
+      }[event];
+      if (metaEvent) {
+        window.fbq('track', metaEvent, {
+          content_name: detail.cta || event,
+          content_category: 'Fenster website',
+        }, { eventID: payload.event_id });
+      }
     }
   }
 
+  if (!analyticsAccepted) {
+    if (marketingAccepted) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: `fenster_${event}`,
+        event_id: payload.event_id,
+        page_path: payload.page_path,
+        cta: detail.cta || '',
+      });
+    }
+    return payload.journey_id;
+  }
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ ...payload, event: `fenster_${event}` });
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', `fenster_${event}`, {
+      page_path: payload.page_path,
+      cta: detail.cta || '',
+      product_collection: detail.product_collection || '',
+      value: Number(detail.price_amount || 0),
+      currency: detail.price_currency || 'GBP',
+      event_id: payload.event_id,
+    });
+  }
+  if (typeof window.clarity !== 'function') {
+    window.clarity = function (...args) {
+      (window.clarity.q = window.clarity.q || []).push(args);
+    };
+  }
+  window.clarity?.('event', `fenster_${event}`);
+
+  sendWebsiteEvent(payload);
+
   return payload.journey_id;
 };
+
+flushWebsiteEventQueue();
 
 const windowCadUrlWithReference = (value) => {
   if (!value || !/windowsoftware\.co\.uk\/windowcad7/i.test(value)) return value;
 
   try {
     const url = new URL(value, window.location.href);
-    const trackingValue = trackingConsentRejected() ? 'rejected-cookies' : (journeyReference() || 'cookie-consent-not-accepted');
+    const trackingValue = journeyReference()
+      || marketingAttributionReference()
+      || (cookieConsentChoiceMade() ? 'rejected-cookies' : 'cookie-consent-not-accepted');
     url.searchParams.set(websiteTracking.referenceParameter || 'reference', trackingValue);
     const adsTracker = adTrackerReference();
     if (adsTracker) url.searchParams.set('ads', adsTracker);
@@ -1803,10 +1960,17 @@ const windowCadUrlWithReference = (value) => {
   }
 };
 
-document.querySelectorAll('a[href*="windowsoftware.co.uk/windowcad7/"]').forEach((link) => {
-  link.href = windowCadUrlWithReference(link.href);
+const windowCadLinks = [...document.querySelectorAll('a[href*="windowsoftware.co.uk/windowcad7/"]')];
+const refreshWindowCadLinks = () => {
+  windowCadLinks.forEach((link) => {
+    if (!link.dataset.fgQuoteBaseUrl) link.dataset.fgQuoteBaseUrl = link.href;
+    link.href = windowCadUrlWithReference(link.dataset.fgQuoteBaseUrl);
+  });
+};
+
+windowCadLinks.forEach((link) => {
   link.addEventListener('click', () => {
-    link.href = windowCadUrlWithReference(link.href);
+    link.href = windowCadUrlWithReference(link.dataset.fgQuoteBaseUrl || link.href);
     trackWebsiteEvent('quote_opened', {
       cta: (link.textContent || 'WindowCAD link').trim().slice(0, 120),
       product_collection: new URL(link.href).searchParams.get('productCollection') || '',
@@ -1814,13 +1978,24 @@ document.querySelectorAll('a[href*="windowsoftware.co.uk/windowcad7/"]').forEach
   });
 });
 
-document.querySelectorAll('[data-fg-journey-ref]').forEach((field) => {
-  field.value = journeyReference();
-});
+refreshWindowCadLinks();
 
-document.querySelectorAll('[data-fg-visitor-id]').forEach((field) => {
-  field.value = visitorReference();
-});
+const populateTrackingFields = (scope = document) => {
+  scope.querySelectorAll('[data-fg-journey-ref]').forEach((field) => {
+    field.value = journeyReference();
+  });
+  scope.querySelectorAll('[data-fg-visitor-id]').forEach((field) => {
+    field.value = visitorReference();
+  });
+  scope.querySelectorAll('[data-fg-analytics-consent]').forEach((field) => {
+    field.value = trackingConsentAccepted() ? '1' : '0';
+  });
+  scope.querySelectorAll('[data-fg-marketing-consent]').forEach((field) => {
+    field.value = marketingConsentAccepted() ? '1' : '0';
+  });
+};
+
+populateTrackingFields();
 
 // Google Ads click ids identify the ad click behind a lead, so a job we win can
 // be reported back to Google as an offline conversion and bidding can learn what
@@ -1830,28 +2005,25 @@ const adClickStorageKey = 'fenster_ad_click_id';
 const validAdClickValue = (value) => /^(gclid|gbraid|wbraid):[A-Za-z0-9_\-.]{10,200}$/.test(value || '');
 
 const adClickReference = () => {
+  if (!marketingConsentAccepted()) return '';
   const parameters = new URLSearchParams(window.location.search);
   for (const key of ['gclid', 'gbraid', 'wbraid']) {
     const captured = `${key}:${(parameters.get(key) || '').trim()}`;
     if (validAdClickValue(captured)) {
-      // storeMarketingValue is consent gated, so a visitor without marketing
-      // consent keeps the id
-      // for this page load without it ever being persisted.
       storeMarketingValue(adClickStorageKey, captured);
       return captured;
     }
   }
-  if (!marketingConsentAccepted()) return '';
   return readStoredTrackingValue(adClickStorageKey, validAdClickValue);
 };
 
-const populateAdClickFields = () => {
+const populateAdClickFields = (scope = document) => {
   const captured = adClickReference();
-  document.querySelectorAll('[data-fg-ad-click-id]').forEach((field) => {
+  scope.querySelectorAll('[data-fg-ad-click-id]').forEach((field) => {
     field.value = captured;
   });
   const adsTracker = adTrackerReference();
-  document.querySelectorAll('[data-fg-ad-tracker]').forEach((field) => {
+  scope.querySelectorAll('[data-fg-ad-tracker]').forEach((field) => {
     field.value = adsTracker;
   });
 };
@@ -1860,11 +2032,11 @@ populateAdClickFields();
 
 let lastAdAttributionSync = '';
 const syncAdAttribution = () => {
-  if (!trackingConsentAccepted() || !websiteTracking.adAttributionEndpoint) return;
-  const journeyId = journeyReference();
+  if (!marketingConsentAccepted() || !websiteTracking.adAttributionEndpoint) return;
+  const journeyId = journeyReference() || marketingAttributionReference();
   const clickId = adClickReference();
   const adsTracker = adTrackerReference();
-  if (!validTrackingReference(journeyId, 'FG2') || !validAdClickValue(clickId)) return;
+  if (!validTrackingReference(journeyId, 'FG2') && !validTrackingReference(journeyId, 'FGA')) return;
 
   const syncKey = `${journeyId}:${clickId}:${adsTracker}`;
   if (syncKey === lastAdAttributionSync) return;
@@ -1878,6 +2050,7 @@ const syncAdAttribution = () => {
       journey_id: journeyId,
       ad_click_id: clickId,
       ads_tracker: adsTracker,
+      marketing_consent: true,
     }),
   }).catch(() => {
     lastAdAttributionSync = '';
@@ -1892,10 +2065,18 @@ syncAdAttribution();
 // it is lost the moment they open a second page. The banner dispatches on
 // window, not document.
 window.addEventListener('fenster:tracking-consent-accepted', () => {
+  populateTrackingFields();
   populateAdClickFields();
+  refreshWindowCadLinks();
+  flushWebsiteEventQueue();
   syncAdAttribution();
 });
-window.addEventListener('fenster:cookie-preferences-updated', populateAdClickFields);
+window.addEventListener('fenster:cookie-preferences-updated', () => {
+  populateTrackingFields();
+  populateAdClickFields();
+  refreshWindowCadLinks();
+  syncAdAttribution();
+});
 
 let consentedPageRecorded = false;
 if (trackingConsentAccepted()) {
@@ -1916,7 +2097,7 @@ window.addEventListener('fenster:tracking-consent-accepted', () => {
 const pageTrackingStartedAt = Date.now();
 let pageEngagementRecorded = false;
 const recordPageEngagement = () => {
-  if (pageEngagementRecorded || !trackingConsentAccepted()) return;
+  if (pageEngagementRecorded) return;
   pageEngagementRecorded = true;
   trackWebsiteEvent('page_engaged', {
     page_duration_seconds: Math.min(1800, Math.max(1, Math.round((Date.now() - pageTrackingStartedAt) / 1000))),
@@ -2214,8 +2395,9 @@ enquiryForms.forEach((form) => {
 
   form.addEventListener('submit', async (event) => {
     recordFormStart();
-    form.querySelectorAll('[data-fg-journey-ref]').forEach((field) => { field.value = journeyReference(); });
-    form.querySelectorAll('[data-fg-visitor-id]').forEach((field) => { field.value = visitorReference(); });
+    populateTrackingFields(form);
+    populateAdClickFields(form);
+    syncAdAttribution();
     validateContactFields();
 
     if (showStepForInvalidField()) {
@@ -2270,21 +2452,29 @@ enquiryForms.forEach((form) => {
         result.message || 'Thanks — your enquiry has been received.',
         result.copy || 'Your project details are safely with the Fenster team.',
       );
+      const consultationBooking = Boolean(form.querySelector('[data-fg-consultation-booking]'));
       if (marketingConsentAccepted()) {
         // Google Tag Manager can only fire an Ads conversion from something it
         // sees in the browser. The dashboard already receives form_submitted
         // server-side from inc/enquiries.php, so this is a dataLayer push only:
         // routing it through trackWebsiteEvent would double count the lead.
+        const conversionEventId = Number(result.enquiry_id || 0) > 0
+          ? `wp-form-${Number(result.enquiry_id)}`
+          : createWebsiteEventId();
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
-          event: form.querySelector('[data-fg-consultation-booking]')
-            ? 'fenster_consultation_booked'
-            : 'fenster_form_submitted',
+          event: consultationBooking ? 'fenster_consultation_booked' : 'fenster_form_submitted',
+          event_id: conversionEventId,
           form_context: formContext(),
           page_path: window.location.pathname,
         });
-      } else {
-        trackAggregateStat('form_submitted');
+        sendGoogleAdsConversion(consultationBooking ? 'consultation' : 'enquiry', conversionEventId);
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', consultationBooking ? 'Schedule' : 'Lead', {
+            content_name: formContext(),
+            content_category: consultationBooking ? 'Consultation' : 'Website enquiry',
+          }, { eventID: conversionEventId });
+        }
       }
       const restoreSubmissionPosition = () => {
         smoothScroll?.scrollTo?.(submittedScrollY, { immediate: true, force: true });
@@ -3499,10 +3689,16 @@ const loadQuoteFrame = (frameWrap) => {
   const quoteIframe = frameWrap?.querySelector('iframe[data-quote-iframe-src]');
   const quoteSrc = quoteIframe?.getAttribute('data-quote-iframe-src');
 
+  if (!cookieConsentChoiceMade()) {
+    if (frameWrap) frameWrap.dataset.quoteWaitingForConsent = 'true';
+    return;
+  }
+
   if (!quoteIframe || !quoteSrc || quoteIframe.getAttribute('src')) {
     return;
   }
 
+  delete frameWrap.dataset.quoteWaitingForConsent;
   const trackedQuoteSrc = windowCadUrlWithReference(quoteSrc);
   quoteIframe.setAttribute('data-quote-iframe-src', trackedQuoteSrc);
   quoteIframe.setAttribute('src', trackedQuoteSrc);
@@ -3516,6 +3712,10 @@ const loadQuoteFrame = (frameWrap) => {
 
 const scheduleQuoteFrameLoad = (frameWrap, delay = 0) => {
   if (!frameWrap || frameWrap.dataset.quoteLoadScheduled === 'true') return;
+  if (!cookieConsentChoiceMade()) {
+    frameWrap.dataset.quoteWaitingForConsent = 'true';
+    return;
+  }
 
   frameWrap.dataset.quoteLoadScheduled = 'true';
   const load = () => loadQuoteFrame(frameWrap);
@@ -3556,6 +3756,14 @@ if ('IntersectionObserver' in window) {
     scheduleQuoteFrameLoad(frameWrap, frameWrap.dataset.quoteAutoload === 'idle' ? 900 : 0);
   });
 }
+
+window.addEventListener('fenster:cookie-preferences-updated', () => {
+  quoteAutoloadFrames.forEach((frameWrap) => {
+    if (frameWrap.querySelector('iframe[src]')) return;
+    delete frameWrap.dataset.quoteLoadScheduled;
+    scheduleQuoteFrameLoad(frameWrap, frameWrap.dataset.quoteAutoload === 'idle' ? 150 : 0);
+  });
+});
 
 const quoteTouchQuery = window.matchMedia('(max-width: 860px)');
 let quoteTouchLockTimer = 0;
@@ -3622,6 +3830,7 @@ document.querySelectorAll('[data-load-quote]').forEach((quoteLoadButton) => {
       ? quoteCard
       : quoteCard.querySelector('[data-quote-frame-wrap]');
 
+    trackWebsiteEvent('quote_opened', { cta: (quoteLoadButton.textContent || 'Load quote tool').trim().slice(0, 120) });
     loadQuoteFrame(frameWrap);
   });
 });
@@ -3632,6 +3841,7 @@ document.querySelectorAll('[data-fullscreen-quote]').forEach((quoteFullscreenBut
     const frameWrap = quoteCard.querySelector('[data-quote-frame-wrap]');
     const quoteUrl = frameWrap?.getAttribute('data-quote-url');
 
+    trackWebsiteEvent('quote_opened', { cta: (quoteFullscreenButton.textContent || 'Expand quote tool').trim().slice(0, 120) });
     loadQuoteFrame(frameWrap);
 
     try {

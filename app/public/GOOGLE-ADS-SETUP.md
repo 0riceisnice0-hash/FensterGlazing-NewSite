@@ -430,46 +430,51 @@ Then:
 
 ## Part 6 — Tracking (before anything is enabled)
 
-### 6a. What Zac's AI builds on the website (say "go" and it happens via the normal test-site workflow)
+### 6a. What the website now records
 
-1. `dataLayer.push({ event: 'fenster_form_submitted', form_context: ... })` in the enquiry AJAX success handler in `src/js/main.js` — a plain push, **not** `trackWebsiteEvent()` (which would double-count `form_submitted` in the Marketing Dashboard, since the server already relays it).
-2. The same for consultation-booking success (`fenster_consultation_booked`).
-3. Hidden ad-click and `ads` tracker fields on the shared enquiry form, populated from the landing URL and persisted for 90 days for consented visitors, saved to `fenster_enquiry` post meta by `inc/enquiries.php`. WordPress-only — never sent to the Marketing Dashboard.
-4. The same accepted click ID is stored server-side against the opaque `FG2` journey. Every WindowCAD URL receives both `tracking=FG2-...` and `ads={adgroupid}`; the completed WindowCAD callback joins the click ID and tracker to the private enquiry. Quote-tool opens and iframe loads are starts, not conversions.
-4. Build, lint, deploy to test, verify with GTM Preview, then owner-approved live deploy per `LIVECHANGES.md`.
+1. Consent-gated Google Ads conversions are sent directly by the website for enquiry success, consultation success and phone-link clicks. The live conversion ID and labels are in `inc/google-ads-conversions.php`.
+2. The browser still pushes the matching `fenster_*` data-layer events for diagnostics and future tag-manager use. Do **not** add duplicate GTM conversion tags for the three direct conversions.
+3. Ad click IDs and the WindowCAD `ads` value are accepted only after marketing consent. They stay in WordPress and the protected Google feed; they are never sent to the Marketing Dashboard.
+4. Analytics consent creates an opaque 90-day visitor ID and a journey that rotates after 30 minutes of inactivity. Marketing-only visitors receive a separate `FGA-...` attribution reference, so WindowCAD attribution does not silently enable analytics tracking.
+5. The quote iframe cannot load before the visitor chooses cookie preferences. `quote_opened` means a deliberate click or expansion; `quote_iframe_loaded` is exposure only and must not be used as a lead conversion.
+6. Browser and server events carry stable event IDs. Failed non-PII browser events retry, server form events are sent once, and test-site traffic is separated from production in the Marketing Dashboard.
 
-### 6b. Conversion actions in Google Ads (you, ~20 minutes)
+### 6b. Conversion actions in Google Ads
 
-Left menu **Goals → Conversions → Summary → + New conversion action**:
+Left menu **Goals → Conversions → Summary**:
 
-1. **"Enquiry form submitted"** — Website → enter `fensterglazing.com` → "Add a conversion action manually":
-   - Goal category: **Submit lead form** · Value: **£40** (same for each) · Count: **One** · Click-through window: 90 days · Attribution: Data-driven → Save.
-   - On the "Tag setup" step choose **Use Google Tag Manager** → note down the **Conversion ID** (`AW-XXXXXXXXX`) and **Conversion label**.
-2. **"Phone number clicked"** — same flow → category **Phone call lead** · Value £40 · Count One → note ID + label.
-3. **"Instant quote submitted"** — Import → CRM or other data sources → track conversions from clicks → manual upload · Category **Submit lead form** · Value £25 · Count One · Attribution **Data-driven** if offered → **Primary**. Import only WindowCAD callbacks that have a stored `gclid`, `gbraid` or `wbraid`.
-   - If the old **"Quote tool opened"** action exists, keep it Secondary or remove it from campaign goals. The tool auto-loads on quote-enabled pages, so an open is not buying intent and must never drive bidding.
-   - **Live 2026-07-30:** this is now connected to the site's private HTTPS feed and runs daily. The feed exports no customer PII, filters out its schema-only row, and maps GCLID, completion time, transaction ID, £25 value and GBP currency. Do not replace it with quote-tool-open tracking.
-4. **"Consultation booked"** — category **Book appointment** · Value £60 · Count One → note ID + label.
-5. **"Calls from ads"** — + New conversion action → **Phone calls** → "Calls from ads using call assets" → Call length: **60 seconds** · Value £40 → Save.
+1. Existing direct website actions:
+   - **Enquiry form submitted** — `AW-808336148/r6edCOm2ztgcEJT2uIED`
+   - **Phone number clicked** — `AW-808336148/S9iCCJr3ztgcEJT2uIED`
+   - **Consultation booked** — `AW-808336148/Zi3tCLLU1tgcEJT2uIED`
+2. Create or verify a **Quote tool opened** website action only if deliberate quote opens are useful as a **Secondary** observation. Store its conversion label in the WordPress option `fenster_google_ads_quote_label`. It must not be a primary bidding goal.
+3. Create or verify two offline actions:
+   - **Qualified lead** — qualified or appointment outcomes.
+   - **Won lead** — won outcomes, using the actual saved order value and GBP.
+4. Connect those actions to the site's protected daily Google feed. A row may match by `gclid`, `gbraid`, `wbraid`, SHA-256 email, or SHA-256 phone only when marketing consent was recorded. The feed contains no raw customer contact details.
+5. Do not assign an invented fixed value to a WindowCAD submission. The completed quote row has zero value; revenue appears only on a later confirmed won outcome.
+6. Keep **Calls from ads** configured from call assets with an appropriate connected-call duration. Website phone-link clicks remain intent, not proof of an answered call.
 
-### 6c. Google Tag Manager (container `GTM-K89BCS9`, you or Zac's AI with access, ~20 minutes)
+### 6c. Google Tag Manager (`GTM-K89BCS9`)
 
-In tagmanager.google.com, open the container → Workspace:
+The public GTM container is legacy support, not the source of truth for the known website conversions. The website now calls the known Google Ads destinations directly after marketing consent, so publishing duplicate GTM conversion tags would double-count them.
 
-1. **Tag: "Conversion Linker"** — New tag → tag type **Conversion Linker** → Trigger: **All Pages** → Save. (Required for Ads conversions to attribute.)
-2. **Trigger: "fenster_form_submitted"** — New trigger → type **Custom Event** → Event name `fenster_form_submitted` → Save.
-   Repeat for `fenster_phone_click`, `fenster_quote_opened`, `fenster_consultation_booked`.
-3. **Tag: "Ads — Enquiry form"** — New tag → **Google Ads Conversion Tracking** → paste the Conversion ID + label from 6b.1 → Trigger: `fenster_form_submitted` → Save.
-   Repeat: "Ads — Phone click" (6b.2 label, trigger `fenster_phone_click`), "Ads — Quote opened" (6b.3, trigger `fenster_quote_opened`), "Ads — Consultation" (6b.4, trigger `fenster_consultation_booked`).
-4. **Preview** (top right) → enter `https://fensterglazing.com/contact/` → in the debug session: click a phone number (check "Ads — Phone click" fired), submit a real test enquiry with your own details (check "Ads — Enquiry form" fired — this needs 6a live first). Accept the cookie banner first: tags only exist for accepters, by design.
-5. **Submit → Publish** the container version, named `Ads conversions v1`.
+Use GTM Preview only as a diagnostic:
 
-Known limitation, accepted for now: GTM loads only after cookie acceptance, so Google sees conversions from accepters only. Read the accept rate off the Marketing Dashboard's consent counters and mentally gross CPL down by it. Upgrading to Consent Mode v2 (denied-state pings + modelling) is a separate owner decision because it loosens the deliberately strict consent layer.
+1. Confirm the Google tag/Conversion Linker loads only after marketing consent.
+2. Confirm `fenster_form_submitted`, `fenster_phone_click`, `fenster_quote_opened` and `fenster_consultation_booked` appear in the data layer.
+3. Confirm there are no duplicate Ads conversion tags for enquiry, phone or consultation.
+4. Publish the container only if a deliberate, reviewed container change is required.
+
+Strict consent is intentional: no Google or Meta marketing storage, identifiers or conversion calls are used before marketing consent.
 
 ### 6d. Verify end to end
 
-- Goals → Conversions → each action's status should move from "Inactive" to **"No recent conversions" / "Recording conversions"** within ~24h of the test firing.
-- The test enquiry should sit in WordPress (`fenster_enquiry`) **with a gclid meta value** if you clicked through a paused-then-briefly-enabled ad — or simply append `?gclid=TEST123` to a URL and submit to prove the capture works.
+- Use a fresh test-site journey with a fake click ID to verify the hidden form and WindowCAD URL populate only after marketing consent.
+- Switch to necessary-only and verify ad IDs are removed, the analytics journey is blank, and the quote tool still works after the explicit choice.
+- Verify a repeated event ID is counted once and test traffic never appears in production dashboard totals.
+- Google Ads action status can take roughly 24 hours to move from **Inactive** to **No recent conversions** or **Recording conversions** after a valid live-domain test.
+- Check the daily offline import diagnostics and reject reports. A feed being reachable does not prove its columns are mapped to the intended Google conversion actions.
 
 ---
 

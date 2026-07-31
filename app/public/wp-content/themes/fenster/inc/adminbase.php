@@ -178,8 +178,56 @@ function fenster_register_windowcad_adminbase_route(): void
     register_rest_route('fenster/v1', '/windowcad', [
         'methods' => WP_REST_Server::CREATABLE,
         'callback' => 'fenster_handle_windowcad_submission',
-        'permission_callback' => '__return_true',
+        'permission_callback' => 'fenster_windowcad_request_allowed',
     ]);
+}
+
+function fenster_windowcad_webhook_secret(): string
+{
+    return fenster_adminbase_config_value(
+        'FENSTER_WINDOWCAD_WEBHOOK_SECRET',
+        'fenster_windowcad_webhook_secret'
+    );
+}
+
+function fenster_windowcad_request_allowed(WP_REST_Request $request): bool|WP_Error
+{
+    $secret = fenster_windowcad_webhook_secret();
+    if ($secret !== '') {
+        $provided = trim((string) $request->get_header('x-fenster-windowcad-secret'));
+        if ($provided === '') {
+            $provided = trim((string) $request->get_param('webhook_token'));
+        }
+        if ($provided === '' || ! hash_equals($secret, $provided)) {
+            return new WP_Error(
+                'fenster_windowcad_unauthorized',
+                'A valid WindowCAD webhook credential is required.',
+                ['status' => 401]
+            );
+        }
+    }
+
+    if (strlen((string) $request->get_body()) > 100000) {
+        return new WP_Error(
+            'fenster_windowcad_payload_too_large',
+            'The WindowCAD payload is too large.',
+            ['status' => 413]
+        );
+    }
+
+    $remote_address = sanitize_text_field((string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
+    $rate_key = 'fenster_wc_rate_' . substr(hash('sha256', $remote_address), 0, 32);
+    $requests = (int) get_transient($rate_key);
+    if ($requests >= 60) {
+        return new WP_Error(
+            'fenster_windowcad_rate_limited',
+            'Too many WindowCAD submissions.',
+            ['status' => 429]
+        );
+    }
+    set_transient($rate_key, $requests + 1, HOUR_IN_SECONDS);
+
+    return true;
 }
 
 function fenster_windowcad_payload_fields(WP_REST_Request $request): array
@@ -246,12 +294,47 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $email = sanitize_email((string) ($fields['Email'] ?? ''));
     $phone = sanitize_text_field((string) ($fields['Phone'] ?? $fields['Telephone'] ?? ''));
     $postcode = sanitize_text_field((string) ($fields['Post code'] ?? $fields['Postcode'] ?? ''));
+    if ($full_name === '' || ($email === '' && $phone === '')) {
+        fenster_windowcad_log('payload rejected because required contact details were missing');
+
+        return new WP_REST_Response([
+            'status' => 'error',
+            'message' => 'WindowCAD must include a customer name and an email address or phone number.',
+        ], 422);
+    }
+
+    $fingerprint = hash('sha256', (string) $request->get_body());
+    $existing = new WP_Query([
+        'post_type' => 'fenster_enquiry',
+        'post_status' => 'private',
+        'posts_per_page' => 1,
+        'fields' => 'ids',
+        'no_found_rows' => true,
+        'meta_key' => '_fenster_windowcad_fingerprint',
+        'meta_value' => $fingerprint,
+    ]);
+    $existing_enquiry_id = ! empty($existing->posts) ? (int) $existing->posts[0] : 0;
+    if ($existing_enquiry_id > 0 && get_post_meta($existing_enquiry_id, '_fenster_adminbase_sent', true) === '1') {
+        fenster_windowcad_log('duplicate webhook accepted without creating another lead', [
+            'enquiry_id' => $existing_enquiry_id,
+        ]);
+
+        return new WP_REST_Response([
+            'status' => 'success',
+            'message' => 'Duplicate WindowCAD lead already processed.',
+            'enquiry_id' => $existing_enquiry_id,
+            'duplicate' => true,
+        ], 200);
+    }
+
     $journey_ref = fenster_windowcad_tracking_from_fields($fields);
+    $marketing_ref = fenster_windowcad_marketing_reference_from_fields($fields);
     $tracking_field_present = fenster_windowcad_tracking_field_present($fields);
     $quote_price = fenster_windowcad_price_from_fields($fields);
     $windowcad_ads_tracker = fenster_windowcad_ads_tracker_from_fields($fields);
-    $ad_attribution = $journey_ref !== ''
-        ? fenster_ad_attribution_for_journey($journey_ref)
+    $attribution_ref = $journey_ref !== '' ? $journey_ref : $marketing_ref;
+    $ad_attribution = $attribution_ref !== ''
+        ? fenster_ad_attribution_for_journey($attribution_ref)
         : [];
     $ads_tracker = (string) ($ad_attribution['ads_tracker'] ?? '');
     if ($ads_tracker === '') {
@@ -259,6 +342,7 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     }
     $ad_click_type = (string) ($ad_attribution['click_type'] ?? '');
     $ad_click_id = (string) ($ad_attribution['click_id'] ?? '');
+    $marketing_consent = ! empty($ad_attribution['marketing_consent']);
 
     if (! $tracking_field_present) {
         // Every website-originated quote URL carries a tracking value, even for
@@ -271,6 +355,8 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     $notes = 'Lead from WindowCAD';
     if ($journey_ref !== '') {
         $notes .= "\nWebsite tracking: " . $journey_ref;
+    } elseif ($marketing_ref !== '') {
+        $notes .= "\nMarketing attribution: " . $marketing_ref;
     } elseif (! $tracking_field_present) {
         $notes .= "\nWebsite tracking: none (WindowCAD submission had no Tracking field)";
     }
@@ -292,12 +378,14 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
         wp_json_encode($fields, JSON_PRETTY_PRINT),
     ]));
 
-    $enquiry_id = wp_insert_post([
-        'post_type' => 'fenster_enquiry',
-        'post_status' => 'private',
-        'post_title' => trim($full_name) !== '' ? $full_name . ' - WindowCAD' : 'WindowCAD lead',
-        'post_content' => $summary,
-    ], true);
+    $enquiry_id = $existing_enquiry_id > 0
+        ? $existing_enquiry_id
+        : wp_insert_post([
+            'post_type' => 'fenster_enquiry',
+            'post_status' => 'private',
+            'post_title' => trim($full_name) !== '' ? $full_name . ' - WindowCAD' : 'WindowCAD lead',
+            'post_content' => $summary,
+        ], true);
 
     if (! is_wp_error($enquiry_id)) {
         $meta = [
@@ -309,10 +397,15 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             '_fenster_source' => 'WindowCAD',
             '_fenster_page_url' => home_url('/online-quote/'),
             '_fenster_journey_ref' => $journey_ref,
+            '_fenster_marketing_ref' => $marketing_ref,
             '_fenster_ad_click_type' => $ad_click_type,
             '_fenster_ad_click_id' => $ad_click_id,
             '_fenster_ads_tracker' => $ads_tracker,
+            '_fenster_quote_price' => number_format($quote_price, 2, '.', ''),
+            '_fenster_analytics_consent' => $journey_ref !== '' ? '1' : '0',
+            '_fenster_marketing_consent' => $marketing_consent ? '1' : '0',
             '_fenster_windowcad_fields' => wp_json_encode($fields),
+            '_fenster_windowcad_fingerprint' => $fingerprint,
         ];
         foreach ($meta as $key => $value) {
             update_post_meta((int) $enquiry_id, $key, $value);
@@ -322,18 +415,32 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
     // Record the completion for the dashboard before attempting AdminBase, so
     // attribution never depends on the office CRM being reachable. The lead
     // itself is already saved as a private enquiry above.
-    if ($journey_ref !== '') {
+    if ($existing_enquiry_id === 0 && ! is_wp_error($enquiry_id) && $journey_ref !== '') {
         fenster_dashboard_track_event('quote_completed', [
+            'event_id' => 'wp-windowcad-' . (int) $enquiry_id,
             'journey_id' => $journey_ref,
             'price_amount' => $quote_price,
             'price_currency' => 'GBP',
         ]);
-    } else {
+    } elseif ($existing_enquiry_id === 0 && ! is_wp_error($enquiry_id)) {
         // No consented FG2 reference: never create a dashboard journey, but do
         // count the completion in the aggregate-only statistical path so total
         // WindowCAD completions remain measurable and a broken Tracking field
         // is visible within a day instead of silently zeroing the tracker.
-        fenster_dashboard_track_stat('quote_completed', '/online-quote/');
+        fenster_dashboard_track_stat(
+            'quote_completed',
+            '/online-quote/',
+            'wp-windowcad-' . (int) $enquiry_id,
+            (string) get_post_time('c', true, (int) $enquiry_id)
+        );
+    }
+    if ($existing_enquiry_id === 0 && ! is_wp_error($enquiry_id)) {
+        fenster_meta_track_enquiry(
+            (int) $enquiry_id,
+            'Lead',
+            'wp-windowcad-' . (int) $enquiry_id,
+            $quote_price
+        );
     }
 
     $result = fenster_adminbase_relay([

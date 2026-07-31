@@ -139,31 +139,36 @@ function fenster_google_ads_conversion_rows(): array
             'before' => gmdate('Y-m-d H:i:s', time() - (6 * HOUR_IN_SECONDS)),
             'inclusive' => true,
         ]],
-        'meta_query' => [
-            'relation' => 'AND',
-            [
-                'key' => '_fenster_project_type',
-                'value' => 'WindowCAD',
-            ],
-            [
-                'key' => '_fenster_ad_click_id',
-                'compare' => 'EXISTS',
-            ],
-            [
-                'key' => '_fenster_ad_click_type',
-                'value' => ['gclid', 'gbraid', 'wbraid'],
-                'compare' => 'IN',
-            ],
-        ],
     ]);
 
     $rows = [];
     foreach ($query->posts as $post_id) {
         $click_type = sanitize_key((string) get_post_meta($post_id, '_fenster_ad_click_type', true));
         $click_id = sanitize_text_field((string) get_post_meta($post_id, '_fenster_ad_click_id', true));
-        if (! in_array($click_type, ['gclid', 'gbraid', 'wbraid'], true)
-            || ! preg_match('/^[A-Za-z0-9_.-]{10,200}$/', $click_id)
-        ) {
+        $marketing_consent = get_post_meta($post_id, '_fenster_marketing_consent', true) === '1';
+        $valid_click = $marketing_consent
+            && in_array($click_type, ['gclid', 'gbraid', 'wbraid'], true)
+            && preg_match('/^[A-Za-z0-9_.-]{10,200}$/', $click_id);
+        $email_hash = '';
+        $phone_hash = '';
+        if ($marketing_consent) {
+            $email = strtolower(trim((string) get_post_meta($post_id, '_fenster_email', true)));
+            if (is_email($email)) {
+                $email_hash = hash('sha256', $email);
+            }
+            $phone = preg_replace('/\D+/', '', (string) get_post_meta($post_id, '_fenster_phone', true));
+            if (is_string($phone) && $phone !== '') {
+                if (str_starts_with($phone, '0')) {
+                    $phone = '44' . substr($phone, 1);
+                } elseif (str_starts_with($phone, '0044')) {
+                    $phone = substr($phone, 2);
+                }
+                if (preg_match('/^44[1-9][0-9]{8,9}$/', $phone)) {
+                    $phone_hash = hash('sha256', '+' . $phone);
+                }
+            }
+        }
+        if (! $valid_click && $email_hash === '' && $phone_hash === '') {
             continue;
         }
 
@@ -182,19 +187,52 @@ function fenster_google_ads_conversion_rows(): array
             'gbraid' => '',
             'wbraid' => '',
         ];
-        $identifiers[$click_type] = $click_id;
+        if ($valid_click) {
+            $identifiers[$click_type] = $click_id;
+        }
 
-        $rows[] = [
-            'conversion',
-            $identifiers['gclid'],
-            $identifiers['gbraid'],
-            $identifiers['wbraid'],
-            'Instant quote submitted',
-            $converted_at->format('Y-m-d\TH:i:s\Z'),
-            '25.00',
-            'GBP',
-            'fg-windowcad-' . (int) $post_id,
-        ];
+        $project_type = (string) get_post_meta($post_id, '_fenster_project_type', true);
+        if ($project_type === 'WindowCAD') {
+            $rows[] = [
+                'conversion',
+                $identifiers['gclid'],
+                $identifiers['gbraid'],
+                $identifiers['wbraid'],
+                $email_hash,
+                $phone_hash,
+                'Instant quote submitted',
+                $converted_at->format('Y-m-d\TH:i:s\Z'),
+                '0.00',
+                'GBP',
+                'fg-windowcad-' . (int) $post_id,
+            ];
+        }
+
+        $outcome = sanitize_key((string) get_post_meta($post_id, '_fenster_outcome_status', true));
+        if (in_array($outcome, ['qualified', 'appointment', 'won'], true)) {
+            $outcome_time = (string) get_post_meta($post_id, '_fenster_outcome_updated_at', true);
+            try {
+                $outcome_at = $outcome_time !== '' ? new DateTimeImmutable($outcome_time) : $converted_at;
+            } catch (Exception $error) {
+                $outcome_at = $converted_at;
+            }
+            $outcome_value = $outcome === 'won'
+                ? max(0, (float) get_post_meta($post_id, '_fenster_outcome_value', true))
+                : 0;
+            $rows[] = [
+                'conversion',
+                $identifiers['gclid'],
+                $identifiers['gbraid'],
+                $identifiers['wbraid'],
+                $email_hash,
+                $phone_hash,
+                $outcome === 'won' ? 'Won lead' : 'Qualified lead',
+                $outcome_at->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d\TH:i:s\Z'),
+                number_format($outcome_value, 2, '.', ''),
+                'GBP',
+                ($outcome === 'won' ? 'fg-won-' : 'fg-qualified-') . (int) $post_id,
+            ];
+        }
     }
 
     return $rows;
@@ -212,6 +250,8 @@ function fenster_google_ads_conversion_feed(): WP_REST_Response
         'gclid',
         'gbraid',
         'wbraid',
+        'email_sha256',
+        'phone_sha256',
         'conversion_action',
         'conversion_time',
         'conversion_value',
@@ -229,6 +269,8 @@ function fenster_google_ads_conversion_feed(): WP_REST_Response
         $rows[] = [
             'schema_sample',
             'EXCLUDED_SCHEMA_SAMPLE',
+            '',
+            '',
             '',
             '',
             'Instant quote submitted',
