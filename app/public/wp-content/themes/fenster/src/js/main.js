@@ -360,13 +360,15 @@ if (legendAssistant) {
       fill: 'forwards',
     });
 
-    try {
-      await motion.finished;
-    } catch (error) {
-      // A resize or navigation can cancel the visual handoff safely.
-    }
+    await Promise.race([
+      motion.finished.catch(() => {
+        // A resize or navigation can cancel the visual handoff safely.
+      }),
+      new Promise((resolve) => window.setTimeout(resolve, duration + 250)),
+    ]);
 
     window.clearTimeout(frameTimer);
+    motion.cancel();
     traveller.remove();
   };
 
