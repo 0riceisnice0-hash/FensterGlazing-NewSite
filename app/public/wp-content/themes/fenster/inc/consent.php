@@ -449,6 +449,23 @@ function fenster_render_cookie_consent(): void
             }
         }
 
+        function syncSwitchAppearance(input) {
+            var track = input && input.nextElementSibling;
+            var activeColour = 'var(--color-primary)';
+
+            if (! track || ! track.classList.contains('fg-cookie-consent__switch-track')) {
+                return;
+            }
+
+            track.style.setProperty('background-color', input.checked ? activeColour : '#ffffff', 'important');
+            track.style.setProperty('border-color', input.checked ? activeColour : '#6c7b80', 'important');
+        }
+
+        function syncSwitchAppearances() {
+            syncSwitchAppearance(analyticsInput);
+            syncSwitchAppearance(marketingInput);
+        }
+
         function showCustom() {
             var preferences = getPreferences();
             if (dialog) {
@@ -461,6 +478,7 @@ function fenster_render_cookie_consent(): void
             if (marketingInput) {
                 marketingInput.checked = Boolean(preferences && preferences.marketing);
             }
+            syncSwitchAppearances();
             if (overview) {
                 overview.hidden = true;
             }
@@ -550,6 +568,18 @@ function fenster_render_cookie_consent(): void
         if (settings) {
             settings.addEventListener('click', function () {
                 openDialog(false);
+            });
+        }
+
+        if (analyticsInput) {
+            analyticsInput.addEventListener('change', function () {
+                syncSwitchAppearance(analyticsInput);
+            });
+        }
+
+        if (marketingInput) {
+            marketingInput.addEventListener('change', function () {
+                syncSwitchAppearance(marketingInput);
             });
         }
 
