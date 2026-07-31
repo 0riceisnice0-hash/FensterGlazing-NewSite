@@ -1,6 +1,15 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-30
+Last updated: 2026-07-31
+
+## 2026-07-31 - Legend/native cookie modal regression fixed and consent UI polished (test, 0c1d567)
+
+- Owner correctly reported that the cookie work had disturbed Legend. A full comparison of the pre-cookie production backup with rollback commit `814b8bf` showed no file differences, so the rollback did not delete Legend code. The regression was in the new test code: Legend's offset observer still understood only the old bottom banner's `hidden` state, not a native dialog's `open` state.
+- Legend now observes both `hidden` and `open`. An open native cookie modal gives Legend an explicit `is-cookie-modal-open` state, hiding the launcher and panel completely; closing the modal removes that state and restores Legend at `--legend-cookie-offset: 0px`. The old measured offset remains available for the legacy bottom banner.
+- Reworked the consent panel into a tighter 680px Fenster card with a steel/green accent rail, softer branded backdrop, clearer hierarchy, an optional-cookie notice, refined buttons/cards and a compact phone layout.
+- Found and fixed a second styling fault during browser QA: the consent component used nonexistent token `--color-primary`. It now uses the real `--color-accent` token. The analytics and marketing inputs remain native accessible checkboxes, while separate presentation tracks make their state unambiguous across the test browser's form-control styling.
+- Production build and PHP lint pass. Five protected-test routes return 200. At 1280x720, opening the modal hides Legend and closing it restores the launcher and full 420px chat panel at offset zero. At 390x844, the first layer is 374x516, contains only Customise and Accept all, fits fully with no horizontal overflow, and hides Legend. Custom switches render green when enabled. No console errors.
+- Test deployment only. Production remains byte-identical to `814b8bf`.
 
 ## 2026-07-30 - Cookie consent live release rolled back (814b8bf)
 

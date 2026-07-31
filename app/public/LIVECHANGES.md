@@ -1,15 +1,15 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-07-30
+Last updated: 2026-07-31
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 
-- **The granular cookie-consent modal is test-only again after the owner-requested live rollback.** Production is back on the earlier dismissible Accept/Reject banner. Test/`main` still has the native modal that requires Customise or Accept all, with necessary-only inside Customise and separate analytics/marketing choices.
+- **The polished granular cookie-consent modal is test-only at theme commit `0c1d567`.** Production remains on the earlier dismissible Accept/Reject banner. Test requires Customise or Accept all, with necessary-only inside Customise and separate analytics/marketing choices. Legend now hides while the native modal is open and returns at its normal `0px` offset when it closes; the old banner-only height observer no longer leaves Legend displaced.
 
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- **Live theme is back at `814b8bf` on `codex/ads-production-release` after the owner-requested 2026-07-30 rollback. Test is at theme commit `4bb8a48` on `main`, retaining both the granular cookie work and the separate privacy-glass batch for review.** The rollback first checksum-confirmed live as `23d31c4`, then reset the server repo to the explicit pre-release SHA and performed a theme-only rsync plus both cache purges. Twelve representative theme files match `814b8bf`, six live routes return 200, and browser verification shows the previous non-modal Cookie choices banner with Reject and Accept, no Customise control, no inert page, no optional scripts before acceptance and no console errors. The pre-release archive remains `~/backups/fenster-theme/fenster-pre-23d31c4-20260730-145622.tar.gz` (375M, 1,739 entries).
+- **Live theme is at `814b8bf` on `codex/ads-production-release`; test theme is at `0c1d567` on `main`, retaining both the granular cookie work and the separate privacy-glass batch for review.** The complete pre-cookie backup was compared against `814b8bf` and produced no differences, proving the live rollback did not delete a Legend file. The test regression was instead the old Legend code treating a native dialog like the previous bottom banner: it checked only `hidden`, measured the open modal as vertical offset, and never observed `open` being removed. Test now observes both attributes, hides Legend for an open modal and restores it at `0px`. The cookie panel has a tighter branded treatment and stable accessible switch tracks using the real `--color-accent` token. Five test routes return 200; desktop and 390x844 browser checks show no overlap, no horizontal overflow and no console errors. Production files remain byte-identical to `814b8bf`.
 - **The pointer was stale again at deploy time.** This file said `8052f65`; the live theme actually checksummed to `d3600ad`, the docs commit straight after it, so the theme content was the same but the recorded SHA was not the deployed one. That is three releases running where the line was wrong. **Re-establish by checksum every time; it takes under a minute.**
 - The previous release was `41ffb83` (2026-07-29). Before that, `6ea0dba`. Before that, `834b424`, `4458fc6` (2026-07-24) and `94e7d0f`.
 - **Re-establish live by checksum before every deploy rather than trusting this line.** It was stale by four commits on 2026-07-24. Checksum a few theme files against history: `inc/site-data.php`, `assets/css/main.css`, `assets/js/main.js` and, when those tie, whatever the candidate commits actually touched. Correct this line as part of the deploy.
