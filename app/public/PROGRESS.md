@@ -1992,6 +1992,20 @@ Do not use this as the primary rulebook or handover. Use:
 - Test deployment only. No live-site deployment was performed.
 - Follow-up: the one-grammar CSS cleanup had swallowed the construction explorer styles (a deletion cut spanned the region the audit build had inserted them into), so the explorer shipped unstyled and the owner caught it. Styles restored, and QA now includes a template-classes-versus-compiled-CSS diff so a section cannot ship unstyled again.
 
+## 2026-07-31 - Consent-Safe Tracking Repair
+
+- Rebuilt website attribution around a 90-day opaque visitor and a journey that rotates after 30 minutes of inactivity. A returning campaign starts a new journey rather than overwriting the earlier first touch.
+- Fixed the consent race at enquiry submission: journey, visitor, analytics, marketing, click-ID and WindowCAD tracker fields are refreshed immediately before the form request.
+- Marketing click IDs and the WindowCAD `ads` value are now strictly marketing-consent-only. Marketing-only visitors use an `FGA-…` attribution reference without creating an analytics visitor or dashboard journey.
+- The WindowCAD iframe cannot load before a cookie choice. A deliberate load/expand records `quote_opened`; automatic `quote_iframe_loaded` remains exposure only and cannot inflate quote starts.
+- Browser events have stable IDs, retry without PII and deduplicate in the dashboard. Server form/WindowCAD events and aggregate receipt IDs are deterministic, eliminating the browser/server form double count and making reconciliation safe to repeat.
+- Test and production dashboard traffic is separated from the real request origin. Production reporting excludes test and legacy rows; unsigned server relays and unsigned completed-lead events are rejected.
+- Added granular consent health, office outcomes (`qualified`, `appointment`, `won`, `lost`), actual won values, direct consented Google conversions for enquiry/consultation/phone, standard Meta browser events, optional Meta CAPI, and a protected Google offline feed using click IDs or SHA-256 contact matches.
+- Hardened the public WindowCAD endpoint with payload limits, required contact fields, rate limiting and exact-payload deduplication. Shared-secret enforcement is implemented but remains off until the external WindowCAD webhook can be updated with the matching credential.
+- Protected-test QA passed accept-all, necessary-only and marketing-only journeys. The deployed theme is commit `289b2c2`; the pre-release live archive is `~/backups/fenster-theme/fenster-pre-289b2c2-20260731-102149.tar.gz`.
+- Marketing Dashboard migration `0017_tracking_integrity.sql` and commit `05e7481` were deployed. A 90-day WordPress reconciliation found 71 saved leads: 18 identified and 53 aggregate-only. Running it twice left counts unchanged at 18 and 53.
+- Account-side items still require authenticated access: create/store the Google quote-open label if wanted as Secondary, create/map the `Qualified lead` and `Won lead` offline actions, configure a Meta CAPI token, enable the WindowCAD shared secret at both ends, and connect Focus Group call outcomes when an authorised feed exists.
+
 ## 2026-07-30 - Google Ads Launch And WindowCAD Conversion Import
 
 - Enabled the three approved search campaigns: `MK — Windows` (£12/day), `MK — Doors` (£12/day) and `MK — Price Intent` (£9/day).
