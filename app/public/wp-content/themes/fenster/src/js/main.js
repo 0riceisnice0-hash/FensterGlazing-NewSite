@@ -400,8 +400,16 @@ if (legendAssistant) {
   const syncCookieOffset = () => {
     const banner = document.querySelector('[data-fg-cookie-consent]');
     let offset = 0;
+    const isDialog = Boolean(banner && banner.matches('dialog'));
+    const dialogIsOpen = Boolean(isDialog && banner.hasAttribute('open'));
+    const bannerIsVisible = Boolean(banner && (isDialog ? dialogIsOpen : !banner.hidden));
 
-    if (banner && !banner.hidden) {
+    // A native modal belongs to the browser's top layer, so Legend should
+    // leave the stage entirely while the visitor makes the required choice.
+    // The legacy bottom banner still needs its measured vertical offset.
+    legendAssistant.classList.toggle('is-cookie-modal-open', dialogIsOpen);
+
+    if (bannerIsVisible && !isDialog) {
       offset = Math.ceil(banner.getBoundingClientRect().height + 16);
     }
 
@@ -411,7 +419,7 @@ if (legendAssistant) {
   const observeCookieControls = () => {
     const controls = document.querySelectorAll('[data-fg-cookie-consent]');
     const observer = new MutationObserver(syncCookieOffset);
-    controls.forEach((control) => observer.observe(control, { attributes: true, attributeFilter: ['hidden'] }));
+    controls.forEach((control) => observer.observe(control, { attributes: true, attributeFilter: ['hidden', 'open'] }));
     syncCookieOffset();
   };
 
