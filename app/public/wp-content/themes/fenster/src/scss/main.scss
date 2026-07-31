@@ -1601,7 +1601,7 @@ h3 {
   right: 0;
   left: 0;
   height: 6px;
-  background: linear-gradient(90deg, var(--color-steel) 0 28%, var(--color-primary) 28% 100%);
+  background: linear-gradient(90deg, var(--color-steel) 0 28%, var(--color-accent) 28% 100%);
   content: "";
 }
 
@@ -1610,7 +1610,7 @@ h3 {
   gap: 0.5rem;
   align-items: center;
   margin: 0 0 0.6rem;
-  color: var(--color-primary);
+  color: var(--color-accent);
   font-size: 0.75rem;
   font-weight: 850;
   letter-spacing: 0.13em;
@@ -1622,7 +1622,7 @@ h3 {
   height: 9px;
   border: 3px solid rgba(46, 172, 102, 0.2);
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--color-accent);
   background-clip: padding-box;
   content: "";
 }
@@ -1649,7 +1649,7 @@ h3 {
   margin: 0.85rem 0 0;
   padding: 0.72rem 0.85rem;
   border: 1px solid rgba(46, 172, 102, 0.2);
-  border-left: 4px solid var(--color-primary);
+  border-left: 4px solid var(--color-accent);
   border-radius: 10px;
   background: rgba(237, 247, 242, 0.9);
   color: var(--color-steel);
@@ -1698,7 +1698,7 @@ h3 {
 
 .fg-cookie-consent .button--light:hover,
 .fg-cookie-consent .button--light:focus-visible {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background: #e5efee;
   color: var(--color-ink);
 }
@@ -1743,7 +1743,7 @@ h3 {
 
 .fg-cookie-consent__close:hover,
 .fg-cookie-consent__close:focus-visible {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background: #e5efee;
 }
 
@@ -1791,7 +1791,7 @@ h3 {
   border-radius: 999px;
   border: 1px solid rgba(46, 172, 102, 0.18);
   background: #eaf5ef;
-  color: var(--color-primary);
+  color: var(--color-accent-dark);
   font-size: 0.76rem;
   font-weight: 850;
   white-space: nowrap;
@@ -1842,8 +1842,8 @@ h3 {
 }
 
 .fg-cookie-consent__switch input[role="switch"]:checked + .fg-cookie-consent__switch-track {
-  border-color: var(--color-primary);
-  background: var(--color-primary);
+  border-color: var(--color-accent);
+  background: var(--color-accent);
 }
 
 .fg-cookie-consent__switch input[role="switch"]:checked + .fg-cookie-consent__switch-track::before {
