@@ -451,7 +451,7 @@ function fenster_render_cookie_consent(): void
 
         function syncSwitchAppearance(input) {
             var track = input && input.nextElementSibling;
-            var activeColour = 'var(--color-primary)';
+            var activeColour = 'var(--color-accent)';
 
             if (! track || ! track.classList.contains('fg-cookie-consent__switch-track')) {
                 return;
