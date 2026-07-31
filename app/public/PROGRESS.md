@@ -2,6 +2,15 @@
 
 Last updated: 2026-07-31
 
+## 2026-07-31 - Polished cookie consent and Legend fix promoted live (616d673)
+
+- Rebuilt only the approved consent and Legend changes on exact Ads production base `814b8bf` as scoped branch `codex/cookie-consent-live`; `814b8bf..616d673` changes only consent markup/logic, generated policy copy, consent-aware JavaScript, consent styles and their compiled assets. The separate privacy-glass test batch was not included.
+- Re-deployed that exact candidate to protected test before release. Candidate checksums matched every deployed test file; six routes returned 200; desktop and 390x844 browser QA confirmed first-layer Customise / Accept all, green enabled switches, zero horizontal overflow, Legend hidden at offset zero while the modal is open, Legend restored afterward and the 420px panel opening normally. No console errors.
+- Created `~/backups/fenster-theme/fenster-pre-616d673-20260731-082054.tar.gz` before promotion (375M, 1,739 entries), then extracted it and compared the complete archive with production; no differences were found.
+- Promoted exact SHA `616d673` with a theme-only rsync and purged WordPress and SiteGround caches. All changed files and the six production Ads attribution/feed files checksum against the candidate, and homepage, quote, casement, Milton Keynes, Cookie Policy and Privacy Policy routes all return 200.
+- Clean-origin live browser QA confirmed optional scripts are absent before consent and after necessary-only, while accept-all loads GTM, Clarity and Meta. Legend stays hidden while consent blocks the page, returns at `0px` after a choice and opens its full 420px panel. No console errors.
+- Restored protected test to `main` (`0c1d567` theme code, `5081b4d` docs) after promotion so its separate privacy-glass review batch remains available. The unrelated local `GOOGLE-ADS-SETUP.md` edit was left untouched.
+
 ## 2026-07-31 - Legend/native cookie modal regression fixed and consent UI polished (test, 0c1d567)
 
 - Owner correctly reported that the cookie work had disturbed Legend. A full comparison of the pre-cookie production backup with rollback commit `814b8bf` showed no file differences, so the rollback did not delete Legend code. The regression was in the new test code: Legend's offset observer still understood only the old bottom banner's `hidden` state, not a native dialog's `open` state.
