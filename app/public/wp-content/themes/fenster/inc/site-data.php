@@ -451,7 +451,7 @@ function fenster_site_data(): array
                    bank, added 2026-07-29. */
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-through-flap.webp', 'alt' => 'Black cat coming out through a white pet flap fitted into a glazed door'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-looking-out.webp', 'alt' => 'Black cat looking out through a white pet flap fitted into a sealed glass unit'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-at-the-flap.webp', 'alt' => 'Black cat looking out through a white pet flap fitted into a sealed glass unit'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-in-door.webp', 'alt' => 'Clear round pet flap in a glazed door beside a brick wall'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-glass-closeup.webp', 'alt' => 'Clear round pet flap in a glazed door, seen close up from outside'],
                 ],
@@ -1098,7 +1098,7 @@ function fenster_site_data(): array
                 /* Was roofline boards and a sealed-unit sample. Real installs
                    since 2026-07-29; the pool feeds the town matrix too. */
                 ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-through-flap.webp', 'alt' => 'Black cat coming out through a white pet flap fitted into a glazed door'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-looking-out.webp', 'alt' => 'Black cat looking out through a white pet flap fitted into a sealed glass unit'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-cat-at-the-flap.webp', 'alt' => 'Black cat looking out through a white pet flap fitted into a sealed glass unit'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-in-door.webp', 'alt' => 'Clear round pet flap in a glazed door beside a brick wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-glass-closeup.webp', 'alt' => 'Clear round pet flap in a glazed door, seen close up from outside'],
             ],

@@ -6731,9 +6731,20 @@ h3 {
    `object-fit: cover`, so a tighter crop changes what you see but not how tall
    the box is. The height has to be capped as well. Scoped to this route rather
    than every product page, because that is the one that was reported and a
-   global cap would resize media on every product page at once. */
+   global cap would resize media on every product page at once.
+
+   Capping it alone then left the gap the owner reported: a short media column
+   beside a tall copy column is dead space by definition. It sticks instead, so
+   the photographs travel down alongside the copy rather than sitting in a hole.
+   Sticky needs `align-self: start`, because the stretch above would make the
+   column full height again and nothing would ever stick, and it needs a definite
+   height because the rows are fr units. Capped to the viewport as well as to
+   720px, since a sticky element taller than the screen never sticks. */
 .fg-product-why__media-stack--capped {
-  max-height: 720px;
+  align-self: start;
+  position: sticky;
+  top: calc(var(--site-header-main-height, 72px) + 1.5rem);
+  height: min(720px, calc(100vh - var(--site-header-main-height, 72px) - 3rem));
 }
 
 .fg-product-why__media img {
@@ -21941,6 +21952,14 @@ a.fg-cs-card__pill:focus-visible {
 
   .fg-hero {
     min-height: auto;
+  }
+
+  /* Single column below this, so the media has nothing to stick beside.
+     Returns the stack to exactly what it does without the modifier. */
+  .fg-product-why__media-stack--capped {
+    position: static;
+    height: auto;
+    align-self: stretch;
   }
 
   .fg-hero__inner,
