@@ -36,11 +36,16 @@ $hub_routes = [
         'meta' => 'Fastest option',
         'url' => home_url('/online-quote/'),
     ],
+    /* This card is the home visit, not a showroom chat. It said "Talk to the
+       showroom team" and described a "showroom or project consultation", which
+       is the wrong offer: we come out to the property. Owner correction,
+       2026-08-02. The word free is not optional here, per the owner-confirmed
+       consultation facts in AI.md. */
     [
-        'label' => 'Consultation',
-        'title' => 'Talk to the showroom team.',
-        'copy' => 'Choose a weekday and preferred time for a showroom or project consultation with the Fenster team.',
-        'meta' => 'Best for advice',
+        'label' => 'Free consultation',
+        'title' => 'Have an expert come to you.',
+        'copy' => 'Pick a weekday and a time. One of our experts visits, measures up and prices the job while they are there, at no charge.',
+        'meta' => 'No charge',
         'url' => home_url('/book-a-consultation/'),
     ],
 ];
@@ -114,6 +119,19 @@ $form_notes = [
                         <span><?php echo esc_html($line); ?></span>
                     <?php endforeach; ?>
                 </address>
+                <?php
+                /* Hours come from brand.hours, the same string the footer and
+                   the About page print, so there is one place to change them.
+                   Do not retype the times here: a second copy is how the
+                   showroom hours and the footer end up disagreeing. */
+                $showroom_hours = trim((string) ($brand['hours'] ?? ''));
+                ?>
+                <?php if ($showroom_hours !== '') : ?>
+                    <p class="fg-contact-showroom__hours">
+                        <span><?php esc_html_e('Opening hours', 'fenster'); ?></span>
+                        <strong><?php echo esc_html($showroom_hours); ?></strong>
+                    </p>
+                <?php endif; ?>
                 <div class="fg-contact-showroom__actions">
                     <a class="button" href="<?php echo esc_url($directions_link); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open directions', 'fenster'); ?></a>
                     <a class="text-link" href="<?php echo esc_url($map_link); ?>" target="_blank" rel="noopener"><?php esc_html_e('View on Google Maps', 'fenster'); ?></a>

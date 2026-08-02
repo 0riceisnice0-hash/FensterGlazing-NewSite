@@ -52,7 +52,10 @@ $postcode_pattern = '^([Gg][Ii][Rr]\s?0[Aa]{2}|[A-Za-z]{1,2}[0-9][A-Za-z0-9]?\s?
 $bank_holidays = function_exists('fenster_consultation_bank_holidays') ? fenster_consultation_bank_holidays() : [];
 $status = sanitize_key(wp_unslash($_GET['fenster_enquiry'] ?? ''));
 $notices = [
-    'success' => ['title' => 'Thanks - your enquiry has been received.', 'copy' => 'The Fenster team now has your details and will come back to you as soon as possible.'],
+    /* Was "The Fenster team now has your details", which is the third-person
+       voice STYLE.md rules out. Same fault as the consultation copy above and
+       fixed in the same pass. */
+    'success' => ['title' => 'Thanks - your enquiry has been received.', 'copy' => 'We have your details and will come back to you as soon as we can.'],
     'missing' => ['title' => 'Please check the highlighted details.', 'copy' => 'Name, email, phone, postcode, project type, project details and privacy confirmation are required.'],
     'bad_email' => ['title' => 'Please check your email address.', 'copy' => 'Enter a valid email address so the team can reply.'],
     'bad_phone' => ['title' => 'Please check your phone number.', 'copy' => 'Enter a valid UK phone number, such as 01908 429200 or 07123 456789.'],
@@ -94,7 +97,7 @@ $notices = [
                 <div class="fg-consultation-booking__intro">
                     <span><?php esc_html_e('Step 1 of 3', 'fenster'); ?></span>
                     <strong><?php esc_html_e('Pick a date for your free consultation.', 'fenster'); ?></strong>
-                    <p><?php esc_html_e('Pick a preferred time and the Fenster team will confirm the appointment with you. One of our experts visits, and the visit is free.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Tell us when suits and we will confirm it by phone or email. One of our experts comes to you, measures up and prices the job on the spot. There is nothing to pay, and nothing to pay if you decide against the work.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-consultation-booking__calendar" data-fg-consultation-calendar aria-live="polite"></div>
                 <p class="fg-consultation-booking__availability" aria-label="<?php esc_attr_e('Consultation availability', 'fenster'); ?>">
