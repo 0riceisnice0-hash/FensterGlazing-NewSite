@@ -699,7 +699,7 @@ function fenster_case_studies(): array
                 'Two openings at the back of this terrace, both still in painted timber and both French pairs. One opens onto the patio, the other onto the side path, and each had a toplight above it.',
                 'The patio opening is a French pair again, in <a href="' . esc_url(home_url('/heritage-aluminium-doors/')) . '">Sheerline Classic heritage aluminium</a>. The side path is where the layout actually changed. Splitting a narrow opening into two leaves gives you two narrow ways through and no useful one, so that opening is now a single wide leaf in the same brickwork.',
                 'Both toplights were kept. That let the new frames sit in the existing openings without losing glass above the door, and it keeps the proportions the back of the house already had.',
-                'Both doors are two bar, so the glazing bars line up across the pair and the single even though the two openings are different widths. Finished in <a href="' . $colour_link('aluminium', 'jet-black') . '">Jet Black</a> with black handles, against red brick and a black painted plinth.',
+                'Both doors are two bar, so the glazing bars line up across the pair and the single even though the two openings are different widths. Finished in <a href="' . $colour_link('aluminium', 'jet-black') . '">Jet Black</a> with black handles, against the red brick.',
                 'Powder-coated aluminium replaces painted timber on both, so neither needs repainting, and both lock at several points up the frame rather than on a single latch.',
             ],
             'installed' => [
@@ -710,13 +710,15 @@ function fenster_case_studies(): array
                 'Jet Black finish with black handles',
             ],
             'installers' => [$fitter_zac, $fitter_shane],
+            // Paired for reading: each opening after then before, then the two
+            // shots taken from indoors. The first entry is what the card uses.
             'images' => [
-                ['src' => $img . 'cs-wolverton-heritage-doors-exterior.webp', 'caption' => 'After: the patio opening, a French pair with two bar glazing and the toplight above.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-exterior.webp', 'caption' => 'After: the patio opening, a French pair with two bar glazing.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-before-double.webp', 'caption' => 'Before: the painted timber French doors on the same opening.'],
-                ['src' => $img . 'cs-wolverton-heritage-doors-open.webp', 'caption' => 'After: both leaves open onto the patio, looking back through the kitchen.'],
-                ['src' => $img . 'cs-wolverton-heritage-doors-before-single.webp', 'caption' => 'Before: the side path opening as a narrow timber French pair, two slim leaves and a central stile.'],
-                ['src' => $img . 'cs-wolverton-heritage-doors-single.webp', 'caption' => 'After: the same opening as one wide single leaf, matched to the patio doors.'],
-                ['src' => $img . 'cs-wolverton-heritage-doors-interior.webp', 'caption' => 'After: the patio doors from inside, with the toplight carrying daylight above the head.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-single.webp', 'caption' => 'After: the side path as one wide single leaf.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-before-single.webp', 'caption' => 'Before: the side path as a narrow timber French pair.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-open.webp', 'caption' => 'Both leaves open onto the patio, looking back through the kitchen.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-interior.webp', 'caption' => 'The patio doors from inside, with the toplight above the head.'],
             ],
         ],
         'white-charisma-rose-sash-windows-wolverton' => [
