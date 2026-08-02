@@ -210,6 +210,10 @@ function fenster_product_scrub_videos(): array
             ['file' => 'prestige-window.webm', 'type' => 'video/webm'],
             ['file' => 'prestige-window.mp4', 'type' => 'video/mp4'],
         ],
+        'aluminium-sliding-doors' => [
+            ['file' => 'prestige-slider.webm', 'type' => 'video/webm'],
+            ['file' => 'prestige-slider.mp4', 'type' => 'video/mp4'],
+        ],
         'heritage-aluminium-doors' => [
             ['file' => 'classic-door-turntable.webm', 'type' => 'video/webm'],
             ['file' => 'classic-door-turntable.mp4', 'type' => 'video/mp4'],
