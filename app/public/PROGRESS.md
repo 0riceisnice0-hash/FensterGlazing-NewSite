@@ -4,7 +4,7 @@ Last updated: 2026-08-02
 
 ## START HERE, 2026-08-02 (end of session)
 
-**Live, `main` and test are all level at `3ec2d76`.** Re-establish live by
+**Live, `main` and test are all level at `32dcba6`.** Re-establish live by
 checksum before any release anyway, and on **more than one file**:
 `assets/css/main.css` was byte-identical across two candidate commits earlier
 today and would have given a false read on its own. The recorded pointer was
@@ -17,6 +17,20 @@ correct at the last two releases, which is not a reason to stop checking.
   owner has since said to keep them. The rule text has not been rewritten, so a
   future session could reasonably strip the metric back out. Rewrite the rule or
   remove the metric; do not leave it contradicting itself.
+
+**Two traps added 2026-08-02, both about diagnosing before fixing:**
+
+- **Ask what colour it went.** The contact hub cards were reported turning to
+  block colour. The first diagnosis, the consent modal's backdrop dimming them,
+  was reproducible and wrong. "Green and blue" was the tell: those are
+  `--color-accent` and `--color-steel`, the fallback layers beneath the images
+  in the same `background` shorthand, so the image layer was not painting at
+  all. A symptom that looks like dimming and a symptom that looks like a missing
+  layer are not the same thing.
+- **A rule that states a fact is a source, not a description.** `AI.md` said the
+  consultation includes measuring up. Nine places across the site had copied it,
+  including Legend's verified facts, so the fix had to start with the rule
+  rather than the page that was reported.
 
 **Closed since the last session, so do not reopen:**
 
@@ -51,6 +65,66 @@ correct at the last two releases, which is not a reason to stop checking.
   colourspace convert, and check against a `pdftoppm` render of the page. This
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
+
+## 2026-08-02 - Bifold scrub, contact page and the consultation facts, live (32dcba6)
+
+- **Live established by checksum as `3ec2d76` first**, with the empty-input hash
+  printed alongside. **Three of the five files checked tied across two candidate
+  commits**, because the last change touched neither; only `enquiry-form.php`
+  and `site-data.php` separated them. That is the 2026-08-02 lesson repeating in
+  a different shape: pick files the candidates actually differ in.
+- Range `d7e5f34..32dcba6` was **5 commits, one author**, all reviewed on test in
+  the same session and approved together. Backup
+  `fenster-pre-32dcba6-20260802-152248.tar.gz` confirmed at 378M and 1,777
+  entries, found by grepping the SHA rather than reading the tail of `ls`.
+  Explicit SHA, theme-only rsync, both caches purged.
+- **The bifold turntable stays in the first box** rather than travelling in from
+  the hero, matching the heritage door. Re-encoded all-intra from the webm alpha
+  master; a normal-GOP source would have reproduced the seek lag already logged
+  against `prestige-slider`. `object-fit` is `contain`, not the traveller's
+  `cover`, which crops the outer panels off a 900x900 render in a wide box. The
+  traveller mechanism now renders nowhere and is left in place, documented, for
+  a separate decision.
+- **"We measure at the consultation" was false and was live in nine places**,
+  including Legend's verified facts and the `/book-a-consultation/` meta
+  description. The root cause was `AI.md` itself saying "measure up", which
+  everything then copied. Corrected at source and in all nine: an expert goes
+  through the options, any sizes taken are rough and only enough to price the
+  job, and the proper measurements are the technical survey later. **A rule that
+  states a fact is a source, not a description; when the fact changes, the rule
+  is the first thing to fix.**
+- One knock-on caught in QA: the rewritten booking meta description came out at
+  177 characters against the 160 cap, and was trimmed to 146.
+- **The contact page had no general enquiry form**, and it was not deliberate.
+  `931c7ef` converted the existing one into the consultation booker in place,
+  taking the heading, source, button label and mode with it, so the page the
+  header and footer point at for "get in touch" demanded an appointment date and
+  time. Restored, with the booker removed because `/book-a-consultation/` owns
+  that journey and the hub card already links to it. Lead attribution goes back
+  to source `Contact page`.
+- **The two hub cards stopped hanging their photograph off a `z-index: -2`
+  pseudo-element.** The owner reported them turning solid green and blue, which
+  are the fallback colours under the images in the same shorthand. It could not
+  be reproduced in headless Chrome or the in-app browser, and the images serve
+  200 at full size, so the fragile construction went rather than the compositor
+  being chased: a real `<img>`, no negative z-index, no reliance on the isolated
+  stacking context under the consent modal's `backdrop-filter`. Right-sized on
+  the way past, 2.56MB to 154KB.
+- **A wrong diagnosis, recorded because it cost a round.** The first answer was
+  that the consent backdrop was dimming the cards. It produces a similar-looking
+  symptom and was reproducible, so it was reported with confidence. The owner's
+  detail that the boxes went *green and blue* is what disproved it: those are
+  `--color-accent` and `--color-steel`, the fallback layers, not a dark scrim.
+  Ask what colour before concluding what dimmed it.
+- **Verified on production:** seven theme files byte-identical to the commit;
+  fourteen routes 200 with the head-term marker intact; the enquiry form on
+  `/contact/` with zero booker markup and zero appointment inputs; the booking
+  journey intact on its own page; the bifold scrub rendering once with no
+  traveller markup; new image and video assets serving; the measuring claim
+  returning zero on three routes; no PHP notices on five routes. Live browser
+  pass at 1440 and a proven 390: card images loaded, scrub picking the mobile
+  source at 390, no horizontal overflow, headings within the cap.
+- Live, `main` and test are level at `32dcba6`.
 
 ## 2026-08-02 - Patio door handles promoted to live (3ec2d76)
 
