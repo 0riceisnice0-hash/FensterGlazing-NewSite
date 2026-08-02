@@ -34713,6 +34713,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-configurations__heading .eyebrow,
 .fg-heritage-door-colours__heading .eyebrow,
+.fg-alu-colours__heading .eyebrow,
 .fg-upvc-colours__heading .eyebrow,
 .fg-handle-finishes__heading .eyebrow,
 .fg-heritage-door-use__heading .eyebrow {
@@ -34721,6 +34722,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-configurations__heading h2,
 .fg-heritage-door-colours__heading h2,
+.fg-alu-colours__heading h2,
 .fg-upvc-colours__heading h2,
 .fg-handle-finishes__heading h2,
 .fg-heritage-door-use__heading h2,
@@ -34737,6 +34739,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-configurations__heading p:not(.eyebrow),
 .fg-heritage-door-colours__heading p:not(.eyebrow),
+.fg-alu-colours__heading p:not(.eyebrow),
 .fg-upvc-colours__heading p:not(.eyebrow),
 .fg-handle-finishes__heading p:not(.eyebrow) {
   max-width: 56ch;
@@ -35043,6 +35046,7 @@ html.fg-blinds-reveal-locked {
 @media (hover: hover) {
   .fg-heritage-door-colours__grid li:hover,
   .fg-upvc-colours__grid li:hover,
+  .fg-alu-colours__grid li:hover,
   .fg-handle-finishes__grid li:hover {
     z-index: 1;
     transform: translateY(-2px) scale(1.03);

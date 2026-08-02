@@ -1963,7 +1963,10 @@ function fenster_site_data(): array
                         ['name' => 'Anthracite Grey', 'hex' => '#353b3f', 'finish' => 'RAL 7016 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Anthracite-600.jpg'],
                         ['name' => 'Jet Black', 'hex' => '#111111', 'finish' => 'RAL 9005 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Black-600.jpg'],
                         ['name' => 'Cream', 'hex' => '#efe6d0', 'finish' => 'RAL 9001 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Cream-600.jpg'],
-                        ['name' => 'Agate Grey', 'hex' => '#b4bbb3', 'finish' => 'RAL 7018 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Agate-600.jpg'],
+                        // Owner-confirmed 2026-08-02: Agate Grey is RAL 7038.
+                        // This said 7018, which is Umbra Grey, and disagreed
+                        // with the heritage door page's own list.
+                        ['name' => 'Agate Grey', 'hex' => '#b4bbb3', 'finish' => 'RAL 7038 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Agate-600.jpg'],
                         ['name' => 'Squirrel Grey', 'hex' => '#8f9187', 'finish' => 'RAL 7000 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Squirrel-600.jpg'],
                         ['name' => 'Pastel Turquoise', 'hex' => '#7facad', 'finish' => 'RAL 6034 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Turquoise-600.jpg'],
                         ['name' => 'Chocolate Brown', 'hex' => '#4d352b', 'finish' => 'RAL 8017 Matt', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/sheerline/Classic-Corner-Brown-600.jpg'],
