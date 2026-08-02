@@ -99,17 +99,6 @@ $door_colours = [
             </div>
         </section>
 
-        <section class="fg-heritage-door-lede">
-            <div class="container">
-                <p><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
-                <ul class="fg-heritage-door-lede__points" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
-                    <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Fitted by our own installers, with a 10 year guarantee', 'fenster'); ?></li>
-                </ul>
-            </div>
-        </section>
-
         <section class="fg-heritage-door-brief" aria-label="<?php esc_attr_e('Heritage door specification summary', 'fenster'); ?>">
             <div class="container">
                 <div class="fg-heritage-door-brief__grid">
@@ -118,6 +107,17 @@ $door_colours = [
                     <p><strong><?php esc_html_e('Up to 2.2m x 1m', 'fenster'); ?></strong><span><?php esc_html_e('Maximum sash size per leaf', 'fenster'); ?></span></p>
                     <p><strong><?php esc_html_e('Opens in or out', 'fenster'); ?></strong><span><?php esc_html_e('Set by the room, the threshold and the swing', 'fenster'); ?></span></p>
                 </div>
+            </div>
+        </section>
+
+        <section class="fg-heritage-door-lede">
+            <div class="container">
+                <p><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
+                <ul class="fg-heritage-door-lede__points" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
+                    <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Fitted by our own installers, with a 10 year guarantee', 'fenster'); ?></li>
+                </ul>
             </div>
         </section>
 
@@ -233,6 +233,37 @@ $door_colours = [
             </div>
         </section>
 
+        <section class="fg-heritage-door-use">
+            <div class="container">
+                <div class="fg-heritage-door-use__heading">
+                    <p class="eyebrow"><?php esc_html_e('Where they work', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Two jobs these doors do well.', 'fenster'); ?></h2>
+                </div>
+                <div class="fg-heritage-door-use__grid">
+                    <article>
+                        <figure>
+                            <img src="<?php echo esc_url($asset('heritage-french-brick-1400w.webp')); ?>" alt="<?php esc_attr_e('Black heritage aluminium French doors in a red brick courtyard with stone paving', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-brick-1400w.webp')); ?>>
+                        </figure>
+                        <div class="fg-heritage-door-use__copy">
+                            <span><?php esc_html_e('01. Period replacement', 'fenster'); ?></span>
+                            <h3><?php esc_html_e('Replacing something original.', 'fenster'); ?></h3>
+                            <p><?php esc_html_e('If a house already has steel or slim timber doors, a chunky modern replacement reads wrong from the street. The Classic Heritage Door keeps the frame narrow enough that the opening still looks like it belongs to the house.', 'fenster'); ?></p>
+                        </div>
+                    </article>
+                    <article>
+                        <figure>
+                            <img src="<?php echo esc_url($asset('heritage-french-open-1400w.webp')); ?>" alt="<?php esc_attr_e('Heritage aluminium French doors opened from a living room onto a courtyard', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-open-1400w.webp')); ?>>
+                        </figure>
+                        <div class="fg-heritage-door-use__copy">
+                            <span><?php esc_html_e('02. New extension', 'fenster'); ?></span>
+                            <h3><?php esc_html_e('Giving a new room some age.', 'fenster'); ?></h3>
+                            <p><?php esc_html_e('On a kitchen or garden room extension the bars do the opposite job. They stop a big glazed opening looking like a shopfront and give the new part of the house something to look at.', 'fenster'); ?></p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <section class="fg-heritage-door-frame">
             <div class="container fg-heritage-door-frame__grid">
                 <div class="fg-heritage-door-frame__visuals">
@@ -261,37 +292,6 @@ $door_colours = [
                             <dd><?php esc_html_e('The door was drawn to sit alongside the Classic window range, so the stepped face, colour and bars line up if you are doing the doors and windows together.', 'fenster'); ?></dd>
                         </div>
                     </dl>
-                </div>
-            </div>
-        </section>
-
-        <section class="fg-heritage-door-use">
-            <div class="container">
-                <div class="fg-heritage-door-use__heading">
-                    <p class="eyebrow"><?php esc_html_e('Where they work', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Two jobs these doors do well.', 'fenster'); ?></h2>
-                </div>
-                <div class="fg-heritage-door-use__grid">
-                    <article>
-                        <figure>
-                            <img src="<?php echo esc_url($asset('heritage-french-brick-1400w.webp')); ?>" alt="<?php esc_attr_e('Black heritage aluminium French doors in a red brick courtyard with stone paving', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-brick-1400w.webp')); ?>>
-                        </figure>
-                        <div class="fg-heritage-door-use__copy">
-                            <span><?php esc_html_e('01. Period replacement', 'fenster'); ?></span>
-                            <h3><?php esc_html_e('Replacing something original.', 'fenster'); ?></h3>
-                            <p><?php esc_html_e('If a house already has steel or slim timber doors, a chunky modern replacement reads wrong from the street. The Classic Heritage Door keeps the frame narrow enough that the opening still looks like it belongs to the house.', 'fenster'); ?></p>
-                        </div>
-                    </article>
-                    <article>
-                        <figure>
-                            <img src="<?php echo esc_url($asset('heritage-french-open-1400w.webp')); ?>" alt="<?php esc_attr_e('Heritage aluminium French doors opened from a living room onto a courtyard', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-open-1400w.webp')); ?>>
-                        </figure>
-                        <div class="fg-heritage-door-use__copy">
-                            <span><?php esc_html_e('02. New extension', 'fenster'); ?></span>
-                            <h3><?php esc_html_e('Giving a new room some age.', 'fenster'); ?></h3>
-                            <p><?php esc_html_e('On a kitchen or garden room extension the bars do the opposite job. They stop a big glazed opening looking like a shopfront and give the new part of the house something to look at.', 'fenster'); ?></p>
-                        </div>
-                    </article>
                 </div>
             </div>
         </section>

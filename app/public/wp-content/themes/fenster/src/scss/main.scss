@@ -34517,11 +34517,11 @@ html.fg-blinds-reveal-locked {
 }
 
 /* The lead paragraph and reassurance points, displaced from the hero when it
-   became the shared full-bleed one. Sits between the hero and the four-fact
-   strip so the page still says what the product is before it starts quoting
-   numbers at people. */
+   became the shared full-bleed one. Sits after the four-fact strip, matching
+   casement, where the specification strip sits under the hero and the prose
+   intro follows it. */
 .fg-heritage-door-lede {
-  padding: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: clamp(1.5rem, 3vw, 2.4rem) 0 0;
 }
 
 .fg-heritage-door-lede > .container {
