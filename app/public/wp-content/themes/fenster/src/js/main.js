@@ -3568,16 +3568,20 @@ document.querySelectorAll('[data-fg-scrub-video]').forEach((video) => {
     const viewport = window.innerHeight || 0;
     if (!rect.height || !viewport) return;
 
-    /* Starts when the top edge enters the viewport and finishes when the
-       element is centred in it, which is half of a full pass.
+    /* Runs from the element being half on screen to it being centred, which
+       works out at exactly half a viewport of scroll whatever the element's
+       height.
 
-       Running it across the whole pass instead put the last frames on screen
-       only after the element had scrolled off the top, so the end of the
-       rotation, where the handle turns, was never actually seen. Completing at
-       centre means the whole animation plays while the door is fully visible,
-       and it then holds on the final frame as you carry on scrolling. */
-    const travel = (viewport + rect.height) / 2;
-    const progress = clamp((viewport - rect.top) / Math.max(1, travel));
+       Both ends of this have been wrong once. Across a full pass, the last
+       frames only arrived after the element had left the top of the viewport,
+       so the end of the rotation was never seen. Starting from the top edge
+       entering the viewport instead spent the opening frames below the fold
+       and lost the beginning. Half-visible to centred keeps both: the rotation
+       starts as the product appears and finishes with it settled and fully in
+       view, then holds the last frame. */
+    const start = viewport - (rect.height / 2);
+    const travel = viewport / 2;
+    const progress = clamp((start - rect.top) / Math.max(1, travel));
     seekVideo(progress >= 0.995 ? Math.max(0, duration - 0.035) : progress * duration);
   };
 
