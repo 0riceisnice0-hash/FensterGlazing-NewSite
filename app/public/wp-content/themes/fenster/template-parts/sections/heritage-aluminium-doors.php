@@ -229,10 +229,10 @@ $door_colours = [
             <div class="container fg-heritage-door-security__grid">
                 <div class="fg-heritage-door-security__copy">
                     <p class="eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Secured by Design is an upgrade, not the standard.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Secured by Design is the police service\'s own standard, and the Classic Heritage Door passes it. It does not arrive that way. It is a specification you choose and pay for, and the badge tends to appear on installer websites without that sentence next to it.', 'fenster'); ?></p>
-                    <p><?php esc_html_e('Whether you need it depends on the door. A garden door inside a walled courtyard is a different problem from a side door onto an unlit alley. A four bar door breaks the glass into five small panes. A door with no bars is one sheet at chest height.', 'fenster'); ?></p>
-                    <p><?php esc_html_e('So we come and look. Where the door sits, what is behind it, who can see it from the road. Then we tell you whether the upgrade is worth your money on that opening, and we are happy to say no.', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Secured by Design, specified door by door.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Secured by Design is the police service\'s own standard, and the Classic Heritage Door meets it. It is a specification you choose, so you can put it exactly where it does the most good.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('What a door needs depends on where it sits. A garden door inside a walled courtyard is a different job from a side door onto an unlit alley. A four bar door breaks the glass into five small panes, and a door with no bars is a single sheet at chest height.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('So we come and look at the opening: where the door sits, what is behind it, who can see it from the road. You get a straight recommendation for that door, based on what we find.', 'fenster'); ?></p>
                 </div>
                 <figure class="fg-heritage-door-security__media">
                     <img src="<?php echo esc_url($asset('heritage-french-courtyard-1100w.webp')); ?>" alt="<?php esc_attr_e('Anthracite heritage aluminium French doors beside a matching window on a rendered house', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-courtyard-1100w.webp')); ?>>
@@ -244,8 +244,8 @@ $door_colours = [
             <div class="container">
                 <div class="fg-heritage-door-colours__heading">
                     <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Twelve standard colours, and most people pick two of them.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Anthracite Grey and Jet Black cover the large majority of heritage doors we fit, which is worth knowing before you spend an evening on the other ten. All twelve are powder coated in the UK on a Qualicoat approved line.', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Twelve standard colours, powder coated in the UK.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Anthracite Grey and Jet Black are the two we fit most often, and they sit well against brick and render alike. All twelve are powder coated in the UK on a Qualicoat approved line, so the finish is the same whichever you choose.', 'fenster'); ?></p>
                 </div>
                 <ul class="fg-heritage-door-colours__grid">
                     <?php foreach ($door_colours as $colour) : ?>
@@ -256,7 +256,7 @@ $door_colours = [
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <p class="fg-heritage-door-colours__note"><?php esc_html_e('You can have a different colour inside and out at no lead-time penalty, and bespoke colours outside the twelve are available if you need to match something existing. Ask us before you assume a colour is not possible.', 'fenster'); ?></p>
+                <p class="fg-heritage-door-colours__note"><?php esc_html_e('You can have a different colour inside and out with no effect on the lead time, and we can match a colour beyond the twelve if you have something existing to work to. If you have a shade in mind, ask and we will tell you what is possible.', 'fenster'); ?></p>
             </div>
         </section>
 
