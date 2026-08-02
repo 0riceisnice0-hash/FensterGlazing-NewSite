@@ -13,6 +13,56 @@ which has been stale four releases running.
 
 Six defects were fixed on top of the merge; see the 2026-08-02 entry below.
 
+## 2026-08-02 - Heritage doors and the aluminium colour grids, live (c88412d)
+
+- Live established by checksum as `64f4e51` on four theme files, with the
+  empty-input hash printed alongside so a silent miss could not read as a match.
+  Range `64f4e51..c88412d` was 7 commits, one author, all of it reviewed on test
+  in the same session. Backup `fenster-pre-c88412d-20260802-110844.tar.gz`
+  (378M, 1,763 entries) confirmed before deploying. Explicit SHA, theme-only
+  rsync, `wp cache flush`, `wp sg purge`.
+- **Heritage doors:** the Classic turntable now fills the first slot after the
+  hero, scrubbing in place rather than travelling like the bifold. The kitchen
+  photograph it displaced moved into the second "Two jobs" card, which removes
+  the one repeated image on the page. Numbering off those two cards, Real homes
+  given its own padding, the Wolverton install added as the gallery's lead in a
+  tall cell so the portrait is not cropped, the mechanical corner-cleat shot
+  removed so the thermal cut-through takes the column, and the case-study strip
+  rebuilt on flex.
+- **The case-study spacing had a specific cause.** `auto-fit` collapsed the empty
+  tracks and split the row between the survivors, so two studies sat in 578px
+  tracks holding 416px cards: a 186px visual gap while `gap` read 24px. Flex
+  fixes it for every count and wraps as more studies load.
+- **Aluminium windows** show the Prestige profile turning instead of a still of
+  the same corner. Scrub routes now live in `fenster_product_scrub_videos()`,
+  separate from the traveller map, because anything in the traveller map gets
+  traveller markup rendered for it and would otherwise get both treatments.
+- **The five aluminium routes carry the colour grid** in the heritage layout,
+  through `aluminium-colour-grid.php`, the counterpart to the existing uPVC
+  grid. Both read `colour_options`, so the hub stays the single source. Heritage
+  doors is deliberately excluded: its range stops at dual and bespoke on
+  request rather than the any-RAL match these five carry.
+- **Agate Grey is RAL 7038**, owner-confirmed. `site-data.php` said 7018, which
+  is Umbra Grey, and disagreed with the heritage door page. It fed the colour
+  hub as well as the five new grids.
+- **A layout bug reached the owner and should not have.** The colour grid was
+  added to the container rule and to none of the three rules that place its
+  children, so the eyebrow lost its full-width span, the h2 auto-placed into
+  the second column at default size and the copy fell beneath the eyebrow. The
+  selectors had been added by script and reported "8 of 8", which was the script
+  counting its own patterns rather than proof the layout was complete, and the
+  browser pass measured columns, tiles and overflow but never the heading. The
+  check is now a diff of every selector naming the uPVC or heritage colour grid
+  against its aluminium counterpart.
+- **Verified on production** rather than assumed: seven theme files byte-identical
+  to the commit; thirteen routes 200 with the head-term marker intact; the
+  turntable, four-cell gallery, Wolverton image and heritage-windows link all
+  present; corner-cleat and 01/02 numbering returning zero; the colour grid on
+  exactly the five routes with twelve swatches each; RAL 7038 serving and 7018
+  returning zero on all five and on the colour hub; the new video and image
+  assets serving; no PHP notices on five routes; and a live browser pass showing
+  the corrected heading placement, no horizontal overflow and no console errors.
+
 ## 2026-08-02 - Promoted to live (64f4e51)
 
 - **Live established by checksum first**, not read from a doc: four theme files
