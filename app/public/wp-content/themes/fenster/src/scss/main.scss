@@ -34336,18 +34336,26 @@ html.fg-blinds-reveal-locked {
   line-height: 1.6;
 }
 
-/* auto-fit with a card cap: product routes can match one, two or three
-   studies, and each count should look intentional rather than leave holes. */
+/* Flex, not grid, and the reason is the two-study case. With
+   `repeat(auto-fit, minmax(15rem, 1fr))` plus a 26rem cap on the card, auto-fit
+   collapsed the empty tracks and shared the whole row between the survivors:
+   two studies produced 578px tracks holding 416px cards, so the visible gap
+   between them was 186px while `gap` still read 24px. It looked like the
+   section had been spaced by hand and badly.
+
+   Capping the track instead is not the fix either, because auto-fit counts
+   tracks by the max when the max is definite, which is what forced two columns
+   before. Flex sidesteps both: cards grow to the cap, pack from the left with
+   the real gap, and wrap once there are enough of them. One, two, three or a
+   dozen studies all read as the same component. */
 .fg-cs-strip__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: clamp(0.9rem, 2vw, 1.5rem);
 }
 
-/* Cap the card, not the track: auto-fit counts tracks by the max size when it
-   is definite, which forced two columns. The cap keeps a lone matched study
-   from stretching across the whole container. */
 .fg-cs-strip__grid .fg-cs-card {
+  flex: 1 1 15rem;
   max-width: 26rem;
 }
 
@@ -34359,9 +34367,16 @@ html.fg-blinds-reveal-locked {
   margin-top: clamp(1rem, 2vw, 1.5rem);
 }
 
+/* Was `grid-template-columns: 1fr`, which stopped meaning anything the moment
+   the container became flex. Stack explicitly and drop the card cap, or a
+   phone gets a 416px column floating in a 358px viewport. */
 @media (max-width: 860px) {
   .fg-cs-strip__grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .fg-cs-strip__grid .fg-cs-card {
+    max-width: none;
   }
 }
 
@@ -34833,6 +34848,19 @@ html.fg-blinds-reveal-locked {
   height: 100%;
   aspect-ratio: 1;
   object-fit: cover;
+}
+
+/* With the corner-cleat photograph gone the thermal cut-through takes the whole
+   column. `contain` rather than `cover`, because at this size a square crop of
+   a render whose subject already fills the frame starts clipping the corner of
+   the section it is there to show. */
+.fg-heritage-door-frame__visuals--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fg-heritage-door-frame__visuals--single img {
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
 }
 
 .fg-heritage-door-frame__points {
@@ -35720,6 +35748,22 @@ html.fg-blinds-reveal-locked {
   aspect-ratio: 4 / 3;
 }
 
+/* The Classic Heritage Door turntable is a 900x900 render, so the slot is
+   square and the frame is `contain`. Dropping a square source into the shared
+   16/10 box would either crop the top and bottom off the door or stretch it,
+   and STYLE.md rules both out. */
+.fg-cw-media--turntable {
+  aspect-ratio: 1;
+  background: #0b1f24;
+}
+
+.fg-cw-media--turntable video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .fg-cw-media img {
   width: 100%;
   height: 100%;
@@ -35969,6 +36013,16 @@ html.fg-blinds-reveal-locked {
   color: #ffffff;
 }
 
+/* The section's vertical padding came from `.fg-cw section`, so it only existed
+   where a `.fg-cw` wrapper happened to contain the gallery. On heritage doors
+   the gallery is a sibling of that wrapper, not a child, so it rendered with
+   none and the heading sat hard against the top edge of the steel band. Same
+   trap as the text colour above: a section that paints its own background owns
+   its own padding. */
+.fg-cw-gallery--heritage {
+  padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
+}
+
 .fg-cw .fg-cw-gallery__head > p,
 .fg-cw-gallery--heritage .fg-cw-gallery__head > p {
   max-width: 46ch;
@@ -36006,10 +36060,15 @@ html.fg-blinds-reveal-locked {
    pictures that honestly show a finished door, so its variant re-cuts the same
    twelve-column, two-row grid to fill without leaving holes. Everything else
    about the component, the lightbox, the captions and the mobile swipe row, is
-   shared rather than copied. */
-.fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
-.fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 6 / 13; grid-row: 1 / 2; }
-.fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 6 / 13; grid-row: 2 / 3; }
+   shared rather than copied.
+
+   Cell one is the tall left column because Wolverton is a 3:4 portrait and a
+   wide cell would crop the door out of its own photograph. Add a fifth picture
+   and this needs re-cutting again; the base six-cell rule will not cover it. */
+.fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 5; grid-row: 1 / 3; }
+.fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 5 / 13; grid-row: 1 / 2; }
+.fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 5 / 9; grid-row: 2 / 3; }
+.fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(4) { grid-column: 9 / 13; grid-row: 2 / 3; }
 
 .fg-cw-gallery__mosaic a {
   display: block;

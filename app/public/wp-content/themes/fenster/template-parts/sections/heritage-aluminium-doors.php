@@ -30,6 +30,17 @@ $asset = static function (string $path) use ($asset_path): string {
     return fenster_generated_url($asset_path($path));
 };
 
+/* The Classic Heritage Door turntable. It was already mapped to this route in
+   fenster_product_scroll_videos() and had simply never been rendered, because
+   this template returns before the generic product journey that reads it.
+
+   Deliberately not the bifold treatment: that one flies the video across the
+   page from a slot beside the hero, and the owner asked for the scrub without
+   the travel. It scrubs in place from its own position in the viewport. */
+$turntable_sources = function_exists('fenster_product_scroll_video_sources_for_slug')
+    ? fenster_product_scroll_video_sources_for_slug('heritage-aluminium-doors')
+    : [];
+
 $door_configurations = [
     ['leaf' => 'Single door', 'bars' => 'No bars', 'colour' => 'Anthracite Grey', 'image' => 'config-01-single-no-bars-anthracite.webp'],
     ['leaf' => 'Single door', 'bars' => '2 bar', 'colour' => 'Pure White', 'image' => 'config-02-single-2-bar-pure-white.webp'],
@@ -47,6 +58,7 @@ $door_configurations = [
    below already shows those; putting them in a gallery headed "real homes"
    would be a claim the picture cannot support. */
 $door_gallery = [
+    ['file' => 'heritage-wolverton', 'width' => 1050, 'focus' => '50% 50%', 'caption' => 'Wolverton', 'alt' => 'Black heritage aluminium French doors with a toplight, fitted by Fenster to a Victorian terrace in Wolverton'],
     ['file' => 'heritage-northampton', 'width' => 1080, 'focus' => '50% 50%', 'caption' => 'Northampton', 'alt' => 'Black heritage aluminium doors and a roof lantern fitted by Fenster on a Northampton extension'],
     ['file' => 'heritage-french-open', 'width' => 1400, 'focus' => '68% 50%', 'caption' => 'French doors open to a courtyard', 'alt' => 'Black heritage aluminium French doors standing open onto a planted courtyard'],
     ['file' => 'heritage-lever-handles', 'width' => 886, 'focus' => '50% 50%', 'caption' => 'Lever handles', 'alt' => 'Lever handles on a pair of black heritage aluminium doors'],
@@ -172,13 +184,31 @@ $door_colours = [
                             <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $phone)); ?></a>
                         </div>
                     </div>
-                    <figure class="fg-cw-media">
-                        <img <?php echo fenster_image_attr_string($asset_path('heritage-door-kitchen-1600w.webp'), [
-                            'alt' => __('Black heritage aluminium door and side screen looking onto a garden from a green kitchen', 'fenster'),
-                            'loading' => 'lazy',
-                        ]); ?>>
-                        <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
-                    </figure>
+                    <?php if (! empty($turntable_sources)) : ?>
+                        <figure class="fg-cw-media fg-cw-media--turntable">
+                            <?php
+                            /* No autoplay and no controls: scroll position is the
+                               only thing that moves it. With JavaScript off or
+                               reduced motion on it stays on the first frame, which
+                               is a straight-on shot of the door, so the slot still
+                               shows the product rather than an empty box. */
+                            ?>
+                            <video class="fg-heritage-door-turntable" data-fg-scrub-video muted playsinline preload="metadata" aria-label="<?php esc_attr_e('Sheerline Classic Heritage Door rotating to show its profile', 'fenster'); ?>">
+                                <?php foreach ($turntable_sources as $turntable_source) : ?>
+                                    <source src="<?php echo esc_url($turntable_source['src']); ?>" type="<?php echo esc_attr($turntable_source['type']); ?>">
+                                <?php endforeach; ?>
+                            </video>
+                            <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
+                        </figure>
+                    <?php else : ?>
+                        <figure class="fg-cw-media">
+                            <img <?php echo fenster_image_attr_string($asset_path('heritage-door-kitchen-1600w.webp'), [
+                                'alt' => __('Black heritage aluminium door and side screen looking onto a garden from a green kitchen', 'fenster'),
+                                'loading' => 'lazy',
+                            ]); ?>>
+                            <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
+                        </figure>
+                    <?php endif; ?>
                 </div>
             </section>
         </div>
@@ -252,7 +282,7 @@ $door_colours = [
                         <h2 id="fg-heritage-gallery-title"><?php esc_html_e('Heritage doors on real houses.', 'fenster'); ?></h2>
                     </div>
                     <p>
-                        <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Northampton is our own install; the rest are Sheerline photography of the same door. Click any image for a closer look.', 'fenster'); ?></span>
+                        <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Wolverton and Northampton are our own installs; the rest is Sheerline photography of the same door. Click any image for a closer look.', 'fenster'); ?></span>
                         <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished doors. Tap any image for a closer look.', 'fenster'); ?></span>
                     </p>
                 </div>
@@ -307,17 +337,24 @@ $door_colours = [
                             <img src="<?php echo esc_url($asset('heritage-french-brick-1400w.webp')); ?>" alt="<?php esc_attr_e('Black heritage aluminium French doors in a red brick courtyard with stone paving', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-brick-1400w.webp')); ?>>
                         </figure>
                         <div class="fg-heritage-door-use__copy">
-                            <span><?php esc_html_e('01. Period replacement', 'fenster'); ?></span>
+                            <span><?php esc_html_e('Period replacement', 'fenster'); ?></span>
                             <h3><?php esc_html_e('Replacing something original.', 'fenster'); ?></h3>
                             <p><?php esc_html_e('If a house already has steel or slim timber doors, a chunky modern replacement reads wrong from the street. The Classic Heritage Door keeps the frame narrow enough that the opening still looks like it belongs to the house.', 'fenster'); ?></p>
                         </div>
                     </article>
                     <article>
                         <figure>
-                            <img src="<?php echo esc_url($asset('heritage-french-open-1400w.webp')); ?>" alt="<?php esc_attr_e('Heritage aluminium French doors opened from a living room onto a courtyard', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-french-open-1400w.webp')); ?>>
+                            <?php
+                            /* The kitchen shot, moved here from the intro slot the
+                               turntable now holds. It was this or leaving the
+                               courtyard French doors in two places: they were
+                               already the gallery's second image, and a photograph
+                               used twice on one page reads as a thin library. */
+                            ?>
+                            <img src="<?php echo esc_url($asset('heritage-door-kitchen-1600w.webp')); ?>" alt="<?php esc_attr_e('Black heritage aluminium door and side screen looking onto a garden from a green kitchen extension', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-door-kitchen-1600w.webp')); ?>>
                         </figure>
                         <div class="fg-heritage-door-use__copy">
-                            <span><?php esc_html_e('02. New extension', 'fenster'); ?></span>
+                            <span><?php esc_html_e('New extension', 'fenster'); ?></span>
                             <h3><?php esc_html_e('Giving a new room some age.', 'fenster'); ?></h3>
                             <p><?php esc_html_e('On a kitchen or garden room extension the bars do the opposite job. They stop a big glazed opening looking like a shopfront and give the new part of the house something to look at.', 'fenster'); ?></p>
                         </div>
@@ -328,12 +365,16 @@ $door_colours = [
 
         <section class="fg-heritage-door-frame">
             <div class="container fg-heritage-door-frame__grid">
-                <div class="fg-heritage-door-frame__visuals">
+                <?php
+                /* One visual, not two. The corner-cleat photograph was a dark
+                   grey mechanical joint sitting under the thermal cut-through
+                   and reading as a second, duller version of it. The cleat is
+                   still explained in the Patented corner joint point below,
+                   which is where that fact belongs. */
+                ?>
+                <div class="fg-heritage-door-frame__visuals fg-heritage-door-frame__visuals--single">
                     <figure class="fg-heritage-door-frame__thermal">
                         <img src="<?php echo esc_url($asset('heritage-thermlock-900w.webp')); ?>" alt="<?php esc_attr_e('Thermal image cut-through of a Sheerline Classic aluminium frame and sealed glass unit', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-thermlock-900w.webp')); ?>>
-                    </figure>
-                    <figure class="fg-heritage-door-frame__corner">
-                        <img src="<?php echo esc_url($asset('heritage-corner-cleat-600w.webp')); ?>" alt="<?php esc_attr_e('Cut-through of the corner cleat that joins a Sheerline Classic frame', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-corner-cleat-600w.webp')); ?>>
                     </figure>
                 </div>
                 <div class="fg-heritage-door-frame__copy">

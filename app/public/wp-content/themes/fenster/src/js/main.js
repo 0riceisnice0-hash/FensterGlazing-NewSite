@@ -3530,6 +3530,76 @@ scrollVideoBlocks.forEach((block) => {
   window.addEventListener('resize', calculate);
 });
 
+/* Scrub a video from its own position in the viewport. Deliberately not the
+   [data-fg-product-video-final] traveller above: that one lifts the video out
+   of the flow and flies it across the page from a slot beside the hero, which
+   is the bifold treatment. This one never moves. It sits where it is rendered
+   and only maps scroll progress onto currentTime.
+
+   Verification note: this cannot be checked by watching it. Headless runs about
+   one rAF per render and a hidden tab throttles them to nothing, so a real
+   scroll reads as "did not move" in both. Assert on the seek instead, the way
+   the colour rail release was proved. */
+document.querySelectorAll('[data-fg-scrub-video]').forEach((video) => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  video.muted = true;
+  video.playsInline = true;
+
+  let duration = 0;
+  let ticking = false;
+
+  const seekVideo = (time) => {
+    if (!duration || Number.isNaN(time)) return;
+    const nextTime = clamp(time, 0, Math.max(0, duration - 0.035));
+    if (Math.abs(video.currentTime - nextTime) < 0.025) return;
+    try {
+      video.currentTime = nextTime;
+    } catch (_error) {
+      // Seeks can be rejected before enough metadata has arrived.
+    }
+  };
+
+  const updateScrub = () => {
+    ticking = false;
+    if (!duration) return;
+
+    const rect = video.getBoundingClientRect();
+    const viewport = window.innerHeight || 0;
+    if (!rect.height || !viewport) return;
+
+    /* Runs from the moment the top edge enters the viewport to the moment the
+       bottom edge leaves it, so the whole rotation happens while the door is
+       actually on screen rather than finishing above the fold. */
+    const travel = viewport + rect.height;
+    const progress = clamp((viewport - rect.top) / Math.max(1, travel));
+    seekVideo(progress >= 0.995 ? Math.max(0, duration - 0.035) : progress * duration);
+  };
+
+  const requestScrubUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateScrub);
+  };
+
+  const initScrub = () => {
+    duration = video.duration || 0;
+    if (!duration) return;
+    video.pause();
+    updateScrub();
+  };
+
+  if (video.readyState >= 1) {
+    initScrub();
+  } else {
+    video.addEventListener('loadedmetadata', initScrub, { once: true });
+  }
+
+  window.addEventListener('scroll', requestScrubUpdate, { passive: true });
+  window.addEventListener('resize', requestScrubUpdate);
+  window.addEventListener('load', requestScrubUpdate);
+});
+
 document.querySelectorAll('[data-fg-product-video-final]').forEach((finalVideo) => {
   const startSlot = document.querySelector('[data-fg-product-video-start]');
   const targetSlot = finalVideo.closest('.fg-product-why__media');
