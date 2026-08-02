@@ -7211,6 +7211,14 @@ h3 {
   background: #fbfbfb;
 }
 
+/* The shared scrim is sized for photography, where it lifts a white caption off
+   a busy image. Over a white render it washed the bottom half of the frame grey,
+   which is the opposite of what this slot is for. Keep just enough to seat the
+   caption. */
+.fg-product-intel__media--turntable::after {
+  background: linear-gradient(0deg, rgba(0, 45, 58, 0.34), transparent 26%);
+}
+
 .fg-product-intel__media--turntable video {
   display: block;
   width: 100%;
