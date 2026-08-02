@@ -34395,13 +34395,22 @@ html.fg-blinds-reveal-locked {
 
 /* Was `grid-template-columns: 1fr`, which stopped meaning anything the moment
    the container became flex. Stack explicitly and drop the card cap, or a
-   phone gets a 416px column floating in a 358px viewport. */
+   phone gets a 416px column floating in a 358px viewport.
+
+   `flex: 0 0 auto` matters as much as the direction. The desktop rule sets
+   `flex: 1 1 15rem`, and that basis is measured along the main axis, so turning
+   the container into a column turned a 15rem *width* into a 15rem *height*.
+   The card is a two-row grid, `auto 1fr`; locked to 240px its media row
+   computed to 0px, the image overflowed a zero-height row and the body landed
+   on top of it. The text rendered directly over the photograph on every page
+   carrying this strip. */
 @media (max-width: 860px) {
   .fg-cs-strip__grid {
     flex-direction: column;
   }
 
   .fg-cs-strip__grid .fg-cs-card {
+    flex: 0 0 auto;
     max-width: none;
   }
 }
