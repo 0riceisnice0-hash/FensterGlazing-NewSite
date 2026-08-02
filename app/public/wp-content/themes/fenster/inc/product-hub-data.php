@@ -327,9 +327,9 @@ function fenster_product_hub_data(string $slug): array
             'choices' => ['Repair versus replacement advice', 'Security upgrades such as cylinders and handles', 'Draught and gasket checks', 'Maintenance guidance after repair'],
         ],
         'cat-and-dog-flaps' => [
-            'badges' => ['Glass or panel', 'Microchip option', 'New unit required'],
-            'heading' => 'Pet flap fitting decided before the glass or panel is ordered.',
-            'copy' => 'A clean pet-flap installation starts with the right fitting method. Fenster checks whether the opening needs a new sealed glass unit, a replacement door panel or a panel cut-out, then confirms the flap model and position before manufacture.',
+            'badges' => ['Standard or microchip', 'Glass or panel', 'Approved SureFlap installer'],
+            'heading' => 'Glass or panel is the decision that shapes the whole job.',
+            'copy' => 'A sealed unit cannot be cut once it has been made, so a flap in glass means a new unit with the aperture already in it. A flap in a door panel is one we cut ourselves. We work out which of the two your door needs before anything is ordered, on doors and windows that are already there as well as new ones.',
             'specs' => [
                 ['label' => 'Glass fitting', 'value' => 'A new sealed glass unit is made with the correct aperture for the chosen flap'],
                 ['label' => 'Panel fitting', 'value' => 'Suitable uPVC or door panels can often accept a flap after material and position checks'],
@@ -476,10 +476,10 @@ function fenster_product_hub_data(string $slug): array
             'Limitations' => 'Repair is not always sensible if parts are obsolete, the frame is distorted or security would still be poor afterwards.',
         ],
         'cat-and-dog-flaps' => [
-            'Glass fitting' => 'Sealed glass cannot be cut on site, so a new unit is manufactured with the aperture already in the right place.',
-            'Panel fitting' => 'Panel installs depend on the door material, panel thickness and whether the flap will sit at a usable height.',
-            'Access control' => 'Manual, lockable and microchip flaps suit different pets, security needs and household routines.',
-            'Survey checks' => 'Pet size, outside access, threshold height and door construction all affect where the flap should go.',
+            'Glass fitting' => 'Sealed glass cannot be cut once it has been made, so we order a new unit with the aperture already in the right place.',
+            'Panel fitting' => 'We cut the panel ourselves, once the material and the thickness have been checked. Not every panel will take a flap.',
+            'Access control' => 'A standard flap locks by hand. A microchip flap reads the chip your pet already has and opens only for them.',
+            'Survey checks' => 'Pet size, outside access, threshold height and how the door is built all decide where the flap should sit.',
         ],
     ];
 

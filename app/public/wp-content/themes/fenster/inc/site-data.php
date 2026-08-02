@@ -408,11 +408,14 @@ function fenster_site_data(): array
                 ['label' => 'Pricing', 'value' => 'Clear repair quotes'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
+            /* Two flap types, not three. The old strip listed "Manual, lockable,
+               microchip" as if lockable were a separate model; the standard flap
+               is the one that locks by hand. Owner correction, 2026-08-02. */
             'cat-and-dog-flaps' => [
-                ['label' => 'Fitting methods', 'value' => 'Glass or door panel'],
-                ['label' => 'Glass work', 'value' => 'New sealed unit'],
-                ['label' => 'Flap types', 'value' => 'Manual, lockable, microchip'],
-                ['label' => 'Survey checks', 'value' => 'Pet size and position'],
+                ['label' => 'Flap types', 'value' => 'Standard or microchip'],
+                ['label' => 'Fitted into', 'value' => 'Glass or door panel'],
+                ['label' => 'Glass route', 'value' => 'A new sealed unit'],
+                ['label' => 'Approved installer', 'value' => 'SureFlap'],
             ],
         ],
         'product_media' => [
@@ -1202,21 +1205,33 @@ function fenster_site_data(): array
                     ['question' => 'Will the threshold be checked?', 'answer' => 'Yes. Fenster checks threshold height, drainage, access and floor finishes during survey before the final specification is ordered.'],
                 ],
             ],
+            /* Rewritten 2026-08-02 from the owner's own account of the job.
+               Two corrections of substance: we offer two flap types, standard
+               and microchip, where the strip used to imply three by listing
+               "lockable" separately; and the routes in are a new sealed unit or
+               a panel we cut, on doors and windows that are already there as
+               well as new ones. Brands are kept vague on purpose because the
+               full supplier list is not settled; SureFlap is named because we
+               are approved to fit it.
+
+               The guarantee FAQ is deliberate. Pet flaps sit outside the ten
+               year insurance-backed cover, which is exactly the kind of caveat
+               TONEOFVOICE.md says to volunteer rather than let someone find. */
             'cat-and-dog-flaps' => [
-                'intro' => 'Cat and dog flaps can be fitted neatly when the glass, panel and flap are specified together. Fenster checks the door or glazed unit first, then confirms the right fitting method, height, access control and weather detail before anything is ordered.',
+                'intro' => 'A sealed glass unit cannot be cut once it has been made. So a flap in glass means a new unit with the hole already in it, and a flap in a door panel is one we cut ourselves. Working out which of those two your door needs is the first thing we do, because it decides the rest of the job.',
                 'benefits' => [
-                    ['title' => 'The right fitting method', 'copy' => 'Some projects suit a replacement door panel, while glazed doors usually need a new sealed unit made with the aperture already built in.'],
-                    ['title' => 'No cutting sealed glass on site', 'copy' => 'Toughened double glazed units cannot simply be cut after manufacture. Fenster measures and orders a new unit when glass fitting is required.'],
-                    ['title' => 'Manual, lockable or microchip', 'copy' => 'Choose a simple flap, a lockable model or a microchip-controlled option when you want better control over which pets can come in.'],
-                    ['title' => 'Positioned around real use', 'copy' => 'The flap height, size and outside access are checked around the pet, the door construction and day-to-day access through the home.'],
-                    ['title' => 'Measured before ordering', 'copy' => 'Fenster confirms glass type, panel suitability, flap model and installation details before the made-to-measure part is ordered.'],
+                    ['title' => 'Two flaps, not a catalogue', 'copy' => 'A standard flap that you lock by hand when you want it shut, or a microchip flap that reads the chip your pet already has and opens only for them. The second one is what people ask for when someone else\'s cat has been letting itself in.'],
+                    ['title' => 'Glass means a new unit', 'copy' => 'Toughened and sealed units cannot be cut after they are made, which surprises most people. We measure the opening, order a new unit with the aperture already in the right place, and fit the flap into that.'],
+                    ['title' => 'Panels we cut ourselves', 'copy' => 'Where the door has a panel that suits it, we cut the aperture and fit the flap into it. We check the material and the thickness first, because not every panel will take one.'],
+                    ['title' => 'It does not have to be our door', 'copy' => 'We fit flaps into doors and windows that are already in the house, not only into ones we are making for you. If we did not install it, we will still tell you straight whether it will take a flap.'],
+                    ['title' => 'Approved SureFlap installers', 'copy' => 'We are approved to fit SureFlap, and we fit other makes as well. That means the flap gets chosen around your pet and your door rather than around one brand.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Can you install a cat or dog flap into glass?', 'answer' => 'Yes, but existing double glazed glass is not cut on site. Fenster supplies a new sealed unit with a factory-made aperture for the chosen flap.'],
-                    ['question' => 'Can pet flaps be fitted into uPVC or composite doors?', 'answer' => 'Yes. Suitable door panels can often accept a pet flap, and Fenster will check the material, panel and position before confirming the approach.'],
-                    ['question' => 'Do you offer microchip cat flaps?', 'answer' => 'Yes. Manual, lockable and microchip-activated models can be discussed so the flap matches the pet and the level of access control you want.'],
-                    ['question' => 'Can a dog flap go into double glazing?', 'answer' => 'It depends on the flap size, the glass unit and the door design. Larger openings need careful checking before a replacement sealed unit is specified.'],
-                    ['question' => 'Do you survey before ordering the flap or glass?', 'answer' => 'Yes. Fenster checks measurements, glass type, door or panel construction, flap size and the intended outside access before any made-to-measure unit is ordered.'],
+                    ['question' => 'Can you fit a cat flap into a double glazed door?', 'answer' => 'Yes, but not by cutting the glass you already have. A sealed unit cannot be cut once it has been made, so we measure the opening and order a new unit with the aperture already in it. The flap goes into that.'],
+                    ['question' => 'Can you fit one into a door panel instead?', 'answer' => 'Yes, where the panel suits it. We cut the aperture ourselves and fit the flap into the panel. We check the material and thickness first, because not every panel will take one.'],
+                    ['question' => 'What is the difference between the two flaps you fit?', 'answer' => 'A standard flap locks by hand when you want it shut. A microchip flap reads the chip your pet already has and opens only for them, so other animals stay outside. Both go into glass or a panel the same way.'],
+                    ['question' => 'Does it have to be a door you installed?', 'answer' => 'No. We fit flaps into doors and windows that are already in the house, as well as into new ones we are making for you.'],
+                    ['question' => 'Is a pet flap covered by the ten year guarantee?', 'answer' => 'No, and we would rather say so here than let you find out later. The ten year insurance-backed guarantee covers new window and door installations. Pet flaps sit outside it, along with repairs, replacement glass, roofline and integral blinds. The work is still ours, and you still ring us rather than a call centre if something is not right.'],
                 ],
             ],
             'roofline' => [

@@ -1526,8 +1526,8 @@ function fenster_get_generated_page(?string $slug = null): ?array
         $page = $index[$slug];
         $page['title'] = 'Cat and Dog Flaps';
         $page['url'] = home_url('/cat-and-dog-flaps/');
-        $page['seo']['title_tag'] = 'Cat and Dog Flaps | Pet Flap Glazing | Fenster Glazing';
-        $page['seo']['meta_description'] = 'Cat and dog flaps fitted into suitable door panels or new sealed glass units, with manual, lockable and microchip options checked before order.';
+        $page['seo']['title_tag'] = 'Cat and Dog Flaps | Fitted Into Glass or Panels | Fenster Glazing';
+        $page['seo']['meta_description'] = 'Standard and microchip cat and dog flaps, fitted into a new sealed glass unit or cut into a door panel. Approved SureFlap installers in Milton Keynes.';
         $page['seo']['canonical'] = 'https://fensterglazing.com/cat-and-dog-flaps/';
         $page['seo']['robots'] = 'max-image-preview:large';
 

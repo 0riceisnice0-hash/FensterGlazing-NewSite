@@ -1134,19 +1134,19 @@ $journey_option_heading = ($is_product && ! $is_commercial) ? 'Choose a finish t
 $journey_options = $product_colours;
 
 if ($is_pet_flap_page) {
-    $journey_heading = 'Plan a pet flap that fits the door, glass and pet.';
-    $journey_steps = ['Choose the fitting method', 'Confirm the flap type', 'Survey before ordering'];
-    $journey_intro_heading = 'A small product with details worth checking.';
-    $journey_intro_copy = 'The right result depends on glass type, panel construction, pet size, flap model and outside access.';
+    $journey_heading = 'Cat and dog flaps, fitted into glass or into the panel.';
+    $journey_steps = ['Glass or panel', 'Standard or microchip', 'Survey before ordering'];
+    $journey_intro_heading = 'A small job with one big decision in it.';
+    $journey_intro_copy = 'A sealed unit cannot be cut once it has been made, so glass means a new unit. A panel we cut ourselves.';
     $journey_why_eyebrow = 'Pet flap fitting';
-    $journey_why_heading = 'A neat pet flap starts with the right glass or panel decision.';
+    $journey_why_heading = 'Glass or panel decides the rest of the job.';
     $journey_why_button = 'Ask about a pet flap';
     $journey_gallery_eyebrow = 'Fitting choices';
-    $journey_gallery_heading = 'Decide the fitting method before anything is made.';
+    $journey_gallery_heading = 'Where the flap goes, and what that means.';
     $journey_faq_heading = 'FAQs about cat and dog flaps';
     $journey_order_eyebrow = 'Pet flap process';
-    $journey_order_heading = 'Survey, specify, order and fit without guesswork.';
-    $journey_order_copy = 'We check the existing door or glass first, confirm the fitting method, then order the right made-to-measure part for installation.';
+    $journey_order_heading = 'We look at the door before anything is ordered.';
+    $journey_order_copy = 'A pet flap is not made to survey sizes like a window, so the order goes in once we know which route your door takes and which flap you want.';
     $journey_order_action = 'Ask about pet flap fitting';
     $journey_option_eyebrow = 'Pet flap checks';
     $journey_option_heading = 'Choose the fitting method around the existing door or glass.';
@@ -1219,24 +1219,24 @@ $legend_verdicts = $is_pet_flap_page
 $pet_flap_cards = $is_pet_flap_page
     ? [
         [
-            'title' => 'Replacement glass unit',
-            'copy' => 'For many glazed doors, the existing sealed unit is measured and replaced with a new unit made around the selected flap.',
-            'points' => ['Keeps the sealed unit intact', 'Factory-made aperture', 'Clear or obscure glass options'],
+            'title' => 'Into new glass',
+            'copy' => 'A sealed unit cannot be cut once it has been made, so we measure the opening and order a new unit with the aperture already in it. The old unit comes out, the new one goes in, and the flap fits into that.',
+            'points' => ['The glass you have cannot be cut', 'Aperture made at the factory', 'Clear or obscured, same as any unit'],
         ],
         [
-            'title' => 'Door panel fitting',
-            'copy' => 'Some uPVC or door panels can accept a flap directly once the material, reinforcement and position have been checked.',
-            'points' => ['Suitable panels only', 'Position checked before cutting', 'Useful for simpler access needs'],
+            'title' => 'Into a door panel',
+            'copy' => 'Where the door has a panel that suits it, we cut the aperture ourselves and fit the flap straight into it. We check the material and the thickness first, because not every panel will take one.',
+            'points' => ['Cut by us, on site', 'Suitable panels only', 'No glass to reorder'],
         ],
         [
-            'title' => 'Microchip access',
-            'copy' => 'Microchip models can reduce unwanted visitors and give better control than a basic open flap.',
-            'points' => ['Manual and lockable alternatives', 'Cat and selected dog sizes', 'Power and battery details checked'],
+            'title' => 'Standard or microchip',
+            'copy' => 'The standard flap locks by hand when you want it shut. The microchip flap reads the chip your pet already has and opens only for them, which is the one people ask for when other animals have been getting in.',
+            'points' => ['Both lock', 'Microchip reads your own pet', 'We are approved SureFlap installers'],
         ],
         [
-            'title' => 'Height and outside access',
-            'copy' => 'The pet, door height, threshold and outside landing all affect whether the flap will feel natural to use.',
-            'points' => ['Pet size matters', 'Threshold and step checked', 'Weather exposure considered'],
+            'title' => 'Where it sits',
+            'copy' => 'Height matters more than people expect. We look at the pet, the threshold and what is on the other side, because a flap at the wrong height gets used once and then ignored.',
+            'points' => ['Set around the pet, not the door', 'Outside step checked', 'Cats and smaller dogs'],
         ],
     ]
     : [];
@@ -3871,9 +3871,9 @@ if ($is_commercial_hub) {
             <section class="fg-pet-flap-guide">
                 <div class="container fg-pet-flap-guide__grid">
                     <div class="fg-pet-flap-guide__lead">
-                        <p class="eyebrow"><?php esc_html_e('Glass, panel or flap first?', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('The fitting method is chosen before the pet flap is ordered.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. We check the existing unit, the selected flap and the outside access before giving the go-ahead.', 'fenster'); ?></p>
+                        <p class="eyebrow"><?php esc_html_e('How it actually goes in', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('Two ways in, and the door decides which.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('From the outside a pet flap looks like a hole in a door. The part that matters is what it is being cut into: a sealed unit that has to be remade, or a panel we can cut on site. We look at the door, the pet and the outside step before anything is ordered.', 'fenster'); ?></p>
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Check my pet flap options', 'fenster'); ?></a>
                     </div>
                     <div class="fg-pet-flap-guide__cards" aria-label="<?php esc_attr_e('Pet flap fitting options', 'fenster'); ?>">
