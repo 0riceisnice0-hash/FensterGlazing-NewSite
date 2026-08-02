@@ -12071,16 +12071,26 @@ a.fg-cs-installer:hover {
   font-size: clamp(1.45rem, 2.2vw, 2rem);
 }
 
+/* A row-first grid, not a column masonry. `columns` fills the left column top
+   to bottom before starting the right one, so the pictures do not read left to
+   right and a before cannot be placed beside its after: on the Wolverton study
+   one pair stacked correctly and the other split across the column break. A
+   grid makes source order and reading order the same thing, at every width.
+
+   align-items: start keeps each figure its natural height rather than
+   stretching it, so mixed portrait and landscape sets still sit on their own
+   proportions; a short row simply leaves space under the shorter picture. */
 .fg-cs-gallery__masonry {
-  columns: 2 22rem;
-  column-gap: clamp(1rem, 2vw, 1.5rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  align-items: start;
+  gap: clamp(1rem, 2vw, 1.5rem);
 }
 
 .fg-cs-shot {
   display: grid;
   gap: 0.6rem;
-  margin: 0 0 clamp(1rem, 2vw, 1.5rem);
-  break-inside: avoid;
+  margin: 0;
 }
 
 .fg-cs-shot img {
