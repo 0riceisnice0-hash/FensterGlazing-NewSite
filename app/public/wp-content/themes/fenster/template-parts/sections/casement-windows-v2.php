@@ -94,12 +94,24 @@ $faq_schema = [
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('The system we fit', 'fenster'); ?></p>
-                <h2 id="fg-cw-intro-title"><?php esc_html_e('One frame, openers and fixed panes together.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A casement is hinged at the side or the top and opens outwards. Because the openers and the fixed panes are made into one frame, a single window can give you a wide opening where you need one and uninterrupted glass where you do not.', 'fenster'); ?></p>
-                <p><?php esc_html_e('We fit the 70mm Liniar EnergyPlus system. We work out the layout room by room first, then match the glass, the locking and the handles to it.', 'fenster'); ?></p>
+                <?php
+                /* This section used to open by defining the hinge types and
+                   listing side-hung, top-hung and fixed lights, which is
+                   precisely what the Opening styles section below does in
+                   detail. It now says what the window is and why we fit it, and
+                   leaves the mechanics to that section.
+
+                   It stays out of the anatomy section's territory too: chambers,
+                   gaskets and the sealed unit explain how the 0.95 figure is
+                   reached, so the figure is claimed once here and explained
+                   there rather than argued twice. */
+                ?>
+                <h2 id="fg-cw-intro-title"><?php esc_html_e('The most popular window in the country, and the most adaptable.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Casement is the window most UK homes already have, and the one that adapts to the widest range of openings. Every window is made to measure, so the same system covers a small bathroom light, a full bay across the front and everything in between.', 'fenster'); ?></p>
+                <p><?php esc_html_e('We fit the 70mm Liniar EnergyPlus system on every casement. It is what we specify as standard rather than an upgrade tier, and on our listed specification the finished window reaches 0.95 W/m²K, which makes it A+ rated.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
-                    <li><?php esc_html_e('Side-hung, top-hung and fixed lights in any combination', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Made to measure, in sixteen external colours', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Made to measure, from a single light to a full bay', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Sixteen external colours, with smooth white or the same colour inside', 'fenster'); ?></li>
                     <li><?php esc_html_e('Fitted by our own installers, with a ten year guarantee', 'fenster'); ?></li>
                 </ul>
                 <div class="fg-cw-actions">
