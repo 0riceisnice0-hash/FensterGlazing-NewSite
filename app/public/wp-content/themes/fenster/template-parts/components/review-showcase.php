@@ -34,11 +34,21 @@ $review_count = (int) $summary['count'];
 $read_url = fenster_google_reviews_url();
 $trustpilot_url = (string) fenster_data('brand.trustpilot_url', '');
 
-/** Five stars, filled to the nearest half. */
+/**
+ * Five stars, filled to the nearest half.
+ *
+ * The rounding step is the point. Without it the fill *floors* to the half
+ * below, so 4.9 asked "is 4.9 >= 5" for the fifth star, got no, fell through to
+ * the half case and drew four and a half stars against a headline reading 4.9.
+ * Google rounds to the nearest half and shows five, so ours disagreed with both
+ * our own number and the profile it cites. Round first, then fill: 4.9 and 4.75
+ * give five, 4.7 gives four and a half, 4.2 gives four.
+ */
 $render_stars = static function (float $value): string {
+    $rounded = round($value * 2) / 2;
     $markup = '';
     for ($index = 1; $index <= 5; $index++) {
-        $state = $value >= $index ? 'is-full' : ($value >= $index - 0.5 ? 'is-half' : '');
+        $state = $rounded >= $index ? 'is-full' : ($rounded >= $index - 0.5 ? 'is-half' : '');
         $markup .= '<i class="fg-stars__star ' . esc_attr($state) . '" aria-hidden="true"></i>';
     }
 
