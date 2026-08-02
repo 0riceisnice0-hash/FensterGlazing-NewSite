@@ -33,11 +33,14 @@ If a sentence would survive on a competitor's website unchanged, it is too gener
 The voice earns trust by volunteering the caveat or naming the industry's bad habit directly, before the customer has to dig for it.
 
 - "Any installer can print a logo, so here is what each of ours covers, including the limits most keep in the small print."
-- "The ten year guarantee covers new window and door installations. Repairs, replacement glass, roofline, integral blinds and pet flaps sit outside it... We would rather say that here than bury it."
 - "One number for the job, not an online teaser and a different figure at the door."
 - "No stock photos and no showroom sets."
 
 The pattern is: state the suspicion a sensible customer already has, then answer it plainly. Never pretend the suspicion does not exist. Never over-promise to make it go away.
+
+**Bounded by an owner instruction, 2026-08-02: do not write copy that states what is _not_ covered or _not_ included.** The site avoids that kind of negative. This principle is about candour on things a customer will meet in practice, not about listing exclusions, and the two used to be blurred here: an earlier version of this section used the guarantee limits as its worked example, which is exactly the copy the owner does not want. Prefer the positive statement that happens to be accurate. The order process rail is the model: it says the ten year guarantee covers "new windows and doors", which is true everywhere it renders and names no exclusion.
+
+**Still live and unchanged: the `/about/` page states the guarantee exclusions at length**, and the product hub FAQs carry a guarantee-limits answer. Both predate this instruction and are owner-approved copy on the page the owner rates most. They have deliberately not been rewritten off the back of a note about one FAQ; raise it with the owner before touching them.
 
 ### 3. Respect the reader's way of doing things
 

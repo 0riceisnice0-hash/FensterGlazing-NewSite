@@ -1221,7 +1221,7 @@ $pet_flap_cards = $is_pet_flap_page
         [
             'title' => 'Into new glass',
             'copy' => 'A sealed unit cannot be cut once it has been made, so we measure the opening and order a new unit with the aperture already in it. The old unit comes out, the new one goes in, and the flap fits into that.',
-            'points' => ['The glass you have cannot be cut', 'Aperture made at the factory', 'Clear or obscured, same as any unit'],
+            'points' => ['The glass you have cannot be cut', 'Aperture made at the factory', 'Usually a week or two for the unit'],
         ],
         [
             'title' => 'Into a door panel',
@@ -1230,13 +1230,13 @@ $pet_flap_cards = $is_pet_flap_page
         ],
         [
             'title' => 'Standard or microchip',
-            'copy' => 'The standard flap locks by hand when you want it shut. The microchip flap reads the chip your pet already has and opens only for them, which is the one people ask for when other animals have been getting in.',
+            'copy' => 'The standard flap locks by hand when you want it shut. The microchip flap reads the chip your pet already has and opens only for them, which is the one people ask for when other animals have been getting in. Either goes into glass or a panel.',
             'points' => ['Both lock', 'Microchip reads your own pet', 'We are approved SureFlap installers'],
         ],
         [
             'title' => 'Where it sits',
             'copy' => 'Height matters more than people expect. We look at the pet, the threshold and what is on the other side, because a flap at the wrong height gets used once and then ignored.',
-            'points' => ['Set around the pet, not the door', 'Outside step checked', 'Cats and smaller dogs'],
+            'points' => ['Set around the pet, not the door', 'Outside step checked', 'Cats and dogs, sized to suit'],
         ],
     ]
     : [];

@@ -1214,9 +1214,12 @@ function fenster_site_data(): array
                full supplier list is not settled; SureFlap is named because we
                are approved to fit it.
 
-               The guarantee FAQ is deliberate. Pet flaps sit outside the ten
-               year insurance-backed cover, which is exactly the kind of caveat
-               TONEOFVOICE.md says to volunteer rather than let someone find. */
+               No line here says what the guarantee does not cover. Owner
+               instruction, 2026-08-02: the site avoids stating exclusions. The
+               order-process rail still scopes its guarantee step to "new windows
+               and doors", which is a positive statement that happens to stay
+               accurate on this route; that scoping is accuracy, not a negative,
+               and must not be removed. */
             'cat-and-dog-flaps' => [
                 'intro' => 'A sealed glass unit cannot be cut once it has been made. So a flap in glass means a new unit with the hole already in it, and a flap in a door panel is one we cut ourselves. Working out which of those two your door needs is the first thing we do, because it decides the rest of the job.',
                 'benefits' => [
@@ -1227,11 +1230,11 @@ function fenster_site_data(): array
                     ['title' => 'Approved SureFlap installers', 'copy' => 'We are approved to fit SureFlap, and we fit other makes as well. That means the flap gets chosen around your pet and your door rather than around one brand.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Can you fit a cat flap into a double glazed door?', 'answer' => 'Yes, but not by cutting the glass you already have. A sealed unit cannot be cut once it has been made, so we measure the opening and order a new unit with the aperture already in it. The flap goes into that.'],
+                    ['question' => 'Can you fit a cat flap into a double glazed door?', 'answer' => 'Yes, but not by cutting the glass you already have. A sealed unit cannot be cut once it has been made, so we measure the opening and order a new unit with the aperture already in it. The flap goes into that. Dog flaps and microchip flaps go in the same way, with a bigger aperture for a dog.'],
                     ['question' => 'Can you fit one into a door panel instead?', 'answer' => 'Yes, where the panel suits it. We cut the aperture ourselves and fit the flap into the panel. We check the material and thickness first, because not every panel will take one.'],
                     ['question' => 'What is the difference between the two flaps you fit?', 'answer' => 'A standard flap locks by hand when you want it shut. A microchip flap reads the chip your pet already has and opens only for them, so other animals stay outside. Both go into glass or a panel the same way.'],
                     ['question' => 'Does it have to be a door you installed?', 'answer' => 'No. We fit flaps into doors and windows that are already in the house, as well as into new ones we are making for you.'],
-                    ['question' => 'Is a pet flap covered by the ten year guarantee?', 'answer' => 'No, and we would rather say so here than let you find out later. The ten year insurance-backed guarantee covers new window and door installations. Pet flaps sit outside it, along with repairs, replacement glass, roofline and integral blinds. The work is still ours, and you still ring us rather than a call centre if something is not right.'],
+                    ['question' => 'How long does it take?', 'answer' => 'Glass is the longer of the two. The new unit is made to order with the aperture already in it, so allow a week or two from the survey. A panel does not need a new unit made, so it is normally quicker.'],
                 ],
             ],
             'roofline' => [
