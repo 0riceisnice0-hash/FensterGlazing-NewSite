@@ -205,19 +205,33 @@ function fenster_integral_blinds_reveal_url(): string
  */
 function fenster_product_scrub_videos(): array
 {
+    /*
+     * All-intra H.264: every frame is a keyframe. A scrub seeks on almost every
+     * scroll frame, and with a normal GOP each seek decodes forward from the
+     * last keyframe, which is what made this feel laggy. prestige-slider had
+     * one keyframe in 101 frames, so every seek was decoding from frame zero.
+     * All-intra costs about five times the file size and buys a single-frame
+     * decode per seek.
+     *
+     * The mobile source is listed first because a browser takes the first
+     * source whose media matches. It is half the width and under half the
+     * bytes, which matters more on a phone than the sharpness does in a 351px
+     * slot.
+     *
+     * No WebM here on purpose: VP9 all-intra is larger and less reliably
+     * hardware-decoded, and hardware decode is the whole point.
+     */
+    $scrub = static function (string $stem): array {
+        return [
+            ['file' => $stem . '-scrub-mobile.mp4', 'type' => 'video/mp4', 'media' => '(max-width: 860px)'],
+            ['file' => $stem . '-scrub.mp4', 'type' => 'video/mp4'],
+        ];
+    };
+
     return [
-        'aluminium-windows' => [
-            ['file' => 'prestige-window.webm', 'type' => 'video/webm'],
-            ['file' => 'prestige-window.mp4', 'type' => 'video/mp4'],
-        ],
-        'aluminium-sliding-doors' => [
-            ['file' => 'prestige-slider.webm', 'type' => 'video/webm'],
-            ['file' => 'prestige-slider.mp4', 'type' => 'video/mp4'],
-        ],
-        'heritage-aluminium-doors' => [
-            ['file' => 'classic-door-turntable.webm', 'type' => 'video/webm'],
-            ['file' => 'classic-door-turntable.mp4', 'type' => 'video/mp4'],
-        ],
+        'aluminium-windows' => $scrub('prestige-window'),
+        'aluminium-sliding-doors' => $scrub('prestige-slider'),
+        'heritage-aluminium-doors' => $scrub('classic-door-turntable'),
     ];
 }
 
@@ -251,6 +265,7 @@ function fenster_product_scroll_video_sources_from(mixed $sources): array
             return [
                 'src' => $url,
                 'type' => (string) ($source['type'] ?? 'video/mp4'),
+                'media' => (string) ($source['media'] ?? ''),
             ];
         },
         is_array($sources) ? $sources : []

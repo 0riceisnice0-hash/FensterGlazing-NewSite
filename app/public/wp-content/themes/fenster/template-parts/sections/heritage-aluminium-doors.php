@@ -193,9 +193,9 @@ $door_colours = [
                                is a straight-on shot of the door, so the slot still
                                shows the product rather than an empty box. */
                             ?>
-                            <video class="fg-heritage-door-turntable" data-fg-scrub-video muted playsinline preload="metadata" aria-label="<?php esc_attr_e('Sheerline Classic Heritage Door rotating to show its profile', 'fenster'); ?>">
+                            <video class="fg-heritage-door-turntable" data-fg-scrub-video muted playsinline preload="auto" aria-label="<?php esc_attr_e('Sheerline Classic Heritage Door rotating to show its profile', 'fenster'); ?>">
                                 <?php foreach ($turntable_sources as $turntable_source) : ?>
-                                    <source src="<?php echo esc_url($turntable_source['src']); ?>" type="<?php echo esc_attr($turntable_source['type']); ?>">
+                                    <source src="<?php echo esc_url($turntable_source['src']); ?>" type="<?php echo esc_attr($turntable_source['type']); ?>"<?php if (! empty($turntable_source['media'])) : ?> media="<?php echo esc_attr($turntable_source['media']); ?>"<?php endif; ?>>
                                 <?php endforeach; ?>
                             </video>
                             <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>

@@ -3843,9 +3843,9 @@ if ($is_commercial_hub) {
                         ?>
                         <?php if (! empty($product_scrub_sources)) : ?>
                             <figure class="fg-product-intel__media fg-product-intel__media--turntable">
-                                <video data-fg-scrub-video muted playsinline preload="metadata" aria-label="<?php echo esc_attr(sprintf(__('%s frame profile rotating to show its section', 'fenster'), $title)); ?>">
+                                <video data-fg-scrub-video muted playsinline preload="auto" aria-label="<?php echo esc_attr(sprintf(__('%s frame profile rotating to show its section', 'fenster'), $title)); ?>">
                                     <?php foreach ($product_scrub_sources as $product_scrub_source) : ?>
-                                        <source src="<?php echo esc_url($product_scrub_source['src']); ?>" type="<?php echo esc_attr($product_scrub_source['type']); ?>">
+                                        <source src="<?php echo esc_url($product_scrub_source['src']); ?>" type="<?php echo esc_attr($product_scrub_source['type']); ?>"<?php if (! empty($product_scrub_source['media'])) : ?> media="<?php echo esc_attr($product_scrub_source['media']); ?>"<?php endif; ?>>
                                     <?php endforeach; ?>
                                 </video>
                                 <figcaption>
