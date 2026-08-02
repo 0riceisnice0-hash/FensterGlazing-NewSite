@@ -157,6 +157,16 @@ Owner: the first two info sections repeat each other on opening types, and the E
 - Verified on test: the three duplicated phrases return zero matches, the new intro serves, all four opening styles remain in their own section, banner at 11% with the spec strip at 5% and the intro at 6% between them, no horizontal overflow.
 - Test deployment only. Live is `572fe3c` for this session's work.
 
+## 2026-07-29 - Heritage doors reordered to the casement rhythm (test, 75ab266)
+
+Owner, after approving the casement order: reorder heritage a bit more like it, it feels disjointed.
+
+- **Two adjacent swaps, nothing else moved.** The four-fact strip now sits directly under the hero with the prose intro after it, matching casement exactly: hero, specification strip, intro, tech banner. The page previously opened hero, prose, facts, banner, so the numbers interrupted the introduction instead of framing it. And the two jobs section now precedes the frame construction section, so the benefit reads before the cutaway, the way casement puts gallery and CTA before its anatomy section.
+- **The gallery deliberately stays before configurations.** Casement runs variants, then details, then gallery. The owner asked for the gallery there specifically when it was added, and a general instruction to match casement does not override a specific instruction about that section. Flagged to the owner rather than silently reversed.
+- The lede's own SCSS comment described it as sitting between the hero and the fact strip, which the swap made false, so it was corrected along with its top padding.
+- Verified on test: rendered order is hero 1%, brief 6%, lede 8%, tech banner 10%, gallery 12%, configurations 20%, detail 29%, use 35%, frame 43%, security 50%, colours 56%, handles 65%, case studies 70%, enquiry 79%, reviews 86%. No horizontal overflow.
+- Test deployment only. Live is `572fe3c` for this session's work.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
