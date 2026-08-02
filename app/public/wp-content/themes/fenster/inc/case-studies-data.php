@@ -710,14 +710,15 @@ function fenster_case_studies(): array
                 'Jet Black finish with black handles',
             ],
             'installers' => [$fitter_zac, $fitter_shane],
-            // Paired for reading: each opening after then before, then the two
-            // shots taken from indoors. The first entry is what the card uses.
+            /* The first entry is spent on the hero and the card, so it is the
+               open shot, which belongs to no pair. That leaves the gallery
+               itself reading after, before, after, before, then indoors. */
             'images' => [
+                ['src' => $img . 'cs-wolverton-heritage-doors-open.webp', 'caption' => 'Both leaves open onto the patio, looking back through the kitchen.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-exterior.webp', 'caption' => 'After: the patio opening, a French pair with two bar glazing.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-before-double.webp', 'caption' => 'Before: the painted timber French doors on the same opening.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-single.webp', 'caption' => 'After: the side path as one wide single leaf.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-before-single.webp', 'caption' => 'Before: the side path as a narrow timber French pair.'],
-                ['src' => $img . 'cs-wolverton-heritage-doors-open.webp', 'caption' => 'Both leaves open onto the patio, looking back through the kitchen.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-interior.webp', 'caption' => 'The patio doors from inside, with the toplight above the head.'],
             ],
         ],
