@@ -3568,10 +3568,15 @@ document.querySelectorAll('[data-fg-scrub-video]').forEach((video) => {
     const viewport = window.innerHeight || 0;
     if (!rect.height || !viewport) return;
 
-    /* Runs from the moment the top edge enters the viewport to the moment the
-       bottom edge leaves it, so the whole rotation happens while the door is
-       actually on screen rather than finishing above the fold. */
-    const travel = viewport + rect.height;
+    /* Starts when the top edge enters the viewport and finishes when the
+       element is centred in it, which is half of a full pass.
+
+       Running it across the whole pass instead put the last frames on screen
+       only after the element had scrolled off the top, so the end of the
+       rotation, where the handle turns, was never actually seen. Completing at
+       centre means the whole animation plays while the door is fully visible,
+       and it then holds on the final frame as you carry on scrolling. */
+    const travel = (viewport + rect.height) / 2;
     const progress = clamp((viewport - rect.top) / Math.max(1, travel));
     seekVideo(progress >= 0.995 ? Math.max(0, duration - 0.035) : progress * duration);
   };
