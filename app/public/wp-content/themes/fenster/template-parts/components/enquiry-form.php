@@ -215,7 +215,13 @@ $notices = [
         <?php /* Not a step: the enquiry-type gate above is pre-selected, so there is nothing to complete first. */ ?>
         <span><?php esc_html_e('Project enquiry', 'fenster'); ?></span>
         <strong><?php esc_html_e('Tell us the basics.', 'fenster'); ?></strong>
-        <p><?php esc_html_e('A few useful details are enough. Fenster can confirm the exact specification after survey.', 'fenster'); ?></p>
+        <?php
+        /* Was "Fenster can confirm the exact specification after survey", the
+           third-person voice STYLE.md rules out. The consent line below keeps
+           the brand name on purpose: there it names the party receiving the
+           data, which is what a privacy statement is supposed to do. */
+        ?>
+        <p><?php esc_html_e('A few useful details are enough. We confirm the exact specification after survey.', 'fenster'); ?></p>
     </div>
 
     <fieldset class="fg-enquiry-form__step">
