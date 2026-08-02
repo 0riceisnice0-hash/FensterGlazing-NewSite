@@ -5710,3 +5710,38 @@ document.querySelectorAll('[data-fg-readmore]').forEach((button) => {
   apply();
   window.addEventListener('resize', apply, { passive: true });
 });
+
+/* Legend's verdict stamp on the pet flap page. Pressing it cycles his opinion.
+   
+   The first verdict is rendered server-side and stays visible, so this is a pure
+   enhancement: with JavaScript off the stamp still reads as a finished thought
+   and only the cycling is lost. The copy lives in PHP and arrives on a data
+   attribute, so his voice is edited where the rest of the page copy is rather
+   than in the bundle.
+   
+   aria-live on the verdict is already in the markup, so a screen reader hears
+   each new one without the button needing to announce anything itself. */
+document.querySelectorAll('[data-fg-legend-approved]').forEach((block) => {
+  const button = block.querySelector('.fg-legend-approved__stamp');
+  const verdict = block.querySelector('[data-fg-legend-verdict]');
+  if (!button || !verdict) return;
+
+  let verdicts = [];
+  try {
+    verdicts = JSON.parse(block.dataset.fgLegendVerdicts || '[]');
+  } catch (_error) {
+    verdicts = [];
+  }
+  if (!Array.isArray(verdicts) || verdicts.length < 2) return;
+
+  // Start from whichever one PHP already printed, so the first press moves on
+  // rather than repeating what is on screen.
+  let index = Math.max(0, verdicts.indexOf(verdict.textContent.trim()));
+
+  button.addEventListener('click', () => {
+    index = (index + 1) % verdicts.length;
+    verdict.textContent = verdicts[index];
+    button.classList.add('is-pressed');
+    window.setTimeout(() => button.classList.remove('is-pressed'), 160);
+  });
+});

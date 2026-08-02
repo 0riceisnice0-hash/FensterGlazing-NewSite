@@ -7018,6 +7018,94 @@ h3 {
   padding: clamp(1.5rem, 3vw, 2.6rem);
 }
 
+/* Legend's stamp. Deliberately quiet: it sits below the primary action and must
+   not compete with it, and it must never read as a badge alongside the real
+   FENSA and CPA marks. Hence a hairline chip on the page tint rather than
+   anything that looks like an accreditation seal or a second CTA. */
+.fg-legend-approved {
+  display: grid;
+  gap: 0.4rem;
+  justify-items: start;
+  margin-top: 0.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.fg-legend-approved__stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.4rem;
+  border: 1px solid rgba(15, 49, 54, 0.16);
+  border-radius: 999px;
+  background: rgba(245, 250, 248, 0.9);
+  color: var(--color-steel);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.fg-legend-approved__stamp img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@media (hover: hover) {
+  .fg-legend-approved__stamp:hover {
+    border-color: rgba(46, 172, 102, 0.5);
+    background: #ffffff;
+  }
+}
+
+/* The press is the whole interaction, so it needs to be felt rather than
+   admired: a quick squash and release, cancelled for reduced motion. */
+.fg-legend-approved__stamp:active,
+.fg-legend-approved__stamp.is-pressed {
+  transform: scale(0.96);
+}
+
+.fg-legend-approved__verdict {
+  margin: 0;
+  max-width: 34ch;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.fg-legend-approved__who {
+  margin: 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-legend-approved__who a {
+  color: var(--color-accent-dark, var(--color-accent));
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.fg-legend-approved__who a:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-legend-approved__stamp {
+    transition: none;
+  }
+
+  .fg-legend-approved__stamp:active,
+  .fg-legend-approved__stamp.is-pressed {
+    transform: none;
+  }
+}
+
 .fg-pet-flap-guide__lead h2 {
   margin: 0;
   color: var(--color-steel);

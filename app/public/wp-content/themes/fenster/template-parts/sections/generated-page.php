@@ -1196,6 +1196,26 @@ if ($is_commercial) {
         ['step' => '04', 'title' => 'Fit and finish', 'copy' => 'The flap, glass or panel is installed neatly, with position, weathering and everyday use checked on completion.'],
     ];
 }
+/* Legend's verdict on the pet flap page. He is Fenster's office cat and the
+   Chief Meow Officer on Meet the Team, so a pet flap is the one route on the
+   site where his opinion is on topic.
+
+   Kept to the one dry aside per page TONEOFVOICE.md allows, and kept away from
+   the FENSA and CPA marks on purpose: "Legend approved" must read as the joke it
+   is and never as a badge that could be mistaken for a real accreditation. The
+   verdicts are deadpan, with no exclamation marks, for the same reason.
+
+   The first is rendered server-side and visible, so with JavaScript off the
+   stamp still reads as a complete thought and only the cycling is lost. */
+$legend_verdicts = $is_pet_flap_page
+    ? [
+        'Went through it. Came back. Went through it again.',
+        'Tested at three in the morning. Several times.',
+        'Fits a cat of my proportions, which was generous of them.',
+        'No draught. No complaints.',
+        'Approved. Now open the door for me anyway.',
+    ]
+    : [];
 $pet_flap_cards = $is_pet_flap_page
     ? [
         [
@@ -3816,6 +3836,25 @@ if ($is_commercial_hub) {
                         <h2><?php esc_html_e('The fitting method is chosen before the pet flap is ordered.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. We check the existing unit, the selected flap and the outside access before giving the go-ahead.', 'fenster'); ?></p>
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Check my pet flap options', 'fenster'); ?></a>
+
+                        <?php if (! empty($legend_verdicts)) : ?>
+                            <div class="fg-legend-approved" data-fg-legend-approved data-fg-legend-verdicts="<?php echo esc_attr((string) wp_json_encode(array_values($legend_verdicts))); ?>">
+                                <button type="button" class="fg-legend-approved__stamp" aria-describedby="fg-legend-verdict">
+                                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/team/legend-avatar.webp', [
+                                        'alt' => '',
+                                        'loading' => 'lazy',
+                                        'decoding' => 'async',
+                                    ]); ?>>
+                                    <span><?php esc_html_e('Legend approved', 'fenster'); ?></span>
+                                </button>
+                                <p class="fg-legend-approved__verdict" id="fg-legend-verdict" data-fg-legend-verdict aria-live="polite">
+                                    <?php echo esc_html((string) $legend_verdicts[0]); ?>
+                                </p>
+                                <p class="fg-legend-approved__who">
+                                    <a href="<?php echo esc_url(home_url('/meet-the-team/#legend')); ?>"><?php esc_html_e('Legend, Chief Meow Officer', 'fenster'); ?></a>
+                                </p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="fg-pet-flap-guide__cards" aria-label="<?php esc_attr_e('Pet flap fitting options', 'fenster'); ?>">
                         <?php foreach ($pet_flap_cards as $card) : ?>
