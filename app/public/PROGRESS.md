@@ -13,6 +13,40 @@ which has been stale four releases running.
 
 Six defects were fixed on top of the merge; see the 2026-08-02 entry below.
 
+## 2026-08-02 - Promoted to live (64f4e51)
+
+- **Live established by checksum first**, not read from a doc: four theme files
+  matched `289b2c2` (theme-identical to tip `f37e05d`) byte for byte. The
+  empty-input hash was printed alongside the sweep so a silent miss could not
+  read as a match, and the `${sha}:path` brace trap was respected.
+- Range `f37e05d..64f4e51` was **74 commits, two authors**: the tracking-repair
+  merge and its six fixes, the heritage doors rebuild, the casement intro and
+  banner move, the Wolverton case study and gallery ordering, the privacy glass
+  card run including the Satin swatch correction, the cookie consent polish and
+  the case-study pricing default. All had been verified on test. The range was
+  put to the owner, who reviewed test and approved shipping it whole.
+- Backup `fenster-pre-64f4e51-20260802-093342.tar.gz` confirmed at 375M and
+  1,739 entries before deploying. Theme-only rsync at an explicit SHA,
+  `wp cache flush`, `wp sg purge`.
+- **Verified on production individually rather than by status code.** Eight
+  theme files byte-identical to the commit; fifteen routes 200;
+  `/double-glazing-milton-keynes/` still carries its head-term marker. Heritage
+  doors serves the `productCollection=12` embed with the false "not on the
+  instant quote tool" sentence returning zero matches, and the shared
+  full-width hero. The Wolverton study returns 200 and reads consultation while
+  Broughton reads the quote tool. `/obscured-glass/` serves `feTurbulence`
+  grain. No PHP notices leak on four routes.
+- **Security fix confirmed live.** The conversion feed returns 401 for no auth,
+  for the default username with an empty password, and for a wrong password.
+  A 503 would have meant the fix broke the configuration; it did not. The
+  non-blocking Meta relay and the shared phone helper are both present, and the
+  old `'0'`-before-`'0044'` branch returns zero matches in both files.
+- **Live, `main` and test are now level at `64f4e51`.** The divergence that
+  opened on 2026-07-30 is closed in both directions.
+- Banner impressions stay, on the owner's explicit instruction. `AI.md` still
+  carries the older rule against them; that rule is superseded for the consent
+  modal and should be read as such.
+
 ## 2026-08-02 - Tracking repair merged into main, with six fixes on top
 
 The `codex/tracking-repair` divergence is closed. `main` is now a superset of
