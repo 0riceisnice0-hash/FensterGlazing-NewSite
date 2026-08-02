@@ -593,10 +593,10 @@ function fenster_site_data(): array
                 ],
             ],
             'integral-blinds' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide sliding doors'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide aluminium bifold doors'],
                 'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Close-up of a blind sealed between the panes of a glazed door'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide sliding doors'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide aluminium bifold doors'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Close-up of integral blinds between glass panes'],
                 ],
             ],
@@ -993,7 +993,6 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-living-room-1200w.webp', 'alt' => 'Aluminium sliding doors across a living room wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-track-900w.webp', 'alt' => 'Stainless steel running track and threshold on an aluminium sliding door'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-sliding-door.jpg', 'alt' => 'Aluminium sliding door open onto a decked terrace and countryside'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds sealed inside wide aluminium sliding doors'],
             ],
             'aluminium_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden'],
