@@ -34851,15 +34851,19 @@ html.fg-blinds-reveal-locked {
 }
 
 /* With the corner-cleat photograph gone the thermal cut-through takes the whole
-   column. `contain` rather than `cover`, because at this size a square crop of
-   a render whose subject already fills the frame starts clipping the corner of
-   the section it is there to show. */
+   column.
+
+   The box stays square because the render is square, 900x900 on its own black
+   field. Putting it in a 4/3 box with `contain` letterboxed it and drew two
+   dark columns down either side, which is what it looked like: an image that
+   had not loaded properly. Match the source ratio and there are no bars to
+   explain away. */
 .fg-heritage-door-frame__visuals--single {
   grid-template-columns: minmax(0, 1fr);
 }
 
 .fg-heritage-door-frame__visuals--single img {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1;
   object-fit: contain;
 }
 
@@ -35751,10 +35755,15 @@ html.fg-blinds-reveal-locked {
 /* The Classic Heritage Door turntable is a 900x900 render, so the slot is
    square and the frame is `contain`. Dropping a square source into the shared
    16/10 box would either crop the top and bottom off the door or stretch it,
-   and STYLE.md rules both out. */
+   and STYLE.md rules both out.
+
+   The render carries a near-white background of its own (sampled at 251,251,251
+   in all four corners), so the panel behind it is white. It was the inherited
+   steel first, which put a dark door on a dark field and lost the sightlines
+   that are the entire point of this product. */
 .fg-cw-media--turntable {
   aspect-ratio: 1;
-  background: #0b1f24;
+  background: #fbfbfb;
 }
 
 .fg-cw-media--turntable video {

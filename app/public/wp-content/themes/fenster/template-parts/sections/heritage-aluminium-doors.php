@@ -391,8 +391,20 @@ $door_colours = [
                             <dd><?php esc_html_e('The corners are cleated rather than welded, which keeps the frame square. Misaligned corners are the usual reason a slim door starts to bind after a few years.', 'fenster'); ?></dd>
                         </div>
                         <div>
-                            <dt><?php esc_html_e('Matches the Classic windows', 'fenster'); ?></dt>
-                            <dd><?php esc_html_e('The door was drawn to sit alongside the Classic window range, so the stepped face, colour and bars line up if you are doing the doors and windows together.', 'fenster'); ?></dd>
+                            <dt><?php esc_html_e('Matches our heritage windows', 'fenster'); ?></dt>
+                            <dd>
+                                <?php
+                                /* "Classic" is Sheerline's name for the system.
+                                   The route a customer can actually click is
+                                   /heritage-windows/, and that page calls them
+                                   heritage windows, so this says the same. */
+                                printf(
+                                    /* translators: %s: heritage windows page link */
+                                    esc_html__('The door was drawn to sit alongside our %s, so the stepped face, colour and bars line up if you are doing the doors and windows together.', 'fenster'),
+                                    '<a href="' . esc_url(home_url('/heritage-windows/')) . '">' . esc_html__('heritage windows', 'fenster') . '</a>'
+                                );
+                                ?>
+                            </dd>
                         </div>
                     </dl>
                 </div>
