@@ -314,8 +314,11 @@ $notices = [
     <input type="hidden" name="page_url" value="<?php echo esc_url((string) home_url(wp_unslash($_SERVER['REQUEST_URI'] ?? '/'))); ?>">
     <input type="hidden" name="journey_ref" value="" data-fg-journey-ref>
     <input type="hidden" name="visitor_id" value="" data-fg-visitor-id>
+    <input type="hidden" name="analytics_consent" value="0" data-fg-analytics-consent>
     <?php /* Google Ads click id, so a won job can be reported back as an offline conversion. Stays in WordPress; never relayed to the Marketing Dashboard. */ ?>
     <input type="hidden" name="ad_click_id" value="" data-fg-ad-click-id>
+    <input type="hidden" name="ad_tracker" value="" data-fg-ad-tracker>
+    <input type="hidden" name="marketing_consent" value="0" data-fg-marketing-consent>
     <input type="hidden" name="fenster_started_at" value="<?php echo esc_attr((string) time()); ?>">
     <?php wp_nonce_field('fenster_submit_enquiry', 'fenster_enquiry_nonce'); ?>
 </form>

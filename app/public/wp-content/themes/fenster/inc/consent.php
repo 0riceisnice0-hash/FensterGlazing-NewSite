@@ -165,6 +165,7 @@ function fenster_render_cookie_consent(): void
         var gtmLoaded = false;
         var clarityLoaded = false;
         var metaLoaded = false;
+        var bannerShownRecorded = false;
 
         function recordConsentMetric(choice) {
             var endpoint = window.fensterWebsiteTracking && window.fensterWebsiteTracking.consentEndpoint;
@@ -309,7 +310,7 @@ function fenster_render_cookie_consent(): void
         function clearOptionalCookies(category) {
             var optionalCookieName = category === 'analytics'
                 ? /^(?:_ga(?:_.+)?|_gid|_gat(?:_.+)?|_clck|_clsk)$/
-                : /^(?:_fbp|_fbc)$/;
+                : /^(?:_fbp|_fbc|_gcl_.+|_gac_.+|_gads|_gpi)$/;
             var domain = window.location.hostname.replace(/^www\./, '');
 
             document.cookie.split(';').forEach(function (cookie) {
@@ -329,7 +330,8 @@ function fenster_render_cookie_consent(): void
             [
                 'fenster_quote_journey_ref',
                 'fenster_website_visitor_id',
-                'fenster_website_first_touch'
+                'fenster_website_first_touch',
+                'fenster_website_event_queue'
             ].forEach(function (key) {
                 try {
                     window.localStorage.removeItem(key);
@@ -338,9 +340,15 @@ function fenster_render_cookie_consent(): void
         }
 
         function clearMarketingStorage() {
-            try {
-                window.localStorage.removeItem('fenster_ad_click_id');
-            } catch (error) {}
+            [
+                'fenster_ad_click_id',
+                'fenster_ads_tracker',
+                'fenster_marketing_attribution_ref'
+            ].forEach(function (key) {
+                try {
+                    window.localStorage.removeItem(key);
+                } catch (error) {}
+            });
         }
 
         function revokeTrackingConsent(preferences) {
@@ -494,6 +502,10 @@ function fenster_render_cookie_consent(): void
             }
 
             mandatoryChoice = Boolean(isMandatory);
+            if (mandatoryChoice && ! bannerShownRecorded) {
+                bannerShownRecorded = true;
+                recordConsentMetric('shown');
+            }
             closeButton.hidden = mandatoryChoice;
             showOverview();
             document.documentElement.classList.add('fg-cookie-consent-open');
@@ -521,13 +533,19 @@ function fenster_render_cookie_consent(): void
         function saveChoice(analytics, marketing) {
             var previous = getPreferences();
             var preferences = setPreferences(analytics, marketing);
-            var optionalAccepted = preferences.analytics || preferences.marketing;
             var consentWithdrawn = Boolean(previous && (
                 (previous.analytics && ! preferences.analytics) ||
                 (previous.marketing && ! preferences.marketing)
             ));
 
-            recordConsentMetric(optionalAccepted ? 'accepted' : 'rejected');
+            var consentChoice = preferences.analytics && preferences.marketing
+                ? 'all'
+                : preferences.analytics
+                    ? 'analytics_only'
+                    : preferences.marketing
+                        ? 'marketing_only'
+                        : 'necessary_only';
+            recordConsentMetric(consentChoice);
             closeDialog();
             showSettingsButton();
             revokeTrackingConsent(preferences);

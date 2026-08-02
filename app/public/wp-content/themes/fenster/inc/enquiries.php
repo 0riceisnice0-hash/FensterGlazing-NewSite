@@ -32,6 +32,88 @@ function fenster_register_enquiry_post_type(): void
     ]);
 }
 
+add_action('add_meta_boxes_fenster_enquiry', 'fenster_enquiry_add_outcome_meta_box');
+function fenster_enquiry_add_outcome_meta_box(): void
+{
+    add_meta_box(
+        'fenster-enquiry-outcome',
+        __('Lead outcome', 'fenster'),
+        'fenster_enquiry_render_outcome_meta_box',
+        'fenster_enquiry',
+        'side',
+        'high'
+    );
+}
+
+function fenster_enquiry_render_outcome_meta_box(WP_Post $post): void
+{
+    $status = (string) get_post_meta($post->ID, '_fenster_outcome_status', true);
+    $status = $status !== '' ? $status : 'new';
+    $value = (string) get_post_meta($post->ID, '_fenster_outcome_value', true);
+    wp_nonce_field('fenster_enquiry_outcome_' . $post->ID, 'fenster_enquiry_outcome_nonce');
+    ?>
+    <p>
+        <label for="fenster-outcome-status"><strong><?php esc_html_e('Status', 'fenster'); ?></strong></label>
+        <select id="fenster-outcome-status" name="fenster_outcome_status" class="widefat">
+            <?php foreach ([
+                'new' => __('New', 'fenster'),
+                'contacted' => __('Contacted', 'fenster'),
+                'qualified' => __('Qualified', 'fenster'),
+                'appointment' => __('Appointment', 'fenster'),
+                'won' => __('Won', 'fenster'),
+                'lost' => __('Lost', 'fenster'),
+            ] as $key => $label) : ?>
+                <option value="<?php echo esc_attr($key); ?>" <?php selected($status, $key); ?>><?php echo esc_html($label); ?></option>
+            <?php endforeach; ?>
+        </select>
+    </p>
+    <p>
+        <label for="fenster-outcome-value"><strong><?php esc_html_e('Won value (£)', 'fenster'); ?></strong></label>
+        <input id="fenster-outcome-value" class="widefat" type="number" min="0" step="0.01" name="fenster_outcome_value" value="<?php echo esc_attr($value); ?>">
+    </p>
+    <p class="description"><?php esc_html_e('Qualified and won outcomes are sent to the Marketing Dashboard and become eligible for Google Ads offline reporting when consented attribution is available.', 'fenster'); ?></p>
+    <?php
+}
+
+add_action('save_post_fenster_enquiry', 'fenster_enquiry_save_outcome', 20, 2);
+function fenster_enquiry_save_outcome(int $post_id, WP_Post $post): void
+{
+    if (wp_is_post_revision($post_id)
+        || wp_is_post_autosave($post_id)
+        || ! current_user_can('edit_post', $post_id)
+        || ! isset($_POST['fenster_enquiry_outcome_nonce'])
+        || ! wp_verify_nonce(
+            sanitize_text_field(wp_unslash($_POST['fenster_enquiry_outcome_nonce'])),
+            'fenster_enquiry_outcome_' . $post_id
+        )
+    ) {
+        return;
+    }
+
+    $status = sanitize_key((string) wp_unslash($_POST['fenster_outcome_status'] ?? 'new'));
+    if (! in_array($status, ['new', 'contacted', 'qualified', 'appointment', 'won', 'lost'], true)) {
+        $status = 'new';
+    }
+    $value = max(0, (float) wp_unslash($_POST['fenster_outcome_value'] ?? 0));
+    $previous_status = (string) get_post_meta($post_id, '_fenster_outcome_status', true);
+    $previous_value = (float) get_post_meta($post_id, '_fenster_outcome_value', true);
+
+    update_post_meta($post_id, '_fenster_outcome_status', $status);
+    update_post_meta($post_id, '_fenster_outcome_value', number_format($value, 2, '.', ''));
+
+    if ($previous_status === $status && abs($previous_value - $value) < 0.005) {
+        return;
+    }
+
+    $updated_at = gmdate('c');
+    update_post_meta($post_id, '_fenster_outcome_updated_at', $updated_at);
+    $journey_id = (string) get_post_meta($post_id, '_fenster_journey_ref', true);
+    fenster_dashboard_track_outcome($journey_id, $status, $value, $updated_at);
+    if ($status === 'won') {
+        fenster_meta_track_enquiry($post_id, 'Purchase', 'wp-won-' . $post_id, $value);
+    }
+}
+
 add_filter('manage_fenster_enquiry_posts_columns', 'fenster_enquiry_admin_columns');
 function fenster_enquiry_admin_columns(array $columns): array
 {
@@ -41,7 +123,8 @@ function fenster_enquiry_admin_columns(array $columns): array
         'fenster_project' => __('Project', 'fenster'),
         'fenster_contact' => __('Contact', 'fenster'),
         'fenster_source' => __('Source', 'fenster'),
-        'fenster_ad' => __('Ad click', 'fenster'),
+        'fenster_ad' => __('Ad attribution', 'fenster'),
+        'fenster_outcome' => __('Outcome', 'fenster'),
         'fenster_delivery' => __('Email', 'fenster'),
         'date' => __('Received', 'fenster'),
     ];
@@ -61,19 +144,29 @@ function fenster_render_enquiry_admin_column(string $column, int $post_id): void
     } elseif ($column === 'fenster_ad') {
         $click_id = (string) get_post_meta($post_id, '_fenster_ad_click_id', true);
         $click_type = (string) get_post_meta($post_id, '_fenster_ad_click_type', true);
-        if ($click_id === '') {
+        $ads_tracker = (string) get_post_meta($post_id, '_fenster_ads_tracker', true);
+        if ($click_id === '' && $ads_tracker === '') {
             echo '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . esc_html__('Not from an ad', 'fenster') . '</span>';
             return;
         }
 
-        // The full value is what an offline conversion upload needs, so keep it
-        // selectable in the title attribute rather than only showing a stub.
-        printf(
-            '<code title="%1$s">%2$s: %3$s</code>',
-            esc_attr($click_id),
-            esc_html($click_type),
-            esc_html(strlen($click_id) > 16 ? substr($click_id, 0, 16) . '...' : $click_id)
-        );
+        if ($ads_tracker !== '') {
+            echo '<code>' . esc_html('ads: ' . $ads_tracker) . '</code>';
+        }
+        if ($click_id !== '') {
+            // The full value is what an offline conversion upload needs, so keep
+            // it selectable in the title attribute rather than only showing a stub.
+            printf(
+                '%1$s<code title="%2$s">%3$s: %4$s</code>',
+                $ads_tracker !== '' ? '<br>' : '',
+                esc_attr($click_id),
+                esc_html($click_type),
+                esc_html(strlen($click_id) > 16 ? substr($click_id, 0, 16) . '...' : $click_id)
+            );
+        }
+    } elseif ($column === 'fenster_outcome') {
+        $status = (string) get_post_meta($post_id, '_fenster_outcome_status', true);
+        echo esc_html(ucfirst($status !== '' ? $status : 'new'));
     } elseif ($column === 'fenster_delivery') {
         $sent = (bool) get_post_meta($post_id, '_fenster_email_sent', true);
         echo esc_html($sent ? __('Sent', 'fenster') : __('Saved only', 'fenster'));
@@ -421,12 +514,35 @@ function fenster_process_enquiry(): array|WP_Error
         'page_url' => esc_url_raw(wp_unslash($_POST['page_url'] ?? '')),
         'journey_ref' => sanitize_text_field(wp_unslash($_POST['journey_ref'] ?? '')),
         'visitor_id' => sanitize_text_field(wp_unslash($_POST['visitor_id'] ?? '')),
+        'analytics_consent' => sanitize_text_field(wp_unslash($_POST['analytics_consent'] ?? '0')) === '1',
         'ad_click_id' => sanitize_text_field(wp_unslash($_POST['ad_click_id'] ?? '')),
+        'ad_tracker' => sanitize_text_field(wp_unslash($_POST['ad_tracker'] ?? '')),
+        'marketing_consent' => sanitize_text_field(wp_unslash($_POST['marketing_consent'] ?? '0')) === '1',
         'appointment_date' => sanitize_text_field(wp_unslash($_POST['appointment_date'] ?? '')),
         'appointment_time' => sanitize_text_field(wp_unslash($_POST['appointment_time'] ?? '')),
     ];
     $data['journey_ref'] = preg_match('/^FG2-[A-Z0-9-]{8,80}$/i', $data['journey_ref']) ? strtoupper($data['journey_ref']) : '';
     $data['visitor_id'] = preg_match('/^FGV-[A-Z0-9-]{8,80}$/i', $data['visitor_id']) ? strtoupper($data['visitor_id']) : '';
+    /*
+     * These two flags are asserted by the browser, not verified here, and that
+     * is a deliberate limit rather than an oversight. `fenster_cookie_consent`
+     * lives in local storage and is never written to a cookie, so PHP has
+     * nothing to check them against; the generated Privacy Policy tells
+     * visitors that in as many words. Do not "harden" this by mirroring
+     * consent into a cookie without changing that policy text first.
+     *
+     * The flags still narrow what gets stored, so a normal rejecting visitor
+     * saves no journey, visitor id or click id. Forging them only exposes the
+     * forger's own submission.
+     */
+    if (! $data['analytics_consent']) {
+        $data['journey_ref'] = '';
+        $data['visitor_id'] = '';
+    }
+    if (! $data['marketing_consent']) {
+        $data['ad_click_id'] = '';
+        $data['ad_tracker'] = '';
+    }
 
     /*
      * Google Ads click identifiers arrive as "gclid:value", "gbraid:value" or
@@ -440,6 +556,9 @@ function fenster_process_enquiry(): array|WP_Error
     } else {
         $data['ad_click_id'] = '';
     }
+    $data['ad_tracker'] = preg_match('/^[A-Za-z0-9 _.-]{1,80}$/', $data['ad_tracker'])
+        ? $data['ad_tracker']
+        : '';
     $privacy = ! empty($_POST['privacy']);
 
     if ($data['name'] === '' || $data['email'] === '' || $data['phone'] === '' || $data['location'] === '' || $data['project_type'] === '' || $data['message'] === '' || ! $privacy) {
@@ -527,6 +646,9 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_visitor_id' => $data['visitor_id'],
         '_fenster_ad_click_type' => $data['ad_click_type'],
         '_fenster_ad_click_id' => $data['ad_click_id'],
+        '_fenster_ads_tracker' => $data['ad_tracker'],
+        '_fenster_analytics_consent' => $data['analytics_consent'] ? '1' : '0',
+        '_fenster_marketing_consent' => $data['marketing_consent'] ? '1' : '0',
         '_fenster_appointment_date' => $data['appointment_date'],
         '_fenster_appointment_time' => $data['appointment_time'],
         '_fenster_appointment_display' => $data['appointment_display'],
@@ -575,12 +697,27 @@ function fenster_process_enquiry(): array|WP_Error
 
     if ($data['journey_ref'] !== '') {
         fenster_dashboard_track_event('form_submitted', [
+            'event_id' => 'wp-form-' . (int) $enquiry_id,
             'journey_id' => $data['journey_ref'],
             'visitor_id' => $data['visitor_id'],
             'page_path' => (string) wp_parse_url($data['page_url'], PHP_URL_PATH),
-            'source' => $data['source'],
+            'cta' => $data['source'],
         ]);
+    } else {
+        fenster_dashboard_track_stat(
+            'form_submitted',
+            (string) wp_parse_url($data['page_url'], PHP_URL_PATH),
+            'wp-form-' . (int) $enquiry_id,
+            (string) get_post_time('c', true, $enquiry_id)
+        );
     }
+    fenster_meta_track_enquiry(
+        (int) $enquiry_id,
+        $data['appointment_display'] !== '' ? 'Schedule' : 'Lead',
+        'wp-form-' . (int) $enquiry_id,
+        0,
+        true
+    );
 
     return [
         'status' => 'success',

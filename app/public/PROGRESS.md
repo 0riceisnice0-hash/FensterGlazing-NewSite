@@ -1,26 +1,82 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-07-31
+Last updated: 2026-08-02
 
-## START HERE, 2026-08-02: live and main have diverged
+## START HERE, 2026-08-02: the divergence is merged, live is behind
 
-A new session should read this before touching anything.
+`codex/tracking-repair` is merged into `main`. The 71-versus-23 commit split is
+closed and `main` is now a superset of what production runs.
 
-**Do not deploy to live until this is resolved.** Live is running `origin/codex/tracking-repair` (head `f37e05d`), measured by checksumming four theme files against every branch, not read from a doc. That branch is not merged into `main`. Deploying `main` would delete 23 commits of released work, including `inc/google-ads-conversions.php` (317 lines absent from `main`), the website-tracking changes, the consent metrics, and the clearing of `_gcl_`, `_gac_`, `_gads` and `_gpi` when a visitor rejects consent. That last one is a live privacy behaviour.
+**Live has not moved.** It is still the `289b2c2` runtime (tip `f37e05d`).
+Re-establish that by checksum before any release rather than trusting this line,
+which has been stale four releases running.
 
-**Where the work is:**
-- `main` is at `779b51a`, and test is deployed from it. 71 commits on `main` are not live.
-- Everything this session built is on test and verified there: the colour hub rail and hero, the handle options box, the heritage doors page rebuilt on the casement components, the casement intro rewrite, the heritage quote tool that was missing, and the Wolverton case study.
-- The heritage quote tool fix matters: heritage doors were always in the quote map as `productCollection=12`, the route was never passed the URL, and the enquiry copy had filled the gap by claiming the tool did not cover them. That claim is still live.
+Six defects were fixed on top of the merge; see the 2026-08-02 entry below.
 
-**The decision the owner is making:** who merges `codex/tracking-repair` into `main`. The recommendation given was that whoever wrote it does so, since both sides modify the same files (`heritage-aluminium-doors.php`, `casement-windows-v2.php`, `case-studies-residential.php`, `generated-page.php`, `src/js/main.js`) and it is a real merge, not a fast-forward. Then this session's work rebases on top and both ship together.
+## 2026-08-02 - Tracking repair merged into main, with six fixes on top
 
-**Open items, smaller:**
-- The case study gallery is now a row-first grid rather than a column masonry, so source order equals reading order. Change is global to all case studies.
-- `priced_by` on a case study controls the "how they got their price" line. Only the Wolverton study sets it, so the other residential studies now print nothing there rather than the old unchecked claim that everyone used the quote tool.
-- Composite white is `#ffffff` on the colour hub but `#f2f0e8` with a real door photo on the composite doors page. The two disagree.
-- The old dual-colour hero photo on the colour hub is unused, and its caption fact ("One frame, two finishes. Black outside, white inside.") is no longer anywhere on the page.
+The `codex/tracking-repair` divergence is closed. `main` is now a superset of
+the live runtime, so a release from it no longer deletes the Ads work.
 
+- **Merge.** Six conflicts, none of them in the product templates the earlier
+  note warned about: `heritage-aluminium-doors.php`, `casement-windows-v2.php`,
+  `case-studies-residential.php` and `generated-page.php` all merged cleanly,
+  because the branch had been cut after that work landed. The real conflicts
+  were `inc/consent.php` and `src/js/main.js`, where every hunk was the branch
+  evolving main's own code rather than competing with it, plus the two compiled
+  assets and two docs. Compiled CSS and JS were **rebuilt from merged source**
+  rather than hand-merged, then checked to carry both sides (`fg-colour-rail`,
+  `fg-cw-`, `fg-handle-finishes` and `fg-cs-quote-note` alongside
+  `fg-cookie-consent` and `fenster_form_submitted`).
+- **Auth bypass in the conversion feed, closed.** `hash_equals('', '')` is true,
+  so with a feed token configured and the password left unset, the hardcoded
+  default username plus an empty password authorised the whole feed: up to 500
+  records of click IDs and SHA-256 email and phone hashes. Live was never
+  exposed, confirmed by probing production for status codes only (401 on no
+  auth, on an empty password and on a wrong password), because the password is
+  configured there. It was one config change away: the token path exists
+  *because* Data Manager's fetcher loses the Authorization header, so dropping
+  the password is the natural next step for whoever operates it. Basic auth is
+  now only offered when both halves are set, and fails closed otherwise.
+- **The Meta CAPI call no longer blocks the lead path.** It ran `blocking` with
+  an 8 second timeout immediately before the enquiry success response, so an
+  unreachable `graph.facebook.com` would have held every customer's form
+  submission for up to eight seconds. Now non-blocking. Same lesson as the
+  AdminBase cURL 60 outage on 2026-07-21: attribution must not be able to take
+  the lead down with it.
+- **Meta access token moved out of the query string** into the request body, so
+  it cannot land in whatever logs a failed request.
+- **UK phone normalisation was silently dropping `0044` numbers**, in both the
+  feed and the Meta payload. Digits are stripped first, so `0044...` also
+  starts with `0` and took that branch: `00441908...` became `440441908...`,
+  failed the E.164 check and was discarded. The `0044` branch could never run.
+  One shared `fenster_normalise_uk_phone()` now serves both, longest prefix
+  first, unit-tested across seven formats.
+- **The feed no longer truncates the newest conversions.** It read 500 posts
+  ordered oldest-first over an 89 day window, so once volume outgrew the cap it
+  was the new rows that fell off. Now newest-first at 2000; Google dedupes on
+  `order_id`, so re-sending an older row is free.
+- **Client-asserted consent flags: documented, not "fixed".** The review called
+  for verifying `analytics_consent` and `marketing_consent` server-side. That
+  is not possible: `fenster_cookie_consent` lives in local storage and is never
+  written to a cookie, and the generated Privacy Policy tells visitors exactly
+  that. Mirroring consent into a cookie to satisfy the check would have made a
+  published policy statement false. The trust boundary is now recorded in
+  `inc/enquiries.php` instead, with a warning not to "harden" it without
+  changing the policy first.
+- **Flagged, not changed: banner impressions are back.** The branch records a
+  `shown` consent metric on the mandatory modal. `AI.md` and the 2026-07-13
+  entry both say not to reinstate banner-impression counts, because pre-consent
+  crawler traffic makes them undependable. It is already live, and the
+  dashboard may now depend on the value, so it was left alone rather than
+  silently reverted. **Owner decision needed.**
+- `GOOGLE-ADS-PLAN.md` section 3b was stale in both directions and now reads
+  true: Consent Mode v2 defaults do exist, gclid capture is done, and the part
+  that genuinely remains open is that GTM still only loads after a choice, so
+  refusing visitors send no denied-state pings.
+- All theme PHP lints clean on PHP 8.2.32. Production build passes.
+- **Live is untouched and has not moved.** Re-establish it by checksum before
+  the next release.
 
 ## 2026-07-31 - Polished cookie consent and Legend fix promoted live (616d673)
 
@@ -69,7 +125,17 @@ A new session should read this before touching anything.
 - Shipped to the protected test site through theme commit `37222a2`. PHP lint, JavaScript syntax checking and the production CSS/JavaScript build pass. Five representative routes return 200.
 - Browser QA passed at 1280x720 and a true 390x844: mandatory Escape leaves the first modal open, the first layer has no close control, all mobile controls fit with no horizontal overflow, the custom switches are off on a fresh choice, necessary-only loads no optional scripts, analytics-only loads Clarity but not Meta, marketing-only loads Meta but not Clarity, accept-all loads both, the Clarity replay stylesheet precedes Clarity, withdrawal reloads without the removed category, footer settings reopens with saved values, and the updated policy sections render. No browser console errors.
 - Follow-up verification on `7d6c84c`: a clean first visit exposes exactly **Customise** and **Accept all**, Customise exposes **Use necessary only** with both optional switches off, choosing it closes the modal with zero optional tracking scripts, and the two-button first layer fits at 390x844 with no horizontal overflow.
+## 2026-07-30 - Google Ads quote-completion attribution (live release)
 
+- Owner clarified that the quote iframe auto-loads on quote-enabled pages, so `quote_opened` and `quote_iframe_loaded` are funnel diagnostics, not conversions. The paid goal is a completed WindowCAD submission.
+- Google campaign suffixes now use `ads={adgroupid}`. The theme preserves that real ad-group number across a consented visit and copies it into every WindowCAD URL while keeping the existing `tracking=FG2-...` journey reference separate.
+- Accepted `gclid`, `gbraid` and `wbraid` values are joined to the opaque FG2 journey in WordPress for 90 days through the same-origin `/wp-json/fenster/v1/ad-attribution` endpoint. The WindowCAD callback writes the click ID and `ads` tracker to the private enquiry for offline Google Ads import. Click IDs never enter the Marketing Dashboard or AdminBase notes.
+- Website forms now save the same `ads` tracker beside their existing click ID. The enquiry list shows both under `Ad attribution`.
+- Corrected the dataLayer event construction so its intended `fenster_*` name cannot be overwritten by the unprefixed payload event, and moved the post-accept visitor/page listener from `document` to the `window` that actually dispatches the consent event.
+- Isolated the production release directly on the checksummed live runtime `572fe3c`, avoiding the unrelated visual commits in the original test branch. Built the compiled JS and PHP-linted every changed include/template.
+- Deployed exact commit `c87391f` to the protected test site first. The quote link carried `tracking=FG2-284F8566C4E94E7DAC&ads=12345678901`, and WordPress stored the matching test `gclid` and ad-group tracker.
+- Took the verified rollback archive `~/backups/fenster-theme/fenster-pre-c87391f-20260730-120759.tar.gz` (375M, 1,738 entries), deployed the same commit to production, and flushed both WordPress and SiteGround caches.
+- Production verification passed: all six changed runtime files matched the commit byte for byte; eight representative routes returned `200`; the dedicated head-term marker remained present; and a cache-busted browser test produced `tracking=FG2-AAEEB743178E4E16B3&ads=12345678901` with the matching `gclid` and tracker recoverable server-side.
 ## 2026-07-29 - Two open handle questions closed by the owner (docs only)
 
 - **Tilt and turn takes a different handle family, not S2.** The open item read as though the page was missing something; it was not. Adding the S2 grid there would have put the wrong hardware on the page, which is the more expensive mistake of the two. Details to follow from the owner, so the grid stays off until they arrive.
@@ -479,7 +545,6 @@ Owner report: the uPVC doors and aluminium doors tiles are the wrong pictures fo
 - **Found and left alone on the owner's instruction:** `/aluminium-doors/` has the same problem in its hero. `sheerline-aluminium-door.jpg` is an interior kitchen shot of a white single door, already noted on 2026-07-21 as reading uPVC. The only correct replacements are 600x450, too small for a hero, so it needs a better asset rather than a swap. Recorded in `nick.md`.
 - Verified on test: the render is gone from `/doors-milton-keynes/` and the replacement is serving.
 - Test deployment only. No live-site deployment was performed.
-
 ## 2026-07-28 - Consultations stated as free sitewide (test)
 
 Owner instruction from Nick: wherever the site mentions booking a consultation, make clear it is free.
@@ -2170,4 +2235,26 @@ Do not use this as the primary rulebook or handover. Use:
 - QA on test at `1440 x 900`, `768 x 1024` and `390 x 844`: no body overflow, one H1, nothing above 57.6px, no broken images, no console errors.
 - Test deployment only. No live-site deployment was performed.
 - Follow-up: the one-grammar CSS cleanup had swallowed the construction explorer styles (a deletion cut spanned the region the audit build had inserted them into), so the explorer shipped unstyled and the owner caught it. Styles restored, and QA now includes a template-classes-versus-compiled-CSS diff so a section cannot ship unstyled again.
+
+## 2026-07-31 - Consent-Safe Tracking Repair
+
+- Rebuilt website attribution around a 90-day opaque visitor and a journey that rotates after 30 minutes of inactivity. A returning campaign starts a new journey rather than overwriting the earlier first touch.
+- Fixed the consent race at enquiry submission: journey, visitor, analytics, marketing, click-ID and WindowCAD tracker fields are refreshed immediately before the form request.
+- Marketing click IDs and the WindowCAD `ads` value are now strictly marketing-consent-only. Marketing-only visitors use an `FGA-…` attribution reference without creating an analytics visitor or dashboard journey.
+- The WindowCAD iframe cannot load before a cookie choice. A deliberate load/expand records `quote_opened`; automatic `quote_iframe_loaded` remains exposure only and cannot inflate quote starts.
+- Browser events have stable IDs, retry without PII and deduplicate in the dashboard. Server form/WindowCAD events and aggregate receipt IDs are deterministic, eliminating the browser/server form double count and making reconciliation safe to repeat.
+- Test and production dashboard traffic is separated from the real request origin. Production reporting excludes test and legacy rows; unsigned server relays and unsigned completed-lead events are rejected.
+- Added granular consent health, office outcomes (`qualified`, `appointment`, `won`, `lost`), actual won values, direct consented Google conversions for enquiry/consultation/phone, standard Meta browser events, optional Meta CAPI, and a protected Google offline feed using click IDs or SHA-256 contact matches.
+- Hardened the public WindowCAD endpoint with payload limits, required contact fields, rate limiting and exact-payload deduplication. Shared-secret enforcement is implemented but remains off until the external WindowCAD webhook can be updated with the matching credential.
+- Protected-test QA passed accept-all, necessary-only and marketing-only journeys. The deployed theme is commit `289b2c2`; the pre-release live archive is `~/backups/fenster-theme/fenster-pre-289b2c2-20260731-102149.tar.gz`.
+- Marketing Dashboard migration `0017_tracking_integrity.sql` and commit `05e7481` were deployed. A 90-day WordPress reconciliation found 71 saved leads: 18 identified and 53 aggregate-only. Running it twice left counts unchanged at 18 and 53.
+- Account-side items still require authenticated access: create/store the Google quote-open label if wanted as Secondary, create/map the `Qualified lead` and `Won lead` offline actions, configure a Meta CAPI token, enable the WindowCAD shared secret at both ends, and connect Focus Group call outcomes when an authorised feed exists.
+
+## 2026-07-30 - Google Ads Launch And WindowCAD Conversion Import
+
+- Enabled the three approved search campaigns: `MK — Windows` (£12/day), `MK — Doors` (£12/day) and `MK — Price Intent` (£9/day).
+- Added the missing responsive search ad to the `Double Glazing MK` ad group with 15 headlines, four descriptions, the dedicated Milton Keynes landing page, inherited sitelinks and the approved image set.
+- Added a private, token-protected HTTPS CSV feed for completed WindowCAD quotes. It exports only consented Google click identifiers, completion time, a stable non-PII transaction ID, £25 value and GBP currency.
+- Connected the feed to the Primary `Instant quote submitted` conversion action in Google Ads Data Manager. It runs daily, filters `record_type = conversion`, and excludes the schema-only row used to establish the connection before the first real ad-attributed quote exists.
+- Verified live: unauthorised feed requests return 401, the tokenized feed returns CSV with `no-store` and `noindex`, and the existing homepage, quote, product and Milton Keynes routes remain healthy.
 
