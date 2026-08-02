@@ -80,10 +80,14 @@ $quick_routes = [
     ['label' => 'Price first', 'title' => 'Instant quote tool', 'copy' => 'Use online pricing for a quick product and price starting point before a final Fenster check.', 'url' => home_url('/online-quote/')],
 ];
 
+/* These described the consultation booking flow, which is no longer the form on
+   this page. Deliberately no promise of a confirmation email: those are gated
+   on `fenster_smtp_is_configured()` and switch themselves on and off, so copy
+   must not assert one. */
 $form_notes = [
-    'Weekday consultations can be requested up to 30 days ahead.',
-    'Available request times run from 9am to 4pm.',
-    'We will confirm the appointment by phone or email.',
+    'Attach photos, drawings or a schedule if it helps.',
+    'Phone lines are answered 24 hours a day if it is urgent.',
+    'For a figure first, the online quote tool prices your job in minutes.',
 ];
 ?>
 
@@ -201,12 +205,26 @@ $form_notes = [
         </div>
     </section>
 
-    <section id="book-consultation" class="fg-contact-form-section fg-contact-form-section--consultation">
+    <?php
+    /* The general enquiry form, restored 2026-08-02 on owner instruction.
+       It was never removed on purpose: `931c7ef` ("Add reusable consultation
+       booking form") converted this one include in place, taking the heading,
+       source, button label and mode with it, so the page that the header,
+       footer and nav all point at for "get in touch" had no way to simply send
+       a message. Every version before that commit carried this form.
+
+       The consultation booker is deliberately not here as well. It has its own
+       indexable route at /book-a-consultation/ with its own SEO, FAQs and proof
+       row, and the hub card at the top of this page already sends people there,
+       so carrying it twice made the site repeat one journey and offer the other
+       nowhere. Nothing linked to the old #book-consultation anchor. */
+    ?>
+    <section id="contact-enquiry" class="fg-contact-form-section">
         <div class="container fg-contact-form-section__grid">
             <div class="fg-contact-form-section__copy">
-                <p class="eyebrow"><?php esc_html_e('Book a free consultation', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Choose a time to talk things through.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Start with a weekday, choose your preferred time, then leave the details Fenster needs to confirm the appointment. One of our experts comes to you anywhere across Milton Keynes and the surrounding counties. The visit is free and there is nothing to pay if you decide against the job.', 'fenster'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Send an enquiry', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Tell us what you need help with.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Windows, doors, a repair, a misted unit or a commercial job. Leave the details and we will come back to you. If you would rather have someone come out and go through it properly, book a free consultation instead.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
                     <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>
@@ -219,10 +237,9 @@ $form_notes = [
             </div>
             <?php
             get_template_part('template-parts/components/enquiry-form', null, [
-                'class' => 'fg-contact-form fg-consultation-form',
-                'source' => 'Contact page consultation request',
-                'button_label' => 'Request consultation',
-                'consultation_booking' => true,
+                'class' => 'fg-contact-form',
+                'source' => 'Contact page',
+                'button_label' => 'Send enquiry',
             ]);
             ?>
         </div>
