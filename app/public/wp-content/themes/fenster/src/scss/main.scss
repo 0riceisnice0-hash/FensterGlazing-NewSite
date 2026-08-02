@@ -12082,7 +12082,10 @@ a.fg-cs-installer:hover {
    proportions; a short row simply leaves space under the shorter picture. */
 .fg-cs-gallery__masonry {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  /* Two across, as the old masonry was. At 22rem a 1180px container fits
+     three, which pushed the second before away from its after onto the next
+     row. Two columns puts each pair on a row of its own. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
   align-items: start;
   gap: clamp(1rem, 2vw, 1.5rem);
 }
