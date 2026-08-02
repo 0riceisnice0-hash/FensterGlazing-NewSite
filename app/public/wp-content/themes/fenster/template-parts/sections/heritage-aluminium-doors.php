@@ -50,26 +50,49 @@ $door_colours = [
 
 <main id="main-content" class="fg-heritage-door-page">
     <article>
-        <section class="fg-heritage-door-hero">
-            <div class="container fg-heritage-door-hero__grid">
-                <div class="fg-heritage-door-hero__copy">
-                    <p class="eyebrow"><?php esc_html_e('Heritage aluminium doors in Milton Keynes', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Sheerline heritage aluminium doors', 'fenster'); ?></h1>
-                    <p class="fg-heritage-door-hero__lead"><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
-                    <div class="fg-heritage-door-hero__actions">
-                        <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
-                        <a class="button button--steel" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+        <?php
+        /* The shared full-bleed hero, the same one every other product route
+           uses, rather than this page's old boxed-image hero. Owner asked for
+           it to match. .fg-hero--compact hides .fg-hero__intro by design, which
+           is why the lead paragraph moves out to its own block below rather
+           than staying here where it would be marked up but never seen. */
+        ?>
+        <section class="fg-hero fg-hero--compact">
+            <img <?php echo fenster_image_attr_string($asset_path('hero/heritage-door-brick-1760w.webp'), [
+                'class' => 'fg-hero__image',
+                'alt' => __('Black Sheerline heritage aluminium French doors in a red brick courtyard', 'fenster'),
+                'loading' => 'eager',
+                'fetchpriority' => 'high',
+                'srcset' => implode(', ', [
+                    $asset('hero/heritage-door-brick-800w.webp') . ' 800w',
+                    $asset('hero/heritage-door-brick-1200w.webp') . ' 1200w',
+                    $asset('hero/heritage-door-brick-1760w.webp') . ' 1760w',
+                ]),
+                'sizes' => '100vw',
+            ]); ?>>
+            <div class="fg-hero__shade"></div>
+            <div class="container fg-hero__inner">
+                <div class="fg-hero__copy">
+                    <div class="fg-hero__heading">
+                        <p class="eyebrow"><?php esc_html_e('Heritage aluminium doors in Milton Keynes', 'fenster'); ?></p>
+                        <h1><?php esc_html_e('Sheerline heritage aluminium doors', 'fenster'); ?></h1>
                     </div>
-                    <ul class="fg-heritage-door-hero__reassurance" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
-                        <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Fitted by our own installers, with a 10 year guarantee', 'fenster'); ?></li>
-                    </ul>
+                    <div class="button-row">
+                        <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
+                        <a class="button button--light" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+                    </div>
                 </div>
-                <figure class="fg-heritage-door-hero__media">
-                    <img src="<?php echo esc_url($asset('heritage-door-kitchen-1600w.webp')); ?>" alt="<?php esc_attr_e('Black heritage aluminium door and side screen looking onto a garden from a green kitchen', 'fenster'); ?>" loading="eager"<?php echo fenster_image_attr_string($asset_path('heritage-door-kitchen-1600w.webp')); ?>>
-                    <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
-                </figure>
+            </div>
+        </section>
+
+        <section class="fg-heritage-door-lede">
+            <div class="container">
+                <p><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
+                <ul class="fg-heritage-door-lede__points" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
+                    <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Fitted by our own installers, with a 10 year guarantee', 'fenster'); ?></li>
+                </ul>
             </div>
         </section>
 

@@ -34516,8 +34516,38 @@ html.fg-blinds-reveal-locked {
   color: var(--color-accent-dark);
 }
 
+/* The lead paragraph and reassurance points, displaced from the hero when it
+   became the shared full-bleed one. Sits between the hero and the four-fact
+   strip so the page still says what the product is before it starts quoting
+   numbers at people. */
+.fg-heritage-door-lede {
+  padding: clamp(2rem, 4vw, 3rem) 0 0;
+}
+
+.fg-heritage-door-lede > .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.4rem, 3vw, 3rem);
+  align-items: start;
+}
+
+.fg-heritage-door-lede p {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: clamp(1.02rem, 1.25vw, 1.16rem);
+  line-height: 1.56;
+}
+
+@media (max-width: 860px) {
+  .fg-heritage-door-lede > .container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .fg-cd3-hero__reassurance,
 .fg-heritage-door-hero__reassurance,
+.fg-heritage-door-lede__points,
 .fg-heritage-door-enquiry__copy ul {
   display: grid;
   gap: 0.55rem;
@@ -34528,6 +34558,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-hero__reassurance li,
 .fg-heritage-door-hero__reassurance li,
+.fg-heritage-door-lede__points li,
 .fg-heritage-door-enquiry__copy li {
   position: relative;
   padding-left: 1.45rem;
@@ -34537,6 +34568,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-hero__reassurance li::before,
 .fg-heritage-door-hero__reassurance li::before,
+.fg-heritage-door-lede__points li::before,
 .fg-heritage-door-enquiry__copy li::before {
   position: absolute;
   top: 0.5em;
