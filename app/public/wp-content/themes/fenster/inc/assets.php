@@ -158,14 +158,26 @@ function fenster_image_attr_string(string $url, array $attrs = []): string
     return implode(' ', $output);
 }
 
+/**
+ * The traveller: videos lifted out of the flow and flown across the page from a
+ * slot beside the hero.
+ *
+ * **This map is empty and the traveller therefore renders nowhere.** Bifold was
+ * its only route and moved to the in-place scrub below on 2026-08-02, on owner
+ * instruction: the video should stay in the first box the way the heritage door
+ * turntable does, rather than travelling in from the hero.
+ *
+ * The mechanism is left in place rather than deleted, because removing it also
+ * means removing its markup in generated-page.php, its controller in main.js and
+ * its styles. That is a separate change and nobody has asked for it. If it is
+ * still empty next time someone reads this, it is worth deleting properly. Its
+ * source assets, `bifold-video.webm` and `bifold-video.mp4`, are still on disk;
+ * the webm is the alpha master the scrub encode was made from, so keep it even
+ * if the traveller does go.
+ */
 function fenster_product_scroll_videos(): array
 {
-    return [
-        'aluminium-bifold-doors' => [
-            ['file' => 'bifold-video.webm', 'type' => 'video/webm'],
-            ['file' => 'bifold-video.mp4', 'type' => 'video/mp4'],
-        ],
-    ];
+    return [];
 }
 
 function fenster_product_scroll_video_url(string $file): string
@@ -232,7 +244,30 @@ function fenster_product_scrub_videos(): array
         'aluminium-windows' => $scrub('prestige-window'),
         'aluminium-sliding-doors' => $scrub('prestige-slider'),
         'heritage-aluminium-doors' => $scrub('classic-door-turntable'),
+        /* Moved off the traveller on 2026-08-02, owner instruction. Re-encoded
+           from `bifold-video.webm` rather than the mp4: the webm is the alpha
+           master at more than three times the bitrate, and the mp4's baked
+           background is #fdfdfd where the figure is #fbfbfb, which would have
+           shown as a faint square inside its own box. The flat colour is
+           encoded as #fdfdfd on purpose, because yuv420p round-trips that to
+           #fbfbfb and an exact match is what makes the letterboxing invisible. */
+        'aluminium-bifold-doors' => $scrub('bifold'),
     ];
+}
+
+/**
+ * Routes whose scrub video renders in the "why" box rather than the product
+ * intel figure.
+ *
+ * Most routes show the scrub in the intel figure. Bifold shows it in the first
+ * box after the hero, which is where its video already ended up as a traveller
+ * and where the owner asked for it to stay. A route named here must be skipped
+ * by the intel figure or it renders the same video twice, which is the same
+ * both-treatments trap the traveller comment above warns about.
+ */
+function fenster_product_scrub_in_why_routes(): array
+{
+    return ['aluminium-bifold-doors'];
 }
 
 function fenster_product_scrub_video_sources_for_slug(string $slug): array

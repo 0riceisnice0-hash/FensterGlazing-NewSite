@@ -318,6 +318,17 @@ $colour_materials = $colour_options['materials'] ?? [];
 $colour_materials = is_array($colour_materials) ? $colour_materials : [];
 $product_scroll_video_src = fenster_product_scroll_video_for_slug($slug);
 $product_scroll_video_sources = fenster_product_scroll_video_sources_for_slug($slug);
+/* Hoisted so the two slots that can show a scrub agree on one decision. The
+   intel figure used to work this out for itself further down the file; with a
+   second possible home for the video, computing it twice is how the two would
+   drift into rendering it in both places. */
+$product_scrub_sources = function_exists('fenster_product_scrub_video_sources_for_slug')
+    ? fenster_product_scrub_video_sources_for_slug($slug)
+    : [];
+$scrub_in_why_routes = function_exists('fenster_product_scrub_in_why_routes')
+    ? fenster_product_scrub_in_why_routes()
+    : [];
+$scrub_in_why = ! empty($product_scrub_sources) && in_array($slug, $scrub_in_why_routes, true);
 $sash_roseview_models = [];
 $sash_roseview_details = [];
 $sash_roseview_feature_cards = [];
@@ -3726,15 +3737,35 @@ if ($is_commercial_hub) {
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
                     <div class="fg-product-why__media-stack">
-                        <figure class="fg-product-why__media fg-product-why__media--primary">
-                            <?php if ($product_scroll_video_src) : ?>
-                                <video class="fg-product-traveller-final" data-fg-product-video-final muted playsinline preload="auto" aria-label="<?php echo esc_attr($title . ' product animation'); ?>">
-                                    <?php foreach ($product_scroll_video_sources as $product_scroll_video_source) : ?>
-                                        <source src="<?php echo esc_url($product_scroll_video_source['src']); ?>" type="<?php echo esc_attr($product_scroll_video_source['type']); ?>">
+                        <figure class="fg-product-why__media fg-product-why__media--primary<?php echo $scrub_in_why ? ' fg-product-why__media--scrub' : ''; ?>">
+                            <?php if ($scrub_in_why) : ?>
+                                <?php
+                                /* Scrubs in place from this box. No autoplay and
+                                   no controls: scroll position is the only thing
+                                   that moves it. With JavaScript off or reduced
+                                   motion on it holds frame one, which is the
+                                   doors closed, so the slot still shows the
+                                   product rather than an empty box. The still
+                                   image is deliberately not rendered underneath:
+                                   the video is the picture here, and layering
+                                   the two is what the traveller needed, not
+                                   this. */
+                                ?>
+                                <video data-fg-scrub-video muted playsinline preload="auto" aria-label="<?php echo esc_attr(sprintf(__('%s opening and folding back', 'fenster'), $title)); ?>">
+                                    <?php foreach ($product_scrub_sources as $product_scrub_source) : ?>
+                                        <source src="<?php echo esc_url($product_scrub_source['src']); ?>" type="<?php echo esc_attr($product_scrub_source['type']); ?>"<?php if (! empty($product_scrub_source['media'])) : ?> media="<?php echo esc_attr($product_scrub_source['media']); ?>"<?php endif; ?>>
                                     <?php endforeach; ?>
                                 </video>
+                            <?php else : ?>
+                                <?php if ($product_scroll_video_src) : ?>
+                                    <video class="fg-product-traveller-final" data-fg-product-video-final muted playsinline preload="auto" aria-label="<?php echo esc_attr($title . ' product animation'); ?>">
+                                        <?php foreach ($product_scroll_video_sources as $product_scroll_video_source) : ?>
+                                            <source src="<?php echo esc_url($product_scroll_video_source['src']); ?>" type="<?php echo esc_attr($product_scroll_video_source['type']); ?>">
+                                        <?php endforeach; ?>
+                                    </video>
+                                <?php endif; ?>
+                                <img src="<?php echo esc_url(fenster_generated_url($product_why_image['src'])); ?>" alt="<?php echo esc_attr($product_why_image['alt'] ?? $title); ?>" loading="lazy">
                             <?php endif; ?>
-                            <img src="<?php echo esc_url(fenster_generated_url($product_why_image['src'])); ?>" alt="<?php echo esc_attr($product_why_image['alt'] ?? $title); ?>" loading="lazy">
                             <figcaption>
                                 <span><?php esc_html_e('Fenster specification', 'fenster'); ?></span>
                                 <strong><?php echo esc_html($title); ?></strong>
@@ -3856,15 +3887,17 @@ if ($is_commercial_hub) {
 
                         <?php
                         /* A route with a scrub video shows the profile turning
-                           here instead of a still of the same corner. It is the
-                           in-place scrub, not the bifold traveller: the video
+                           here instead of a still of the same corner. The video
                            stays in this figure and only maps scroll position
-                           onto currentTime. Routes without one are unchanged. */
-                        $product_scrub_sources = function_exists('fenster_product_scrub_video_sources_for_slug')
-                            ? fenster_product_scrub_video_sources_for_slug($slug)
-                            : [];
+                           onto currentTime.
+
+                           `$scrub_in_why` excludes the routes that show their
+                           scrub in the "why" box further up the page instead,
+                           currently bifold. Without that guard the same video
+                           renders twice on those routes. Both flags are worked
+                           out once at the top of this file. */
                         ?>
-                        <?php if (! empty($product_scrub_sources)) : ?>
+                        <?php if (! empty($product_scrub_sources) && ! $scrub_in_why) : ?>
                             <figure class="fg-product-intel__media fg-product-intel__media--turntable">
                                 <video data-fg-scrub-video muted playsinline preload="auto" aria-label="<?php echo esc_attr(sprintf(__('%s frame profile rotating to show its section', 'fenster'), $title)); ?>">
                                     <?php foreach ($product_scrub_sources as $product_scrub_source) : ?>
