@@ -32,6 +32,20 @@ $door_configurations = [
     ['leaf' => 'French doors', 'bars' => '4 bar', 'colour' => 'Silver Metallic', 'image' => 'config-09-french-4-bar-silver-metallic.webp'],
 ];
 
+/* Gallery order matters: the first image takes the large cell, so it needs a
+   focal point or the crop loses the door.
+
+   Only genuinely photographic shots are here. The cutout doors on white in
+   assets/images/imported are product renders, and the configurations carousel
+   below already shows those; putting them in a gallery headed "real homes"
+   would be a claim the picture cannot support. */
+$door_gallery = [
+    ['file' => 'heritage-northampton', 'width' => 1080, 'focus' => '50% 50%', 'caption' => 'Northampton', 'alt' => 'Black heritage aluminium doors and a roof lantern fitted by Fenster on a Northampton extension'],
+    ['file' => 'heritage-kitchen-garden-door', 'width' => 1600, 'focus' => '72% 50%', 'caption' => 'Garden door off a kitchen', 'alt' => 'Black heritage aluminium door and side screen looking onto a garden from a green kitchen'],
+    ['file' => 'heritage-french-open', 'width' => 1400, 'focus' => '68% 50%', 'caption' => 'French doors open to a courtyard', 'alt' => 'Black heritage aluminium French doors standing open onto a planted courtyard'],
+    ['file' => 'heritage-lever-handles', 'width' => 886, 'focus' => '50% 50%', 'caption' => 'Lever handles', 'alt' => 'Lever handles on a pair of black heritage aluminium doors'],
+];
+
 $door_colours = [
     ['name' => 'Pure White', 'ref' => 'RAL 9010 Matt', 'image' => 'pure-white.webp'],
     ['name' => 'Hipca Gloss White', 'ref' => 'RAL 9910 Gloss', 'image' => 'gloss-white.webp'],
@@ -110,6 +124,63 @@ $door_colours = [
         <?php
         get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('heritage-aluminium-doors'));
         ?>
+
+        <?php
+        /* Reuses the casement gallery component wholesale rather than growing a
+           second one: same mosaic, same lightbox, same swipe row on a phone.
+           The --heritage modifier only re-cuts the grid, because that mosaic is
+           hard-coded for six cells and there are four honest pictures here. */
+        ?>
+        <section class="fg-cw-gallery fg-cw-gallery--heritage" aria-labelledby="fg-heritage-gallery-title">
+            <div class="container">
+                <div class="fg-cw-gallery__head">
+                    <div>
+                        <p class="eyebrow"><?php esc_html_e('Real homes', 'fenster'); ?></p>
+                        <h2 id="fg-heritage-gallery-title"><?php esc_html_e('Heritage doors on real houses.', 'fenster'); ?></h2>
+                    </div>
+                    <p>
+                        <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Northampton is our own install; the rest are Sheerline photography of the same door. Click any image for a closer look.', 'fenster'); ?></span>
+                        <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished doors. Tap any image for a closer look.', 'fenster'); ?></span>
+                    </p>
+                </div>
+
+                <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Heritage door gallery', 'fenster'); ?>">
+                    <?php foreach ($door_gallery as $index => $image) : ?>
+                        <?php
+                        $stem = $asset_path('gallery/' . $image['file']);
+                        $full_width = (int) $image['width'];
+                        $sources = [
+                            fenster_generated_url($stem . '-480w.webp') . ' 480w',
+                            fenster_generated_url($stem . '-800w.webp') . ' 800w',
+                        ];
+                        if ($full_width > 1400) {
+                            $sources[] = fenster_generated_url($stem . '-1400w.webp') . ' 1400w';
+                        }
+                        $sources[] = fenster_generated_url($stem . '.webp') . ' ' . $full_width . 'w';
+                        ?>
+                        <figure>
+                            <a
+                                href="<?php echo esc_url(fenster_generated_url($stem . '.webp')); ?>"
+                                data-fg-gallery-lightbox
+                                aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $image['alt'])); ?>"
+                            >
+                                <img
+                                    src="<?php echo esc_url(fenster_generated_url($stem . '-800w.webp')); ?>"
+                                    srcset="<?php echo esc_attr(implode(', ', $sources)); ?>"
+                                    sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '40vw' : '28vw'; ?>"
+                                    alt="<?php echo esc_attr($image['alt']); ?>"
+                                    loading="lazy"
+                                    style="object-position: <?php echo esc_attr($image['focus']); ?>;"
+                                >
+                                <figcaption><?php echo esc_html($image['caption']); ?></figcaption>
+                            </a>
+                        </figure>
+                    <?php endforeach; ?>
+                </div>
+
+                <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
+            </div>
+        </section>
 
         <section id="heritage-door-configurations" class="fg-heritage-door-configurations">
             <div class="container">
@@ -267,6 +338,39 @@ $door_colours = [
            follows frame colour. */
         get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args());
         ?>
+
+        <?php if (function_exists('fenster_case_studies_for_product')) : ?>
+            <?php $heritage_case_cards = fenster_case_studies_for_product('heritage-aluminium-doors', 3); ?>
+            <?php if ($heritage_case_cards !== []) : ?>
+                <section class="fg-cs-strip">
+                    <div class="container">
+                        <div class="fg-cs-strip__head">
+                            <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                            <?php
+                            /* No count in this heading. Casement says "three
+                               jobs" because it has three; one study names these
+                               doors today, and a number would go stale the
+                               moment another is written. */
+                            ?>
+                            <h2><?php esc_html_e('Heritage doors, photographed on the day.', 'fenster'); ?></h2>
+                        </div>
+                        <div class="fg-cs-strip__grid">
+                            <?php foreach ($heritage_case_cards as $heritage_case_card) : ?>
+                                <?php
+                                get_template_part('template-parts/components/case-study-card', null, [
+                                    'card' => $heritage_case_card,
+                                    'heading' => 'h3',
+                                ]);
+                                ?>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="button-row fg-cs-strip__cta">
+                            <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('See all case studies', 'fenster'); ?></a>
+                        </div>
+                    </div>
+                </section>
+            <?php endif; ?>
+        <?php endif; ?>
 
         <section id="fenster-heritage-door-enquiry" class="fg-heritage-door-enquiry">
             <div class="container fg-heritage-door-enquiry__grid">
