@@ -9341,6 +9341,27 @@ html.fg-gallery-lightbox-open body {
   top: calc(clamp(1.1rem, 2vw, 1.5rem) + 198px + 112px + 1.5rem);
 }
 
+/* Patio is the one family whose imagery is a photograph rather than a cutout,
+   so the hub stage frames it instead of floating it. The images stay absolutely
+   positioned and stacked, because that overlay is what the crossfade between
+   finishes relies on; `inset: 0` plus `margin: auto` on a definite box centres
+   them without breaking it. The shelf line comes off: a framed photograph is
+   not standing on anything. */
+.fg-patio-handles .fg-window-handles__visual::before {
+  display: none;
+}
+
+.fg-patio-handles .fg-window-handles__visual img {
+  inset: 0;
+  width: min(74%, 288px);
+  height: auto;
+  aspect-ratio: 1;
+  margin: auto;
+  border: 1px solid rgba(15, 49, 54, 0.14);
+  border-radius: 10px;
+  object-fit: cover;
+}
+
 .fg-sash-furniture {
   background: transparent;
 }
@@ -35130,6 +35151,22 @@ html.fg-blinds-reveal-locked {
   aspect-ratio: 3 / 4;
   margin-bottom: 0.35rem;
   object-fit: contain;
+}
+
+/* The other three families are portrait cutouts on white, so they contain into
+   a 3:4 box. Mila's patio photography is the handle shot on the door panel at
+   roughly square, and containing that into 3:4 letterboxes it and shrinks the
+   handle to nothing. It covers a square box instead.
+
+   The hairline is not decoration: the white finish is a white handle on a pale
+   panel, and without an edge that tile reads as an empty slot on a white card.
+   Same fault, and the same fix, as the pale swatches on the colour rail. It
+   goes on all five so they stay a set. */
+.fg-handle-finishes--patio .fg-handle-finishes__grid img {
+  aspect-ratio: 1;
+  border: 1px solid rgba(15, 49, 54, 0.14);
+  border-radius: 6px;
+  object-fit: cover;
 }
 
 .fg-upvc-colours__grid i {

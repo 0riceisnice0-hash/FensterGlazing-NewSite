@@ -2,6 +2,57 @@
 
 Last updated: 2026-08-02
 
+## 2026-08-02 - Patio door handles, the fourth handle family (test)
+
+Owner: patio door handles are missing from the site along with their colour
+options, in the same style as the other products' handles, from the Mila
+ProLinea literature, and we do not offer Smokey Chrome.
+
+- **The frame colour grid was already there.** `/patio-doors/` has carried the
+  sixteen Liniar foils since 2026-07-29; checked on production before changing
+  anything. What was missing was the handle and its five finishes, so "colour
+  options" was read as the handle finishes. Nothing was done to the foil grid.
+- **This closes the "patio to come" note** the handle hub has carried in
+  `AI.md` since it was built on 2026-07-29. `/handle-options/` now runs four
+  choosers; `/patio-doors/` now renders the compact grid, after the foil grid,
+  which is where the other product routes put it.
+- **It is its own family, not another entry in `door_handles`.** A slider moves
+  sideways under its own weight and takes a fixed D-pull, not a lever on a
+  backplate. That is also the reason patio, aluminium sliding, bifold and slide
+  and fold were kept off the long-plate list in the first place, so adding it
+  there would have contradicted an existing owner instruction.
+- **Assets came out of the PDF, and the first extraction was silently wrong.**
+  `pdfimages` pulled the six finishes as Adobe CMYK JPEGs, which are stored
+  inverted; converted straight to sRGB they came back as a handle lit on black.
+  They look like deliberate product shots on a dark background rather than
+  corrupt files, which is what makes it worth recording: negate before the
+  colourspace convert. Verified by rendering the page with `pdftoppm` and
+  comparing. Five assets at native 299x307, one shared framing, 3-7KB each.
+- **Five finishes, not six.** Smokey Chrome dropped on owner instruction. Five
+  means the grid reuses the tilt and turn `--five` column count rather than
+  introducing a sixth, and that modifier is already named in both breakpoint
+  lists, so the specificity trap recorded twice in `AI.md` does not apply here.
+- **The imagery is a different shape from the other three families** and needed
+  its own rule. Mila photographs the handle on a door panel at roughly square;
+  the other three are portrait cutouts on white containing into a 3:4 box.
+  Contained, the patio shot letterboxes and the handle shrinks to nothing, so
+  `--patio` covers a square instead, and the hub stage frames it rather than
+  floating it over the shelf glow that suits a cutout.
+- **The white tile needed an edge.** A white handle on a pale panel on a white
+  card reads as an empty slot, the same fault already recorded for Smooth White
+  on the colour rail. The hairline goes on all five so they stay a set.
+- **Finish names follow the site, not the supplier.** Mila's Polished Gold,
+  Polished Chrome and Smooth Satin Chrome are Gold, Chrome and Satin Silver
+  here, matching the other three families. Recorded in `AI.md` so a later pass
+  does not "correct" them against the literature, which is the same rule
+  already written against the greenteQ bulletin.
+- **Left alone deliberately, and needing the owner:** `/aluminium-sliding-doors/`
+  still renders no handle section. Mila's literature says the ProLinea suits
+  aluminium patio doors, but the owner asked for uPVC and Sheerline's slider has
+  not been confirmed as taking it, so an assumed section would be a claim rather
+  than a fact.
+- Test deployment only. No live-site deployment was performed.
+
 ## START HERE, 2026-08-02 (end of session)
 
 **Live, `main` and test are all level at `6fdf9ff`.** The

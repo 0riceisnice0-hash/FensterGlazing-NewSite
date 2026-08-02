@@ -298,6 +298,13 @@ $show_tilt_turn_handles = $use_product_journey && is_array($tt_handle_slugs) && 
 $show_door_handles = $use_product_journey && $is_door_product && is_array($door_handle_slugs) && in_array($slug, $door_handle_slugs, true);
 $door_handle_finishes = $door_handles['finishes'] ?? [];
 $door_handle_finishes = is_array($door_handle_finishes) ? array_values($door_handle_finishes) : [];
+/* The sliding patio D-pull. Its own family, not an entry in door_handles: a
+   slider takes no lever, so the long-plate grid would be the wrong hardware
+   here in the same way the S2 grid would be wrong on tilt and turn. */
+$patio_handles = fenster_data('patio_handles', []);
+$patio_handles = is_array($patio_handles) ? $patio_handles : [];
+$patio_handle_slugs = $patio_handles['slugs'] ?? [];
+$show_patio_handles = $use_product_journey && is_array($patio_handle_slugs) && in_array($slug, $patio_handle_slugs, true);
 $obscure_glass = fenster_data('obscure_glass', []);
 $obscure_glass = is_array($obscure_glass) ? $obscure_glass : [];
 $obscure_glass_textures = $obscure_glass['textures'] ?? [];
@@ -1994,7 +2001,7 @@ if ($is_window_handles) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Specification hub', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Window and door handle options.', 'fenster'); ?></h1>
-                    <p><?php esc_html_e('Every handle finish we fit, for windows and for doors, on one page. Windows take the S2 Signature range; doors take a long backplate that carries the lever and the cylinder together. We confirm what a given system can take at specification stage.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Every handle finish we fit, for windows and for doors, on one page. Windows take the S2 Signature range, tilt and turn takes its own locking lever, hinged doors take a long backplate that carries the lever and the cylinder together, and sliding patio doors take a D-pull. We confirm what a given system can take at specification stage.', 'fenster'); ?></p>
                     <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about handles', 'fenster'); ?></a>
                 </div>
                 <?php if (! empty($window_handle_finishes[0]['image'])) : ?>
@@ -2047,6 +2054,22 @@ if ($is_window_handles) {
             'details_heading' => 'Door hardware note',
             'swatches_label' => 'Door handle finish options',
             'features_label' => 'Door handle features',
+        ]);
+
+        /* Patio last, because it is the one family that is not a lever, so it
+           reads better after the three that are. Added 2026-08-02, closing the
+           "patio to come" note this hub was built with. */
+        get_template_part('template-parts/components/handle-chooser', null, [
+            'id' => 'patio-handle-finishes',
+            'modifier' => 'fg-window-handles--hub fg-patio-handles',
+            'eyebrow' => 'Patio door handles',
+            'heading' => 'A pull, not a lever, on a sliding door.',
+            'intro' => (string) ($patio_handles['intro'] ?? ''),
+            'data' => $patio_handles,
+            'alt_pattern' => 'Mila ProLinea sliding patio door handle in %s',
+            'details_heading' => 'Handle specification',
+            'swatches_label' => 'Patio door handle finish options',
+            'features_label' => 'Patio door handle features',
         ]);
         ?>
 
@@ -4118,6 +4141,10 @@ if ($is_commercial_hub) {
 
         <?php if ($show_door_handles) : ?>
             <?php get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args()); ?>
+        <?php endif; ?>
+
+        <?php if ($show_patio_handles) : ?>
+            <?php get_template_part('template-parts/components/handle-grid', null, fenster_patio_handle_grid_args()); ?>
         <?php endif; ?>
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>

@@ -1899,6 +1899,94 @@ function fenster_site_data(): array
             ],
             'technical_intro' => 'Door handle availability depends on the chosen door system, lock set and colour package, so we confirm the final compatible hardware at specification stage.',
         ],
+        /* Mila ProLinea, the uPVC sliding patio door handle. This is the fourth
+           handle family and closes the "patio to come" note left on the handle
+           hub when it was built on 2026-07-29.
+
+           A sliding patio door cannot take the long-plate handle on
+           `door_handles`: that is a lever on a backplate for a door on hinges,
+           and a slider needs a fixed D-pull you brace against to move the sash.
+           So this is its own family rather than another entry in that list, for
+           the same reason tilt and turn is its own family.
+
+           Facts are from the Mila ProLinea Patio Door Handle literature
+           (milasecure.com). We fit five of the six finishes; Smokey Chrome is
+           deliberately not offered, owner instruction 2026-08-02.
+
+           Mila's own names for three of ours are Polished Gold, Polished Chrome
+           and Smooth Satin Chrome. The customer-facing names here match the
+           other three handle families instead, so someone comparing a window
+           handle with a patio handle sees the same five words. Do not "correct"
+           them against the literature; that is the same rule already recorded
+           against the greenteQ bulletin. */
+        'patio_handles' => [
+            'slugs' => ['patio-doors'],
+            'intro' => 'A sliding patio door takes a different handle from a door on hinges. There is no lever to turn: the long D-shaped pull is what you brace against to move the sash, so it is fixed to the door and shaped for a full hand rather than fingertips.',
+            'features' => [
+                ['title' => 'Shaped for pulling, not turning', 'copy' => 'A sliding sash is heavy and moves sideways, so the handle is a long D-pull you can get a whole hand around rather than a lever. It is the same shape inside and out.'],
+                ['title' => 'Handed to suit the door', 'copy' => 'The handle is reversible, so it fits whichever way your doors slide. We set the handing at survey rather than asking you to work it out.'],
+                ['title' => 'Locks through the same plate', 'copy' => 'The cylinder sits in the backplate below the pull, so locking and lifting are the same piece of hardware rather than two things bolted to the door.'],
+            ],
+            'technical_intro' => 'Mila ProLinea patio door handle.',
+            /* The six lever, blind and blank combinations in the literature are
+               a fitter's choice about which side gets a key and which gets a
+               fixed pull. It is settled at survey from how the doors are used,
+               so it is not on the page. Recorded here so it does not have to be
+               looked up again. */
+            'technical' => [
+                ['label' => 'Format', 'value' => 'Long D-pull on a backplate'],
+                ['label' => 'Handing', 'value' => 'Reversible, left or right'],
+                ['label' => 'Materials', 'value' => 'Aluminium painted, zinc plated'],
+                ['label' => 'Cycle testing', 'value' => '50,000 cycles, independently tested'],
+                ['label' => 'Weather resistance', 'value' => 'Salt spray tested to 240 hours plated, 480 powder coated'],
+            ],
+            /* Photography is Mila's own, from the literature linked above, at
+               its native 299x307. The five share one framing because they came
+               off one sheet, which is the same reason the heritage door
+               configurations and the tilt and turn finishes are not re-cropped
+               individually. Do not re-trim them one at a time.
+
+               Hexes are the swatch fallback only, and are the values already
+               used for these five finish names on the tilt and turn handle, so
+               the chip behind a loading image is consistent between families. */
+            'finishes' => [
+                [
+                    'name' => 'White',
+                    'label' => 'White patio door handle',
+                    'hex' => '#f4f4f1',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-patio/patio-white.webp',
+                    'copy' => 'The default on white frames, and the one most people pick without thinking about it.',
+                ],
+                [
+                    'name' => 'Black',
+                    'label' => 'Black patio door handle',
+                    'hex' => '#141414',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-patio/patio-black.webp',
+                    'copy' => 'Reads as deliberate against anthracite and black foiled frames, and hides marks better than a pale finish on a door this often used.',
+                ],
+                [
+                    'name' => 'Chrome',
+                    'label' => 'Polished chrome patio door handle',
+                    'hex' => '#d5d8da',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-patio/patio-chrome.webp',
+                    'copy' => 'Bright and reflective, which suits a room where the other ironmongery is polished.',
+                ],
+                [
+                    'name' => 'Gold',
+                    'label' => 'Polished gold patio door handle',
+                    'hex' => '#c8a13c',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-patio/patio-gold.webp',
+                    'copy' => 'A warm brass tone, usually chosen to match existing door furniture rather than the frame.',
+                ],
+                [
+                    'name' => 'Satin Silver',
+                    'label' => 'Smooth satin chrome patio door handle',
+                    'hex' => '#a9adb0',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-patio/patio-satin-silver.webp',
+                    'copy' => 'The muted metallic, bright without the mirror. It shows fingerprints least of the five.',
+                ],
+            ],
+        ],
         'obscure_glass' => [
             'intro' => 'Obscured glass adds privacy while still letting daylight through. Use the preview to compare how the same real image changes behind each texture before choosing door glass, bathroom glass, side panels or replacement units.',
             'legend_image' => '/wp-content/themes/fenster/assets/team/legend-colour.webp',

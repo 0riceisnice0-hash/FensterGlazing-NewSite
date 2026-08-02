@@ -633,3 +633,24 @@ function fenster_door_handle_grid_args(): array
         'link_href' => home_url('/handle-options/#door-handle-finishes'),
     ];
 }
+
+/* The sliding patio D-pull. Five finishes, so it reuses the --five column
+   count the tilt and turn grid already defines rather than introducing a
+   sixth. That modifier is named in both breakpoint lists, which is the trap
+   AI.md records against .fg-handle-finishes--doors. */
+function fenster_patio_handle_grid_args(): array
+{
+    $data = fenster_data('patio_handles', []);
+
+    return [
+        'data' => is_array($data) ? $data : [],
+        'id' => 'patio-handle-finishes',
+        'eyebrow' => 'Handles',
+        'heading' => 'Five finishes on the sliding patio handle.',
+        'intro' => 'A sliding door takes a long D-pull rather than a lever, because you are moving the weight of the sash sideways rather than turning a latch. The same shape sits on both faces, with the cylinder in the plate below it.',
+        'note' => 'The handle is reversible, so it suits doors sliding either way. We set the handing and which face takes the key at survey.',
+        'alt_pattern' => 'Mila ProLinea sliding patio door handle in %s',
+        'columns' => 'fg-handle-finishes--five fg-handle-finishes--patio',
+        'link_href' => home_url('/handle-options/#patio-handle-finishes'),
+    ];
+}
