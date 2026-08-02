@@ -134,6 +134,18 @@ Owner: `/heritage-aluminium-doors/` should have a full width hero image like oth
 - **Rebased onto 16 commits from the concurrent session**, which had shipped scoped cookie consent to live in the meantime. Only the compiled CSS conflicted; the SCSS merged cleanly. Resolved by rebuilding the artifact from merged source rather than hand-merging it, then confirming all 51 of their `fg-cookie-consent` rules and my 7 lede rules were both present. Ran `build:css` only, leaving `assets/js/main.js` byte-identical to theirs, since a local esbuild produces a different bundle and would have silently replaced code they had just released.
 - Test deployment only. Live is `572fe3c` for this session's work; the other session has since released its own.
 
+## 2026-07-29 - Heritage doors: real homes gallery and the missing case studies (test, 3b32cbb)
+
+Owner: the page needs to be more image heavy near the top, a gallery like the casement Real homes section before configurations, and the case studies section at the bottom was missing.
+
+- **Gallery reuses the casement component rather than growing a second one.** Same mosaic, lightbox, captions and mobile swipe row. A `--heritage` modifier only re-cuts the grid, because that mosaic is hard-coded for six cells with `nth-child` and would otherwise leave holes.
+- **Four pictures, not six, and that was the honest limit.** The cutout doors on white in `assets/images/imported` are product renders, and the configurations carousel already shows those; putting them under a heading reading "real homes" would be a claim the picture cannot support. The C08 shot was rejected too: it is a heritage *window*, not a door.
+- The kitchen shot is reused here rather than left unused after it stopped being the hero. The Northampton image is our own install and the copy says so, matching how the casement gallery separates our work from the manufacturer's photography.
+- **Case studies: exactly one study names these doors**, so the heading carries no count. Casement can say "three jobs" because it has three. Checked deliberately, because `fenster_case_studies_for_product()` falls back to returning *every* study when nothing matches, and its own docblock warns that this makes a page claim unrelated jobs as its own. Verified the rendered strip contains one card and that it is the Northampton heritage door job, not the fallback.
+- **The gallery took its text colour from the page wrapper, not from itself.** `.fg-cw .fg-cw-gallery h2` scoped white text to the casement wrapper, so on the heritage page the section painted its own steel background and then rendered an ink heading on it. The hint was worse: even its `display: none` was scoped that way, so it would have shown unstyled on desktop. Both now also match the section's own modifier.
+- Verified on test at 1440 and a true 390: heading white on the steel background, four cells filling the mosaic with no holes, all four images loaded, hint hidden on desktop and shown on mobile, mosaic scrolls as a swipe row on the phone, no horizontal overflow at either width.
+- Test deployment only. Live is `572fe3c` for this session's work.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
