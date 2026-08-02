@@ -122,6 +122,18 @@ Owner: the privacy glass box on product pages has a 01 that makes no sense now, 
 - Verified at a true 390: strip 326x66, mask reads `linear-gradient(transparent 0%, #000 55%)`, 23px gap between the CTA and the strip, zero rectangle overlap between the strip and the heading, copy or CTA, screenshot confirms a visible dissolve rather than a hard top edge.
 - Test deployment only. Live is `572fe3c`.
 
+## 2026-07-29 - Heritage doors on the shared full-width hero (test, e3af760)
+
+Owner: `/heritage-aluminium-doors/` should have a full width hero image like other pages.
+
+- It was the last product route still on its own boxed hero: a two-column layout with the photo in a 6:5 card beside the copy. It now uses the same `.fg-hero fg-hero--compact` section as casement, sash and the rest.
+- **The old hero photo was the wrong shape for the job.** It was the 1600x1334 interior kitchen shot, nearly square, which is fine in a card and poor full-bleed. The new hero is built from `assets/images/imported/Sheerline-Heritage-Doors.jpg`, 1762x1090, the widest heritage shot in the theme and the full-frame original of the courtyard crop already used further down the page. Derivatives at 800, 1200 and 1760 with a srcset.
+- **`.fg-hero--compact` hides `.fg-hero__intro` by design**, so the lead paragraph and the three reassurance points were moved into their own block below the hero rather than left marked up and never shown. The page still explains what the product is before it starts quoting numbers.
+- Second button switched from `button--steel` to `button--light`, which is what the other heroes use; steel was styled for the old light background.
+- Verified on test at 1440 and a true 390: hero spans the full viewport width at both, image loads and picks the right srcset entry at each, the lede block renders, no horizontal overflow.
+- **Rebased onto 16 commits from the concurrent session**, which had shipped scoped cookie consent to live in the meantime. Only the compiled CSS conflicted; the SCSS merged cleanly. Resolved by rebuilding the artifact from merged source rather than hand-merging it, then confirming all 51 of their `fg-cookie-consent` rules and my 7 lede rules were both present. Ran `build:css` only, leaving `assets/js/main.js` byte-identical to theirs, since a local esbuild produces a different bundle and would have silently replaced code they had just released.
+- Test deployment only. Live is `572fe3c` for this session's work; the other session has since released its own.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
