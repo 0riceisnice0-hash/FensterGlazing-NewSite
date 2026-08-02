@@ -92,15 +92,22 @@ $door_colours = [
                     </div>
                     <div class="button-row">
                         <?php
-                        /* The same full and short label pair casement's hero
-                           uses, so the long label does not wrap on a phone.
-                           .fg-hero--compact swaps them at 860px. */
+                        /* Casement's pairing: consultation leads in the hero and
+                           the pricing route follows, with the intro box below
+                           reversing it. The second button is a quote request
+                           rather than instant pricing, because heritage doors
+                           are not on the instant quote tool, which the enquiry
+                           section further down states outright.
+
+                           Full and short labels as casement, so the long label
+                           does not wrap on a phone; .fg-hero--compact swaps them
+                           at 860px. */
                         ?>
-                        <a class="button" href="#fenster-heritage-door-enquiry">
-                            <span class="fg-hero-cta__full"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></span>
-                            <span class="fg-hero-cta__short"><?php esc_html_e('Get a quote', 'fenster'); ?></span>
+                        <a class="button" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>">
+                            <span class="fg-hero-cta__full"><?php esc_html_e('Start your design consultation', 'fenster'); ?></span>
+                            <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
                         </a>
-                        <a class="button button--light" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+                        <a class="button button--light" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
                     </div>
                 </div>
             </div>
@@ -148,6 +155,11 @@ $door_colours = [
                             <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
                             <li><?php esc_html_e('Fitted by our own installers, with a ten year guarantee', 'fenster'); ?></li>
                         </ul>
+                        <?php
+                        /* Reversed against the hero, as casement does: the hero
+                           opens with the consultation and this box leads with
+                           the pricing route, then the phone. */
+                        ?>
                         <div class="fg-cw-actions">
                             <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
                             <a class="button button--steel" href="tel:01908429200"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), '01908 429200')); ?></a>
