@@ -134,6 +134,16 @@ $faq_schema = [
         </div>
     </section>
 
+    <?php
+    /* Rendered here rather than by generated-page.php, which would stack it on
+       the spec strip immediately under the hero. It used to sit further down
+       with the construction section, but at 32% of an 11,000px page it arrived
+       long after the claim it backs up. The intro directly above now leads on
+       EnergyPlus being what we fit as standard, so the banner belongs against
+       that rather than three sections later. */
+    get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows'));
+    ?>
+
     <section id="casement-opening-styles" class="fg-cw-layouts" aria-labelledby="fg-cw-layouts-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
             <figure class="fg-cw-media fg-cw-media--tall">
@@ -253,12 +263,6 @@ $faq_schema = [
     </section>
 
 
-
-    <?php
-    // Rendered here rather than by generated-page.php so the banner sits with
-    // the construction section instead of stacking on the spec strip.
-    get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows'));
-    ?>
 
     <section class="fg-cw-anatomy" aria-labelledby="fg-cw-anatomy-title">
         <div class="container">
