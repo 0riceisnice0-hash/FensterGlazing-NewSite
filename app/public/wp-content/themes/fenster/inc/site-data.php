@@ -985,13 +985,19 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'alt' => 'Wide glazed door opening on a brick home'],
             ],
             'aluminium_sliding_doors' => [
+                // Order is load-bearing. Body images are this pool minus the
+                // hero, and the mosaic renders array_slice(body, 4), so body
+                // indices 2 and 3 render nowhere on this route. The handle and
+                // track close-ups sit there deliberately: the lift-and-slide
+                // detail section already shows both, and the mosaic would
+                // otherwise print the track a second time.
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-brick-1600w.webp', 'alt' => 'Anthracite aluminium lift and slide patio door on a brick house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-3-pane-interior-1600w.webp', 'alt' => 'Three pane aluminium sliding door framing a lake and mountain view'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-timber-clad-1200w.webp', 'alt' => 'Run of aluminium sliding doors along a timber clad garden room'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-handle-900w.webp', 'alt' => 'Slim handle and flush hook lock on an aluminium sliding door'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-view-interior-1500w.webp', 'alt' => 'Two pane aluminium sliding door opening onto a hillside view'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-living-room-1200w.webp', 'alt' => 'Aluminium sliding doors across a living room wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-track-900w.webp', 'alt' => 'Stainless steel running track and threshold on an aluminium sliding door'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-living-room-1200w.webp', 'alt' => 'Aluminium sliding doors across a living room wall'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-view-interior-1500w.webp', 'alt' => 'Two pane aluminium sliding door opening onto a hillside view'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-sliding-door.jpg', 'alt' => 'Aluminium sliding door open onto a decked terrace and countryside'],
                 // The mosaic renders array_slice($images, 4) and wants four of
                 // them, so this pool needs nine entries for the gallery to
