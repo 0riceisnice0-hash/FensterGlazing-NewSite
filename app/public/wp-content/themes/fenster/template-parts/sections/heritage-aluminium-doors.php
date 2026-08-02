@@ -99,31 +99,110 @@ $door_colours = [
             </div>
         </section>
 
-        <section class="fg-heritage-door-brief" aria-label="<?php esc_attr_e('Heritage door specification summary', 'fenster'); ?>">
-            <div class="container">
-                <div class="fg-heritage-door-brief__grid">
-                    <p><strong><?php esc_html_e('60.5mm sightlines', 'fenster'); ?></strong><span><?php esc_html_e('Slim frame faces, so the glass does the work', 'fenster'); ?></span></p>
-                    <p><strong><?php esc_html_e('1.4 W/m²K', 'fenster'); ?></strong><span><?php esc_html_e('Double glazed U-value for the door', 'fenster'); ?></span></p>
-                    <p><strong><?php esc_html_e('Up to 2.2m x 1m', 'fenster'); ?></strong><span><?php esc_html_e('Maximum sash size per leaf', 'fenster'); ?></span></p>
-                    <p><strong><?php esc_html_e('Opens in or out', 'fenster'); ?></strong><span><?php esc_html_e('Set by the room, the threshold and the swing', 'fenster'); ?></span></p>
+        <?php
+        /* The shared specification strip, the same component casement puts
+           under its hero. This page had its own four-cell grid with no label
+           block, which is why it read as a different thing sitting in the same
+           place. Label and value only, as the component does; the qualifying
+           sentences the old grid carried are made again in the sections that
+           own them. */
+        ?>
+        <section class="fg-product-pulse fg-product-pulse--usps" aria-label="<?php esc_attr_e('Heritage aluminium door key specifications', 'fenster'); ?>">
+            <div class="container fg-product-pulse__inner">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Key specifications', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></h2>
                 </div>
+                <ul aria-label="<?php esc_attr_e('Four product specifications', 'fenster'); ?>">
+                    <li><small><?php esc_html_e('Sightlines', 'fenster'); ?></small><strong><?php esc_html_e('60.5mm', 'fenster'); ?></strong></li>
+                    <li><small><?php esc_html_e('U-value', 'fenster'); ?></small><strong><?php esc_html_e('1.4 W/m²K', 'fenster'); ?></strong></li>
+                    <li><small><?php esc_html_e('Max sash size', 'fenster'); ?></small><strong><?php esc_html_e('2.2m x 1m', 'fenster'); ?></strong></li>
+                    <li><small><?php esc_html_e('Opening', 'fenster'); ?></small><strong><?php esc_html_e('In or out', 'fenster'); ?></strong></li>
+                </ul>
             </div>
         </section>
 
         <section class="fg-heritage-door-lede">
-            <div class="container">
-                <p><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
-                <ul class="fg-heritage-door-lede__points" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
-                    <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Fitted by our own installers, with a 10 year guarantee', 'fenster'); ?></li>
-                </ul>
+            <div class="container fg-heritage-door-lede__grid">
+                <div class="fg-heritage-door-lede__copy">
+                    <p><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
+                    <ul class="fg-heritage-door-lede__points" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
+                        <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
+                        <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
+                        <li><?php esc_html_e('Fitted by our own installers, with a 10 year guarantee', 'fenster'); ?></li>
+                    </ul>
+                </div>
+                <?php
+                /* The intro needed an image of its own, like casement's. Every
+                   photograph of a door in a room is already spoken for by the
+                   hero, the gallery or a detail section, so this is the product
+                   on white: honest about what it is, and not a second claim on
+                   a picture used elsewhere. */
+                ?>
+                <figure class="fg-heritage-door-lede__media">
+                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Black-Sheerline-Heritage-Door.jpg', [
+                        'alt' => __('Single black Sheerline Classic Heritage Door with five glazing bars', 'fenster'),
+                        'loading' => 'lazy',
+                    ]); ?>>
+                    <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
+                </figure>
             </div>
         </section>
 
         <?php
         get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('heritage-aluminium-doors'));
         ?>
+
+        <section id="heritage-door-configurations" class="fg-heritage-door-configurations">
+            <div class="container">
+                <div class="fg-heritage-door-configurations__heading">
+                    <p class="eyebrow"><?php esc_html_e('Configurations', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Two decisions make the door.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('First, single or French. Then how many glazing bars. These six are the stocked combinations. Bar spacing changes the character more than anything else, so it is worth looking at all three.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-colour-carousel fg-heritage-door-configurations__carousel" data-fg-colour-carousel>
+                    <div class="fg-colour-carousel__viewport">
+                        <div class="fg-colour-carousel__track" data-fg-colour-carousel-track>
+                            <?php foreach ($door_configurations as $configuration) : ?>
+                                <article class="fg-colour-carousel__slide fg-heritage-door-configurations__slide" data-fg-colour-slide>
+                                    <img src="<?php echo esc_url($asset('configurations/' . $configuration['image'])); ?>" alt="<?php echo esc_attr(sprintf('%1$s heritage aluminium door, %2$s, in %3$s', $configuration['leaf'], strtolower($configuration['bars']), $configuration['colour'])); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('configurations/' . $configuration['image'])); ?>>
+                                    <div>
+                                        <h3><?php echo esc_html($configuration['leaf']); ?></h3>
+                                        <p><?php echo esc_html($configuration['bars'] . ', ' . $configuration['colour']); ?></p>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="fg-colour-carousel__controls">
+                        <button type="button" data-fg-colour-prev aria-label="<?php esc_attr_e('Previous heritage door configuration', 'fenster'); ?>">&#8249;</button>
+                        <span data-fg-colour-count><?php echo esc_html('01 / ' . sprintf('%02d', count($door_configurations))); ?></span>
+                        <button type="button" data-fg-colour-next aria-label="<?php esc_attr_e('Next heritage door configuration', 'fenster'); ?>">&#8250;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fg-heritage-door-detail">
+            <div class="container fg-heritage-door-detail__grid">
+                <div class="fg-heritage-door-detail__copy">
+                    <p class="eyebrow"><?php esc_html_e('The period details', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Look at the lockbox and the bars.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Two things separate a heritage door from an ordinary glazed aluminium door. The first is the lockbox, a raised plate around the lock that copies the ironmongery on an original steel door. The second is the bar: stepped rather than flat, so it catches a shadow line the way a real glazing bar does.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Bars come in 25mm and 40mm, flat or stepped. On a cottage we usually go wider and fewer. On a Georgian elevation we go narrower and more, so the panes stay square. We will set the layout out on paper with you before anything is ordered.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-heritage-door-detail__visuals">
+                    <figure class="fg-heritage-door-detail__lockbox">
+                        <img src="<?php echo esc_url($asset('heritage-lockbox-900w.webp')); ?>" alt="<?php esc_attr_e('Period-style lockbox and lever handles on a pair of black heritage aluminium doors', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-lockbox-900w.webp')); ?>>
+                        <figcaption><?php esc_html_e('Period lockbox', 'fenster'); ?></figcaption>
+                    </figure>
+                    <figure class="fg-heritage-door-detail__bar">
+                        <img src="<?php echo esc_url($asset('heritage-glazing-bar-600w.webp')); ?>" alt="<?php esc_attr_e('Close-up of a stepped glazing bar crossing a heritage aluminium frame', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-glazing-bar-600w.webp')); ?>>
+                        <figcaption><?php esc_html_e('Stepped bar', 'fenster'); ?></figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
 
         <?php
         /* Reuses the casement gallery component wholesale rather than growing a
@@ -179,57 +258,6 @@ $door_colours = [
                 </div>
 
                 <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to explore', 'fenster'); ?> <span>&rarr;</span></p>
-            </div>
-        </section>
-
-        <section id="heritage-door-configurations" class="fg-heritage-door-configurations">
-            <div class="container">
-                <div class="fg-heritage-door-configurations__heading">
-                    <p class="eyebrow"><?php esc_html_e('Configurations', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Two decisions make the door.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('First, single or French. Then how many glazing bars. These six are the stocked combinations. Bar spacing changes the character more than anything else, so it is worth looking at all three.', 'fenster'); ?></p>
-                </div>
-                <div class="fg-colour-carousel fg-heritage-door-configurations__carousel" data-fg-colour-carousel>
-                    <div class="fg-colour-carousel__viewport">
-                        <div class="fg-colour-carousel__track" data-fg-colour-carousel-track>
-                            <?php foreach ($door_configurations as $configuration) : ?>
-                                <article class="fg-colour-carousel__slide fg-heritage-door-configurations__slide" data-fg-colour-slide>
-                                    <img src="<?php echo esc_url($asset('configurations/' . $configuration['image'])); ?>" alt="<?php echo esc_attr(sprintf('%1$s heritage aluminium door, %2$s, in %3$s', $configuration['leaf'], strtolower($configuration['bars']), $configuration['colour'])); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('configurations/' . $configuration['image'])); ?>>
-                                    <div>
-                                        <h3><?php echo esc_html($configuration['leaf']); ?></h3>
-                                        <p><?php echo esc_html($configuration['bars'] . ', ' . $configuration['colour']); ?></p>
-                                    </div>
-                                </article>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <div class="fg-colour-carousel__controls">
-                        <button type="button" data-fg-colour-prev aria-label="<?php esc_attr_e('Previous heritage door configuration', 'fenster'); ?>">&#8249;</button>
-                        <span data-fg-colour-count><?php echo esc_html('01 / ' . sprintf('%02d', count($door_configurations))); ?></span>
-                        <button type="button" data-fg-colour-next aria-label="<?php esc_attr_e('Next heritage door configuration', 'fenster'); ?>">&#8250;</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="fg-heritage-door-detail">
-            <div class="container fg-heritage-door-detail__grid">
-                <div class="fg-heritage-door-detail__copy">
-                    <p class="eyebrow"><?php esc_html_e('The period details', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Look at the lockbox and the bars.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Two things separate a heritage door from an ordinary glazed aluminium door. The first is the lockbox, a raised plate around the lock that copies the ironmongery on an original steel door. The second is the bar: stepped rather than flat, so it catches a shadow line the way a real glazing bar does.', 'fenster'); ?></p>
-                    <p><?php esc_html_e('Bars come in 25mm and 40mm, flat or stepped. On a cottage we usually go wider and fewer. On a Georgian elevation we go narrower and more, so the panes stay square. We will set the layout out on paper with you before anything is ordered.', 'fenster'); ?></p>
-                </div>
-                <div class="fg-heritage-door-detail__visuals">
-                    <figure class="fg-heritage-door-detail__lockbox">
-                        <img src="<?php echo esc_url($asset('heritage-lockbox-900w.webp')); ?>" alt="<?php esc_attr_e('Period-style lockbox and lever handles on a pair of black heritage aluminium doors', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-lockbox-900w.webp')); ?>>
-                        <figcaption><?php esc_html_e('Period lockbox', 'fenster'); ?></figcaption>
-                    </figure>
-                    <figure class="fg-heritage-door-detail__bar">
-                        <img src="<?php echo esc_url($asset('heritage-glazing-bar-600w.webp')); ?>" alt="<?php esc_attr_e('Close-up of a stepped glazing bar crossing a heritage aluminium frame', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string($asset_path('heritage-glazing-bar-600w.webp')); ?>>
-                        <figcaption><?php esc_html_e('Stepped bar', 'fenster'); ?></figcaption>
-                    </figure>
-                </div>
             </div>
         </section>
 

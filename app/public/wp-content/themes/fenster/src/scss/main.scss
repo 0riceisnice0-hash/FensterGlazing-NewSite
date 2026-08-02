@@ -34524,11 +34524,45 @@ html.fg-blinds-reveal-locked {
   padding: clamp(1.5rem, 3vw, 2.4rem) 0 0;
 }
 
-.fg-heritage-door-lede > .container {
+.fg-heritage-door-lede__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.4rem, 3vw, 3rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.6rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.fg-heritage-door-lede__copy {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.4rem);
+  align-content: start;
+}
+
+/* The product shot is a portrait cutout on white, so the frame is given the
+   proportion rather than the crop: contain, not cover, or the door loses its
+   head and cill. */
+.fg-heritage-door-lede__media {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(0, 45, 58, 0.11);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-heritage-door-lede__media img {
+  display: block;
+  width: 100%;
+  height: clamp(280px, 30vw, 400px);
+  object-fit: contain;
+  padding: clamp(0.8rem, 2vw, 1.4rem);
+}
+
+.fg-heritage-door-lede__media figcaption {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(0, 45, 58, 0.1);
+  color: var(--color-steel);
+  font-size: 0.85rem;
+  font-weight: 850;
 }
 
 .fg-heritage-door-lede p {
@@ -34540,7 +34574,7 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 860px) {
-  .fg-heritage-door-lede > .container {
+  .fg-heritage-door-lede__grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }
