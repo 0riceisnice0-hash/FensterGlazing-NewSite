@@ -9353,7 +9353,11 @@ html.fg-gallery-lightbox-open body {
 
 .fg-patio-handles .fg-window-handles__visual img {
   inset: 0;
-  width: min(74%, 288px);
+  /* The percentage is what binds at both ends: the stage is about 280px wide
+     on desktop and about 340px on a phone, so the cap only catches the phone.
+     At 74% the desktop photo sat 207px inside a 280px column and read as
+     under-filled. */
+  width: min(86%, 288px);
   height: auto;
   aspect-ratio: 1;
   margin: auto;
