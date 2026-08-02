@@ -264,6 +264,7 @@ $aluminium_colour_routes = [
     'heritage-windows' => 'window',
     'aluminium-bifold-doors' => 'door',
     'aluminium-doors' => 'door',
+    'aluminium-sliding-doors' => 'door',
 ];
 $product_media = fenster_data('product_media.' . $slug, []);
 $product_media = is_array($product_media) ? $product_media : [];
@@ -4078,6 +4079,10 @@ if ($is_commercial_hub) {
 
         <?php if (isset($aluminium_colour_routes[$slug])) : ?>
             <?php get_template_part('template-parts/components/aluminium-colour-grid', null, ['product_noun' => $aluminium_colour_routes[$slug]]); ?>
+        <?php endif; ?>
+
+        <?php if ($slug === 'aluminium-sliding-doors') : ?>
+            <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
         <?php if ($shows_handle_grid) : ?>

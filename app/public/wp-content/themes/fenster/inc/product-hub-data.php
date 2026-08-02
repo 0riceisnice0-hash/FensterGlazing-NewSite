@@ -162,11 +162,14 @@ function fenster_product_hub_data(string $slug): array
             'badges' => [$thermlock_badge, 'Large glass panels', 'Slim interlock'],
             'heading' => 'Aluminium sliding doors for wide views and heavy glass.',
             'copy' => 'Aluminium sliders differ from uPVC patio doors through bigger glass, slimmer interlocks, heavier sash capacity, smooth tracks and more architectural colour options.',
+            // Real figures from the Sheerline Prestige Lift & Slide specification.
+            // These read "where specified" and "options" throughout before, which
+            // told a customer nothing they could act on.
             'specs' => [
-                ['label' => 'System family', 'value' => 'Sheerline lift and slide style aluminium patio door options'],
-                ['label' => 'Glass area', 'value' => 'Large panels with slim interlock options, final sizes confirmed by survey'],
-                ['label' => 'Track detail', 'value' => 'Dual or triple-track layouts with drainage and threshold choices'],
-                ['label' => 'Hardware', 'value' => 'Lift-slide operation, secure locking and stainless track details where specified'],
+                ['label' => 'System', 'value' => 'Sheerline Prestige Lift & Slide, on a 106mm frame and sash'],
+                ['label' => 'Size', 'value' => 'Up to 6.5m wide and 2.5m tall, carrying up to 400kg a sash'],
+                ['label' => 'Track detail', 'value' => 'Stainless steel tracks in dual or triple track, with drainage built into the threshold'],
+                ['label' => 'Hardware', 'value' => 'Lift and slide action with flush hook-locks set into the interlock, tested to PAS 24'],
             ],
             'choices' => ['Two, three or four-panel style layouts', 'Large fixed pane with sliding access', 'RAL colour and dual colour options', 'Solar-control glass for sunny elevations'],
         ],

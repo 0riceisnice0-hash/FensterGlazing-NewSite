@@ -307,11 +307,14 @@ function fenster_site_data(): array
                 ['label' => 'Design', 'value' => 'Versatile'],
                 ['label' => 'Security', 'value' => '10 point locking'],
             ],
+            // Sheerline Prestige Lift & Slide published specification. Colour came off
+            // this strip when the route gained the powder-coated colour section, so
+            // the four tiles say something the rest of the page does not.
             'aluminium-sliding-doors' => [
                 ['label' => 'U-value*', 'value' => '1.0 W/m²K'],
-                ['label' => 'Colour choice', 'value' => 'Any RAL colour'],
-                ['label' => 'Track options', 'value' => 'Dual or triple'],
-                ['label' => 'Security', 'value' => 'Flush hook-locks'],
+                ['label' => 'Maximum opening', 'value' => '6.5m wide, 2.5m tall'],
+                ['label' => 'Interlock', 'value' => '80mm or 52mm'],
+                ['label' => 'Security', 'value' => 'Flush hook-locks, PAS 24'],
             ],
             // Collections match the WindowCAD door-style groups, not Distinction's
             // Signature/Contemporary split. See COMPOSITE-DOOR-REDESIGN.md.
