@@ -13,6 +13,55 @@ which has been stale four releases running.
 
 Six defects were fixed on top of the merge; see the 2026-08-02 entry below.
 
+## 2026-08-02 - Aluminium sliding doors rebuilt, live (79cf9d4)
+
+- Live established by checksum as `c88412d` on four theme files, with the
+  empty-input hash printed alongside. `assets/css/main.css` was identical across
+  both candidates, so the JavaScript, `site-data.php` and `assets.php` were what
+  discriminated; one file is not a checksum sweep. Range `c88412d..79cf9d4` was
+  12 commits, one author. Backup `fenster-pre-79cf9d4-20260802-120522.tar.gz`
+  (378M, 1,767 entries) taken first. Explicit SHA, theme-only rsync, both caches
+  purged.
+- **The page was measured against Sheerline's own patio page.** The gap was not
+  imagery, it was that ours carried no figure a customer could act on: "lift and
+  slide style", "large panels with slim interlock options", "stainless track
+  details where specified". It now states 106mm frame and sash, 80mm or 52mm
+  interlock, 6.5m by 2.5m maximum, 400kg a sash, three threshold heights and
+  PAS 24, in a two-part detail section built on the casement split grammar the
+  heritage page already reuses.
+- **The slider turntable existed after all.** `alislider.mp4` was in OneDrive
+  under Marketing/Image Bank/Legacy Marketing/Sheerline web assets. A previous
+  session's note that there is no scrape on this Mac was taken too far; the
+  image bank is a separate place and it is worth looking there first.
+- Section order moved onto the heritage rhythm: the technology banner sits with
+  the sections that explain it rather than stacked on the specification strip,
+  the detail sections come before the gallery, and the process rail is gone.
+- **Two image faults, one reported and one self-inflicted.** The owner spotted a
+  bifold photograph in the slider gallery, alt text and all. Removing it dropped
+  the pool from nine entries to eight and the mosaic vanished silently, because
+  it renders `array_slice($images, 4)` and wants four of them. The replacement
+  then turned out to be the same photograph as the hero at a different crop,
+  0.85% RMSE apart against 39% for two genuinely different shots. **A duplicate
+  check on filenames cannot see that**; compare the pixels.
+- Hero is now the aspirational three-pane and the old brick hero is reused in
+  the mosaic, on the owner's instruction. Flagged at the time: the new hero is a
+  render where the one it replaces was a photograph.
+- **The scrub window was wrong at both ends before it was right.** Across a full
+  pass the last frames only arrived after the element had left the top of the
+  viewport, so the handle turn was never seen. Finishing at centre fixed that
+  and pushed the opening frames below the fold. It now runs from half visible to
+  centred, which is half a viewport of scroll whatever the element's height.
+- **The lag was the encoding, not the controller.** `prestige-slider.mp4` had
+  one keyframe in 101 frames, so every seek decoded from frame zero. All three
+  scrub videos are all-intra now, with a half-width mobile encode listed first.
+  Measured on production: seeks median 2.2ms at 1440 and 1.5ms at 375, against a
+  16.7ms frame budget.
+- **Verified on production:** seven theme files byte-identical; fourteen routes
+  200 with the head-term marker; the turntable and its mobile source present;
+  twelve swatches; no process rail; the bifold photograph gone; nine slider
+  images with no duplicates; the 106mm and 6.5m figures serving; no PHP notices
+  on five routes; no console errors; no horizontal overflow; headings at cap.
+
 ## 2026-08-02 - Heritage doors and the aluminium colour grids, live (c88412d)
 
 - Live established by checksum as `64f4e51` on four theme files, with the
