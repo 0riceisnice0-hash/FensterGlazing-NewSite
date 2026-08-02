@@ -146,6 +146,17 @@ Owner: the page needs to be more image heavy near the top, a gallery like the ca
 - Verified on test at 1440 and a true 390: heading white on the steel background, four cells filling the mosaic with no holes, all four images loaded, hint hidden on desktop and shown on mobile, mosaic scrolls as a swipe row on the phone, no horizontal overflow at either width.
 - Test deployment only. Live is `572fe3c` for this session's work.
 
+## 2026-07-29 - Casement: intro rewritten, EnergyPlus banner lifted (test, 4dd4e0d)
+
+Owner: the first two info sections repeat each other on opening types, and the EnergyPlus box feels lost at the bottom.
+
+- **The repetition was real and one-directional.** The intro opened by defining the hinge types and listing side-hung, top-hung and fixed lights; the Opening styles section immediately below sets out exactly those four, with the hardware detail. The intro now leads on what the window is instead: the most common window in UK homes, made to measure from a single light to a full bay, sixteen colours, EnergyPlus as standard rather than an upgrade tier, A+ at 0.95.
+- **Avoided swapping one duplication for another.** The anatomy section further down owns chambers, gaskets and the sealed unit, which is what explains how 0.95 is reached. The figure is now claimed once in the intro and explained once in anatomy, rather than argued in both.
+- **Facts reused rather than rewritten:** sixteen colours with smooth white or the same colour inside, and 0.95 on the listed specification, both already established elsewhere in the theme. **No double-glazed U-value is quoted on this route**, because 1.2 with 28mm belongs to flush casement.
+- **The banner was not at the bottom, but it was buried.** Measured at 3,562px of an 11,260px page, 32% down, below the hero, intro, opening styles, details, gallery and the CTA panel. Its original placement had a real reason, which still holds: letting `generated-page.php` render it stacks it straight onto the four-tile spec strip under the hero. So it moved up to just under the intro, the section that now makes the EnergyPlus claim, with the intro still separating it from the spec strip. Now 1,289px, 11% down.
+- Verified on test: the three duplicated phrases return zero matches, the new intro serves, all four opening styles remain in their own section, banner at 11% with the spec strip at 5% and the intro at 6% between them, no horizontal overflow.
+- Test deployment only. Live is `572fe3c` for this session's work.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
