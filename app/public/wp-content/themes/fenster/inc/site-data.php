@@ -993,6 +993,11 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-living-room-1200w.webp', 'alt' => 'Aluminium sliding doors across a living room wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-track-900w.webp', 'alt' => 'Stainless steel running track and threshold on an aluminium sliding door'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-sliding-door.jpg', 'alt' => 'Aluminium sliding door open onto a decked terrace and countryside'],
+                // The mosaic renders array_slice($images, 4) and wants four of
+                // them, so this pool needs nine entries for the gallery to
+                // appear at all. Dropping below that removes the section
+                // silently rather than leaving a gap.
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-deck-1400w.webp', 'alt' => 'Anthracite aluminium sliding doors along a brick and timber clad elevation, seen from the decking'],
             ],
             'aluminium_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden'],
