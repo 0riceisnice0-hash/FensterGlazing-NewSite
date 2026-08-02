@@ -1190,10 +1190,16 @@ if ($is_commercial) {
        year guarantee, so the canonical steps would describe work we are not
        doing here. Flagged to the owner on 2026-07-29. */
     $product_order_steps = [
-        ['step' => '01', 'title' => 'Check the opening', 'copy' => 'We confirm whether the flap is going into a suitable panel or a replacement sealed glass unit.'],
-        ['step' => '02', 'title' => 'Choose the flap', 'copy' => 'Manual, lockable and microchip options are matched to the pet, opening size and access-control need.'],
-        ['step' => '03', 'title' => 'Order the part', 'copy' => 'If glass is required, the new sealed unit is made with the correct aperture before installation.'],
-        ['step' => '04', 'title' => 'Fit and finish', 'copy' => 'The flap, glass or panel is installed neatly, with position, weathering and everyday use checked on completion.'],
+        /* This rail carries its own steps because a pet flap is a different job
+           from a window, and it was the one source the 2026-08-02 copy sweep
+           missed first time round: it still offered "manual, lockable and
+           microchip" as three flap types after every other source had been
+           corrected to two. Worth remembering that this page has six places
+           copy lives, and the process steps are the easiest to forget. */
+        ['step' => '01', 'title' => 'Look at the door', 'copy' => 'We work out whether the flap is going into a panel we can cut, or into a new sealed unit, because that decides the rest of it.'],
+        ['step' => '02', 'title' => 'Pick the flap', 'copy' => 'A standard flap that locks by hand, or a microchip one that opens only for your pet. We size it around the animal rather than the door.'],
+        ['step' => '03', 'title' => 'Order the part', 'copy' => 'A new glass unit is made to order with the aperture already in it, so allow a week or two. A panel does not need one.'],
+        ['step' => '04', 'title' => 'Fit and finish', 'copy' => 'We fit it, weather it and check your pet can actually get through at the height it has ended up.'],
     ];
 }
 /* Legend's verdict on the pet flap page. He is Fenster's office cat and the
