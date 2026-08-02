@@ -675,6 +675,44 @@ function fenster_case_studies(): array
             ],
         ],
 
+        'heritage-aluminium-doors-wolverton' => [
+            'title' => 'Heritage aluminium doors, Wolverton',
+            'location' => 'Wolverton',
+            'type' => 'Residential',
+            'date' => '2026-05-13',
+            'summary' => 'A pair of French heritage doors and a single, both jet black with two bar glazing, replacing painted timber at the back of a Victorian terrace.',
+            'lead' => 'This Victorian terrace in Wolverton had painted timber doors on two openings at the back. We replaced both with Sheerline Classic heritage aluminium: a French pair onto the patio and a single onto the side path, matched to each other in jet black.',
+            'products' => [
+                ['label' => 'Heritage aluminium doors', 'url' => home_url('/heritage-aluminium-doors/')],
+            ],
+            'colour' => ['label' => 'Jet Black', 'url' => $colour_link('aluminium', 'jet-black')],
+            'specs' => [
+                ['label' => 'Products', 'value' => 'Heritage aluminium doors'],
+                ['label' => 'System', 'value' => 'Sheerline Classic, 1.4 W/m²K'],
+                ['label' => 'Configuration', 'value' => 'French pair and a single, both with toplights'],
+                ['label' => 'Colour', 'value' => 'Jet Black, with black handles'],
+            ],
+            'overview' => [
+                'Two openings at the back of the house, both still in painted timber. A wide one onto the patio and a narrower one onto the side path, each with a toplight above it that the original doors already had.',
+                'Both are now <a href="' . esc_url(home_url('/heritage-aluminium-doors/')) . '">Sheerline Classic heritage aluminium doors</a>, the wide opening as a French pair and the side path as a single. Keeping the toplights meant the new frames could sit in the existing brick openings without reducing the glass.',
+                'Both doors are two bar, so the glazing bars line up across the pair and the single even though the openings are different widths. Finished in <a href="' . $colour_link('aluminium', 'jet-black') . '">Jet Black</a> with black handles, against red brick and a black painted plinth.',
+            ],
+            'installed' => [
+                'Sheerline Classic heritage aluminium French doors',
+                'Sheerline Classic heritage aluminium single door',
+                'Two bar glazing on both, with toplights retained',
+                'Jet Black finish with black handles',
+            ],
+            'installers' => [$fitter_zac, $fitter_shane],
+            'images' => [
+                ['src' => $img . 'cs-wolverton-heritage-doors-exterior.webp', 'caption' => 'After: the French pair onto the patio, two bar glazing with the toplight above.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-before-double.webp', 'caption' => 'Before: the painted timber doors on the same opening.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-open.webp', 'caption' => 'After: both leaves open onto the patio, looking back through the kitchen.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-before-single.webp', 'caption' => 'Before: the timber single door onto the side path.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-single.webp', 'caption' => 'After: the single in the same opening, matched to the French pair.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-interior.webp', 'caption' => 'After: the French doors from inside, with the toplight carrying daylight above the head.'],
+            ],
+        ],
         'white-charisma-rose-sash-windows-wolverton' => [
             'title' => 'White Charisma Rose sash windows, Wolverton',
             'location' => 'Wolverton, Milton Keynes',
