@@ -2,6 +2,26 @@
 
 Last updated: 2026-07-31
 
+## START HERE, 2026-08-02: live and main have diverged
+
+A new session should read this before touching anything.
+
+**Do not deploy to live until this is resolved.** Live is running `origin/codex/tracking-repair` (head `f37e05d`), measured by checksumming four theme files against every branch, not read from a doc. That branch is not merged into `main`. Deploying `main` would delete 23 commits of released work, including `inc/google-ads-conversions.php` (317 lines absent from `main`), the website-tracking changes, the consent metrics, and the clearing of `_gcl_`, `_gac_`, `_gads` and `_gpi` when a visitor rejects consent. That last one is a live privacy behaviour.
+
+**Where the work is:**
+- `main` is at `779b51a`, and test is deployed from it. 71 commits on `main` are not live.
+- Everything this session built is on test and verified there: the colour hub rail and hero, the handle options box, the heritage doors page rebuilt on the casement components, the casement intro rewrite, the heritage quote tool that was missing, and the Wolverton case study.
+- The heritage quote tool fix matters: heritage doors were always in the quote map as `productCollection=12`, the route was never passed the URL, and the enquiry copy had filled the gap by claiming the tool did not cover them. That claim is still live.
+
+**The decision the owner is making:** who merges `codex/tracking-repair` into `main`. The recommendation given was that whoever wrote it does so, since both sides modify the same files (`heritage-aluminium-doors.php`, `casement-windows-v2.php`, `case-studies-residential.php`, `generated-page.php`, `src/js/main.js`) and it is a real merge, not a fast-forward. Then this session's work rebases on top and both ship together.
+
+**Open items, smaller:**
+- The case study gallery is now a row-first grid rather than a column masonry, so source order equals reading order. Change is global to all case studies.
+- `priced_by` on a case study controls the "how they got their price" line. Only the Wolverton study sets it, so the other residential studies now print nothing there rather than the old unchecked claim that everyone used the quote tool.
+- Composite white is `#ffffff` on the colour hub but `#f2f0e8` with a real door photo on the composite doors page. The two disagree.
+- The old dual-colour hero photo on the colour hub is unused, and its caption fact ("One frame, two finishes. Black outside, white inside.") is no longer anywhere on the page.
+
+
 ## 2026-07-31 - Polished cookie consent and Legend fix promoted live (616d673)
 
 - Rebuilt only the approved consent and Legend changes on exact Ads production base `814b8bf` as scoped branch `codex/cookie-consent-live`; `814b8bf..616d673` changes only consent markup/logic, generated policy copy, consent-aware JavaScript, consent styles and their compiled assets. The separate privacy-glass test batch was not included.
