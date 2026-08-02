@@ -35973,11 +35973,16 @@ html.fg-blinds-reveal-locked {
   margin-bottom: clamp(1.25rem, 2.5vw, 1.9rem);
 }
 
-.fg-cw .fg-cw-gallery h2 {
+/* The section paints itself dark, so its own text colour belongs with it rather
+   than with whichever page wrapper happens to contain it. Scoping this to .fg-cw
+   left the heritage page rendering an ink heading on a steel background. */
+.fg-cw .fg-cw-gallery h2,
+.fg-cw-gallery--heritage h2 {
   color: #ffffff;
 }
 
-.fg-cw .fg-cw-gallery__head > p {
+.fg-cw .fg-cw-gallery__head > p,
+.fg-cw-gallery--heritage .fg-cw-gallery__head > p {
   max-width: 46ch;
   margin: 0;
   color: rgba(255, 255, 255, 0.78);
@@ -36057,7 +36062,8 @@ html.fg-blinds-reveal-locked {
   outline-offset: 2px;
 }
 
-.fg-cw .fg-cw-gallery__hint {
+.fg-cw .fg-cw-gallery__hint,
+.fg-cw-gallery--heritage .fg-cw-gallery__hint {
   display: none;
   max-width: none;
   margin: 0.85rem 0 0;
@@ -36141,7 +36147,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cw .fg-cw-gallery__hint,
-  .fg-heritage-door-page .fg-cw-gallery__hint {
+  .fg-cw-gallery--heritage .fg-cw-gallery__hint {
     display: block;
   }
 
