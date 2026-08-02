@@ -91,7 +91,15 @@ $door_colours = [
                         <h1><?php esc_html_e('Sheerline heritage aluminium doors', 'fenster'); ?></h1>
                     </div>
                     <div class="button-row">
-                        <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
+                        <?php
+                        /* The same full and short label pair casement's hero
+                           uses, so the long label does not wrap on a phone.
+                           .fg-hero--compact swaps them at 860px. */
+                        ?>
+                        <a class="button" href="#fenster-heritage-door-enquiry">
+                            <span class="fg-hero-cta__full"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></span>
+                            <span class="fg-hero-cta__short"><?php esc_html_e('Get a quote', 'fenster'); ?></span>
+                        </a>
                         <a class="button button--light" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
                     </div>
                 </div>
@@ -121,31 +129,40 @@ $door_colours = [
             </div>
         </section>
 
-        <section class="fg-heritage-door-lede">
-            <div class="container fg-heritage-door-lede__grid">
-                <div class="fg-heritage-door-lede__copy">
-                    <p><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
-                    <ul class="fg-heritage-door-lede__points" aria-label="<?php esc_attr_e('Heritage door reassurance', 'fenster'); ?>">
-                        <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Fitted by our own installers, with a 10 year guarantee', 'fenster'); ?></li>
-                    </ul>
+        <?php
+        /* Built from the casement intro's own markup and classes rather than a
+           lookalike: fg-cw carries the eyebrow, heading and figure rules, and
+           fg-cw-split, fg-cw-facts, fg-cw-actions and fg-cw-media are shared
+           already. Same section, not a copy of it. */
+        ?>
+        <div class="fg-cw fg-heritage-door-lede">
+            <section class="fg-cw-intro" aria-labelledby="fg-heritage-intro-title">
+                <div class="container fg-cw-split">
+                    <div class="fg-cw-copy">
+                        <p class="eyebrow"><?php esc_html_e('The door we fit', 'fenster'); ?></p>
+                        <h2 id="fg-heritage-intro-title"><?php esc_html_e('Steel-look proportions, in aluminium that never needs painting.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('We supply and install the Sheerline Classic Heritage Door across Milton Keynes and the surrounding towns. It copies the slim proportions of early twentieth century steel doors, but it is powder-coated aluminium, so it does not rust and it does not need repainting.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('Sheerline build their own multi-chamber thermal core into every frame, which is how a door with 60.5mm sightlines still reaches 1.4 W/m²K double glazed. Single or French, with or without glazing bars, opening in or out.', 'fenster'); ?></p>
+                        <ul class="fg-cw-facts">
+                            <li><?php esc_html_e('Single doors and French doors, with or without glazing bars', 'fenster'); ?></li>
+                            <li><?php esc_html_e('Opening measured and checked before anything is ordered', 'fenster'); ?></li>
+                            <li><?php esc_html_e('Fitted by our own installers, with a ten year guarantee', 'fenster'); ?></li>
+                        </ul>
+                        <div class="fg-cw-actions">
+                            <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
+                            <a class="button button--steel" href="tel:01908429200"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), '01908 429200')); ?></a>
+                        </div>
+                    </div>
+                    <figure class="fg-cw-media">
+                        <img <?php echo fenster_image_attr_string($asset_path('heritage-door-kitchen-1600w.webp'), [
+                            'alt' => __('Black heritage aluminium door and side screen looking onto a garden from a green kitchen', 'fenster'),
+                            'loading' => 'lazy',
+                        ]); ?>>
+                        <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
+                    </figure>
                 </div>
-                <?php
-                /* A real room, not the cutout that was here first: that was a
-                   product shot on white and rendered small in a large empty
-                   frame. This is the kitchen photograph, moved out of the
-                   gallery so it is not shown twice on one page. */
-                ?>
-                <figure class="fg-heritage-door-lede__media">
-                    <img <?php echo fenster_image_attr_string($asset_path('heritage-door-kitchen-1600w.webp'), [
-                        'alt' => __('Black heritage aluminium door and side screen looking onto a garden from a green kitchen', 'fenster'),
-                        'loading' => 'lazy',
-                    ]); ?>>
-                    <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
-                </figure>
-            </div>
-        </section>
+            </section>
+        </div>
 
         <?php
         get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('heritage-aluminium-doors'));

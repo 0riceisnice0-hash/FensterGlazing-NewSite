@@ -34516,69 +34516,15 @@ html.fg-blinds-reveal-locked {
   color: var(--color-accent-dark);
 }
 
-/* The lead paragraph and reassurance points, displaced from the hero when it
-   became the shared full-bleed one. Sits after the four-fact strip, matching
-   casement, where the specification strip sits under the hero and the prose
-   intro follows it. */
-.fg-heritage-door-lede {
-  padding: clamp(1.5rem, 3vw, 2.4rem) 0 0;
-}
-
-.fg-heritage-door-lede__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(1.6rem, 4vw, 3.5rem);
-  align-items: center;
-}
-
-.fg-heritage-door-lede__copy {
-  display: grid;
-  gap: clamp(1rem, 2vw, 1.4rem);
-  align-content: start;
-}
-
-.fg-heritage-door-lede__media {
-  position: relative;
-  margin: 0;
-  overflow: hidden;
-  border: 1px solid rgba(0, 45, 58, 0.11);
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.fg-heritage-door-lede__media img {
-  display: block;
-  width: 100%;
-  height: clamp(280px, 30vw, 400px);
-  object-fit: cover;
-  object-position: 72% 50%;
-}
-
-.fg-heritage-door-lede__media figcaption {
-  padding: 0.75rem 1rem;
-  border-top: 1px solid rgba(0, 45, 58, 0.1);
-  color: var(--color-steel);
-  font-size: 0.85rem;
-  font-weight: 850;
-}
-
-.fg-heritage-door-lede p {
-  max-width: 46ch;
-  margin: 0;
-  color: var(--color-muted);
-  font-size: clamp(1.02rem, 1.25vw, 1.16rem);
-  line-height: 1.56;
-}
-
-@media (max-width: 860px) {
-  .fg-heritage-door-lede__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+/* The intro is casement's section, markup and classes included, so the only
+   thing left here is the outer spacing. Everything that used to be a bespoke
+   grid, figure and caption for this page is now the shared component. */
+.fg-heritage-door-lede .fg-cw-intro {
+  padding: clamp(2rem, 4vw, 3.2rem) 0 0;
 }
 
 .fg-cd3-hero__reassurance,
 .fg-heritage-door-hero__reassurance,
-.fg-heritage-door-lede__points,
 .fg-heritage-door-enquiry__copy ul {
   display: grid;
   gap: 0.55rem;
@@ -34589,7 +34535,6 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-hero__reassurance li,
 .fg-heritage-door-hero__reassurance li,
-.fg-heritage-door-lede__points li,
 .fg-heritage-door-enquiry__copy li {
   position: relative;
   padding-left: 1.45rem;
@@ -34599,7 +34544,6 @@ html.fg-blinds-reveal-locked {
 
 .fg-cd3-hero__reassurance li::before,
 .fg-heritage-door-hero__reassurance li::before,
-.fg-heritage-door-lede__points li::before,
 .fg-heritage-door-enquiry__copy li::before {
   position: absolute;
   top: 0.5em;
