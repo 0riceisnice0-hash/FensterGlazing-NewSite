@@ -165,10 +165,6 @@ function fenster_product_scroll_videos(): array
             ['file' => 'bifold-video.webm', 'type' => 'video/webm'],
             ['file' => 'bifold-video.mp4', 'type' => 'video/mp4'],
         ],
-        'heritage-aluminium-doors' => [
-            ['file' => 'classic-door-turntable.webm', 'type' => 'video/webm'],
-            ['file' => 'classic-door-turntable.mp4', 'type' => 'video/mp4'],
-        ],
     ];
 }
 
@@ -194,11 +190,51 @@ function fenster_integral_blinds_reveal_url(): string
     return fenster_product_scroll_video_url('integral-blinds-chroma.mp4');
 }
 
+/**
+ * Videos that scrub in place from their own position in the viewport.
+ *
+ * Deliberately a separate map from fenster_product_scroll_videos(), which is
+ * the bifold traveller: that one lifts the video out of the flow and flies it
+ * across the page from a slot beside the hero. Anything listed there gets the
+ * traveller markup rendered for it in generated-page.php, so a route wanting
+ * the plain scrub has to be listed here instead or it gets both treatments.
+ *
+ * Every entry must be the system the route actually sells. The Prestige corner
+ * belongs on aluminium windows, which is a Prestige route; it is not the
+ * Classic profile and must not be used on the heritage pages.
+ */
+function fenster_product_scrub_videos(): array
+{
+    return [
+        'aluminium-windows' => [
+            ['file' => 'prestige-window.webm', 'type' => 'video/webm'],
+            ['file' => 'prestige-window.mp4', 'type' => 'video/mp4'],
+        ],
+        'heritage-aluminium-doors' => [
+            ['file' => 'classic-door-turntable.webm', 'type' => 'video/webm'],
+            ['file' => 'classic-door-turntable.mp4', 'type' => 'video/mp4'],
+        ],
+    ];
+}
+
+function fenster_product_scrub_video_sources_for_slug(string $slug): array
+{
+    return fenster_product_scroll_video_sources_from(fenster_product_scrub_videos()[$slug] ?? []);
+}
+
 function fenster_product_scroll_video_sources_for_slug(string $slug): array
 {
     $videos = fenster_product_scroll_videos();
-    $sources = $videos[$slug] ?? [];
 
+    return fenster_product_scroll_video_sources_from($videos[$slug] ?? []);
+}
+
+/**
+ * Turn a list of {file, type} entries into renderable {src, type} sources,
+ * dropping any whose file is missing from the theme.
+ */
+function fenster_product_scroll_video_sources_from(mixed $sources): array
+{
     return array_values(array_filter(array_map(
         static function (array $source): array {
             $file = (string) ($source['file'] ?? '');

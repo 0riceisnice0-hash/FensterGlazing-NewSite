@@ -37,8 +37,8 @@ $asset = static function (string $path) use ($asset_path): string {
    Deliberately not the bifold treatment: that one flies the video across the
    page from a slot beside the hero, and the owner asked for the scrub without
    the travel. It scrubs in place from its own position in the viewport. */
-$turntable_sources = function_exists('fenster_product_scroll_video_sources_for_slug')
-    ? fenster_product_scroll_video_sources_for_slug('heritage-aluminium-doors')
+$turntable_sources = function_exists('fenster_product_scrub_video_sources_for_slug')
+    ? fenster_product_scrub_video_sources_for_slug('heritage-aluminium-doors')
     : [];
 
 $door_configurations = [

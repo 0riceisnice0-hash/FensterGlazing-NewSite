@@ -3809,7 +3809,29 @@ if ($is_commercial_hub) {
                             <?php endif; ?>
                         </div>
 
-                        <?php if (is_array($product_hub_image) && ! empty($product_hub_image['src'])) : ?>
+                        <?php
+                        /* A route with a scrub video shows the profile turning
+                           here instead of a still of the same corner. It is the
+                           in-place scrub, not the bifold traveller: the video
+                           stays in this figure and only maps scroll position
+                           onto currentTime. Routes without one are unchanged. */
+                        $product_scrub_sources = function_exists('fenster_product_scrub_video_sources_for_slug')
+                            ? fenster_product_scrub_video_sources_for_slug($slug)
+                            : [];
+                        ?>
+                        <?php if (! empty($product_scrub_sources)) : ?>
+                            <figure class="fg-product-intel__media fg-product-intel__media--turntable">
+                                <video data-fg-scrub-video muted playsinline preload="metadata" aria-label="<?php echo esc_attr(sprintf(__('%s frame profile rotating to show its section', 'fenster'), $title)); ?>">
+                                    <?php foreach ($product_scrub_sources as $product_scrub_source) : ?>
+                                        <source src="<?php echo esc_url($product_scrub_source['src']); ?>" type="<?php echo esc_attr($product_scrub_source['type']); ?>">
+                                    <?php endforeach; ?>
+                                </video>
+                                <figcaption>
+                                    <span><?php esc_html_e('Product view', 'fenster'); ?></span>
+                                    <strong><?php echo esc_html($title); ?></strong>
+                                </figcaption>
+                            </figure>
+                        <?php elseif (is_array($product_hub_image) && ! empty($product_hub_image['src'])) : ?>
                             <figure class="fg-product-intel__media">
                                 <img src="<?php echo esc_url(fenster_generated_url((string) $product_hub_image['src'])); ?>" alt="<?php echo esc_attr((string) ($product_hub_image['alt'] ?? $title)); ?>" loading="lazy">
                                 <figcaption>
