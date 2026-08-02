@@ -129,6 +129,7 @@ Every entry is fully self-describing. Fields:
         ['label' => 'uPVC casement windows', 'url' => home_url('/casement-windows/')],
     ],
     'colour'   => ['label' => 'Basalt grey (RAL 7012)', 'url' => $colour_basalt],  // or null
+    'priced_by' => 'consultation',                      // omit for the quote tool (the default). See below.
     'specs'    => [                                     // the four-item spec strip under the hero
         ['label' => 'Product', 'value' => 'One uPVC casement window'],
         ['label' => 'System', 'value' => 'Liniar EnergyPlus 70mm uPVC'],
@@ -168,6 +169,16 @@ image base), `$casement`, `$flush`, `$bifold`, `$slidefold` (product URLs),
 Optional fields (`installers`, `review`, `colour`) simply don't render when
 absent. `overview` and `review['quote']` are passed through `wp_kses` allowing
 only `<a>`, `<strong>`, `<em>`.
+
+`priced_by` controls the "how they got their price" line under the overview.
+**The instant quote tool is the default**, so only set it when the job was
+priced another way: `'consultation'` prints the home-consultation line instead.
+Wolverton heritage doors is the one study that sets it, after the page claimed
+the quote tool for a job that was priced at a consultation. This is a claim
+about a real customer, so check which route the job actually took before
+leaving a new study on the default. A route with no branch in
+`case-studies-residential.php` needs one adding rather than being left to fall
+through. Commercial studies never print the line.
 
 ---
 
