@@ -683,8 +683,8 @@ function fenster_case_studies(): array
             // Owner-confirmed: this job was priced at a consultation, not on
             // the quote tool.
             'priced_by' => 'consultation',
-            'summary' => 'Two timber openings at the back of a Victorian terrace, replaced in jet black heritage aluminium, with the narrow one turned into a single wide door.',
-            'lead' => 'This Victorian terrace in Wolverton had painted timber doors on two openings at the back. Both are now Sheerline Classic heritage aluminium: French doors to the patio again, and the narrow side path opening turned into a single wide door.',
+            'summary' => 'Two timber openings at the back of a Victorian terrace, replaced in jet black heritage aluminium, with the narrow one turned into a single wide leaf.',
+            'lead' => 'This Victorian terrace in Wolverton had painted timber doors on two openings at the back. Both are now Sheerline Classic heritage aluminium: French doors to the patio again, and the narrow side path opening turned into a single wide leaf.',
             'products' => [
                 ['label' => 'Heritage aluminium doors', 'url' => home_url('/heritage-aluminium-doors/')],
             ],
@@ -697,7 +697,7 @@ function fenster_case_studies(): array
             ],
             'overview' => [
                 'Two openings at the back of this terrace, both still in painted timber and both French doors. One opens onto the patio, the other onto the side path, and each had a toplight above it.',
-                'The patio opening is French doors again, in <a href="' . esc_url(home_url('/heritage-aluminium-doors/')) . '">Sheerline Classic heritage aluminium</a>. The side path is where the layout actually changed. Splitting a narrow opening in two gives you two narrow ways through and no useful one, so that opening is now a single wide door in the same brickwork.',
+                'The patio opening is French doors again, in <a href="' . esc_url(home_url('/heritage-aluminium-doors/')) . '">Sheerline Classic heritage aluminium</a>. The side path is where the layout actually changed. Splitting a narrow opening in two gives you two narrow ways through and no useful one, so that opening is now a single wide leaf in the same brickwork.',
                 'Both toplights were kept. That let the new frames sit in the existing openings without losing glass above the door, and it keeps the proportions the back of the house already had.',
                 'Both are two bar, so the glazing bars line up across the French doors and the single even though the two openings are different widths. Finished in <a href="' . $colour_link('aluminium', 'jet-black') . '">Jet Black</a> with black handles, against the red brick.',
                 'Powder-coated aluminium replaces painted timber on both, so neither needs repainting, and both lock at several points up the frame rather than on a single latch.',
@@ -705,7 +705,7 @@ function fenster_case_studies(): array
             'installed' => [
                 'Sheerline Classic heritage aluminium French doors to the patio',
                 'Sheerline Classic heritage aluminium single door to the side path',
-                'Narrow French opening turned into one wide single door',
+                'Narrow French opening turned into one wide leaf',
                 'Two bar glazing on both, with the existing toplights retained',
                 'Jet Black finish with black handles',
             ],
@@ -714,10 +714,10 @@ function fenster_case_studies(): array
                open shot, which belongs to no pair. That leaves the gallery
                itself reading after, before, after, before, then indoors. */
             'images' => [
-                ['src' => $img . 'cs-wolverton-heritage-doors-open.webp', 'caption' => 'Both doors open onto the patio, looking back through the kitchen.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-open.webp', 'caption' => 'Both leaves open onto the patio, looking back through the kitchen.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-exterior.webp', 'caption' => 'After: the patio opening, French doors with two bar glazing.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-before-double.webp', 'caption' => 'Before: the painted timber French doors on the same opening.'],
-                ['src' => $img . 'cs-wolverton-heritage-doors-single.webp', 'caption' => 'After: the side path as one wide single door.'],
+                ['src' => $img . 'cs-wolverton-heritage-doors-single.webp', 'caption' => 'After: the side path as one wide single leaf.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-before-single.webp', 'caption' => 'Before: the side path as narrow timber French doors.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-interior.webp', 'caption' => 'The patio doors from inside, with the toplight above the head.'],
             ],
