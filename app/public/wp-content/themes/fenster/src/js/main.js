@@ -5738,6 +5738,10 @@ document.querySelectorAll('[data-fg-legend-approved]').forEach((block) => {
   // rather than repeating what is on screen.
   let index = Math.max(0, verdicts.indexOf(verdict.textContent.trim()));
 
+  // The hint ships hidden so it can never invite a press that does nothing.
+  const hint = block.querySelector('[data-fg-legend-hint]');
+  if (hint) hint.hidden = false;
+
   button.addEventListener('click', () => {
     index = (index + 1) % verdicts.length;
     verdict.textContent = verdicts[index];

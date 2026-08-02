@@ -3828,6 +3828,45 @@ if ($is_commercial_hub) {
         </section>
         <?php endif; ?>
 
+        <?php if (! empty($legend_verdicts)) : ?>
+            <?php
+            /* Its own band rather than a chip in the guide's column, and above
+               the guide rather than inside it: owner asked for it higher and
+               more prominent, 2026-08-02.
+
+               It does not go higher than this. `STYLE.md` puts the page's one
+               dry aside anywhere but the hero, and the specification strip
+               directly under the hero is where a customer is still working out
+               whether a flap can go in their door at all. This sits after the
+               product information, which is the first point where a joke is not
+               interrupting an answer. */
+            ?>
+            <section class="fg-legend-band" aria-label="<?php esc_attr_e('Legend approved', 'fenster'); ?>">
+                <div class="container">
+                    <div class="fg-legend-approved" data-fg-legend-approved data-fg-legend-verdicts="<?php echo esc_attr((string) wp_json_encode(array_values($legend_verdicts))); ?>">
+                        <button type="button" class="fg-legend-approved__stamp" aria-describedby="fg-legend-verdict">
+                            <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/team/legend-avatar.webp', [
+                                'alt' => '',
+                                'loading' => 'lazy',
+                                'decoding' => 'async',
+                            ]); ?>>
+                            <span><?php esc_html_e('Legend approved', 'fenster'); ?></span>
+                        </button>
+                        <div class="fg-legend-approved__body">
+                            <p class="fg-legend-approved__verdict" id="fg-legend-verdict" data-fg-legend-verdict aria-live="polite">
+                                <?php echo esc_html((string) $legend_verdicts[0]); ?>
+                            </p>
+                            <p class="fg-legend-approved__who">
+                                <a href="<?php echo esc_url(home_url('/meet-the-team/#legend')); ?>"><?php esc_html_e('Legend, Chief Meow Officer', 'fenster'); ?></a>
+                                <?php /* Hidden until the controller attaches, so it never invites a press that cannot happen. */ ?>
+                                <span class="fg-legend-approved__hint" data-fg-legend-hint hidden><?php esc_html_e('Press the stamp for another verdict', 'fenster'); ?></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+
         <?php if ($is_pet_flap_page && ! empty($pet_flap_cards)) : ?>
             <section class="fg-pet-flap-guide">
                 <div class="container fg-pet-flap-guide__grid">
@@ -3836,25 +3875,6 @@ if ($is_commercial_hub) {
                         <h2><?php esc_html_e('The fitting method is chosen before the pet flap is ordered.', 'fenster'); ?></h2>
                         <p><?php esc_html_e('A pet flap can look simple from the outside, but the installation depends on what the door or glass will safely accept. We check the existing unit, the selected flap and the outside access before giving the go-ahead.', 'fenster'); ?></p>
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Check my pet flap options', 'fenster'); ?></a>
-
-                        <?php if (! empty($legend_verdicts)) : ?>
-                            <div class="fg-legend-approved" data-fg-legend-approved data-fg-legend-verdicts="<?php echo esc_attr((string) wp_json_encode(array_values($legend_verdicts))); ?>">
-                                <button type="button" class="fg-legend-approved__stamp" aria-describedby="fg-legend-verdict">
-                                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/team/legend-avatar.webp', [
-                                        'alt' => '',
-                                        'loading' => 'lazy',
-                                        'decoding' => 'async',
-                                    ]); ?>>
-                                    <span><?php esc_html_e('Legend approved', 'fenster'); ?></span>
-                                </button>
-                                <p class="fg-legend-approved__verdict" id="fg-legend-verdict" data-fg-legend-verdict aria-live="polite">
-                                    <?php echo esc_html((string) $legend_verdicts[0]); ?>
-                                </p>
-                                <p class="fg-legend-approved__who">
-                                    <a href="<?php echo esc_url(home_url('/meet-the-team/#legend')); ?>"><?php esc_html_e('Legend, Chief Meow Officer', 'fenster'); ?></a>
-                                </p>
-                            </div>
-                        <?php endif; ?>
                     </div>
                     <div class="fg-pet-flap-guide__cards" aria-label="<?php esc_attr_e('Pet flap fitting options', 'fenster'); ?>">
                         <?php foreach ($pet_flap_cards as $card) : ?>
