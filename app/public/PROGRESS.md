@@ -4,7 +4,7 @@ Last updated: 2026-08-02
 
 ## START HERE, 2026-08-02 (end of session)
 
-**Live, `main` and test are all level at `32dcba6`.** Re-establish live by
+**Live, `main` and test are all level at `0b0affe`.** Re-establish live by
 checksum before any release anyway, and on **more than one file**:
 `assets/css/main.css` was byte-identical across two candidate commits earlier
 today and would have given a false read on its own. The recorded pointer was
@@ -65,6 +65,39 @@ correct at the last two releases, which is not a reason to stop checking.
   colourspace convert, and check against a `pdftoppm` render of the page. This
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
+
+## 2026-08-02 - Review stars and the submit arrow, live (0b0affe)
+
+- Live established by checksum as `32dcba6` on the files the candidates actually
+  differ in, with the empty-input hash printed alongside. Range
+  `1e690a2..0b0affe` was 1 commit, one author, two files. Backup
+  `fenster-pre-0b0affe-20260802-154451.tar.gz` confirmed at 379M and 1,782
+  entries. Explicit SHA, theme-only rsync, both caches purged.
+- **The star fill floored instead of rounding.** For a 4.9 rating the fifth star
+  asked `4.9 >= 5`, got no, fell through to the half case and drew four and a
+  half stars beside a headline reading 4.9. So the graphic contradicted both our
+  own number and the Google profile it links to, which shows five. **The
+  function's docblock already said "filled to the nearest half"; the code did
+  not.** Rounding the value before filling fixes every case: 4.9, 4.8 and 4.75
+  give five, 4.7 and 4.4 give four and a half, 4.2 gives four.
+- The accessible label still carries the true unrounded figure, so a screen
+  reader hears "4.9 out of 5 stars" while the visual rounds the way Google does.
+  Do not round the label to match the stars; they are answering different
+  questions.
+- One renderer serves the fifteen templates that show the review showcase, so
+  the fix landed everywhere at once. Verified five full and zero half on seven
+  production routes.
+- **Submit buttons drew a literal ASCII `->`.** Now the same right-arrow glyph
+  the rest of the site already used. `COPY-AUDIT.md` section 8, open since July,
+  is closed.
+- Incidental, and worth knowing: the summary is serving **136 reviews** where the
+  hardcoded fallback in `site-data.php` says 133, which confirms the Google
+  Places API is live and that the count is not the stale fallback. The fallback
+  figures still rot on their own and are due a quarterly check.
+- **Verified on production:** both files byte-identical to the commit; five full
+  stars on seven routes; zero ASCII arrows on three; seven routes 200 with the
+  head-term marker intact; no PHP notices on three routes.
+- Live, `main` and test are level at `0b0affe`.
 
 ## 2026-08-02 - Bifold scrub, contact page and the consultation facts, live (32dcba6)
 

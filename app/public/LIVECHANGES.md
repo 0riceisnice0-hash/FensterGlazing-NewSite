@@ -9,7 +9,7 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- **Live is `32dcba6`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `3ec2d76` before deploying. Backup: `~/backups/fenster-theme/fenster-pre-32dcba6-20260802-152248.tar.gz` (378M, 1,777 entries). **Still re-establish by checksum before the next release rather than trusting this line, and on more than one file: three of the five files checked tied across two candidate commits in this release, and only `enquiry-form.php` and `site-data.php` separated them.**
+- **Live is `0b0affe`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `32dcba6` before deploying. Backup: `~/backups/fenster-theme/fenster-pre-0b0affe-20260802-154451.tar.gz` (379M, 1,782 entries). **Still re-establish by checksum before the next release rather than trusting this line, and pick files the candidate commits actually differ in.** On the release before this one, three of five checksummed files tied across two candidates and only two separated them.
 - The previous live runtime was `6fdf9ff` (2026-08-02).
 - **The pointer was stale again at deploy time.** This file said `8052f65`; the live theme actually checksummed to `d3600ad`, the docs commit straight after it, so the theme content was the same but the recorded SHA was not the deployed one. That is three releases running where the line was wrong. **Re-establish by checksum every time; it takes under a minute.**
 - The previous live runtime was `616d673` (2026-07-30). Before that, `c87391f`, `572fe3c`, `6ea0dba`, `834b424`, `4458fc6` and `94e7d0f`.

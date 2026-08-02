@@ -135,7 +135,7 @@ On every town×product page the same "Survey checks…" sentence appears up to t
 - Review cards mix date formats: "2025-06-01" (ISO) next to "14 Nov 2025". Pick the human format.
 - Unit inconsistency: "1.2 **W/m2K**" on the sash spec table vs "W/m²K" elsewhere; also bare "**A rated**" cell vs "A+ rated" elsewhere.
 - Title-case drift on scraped CTAs: "Get in Touch", "Book A Consultation" vs the site's sentence case.
-- Buttons render a literal ASCII "->" arrow (`<i>-&gt;</i>`) rather than a proper arrow/icon.
+- ~~Buttons render a literal ASCII "->" arrow (`<i>-&gt;</i>`) rather than a proper arrow/icon.~~ **Fixed and live 2026-08-02 (`0b0affe`)**: the three submit buttons now use the same right-arrow glyph the rest of the site already used.
 - Lazy-load helper copy is slightly techy: "The designer loads after the page settles" / "Loads when you reach this section" — fine, but "settles" is odd; consider "The designer loads in a moment — or tap to open it now."
 
 **Not bugs (checked and cleared):** "Commercial Commercial Glazing", "Aluminium Flush Flush lines…", "Maintenance Maintenance-free" — these looked like duplications in extraction but are nested nav/label+value markup that renders correctly. The consent banner copy, cookie/privacy/terms legal text, team bios (including Legend the Chief Meow Officer), why-trust narrative, colour hub, obscured-glass visualiser guidance and commercial hub v2 copy all read well.
