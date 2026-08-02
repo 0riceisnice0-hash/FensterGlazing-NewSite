@@ -680,6 +680,9 @@ function fenster_case_studies(): array
             'location' => 'Wolverton',
             'type' => 'Residential',
             'date' => '2026-05-13',
+            // Owner-confirmed: this job was priced at a consultation, not on
+            // the quote tool.
+            'priced_by' => 'consultation',
             'summary' => 'A pair of French heritage doors and a single, both jet black with two bar glazing, replacing painted timber at the back of a Victorian terrace.',
             'lead' => 'This Victorian terrace in Wolverton had painted timber doors on two openings at the back. We replaced both with Sheerline Classic heritage aluminium: a French pair onto the patio and a single onto the side path, matched to each other in jet black.',
             'products' => [

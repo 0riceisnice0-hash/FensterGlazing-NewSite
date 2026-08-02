@@ -284,13 +284,33 @@ $hero_intro_html = ob_get_clean();
                 <?php foreach ($overview as $paragraph) : ?>
                     <p><?php echo wp_kses((string) $paragraph, $allowed_overview_html); ?></p>
                 <?php endforeach; ?>
-                <?php if (! $is_commercial) : ?>
+                <?php
+                /* How this customer got their price is a fact about a real
+                   person, so it comes from the study rather than being assumed.
+                   This printed "from our instant quote tool" on every
+                   residential study unconditionally, and the Wolverton job was
+                   priced at a consultation, so it was stating the wrong thing
+                   about a real customer. Studies that do not say print nothing
+                   until someone confirms which route it was. */
+                $priced_by = (string) ($study['priced_by'] ?? '');
+                ?>
+                <?php if (! $is_commercial && $priced_by === 'quote_tool') : ?>
                     <p class="fg-cs-quote-note">
                         <?php
                         printf(
                             /* translators: %s: instant quote tool link */
                             esc_html__('This customer got their price from our %s.', 'fenster'),
                             '<a href="' . esc_url($quote_url) . '">' . esc_html__('instant quote tool', 'fenster') . '</a>'
+                        );
+                        ?>
+                    </p>
+                <?php elseif (! $is_commercial && $priced_by === 'consultation') : ?>
+                    <p class="fg-cs-quote-note">
+                        <?php
+                        printf(
+                            /* translators: %s: consultation booking link */
+                            esc_html__('This customer got their price from a %s.', 'fenster'),
+                            '<a href="' . esc_url(home_url('/book-a-consultation/')) . '">' . esc_html__('home consultation', 'fenster') . '</a>'
                         );
                         ?>
                     </p>
