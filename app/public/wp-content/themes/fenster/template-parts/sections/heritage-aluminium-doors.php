@@ -15,6 +15,13 @@ if (! defined('ABSPATH')) {
 
 $page = is_array($args['page'] ?? null) ? $args['page'] : [];
 $trust_items = is_array($args['trust_items'] ?? null) ? $args['trust_items'] : [];
+$quote_url = (string) ($args['quote_url'] ?? '');
+$quote_label = (string) ($args['quote_label'] ?? 'Heritage Aluminium Doors');
+$brand = is_array($args['brand'] ?? null) ? $args['brand'] : [];
+$phone = (string) ($brand['phone'] ?? '01908 429200');
+// Where the pricing buttons point: the embed when the tool is available for
+// this route, the shared quote page when it is not.
+$quote_link = $quote_url !== '' ? '#fenster-product-quote' : home_url('/online-quote/');
 
 $asset_path = static function (string $path): string {
     return '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/' . $path;
@@ -107,7 +114,7 @@ $door_colours = [
                             <span class="fg-hero-cta__full"><?php esc_html_e('Start your design consultation', 'fenster'); ?></span>
                             <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
                         </a>
-                        <a class="button button--light" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
+                        <a class="button button--light" href="<?php echo esc_url($quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
                     </div>
                 </div>
             </div>
@@ -161,8 +168,8 @@ $door_colours = [
                            the pricing route, then the phone. */
                         ?>
                         <div class="fg-cw-actions">
-                            <a class="button" href="#fenster-heritage-door-enquiry"><?php esc_html_e('Get a heritage door quote', 'fenster'); ?></a>
-                            <a class="button button--steel" href="tel:01908429200"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), '01908 429200')); ?></a>
+                            <a class="button" href="<?php echo esc_url($quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                            <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $phone)); ?></a>
                         </div>
                     </div>
                     <figure class="fg-cw-media">
@@ -427,12 +434,48 @@ $door_colours = [
             <?php endif; ?>
         <?php endif; ?>
 
+        <?php if ($quote_url !== '') : ?>
+            <?php
+            /* Heritage doors are on the quote tool as productCollection=12, and
+               were the whole time. The route simply never received the URL, so
+               the page could not offer the tool and the enquiry copy told
+               people it did not exist. Same embed casement uses. */
+            ?>
+            <section id="fenster-product-quote" class="fg-product-quote-embed" aria-label="<?php echo esc_attr($quote_label . ' instant quote'); ?>">
+                <div class="container fg-product-quote-embed__grid">
+                    <div class="fg-product-quote-embed__copy">
+                        <p class="eyebrow"><?php esc_html_e('Instant quote', 'fenster'); ?></p>
+                        <h2><?php esc_html_e('Price it online, or let us come to you.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('Your sizes, your bar layout and your colour, a real figure in minutes. Survey confirms the opening, the swing and the threshold before anything is made.', 'fenster'); ?></p>
+                    </div>
+                    <article class="fg-product-quote-embed__card" data-quote-card>
+                        <div class="fg-product-quote-embed__bar">
+                            <h3><?php esc_html_e('Heritage door quote tool', 'fenster'); ?></h3>
+                            <div class="fg-product-quote-embed__actions">
+                                <button class="button button--light" type="button" data-fullscreen-quote><?php esc_html_e('Expand view', 'fenster'); ?></button>
+                                <a class="button" href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
+                                <a class="button fg-product-quote-embed__mobile-open" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Open quote tool', 'fenster'); ?></a>
+                            </div>
+                        </div>
+                        <div class="fg-product-quote-embed__frame" data-quote-frame-wrap data-lenis-prevent data-quote-url="<?php echo esc_url($quote_url); ?>" data-quote-autoload="near">
+                            <div class="fg-quote-frame-placeholder fg-product-quote-embed__placeholder">
+                                <strong><?php esc_html_e('Instant quote tool', 'fenster'); ?></strong>
+                                <span><?php esc_html_e('Loads when you reach this section, or tap to open it now.', 'fenster'); ?></span>
+                                <button class="button" type="button" data-load-quote><?php esc_html_e('Load quote tool', 'fenster'); ?></button>
+                            </div>
+                            <iframe data-quote-iframe-src="<?php echo esc_url($quote_url); ?>" title="<?php echo esc_attr($quote_label . ' instant quote tool'); ?>" loading="lazy" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        <?php endif; ?>
+
         <section id="fenster-heritage-door-enquiry" class="fg-heritage-door-enquiry">
             <div class="container fg-heritage-door-enquiry__grid">
                 <div class="fg-heritage-door-enquiry__copy">
                     <p class="eyebrow"><?php esc_html_e('Request a quote', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Tell us about the opening.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Heritage doors are not on the instant quote tool, because the size, the bar layout and the colour change the price too much to guess at. Send us the details instead and we will come back with a real figure.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('You can price a heritage door yourself with the tool above. If your opening is awkward, or you would rather talk it through, send the details here instead and we will come back with a figure.', 'fenster'); ?></p>
                     <ul>
                         <li><?php esc_html_e('A photo of the existing door or opening, if there is one', 'fenster'); ?></li>
                         <li><?php esc_html_e('Rough width and height, and whether you want single or French', 'fenster'); ?></li>

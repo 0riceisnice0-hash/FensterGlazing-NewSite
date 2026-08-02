@@ -1916,6 +1916,12 @@ if ($slug === 'heritage-aluminium-doors') {
         'page' => $page,
         'title' => $title,
         'trust_items' => $trust_items,
+        // Heritage doors are on the quote tool, productCollection=12 in the map
+        // above. The route just never received the URL, so the page could not
+        // offer the tool and its copy said the opposite.
+        'quote_url' => $product_quote_embed_url,
+        'quote_label' => $product_quote_embed_label,
+        'brand' => $brand,
     ]);
     return;
 }
