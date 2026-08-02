@@ -2,16 +2,68 @@
 
 Last updated: 2026-08-02
 
-## START HERE, 2026-08-02: the divergence is merged, live is behind
+## START HERE, 2026-08-02 (end of session)
 
-`codex/tracking-repair` is merged into `main`. The 71-versus-23 commit split is
-closed and `main` is now a superset of what production runs.
+**Live, `main` and test are all level at `6fdf9ff`.** The
+`codex/tracking-repair` divergence that opened this file on 2026-07-30 is
+closed in both directions; there is no outstanding merge. Re-establish live by
+checksum anyway before any release, on more than one file: `assets/css/main.css`
+was byte-identical across two candidate commits today and would have given a
+false read on its own.
 
-**Live has not moved.** It is still the `289b2c2` runtime (tip `f37e05d`).
-Re-establish that by checksum before any release rather than trusting this line,
-which has been stale four releases running.
+**Two things still want an owner decision:**
 
-Six defects were fixed on top of the merge; see the 2026-08-02 entry below.
+- **Banner impressions.** The consent modal records a `shown` metric again.
+  `AI.md` still carries the older rule against banner-impression counts, and the
+  owner has since said to keep them. The rule text has not been rewritten, so a
+  future session could reasonably strip the metric back out. Rewrite the rule or
+  remove the metric; do not leave it contradicting itself.
+- **Aluminium sliding doors ordering.** The page was moved onto the heritage
+  rhythm as far as slug guards allow. A full match wants a dedicated template,
+  the path casement, composite, sash, roof lanterns and heritage all took:
+  heritage puts case studies before the quote embed and carries no related-links
+  band, and both are shared blocks fixed for every product route.
+
+**Three traps this session paid for, worth not repeating:**
+
+- **The image bank is not the scrape.** A note here said there is no scrape on
+  this Mac, and that was taken to mean no supplier assets at all. The Sheerline
+  turntables, patio stills and several unused animations were in OneDrive at
+  `Marketing/Image Bank/Legacy Marketing/Sheerline web assets` the whole time.
+  Look there before concluding an asset does not exist.
+- **A duplicate check on filenames cannot see a duplicate photograph.** An image
+  added to the slider pool turned out to be the hero at a different crop, 0.85%
+  RMSE apart against 39% for two genuinely different shots. Compare pixels:
+  `magick compare -metric RMSE` on two resized copies.
+- **Measuring the wrong axis passes a broken layout.** Twice today a change was
+  verified by measuring what had been changed rather than what it affected: a
+  colour-grid heading checked for columns and overflow but never placement, and
+  case-study cards checked for flex-direction and width but never height, which
+  shipped text sitting on top of photographs on five pages. If a change touches
+  layout, measure the thing next to it too, and look at it.
+
+## 2026-08-02 - Case study card overlap fixed, live (6fdf9ff)
+
+- Owner reported text sitting on top of the photographs in the case-study strip
+  on mobile, on several pages. Self-inflicted, by this morning's change of that
+  strip from grid to flex.
+- **The cause was an axis, not a rule.** The desktop rule is `flex: 1 1 15rem`,
+  and a flex basis is measured along the main axis, so `flex-direction: column`
+  on mobile turned a 15rem width into a 15rem height. The card is a two-row
+  grid, `auto 1fr`; locked to 240px its media row computed to `0px`, the image
+  overflowed a zero-height row and the body started at the same y.
+  `flex: 0 0 auto` on mobile hands the height back to the content.
+- Measured before: `gridTemplateRows: 0px 299.953px`, media and body both at
+  y 11866. After: `218.125px 299.953px`, zero overlap on every card, on casement
+  windows and composite doors, with desktop unchanged at three 377px cards and a
+  24px gap.
+- **The verification that let it through** looked at flex-direction and card
+  width and never at height. Recorded because it is the second time today a
+  layout change was checked on the axis that was edited rather than the one that
+  broke.
+- Live established by checksum as `79cf9d4`, range two commits, backup taken,
+  explicit SHA, both caches purged. Verified on production at 375: zero overlap,
+  no horizontal overflow.
 
 ## 2026-08-02 - Aluminium sliding doors rebuilt, live (79cf9d4)
 

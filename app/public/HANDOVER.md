@@ -17,7 +17,7 @@ Use:
 
 ## Important Updates
 
-- **Live is `79cf9d4`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `c88412d` before deploying; range was 12 commits, one author, all reviewed on test. Backup: `~/backups/fenster-theme/fenster-pre-79cf9d4-20260802-120522.tar.gz` (378M, 1,767 entries). **Still re-establish by checksum before the next release rather than trusting this line.**
+- **Live is `6fdf9ff`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `79cf9d4` before deploying. Backup: `~/backups/fenster-theme/fenster-pre-6fdf9ff-20260802-*.tar.gz` (1,771 entries). **Still re-establish by checksum before the next release rather than trusting this line.**
 - **Deploy trap — read before any live deploy.** The live deploy one-liner in `LIVECHANGES.md` runs `git reset --hard origin/main`, so it ships *everything on `main`*, not the specific commit you verified. On 2026-07-18 a deploy of the small Legend iframe fixes swept fourteen unapproved composite-door commits onto production with them. If you need to release one approved commit, reset the server repo cache to that exact SHA instead of `origin/main`.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
 - Local development uses the standard WordPress path `wp-content\themes\fenster`, but SiteGround test/live are verified Bedrock installs. Server theme paths are `~/www/test.fensterglazing.com/public_html/web/app/themes/fenster/` and `~/www/fensterglazing.com/public_html/web/app/themes/fenster/`.

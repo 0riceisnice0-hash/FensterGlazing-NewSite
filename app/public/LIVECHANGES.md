@@ -9,7 +9,7 @@ This is the short operational guide for any Codex agent or developer making chan
 ## Current Truth
 
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
-- **Live is `79cf9d4`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `c88412d` before deploying; range was 12 commits, one author, all reviewed on test. Backup: `~/backups/fenster-theme/fenster-pre-79cf9d4-20260802-120522.tar.gz` (378M, 1,767 entries). **Still re-establish by checksum before the next release rather than trusting this line.**
+- **Live is `6fdf9ff`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `79cf9d4` before deploying. Backup: `~/backups/fenster-theme/fenster-pre-6fdf9ff-20260802-*.tar.gz` (1,771 entries). **Still re-establish by checksum before the next release rather than trusting this line.**
 - **The pointer was stale again at deploy time.** This file said `8052f65`; the live theme actually checksummed to `d3600ad`, the docs commit straight after it, so the theme content was the same but the recorded SHA was not the deployed one. That is three releases running where the line was wrong. **Re-establish by checksum every time; it takes under a minute.**
 - The previous live runtime was `616d673` (2026-07-30). Before that, `c87391f`, `572fe3c`, `6ea0dba`, `834b424`, `4458fc6` and `94e7d0f`.
 - **Re-establish live by checksum before every deploy rather than trusting this line.** It was stale by four commits on 2026-07-24. Checksum a few theme files against history: `inc/site-data.php`, `assets/css/main.css`, `assets/js/main.js` and, when those tie, whatever the candidate commits actually touched. Correct this line as part of the deploy.
