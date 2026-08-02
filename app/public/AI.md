@@ -496,6 +496,10 @@ These rules apply to every new section, page change, form, carousel, product pag
 
 ## Asset And Cache Rules
 
+- **Replacing a theme image in place does not reach anyone who has already loaded the page.** Theme image URLs carry no version query, unlike the videos, which get `?ver=filemtime`. Overwrite `foo.webp` with new artwork and every cached browser and proxy keeps serving the old one, so the change is live, correct on the server, and invisible to the person who asked for it. This happened on 2026-08-02 with the pet flap crops: the owner was shown recropped images and reported the originals back, because his browser still had them. **Give recropped or replaced artwork a new filename**, and update every reference. A general fix would be filemtime versioning inside the image helper, which would change every image URL on the site and needs its own verification pass; it has not been done.
+- **A replaced crop usually invalidates its alt text.** The same 2026-08-02 pass tightened a shot that turned out to contain a cat looking out, which no alt describing "a sealed glass unit beside a brick wall" still covered. Re-read the alt whenever the framing changes.
+
+
 - Scrape-derived imagery lives in `wp-content\themes\fenster\assets\images\imported`. Never reference `wp-content\fenster-reference` from theme code or `data\pages.json`; that folder is a local-only archive and is not deployed.
 - Use `fenster_image_attr_string()` for theme images where practical so rendered images get explicit width/height attributes from local files. Prioritise hero, header, above-the-fold and generated-template images before lower-risk decorative images.
 - Local BrowserSync can serve stale built CSS if edits are not rebuilt.
