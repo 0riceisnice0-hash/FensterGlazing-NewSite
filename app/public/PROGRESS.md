@@ -2,6 +2,90 @@
 
 Last updated: 2026-08-02
 
+## START HERE, 2026-08-02 (end of session)
+
+**Live, `main` and test are all level at `3ec2d76`.** Re-establish live by
+checksum before any release anyway, and on **more than one file**:
+`assets/css/main.css` was byte-identical across two candidate commits earlier
+today and would have given a false read on its own. The recorded pointer was
+correct at the last two releases, which is not a reason to stop checking.
+
+**One thing still wants an owner decision:**
+
+- **Banner impressions.** The consent modal records a `shown` metric again.
+  `AI.md` still carries the older rule against banner-impression counts, and the
+  owner has since said to keep them. The rule text has not been rewritten, so a
+  future session could reasonably strip the metric back out. Rewrite the rule or
+  remove the metric; do not leave it contradicting itself.
+
+**Closed since the last session, so do not reopen:**
+
+- **Aluminium sliding doors ordering.** Was listed here as wanting a decision on
+  a dedicated template. Separately, the owner confirmed on 2026-08-02 that the
+  patio handle grid must **not** be added to that route, despite Mila's
+  literature saying the handle suits aluminium patio doors. See the Patio Handle
+  Rule in `AI.md`.
+- **The handle hub's "patio to come" note.** `/handle-options/` now carries all
+  four families: windows, tilt and turn, hinged doors and sliding patio.
+
+**Four traps worth not repeating:**
+
+- **The image bank is not the scrape.** A note here said there is no scrape on
+  this Mac, and that was taken to mean no supplier assets at all. The Sheerline
+  turntables, patio stills and several unused animations were in OneDrive at
+  `Marketing/Image Bank/Legacy Marketing/Sheerline web assets` the whole time.
+  Look there before concluding an asset does not exist.
+- **A duplicate check on filenames cannot see a duplicate photograph.** An image
+  added to the slider pool turned out to be the hero at a different crop, 0.85%
+  RMSE apart against 39% for two genuinely different shots. Compare pixels:
+  `magick compare -metric RMSE` on two resized copies.
+- **Measuring the wrong axis passes a broken layout.** Twice in one day a change
+  was verified by measuring what had been changed rather than what it affected: a
+  colour-grid heading checked for columns and overflow but never placement, and
+  case-study cards checked for flex-direction and width but never height, which
+  shipped text sitting on top of photographs on five pages. If a change touches
+  layout, measure the thing next to it too, and look at it.
+- **`pdfimages` returns Adobe CMYK JPEGs inverted.** Converted straight to sRGB
+  they come back as the subject lit on a black field, which reads as deliberate
+  product photography rather than a broken extraction. Negate before the
+  colourspace convert, and check against a `pdftoppm` render of the page. This
+  cost a wrong conclusion about the Mila handle assets on 2026-08-02.
+
+
+## 2026-08-02 - Patio door handles promoted to live (3ec2d76)
+
+- **Live established by checksum on four theme files**, with the empty-input
+  hash printed alongside so a silent miss could not read as a match. Production
+  matched `6fdf9ff` and `036c02e`, which are theme-identical, so `036c02e` was
+  the range base to yield a superset. **The recorded pointer was right this
+  time**, ending the run of three releases where it was not. Check it anyway.
+- Range `036c02e..3ec2d76` was **2 commits, one author**, touching only the
+  patio handle work: the data, the two call sites, the SCSS, the compiled CSS
+  and five new image assets. No concurrent-session work in this batch.
+- Backup `fenster-pre-3ec2d76-20260802-141450.tar.gz` confirmed at 378M and
+  1,771 entries before deploying, found by grepping the SHA rather than reading
+  the tail of `ls`, since the backups sort alphabetically. Explicit SHA,
+  theme-only rsync, `wp cache flush`, `wp sg purge`.
+- **Verified on production individually rather than by status code:** five
+  theme files byte-identical to the commit; fifteen routes 200 with
+  `/double-glazing-milton-keynes/` still carrying its head-term marker; all five
+  handle assets serving `200 image/webp`; the grid on `/patio-doors/` with five
+  distinct images, the foil colour grid retained beside it, and zero matches for
+  "Smokey" or the long-plate markup; four families on `/handle-options/`; the
+  patio grid returning zero on six other routes including the town matrix; no
+  PHP notices on five routes.
+- **Live browser pass at 1440 and a proven 390.** Five equal 222x249 tiles on
+  one row at 1440 and 177x204 over two columns at 390, every image loaded, zero
+  image/label overlap, no rectangle overlap with the colour grid above, no
+  horizontal overflow, largest heading 48px against the 57.6px cap. The 390
+  reading was taken through an iframe because headless Chrome on this Mac
+  clamps `--window-size` to 500px.
+- **Owner decision recorded: do not extend this to `/aluminium-sliding-doors/`.**
+  Mila's literature says the ProLinea suits aluminium patio doors, so the
+  question would otherwise be reopened by the next person to read it. `AI.md`
+  now says the answer is no rather than leaving it open.
+- Live, `main` and test are level at `3ec2d76` for theme content.
+
 ## 2026-08-02 - Patio door handles, the fourth handle family (test)
 
 Owner: patio door handles are missing from the site along with their colour
@@ -51,47 +135,7 @@ ProLinea literature, and we do not offer Smokey Chrome.
   aluminium patio doors, but the owner asked for uPVC and Sheerline's slider has
   not been confirmed as taking it, so an assumed section would be a claim rather
   than a fact.
-- Test deployment only. No live-site deployment was performed.
-
-## START HERE, 2026-08-02 (end of session)
-
-**Live, `main` and test are all level at `6fdf9ff`.** The
-`codex/tracking-repair` divergence that opened this file on 2026-07-30 is
-closed in both directions; there is no outstanding merge. Re-establish live by
-checksum anyway before any release, on more than one file: `assets/css/main.css`
-was byte-identical across two candidate commits today and would have given a
-false read on its own.
-
-**Two things still want an owner decision:**
-
-- **Banner impressions.** The consent modal records a `shown` metric again.
-  `AI.md` still carries the older rule against banner-impression counts, and the
-  owner has since said to keep them. The rule text has not been rewritten, so a
-  future session could reasonably strip the metric back out. Rewrite the rule or
-  remove the metric; do not leave it contradicting itself.
-- **Aluminium sliding doors ordering.** The page was moved onto the heritage
-  rhythm as far as slug guards allow. A full match wants a dedicated template,
-  the path casement, composite, sash, roof lanterns and heritage all took:
-  heritage puts case studies before the quote embed and carries no related-links
-  band, and both are shared blocks fixed for every product route.
-
-**Three traps this session paid for, worth not repeating:**
-
-- **The image bank is not the scrape.** A note here said there is no scrape on
-  this Mac, and that was taken to mean no supplier assets at all. The Sheerline
-  turntables, patio stills and several unused animations were in OneDrive at
-  `Marketing/Image Bank/Legacy Marketing/Sheerline web assets` the whole time.
-  Look there before concluding an asset does not exist.
-- **A duplicate check on filenames cannot see a duplicate photograph.** An image
-  added to the slider pool turned out to be the hero at a different crop, 0.85%
-  RMSE apart against 39% for two genuinely different shots. Compare pixels:
-  `magick compare -metric RMSE` on two resized copies.
-- **Measuring the wrong axis passes a broken layout.** Twice today a change was
-  verified by measuring what had been changed rather than what it affected: a
-  colour-grid heading checked for columns and overflow but never placement, and
-  case-study cards checked for flex-direction and width but never height, which
-  shipped text sitting on top of photographs on five pages. If a change touches
-  layout, measure the thing next to it too, and look at it.
+- Promoted to live the same day as `3ec2d76`; see the release entry above.
 
 ## 2026-08-02 - Case study card overlap fixed, live (6fdf9ff)
 
