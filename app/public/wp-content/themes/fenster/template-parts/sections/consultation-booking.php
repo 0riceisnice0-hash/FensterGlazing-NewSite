@@ -21,11 +21,11 @@ $booking_trust = [
 $faqs = [
     ['question' => 'Is the consultation free?', 'answer' => 'Yes. The visit, the measuring and the price are free, and they stay free whether you go ahead with us or not. There is no charge for coming out and no fee to pay if you decide against the job.'],
     ['question' => 'Will I get a hard sell?', 'answer' => 'No. It is a friendly visit rather than a pitch. We go through the options, price the job and leave the decision with you. There is no negotiating either: the price is the price, so there is no inflated opening figure and no discount that depends on signing today.'],
-    ['question' => 'How long does the visit take?', 'answer' => 'An hour at most, normally. We measure the openings, go through the options and price the job, and that is the visit. There are no long presentations to sit through.'],
+    ['question' => 'How long does the visit take?', 'answer' => 'An hour at most, normally. We go through the options for your property, take rough sizes so the price is right and quote the job, and that is the visit. There are no long presentations to sit through.'],
     ['question' => 'Does everyone deciding need to be there?', 'answer' => 'No. Some firms will only book a visit when every decision maker is home. We do not work that way, so come on your own if that suits you and take the price away to talk over with whoever you like.'],
     ['question' => 'Who comes out, and what will we go through?', 'answer' => 'A window and door expert, who will go through the options with you: which style suits the opening, how the glass, colour and hardware choices change things, and what is worth doing now against later. Windows, doors, glazing, repairs and roof lanterns are all fair game.'],
     ['question' => 'Can I see samples at the visit?', 'answer' => 'We bring colour swatches, and the job goes together on screen on the iPad as we price it, so you can see the choices as you make them. Full product samples stay at the showroom, so if you want to open a bifold or feel the weight of a handle, that is worth a separate trip. We can arrange one.'],
-    ['question' => 'Will I get a price on the day?', 'answer' => 'Yes. We measure the openings, then build and price the job in front of you on an iPad, using the same software and the same price list as the online quote tool on this site. It is one number for the job rather than an online figure and a different one at the door, and you are not waiting a week to find out what it is.'],
+    ['question' => 'Will I get a price on the day?', 'answer' => 'Yes. We take rough sizes, then build and price the job in front of you on an iPad, using the same software and the same price list as the online quote tool on this site. It is one number for the job rather than an online figure and a different one at the door, and you are not waiting a week to find out what it is. The exact measurements come later, at the technical survey.'],
     ['question' => 'What happens after the visit?', 'answer' => 'If you are not ready to decide on the day, we send the quote over and leave it with you. It normally holds for 30 days. If you want to go ahead, we send a contract and a deposit request, typically 50%. A full technical survey follows, and that is what settles the final sizes and details before anything is made.'],
     ['question' => 'Can I get a price without booking a visit?', 'answer' => 'Yes. The online quote tool prices your sizes, styles, colours and glass as you go, and most people have a real figure inside ten minutes. A consultation is worth it when the opening is awkward, the choice is not obvious, or you would rather talk it through with someone.'],
     ['question' => 'Is my chosen time confirmed immediately?', 'answer' => 'No. Your selected date and time are a preferred appointment request. We check availability and confirm the appointment with you by phone or email.'],
@@ -48,7 +48,7 @@ $faq_schema = [
             <div class="fg-consultation-page__hero-copy">
                 <p class="eyebrow"><?php esc_html_e('Fenster Glazing · Milton Keynes and surrounding areas', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Book a free consultation with an expert.', 'fenster'); ?></h1>
-                <p><?php esc_html_e('Choose a weekday and a preferred time, and one of our experts will come to you, measure up and price the job before they leave. The visit is free, whether you go ahead with us or not.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Choose a weekday and a preferred time, and one of our experts will come to you, go through the options for your property and price the job before they leave. The visit is free, whether you go ahead with us or not.', 'fenster'); ?></p>
                 <p><?php esc_html_e('We cover Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire, and we will confirm your appointment directly.', 'fenster'); ?></p>
             </div>
 
@@ -89,7 +89,7 @@ $faq_schema = [
                 <p><?php esc_html_e('Whether you are replacing one door or planning a larger extension, a free consultation gives you time to compare the options that matter before you commit. It is a friendly conversation with a window and door expert, not a sales visit.', 'fenster'); ?></p>
                 <ul>
                     <li><?php esc_html_e('An expert goes through the options with you, and what suits the opening.', 'fenster'); ?></li>
-                    <li><?php esc_html_e('The job is measured, then built and priced in front of you on an iPad.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('The job is built and priced in front of you on an iPad, from rough sizes.', 'fenster'); ?></li>
                     <li><?php esc_html_e('It is the same pricing software as the online quote tool, so the number matches.', 'fenster'); ?></li>
                     <li><?php esc_html_e('No pressure and no long presentation. An hour at most, normally.', 'fenster'); ?></li>
                 </ul>

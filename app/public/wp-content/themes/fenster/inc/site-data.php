@@ -26,7 +26,13 @@ function fenster_site_data(): array
                 'Milton Keynes',
                 'Buckinghamshire MK13 9HF',
             ],
+            /* Two separate facts, kept apart because they are not the same
+               opening time. `hours` is the combined line the footer prints;
+               `showroom_hours` is the showroom on its own, for anywhere that is
+               answering "when can I turn up". Owner instruction, 2026-08-02:
+               a showroom opening-hours block must not carry the phone line. */
             'hours' => 'Monday to Friday, 8.30am to 5pm. Phone lines open 24/7.',
+            'showroom_hours' => 'Monday to Friday, 8.30am to 5pm',
             // Fallback only. When the Places API is configured, the canonical
             // review and write-review URLs are built from the place ID in
             // inc/google-reviews.php. Never point these at a Google search
@@ -195,7 +201,7 @@ function fenster_site_data(): array
                         'badge' => 'Expert advice',
                         'variant' => 'accent',
                         'url' => home_url('/book-a-consultation/'),
-                        'copy' => 'An expert comes to you, measures up and prices the job. The visit costs nothing.',
+                        'copy' => 'An expert comes to you, goes through the options and prices the job. The visit costs nothing.',
                     ],
                 ],
             ],

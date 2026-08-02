@@ -141,7 +141,7 @@ The confirmed business facts are:
 - Prices must not be estimated. Use the instant quote tool unless an exact price is explicitly published.
 - Showroom hours are Monday to Friday, 8.30am to 5pm, with phone lines open 24/7. Fenster is closed at weekends.
 - Consultation dates and times are requests until the team confirms them by phone or email.
-- Consultations are free. Fenster visits, measures up and prices the job at no charge, and there is nothing to pay if the customer decides against the work.
+- Consultations are free. Fenster visits, goes through the options and prices the job at no charge, and there is nothing to pay if the customer decides against the work. **No measuring happens at the consultation** (owner correction, 2026-08-02): any sizes taken are rough, only enough to price the job, and the proper measurements are the technical survey later.
 
 Articles and guides may still supply general advice, but they cannot establish current product availability, certification eligibility, hours or guarantee terms by themselves.
 

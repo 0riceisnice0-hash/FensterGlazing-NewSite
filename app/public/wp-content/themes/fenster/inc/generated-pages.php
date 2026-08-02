@@ -930,7 +930,7 @@ function fenster_get_generated_page(?string $slug = null): ?array
         ],
         'book-a-consultation' => [
             'title_tag' => 'Free Expert Window & Door Consultation | Milton Keynes',
-            'meta_description' => 'Book a free window and door consultation with a Fenster Glazing expert. We measure and price at your home across Milton Keynes and the surrounding counties.',
+            'meta_description' => 'Book a free window and door consultation with a Fenster Glazing expert. We go through the options and price the job at your home in Milton Keynes.',
         ],
     ];
     $launch_seo_overrides = array_merge($launch_seo_overrides, fenster_gsc_static_seo_overrides());

@@ -97,7 +97,7 @@ $notices = [
                 <div class="fg-consultation-booking__intro">
                     <span><?php esc_html_e('Step 1 of 3', 'fenster'); ?></span>
                     <strong><?php esc_html_e('Pick a date for your free consultation.', 'fenster'); ?></strong>
-                    <p><?php esc_html_e('Tell us when suits and we will confirm it by phone or email. One of our experts comes to you, measures up and prices the job on the spot. There is nothing to pay, and nothing to pay if you decide against the work.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Tell us when suits and we will confirm it by phone or email. One of our experts comes to you, talks through the options for your property and prices the job before they leave. It is free, whether you go ahead or not.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-consultation-booking__calendar" data-fg-consultation-calendar aria-live="polite"></div>
                 <p class="fg-consultation-booking__availability" aria-label="<?php esc_attr_e('Consultation availability', 'fenster'); ?>">

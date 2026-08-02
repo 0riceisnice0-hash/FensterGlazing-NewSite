@@ -79,7 +79,7 @@ $price_visit = [
     'title' => 'In person',
     'steps' => [
         'Send an enquiry or give us a call',
-        'We visit, measure and talk it through',
+        'We visit and talk it through',
         'You get the price on the spot',
     ],
 ];
@@ -101,7 +101,7 @@ $accreditations = [
 
 $routes = [
     ['title' => 'Get an instant price', 'copy' => 'Your sizes, your finishes, a real figure in minutes.', 'url' => $quote_url, 'primary' => true],
-    ['title' => 'Book a free consultation', 'copy' => 'We measure up and price the job at the property, at no charge.', 'url' => $consult_url],
+    ['title' => 'Book a free consultation', 'copy' => 'We go through the options and price the job at the property, at no charge.', 'url' => $consult_url],
     ['title' => 'See our work', 'copy' => 'Real installs with the fitters, specs and photos.', 'url' => home_url('/case-studies/')],
     ['title' => 'Meet the team', 'copy' => 'Everyone here, including the office cat.', 'url' => home_url('/meet-the-team/')],
     ['title' => 'Why you can trust us', 'copy' => 'Guarantees, accreditations and how we price.', 'url' => home_url('/why-trust-fenster/')],
@@ -149,7 +149,7 @@ $routes = [
                 <p class="eyebrow"><?php esc_html_e('How pricing works', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Price it online, or let us come to you.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('If you like doing things yourself, build the job on our quote tool: your sizes, styles, colours and glass, priced as you go. Most people have a real figure inside ten minutes.', 'fenster'); ?></p>
-                <p><?php esc_html_e('If you would rather talk it through, book a free consultation. We come out, measure the openings properly, answer the awkward questions and price the job before we leave. It stays free if you decide against the job. No waiting a week to find out the number.', 'fenster'); ?></p>
+                <p><?php esc_html_e('If you would rather talk it through, book a free consultation. We come out, go through the options for your property, answer the awkward questions and price the job before we leave. It stays free if you decide against the job. No waiting a week to find out the number.', 'fenster'); ?></p>
                 <p>
                     <?php esc_html_e('Both run on the same pricing software and the same price list. One number for the job, not an online teaser and a different figure at the door. If you want to sense-check us first, we publish', 'fenster'); ?>
                     <a href="<?php echo esc_url($prices_url); ?>"><?php esc_html_e('example prices for real jobs', 'fenster'); ?></a><?php esc_html_e(', free to browse with no form in the way.', 'fenster'); ?>

@@ -28,6 +28,19 @@ $map_link = 'https://www.google.com/maps/search/?api=1&query=' . $map_query;
 $directions_link = 'https://www.google.com/maps/dir/?api=1&destination=' . $map_query;
 $showroom_image = FENSTER_THEME_URI . '/assets/images/about/fenster-showroom.png';
 
+/* The card photograph is a real <img>, not a background on the ::before.
+   It used to be the third layer of a `background` shorthand on a pseudo-element
+   at `z-index: -2` inside an `isolation: isolate` card, sitting under a page
+   whose cookie modal applies `backdrop-filter: blur()`. That combination has to
+   composite a negative-z layer through a filtered backdrop, and on the owner's
+   machine it was dropping the photograph and leaving the flat colour underneath
+   it: accent green on the quote card, steel on the showroom one, which is
+   exactly what was reported. It could not be reproduced here, so this removes
+   the fragile construction rather than chasing the compositor.
+
+   The ::before keeps the gradient. The image is also right-sized on the way
+   past: the showroom PNG was 2.37MB for a 580px card, which AUDIT.md has
+   flagged since July. */
 $hub_routes = [
     [
         'label' => 'Instant quote',
@@ -35,18 +48,29 @@ $hub_routes = [
         'copy' => 'Open the quote tool, choose products, colours and sizes, then use the price as a starting point before survey.',
         'meta' => 'Fastest option',
         'url' => home_url('/online-quote/'),
+        'image' => '/wp-content/themes/fenster/assets/images/contact/contact-hub-quote.webp',
     ],
     /* This card is the home visit, not a showroom chat. It said "Talk to the
        showroom team" and described a "showroom or project consultation", which
        is the wrong offer: we come out to the property. Owner correction,
-       2026-08-02. The word free is not optional here, per the owner-confirmed
-       consultation facts in AI.md. */
+       2026-08-02.
+
+       Two things the same owner correction settled. The lead is the expert
+       advice, not the price of the visit: free is true and stays, but it is the
+       reassurance at the end rather than the headline. And **we do not measure
+       at a consultation** — sizes taken there are rough, only enough to price
+       the job. The real measurements are the technical survey, later. */
     [
-        'label' => 'Free consultation',
-        'title' => 'Have an expert come to you.',
-        'copy' => 'Pick a weekday and a time. One of our experts visits, measures up and prices the job while they are there, at no charge.',
-        'meta' => 'No charge',
+        'label' => 'Consultation',
+        'title' => 'Talk it through with an expert.',
+        'copy' => 'One of our window and door experts comes to you, goes through the options for your property and prices the job before they leave. It is free, whether you go ahead or not.',
+        'meta' => 'Expert advice',
         'url' => home_url('/book-a-consultation/'),
+        /* Still the showroom exterior. Flagged to the owner on 2026-08-02: the
+           picture says "come to our showroom" while the copy says we come to
+           you, and there is no photograph anywhere in the theme of a consultant
+           at a customer's home. Swap it when one exists. */
+        'image' => '/wp-content/themes/fenster/assets/images/contact/contact-hub-showroom.webp',
     ],
 ];
 
@@ -75,6 +99,13 @@ $form_notes = [
             <div class="fg-contact-hub" aria-label="<?php esc_attr_e('Choose how to contact Fenster', 'fenster'); ?>">
                 <?php foreach ($hub_routes as $index => $route) : ?>
                     <a class="fg-contact-hub-card <?php echo esc_attr($index === 0 ? 'fg-contact-hub-card--quote' : 'fg-contact-hub-card--showroom'); ?>" href="<?php echo esc_url($route['url']); ?>">
+                        <?php if (! empty($route['image'])) : ?>
+                            <img class="fg-contact-hub-card__media" <?php echo fenster_image_attr_string((string) $route['image'], [
+                                'alt' => '',
+                                'loading' => 'eager',
+                                'decoding' => 'async',
+                            ]); ?>>
+                        <?php endif; ?>
                         <span><?php echo esc_html($route['label']); ?></span>
                         <strong><?php echo esc_html($route['title']); ?></strong>
                         <small><?php echo esc_html($route['copy']); ?></small>
@@ -120,11 +151,12 @@ $form_notes = [
                     <?php endforeach; ?>
                 </address>
                 <?php
-                /* Hours come from brand.hours, the same string the footer and
-                   the About page print, so there is one place to change them.
-                   Do not retype the times here: a second copy is how the
-                   showroom hours and the footer end up disagreeing. */
-                $showroom_hours = trim((string) ($brand['hours'] ?? ''));
+                /* Showroom times only. This block answers "when can I turn up",
+                   so the 24/7 phone line does not belong in it (owner
+                   instruction, 2026-08-02). It reads brand.showroom_hours
+                   rather than retyping the times, because a second copy is how
+                   this and the footer end up disagreeing. */
+                $showroom_hours = trim((string) ($brand['showroom_hours'] ?? ''));
                 ?>
                 <?php if ($showroom_hours !== '') : ?>
                     <p class="fg-contact-showroom__hours">
