@@ -248,6 +248,23 @@ $upvc_foil_routes = [
     'patio-doors' => 'patio door',
 ];
 $shows_upvc_colour_grid = isset($upvc_foil_routes[$slug]) || $slug === 'casement-windows';
+
+/* The powder-coated range, laid out the way the heritage door page lays out
+   its colours. Owner instruction, 2026-08-02.
+
+   Only routes that genuinely carry this range. Sliding sash is Roseview,
+   composite has its own paint range, and the uPVC routes take the foil grid
+   above. /heritage-aluminium-doors/ is absent on purpose: it has its own
+   template and its own twelve-colour section, which is the reference this one
+   copies, and its range stops at dual and bespoke on request rather than the
+   any-RAL match these routes offer. */
+$aluminium_colour_routes = [
+    'aluminium-windows' => 'window',
+    'aluminium-flush-windows' => 'window',
+    'heritage-windows' => 'window',
+    'aluminium-bifold-doors' => 'door',
+    'aluminium-doors' => 'door',
+];
 $product_media = fenster_data('product_media.' . $slug, []);
 $product_media = is_array($product_media) ? $product_media : [];
 $sash_furniture = fenster_data('sash_furniture', []);
@@ -3955,7 +3972,10 @@ if ($is_commercial_hub) {
                    of those cards. A single numbered step is not a sequence. */
                 $option_cards = [];
 
-                if ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid) {
+                /* A route that lays the colours out inline does not also need a
+                   card pointing at the colour hub: the grid's own note already
+                   links there. Same suppression the uPVC foil routes use. */
+                if ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
                     $option_cards[] = [
                         'modifier' => 'colour',
                         'url' => home_url('/colour-options/'),
@@ -4054,6 +4074,10 @@ if ($is_commercial_hub) {
 
         <?php if (isset($upvc_foil_routes[$slug])) : ?>
             <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_foil_routes[$slug]]); ?>
+        <?php endif; ?>
+
+        <?php if (isset($aluminium_colour_routes[$slug])) : ?>
+            <?php get_template_part('template-parts/components/aluminium-colour-grid', null, ['product_noun' => $aluminium_colour_routes[$slug]]); ?>
         <?php endif; ?>
 
         <?php if ($shows_handle_grid) : ?>

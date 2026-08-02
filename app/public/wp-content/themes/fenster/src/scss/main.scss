@@ -34511,6 +34511,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-security,
 .fg-heritage-door-colours,
 .fg-upvc-colours,
+.fg-alu-colours,
 .fg-handle-finishes,
 .fg-heritage-door-enquiry {
   padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
@@ -34700,6 +34701,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-configurations__heading,
 .fg-heritage-door-colours__heading,
 .fg-upvc-colours__heading,
+.fg-alu-colours__heading,
 .fg-handle-finishes__heading,
 .fg-heritage-door-use__heading {
   display: grid;
@@ -34994,6 +34996,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid,
 .fg-upvc-colours__grid,
+.fg-alu-colours__grid,
 .fg-handle-finishes__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -35020,6 +35023,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid li,
 .fg-upvc-colours__grid li,
+.fg-alu-colours__grid li,
 .fg-handle-finishes__grid li {
   position: relative;
   display: grid;
@@ -35061,7 +35065,8 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-.fg-heritage-door-colours__grid img {
+.fg-heritage-door-colours__grid img,
+.fg-alu-colours__grid img {
   display: block;
   width: 100%;
   height: auto;
@@ -35087,6 +35092,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid strong,
 .fg-upvc-colours__grid strong,
+.fg-alu-colours__grid strong,
 .fg-handle-finishes__grid strong {
   color: var(--color-ink);
   font-size: 0.86rem;
@@ -35095,6 +35101,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid span,
 .fg-upvc-colours__grid span,
+.fg-alu-colours__grid span,
 .fg-handle-finishes__grid span {
   color: var(--color-muted);
   font-size: 0.74rem;
@@ -35125,6 +35132,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__note,
 .fg-upvc-colours__note,
+.fg-alu-colours__note,
 .fg-handle-finishes__note {
   max-width: 68ch;
   margin: 1.2rem 0 0;
@@ -35160,6 +35168,7 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 1080px) {
   .fg-heritage-door-colours__grid,
   .fg-upvc-colours__grid,
+  .fg-alu-colours__grid,
   .fg-handle-finishes__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -35326,6 +35335,7 @@ html.fg-blinds-reveal-locked {
 
   .fg-heritage-door-colours__grid,
   .fg-upvc-colours__grid,
+  .fg-alu-colours__grid,
   .fg-handle-finishes__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
