@@ -167,6 +167,18 @@ Owner, after approving the casement order: reorder heritage a bit more like it, 
 - Verified on test: rendered order is hero 1%, brief 6%, lede 8%, tech banner 10%, gallery 12%, configurations 20%, detail 29%, use 35%, frame 43%, security 50%, colours 56%, handles 65%, case studies 70%, enquiry 79%, reviews 86%. No horizontal overflow.
 - Test deployment only. Live is `572fe3c` for this session's work.
 
+## 2026-07-29 - Heritage doors rebuilt on the casement components (test, 006df8c)
+
+Owner rejected the first pass, attached the casement intro section and said heritage should look like that, and asked for the hero CTAs to match too.
+
+- **The misaligned box was the specification strip.** Measured before changing anything: every container already sat at 130 to 1310, so it was not the grid. Heritage had its own four-cell strip with no label block, so the numbers began hard against the left edge with nothing introducing them, while casement leads with "Key specifications" and the product name. It now uses the shared `fg-product-pulse` component, so it is the same thing rather than a lookalike.
+- **The intro is now casement's section outright**: `fg-cw` for the eyebrow, heading and figure rules, then `fg-cw-split`, `fg-cw-facts`, `fg-cw-actions` and `fg-cw-media`, all already shared. That supplied what the bespoke version was missing rather than imitating it: an eyebrow and H2 above the copy, a second paragraph, the action buttons, and the caption as a pill over the image instead of a bar beneath it. About forty lines of heritage-only grid, figure and caption CSS were deleted as a result.
+- **The intro image was wrong twice before it was right.** First there was none. Then it was the product-on-white cutout, which rendered as a small door in a large empty frame, worse than nothing. It is the kitchen photograph now, a real room and the closest match on this page to casement's intro figure, moved out of the gallery so it is not shown twice. The gallery dropped to three and its mosaic was re-cut to fill without holes.
+- **Hero CTAs already used the same button pair**, so what was actually missing was casement's full and short label pattern. "Get a heritage door quote" is long enough to wrap on a phone and now shortens to "Get a quote" at the same breakpoint.
+- Real homes moved to casement's position, after configurations and detail, reversing where it was first requested. The owner overrode that explicitly.
+- Verified on test: order is hero 1%, specs 7%, intro 8%, banner 14%, configurations 16%, detail 24%, gallery 30%, two jobs 37%, frame 45%, security 53%, colours 58%, handles 67%, case studies 72%, enquiry 80%, reviews 87%. No horizontal overflow.
+- Test deployment only. Live is `572fe3c` for this session's work.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
