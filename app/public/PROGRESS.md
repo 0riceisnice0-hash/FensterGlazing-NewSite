@@ -179,6 +179,18 @@ Owner rejected the first pass, attached the casement intro section and said heri
 - Verified on test: order is hero 1%, specs 7%, intro 8%, banner 14%, configurations 16%, detail 24%, gallery 30%, two jobs 37%, frame 45%, security 53%, colours 58%, handles 67%, case studies 72%, enquiry 80%, reviews 87%. No horizontal overflow.
 - Test deployment only. Live is `572fe3c` for this session's work.
 
+## 2026-07-29 - Heritage doors are on the quote tool, and the page said otherwise (test, ae866b2)
+
+Owner: heritage doors ARE on our instant quote tool, this is missing from the page.
+
+- **A live factual error, and the data to disprove it was already in the theme.** `heritage-aluminium-doors` sits in `$product_quote_embeds` in `generated-page.php` as `productCollection=12`, labelled Heritage Aluminium Doors. The route was simply never passed the URL, so it could not render the embed, and the enquiry copy filled the gap with the opposite claim: "Heritage doors are not on the instant quote tool, because the size, the bar layout and the colour change the price too much to guess at." **Written to explain an absence that was a plumbing gap, not a fact.**
+- `generated-page.php` now passes `quote_url`, `quote_label` and `brand` to this route, the same three casement receives. The page renders the same embed casement does, guarded on the URL so it disappears rather than breaks if the route is ever taken off the tool.
+- CTAs now match casement exactly: hero is consultation then instant pricing, the intro box is get an instant price then call, both pricing buttons pointing at the embed. The phone number comes from brand data rather than being hardcoded in the template.
+- Enquiry copy rewritten to point at the tool and offer the form for awkward openings.
+- **Worth remembering:** when a page explains why it lacks something, check whether the absence is real before repeating the explanation. This one had been live.
+- Verified on test: embed present at 74% of the page with `productCollection=12` and the iframe, the false sentence returning zero matches, hero reading Start your design consultation then Instant pricing, box reading Get an instant price then Call, both pricing links resolving to `#fenster-product-quote`, no horizontal overflow.
+- Test deployment only. Live is `572fe3c` for this session's work.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
