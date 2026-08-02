@@ -41,7 +41,6 @@ $door_configurations = [
    would be a claim the picture cannot support. */
 $door_gallery = [
     ['file' => 'heritage-northampton', 'width' => 1080, 'focus' => '50% 50%', 'caption' => 'Northampton', 'alt' => 'Black heritage aluminium doors and a roof lantern fitted by Fenster on a Northampton extension'],
-    ['file' => 'heritage-kitchen-garden-door', 'width' => 1600, 'focus' => '72% 50%', 'caption' => 'Garden door off a kitchen', 'alt' => 'Black heritage aluminium door and side screen looking onto a garden from a green kitchen'],
     ['file' => 'heritage-french-open', 'width' => 1400, 'focus' => '68% 50%', 'caption' => 'French doors open to a courtyard', 'alt' => 'Black heritage aluminium French doors standing open onto a planted courtyard'],
     ['file' => 'heritage-lever-handles', 'width' => 886, 'focus' => '50% 50%', 'caption' => 'Lever handles', 'alt' => 'Lever handles on a pair of black heritage aluminium doors'],
 ];
@@ -133,15 +132,14 @@ $door_colours = [
                     </ul>
                 </div>
                 <?php
-                /* The intro needed an image of its own, like casement's. Every
-                   photograph of a door in a room is already spoken for by the
-                   hero, the gallery or a detail section, so this is the product
-                   on white: honest about what it is, and not a second claim on
-                   a picture used elsewhere. */
+                /* A real room, not the cutout that was here first: that was a
+                   product shot on white and rendered small in a large empty
+                   frame. This is the kitchen photograph, moved out of the
+                   gallery so it is not shown twice on one page. */
                 ?>
                 <figure class="fg-heritage-door-lede__media">
-                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Black-Sheerline-Heritage-Door.jpg', [
-                        'alt' => __('Single black Sheerline Classic Heritage Door with five glazing bars', 'fenster'),
+                    <img <?php echo fenster_image_attr_string($asset_path('heritage-door-kitchen-1600w.webp'), [
+                        'alt' => __('Black heritage aluminium door and side screen looking onto a garden from a green kitchen', 'fenster'),
                         'loading' => 'lazy',
                     ]); ?>>
                     <figcaption><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></figcaption>
