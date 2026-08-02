@@ -3241,7 +3241,11 @@ if ($is_commercial_hub) {
     // doors) place the banner themselves, where it sits beside the section
     // that explains the technology instead of stacking on the spec strip.
     $tech_banner = fenster_tech_banner_args($slug);
-    if (! empty($tech_banner)) {
+    // Aluminium sliding doors places it itself, further down, for the same
+    // reason: stacked straight onto the specification strip it repeats the
+    // numbers the strip has just given inside a single viewport.
+    $defer_tech_banner = $slug === 'aluminium-sliding-doors';
+    if (! empty($tech_banner) && ! $defer_tech_banner) {
         get_template_part('template-parts/components/tech-banner', null, $tech_banner);
     }
     ?>
@@ -3934,6 +3938,18 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
+        <?php if ($slug === 'aluminium-sliding-doors') : ?>
+            <?php
+            /* The heritage rhythm: lede, then the technology banner beside the
+               claim it backs, then the product's own detail sections, and only
+               then the gallery and the finishes. */
+            if (! empty($tech_banner)) {
+                get_template_part('template-parts/components/tech-banner', null, $tech_banner);
+            }
+            ?>
+            <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
+        <?php endif; ?>
+
         <?php if (! $is_pet_flap_page && ! $is_composite_doors && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
@@ -4081,9 +4097,6 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/aluminium-colour-grid', null, ['product_noun' => $aluminium_colour_routes[$slug]]); ?>
         <?php endif; ?>
 
-        <?php if ($slug === 'aluminium-sliding-doors') : ?>
-            <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
-        <?php endif; ?>
 
         <?php if ($shows_handle_grid) : ?>
             <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
@@ -4319,7 +4332,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && $slug !== 'aluminium-sliding-doors') : ?>
         <?php
         get_template_part('template-parts/components/order-process', null, [
             'eyebrow' => $journey_order_eyebrow,
