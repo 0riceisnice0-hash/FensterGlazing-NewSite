@@ -3762,7 +3762,7 @@ if ($is_commercial_hub) {
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
-                    <div class="fg-product-why__media-stack">
+                    <div class="fg-product-why__media-stack<?php echo $is_pet_flap_page ? ' fg-product-why__media-stack--capped' : ''; ?>">
                         <figure class="fg-product-why__media fg-product-why__media--primary<?php echo $scrub_in_why ? ' fg-product-why__media--scrub' : ''; ?>">
                             <?php if ($scrub_in_why) : ?>
                                 <?php

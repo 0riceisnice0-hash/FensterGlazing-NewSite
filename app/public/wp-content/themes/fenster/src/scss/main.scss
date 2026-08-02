@@ -6723,6 +6723,19 @@ h3 {
   min-height: 160px;
 }
 
+/* The media column stretches to match the copy beside it, and on the pet flap
+   route that copy runs to five benefit cards, so the photographs were being
+   drawn over a thousand pixels tall and taking the section to nearly 2,000.
+
+   Worth being clear about why the crop alone did not fix this: the images are
+   `object-fit: cover`, so a tighter crop changes what you see but not how tall
+   the box is. The height has to be capped as well. Scoped to this route rather
+   than every product page, because that is the one that was reported and a
+   global cap would resize media on every product page at once. */
+.fg-product-why__media-stack--capped {
+  max-height: 720px;
+}
+
 .fg-product-why__media img {
   display: block;
   width: 100%;
