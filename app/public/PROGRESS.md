@@ -191,6 +191,16 @@ Owner: heritage doors ARE on our instant quote tool, this is missing from the pa
 - Verified on test: embed present at 74% of the page with `productCollection=12` and the iframe, the false sentence returning zero matches, hero reading Start your design consultation then Instant pricing, box reading Get an instant price then Call, both pricing links resolving to `#fenster-product-quote`, no horizontal overflow.
 - Test deployment only. Live is `572fe3c` for this session's work.
 
+## 2026-07-29 - Case study: heritage aluminium doors, Wolverton (test, 99bb992)
+
+Owner supplied the job and eight photographs from Downloads: Zac Rugman and Shane Gowing fitted a French pair and a single to the back of a Victorian terrace in Wolverton, both Jet Black with black handles, both two bar, completed 13 May 2026.
+
+- Six of the eight used, chosen as three pairs: the wide opening before and after, the side path before and after, plus the doors open and the view from inside. The two left out were a duller shot of the same elevation and a second interior from further back. Identified from a numbered contact sheet rather than by filename, since WhatsApp names carry no subject.
+- **Before and after live in the captions, not in a paired block.** The case study system has no before and after support: `images` is a flat list. The order alternates after, before, after so each pair stays together, and the first entry is what the card uses.
+- Route, sitemap entry, the archive and the heritage doors page strip all pick the study up from the data with no further wiring. Verified all four on test, plus the date rendering, both installers, and the Jet Black colour deep link.
+- **Flagged to the owner, not fixed:** `case-studies-residential.php` prints "This customer got their price from our instant quote tool" on every residential study unconditionally. Nobody has confirmed that of this customer, or of the others it already claims it about, and it is live. It wants a per-study flag rather than an assumption.
+- Test deployment only. Live is `572fe3c` for this session's work.
+
 ## 2026-07-29 - Colour rails no longer grab (test, 8fb4fe2)
 
 Owner: make the sliders better on this page, not grabby.
