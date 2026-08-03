@@ -36,39 +36,81 @@ $roof_styles = [
 
 <main id="main-content" class="fg-roof-lantern-page">
     <article>
-        <section class="fg-roof-lantern-hero">
-            <div class="container fg-roof-lantern-hero__grid">
-                <div class="fg-roof-lantern-hero__copy">
-                    <p class="eyebrow"><?php esc_html_e('Roof lanterns and roof lights in Milton Keynes', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Sheerline S1 roof lanterns', 'fenster'); ?></h1>
-                    <p class="fg-roof-lantern-hero__lead"><?php esc_html_e('We supply and install Sheerline S1 aluminium roof lanterns across Milton Keynes. We check the roof opening, glass specification, ventilation and finish before the lantern is ordered.', 'fenster'); ?></p>
-                    <div class="fg-roof-lantern-hero__actions">
-                        <a class="button" href="#fenster-roof-lantern-enquiry"><?php esc_html_e('Get a roof lantern quote', 'fenster'); ?></a>
-                        <a class="button button--steel" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+        <?php
+        /* The shared full-bleed hero, as every other product route uses, rather
+           than this page's old boxed two-column one. Same change heritage doors
+           had on 2026-07-29 and for the same reason: it was the odd page out.
+
+           The photograph is our own Drayton Parslow install with the vents
+           open, not one of the Sheerline renders this page used to lead on. The
+           old hero was S1-Lantern-Kitchen-A, which is a manufacturer CGI
+           visualisation; three of the four wide lantern images in the theme
+           are.
+
+           .fg-hero--compact hides .fg-hero__intro by design, so the lead
+           paragraph and the reassurance list move to their own block below
+           rather than staying here where they would be marked up and never
+           seen. */
+        ?>
+        <section class="fg-hero fg-hero--compact">
+            <img <?php echo fenster_image_attr_string($asset('hero/lantern-drayton-parslow-1600w.webp'), [
+                'class' => 'fg-hero__image',
+                'alt' => __('Sheerline S1 roof lantern with its opening vents raised, fitted by Fenster in Drayton Parslow', 'fenster'),
+                'loading' => 'eager',
+                'fetchpriority' => 'high',
+                'srcset' => implode(', ', [
+                    $asset('hero/lantern-drayton-parslow-800w.webp') . ' 800w',
+                    $asset('hero/lantern-drayton-parslow-1200w.webp') . ' 1200w',
+                    $asset('hero/lantern-drayton-parslow-1600w.webp') . ' 1600w',
+                ]),
+                'sizes' => '100vw',
+            ]); ?>>
+            <div class="fg-hero__shade"></div>
+            <div class="container fg-hero__inner">
+                <div class="fg-hero__copy">
+                    <div class="fg-hero__heading">
+                        <p class="eyebrow"><?php esc_html_e('Roof lanterns and roof lights in Milton Keynes', 'fenster'); ?></p>
+                        <h1><?php esc_html_e('Sheerline S1 roof lanterns', 'fenster'); ?></h1>
                     </div>
-                    <ul class="fg-roof-lantern-hero__reassurance" aria-label="<?php esc_attr_e('Roof lantern reassurance', 'fenster'); ?>">
-                        <li><?php esc_html_e('Opening measured and checked before order', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Glass options for heat, noise and safety', 'fenster'); ?></li>
-                        <li><?php esc_html_e('Local installation with aftercare', 'fenster'); ?></li>
-                    </ul>
+                    <div class="button-row">
+                        <a class="button" href="#fenster-roof-lantern-enquiry">
+                            <span class="fg-hero-cta__full"><?php esc_html_e('Get a roof lantern quote', 'fenster'); ?></span>
+                            <span class="fg-hero-cta__short"><?php esc_html_e('Get a quote', 'fenster'); ?></span>
+                        </a>
+                        <a class="button button--light" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+                    </div>
                 </div>
-                <figure class="fg-roof-lantern-hero__media">
-                    <img src="<?php echo esc_url($imported('S1-Lantern-Kitchen-A-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Sheerline roof lantern above a modern kitchen and dining space', 'fenster'); ?>" loading="eager"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-Kitchen-A-min-scaled.jpg'); ?>>
-                    <figcaption><?php esc_html_e('Sheerline S1 aluminium roof lantern', 'fenster'); ?></figcaption>
-                </figure>
             </div>
         </section>
 
-        <section class="fg-roof-lantern-brief" aria-label="<?php esc_attr_e('Roof lantern specification summary', 'fenster'); ?>">
+        <?php
+        /* The shared key-specification strip, which is what gives this route its
+           U-value; it previously carried a bespoke four-fact block and showed no
+           U-value at all. Tiles are passed rather than read from product_usps
+           for the same reason heritage does it: the usps entry here holds facts
+           this page does not lead on, and the S1 system name is already the H1. */
+        get_template_part('template-parts/components/product-pulse', null, [
+            'slug'  => 'roof-lanterns',
+            'title' => __('Sheerline S1 roof lantern', 'fenster'),
+            'usps'  => [
+                ['label' => __('U-value', 'fenster'), 'value' => __('1.0 W/m²K', 'fenster')],
+                ['label' => __('Glazing', 'fenster'), 'value' => __('28mm', 'fenster')],
+                ['label' => __('Max size', 'fenster'), 'value' => __('3.2m x 6m', 'fenster')],
+                ['label' => __('Ventilation', 'fenster'), 'value' => __('SheerVent option', 'fenster')],
+            ],
+        ]);
+        ?>
+
+        <div class="fg-cw fg-roof-lantern-lede">
             <div class="container">
-                <div class="fg-roof-lantern-brief__grid">
-                    <p><strong><?php esc_html_e('S1 aluminium system', 'fenster'); ?></strong><span><?php esc_html_e('Slim, low-line external appearance', 'fenster'); ?></span></p>
-                    <p><strong><?php esc_html_e('28mm glazing', 'fenster'); ?></strong><span><?php esc_html_e('Solar-control, acoustic and toughened options', 'fenster'); ?></span></p>
-                    <p><strong><?php esc_html_e('Up to 3.2 x 6m', 'fenster'); ?></strong><span><?php esc_html_e('Available without tie bars, subject to size and survey', 'fenster'); ?></span></p>
-                    <p><strong><?php esc_html_e('SheerVent option', 'fenster'); ?></strong><span><?php esc_html_e('Automated ventilation with rain sensing', 'fenster'); ?></span></p>
-                </div>
+                <p><?php esc_html_e('We supply and install Sheerline S1 aluminium roof lanterns across Milton Keynes. We check the roof opening, glass specification, ventilation and finish before the lantern is ordered.', 'fenster'); ?></p>
+                <ul class="fg-roof-lantern-hero__reassurance" aria-label="<?php esc_attr_e('Roof lantern reassurance', 'fenster'); ?>">
+                    <li><?php esc_html_e('Opening measured and checked before order', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Glass options for heat, noise and safety', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Local installation with aftercare', 'fenster'); ?></li>
+                </ul>
             </div>
-        </section>
+        </div>
 
         <?php
         get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('roof-lanterns'));
