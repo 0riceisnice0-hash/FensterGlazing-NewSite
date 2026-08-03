@@ -28002,6 +28002,19 @@ html.fg-blinds-reveal-locked {
   content: '';
 }
 
+/* A deeper shade for the lantern hero only. The shared gradient is tuned for
+   brick and slate; this photograph is glass in full sun, and measured against
+   it the mint eyebrow fell to about 1.7:1 and the white H1 to 3:1, which
+   STYLE.md calls a release blocker rather than a nuance. Scoped to this route
+   so the heroes that do not need it are untouched, and applied to the shade
+   rather than the image so the photograph itself is not dulled where no text
+   sits over it. */
+.fg-roof-lantern-page .fg-hero__shade {
+  background:
+    linear-gradient(90deg, rgba(0, 45, 58, 0.76) 0%, rgba(0, 45, 58, 0.6) 46%, rgba(0, 45, 58, 0.16) 100%),
+    linear-gradient(0deg, rgba(0, 45, 58, 0.6), rgba(0, 45, 58, 0.12) 54%);
+}
+
 /* The lead and the reassurance points, moved out of the hero when this route
    went onto the shared full-bleed one. .fg-hero--compact hides .fg-hero__intro,
    so they need somewhere real to live rather than sitting in markup that never
