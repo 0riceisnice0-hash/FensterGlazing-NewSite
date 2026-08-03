@@ -37313,7 +37313,7 @@ html.fg-blinds-reveal-locked {
 .fg-blind-visualiser__colours {
   grid-area: colours;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
   gap: 0.6rem;
 }
 
@@ -37348,6 +37348,9 @@ html.fg-blinds-reveal-locked {
   font-weight: 600;
   line-height: 1.2;
   color: var(--color-ink);
+  /* Safety net only. The break opportunity after the slash is added in the
+     component; this catches a longer bespoke name if one is ever added. */
+  overflow-wrap: break-word;
 }
 
 .fg-blind-visualiser__colour-code {
@@ -37387,6 +37390,11 @@ html.fg-blinds-reveal-locked {
       'stage    controls'
       'stage    colours'
       'stage    note';
+    /* The stage spans four rows, so without this the rows split the stage's
+       height between them and the controls drift apart down the column. Sizing
+       them to their content and letting the last row absorb what is left keeps
+       the group tight under the readout. */
+    grid-template-rows: auto auto auto auto 1fr;
     align-content: start;
     column-gap: clamp(2rem, 4vw, 3.6rem);
     row-gap: clamp(1rem, 2vw, 1.6rem);
@@ -37400,7 +37408,14 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-blind-visualiser__note {
-    align-self: end;
+    align-self: start;
+    padding-top: 0.4rem;
+  }
+
+  /* Nine colours land as a clean three by three rather than four, four and a
+     stranded ninth. */
+  .fg-blind-visualiser__colours {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

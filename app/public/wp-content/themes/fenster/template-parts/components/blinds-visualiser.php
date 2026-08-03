@@ -151,7 +151,12 @@ foreach ($colours as $index => $colour) {
                         data-code="<?php echo esc_attr($code); ?>"
                     >
                         <i aria-hidden="true"></i>
-                        <span class="fg-blind-visualiser__colour-name"><?php echo esc_html($name); ?></span>
+                        <?php /* White/Anthracite is the longest name and a
+                                 slash is not a break opportunity, so it runs
+                                 out of its chip without somewhere to wrap.
+                                 Escaped first, then the marker is added, so
+                                 the name itself is still never trusted. */ ?>
+                        <span class="fg-blind-visualiser__colour-name"><?php echo str_replace('/', '/<wbr>', esc_html($name)); ?></span>
                         <?php if ($code !== '') : ?>
                             <span class="fg-blind-visualiser__colour-code"><?php echo esc_html($code); ?></span>
                         <?php endif; ?>
