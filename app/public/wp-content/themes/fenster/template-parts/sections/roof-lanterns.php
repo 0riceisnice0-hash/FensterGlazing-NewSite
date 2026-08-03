@@ -53,18 +53,33 @@ $roof_styles = [
            seen. */
         ?>
         <section class="fg-hero fg-hero--compact">
-            <img <?php echo fenster_image_attr_string($asset('hero/lantern-drayton-parslow-1600w.webp'), [
-                'class' => 'fg-hero__image',
-                'alt' => __('Sheerline S1 roof lantern with its opening vents raised, fitted by Fenster in Drayton Parslow', 'fenster'),
-                'loading' => 'eager',
-                'fetchpriority' => 'high',
-                'srcset' => implode(', ', [
-                    $asset('hero/lantern-drayton-parslow-800w.webp') . ' 800w',
-                    $asset('hero/lantern-drayton-parslow-1200w.webp') . ' 1200w',
-                    $asset('hero/lantern-drayton-parslow-1600w.webp') . ' 1600w',
-                ]),
-                'sizes' => '100vw',
-            ]); ?>>
+            <?php
+            /* The same Drayton Parslow job as the still, moving. It reuses the
+               generic data-fg-lazy-video controller rather than a new one:
+               preload="none", the sources are swapped in on idle, and
+               data-fg-video-slow-mode="interaction" holds it back entirely on
+               small viewports, constrained connections and reduced motion. That
+               is the treatment the homepage hero already has, and the reason
+               6.5MB never lands in a phone's initial payload.
+
+               The poster is the 1200w still deliberately, not the 1600w. The
+               video is 1280 wide, so poster and video sit at the same effective
+               resolution and there is no visible jump when it swaps in. */
+            ?>
+            <video
+                class="fg-hero__video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="none"
+                poster="<?php echo esc_url($asset('hero/lantern-drayton-parslow-1200w.webp')); ?>"
+                aria-label="<?php esc_attr_e('Sheerline S1 roof lantern with its opening vents raised, fitted by Fenster in Drayton Parslow', 'fenster'); ?>"
+                data-fg-lazy-video
+                data-fg-video-slow-mode="interaction"
+            >
+                <source data-src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/videos/case-studies/cs-big-roof-lantern.mp4'); ?>" type="video/mp4">
+            </video>
             <div class="fg-hero__shade"></div>
             <div class="container fg-hero__inner">
                 <div class="fg-hero__copy">
@@ -236,6 +251,44 @@ $roof_styles = [
                 <div><p class="eyebrow"><?php esc_html_e('Prefer a flatter roof profile?', 'fenster'); ?></p><h2><?php esc_html_e('Compare fixed and opening flat rooflights.', 'fenster'); ?></h2><p><?php esc_html_e('Flat rooflights use edge-to-edge glass without the pitched rafters of a lantern. The separate page covers fixed, opening, larger multi-pane and walk-on options.', 'fenster'); ?></p><a class="button button--outline" href="<?php echo esc_url(home_url('/flat-rooflights/')); ?>"><?php esc_html_e('View flat rooflights', 'fenster'); ?></a></div>
             </div>
         </section>
+
+        <?php
+        /* Real lantern jobs before the enquiry, as casement and heritage doors
+           both do. Two studies genuinely link to /roof-lanterns/, the Drayton
+           Parslow lantern and the Northampton lantern with heritage doors, so
+           the heading says two rather than carrying a count that could go stale.
+
+           Checked rather than assumed: fenster_case_studies_for_product falls
+           back to returning every study when nothing matches, which is how a
+           page ends up claiming unrelated jobs as its own. These two match on
+           their products[] url. */
+        ?>
+        <?php if (function_exists('fenster_case_studies_for_product')) : ?>
+            <?php $rl_case_cards = fenster_case_studies_for_product('roof-lanterns', 3); ?>
+            <?php if ($rl_case_cards !== []) : ?>
+                <section class="fg-cs-strip">
+                    <div class="container">
+                        <div class="fg-cs-strip__head">
+                            <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                            <h2><?php esc_html_e('Lanterns we have fitted, photographed on the day.', 'fenster'); ?></h2>
+                        </div>
+                        <div class="fg-cs-strip__grid">
+                            <?php foreach ($rl_case_cards as $rl_case_card) : ?>
+                                <?php
+                                get_template_part('template-parts/components/case-study-card', null, [
+                                    'card' => $rl_case_card,
+                                    'heading' => 'h3',
+                                ]);
+                                ?>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="button-row fg-cs-strip__cta">
+                            <a class="button button--light" href="<?php echo esc_url(home_url('/case-studies/')); ?>"><?php esc_html_e('See all case studies', 'fenster'); ?></a>
+                        </div>
+                    </div>
+                </section>
+            <?php endif; ?>
+        <?php endif; ?>
 
         <section id="fenster-roof-lantern-enquiry" class="fg-roof-lantern-enquiry">
             <div class="container fg-roof-lantern-enquiry__grid">
