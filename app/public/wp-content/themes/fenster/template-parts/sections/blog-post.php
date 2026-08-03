@@ -97,8 +97,9 @@ foreach ($sections as $section) {
 $next_links = array_slice((array) ($next_steps['links'] ?? []), 0, 3);
 ?>
 
-<main id="main-content" class="fg-blog-post-page">
-    <article>
+<?php /* header.php already opens <main id="main-content">; older dedicated
+   templates nest a second main inside it, which this template does not copy. */ ?>
+<article class="fg-blog-post-page">
         <section class="fg-blog-post-hero">
             <div class="container fg-blog-post-hero__grid">
                 <div class="fg-blog-post-hero__copy">
@@ -197,5 +198,4 @@ $next_links = array_slice((array) ($next_steps['links'] ?? []), 0, 3);
                 </div>
             </div>
         </section>
-    </article>
-</main>
+</article>
