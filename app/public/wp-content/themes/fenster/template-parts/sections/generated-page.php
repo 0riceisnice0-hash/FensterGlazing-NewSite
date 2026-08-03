@@ -3914,7 +3914,7 @@ if ($is_commercial_hub) {
                 'id'            => 'blind-visualiser',
                 'eyebrow'       => __('See it work', 'fenster'),
                 'heading'       => __('Work the blind before you order it.', 'fenster'),
-                'intro'         => __('This is a Notan magnetic blind sealed inside a sealed unit, drawn straight on. Move the sliders to tilt the slats and raise the blind, and pick any of the nine standard colours to see it in the finish you are considering.', 'fenster'),
+                'intro'         => __('This is a Notan magnetic blind sealed inside a sealed unit, drawn straight on. Work it the way you would work the real thing, using the two magnets on the frame inside the glass, and pick any of the nine standard colours to see it in the finish you are considering.', 'fenster'),
                 'fallback_image' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg',
                 'fallback_alt'  => __('Close-up of a Notan integral blind sealed between the panes of a glazed door', 'fenster'),
             ]);
