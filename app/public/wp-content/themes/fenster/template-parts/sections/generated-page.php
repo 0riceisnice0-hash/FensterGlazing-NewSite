@@ -2131,6 +2131,8 @@ if ($is_window_handles) {
             'intro' => (string) ($lift_slide_handles['intro'] ?? ''),
             'data' => $lift_slide_handles,
             'alt_pattern' => 'architeQ Aspire lift and slide door handle in %s',
+            'fallback_image' => '/wp-content/themes/fenster/assets/images/products/handles-liftslide/liftslide-lever-cup.webp',
+            'fallback_alt' => 'architeQ Aspire lift and slide door handle, the inside lever beside the outside finger cup',
             'details_heading' => 'Handle specification',
             'swatches_label' => 'Lift and slide door handle finish options',
             'features_label' => 'Lift and slide door handle features',

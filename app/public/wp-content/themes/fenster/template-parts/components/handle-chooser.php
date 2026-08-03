@@ -55,17 +55,44 @@ $features        = is_array($handle_data['features'] ?? null) ? $handle_data['fe
                 <?php endif; ?>
             </div>
 
+            <?php
+            /* A family can have no per-finish photography: the lift and slide
+               suite is rendered by VBH in three of the five finishes we offer
+               and in none of them for White. Rendering the stage anyway gave
+               every finish an empty src, which is a broken image and makes the
+               browser re-request the page. Fall back to one static product
+               image instead, and let the swatches and the copy panel carry the
+               finish. */
+            $has_finish_images = false;
+            foreach ($finishes as $finish) {
+                if (! empty($finish['image'])) {
+                    $has_finish_images = true;
+                    break;
+                }
+            }
+            $fallback_image = (string) ($args['fallback_image'] ?? '');
+            ?>
             <div class="fg-window-handles__visual" aria-live="polite">
-                <?php foreach ($finishes as $index => $finish) : ?>
-                    <?php $finish_name = (string) ($finish['name'] ?? 'Handle finish'); ?>
+                <?php if ($has_finish_images) : ?>
+                    <?php foreach ($finishes as $index => $finish) : ?>
+                        <?php $finish_name = (string) ($finish['name'] ?? 'Handle finish'); ?>
+                        <?php if (empty($finish['image'])) { continue; } ?>
+                        <img
+                            src="<?php echo esc_url(fenster_generated_url((string) $finish['image'])); ?>"
+                            alt="<?php echo esc_attr(sprintf($alt_pattern, $finish_name)); ?>"
+                            loading="<?php echo ($eager_first && $index === 0) ? 'eager' : 'lazy'; ?>"
+                            data-fg-handle-image="<?php echo esc_attr((string) $index); ?>"
+                            class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
+                        >
+                    <?php endforeach; ?>
+                <?php elseif ($fallback_image !== '') : ?>
                     <img
-                        src="<?php echo esc_url(fenster_generated_url((string) ($finish['image'] ?? ''))); ?>"
-                        alt="<?php echo esc_attr(sprintf($alt_pattern, $finish_name)); ?>"
-                        loading="<?php echo ($eager_first && $index === 0) ? 'eager' : 'lazy'; ?>"
-                        data-fg-handle-image="<?php echo esc_attr((string) $index); ?>"
-                        class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
+                        src="<?php echo esc_url(fenster_generated_url($fallback_image)); ?>"
+                        alt="<?php echo esc_attr((string) ($args['fallback_alt'] ?? '')); ?>"
+                        loading="lazy"
+                        class="is-active"
                     >
-                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <div class="fg-window-handles__chooser">
