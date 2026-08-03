@@ -2007,6 +2007,17 @@ if ($slug === 'flat-rooflights') {
     return;
 }
 
+/* Scheduled blog posts render through their own template rather than the
+   imported-guide article layout; see inc/blog-posts.php. */
+$blog_post = function_exists('fenster_blog_post') ? fenster_blog_post($slug) : null;
+if (is_array($blog_post)) {
+    get_template_part('template-parts/sections/blog-post', null, [
+        'page' => $page,
+        'post' => $blog_post,
+    ]);
+    return;
+}
+
 if ($is_product_selector_hub) {
     get_template_part('template-parts/sections/product-hub', null, [
         'brand' => $brand,
