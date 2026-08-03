@@ -465,10 +465,13 @@ function fenster_site_data(): array
             // No triple, per the owner-confirmed exclusion list
             'slide-fold-doors'        => ['double' => '1.4 W/m²K'],
             /* Sheerline S1. Owner-confirmed 2026-08-03: the 1.0 is the double
-               glazed figure, reached with Blu-active glass, which is standard
-               on lanterns. It is not a triple figure, and it beats Sheerline's
-               generic 1.4 double because of the glass rather than a third pane.
-               Do not pair it with a triple value without confirming one. */
+               glazed figure, reached with Pilkington Activ Blue, which is
+               standard on lanterns. It is not a triple figure, and it beats
+               Sheerline's generic 1.4 double because of the glass rather than a
+               third pane. Do not pair it with a triple value without confirming
+               one. The owner first called it "blu-active"; the product is
+               Pilkington Activ Blue, a self-cleaning solar control glass made
+               for roof units, so that is the name the page uses. */
             'roof-lanterns'           => ['double' => '1.0 W/m²K'],
         ],
         'product_media' => [
