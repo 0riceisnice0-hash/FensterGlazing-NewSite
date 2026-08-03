@@ -346,8 +346,17 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Integral blinds sealed inside double glazing for doors, windows and roof glazing, with magnetic or electric controls and survey-led advice from Fenster Glazing.',
         ],
         'roof-lanterns' => [
-            'title_tag' => 'Roof Lanterns Milton Keynes | Sheerline S1 Lanterns',
-            'meta_description' => 'Sheerline S1 aluminium roof lanterns in Milton Keynes, with 13 layouts, frame colours, glass and ventilation specified before installation.',
+            /* GSC: "roof lights milton keynes" ranks here but the two-word form
+               appeared nowhere on the page once /roof-lanterns-milton-keynes/
+               started redirecting in. Searchers write it both ways. */
+            'title_tag' => 'Roof Lanterns & Roof Lights Milton Keynes | Sheerline S1',
+            'meta_description' => 'Sheerline S1 aluminium roof lanterns and roof lights in Milton Keynes, with 13 layouts, frame colours, glass and ventilation specified before installation.',
+        ],
+        'french-casement-windows' => [
+            /* Title matches the imported one that already ranks; only the
+               scrape-era town-list description is replaced. */
+            'title_tag' => 'French Casement Windows Milton Keynes | Fenster Glazing',
+            'meta_description' => 'French casement windows with no fixed central mullion, so both sashes open into one clear, full-width opening that suits fire escape. Fitted in Milton Keynes.',
         ],
         'flat-rooflights' => [
             'title_tag' => 'Flat Rooflights Milton Keynes | Fixed & Opening Rooflights',
@@ -1622,6 +1631,10 @@ function fenster_redirect_target(string $slug): string
     }
 
     $map = [
+        // The old site's commercial hub. Without this entry WordPress's 404
+        // guess-redirect sends it to /commercial-automation/, so the most
+        // linked commercial URL lands on a niche subpage instead of the hub.
+        'commercial' => 'commercial-glazing',
         'dunstable-casement-windows' => 'casement-windows-dunstable',
         'bow-and-bay-windows-northampton' => 'bow-bay-windows-northampton',
         'tilt-and-turn-windows-northampton' => 'tilt-turn-windows-northampton',
