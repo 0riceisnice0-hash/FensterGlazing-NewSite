@@ -2011,6 +2011,88 @@ function fenster_site_data(): array
                 ],
             ],
         ],
+        /* The fifth handle family: architeQ Aspire lift/slide furniture on
+           /aluminium-sliding-doors/. It is its own family and must not be
+           merged into patio_handles, which is the Mila ProLinea for uPVC
+           sliders. A lift/slide sash is raised off its seals before it moves,
+           so it takes a geared lever rather than a fixed D-pull, and the owner
+           confirmed on 2026-08-02 that the ProLinea does not go on this route.
+
+           Facts come from the VBH product bulletin
+           PB_CUS_architeQ_Aspire_Suite_Lift-Slide_Door_Furniture_181125.
+           Deliberately not shown to customers, the same way the greenteQ
+           spindle and fixing centres are not: VBH order codes, spindle and
+           fixing-pack lengths, the with/without cylinder-hole variants and the
+           Hi-Grip option, where the lever stands 11mm further off the sash for
+           clearance. Those are fitter choices. Recorded here so they do not
+           have to be looked up again.
+
+           No per-finish photography. The bulletin renders levers in only three
+           of the five finishes we offer and has no White at all, and brushed
+           appears as a finger cup rather than a lever, so there is no complete
+           set to show. The finishes therefore render as hex chips and the
+           section carries the real lever-and-cup pair instead. Do not tint or
+           generate a tile to fill the gap; that is the rule already recorded
+           for the four composite colours with no painted tile. If VBH ever
+           supply a full labelled set, add images here and the grid picks them
+           up with no template change. */
+        'lift_slide_handles' => [
+            'slugs' => ['aluminium-sliding-doors'],
+            'intro' => 'A lift and slide door is not moved like a patio slider. The lever lifts the sash off its seals before it rolls, so the handle is geared rather than fixed, and the two faces of the door do different jobs: a lever on the inside, a flush finger cup on the outside.',
+            'features' => [
+                ['title' => 'A lever inside, a cup outside', 'copy' => 'The lever does the lifting and sliding from indoors. Outside takes a finger cup set flush into the sash, so nothing projects into the opening you have just spent money widening. The outer face can also be left blank if you never open the door from the garden.'],
+                ['title' => 'Geared for the weight', 'copy' => 'The lever runs to 250mm, which is what gives you the leverage to move a sash weighing up to 400kg, depending on the gear it is built with. A spring locates it positively in both the closed and the slide position, so it does not drift between the two.'],
+                ['title' => 'One handle or two', 'copy' => 'Fitted inside only with a finger cup opposite, or through-fixed back to back as a pair so the door works from either side. Which you want depends on whether the outside face is a way in or just a way out.'],
+            ],
+            'technical_intro' => 'architeQ Aspire lift and slide door furniture.',
+            'technical' => [
+                ['label' => 'Inside', 'value' => '250mm lever on a rounded backplate'],
+                ['label' => 'Outside', 'value' => 'Flush finger cup, or a second lever back to back'],
+                ['label' => 'Sash weight', 'value' => 'Up to 400kg, depending on the gear'],
+                ['label' => 'Security', 'value' => 'Secured by Design Police Preferred Specification'],
+                ['label' => 'Surface guarantee', 'value' => '25 years, from architeQ'],
+            ],
+            /* Hexes match the values already used for these finish names on the
+               other families, so a chip reads the same across the site. White
+               takes a hairline in the grid for the reason Smooth White does on
+               the colour rail: a near-white swatch on a white card reads as an
+               empty slot. Chrome is VBH's Polished Stainless Steel; the name
+               follows the site rather than the supplier, owner-confirmed
+               2026-08-03, which is the rule already recorded against the Mila
+               and greenteQ literature. */
+            'finishes' => [
+                [
+                    'name' => 'Anthracite',
+                    'label' => 'Anthracite lift and slide door handle',
+                    'hex' => '#383b3d',
+                    'copy' => 'The one that disappears into an anthracite frame, which is what most aluminium sliders are specified in.',
+                ],
+                [
+                    'name' => 'Black',
+                    'label' => 'Black lift and slide door handle',
+                    'hex' => '#141414',
+                    'copy' => 'Flatter and darker than anthracite. It reads as a deliberate choice rather than a match.',
+                ],
+                [
+                    'name' => 'White',
+                    'label' => 'White lift and slide door handle',
+                    'hex' => '#f4f4f1',
+                    'copy' => 'For a white frame, and the quietest of the five against a pale interior.',
+                ],
+                [
+                    'name' => 'Chrome',
+                    'label' => 'Polished chrome lift and slide door handle',
+                    'hex' => '#d5d8da',
+                    'copy' => 'A mirror finish that picks up the room. It shows marks more than the brushed one on a door this often used.',
+                ],
+                [
+                    'name' => 'Brushed stainless steel',
+                    'label' => 'Brushed stainless steel lift and slide door handle',
+                    'hex' => '#b9bcbd',
+                    'copy' => 'The same metal without the mirror, so fingerprints and daylight both sit softer on it.',
+                ],
+            ],
+        ],
         'obscure_glass' => [
             'intro' => 'Obscured glass adds privacy while still letting daylight through. Use the preview to compare how the same real image changes behind each texture before choosing door glass, bathroom glass, side panels or replacement units.',
             'legend_image' => '/wp-content/themes/fenster/assets/team/legend-colour.webp',

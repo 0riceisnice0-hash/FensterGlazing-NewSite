@@ -654,3 +654,24 @@ function fenster_patio_handle_grid_args(): array
         'link_href' => home_url('/handle-options/#patio-handle-finishes'),
     ];
 }
+
+/* The lift and slide lever. Five finishes again, so it reuses --five like the
+   patio and tilt and turn grids rather than adding a sixth column count. No
+   --liftslide modifier, because with no per-finish photography there is nothing
+   for one to change; the chips are styled by the shared chip rule. */
+function fenster_lift_slide_handle_grid_args(): array
+{
+    $data = fenster_data('lift_slide_handles', []);
+
+    return [
+        'data' => is_array($data) ? $data : [],
+        'id' => 'lift-slide-handle-finishes',
+        'eyebrow' => 'Handles',
+        'heading' => 'Five finishes on the lift and slide handle.',
+        'intro' => 'The lever lifts the sash off its seals before it rolls, so it is geared rather than fixed. Inside gets the lever, outside gets a flush finger cup set into the sash, and the finish is the same on both.',
+        'note' => 'Whether the outside takes a finger cup or a second lever depends on how you use the door, and we settle that with you before it is ordered.',
+        'alt_pattern' => 'architeQ Aspire lift and slide door handle in %s',
+        'columns' => 'fg-handle-finishes--five',
+        'link_href' => home_url('/handle-options/#lift-slide-handle-finishes'),
+    ];
+}

@@ -35392,6 +35392,24 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
+/* Chip fallback where a family has no per-finish photography, currently the
+   lift and slide furniture: VBH render levers in three of the five finishes we
+   offer and none in White. It occupies the same 3:4 box the image would, so a
+   chip tile and a photographed tile are the same height in a mixed grid.
+
+   The hairline goes on every chip rather than only the pale ones, for the
+   reason already recorded against the patio grid and the colour rail: a
+   near-white swatch on a white card reads as an empty slot, and edging only
+   that one singles it out instead of keeping the five a set. */
+.fg-handle-finishes__chip {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  margin-bottom: 0.35rem;
+  border: 1px solid rgba(15, 49, 54, 0.14);
+  border-radius: 6px;
+}
+
 .fg-upvc-colours__grid i {
   display: block;
   width: 100%;

@@ -64,6 +64,15 @@ $title_id    = 'fg-' . $section_id . '-title';
                 <li>
                     <?php if (! empty($finish['image'])) : ?>
                         <img src="<?php echo esc_url(fenster_generated_url((string) $finish['image'])); ?>" alt="<?php echo esc_attr(sprintf($alt_pattern, $finish_name)); ?>" loading="lazy">
+                    <?php elseif (! empty($finish['hex'])) : ?>
+                        <?php
+                        /* Colour chip fallback for a family with no per-finish
+                           photography. It is an <i> rather than a <span>
+                           because the tile already renders a <span> for the sub
+                           label, and a generic child selector on a component is
+                           a trap for the next element added to it. */
+                        ?>
+                        <i class="fg-handle-finishes__chip" style="background: <?php echo esc_attr((string) $finish['hex']); ?>;" aria-hidden="true"></i>
                     <?php endif; ?>
                     <strong><?php echo esc_html($finish_name); ?></strong>
                     <?php if ($sub_label && $finish_label !== '') : ?>
