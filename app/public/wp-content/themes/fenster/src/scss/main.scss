@@ -36374,6 +36374,20 @@ html.fg-blinds-reveal-locked {
 .fg-cw-gallery__mosaic figure:nth-child(5) { grid-column: 8 / 11; }
 .fg-cw-gallery__mosaic figure:nth-child(6) { grid-column: 11 / 13; }
 
+/* Cells seven and eight are a third row of two equal landscape cells, added
+   with the Stony Stratford and Rushden installs. They close the rectangle, so
+   the grid still fills. The mosaic height has to grow with the row or three
+   rows share the two-row height and every cell letterboxes; that increase is
+   scoped away from the heritage variant below, which is still a four-cell,
+   two-row cut and must keep the shorter box. Add a ninth picture and this
+   needs re-cutting again. */
+.fg-cw-gallery__mosaic figure:nth-child(7) { grid-column: 1 / 7; }
+.fg-cw-gallery__mosaic figure:nth-child(8) { grid-column: 7 / 13; }
+
+.fg-cw-gallery:not(.fg-cw-gallery--heritage) .fg-cw-gallery__mosaic {
+  height: clamp(620px, 66vw, 840px);
+}
+
 /* The mosaic above is cut for exactly six cells. Heritage doors has four
    pictures that honestly show a finished door, so its variant re-cuts the same
    twelve-column, two-row grid to fill without leaving holes. Everything else

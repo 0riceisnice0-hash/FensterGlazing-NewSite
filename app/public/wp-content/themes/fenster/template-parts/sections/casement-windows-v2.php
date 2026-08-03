@@ -54,6 +54,8 @@ $gallery = [
     ['file' => 'casement-leighton-buzzard', 'width' => 1400, 'focus' => '50% 55%', 'caption' => 'Leighton Buzzard', 'alt' => 'White Liniar casement windows fitted by Fenster across a Leighton Buzzard terrace'],
     ['file' => 'casement-cottage-arch', 'width' => 1200, 'focus' => '76% 50%', 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
     ['file' => 'casement-open-interior', 'width' => 1400, 'focus' => '35% 50%', 'caption' => 'A sash open from inside', 'alt' => 'White uPVC casement sash opened outwards, seen from inside the room'],
+    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '32% 50%', 'caption' => 'Stony Stratford', 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
+    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '42% 45%', 'caption' => 'Leaded diamond glass, Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
 ];
 
 $related = [
@@ -204,7 +206,7 @@ $faq_schema = [
                     <h2 id="fg-cw-gallery-title"><?php esc_html_e('Liniar casements on real houses.', 'fenster'); ?></h2>
                 </div>
                 <p>
-                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Bolbeck Park and Leighton Buzzard are our own installs; the rest are Liniar photography of the same system. Click any image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Bolbeck Park, Leighton Buzzard, Stony Stratford and Rushden are our own installs; the rest are Liniar photography of the same system. Click any image for a closer look.', 'fenster'); ?></span>
                     <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished installations. Tap any image for a closer look.', 'fenster'); ?></span>
                 </p>
             </div>
@@ -231,7 +233,7 @@ $faq_schema = [
                             <img
                                 src="<?php echo esc_url(fenster_generated_url($stem . '-800w.webp')); ?>"
                                 srcset="<?php echo esc_attr(implode(', ', $sources)); ?>"
-                                sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '38vw' : '20vw'; ?>"
+                                sizes="(max-width: 860px) 82vw, <?php echo ($index === 0 || $index >= 6) ? '38vw' : '20vw'; ?>"
                                 alt="<?php echo esc_attr($image['alt']); ?>"
                                 loading="lazy"
                                 style="object-position: <?php echo esc_attr($image['focus']); ?>;"
