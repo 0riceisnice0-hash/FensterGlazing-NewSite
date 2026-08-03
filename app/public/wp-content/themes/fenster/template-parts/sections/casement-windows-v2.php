@@ -329,13 +329,12 @@ $faq_schema = [
             </div>
             <figure class="fg-cw-media fg-cw-media--tall">
                 <img
-                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-installation-900w.webp')); ?>"
-                    alt="<?php esc_attr_e('Fenster installer fitting a new uPVC window frame into a brick opening', 'fenster'); ?>"
+                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-cranfield-1400w.webp')); ?>"
+                    alt="<?php esc_attr_e('White uPVC casement window with a top opening light, a fixed pane and trickle vents, fitted by Fenster in Cranfield', 'fenster'); ?>"
                     loading="lazy"
-                    width="900"
-                    height="600"
+                    width="1400"
+                    height="1050"
                 >
-                <figcaption><?php esc_html_e('Our own installers', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </section>
