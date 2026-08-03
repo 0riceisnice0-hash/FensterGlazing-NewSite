@@ -50,12 +50,10 @@ $spec_points = [
 $gallery = [
     ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'alt' => 'Anthracite Liniar casement windows stacked on a corner elevation in Bolbeck Park, fitted by Fenster'],
     ['file' => 'casement-stone-elevation', 'width' => 1200, 'focus' => '50% 45%', 'caption' => 'White casements across a full elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
-    ['file' => 'casement-brick-bay', 'width' => 1400, 'focus' => '40% 50%', 'caption' => 'Casements in a bay', 'alt' => 'White uPVC casement windows with glazing bars set into a brick bay'],
+    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
     ['file' => 'casement-leighton-buzzard', 'width' => 1400, 'focus' => '50% 55%', 'caption' => 'Leighton Buzzard', 'alt' => 'White Liniar casement windows fitted by Fenster across a Leighton Buzzard terrace'],
     ['file' => 'casement-cottage-arch', 'width' => 1200, 'focus' => '76% 50%', 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
-    ['file' => 'casement-open-interior', 'width' => 1400, 'focus' => '35% 50%', 'caption' => 'A sash open from inside', 'alt' => 'White uPVC casement sash opened outwards, seen from inside the room'],
-    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '32% 50%', 'caption' => 'Stony Stratford', 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
-    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '42% 45%', 'caption' => 'Leaded diamond glass, Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
+    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '40% 45%', 'caption' => 'Leaded diamond glass, Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
 ];
 
 $related = [
@@ -233,7 +231,7 @@ $faq_schema = [
                             <img
                                 src="<?php echo esc_url(fenster_generated_url($stem . '-800w.webp')); ?>"
                                 srcset="<?php echo esc_attr(implode(', ', $sources)); ?>"
-                                sizes="(max-width: 860px) 82vw, <?php echo ($index === 0 || $index >= 6) ? '38vw' : '20vw'; ?>"
+                                sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '38vw' : '20vw'; ?>"
                                 alt="<?php echo esc_attr($image['alt']); ?>"
                                 loading="lazy"
                                 style="object-position: <?php echo esc_attr($image['focus']); ?>;"
