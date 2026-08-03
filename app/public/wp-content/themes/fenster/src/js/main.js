@@ -2938,6 +2938,771 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   setSplit(splitControl?.value || 54);
 });
 
+/* Notan magnetic integral blind visualiser.
+ *
+ * Draws one glazed unit face on and fully straight, with the blind rendered
+ * from its geometry rather than from photography. Face on is what makes a 2D
+ * canvas sufficient: with no perspective a slat projects to a plain rectangle
+ * of height `slat * |sin phi| + thickness * |cos phi|`, which is exact. Nine
+ * colours against a continuous tilt and a continuous lift is also far past
+ * what a sprite sheet can hold, so it has to be drawn.
+ *
+ * Two caches carry the cost. The garden behind the glass is rendered small,
+ * blown back up to soften it, and kept until the box resizes. The blind is one
+ * tile, being a slat and the gap under it, rebuilt only when the tilt, the
+ * colour or the size actually change and then stamped once per slat. A frame
+ * that only moves the lift therefore reuses the tile it already had.
+ */
+document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
+  const canvas = root.querySelector('[data-fg-blind-canvas]');
+  const stage = root.querySelector('.fg-blind-visualiser__stage');
+  const tiltInput = root.querySelector('[data-fg-blind-tilt]');
+  const liftInput = root.querySelector('[data-fg-blind-lift]');
+  const readout = root.querySelector('[data-fg-blind-readout]');
+  const colourButtons = [...root.querySelectorAll('[data-fg-blind-colour]')];
+
+  if (!canvas || !stage || !tiltInput || !liftInput || !colourButtons.length) return;
+
+  const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return;
+
+  /* Millimetres. A window sash rather than a door leaf, because at door
+     height the slats fall below two pixels each and the tilt stops reading. */
+  const GLASS_W = 500;
+  const GLASS_H = 660;
+  const FRAME = 27;
+  const SLAT = 12.5;
+  const SLAT_T = 0.18;
+  const PITCH = 11.9;
+  const STACK_PITCH = 2.15;
+  const RAIL = 15;
+  const HEAD = 30;
+  const UNIT_W = GLASS_W + FRAME * 2;
+  const UNIT_H = GLASS_H + FRAME * 2;
+  const DROP = GLASS_H - HEAD - RAIL;
+  const SLAT_COUNT = Math.floor(DROP / PITCH);
+  /* Real tilt mechanisms stop short of ninety degrees. Stopping at seventy
+     eight also trims most of the dead zone at each end of the slider, where
+     the slats have already overlapped and further rotation changes nothing. */
+  const MAX_TILT = (78 * Math.PI) / 180;
+
+  const smooth = (start, end, value) => {
+    const amount = clamp((value - start) / (end - start || 0.0001));
+    return amount * amount * (3 - 2 * amount);
+  };
+  const toRgb = (hex) => {
+    const raw = String(hex || '').replace('#', '');
+    const full = raw.length === 3 ? raw.split('').map((c) => c + c).join('') : raw;
+    const n = Number.parseInt(full, 16);
+    return Number.isFinite(n) ? { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 } : { r: 255, g: 255, b: 255 };
+  };
+  const mixRgb = (a, b, t) => ({ r: a.r + (b.r - a.r) * t, g: a.g + (b.g - a.g) * t, b: a.b + (b.b - a.b) * t });
+  const paint = (c, k, add = 0, alpha = 1) => `rgba(${clamp(Math.round(c.r * k + add), 0, 255)},${clamp(Math.round(c.g * k + add), 0, 255)},${clamp(Math.round(c.b * k + add), 0, 255)},${alpha})`;
+
+  const swatches = colourButtons.map((button) => ({
+    face: toRgb(button.dataset.hex),
+    back: toRgb(button.dataset.reverse || button.dataset.hex),
+    metallic: button.dataset.metallic === '1',
+    name: button.dataset.name || 'Slat colour',
+    code: button.dataset.code || '',
+  }));
+
+  let activeIndex = Math.max(0, colourButtons.findIndex((button) => button.classList.contains('is-active')));
+  let shownFace = { ...swatches[activeIndex].face };
+  let shownBack = { ...swatches[activeIndex].back };
+  let shownMetallic = swatches[activeIndex].metallic ? 1 : 0;
+
+  let tiltTarget = Number.parseFloat(tiltInput.value);
+  let liftTarget = Number.parseFloat(liftInput.value);
+  let tilt = tiltTarget;
+  let lift = liftTarget;
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let scene = null;
+  let sceneKey = '';
+  let tile = null;
+  let tileKey = '';
+  let unitChrome = null;
+  let chromeKey = '';
+  let grain = null;
+  let frame = 0;
+  let visible = true;
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* A hanging blind is not a grating. Real slats sit a fraction off pitch and
+     catch fractionally different amounts of light, and without that the render
+     reads as a printed pattern no matter how good the shading is. Computed
+     once from the index rather than from Math.random, so a slat keeps the same
+     character between frames instead of shimmering. */
+  const wobble = Array.from({ length: SLAT_COUNT }, (unused, i) => {
+    const n = Math.sin(i * 12.9898) * 43758.5453;
+    const m = Math.sin(i * 78.233 + 1.7) * 12345.6789;
+    const r = Math.sin(i * 39.4271 + 4.1) * 24634.6345;
+    return {
+      offset: (n - Math.floor(n)) - 0.5,
+      gain: (m - Math.floor(m)) - 0.5,
+      lean: (r - Math.floor(r)) - 0.5,
+    };
+  });
+
+  /* The garden is drawn at an eighth of the size and scaled back up. That is the
+     blur: it costs one upscale instead of a filter pass, it is supported
+     everywhere, and the softness it produces is the depth of field a real
+     camera focused on the blind would give the garden behind it anyway. */
+  const buildScene = (w, h) => {
+    const sw = Math.max(28, Math.round(w / 8));
+    const sh = Math.max(28, Math.round(h / 8));
+    const small = document.createElement('canvas');
+    small.width = sw;
+    small.height = sh;
+    const g = small.getContext('2d');
+    if (!g) return null;
+
+    const sky = g.createLinearGradient(0, 0, 0, sh * 0.7);
+    sky.addColorStop(0, '#bcdcf0');
+    sky.addColorStop(0.5, '#e4f0f7');
+    sky.addColorStop(1, '#f4f7ea');
+    g.fillStyle = sky;
+    g.fillRect(0, 0, sw, sh);
+
+    const sun = g.createRadialGradient(sw * 0.74, sh * 0.08, 0, sw * 0.74, sh * 0.08, sw * 1.1);
+    sun.addColorStop(0, 'rgba(255,254,246,1)');
+    sun.addColorStop(0.4, 'rgba(255,252,238,0.5)');
+    sun.addColorStop(1, 'rgba(255,252,238,0)');
+    g.fillStyle = sun;
+    g.fillRect(0, 0, sw, sh);
+
+    const horizon = sh * 0.66;
+    /* Three summed sines give a canopy that reads as trees without any of
+       them being recognisable, which is the point once it is this soft. */
+    g.beginPath();
+    g.moveTo(0, sh);
+    g.lineTo(0, horizon);
+    for (let x = 0; x <= sw; x += 1) {
+      const t = x / sw;
+      const canopy = Math.sin(t * 8.3) * 0.5 + Math.sin(t * 19.7 + 1.3) * 0.3 + Math.sin(t * 37.1 + 2.6) * 0.17;
+      g.lineTo(x, horizon - sh * 0.16 * (0.5 + canopy * 0.5));
+    }
+    g.lineTo(sw, sh);
+    g.closePath();
+    const trees = g.createLinearGradient(0, horizon - sh * 0.24, 0, horizon + sh * 0.02);
+    trees.addColorStop(0, '#b6c99b');
+    trees.addColorStop(0.55, '#96b177');
+    trees.addColorStop(1, '#7b9761');
+    g.fillStyle = trees;
+    g.fill();
+
+    const lawn = g.createLinearGradient(0, horizon, 0, sh);
+    lawn.addColorStop(0, '#adc484');
+    lawn.addColorStop(0.5, '#9cb673');
+    lawn.addColorStop(1, '#87a25f');
+    g.fillStyle = lawn;
+    g.fillRect(0, horizon, sw, sh - horizon);
+
+    const paving = g.createLinearGradient(0, sh * 0.88, 0, sh);
+    paving.addColorStop(0, 'rgba(214,204,186,0)');
+    paving.addColorStop(1, 'rgba(220,211,193,0.92)');
+    g.fillStyle = paving;
+    g.fillRect(0, sh * 0.88, sw, sh * 0.12);
+
+    /* Dapple. At this blur nothing in a real garden survives as shape, but the
+       uneven pools of light and shade do, and a smooth gradient without them
+       is the tell that the view was generated rather than photographed. */
+    const dapple = [
+      [0.18, 0.78, 0.3, 'rgba(255,252,232,0.5)'], [0.62, 0.86, 0.34, 'rgba(72,92,54,0.34)'],
+      [0.86, 0.72, 0.26, 'rgba(255,250,226,0.42)'], [0.34, 0.94, 0.24, 'rgba(84,104,62,0.3)'],
+      [0.08, 0.62, 0.22, 'rgba(96,116,74,0.32)'], [0.5, 0.7, 0.2, 'rgba(255,253,238,0.34)'],
+    ];
+    dapple.forEach(([x, y, r, colour]) => {
+      const pool = g.createRadialGradient(sw * x, sh * y, 0, sw * x, sh * y, sw * r);
+      pool.addColorStop(0, colour);
+      pool.addColorStop(1, colour.replace(/[\d.]+\)$/, '0)'));
+      g.fillStyle = pool;
+      g.fillRect(0, 0, sw, sh);
+    });
+
+    const render = (target, veil) => {
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(w));
+      c.height = Math.max(1, Math.round(h));
+      const f = c.getContext('2d');
+      if (!f) return null;
+      f.imageSmoothingEnabled = true;
+      f.imageSmoothingQuality = 'high';
+      f.drawImage(target, 0, 0, c.width, c.height);
+      /* A camera exposed for the room blows the garden out. Without this veil
+         the slats read as darker than the view rather than silhouetted by it. */
+      f.fillStyle = `rgba(255,255,255,${veil})`;
+      f.fillRect(0, 0, c.width, c.height);
+      return c;
+    };
+
+    /* A second, far coarser copy of the same garden. Added back over the
+       finished blind with `lighter`, it is the veiling glare a bright exterior
+       throws across dark slats: light spilling out of the gaps and washing the
+       aluminium next to them. It is the difference between a diagram of a
+       blind and a photograph of one, and because it is the scene rather than a
+       readback of the canvas it costs one cached drawImage rather than a
+       getImageData every frame. */
+    const hazeW = Math.max(8, Math.round(sw / 3));
+    const hazeH = Math.max(8, Math.round(sh / 3));
+    const haze = document.createElement('canvas');
+    haze.width = hazeW;
+    haze.height = hazeH;
+    const hz = haze.getContext('2d');
+    if (hz) {
+      hz.imageSmoothingEnabled = true;
+      hz.drawImage(small, 0, 0, hazeW, hazeH);
+    }
+
+    return { view: render(small, 0.14), haze: render(haze, 0.26) };
+  };
+
+  const buildGrain = () => {
+    const size = 96;
+    const c = document.createElement('canvas');
+    c.width = size;
+    c.height = size;
+    const g = c.getContext('2d');
+    if (!g) return null;
+    const data = g.createImageData(size, size);
+    for (let i = 0; i < data.data.length; i += 4) {
+      const v = 118 + Math.random() * 24;
+      data.data[i] = v;
+      data.data[i + 1] = v;
+      data.data[i + 2] = v;
+      data.data[i + 3] = 255;
+    }
+    g.putImageData(data, 0, 0);
+    return c;
+  };
+
+  /* One tile: the slat, then the gap beneath it, at three times the height so
+     the fractional pitch lands with clean antialiasing when it is stamped. */
+  const buildTile = (face, back, metallic, phi, pitchPx, slatPx) => {
+    const ss = 3;
+    const W = 96;
+    const H = Math.max(3, Math.round(pitchPx * ss));
+    const bandH = clamp(slatPx * ss, 0.5, H);
+    const gapH = H - bandH;
+    const openness = clamp((pitchPx - slatPx) / pitchPx, 0, 1);
+    const c = document.createElement('canvas');
+    c.width = W;
+    c.height = H;
+    const g = c.getContext('2d');
+    if (!g) return null;
+
+    if (gapH > 0.5) {
+      /* The gap is not empty: the slat above shades the top of it and the
+         slat below catches light at the bottom of it. Kept light on purpose.
+         An earlier pass used nearly half black here and it read as a painted
+         stripe, because in life the gap is the brightest thing on the window
+         and the slat is what is dark. */
+      const shadow = g.createLinearGradient(0, bandH, 0, H);
+      shadow.addColorStop(0, 'rgba(24,26,22,0.24)');
+      shadow.addColorStop(0.45, 'rgba(24,26,22,0.03)');
+      shadow.addColorStop(1, 'rgba(24,26,22,0.14)');
+      g.fillStyle = shadow;
+      g.fillRect(0, bandH, W, gapH);
+
+      /* On a two sided slat the outward face shows as a sliver through the
+         gap, on whichever side the tilt turns it towards. Absent a reverse
+         colour this paints the same colour it already is and disappears. */
+      const reveal = clamp(Math.abs(Math.sin(phi)) * 0.85, 0, 1) * openness;
+      const sliver = gapH * reveal * 0.5;
+      if (sliver > 0.4) {
+        const top = phi < 0;
+        const y = top ? bandH : H - sliver;
+        const edge = g.createLinearGradient(0, y, 0, y + sliver);
+        edge.addColorStop(top ? 0 : 1, paint(back, 0.5, 0, 0.92));
+        edge.addColorStop(top ? 1 : 0, paint(back, 0.72, 0, 0));
+        g.fillStyle = edge;
+        g.fillRect(0, y, W, sliver);
+      }
+    }
+
+    /* The room side of a slat is always turned away from an exterior sun, so
+       there is no direct term at all. What lights it is room ambient, which
+       tracks how square the slat is to the room, plus light coming through the
+       gap and bouncing off the slat below onto its lower edge. */
+    const crown = 0.2;
+    const lean = Math.sign(phi) || 1;
+    const specPos = 0.5 - 0.42 * Math.sin(phi);
+    const specStrength = metallic ? 0.5 : 0.16;
+    const facing = Math.abs(Math.sin(phi));
+    /* The gap sits below the slat, so the edge turned towards it is the lower
+       one, and that is the edge the sky wraps around. Leaning the other way
+       moves the bright edge to the top. Splitting it this way is what stops
+       every slat reading as a symmetrical painted bar. */
+    const bright = lean > 0 ? 1 : 0;
+
+    const luminanceAt = (v) => {
+      const u = (v - 0.5) * 2;
+      const local = Math.abs(Math.sin(phi + crown * u * lean));
+      /* Room ambient. The exterior sun is behind the blind and never reaches
+         the room face directly, so this is the whole of the base term. */
+      let k = 0.4 + 0.42 * local;
+      /* Sky through the gap, bouncing off the slat below onto this one. */
+      k += 0.4 * openness * smooth(0.34, 1, bright ? v : 1 - v);
+      /* The crown is convex to the room, so its middle turns furthest towards
+         the light in the room and reads a touch brighter than either edge. */
+      k += 0.1 * Math.cos((v - 0.5) * Math.PI);
+      k -= 0.1 * smooth(0.55, 0, bright ? v : 1 - v) * (1 - openness * 0.5);
+      return k;
+    };
+    /* The edge is two tenths of a millimetre thick and sits against a blown
+       out sky, so it scatters a fringe. It is the single detail that stops the
+       blind reading as flat bands of colour.
+       It has to fall away as the slat gets lighter. The fringe is the contrast
+       between the scatter and the body of the slat, and a white slat is
+       already as bright as the sky behind it, so there is nothing to see. Left
+       flat, it blew White, Cream and Metallic Silver out until all three read
+       as the same pale wash and the blind looked see through when its slats
+       were seventy per cent overlapped. */
+    const faceLum = (0.2126 * face.r + 0.7152 * face.g + 0.0722 * face.b) / 255;
+    const contrast = 1 - faceLum * 0.82;
+    const fringeAt = (v) => {
+      const lit = bright ? smooth(0.7, 1, v) : smooth(0.3, 0, v);
+      return lit * (0.16 + 0.52 * openness) * (0.3 + 0.7 * facing) * contrast;
+    };
+    const highlightAt = (v) => {
+      const spec = Math.exp(-((v - specPos) ** 2) / 0.02) * specStrength * contrast;
+      return (spec + fringeAt(v) * 0.5) * 205;
+    };
+
+    const grad = g.createLinearGradient(0, 0, 0, bandH);
+    const steps = 13;
+    for (let i = 0; i < steps; i += 1) {
+      const v = i / (steps - 1);
+      /* The fringe thins the slat rather than painting over it. Scattering
+         round an edge that thin is partial occlusion, so letting the scene
+         through is both what happens and what makes it look photographed: the
+         highlight comes out sky coloured at the head of the pane and green
+         down where the lawn is, instead of the same white rule fifty times. */
+      grad.addColorStop(v, paint(face, luminanceAt(v), highlightAt(v), 1 - fringeAt(v) * 0.62));
+    }
+    g.fillStyle = grad;
+    g.fillRect(0, 0, W, bandH);
+
+    return { canvas: c, ss };
+  };
+
+  /* Everything that is not the blind. `glass` is the tint, the sheen and the
+     vignette at glass size; `frame` is the aluminium, its mitres and the
+     rebate shadow it throws, at canvas size and transparent everywhere else.
+     An aluminium frame needs three bands rather than one flat fill, because
+     what identifies a real one at a glance is the step down from the outer
+     face to the glazing bead and the shadow that step drops onto the glass.
+     Mitres go in at forty five degrees for the same reason: butt joints read
+     as a box drawn round a picture. */
+  const buildChrome = (L) => {
+    const glass = document.createElement('canvas');
+    glass.width = Math.max(1, Math.round(L.glassW));
+    glass.height = Math.max(1, Math.round(L.glassH));
+    const gg = glass.getContext('2d');
+    if (gg) {
+      const w = glass.width;
+      const h = glass.height;
+      gg.fillStyle = 'rgba(196,212,222,0.07)';
+      gg.fillRect(0, 0, w, h);
+      const sheen = gg.createLinearGradient(0, 0, w * 1.15, h * 0.8);
+      sheen.addColorStop(0, 'rgba(255,255,255,0.16)');
+      sheen.addColorStop(0.34, 'rgba(255,255,255,0.05)');
+      sheen.addColorStop(0.52, 'rgba(255,255,255,0)');
+      sheen.addColorStop(1, 'rgba(255,255,255,0.05)');
+      gg.fillStyle = sheen;
+      gg.fillRect(0, 0, w, h);
+      const vignette = gg.createRadialGradient(w / 2, h / 2, Math.min(w, h) * 0.32, w / 2, h / 2, Math.max(w, h) * 0.72);
+      vignette.addColorStop(0, 'rgba(0,0,0,0)');
+      vignette.addColorStop(1, 'rgba(8,11,14,0.13)');
+      gg.fillStyle = vignette;
+      gg.fillRect(0, 0, w, h);
+    }
+
+    const frameCanvas = document.createElement('canvas');
+    frameCanvas.width = Math.max(1, Math.round(width));
+    frameCanvas.height = Math.max(1, Math.round(height));
+    const f = frameCanvas.getContext('2d');
+    if (!f) return { glass, frame: null };
+
+    const framePx = FRAME * L.scale;
+    const beadPx = framePx * 0.34;
+    const facePx = framePx - beadPx;
+    const band = (x, y, w, h, from, to, horizontal) => {
+      const grad = f.createLinearGradient(x, y, horizontal ? x : x + w, horizontal ? y + h : y);
+      grad.addColorStop(0, from);
+      grad.addColorStop(1, to);
+      f.fillStyle = grad;
+      f.fillRect(x, y, w, h);
+    };
+
+    /* Rebate shadow first, clipped to the glass, so the frame lands on top of
+       its own shadow rather than beside it. */
+    f.save();
+    f.beginPath();
+    f.rect(L.glassX, L.glassY, L.glassW, L.glassH);
+    f.clip();
+    const rebate = Math.max(1.5, framePx * 0.4);
+    const top = f.createLinearGradient(0, L.glassY, 0, L.glassY + rebate);
+    top.addColorStop(0, 'rgba(18,22,26,0.42)');
+    top.addColorStop(1, 'rgba(18,22,26,0)');
+    f.fillStyle = top;
+    f.fillRect(L.glassX, L.glassY, L.glassW, rebate);
+    const left = f.createLinearGradient(L.glassX, 0, L.glassX + rebate, 0);
+    left.addColorStop(0, 'rgba(18,22,26,0.34)');
+    left.addColorStop(1, 'rgba(18,22,26,0)');
+    f.fillStyle = left;
+    f.fillRect(L.glassX, L.glassY, rebate, L.glassH);
+    const right = f.createLinearGradient(L.glassX + L.glassW - rebate, 0, L.glassX + L.glassW, 0);
+    right.addColorStop(0, 'rgba(18,22,26,0)');
+    right.addColorStop(1, 'rgba(18,22,26,0.24)');
+    f.fillStyle = right;
+    f.fillRect(L.glassX + L.glassW - rebate, L.glassY, rebate, L.glassH);
+    f.restore();
+
+    f.save();
+    f.beginPath();
+    f.rect(L.x, L.y, L.unitW, L.unitH);
+    f.rect(L.glassX, L.glassY, L.glassW, L.glassH);
+    f.clip('evenodd');
+    band(L.x, L.y, L.unitW, facePx, '#dfe2e4', '#b7bbbf', true);
+    band(L.x, L.y + L.unitH - facePx, L.unitW, facePx, '#95999e', '#b4b8bc', true);
+    band(L.x, L.y, facePx, L.unitH, '#d7dadd', '#b1b5b9', false);
+    band(L.x + L.unitW - facePx, L.y, facePx, L.unitH, '#9fa4a8', '#c3c7ca', false);
+    band(L.glassX - beadPx, L.glassY - beadPx, L.glassW + beadPx * 2, beadPx, '#8b9095', '#b6babe', true);
+    band(L.glassX - beadPx, L.glassY + L.glassH, L.glassW + beadPx * 2, beadPx, '#c2c6c9', '#8b9095', true);
+    band(L.glassX - beadPx, L.glassY, beadPx, L.glassH, '#90959a', '#b8bcbf', false);
+    band(L.glassX + L.glassW, L.glassY, beadPx, L.glassH, '#b6babe', '#90959a', false);
+    f.strokeStyle = 'rgba(70,78,84,0.2)';
+    f.lineWidth = Math.max(0.7, L.scale * 0.7);
+    f.beginPath();
+    [[L.x, L.y, L.glassX, L.glassY], [L.x + L.unitW, L.y, L.glassX + L.glassW, L.glassY],
+      [L.x, L.y + L.unitH, L.glassX, L.glassY + L.glassH], [L.x + L.unitW, L.y + L.unitH, L.glassX + L.glassW, L.glassY + L.glassH]]
+      .forEach(([ax, ay, bx, by]) => { f.moveTo(ax, ay); f.lineTo(bx, by); });
+    f.stroke();
+    f.restore();
+
+    f.strokeStyle = 'rgba(38,46,52,0.5)';
+    f.lineWidth = Math.max(1, L.scale * 1.1);
+    f.strokeRect(L.glassX, L.glassY, L.glassW, L.glassH);
+    f.strokeStyle = 'rgba(255,255,255,0.55)';
+    f.lineWidth = 1;
+    f.strokeRect(L.x + 0.5, L.y + 0.5, L.unitW - 1, L.unitH - 1);
+
+    return { glass, frame: frameCanvas };
+  };
+
+  const layout = () => {
+    const box = stage.getBoundingClientRect();
+    const w = Math.max(160, Math.round(box.width));
+    const h = Math.max(160, Math.round(box.height));
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = w;
+    height = h;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const scale = Math.min(w / UNIT_W, h / UNIT_H);
+    const unitW = UNIT_W * scale;
+    const unitH = UNIT_H * scale;
+    return {
+      scale,
+      x: (w - unitW) / 2,
+      y: (h - unitH) / 2,
+      unitW,
+      unitH,
+      glassX: (w - unitW) / 2 + FRAME * scale,
+      glassY: (h - unitH) / 2 + FRAME * scale,
+      glassW: GLASS_W * scale,
+      glassH: GLASS_H * scale,
+    };
+  };
+
+  const draw = (settled = true) => {
+    const L = layout();
+    const phi = ((tilt / 100) - 0.5) * 2 * MAX_TILT;
+    const pitchPx = PITCH * L.scale;
+    const slatPx = (SLAT * Math.abs(Math.sin(phi)) + SLAT_T * Math.abs(Math.cos(phi))) * L.scale;
+
+    ctx.fillStyle = '#151719';
+    ctx.fillRect(0, 0, width, height);
+
+    const key = `${Math.round(L.glassW)}x${Math.round(L.glassH)}`;
+    if (sceneKey !== key) {
+      scene = buildScene(L.glassW, L.glassH);
+      sceneKey = key;
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(L.glassX, L.glassY, L.glassW, L.glassH);
+    ctx.clip();
+
+    if (scene && scene.view) ctx.drawImage(scene.view, L.glassX, L.glassY, L.glassW, L.glassH);
+
+    const headPx = HEAD * L.scale;
+    const railPx = RAIL * L.scale;
+    const raised = clamp(lift / 100, 0, 1);
+    const stacked = Math.round(SLAT_COUNT * raised);
+    const deployed = SLAT_COUNT - stacked;
+    const stackPx = stacked * STACK_PITCH * L.scale;
+    const topPx = L.glassY + headPx + stackPx;
+
+    const tKey = `${shownFace.r | 0},${shownFace.g | 0},${shownFace.b | 0},${shownBack.r | 0},${shownBack.g | 0},${shownBack.b | 0},${shownMetallic.toFixed(2)},${phi.toFixed(4)},${pitchPx.toFixed(2)},${slatPx.toFixed(2)}`;
+    if (tileKey !== tKey) {
+      tile = buildTile(shownFace, shownBack, shownMetallic > 0.5, phi, pitchPx, slatPx);
+      tileKey = tKey;
+    }
+
+    if (tile && deployed > 0) {
+      /* Slats are stamped from the top of the drop down, so the wobble index
+         follows the slat rather than the row: raising the blind takes slats
+         out of the drop and their neighbours keep the character they had. */
+      const first = SLAT_COUNT - deployed;
+      const midX = L.glassX + L.glassW / 2;
+      for (let i = 0; i < deployed; i += 1) {
+        const w = wobble[first + i] || { offset: 0, gain: 0, lean: 0 };
+        const y = topPx + i * pitchPx + w.offset * pitchPx * 0.16;
+        ctx.globalAlpha = 1 + w.gain * 0.16;
+        /* A fifth of a degree of lean per slat. It is far too small to see on
+           any one slat and it is the whole difference across fifty of them:
+           perfectly level slats read as a printed rule, and no real blind
+           hangs that straight. */
+        ctx.save();
+        ctx.translate(midX, y + pitchPx / 2);
+        ctx.rotate(w.lean * 0.0042);
+        ctx.drawImage(tile.canvas, -L.glassW / 2 - 2, -pitchPx / 2, L.glassW + 4, pitchPx);
+        ctx.restore();
+      }
+      ctx.globalAlpha = 1;
+
+      const railY = topPx + deployed * pitchPx;
+      const rail = ctx.createLinearGradient(0, railY, 0, railY + railPx);
+      rail.addColorStop(0, paint(shownFace, 0.86, 26));
+      rail.addColorStop(0.45, paint(shownFace, 0.6));
+      rail.addColorStop(1, paint(shownFace, 0.4));
+      ctx.fillStyle = rail;
+      ctx.fillRect(L.glassX, railY, L.glassW, railPx);
+      const under = ctx.createLinearGradient(0, railY + railPx, 0, railY + railPx * 2.4);
+      under.addColorStop(0, 'rgba(10,13,16,0.4)');
+      under.addColorStop(1, 'rgba(10,13,16,0)');
+      ctx.fillStyle = under;
+      ctx.fillRect(L.glassX, railY + railPx, L.glassW, railPx * 1.4);
+    }
+
+    /* The stack. Slats are conserved, so raising the blind moves them out of
+       the drop and into a dense band under the head rather than shrinking the
+       drop and losing them. */
+    if (stacked > 0) {
+      const y = L.glassY + headPx;
+      ctx.fillStyle = paint(shownFace, 0.52);
+      ctx.fillRect(L.glassX, y, L.glassW, stackPx);
+      const linePx = STACK_PITCH * L.scale;
+      if (linePx >= 1.4) {
+        ctx.fillStyle = paint(shownFace, 0.92, 18, 0.55);
+        for (let i = 0; i < stacked; i += 1) {
+          ctx.fillRect(L.glassX, y + i * linePx, L.glassW, Math.max(0.6, linePx * 0.34));
+        }
+      } else {
+        const texture = ctx.createLinearGradient(0, y, 0, y + stackPx);
+        texture.addColorStop(0, paint(shownFace, 1.05, 20, 0.4));
+        texture.addColorStop(1, paint(shownFace, 0.62, 0, 0.4));
+        ctx.fillStyle = texture;
+        ctx.fillRect(L.glassX, y, L.glassW, stackPx);
+      }
+      ctx.fillStyle = 'rgba(255,255,255,0.16)';
+      ctx.fillRect(L.glassX, y, L.glassW, Math.max(0.7, L.scale * 1.2));
+      const drop = ctx.createLinearGradient(0, y + stackPx, 0, y + stackPx + railPx * 1.8);
+      drop.addColorStop(0, 'rgba(10,13,16,0.45)');
+      drop.addColorStop(1, 'rgba(10,13,16,0)');
+      ctx.fillStyle = drop;
+      ctx.fillRect(L.glassX, y + stackPx, L.glassW, railPx * 1.8);
+    }
+
+    /* Veiling glare. The blurred garden added back over the finished blind, so
+       the light coming through the gaps spills onto the slats beside them. */
+    if (scene && scene.haze) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      /* Glare scales against the slat, not the window. Adding the same wash to
+         a white blind as to a black one turned White, Cream and Metallic
+         Silver green, because the garden was being added to a surface that had
+         no headroom left to take it. */
+      const faceLum = (0.2126 * shownFace.r + 0.7152 * shownFace.g + 0.0722 * shownFace.b) / 255;
+      ctx.globalAlpha = 0.11 * (0.34 + 0.66 * (1 - faceLum * 0.86));
+      ctx.drawImage(scene.haze, L.glassX, L.glassY, L.glassW, L.glassH);
+      ctx.restore();
+    }
+
+    /* Ladder cords. Fine, taut and only really visible where they cross a dark
+       slat, which is why they go on with `lighter` rather than as flat paint:
+       against the gaps they all but disappear, exactly as in the photography. */
+    const cordW = Math.max(0.6, L.scale * 0.9);
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = 'rgba(126,132,128,0.34)';
+    [0.24, 0.76].forEach((at) => {
+      ctx.fillRect(L.glassX + L.glassW * at, L.glassY + headPx, cordW, L.glassH - headPx);
+    });
+    ctx.restore();
+
+    /* Head channel: the thirty millimetre Notan profile, seen through glass. */
+    const head = ctx.createLinearGradient(0, L.glassY, 0, L.glassY + headPx);
+    head.addColorStop(0, '#d8dcdd');
+    head.addColorStop(0.35, '#b3b8bb');
+    head.addColorStop(0.85, '#8f9599');
+    head.addColorStop(1, '#6d7377');
+    ctx.fillStyle = head;
+    ctx.fillRect(L.glassX, L.glassY, L.glassW, headPx);
+
+    ctx.restore();
+
+    /* Glass and frame are both cached: neither depends on tilt, lift or
+       colour, so recomputing a dozen gradients for them on every frame of a
+       slider drag was the largest single cost in the loop and bought nothing.
+       They rebuild only when the box resizes. */
+    if (chromeKey !== key) {
+      unitChrome = buildChrome(L);
+      chromeKey = key;
+    }
+    if (unitChrome) {
+      if (unitChrome.glass) ctx.drawImage(unitChrome.glass, L.glassX, L.glassY, L.glassW, L.glassH);
+      if (unitChrome.frame) ctx.drawImage(unitChrome.frame, 0, 0, width, height);
+    }
+
+    /* Grain is a static texture over a still image, so it can wait for the
+       last frame of a movement. Skipping it while the sliders are moving takes
+       a full canvas `overlay` composite out of the animating path, which is
+       what keeps a mid-range phone smooth during a drag. */
+    if (settled) {
+      if (!grain) grain = buildGrain();
+      const pattern = grain ? ctx.createPattern(grain, 'repeat') : null;
+      if (pattern) {
+        ctx.save();
+        ctx.globalAlpha = 0.05;
+        ctx.globalCompositeOperation = 'overlay';
+        ctx.fillStyle = pattern;
+        ctx.fillRect(0, 0, width, height);
+        ctx.restore();
+      }
+    }
+  };
+
+  const describe = () => {
+    if (!readout) return;
+    const swatch = swatches[activeIndex];
+    const t = tiltTarget;
+    const l = liftTarget;
+    let tiltWord = 'tilted part open';
+    if (t <= 6 || t >= 94) tiltWord = 'slats closed';
+    else if (t >= 44 && t <= 56) tiltWord = 'slats fully open';
+    else if (t < 44) tiltWord = 'tilted open, angled up';
+    else tiltWord = 'tilted open, angled down';
+    let liftWord = `raised ${Math.round(l)}%`;
+    if (l <= 1) liftWord = 'blind fully down';
+    else if (l >= 99) liftWord = 'blind fully raised';
+    readout.textContent = `${swatch.name}${swatch.code ? ` ${swatch.code}` : ''} — ${tiltWord}, ${liftWord}.`;
+  };
+
+  const step = () => {
+    frame = 0;
+    const ease = still ? 1 : 0.19;
+    const target = swatches[activeIndex];
+    const dt = tiltTarget - tilt;
+    const dl = liftTarget - lift;
+    const df = target.metallic ? 1 : 0;
+
+    tilt += dt * ease;
+    lift += dl * ease;
+    shownFace = mixRgb(shownFace, target.face, ease);
+    shownBack = mixRgb(shownBack, target.back, ease);
+    shownMetallic += (df - shownMetallic) * ease;
+
+    let settled = Math.abs(dt) < 0.02 && Math.abs(dl) < 0.02;
+    settled = settled && Math.abs(shownFace.r - target.face.r) < 0.4 && Math.abs(shownFace.g - target.face.g) < 0.4 && Math.abs(shownFace.b - target.face.b) < 0.4;
+    settled = settled && Math.abs(shownBack.r - target.back.r) < 0.4 && Math.abs(shownMetallic - df) < 0.01;
+
+    if (settled) {
+      tilt = tiltTarget;
+      lift = liftTarget;
+      shownFace = { ...target.face };
+      shownBack = { ...target.back };
+      shownMetallic = df;
+    }
+
+    draw(settled);
+
+    if (!settled && visible) frame = window.requestAnimationFrame(step);
+  };
+
+  const nudge = () => {
+    if (frame) return;
+    frame = window.requestAnimationFrame(step);
+  };
+
+  tiltInput.addEventListener('input', () => {
+    tiltTarget = clamp(Number.parseFloat(tiltInput.value) || 0, 0, 100);
+    describe();
+    nudge();
+  });
+  liftInput.addEventListener('input', () => {
+    liftTarget = clamp(Number.parseFloat(liftInput.value) || 0, 0, 100);
+    describe();
+    nudge();
+  });
+
+  colourButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      activeIndex = index;
+      colourButtons.forEach((other, i) => {
+        other.classList.toggle('is-active', i === index);
+        other.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+      describe();
+      nudge();
+    });
+  });
+
+  if ('ResizeObserver' in window) {
+    let last = '';
+    const observer = new ResizeObserver(() => {
+      const box = stage.getBoundingClientRect();
+      const key = `${Math.round(box.width)}x${Math.round(box.height)}`;
+      if (key === last) return;
+      last = key;
+      sceneKey = '';
+      tileKey = '';
+      chromeKey = '';
+      nudge();
+    });
+    observer.observe(stage);
+  } else {
+    window.addEventListener('resize', () => {
+      sceneKey = '';
+      tileKey = '';
+      chromeKey = '';
+      nudge();
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const seen = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        visible = entry.isIntersecting;
+        if (visible) nudge();
+      });
+    }, { rootMargin: '160px' });
+    seen.observe(stage);
+  }
+
+  root.classList.add('is-live');
+  describe();
+  draw();
+});
+
 document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
   const track = carousel.querySelector('[data-fg-colour-carousel-track]');
   const slides = [...carousel.querySelectorAll('[data-fg-colour-slide]')];

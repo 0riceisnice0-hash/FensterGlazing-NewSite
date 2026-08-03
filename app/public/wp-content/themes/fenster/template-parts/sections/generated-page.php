@@ -3900,6 +3900,27 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
+        <?php
+        /* The blind visualiser sits here, straight after the why section, for
+           the same reason the obscured glass visualiser sits where it does:
+           the page has just told the customer the blind is sealed in the
+           glass and they cannot touch it, so the next thing to do is let them
+           work it. Everything below this point is specification and process,
+           which reads better once the product has been understood. */
+        ?>
+        <?php if ($is_integral_blinds) : ?>
+            <?php
+            get_template_part('template-parts/components/blinds-visualiser', null, [
+                'id'            => 'blind-visualiser',
+                'eyebrow'       => __('See it work', 'fenster'),
+                'heading'       => __('Work the blind before you order it.', 'fenster'),
+                'intro'         => __('This is a Notan magnetic blind sealed inside a sealed unit, drawn straight on. Move the sliders to tilt the slats and raise the blind, and pick any of the nine standard colours to see it in the finish you are considering.', 'fenster'),
+                'fallback_image' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg',
+                'fallback_alt'  => __('Close-up of a Notan integral blind sealed between the panes of a glazed door', 'fenster'),
+            ]);
+            ?>
+        <?php endif; ?>
+
         <?php if ($is_pet_flap_page && ! empty($pet_flap_cards)) : ?>
             <section class="fg-pet-flap-guide">
                 <div class="container fg-pet-flap-guide__grid">

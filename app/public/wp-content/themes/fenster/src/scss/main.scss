@@ -37126,3 +37126,290 @@ html.fg-blinds-reveal-locked {
     transition: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   Notan magnetic integral blind visualiser
+   ------------------------------------------------------------------ */
+
+.fg-blind-visualiser {
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+
+.fg-blind-visualiser__shell {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  align-items: start;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'intro'
+    'stage'
+    'readout'
+    'controls'
+    'colours'
+    'note';
+}
+
+.fg-blind-visualiser__intro {
+  grid-area: intro;
+  max-width: 46rem;
+}
+
+.fg-blind-visualiser__intro h2 {
+  margin-bottom: 0.85rem;
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  line-height: 1.02;
+}
+
+.fg-blind-visualiser__intro p:not(.eyebrow) {
+  color: var(--color-muted);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+}
+
+.fg-blind-visualiser__stage {
+  grid-area: stage;
+  position: relative;
+  /* Matches the unit the renderer lays out, glass plus frame, so the drawing
+     fills the box instead of letterboxing inside it. */
+  aspect-ratio: 554 / 714;
+  max-height: 620px;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 460px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #151719;
+  box-shadow: 0 26px 70px rgba(0, 45, 58, 0.24);
+  /* The stage is a drawing, not a scroller. Letting vertical pans through
+     keeps the page scrollable when a thumb lands on it, which is the same
+     rule the obscured glass visualiser follows. */
+  touch-action: pan-y;
+}
+
+.fg-blind-visualiser__canvas,
+.fg-blind-visualiser__fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The photograph is what shows until the controller has a context and a first
+   frame. A thrown error therefore leaves a real Notan close-up on the page
+   rather than a black rectangle, which a <noscript> block would not catch. */
+.fg-blind-visualiser__canvas {
+  display: none;
+}
+
+.fg-blind-visualiser.is-live .fg-blind-visualiser__canvas {
+  display: block;
+}
+
+.fg-blind-visualiser.is-live .fg-blind-visualiser__fallback {
+  display: none;
+}
+
+.fg-blind-visualiser__readout {
+  grid-area: readout;
+  margin: 0;
+  min-height: 1.5em;
+  color: var(--color-ink);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.fg-blind-visualiser__controls {
+  grid-area: controls;
+  display: grid;
+  gap: clamp(1rem, 2.4vw, 1.6rem);
+}
+
+.fg-blind-visualiser__slider label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.fg-blind-visualiser__slider input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 26px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.fg-blind-visualiser__slider input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-line), #b9c9cd);
+}
+
+.fg-blind-visualiser__slider input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-line), #b9c9cd);
+}
+
+.fg-blind-visualiser__slider input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -8px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 4px 12px rgba(0, 45, 58, 0.3);
+}
+
+.fg-blind-visualiser__slider input[type='range']::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 4px 12px rgba(0, 45, 58, 0.3);
+}
+
+.fg-blind-visualiser__slider input[type='range']:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.fg-blind-visualiser__scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+}
+
+.fg-blind-visualiser__scale em {
+  font-style: normal;
+}
+
+.fg-blind-visualiser__scale em:nth-child(2) {
+  transform: translateX(-50%);
+  margin-left: 50%;
+  position: absolute;
+}
+
+.fg-blind-visualiser__scale {
+  position: relative;
+}
+
+.fg-blind-visualiser__scale--pair em:nth-child(2) {
+  position: static;
+  transform: none;
+  margin-left: 0;
+}
+
+.fg-blind-visualiser__colours {
+  grid-area: colours;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 0.6rem;
+}
+
+.fg-blind-visualiser__colour {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.fg-blind-visualiser__colour i {
+  grid-row: 1 / 3;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(6, 33, 42, 0.22);
+  border-radius: 50%;
+  /* Two stops with a hard edge, so White/Anthracite shows both of its faces
+     on the chip exactly as Notan draw it on their own swatch. */
+  background: linear-gradient(90deg, var(--swatch) 0 50%, var(--swatch-reverse) 50% 100%);
+}
+
+.fg-blind-visualiser__colour-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.fg-blind-visualiser__colour-code {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.fg-blind-visualiser__colour:hover {
+  border-color: #9fb4ba;
+  transform: translateY(-1px);
+}
+
+.fg-blind-visualiser__colour:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.fg-blind-visualiser__colour.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 10px 24px rgba(0, 45, 58, 0.12);
+}
+
+.fg-blind-visualiser__note {
+  grid-area: note;
+  margin: 0;
+  max-width: 52rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+@media (min-width: 861px) {
+  .fg-blind-visualiser__shell {
+    grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1fr);
+    grid-template-areas:
+      'intro    intro'
+      'stage    readout'
+      'stage    controls'
+      'stage    colours'
+      'stage    note';
+    align-content: start;
+    column-gap: clamp(2rem, 4vw, 3.6rem);
+    row-gap: clamp(1rem, 2vw, 1.6rem);
+  }
+
+  .fg-blind-visualiser__stage {
+    grid-row: 2 / 6;
+    max-width: none;
+    max-height: none;
+    align-self: start;
+  }
+
+  .fg-blind-visualiser__note {
+    align-self: end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-blind-visualiser__colour {
+    transition: none;
+  }
+
+  .fg-blind-visualiser__colour:hover {
+    transform: none;
+  }
+}

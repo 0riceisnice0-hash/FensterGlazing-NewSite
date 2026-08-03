@@ -474,6 +474,48 @@ function fenster_site_data(): array
                for roof units, so that is the name the page uses. */
             'roof-lanterns'           => ['double' => '1.0 W/m²K'],
         ],
+        /* The nine standard slat colours of the Notan magnetic integrated
+           blind, which is the system Fenster supplies on /integral-blinds/.
+
+           These are not invented and they are not eyedropped from a photo. On
+           2026-08-03 the official brochure
+           `notan.co.uk/wp-content/uploads/2024/05/Notan-Magnetic-Integrated-blinds.pdf`
+           was downloaded and confirmed the range is nine, not the "11 standard
+           colour choices" the Our Blinds page still claims. The names and the
+           BY/RAL codes are transcribed from that brochure. Each `hex` is
+           sampled from the centre of Notan's own swatch asset under
+           `notan.co.uk/wp-content/uploads/2021/02/`, which carries an embedded
+           sRGB IEC61966-2.1 profile, so the numbers are already in the space
+           the browser paints in and need no conversion.
+
+           Several of them will look wrong at a glance and are not. Notan's
+           CREAM is a warm grey rather than a cream, and their ROSE GOLD is a
+           greige rather than a pink. Both were checked twice, against the web
+           swatch and against the printed brochure page, and they agree. Do not
+           "correct" them towards what the name suggests.
+
+           WHITE/ANTHRACITE BY012 is the only two-sided slat: white on the room
+           face, anthracite on the outward face. `reverse` exists for that one
+           reason and the visualiser uses it to paint the back of a slat seen
+           through the gap. Leave `reverse` unset on the other eight; the
+           renderer treats absent as "same colour both sides", which is true.
+
+           Deliberately not stored here: a slat width. Notan publish the 30mm
+           profile that houses the mechanism, not the slat dimension, so the
+           renderer assumes the standard integral-blind 12.5mm slat for
+           geometry only and no figure is printed on the page. If Notan confirm
+           a width it can be added and shown; until then it must not be. */
+        'notan_blind_colours' => [
+            ['key' => 'white',            'name' => 'White',            'code' => 'BY001',   'hex' => '#FFFFFF'],
+            ['key' => 'cream',            'name' => 'Cream',            'code' => 'BY010',   'hex' => '#9B9690'],
+            ['key' => 'rose-gold',        'name' => 'Rose Gold',        'code' => 'BY014',   'hex' => '#9F8F7F'],
+            ['key' => 'anthracite',       'name' => 'Anthracite Grey',  'code' => 'RAL7016', 'hex' => '#1A1C1B'],
+            ['key' => 'brown',            'name' => 'Brown',            'code' => 'BY006',   'hex' => '#503723'],
+            ['key' => 'dark-brown',       'name' => 'Dark Brown',       'code' => 'BY007',   'hex' => '#2D211B'],
+            ['key' => 'metallic-silver',  'name' => 'Metallic Silver',  'code' => 'BY004',   'hex' => '#494A4C', 'metallic' => true],
+            ['key' => 'white-anthracite', 'name' => 'White/Anthracite', 'code' => 'BY012',   'hex' => '#FFFFFF', 'reverse' => '#1A1C1B'],
+            ['key' => 'black',            'name' => 'Black',            'code' => 'RAL9005', 'hex' => '#151419'],
+        ],
         'product_media' => [
             'aluminium-bifold-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'alt' => 'Anthracite aluminium bifold doors fitted to a brick home'],
