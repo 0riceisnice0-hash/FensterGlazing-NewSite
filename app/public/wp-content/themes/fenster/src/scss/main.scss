@@ -3841,61 +3841,42 @@ h3 {
   text-transform: uppercase;
 }
 
-/* The glazing tile is the only interactive one in the strip. Its third row is
-   always occupied, either by the toggle or by the static "Double glazed" line,
-   so a system that cannot take triple is exactly as tall as one that can and
-   the row of four stays level. Do not drop the note to save space; a ragged row
-   is what makes this read as bolted on, and the note is also how the page says
-   double-only without writing a sentence about what is not included. */
-.fg-product-pulse__glazing {
-  gap: 0.3rem;
+/* Both glazing figures, always visible, triple above double. No control: the
+   owner rejected a toggle, and two numbers are the whole point of the tile.
+
+   The rows are a two-column grid rather than inline text so the figures align
+   under each other and the glazing words form their own column. That alignment
+   is what keeps it reading as one fact with two values instead of two separate
+   lines of copy. The grid stretches the tiles to a common height, so a
+   single-row tile on a double-only route still sits level with its neighbours. */
+.fg-product-pulse__glazing-rows {
+  display: grid;
+  gap: 0.1rem;
 }
 
-.fg-product-pulse__glazing-toggle {
-  display: inline-flex;
-  align-self: start;
-  padding: 2px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  background: #ffffff;
+.fg-product-pulse__glazing-rows > span {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.4rem;
 }
 
-.fg-product-pulse__glazing-toggle button {
-  padding: 0.16rem 0.6rem;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
+/* The glazing word is deliberately quieter than the figure. Same size as the
+   tile label above it, so the tile reads label, then values, rather than three
+   competing weights. */
+.fg-product-pulse__glazing-rows i {
   color: var(--color-muted);
-  font-family: inherit;
   font-size: 0.68rem;
+  font-style: normal;
   font-weight: 800;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: background 180ms ease, color 180ms ease;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.fg-product-pulse__glazing-toggle button:hover {
-  color: var(--color-steel);
-}
-
-.fg-product-pulse__glazing-toggle button.is-active {
-  background: var(--color-accent);
-  color: #ffffff;
-}
-
-.fg-product-pulse__glazing-note {
-  color: var(--color-muted);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-/* Below the four-across breakpoint the tiles get narrower, and a two-segment
-   pill plus a figure is the widest content in the strip. Let it wrap rather
-   than squeeze the figure. */
-@media (max-width: 860px) {
-  .fg-product-pulse__glazing-toggle button {
-    padding: 0.16rem 0.45rem;
+@media (max-width: 560px) {
+  .fg-product-pulse__glazing-rows > span {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
   }
 }
 

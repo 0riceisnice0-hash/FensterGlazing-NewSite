@@ -52,17 +52,29 @@ $triple = (string) ($glazing['triple'] ?? '');
                 $is_uvalue = $double !== '' && stripos($label, 'U-value') === 0;
                 ?>
                 <?php if ($is_uvalue) : ?>
-                    <li class="fg-product-pulse__glazing"<?php echo $triple !== '' ? ' data-fg-glazing' : ''; ?>>
+                    <li class="fg-product-pulse__glazing">
                         <small><?php esc_html_e('U-value', 'fenster'); ?></small>
-                        <strong data-fg-glazing-figure><?php echo esc_html($double); ?></strong>
-                        <?php if ($triple !== '') : ?>
-                            <span class="fg-product-pulse__glazing-toggle" role="group" aria-label="<?php esc_attr_e('Choose glazing', 'fenster'); ?>">
-                                <button type="button" class="is-active" data-fg-glazing-option="<?php echo esc_attr($double); ?>" aria-pressed="true"><?php esc_html_e('Double', 'fenster'); ?></button>
-                                <button type="button" data-fg-glazing-option="<?php echo esc_attr($triple); ?>" aria-pressed="false"><?php esc_html_e('Triple', 'fenster'); ?></button>
-                            </span>
-                        <?php else : ?>
-                            <span class="fg-product-pulse__glazing-note"><?php esc_html_e('Double glazed', 'fenster'); ?></span>
-                        <?php endif; ?>
+                        <?php
+                        /* Triple above double, on the owner's instruction. Both
+                           are always visible: a system that takes triple shows
+                           two rows, one that does not shows a single row that
+                           still names its glazing, so the difference between
+                           the two products is legible without a sentence about
+                           what is not included. */
+                        $rows = [];
+                        if ($triple !== '') {
+                            $rows[] = ['figure' => $triple, 'glazing' => __('Triple', 'fenster')];
+                        }
+                        $rows[] = ['figure' => $double, 'glazing' => __('Double', 'fenster')];
+                        ?>
+                        <span class="fg-product-pulse__glazing-rows">
+                            <?php foreach ($rows as $row) : ?>
+                                <span>
+                                    <strong><?php echo esc_html($row['figure']); ?></strong>
+                                    <i><?php echo esc_html($row['glazing']); ?></i>
+                                </span>
+                            <?php endforeach; ?>
+                        </span>
                     </li>
                 <?php else : ?>
                     <li>
