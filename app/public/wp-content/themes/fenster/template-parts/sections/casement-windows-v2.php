@@ -53,7 +53,7 @@ $gallery = [
     ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
     ['file' => 'casement-leighton-buzzard', 'width' => 1400, 'focus' => '50% 55%', 'caption' => 'Leighton Buzzard', 'alt' => 'White Liniar casement windows fitted by Fenster across a Leighton Buzzard terrace'],
     ['file' => 'casement-cottage-arch', 'width' => 1200, 'focus' => '76% 50%', 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
-    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '40% 45%', 'caption' => 'Leaded diamond glass, Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
+    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '40% 45%', 'caption' => 'Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
 ];
 
 $related = [
