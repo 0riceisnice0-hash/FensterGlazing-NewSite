@@ -311,6 +311,10 @@ $patio_handles = fenster_data('patio_handles', []);
 $patio_handles = is_array($patio_handles) ? $patio_handles : [];
 $patio_handle_slugs = $patio_handles['slugs'] ?? [];
 $show_patio_handles = $use_product_journey && is_array($patio_handle_slugs) && in_array($slug, $patio_handle_slugs, true);
+$lift_slide_handles = fenster_data('lift_slide_handles', []);
+$lift_slide_handles = is_array($lift_slide_handles) ? $lift_slide_handles : [];
+$lift_slide_handle_slugs = $lift_slide_handles['slugs'] ?? [];
+$show_lift_slide_handles = $use_product_journey && is_array($lift_slide_handle_slugs) && in_array($slug, $lift_slide_handle_slugs, true);
 $obscure_glass = fenster_data('obscure_glass', []);
 $obscure_glass = is_array($obscure_glass) ? $obscure_glass : [];
 $obscure_glass_textures = $obscure_glass['textures'] ?? [];
@@ -2113,6 +2117,23 @@ if ($is_window_handles) {
             'details_heading' => 'Handle specification',
             'swatches_label' => 'Patio door handle finish options',
             'features_label' => 'Patio door handle features',
+        ]);
+
+        /* Fifth family on the hub, and the one that closes the "patio to come"
+           note this page was built with. A lift and slide is a different
+           mechanism from the uPVC slider above it, which is why it is here
+           rather than folded into that section. */
+        get_template_part('template-parts/components/handle-chooser', null, [
+            'id' => 'lift-slide-handle-finishes',
+            'modifier' => 'fg-window-handles--hub fg-lift-slide-handles',
+            'eyebrow' => 'Lift and slide door handles',
+            'heading' => 'A lever inside, a finger cup outside.',
+            'intro' => (string) ($lift_slide_handles['intro'] ?? ''),
+            'data' => $lift_slide_handles,
+            'alt_pattern' => 'architeQ Aspire lift and slide door handle in %s',
+            'details_heading' => 'Handle specification',
+            'swatches_label' => 'Lift and slide door handle finish options',
+            'features_label' => 'Lift and slide door handle features',
         ]);
         ?>
 
@@ -4249,6 +4270,10 @@ if ($is_commercial_hub) {
 
         <?php if ($show_patio_handles) : ?>
             <?php get_template_part('template-parts/components/handle-grid', null, fenster_patio_handle_grid_args()); ?>
+        <?php endif; ?>
+
+        <?php if ($show_lift_slide_handles) : ?>
+            <?php get_template_part('template-parts/components/handle-grid', null, fenster_lift_slide_handle_grid_args()); ?>
         <?php endif; ?>
 
         <?php if ($show_sash_furniture && ! empty($sash_furniture_ranges)) : ?>
