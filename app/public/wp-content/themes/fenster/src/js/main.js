@@ -3548,6 +3548,43 @@ document.querySelectorAll('[data-fg-scrub-video]').forEach((video) => {
 
   let duration = 0;
   let ticking = false;
+  let primed = false;
+
+  /* iOS Safari will not paint a frame from a currentTime seek on a video that
+     has never played. The decoder is not primed, and preload="auto" is treated
+     as metadata-only there, so the element sits on its first frame while every
+     seek is accepted and quietly ignored. That is why this worked everywhere
+     except iOS.
+
+     Muted inline playback is allowed without a user gesture, so starting it
+     once and immediately pausing primes the decoder and starts the buffering
+     that seeking needs. Harmless on desktop, which is why it is not behind a
+     UA check: a muted play/pause nobody sees beats sniffing for Safari.
+
+     play() can still be rejected (low power mode, for one), so a rejection
+     re-arms the flag and a one-shot touchstart tries again on the first real
+     interaction. */
+  const primeDecoder = () => {
+    if (primed) return;
+    primed = true;
+
+    const started = video.play();
+    if (started && typeof started.then === 'function') {
+      started.then(() => {
+        video.pause();
+        updateScrub();
+      }).catch(() => {
+        primed = false;
+      });
+      return;
+    }
+
+    try {
+      video.pause();
+    } catch (_error) {
+      primed = false;
+    }
+  };
 
   const seekVideo = (time) => {
     if (!duration || Number.isNaN(time)) return;
@@ -3562,11 +3599,19 @@ document.querySelectorAll('[data-fg-scrub-video]').forEach((video) => {
 
   const updateScrub = () => {
     ticking = false;
-    if (!duration) return;
 
     const rect = video.getBoundingClientRect();
     const viewport = window.innerHeight || 0;
     if (!rect.height || !viewport) return;
+
+    /* Prime as it approaches rather than on load, so a page carrying several of
+       these does not start every decoder at once on a phone. One viewport of
+       margin is enough to be ready before the rotation is asked for. */
+    if (!primed && rect.top < viewport * 2 && rect.bottom > -viewport) {
+      primeDecoder();
+    }
+
+    if (!duration) return;
 
     /* Runs from the element being half on screen to it being centred, which
        works out at exactly half a viewport of scroll whatever the element's
@@ -3603,6 +3648,19 @@ document.querySelectorAll('[data-fg-scrub-video]').forEach((video) => {
   } else {
     video.addEventListener('loadedmetadata', initScrub, { once: true });
   }
+
+  /* loadedmetadata can fire on iOS with no decoded frame yet, so re-run once a
+     frame actually exists. Without this the first seek lands before there is
+     anything to paint and the rotation appears to start late. */
+  video.addEventListener('loadeddata', () => {
+    if (!duration) initScrub();
+    updateScrub();
+  }, { once: true });
+
+  // Last resort if autoplay-to-prime was refused: the first touch is a gesture.
+  document.addEventListener('touchstart', () => {
+    if (!primed) primeDecoder();
+  }, { once: true, passive: true });
 
   window.addEventListener('scroll', requestScrubUpdate, { passive: true });
   window.addEventListener('resize', requestScrubUpdate);
