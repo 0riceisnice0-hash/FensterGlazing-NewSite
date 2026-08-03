@@ -130,7 +130,9 @@ $article_next_steps_map = [
         ],
     ],
 ];
-$article_next_steps = $article_next_steps_map[$slug] ?? [];
+/* Scheduled blog posts carry their own next-steps block in the page data;
+   the map above covers the imported guides that predate it. */
+$article_next_steps = $article_next_steps_map[$slug] ?? (is_array($page['next_steps'] ?? null) ? $page['next_steps'] : []);
 
 $article_blocks = [];
 $intro_consumed = false;

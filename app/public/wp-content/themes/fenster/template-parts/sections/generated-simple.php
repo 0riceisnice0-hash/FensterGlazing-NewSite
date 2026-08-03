@@ -42,6 +42,23 @@ foreach ($sections as $index => $section) {
     ];
 }
 
+/* Scheduled blog posts lead the /blog/ hub, newest first. Imported-content
+   cards follow. Only these cards carry a URL, so only they render linked. */
+if ($slug === 'blog' && function_exists('fenster_live_blog_posts')) {
+    $post_cards = [];
+    foreach (fenster_live_blog_posts() as $post_slug => $post) {
+        $post_images = function_exists('fenster_blog_post_images') ? fenster_blog_post_images($post) : [];
+        $post_cards[] = [
+            'heading' => (string) $post['title'],
+            'body' => [(string) ($post['meta_description'] ?? '')],
+            'image' => (string) ($post_images[0]['src'] ?? ''),
+            'alt' => (string) ($post_images[0]['alt'] ?? $post['title']),
+            'url' => home_url('/' . $post_slug . '/'),
+        ];
+    }
+    $cards = array_merge($post_cards, $cards);
+}
+
 $cards = array_slice($cards, 0, $is_archive ? 18 : 8);
 
 if ($is_careers) :
@@ -162,7 +179,11 @@ endif;
                                 <img src="<?php echo esc_url(fenster_generated_url($card['image'])); ?>" alt="<?php echo esc_attr($card['alt']); ?>" loading="lazy">
                             <?php endif; ?>
                             <div>
-                                <h3><?php echo esc_html($card['heading']); ?></h3>
+                                <?php if (! empty($card['url'])) : ?>
+                                    <h3><a href="<?php echo esc_url($card['url']); ?>"><?php echo esc_html($card['heading']); ?></a></h3>
+                                <?php else : ?>
+                                    <h3><?php echo esc_html($card['heading']); ?></h3>
+                                <?php endif; ?>
                                 <?php foreach (array_slice($card['body'], 0, $is_archive ? 1 : 3) as $paragraph) : ?>
                                     <p><?php echo esc_html($paragraph); ?></p>
                                 <?php endforeach; ?>
