@@ -36384,8 +36384,15 @@ html.fg-blinds-reveal-locked {
 .fg-cw-gallery__mosaic figure:nth-child(7) { grid-column: 1 / 7; }
 .fg-cw-gallery__mosaic figure:nth-child(8) { grid-column: 7 / 13; }
 
-.fg-cw-gallery:not(.fg-cw-gallery--heritage) .fg-cw-gallery__mosaic {
-  height: clamp(620px, 66vw, 840px);
+/* Gated to desktop on purpose. This selector is (0,3,0) and the mobile
+   `height: auto` that turns the mosaic into a swipe rail is only (0,1,0), so
+   ungated it wins inside the 860px block regardless of source order and freezes
+   the rail at a fixed height. Same specificity trap already recorded against
+   `.fg-product-hub > section` and `.fg-ph-tiles[data-count]`. */
+@media (min-width: 861px) {
+  .fg-cw-gallery:not(.fg-cw-gallery--heritage) .fg-cw-gallery__mosaic {
+    height: clamp(620px, 66vw, 840px);
+  }
 }
 
 /* The mosaic above is cut for exactly six cells. Heritage doors has four
