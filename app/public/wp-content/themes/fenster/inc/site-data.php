@@ -2027,15 +2027,20 @@ function fenster_site_data(): array
            clearance. Those are fitter choices. Recorded here so they do not
            have to be looked up again.
 
-           No per-finish photography. The bulletin renders levers in only three
-           of the five finishes we offer and has no White at all, and brushed
-           appears as a finger cup rather than a lever, so there is no complete
-           set to show. The finishes therefore render as hex chips and the
-           section carries the real lever-and-cup pair instead. Do not tint or
-           generate a tile to fill the gap; that is the rule already recorded
-           for the four composite colours with no painted tile. If VBH ever
-           supply a full labelled set, add images here and the grid picks them
-           up with no template change. */
+           Finish imagery: three are VBH's own renders lifted from the bulletin,
+           Anthracite, Black and Chrome. VBH publish no White lever and no
+           brushed lever, so those two are derived from the renders that do
+           exist: White from the black lever, Brushed from the polished one with
+           its tonal range compressed to satin. Owner instruction, 2026-08-03,
+           to make the assets rather than ship colour blocks, which is the same
+           decision already recorded for the tilt and turn finishes where the
+           imagery is generated and the owner accepted it.
+
+           All five were padded onto one shared canvas before scaling, so the
+           handles are the same size as each other. Do not re-trim them
+           individually: the same rule already applies to the heritage door
+           configurations, the tilt and turn finishes and the Mila patio set.
+           Replace the two derived files the moment VBH publish real ones. */
         'lift_slide_handles' => [
             'slugs' => ['aluminium-sliding-doors'],
             'intro' => 'A lift and slide door is not moved like a patio slider. The lever lifts the sash off its seals before it rolls, so the handle is geared rather than fixed, and the two faces of the door do different jobs: a lever on the inside, a flush finger cup on the outside.',
@@ -2065,30 +2070,35 @@ function fenster_site_data(): array
                     'name' => 'Anthracite',
                     'label' => 'Anthracite lift and slide door handle',
                     'hex' => '#383b3d',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-liftslide/liftslide-anthracite.webp',
                     'copy' => 'The one that disappears into an anthracite frame, which is what most aluminium sliders are specified in.',
                 ],
                 [
                     'name' => 'Black',
                     'label' => 'Black lift and slide door handle',
                     'hex' => '#141414',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-liftslide/liftslide-black.webp',
                     'copy' => 'Flatter and darker than anthracite. It reads as a deliberate choice rather than a match.',
                 ],
                 [
                     'name' => 'White',
                     'label' => 'White lift and slide door handle',
                     'hex' => '#f4f4f1',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-liftslide/liftslide-white.webp',
                     'copy' => 'For a white frame, and the quietest of the five against a pale interior.',
                 ],
                 [
                     'name' => 'Chrome',
                     'label' => 'Polished chrome lift and slide door handle',
                     'hex' => '#d5d8da',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-liftslide/liftslide-chrome.webp',
                     'copy' => 'A mirror finish that picks up the room. It shows marks more than the brushed one on a door this often used.',
                 ],
                 [
                     'name' => 'Brushed stainless steel',
                     'label' => 'Brushed stainless steel lift and slide door handle',
                     'hex' => '#b9bcbd',
+                    'image' => '/wp-content/themes/fenster/assets/images/products/handles-liftslide/liftslide-brushed-stainless-steel.webp',
                     'copy' => 'The same metal without the mirror, so fingerprints and daylight both sit softer on it.',
                 ],
             ],
