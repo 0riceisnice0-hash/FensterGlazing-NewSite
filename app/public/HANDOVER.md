@@ -375,6 +375,30 @@ Current accepted behaviour:
 - The glass treatment should follow the Pilkington-style layer model: a blurred/brightened duplicate of the current scene, with the texture pattern as a separate unblurred layer above it. Do not blur the texture layer itself or it turns into glow.
 - Mobile uses the same texture data with tappable horizontal glass controls, no hover dependency, and touch rules that allow normal vertical page scrolling through the visualiser.
 
+### Integral Blinds Page
+
+Route: `/integral-blinds/`, rendered through `generated-page.php`.
+
+Current accepted behaviour:
+
+- The page carries an interactive **Notan magnetic blind visualiser**, gated on the route in `generated-page.php` and rendered from `template-parts\components\blinds-visualiser.php`. It sits directly after the why section, on the same reasoning as the obscured glass visualiser: the page has just explained that the blind is sealed inside the glass and cannot be touched, so the next thing to do is let the customer work it. Everything below it is specification and process, which reads better once the product is understood.
+- The unit is **face on and fully straight**, which the owner asked for explicitly on 2026-08-03. Do not reintroduce a perspective or angled view.
+- **The controls are the two magnets on the unit's own profile, not sliders beside a picture of it.** The owner corrected this on 2026-08-03: on a Notan magnetic unit the two magnets run in a channel on the colour matched frame sealed inside the glass, the upper one tilting the slats and the lower one raising and lowering the blind. They are drawn on the right hand stile and dragged there. Do not move them back out to page furniture.
+- `magnetTracks()` is the single source of both where a magnet is drawn and where it can be grabbed. Keep it that way; a magnet drawn somewhere it cannot be grabbed is the obvious way for this to break.
+- Tilt runs closed, open, closed across the magnet's travel: `0` and `100` are both fully closed and `50` is edge on, which is the real travel and shows that the blind closes both ways. Rotation is capped at 78 degrees because real tilt mechanisms stop short of 90 and because the slats have already overlapped well before then, so the last stretch would be a dead zone.
+- The lift magnet reads the way the blind moves: at the top of its travel the blind is raised, at the bottom it is fully down.
+- Two `input type="range"` controls remain in the markup, moved **off screen rather than hidden**, and the controller mirrors them to the magnets in both directions. They are what makes the visualiser operable by keyboard and legible to a screen reader; `display: none` or `visibility: hidden` would drop them out of the tab order and leave it working by pointer alone. Focus on one of them draws a ring round the matching magnet.
+- The stage is `touch-action: pan-y` and only becomes `none` while a magnet is actually held. Without the switch either the page cannot scroll over the stage or the blind cannot be worked by touch.
+- The blind is **drawn, not photographed**. Nine colours against a continuous tilt and a continuous lift is far past what a sprite sheet can hold. See the Three.js / Canvas Rule in `AI.md`: this is 2D canvas with no library and is a deliberate exception, not a breach.
+- Colour data lives in `inc\site-data.php` under `notan_blind_colours`. See the Notan Integral Blind Rule in `AI.md` before changing any of it, in particular before "fixing" Cream or Rose Gold.
+- Slats carry a deterministic per-slat wobble in position, brightness and about a fifth of a degree of lean. It is not decoration. Without it fifty perfectly level slats read as a printed rule rather than as a blind, which was the single biggest thing separating the render from a photograph.
+- The bright edge on each slat **thins the slat rather than painting over it**, so the scene tints it: sky coloured at the head of the pane, green down where the lawn is. It also falls away as the slat colour lightens, because a white slat is already as bright as the sky behind it. Left flat, it blew White, Cream and Metallic Silver out until all three read as the same pale wash.
+- Costs are cached rather than spent per frame. The garden, the veiling glare, the glass overlay and the aluminium frame rebuild only on resize; the slat tile rebuilds only when tilt, colour or size change; the grain waits for the settled frame. Measured at 6.0ms a frame with the GPU disabled, against 9.2ms before the caches were added.
+- The controller adds `is-live` only once it has a context and a first frame. Until then the real Notan close-up photograph is what shows, so a thrown error degrades to a photograph rather than to a black box. A `<noscript>` block would not have covered that case.
+- Off-screen the animation loop stops, `prefers-reduced-motion` snaps instead of easing but stays fully interactive, and the stage sets `touch-action: pan-y` so a thumb landing on it still scrolls the page, the same rule the obscured glass visualiser follows.
+- The view behind the glass is generated, not a project photograph. At the blur a camera exposed for the room would give it, almost nothing photographic survives except the colour distribution and the large scale light and shade, so it is built from a sky, a treeline, a lawn and dapple. The renderer takes an optional scene image if a real view is ever preferred.
+- No slat dimension is stated anywhere on the page. Notan do not publish one.
+
 ### Colour Options Pages
 
 Routes:

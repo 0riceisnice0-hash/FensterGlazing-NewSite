@@ -37144,7 +37144,7 @@ html.fg-blinds-reveal-locked {
     'intro'
     'stage'
     'readout'
-    'controls'
+    'hint'
     'colours'
     'note';
 }
@@ -37181,8 +37181,18 @@ html.fg-blinds-reveal-locked {
   box-shadow: 0 26px 70px rgba(0, 45, 58, 0.24);
   /* The stage is a drawing, not a scroller. Letting vertical pans through
      keeps the page scrollable when a thumb lands on it, which is the same
-     rule the obscured glass visualiser follows. */
+     rule the obscured glass visualiser follows. Only while a magnet is
+     actually held does the drag win, or the blind could not be worked by
+     touch at all. */
   touch-action: pan-y;
+}
+
+.fg-blind-visualiser__stage.is-dragging {
+  touch-action: none;
+}
+
+.fg-blind-visualiser__canvas {
+  touch-action: inherit;
 }
 
 .fg-blind-visualiser__canvas,
@@ -37217,97 +37227,27 @@ html.fg-blinds-reveal-locked {
   font-weight: 600;
 }
 
-.fg-blind-visualiser__controls {
-  grid-area: controls;
-  display: grid;
-  gap: clamp(1rem, 2.4vw, 1.6rem);
-}
-
-.fg-blind-visualiser__slider label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
-.fg-blind-visualiser__slider input[type='range'] {
-  -webkit-appearance: none;
-  appearance: none;
-  display: block;
-  width: 100%;
-  height: 26px;
-  margin: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.fg-blind-visualiser__slider input[type='range']::-webkit-slider-runnable-track {
-  height: 6px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-line), #b9c9cd);
-}
-
-.fg-blind-visualiser__slider input[type='range']::-moz-range-track {
-  height: 6px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-line), #b9c9cd);
-}
-
-.fg-blind-visualiser__slider input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  margin-top: -8px;
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 4px 12px rgba(0, 45, 58, 0.3);
-}
-
-.fg-blind-visualiser__slider input[type='range']::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 4px 12px rgba(0, 45, 58, 0.3);
-}
-
-.fg-blind-visualiser__slider input[type='range']:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
-}
-
-.fg-blind-visualiser__scale {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.3rem;
-  color: var(--color-muted);
-  font-size: 0.76rem;
-}
-
-.fg-blind-visualiser__scale em {
-  font-style: normal;
-}
-
-.fg-blind-visualiser__scale em:nth-child(2) {
-  transform: translateX(-50%);
-  margin-left: 50%;
+/* The real controls are the two magnets drawn on the unit's own profile. These
+   inputs are the same two controls for keyboard and screen reader users, so
+   they are moved off screen rather than hidden: `display: none` or
+   `visibility: hidden` would drop them out of the tab order and leave the
+   visualiser operable by pointer alone. Focus is shown by a ring drawn round
+   the matching magnet on the canvas. */
+.fg-blind-visualiser__a11y {
   position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.fg-blind-visualiser__scale {
-  position: relative;
-}
-
-.fg-blind-visualiser__scale--pair em:nth-child(2) {
-  position: static;
-  transform: none;
-  margin-left: 0;
+.fg-blind-visualiser__hint {
+  grid-area: hint;
+  margin: 0;
+  max-width: 34rem;
+  color: var(--color-muted);
+  font-size: 0.92rem;
 }
 
 .fg-blind-visualiser__colours {
@@ -37387,7 +37327,7 @@ html.fg-blinds-reveal-locked {
     grid-template-areas:
       'intro    intro'
       'stage    readout'
-      'stage    controls'
+      'stage    hint'
       'stage    colours'
       'stage    note';
     /* The stage spans four rows, so without this the rows split the stage's

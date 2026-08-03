@@ -127,6 +127,15 @@ PHP lint example:
 - Do not assume the old homepage 3D/canvas experiment is live. The remaining `fg-home-hero-3d`, `data-fg-home-3d` and `THREE.*` references are inactive legacy source/style hooks and are not present in the compiled JS.
 - Do not reintroduce Three.js, a WebGL hero or a canvas product scene unless the owner explicitly asks for that feature.
 - If 3D is deliberately reintroduced, add the dependency/import/enqueue intentionally, provide mobile and reduced-motion fallbacks, and verify the canvas is nonblank in desktop and mobile browser QA.
+- **The blind visualiser on `/integral-blinds/` is a deliberate exception and does not breach this.** It is 2D canvas, no library and no new dependency. It is 2D because the owner asked for the unit face on and fully straight, and with no perspective a slat projects to a plain rectangle of height `slat * |sin phi| + thickness * |cos phi|`, which is exact rather than approximated. WebGL would buy no accuracy there. Do not "upgrade" it to Three.js.
+
+## Notan Integral Blind Rule
+
+- Notan publish **nine** standard slat colours for the magnetic system, not eleven. `notan.co.uk/our-blinds/` still says "11 standard colour choices" and is wrong; the official brochure at `notan.co.uk/wp-content/uploads/2024/05/Notan-Magnetic-Integrated-blinds.pdf` lists nine, and that is what `notan_blind_colours` in `inc\site-data.php` carries.
+- The hex values are sampled from Notan's own swatch assets under `notan.co.uk/wp-content/uploads/2021/02/`, which carry an embedded sRGB profile, so they need no conversion.
+- **Two of them look wrong and are not.** Notan's `CREAM BY010` is a warm grey, not a cream, and `ROSE GOLD BY014` is a greige, not a pink. Both were checked against the web swatch and the printed brochure page on 2026-08-03 and they agree. Do not "correct" them towards what the name suggests.
+- `WHITE/ANTHRACITE BY012` is the only two-sided slat: white on the room side, anthracite outside. It is the only entry with a `reverse` value.
+- **No slat width is published.** The 30mm figure Notan give is the profile housing the mechanism, not the slat. The renderer assumes the standard 12.5mm integral-blind slat for geometry only and **no slat dimension is printed on the page**. If Notan confirm a width it can be added and shown; until then it must not be.
 
 ## Shared Form Rule
 
@@ -241,7 +250,7 @@ PHP lint example:
 - Products with supplied U-values show them first.
 - Colour choice should be second where supplied.
 - Composite Doors and Integral Blinds currently do not have supplied U-values.
-- Integral Blinds controls must be described as `Magnetic or electric`.
+- Integral Blinds controls must be described as `Magnetic or electric`. The blind visualiser demonstrates the **magnetic** system specifically and says so; it must not be allowed to imply magnetic is the only control offered.
 
 ## Product Quote Embed Rule
 

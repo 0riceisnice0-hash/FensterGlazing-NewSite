@@ -67,6 +67,69 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-03 - Notan blind visualiser on integral blinds (test only, fa9ccc8)
+
+- **On test only, at the owner's instruction.** Live is unchanged and still
+  `13354b4`.
+- `/integral-blinds/` now carries an interactive visualiser: one glazed unit
+  drawn face on and fully straight, worked by the two magnets on its own
+  profile, in the nine real Notan slat colours. Accepted behaviour is written
+  up in `HANDOVER.md` under Integral Blinds Page; the colour facts are in
+  `AI.md` under the Notan Integral Blind Rule.
+- **The controls are part of the product, and the first build got that wrong.**
+  It shipped page sliders next to a picture of the unit. The owner corrected
+  it: on a Notan magnetic unit the two magnets run in a channel on the colour
+  matched frame sealed inside the glass, the upper one tilting and the lower
+  one lifting. They are now drawn on the right hand stile and dragged there,
+  and the profile takes the selected slat colour with them. The lesson is the
+  ordinary one: the control surface is a fact about the product and needed
+  checking against the supplier's own photography, exactly as the colours did.
+- One function, `magnetTracks()`, owns both where a magnet is drawn and where
+  it can be grabbed, so the two cannot drift apart.
+- The range inputs stayed, moved off screen rather than hidden, and are
+  mirrored to the magnets both ways. Hiding them properly would have left the
+  visualiser operable by pointer alone.
+- **Investigate the supplier before building the thing.** The colour range was
+  taken from Notan's official brochure PDF, not from their site: `our-blinds/`
+  still advertises "11 standard colour choices" and the brochure lists nine.
+  Two of the nine also contradict their own names, Cream being a warm grey and
+  Rose Gold a greige. Both were checked twice, against the web swatch and the
+  printed page, before being written down. Nothing was eyedropped from a
+  photograph and nothing was invented.
+- **Face on is why a canvas was enough.** With no perspective a slat projects to
+  a rectangle of height `slat * |sin phi| + thickness * |cos phi|`, which is
+  exact, so WebGL would have added a forbidden dependency for no accuracy. The
+  Three.js rule in `AI.md` now records this as a deliberate exception so the
+  next session does not read it as a breach or try to "upgrade" it.
+- **Deriving the light beat tuning it.** The exterior sun never reaches the room
+  face of a slat, so the base term is room ambient alone plus sky bouncing off
+  the slat below. Three separate defects came from ignoring that: a near-black
+  gap shadow that made the gaps read as painted stripes when in life the gap is
+  the brightest thing on the window; a flat white fringe that read as a printed
+  rule until it was made to thin the slat instead of paint over it, letting the
+  scene tint it; and that same fringe applied equally to every colour, which
+  blew White, Cream and Metallic Silver into one indistinguishable pale wash
+  because a white slat has no headroom left to take glare.
+- **Perfect geometry was the biggest tell.** Fifty exactly level, exactly
+  pitched slats read as a printed pattern no matter how good the shading was.
+  A deterministic per-slat wobble in position, brightness and about a fifth of
+  a degree of lean fixed it. Derived from the index rather than `Math.random`
+  so a slat keeps its character between frames instead of shimmering.
+- Caching the garden, the glare, the glass and the frame, and holding the grain
+  back for the settled frame, took a frame from 9.2ms to 6.0ms with the GPU
+  disabled. None of those four depend on tilt, lift or colour, so recomputing
+  a dozen gradients for them during a slider drag bought nothing.
+- **Headless Chrome clamps its viewport to 500px wide.** A 390px screenshot is
+  a 500px layout cropped to 390, which looks exactly like a mobile overflow bug
+  and is not one. Load the page in a 390px iframe and measure
+  `documentElement.scrollWidth` inside it instead. This cost a wrong conclusion
+  about mobile overflow before it was caught.
+- Verified on test by rendering the real page: controller live, canvas painting
+  real pixels, `scrollWidth` equal to the viewport, every tilt and lift state
+  behaving, all nine colours distinct, and a scripted colour click plus slider
+  move updating both the canvas and the readout.
+
+
 ## 2026-08-03 - Casement and lift-and-slide promoted to live (ac6f372)
 
 - **Live established by checksum on six theme files**, with the empty-input hash

@@ -2976,10 +2976,20 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   const PITCH = 11.9;
   const STACK_PITCH = 2.15;
   const RAIL = 15;
-  const HEAD = 30;
+  /* The profile's own top member is the head, so the blind starts directly
+     under it. An earlier pass kept a separate 30mm head inside the profile and
+     it rendered as a strip of bare glass above the first slat. */
+  const HEAD = 0;
+  /* The Notan profile: the colour matched frame sealed inside the glass that
+     the blind hangs in and that the two magnets run on. Notan describe it as a
+     slim 30mm fully symmetrical profile, so it borders the glass on all four
+     sides rather than only capping the head. */
+  const NOTAN = 24;
   const UNIT_W = GLASS_W + FRAME * 2;
   const UNIT_H = GLASS_H + FRAME * 2;
-  const DROP = GLASS_H - HEAD - RAIL;
+  const BLIND_W = GLASS_W - NOTAN * 2;
+  const BLIND_H = GLASS_H - NOTAN * 2;
+  const DROP = BLIND_H - HEAD - RAIL;
   const SLAT_COUNT = Math.floor(DROP / PITCH);
   /* Real tilt mechanisms stop short of ninety degrees. Stopping at seventy
      eight also trims most of the dead zone at each end of the slider, where
@@ -3029,6 +3039,8 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   let grain = null;
   let frame = 0;
   let visible = true;
+  let dragging = null;
+  let focused = null;
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* A hanging blind is not a grating. Real slats sit a fraction off pitch and
@@ -3394,6 +3406,132 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     return { glass, frame: frameCanvas };
   };
 
+  /* Where the two magnets sit and how far each one travels. Both run on the
+     right hand stile of the Notan profile, the upper one tilting and the lower
+     one lifting, which is how the unit is actually operated. Kept as one
+     function so the renderer and the pointer handling cannot drift apart: a
+     magnet that is drawn somewhere it cannot be grabbed is the obvious way for
+     this to break. */
+  const magnetTracks = (L) => {
+    const notanPx = NOTAN * L.scale;
+    const blindY = L.glassY + notanPx;
+    const blindH = L.glassH - notanPx * 2;
+    const x = L.glassX + L.glassW - notanPx / 2;
+    const w = notanPx * 0.74;
+    const h = notanPx * 2.5;
+    return {
+      x,
+      w,
+      h,
+      tilt: { top: blindY + blindH * 0.05, bottom: blindY + blindH * 0.3 },
+      /* Lift reads the way the blind moves: the magnet at the top of its
+         travel is the blind raised, at the bottom it is fully down. */
+      lift: { top: blindY + blindH * 0.4, bottom: blindY + blindH * 0.95 },
+    };
+  };
+
+  const magnetCentre = (L, which) => {
+    const t = magnetTracks(L);
+    const track = t[which];
+    const amount = which === 'tilt' ? tilt / 100 : 1 - lift / 100;
+    return { x: t.x, y: track.top + (track.bottom - track.top) * clamp(amount, 0, 1), w: t.w, h: t.h };
+  };
+
+  const roundedRect = (c, x, y, w, h, r) => {
+    const radius = Math.min(r, w / 2, h / 2);
+    c.beginPath();
+    c.moveTo(x + radius, y);
+    c.arcTo(x + w, y, x + w, y + h, radius);
+    c.arcTo(x + w, y + h, x, y + h, radius);
+    c.arcTo(x, y + h, x, y, radius);
+    c.arcTo(x, y, x + w, y, radius);
+    c.closePath();
+  };
+
+  const drawProfile = (L, notanPx, blindX, blindY, blindW, blindH) => {
+    /* Colour matched, so picking a slat colour moves the profile with it. It
+       is satin rather than the same value as the slats: an extrusion next to a
+       rolled slat in the same paint still reads as a different material. */
+    const body = mixRgb(shownFace, { r: 92, g: 96, b: 98 }, 0.22);
+
+    const side = (x, y, w, h, from, to, horizontal) => {
+      const grad = ctx.createLinearGradient(x, y, horizontal ? x : x + w, horizontal ? y + h : y);
+      grad.addColorStop(0, paint(body, from.k, from.add));
+      grad.addColorStop(1, paint(body, to.k, to.add));
+      ctx.fillStyle = grad;
+      ctx.fillRect(x, y, w, h);
+    };
+
+    const lit = { k: 1.16, add: 40 };
+    const mid = { k: 0.94, add: 14 };
+    const dark = { k: 0.55, add: 0 };
+
+    side(L.glassX, L.glassY, L.glassW, notanPx, lit, dark, true);
+    side(L.glassX, L.glassY + L.glassH - notanPx, L.glassW, notanPx, dark, mid, true);
+    side(L.glassX, L.glassY, notanPx, L.glassH, mid, dark, false);
+    side(L.glassX + L.glassW - notanPx, L.glassY, notanPx, L.glassH, dark, mid, false);
+
+    /* The channel the magnets run in, sunk into the right hand stile. */
+    const t = magnetTracks(L);
+    const channelW = t.w * 0.94;
+    const channelTop = t.tilt.top - t.h * 0.5;
+    const channelBottom = t.lift.bottom + t.h * 0.5;
+    const channel = ctx.createLinearGradient(t.x - channelW / 2, 0, t.x + channelW / 2, 0);
+    channel.addColorStop(0, paint(body, 0.24));
+    channel.addColorStop(0.3, paint(body, 0.4));
+    channel.addColorStop(0.7, paint(body, 0.92, 20));
+    channel.addColorStop(1, paint(body, 0.28));
+    ctx.fillStyle = channel;
+    ctx.fillRect(t.x - channelW / 2, channelTop, channelW, channelBottom - channelTop);
+
+    /* A hairline where the profile meets the blind, so the slats read as
+       sitting behind it rather than butted against it. */
+    ctx.strokeStyle = 'rgba(10,13,16,0.34)';
+    ctx.lineWidth = Math.max(0.6, L.scale * 0.6);
+    ctx.strokeRect(blindX, blindY, blindW, blindH);
+
+    ['tilt', 'lift'].forEach((which) => {
+      const m = magnetCentre(L, which);
+      const x = m.x - m.w / 2;
+      const y = m.y - m.h / 2;
+      const radius = m.w * 0.34;
+
+      ctx.save();
+      ctx.shadowColor = 'rgba(8,11,14,0.5)';
+      ctx.shadowBlur = Math.max(2, m.w * 0.5);
+      ctx.shadowOffsetX = Math.max(1, m.w * 0.12);
+      ctx.shadowOffsetY = Math.max(1, m.w * 0.16);
+      roundedRect(ctx, x, y, m.w, m.h, radius);
+      const cap = ctx.createLinearGradient(x, y, x + m.w, y);
+      cap.addColorStop(0, paint(body, 0.78, 14));
+      cap.addColorStop(0.3, paint(body, 1.2, 62));
+      cap.addColorStop(0.52, paint(body, 1.02, 34));
+      cap.addColorStop(0.78, paint(body, 0.84, 12));
+      cap.addColorStop(1, paint(body, 0.5));
+      ctx.fillStyle = cap;
+      ctx.fill();
+      ctx.restore();
+
+      /* A brighter cap at each end, which is what the moulding actually looks
+         like and what makes the block read as proud of the stile. */
+      const ends = ctx.createLinearGradient(0, y, 0, y + m.h);
+      ends.addColorStop(0, 'rgba(255,255,255,0.34)');
+      ends.addColorStop(0.16, 'rgba(255,255,255,0)');
+      ends.addColorStop(0.84, 'rgba(0,0,0,0)');
+      ends.addColorStop(1, 'rgba(0,0,0,0.24)');
+      roundedRect(ctx, x, y, m.w, m.h, radius);
+      ctx.fillStyle = ends;
+      ctx.fill();
+
+      if (focused === which) {
+        ctx.strokeStyle = '#2eac66';
+        ctx.lineWidth = Math.max(1.6, m.w * 0.16);
+        roundedRect(ctx, x - m.w * 0.28, y - m.w * 0.28, m.w * 1.56, m.h + m.w * 0.56, radius * 1.5);
+        ctx.stroke();
+      }
+    });
+  };
+
   const layout = () => {
     const box = stage.getBoundingClientRect();
     const w = Math.max(160, Math.round(box.width));
@@ -3443,13 +3581,18 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
     if (scene && scene.view) ctx.drawImage(scene.view, L.glassX, L.glassY, L.glassW, L.glassH);
 
+    const notanPx = NOTAN * L.scale;
+    const blindX = L.glassX + notanPx;
+    const blindY = L.glassY + notanPx;
+    const blindW = L.glassW - notanPx * 2;
+    const blindH = L.glassH - notanPx * 2;
     const headPx = HEAD * L.scale;
     const railPx = RAIL * L.scale;
     const raised = clamp(lift / 100, 0, 1);
     const stacked = Math.round(SLAT_COUNT * raised);
     const deployed = SLAT_COUNT - stacked;
     const stackPx = stacked * STACK_PITCH * L.scale;
-    const topPx = L.glassY + headPx + stackPx;
+    const topPx = blindY + headPx + stackPx;
 
     const tKey = `${shownFace.r | 0},${shownFace.g | 0},${shownFace.b | 0},${shownBack.r | 0},${shownBack.g | 0},${shownBack.b | 0},${shownMetallic.toFixed(2)},${phi.toFixed(4)},${pitchPx.toFixed(2)},${slatPx.toFixed(2)}`;
     if (tileKey !== tKey) {
@@ -3462,7 +3605,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
          follows the slat rather than the row: raising the blind takes slats
          out of the drop and their neighbours keep the character they had. */
       const first = SLAT_COUNT - deployed;
-      const midX = L.glassX + L.glassW / 2;
+      const midX = blindX + blindW / 2;
       for (let i = 0; i < deployed; i += 1) {
         const w = wobble[first + i] || { offset: 0, gain: 0, lean: 0 };
         const y = topPx + i * pitchPx + w.offset * pitchPx * 0.16;
@@ -3474,7 +3617,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
         ctx.save();
         ctx.translate(midX, y + pitchPx / 2);
         ctx.rotate(w.lean * 0.0042);
-        ctx.drawImage(tile.canvas, -L.glassW / 2 - 2, -pitchPx / 2, L.glassW + 4, pitchPx);
+        ctx.drawImage(tile.canvas, -blindW / 2 - 2, -pitchPx / 2, blindW + 4, pitchPx);
         ctx.restore();
       }
       ctx.globalAlpha = 1;
@@ -3485,41 +3628,41 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       rail.addColorStop(0.45, paint(shownFace, 0.6));
       rail.addColorStop(1, paint(shownFace, 0.4));
       ctx.fillStyle = rail;
-      ctx.fillRect(L.glassX, railY, L.glassW, railPx);
+      ctx.fillRect(blindX, railY, blindW, railPx);
       const under = ctx.createLinearGradient(0, railY + railPx, 0, railY + railPx * 2.4);
       under.addColorStop(0, 'rgba(10,13,16,0.4)');
       under.addColorStop(1, 'rgba(10,13,16,0)');
       ctx.fillStyle = under;
-      ctx.fillRect(L.glassX, railY + railPx, L.glassW, railPx * 1.4);
+      ctx.fillRect(blindX, railY + railPx, blindW, railPx * 1.4);
     }
 
     /* The stack. Slats are conserved, so raising the blind moves them out of
        the drop and into a dense band under the head rather than shrinking the
        drop and losing them. */
     if (stacked > 0) {
-      const y = L.glassY + headPx;
+      const y = blindY + headPx;
       ctx.fillStyle = paint(shownFace, 0.52);
-      ctx.fillRect(L.glassX, y, L.glassW, stackPx);
+      ctx.fillRect(blindX, y, blindW, stackPx);
       const linePx = STACK_PITCH * L.scale;
       if (linePx >= 1.4) {
         ctx.fillStyle = paint(shownFace, 0.92, 18, 0.55);
         for (let i = 0; i < stacked; i += 1) {
-          ctx.fillRect(L.glassX, y + i * linePx, L.glassW, Math.max(0.6, linePx * 0.34));
+          ctx.fillRect(blindX, y + i * linePx, blindW, Math.max(0.6, linePx * 0.34));
         }
       } else {
         const texture = ctx.createLinearGradient(0, y, 0, y + stackPx);
         texture.addColorStop(0, paint(shownFace, 1.05, 20, 0.4));
         texture.addColorStop(1, paint(shownFace, 0.62, 0, 0.4));
         ctx.fillStyle = texture;
-        ctx.fillRect(L.glassX, y, L.glassW, stackPx);
+        ctx.fillRect(blindX, y, blindW, stackPx);
       }
       ctx.fillStyle = 'rgba(255,255,255,0.16)';
-      ctx.fillRect(L.glassX, y, L.glassW, Math.max(0.7, L.scale * 1.2));
+      ctx.fillRect(blindX, y, blindW, Math.max(0.7, L.scale * 1.2));
       const drop = ctx.createLinearGradient(0, y + stackPx, 0, y + stackPx + railPx * 1.8);
       drop.addColorStop(0, 'rgba(10,13,16,0.45)');
       drop.addColorStop(1, 'rgba(10,13,16,0)');
       ctx.fillStyle = drop;
-      ctx.fillRect(L.glassX, y + stackPx, L.glassW, railPx * 1.8);
+      ctx.fillRect(blindX, y + stackPx, blindW, railPx * 1.8);
     }
 
     /* Veiling glare. The blurred garden added back over the finished blind, so
@@ -3545,18 +3688,14 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     ctx.globalCompositeOperation = 'lighter';
     ctx.fillStyle = 'rgba(126,132,128,0.34)';
     [0.24, 0.76].forEach((at) => {
-      ctx.fillRect(L.glassX + L.glassW * at, L.glassY + headPx, cordW, L.glassH - headPx);
+      ctx.fillRect(blindX + blindW * at, blindY + headPx, cordW, blindH - headPx);
     });
     ctx.restore();
 
-    /* Head channel: the thirty millimetre Notan profile, seen through glass. */
-    const head = ctx.createLinearGradient(0, L.glassY, 0, L.glassY + headPx);
-    head.addColorStop(0, '#d8dcdd');
-    head.addColorStop(0.35, '#b3b8bb');
-    head.addColorStop(0.85, '#8f9599');
-    head.addColorStop(1, '#6d7377');
-    ctx.fillStyle = head;
-    ctx.fillRect(L.glassX, L.glassY, L.glassW, headPx);
+    /* The Notan profile, colour matched to the slats, and the two magnets that
+       run on it. This is the product: the controls are on the frame sealed
+       inside the glass, not beside the picture of it. */
+    drawProfile(L, notanPx, blindX, blindY, blindW, blindH);
 
     ctx.restore();
 
@@ -3653,6 +3792,87 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     describe();
     nudge();
   });
+
+  [['tilt', tiltInput], ['lift', liftInput]].forEach(([which, input]) => {
+    input.addEventListener('focus', () => { focused = which; nudge(); });
+    input.addEventListener('blur', () => { focused = focused === which ? null : focused; nudge(); });
+  });
+
+  /* Dragging the magnets. The pointer position is already in the same units the
+     renderer draws in, because the context is scaled by the device pixel ratio
+     rather than the canvas being sized in device pixels, so the bounding box
+     offset is all that is needed. */
+  const localPoint = (event) => {
+    const box = canvas.getBoundingClientRect();
+    return { x: event.clientX - box.left, y: event.clientY - box.top };
+  };
+
+  const hitMagnet = (point) => {
+    const L = layout();
+    /* Generous, and the tilt magnet is tested first: the two travels do not
+       overlap, but a fingertip near the join should not have to be precise. */
+    return ['tilt', 'lift'].find((which) => {
+      const m = magnetCentre(L, which);
+      const padX = Math.max(12, m.w);
+      const padY = Math.max(10, m.w * 0.7);
+      return Math.abs(point.x - m.x) <= m.w / 2 + padX && Math.abs(point.y - m.y) <= m.h / 2 + padY;
+    }) || null;
+  };
+
+  const applyDrag = (which, point) => {
+    const L = layout();
+    const track = magnetTracks(L)[which];
+    const along = clamp((point.y - track.top) / Math.max(1, track.bottom - track.top));
+    const value = Math.round((which === 'tilt' ? along : 1 - along) * 200) / 2;
+
+    if (which === 'tilt') {
+      tiltTarget = value;
+      tiltInput.value = String(value);
+    } else {
+      liftTarget = value;
+      liftInput.value = String(value);
+    }
+
+    describe();
+    nudge();
+  };
+
+  canvas.addEventListener('pointerdown', (event) => {
+    const point = localPoint(event);
+    const which = hitMagnet(point);
+    if (!which) return;
+
+    dragging = which;
+    focused = which;
+    /* Only while a magnet is actually held. The rest of the time the stage
+       stays `pan-y` so a thumb landing on it still scrolls the page. */
+    stage.classList.add('is-dragging');
+    canvas.setPointerCapture?.(event.pointerId);
+    event.preventDefault();
+    applyDrag(which, point);
+  });
+
+  canvas.addEventListener('pointermove', (event) => {
+    const point = localPoint(event);
+
+    if (dragging) {
+      event.preventDefault();
+      applyDrag(dragging, point);
+      return;
+    }
+
+    canvas.style.cursor = hitMagnet(point) ? 'grab' : '';
+  });
+
+  const endDrag = (event) => {
+    if (!dragging) return;
+    dragging = null;
+    stage.classList.remove('is-dragging');
+    canvas.releasePointerCapture?.(event.pointerId);
+  };
+
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
 
   colourButtons.forEach((button, index) => {
     button.addEventListener('click', () => {

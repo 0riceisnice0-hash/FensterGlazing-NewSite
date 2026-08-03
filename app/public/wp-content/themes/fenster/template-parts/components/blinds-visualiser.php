@@ -84,13 +84,20 @@ foreach ($colours as $index => $colour) {
                         decoding="async"
                     >
                 <?php endif; ?>
-            </div>
 
-            <p class="fg-blind-visualiser__readout" data-fg-blind-readout aria-live="polite"></p>
-
-            <div class="fg-blind-visualiser__controls">
-                <div class="fg-blind-visualiser__slider">
-                    <label for="<?php echo esc_attr($section_id); ?>-tilt"><?php esc_html_e('Tilt', 'fenster'); ?></label>
+                <?php
+                /* The two magnets are drawn on the unit's own profile and are
+                   dragged there, because that is where they are on the real
+                   product. These inputs are the same two controls for anyone
+                   not using a pointer: they stay in the tab order, carry the
+                   labels and the values a screen reader needs, and the
+                   controller mirrors them to the magnets in both directions.
+                   They are placed off screen rather than hidden, because
+                   `display: none` would take them out of the tab order and
+                   leave the visualiser operable by mouse alone. */
+                ?>
+                <div class="fg-blind-visualiser__a11y">
+                    <label for="<?php echo esc_attr($section_id); ?>-tilt"><?php esc_html_e('Tilt the slats', 'fenster'); ?></label>
                     <?php /* 0 and 100 are both closed, 50 is edge on. That is
                              the real travel of the magnet: closed one way,
                              open, closed the other way. */ ?>
@@ -103,15 +110,7 @@ foreach ($colours as $index => $colour) {
                         value="78"
                         data-fg-blind-tilt
                     >
-                    <span class="fg-blind-visualiser__scale" aria-hidden="true">
-                        <em><?php esc_html_e('Closed', 'fenster'); ?></em>
-                        <em><?php esc_html_e('Open', 'fenster'); ?></em>
-                        <em><?php esc_html_e('Closed', 'fenster'); ?></em>
-                    </span>
-                </div>
-
-                <div class="fg-blind-visualiser__slider">
-                    <label for="<?php echo esc_attr($section_id); ?>-lift"><?php esc_html_e('Height', 'fenster'); ?></label>
+                    <label for="<?php echo esc_attr($section_id); ?>-lift"><?php esc_html_e('Raise or lower the blind', 'fenster'); ?></label>
                     <input
                         type="range"
                         id="<?php echo esc_attr($section_id); ?>-lift"
@@ -121,12 +120,14 @@ foreach ($colours as $index => $colour) {
                         value="0"
                         data-fg-blind-lift
                     >
-                    <span class="fg-blind-visualiser__scale fg-blind-visualiser__scale--pair" aria-hidden="true">
-                        <em><?php esc_html_e('Down', 'fenster'); ?></em>
-                        <em><?php esc_html_e('Raised', 'fenster'); ?></em>
-                    </span>
                 </div>
             </div>
+
+            <p class="fg-blind-visualiser__readout" data-fg-blind-readout aria-live="polite"></p>
+
+            <p class="fg-blind-visualiser__hint">
+                <?php esc_html_e('Drag the two magnets on the frame inside the glass. The top one tilts the slats. The bottom one raises and lowers the blind.', 'fenster'); ?>
+            </p>
 
             <div class="fg-blind-visualiser__colours" role="list" aria-label="<?php esc_attr_e('Notan slat colours', 'fenster'); ?>">
                 <?php foreach ($colours as $index => $colour) : ?>
