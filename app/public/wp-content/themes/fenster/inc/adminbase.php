@@ -207,12 +207,27 @@ function fenster_windowcad_request_allowed(WP_REST_Request $request): bool|WP_Er
         }
     }
 
-    if (strlen((string) $request->get_body()) > 100000) {
+    /*
+     * This ceiling exists only to stop an abusive body being buffered. It must
+     * never sit close to a real submission, because rejecting one loses a lead.
+     * It was 100000, which every genuine WindowCAD quote exceeds: the webhook
+     * posts the whole quote document and the parser keeps only the handful of
+     * `infoProperties` values, a few hundred bytes of it. From 31 July 2026 that
+     * cap returned 413 to every submission, and the office received no WindowCAD
+     * leads at all until 3 August. Size is now noted, not judged.
+     */
+    $body_length = strlen((string) $request->get_body());
+    if ($body_length > 5000000) {
+        fenster_windowcad_log('payload rejected as abusively large', ['bytes' => $body_length]);
+
         return new WP_Error(
             'fenster_windowcad_payload_too_large',
             'The WindowCAD payload is too large.',
             ['status' => 413]
         );
+    }
+    if ($body_length > 1000000) {
+        fenster_windowcad_log('unusually large payload accepted', ['bytes' => $body_length]);
     }
 
     $remote_address = sanitize_text_field((string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
