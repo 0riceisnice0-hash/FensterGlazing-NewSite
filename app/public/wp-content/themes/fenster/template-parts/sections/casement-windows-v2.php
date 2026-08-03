@@ -52,8 +52,7 @@ $gallery = [
     ['file' => 'casement-stone-elevation', 'width' => 1200, 'focus' => '50% 45%', 'caption' => 'White casements across a full elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
     ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
     ['file' => 'casement-leighton-buzzard', 'width' => 1400, 'focus' => '50% 55%', 'caption' => 'Leighton Buzzard', 'alt' => 'White Liniar casement windows fitted by Fenster across a Leighton Buzzard terrace'],
-    ['file' => 'casement-cottage-arch', 'width' => 1200, 'focus' => '76% 50%', 'caption' => 'Arched head on a stone cottage', 'alt' => 'Grey uPVC casement windows with an arched head in a stone cottage elevation'],
-    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '40% 45%', 'caption' => 'Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
+    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
 ];
 
 $related = [
@@ -204,7 +203,7 @@ $faq_schema = [
                     <h2 id="fg-cw-gallery-title"><?php esc_html_e('Liniar casements on real houses.', 'fenster'); ?></h2>
                 </div>
                 <p>
-                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Bolbeck Park, Leighton Buzzard, Stony Stratford and Rushden are our own installs; the rest are Liniar photography of the same system. Click any image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Bolbeck Park, Leighton Buzzard, Stony Stratford and Rushden are our own installs; the stone elevation is Liniar photography of the same system. Click any image for a closer look.', 'fenster'); ?></span>
                     <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished installations. Tap any image for a closer look.', 'fenster'); ?></span>
                 </p>
             </div>
