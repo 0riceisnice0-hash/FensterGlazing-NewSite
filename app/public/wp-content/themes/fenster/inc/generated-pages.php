@@ -902,6 +902,14 @@ function fenster_get_generated_page(?string $slug = null): ?array
         return $page_cache[$slug] = $page;
     }
 
+    /* Scheduled blog posts. fenster_blog_post_page() returns null until the
+       post's publish date, so a future-dated post 404s everywhere and then
+       appears — here, on /blog/ and in the sitemap — with no manual step. */
+    $blog_post_page = function_exists('fenster_blog_post_page') ? fenster_blog_post_page($slug) : null;
+    if (is_array($blog_post_page)) {
+        return $page_cache[$slug] = $blog_post_page;
+    }
+
     $launch_seo_overrides = [
         'contact' => [
             'title_tag' => 'Contact Fenster Glazing | Milton Keynes Showroom & Quotes',
@@ -1978,7 +1986,8 @@ function fenster_maybe_render_generated_sitemap(): void
         }
     }
 
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs) as $virtual_slug) {
+    $live_blog_post_slugs = function_exists('fenster_live_blog_posts') ? array_keys(fenster_live_blog_posts()) : [];
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
