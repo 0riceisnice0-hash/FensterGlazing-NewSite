@@ -8,6 +8,14 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **Live is `c97aff4` as of 2026-08-03, established by checksum, and it is NOT on `main`.** It sits on `fix/windowcad-payload-limit`, one commit ahead of `a8f8388` (the 2 Aug cat-flaps release, also verified by checksum). This line said `616d673` for three days while live had moved on twice. Merge `fix/windowcad-payload-limit` into `main` so the branch and production stop diverging.
+- **WindowCAD leads were dead from 31 July to 3 August.** The tracking-repair branch added a 100,000-byte payload cap to the webhook's permission callback. Every genuine WindowCAD submission exceeds it: the webhook posts the whole quote document while the parser keeps only the `infoProperties` values, a few hundred bytes once stored, so the cap had been sized against the parsed result rather than the request. The access log is unambiguous — 51 consecutive `200`s from 6 to 30 July, then three `413`s on 31 July at 14:30, 14:34 and 14:38, and no enquiry post created until the fix. **Never gate that webhook on body size.** The ceiling is now 5 MB and logs rather than dropping.
+- **Diagnose lead loss from the access log first; `php_errorlog` will be empty.** A rejection inside a REST `permission_callback` happens before any theme logging runs. One command dates the breakage exactly:
+
+  ```bash
+  zcat ~/www/fensterglazing.com/logs/*.gz | grep 'POST /wp-json/fenster/v1/windowcad'
+  ```
+
 - Active GitHub repo: `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
 - **Live is `0b0affe`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `32dcba6` before deploying. Backup: `~/backups/fenster-theme/fenster-pre-0b0affe-20260802-154451.tar.gz` (379M, 1,782 entries). **Still re-establish by checksum before the next release rather than trusting this line, and pick files the candidate commits actually differ in.** On the release before this one, three of five checksummed files tied across two candidates and only two separated them.
 - The previous live runtime was `6fdf9ff` (2026-08-02).
@@ -16,7 +24,23 @@ This is the short operational guide for any Codex agent or developer making chan
 - **Re-establish live by checksum before every deploy rather than trusting this line.** It was stale by four commits on 2026-07-24. Checksum a few theme files against history: `inc/site-data.php`, `assets/css/main.css`, `assets/js/main.js` and, when those tie, whatever the candidate commits actually touched. Correct this line as part of the deploy.
 - The earlier `release/heritage-doors` divergence is closed: everything on it reached production through the 2026-07-22 releases, and live has been deployed from `main` since.
 - The previous approved promotion was `13e7f95` (`Heritage doors case study: real interior photos + Sheerline award`) on 2026-07-17. This is the curated residential case studies system (`/case-studies/`), now with six projects including two video-led roof lantern studies (Drayton Parslow big lantern, Northampton lantern + heritage doors with a Sheerline Installation of the Month award). Studies auto-sort by date.
-- Deploy cache note: `wp cache flush` alone does NOT clear SiteGround's dynamic/proxy cache, so changes can appear missing on test/live. Run `wp sg purge` after every deploy (and it is included in the deploy one-liners below). When verifying, also cache-bust the URL. Verified live on 13e7f95: archive plus all six detail pages `200`, videos and the interior photo `200`, both new studies present in `page-sitemap.xml`.
+- **`wp sg purge` FAILS ON LIVE and always has — the deploy one-liner below is wrong for production.** It returns `Error: 'sg' is not a registered wp command` because `sg-cachepress` is **inactive** on `fensterglazing.com`. It is active on test, which is why nobody noticed. The consequence is nasty: the theme rsyncs correctly, `wp cache flush` reports success, the deploy looks green, and SiteGround's proxy keeps serving the OLD page. Verified on the `a8f8388` deploy — `x-proxy-cache: HIT`, none of the new content present, and the page still referencing an image already deleted from disk. Headers are `s-maxage=3600, stale-while-revalidate=86400`, so it self-heals in about an hour and repeated requests will NOT force revalidation.
+- **Do not fix that by activating sg-cachepress on live.** `siteground_optimizer_lazyload_images` is set to `1` there, so activating it would switch on lazy-loading and change live rendering, probably fighting the theme's own deferred-media hotfix `7c973b5`.
+- **Purge live without touching plugin state.** The plugin's purge is just a JSON message to a Unix socket. Base64 this to the server and run it with `php` after every live deploy:
+
+  ```php
+  $fp = stream_socket_client('unix:///chroot/tmp/site-tools.sock', $e, $s, 5);
+  fwrite($fp, json_encode(array(
+    'api'=>'domain-all','cmd'=>'update',
+    'params'=>array('flush_cache'=>'1','id'=>'fensterglazing.com','path'=>'/(.*)'),
+    'settings'=>array('json'=>1),
+  ), JSON_FORCE_OBJECT)."\n");
+  echo fgets($fp, 32*1024);
+  ```
+
+  A successful purge returns `{"json":{...,"msg":"OK",...}}`.
+- **Verify like a visitor, with NO cache-buster.** Re-request the changed page plainly and confirm `x-proxy-cache: MISS` plus the new content. A cache-busted URL always looks correct and proves nothing. Also note: curling live from the server with a full spoofed Chrome user-agent returns a SiteGround WAF `403`; a plain UA such as `Mozilla/5.0 deploy verification` works.
+- Deploy cache note: `wp cache flush` alone does NOT clear SiteGround's dynamic/proxy cache, so changes can appear missing on test/live. `wp sg purge` still works on **test**. When verifying, also cache-bust the URL. Verified live on 13e7f95: archive plus all six detail pages `200`, videos and the interior photo `200`, both new studies present in `page-sitemap.xml`.
 - Local site root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public`
 - Local theme root: `C:\Users\zacpl\Local Sites\fenster-glazing\app\public\wp-content\themes\fenster`
 - Server repo cache: `~/repos/FensterGlazing-NewSite`
@@ -84,6 +108,10 @@ Deploy to live:
 ```powershell
 ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard <SHA> && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush && wp sg purge"
 ```
+
+> **The trailing `wp sg purge` in that live command does nothing** — see Current Truth above. Run the socket purge instead, then verify the changed page with no cache-buster and confirm `x-proxy-cache: MISS`. Until you do, the deploy is on disk but not reaching visitors.
+
+> **Take the pre-deploy backup, then prune.** `~/backups/fenster-theme` gains a ~375 MB tarball per deploy and had no retention policy: 46 files / 17 GB by 3 August 2026, which is most of why the account hit 107% of its disk quota and SiteGround disabled Site Tools. Keep the newest three and delete the rest as part of the deploy. Check `du -sh ~/*` first if anything looks tight — it finds the problem in one command.
 
 > **Why this changed.** The old form of this command used `git reset --hard origin/main`, which deploys whatever happens to be on `main` rather than the commit you approved. On 2026-07-18 a deploy of four small Legend fixes also pushed fourteen unapproved composite-door commits to production, because they were sitting in front of the Legend work on `main`. Resetting to an explicit SHA is what makes "deploy the same verified commit to live" in the Normal Change Flow actually true.
 >
@@ -196,6 +224,7 @@ Live must not become the source of truth.
 - Performance hotfix `7c973b5` defers heavy media and quote embeds without removing premium visuals. Do not make the homepage hero video or WindowCAD iframes eager again unless there is a measured reason.
 - Microsoft Clarity had unstyled/giant-image recordings because Clarity-like replay/resource fetches could receive the SiteGround/nginx `403 - Forbidden` HTML page instead of the real stylesheet. The live fix is theme-owned: Clarity plugins are removed, `inc\assets.php` adds `data-clarity-unmask="true"` to CSS/font/image resource links, and `inc\consent.php` injects `style#fenster-clarity-replay-css[data-clarity-unmask="true"]` after accepted consent and before loading `clarity.ms/tag/xi7rk1pic8`. Do not remove this inline replay CSS or reinstall the Clarity plugins without retesting recordings.
 - Public tracking is gated by the theme consent layer in `inc\consent.php`. Do not re-add raw GTM, Clarity or Meta Pixel snippets in Insert Headers/Footers or plugin settings unless they remain blocked until consent.
+- **Ad destination URLs are not carrying UTM parameters.** Nearly every attributed lead in the dashboard shows its source as "Direct or unknown", so paid traffic is invisible as paid and no channel can be credited with a lead. Nothing in the dashboard can recover a source that was never sent — fix the tagging on the ad URLs. Related: WindowCAD completions relay no `product_collection` or `price_amount`, so lead value and cost-per-lead cannot be computed at all.
 - The Marketing Dashboard Website Tracker is also consent-gated. Its production code and API are hosted separately at `https://github.com/0riceisnice0-hash/Marketing-Dashboard`; deploy dashboard changes from that repository, not from this theme deployment. Read `WEBSITE-TRACKER.md` in that repository before changing the tracker or interpreting an outcome. Analytics consent permits opaque `FGV-…` visitor tracking and 30-minute `FG2-…` journeys. Non-consented activity is aggregate-only, environment-separated and cannot join a person. Completed lead relays require the shared signing secret and deterministic event IDs. Do not change `src\js\main.js`, `inc\consent.php`, `inc\website-tracking.php` or `inc\adminbase.php` in a way that sends rejected/no-choice browsing, form or WindowCAD events to an identified dashboard journey.
 - WindowCAD URL attribution belongs in its separate **Tracking** field, never the office-owned **Reference** field. Analytics uses `FG2-…`; marketing-only attribution uses `FGA-…`; rejected/no-choice values are `rejected-cookies` / `cookie-consent-not-accepted`. Only `FG2-…` may create or join a dashboard journey.
 - `test.fensterglazing.com` is intentionally Basic Auth protected to avoid a public duplicate. Username: `fenster`; password: `Fenster`. The test `.htaccess` also serves public `robots.txt` with `Allow: /` and uses a custom 401 handler so blocked test URLs return `X-Robots-Tag: noindex, nofollow, noarchive`; keep that combination so Google can drop already-discovered test URLs.
