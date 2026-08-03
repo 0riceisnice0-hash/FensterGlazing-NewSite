@@ -140,20 +140,21 @@ $door_colours = [
            sentences the old grid carried are made again in the sections that
            own them. */
         ?>
-        <section class="fg-product-pulse fg-product-pulse--usps" aria-label="<?php esc_attr_e('Heritage aluminium door key specifications', 'fenster'); ?>">
-            <div class="container fg-product-pulse__inner">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Key specifications', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Sheerline Classic Heritage Door', 'fenster'); ?></h2>
-                </div>
-                <ul aria-label="<?php esc_attr_e('Four product specifications', 'fenster'); ?>">
-                    <li><small><?php esc_html_e('Sightlines', 'fenster'); ?></small><strong><?php esc_html_e('60.5mm', 'fenster'); ?></strong></li>
-                    <li><small><?php esc_html_e('U-value', 'fenster'); ?></small><strong><?php esc_html_e('1.4 W/m²K', 'fenster'); ?></strong></li>
-                    <li><small><?php esc_html_e('Max sash size', 'fenster'); ?></small><strong><?php esc_html_e('2.2m x 1m', 'fenster'); ?></strong></li>
-                    <li><small><?php esc_html_e('Opening', 'fenster'); ?></small><strong><?php esc_html_e('In or out', 'fenster'); ?></strong></li>
-                </ul>
-            </div>
-        </section>
+        <?php
+        /* The tiles were hardcoded here rather than read from product_usps, so
+           this route had its own copy of the strip. It uses the shared
+           component now, which is also what gives it the glazing toggle. */
+        get_template_part('template-parts/components/product-pulse', null, [
+            'slug'  => 'heritage-aluminium-doors',
+            'title' => __('Sheerline Classic Heritage Door', 'fenster'),
+            'usps'  => [
+                ['label' => __('Sightlines', 'fenster'), 'value' => __('60.5mm', 'fenster')],
+                ['label' => __('U-value', 'fenster'), 'value' => __('1.4 W/m²K', 'fenster')],
+                ['label' => __('Max sash size', 'fenster'), 'value' => __('2.2m x 1m', 'fenster')],
+                ['label' => __('Opening', 'fenster'), 'value' => __('In or out', 'fenster')],
+            ],
+        ]);
+        ?>
 
         <?php
         /* Built from the casement intro's own markup and classes rather than a

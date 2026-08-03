@@ -418,6 +418,53 @@ function fenster_site_data(): array
                 ['label' => 'Approved installer', 'value' => 'SureFlap'],
             ],
         ],
+        /* Both glazing figures per route, so the key-specification tile can show
+           what the window actually does on the standard specification and what
+           it reaches on the upgrade. Before this the strip printed one number
+           and never said which glazing it was, so casement showed its triple
+           figure while flush casement showed its double and the two looked
+           comparable when they were not.
+
+           `double` is what renders first, because that is the standard
+           specification rather than the best case. `triple` absent is the
+           signal that the system does not take it, and the tile then says
+           "Double glazed" instead of offering a toggle. That is deliberate: it
+           makes the incompatibility visible without writing a sentence about
+           what is not included, which the owner ruled out on 2026-08-02.
+
+           Sources: Sheerline publish 1.4 double and 1.0 triple across Prestige
+           (1.1 on stepped sashes) and 1.4 / 1.1 on Classic, triple in certain
+           styles only. Owner-confirmed 2026-08-03 that 0.95 is the figure for
+           all Liniar triple and 1.2 the double. Liniar publish 1.3 double on
+           tilt and turn; ours is the tighter claim and is deliberate.
+
+           Not listed, and each for a reason. uPVC doors and patio doors are
+           awaiting fabricator figures; uPVC doors currently shows a starred 1.0
+           that conflicts with the 0.95 rule and must not be paired up until it
+           is confirmed. Sliding sash is Roseview and takes no triple. Roof
+           lanterns are 1.0 double but render no key-specification strip at all,
+           so there is nowhere to put it yet. Configuration routes (French
+           doors, French casement, bow and bay) stay absent on purpose: the
+           glazing follows whichever system the pair or the bay is built from,
+           so no single figure is true for the route. */
+        'glazing_u_values' => [
+            // Liniar EnergyPlus 70mm
+            'casement-windows'        => ['double' => '1.2 W/m²K', 'triple' => '0.95 W/m²K'],
+            'tilt-turn-windows'       => ['double' => '1.2 W/m²K', 'triple' => '0.95 W/m²K'],
+            // 28mm IGU only, so no triple. Liniar's own specification confirms it.
+            'flush-casement-windows'  => ['double' => '1.2 W/m²K'],
+            // Sheerline Prestige
+            'aluminium-windows'       => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
+            'aluminium-flush-windows' => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
+            'aluminium-doors'         => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
+            'aluminium-bifold-doors'  => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
+            'aluminium-sliding-doors' => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
+            // Sheerline Classic
+            'heritage-windows'          => ['double' => '1.4 W/m²K', 'triple' => '1.1 W/m²K'],
+            'heritage-aluminium-doors'  => ['double' => '1.4 W/m²K', 'triple' => '1.1 W/m²K'],
+            // No triple, per the owner-confirmed exclusion list
+            'slide-fold-doors'        => ['double' => '1.4 W/m²K'],
+        ],
         'product_media' => [
             'aluminium-bifold-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'alt' => 'Anthracite aluminium bifold doors fitted to a brick home'],

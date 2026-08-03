@@ -3292,22 +3292,11 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors) : ?>
-        <section class="fg-product-pulse fg-product-pulse--usps" aria-label="<?php echo esc_attr($title . ' key specifications'); ?>">
-            <div class="container fg-product-pulse__inner">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Key specifications', 'fenster'); ?></p>
-                    <h2><?php echo esc_html($title); ?></h2>
-                </div>
-                <ul aria-label="<?php esc_attr_e('Four product specifications', 'fenster'); ?>">
-                    <?php foreach ($product_usps as $usp) : ?>
-                        <li>
-                            <small><?php echo esc_html($usp['label'] ?? ''); ?></small>
-                            <strong><?php echo esc_html($usp['value'] ?? ''); ?></strong>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        </section>
+        <?php get_template_part('template-parts/components/product-pulse', null, [
+            'usps'  => $product_usps,
+            'slug'  => $slug,
+            'title' => $title,
+        ]); ?>
     <?php elseif (! $use_product_journey) : ?>
         <section class="fg-intent-band">
             <div class="container fg-intent">
