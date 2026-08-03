@@ -1,8 +1,12 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-02
+Last updated: 2026-08-03
 
 ## START HERE, 2026-08-02 (end of session)
+
+**The live SHA in this block is stale. `LIVECHANGES.md` is authoritative** and
+records live as `c97aff4` on 2026-08-03, established by checksum. The rest of
+this block still holds.
 
 **Live, `main` and test are all level at `0b0affe`.** Re-establish live by
 checksum before any release anyway, and on **more than one file**:
@@ -10,13 +14,10 @@ checksum before any release anyway, and on **more than one file**:
 today and would have given a false read on its own. The recorded pointer was
 correct at the last two releases, which is not a reason to stop checking.
 
-**One thing still wants an owner decision:**
-
-- **Banner impressions.** The consent modal records a `shown` metric again.
-  `AI.md` still carries the older rule against banner-impression counts, and the
-  owner has since said to keep them. The rule text has not been rewritten, so a
-  future session could reasonably strip the metric back out. Rewrite the rule or
-  remove the metric; do not leave it contradicting itself.
+**Nothing is waiting on an owner decision.** The banner-impressions
+contradiction that sat here was closed on 2026-08-03: the metric stays, the rule
+was rewritten to match, and the reason it must never become a rate is now
+recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
 
 **Two traps added 2026-08-02, both about diagnosing before fixing:**
 
@@ -65,6 +66,52 @@ correct at the last two releases, which is not a reason to stop checking.
   colourspace convert, and check against a `pdftoppm` render of the page. This
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
+
+## 2026-08-03 - Banner impressions verified against the tracker and the rule rewritten (docs only)
+
+Owner: the banner is a consent popup now. Read the docs on it, verify it against
+the Website Tracker, then update the docs so this stops being raised.
+
+- **The component genuinely changed, so the old rule was written about a
+  different thing.** `inc/consent.php` is a native `<dialog>` opened with
+  `showModal()`. With no stored preference it opens mandatory: the `cancel`
+  event is prevented so Escape cannot dismiss it, and the close control is
+  hidden until a valid choice already exists. The 2026-07-13 rule was written
+  against a dismissible bottom banner that reappeared on every page load, which
+  is why it said impressions could not be depended on.
+- **Verified end to end rather than assumed.** The theme posts
+  `{choice: 'shown'}` once per page load, guarded by `bannerShownRecorded` and
+  fired only from `openDialog(true)`. The dashboard maps `shown` to the
+  `banner_shown` column of `website_consent_daily_v2`, keyed on environment and
+  day, and rejects any other value with a 400. Nothing about a visitor, URL,
+  source, device or journey is attached, so the aggregate-only privacy boundary
+  holds.
+- **The metric stays.** Owner instruction, 2026-08-02. `AI.md` now says so
+  outright, and `HANDOVER.md` and `AUDIT.md` no longer claim impressions were
+  removed. Its dependable use is a health check: a live figure of zero means the
+  modal or the consent endpoint has broken.
+- **It must never become a rate, and the cause is not crawler noise.** The
+  tracker's own guide records 562 choices against 499 impressions on
+  2026-08-03, which had rendered as "113% of visitors answered". Two
+  deterministic causes were found, either of which is enough on its own.
+  Footer **Cookie settings** reopens the modal through `openDialog(false)`,
+  which records no impression, while saving from that panel still records a
+  choice. And the v1 `website_consent_daily` rows the state query `UNION`s carry
+  choices with no impressions, because impression recording was removed on
+  2026-07-13 while accepts and rejects kept being written. Crawler and prefetch
+  traffic moves it in both directions on top of that.
+- **So impressions minus choices is not a sound abandonment figure either**, and
+  the dashboard guide's line offering it for abandonment overstates what the
+  number can carry. Flagged for the separate `Marketing-Dashboard` repo rather
+  than edited from here.
+- **Confirmed the dashboard does not misuse it.** `banner_shown` is a
+  denominator nowhere in `public/app.js`: Consent Health's percentage is
+  analytics-accepted over choices-answered, so it cannot exceed 100%, and the
+  Overview headline is the page-view split. `shown` is read once, as an
+  empty-state guard.
+- Docs only. No theme change, no build, no deployment. Docs are not part of the
+  theme rsync, so nothing here reaches production. Live was `c97aff4` when this
+  was written, per `LIVECHANGES.md`; re-establish by checksum as always.
 
 ## 2026-08-02 - Review stars and the submit arrow, live (0b0affe)
 
@@ -398,7 +445,8 @@ ProLinea literature, and we do not offer Smokey Chrome.
   opened on 2026-07-30 is closed in both directions.
 - Banner impressions stay, on the owner's explicit instruction. `AI.md` still
   carries the older rule against them; that rule is superseded for the consent
-  modal and should be read as such.
+  modal and should be read as such. **Closed 2026-08-03: the rule was rewritten
+  and no longer contradicts the metric.**
 
 ## 2026-08-02 - Tracking repair merged into main, with six fixes on top
 
@@ -456,7 +504,9 @@ the live runtime, so a release from it no longer deletes the Ads work.
   entry both say not to reinstate banner-impression counts, because pre-consent
   crawler traffic makes them undependable. It is already live, and the
   dashboard may now depend on the value, so it was left alone rather than
-  silently reverted. **Owner decision needed.**
+  silently reverted. ~~**Owner decision needed.**~~ **Closed 2026-08-03:** the
+  metric stays and `AI.md` now says so. The crawler objection turned out not to
+  be the real problem either; see the 2026-08-03 entry.
 - `GOOGLE-ADS-PLAN.md` section 3b was stale in both directions and now reads
   true: Consent Mode v2 defaults do exist, gclid capture is done, and the part
   that genuinely remains open is that GTM still only loads after a choice, so
