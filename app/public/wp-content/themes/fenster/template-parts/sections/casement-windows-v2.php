@@ -147,8 +147,8 @@ $faq_schema = [
         <div class="container fg-cw-split fg-cw-split--media-first">
             <figure class="fg-cw-media fg-cw-media--tall">
                 <img
-                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-leighton-front-1400w.webp')); ?>"
-                    alt="<?php esc_attr_e('White Liniar casement window with opening and fixed lights, fitted by Fenster in Leighton Buzzard', 'fenster'); ?>"
+                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-leighton-inside-1400w.webp')); ?>"
+                    alt="<?php esc_attr_e('White Liniar casement window seen from inside, both side-hung sashes open either side of a fixed centre pane, fitted by Fenster in Leighton Buzzard', 'fenster'); ?>"
                     loading="lazy" width="1400" height="1050">
                 <figcaption><?php esc_html_e('Leighton Buzzard', 'fenster'); ?></figcaption>
             </figure>
