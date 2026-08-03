@@ -311,8 +311,8 @@ $faq_schema = [
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Glass, locking and hardware', 'fenster'); ?></p>
-                <h2 id="fg-cw-spec-title"><?php esc_html_e('Four decisions we make at the survey.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('None of these can be settled properly from a website, which is why we come and look before anything is drawn.', 'fenster'); ?></p>
+                <h2 id="fg-cw-spec-title"><?php esc_html_e('Four decisions to make before you price it.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Glass, locking and handles are yours to choose, and the quote tool asks for them as you build the window. Ventilation we set against the regulations. If you would rather talk it through, we go through the options with you at a consultation.', 'fenster'); ?></p>
                 <dl class="fg-cw-list">
                     <?php foreach ($spec_points as $point) : ?>
                         <div>
