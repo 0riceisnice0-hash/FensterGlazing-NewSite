@@ -5807,29 +5807,3 @@ document.querySelectorAll('[data-fg-legend-approved]').forEach((block) => {
     window.setTimeout(() => button.classList.remove('is-pressed'), 160);
   });
 });
-
-/* Glazing toggle on the key-specification strip. Swaps the U-value figure
-   between the double and triple values the tile carries.
-
-   Scoped per tile so several strips on one page stay independent, and the
-   figures come from the markup rather than being looked up, so the controller
-   never needs to know a product. A route with no triple renders no toggle and
-   is skipped entirely. */
-document.querySelectorAll('[data-fg-glazing]').forEach((tile) => {
-  const figure = tile.querySelector('[data-fg-glazing-figure]');
-  const options = [...tile.querySelectorAll('[data-fg-glazing-option]')];
-  if (!figure || options.length < 2) return;
-
-  options.forEach((option) => {
-    option.addEventListener('click', () => {
-      const value = option.getAttribute('data-fg-glazing-option') || '';
-      if (!value) return;
-      figure.textContent = value;
-      options.forEach((other) => {
-        const isActive = other === option;
-        other.classList.toggle('is-active', isActive);
-        other.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
-    });
-  });
-});
