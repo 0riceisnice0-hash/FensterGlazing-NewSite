@@ -106,6 +106,12 @@ $is_valid_generated_image = static function ($image): bool {
     $local_path = '';
     if (str_starts_with($path, '/app/uploads/')) {
         $local_path = ABSPATH . 'wp-content/uploads/' . substr($path, strlen('/app/uploads/'));
+    } elseif (str_starts_with($path, '/wp-content/themes/fenster/')) {
+        /* Theme assets live at web/app/themes/fenster on the Bedrock servers,
+           so the generic ABSPATH mapping below never finds them and every
+           theme-pool image would be silently dropped. Resolve via the real
+           theme directory instead. */
+        $local_path = get_template_directory() . substr($path, strlen('/wp-content/themes/fenster'));
     } elseif (str_starts_with($path, '/wp-content/uploads/')) {
         $local_path = ABSPATH . ltrim($path, '/');
     } elseif (str_starts_with($path, '/wp-content/')) {
