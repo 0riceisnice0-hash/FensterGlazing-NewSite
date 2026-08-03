@@ -67,6 +67,53 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-03 - Casement and lift-and-slide promoted to live (ac6f372)
+
+- **Live established by checksum on six theme files**, with the empty-input hash
+  printed alongside so a silent miss could not read as a match. All six matched
+  `d57c970`, so the recorded pointer was right for once. It was **not** an
+  ancestor of `main`, so the branches had diverged.
+- **The range check is what made this release safe, and the explicit-SHA rule
+  would not have.** `d57c970..origin/main` was 21 commits from two authors, and
+  the seven that were not mine included the scheduled blog system: 607 lines of
+  `inc/blog-posts.php` wired into `functions.php`, a blog template and 299 lines
+  of SCSS. The other session's own commit said the batch was awaiting review on
+  test. Those commits are **ancestors of the tip**, not commits landing after
+  the one being shipped, which is exactly the case the explicit-SHA rule does
+  not catch. Deploying `main` would have started publishing posts to production.
+- Put to the owner, who chose to ship only this session's work. Cut
+  `release/casement-and-liftslide` from `d57c970` and cherry-picked the fourteen
+  commits. **All applied cleanly**, because live's `d57c970` and `main`'s
+  `9761138` are the same change under different hashes, so the base content
+  matched.
+- **Proved the compiled CSS carried none of the blog work** rather than assuming:
+  rebuilt from the branch and `main.css` came back byte-identical to the
+  committed one, and `fg-blog` returns zero in both source and compiled. No
+  `blog-posts.php`, no `blog-post.php`, and `functions.php` does not load them.
+- Whole-theme PHP lint clean. The candidate went to test first and was verified
+  there before live, then test was restored to `main` so the other session's
+  blog batch is still available to review.
+- Backup `fenster-pre-ac6f372-20260803-162526.tar.gz` (379M, 1,783 entries)
+  confirmed by grepping the SHA, not by reading the tail of `ls`. Deployed at an
+  explicit SHA with a theme-only rsync.
+- **`wp sg purge` failed on live: `sg-cachepress` is inactive there.** It is
+  active on test, which is why the same one-liner works on one half and not the
+  other. There is no CLI purge on live either: `/bin/sg` has no cache group and
+  wp-cli exposes no cache commands.
+- **That mattered, and briefly read as a failed deploy.** Two of the three
+  changed routes served stale HTML on their plain URLs (`x-proxy-cache: HIT`,
+  `s-maxage=3600`) while the files on disk were byte-identical to the commit.
+  A cache-busted fetch showed the correct page throughout. **Verify a live deploy
+  with a cache-buster, or the proxy will tell you the release did not land.**
+- **Verified on production individually rather than by status code:** seven theme
+  files byte-identical to `ac6f372`; fourteen routes 200 with the head-term
+  marker intact; the casement gallery at five cells in the right order; the
+  survey copy corrected and the old claim returning zero; the stock installer
+  photo and its "Our own installers" caption gone; the Cranfield photo and the
+  inside-shot layouts image serving; five lift-and-slide finishes on the slider
+  and five switchable on the hub; five handle families on `/handle-options/`;
+  zero blog markup; zero PHP notices.
+
 ## 2026-08-03 - Banner impressions verified against the tracker and the rule rewritten (docs only)
 
 Owner: the banner is a consent popup now. Read the docs on it, verify it against
