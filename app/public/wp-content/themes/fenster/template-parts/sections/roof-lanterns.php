@@ -138,10 +138,15 @@ $roof_styles = [
                     <h2><?php esc_html_e('Check the lantern from both sides.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('From inside, you see the opening and daylight. From outside, you see the frame, caps and roof finish. We specify both sides together.', 'fenster'); ?></p>
                 </div>
+                <?php
+                /* The inside view leads, because the section is called Inside
+                   and outside and every picture here used to be an exterior.
+                   The copy promised a view from below and never delivered one. */
+                ?>
                 <div class="fg-roof-lantern-views__grid">
-                    <figure><img src="<?php echo esc_url($imported('S1-Lantern-by-night-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Low-profile Sheerline roof lantern viewed from a flat roof at dusk', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-by-night-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('Exterior at night', 'fenster'); ?></figcaption></figure>
+                    <figure><img src="<?php echo esc_url($imported('Lantern-looking-up-04405-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('White Sheerline S1 roof lantern seen from inside the room, looking up at the sky', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Lantern-looking-up-04405-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('From inside, looking up', 'fenster'); ?></figcaption></figure>
                     <figure><img src="<?php echo esc_url($imported('S1-Lantern-exterior-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Installed Sheerline aluminium roof lantern viewed across a flat roof', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-exterior-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('Low-line roof finish', 'fenster'); ?></figcaption></figure>
-                    <figure><img src="<?php echo esc_url($imported('S1-Lantern-first-installation-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Completed Sheerline roof lantern installation', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-first-installation-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('Completed installation', 'fenster'); ?></figcaption></figure>
+                    <figure><img src="<?php echo esc_url($imported('S1-Lantern-by-night-min-scaled.jpg')); ?>" alt="<?php esc_attr_e('Low-profile Sheerline roof lantern viewed from a flat roof at dusk', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/S1-Lantern-by-night-min-scaled.jpg'); ?>><figcaption><?php esc_html_e('Exterior at night', 'fenster'); ?></figcaption></figure>
                 </div>
             </div>
         </section>
@@ -154,10 +159,10 @@ $roof_styles = [
                 <div class="fg-roof-lantern-intro__copy">
                     <p class="eyebrow"><?php esc_html_e('Getting the specification right', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Start with the room and roof opening.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('We look at the opening size, where daylight will fall, the direction the room faces and the surrounding windows and doors. We then use that information to specify the glass, ventilation, frame colour and proportions.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('We look at the opening size, where daylight will fall, the direction the room faces and the surrounding windows and doors. We then use that information to set the ventilation, frame colour and proportions, on top of the Activ Blue glass that comes as standard.', 'fenster'); ?></p>
                     <ol class="fg-roof-lantern-intro__steps">
                         <li><strong><?php esc_html_e('01. Position', 'fenster'); ?></strong><span><?php esc_html_e('Set the opening size and position around the room below and the roof structure above.', 'fenster'); ?></span></li>
-                        <li><strong><?php esc_html_e('02. Comfort', 'fenster'); ?></strong><span><?php esc_html_e('Choose glass and ventilation for the direction the room faces and how you use it.', 'fenster'); ?></span></li>
+                        <li><strong><?php esc_html_e('02. Comfort', 'fenster'); ?></strong><span><?php esc_html_e('Activ Blue glass comes as standard. We set the ventilation to the direction the room faces and how you use it.', 'fenster'); ?></span></li>
                         <li><strong><?php esc_html_e('03. Finish', 'fenster'); ?></strong><span><?php esc_html_e('Confirm the frame colour and sightlines before the lantern is ordered.', 'fenster'); ?></span></li>
                     </ol>
                 </div>
@@ -188,7 +193,7 @@ $roof_styles = [
                 <div class="fg-roof-lantern-configurations__heading">
                     <p class="eyebrow"><?php esc_html_e('S1 configurations', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Compare all 13 roof lantern layouts.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('S1 is available in square, 2-way and 3-way layouts up to 3.2 x 6m without tie bars. We will confirm which layouts suit the opening before you choose the frame colour and glass.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('S1 is available in square, 2-way and 3-way layouts up to 3.2 x 6m without tie bars. We will confirm which layouts suit the opening before you choose the frame colour.', 'fenster'); ?></p>
                 </div>
             </div>
             <?php
@@ -220,15 +225,22 @@ $roof_styles = [
         <section class="fg-roof-lantern-options">
             <div class="container">
                 <div class="fg-roof-lantern-options__heading">
-                    <p class="eyebrow"><?php esc_html_e('Choose before order', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Decide on security and ventilation early.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Both options change how the lantern and glass are made. We will discuss them with you before the final specification is signed off.', 'fenster'); ?></p>
+                    <?php
+                    /* This section used to be headed "Choose before order" and
+                       presented both as customer choices. Neither is. Owner
+                       correction: the security features are standard on the
+                       frame, and powered vents are uncommon and specified for
+                       the room rather than picked off a list. */
+                    ?>
+                    <p class="eyebrow"><?php esc_html_e('Security and ventilation', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Security is built in. Ventilation is specified for the room.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('The security features are part of the S1 frame, so they are on every lantern we fit. Powered vents are less common: we specify one where the room genuinely needs the air, and design it in before the lantern is made.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-roof-lantern-options__grid">
                     <article>
                         <figure><img src="<?php echo esc_url($asset('s1-security-detail.jpg')); ?>" alt="<?php esc_attr_e('Security detail for a Sheerline S1 roof lantern', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/s1-security-detail.jpg'); ?>></figure>
                         <div class="fg-roof-lantern-options__copy">
-                            <span><?php esc_html_e('01. Security', 'fenster'); ?></span>
+                            <span><?php esc_html_e('Standard', 'fenster'); ?></span>
                             <h3><?php esc_html_e('Security built into the frame.', 'fenster'); ?></h3>
                             <p><?php esc_html_e('S1 uses enclosed glazing, anti-tamper features and a high-security ridge end. The optional Secured by Design upgrade adds concealed clamping plates that retain laminated glass panels.', 'fenster'); ?></p>
                         </div>
@@ -236,7 +248,7 @@ $roof_styles = [
                     <article>
                         <figure><img src="<?php echo esc_url($asset('s1-sheervent.jpg')); ?>" alt="<?php esc_attr_e('SheerVent integrated into a Sheerline S1 roof lantern', 'fenster'); ?>" loading="lazy"<?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/roof-lanterns/s1-sheervent.jpg'); ?>></figure>
                         <div class="fg-roof-lantern-options__copy">
-                            <span><?php esc_html_e('02. Ventilation', 'fenster'); ?></span>
+                            <span><?php esc_html_e('Specified where it is needed', 'fenster'); ?></span>
                             <h3><?php esc_html_e('Ventilation without a bulky roof vent.', 'fenster'); ?></h3>
                             <p><?php esc_html_e('SheerVent sits flush with the S1 rafter bars and opens using powered actuators. An optional rain sensor can close the vent automatically when it starts to rain.', 'fenster'); ?></p>
                         </div>
