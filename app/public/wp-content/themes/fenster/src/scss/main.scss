@@ -3841,6 +3841,64 @@ h3 {
   text-transform: uppercase;
 }
 
+/* The glazing tile is the only interactive one in the strip. Its third row is
+   always occupied, either by the toggle or by the static "Double glazed" line,
+   so a system that cannot take triple is exactly as tall as one that can and
+   the row of four stays level. Do not drop the note to save space; a ragged row
+   is what makes this read as bolted on, and the note is also how the page says
+   double-only without writing a sentence about what is not included. */
+.fg-product-pulse__glazing {
+  gap: 0.3rem;
+}
+
+.fg-product-pulse__glazing-toggle {
+  display: inline-flex;
+  align-self: start;
+  padding: 2px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.fg-product-pulse__glazing-toggle button {
+  padding: 0.16rem 0.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.fg-product-pulse__glazing-toggle button:hover {
+  color: var(--color-steel);
+}
+
+.fg-product-pulse__glazing-toggle button.is-active {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.fg-product-pulse__glazing-note {
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Below the four-across breakpoint the tiles get narrower, and a two-segment
+   pill plus a figure is the widest content in the strip. Let it wrap rather
+   than squeeze the figure. */
+@media (max-width: 860px) {
+  .fg-product-pulse__glazing-toggle button {
+    padding: 0.16rem 0.45rem;
+  }
+}
+
 .fg-product-pulse li strong {
   color: var(--color-steel);
   font-size: 1rem;
