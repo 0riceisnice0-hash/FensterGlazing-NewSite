@@ -109,7 +109,7 @@ $roof_styles = [
             'title' => __('Sheerline S1 roof lantern', 'fenster'),
             'usps'  => [
                 ['label' => __('U-value', 'fenster'), 'value' => __('1.0 W/m²K', 'fenster')],
-                ['label' => __('Glazing', 'fenster'), 'value' => __('28mm', 'fenster')],
+                ['label' => __('Glazing', 'fenster'), 'value' => __('28mm Activ Blue', 'fenster')],
                 ['label' => __('Max size', 'fenster'), 'value' => __('3.2m x 6m', 'fenster')],
                 ['label' => __('Ventilation', 'fenster'), 'value' => __('SheerVent option', 'fenster')],
             ],
