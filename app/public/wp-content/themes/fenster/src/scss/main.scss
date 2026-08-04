@@ -36977,7 +36977,10 @@ html.fg-blinds-reveal-locked {
   letter-spacing: 0.03em;
 }
 
-@media (hover: hover) {
+/* Gated on a fine pointer as well as hover, because some touch devices report
+   hover: hover and would then never reveal these. The phone block below turns
+   them on unconditionally as a second guard. */
+@media (hover: hover) and (pointer: fine) {
   .fg-cas-tags {
     max-height: 0;
     margin-top: 0;
@@ -37022,6 +37025,14 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cas-combi figure { order: -1; }
+
+  /* Nothing to hover with: the features are simply on. */
+  .fg-cas-tags {
+    max-height: none;
+    margin-top: 0.45rem;
+    opacity: 1;
+    overflow: visible;
+  }
 
   .fg-cas-section-head,
   .fg-cas-overture__grid { gap: 0.75rem; }
