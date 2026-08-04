@@ -3086,7 +3086,11 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
      catch fractionally different amounts of light, and without that the render
      reads as a printed pattern no matter how good the shading is. Computed
      once from the index rather than from Math.random, so a slat keeps the same
-     character between frames instead of shimmering. */
+     character between frames instead of shimmering.
+
+     The amounts applied at the draw site are deliberately small. The first
+     pass was four times stronger and read as damage rather than as hang. It
+     is a fine line: none at all is a printed rule, too much is a bent blind. */
   const wobble = Array.from({ length: SLAT_COUNT }, (unused, i) => {
     const n = Math.sin(i * 12.9898) * 43758.5453;
     const m = Math.sin(i * 78.233 + 1.7) * 12345.6789;
@@ -3831,15 +3835,18 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       const midX = blindX + blindW / 2;
       for (let i = 0; i < deployed; i += 1) {
         const w = wobble[i] || { offset: 0, gain: 0, lean: 0 };
-        const y = topPx + i * pitchPx + w.offset * pitchPx * 0.16;
-        ctx.globalAlpha = 1 + w.gain * 0.16;
-        /* A fifth of a degree of lean per slat. It is far too small to see on
-           any one slat and it is the whole difference across fifty of them:
-           perfectly level slats read as a printed rule, and no real blind
-           hangs that straight. */
+        const y = topPx + i * pitchPx + w.offset * pitchPx * 0.04;
+        ctx.globalAlpha = 1 + w.gain * 0.04;
+        /* About a twentieth of a degree of lean per slat, a quarter of what
+           it was. Perfectly level slats still read as a printed rule, so some
+           variation has to stay, but at the old strength the blind looked
+           damaged rather than hung: the owner asked for roughly seventy five
+           per cent more consistency and this is that. Position and brightness
+           came down by the same quarter, together, or reducing one alone just
+           shifts which cue reads as the defect. */
         ctx.save();
         ctx.translate(midX, y + pitchPx / 2);
-        ctx.rotate(w.lean * 0.0042);
+        ctx.rotate(w.lean * 0.00105);
         ctx.drawImage(tile.canvas, -blindW / 2 - 2, -pitchPx / 2, blindW + 4, pitchPx);
         ctx.restore();
       }
