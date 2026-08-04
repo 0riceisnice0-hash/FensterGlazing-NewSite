@@ -67,6 +67,62 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-04 - Casement rebuilt around the journey, and held to a car maker's register (test, eb27ff0)
+
+Owner: start afresh, order the elements the way a consumer meets them, no
+gimmicks, only facts and selling points. Lead on versatility, energy efficiency
+with EnergyPlus as the USP, and security. Make it stylish and high end, closer
+to a luxury vehicle site than a cheap double glazing one. Only the best images
+even if staged, except where a photograph belongs to a real job. Use the white
+background images for the flush comparison. Think the whole flow through before
+rebuilding the parts.
+
+- **The flow was designed before a line was written**, in the order a buyer asks
+  the questions: what is it and does it suit my house, can I have it my way,
+  will it be warm, will it be safe, are you any good, what does it cost. That
+  gives an overture, the film, three numbered chapters, the proof, then the
+  quote tool.
+- **01 Versatility** carries the four ways it opens, standard against flush,
+  the sixteen foils, the bars and horns and lead, and the handles.
+  **02 EnergyPlus** and **03 Security** sit on dark, because both are technical
+  claims and the studio photography reads as lit product there rather than as a
+  diagram on a page. One display size runs across every chapter and section
+  head, the chapter numeral is a hairline outline, and there is not a card or a
+  drop shadow anywhere.
+- **The comparison uses the white background Liniar studio pair the owner
+  asked for**, and finding it took correcting a mistake: those originals are
+  CMYK JPEGs, so a contact sheet rendered them as dark brown product shots and
+  the whole set was nearly written off. Viewed directly they are white frames
+  on white. Converted to sRGB WebP under products/casement/studio so no browser
+  has to guess, then both cropped square around their subjects so the proud
+  sash and the four level ones present at one scale.
+- **Studio photography carries the page; our own job photographs are confined
+  to the proof mosaic and the case studies**, which is the owner's rule and
+  also the honest one: staged imagery sells the product, real imagery proves
+  the work. The Cranfield and Leighton job shots left the body for that reason,
+  and an in-situ brick photograph that had crept into the four opening styles
+  went with them for breaking the register.
+- **The height attribute trap, again.** The detail trio drew as three portraits
+  of different heights because width and height attributes on an img are
+  presentational hints that beat aspect-ratio unless one dimension is released.
+  `ABOUT-PAGE-HANDOVER.md` has recorded this since July. `height: auto`.
+- **Pruning CSS on blank lines broke a page nobody had touched.** Keeping every
+  rule that mentioned `fg-cw-gallery` kept the rules but not the
+  `@media (max-width: 860px)` wrapper around the phone ones, so the heritage
+  door gallery rendered its swipe rail at 1280: display flex, four cells at
+  726px, no mosaic. The build was perfectly happy. Rebuilt from the pre-removal
+  commit with a brace-aware parser that keeps media wrappers and only the inner
+  rules naming the component. **A CSS rule is a brace pair, not a paragraph**,
+  and this is the second cut in one day whose assertion did not name what it
+  must not swallow.
+- Verified on test: eleven sections in the intended order, chapter numerals
+  01/02/03, four style cards at equal height, the trio equal, the comparison
+  pair equal, 42 images with none broken, the construction list opening one at
+  a time with the first open in the markup. At 390 the page is 390 wide with no
+  body overflow, the largest heading 39px against the 57.6px cap, and no
+  console errors. Heritage doors re-measured afterwards and back on its grid.
+- Test deployment only. Live is untouched.
+
 ## 2026-08-04 - A casement configurator, built and then removed the same day (test)
 
 Owner, on the redesign below: stop plastering the leaks and rebuild the pipe,

@@ -429,16 +429,17 @@ Current accepted behaviour:
 
 Route: `/casement-windows/`, the most viewed page on the site.
 
-Template: `template-parts\sections\casement-windows-v2.php`, dispatched from `template-parts\sections\generated-page.php`, which returns early for this slug.
+Template: `template-parts\sections\casement-windows-v2.php`, dispatched from `template-parts\sections\generated-page.php`, which returns early for this slug. Styling is the `.fg-cas` namespace.
 
-Current accepted behaviour, rebuilt 2026-08-04:
+Current accepted model, rebuilt 2026-08-04:
 
-- **The page is photography-led, and the interactive moment is the real quote tool.** A drawn canvas configurator was built here on 2026-08-04 and removed the same day on the owner's instruction: the WindowCAD tool already configures a window *and* prices it, so a second configurator competed with the thing that converts, and a vector drawing read as a game graphic rather than a premium product. Do not rebuild it. If this page needs more interactivity, route harder to `#fenster-product-quote`.
-- Section order is detail strip, film band, intro with the EnergyPlus banner, opening styles, moving parts, casement or flush, construction explorer, real homes gallery, CTA, specification decisions, colour grid, handle grid, quote embed, FAQs, case studies, enquiry, reviews.
-- **A slot near the top is reserved for an installation film.** `$film_src` at the top of the template is empty, so the band renders the installer photograph with an in-production chip. Setting that one variable to a theme path plays the mp4 in the same frame; nothing else needs changing.
-- **The detail strip is the decorative options, photographed.** Astragal and horn, Georgian bars and leaded glass, at the scale a customer would see them. It does the same job for bars and lead that the foil swatches and handle photographs do for colour and hardware.
-- **The casement or flush section is annotated photography.** Numbered markers on the Cranfield window point at the proud sash and the directly glazed fixed pane; the flush three-light beside it shows the level sash and matched dummy lights. Both are stated A+ and both figures shown, per the even-handed comparison rule.
-- Opening styles describes hardware, not names. The Leighton Buzzard photograph beside it shows two side-hung sashes around a fixed pane, and the copy says so; it previously claimed three of the four layouts.
+- **The page is ordered by the customer's journey, not by section type**: overture, film, then three numbered chapters, then proof, then the quote tool. The chapters are the three things that sell this window and the owner named them: **01 Versatility, 02 EnergyPlus, 03 Security**. Do not reorder them or add a fourth without asking.
+- **The register is a car maker's product page.** One display size across every chapter and section head, a hairline chapter numeral, full-bleed photography, generous space, and no cards or drop shadows. Both technical chapters sit on dark so the white studio photography reads as lit product.
+- **Imagery rule, owner instruction:** the best image wins and staged manufacturer photography is preferred, *except* in the proof mosaic and the case studies, where the point is that the work is ours. Do not put job photographs back into the body.
+- **The flush comparison uses the white background Liniar studio pair**, cropped square so both subjects present at one scale. Those originals are **CMYK JPEGs**: a contact sheet will render them as dark brown and they are not. The converted sRGB set lives in `assets\images\products\casement\studio`; regenerate with `-colorspace sRGB` and look at the result.
+- A drawn canvas configurator was built here on 2026-08-04 and removed the same day on the owner's instruction: the WindowCAD tool already configures a window *and* prices it, so a second configurator competed with the thing that converts, and a vector drawing read as a game graphic rather than a premium product. Do not rebuild it. If this page needs more interactivity, route harder to `#fenster-product-quote`.
+- **A slot near the top is reserved for an installation film.** `$film_src` at the top of the template is empty, so the band renders the installer photograph with an in-production chip. Setting that one variable to a theme path plays the mp4 in the same frame.
+- `.fg-cw-gallery` still exists in the stylesheet for `/heritage-aluminium-doors/` only. It is labelled; do not prune it with the next casement rewrite, and never prune CSS by splitting on blank lines, which drops media query wrappers.
 
 ### Colour Options Pages
 
