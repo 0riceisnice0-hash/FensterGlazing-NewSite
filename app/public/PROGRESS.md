@@ -94,6 +94,19 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   easing has settled it stayed black. The owner reported it as "keeps on going
   black after clicking". `layout()` is now measurement only. The general
   lesson: anything the pointer path calls at pointer rate has to be pure.
+- **A pointerdown handler cannot cancel a scroll that has already started.** The
+  owner reported that dragging on mobile pulled the whole page. The stage was
+  `touch-action: pan-y` and the code switched it to `none` on `pointerdown`,
+  which is too late: the browser commits a touch to a scroll before the handler
+  runs. Fixed by putting two grab elements over the drawn magnets and giving
+  only those `touch-action: none`, so a drag on a magnet is a drag and a drag
+  anywhere else on the glass is still a scroll. If an element needs to take a
+  drag on touch, it has to declare that in CSS before the gesture begins.
+- **The cassette is 50mm and colour matched to the slats**, from a second
+  photograph of a bare unit. The magnets slot onto the slim rail at the inner
+  edge of the frame rather than sitting in the middle of the member. The window
+  frame had to come down in section to make room: at the showroom sample's full
+  thickness plus a 50mm cassette, the two borders together swallowed the glass.
 - **The blind's framework is a U, not a border.** Sides and head, nothing across
   the bottom, with the bottom rail resting on the edge of the glass. The head
   rail belongs to the blind, so it takes the slat colour; the cassette belongs
