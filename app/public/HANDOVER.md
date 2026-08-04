@@ -425,6 +425,22 @@ Current accepted behaviour:
 - **The slat colours are on `/colour-options/` as their own section**, anchored `#integral-blind-colours`, built at render time from `notan_blind_colours` rather than copied into `colour_options`. Keep it derived: the hub and the visualiser must not be able to drift apart.
 - **Instant pricing is off on this route** via `$offers_instant_price`. A blind unit is a sealed unit specification made to its host window or door, and the online tool prices windows and doors, so the button promised a number nobody could get. Both hero variants and the hero card are gated on the same list; add a slug there rather than deleting buttons, or they fall out of step.
 
+### Casement Windows Page
+
+Route: `/casement-windows/`, the most viewed page on the site.
+
+Template: `template-parts\sections\casement-windows-v2.php`, dispatched from `template-parts\sections\generated-page.php`, which returns early for this slug.
+
+Current accepted behaviour, rebuilt 2026-08-04:
+
+- **The page opens on a designer, not on prose.** `template-parts\components\casement-designer.php` draws the window the visitor specifies on a 2D canvas. See the Casement Designer Rule in `AI.md` before touching it; every value it shows comes from `inc\site-data.php`.
+- Section order is designer, evidence strip, film band, intro with the EnergyPlus banner, opening styles, moving parts, casement or flush, construction explorer, real homes gallery, CTA, specification decisions, colour grid, handle grid, quote embed, FAQs, case studies, enquiry, reviews.
+- **A slot near the top is reserved for an installation film.** `$film_src` at the top of the template is empty, so the band renders the installer photograph with an in-production chip. Setting that one variable to a theme path plays the mp4 in the same frame; nothing else needs changing.
+- **The evidence strip under the designer is not decoration.** Astragal and horn, Georgian bars and leaded glass, photographed, so the drawn options are backed by the real thing the way the foil swatches and handle photographs back the colour and handle choices further down.
+- **The casement or flush section is annotated photography.** Numbered markers on the Cranfield window point at the proud sash and the directly glazed fixed pane; the flush three-light beside it shows the level sash and matched dummy lights. Both are stated A+ and both figures shown, per the even-handed comparison rule.
+- The five-photograph personalisation stage that briefly stood between these two is gone: the designer answers the same question properly.
+- Opening styles describes hardware, not names. The Leighton Buzzard photograph beside it shows two side-hung sashes around a fixed pane, and the copy says so; it previously claimed three of the four layouts.
+
 ### Colour Options Pages
 
 Routes:
