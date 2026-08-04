@@ -119,6 +119,7 @@ $designer_bars = [
                                 data-fg-cwd-colour="<?php echo esc_attr($colour_hex); ?>"
                                 data-colour-name="<?php echo esc_attr($colour_name); ?>"
                                 data-colour-finish="<?php echo esc_attr($colour_finish); ?>"
+                                data-colour-grain="<?php echo ! empty($colour['grain']) ? '1' : '0'; ?>"
                                 style="--cwd-swatch: <?php echo esc_attr($colour_hex); ?>;"
                                 aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
                                 title="<?php echo esc_attr($colour_title); ?>">

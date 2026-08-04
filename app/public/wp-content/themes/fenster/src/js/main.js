@@ -7105,6 +7105,7 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     layout: 'three-light',
     bars: 'none',
     colour: colourButtons[0] ? colourButtons[0].dataset.fgCwdColour : '#ffffff',
+    grain: colourButtons[0] ? colourButtons[0].dataset.colourGrain === '1' : false,
     colourLabel: colourButtons[0] ? colourButtons[0].dataset.colourName : 'Smooth White',
     handle: handleButtons[0] ? handleButtons[0].dataset.fgCwdHandle : '#f4f4ef',
     handleLabel: handleButtons[0] ? handleButtons[0].dataset.handleName : 'White',
@@ -7149,12 +7150,15 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
 
   const interiorColour = () => (state.match ? state.colour : '#f6f6f2');
   const faceColour = () => (state.inside ? interiorColour() : state.colour);
+  // The grain belongs to the foil, so it follows the foil onto whichever face
+  // is actually carrying it. Smooth white inside is not a woodgrain.
+  const faceGrain = () => (state.inside ? state.grain && state.match : state.grain);
 
   /* A uPVC member drawn as a section rather than a flat block: the sculptured
      bead is a soft curve, so the light lands along the top and left and falls
      away to the bottom and right. That is the difference between reading as a
      window and reading as a wireframe. */
-  const member = (x, y, w, h, colour) => {
+  const member = (x, y, w, h, colour, grain) => {
     if (w <= 0 || h <= 0) return;
     const g = ctx.createLinearGradient(x, y, x + w * 0.35, y + h);
     g.addColorStop(0, shade(colour, 0.1));
@@ -7162,17 +7166,56 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     g.addColorStop(1, shade(colour, -0.12));
     ctx.fillStyle = g;
     ctx.fillRect(x, y, w, h);
+
+    /* A woodgrain foil has a grain you can feel, which is what colour_options
+       says about them and why they are marked in the data rather than guessed
+       at by name here. Drawn flat they read as brown plastic, which is exactly
+       the fault the blind's flake finishes had before they were given one. */
+    if (!grain) return;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x, y, w, h);
+    ctx.clip();
+    const along = w >= h;
+    const lines = Math.max(4, Math.round((along ? h : w) / 2.4));
+    for (let i = 0; i < lines; i += 1) {
+      const v = hashNoise(i, Math.round(along ? y : x));
+      ctx.strokeStyle = `rgba(${v > 0.5 ? '255, 246, 232' : '46, 26, 12'}, ${0.05 + v * 0.09})`;
+      ctx.lineWidth = 0.6 + v * 1.1;
+      ctx.beginPath();
+      if (along) {
+        const ly = y + (i + v) * (h / lines);
+        ctx.moveTo(x, ly);
+        ctx.bezierCurveTo(x + w * 0.3, ly + (v - 0.5) * 2.4, x + w * 0.7, ly - (v - 0.5) * 2.4, x + w, ly);
+      } else {
+        const lx = x + (i + v) * (w / lines);
+        ctx.moveTo(lx, y);
+        ctx.bezierCurveTo(lx + (v - 0.5) * 2.4, y + h * 0.3, lx - (v - 0.5) * 2.4, y + h * 0.7, lx, y + h);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
   };
 
-  const glassPaint = (x, y, w, h, scale) => {
-    // Outside: sky at the top falling to the reflection of the ground. Inside:
-    // you are looking out, so the pane is brighter and warmer at the foot.
-    const g = ctx.createLinearGradient(x, y, x, y + h);
+  /* Every pane on one window reflects the same sky, so the gradient and the
+     sheen are laid out in whole-window coordinates and each pane is a window
+     onto that one scene. Restarting them per pane was the single thing making
+     this read as painted panels rather than glass: eight identical diagonal
+     highlights, one per opening, which happens nowhere in nature. `frame` is
+     the whole window rect and is set once per draw. */
+  let frameRect = { x: 0, y: 0, w: 1, h: 1 };
+
+  const glassPaint = (x, y, w, h) => {
+    const f = frameRect;
+    const g = ctx.createLinearGradient(f.x, f.y, f.x, f.y + f.h);
     if (state.inside) {
+      // Looking out: the garden is brighter at the foot than the sky is here.
       g.addColorStop(0, '#cfe2ee');
       g.addColorStop(0.55, '#bcd3d2');
       g.addColorStop(1, '#a8bfa4');
     } else {
+      // Looking at it: sky at the head, the ground and whatever is opposite
+      // reflected lower down, which is always the darker half.
       g.addColorStop(0, '#b9d2e2');
       g.addColorStop(0.45, '#9fb9c6');
       g.addColorStop(1, '#7d949a');
@@ -7181,27 +7224,31 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     ctx.fillRect(x, y, w, h);
 
     if (state.obscure) {
-      // Sandblasted glass is grain, not stripes. Deterministic dots at a size
-      // that holds up at any scale, matching the feTurbulence decision made
-      // for the satin swatch on /obscured-glass/.
-      const step = Math.max(3, 5 * scale);
+      /* Sandblasted and patterned glass is grain, not tiles. The step is in
+         drawing pixels rather than millimetres so the texture stays fine at
+         any window size; sized from the window it turned into mosaic blocks.
+         Deterministic, so it cannot crawl between redraws, which is the same
+         call made for the blind's flake finishes. */
       ctx.save();
       ctx.beginPath();
       ctx.rect(x, y, w, h);
       ctx.clip();
-      for (let i = 0; i * step < w; i += 1) {
-        for (let j = 0; j * step < h; j += 1) {
-          const v = hashNoise(i, j);
-          ctx.fillStyle = `rgba(255, 255, 255, ${0.16 + v * 0.4})`;
-          ctx.fillRect(x + i * step, y + j * step, step * (0.5 + v * 0.5), step * (0.5 + v * 0.5));
+      ctx.fillStyle = 'rgba(240, 246, 248, 0.55)';
+      ctx.fillRect(x, y, w, h);
+      const step = 3;
+      for (let i = 0; i * step < w + step; i += 1) {
+        for (let j = 0; j * step < h + step; j += 1) {
+          const v = hashNoise(i + Math.round(x), j + Math.round(y));
+          if (v < 0.55) continue;
+          ctx.fillStyle = `rgba(255, 255, 255, ${(v - 0.55) * 0.9})`;
+          ctx.fillRect(x + i * step, y + j * step, step, step);
         }
       }
       ctx.restore();
-      ctx.fillStyle = 'rgba(236, 243, 245, 0.42)';
-      ctx.fillRect(x, y, w, h);
     }
 
-    // The rebate throws a shadow onto the glass along the top and left.
+    // The rebate throws a shadow onto the glass along the head and the hinge
+    // side, which is what gives a pane its depth in the frame.
     const inner = ctx.createLinearGradient(x, y, x + w * 0.22, y + h * 0.22);
     inner.addColorStop(0, 'rgba(10, 30, 38, 0.24)');
     inner.addColorStop(1, 'rgba(10, 30, 38, 0)');
@@ -7210,17 +7257,29 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
   };
 
   const glassSheen = (x, y, w, h) => {
+    // Clipped to the pane, but drawn against the whole window, so the band
+    // runs across mullions and transoms the way a real reflection does.
+    const f = frameRect;
     ctx.save();
     ctx.beginPath();
     ctx.rect(x, y, w, h);
     ctx.clip();
     ctx.beginPath();
-    ctx.moveTo(x - w * 0.1, y + h * 0.72);
-    ctx.lineTo(x + w * 0.55, y - h * 0.1);
-    ctx.lineTo(x + w * 0.82, y - h * 0.1);
-    ctx.lineTo(x + w * 0.17, y + h * 0.72);
+    ctx.moveTo(f.x - f.w * 0.15, f.y + f.h * 0.95);
+    ctx.lineTo(f.x + f.w * 0.52, f.y - f.h * 0.12);
+    ctx.lineTo(f.x + f.w * 0.78, f.y - f.h * 0.12);
+    ctx.lineTo(f.x + f.w * 0.11, f.y + f.h * 0.95);
     ctx.closePath();
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.17)';
+    ctx.fill();
+    // A second, narrower band keeps it from reading as one painted stripe.
+    ctx.beginPath();
+    ctx.moveTo(f.x + f.w * 0.62, f.y + f.h * 1.05);
+    ctx.lineTo(f.x + f.w * 1.02, f.y + f.h * 0.36);
+    ctx.lineTo(f.x + f.w * 1.1, f.y + f.h * 0.36);
+    ctx.lineTo(f.x + f.w * 0.7, f.y + f.h * 1.05);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
     ctx.fill();
     ctx.restore();
   };
@@ -7324,8 +7383,11 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
      view, and a fixed pane has no sash to carry them. */
   const drawHorns = (cell, r, mm) => {
     if (!state.horns || state.inside || cell.type === 'fixed') return;
-    const hw = SASH * mm * 0.62;
-    const hh = SASH * mm * 1.25;
+    // Sized off the reference photograph: about two thirds of the stile wide
+    // and a little over twice that long, hanging clear below the bottom rail
+    // with a turned end. At the first size they read as feet.
+    const hw = SASH * mm * 0.66;
+    const hh = SASH * mm * 1.6;
     const colour = state.colour;
     [r.x + SASH * mm * 0.2, r.x + r.w - SASH * mm * 0.2 - hw].forEach((hx) => {
       const hy = r.y + r.h - SASH * mm * 0.35;
@@ -7344,7 +7406,7 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     });
   };
 
-  const drawCell = (cell, r, mm, scale) => {
+  const drawCell = (cell, r, mm) => {
     if (cell.type === 'fixed') {
       // Glazed straight into the frame, so the border is only the bead. This
       // is why a fixed pane holds more glass than an opener the same size,
@@ -7354,7 +7416,7 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
       const gw = r.w - BEAD * mm * 2;
       const gh = r.h - BEAD * mm * 2;
       if (gw <= 0 || gh <= 0) return;
-      glassPaint(gx, gy, gw, gh, scale);
+      glassPaint(gx, gy, gw, gh);
       drawBars(gx, gy, gw, gh, mm, false);
       glassSheen(gx, gy, gw, gh);
       drawBars(gx, gy, gw, gh, mm, true);
@@ -7365,15 +7427,19 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     const cos = Math.cos(OPEN_ANGLE * open);
     const sin = Math.sin(OPEN_ANGLE * open);
 
-    // The reveal behind an open sash: the room, in shadow.
+    /* The opening behind a swung sash. Flat black read as a bar of ink rather
+       than a way into a room, so it is a lit interior falling into shadow at
+       the head and the hinge, which is where a room actually goes dark. */
     if (open > 0.001) {
-      ctx.fillStyle = '#1b2529';
-      ctx.fillRect(r.x, r.y, r.w, r.h);
-      const g = ctx.createLinearGradient(r.x, r.y, r.x + r.w * 0.4, r.y + r.h);
-      g.addColorStop(0, 'rgba(0, 0, 0, 0.45)');
-      g.addColorStop(1, 'rgba(0, 0, 0, 0.1)');
+      const g = ctx.createLinearGradient(r.x, r.y, r.x + r.w * 0.55, r.y + r.h);
+      g.addColorStop(0, '#141d21');
+      g.addColorStop(0.55, '#2c3a3f');
+      g.addColorStop(1, '#42535a');
       ctx.fillStyle = g;
       ctx.fillRect(r.x, r.y, r.w, r.h);
+      // The reveal returns: a lit edge where the opening meets the room.
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.09)';
+      ctx.fillRect(r.x, r.y + r.h - Math.max(1, 14 * mm), r.w, Math.max(1, 14 * mm));
     }
 
     /* Orthographic projection of a slab hinged on one edge. A point at
@@ -7414,7 +7480,7 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
       member(edge.x, edge.y, edge.w, edge.h, shade(interiorColour(), -0.08));
     }
 
-    member(s.x, s.y, s.w, s.h, faceColour());
+    member(s.x, s.y, s.w, s.h, faceColour(), faceGrain());
 
     // Glass inset by the sash face. Compressed along the rotating axis so the
     // sash rails stay the right thickness as it swings.
@@ -7429,10 +7495,55 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     const pw = s.w - ix * 2;
     const ph = s.h - iy * 2;
     if (pw > 0 && ph > 0) {
-      glassPaint(px, py, pw, ph, scale);
+      glassPaint(px, py, pw, ph);
       drawBars(px, py, pw, ph, mm, false);
       glassSheen(px, py, pw, ph);
       drawBars(px, py, pw, ph, mm, true);
+    }
+
+    /* The friction stay. Every opener on this system rides on one, and drawn
+       across the gap it is the thing that says "this sash is open" rather than
+       "this sash got narrower", which is the honest weakness of an exact
+       face-on projection. Stainless, so it is drawn as metal rather than in
+       the frame colour. */
+    if (open > 0.02 && edge) {
+      const armT = Math.max(1.2, 11 * mm);
+      // The arm is only ever visible in the gap, between the swung sash and
+      // the frame it has left. Drawn across the sash it would be an arm lying
+      // over the glass, which is not where a stay lives.
+      const arm = (ax, ay, bx, by) => {
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
+      };
+      ctx.save();
+      ctx.strokeStyle = 'rgba(216, 223, 226, 0.9)';
+      ctx.lineWidth = armT;
+      ctx.lineCap = 'round';
+      if (cell.type === 'top') {
+        const gapTop = edge.y + edge.h;
+        const gapBottom = r.y + r.h;
+        if (gapBottom - gapTop > armT) {
+          arm(r.x + r.w * 0.18, gapBottom, r.x + r.w * 0.26, gapTop);
+          arm(r.x + r.w * 0.82, gapBottom, r.x + r.w * 0.74, gapTop);
+        }
+      } else if (cell.hinge === 'left') {
+        const gapLeft = edge.x + edge.w;
+        const gapRight = r.x + r.w;
+        if (gapRight - gapLeft > armT) {
+          arm(gapRight, r.y + r.h * 0.16, gapLeft, r.y + r.h * 0.24);
+          arm(gapRight, r.y + r.h * 0.84, gapLeft, r.y + r.h * 0.76);
+        }
+      } else {
+        const gapRight = edge.x;
+        const gapLeft = r.x;
+        if (gapRight - gapLeft > armT) {
+          arm(gapLeft, r.y + r.h * 0.16, gapRight, r.y + r.h * 0.24);
+          arm(gapLeft, r.y + r.h * 0.84, gapRight, r.y + r.h * 0.76);
+        }
+      }
+      ctx.restore();
     }
 
     drawHandle(cell, s, mm);
@@ -7477,10 +7588,13 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, rect.width, rect.height);
 
-    // Backdrop: a quiet wall so the window reads as fitted into something.
+    /* Backdrop: a quiet wall, so the window reads as fitted into something.
+       The inside wall is deliberately deeper than the outside one. Painted as
+       pale as the smooth white frame it is supposed to sit in, the whole
+       drawing washed out and the frame disappeared into it. */
     const bg = ctx.createLinearGradient(0, 0, 0, rect.height);
-    bg.addColorStop(0, state.inside ? '#f3f1ec' : '#e8ebe9');
-    bg.addColorStop(1, state.inside ? '#e3e0d9' : '#d5dbd9');
+    bg.addColorStop(0, state.inside ? '#ded7cb' : '#e8ebe9');
+    bg.addColorStop(1, state.inside ? '#c3bcae' : '#d5dbd9');
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, rect.width, rect.height);
 
@@ -7492,7 +7606,6 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     const wh = state.height * mm;
     const ox = (rect.width - ww) / 2;
     const oy = (rect.height - wh) / 2;
-    const scale = mm * 60;
 
     // Cill and its shadow, so the window is sitting on something.
     ctx.fillStyle = 'rgba(18, 36, 42, 0.16)';
@@ -7506,7 +7619,10 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     ctx.fillRect(ox, oy, ww, wh);
     ctx.restore();
 
-    member(ox, oy, ww, wh, faceColour());
+    member(ox, oy, ww, wh, faceColour(), faceGrain());
+
+    // Whole-window bounds for the continuous glass gradient and reflection.
+    frameRect = { x: ox, y: oy, w: ww, h: wh };
 
     const inner = {
       x: ox + FRAME * mm,
@@ -7528,7 +7644,7 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
         w: cell.w * inner.w - left - right,
         h: cell.h * inner.h - top - bottom,
       };
-      if (r.w > 1 && r.h > 1) drawCell(cell, r, mm, scale);
+      if (r.w > 1 && r.h > 1) drawCell(cell, r, mm);
     });
 
     // A hairline along the top and left of every member, which is what the
@@ -7600,6 +7716,7 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     button.addEventListener('click', () => {
       state.colour = button.dataset.fgCwdColour;
       state.colourLabel = button.dataset.colourName || '';
+      state.grain = button.dataset.colourGrain === '1';
       press(colourButtons, button);
       const finish = button.dataset.colourFinish;
       sync(finish ? `${state.colourLabel}. ${finish}.` : state.colourLabel);
