@@ -35812,6 +35812,22 @@ html.fg-blinds-reveal-locked {
   background: var(--swatch, #ffffff);
 }
 
+/* Metallic Silver and Rose Gold are flake finishes and sparkle plainly on the
+   real slats, so a flat fill reads as the wrong material. Three dot layers at
+   co-prime tile sizes: the pattern never lines up inside a swatch, so it looks
+   scattered without needing an image or a canvas. Shared by the slat grid, the
+   hub tile and the visualiser chip so one colour is not drawn three ways. */
+.fg-blind-colours__grid i.is-glitter,
+.fg-colour-rail__slide.is-glitter .fg-colour-rail__media i,
+.fg-blind-visualiser__colour.is-glitter i {
+  background-image:
+    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.92) 0 0.5px, transparent 0.9px),
+    radial-gradient(circle at 68% 71%, rgba(255, 255, 255, 0.6) 0 0.4px, transparent 0.8px),
+    radial-gradient(circle at 15% 82%, rgba(38, 30, 18, 0.42) 0 0.4px, transparent 0.8px);
+  background-size: 7px 7px, 11px 11px, 13px 13px;
+  background-color: var(--swatch, #ffffff);
+}
+
 /* A two sided slat shows both faces on one swatch. Notan draw it as a vertical
    split; the owner asked for a diagonal on 2026-08-04. A hard stop, not a
    blend: it is two painted faces, not a gradient between them. */

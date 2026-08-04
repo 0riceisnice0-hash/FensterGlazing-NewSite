@@ -54,7 +54,7 @@ if (empty($slat_colours)) {
                     ?>
                     <i
                         aria-hidden="true"
-                        class="<?php echo $colour_reverse !== '' ? 'is-two-sided' : ''; ?>"
+                        class="<?php echo $colour_reverse !== '' ? 'is-two-sided' : ''; ?><?php echo ! empty($colour['glitter']) ? ' is-glitter' : ''; ?>"
                         style="<?php echo esc_attr($swatch_style); ?>"
                     ></i>
                     <strong><?php echo esc_html($colour_name); ?></strong>

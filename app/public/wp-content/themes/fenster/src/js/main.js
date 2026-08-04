@@ -3011,10 +3011,13 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   /* The slim rail at the inner edge of the frame, at the boundary with the
      clear, that the two magnets slot onto. */
   const RAIL_W = 11;
-  /* Longer and slimmer than it was. The reference photographs put it at about
-     one to three, not one to two and a bit. */
-  const MAGNET_W = 25;
-  const MAGNET_H = 64;
+  /* The two are not the same size. On the real unit the lift magnet is
+     noticeably longer than the tilt one, about half as long again, and both
+     are wider than the earlier photographs suggested: those were shot at a
+     steep angle, which foreshortens the width and not the length. */
+  const MAGNET_W = 28;
+  const MAGNET_H_TILT = 58;
+  const MAGNET_H_LIFT = 95;
   const UNIT_W = GLASS_W + FRAME * 2;
   const UNIT_H = GLASS_H + FRAME * 2;
   const BLIND_W = GLASS_W - CASSETTE * 2;
@@ -3043,6 +3046,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     face: toRgb(button.dataset.hex),
     back: toRgb(button.dataset.reverse || button.dataset.hex),
     metallic: button.dataset.metallic === '1',
+    glitter: button.dataset.glitter === '1',
     name: button.dataset.name || 'Slat colour',
     code: button.dataset.code || '',
   }));
@@ -3051,6 +3055,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   let shownFace = { ...swatches[activeIndex].face };
   let shownBack = { ...swatches[activeIndex].back };
   let shownMetallic = swatches[activeIndex].metallic ? 1 : 0;
+  let shownGlitter = swatches[activeIndex].glitter ? 1 : 0;
 
   let tiltTarget = Number.parseFloat(tiltInput.value);
   let liftTarget = Number.parseFloat(liftInput.value);
@@ -3227,9 +3232,12 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
   /* One tile: the slat, then the gap beneath it, at three times the height so
      the fractional pitch lands with clean antialiasing when it is stamped. */
-  const buildTile = (face, back, metallic, phi, pitchPx, slatPx) => {
+  const buildTile = (face, back, metallic, glitter, phi, pitchPx, slatPx) => {
     const ss = 3;
-    const W = 96;
+    /* A glitter finish needs a wide tile. The tile is stretched to the width of
+       the blind, so on the usual 96 a one pixel fleck comes out as a four pixel
+       horizontal smear, which reads as a scratch rather than a flake. */
+    const W = glitter ? 480 : 96;
     const H = Math.max(3, Math.round(pitchPx * ss));
     const bandH = clamp(slatPx * ss, 0.5, H);
     const gapH = H - bandH;
@@ -3331,6 +3339,27 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     }
     g.fillStyle = grad;
     g.fillRect(0, 0, W, bandH);
+
+    /* Metallic Silver and Rose Gold are flake finishes: the real slats sparkle
+       plainly in the owner's photograph of the sample card, and painted flat
+       they read as plastic. Deterministic from the index rather than
+       `Math.random`, or the flecks would jump on every rebuild and the blind
+       would crawl while a slider moved. */
+    if (glitter && bandH > 1.5) {
+      const flecks = Math.round(W * bandH * 0.05);
+      for (let i = 0; i < flecks; i += 1) {
+        const nx = Math.sin(i * 12.9898 + 4.1) * 43758.5453;
+        const ny = Math.sin(i * 78.233 + 2.7) * 12345.6789;
+        const nb = Math.sin(i * 39.4271 + 5.3) * 24634.6345;
+        const x = (nx - Math.floor(nx)) * W;
+        const y = (ny - Math.floor(ny)) * bandH;
+        const bright = nb - Math.floor(nb);
+        g.fillStyle = bright > 0.34
+          ? `rgba(255,255,255,${(0.18 + bright * 0.5).toFixed(3)})`
+          : `rgba(24,20,14,${(0.1 + bright * 0.4).toFixed(3)})`;
+        g.fillRect(x, y, 1, Math.max(0.7, ss * 0.34));
+      }
+    }
 
     return { canvas: c, ss };
   };
@@ -3511,21 +3540,23 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
        the rail put it half over the clear. */
     const x = railX + railW / 2 + (MAGNET_W * L.scale) / 2;
     const w = MAGNET_W * L.scale;
-    const h = MAGNET_H * L.scale;
+    const hTilt = MAGNET_H_TILT * L.scale;
+    const hLift = MAGNET_H_LIFT * L.scale;
     return {
       x,
       w,
-      h,
       memberW: cassettePx,
       railX,
       railW,
       railTop: L.glassY,
       railBottom: bottom,
-      tilt: { top: top + h * 0.6, bottom: top + span * 0.2 },
+      hTilt,
+      hLift,
+      tilt: { top: top + hTilt * 0.6, bottom: top + span * 0.2 },
       /* Inverted on the owner's instruction, and it is how the geared magnet
          actually runs: the magnet at the top of its travel is the blind down
          and closed, and pulling it down is what raises the blind open. */
-      lift: { top: top + span * 0.36, bottom: bottom - h * 0.6 },
+      lift: { top: top + span * 0.36, bottom: bottom - hLift * 0.6 },
     };
   };
 
@@ -3533,7 +3564,12 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     const t = magnetTracks(L);
     const track = t[which];
     const amount = which === 'tilt' ? tilt / 100 : lift / 100;
-    return { x: t.x, y: track.top + (track.bottom - track.top) * clamp(amount, 0, 1), w: t.w, h: t.h };
+    return {
+      x: t.x,
+      y: track.top + (track.bottom - track.top) * clamp(amount, 0, 1),
+      w: t.w,
+      h: which === 'tilt' ? t.hTilt : t.hLift,
+    };
   };
 
   const roundedRect = (c, x, y, w, h, r) => {
@@ -3758,9 +3794,15 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     const stacked = Math.round(SLAT_COUNT * raised);
     const deployed = SLAT_COUNT - stacked;
     const stackPx = stacked * STACK_PITCH * L.scale;
-    const topPx = blindY + headPx + stackPx;
+    /* The blind hangs from the head and gathers onto its own bottom rail as it
+       rises, so the stack sits at the foot of the drop with the hanging slats
+       above it, and the whole group travels up together. It was drawn at the
+       head with the hanging slats below, which is the wrong way round and is
+       not how the owner's blinds behave. */
+    const topPx = blindY + headPx;
+    const stackTop = topPx + deployed * pitchPx;
 
-    const tKey = `${shownFace.r | 0},${shownFace.g | 0},${shownFace.b | 0},${shownBack.r | 0},${shownBack.g | 0},${shownBack.b | 0},${shownMetallic.toFixed(2)},${phi.toFixed(4)},${pitchPx.toFixed(2)},${slatPx.toFixed(2)}`;
+    const tKey = `${shownFace.r | 0},${shownFace.g | 0},${shownFace.b | 0},${shownBack.r | 0},${shownBack.g | 0},${shownBack.b | 0},${shownMetallic.toFixed(2)},${shownGlitter.toFixed(2)},${phi.toFixed(4)},${pitchPx.toFixed(2)},${slatPx.toFixed(2)}`;
     if (tileKey !== tKey) {
       /* Which side of the slat the room is looking at. A venetian presents
          opposite faces in its two closed positions, so on a two sided slat
@@ -3773,7 +3815,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
          white however the slats are turned. */
       const roomSide = phi >= 0 ? shownFace : shownBack;
       const outSide = phi >= 0 ? shownBack : shownFace;
-      tile = buildTile(roomSide, outSide, shownMetallic > 0.5, phi, pitchPx, slatPx);
+      tile = buildTile(roomSide, outSide, shownMetallic > 0.5, shownGlitter > 0.5, phi, pitchPx, slatPx);
       tileKey = tKey;
     }
 
@@ -3798,26 +3840,13 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
         ctx.restore();
       }
       ctx.globalAlpha = 1;
-
-      const railY = topPx + deployed * pitchPx;
-      const rail = ctx.createLinearGradient(0, railY, 0, railY + railPx);
-      rail.addColorStop(0, paint(shownFace, 0.86, 26));
-      rail.addColorStop(0.45, paint(shownFace, 0.6));
-      rail.addColorStop(1, paint(shownFace, 0.4));
-      ctx.fillStyle = rail;
-      ctx.fillRect(blindX, railY, blindW, railPx);
-      const under = ctx.createLinearGradient(0, railY + railPx, 0, railY + railPx * 2.4);
-      under.addColorStop(0, 'rgba(10,13,16,0.4)');
-      under.addColorStop(1, 'rgba(10,13,16,0)');
-      ctx.fillStyle = under;
-      ctx.fillRect(blindX, railY + railPx, blindW, railPx * 1.4);
     }
 
-    /* The stack. Slats are conserved, so raising the blind moves them out of
-       the drop and into a dense band under the head rather than shrinking the
-       drop and losing them. */
+    /* The stack, gathered on top of the bottom rail. Slats are conserved, so
+       raising the blind moves them out of the drop and into this band rather
+       than shrinking the drop and losing them. */
     if (stacked > 0) {
-      const y = blindY + headPx;
+      const y = stackTop;
       ctx.fillStyle = paint(shownFace, 0.52);
       ctx.fillRect(blindX, y, blindW, stackPx);
       const linePx = STACK_PITCH * L.scale;
@@ -3842,6 +3871,22 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       ctx.fillRect(blindX, y + stackPx, blindW, railPx * 1.8);
     }
 
+    /* The bottom rail, under whatever has gathered on it. Outside the slat
+       branch on purpose: it is still there when the blind is fully raised and
+       every slat is in the stack. */
+    const railY = stackTop + stackPx;
+    const rail = ctx.createLinearGradient(0, railY, 0, railY + railPx);
+    rail.addColorStop(0, paint(shownFace, 0.86, 26));
+    rail.addColorStop(0.45, paint(shownFace, 0.6));
+    rail.addColorStop(1, paint(shownFace, 0.4));
+    ctx.fillStyle = rail;
+    ctx.fillRect(blindX, railY, blindW, railPx);
+    const under = ctx.createLinearGradient(0, railY + railPx, 0, railY + railPx * 2.4);
+    under.addColorStop(0, 'rgba(10,13,16,0.4)');
+    under.addColorStop(1, 'rgba(10,13,16,0)');
+    ctx.fillStyle = under;
+    ctx.fillRect(blindX, railY + railPx, blindW, railPx * 1.4);
+
     /* Veiling glare. The blurred garden added back over the finished blind, so
        the light coming through the gaps spills onto the slats beside them. */
     if (scene && scene.haze) {
@@ -3864,7 +3909,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
        the bottom rail and come up with it. Drawn full height they stayed behind
        as a pair of wires hanging over clear glass once the blind was raised. */
     const cordTop = topPx;
-    const cordBottom = topPx + deployed * pitchPx + railPx;
+    const cordBottom = stackTop + stackPx + railPx;
     if (cordBottom - cordTop > 1) {
       const cordW = Math.max(0.6, L.scale * 0.9);
       ctx.save();
@@ -3932,16 +3977,18 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     const dt = tiltTarget - tilt;
     const dl = liftTarget - lift;
     const df = target.metallic ? 1 : 0;
+    const dg = target.glitter ? 1 : 0;
 
     tilt += dt * ease;
     lift += dl * ease;
     shownFace = mixRgb(shownFace, target.face, ease);
     shownBack = mixRgb(shownBack, target.back, ease);
     shownMetallic += (df - shownMetallic) * ease;
+    shownGlitter += (dg - shownGlitter) * ease;
 
     let settled = Math.abs(dt) < 0.02 && Math.abs(dl) < 0.02;
     settled = settled && Math.abs(shownFace.r - target.face.r) < 0.4 && Math.abs(shownFace.g - target.face.g) < 0.4 && Math.abs(shownFace.b - target.face.b) < 0.4;
-    settled = settled && Math.abs(shownBack.r - target.back.r) < 0.4 && Math.abs(shownMetallic - df) < 0.01;
+    settled = settled && Math.abs(shownBack.r - target.back.r) < 0.4 && Math.abs(shownMetallic - df) < 0.01 && Math.abs(shownGlitter - dg) < 0.01;
 
     if (settled) {
       tilt = tiltTarget;
@@ -3949,6 +3996,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       shownFace = { ...target.face };
       shownBack = { ...target.back };
       shownMetallic = df;
+      shownGlitter = dg;
     }
 
     draw(settled);

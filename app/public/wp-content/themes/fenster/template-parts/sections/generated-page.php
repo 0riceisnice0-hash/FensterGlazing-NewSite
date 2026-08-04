@@ -2209,6 +2209,7 @@ if ($is_colour_options) {
                            so here rather than leaving the swatch to imply a
                            plain white slat. */
                         'hex_reverse' => (string) ($slat['reverse'] ?? ''),
+                        'glitter' => ! empty($slat['glitter']),
                         'finish' => ! empty($slat['reverse'])
                             ? trim($code . ' ' . __('two sided, anthracite outside', 'fenster'))
                             : $code,
@@ -2275,7 +2276,7 @@ if ($is_colour_options) {
                             $swatch_style .= ';--swatch-reverse:' . $swatch_reverse;
                         }
                         ?>
-                    <li class="fg-colour-rail__slide<?php echo $swatch_reverse !== '' ? ' is-two-sided' : ''; ?>" style="<?php echo esc_attr($swatch_style); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
+                    <li class="fg-colour-rail__slide<?php echo $swatch_reverse !== '' ? ' is-two-sided' : ''; ?><?php echo ! empty($colour['glitter']) ? ' is-glitter' : ''; ?>" style="<?php echo esc_attr($swatch_style); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
                             <?php
                             /* A near-white swatch on a white card reads as an
                                empty slot rather than a colour, so it takes a

@@ -155,13 +155,14 @@ foreach ($colours as $index => $colour) {
                     <button
                         type="button"
                         role="listitem"
-                        class="fg-blind-visualiser__colour<?php echo $active ? ' is-active' : ''; ?>"
+                        class="fg-blind-visualiser__colour<?php echo $active ? ' is-active' : ''; ?><?php echo ! empty($colour['glitter']) ? ' is-glitter' : ''; ?>"
                         style="<?php echo esc_attr('--swatch:' . $hex . ';--swatch-reverse:' . ($reverse !== '' ? $reverse : $hex)); ?>"
                         aria-pressed="<?php echo $active ? 'true' : 'false'; ?>"
                         data-fg-blind-colour="<?php echo esc_attr((string) $index); ?>"
                         data-hex="<?php echo esc_attr($hex); ?>"
                         <?php if ($reverse !== '') : ?>data-reverse="<?php echo esc_attr($reverse); ?>"<?php endif; ?>
                         <?php if (! empty($colour['metallic'])) : ?>data-metallic="1"<?php endif; ?>
+                        <?php if (! empty($colour['glitter'])) : ?>data-glitter="1"<?php endif; ?>
                         data-name="<?php echo esc_attr($name); ?>"
                         data-code="<?php echo esc_attr($code); ?>"
                     >

@@ -495,6 +495,27 @@ function fenster_site_data(): array
            "correct" them towards what the name suggests. Neither has anything
            but a BY code, so the swatch is the only source there is.
 
+           Superseded on 2026-08-04 by the owner's photograph of the physical
+           slat sample card, which is a better source than either: real slats,
+           in one frame, under one light. The card is under-exposed and the
+           slats are glossy, so it is reliable for hue and for the relationship
+           between colours but not for absolute lightness; the values below are
+           its hues, exposure-corrected against the paper and anchored so White
+           reads white and the two RAL entries keep their published values.
+           Cream and Rose Gold moved most: Cream is a warm greige rather than
+           the near-neutral the disc suggested, and Rose Gold is a champagne
+           gold rather than a taupe.
+
+           `glitter` marks the two that are visibly metallic-flake in the
+           photograph, Metallic Silver and Rose Gold. It is a finish, not a
+           colour, and the renderer and the swatches both read it.
+
+           The card carries a `BY005` charcoal that the brochure does not list,
+           and does not carry `BY012` White/Anthracite, which the brochure
+           does. Unresolved: BY005 is not added here because there is no
+           published name for it, and BY012 is kept because the brochure is the
+           published range. Worth asking Notan which is current.
+
            The two RAL entries are the exception and do not come from the
            swatches. RAL 7016 is a published standard, Notan cite the code
            themselves, and the standard is #383E42, a grey. Their swatch disc
@@ -515,15 +536,15 @@ function fenster_site_data(): array
            geometry only and no figure is printed on the page. If Notan confirm
            a width it can be added and shown; until then it must not be. */
         'notan_blind_colours' => [
-            ['key' => 'white',            'name' => 'White',            'code' => 'BY001',   'hex' => '#FFFFFF'],
-            ['key' => 'cream',            'name' => 'Cream',            'code' => 'BY010',   'hex' => '#9B9690'],
-            ['key' => 'rose-gold',        'name' => 'Rose Gold',        'code' => 'BY014',   'hex' => '#9F8F7F'],
+            ['key' => 'white',            'name' => 'White',            'code' => 'BY001',   'hex' => '#EDEFEF'],
+            ['key' => 'cream',            'name' => 'Cream',            'code' => 'BY010',   'hex' => '#B3AD96'],
+            ['key' => 'rose-gold',        'name' => 'Rose Gold',        'code' => 'BY014',   'hex' => '#CFBE9C', 'glitter' => true],
             ['key' => 'anthracite',       'name' => 'Anthracite Grey',  'code' => 'RAL7016', 'hex' => '#383E42'],
-            ['key' => 'brown',            'name' => 'Brown',            'code' => 'BY006',   'hex' => '#503723'],
-            ['key' => 'dark-brown',       'name' => 'Dark Brown',       'code' => 'BY007',   'hex' => '#2D211B'],
-            ['key' => 'metallic-silver',  'name' => 'Metallic Silver',  'code' => 'BY004',   'hex' => '#494A4C', 'metallic' => true],
-            ['key' => 'white-anthracite', 'name' => 'White/Anthracite', 'code' => 'BY012',   'hex' => '#FFFFFF', 'reverse' => '#383E42'],
-            ['key' => 'black',            'name' => 'Black',            'code' => 'RAL9005', 'hex' => '#151419'],
+            ['key' => 'brown',            'name' => 'Brown',            'code' => 'BY006',   'hex' => '#4A3524'],
+            ['key' => 'dark-brown',       'name' => 'Dark Brown',       'code' => 'BY007',   'hex' => '#2E2724'],
+            ['key' => 'metallic-silver',  'name' => 'Metallic Silver',  'code' => 'BY004',   'hex' => '#B8BCC0', 'metallic' => true, 'glitter' => true],
+            ['key' => 'white-anthracite', 'name' => 'White/Anthracite', 'code' => 'BY012',   'hex' => '#EDEFEF', 'reverse' => '#383E42'],
+            ['key' => 'black',            'name' => 'Black',            'code' => 'RAL9005', 'hex' => '#0D0D0F'],
         ],
         'product_media' => [
             'aluminium-bifold-doors' => [
