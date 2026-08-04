@@ -127,6 +127,20 @@ PHP lint example:
 - Do not assume the old homepage 3D/canvas experiment is live. The remaining `fg-home-hero-3d`, `data-fg-home-3d` and `THREE.*` references are inactive legacy source/style hooks and are not present in the compiled JS.
 - Do not reintroduce Three.js, a WebGL hero or a canvas product scene unless the owner explicitly asks for that feature.
 - If 3D is deliberately reintroduced, add the dependency/import/enqueue intentionally, provide mobile and reduced-motion fallbacks, and verify the canvas is nonblank in desktop and mobile browser QA.
+- **The blind visualiser on `/integral-blinds/` is a deliberate exception and does not breach this.** It is 2D canvas, no library and no new dependency. It is 2D because the owner asked for the unit face on and fully straight, and with no perspective a slat projects to a plain rectangle of height `slat * |sin phi| + thickness * |cos phi|`, which is exact rather than approximated. WebGL would buy no accuracy there. Do not "upgrade" it to Three.js.
+
+## Notan Integral Blind Rule
+
+- Notan publish **nine** standard slat colours for the magnetic system, not eleven. `notan.co.uk/our-blinds/` still says "11 standard colour choices" and is wrong; the official brochure at `notan.co.uk/wp-content/uploads/2024/05/Notan-Magnetic-Integrated-blinds.pdf` lists nine, and that is what `notan_blind_colours` in `inc\site-data.php` carries.
+- The hex values are sampled from Notan's own swatch assets under `notan.co.uk/wp-content/uploads/2021/02/`, which carry an embedded sRGB profile, so they need no conversion.
+- **Two of them look wrong and are not.** Notan's `CREAM BY010` is a warm grey, not a cream, and `ROSE GOLD BY014` is a greige, not a pink. Both were checked against the web swatch and the printed brochure page on 2026-08-03 and they agree. Do not "correct" them towards what the name suggests. Neither carries anything but a BY code, so the swatch is the only source there is.
+- **The physical slat sample card is the colour source**, photographed by the owner on 2026-08-04 and better than either earlier source: real slats, one frame, one light. It is under-exposed and the slats are glossy, so it is reliable for hue and for the relationship between colours, not for absolute lightness. The stored values are its hues, exposure-corrected against the paper and anchored so White reads white and the RAL codes keep their published values.
+- **`glitter` is a finish, not a colour.** Metallic Silver and Rose Gold are flake finishes and sparkle plainly on the real slats. The renderer and all three swatch surfaces read the flag. Swatch sparkle comes from an inline SVG of thresholded turbulence: tiled radial-gradients line up into a visible weave at swatch size and read as printed fabric.
+- **The brochure is the range, and that is settled.** The sample card carries a `BY005` charcoal the brochure does not list, and lacks `BY012` White/Anthracite, which the brochure has. Owner ruling, 2026-08-04: **BY005 is not offered and must not be added from a sample card**, and BY012 stays. Do not reopen this from a future photograph.
+- **`BY012` is not a colour of its own.** It is `BY001` White and `RAL7016` Anthracite Grey, one on each face. Its two values must stay equal to those two entries; change one and change the other, or the same paint gets drawn two ways on one page.
+- **Where a colour carries a RAL code, prefer the code over the swatch.** `RAL 7016` is `#383E42`, a grey. Notan's own swatch disc reads `#1A1C1B`, which is all but black and is almost certainly a reproduction problem; the owner describes the colour as grey, agreeing with the standard. Corrected 2026-08-04.
+- `WHITE/ANTHRACITE BY012` is the only two-sided slat: white on the room side, anthracite outside. It is the only entry with a `reverse` value. **The visualiser flips it with the tilt**, because a venetian presents opposite faces in its two closed positions; the swap lands at edge on, where the slat is invisible. The cassette stays on the room-side colour, so the frame on this option is white however the slats are turned.
+- **No slat width is published.** The 30mm figure Notan give is the profile housing the mechanism, not the slat. The renderer assumes the standard 12.5mm integral-blind slat for geometry only and **no slat dimension is printed on the page**. If Notan confirm a width it can be added and shown; until then it must not be.
 
 ## Shared Form Rule
 
@@ -241,7 +255,7 @@ PHP lint example:
 - Products with supplied U-values show them first.
 - Colour choice should be second where supplied.
 - Composite Doors and Integral Blinds currently do not have supplied U-values.
-- Integral Blinds controls must be described as `Magnetic or electric`.
+- Integral Blinds controls must be described as `Magnetic or electric`. The blind visualiser demonstrates the **magnetic** system specifically and says so; it must not be allowed to imply magnetic is the only control offered.
 
 ## Product Quote Embed Rule
 

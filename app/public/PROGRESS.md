@@ -67,6 +67,184 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-03 - Notan blind visualiser on integral blinds (test only, fa9ccc8)
+
+- **On test only, at the owner's instruction.** Live is unchanged and still
+  `13354b4`.
+- `/integral-blinds/` now carries an interactive visualiser: one glazed unit
+  drawn face on and fully straight, worked by the two magnets on its own
+  profile, in the nine real Notan slat colours. Accepted behaviour is written
+  up in `HANDOVER.md` under Integral Blinds Page; the colour facts are in
+  `AI.md` under the Notan Integral Blind Rule.
+- **The controls are part of the product, and the first build got that wrong.**
+  It shipped page sliders next to a picture of the unit. The owner corrected
+  it: on a Notan magnetic unit the two magnets run in a channel on the colour
+  matched frame sealed inside the glass, the upper one tilting and the lower
+  one lifting. They are now drawn on the right hand stile and dragged there,
+  and the profile takes the selected slat colour with them. The lesson is the
+  ordinary one: the control surface is a fact about the product and needed
+  checking against the supplier's own photography, exactly as the colours did.
+- One function, `magnetTracks()`, owns both where a magnet is drawn and where
+  it can be grabbed, so the two cannot drift apart.
+- **A measuring function with a side effect blanked the canvas.** `layout()`
+  sized the backing store as well as measuring, and assigning to `canvas.width`
+  clears the canvas even when the value has not changed. The pointer handling
+  calls `layout()` on every move to hit-test the magnets, so moving the mouse
+  across the unit wiped it to black, and because nothing is scheduled once the
+  easing has settled it stayed black. The owner reported it as "keeps on going
+  black after clicking". `layout()` is now measurement only. The general
+  lesson: anything the pointer path calls at pointer rate has to be pure.
+- **A photograph of the real thing beat two rounds of careful sourcing.** The
+  slat colours had been taken from Notan's web swatches and cross-checked
+  against their brochure, and were still wrong: Cream was a near-neutral grey
+  and is a warm greige, Rose Gold was a taupe and is a champagne gold, Metallic
+  Silver was a dark grey and is a bright silver. The owner's photograph of the
+  physical sample card settled all three. Where a product exists, ask for a
+  picture of it before trusting a supplier's marketing asset.
+- **The brochure is the range.** The physical sample card and the brochure
+  disagreed: the card had a BY005 charcoal the brochure omits, and omitted the
+  BY012 White/Anthracite the brochure lists. Settled by the owner: BY005 is not
+  offered, BY012 stays, and BY012 is not a separate colour but White and
+  Anthracite Grey one on each face, so its two values track those entries.
+- **Any lattice reads as a lattice.** The glitter finishes were built from tiled
+  radial-gradients, which line up into a visible weave at swatch size and read
+  as printed fabric rather than metallic flake. Replaced with an inline SVG of
+  fractal turbulence thresholded to its brightest tail.
+- **The page around the visualiser needed the same scrutiny as the visualiser.**
+  Once the blind itself was right, the owner found four things wrong with the
+  page it sits on: three of the five photographs had no blind in them, the
+  specification choices offered frame colours that are not chosen on this
+  route, the slat colours were nowhere on the colour hub, and the hero offered
+  instant pricing for a product the tool cannot price. All four were inherited
+  from the generic product template and none of them would have shown up in a
+  check of the new component alone.
+- **A pointerdown handler cannot cancel a scroll that has already started.** The
+  owner reported that dragging on mobile pulled the whole page. The stage was
+  `touch-action: pan-y` and the code switched it to `none` on `pointerdown`,
+  which is too late: the browser commits a touch to a scroll before the handler
+  runs. Fixed by putting two grab elements over the drawn magnets and giving
+  only those `touch-action: none`, so a drag on a magnet is a drag and a drag
+  anywhere else on the glass is still a scroll. If an element needs to take a
+  drag on touch, it has to declare that in CSS before the gesture begins.
+- **The two-sided slat now flips with the tilt.** A venetian presents opposite
+  faces in its two closed positions, so White/Anthracite gives the room white
+  one way and anthracite the other, with the swap landing at edge on where the
+  slat is invisible. The cassette stays on the room-side colour, so the frame on
+  that option stays white. It was previously showing white always and only a
+  sliver of the reverse through the gaps, which understated the option.
+- **A RAL code beats a sampled swatch.** RAL 7016 was carrying `#1A1C1B` from
+  Notan's own swatch disc, which is all but black; the published standard is
+  `#383E42`, a grey, Notan cite the code themselves, and the owner describes the
+  colour as grey. The BY colours have no such standard, so their swatches stand.
+- **The cassette is 50mm and colour matched to the slats**, from a second
+  photograph of a bare unit. The magnets slot onto the slim rail at the inner
+  edge of the frame rather than sitting in the middle of the member. The window
+  frame had to come down in section to make room: at the showroom sample's full
+  thickness plus a 50mm cassette, the two borders together swallowed the glass.
+- **The blind's framework is a U, not a border.** Sides and head, nothing across
+  the bottom, with the bottom rail resting on the edge of the glass. The head
+  rail belongs to the blind, so it takes the slat colour; the cassette belongs
+  to the unit, so it stays matched to the window frame. Lift is also inverted:
+  the magnet at the top is the blind down and closed, and pulling it down
+  raises it open, which is how the geared magnet runs.
+- **The frame and the controls were rebuilt from the owner's photograph of the
+  showroom unit**, supplied 2026-08-04. Three things were wrong and none of
+  them would have been caught without it: the wide colour matched border round
+  the inside of the glass does not exist, the magnets are chunky glossy blocks
+  rather than slim capsules, and the frame is a stepped anthracite uPVC section
+  rather than a flat bezel. Woodgrain also has to run along each profile; doing
+  it both ways over the whole frame gave a crosshatch that read as fabric.
+- The range inputs stayed, moved off screen rather than hidden, and are
+  mirrored to the magnets both ways. Hiding them properly would have left the
+  visualiser operable by pointer alone.
+- **Investigate the supplier before building the thing.** The colour range was
+  taken from Notan's official brochure PDF, not from their site: `our-blinds/`
+  still advertises "11 standard colour choices" and the brochure lists nine.
+  Two of the nine also contradict their own names, Cream being a warm grey and
+  Rose Gold a greige. Both were checked twice, against the web swatch and the
+  printed page, before being written down. Nothing was eyedropped from a
+  photograph and nothing was invented.
+- **Face on is why a canvas was enough.** With no perspective a slat projects to
+  a rectangle of height `slat * |sin phi| + thickness * |cos phi|`, which is
+  exact, so WebGL would have added a forbidden dependency for no accuracy. The
+  Three.js rule in `AI.md` now records this as a deliberate exception so the
+  next session does not read it as a breach or try to "upgrade" it.
+- **Deriving the light beat tuning it.** The exterior sun never reaches the room
+  face of a slat, so the base term is room ambient alone plus sky bouncing off
+  the slat below. Three separate defects came from ignoring that: a near-black
+  gap shadow that made the gaps read as painted stripes when in life the gap is
+  the brightest thing on the window; a flat white fringe that read as a printed
+  rule until it was made to thin the slat instead of paint over it, letting the
+  scene tint it; and that same fringe applied equally to every colour, which
+  blew White, Cream and Metallic Silver into one indistinguishable pale wash
+  because a white slat has no headroom left to take glare.
+- **Perfect geometry was the biggest tell.** Fifty exactly level, exactly
+  pitched slats read as a printed pattern no matter how good the shading was.
+  A deterministic per-slat wobble in position, brightness and about a fifth of
+  a degree of lean fixed it. Derived from the index rather than `Math.random`
+  so a slat keeps its character between frames instead of shimmering.
+- Caching the garden, the glare, the glass and the frame, and holding the grain
+  back for the settled frame, took a frame from 9.2ms to 6.0ms with the GPU
+  disabled. None of those four depend on tilt, lift or colour, so recomputing
+  a dozen gradients for them during a slider drag bought nothing.
+- **Headless Chrome clamps its viewport to 500px wide.** A 390px screenshot is
+  a 500px layout cropped to 390, which looks exactly like a mobile overflow bug
+  and is not one. Load the page in a 390px iframe and measure
+  `documentElement.scrollWidth` inside it instead. This cost a wrong conclusion
+  about mobile overflow before it was caught.
+- Verified on test by rendering the real page: controller live, canvas painting
+  real pixels, `scrollWidth` equal to the viewport, every tilt and lift state
+  behaving, all nine colours distinct, and a scripted colour click plus slider
+  move updating both the canvas and the readout.
+
+
+## 2026-08-03 - Casement and lift-and-slide promoted to live (ac6f372)
+
+- **Live established by checksum on six theme files**, with the empty-input hash
+  printed alongside so a silent miss could not read as a match. All six matched
+  `d57c970`, so the recorded pointer was right for once. It was **not** an
+  ancestor of `main`, so the branches had diverged.
+- **The range check is what made this release safe, and the explicit-SHA rule
+  would not have.** `d57c970..origin/main` was 21 commits from two authors, and
+  the seven that were not mine included the scheduled blog system: 607 lines of
+  `inc/blog-posts.php` wired into `functions.php`, a blog template and 299 lines
+  of SCSS. The other session's own commit said the batch was awaiting review on
+  test. Those commits are **ancestors of the tip**, not commits landing after
+  the one being shipped, which is exactly the case the explicit-SHA rule does
+  not catch. Deploying `main` would have started publishing posts to production.
+- Put to the owner, who chose to ship only this session's work. Cut
+  `release/casement-and-liftslide` from `d57c970` and cherry-picked the fourteen
+  commits. **All applied cleanly**, because live's `d57c970` and `main`'s
+  `9761138` are the same change under different hashes, so the base content
+  matched.
+- **Proved the compiled CSS carried none of the blog work** rather than assuming:
+  rebuilt from the branch and `main.css` came back byte-identical to the
+  committed one, and `fg-blog` returns zero in both source and compiled. No
+  `blog-posts.php`, no `blog-post.php`, and `functions.php` does not load them.
+- Whole-theme PHP lint clean. The candidate went to test first and was verified
+  there before live, then test was restored to `main` so the other session's
+  blog batch is still available to review.
+- Backup `fenster-pre-ac6f372-20260803-162526.tar.gz` (379M, 1,783 entries)
+  confirmed by grepping the SHA, not by reading the tail of `ls`. Deployed at an
+  explicit SHA with a theme-only rsync.
+- **`wp sg purge` failed on live: `sg-cachepress` is inactive there.** It is
+  active on test, which is why the same one-liner works on one half and not the
+  other. There is no CLI purge on live either: `/bin/sg` has no cache group and
+  wp-cli exposes no cache commands.
+- **That mattered, and briefly read as a failed deploy.** Two of the three
+  changed routes served stale HTML on their plain URLs (`x-proxy-cache: HIT`,
+  `s-maxage=3600`) while the files on disk were byte-identical to the commit.
+  A cache-busted fetch showed the correct page throughout. **Verify a live deploy
+  with a cache-buster, or the proxy will tell you the release did not land.**
+- **Verified on production individually rather than by status code:** seven theme
+  files byte-identical to `ac6f372`; fourteen routes 200 with the head-term
+  marker intact; the casement gallery at five cells in the right order; the
+  survey copy corrected and the old claim returning zero; the stock installer
+  photo and its "Our own installers" caption gone; the Cranfield photo and the
+  inside-shot layouts image serving; five lift-and-slide finishes on the slider
+  and five switchable on the hub; five handle families on `/handle-options/`;
+  zero blog markup; zero PHP notices.
+
 ## 2026-08-03 - Banner impressions verified against the tracker and the rule rewritten (docs only)
 
 Owner: the banner is a consent popup now. Read the docs on it, verify it against

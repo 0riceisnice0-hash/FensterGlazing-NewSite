@@ -474,6 +474,85 @@ function fenster_site_data(): array
                for roof units, so that is the name the page uses. */
             'roof-lanterns'           => ['double' => '1.0 W/m²K'],
         ],
+        /* The nine standard slat colours of the Notan magnetic integrated
+           blind, which is the system Fenster supplies on /integral-blinds/.
+
+           These are not invented and they are not eyedropped from a photo. On
+           2026-08-03 the official brochure
+           `notan.co.uk/wp-content/uploads/2024/05/Notan-Magnetic-Integrated-blinds.pdf`
+           was downloaded and confirmed the range is nine, not the "11 standard
+           colour choices" the Our Blinds page still claims. The names and the
+           BY/RAL codes are transcribed from that brochure. Each `hex` is
+           sampled from the centre of Notan's own swatch asset under
+           `notan.co.uk/wp-content/uploads/2021/02/`, which carries an embedded
+           sRGB IEC61966-2.1 profile, so the numbers are already in the space
+           the browser paints in and need no conversion.
+
+           Several of them will look wrong at a glance and are not. Notan's
+           CREAM is a warm grey rather than a cream, and their ROSE GOLD is a
+           greige rather than a pink. Both were checked twice, against the web
+           swatch and against the printed brochure page, and they agree. Do not
+           "correct" them towards what the name suggests. Neither has anything
+           but a BY code, so the swatch is the only source there is.
+
+           Superseded on 2026-08-04 by the owner's photograph of the physical
+           slat sample card, which is a better source than either: real slats,
+           in one frame, under one light. The card is under-exposed and the
+           slats are glossy, so it is reliable for hue and for the relationship
+           between colours but not for absolute lightness; the values below are
+           its hues, exposure-corrected against the paper and anchored so White
+           reads white and the two RAL entries keep their published values.
+           Cream and Rose Gold moved most: Cream is a warm greige rather than
+           the near-neutral the disc suggested, and Rose Gold is a champagne
+           gold rather than a taupe.
+
+           `glitter` marks the two that are visibly metallic-flake in the
+           photograph, Metallic Silver and Rose Gold. It is a finish, not a
+           colour, and the renderer and the swatches both read it.
+
+           The card carries a `BY005` charcoal that the brochure does not list,
+           and does not carry `BY012` White/Anthracite, which the brochure
+           does. Unresolved: BY005 is not added here because there is no
+           published name for it, and BY012 is kept because the brochure is the
+           published range. Worth asking Notan which is current.
+
+           The two RAL entries are the exception and do not come from the
+           swatches. RAL 7016 is a published standard, Notan cite the code
+           themselves, and the standard is #383E42, a grey. Their swatch disc
+           reads #1A1C1B, which is all but black and is almost certainly a
+           reproduction problem. The owner describes the colour as grey, which
+           agrees with the standard and not with the disc, so the standard
+           wins. Where a colour carries a RAL code, prefer the code.
+
+           WHITE/ANTHRACITE BY012 is the only two-sided slat: white on the room
+           face, anthracite on the outward face. `reverse` exists for that one
+           reason and the visualiser uses it to paint the back of a slat seen
+           through the gap. Leave `reverse` unset on the other eight; the
+           renderer treats absent as "same colour both sides", which is true.
+
+           BY012 is not a colour of its own. It is the same two paints as
+           BY001 White and RAL7016 Anthracite Grey, one on each face, which is
+           how the owner describes it. Its two values must therefore stay equal
+           to those two entries: change White or Anthracite and change this to
+           match, or the same paint gets drawn two ways on one page.
+
+           Deliberately not stored here: a slat width. Notan publish the 30mm
+           profile that houses the mechanism, not the slat dimension, so the
+           renderer assumes the standard integral-blind 12.5mm slat for
+           geometry only and no figure is printed on the page. If Notan confirm
+           a width it can be added and shown; until then it must not be. */
+        'notan_blind_colours' => [
+            ['key' => 'white',            'name' => 'White',            'code' => 'BY001',   'hex' => '#EDEFEF'],
+            ['key' => 'cream',            'name' => 'Cream',            'code' => 'BY010',   'hex' => '#B3AD96'],
+            ['key' => 'rose-gold',        'name' => 'Rose Gold',        'code' => 'BY014',   'hex' => '#CFBE9C', 'glitter' => true],
+            ['key' => 'anthracite',       'name' => 'Anthracite Grey',  'code' => 'RAL7016', 'hex' => '#383E42'],
+            ['key' => 'brown',            'name' => 'Brown',            'code' => 'BY006',   'hex' => '#4A3524'],
+            ['key' => 'dark-brown',       'name' => 'Dark Brown',       'code' => 'BY007',   'hex' => '#2E2724'],
+            ['key' => 'metallic-silver',  'name' => 'Metallic Silver',  'code' => 'BY004',   'hex' => '#B8BCC0', 'metallic' => true, 'glitter' => true],
+            // Same two paints as BY001 and RAL7016 above. Keep all four in step.
+            ['key' => 'white-anthracite', 'name' => 'White/Anthracite', 'code' => 'BY012',   'hex' => '#EDEFEF', 'reverse' => '#383E42'],
+            ['key' => 'black',            'name' => 'Black',            'code' => 'RAL9005', 'hex' => '#0D0D0F'],
+        ],
         'product_media' => [
             'aluminium-bifold-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'alt' => 'Anthracite aluminium bifold doors fitted to a brick home'],
@@ -1158,12 +1237,17 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-in-door.webp', 'alt' => 'Clear round pet flap in a glazed door beside a brick wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-glass-closeup.webp', 'alt' => 'Clear round pet flap in a glazed door, seen close up from outside'],
             ],
+            /* Every one of these has to show a blind. Three of the five were a
+               plain sliding door, a plain bifold and a sealed unit sample, none
+               of which had a blind in them, so the page illustrated integral
+               blinds mostly with doors. Owner caught it on 2026-08-04. If a
+               photograph does not show slats, it does not belong in this pool. */
             'integral_blinds' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Blind sealed between panes of glass'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-sliding-door.jpg', 'alt' => 'Large glazed sliding door'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-doors.jpg', 'alt' => 'Wide glazed bifold doors'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Sealed unit detail for between-glass blind systems'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/HiTech-Blinds-Patio-Doors-Blinds-Closed.jpg', 'alt' => 'White patio doors with the integral blinds closed across all three panes'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/HiTech-Blinds-Integral-Blinds-Black-Doors.jpg', 'alt' => 'Anthracite bifold doors with integral blinds lowered inside the glass'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/HiTech-Blinds-French-Doors-open.jpg', 'alt' => 'French doors open, with integral blinds lowered in the side panels'],
             ],
             'roof_lanterns' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-roof-lantern.jpg', 'alt' => 'Roof lantern glazing on a flat roof'],

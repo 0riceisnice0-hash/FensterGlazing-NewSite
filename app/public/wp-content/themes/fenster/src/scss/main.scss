@@ -34846,6 +34846,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours,
 .fg-upvc-colours,
 .fg-alu-colours,
+.fg-blind-colours,
 .fg-handle-finishes,
 .fg-heritage-door-enquiry {
   padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
@@ -35035,6 +35036,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-configurations__heading,
 .fg-heritage-door-colours__heading,
 .fg-upvc-colours__heading,
+.fg-blind-colours__heading,
 .fg-alu-colours__heading,
 .fg-handle-finishes__heading,
 .fg-heritage-door-use__heading {
@@ -35049,6 +35051,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__heading .eyebrow,
 .fg-alu-colours__heading .eyebrow,
 .fg-upvc-colours__heading .eyebrow,
+.fg-blind-colours__heading .eyebrow,
 .fg-handle-finishes__heading .eyebrow,
 .fg-heritage-door-use__heading .eyebrow {
   grid-column: 1 / -1;
@@ -35058,6 +35061,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__heading h2,
 .fg-alu-colours__heading h2,
 .fg-upvc-colours__heading h2,
+.fg-blind-colours__heading h2,
 .fg-handle-finishes__heading h2,
 .fg-heritage-door-use__heading h2,
 .fg-heritage-door-detail__copy h2,
@@ -35075,6 +35079,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__heading p:not(.eyebrow),
 .fg-alu-colours__heading p:not(.eyebrow),
 .fg-upvc-colours__heading p:not(.eyebrow),
+.fg-blind-colours__heading p:not(.eyebrow),
 .fg-handle-finishes__heading p:not(.eyebrow) {
   max-width: 56ch;
   margin-bottom: 0.2rem;
@@ -35334,6 +35339,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__grid,
 .fg-upvc-colours__grid,
 .fg-alu-colours__grid,
+.fg-blind-colours__grid,
 .fg-handle-finishes__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -35360,6 +35366,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid li,
 .fg-upvc-colours__grid li,
+.fg-blind-colours__grid li,
 .fg-alu-colours__grid li,
 .fg-handle-finishes__grid li {
   position: relative;
@@ -35418,7 +35425,8 @@ html.fg-blinds-reveal-locked {
    so it moves into the caption, and the label band is cropped off by showing
    only the top 70% of a square source. Cropping in CSS rather than re-cutting
    the files keeps it reversible and leaves the shared assets untouched. */
-.fg-upvc-colours__grid img {
+.fg-upvc-colours__grid img,
+.fg-blind-colours__grid img {
   display: block;
   width: 100%;
   height: auto;
@@ -35430,6 +35438,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid strong,
 .fg-upvc-colours__grid strong,
+.fg-blind-colours__grid strong,
 .fg-alu-colours__grid strong,
 .fg-handle-finishes__grid strong {
   color: var(--color-ink);
@@ -35439,6 +35448,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid span,
 .fg-upvc-colours__grid span,
+.fg-blind-colours__grid span,
 .fg-alu-colours__grid span,
 .fg-handle-finishes__grid span {
   color: var(--color-muted);
@@ -35491,7 +35501,8 @@ html.fg-blinds-reveal-locked {
   border-radius: 6px;
 }
 
-.fg-upvc-colours__grid i {
+.fg-upvc-colours__grid i,
+.fg-blind-colours__grid i {
   display: block;
   width: 100%;
   height: auto;
@@ -35502,8 +35513,39 @@ html.fg-blinds-reveal-locked {
   background: var(--swatch, #ffffff);
 }
 
+/* Metallic Silver and Rose Gold are flake finishes and sparkle plainly on the
+   real slats, so a flat fill reads as the wrong material. Three dot layers at
+   co-prime tile sizes: the pattern never lines up inside a swatch, so it looks
+   scattered without needing an image or a canvas. Shared by the slat grid, the
+   hub tile and the visualiser chip so one colour is not drawn three ways. */
+.fg-blind-colours__grid i.is-glitter,
+.fg-colour-rail__slide.is-glitter .fg-colour-rail__media i,
+.fg-blind-visualiser__colour.is-glitter i {
+  /* Real noise, not tiled dots. Any lattice of radial-gradients lines up into
+     a visible weave at swatch size and reads as printed fabric; turbulence
+     thresholded to its brightest tail gives scattered flecks instead. The
+     colour matrix forces the fill white and sets alpha to red minus 0.62, so
+     only the top of the noise shows. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='11'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1 0 0 0 -0.62'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23s)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  background-color: var(--swatch, #ffffff);
+}
+
+/* A two sided slat shows both faces on one swatch. Notan draw it as a vertical
+   split; the owner asked for a diagonal on 2026-08-04. A hard stop, not a
+   blend: it is two painted faces, not a gradient between them. */
+.fg-blind-colours__grid i.is-two-sided {
+  background: linear-gradient(
+    135deg,
+    var(--swatch, #ffffff) 0 calc(50% - 0.5px),
+    rgba(15, 49, 54, 0.24) calc(50% - 0.5px) calc(50% + 0.5px),
+    var(--swatch-reverse, var(--swatch, #ffffff)) calc(50% + 0.5px) 100%
+  );
+}
+
 .fg-heritage-door-colours__note,
 .fg-upvc-colours__note,
+.fg-blind-colours__note,
 .fg-alu-colours__note,
 .fg-handle-finishes__note {
   max-width: 68ch;
@@ -36747,6 +36789,18 @@ html.fg-blinds-reveal-locked {
   box-shadow: inset 0 0 0 1px rgba(15, 49, 54, 0.16);
 }
 
+/* A two sided slat shows both faces on one tile, split on the diagonal, so
+   White/Anthracite is not a plain white square on the hub. Hard stop rather
+   than a blend: two painted faces, not a gradient between them. */
+.fg-colour-rail__slide.is-two-sided .fg-colour-rail__media i {
+  background: linear-gradient(
+    135deg,
+    var(--swatch, #ffffff) 0 calc(50% - 0.5px),
+    rgba(15, 49, 54, 0.24) calc(50% - 0.5px) calc(50% + 0.5px),
+    var(--swatch-reverse, var(--swatch, #ffffff)) calc(50% + 0.5px) 100%
+  );
+}
+
 [data-fg-colour-material="upvc"] .fg-colour-rail__media {
   aspect-ratio: 1.42;
 }
@@ -36825,5 +36879,268 @@ html.fg-blinds-reveal-locked {
 
   .fg-colour-rail__slide {
     transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Notan magnetic integral blind visualiser
+   ------------------------------------------------------------------ */
+
+.fg-blind-visualiser {
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+
+.fg-blind-visualiser__shell {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  align-items: start;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'intro'
+    'stage'
+    'readout'
+    'hint'
+    'colours'
+    'note';
+}
+
+.fg-blind-visualiser__intro {
+  grid-area: intro;
+  max-width: 46rem;
+}
+
+.fg-blind-visualiser__intro h2 {
+  margin-bottom: 0.85rem;
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  line-height: 1.02;
+}
+
+.fg-blind-visualiser__intro p:not(.eyebrow) {
+  color: var(--color-muted);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+}
+
+.fg-blind-visualiser__stage {
+  grid-area: stage;
+  position: relative;
+  /* Matches the unit the renderer lays out, glass plus frame, so the drawing
+     fills the box instead of letterboxing inside it. */
+  aspect-ratio: 590 / 770;
+  max-height: 620px;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 460px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #151719;
+  box-shadow: 0 26px 70px rgba(0, 45, 58, 0.24);
+  /* The stage is a drawing, not a scroller. Letting vertical pans through
+     keeps the page scrollable when a thumb lands on it, which is the same
+     rule the obscured glass visualiser follows. Only while a magnet is
+     actually held does the drag win, or the blind could not be worked by
+     touch at all. */
+  touch-action: pan-y;
+}
+
+/* The only two things on the stage that take a drag. Everything else stays
+   pannable, so a thumb on the glass scrolls the page and a thumb on a magnet
+   works the blind. Switching the whole canvas to `touch-action: none` on
+   pointerdown does not work: a touch has already been committed to a scroll by
+   the time the handler runs, which is why dragging used to pull the page. */
+.fg-blind-visualiser__grab {
+  position: absolute;
+  z-index: 2;
+  touch-action: none;
+  cursor: grab;
+  border-radius: 6px;
+  /* Invisible until it matters. On a coarse pointer there is no hover, so the
+     magnets have to carry their own affordance in the drawing. */
+  background: transparent;
+}
+
+.fg-blind-visualiser__grab:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.fg-blind-visualiser__grab.is-held {
+  cursor: grabbing;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.fg-blind-visualiser__canvas,
+.fg-blind-visualiser__fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The photograph is what shows until the controller has a context and a first
+   frame. A thrown error therefore leaves a real Notan close-up on the page
+   rather than a black rectangle, which a <noscript> block would not catch. */
+.fg-blind-visualiser__canvas {
+  display: none;
+}
+
+.fg-blind-visualiser.is-live .fg-blind-visualiser__canvas {
+  display: block;
+}
+
+.fg-blind-visualiser.is-live .fg-blind-visualiser__fallback {
+  display: none;
+}
+
+.fg-blind-visualiser__readout {
+  grid-area: readout;
+  margin: 0;
+  min-height: 1.5em;
+  color: var(--color-ink);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+/* The real controls are the two magnets drawn on the unit's own profile. These
+   inputs are the same two controls for keyboard and screen reader users, so
+   they are moved off screen rather than hidden: `display: none` or
+   `visibility: hidden` would drop them out of the tab order and leave the
+   visualiser operable by pointer alone. Focus is shown by a ring drawn round
+   the matching magnet on the canvas. */
+.fg-blind-visualiser__a11y {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fg-blind-visualiser__hint {
+  grid-area: hint;
+  margin: 0;
+  max-width: 34rem;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.fg-blind-visualiser__colours {
+  grid-area: colours;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 0.6rem;
+}
+
+.fg-blind-visualiser__colour {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.fg-blind-visualiser__colour i {
+  grid-row: 1 / 3;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(6, 33, 42, 0.22);
+  border-radius: 50%;
+  /* Two stops with a hard edge, so White/Anthracite shows both of its faces on
+     the chip. Diagonal on the owner's instruction; Notan's own swatch splits
+     it vertically. Kept the same as the slat colour grid so one product does
+     not draw the same colour two ways. */
+  background: linear-gradient(135deg, var(--swatch) 0 50%, var(--swatch-reverse) 50% 100%);
+}
+
+.fg-blind-visualiser__colour-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ink);
+  /* Safety net only. The break opportunity after the slash is added in the
+     component; this catches a longer bespoke name if one is ever added. */
+  overflow-wrap: break-word;
+}
+
+.fg-blind-visualiser__colour-code {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.fg-blind-visualiser__colour:hover {
+  border-color: #9fb4ba;
+  transform: translateY(-1px);
+}
+
+.fg-blind-visualiser__colour:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.fg-blind-visualiser__colour.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 10px 24px rgba(0, 45, 58, 0.12);
+}
+
+.fg-blind-visualiser__note {
+  grid-area: note;
+  margin: 0;
+  max-width: 52rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+@media (min-width: 861px) {
+  .fg-blind-visualiser__shell {
+    grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1fr);
+    grid-template-areas:
+      'intro    intro'
+      'stage    readout'
+      'stage    hint'
+      'stage    colours'
+      'stage    note';
+    /* The stage spans four rows, so without this the rows split the stage's
+       height between them and the controls drift apart down the column. Sizing
+       them to their content and letting the last row absorb what is left keeps
+       the group tight under the readout. */
+    grid-template-rows: auto auto auto auto 1fr;
+    align-content: start;
+    column-gap: clamp(2rem, 4vw, 3.6rem);
+    row-gap: clamp(1rem, 2vw, 1.6rem);
+  }
+
+  .fg-blind-visualiser__stage {
+    grid-row: 2 / 6;
+    max-width: none;
+    max-height: none;
+    align-self: start;
+  }
+
+  .fg-blind-visualiser__note {
+    align-self: start;
+    padding-top: 0.4rem;
+  }
+
+  /* Nine colours land as a clean three by three rather than four, four and a
+     stranded ninth. */
+  .fg-blind-visualiser__colours {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-blind-visualiser__colour {
+    transition: none;
+  }
+
+  .fg-blind-visualiser__colour:hover {
+    transform: none;
   }
 }

@@ -106,6 +106,12 @@ $is_valid_generated_image = static function ($image): bool {
     $local_path = '';
     if (str_starts_with($path, '/app/uploads/')) {
         $local_path = ABSPATH . 'wp-content/uploads/' . substr($path, strlen('/app/uploads/'));
+    } elseif (str_starts_with($path, '/wp-content/themes/fenster/')) {
+        /* Theme assets live at web/app/themes/fenster on the Bedrock servers,
+           so the generic ABSPATH mapping below never finds them and every
+           theme-pool image would be silently dropped. Resolve via the real
+           theme directory instead. */
+        $local_path = get_template_directory() . substr($path, strlen('/wp-content/themes/fenster'));
     } elseif (str_starts_with($path, '/wp-content/uploads/')) {
         $local_path = ABSPATH . ltrim($path, '/');
     } elseif (str_starts_with($path, '/wp-content/')) {
@@ -793,6 +799,16 @@ $product_quote_embed = $product_quote_embeds[$slug] ?? null;
 $product_quote_embed_url = is_array($product_quote_embed) ? (string) ($product_quote_embed['url'] ?? '') : '';
 $product_quote_embed_label = is_array($product_quote_embed) ? (string) ($product_quote_embed['label'] ?? $title) : $title;
 $product_quote_link = $product_quote_embed_url !== '' ? '#fenster-product-quote' : home_url('/online-quote/');
+
+/* Whether the online tool can actually put a price on this route.
+   Integral blinds cannot be priced consumer-side: a blind unit is a sealed
+   unit specification made to the host window or door, and the tool prices
+   windows and doors. Sending someone to it from here promises a number they
+   cannot get, so the route offers a consultation instead. Owner instruction,
+   2026-08-04. Add a slug here rather than deleting the buttons, so the two
+   hero variants and the hero card stay in step. */
+$no_instant_price_routes = ['integral-blinds'];
+$offers_instant_price = ! in_array($slug, $no_instant_price_routes, true);
 $asset_base = '/wp-content/themes/fenster/assets/images/imported/';
 $hero_overrides = [
     'home' => $asset_base . 'Aluminium-Windows-16.jpg',
@@ -2155,6 +2171,43 @@ if ($is_window_handles) {
 
 if ($is_colour_options) {
     $active_material = $slug === 'aluminium-colours' ? 'aluminium' : ($slug === 'upvc-colours' ? 'upvc' : 'upvc');
+
+    /* Integral blind slats belong on the hub too, on the owner's instruction of
+       2026-08-04. Built here from `notan_blind_colours` rather than copied into
+       `colour_options`, so the hub and the visualiser on /integral-blinds/
+       cannot drift apart: there is one list of nine and both read it.
+
+       It is deliberately last. Frame colour is the decision most people came
+       for, and the slats are a different surface on a different product. */
+    $notan_slats = fenster_data('notan_blind_colours', []);
+    $notan_slats = is_array($notan_slats) ? array_values($notan_slats) : [];
+
+    if ($notan_slats !== []) {
+        $colour_materials['integral-blinds'] = [
+            'label' => __('Integral blind colours', 'fenster'),
+            'slug' => 'integral-blind-colours',
+            'headline' => __('Integral blind colours.', 'fenster'),
+            'copy' => __('These are the slats themselves, sealed inside the glass, not a frame finish. Nine are standard and bespoke RAL is available to order. White/Anthracite is the one to look at twice: it is white on the room side and anthracite outside, so the same blind can suit the room and the elevation at once. The frame around a blind unit takes the colour of whichever window or door it is built into.', 'fenster'),
+            'colours' => array_map(
+                static function (array $slat): array {
+                    $code = trim((string) ($slat['code'] ?? ''));
+                    return [
+                        'name' => (string) ($slat['name'] ?? 'Slat colour'),
+                        'hex' => (string) ($slat['hex'] ?? '#ffffff'),
+                        /* The reverse face is the whole point of BY012, so say
+                           so here rather than leaving the swatch to imply a
+                           plain white slat. */
+                        'hex_reverse' => (string) ($slat['reverse'] ?? ''),
+                        'glitter' => ! empty($slat['glitter']),
+                        'finish' => ! empty($slat['reverse'])
+                            ? trim($code . ' ' . __('two sided, anthracite outside', 'fenster'))
+                            : $code,
+                    ];
+                },
+                array_filter($notan_slats, 'is_array')
+            ),
+        ];
+    }
     $render_colour_material = static function (string $material_key, array $material, string $active_material): void {
         $colours = is_array($material['colours'] ?? null) ? array_values($material['colours']) : [];
         ?>
@@ -2202,7 +2255,17 @@ if ($is_colour_options) {
                 <ul class="fg-colour-rail__track" data-fg-colour-rail-viewport tabindex="0" role="region" aria-label="<?php echo esc_attr(sprintf(__('%s. Scroll or swipe sideways.', 'fenster'), (string) ($material['label'] ?? 'Colours'))); ?>">
                         <?php foreach ($colours as $colour) : ?>
                         <?php $swatch = (string) ($colour['hex'] ?? '#ffffff'); ?>
-                    <li class="fg-colour-rail__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
+                        <?php
+                        /* A two sided slat carries its reverse face as well, so
+                           the tile shows both rather than reading as a plain
+                           white one. Only the blind colours use it. */
+                        $swatch_reverse = trim((string) ($colour['hex_reverse'] ?? ''));
+                        $swatch_style = '--swatch:' . $swatch;
+                        if ($swatch_reverse !== '') {
+                            $swatch_style .= ';--swatch-reverse:' . $swatch_reverse;
+                        }
+                        ?>
+                    <li class="fg-colour-rail__slide<?php echo $swatch_reverse !== '' ? ' is-two-sided' : ''; ?><?php echo ! empty($colour['glitter']) ? ' is-glitter' : ''; ?>" style="<?php echo esc_attr($swatch_style); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
                             <?php
                             /* A near-white swatch on a white card reads as an
                                empty slot rather than a colour, so it takes a
@@ -2943,7 +3006,11 @@ if ($is_commercial_hub) {
                     <p><?php echo esc_html($hero_intro); ?></p>
                     <div class="button-row">
                         <a class="button" href="#fenster-enquiry"><?php echo esc_html($cta_label); ?></a>
-                        <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
+                        <?php if ($offers_instant_price) : ?>
+                            <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
+                        <?php else : ?>
+                            <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <?php foreach ($aluminium_windows_story_panels as $index => $story_panel) : ?>
@@ -3040,7 +3107,11 @@ if ($is_commercial_hub) {
                         <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
                         <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
                     </a>
-                    <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
+                    <?php if ($offers_instant_price) : ?>
+                        <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
+                    <?php else : ?>
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
+                    <?php endif; ?>
                 </div>
             </div>
             <?php if ($is_home) : ?>
@@ -3055,7 +3126,7 @@ if ($is_commercial_hub) {
             <?php else : ?>
                 <aside class="fg-hero__panel fg-hero-card" aria-label="<?php esc_attr_e('Project enquiry', 'fenster'); ?>">
                     <p class="fg-hero-card__kicker"><?php esc_html_e('Start here', 'fenster'); ?></p>
-                    <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : 'Get pricing or book a design chat.'); ?></h2>
+                    <h2><?php echo esc_html($is_commercial ? 'Get a specification conversation moving.' : ($offers_instant_price ? 'Get pricing or book a design chat.' : 'Book a design chat.')); ?></h2>
                     <div class="fg-hero-card__logos">
                         <img src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/trust/google-5-stars.png'); ?>" alt="<?php esc_attr_e('Google five star reviews', 'fenster'); ?>">
                         <a class="fg-accreditation-logo-link" href="<?php echo esc_url(home_url('/fensa-approved-installers/')); ?>" aria-label="<?php esc_attr_e('Learn about Fenster’s FENSA approved installations', 'fenster'); ?>">
@@ -3064,7 +3135,9 @@ if ($is_commercial_hub) {
                     </div>
                     <div class="fg-hero-form">
                         <a class="button" href="#fenster-enquiry"><?php esc_html_e('Start your project', 'fenster'); ?></a>
-                        <a class="text-link" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Use the instant quote tool', 'fenster'); ?></a>
+                        <?php if ($offers_instant_price) : ?>
+                            <a class="text-link" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Use the instant quote tool', 'fenster'); ?></a>
+                        <?php endif; ?>
                     </div>
                 </aside>
             <?php endif; ?>
@@ -3883,6 +3956,27 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
+        <?php
+        /* The blind visualiser sits here, straight after the why section, for
+           the same reason the obscured glass visualiser sits where it does:
+           the page has just told the customer the blind is sealed in the
+           glass and they cannot touch it, so the next thing to do is let them
+           work it. Everything below this point is specification and process,
+           which reads better once the product has been understood. */
+        ?>
+        <?php if ($is_integral_blinds) : ?>
+            <?php
+            get_template_part('template-parts/components/blinds-visualiser', null, [
+                'id'            => 'blind-visualiser',
+                'eyebrow'       => __('See it work', 'fenster'),
+                'heading'       => __('Work the blind before you order it.', 'fenster'),
+                'intro'         => __('This is a Notan magnetic blind sealed inside a sealed unit, drawn straight on. Work it the way you would work the real thing, using the two magnets on the frame inside the glass, and pick any of the nine standard colours to see it in the finish you are considering.', 'fenster'),
+                'fallback_image' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg',
+                'fallback_alt'  => __('Close-up of a Notan integral blind sealed between the panes of a glazed door', 'fenster'),
+            ]);
+            ?>
+        <?php endif; ?>
+
         <?php if ($is_pet_flap_page && ! empty($pet_flap_cards)) : ?>
             <section class="fg-pet-flap-guide">
                 <div class="container fg-pet-flap-guide__grid">
@@ -4109,8 +4203,15 @@ if ($is_commercial_hub) {
             <div class="container">
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
-                    <h2><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.'); ?></h2>
-                    <p><?php echo esc_html($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.'); ?></p>
+                    <?php
+                    /* Integral blinds get their own wording. The generic line
+                       promises colours, glass and hardware, and on this route
+                       two of those three are not decisions made here: the frame
+                       belongs to whichever window or door the unit goes into,
+                       and there is no hardware on the room side at all. */
+                    ?>
+                    <h2><?php echo esc_html($is_integral_blinds ? 'Choose the glass around the blind.' : ($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.')); ?></h2>
+                    <p><?php echo esc_html($is_integral_blinds ? 'The slat colours are further down this page. The other choice on a blind unit is the glass itself: clear, or obscured where the room needs privacy even with the blind open.' : ($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.')); ?></p>
                 </div>
                 <?php
                 /* Built as a list before rendering so the count is known. The
@@ -4123,7 +4224,16 @@ if ($is_commercial_hub) {
                 /* A route that lays the colours out inline does not also need a
                    card pointing at the colour hub: the grid's own note already
                    links there. Same suppression the uPVC foil routes use. */
-                if ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
+                /* Integral blinds render no colour card at all. Frame colour
+                   is not a decision on that route, because the unit goes into
+                   whichever window or door is being made and takes that frame's
+                   colour; and the slat colours that *are* chosen lay out inline
+                   further down the page, with their own link to the hub. A card
+                   pointing at the hub as well is the duplicate the uPVC foil
+                   routes already suppress. */
+                if ($is_integral_blinds) {
+                    // No colour card.
+                } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
                     $option_cards[] = [
                         'modifier' => 'colour',
                         'url' => home_url('/colour-options/'),
@@ -4226,6 +4336,13 @@ if ($is_commercial_hub) {
 
         <?php if (isset($aluminium_colour_routes[$slug])) : ?>
             <?php get_template_part('template-parts/components/aluminium-colour-grid', null, ['product_noun' => $aluminium_colour_routes[$slug]]); ?>
+        <?php endif; ?>
+
+        <?php /* Slat colours inline, the same as the uPVC and aluminium routes
+                 lay out their frame finishes, rather than behind a card that
+                 links away. Owner instruction, 2026-08-04. */ ?>
+        <?php if ($is_integral_blinds) : ?>
+            <?php get_template_part('template-parts/components/blind-colour-grid'); ?>
         <?php endif; ?>
 
 

@@ -2938,6 +2938,1214 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   setSplit(splitControl?.value || 54);
 });
 
+/* Notan magnetic integral blind visualiser.
+ *
+ * Draws one glazed unit face on and fully straight, with the blind rendered
+ * from its geometry rather than from photography. Face on is what makes a 2D
+ * canvas sufficient: with no perspective a slat projects to a plain rectangle
+ * of height `slat * |sin phi| + thickness * |cos phi|`, which is exact. Nine
+ * colours against a continuous tilt and a continuous lift is also far past
+ * what a sprite sheet can hold, so it has to be drawn.
+ *
+ * Two caches carry the cost. The garden behind the glass is rendered small,
+ * blown back up to soften it, and kept until the box resizes. The blind is one
+ * tile, being a slat and the gap under it, rebuilt only when the tilt, the
+ * colour or the size actually change and then stamped once per slat. A frame
+ * that only moves the lift therefore reuses the tile it already had.
+ */
+document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
+  const canvas = root.querySelector('[data-fg-blind-canvas]');
+  const stage = root.querySelector('.fg-blind-visualiser__stage');
+  const tiltInput = root.querySelector('[data-fg-blind-tilt]');
+  const liftInput = root.querySelector('[data-fg-blind-lift]');
+  const readout = root.querySelector('[data-fg-blind-readout]');
+  const colourButtons = [...root.querySelectorAll('[data-fg-blind-colour]')];
+
+  if (!canvas || !stage || !tiltInput || !liftInput || !colourButtons.length) return;
+
+  const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return;
+
+  /* Millimetres. A window sash rather than a door leaf, because at door
+     height the slats fall below two pixels each and the tilt stops reading. */
+  const GLASS_W = 520;
+  const GLASS_H = 700;
+  const SLAT = 12.5;
+  const SLAT_T = 0.18;
+  const PITCH = 11.9;
+  const STACK_PITCH = 2.15;
+  const RAIL = 15;
+  /* The Notan profile: the colour matched frame sealed inside the glass that
+     the blind hangs in and that the two magnets run on. Notan describe it as a
+     slim 30mm fully symmetrical profile, so it borders the glass on all four
+     sides rather than only capping the head. */
+  /* uPVC section, from the owner's photograph of the showroom unit: an outer
+     frame face, a shadow groove, the sash face, a second groove, then the
+     glazing bead. Anthracite, because that is the unit the reference shows and
+     because the hardware inside the glass is matched to the frame rather than
+     to the slats. */
+  /* Slimmer than the showroom sample it was drawn from, deliberately. The
+     blind's own cassette is fifty millimetres a side, and at the sample's full
+     section the two borders together swallowed the glass. The window is the
+     surround here; the blind unit is the subject. */
+  const OUTER = 14;
+  const GROOVE = 2;
+  const SASH = 11;
+  const BEAD = 6;
+  const FRAME = OUTER + GROOVE + SASH + GROOVE + BEAD;
+  const UPVC = { r: 56, g: 62, b: 66 };
+  /* The warm edge spacer round the sealed unit, the blind's own head, and the
+     rail the two magnets run on. The rail is slim and sits near the right of
+     the glass; there is no wide colour matched border, which an earlier pass
+     had wrongly drawn all the way round. */
+  /* The blind's own framework inside the sealed unit. It is a U: two side
+     members and a head, and nothing along the bottom, where the blind's bottom
+     rail simply comes to rest on the edge of the glass. The magnets run on the
+     right hand member and overhang it, which is what the reference photograph
+     shows. Anthracite, matched to the window frame. */
+  const CASSETTE = 50;
+  const SPACER = 9;
+  /* The cassette head is the head, so there is no separate rail band under it.
+     Both are the slat colour now, and drawing two made one flat slab. */
+  const HEADRAIL = 0;
+  /* The slim rail at the inner edge of the frame, at the boundary with the
+     clear, that the two magnets slot onto. */
+  const RAIL_W = 11;
+  /* The two are not the same size. On the real unit the lift magnet is
+     noticeably longer than the tilt one, about half as long again, and both
+     are wider than the earlier photographs suggested: those were shot at a
+     steep angle, which foreshortens the width and not the length. */
+  const MAGNET_W = 28;
+  const MAGNET_H_TILT = 58;
+  const MAGNET_H_LIFT = 95;
+  const UNIT_W = GLASS_W + FRAME * 2;
+  const UNIT_H = GLASS_H + FRAME * 2;
+  const BLIND_W = GLASS_W - CASSETTE * 2;
+  const BLIND_H = GLASS_H - CASSETTE - SPACER;
+  const DROP = BLIND_H - HEADRAIL - RAIL;
+  const SLAT_COUNT = Math.floor(DROP / PITCH);
+  /* Real tilt mechanisms stop short of ninety degrees. Stopping at seventy
+     eight also trims most of the dead zone at each end of the slider, where
+     the slats have already overlapped and further rotation changes nothing. */
+  const MAX_TILT = (78 * Math.PI) / 180;
+
+  const smooth = (start, end, value) => {
+    const amount = clamp((value - start) / (end - start || 0.0001));
+    return amount * amount * (3 - 2 * amount);
+  };
+  const toRgb = (hex) => {
+    const raw = String(hex || '').replace('#', '');
+    const full = raw.length === 3 ? raw.split('').map((c) => c + c).join('') : raw;
+    const n = Number.parseInt(full, 16);
+    return Number.isFinite(n) ? { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 } : { r: 255, g: 255, b: 255 };
+  };
+  const mixRgb = (a, b, t) => ({ r: a.r + (b.r - a.r) * t, g: a.g + (b.g - a.g) * t, b: a.b + (b.b - a.b) * t });
+  const paint = (c, k, add = 0, alpha = 1) => `rgba(${clamp(Math.round(c.r * k + add), 0, 255)},${clamp(Math.round(c.g * k + add), 0, 255)},${clamp(Math.round(c.b * k + add), 0, 255)},${alpha})`;
+
+  const swatches = colourButtons.map((button) => ({
+    face: toRgb(button.dataset.hex),
+    back: toRgb(button.dataset.reverse || button.dataset.hex),
+    metallic: button.dataset.metallic === '1',
+    glitter: button.dataset.glitter === '1',
+    name: button.dataset.name || 'Slat colour',
+    code: button.dataset.code || '',
+  }));
+
+  let activeIndex = Math.max(0, colourButtons.findIndex((button) => button.classList.contains('is-active')));
+  let shownFace = { ...swatches[activeIndex].face };
+  let shownBack = { ...swatches[activeIndex].back };
+  let shownMetallic = swatches[activeIndex].metallic ? 1 : 0;
+  let shownGlitter = swatches[activeIndex].glitter ? 1 : 0;
+
+  let tiltTarget = Number.parseFloat(tiltInput.value);
+  let liftTarget = Number.parseFloat(liftInput.value);
+  let tilt = tiltTarget;
+  let lift = liftTarget;
+
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let scene = null;
+  let sceneKey = '';
+  let tile = null;
+  let tileKey = '';
+  let unitChrome = null;
+  let chromeKey = '';
+  let grain = null;
+  let frame = 0;
+  let visible = true;
+  let dragging = null;
+  let focused = null;
+  const grabs = new Map();
+  root.querySelectorAll('[data-fg-blind-grab]').forEach((grab) => {
+    grabs.set(grab.dataset.fgBlindGrab, grab);
+  });
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* A hanging blind is not a grating. Real slats sit a fraction off pitch and
+     catch fractionally different amounts of light, and without that the render
+     reads as a printed pattern no matter how good the shading is. Computed
+     once from the index rather than from Math.random, so a slat keeps the same
+     character between frames instead of shimmering. */
+  const wobble = Array.from({ length: SLAT_COUNT }, (unused, i) => {
+    const n = Math.sin(i * 12.9898) * 43758.5453;
+    const m = Math.sin(i * 78.233 + 1.7) * 12345.6789;
+    const r = Math.sin(i * 39.4271 + 4.1) * 24634.6345;
+    return {
+      offset: (n - Math.floor(n)) - 0.5,
+      gain: (m - Math.floor(m)) - 0.5,
+      lean: (r - Math.floor(r)) - 0.5,
+    };
+  });
+
+  /* The garden is drawn at an eighth of the size and scaled back up. That is the
+     blur: it costs one upscale instead of a filter pass, it is supported
+     everywhere, and the softness it produces is the depth of field a real
+     camera focused on the blind would give the garden behind it anyway. */
+  const buildScene = (w, h) => {
+    const sw = Math.max(28, Math.round(w / 8));
+    const sh = Math.max(28, Math.round(h / 8));
+    const small = document.createElement('canvas');
+    small.width = sw;
+    small.height = sh;
+    const g = small.getContext('2d');
+    if (!g) return null;
+
+    const sky = g.createLinearGradient(0, 0, 0, sh * 0.7);
+    sky.addColorStop(0, '#bcdcf0');
+    sky.addColorStop(0.5, '#e4f0f7');
+    sky.addColorStop(1, '#f4f7ea');
+    g.fillStyle = sky;
+    g.fillRect(0, 0, sw, sh);
+
+    const sun = g.createRadialGradient(sw * 0.74, sh * 0.08, 0, sw * 0.74, sh * 0.08, sw * 1.1);
+    sun.addColorStop(0, 'rgba(255,254,246,1)');
+    sun.addColorStop(0.4, 'rgba(255,252,238,0.5)');
+    sun.addColorStop(1, 'rgba(255,252,238,0)');
+    g.fillStyle = sun;
+    g.fillRect(0, 0, sw, sh);
+
+    const horizon = sh * 0.66;
+    /* Three summed sines give a canopy that reads as trees without any of
+       them being recognisable, which is the point once it is this soft. */
+    g.beginPath();
+    g.moveTo(0, sh);
+    g.lineTo(0, horizon);
+    for (let x = 0; x <= sw; x += 1) {
+      const t = x / sw;
+      const canopy = Math.sin(t * 8.3) * 0.5 + Math.sin(t * 19.7 + 1.3) * 0.3 + Math.sin(t * 37.1 + 2.6) * 0.17;
+      g.lineTo(x, horizon - sh * 0.16 * (0.5 + canopy * 0.5));
+    }
+    g.lineTo(sw, sh);
+    g.closePath();
+    const trees = g.createLinearGradient(0, horizon - sh * 0.24, 0, horizon + sh * 0.02);
+    trees.addColorStop(0, '#b6c99b');
+    trees.addColorStop(0.55, '#96b177');
+    trees.addColorStop(1, '#7b9761');
+    g.fillStyle = trees;
+    g.fill();
+
+    const lawn = g.createLinearGradient(0, horizon, 0, sh);
+    lawn.addColorStop(0, '#adc484');
+    lawn.addColorStop(0.5, '#9cb673');
+    lawn.addColorStop(1, '#87a25f');
+    g.fillStyle = lawn;
+    g.fillRect(0, horizon, sw, sh - horizon);
+
+    const paving = g.createLinearGradient(0, sh * 0.88, 0, sh);
+    paving.addColorStop(0, 'rgba(214,204,186,0)');
+    paving.addColorStop(1, 'rgba(220,211,193,0.92)');
+    g.fillStyle = paving;
+    g.fillRect(0, sh * 0.88, sw, sh * 0.12);
+
+    /* Dapple. At this blur nothing in a real garden survives as shape, but the
+       uneven pools of light and shade do, and a smooth gradient without them
+       is the tell that the view was generated rather than photographed. */
+    const dapple = [
+      [0.18, 0.78, 0.3, 'rgba(255,252,232,0.5)'], [0.62, 0.86, 0.34, 'rgba(72,92,54,0.34)'],
+      [0.86, 0.72, 0.26, 'rgba(255,250,226,0.42)'], [0.34, 0.94, 0.24, 'rgba(84,104,62,0.3)'],
+      [0.08, 0.62, 0.22, 'rgba(96,116,74,0.32)'], [0.5, 0.7, 0.2, 'rgba(255,253,238,0.34)'],
+    ];
+    dapple.forEach(([x, y, r, colour]) => {
+      const pool = g.createRadialGradient(sw * x, sh * y, 0, sw * x, sh * y, sw * r);
+      pool.addColorStop(0, colour);
+      pool.addColorStop(1, colour.replace(/[\d.]+\)$/, '0)'));
+      g.fillStyle = pool;
+      g.fillRect(0, 0, sw, sh);
+    });
+
+    const render = (target, veil) => {
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(w));
+      c.height = Math.max(1, Math.round(h));
+      const f = c.getContext('2d');
+      if (!f) return null;
+      f.imageSmoothingEnabled = true;
+      f.imageSmoothingQuality = 'high';
+      f.drawImage(target, 0, 0, c.width, c.height);
+      /* A camera exposed for the room blows the garden out. Without this veil
+         the slats read as darker than the view rather than silhouetted by it. */
+      f.fillStyle = `rgba(255,255,255,${veil})`;
+      f.fillRect(0, 0, c.width, c.height);
+      return c;
+    };
+
+    /* A second, far coarser copy of the same garden. Added back over the
+       finished blind with `lighter`, it is the veiling glare a bright exterior
+       throws across dark slats: light spilling out of the gaps and washing the
+       aluminium next to them. It is the difference between a diagram of a
+       blind and a photograph of one, and because it is the scene rather than a
+       readback of the canvas it costs one cached drawImage rather than a
+       getImageData every frame. */
+    const hazeW = Math.max(8, Math.round(sw / 3));
+    const hazeH = Math.max(8, Math.round(sh / 3));
+    const haze = document.createElement('canvas');
+    haze.width = hazeW;
+    haze.height = hazeH;
+    const hz = haze.getContext('2d');
+    if (hz) {
+      hz.imageSmoothingEnabled = true;
+      hz.drawImage(small, 0, 0, hazeW, hazeH);
+    }
+
+    return { view: render(small, 0.14), haze: render(haze, 0.26) };
+  };
+
+  const buildGrain = () => {
+    const size = 96;
+    const c = document.createElement('canvas');
+    c.width = size;
+    c.height = size;
+    const g = c.getContext('2d');
+    if (!g) return null;
+    const data = g.createImageData(size, size);
+    for (let i = 0; i < data.data.length; i += 4) {
+      const v = 118 + Math.random() * 24;
+      data.data[i] = v;
+      data.data[i + 1] = v;
+      data.data[i + 2] = v;
+      data.data[i + 3] = 255;
+    }
+    g.putImageData(data, 0, 0);
+    return c;
+  };
+
+  /* One tile: the slat, then the gap beneath it, at three times the height so
+     the fractional pitch lands with clean antialiasing when it is stamped. */
+  const buildTile = (face, back, metallic, glitter, phi, pitchPx, slatPx) => {
+    const ss = 3;
+    /* A glitter finish needs a wide tile. The tile is stretched to the width of
+       the blind, so on the usual 96 a one pixel fleck comes out as a four pixel
+       horizontal smear, which reads as a scratch rather than a flake. */
+    const W = glitter ? 480 : 96;
+    const H = Math.max(3, Math.round(pitchPx * ss));
+    const bandH = clamp(slatPx * ss, 0.5, H);
+    const gapH = H - bandH;
+    const openness = clamp((pitchPx - slatPx) / pitchPx, 0, 1);
+    const c = document.createElement('canvas');
+    c.width = W;
+    c.height = H;
+    const g = c.getContext('2d');
+    if (!g) return null;
+
+    if (gapH > 0.5) {
+      /* The gap is not empty: the slat above shades the top of it and the
+         slat below catches light at the bottom of it. Kept light on purpose.
+         An earlier pass used nearly half black here and it read as a painted
+         stripe, because in life the gap is the brightest thing on the window
+         and the slat is what is dark. */
+      const shadow = g.createLinearGradient(0, bandH, 0, H);
+      shadow.addColorStop(0, 'rgba(24,26,22,0.24)');
+      shadow.addColorStop(0.45, 'rgba(24,26,22,0.03)');
+      shadow.addColorStop(1, 'rgba(24,26,22,0.14)');
+      g.fillStyle = shadow;
+      g.fillRect(0, bandH, W, gapH);
+
+      /* On a two sided slat the outward face shows as a sliver through the
+         gap, on whichever side the tilt turns it towards. Absent a reverse
+         colour this paints the same colour it already is and disappears. */
+      const reveal = clamp(Math.abs(Math.sin(phi)) * 0.85, 0, 1) * openness;
+      const sliver = gapH * reveal * 0.5;
+      if (sliver > 0.4) {
+        const top = phi < 0;
+        const y = top ? bandH : H - sliver;
+        const edge = g.createLinearGradient(0, y, 0, y + sliver);
+        edge.addColorStop(top ? 0 : 1, paint(back, 0.5, 0, 0.92));
+        edge.addColorStop(top ? 1 : 0, paint(back, 0.72, 0, 0));
+        g.fillStyle = edge;
+        g.fillRect(0, y, W, sliver);
+      }
+    }
+
+    /* The room side of a slat is always turned away from an exterior sun, so
+       there is no direct term at all. What lights it is room ambient, which
+       tracks how square the slat is to the room, plus light coming through the
+       gap and bouncing off the slat below onto its lower edge. */
+    const crown = 0.2;
+    const lean = Math.sign(phi) || 1;
+    const specPos = 0.5 - 0.42 * Math.sin(phi);
+    const specStrength = metallic ? 0.5 : 0.16;
+    const facing = Math.abs(Math.sin(phi));
+    /* The gap sits below the slat, so the edge turned towards it is the lower
+       one, and that is the edge the sky wraps around. Leaning the other way
+       moves the bright edge to the top. Splitting it this way is what stops
+       every slat reading as a symmetrical painted bar. */
+    const bright = lean > 0 ? 1 : 0;
+
+    const luminanceAt = (v) => {
+      const u = (v - 0.5) * 2;
+      const local = Math.abs(Math.sin(phi + crown * u * lean));
+      /* Room ambient. The exterior sun is behind the blind and never reaches
+         the room face directly, so this is the whole of the base term. */
+      let k = 0.4 + 0.42 * local;
+      /* Sky through the gap, bouncing off the slat below onto this one. */
+      k += 0.4 * openness * smooth(0.34, 1, bright ? v : 1 - v);
+      /* The crown is convex to the room, so its middle turns furthest towards
+         the light in the room and reads a touch brighter than either edge. */
+      k += 0.1 * Math.cos((v - 0.5) * Math.PI);
+      k -= 0.1 * smooth(0.55, 0, bright ? v : 1 - v) * (1 - openness * 0.5);
+      return k;
+    };
+    /* The edge is two tenths of a millimetre thick and sits against a blown
+       out sky, so it scatters a fringe. It is the single detail that stops the
+       blind reading as flat bands of colour.
+       It has to fall away as the slat gets lighter. The fringe is the contrast
+       between the scatter and the body of the slat, and a white slat is
+       already as bright as the sky behind it, so there is nothing to see. Left
+       flat, it blew White, Cream and Metallic Silver out until all three read
+       as the same pale wash and the blind looked see through when its slats
+       were seventy per cent overlapped. */
+    const faceLum = (0.2126 * face.r + 0.7152 * face.g + 0.0722 * face.b) / 255;
+    const contrast = 1 - faceLum * 0.82;
+    const fringeAt = (v) => {
+      const lit = bright ? smooth(0.7, 1, v) : smooth(0.3, 0, v);
+      return lit * (0.16 + 0.52 * openness) * (0.3 + 0.7 * facing) * contrast;
+    };
+    const highlightAt = (v) => {
+      const spec = Math.exp(-((v - specPos) ** 2) / 0.02) * specStrength * contrast;
+      return (spec + fringeAt(v) * 0.5) * 205;
+    };
+
+    const grad = g.createLinearGradient(0, 0, 0, bandH);
+    const steps = 13;
+    for (let i = 0; i < steps; i += 1) {
+      const v = i / (steps - 1);
+      /* The fringe thins the slat rather than painting over it. Scattering
+         round an edge that thin is partial occlusion, so letting the scene
+         through is both what happens and what makes it look photographed: the
+         highlight comes out sky coloured at the head of the pane and green
+         down where the lawn is, instead of the same white rule fifty times. */
+      grad.addColorStop(v, paint(face, luminanceAt(v), highlightAt(v), 1 - fringeAt(v) * 0.62));
+    }
+    g.fillStyle = grad;
+    g.fillRect(0, 0, W, bandH);
+
+    /* Metallic Silver and Rose Gold are flake finishes: the real slats sparkle
+       plainly in the owner's photograph of the sample card, and painted flat
+       they read as plastic. Deterministic from the index rather than
+       `Math.random`, or the flecks would jump on every rebuild and the blind
+       would crawl while a slider moved. */
+    if (glitter && bandH > 1.5) {
+      const flecks = Math.round(W * bandH * 0.05);
+      for (let i = 0; i < flecks; i += 1) {
+        const nx = Math.sin(i * 12.9898 + 4.1) * 43758.5453;
+        const ny = Math.sin(i * 78.233 + 2.7) * 12345.6789;
+        const nb = Math.sin(i * 39.4271 + 5.3) * 24634.6345;
+        const x = (nx - Math.floor(nx)) * W;
+        const y = (ny - Math.floor(ny)) * bandH;
+        const bright = nb - Math.floor(nb);
+        g.fillStyle = bright > 0.34
+          ? `rgba(255,255,255,${(0.18 + bright * 0.5).toFixed(3)})`
+          : `rgba(24,20,14,${(0.1 + bright * 0.4).toFixed(3)})`;
+        g.fillRect(x, y, 1, Math.max(0.7, ss * 0.34));
+      }
+    }
+
+    return { canvas: c, ss };
+  };
+
+  /* Everything that is not the blind. `glass` is the tint, the sheen and the
+     vignette at glass size; `frame` is the aluminium, its mitres and the
+     rebate shadow it throws, at canvas size and transparent everywhere else.
+     An aluminium frame needs three bands rather than one flat fill, because
+     what identifies a real one at a glance is the step down from the outer
+     face to the glazing bead and the shadow that step drops onto the glass.
+     Mitres go in at forty five degrees for the same reason: butt joints read
+     as a box drawn round a picture. */
+  const buildChrome = (L) => {
+    const glass = document.createElement('canvas');
+    glass.width = Math.max(1, Math.round(L.glassW));
+    glass.height = Math.max(1, Math.round(L.glassH));
+    const gg = glass.getContext('2d');
+    if (gg) {
+      const w = glass.width;
+      const h = glass.height;
+      gg.fillStyle = 'rgba(196,212,222,0.07)';
+      gg.fillRect(0, 0, w, h);
+      const sheen = gg.createLinearGradient(0, 0, w * 1.15, h * 0.8);
+      sheen.addColorStop(0, 'rgba(255,255,255,0.16)');
+      sheen.addColorStop(0.34, 'rgba(255,255,255,0.05)');
+      sheen.addColorStop(0.52, 'rgba(255,255,255,0)');
+      sheen.addColorStop(1, 'rgba(255,255,255,0.05)');
+      gg.fillStyle = sheen;
+      gg.fillRect(0, 0, w, h);
+      const vignette = gg.createRadialGradient(w / 2, h / 2, Math.min(w, h) * 0.32, w / 2, h / 2, Math.max(w, h) * 0.72);
+      vignette.addColorStop(0, 'rgba(0,0,0,0)');
+      vignette.addColorStop(1, 'rgba(8,11,14,0.13)');
+      gg.fillStyle = vignette;
+      gg.fillRect(0, 0, w, h);
+    }
+
+    const frameCanvas = document.createElement('canvas');
+    frameCanvas.width = Math.max(1, Math.round(width));
+    frameCanvas.height = Math.max(1, Math.round(height));
+    const f = frameCanvas.getContext('2d');
+    if (!f) return { glass, frame: null };
+
+    /* Anthracite uPVC, built from the owner's photograph of the showroom unit
+       rather than as a bezel. What identifies it is the stepped section: an
+       outer frame face, a shadow groove, the sash face, a second groove, then a
+       bead curving down to the glass, with every band mitred at forty five
+       degrees through the corners and carrying a soft highlight along its top
+       edge. A flat rectangle in the same colour reads as a picture frame. */
+    const bands = [
+      { depth: OUTER, top: 0.78, face: 1.24, bottom: 0.92, dome: true },
+      { depth: GROOVE, top: 0.24, face: 0.3, bottom: 0.4 },
+      { depth: SASH, top: 0.86, face: 1.1, bottom: 0.78, dome: true },
+      { depth: GROOVE, top: 0.22, face: 0.28, bottom: 0.38 },
+      { depth: BEAD, top: 1.04, face: 0.82, bottom: 0.46, dome: true },
+    ];
+
+    const tone = (k) => paint(UPVC, k);
+    let inset = 0;
+
+    bands.forEach((band) => {
+      const d = band.depth * L.scale;
+      const x0 = L.x + inset;
+      const y0 = L.y + inset;
+      const w0 = L.unitW - inset * 2;
+      const h0 = L.unitH - inset * 2;
+
+      /* Each band is a ring. Painting it as four trapezia mitred at the
+         corners is what puts the diagonal joint lines in, which is the single
+         clearest sign that this is an extruded frame and not a border. */
+      const ring = (side) => {
+        f.beginPath();
+        if (side === 'top') {
+          f.moveTo(x0, y0); f.lineTo(x0 + w0, y0); f.lineTo(x0 + w0 - d, y0 + d); f.lineTo(x0 + d, y0 + d);
+        } else if (side === 'bottom') {
+          f.moveTo(x0, y0 + h0); f.lineTo(x0 + w0, y0 + h0); f.lineTo(x0 + w0 - d, y0 + h0 - d); f.lineTo(x0 + d, y0 + h0 - d);
+        } else if (side === 'left') {
+          f.moveTo(x0, y0); f.lineTo(x0, y0 + h0); f.lineTo(x0 + d, y0 + h0 - d); f.lineTo(x0 + d, y0 + d);
+        } else {
+          f.moveTo(x0 + w0, y0); f.lineTo(x0 + w0, y0 + h0); f.lineTo(x0 + w0 - d, y0 + h0 - d); f.lineTo(x0 + w0 - d, y0 + d);
+        }
+        f.closePath();
+      };
+
+      const shade = (side, from, to, vertical) => {
+        const grad = vertical
+          ? f.createLinearGradient(0, side === 'bottom' ? y0 + h0 : y0, 0, side === 'bottom' ? y0 + h0 - d : y0 + d)
+          : f.createLinearGradient(side === 'right' ? x0 + w0 : x0, 0, side === 'right' ? x0 + w0 - d : x0 + d, 0);
+        grad.addColorStop(0, tone(from));
+        if (band.dome) grad.addColorStop(0.42, tone((from + to) / 2 + 0.12));
+        grad.addColorStop(1, tone(to));
+        f.fillStyle = grad;
+        ring(side);
+        f.fill();
+      };
+
+      shade('top', band.top, band.face, true);
+      shade('bottom', band.bottom, band.face, true);
+      shade('left', band.top * 0.94, band.face, false);
+      shade('right', band.bottom * 0.94, band.face, false);
+      inset += d;
+    });
+
+    /* The mitre joints themselves, and a hairline where the bead meets the
+       glass so the sealed unit reads as sitting in a rebate. */
+    f.strokeStyle = 'rgba(12,15,18,0.42)';
+    f.lineWidth = Math.max(0.6, L.scale * 0.6);
+    f.beginPath();
+    [[L.x, L.y, L.glassX, L.glassY], [L.x + L.unitW, L.y, L.glassX + L.glassW, L.glassY],
+      [L.x, L.y + L.unitH, L.glassX, L.glassY + L.glassH], [L.x + L.unitW, L.y + L.unitH, L.glassX + L.glassW, L.glassY + L.glassH]]
+      .forEach(([ax, ay, bx, by]) => { f.moveTo(ax, ay); f.lineTo(bx, by); });
+    f.stroke();
+
+    /* Woodgrain foil. It runs along the length of each profile, so the head
+       and cill are grained horizontally and the two jambs vertically. Running
+       both ways over the whole frame produced a crosshatch that read as woven
+       fabric rather than as uPVC. */
+    const framePx = FRAME * L.scale;
+    const grainPass = (clipX, clipY, clipW, clipH, vertical, count) => {
+      f.save();
+      f.beginPath();
+      f.rect(clipX, clipY, clipW, clipH);
+      f.clip();
+      f.globalAlpha = 0.055;
+      f.strokeStyle = '#ffffff';
+      f.lineWidth = Math.max(0.4, L.scale * 0.35);
+      f.beginPath();
+      for (let i = 0; i < count; i += 1) {
+        const n = Math.sin(i * 37.31 + (vertical ? 2.3 : 0)) * 8172.19;
+        const t = n - Math.floor(n);
+        if (vertical) {
+          const x = L.x + t * L.unitW;
+          f.moveTo(x, clipY);
+          f.lineTo(x, clipY + clipH);
+        } else {
+          const y = L.y + t * L.unitH;
+          f.moveTo(clipX, y);
+          f.lineTo(clipX + clipW, y);
+        }
+      }
+      f.stroke();
+      f.restore();
+    };
+    grainPass(L.x, L.y, L.unitW, framePx, false, 150);
+    grainPass(L.x, L.y + L.unitH - framePx, L.unitW, framePx, false, 150);
+    grainPass(L.x, L.y, framePx, L.unitH, true, 120);
+    grainPass(L.x + L.unitW - framePx, L.y, framePx, L.unitH, true, 120);
+
+    f.strokeStyle = 'rgba(6,9,12,0.62)';
+    f.lineWidth = Math.max(1, L.scale * 1.1);
+    f.strokeRect(L.glassX, L.glassY, L.glassW, L.glassH);
+    f.strokeStyle = 'rgba(255,255,255,0.24)';
+    f.lineWidth = 1;
+    f.strokeRect(L.x + 0.5, L.y + 0.5, L.unitW - 1, L.unitH - 1);
+
+    return { glass, frame: frameCanvas };
+  };
+
+  /* Where the two magnets sit and how far each one travels. Both run on one
+     slim vertical rail near the right of the glass, the upper one tilting and
+     the lower one lifting, which is how the unit is actually operated. Kept as
+     one function so the renderer and the pointer handling cannot drift apart:
+     a magnet drawn somewhere it cannot be grabbed is the obvious way for this
+     to break. */
+  const magnetTracks = (L) => {
+    const cassettePx = CASSETTE * L.scale;
+    const spacerPx = SPACER * L.scale;
+    const top = L.glassY + cassettePx;
+    const bottom = L.glassY + L.glassH - spacerPx;
+    const span = bottom - top;
+    /* On the rail at the inner edge of the right hand member, where the frame
+       meets the clear. The magnets slot onto that rail; they do not sit in the
+       middle of the frame, which is where an earlier pass put them. */
+    const railX = L.glassX + L.glassW - cassettePx;
+    const railW = RAIL_W * L.scale;
+    /* The rail is a guide, not a seat. The magnet sits alongside it with its
+       near edge against the rail's far edge, on the frame side, which is what
+       both reference photographs show and how it is described. Centring it on
+       the rail put it half over the clear. */
+    const x = railX + railW / 2 + (MAGNET_W * L.scale) / 2;
+    const w = MAGNET_W * L.scale;
+    const hTilt = MAGNET_H_TILT * L.scale;
+    const hLift = MAGNET_H_LIFT * L.scale;
+    return {
+      x,
+      w,
+      memberW: cassettePx,
+      railX,
+      railW,
+      railTop: L.glassY,
+      railBottom: bottom,
+      hTilt,
+      hLift,
+      tilt: { top: top + hTilt * 0.6, bottom: top + span * 0.2 },
+      /* Inverted on the owner's instruction, and it is how the geared magnet
+         actually runs: the magnet at the top of its travel is the blind down
+         and closed, and pulling it down is what raises the blind open. */
+      lift: { top: top + span * 0.36, bottom: bottom - hLift * 0.6 },
+    };
+  };
+
+  const magnetCentre = (L, which) => {
+    const t = magnetTracks(L);
+    const track = t[which];
+    const amount = which === 'tilt' ? tilt / 100 : lift / 100;
+    return {
+      x: t.x,
+      y: track.top + (track.bottom - track.top) * clamp(amount, 0, 1),
+      w: t.w,
+      h: which === 'tilt' ? t.hTilt : t.hLift,
+    };
+  };
+
+  const roundedRect = (c, x, y, w, h, r) => {
+    const radius = Math.min(r, w / 2, h / 2);
+    c.beginPath();
+    c.moveTo(x + radius, y);
+    c.arcTo(x + w, y, x + w, y + h, radius);
+    c.arcTo(x + w, y + h, x, y + h, radius);
+    c.arcTo(x, y + h, x, y, radius);
+    c.arcTo(x, y, x + w, y, radius);
+    c.closePath();
+  };
+
+  /* Everything sealed inside the glass in front of the blind: the spacer round
+     the edge of the unit, the blind's head, the rail and the two magnets. All
+     of it is matched to the window frame rather than to the slats, which is
+     what the owner's unit shows: anthracite hardware against silver slats. */
+  const drawInternals = (L, blindX, blindY, blindW, blindH) => {
+    const cassettePx = CASSETTE * L.scale;
+    const spacerPx = SPACER * L.scale;
+    const t = magnetTracks(L);
+
+    /* The cassette is colour matched to the slats, on the owner's instruction
+       of 2026-08-04. It is satin rather than the same value: an extrusion next
+       to a rolled slat in the same colour still reads as a different material,
+       and without the shift the frame and a closed blind merge into one slab. */
+    const shell = mixRgb(shownFace, { r: 108, g: 112, b: 114 }, 0.16);
+    /* How far shading is allowed to travel from the base colour. On a dark
+       frame a groove has to go a long way down to read at all; on a white one
+       the same ratio turns it grey, which is what made the rail and the
+       magnets look dirty on the white finishes. Light colours therefore get a
+       shallower floor and dark colours a deeper one. */
+    const shellLum = (0.2126 * shell.r + 0.7152 * shell.g + 0.0722 * shell.b) / 255;
+    const floor = (k) => k + (1 - k) * shellLum * 0.82;
+
+    /* Warm edge spacer, visible only along the foot. Everywhere else the
+       cassette stands in front of it. */
+    const foot = ctx.createLinearGradient(0, L.glassY + L.glassH - spacerPx, 0, L.glassY + L.glassH);
+    foot.addColorStop(0, 'rgba(14,17,20,0.98)');
+    foot.addColorStop(0.55, 'rgba(24,28,32,0.96)');
+    foot.addColorStop(1, 'rgba(10,13,16,0.99)');
+    ctx.fillStyle = foot;
+    ctx.fillRect(L.glassX, L.glassY + L.glassH - spacerPx, L.glassW, spacerPx);
+
+    /* Two side members and a head, about fifty millimetres each, and nothing
+       across the bottom: the bottom rail comes to rest on the edge of the
+       glass. Flat faced with the light along one edge; a bright band down the
+       middle makes each member read as a tube. */
+    const member = (x, y, w, h, vertical, flip) => {
+      const grad = vertical
+        ? ctx.createLinearGradient(x, y, x + w, y)
+        : ctx.createLinearGradient(x, y, x, y + h);
+      grad.addColorStop(0, paint(shell, flip ? floor(0.6) : 1.04, flip ? 0 : 14));
+      grad.addColorStop(0.18, paint(shell, flip ? floor(0.68) : 0.94, flip ? 0 : 6));
+      grad.addColorStop(0.82, paint(shell, flip ? 0.94 : floor(0.68), flip ? 6 : 0));
+      grad.addColorStop(1, paint(shell, flip ? 1.04 : floor(0.58), flip ? 14 : 0));
+      ctx.fillStyle = grad;
+      ctx.fillRect(x, y, w, h);
+    };
+    member(L.glassX, L.glassY, cassettePx, L.glassH - spacerPx, true, false);
+    member(L.glassX + L.glassW - cassettePx, L.glassY, cassettePx, L.glassH - spacerPx, true, true);
+    member(L.glassX, L.glassY, L.glassW, cassettePx, false, false);
+
+    /* Shadow off the inner edge of each member onto the blind behind it. */
+    const line = Math.max(0.7, L.scale * 0.7);
+    ctx.fillStyle = 'rgba(8,11,14,0.38)';
+    ctx.fillRect(blindX, blindY, blindW, line);
+    ctx.fillRect(blindX, blindY, line, blindH);
+    ctx.fillRect(blindX + blindW - line, blindY, line, blindH);
+
+    /* The rail, at the inner edge of the right hand member where the frame
+       meets the clear. This is what the magnets slot onto. */
+    const rail = ctx.createLinearGradient(t.railX - t.railW / 2, 0, t.railX + t.railW / 2, 0);
+    /* A groove, read by the highlight along its clear-side edge rather than by
+       its own tone: it is the same colour as the member it is cut into. */
+    rail.addColorStop(0, paint(shell, 1.12, 22));
+    rail.addColorStop(0.16, paint(shell, floor(0.44)));
+    rail.addColorStop(0.55, paint(shell, floor(0.34)));
+    rail.addColorStop(0.86, paint(shell, floor(0.52)));
+    rail.addColorStop(1, paint(shell, 0.94, 12));
+    ctx.fillStyle = rail;
+    ctx.fillRect(t.railX - t.railW / 2, L.glassY + cassettePx * 0.72, t.railW, L.glassH - spacerPx - cassettePx * 0.72);
+
+    /* The magnet caps are the cassette colour taken a shade deeper and read
+       glossy against it, so they stand out on a white blind as clearly as on a
+       black one. */
+    const cap = mixRgb(shell, { r: 26, g: 29, b: 32 }, 0.16);
+
+    ['tilt', 'lift'].forEach((which) => {
+      const m = magnetCentre(L, which);
+      const x = m.x - m.w / 2;
+      const y = m.y - m.h / 2;
+      /* Generously rounded, glossy, and about one to two point two. The
+         owner's photograph is the reference: an earlier pass had them as slim
+         capsules at one to three and a half, which read as pins. */
+      const radius = m.w * 0.17;
+
+      ctx.save();
+      ctx.shadowColor = 'rgba(6,9,12,0.62)';
+      ctx.shadowBlur = Math.max(2.5, m.w * 0.42);
+      ctx.shadowOffsetX = Math.max(1, m.w * 0.1);
+      ctx.shadowOffsetY = Math.max(1.5, m.w * 0.16);
+      roundedRect(ctx, x, y, m.w, m.h, radius);
+      /* A flat faced block, not a tube. Reading dark, light, dark straight
+         across the width made it look cylindrical; the real one is a broad
+         even face with one crisp turned edge near the right and thin dark
+         returns at both sides. */
+      /* Matte, not glossy. An earlier pass gave it a hard specular sheet,
+         which is a plastic look the real moulding does not have: the
+         references show a soft, almost even face with the light falling away
+         gently to a darker edge on each side. */
+      const body = ctx.createLinearGradient(x, y, x + m.w, y);
+      body.addColorStop(0, paint(cap, floor(0.42)));
+      body.addColorStop(0.12, paint(cap, floor(0.78), 4));
+      body.addColorStop(0.34, paint(cap, floor(0.98), 12));
+      body.addColorStop(0.58, paint(cap, floor(0.92), 8));
+      body.addColorStop(0.84, paint(cap, floor(0.7), 2));
+      body.addColorStop(1, paint(cap, floor(0.4)));
+      ctx.fillStyle = body;
+      ctx.fill();
+      ctx.restore();
+
+      /* The top face catches a hard glint and the bottom rolls into shadow,
+         which is what makes it read as moulded and proud of the glass. */
+      /* Just enough to round the ends. A hard glint across the top read as
+         polished; the moulding is satin. */
+      const roll = ctx.createLinearGradient(0, y, 0, y + m.h);
+      roll.addColorStop(0, 'rgba(255,255,255,0.2)');
+      roll.addColorStop(0.045, 'rgba(255,255,255,0.06)');
+      roll.addColorStop(0.12, 'rgba(0,0,0,0.05)');
+      roll.addColorStop(0.5, 'rgba(0,0,0,0)');
+      roll.addColorStop(0.9, 'rgba(0,0,0,0.12)');
+      roll.addColorStop(1, 'rgba(0,0,0,0.34)');
+      roundedRect(ctx, x, y, m.w, m.h, radius);
+      ctx.fillStyle = roll;
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(4,6,8,0.72)';
+      ctx.lineWidth = Math.max(0.7, L.scale * 0.6);
+      roundedRect(ctx, x, y, m.w, m.h, radius);
+      ctx.stroke();
+
+      if (focused === which) {
+        ctx.strokeStyle = '#2eac66';
+        ctx.lineWidth = Math.max(1.8, m.w * 0.14);
+        roundedRect(ctx, x - m.w * 0.3, y - m.w * 0.3, m.w * 1.6, m.h + m.w * 0.6, radius * 1.6);
+        ctx.stroke();
+      }
+    });
+  };
+
+  const layout = () => {
+    const box = stage.getBoundingClientRect();
+    const w = Math.max(160, Math.round(box.width));
+    const h = Math.max(160, Math.round(box.height));
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = w;
+    height = h;
+
+    const scale = Math.min(w / UNIT_W, h / UNIT_H);
+    const unitW = UNIT_W * scale;
+    const unitH = UNIT_H * scale;
+    return {
+      scale,
+      x: (w - unitW) / 2,
+      y: (h - unitH) / 2,
+      unitW,
+      unitH,
+      glassX: (w - unitW) / 2 + FRAME * scale,
+      glassY: (h - unitH) / 2 + FRAME * scale,
+      glassW: GLASS_W * scale,
+      glassH: GLASS_H * scale,
+    };
+  };
+
+  const draw = (settled = true) => {
+    const L = layout();
+
+    /* Resize only when the backing store is genuinely a different size. The
+       assignment is what clears the canvas, so doing it unconditionally throws
+       away a frame's work every time. */
+    const storeW = Math.round(width * dpr);
+    const storeH = Math.round(height * dpr);
+    if (canvas.width !== storeW || canvas.height !== storeH) {
+      canvas.width = storeW;
+      canvas.height = storeH;
+      sceneKey = '';
+      tileKey = '';
+      chromeKey = '';
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const phi = ((tilt / 100) - 0.5) * 2 * MAX_TILT;
+    const pitchPx = PITCH * L.scale;
+    const slatPx = (SLAT * Math.abs(Math.sin(phi)) + SLAT_T * Math.abs(Math.cos(phi))) * L.scale;
+
+    ctx.fillStyle = '#151719';
+    ctx.fillRect(0, 0, width, height);
+
+    const key = `${Math.round(L.glassW)}x${Math.round(L.glassH)}`;
+    if (sceneKey !== key) {
+      scene = buildScene(L.glassW, L.glassH);
+      sceneKey = key;
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(L.glassX, L.glassY, L.glassW, L.glassH);
+    ctx.clip();
+
+    if (scene && scene.view) ctx.drawImage(scene.view, L.glassX, L.glassY, L.glassW, L.glassH);
+
+    const cassettePx = CASSETTE * L.scale;
+    const spacerPx = SPACER * L.scale;
+    const blindX = L.glassX + cassettePx;
+    const blindY = L.glassY + cassettePx;
+    const blindW = L.glassW - cassettePx * 2;
+    const blindH = L.glassH - cassettePx - spacerPx;
+    const headPx = HEADRAIL * L.scale;
+    const railPx = RAIL * L.scale;
+    const raised = clamp(lift / 100, 0, 1);
+    const stacked = Math.round(SLAT_COUNT * raised);
+    const deployed = SLAT_COUNT - stacked;
+    const stackPx = stacked * STACK_PITCH * L.scale;
+    /* The blind hangs from the head and gathers onto its own bottom rail as it
+       rises, so the stack sits at the foot of the drop with the hanging slats
+       above it, and the whole group travels up together. It was drawn at the
+       head with the hanging slats below, which is the wrong way round and is
+       not how the owner's blinds behave. */
+    const topPx = blindY + headPx;
+    const stackTop = topPx + deployed * pitchPx;
+
+    const tKey = `${shownFace.r | 0},${shownFace.g | 0},${shownFace.b | 0},${shownBack.r | 0},${shownBack.g | 0},${shownBack.b | 0},${shownMetallic.toFixed(2)},${shownGlitter.toFixed(2)},${phi.toFixed(4)},${pitchPx.toFixed(2)},${slatPx.toFixed(2)}`;
+    if (tileKey !== tKey) {
+      /* Which side of the slat the room is looking at. A venetian presents
+         opposite faces in its two closed positions, so on a two sided slat
+         tilting one way shows white and the other shows anthracite. The swap
+         happens at edge on, where the slat is invisible, so it is never seen
+         to happen. On the seven single sided colours `back` is `face` and this
+         does nothing. The cassette, the head, the bottom rail and the stack all
+         stay on `shownFace`: they do not rotate, so the room always sees the
+         room side of them, which is why the frame on White/Anthracite stays
+         white however the slats are turned. */
+      const roomSide = phi >= 0 ? shownFace : shownBack;
+      const outSide = phi >= 0 ? shownBack : shownFace;
+      tile = buildTile(roomSide, outSide, shownMetallic > 0.5, shownGlitter > 0.5, phi, pitchPx, slatPx);
+      tileKey = tKey;
+    }
+
+    if (tile && deployed > 0) {
+      /* The wobble index is the slat, not the row, and the slats still hanging
+         are the top ones: slat 0 is under the head and stays there until the
+         rising stack reaches it. Indexing from `SLAT_COUNT - deployed` instead
+         shifted every slat's offset, gain and lean along by one each time one
+         was taken up, so the whole blind appeared to creep and roll as it was
+         raised when each slat should sit dead still until it is bunched. That
+         offset was correct only while the stack was drawn under the head, and
+         was left behind when the stack moved to the foot. */
+      const midX = blindX + blindW / 2;
+      for (let i = 0; i < deployed; i += 1) {
+        const w = wobble[i] || { offset: 0, gain: 0, lean: 0 };
+        const y = topPx + i * pitchPx + w.offset * pitchPx * 0.16;
+        ctx.globalAlpha = 1 + w.gain * 0.16;
+        /* A fifth of a degree of lean per slat. It is far too small to see on
+           any one slat and it is the whole difference across fifty of them:
+           perfectly level slats read as a printed rule, and no real blind
+           hangs that straight. */
+        ctx.save();
+        ctx.translate(midX, y + pitchPx / 2);
+        ctx.rotate(w.lean * 0.0042);
+        ctx.drawImage(tile.canvas, -blindW / 2 - 2, -pitchPx / 2, blindW + 4, pitchPx);
+        ctx.restore();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    /* The stack, gathered on top of the bottom rail. Slats are conserved, so
+       raising the blind moves them out of the drop and into this band rather
+       than shrinking the drop and losing them. */
+    if (stacked > 0) {
+      const y = stackTop;
+      ctx.fillStyle = paint(shownFace, 0.52);
+      ctx.fillRect(blindX, y, blindW, stackPx);
+      const linePx = STACK_PITCH * L.scale;
+      if (linePx >= 1.4) {
+        ctx.fillStyle = paint(shownFace, 0.92, 18, 0.55);
+        for (let i = 0; i < stacked; i += 1) {
+          ctx.fillRect(blindX, y + i * linePx, blindW, Math.max(0.6, linePx * 0.34));
+        }
+      } else {
+        const texture = ctx.createLinearGradient(0, y, 0, y + stackPx);
+        texture.addColorStop(0, paint(shownFace, 1.05, 20, 0.4));
+        texture.addColorStop(1, paint(shownFace, 0.62, 0, 0.4));
+        ctx.fillStyle = texture;
+        ctx.fillRect(blindX, y, blindW, stackPx);
+      }
+      ctx.fillStyle = 'rgba(255,255,255,0.16)';
+      ctx.fillRect(blindX, y, blindW, Math.max(0.7, L.scale * 1.2));
+      const drop = ctx.createLinearGradient(0, y + stackPx, 0, y + stackPx + railPx * 1.8);
+      drop.addColorStop(0, 'rgba(10,13,16,0.45)');
+      drop.addColorStop(1, 'rgba(10,13,16,0)');
+      ctx.fillStyle = drop;
+      ctx.fillRect(blindX, y + stackPx, blindW, railPx * 1.8);
+    }
+
+    /* The bottom rail, under whatever has gathered on it. Outside the slat
+       branch on purpose: it is still there when the blind is fully raised and
+       every slat is in the stack. */
+    const railY = stackTop + stackPx;
+    const rail = ctx.createLinearGradient(0, railY, 0, railY + railPx);
+    rail.addColorStop(0, paint(shownFace, 0.86, 26));
+    rail.addColorStop(0.45, paint(shownFace, 0.6));
+    rail.addColorStop(1, paint(shownFace, 0.4));
+    ctx.fillStyle = rail;
+    ctx.fillRect(blindX, railY, blindW, railPx);
+    const under = ctx.createLinearGradient(0, railY + railPx, 0, railY + railPx * 2.4);
+    under.addColorStop(0, 'rgba(10,13,16,0.4)');
+    under.addColorStop(1, 'rgba(10,13,16,0)');
+    ctx.fillStyle = under;
+    ctx.fillRect(blindX, railY + railPx, blindW, railPx * 1.4);
+
+    /* Veiling glare. The blurred garden added back over the finished blind, so
+       the light coming through the gaps spills onto the slats beside them. */
+    if (scene && scene.haze) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      /* Glare scales against the slat, not the window. Adding the same wash to
+         a white blind as to a black one turned White, Cream and Metallic
+         Silver green, because the garden was being added to a surface that had
+         no headroom left to take it. */
+      const faceLum = (0.2126 * shownFace.r + 0.7152 * shownFace.g + 0.0722 * shownFace.b) / 255;
+      ctx.globalAlpha = 0.11 * (0.34 + 0.66 * (1 - faceLum * 0.86));
+      ctx.drawImage(scene.haze, L.glassX, L.glassY, L.glassW, L.glassH);
+      ctx.restore();
+    }
+
+    /* Ladder cords. Fine, taut and only really visible where they cross a dark
+       slat, which is why they go on with `lighter` rather than as flat paint:
+       against the gaps they all but disappear, exactly as in the photography.
+       They belong to the blind, so they run only from the foot of the stack to
+       the bottom rail and come up with it. Drawn full height they stayed behind
+       as a pair of wires hanging over clear glass once the blind was raised. */
+    const cordTop = topPx;
+    const cordBottom = stackTop + stackPx + railPx;
+    if (cordBottom - cordTop > 1) {
+      const cordW = Math.max(0.6, L.scale * 0.9);
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = 'rgba(126,132,128,0.34)';
+      [0.24, 0.76].forEach((at) => {
+        ctx.fillRect(blindX + blindW * at, cordTop, cordW, cordBottom - cordTop);
+      });
+      ctx.restore();
+    }
+
+    /* The Notan profile, colour matched to the slats, and the two magnets that
+       run on it. This is the product: the controls are on the frame sealed
+       inside the glass, not beside the picture of it. */
+    drawInternals(L, blindX, blindY, blindW, blindH);
+    placeGrabs(L);
+
+    ctx.restore();
+
+    /* Glass and frame are both cached: neither depends on tilt, lift or
+       colour, so recomputing a dozen gradients for them on every frame of a
+       slider drag was the largest single cost in the loop and bought nothing.
+       They rebuild only when the box resizes. */
+    if (chromeKey !== key) {
+      unitChrome = buildChrome(L);
+      chromeKey = key;
+    }
+    if (unitChrome) {
+      if (unitChrome.glass) ctx.drawImage(unitChrome.glass, L.glassX, L.glassY, L.glassW, L.glassH);
+      if (unitChrome.frame) ctx.drawImage(unitChrome.frame, 0, 0, width, height);
+    }
+
+    /* Grain is a static texture over a still image, so it can wait for the
+       last frame of a movement. Skipping it while the sliders are moving takes
+       a full canvas `overlay` composite out of the animating path, which is
+       what keeps a mid-range phone smooth during a drag. */
+    if (settled) {
+      if (!grain) grain = buildGrain();
+      const pattern = grain ? ctx.createPattern(grain, 'repeat') : null;
+      if (pattern) {
+        ctx.save();
+        ctx.globalAlpha = 0.05;
+        ctx.globalCompositeOperation = 'overlay';
+        ctx.fillStyle = pattern;
+        ctx.fillRect(0, 0, width, height);
+        ctx.restore();
+      }
+    }
+  };
+
+  /* Names the colour and nothing else. It used to narrate the tilt and lift
+     positions as well, which the owner did not want: the magnets show where
+     they are, and the two range inputs announce their own values to a screen
+     reader, so the commentary was duplicating both. */
+  const describe = () => {
+    if (!readout) return;
+    const swatch = swatches[activeIndex];
+    readout.textContent = `${swatch.name}${swatch.code ? ` ${swatch.code}` : ''}`;
+  };
+
+  const step = () => {
+    frame = 0;
+    const ease = still ? 1 : 0.19;
+    const target = swatches[activeIndex];
+    const dt = tiltTarget - tilt;
+    const dl = liftTarget - lift;
+    const df = target.metallic ? 1 : 0;
+    const dg = target.glitter ? 1 : 0;
+
+    tilt += dt * ease;
+    lift += dl * ease;
+    shownFace = mixRgb(shownFace, target.face, ease);
+    shownBack = mixRgb(shownBack, target.back, ease);
+    shownMetallic += (df - shownMetallic) * ease;
+    shownGlitter += (dg - shownGlitter) * ease;
+
+    let settled = Math.abs(dt) < 0.02 && Math.abs(dl) < 0.02;
+    settled = settled && Math.abs(shownFace.r - target.face.r) < 0.4 && Math.abs(shownFace.g - target.face.g) < 0.4 && Math.abs(shownFace.b - target.face.b) < 0.4;
+    settled = settled && Math.abs(shownBack.r - target.back.r) < 0.4 && Math.abs(shownMetallic - df) < 0.01 && Math.abs(shownGlitter - dg) < 0.01;
+
+    if (settled) {
+      tilt = tiltTarget;
+      lift = liftTarget;
+      shownFace = { ...target.face };
+      shownBack = { ...target.back };
+      shownMetallic = df;
+      shownGlitter = dg;
+    }
+
+    draw(settled);
+
+    if (!settled && visible) frame = window.requestAnimationFrame(step);
+  };
+
+  const nudge = () => {
+    if (frame) return;
+    frame = window.requestAnimationFrame(step);
+  };
+
+  tiltInput.addEventListener('input', () => {
+    tiltTarget = clamp(Number.parseFloat(tiltInput.value) || 0, 0, 100);
+    describe();
+    nudge();
+  });
+  liftInput.addEventListener('input', () => {
+    liftTarget = clamp(Number.parseFloat(liftInput.value) || 0, 0, 100);
+    describe();
+    nudge();
+  });
+
+  [['tilt', tiltInput], ['lift', liftInput]].forEach(([which, input]) => {
+    input.addEventListener('focus', () => { focused = which; nudge(); });
+    input.addEventListener('blur', () => { focused = focused === which ? null : focused; nudge(); });
+  });
+
+  /* Dragging the magnets. The two grab elements are positioned over the drawn
+     magnets and are the only things on the stage with `touch-action: none`, so
+     a drag that starts on a magnet is a drag and a drag anywhere else on the
+     glass still scrolls the page. Hit testing the canvas instead could not do
+     that: by the time a pointerdown handler runs, a touch has already been
+     committed to a scroll. */
+  const applyDrag = (which, clientY) => {
+    const L = layout();
+    const track = magnetTracks(L)[which];
+    const box = canvas.getBoundingClientRect();
+    const y = clientY - box.top;
+    const along = clamp((y - track.top) / Math.max(1, track.bottom - track.top));
+    const value = Math.round(along * 200) / 2;
+
+    if (which === 'tilt') {
+      tiltTarget = value;
+      tiltInput.value = String(value);
+    } else {
+      liftTarget = value;
+      liftInput.value = String(value);
+    }
+
+    describe();
+    nudge();
+  };
+
+  const placeGrabs = (L) => {
+    grabs.forEach((grab, which) => {
+      const m = magnetCentre(L, which);
+      /* Padded out to a real touch target. The magnet itself is about sixteen
+         pixels across at the size this renders. */
+      const w = Math.max(46, m.w + 26);
+      const h = Math.max(48, m.h + 16);
+      grab.style.left = `${(m.x - w / 2).toFixed(1)}px`;
+      grab.style.top = `${(m.y - h / 2).toFixed(1)}px`;
+      grab.style.width = `${w.toFixed(1)}px`;
+      grab.style.height = `${h.toFixed(1)}px`;
+    });
+  };
+
+  grabs.forEach((grab, which) => {
+    grab.addEventListener('pointerdown', (event) => {
+      dragging = which;
+      focused = which;
+      grab.setPointerCapture?.(event.pointerId);
+      grab.classList.add('is-held');
+      event.preventDefault();
+      applyDrag(which, event.clientY);
+    });
+
+    grab.addEventListener('pointermove', (event) => {
+      if (dragging !== which) return;
+      event.preventDefault();
+      applyDrag(which, event.clientY);
+    });
+
+    const release = (event) => {
+      if (dragging !== which) return;
+      dragging = null;
+      grab.classList.remove('is-held');
+      grab.releasePointerCapture?.(event.pointerId);
+    };
+
+    grab.addEventListener('pointerup', release);
+    grab.addEventListener('pointercancel', release);
+  });
+
+
+  colourButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      activeIndex = index;
+      colourButtons.forEach((other, i) => {
+        other.classList.toggle('is-active', i === index);
+        other.setAttribute('aria-pressed', i === index ? 'true' : 'false');
+      });
+      describe();
+      nudge();
+    });
+  });
+
+  if ('ResizeObserver' in window) {
+    let last = '';
+    const observer = new ResizeObserver(() => {
+      const box = stage.getBoundingClientRect();
+      const key = `${Math.round(box.width)}x${Math.round(box.height)}`;
+      if (key === last) return;
+      last = key;
+      sceneKey = '';
+      tileKey = '';
+      chromeKey = '';
+      nudge();
+    });
+    observer.observe(stage);
+  } else {
+    window.addEventListener('resize', () => {
+      sceneKey = '';
+      tileKey = '';
+      chromeKey = '';
+      nudge();
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const seen = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        visible = entry.isIntersecting;
+        if (visible) nudge();
+      });
+    }, { rootMargin: '160px' });
+    seen.observe(stage);
+  }
+
+  root.classList.add('is-live');
+  describe();
+  draw();
+});
+
 document.querySelectorAll('[data-fg-colour-carousel]').forEach((carousel) => {
   const track = carousel.querySelector('[data-fg-colour-carousel-track]');
   const slides = [...carousel.querySelectorAll('[data-fg-colour-slide]')];
