@@ -35820,11 +35820,13 @@ html.fg-blinds-reveal-locked {
 .fg-blind-colours__grid i.is-glitter,
 .fg-colour-rail__slide.is-glitter .fg-colour-rail__media i,
 .fg-blind-visualiser__colour.is-glitter i {
-  background-image:
-    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.92) 0 0.5px, transparent 0.9px),
-    radial-gradient(circle at 68% 71%, rgba(255, 255, 255, 0.6) 0 0.4px, transparent 0.8px),
-    radial-gradient(circle at 15% 82%, rgba(38, 30, 18, 0.42) 0 0.4px, transparent 0.8px);
-  background-size: 7px 7px, 11px 11px, 13px 13px;
+  /* Real noise, not tiled dots. Any lattice of radial-gradients lines up into
+     a visible weave at swatch size and reads as printed fabric; turbulence
+     thresholded to its brightest tail gives scattered flecks instead. The
+     colour matrix forces the fill white and sets alpha to red minus 0.62, so
+     only the top of the noise shows. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='11'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1 0 0 0 -0.62'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23s)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
   background-color: var(--swatch, #ffffff);
 }
 
