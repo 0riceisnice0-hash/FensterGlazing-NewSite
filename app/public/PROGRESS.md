@@ -67,6 +67,36 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-04 - Casement: the Excalibur named, and floated on the security band
+
+- **The mechanism has a name now.** The owner confirmed the Kenrick Excalibur,
+  so `$security_points` states it and the security chapter leads on a cut-out
+  photograph of the part itself, drifting against the dark band on the shared
+  `[data-fg-depth]` controller at 0.15, about 27px of travel. That controller
+  was already clamped and is not gated on an observer, which were the two
+  faults in the parallax written from scratch on 2026-07-29; reusing it meant
+  neither could come back. It has no reduced-motion check of its own, so the
+  guard is in CSS on `.fg-cas-lock__art`.
+- **Kenrick's published figures sit beside it and are labelled as Kenrick's**:
+  ten years mechanical, 100,000 cycles, 240 hours salt spray exceeding
+  BS EN 1670:2007, PAS 24 capable and a Secured by Design product. *Capable* is
+  their word. A PAS 24 approval belongs to a tested complete window and never to
+  a component, so the footnote under the figures says so and the existing
+  security bullet that makes the same point stays.
+- **Two things about cutting the part out, both of which cost an attempt.** The
+  studio drop shadow is an olive grey indistinguishable from the matte
+  faceplate, so seeding a flood fill inside it does not remove the shadow, it
+  removes the gearbox: the opaque fraction fell from 13% to 2% in one step and
+  the render showed a skeleton. What works is an intersection, a generous
+  fuzz-13 corner flood for true edges against a hole-closed and dilated fuzz-24
+  flood as a guard. And **the embossing is not mirrored**, though a zoomed crop
+  of a diagonal part is genuinely ambiguous about it. Rotating the bar level
+  settles it in one look, and it settled it the other way from my first
+  reading — I nearly shipped it flipped on the strength of a squint.
+- The contact shadow is a CSS `drop-shadow` on the alpha rather than baked into
+  the file, so the part can move to a light section without carrying a dark
+  rectangle with it.
+
 ## 2026-08-04 - Casement: the owner's list, and a claim on somebody else's job (test, 597c58e)
 
 - **The proof gallery claimed work that is not ours, and that was mine.** The
@@ -97,9 +127,9 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
 - **Security leads on the mechanism**: the multi-point locking strip and its
   cams, beside the keep it drives into, with laminated glass named as the
   upgrade worth taking and multi-point locking stated as standard, which Liniar
-  publish. **The mechanism is deliberately not branded.** Kenrick Excalibur was
-  offered as "pretty sure" and appears nowhere in this project, so it is not a
-  fact this page can print. One line in `$security_points` when it is confirmed.
+  publish. The mechanism was left unbranded in this pass because Kenrick
+  Excalibur had only been offered as "pretty sure". The owner confirmed it the
+  same day; see the entry above.
 - Combinations became a band rather than a fourth card, so the three studio
   photographs stay one matched set and the copy can say plainly that there is
   no standard size and no fixed set of layouts.

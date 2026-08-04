@@ -96,10 +96,22 @@ $anatomy = [
 ];
 
 $security_points = [
-    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. A gearing strip runs the length of the sash and drives cams into keeps at several points, so the sash is held into its seals along its edge rather than at the handle alone.'],
+    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. The Kenrick Excalibur strip runs the length of the sash and drives claws and shoot bolts into keeps at several points, so the sash is held into its seals along its edge rather than at the handle alone.'],
     ['name' => 'Reinforced where it counts', 'copy' => 'Reinforcement sized for the individual window. It is what the locking pulls against, so it is specified with the window rather than assumed.'],
     ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we specify to it. Those approvals belong to a tested complete window, not to a profile name.'],
     ['name' => 'Laminated glass, worth the upgrade', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. It is the upgrade we would point at first on a ground floor, a side return, or any window out of sight from the road.'],
+];
+/* Kenrick's own published figures for the Excalibur, taken from
+   kenricks.co.uk/products/window-hardware/excalibur on 2026-08-04. They belong
+   to the mechanism, not to our finished window, which is why the PAS 24 line
+   says capable rather than certified: the approval sits with a tested complete
+   window and the security list below already makes that distinction. Do not
+   restate any of these as a Fenster figure. */
+$lock_specs = [
+    ['figure' => '10 years', 'label' => 'Mechanical guarantee from Kenrick'],
+    ['figure' => '100,000', 'label' => 'Operating cycles tested'],
+    ['figure' => '240 hours', 'label' => 'Salt spray, exceeding BS EN 1670:2007'],
+    ['figure' => 'PAS 24', 'label' => 'Capable, and a Secured by Design product'],
 ];
 // Our own work only. The studio photography carries the rest of the page; proof
 // has to be the real thing.
@@ -374,6 +386,37 @@ $faq_schema = [
                 <p class="fg-cas-eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
                 <h2 id="fg-cas-ch3-title" class="fg-cas-display"><?php esc_html_e('Held shut along the sash, not at the handle.', 'fenster'); ?></h2>
                 <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, what it pulls against, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
+            </div>
+        </div>
+        <?php /* The mechanism itself. Kenrick's studio photograph with the
+               backdrop and its drop shadow cut away, so the part floats on the
+               band and can drift against it. The drift is the shared
+               [data-fg-depth] controller, which is already clamped and is not
+               gated on an observer; at 0.15 the travel is about 27px, which
+               reads as depth without the seasick effect a heavier setting gave
+               on the about page. Keep the shadow in CSS, not baked into the
+               file, or it cannot sit on any other colour. */ ?>
+        <div class="container fg-cas-lock">
+            <div class="fg-cas-lock__stage" data-fg-depth="0.15">
+                <img class="fg-cas-lock__art"
+                    src="<?php echo esc_url(fenster_generated_url($studio . 'cas-kenrick-excalibur.webp')); ?>"
+                    srcset="<?php echo esc_attr(fenster_generated_url($studio . 'cas-kenrick-excalibur-640w.webp') . ' 640w, ' . fenster_generated_url($studio . 'cas-kenrick-excalibur.webp') . ' 1100w'); ?>"
+                    sizes="(max-width: 860px) 76vw, 40vw"
+                    alt="<?php esc_attr_e('Kenrick Excalibur multi-point window lock, showing the die-cast gearbox, the square spindle hole, the claws and the steel shoot bolts', 'fenster'); ?>"
+                    loading="lazy" width="1100" height="1182">
+            </div>
+            <div class="fg-cas-lock__copy">
+                <p class="fg-cas-lock__brand"><?php esc_html_e('Kenrick Excalibur', 'fenster'); ?></p>
+                <p class="fg-cas-lock__lead"><?php esc_html_e('The mechanism inside the sash. One turn of the handle drives the whole strip at once, throwing steel shoot bolts into the frame and patented bi-directional claws into keeps down the sash edge. The gearbox is die-cast and unhanded, so the same mechanism serves a left hung sash and a right hung one.', 'fenster'); ?></p>
+                <dl class="fg-cas-lock__specs">
+                    <?php foreach ($lock_specs as $lock_spec) : ?>
+                        <div>
+                            <dt><?php echo esc_html($lock_spec['figure']); ?></dt>
+                            <dd><?php echo esc_html($lock_spec['label']); ?></dd>
+                        </div>
+                    <?php endforeach; ?>
+                </dl>
+                <p class="fg-cas-lock__note"><?php esc_html_e('Test figures published by Kenrick for the mechanism. Approvals for a finished window are confirmed against your own configuration.', 'fenster'); ?></p>
             </div>
         </div>
         <div class="container fg-cas-security__grid">

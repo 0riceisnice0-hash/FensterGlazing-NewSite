@@ -36656,6 +36656,87 @@ html.fg-blinds-reveal-locked {
   height: auto;
 }
 
+/* ---- The mechanism, floated on the band ----------------------------------
+   A cut-out part with no backdrop of its own, so the shadow has to come from
+   CSS. drop-shadow follows the alpha channel where box-shadow would draw a
+   rectangle round the file. The stage carries [data-fg-depth] and the shared
+   controller writes --fg-parallax-y onto it; the image reads it, which is the
+   same arrangement .fg-sash-model__media uses. Nothing here clips, so the
+   drift has room to move without the part being cut off at the edge. */
+.fg-cas-lock {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+}
+
+.fg-cas-lock__stage {
+  --fg-parallax-y: 0px;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 2vw, 1.75rem) 0;
+}
+
+.fg-cas-lock__art {
+  display: block;
+  width: min(100%, 520px);
+  height: auto;
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.46));
+  transform: translateY(var(--fg-parallax-y));
+  transition: transform 120ms linear;
+}
+
+.fg-cas-lock__brand {
+  margin: 0 0 0.6rem;
+  color: #ffffff;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.fg-cas-security .fg-cas-lock__brand { color: #ffffff; }
+
+.fg-cas-lock__lead { max-width: 46ch; margin: 0; }
+
+.fg-cas-lock__specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.35rem clamp(1rem, 2.5vw, 2rem);
+  margin: clamp(1.5rem, 3vw, 2.15rem) 0 0;
+  padding-top: clamp(1.35rem, 3vw, 1.9rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.fg-cas-lock__specs dt {
+  color: #ffffff;
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.fg-cas-lock__specs dd {
+  max-width: 26ch;
+  margin: 0.3rem 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.87rem;
+  line-height: 1.45;
+}
+
+.fg-cas-lock__note {
+  margin: 1.4rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.fg-cas-security .fg-cas-lock__note { color: rgba(255, 255, 255, 0.52); }
+
+/* The controller keeps writing the variable; this is what stops it being read.
+   The shared [data-fg-depth] script has no reduced-motion check of its own. */
+@media (prefers-reduced-motion: reduce) {
+  .fg-cas-lock__art { transform: none; transition: none; }
+}
+
 /* The three figures, set like performance stats. */
 .fg-cas-stats { display: grid; gap: 1.5rem; margin: 0; }
 
@@ -37011,11 +37092,16 @@ html.fg-blinds-reveal-locked {
   .fg-cas-overture__grid,
   .fg-cas-energy__grid,
   .fg-cas-security__grid,
+  .fg-cas-lock,
   .fg-cas-film__grid,
   .fg-cas-versus__body,
   .fg-cas-combi {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  /* The part leads on a phone, as the figures elsewhere in this section do. */
+  .fg-cas-lock__stage { order: -1; }
+  .fg-cas-lock__art { width: min(76%, 320px); }
 
   /* The comparison stays two-up on a phone: side by side is the whole point,
      and at 390 each image is still 165px wide, which is enough to read a sash
