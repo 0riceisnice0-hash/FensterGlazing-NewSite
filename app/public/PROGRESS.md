@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-03
+Last updated: 2026-08-04
 
 ## START HERE, 2026-08-02 (end of session)
 
@@ -66,6 +66,32 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   colourspace convert, and check against a `pdftoppm` render of the page. This
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
+
+## 2026-08-04 - Blinds visualiser live, after it briefly took the blog down (6e98351)
+
+- **The visualiser is live and so is the blog. Getting there took two deploys
+  because the first one removed work that was already in production.**
+- The integral-blinds release was cut from `13354b4` and deliberately excluded
+  the concurrent session's blog system, which was the standing instruction from
+  three previous releases. In the hour before, that session had shipped the blog
+  to live as `4f910f0` with the owner's approval. `rsync --delete` then removed
+  `inc/blog-posts.php`, the blog template and the `functions.php` registration,
+  and every scheduled post 404'd until the combined release restored them.
+- **The checksum sweep did not catch it because it ran too early.** Live was
+  established as `13354b4` at the start of the release work and verified again
+  after the deploy — both correct at the time. Nothing checked live in the
+  seconds before the rsync, which is the only check that would have shown
+  `4f910f0` underneath. Re-establish live immediately before overwriting it.
+- **A scoping instruction can go stale without anyone telling you.** "Just mine"
+  was right while the blog was unapproved and wrong the moment it was approved
+  elsewhere. With two strands in flight, cut from `main` and subtract what is
+  unapproved, rather than cutting from an old live and adding your own: the
+  subtractive version fails safe, the additive version silently drops whatever
+  arrived in between.
+- The fix was a release from `main`, which already held both strands, with the
+  compiled assets rebuilt from its own source. Selector diff against `4f910f0`
+  confirmed it added exactly `.fg-blind-visualiser` and `.fg-blind-colours` and
+  removed nothing.
 
 ## 2026-08-03 - Notan blind visualiser on integral blinds (test only, fa9ccc8)
 
