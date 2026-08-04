@@ -67,6 +67,60 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-04 - Casement page redesigned around film, personalisation and the flush comparison (test, cf54f3b)
+
+Owner brief: the most viewed page needs redesigning into the best page on the
+site. More images, a placeholder near the top for a video being made, the
+opening styles section sense-checked, a clear comparison with the uPVC flush,
+and something like Liniar's own customise block for bars, shaped frames and
+mock horns. STYLE.md to be followed loosely and ignored where it constrains.
+
+- **The film slot is a variable, not a to-do.** `$film_src` at the top of
+  `casement-windows-v2.php` is empty; the dark cinematic band under the spec
+  strip renders the installer poster with a pulsing "In production" chip until
+  an mp4 path is set, at which point the same frame plays an autoplaying muted
+  loop. The placeholder explains itself to a customer instead of reading as
+  unfinished.
+- **The personalisation stage reuses `[data-fg-door-selector]` unchanged.**
+  Five looks, each a real photograph: clean, Georgian bars, astragal bars and
+  mock horns, leaded glass, and two-tone colour. The astragal close-up came
+  from `imported/Sash-horn-astragal.jpeg`, unused since the scrape import, and
+  the leaded bay is the 1649px `bay-window.jpg` original from the image bank,
+  which is the high-resolution sibling of the 600px Flitwick copy. Chip thumbs
+  are dedicated 160w files so five buttons do not pull five full images.
+- **The sense check found the opening styles claim was wrong.** The copy said
+  the Leighton Buzzard photo "uses three of the four" layouts; the photograph
+  shows two side-hung sashes around a fixed pane, which is two. It now says
+  that. The egress line also claimed bedrooms get egress hinges outright; it
+  is now scoped to where a bedroom needs its escape route. Mixed layout was
+  renamed Combinations, because it is not a layout.
+- **The flush comparison is annotated photography, not adjectives.** Cranfield
+  carries both differences in one frame: numbered markers point at the proud
+  sash and at the fixed pane glazed straight into the frame, against the flush
+  stone three-light where every face closes level. A four-row table separates
+  them on figures, both shown A+ per the even-handed comparison rule, and the
+  new FAQ carries the same answer into the FAQPage schema.
+- **The gallery grew to six** with the anthracite bay from the bank's casement
+  folder (`ce32a4c8`), and the mosaic was re-cut 4/3 over 2/3/2. The base
+  five-cell cut only existed for this page; heritage overrides its own cells
+  and is unaffected.
+- **A portrait in a 4:3 stage crops to wall.** The Broughton two-tone stage
+  option first used the 900x1200 portrait, and cover-cropping put the dormer
+  at the edge and showed mostly brick. Caught by rendering the crop at stage
+  size before it shipped anywhere visible; the stage now uses a 1200x900 crop
+  of the case-study side photo centred on the lower basalt grey window.
+- Compiled JS is byte-identical: the stage, anatomy and lightbox all run on
+  controllers that already exist. CSS gained the film, stage and versus blocks
+  inside the `.fg-cw` scope, plus a scoped screen-reader utility because the
+  theme has no global one.
+- Verified on test by rendering the deployed markup with local assets: all
+  four new sections present, zero PHP notices, every new asset serving 200.
+  A 390px iframe probe proved `innerWidth=390`, `scrollWidth=390`, max heading
+  39px against the 57.6px cap, all five stage swaps updating image, name and
+  copy, four markers, six gallery cells and the versus table fitting without
+  scroll. Desktop reviewed as full-height renders at 1280.
+- Test deployment only. Live is untouched; the owner reviews on test.
+
 ## 2026-08-04 - Leagrave integral blinds case study, live (4c85f4a)
 
 - The eleventh case study and the only one where the blind is the product: one
