@@ -76,12 +76,12 @@ $style_options = [
     ],
     [
         'name' => 'Two colours, one window',
-        'file' => 'casement-broughton-two-tone-900w',
-        'thumb' => 'casement-broughton-two-tone-160w',
-        'width' => 900,
-        'height' => 1200,
-        'copy' => 'The colour you choose is the outside face; inside stays smooth white or matches. This Broughton dormer runs basalt grey out and white in.',
-        'alt' => 'Basalt grey uPVC casement window with a white interior face on a dormer in Broughton',
+        'file' => 'casement-broughton-grey-1200w',
+        'thumb' => 'casement-broughton-grey-160w',
+        'width' => 1200,
+        'height' => 900,
+        'copy' => 'The colour you choose is the outside face; inside stays smooth white or matches. This Broughton house runs basalt grey out and white in.',
+        'alt' => 'Basalt grey uPVC casement window on a Broughton townhouse, fitted by Fenster',
     ],
 ];
 
