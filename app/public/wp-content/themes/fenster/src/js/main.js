@@ -7697,7 +7697,9 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     canvas.setAttribute('aria-label', `Casement window drawing. ${text}`);
     if (note && message) note.textContent = message;
     if (colourName) {
-      colourName.textContent = state.match
+      // Same rule as the readout, so the two lines cannot describe one window
+      // two different ways on the same screen.
+      colourName.textContent = state.match || state.colourLabel === 'Smooth White'
         ? `${state.colourLabel} inside and out.`
         : `${state.colourLabel} outside, smooth white inside.`;
     }
