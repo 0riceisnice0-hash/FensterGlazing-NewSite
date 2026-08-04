@@ -36937,11 +36937,15 @@ html.fg-blinds-reveal-locked {
   height: auto;
 }
 
+/* The figure is white, because it holds a white studio product shot, so the
+   caption cannot take the section's white type. It sits on a pale band in
+   steel ink instead. White on white is a release blocker in STYLE.md and this
+   caption was exactly that until it was looked at. */
 .fg-cas-security__media figcaption {
-  padding: 0.6rem 0.7rem 0.75rem;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.78rem;
+  padding: 0.6rem 0.75rem 0.7rem;
+  background: #eef1f1;
+  color: var(--color-steel);
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.04em;
 }

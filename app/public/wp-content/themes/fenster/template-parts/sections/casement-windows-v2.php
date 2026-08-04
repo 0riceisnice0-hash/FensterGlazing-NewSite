@@ -201,7 +201,7 @@ $faq_schema = [
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('Versatility', 'fenster'); ?></p>
                 <h2 id="fg-cas-ch1-title" class="fg-cas-display"><?php esc_html_e('One system. Every opening in the house.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Four ways of opening, two faces, sixteen colours, and the detail that decides whether a window suits a Victorian terrace or a new build. All of it made to measure, none of it an upgrade pack.', 'fenster'); ?></p>
+                <p class="fg-cas-lead"><?php esc_html_e('Three ways of opening and any combination of them, two faces, sixteen colours, and the detail that decides whether a window suits a Victorian terrace or a new build. All of it made to measure, none of it an upgrade pack.', 'fenster'); ?></p>
             </div>
         </div>
 
@@ -294,7 +294,7 @@ $faq_schema = [
                     <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
                     <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All three are priced with the window, not added afterwards.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
             </div>
             <div class="fg-cas-trio">
                 <?php foreach ($details as $detail) : ?>
