@@ -86,6 +86,21 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   checking against the supplier's own photography, exactly as the colours did.
 - One function, `magnetTracks()`, owns both where a magnet is drawn and where
   it can be grabbed, so the two cannot drift apart.
+- **A measuring function with a side effect blanked the canvas.** `layout()`
+  sized the backing store as well as measuring, and assigning to `canvas.width`
+  clears the canvas even when the value has not changed. The pointer handling
+  calls `layout()` on every move to hit-test the magnets, so moving the mouse
+  across the unit wiped it to black, and because nothing is scheduled once the
+  easing has settled it stayed black. The owner reported it as "keeps on going
+  black after clicking". `layout()` is now measurement only. The general
+  lesson: anything the pointer path calls at pointer rate has to be pure.
+- **The frame and the controls were rebuilt from the owner's photograph of the
+  showroom unit**, supplied 2026-08-04. Three things were wrong and none of
+  them would have been caught without it: the wide colour matched border round
+  the inside of the glass does not exist, the magnets are chunky glossy blocks
+  rather than slim capsules, and the frame is a stepped anthracite uPVC section
+  rather than a flat bezel. Woodgrain also has to run along each profile; doing
+  it both ways over the whole frame gave a crosshatch that read as fabric.
 - The range inputs stayed, moved off screen rather than hidden, and are
   mirrored to the magnets both ways. Hiding them properly would have left the
   visualiser operable by pointer alone.
