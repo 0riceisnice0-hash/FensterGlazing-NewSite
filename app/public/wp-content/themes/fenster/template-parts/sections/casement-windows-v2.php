@@ -64,8 +64,8 @@ $styles = [
     [
         'name' => 'Combinations',
         'copy' => 'All three share one outer frame, so a single window can do more than one job: a fixed centre for the view, openers either side for the air, a top light over a worktop. Transom and mullion positions decide whether the glass lines up across an elevation.',
-        'image' => $base . 'casement-open-brick-1400w.webp',
-        'alt' => 'White uPVC casement windows opened outwards beside a patio door on a brick elevation',
+        'image' => $base . 'casement-three-light-stone-600w.webp',
+        'alt' => 'White uPVC three light casement window with Georgian bars in a stone wall',
     ],
 ];
 
@@ -211,11 +211,11 @@ $faq_schema = [
 
             <div class="fg-cas-versus__pair">
                 <figure>
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-sash-proud.webp')); ?>" alt="<?php esc_attr_e('White uPVC standard casement window, the opening sash standing proud of the outer frame', 'fenster'); ?>" loading="lazy" width="1250" height="857">
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-sash-proud-sq.webp')); ?>" alt="<?php esc_attr_e('White uPVC standard casement window, the opening sash standing proud of the outer frame', 'fenster'); ?>" loading="lazy" width="857" height="857">
                     <figcaption><strong><?php esc_html_e('Standard casement', 'fenster'); ?></strong><span><?php esc_html_e('The sash stands proud. Fixed panes glaze straight into the frame, so they carry more glass.', 'fenster'); ?></span></figcaption>
                 </figure>
                 <figure>
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-flush-level.webp')); ?>" alt="<?php esc_attr_e('White uPVC flush casement window, four sashes closing level with the frame in one plane', 'fenster'); ?>" loading="lazy" width="1250" height="857">
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-flush-level-sq.webp')); ?>" alt="<?php esc_attr_e('White uPVC flush casement window, four sashes closing level with the frame in one plane', 'fenster'); ?>" loading="lazy" width="857" height="857">
                     <figcaption><strong><?php esc_html_e('Flush casement', 'fenster'); ?></strong><span><?php esc_html_e('Every sash closes level with the frame, in one plane, the way timber joinery sits.', 'fenster'); ?></span></figcaption>
                 </figure>
             </div>
@@ -283,9 +283,9 @@ $faq_schema = [
 
         <div class="container fg-cas-energy__grid">
             <figure class="fg-cas-energy__media">
-                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway.webp')); ?>"
+                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-profile-cutaway-c.webp')); ?>"
                     alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus uPVC frame and sash profile', 'fenster'); ?>"
-                    loading="lazy" width="1250" height="857">
+                    loading="lazy" width="1100" height="733">
             </figure>
             <dl class="fg-cas-stats">
                 <?php foreach ($energy_stats as $stat) : ?>

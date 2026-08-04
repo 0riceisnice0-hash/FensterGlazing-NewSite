@@ -36509,10 +36509,15 @@ html.fg-blinds-reveal-locked {
 
 .fg-cas-versus__pair figure { background: #ffffff; border-radius: 4px; overflow: hidden; }
 
+/* Both comparison files are cropped square, so the box takes their own ratio
+   and neither is cropped again in the browser. height: auto is not optional:
+   the width and height attributes on the img are presentational hints that
+   beat aspect-ratio unless one dimension is released. */
 .fg-cas-versus__pair img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  height: auto;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
 }
 
@@ -36571,6 +36576,7 @@ html.fg-blinds-reveal-locked {
 .fg-cas-trio img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
@@ -36617,12 +36623,13 @@ html.fg-blinds-reveal-locked {
   background: #ffffff;
 }
 
+/* The studio files are already framed; letting them keep their own proportion
+   means nothing is cropped a second time. */
 .fg-cas-energy__media img,
 .fg-cas-security__grid figure img {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
+  height: auto;
 }
 
 /* The three figures, set like performance stats. */
