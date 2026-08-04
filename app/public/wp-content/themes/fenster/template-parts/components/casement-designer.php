@@ -176,6 +176,14 @@ $designer_bars = [
                         <label for="fg-cwd-height"><?php esc_html_e('Height', 'fenster'); ?> <output data-fg-cwd-height-out>1200mm</output></label>
                         <input id="fg-cwd-height" type="range" min="400" max="2100" step="50" value="1200" data-fg-cwd-height>
                     </div>
+                    <?php
+                    /* Deliberately not a rule enforced in code. The drawing
+                       will happily show a sash wider than we would build as
+                       one, and rather than invent a maximum we do not have
+                       published, the honest thing is to say where that gets
+                       settled. */
+                    ?>
+                    <p class="fg-cwd__hint"><?php esc_html_e('Sizes here set the proportions. What can be made as a single sash, and where a window wants a mullion instead, is settled at survey.', 'fenster'); ?></p>
                 </div>
 
                 <div class="fg-cwd__toggles">

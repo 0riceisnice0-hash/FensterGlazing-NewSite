@@ -7633,6 +7633,14 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
         settle();
         return;
       }
+      /* The inside face is only on screen in the inside view, or on the
+         rebate of an open sash. Pressed from the outside of a closed window
+         this control would change nothing on the canvas and read as broken,
+         which is the same fault the handle finishes would have had. */
+      if (key === 'match' && next && !state.inside) {
+        state.inside = true;
+        if (insideButton) insideButton.setAttribute('aria-pressed', 'true');
+      }
       sync(message);
     });
   };
@@ -7641,7 +7649,7 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
   toggle(hornButton, 'horns', 'Mock sash horns are an external dressing, so they show on the outside view only.');
   toggle(obscureButton, 'obscure', 'Obscure glass, shown at roughly the privacy of a bathroom pattern.');
   toggle(insideButton, 'inside', 'The inside face. The rebate is smooth white unless the foil is specified both sides.');
-  toggle(matchButton, 'match', 'Foil on both faces, so the inside matches the outside.');
+  toggle(matchButton, 'match', 'Foil on both faces, so the inside matches the outside. Shown from indoors, where you would see it.');
 
   const sizes = () => {
     state.width = parseInt(widthInput ? widthInput.value : state.width, 10);
