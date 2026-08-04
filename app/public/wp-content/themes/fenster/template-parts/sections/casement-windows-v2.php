@@ -58,7 +58,7 @@ $styles = [
     [
         'name' => 'Fixed pane',
         'copy' => 'No hinges, no gearing, no handle. The glass is bedded straight into the frame, so a fixed pane costs less than an opener the same size and carries a slimmer border and more glass. Ventilation and escape come from the openers around it.',
-        'image' => $studio . 'cas-sash-proud.webp',
+        'image' => $studio . 'cas-sash-proud-sq.webp',
         'alt' => 'White uPVC casement window at a transom, the opening sash standing proud of the frame above a directly glazed fixed pane',
     ],
     [
