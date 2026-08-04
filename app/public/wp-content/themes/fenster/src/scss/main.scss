@@ -8398,6 +8398,20 @@ html.fg-gallery-lightbox-open body {
     -48px 24px 0 #27394f;
 }
 
+/* The default dots above are frame finishes baked into the stylesheet. A card
+   that carries its own six, set from the data it links to, uses those instead:
+   green and orange dots on a blind colours card promised slats that do not
+   exist. `--dot-1` is the top right one, which the base rule paints directly. */
+.fg-product-option-card--colour.has-dots::before {
+  background: var(--dot-1, #f7f6ef);
+  box-shadow:
+    -24px 0 0 var(--dot-2, #94b59f),
+    -48px 0 0 var(--dot-3, #353b3f),
+    0 24px 0 var(--dot-4, #9a5b25),
+    -24px 24px 0 var(--dot-5, #c2c8bd),
+    -48px 24px 0 var(--dot-6, #27394f);
+}
+
 .fg-product-option-card--glass::before {
   background:
     repeating-linear-gradient(125deg, transparent 0 5px, rgba(84, 124, 134, 0.2) 5px 8px),

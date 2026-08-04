@@ -4229,12 +4229,25 @@ if ($is_commercial_hub) {
                        takes that frame's colour. What is chosen here is the
                        slat colour, so the card points at the blind section of
                        the hub rather than the frame finishes. */
+                    /* The colour card's dots are hardcoded frame finishes in
+                       the stylesheet, which on a blind card promised green and
+                       orange slats. Six of the nine real ones are passed
+                       through instead, from the same data the hub reads. */
+                    $slat_dots = array_slice(array_values(array_filter(
+                        array_map(
+                            static fn ($slat) => is_array($slat) ? (string) ($slat['hex'] ?? '') : '',
+                            (array) fenster_data('notan_blind_colours', [])
+                        ),
+                        static fn (string $hex): bool => (bool) preg_match('/^#[0-9a-f]{6}$/i', $hex)
+                    )), 0, 6);
+
                     $option_cards[] = [
                         'modifier' => 'colour',
                         'url' => home_url('/colour-options/#integral-blind-colours'),
                         'title' => __('Blind colours', 'fenster'),
                         'copy' => __('Nine standard Notan slat colours, including a two-sided white and anthracite, plus bespoke RAL to order.', 'fenster'),
                         'cta' => __('See blind colours', 'fenster'),
+                        'dots' => $slat_dots,
                     ];
                 } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
                     $option_cards[] = [
@@ -4303,9 +4316,19 @@ if ($is_commercial_hub) {
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 3; ?>
+                        <?php
+                        $card_dots = is_array($option_card['dots'] ?? null) ? $option_card['dots'] : [];
+                        $card_dot_style = '';
+                        if (count($card_dots) === 6) {
+                            foreach ($card_dots as $dot_index => $dot_hex) {
+                                $card_dot_style .= '--dot-' . ($dot_index + 1) . ':' . $dot_hex . ';';
+                            }
+                        }
+                        ?>
                         <a
-                            class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo $is_patched_glass ? ' is-glazed' : ''; ?>"
+                            class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo $is_patched_glass ? ' is-glazed' : ''; ?><?php echo $card_dot_style !== '' ? ' has-dots' : ''; ?>"
                             href="<?php echo esc_url($option_card['url']); ?>"
+                            <?php echo $card_dot_style !== '' ? 'style="' . esc_attr($card_dot_style) . '"' : ''; ?>
                         >
                             <?php if ($is_patched_glass) : ?>
                                 <?php
