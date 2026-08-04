@@ -530,6 +530,12 @@ function fenster_site_data(): array
            through the gap. Leave `reverse` unset on the other eight; the
            renderer treats absent as "same colour both sides", which is true.
 
+           BY012 is not a colour of its own. It is the same two paints as
+           BY001 White and RAL7016 Anthracite Grey, one on each face, which is
+           how the owner describes it. Its two values must therefore stay equal
+           to those two entries: change White or Anthracite and change this to
+           match, or the same paint gets drawn two ways on one page.
+
            Deliberately not stored here: a slat width. Notan publish the 30mm
            profile that houses the mechanism, not the slat dimension, so the
            renderer assumes the standard integral-blind 12.5mm slat for
@@ -543,6 +549,7 @@ function fenster_site_data(): array
             ['key' => 'brown',            'name' => 'Brown',            'code' => 'BY006',   'hex' => '#4A3524'],
             ['key' => 'dark-brown',       'name' => 'Dark Brown',       'code' => 'BY007',   'hex' => '#2E2724'],
             ['key' => 'metallic-silver',  'name' => 'Metallic Silver',  'code' => 'BY004',   'hex' => '#B8BCC0', 'metallic' => true, 'glitter' => true],
+            // Same two paints as BY001 and RAL7016 above. Keep all four in step.
             ['key' => 'white-anthracite', 'name' => 'White/Anthracite', 'code' => 'BY012',   'hex' => '#EDEFEF', 'reverse' => '#383E42'],
             ['key' => 'black',            'name' => 'Black',            'code' => 'RAL9005', 'hex' => '#0D0D0F'],
         ],

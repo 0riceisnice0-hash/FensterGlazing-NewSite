@@ -101,6 +101,11 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   Silver was a dark grey and is a bright silver. The owner's photograph of the
   physical sample card settled all three. Where a product exists, ask for a
   picture of it before trusting a supplier's marketing asset.
+- **The brochure is the range.** The physical sample card and the brochure
+  disagreed: the card had a BY005 charcoal the brochure omits, and omitted the
+  BY012 White/Anthracite the brochure lists. Settled by the owner: BY005 is not
+  offered, BY012 stays, and BY012 is not a separate colour but White and
+  Anthracite Grey one on each face, so its two values track those entries.
 - **Any lattice reads as a lattice.** The glitter finishes were built from tiled
   radial-gradients, which line up into a visible weave at swatch size and read
   as printed fabric rather than metallic flake. Replaced with an inline SVG of
