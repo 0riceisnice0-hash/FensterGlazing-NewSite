@@ -67,6 +67,23 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-04 - Frame colour card shows real finishes (1a11109)
+
+- The six dots on the Frame colours card were six hexes written into the
+  stylesheet. Four landed on real finishes; the other two, a sage green and a
+  navy, matched nothing anyone can order. They now come from the real uPVC range
+  by name: White, Chartwell Green, Golden Oak, Anthracite Grey, Agate Grey,
+  Blue. The CSS reads them through `--dot-N` with the same real values as
+  fallbacks, so a card that sets none still shows orderable colours.
+- **A commit made on a release branch, then pushed with `git push origin main`,
+  goes nowhere and says nothing.** It pushed the unmoved local `main`, reported
+  success, and the server's `reset --hard origin/main` deployed the previous
+  commit. It was only caught by grepping the deployed file for a string from the
+  change. Do that after every deploy; a clean push and a clean rsync are not
+  evidence that the change shipped.
+- The colour hub hero wall was checked at the same time and was already correct:
+  it is built from the real range and had picked up the new slat colours.
+
 ## 2026-08-04 - Blinds visualiser live, after it briefly took the blog down (6e98351)
 
 - **The visualiser is live and so is the blog. Getting there took two deploys
