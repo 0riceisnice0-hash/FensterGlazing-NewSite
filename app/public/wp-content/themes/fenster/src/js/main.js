@@ -7022,3 +7022,653 @@ document.querySelectorAll('[data-fg-legend-approved]').forEach((block) => {
     window.setTimeout(() => button.classList.remove('is-pressed'), 160);
   });
 });
+
+/* ---------------------------------------------------------------------------
+   Casement designer (/casement-windows/)
+
+   Draws the window the visitor is specifying. 2D canvas, no library, face on,
+   for the same reason the Notan blind visualiser is: with no perspective a
+   hinged sash projects to an exact quadrilateral, so the open state is
+   calculated rather than faked. See the Three.js / Canvas Rule in AI.md.
+
+   Every control is a real DOM button or a native range input. Nothing is
+   hit-tested against the canvas, which is deliberate: the blind visualiser had
+   to grow padded grab elements because a pointerdown handler cannot cancel a
+   scroll the browser has already committed to. With no canvas gesture at all,
+   that class of bug cannot occur here and the stage stays scrollable on touch.
+   --------------------------------------------------------------------------- */
+document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
+  const canvas = root.querySelector('[data-fg-cwd-canvas]');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const readout = root.querySelector('[data-fg-cwd-readout]');
+  const note = root.querySelector('[data-fg-cwd-note]');
+  const colourName = root.querySelector('[data-fg-cwd-colour-name]');
+  const widthInput = root.querySelector('[data-fg-cwd-width]');
+  const heightInput = root.querySelector('[data-fg-cwd-height]');
+  const widthOut = root.querySelector('[data-fg-cwd-width-out]');
+  const heightOut = root.querySelector('[data-fg-cwd-height-out]');
+
+  const layoutButtons = [...root.querySelectorAll('[data-fg-cwd-layout]')];
+  const barButtons = [...root.querySelectorAll('[data-fg-cwd-bars]')];
+  const colourButtons = [...root.querySelectorAll('[data-fg-cwd-colour]')];
+  const handleButtons = [...root.querySelectorAll('[data-fg-cwd-handle]')];
+  const openButton = root.querySelector('[data-fg-cwd-open]');
+  const hornButton = root.querySelector('[data-fg-cwd-horns]');
+  const obscureButton = root.querySelector('[data-fg-cwd-obscure]');
+  const insideButton = root.querySelector('[data-fg-cwd-inside]');
+  const matchButton = root.querySelector('[data-fg-cwd-match]');
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* Cells are fractions of the glazed opening. The controller owns this
+     geometry; the template owns the labels. Every layout here is one we build:
+     openers are side or top hung and outward opening, which is what a casement
+     is. */
+  const LAYOUTS = {
+    'single': [{ x: 0, y: 0, w: 1, h: 1, type: 'side', hinge: 'left' }],
+    'fixed': [{ x: 0, y: 0, w: 1, h: 1, type: 'fixed' }],
+    'two-side': [
+      { x: 0, y: 0, w: 0.5, h: 1, type: 'side', hinge: 'left' },
+      { x: 0.5, y: 0, w: 0.5, h: 1, type: 'side', hinge: 'right' },
+    ],
+    'three-light': [
+      { x: 0, y: 0, w: 0.27, h: 1, type: 'side', hinge: 'left' },
+      { x: 0.27, y: 0, w: 0.46, h: 1, type: 'fixed' },
+      { x: 0.73, y: 0, w: 0.27, h: 1, type: 'side', hinge: 'right' },
+    ],
+    'top-over-fixed': [
+      { x: 0, y: 0, w: 1, h: 0.3, type: 'top' },
+      { x: 0, y: 0.3, w: 1, h: 0.7, type: 'fixed' },
+    ],
+    'cottage': [
+      { x: 0, y: 0, w: 0.5, h: 0.28, type: 'top' },
+      { x: 0.5, y: 0, w: 0.5, h: 0.28, type: 'top' },
+      { x: 0, y: 0.28, w: 0.5, h: 0.72, type: 'side', hinge: 'left' },
+      { x: 0.5, y: 0.28, w: 0.5, h: 0.72, type: 'side', hinge: 'right' },
+    ],
+  };
+
+  // Profile proportions, in the same millimetres as the size sliders. These
+  // set how the drawing looks, not what the page claims: no face width is
+  // printed anywhere, the same way no slat width is printed on the blind.
+  const FRAME = 58;   // outer frame face
+  const SASH = 62;    // sash face, which stands proud of the frame
+  const MULL = 76;    // mullion or transom between two cells
+  const BEAD = 16;    // glazing bead around a directly glazed pane
+  const DEPTH = 62;   // sash thickness, used for the open-sash edge
+  const OPEN_ANGLE = 34 * Math.PI / 180;
+
+  const state = {
+    layout: 'three-light',
+    bars: 'none',
+    colour: colourButtons[0] ? colourButtons[0].dataset.fgCwdColour : '#ffffff',
+    colourLabel: colourButtons[0] ? colourButtons[0].dataset.colourName : 'Smooth White',
+    handle: handleButtons[0] ? handleButtons[0].dataset.fgCwdHandle : '#f4f4ef',
+    handleLabel: handleButtons[0] ? handleButtons[0].dataset.handleName : 'White',
+    width: 1500,
+    height: 1200,
+    horns: false,
+    obscure: false,
+    inside: false,
+    match: false,
+    open: 0,        // eased 0..1
+    openTarget: 0,
+  };
+
+  const pressed = (el) => el && el.getAttribute('aria-pressed') === 'true';
+
+  // Deterministic per-point value for the obscure texture, so the pattern does
+  // not crawl between redraws the way Math.random would.
+  const hashNoise = (i, j) => {
+    const n = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453;
+    return n - Math.floor(n);
+  };
+
+  const shade = (hex, amount) => {
+    const clean = String(hex).replace('#', '');
+    const full = clean.length === 3 ? clean.split('').map((c) => c + c).join('') : clean;
+    const num = parseInt(full, 16);
+    if (Number.isNaN(num)) return hex;
+    let r = (num >> 16) & 255;
+    let g = (num >> 8) & 255;
+    let b = num & 255;
+    if (amount >= 0) {
+      r += (255 - r) * amount;
+      g += (255 - g) * amount;
+      b += (255 - b) * amount;
+    } else {
+      r *= (1 + amount);
+      g *= (1 + amount);
+      b *= (1 + amount);
+    }
+    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+  };
+
+  const interiorColour = () => (state.match ? state.colour : '#f6f6f2');
+  const faceColour = () => (state.inside ? interiorColour() : state.colour);
+
+  /* A uPVC member drawn as a section rather than a flat block: the sculptured
+     bead is a soft curve, so the light lands along the top and left and falls
+     away to the bottom and right. That is the difference between reading as a
+     window and reading as a wireframe. */
+  const member = (x, y, w, h, colour) => {
+    if (w <= 0 || h <= 0) return;
+    const g = ctx.createLinearGradient(x, y, x + w * 0.35, y + h);
+    g.addColorStop(0, shade(colour, 0.1));
+    g.addColorStop(0.45, colour);
+    g.addColorStop(1, shade(colour, -0.12));
+    ctx.fillStyle = g;
+    ctx.fillRect(x, y, w, h);
+  };
+
+  const glassPaint = (x, y, w, h, scale) => {
+    // Outside: sky at the top falling to the reflection of the ground. Inside:
+    // you are looking out, so the pane is brighter and warmer at the foot.
+    const g = ctx.createLinearGradient(x, y, x, y + h);
+    if (state.inside) {
+      g.addColorStop(0, '#cfe2ee');
+      g.addColorStop(0.55, '#bcd3d2');
+      g.addColorStop(1, '#a8bfa4');
+    } else {
+      g.addColorStop(0, '#b9d2e2');
+      g.addColorStop(0.45, '#9fb9c6');
+      g.addColorStop(1, '#7d949a');
+    }
+    ctx.fillStyle = g;
+    ctx.fillRect(x, y, w, h);
+
+    if (state.obscure) {
+      // Sandblasted glass is grain, not stripes. Deterministic dots at a size
+      // that holds up at any scale, matching the feTurbulence decision made
+      // for the satin swatch on /obscured-glass/.
+      const step = Math.max(3, 5 * scale);
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(x, y, w, h);
+      ctx.clip();
+      for (let i = 0; i * step < w; i += 1) {
+        for (let j = 0; j * step < h; j += 1) {
+          const v = hashNoise(i, j);
+          ctx.fillStyle = `rgba(255, 255, 255, ${0.16 + v * 0.4})`;
+          ctx.fillRect(x + i * step, y + j * step, step * (0.5 + v * 0.5), step * (0.5 + v * 0.5));
+        }
+      }
+      ctx.restore();
+      ctx.fillStyle = 'rgba(236, 243, 245, 0.42)';
+      ctx.fillRect(x, y, w, h);
+    }
+
+    // The rebate throws a shadow onto the glass along the top and left.
+    const inner = ctx.createLinearGradient(x, y, x + w * 0.22, y + h * 0.22);
+    inner.addColorStop(0, 'rgba(10, 30, 38, 0.24)');
+    inner.addColorStop(1, 'rgba(10, 30, 38, 0)');
+    ctx.fillStyle = inner;
+    ctx.fillRect(x, y, w, h);
+  };
+
+  const glassSheen = (x, y, w, h) => {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x, y, w, h);
+    ctx.clip();
+    ctx.beginPath();
+    ctx.moveTo(x - w * 0.1, y + h * 0.72);
+    ctx.lineTo(x + w * 0.55, y - h * 0.1);
+    ctx.lineTo(x + w * 0.82, y - h * 0.1);
+    ctx.lineTo(x + w * 0.17, y + h * 0.72);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.fill();
+    ctx.restore();
+  };
+
+  const barGrid = (x, y, w, h, mm) => {
+    const cols = Math.max(1, Math.round(w / (300 * mm)));
+    const rows = Math.max(1, Math.round(h / (360 * mm)));
+    return { cols, rows };
+  };
+
+  /* Georgian bars sit inside the sealed unit, so they are drawn before the
+     sheen and the reflection passes over them. Astragal bars are bonded to the
+     face of the glass, so they are drawn after it, wider, with a highlight and
+     a cast shadow. That difference is the whole reason both options exist and
+     a photograph struggles to show it. */
+  const drawBars = (x, y, w, h, mm, after) => {
+    if (state.bars === 'none') return;
+    if ((state.bars === 'georgian') === after) return;
+    const { cols, rows } = barGrid(x, y, w, h, mm);
+    if (cols <= 1 && rows <= 1) return;
+    const bw = (state.bars === 'astragal' ? 26 : 20) * mm;
+    const colour = faceColour();
+
+    const paint = (bx, by, bw2, bh2) => {
+      if (after) {
+        ctx.fillStyle = 'rgba(12, 28, 34, 0.28)';
+        ctx.fillRect(bx + bw * 0.28, by + bw * 0.28, bw2, bh2);
+      }
+      const g = ctx.createLinearGradient(bx, by, bx + bw2 * 0.6 + 1, by + bh2 * 0.6 + 1);
+      g.addColorStop(0, shade(colour, after ? 0.24 : 0.12));
+      g.addColorStop(1, shade(colour, after ? -0.14 : -0.05));
+      ctx.fillStyle = g;
+      ctx.fillRect(bx, by, bw2, bh2);
+    };
+
+    for (let c = 1; c < cols; c += 1) {
+      paint(x + (w / cols) * c - bw / 2, y, bw, h);
+    }
+    for (let r = 1; r < rows; r += 1) {
+      paint(x, y + (h / rows) * r - bw / 2, w, bw);
+    }
+  };
+
+  /* The S2 handle is on the inside face of the window, so it is only drawn on
+     the inside view. Choosing a finish flips the view for that reason, and the
+     note says so rather than leaving a control that appears to do nothing. */
+  const drawHandle = (cell, r, mm) => {
+    if (!state.inside || cell.type === 'fixed') return;
+    const plateW = 34 * mm;
+    const plateH = 150 * mm;
+    let px;
+    let py;
+    let vertical = true;
+    if (cell.type === 'top') {
+      vertical = false;
+      px = r.x + r.w / 2 - plateH / 2;
+      py = r.y + r.h - SASH * mm / 2 - plateW / 2;
+    } else {
+      // Inside view mirrors the elevation, so the handle sits on the stile
+      // opposite the hinge as seen from indoors.
+      const onLeft = cell.hinge === 'right';
+      px = onLeft ? r.x + SASH * mm / 2 - plateW / 2 : r.x + r.w - SASH * mm / 2 - plateW / 2;
+      py = r.y + r.h / 2 - plateH / 2;
+    }
+    const w = vertical ? plateW : plateH;
+    const h = vertical ? plateH : plateW;
+
+    ctx.save();
+    ctx.fillStyle = 'rgba(10, 28, 34, 0.3)';
+    ctx.beginPath();
+    ctx.roundRect(px + 2 * mm, py + 2 * mm, w, h, 6 * mm);
+    ctx.fill();
+
+    const g = ctx.createLinearGradient(px, py, px + w, py + h);
+    g.addColorStop(0, shade(state.handle, 0.34));
+    g.addColorStop(0.5, state.handle);
+    g.addColorStop(1, shade(state.handle, -0.3));
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.roundRect(px, py, w, h, 6 * mm);
+    ctx.fill();
+
+    // The lever, cranked away from the frame.
+    const leverL = 96 * mm;
+    const leverT = 20 * mm;
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    if (vertical) {
+      const dir = px < r.x + r.w / 2 ? 1 : -1;
+      ctx.roundRect(px + w / 2 - leverT / 2 + (dir * leverL) / 2, py + h / 2 - leverT / 2, leverL, leverT, leverT / 2);
+    } else {
+      ctx.roundRect(px + w / 2 - leverT / 2, py + h / 2 - leverT / 2 - leverL / 2, leverT, leverL, leverT / 2);
+    }
+    ctx.fill();
+    ctx.restore();
+  };
+
+  /* Mock sash horns hang below the bottom corners of the sash with a curved
+     end, which is what the reference photograph of a real Liniar casement
+     shows. They are an external dressing, so they do not appear on the inside
+     view, and a fixed pane has no sash to carry them. */
+  const drawHorns = (cell, r, mm) => {
+    if (!state.horns || state.inside || cell.type === 'fixed') return;
+    const hw = SASH * mm * 0.62;
+    const hh = SASH * mm * 1.25;
+    const colour = state.colour;
+    [r.x + SASH * mm * 0.2, r.x + r.w - SASH * mm * 0.2 - hw].forEach((hx) => {
+      const hy = r.y + r.h - SASH * mm * 0.35;
+      const g = ctx.createLinearGradient(hx, hy, hx + hw, hy + hh);
+      g.addColorStop(0, shade(colour, 0.14));
+      g.addColorStop(1, shade(colour, -0.16));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(hx, hy);
+      ctx.lineTo(hx + hw, hy);
+      ctx.lineTo(hx + hw, hy + hh - hw * 0.7);
+      ctx.quadraticCurveTo(hx + hw, hy + hh, hx + hw / 2, hy + hh);
+      ctx.quadraticCurveTo(hx, hy + hh, hx, hy + hh - hw * 0.7);
+      ctx.closePath();
+      ctx.fill();
+    });
+  };
+
+  const drawCell = (cell, r, mm, scale) => {
+    if (cell.type === 'fixed') {
+      // Glazed straight into the frame, so the border is only the bead. This
+      // is why a fixed pane holds more glass than an opener the same size,
+      // and the drawing has to show it rather than assert it.
+      const gx = r.x + BEAD * mm;
+      const gy = r.y + BEAD * mm;
+      const gw = r.w - BEAD * mm * 2;
+      const gh = r.h - BEAD * mm * 2;
+      if (gw <= 0 || gh <= 0) return;
+      glassPaint(gx, gy, gw, gh, scale);
+      drawBars(gx, gy, gw, gh, mm, false);
+      glassSheen(gx, gy, gw, gh);
+      drawBars(gx, gy, gw, gh, mm, true);
+      return;
+    }
+
+    const open = state.open;
+    const cos = Math.cos(OPEN_ANGLE * open);
+    const sin = Math.sin(OPEN_ANGLE * open);
+
+    // The reveal behind an open sash: the room, in shadow.
+    if (open > 0.001) {
+      ctx.fillStyle = '#1b2529';
+      ctx.fillRect(r.x, r.y, r.w, r.h);
+      const g = ctx.createLinearGradient(r.x, r.y, r.x + r.w * 0.4, r.y + r.h);
+      g.addColorStop(0, 'rgba(0, 0, 0, 0.45)');
+      g.addColorStop(1, 'rgba(0, 0, 0, 0.1)');
+      ctx.fillStyle = g;
+      ctx.fillRect(r.x, r.y, r.w, r.h);
+    }
+
+    /* Orthographic projection of a slab hinged on one edge. A point at
+       distance d along the sash lands at d*cos(t); the far edge of the slab,
+       one thickness behind the face, lands at d*cos(t) + DEPTH*sin(t). At
+       t = 90 degrees that leaves a strip exactly one thickness wide, which is
+       the sash seen edge on. The same exactness argument as the blind slat. */
+    let s = { x: r.x, y: r.y, w: r.w, h: r.h };
+    let edge = null;
+    if (open > 0.001) {
+      if (cell.type === 'top') {
+        const vis = r.h * cos;
+        const eh = DEPTH * mm * sin;
+        s = { x: r.x, y: r.y, w: r.w, h: vis };
+        edge = { x: r.x, y: r.y + vis, w: r.w, h: eh };
+      } else if (cell.hinge === 'left') {
+        const vis = r.w * cos;
+        const ew = DEPTH * mm * sin;
+        s = { x: r.x, y: r.y, w: vis, h: r.h };
+        edge = { x: r.x + vis, y: r.y, w: ew, h: r.h };
+      } else {
+        const vis = r.w * cos;
+        const ew = DEPTH * mm * sin;
+        s = { x: r.x + r.w - vis, y: r.y, w: vis, h: r.h };
+        edge = { x: r.x + r.w - vis - ew, y: r.y, w: ew, h: r.h };
+      }
+    }
+
+    // The sash stands proud of the frame, which is the single thing that
+    // separates this window from a flush casement, so it casts a real shadow.
+    ctx.fillStyle = 'rgba(12, 28, 34, 0.3)';
+    ctx.fillRect(s.x + 4 * mm, s.y + 4 * mm, s.w, s.h);
+
+    /* The edge of an open sash shows the rebate, and the rebate is the
+       unfoiled profile unless the foil is specified on both faces. That is
+       stated in colour_options and is drawn here rather than only written. */
+    if (edge && edge.w > 0.4 && edge.h > 0.4) {
+      member(edge.x, edge.y, edge.w, edge.h, shade(interiorColour(), -0.08));
+    }
+
+    member(s.x, s.y, s.w, s.h, faceColour());
+
+    // Glass inset by the sash face. Compressed along the rotating axis so the
+    // sash rails stay the right thickness as it swings.
+    let ix = SASH * mm;
+    let iy = SASH * mm;
+    if (open > 0.001) {
+      if (cell.type === 'top') iy = SASH * mm * cos;
+      else ix = SASH * mm * cos;
+    }
+    const px = s.x + ix;
+    const py = s.y + iy;
+    const pw = s.w - ix * 2;
+    const ph = s.h - iy * 2;
+    if (pw > 0 && ph > 0) {
+      glassPaint(px, py, pw, ph, scale);
+      drawBars(px, py, pw, ph, mm, false);
+      glassSheen(px, py, pw, ph);
+      drawBars(px, py, pw, ph, mm, true);
+    }
+
+    drawHandle(cell, s, mm);
+    drawHorns(cell, s, mm);
+  };
+
+  const describe = () => {
+    const layout = layoutButtons.find((b) => b.dataset.fgCwdLayout === state.layout);
+    const layoutName = layout ? layout.textContent.trim() : state.layout;
+    const bars = barButtons.find((b) => b.dataset.fgCwdBars === state.bars);
+    const barName = bars ? bars.textContent.trim().toLowerCase() : '';
+    const insideFace = state.match ? `${state.colourLabel} inside` : 'smooth white inside';
+    const parts = [
+      `${layoutName}, ${state.width} by ${state.height}mm`,
+      `${state.colourLabel} outside with ${insideFace}`,
+      state.bars === 'none' ? 'no glazing bars' : barName,
+    ];
+    if (state.horns) parts.push('mock sash horns');
+    if (state.obscure) parts.push('obscure glass');
+    parts.push(`${state.handleLabel} handles`);
+    return `${parts.join('. ')}.`;
+  };
+
+  let backingW = 0;
+  let backingH = 0;
+
+  const draw = () => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const bw = Math.round(rect.width * dpr);
+    const bh = Math.round(rect.height * dpr);
+    // Assigning width or height clears the canvas even when the value has not
+    // changed, so it is guarded. This is the side effect that turned the blind
+    // visualiser black on every pointer move.
+    if (bw !== backingW || bh !== backingH) {
+      canvas.width = bw;
+      canvas.height = bh;
+      backingW = bw;
+      backingH = bh;
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, rect.width, rect.height);
+
+    // Backdrop: a quiet wall so the window reads as fitted into something.
+    const bg = ctx.createLinearGradient(0, 0, 0, rect.height);
+    bg.addColorStop(0, state.inside ? '#f3f1ec' : '#e8ebe9');
+    bg.addColorStop(1, state.inside ? '#e3e0d9' : '#d5dbd9');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, rect.width, rect.height);
+
+    const pad = Math.min(rect.width, rect.height) * 0.09;
+    const availW = rect.width - pad * 2;
+    const availH = rect.height - pad * 2;
+    const mm = Math.min(availW / state.width, availH / state.height);
+    const ww = state.width * mm;
+    const wh = state.height * mm;
+    const ox = (rect.width - ww) / 2;
+    const oy = (rect.height - wh) / 2;
+    const scale = mm * 60;
+
+    // Cill and its shadow, so the window is sitting on something.
+    ctx.fillStyle = 'rgba(18, 36, 42, 0.16)';
+    ctx.fillRect(ox - pad * 0.28, oy + wh, ww + pad * 0.56, pad * 0.2);
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(12, 30, 36, 0.32)';
+    ctx.shadowBlur = 26 * mm * 6;
+    ctx.shadowOffsetY = 8 * mm * 6;
+    ctx.fillStyle = faceColour();
+    ctx.fillRect(ox, oy, ww, wh);
+    ctx.restore();
+
+    member(ox, oy, ww, wh, faceColour());
+
+    const inner = {
+      x: ox + FRAME * mm,
+      y: oy + FRAME * mm,
+      w: ww - FRAME * mm * 2,
+      h: wh - FRAME * mm * 2,
+    };
+
+    const cells = LAYOUTS[state.layout] || LAYOUTS.single;
+    cells.forEach((cell) => {
+      // Internal edges take half a mullion; outer edges sit on the frame.
+      const left = cell.x > 0.001 ? MULL * mm / 2 : 0;
+      const right = cell.x + cell.w < 0.999 ? MULL * mm / 2 : 0;
+      const top = cell.y > 0.001 ? MULL * mm / 2 : 0;
+      const bottom = cell.y + cell.h < 0.999 ? MULL * mm / 2 : 0;
+      const r = {
+        x: inner.x + cell.x * inner.w + left,
+        y: inner.y + cell.y * inner.h + top,
+        w: cell.w * inner.w - left - right,
+        h: cell.h * inner.h - top - bottom,
+      };
+      if (r.w > 1 && r.h > 1) drawCell(cell, r, mm, scale);
+    });
+
+    // A hairline along the top and left of every member, which is what the
+    // sculptured bead actually does with the light.
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.lineWidth = Math.max(1, mm * 6);
+    ctx.strokeRect(ox + ctx.lineWidth / 2, oy + ctx.lineWidth / 2, ww - ctx.lineWidth, wh - ctx.lineWidth);
+
+    if (!root.classList.contains('is-live')) root.classList.add('is-live');
+  };
+
+  let frame = 0;
+  const tick = () => {
+    const diff = state.openTarget - state.open;
+    if (Math.abs(diff) < 0.004) {
+      state.open = state.openTarget;
+      draw();
+      frame = 0;
+      return;
+    }
+    state.open += diff * 0.18;
+    draw();
+    frame = window.requestAnimationFrame(tick);
+  };
+
+  const settle = () => {
+    if (reduceMotion.matches) {
+      state.open = state.openTarget;
+      draw();
+      return;
+    }
+    if (!frame) frame = window.requestAnimationFrame(tick);
+  };
+
+  const sync = (message) => {
+    const text = describe();
+    if (readout) readout.textContent = text;
+    canvas.setAttribute('aria-label', `Casement window drawing. ${text}`);
+    if (note && message) note.textContent = message;
+    if (colourName) {
+      colourName.textContent = state.match
+        ? `${state.colourLabel} inside and out.`
+        : `${state.colourLabel} outside, smooth white inside.`;
+    }
+    draw();
+  };
+
+  const press = (group, active) => {
+    group.forEach((b) => b.setAttribute('aria-pressed', b === active ? 'true' : 'false'));
+  };
+
+  layoutButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      state.layout = button.dataset.fgCwdLayout;
+      press(layoutButtons, button);
+      sync(button.dataset.note || '');
+    });
+  });
+
+  barButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      state.bars = button.dataset.fgCwdBars;
+      press(barButtons, button);
+      sync(button.dataset.note || '');
+    });
+  });
+
+  colourButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      state.colour = button.dataset.fgCwdColour;
+      state.colourLabel = button.dataset.colourName || '';
+      press(colourButtons, button);
+      const finish = button.dataset.colourFinish;
+      sync(finish ? `${state.colourLabel}. ${finish}.` : state.colourLabel);
+    });
+  });
+
+  handleButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      state.handle = button.dataset.fgCwdHandle;
+      state.handleLabel = button.dataset.handleName || '';
+      press(handleButtons, button);
+      // The handle is on the inside face, so showing the choice means showing
+      // the inside. Left on the outside view the control would appear broken.
+      if (!state.inside) {
+        state.inside = true;
+        if (insideButton) insideButton.setAttribute('aria-pressed', 'true');
+      }
+      sync(`${state.handleLabel} S2 Signature handle. Handles are on the inside face, so the view has turned round.`);
+    });
+  });
+
+  const toggle = (button, key, message) => {
+    if (!button) return;
+    button.addEventListener('click', () => {
+      const next = !pressed(button);
+      button.setAttribute('aria-pressed', next ? 'true' : 'false');
+      state[key] = next;
+      if (key === 'open') {
+        state.openTarget = next ? 1 : 0;
+        sync(message);
+        settle();
+        return;
+      }
+      sync(message);
+    });
+  };
+
+  toggle(openButton, 'open', 'Outward opening, drawn at the angle a friction stay holds.');
+  toggle(hornButton, 'horns', 'Mock sash horns are an external dressing, so they show on the outside view only.');
+  toggle(obscureButton, 'obscure', 'Obscure glass, shown at roughly the privacy of a bathroom pattern.');
+  toggle(insideButton, 'inside', 'The inside face. The rebate is smooth white unless the foil is specified both sides.');
+  toggle(matchButton, 'match', 'Foil on both faces, so the inside matches the outside.');
+
+  const sizes = () => {
+    state.width = parseInt(widthInput ? widthInput.value : state.width, 10);
+    state.height = parseInt(heightInput ? heightInput.value : state.height, 10);
+    if (widthOut) widthOut.textContent = `${state.width}mm`;
+    if (heightOut) heightOut.textContent = `${state.height}mm`;
+    sync('');
+  };
+
+  if (widthInput) widthInput.addEventListener('input', sizes);
+  if (heightInput) heightInput.addEventListener('input', sizes);
+
+  let resizeFrame = 0;
+  window.addEventListener('resize', () => {
+    if (resizeFrame) return;
+    resizeFrame = window.requestAnimationFrame(() => {
+      resizeFrame = 0;
+      draw();
+    });
+  });
+
+  // Draw once the element has a box. On a lazy page the section can be laid
+  // out after this script runs, so a zero-size first attempt is retried.
+  const start = () => {
+    draw();
+    if (!root.classList.contains('is-live')) window.setTimeout(start, 120);
+  };
+  sync('A three light: fixed centre pane with an opener each side.');
+  start();
+});

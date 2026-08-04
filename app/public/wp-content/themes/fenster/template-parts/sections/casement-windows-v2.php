@@ -33,58 +33,6 @@ $asset_base = '/wp-content/themes/fenster/assets/images/products/casement/';
 $film_src = '';
 $film_poster = $asset_base . 'casement-installation-900w.webp';
 
-/* The personalisation stage. Each option is one real photograph; the shared
-   [data-fg-door-selector] controller swaps the stage image, name chip and
-   copy line. Thumbs are dedicated 160w files so five chips do not pull five
-   full-size images. */
-$style_options = [
-    [
-        'name' => 'Clean and simple',
-        'file' => 'casement-leighton-front-1400w',
-        'thumb' => 'casement-leighton-front-160w',
-        'width' => 1400,
-        'height' => 1050,
-        'copy' => 'Clear glass and no bars, the slimmest look the system makes. Most modern replacements go out exactly like this.',
-        'alt' => 'White uPVC casement window with clear glass in a tile hung elevation',
-    ],
-    [
-        'name' => 'Georgian bars',
-        'file' => 'casement-bay-white-1080w',
-        'thumb' => 'casement-bay-white-160w',
-        'width' => 1080,
-        'height' => 608,
-        'copy' => 'A bar grid set inside the sealed unit divides the panes without interrupting the glass, so the cottage look wipes clean as one pane.',
-        'alt' => 'White uPVC bay window with Georgian bars between the panes',
-    ],
-    [
-        'name' => 'Astragal bars and horns',
-        'file' => 'casement-astragal-horn-1250w',
-        'thumb' => 'casement-astragal-horn-160w',
-        'width' => 1250,
-        'height' => 857,
-        'copy' => 'Astragal bars sit proud on the glass face, and mock sash horns finish the sash corners, so a casement reads like a period sash window from the street.',
-        'alt' => 'Close up of an astragal glazing bar and mock sash horn on a white uPVC window',
-    ],
-    [
-        'name' => 'Leaded glass',
-        'file' => 'casement-leaded-bay-1400w',
-        'thumb' => 'casement-leaded-bay-160w',
-        'width' => 1400,
-        'height' => 1120,
-        'copy' => 'Lead strip laid over the glass in squares or diamonds, sealed against the weather. It suits bays and older brickwork, and it never needs polishing.',
-        'alt' => 'White uPVC bay window with square leaded glass on a red brick house',
-    ],
-    [
-        'name' => 'Two colours, one window',
-        'file' => 'casement-broughton-grey-1200w',
-        'thumb' => 'casement-broughton-grey-160w',
-        'width' => 1200,
-        'height' => 900,
-        'copy' => 'The colour you choose is the outside face; inside stays smooth white or matches. This Broughton house runs basalt grey out and white in.',
-        'alt' => 'Basalt grey uPVC casement window on a Broughton townhouse, fitted by Fenster',
-    ],
-];
-
 $layout_points = [
     ['name' => 'Side-hung', 'copy' => 'Friction stays hold the sash at any angle. Where a bedroom needs its escape route, egress hinges swing to 90 degrees so the clear opening meets the Building Regulations minimum: 0.33m², at least 450mm each way.'],
     ['name' => 'Top-hung', 'copy' => 'Hinged in the top rail with the handle on the bottom one. The open sash sheds rain clear of the opening, and a restrictor holds the first opening to around 100mm where children sleep.'],
@@ -185,7 +133,49 @@ $faq_schema = [
 ];
 ?>
 
+<?php
+/* The designer opens the page. The hero and the four-tile specification strip
+   have already said what the product is and what it reaches; this is where the
+   visitor starts making the decisions, which is the job the page exists to do.
+   It sits outside the .fg-cw wrapper because it paints its own dark canvas and
+   owns its own type, the same arrangement the gallery band uses. */
+get_template_part('template-parts/components/casement-designer', null, [
+    'quote_url' => $quote_url,
+]);
+?>
+
 <div class="fg-cw">
+    <?php
+    /* Photographs of the three dressings the designer draws, so the drawing is
+       backed by the real thing rather than asking to be taken on trust. The
+       same job the foil swatches and handle photographs do further down. */
+    ?>
+    <section class="fg-cw-proof" aria-labelledby="fg-cw-proof-title">
+        <div class="container">
+            <div class="fg-cw-head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Photographed, not drawn', 'fenster'); ?></p>
+                    <h2 id="fg-cw-proof-title"><?php esc_html_e('The same three options, on real windows.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('A drawing is only worth looking at if the thing it describes exists. These are ours and Liniar\'s, uncropped and unretouched.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-cw-proof__grid">
+                <figure>
+                    <img src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-astragal-horn-1250w.webp')); ?>" alt="<?php esc_attr_e('Close up of a mock sash horn and astragal bar on a white uPVC casement window', 'fenster'); ?>" loading="lazy" width="1250" height="857">
+                    <figcaption><?php esc_html_e('Astragal bar and mock horn', 'fenster'); ?></figcaption>
+                </figure>
+                <figure>
+                    <img src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-bay-white-1080w.webp')); ?>" alt="<?php esc_attr_e('White uPVC bay window with Georgian bars set inside the sealed units', 'fenster'); ?>" loading="lazy" width="1080" height="608">
+                    <figcaption><?php esc_html_e('Georgian bars', 'fenster'); ?></figcaption>
+                </figure>
+                <figure>
+                    <img src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-leaded-bay-1400w.webp')); ?>" alt="<?php esc_attr_e('White uPVC bay window with square leaded glass on a red brick house, fitted by Fenster', 'fenster'); ?>" loading="lazy" width="1400" height="1120">
+                    <figcaption><?php esc_html_e('Leaded glass', 'fenster'); ?></figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
     <section class="fg-cw-film" aria-labelledby="fg-cw-film-title">
         <div class="container fg-cw-film__grid">
             <div class="fg-cw-copy">
@@ -249,55 +239,6 @@ $faq_schema = [
        that claim. */
     get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows'));
     ?>
-
-    <section class="fg-cw-style" aria-labelledby="fg-cw-style-title">
-        <div class="container">
-            <div class="fg-cw-head">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Make it yours', 'fenster'); ?></p>
-                    <h2 id="fg-cw-style-title" class="fg-cw-display"><?php esc_html_e('One window, five different characters.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('Bars, horns, lead and colour are chosen per window, not per order. All five of these come out of the same 70mm system.', 'fenster'); ?></p>
-            </div>
-
-            <div class="fg-cw-style__panel" data-fg-door-selector>
-                <figure class="fg-cw-style__stage">
-                    <img
-                        data-fg-choice-image
-                        src="<?php echo esc_url(fenster_generated_url($asset_base . $style_options[0]['file'] . '.webp')); ?>"
-                        alt="<?php echo esc_attr($style_options[0]['alt']); ?>"
-                        loading="lazy"
-                        width="<?php echo esc_attr((string) $style_options[0]['width']); ?>"
-                        height="<?php echo esc_attr((string) $style_options[0]['height']); ?>"
-                    >
-                    <figcaption data-fg-choice-name><?php echo esc_html($style_options[0]['name']); ?></figcaption>
-                </figure>
-                <div class="fg-cw-style__controls">
-                    <div class="fg-cw-style__options" role="group" aria-label="<?php esc_attr_e('Casement window looks', 'fenster'); ?>">
-                        <?php foreach ($style_options as $option_index => $option) : ?>
-                            <button
-                                type="button"
-                                class="fg-cw-style__option"
-                                data-fg-choice-option
-                                aria-pressed="<?php echo $option_index === 0 ? 'true' : 'false'; ?>"
-                                data-preview-src="<?php echo esc_url(fenster_generated_url($asset_base . $option['file'] . '.webp')); ?>"
-                                data-preview-alt="<?php echo esc_attr($option['alt']); ?>"
-                                data-preview-name="<?php echo esc_attr($option['name']); ?>"
-                                data-preview-copy="<?php echo esc_attr($option['copy']); ?>"
-                            >
-                                <img src="<?php echo esc_url(fenster_generated_url($asset_base . $option['thumb'] . '.webp')); ?>" alt="" loading="lazy" width="56" height="56">
-                                <span><?php echo esc_html($option['name']); ?></span>
-                            </button>
-                        <?php endforeach; ?>
-                    </div>
-                    <p class="fg-cw-style__copy" data-fg-choice-copy><?php echo esc_html($style_options[0]['copy']); ?></p>
-                    <p class="fg-cw-links">
-                        <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('All sixteen colours', 'fenster'); ?></a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section id="casement-opening-styles" class="fg-cw-layouts" aria-labelledby="fg-cw-layouts-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
