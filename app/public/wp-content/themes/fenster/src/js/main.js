@@ -3820,13 +3820,17 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     }
 
     if (tile && deployed > 0) {
-      /* Slats are stamped from the top of the drop down, so the wobble index
-         follows the slat rather than the row: raising the blind takes slats
-         out of the drop and their neighbours keep the character they had. */
-      const first = SLAT_COUNT - deployed;
+      /* The wobble index is the slat, not the row, and the slats still hanging
+         are the top ones: slat 0 is under the head and stays there until the
+         rising stack reaches it. Indexing from `SLAT_COUNT - deployed` instead
+         shifted every slat's offset, gain and lean along by one each time one
+         was taken up, so the whole blind appeared to creep and roll as it was
+         raised when each slat should sit dead still until it is bunched. That
+         offset was correct only while the stack was drawn under the head, and
+         was left behind when the stack moved to the foot. */
       const midX = blindX + blindW / 2;
       for (let i = 0; i < deployed; i += 1) {
-        const w = wobble[first + i] || { offset: 0, gain: 0, lean: 0 };
+        const w = wobble[i] || { offset: 0, gain: 0, lean: 0 };
         const y = topPx + i * pitchPx + w.offset * pitchPx * 0.16;
         ctx.globalAlpha = 1 + w.gain * 0.16;
         /* A fifth of a degree of lean per slat. It is far too small to see on
