@@ -67,7 +67,7 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
-## 2026-08-04 - Casement: the Excalibur named, and floated on the security band
+## 2026-08-04 - Casement: the Excalibur named, and floated on the security band (test, c6f61ab)
 
 - **The mechanism has a name now.** The owner confirmed the Kenrick Excalibur,
   so `$security_points` states it and the security chapter leads on a cut-out
@@ -96,6 +96,25 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
 - The contact shadow is a CSS `drop-shadow` on the alpha rather than baked into
   the file, so the part can move to a light section without carrying a dark
   rectangle with it.
+- **`.fg-cas p` is (0,1,1) and beats a bare class.** It sets a font size, a
+  margin and a max-width, so `.fg-cas-lock__brand` rendered at 16px instead of
+  33.6px and the footnote lost its top margin and sat flush against the last
+  specification. Anything typographic added inside `.fg-cas` has to be
+  qualified with the namespace or it silently loses. Measuring found this;
+  looking at the render, "a bit small" was easy to read as intentional.
+- **A `margin` shorthand on an element that is also a `.container` un-centres
+  it.** `margin: x 0 y` reset the horizontal auto margin and moved the whole
+  band 12px left. Use `margin-top` and `margin-bottom` longhands on any element
+  carrying `.container`. Caught because the probe printed `left=` and the
+  number changed between runs, not because it was visible.
+- **Verifying the parallax needed the transition switched off first.** With
+  `transition: transform 120ms` the computed transform reads as an identity
+  matrix under `--virtual-time-budget`, because rAF is throttled and the
+  transition never advances past its start. Setting `style.transition='none'`
+  and forcing a reflow before reading returns the real
+  `matrix(1, 0, 0, 1, 0, -27)`. Without that step this would have looked like a
+  parallax that does nothing, which is the same symptom as the 2026-07-29 bug
+  and would have sent me to fix code that was already correct.
 
 ## 2026-08-04 - Casement: the owner's list, and a claim on somebody else's job (test, 597c58e)
 
