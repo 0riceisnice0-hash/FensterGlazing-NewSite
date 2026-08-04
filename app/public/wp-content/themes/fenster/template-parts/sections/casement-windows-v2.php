@@ -172,6 +172,29 @@ $faq_schema = [
         </figure>
     </section>
 
+    <?php /* The film, high on the page where a product film belongs. */ ?>
+    <section class="fg-cas-film" aria-labelledby="fg-cas-film-title">
+        <div class="container fg-cas-film__grid">
+            <div>
+                <p class="fg-cas-eyebrow"><?php esc_html_e('Coming to this page', 'fenster'); ?></p>
+                <h2 id="fg-cas-film-title" class="fg-cas-display"><?php esc_html_e('A set of casements, going in.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('We are filming a real installation with our own fitters, from the first survey measure to the final wipe-down. No actors and no showroom set. It will play here.', 'fenster'); ?></p>
+            </div>
+            <figure class="fg-cas-film__media">
+                <?php if ($film_src !== '') : ?>
+                    <video autoplay muted loop playsinline poster="<?php echo esc_url(fenster_generated_url($base . 'casement-installation-900w.webp')); ?>">
+                        <source src="<?php echo esc_url(fenster_generated_url($film_src)); ?>" type="video/mp4">
+                    </video>
+                <?php else : ?>
+                    <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-installation-900w.webp')); ?>"
+                        alt="<?php esc_attr_e('Fenster installer fitting a white uPVC casement window frame into a brick opening', 'fenster'); ?>"
+                        loading="lazy" width="900" height="600">
+                    <span class="fg-cas-chip"><i aria-hidden="true"></i><?php esc_html_e('In production', 'fenster'); ?></span>
+                <?php endif; ?>
+            </figure>
+        </div>
+    </section>
+
     <?php /* ---------- 01 VERSATILITY ---------- */ ?>
     <section class="fg-cas-chapter" aria-labelledby="fg-cas-ch1-title">
         <div class="container fg-cas-chapter__head">
@@ -345,29 +368,6 @@ $faq_schema = [
                     </div>
                 <?php endforeach; ?>
             </dl>
-        </div>
-    </section>
-
-    <?php /* ---------- THE FILM ---------- */ ?>
-    <section class="fg-cas-film" aria-labelledby="fg-cas-film-title">
-        <div class="container fg-cas-film__grid">
-            <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('Coming to this page', 'fenster'); ?></p>
-                <h2 id="fg-cas-film-title" class="fg-cas-display"><?php esc_html_e('A set of casements, going in.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('We are filming a real installation with our own fitters, from the first survey measure to the final wipe-down. No actors and no showroom set. It will play here.', 'fenster'); ?></p>
-            </div>
-            <figure class="fg-cas-film__media">
-                <?php if ($film_src !== '') : ?>
-                    <video autoplay muted loop playsinline poster="<?php echo esc_url(fenster_generated_url($base . 'casement-installation-900w.webp')); ?>">
-                        <source src="<?php echo esc_url(fenster_generated_url($film_src)); ?>" type="video/mp4">
-                    </video>
-                <?php else : ?>
-                    <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-installation-900w.webp')); ?>"
-                        alt="<?php esc_attr_e('Fenster installer fitting a white uPVC casement window frame into a brick opening', 'fenster'); ?>"
-                        loading="lazy" width="900" height="600">
-                    <span class="fg-cas-chip"><i aria-hidden="true"></i><?php esc_html_e('In production', 'fenster'); ?></span>
-                <?php endif; ?>
-            </figure>
         </div>
     </section>
 
