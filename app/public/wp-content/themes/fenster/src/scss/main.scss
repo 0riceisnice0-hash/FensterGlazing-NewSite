@@ -36810,15 +36810,25 @@ html.fg-blinds-reveal-locked {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
   gap: clamp(1.25rem, 2.6vw, 2.25rem);
-  align-items: start;
+  /* Stretch, not start. The controls column is the taller of the two, and on
+     start the stage left a column of empty dark panel under the drawing. The
+     canvas scales the window to whatever box it is given, so the honest fix is
+     to give it the height rather than to cap the controls. */
+  align-items: stretch;
+}
+
+.fg-cwd__stage {
+  display: flex;
+  flex-direction: column;
 }
 
 .fg-cwd__canvas-wrap {
   position: relative;
+  flex: 1;
   overflow: hidden;
   margin: 0;
   border-radius: 10px;
-  aspect-ratio: 4 / 3;
+  min-height: clamp(320px, 42vw, 560px);
   background: #dfe4e2;
   box-shadow: 0 30px 70px rgba(0, 10, 14, 0.45);
 }
@@ -37122,6 +37132,8 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cwd__canvas-wrap {
+    flex: 0 0 auto;
+    min-height: 0;
     aspect-ratio: 1 / 1;
   }
 

@@ -7555,20 +7555,27 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
     drawHorns(cell, s, mm);
   };
 
+  /* The readout is what a customer reads down the phone to us, so it is written
+     as sentences rather than as a list of state. */
   const describe = () => {
     const layout = layoutButtons.find((b) => b.dataset.fgCwdLayout === state.layout);
     const layoutName = layout ? layout.textContent.trim() : state.layout;
     const bars = barButtons.find((b) => b.dataset.fgCwdBars === state.bars);
-    const barName = bars ? bars.textContent.trim().toLowerCase() : '';
-    const insideFace = state.match ? `${state.colourLabel} inside` : 'smooth white inside';
+    const barName = bars ? bars.textContent.trim() : '';
+    // Smooth white outside with smooth white inside is one colour said twice.
+    const colourLine = state.match || state.colourLabel === 'Smooth White'
+      ? `${state.colourLabel} inside and out`
+      : `${state.colourLabel} outside, smooth white inside`;
+    const extras = [];
+    if (state.bars !== 'none') extras.push(barName.toLowerCase());
+    if (state.horns) extras.push('mock sash horns');
+    if (state.obscure) extras.push('obscure glass');
     const parts = [
       `${layoutName}, ${state.width} by ${state.height}mm`,
-      `${state.colourLabel} outside with ${insideFace}`,
-      state.bars === 'none' ? 'no glazing bars' : barName,
+      colourLine,
+      extras.length ? `With ${extras.join(', ')}` : 'No glazing bars',
+      `${state.handleLabel} handles`,
     ];
-    if (state.horns) parts.push('mock sash horns');
-    if (state.obscure) parts.push('obscure glass');
-    parts.push(`${state.handleLabel} handles`);
     return `${parts.join('. ')}.`;
   };
 
