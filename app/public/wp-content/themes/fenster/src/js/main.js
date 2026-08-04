@@ -3521,11 +3521,11 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       railW,
       railTop: L.glassY,
       railBottom: bottom,
-      tilt: { top: top + h * 0.6, bottom: top + span * 0.26 },
+      tilt: { top: top + h * 0.6, bottom: top + span * 0.2 },
       /* Inverted on the owner's instruction, and it is how the geared magnet
          actually runs: the magnet at the top of its travel is the blind down
          and closed, and pulling it down is what raises the blind open. */
-      lift: { top: top + span * 0.46, bottom: bottom - h * 0.6 },
+      lift: { top: top + span * 0.36, bottom: bottom - h * 0.6 },
     };
   };
 
@@ -3561,6 +3561,13 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
        to a rolled slat in the same colour still reads as a different material,
        and without the shift the frame and a closed blind merge into one slab. */
     const shell = mixRgb(shownFace, { r: 108, g: 112, b: 114 }, 0.16);
+    /* How far shading is allowed to travel from the base colour. On a dark
+       frame a groove has to go a long way down to read at all; on a white one
+       the same ratio turns it grey, which is what made the rail and the
+       magnets look dirty on the white finishes. Light colours therefore get a
+       shallower floor and dark colours a deeper one. */
+    const shellLum = (0.2126 * shell.r + 0.7152 * shell.g + 0.0722 * shell.b) / 255;
+    const floor = (k) => k + (1 - k) * shellLum * 0.82;
 
     /* Warm edge spacer, visible only along the foot. Everywhere else the
        cassette stands in front of it. */
@@ -3579,10 +3586,10 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       const grad = vertical
         ? ctx.createLinearGradient(x, y, x + w, y)
         : ctx.createLinearGradient(x, y, x, y + h);
-      grad.addColorStop(0, paint(shell, flip ? 0.6 : 1.04, flip ? 0 : 14));
-      grad.addColorStop(0.18, paint(shell, flip ? 0.68 : 0.94, flip ? 0 : 6));
-      grad.addColorStop(0.82, paint(shell, flip ? 0.94 : 0.68, flip ? 6 : 0));
-      grad.addColorStop(1, paint(shell, flip ? 1.04 : 0.58, flip ? 14 : 0));
+      grad.addColorStop(0, paint(shell, flip ? floor(0.6) : 1.04, flip ? 0 : 14));
+      grad.addColorStop(0.18, paint(shell, flip ? floor(0.68) : 0.94, flip ? 0 : 6));
+      grad.addColorStop(0.82, paint(shell, flip ? 0.94 : floor(0.68), flip ? 6 : 0));
+      grad.addColorStop(1, paint(shell, flip ? 1.04 : floor(0.58), flip ? 14 : 0));
       ctx.fillStyle = grad;
       ctx.fillRect(x, y, w, h);
     };
@@ -3603,9 +3610,9 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     /* A groove, read by the highlight along its clear-side edge rather than by
        its own tone: it is the same colour as the member it is cut into. */
     rail.addColorStop(0, paint(shell, 1.12, 22));
-    rail.addColorStop(0.16, paint(shell, 0.44));
-    rail.addColorStop(0.55, paint(shell, 0.34));
-    rail.addColorStop(0.86, paint(shell, 0.52));
+    rail.addColorStop(0.16, paint(shell, floor(0.44)));
+    rail.addColorStop(0.55, paint(shell, floor(0.34)));
+    rail.addColorStop(0.86, paint(shell, floor(0.52)));
     rail.addColorStop(1, paint(shell, 0.94, 12));
     ctx.fillStyle = rail;
     ctx.fillRect(t.railX - t.railW / 2, L.glassY + cassettePx * 0.72, t.railW, L.glassH - spacerPx - cassettePx * 0.72);
@@ -3613,7 +3620,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     /* The magnet caps are the cassette colour taken a shade deeper and read
        glossy against it, so they stand out on a white blind as clearly as on a
        black one. */
-    const cap = mixRgb(shell, { r: 26, g: 29, b: 32 }, 0.42);
+    const cap = mixRgb(shell, { r: 26, g: 29, b: 32 }, 0.16);
 
     ['tilt', 'lift'].forEach((which) => {
       const m = magnetCentre(L, which);
@@ -3639,12 +3646,12 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
          references show a soft, almost even face with the light falling away
          gently to a darker edge on each side. */
       const body = ctx.createLinearGradient(x, y, x + m.w, y);
-      body.addColorStop(0, paint(cap, 0.42));
-      body.addColorStop(0.12, paint(cap, 0.78, 4));
-      body.addColorStop(0.34, paint(cap, 0.98, 12));
-      body.addColorStop(0.58, paint(cap, 0.92, 8));
-      body.addColorStop(0.84, paint(cap, 0.7, 2));
-      body.addColorStop(1, paint(cap, 0.4));
+      body.addColorStop(0, paint(cap, floor(0.42)));
+      body.addColorStop(0.12, paint(cap, floor(0.78), 4));
+      body.addColorStop(0.34, paint(cap, floor(0.98), 12));
+      body.addColorStop(0.58, paint(cap, floor(0.92), 8));
+      body.addColorStop(0.84, paint(cap, floor(0.7), 2));
+      body.addColorStop(1, paint(cap, floor(0.4)));
       ctx.fillStyle = body;
       ctx.fill();
       ctx.restore();
