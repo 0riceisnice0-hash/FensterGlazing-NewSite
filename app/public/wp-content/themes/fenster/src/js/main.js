@@ -2968,8 +2968,8 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
   /* Millimetres. A window sash rather than a door leaf, because at door
      height the slats fall below two pixels each and the tilt stops reading. */
-  const GLASS_W = 500;
-  const GLASS_H = 660;
+  const GLASS_W = 520;
+  const GLASS_H = 700;
   const SLAT = 12.5;
   const SLAT_T = 0.18;
   const PITCH = 11.9;
@@ -2984,10 +2984,14 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
      glazing bead. Anthracite, because that is the unit the reference shows and
      because the hardware inside the glass is matched to the frame rather than
      to the slats. */
-  const OUTER = 24;
-  const GROOVE = 3;
-  const SASH = 19;
-  const BEAD = 9;
+  /* Slimmer than the showroom sample it was drawn from, deliberately. The
+     blind's own cassette is fifty millimetres a side, and at the sample's full
+     section the two borders together swallowed the glass. The window is the
+     surround here; the blind unit is the subject. */
+  const OUTER = 14;
+  const GROOVE = 2;
+  const SASH = 11;
+  const BEAD = 6;
   const FRAME = OUTER + GROOVE + SASH + GROOVE + BEAD;
   const UPVC = { r: 56, g: 62, b: 66 };
   /* The warm edge spacer round the sealed unit, the blind's own head, and the
@@ -2999,13 +3003,16 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
      rail simply comes to rest on the edge of the glass. The magnets run on the
      right hand member and overhang it, which is what the reference photograph
      shows. Anthracite, matched to the window frame. */
-  const CASSETTE = 20;
+  const CASSETTE = 50;
   const SPACER = 9;
-  /* The blind's own head rail, hanging inside the cassette head, in the slat
-     colour rather than the frame colour. */
-  const HEADRAIL = 16;
-  const MAGNET_W = 30;
-  const MAGNET_H = 58;
+  /* The cassette head is the head, so there is no separate rail band under it.
+     Both are the slat colour now, and drawing two made one flat slab. */
+  const HEADRAIL = 0;
+  /* The slim rail at the inner edge of the frame, at the boundary with the
+     clear, that the two magnets slot onto. */
+  const RAIL_W = 12;
+  const MAGNET_W = 22;
+  const MAGNET_H = 52;
   const UNIT_W = GLASS_W + FRAME * 2;
   const UNIT_H = GLASS_H + FRAME * 2;
   const BLIND_W = GLASS_W - CASSETTE * 2;
@@ -3062,6 +3069,10 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   let visible = true;
   let dragging = null;
   let focused = null;
+  const grabs = new Map();
+  root.querySelectorAll('[data-fg-blind-grab]').forEach((grab) => {
+    grabs.set(grab.dataset.fgBlindGrab, grab);
+  });
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* A hanging blind is not a grating. Real slats sit a fraction off pitch and
@@ -3487,9 +3498,10 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     const top = L.glassY + cassettePx;
     const bottom = L.glassY + L.glassH - spacerPx;
     const span = bottom - top;
-    /* Centred on the right hand cassette member. The magnet is wider than the
-       member and overhangs it onto the glass, as it does on the real unit. */
-    const x = L.glassX + L.glassW - cassettePx / 2;
+    /* On the rail at the inner edge of the right hand member, where the frame
+       meets the clear. The magnets slot onto that rail; they do not sit in the
+       middle of the frame, which is where an earlier pass put them. */
+    const x = L.glassX + L.glassW - cassettePx;
     const w = MAGNET_W * L.scale;
     const h = MAGNET_H * L.scale;
     return {
@@ -3497,6 +3509,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       w,
       h,
       memberW: cassettePx,
+      railW: RAIL_W * L.scale,
       railTop: L.glassY,
       railBottom: bottom,
       tilt: { top: top + h * 0.6, bottom: top + span * 0.26 },
@@ -3532,10 +3545,15 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   const drawInternals = (L, blindX, blindY, blindW, blindH) => {
     const cassettePx = CASSETTE * L.scale;
     const spacerPx = SPACER * L.scale;
-    const headPx = HEADRAIL * L.scale;
     const t = magnetTracks(L);
 
-    /* The warm edge spacer, visible only along the foot. Everywhere else the
+    /* The cassette is colour matched to the slats, on the owner's instruction
+       of 2026-08-04. It is satin rather than the same value: an extrusion next
+       to a rolled slat in the same colour still reads as a different material,
+       and without the shift the frame and a closed blind merge into one slab. */
+    const shell = mixRgb(shownFace, { r: 108, g: 112, b: 114 }, 0.16);
+
+    /* Warm edge spacer, visible only along the foot. Everywhere else the
        cassette stands in front of it. */
     const foot = ctx.createLinearGradient(0, L.glassY + L.glassH - spacerPx, 0, L.glassY + L.glassH);
     foot.addColorStop(0, 'rgba(14,17,20,0.98)');
@@ -3544,19 +3562,18 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     ctx.fillStyle = foot;
     ctx.fillRect(L.glassX, L.glassY + L.glassH - spacerPx, L.glassW, spacerPx);
 
-    /* The cassette: two side members and a head, and deliberately nothing
-       across the bottom. The owner's photograph shows the bottom rail coming
-       to rest straight on the edge of the glass with no member under it. */
+    /* Two side members and a head, about fifty millimetres each, and nothing
+       across the bottom: the bottom rail comes to rest on the edge of the
+       glass. Flat faced with the light along one edge; a bright band down the
+       middle makes each member read as a tube. */
     const member = (x, y, w, h, vertical, flip) => {
       const grad = vertical
         ? ctx.createLinearGradient(x, y, x + w, y)
         : ctx.createLinearGradient(x, y, x, y + h);
-      /* Flat faced, with the light only along one edge. A bright band down
-         the middle made each member read as a tube rather than a channel. */
-      grad.addColorStop(0, paint(UPVC, flip ? 0.4 : 0.94, flip ? 0 : 20));
-      grad.addColorStop(0.2, paint(UPVC, flip ? 0.5 : 0.8, flip ? 0 : 8));
-      grad.addColorStop(0.8, paint(UPVC, flip ? 0.8 : 0.5, flip ? 8 : 0));
-      grad.addColorStop(1, paint(UPVC, flip ? 0.94 : 0.4, flip ? 20 : 0));
+      grad.addColorStop(0, paint(shell, flip ? 0.6 : 1.04, flip ? 0 : 14));
+      grad.addColorStop(0.18, paint(shell, flip ? 0.68 : 0.94, flip ? 0 : 6));
+      grad.addColorStop(0.82, paint(shell, flip ? 0.94 : 0.68, flip ? 6 : 0));
+      grad.addColorStop(1, paint(shell, flip ? 1.04 : 0.58, flip ? 14 : 0));
       ctx.fillStyle = grad;
       ctx.fillRect(x, y, w, h);
     };
@@ -3564,23 +3581,27 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     member(L.glassX + L.glassW - cassettePx, L.glassY, cassettePx, L.glassH - spacerPx, true, true);
     member(L.glassX, L.glassY, L.glassW, cassettePx, false, false);
 
-    /* A shadow off the inner edge of each member onto the blind behind it. */
-    ctx.fillStyle = 'rgba(8,11,14,0.34)';
-    ctx.fillRect(blindX, blindY, blindW, Math.max(0.7, L.scale * 0.7));
-    ctx.fillRect(blindX, blindY, Math.max(0.7, L.scale * 0.7), blindH);
-    ctx.fillRect(blindX + blindW - Math.max(0.7, L.scale * 0.7), blindY, Math.max(0.7, L.scale * 0.7), blindH);
+    /* Shadow off the inner edge of each member onto the blind behind it. */
+    const line = Math.max(0.7, L.scale * 0.7);
+    ctx.fillStyle = 'rgba(8,11,14,0.38)';
+    ctx.fillRect(blindX, blindY, blindW, line);
+    ctx.fillRect(blindX, blindY, line, blindH);
+    ctx.fillRect(blindX + blindW - line, blindY, line, blindH);
 
-    /* The blind's own head rail, in the slat colour rather than the frame
-       colour: it is part of the blind, not part of the cassette. */
-    const head = ctx.createLinearGradient(0, blindY, 0, blindY + headPx);
-    head.addColorStop(0, paint(shownFace, 0.82, 10));
-    head.addColorStop(0.4, paint(shownFace, 1.02, 18));
-    head.addColorStop(0.82, paint(shownFace, 0.74, 4));
-    head.addColorStop(1, paint(shownFace, 0.5));
-    ctx.fillStyle = head;
-    ctx.fillRect(blindX, blindY, blindW, headPx);
-    ctx.fillStyle = 'rgba(8,11,14,0.42)';
-    ctx.fillRect(blindX, blindY + headPx, blindW, Math.max(0.7, L.scale * 0.8));
+    /* The rail, at the inner edge of the right hand member where the frame
+       meets the clear. This is what the magnets slot onto. */
+    const rail = ctx.createLinearGradient(t.x - t.railW / 2, 0, t.x + t.railW / 2, 0);
+    rail.addColorStop(0, paint(shell, 0.5));
+    rail.addColorStop(0.3, paint(shell, 0.66));
+    rail.addColorStop(0.62, paint(shell, 1.06, 16));
+    rail.addColorStop(1, paint(shell, 0.54));
+    ctx.fillStyle = rail;
+    ctx.fillRect(t.x - t.railW / 2, L.glassY + cassettePx * 0.72, t.railW, L.glassH - spacerPx - cassettePx * 0.72);
+
+    /* The magnet caps are the cassette colour taken a shade deeper and read
+       glossy against it, so they stand out on a white blind as clearly as on a
+       black one. */
+    const cap = mixRgb(shell, { r: 26, g: 29, b: 32 }, 0.34);
 
     ['tilt', 'lift'].forEach((which) => {
       const m = magnetCentre(L, which);
@@ -3602,15 +3623,15 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
          even face with one crisp turned edge near the right and thin dark
          returns at both sides. */
       const body = ctx.createLinearGradient(x, y, x + m.w, y);
-      body.addColorStop(0, paint(UPVC, 0.18));
-      body.addColorStop(0.07, paint(UPVC, 0.54, 2));
-      body.addColorStop(0.22, paint(UPVC, 0.92, 22));
-      body.addColorStop(0.4, paint(UPVC, 1.02, 30));
-      body.addColorStop(0.62, paint(UPVC, 0.84, 14));
-      body.addColorStop(0.7, paint(UPVC, 0.36));
-      body.addColorStop(0.79, paint(UPVC, 0.3));
-      body.addColorStop(0.9, paint(UPVC, 0.6, 4));
-      body.addColorStop(1, paint(UPVC, 0.16));
+      body.addColorStop(0, paint(cap, 0.22));
+      body.addColorStop(0.07, paint(cap, 0.58, 2));
+      body.addColorStop(0.22, paint(cap, 0.96, 20));
+      body.addColorStop(0.4, paint(cap, 1.08, 28));
+      body.addColorStop(0.62, paint(cap, 0.88, 12));
+      body.addColorStop(0.7, paint(cap, 0.4));
+      body.addColorStop(0.79, paint(cap, 0.34));
+      body.addColorStop(0.9, paint(cap, 0.64, 4));
+      body.addColorStop(1, paint(cap, 0.2));
       ctx.fillStyle = body;
       ctx.fill();
       ctx.restore();
@@ -3820,6 +3841,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
        run on it. This is the product: the controls are on the frame sealed
        inside the glass, not beside the picture of it. */
     drawInternals(L, blindX, blindY, blindW, blindH);
+    placeGrabs(L);
 
     ctx.restore();
 
@@ -3922,33 +3944,18 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     input.addEventListener('blur', () => { focused = focused === which ? null : focused; nudge(); });
   });
 
-  /* Dragging the magnets. The pointer position is already in the same units the
-     renderer draws in, because the context is scaled by the device pixel ratio
-     rather than the canvas being sized in device pixels, so the bounding box
-     offset is all that is needed. */
-  const localPoint = (event) => {
-    const box = canvas.getBoundingClientRect();
-    return { x: event.clientX - box.left, y: event.clientY - box.top };
-  };
-
-  const hitMagnet = (point) => {
-    const L = layout();
-    /* Generous, and the tilt magnet is tested first: the two travels do not
-       overlap, but a fingertip near the join should not have to be precise. */
-    return ['tilt', 'lift'].find((which) => {
-      const m = magnetCentre(L, which);
-      /* Generous sideways, restrained vertically: the two travels sit close
-         enough at rest that a tall pad makes the hit areas abut. */
-      const padX = Math.max(12, m.w);
-      const padY = Math.max(6, m.w * 0.3);
-      return Math.abs(point.x - m.x) <= m.w / 2 + padX && Math.abs(point.y - m.y) <= m.h / 2 + padY;
-    }) || null;
-  };
-
-  const applyDrag = (which, point) => {
+  /* Dragging the magnets. The two grab elements are positioned over the drawn
+     magnets and are the only things on the stage with `touch-action: none`, so
+     a drag that starts on a magnet is a drag and a drag anywhere else on the
+     glass still scrolls the page. Hit testing the canvas instead could not do
+     that: by the time a pointerdown handler runs, a touch has already been
+     committed to a scroll. */
+  const applyDrag = (which, clientY) => {
     const L = layout();
     const track = magnetTracks(L)[which];
-    const along = clamp((point.y - track.top) / Math.max(1, track.bottom - track.top));
+    const box = canvas.getBoundingClientRect();
+    const y = clientY - box.top;
+    const along = clamp((y - track.top) / Math.max(1, track.bottom - track.top));
     const value = Math.round(along * 200) / 2;
 
     if (which === 'tilt') {
@@ -3963,42 +3970,47 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     nudge();
   };
 
-  canvas.addEventListener('pointerdown', (event) => {
-    const point = localPoint(event);
-    const which = hitMagnet(point);
-    if (!which) return;
-
-    dragging = which;
-    focused = which;
-    /* Only while a magnet is actually held. The rest of the time the stage
-       stays `pan-y` so a thumb landing on it still scrolls the page. */
-    stage.classList.add('is-dragging');
-    canvas.setPointerCapture?.(event.pointerId);
-    event.preventDefault();
-    applyDrag(which, point);
-  });
-
-  canvas.addEventListener('pointermove', (event) => {
-    const point = localPoint(event);
-
-    if (dragging) {
-      event.preventDefault();
-      applyDrag(dragging, point);
-      return;
-    }
-
-    canvas.style.cursor = hitMagnet(point) ? 'grab' : '';
-  });
-
-  const endDrag = (event) => {
-    if (!dragging) return;
-    dragging = null;
-    stage.classList.remove('is-dragging');
-    canvas.releasePointerCapture?.(event.pointerId);
+  const placeGrabs = (L) => {
+    grabs.forEach((grab, which) => {
+      const m = magnetCentre(L, which);
+      /* Padded out to a real touch target. The magnet itself is about sixteen
+         pixels across at the size this renders. */
+      const w = Math.max(46, m.w + 26);
+      const h = Math.max(48, m.h + 16);
+      grab.style.left = `${(m.x - w / 2).toFixed(1)}px`;
+      grab.style.top = `${(m.y - h / 2).toFixed(1)}px`;
+      grab.style.width = `${w.toFixed(1)}px`;
+      grab.style.height = `${h.toFixed(1)}px`;
+    });
   };
 
-  canvas.addEventListener('pointerup', endDrag);
-  canvas.addEventListener('pointercancel', endDrag);
+  grabs.forEach((grab, which) => {
+    grab.addEventListener('pointerdown', (event) => {
+      dragging = which;
+      focused = which;
+      grab.setPointerCapture?.(event.pointerId);
+      grab.classList.add('is-held');
+      event.preventDefault();
+      applyDrag(which, event.clientY);
+    });
+
+    grab.addEventListener('pointermove', (event) => {
+      if (dragging !== which) return;
+      event.preventDefault();
+      applyDrag(which, event.clientY);
+    });
+
+    const release = (event) => {
+      if (dragging !== which) return;
+      dragging = null;
+      grab.classList.remove('is-held');
+      grab.releasePointerCapture?.(event.pointerId);
+    };
+
+    grab.addEventListener('pointerup', release);
+    grab.addEventListener('pointercancel', release);
+  });
+
 
   colourButtons.forEach((button, index) => {
     button.addEventListener('click', () => {

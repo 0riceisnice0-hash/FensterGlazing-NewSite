@@ -37170,7 +37170,7 @@ html.fg-blinds-reveal-locked {
   position: relative;
   /* Matches the unit the renderer lays out, glass plus frame, so the drawing
      fills the box instead of letterboxing inside it. */
-  aspect-ratio: 616 / 776;
+  aspect-ratio: 590 / 770;
   max-height: 620px;
   margin-inline: auto;
   width: 100%;
@@ -37187,12 +37187,29 @@ html.fg-blinds-reveal-locked {
   touch-action: pan-y;
 }
 
-.fg-blind-visualiser__stage.is-dragging {
+/* The only two things on the stage that take a drag. Everything else stays
+   pannable, so a thumb on the glass scrolls the page and a thumb on a magnet
+   works the blind. Switching the whole canvas to `touch-action: none` on
+   pointerdown does not work: a touch has already been committed to a scroll by
+   the time the handler runs, which is why dragging used to pull the page. */
+.fg-blind-visualiser__grab {
+  position: absolute;
+  z-index: 2;
   touch-action: none;
+  cursor: grab;
+  border-radius: 6px;
+  /* Invisible until it matters. On a coarse pointer there is no hover, so the
+     magnets have to carry their own affordance in the drawing. */
+  background: transparent;
 }
 
-.fg-blind-visualiser__canvas {
-  touch-action: inherit;
+.fg-blind-visualiser__grab:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.fg-blind-visualiser__grab.is-held {
+  cursor: grabbing;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .fg-blind-visualiser__canvas,

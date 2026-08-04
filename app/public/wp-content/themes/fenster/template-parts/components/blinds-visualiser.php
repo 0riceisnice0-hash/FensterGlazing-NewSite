@@ -96,6 +96,20 @@ foreach ($colours as $index => $colour) {
                    `display: none` would take them out of the tab order and
                    leave the visualiser operable by mouse alone. */
                 ?>
+                <?php
+                /* Real elements over each magnet rather than hit testing the
+                   canvas. On touch this is the whole difference between the
+                   thing working and not: the stage has to stay pannable so the
+                   page scrolls when a thumb lands on the glass, and switching
+                   the canvas to `touch-action: none` on pointerdown is too
+                   late, because the browser has already committed to a scroll
+                   by then. Only these two carry `touch-action: none`, so a drag
+                   on a magnet is a drag and a drag anywhere else is a scroll.
+                   The controller positions them from the drawn magnets. */
+                ?>
+                <div class="fg-blind-visualiser__grab" data-fg-blind-grab="tilt" aria-hidden="true"></div>
+                <div class="fg-blind-visualiser__grab" data-fg-blind-grab="lift" aria-hidden="true"></div>
+
                 <div class="fg-blind-visualiser__a11y">
                     <label for="<?php echo esc_attr($section_id); ?>-tilt"><?php esc_html_e('Tilt the slats', 'fenster'); ?></label>
                     <?php /* 0 and 100 are both closed, 50 is edge on. That is
