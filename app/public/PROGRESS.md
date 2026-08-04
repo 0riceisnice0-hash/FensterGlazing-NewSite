@@ -67,72 +67,41 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
-## 2026-08-04 - Casement rebuilt around a designer that draws the window (test, 8d960ee)
+## 2026-08-04 - A casement configurator, built and then removed the same day (test)
 
-Owner, on the redesign below: stop plastering the leaks and rebuild the pipe.
-Prioritise the customer, the facts, and find one real wow factor.
+Owner, on the redesign below: stop plastering the leaks and rebuild the pipe,
+with one real wow factor. Then, on what came back: stop that section, we
+already have a far better tool for the same thing, and think showcase for a
+high end product rather than internet game graphics.
 
-- **The diagnosis was right and the first pass was a brochure.** It described a
-  made-to-measure product in prose and photographs and added sections. The page
-  sells a window that is different every time it is made, and nothing on the
-  site let anyone see the one they were describing.
-- **So the page now opens on a designer.** Six layouts, seventeen exterior
-  faces, three bar treatments, horns, six handle finishes, two interior faces,
-  obscure glass and a continuous size, drawn live on a 2D canvas. That is tens
-  of thousands of combinations, which is the test `AI.md` sets for a
-  configurator and the same argument already accepted for the Notan blind.
-  Accepted behaviour is in the Casement Designer Rule in `AI.md`.
-- **The open sash is calculated, not faked.** A slab hinged on one edge
-  projects its face to `w*cos(t)` and its far side to `w*cos(t)+DEPTH*sin(t)`,
-  which at 90 degrees leaves exactly one thickness. Face on is what makes that
-  exact, which is why this is 2D like the blind rather than a WebGL upgrade.
-- **Nothing hit-tests the canvas.** Every control is a real button or a native
-  range. The blind had to grow padded grab elements because a `pointerdown`
-  handler cannot cancel a scroll the browser has already committed to; with no
-  canvas gesture that whole class of bug cannot occur here.
-- **Three facts the drawing teaches that the prose could not.** A fixed pane is
-  glazed straight into the frame and visibly holds more glass than an opener
-  the same size. Georgian bars sit inside the unit and the reflection runs over
-  them while astragal bars sit on the face and cast a shadow. And an open sash
-  shows a smooth white rebate unless the foil is on both faces, which
-  `colour_options` has always said in words and nothing had ever shown.
-- **Every value comes from `site-data`.** Foils from `colour_options`, finishes
-  from `window_handles`. The three woodgrains gained a `grain` flag next to the
-  colour, the same pattern as `glitter` on the Notan slats, rather than a
-  renderer guessing from the name.
-- **Six faults found by rendering nine states and looking at them**, not by
-  reading the code. Every pane restarted its own gradient and its own diagonal
-  highlight, so a cottage window carried eight identical reflections: glass now
-  reflects one scene laid out in whole-window coordinates, and that single
-  change is what separated painted panels from glazing. Woodgrains drew as flat
-  brown plastic. Obscure glass was mosaic tiles, because the step was sized
-  from the window instead of in drawing pixels. Horns read as feet. The inside
-  view washed out, a smooth white frame on a wall painted as pale as the frame.
-  And the open state read as a sash that had shrunk beside a bar of ink, fixed
-  by opening to 58 degrees rather than 34 and drawing the friction stay across
-  the gap, confined to the gap because across the sash it would be an arm lying
-  on the glass.
-- **A control that changes no pixel reads as broken.** Hashing the canvas
-  before and after every control caught Match colour inside doing nothing: the
-  interior face is only visible from indoors or on an open rebate. It turns the
-  view round now, as the handle finishes already did. Looking at the page would
-  not have caught it.
-- **The stage is sticky, after both alternatives were tried and measured.**
-  Stretched to the controls it put a landscape window in a portrait box;
-  aligned to the top it left 535px of empty panel. Sticky keeps the drawing
-  with you while you work down the options, which is what a configurator is
-  for. Static below 1080px, where it would cover the controls it answers.
-- **A sticky check that lied.** The first verification reported the stage not
-  sticking; the probe had simply failed to scroll, because Lenis owns the
-  scroll on this site and `window.scrollTo` does nothing, exactly as `nick.md`
-  warns. Verified structurally instead: `position: sticky`, `top` resolving to
-  88px rather than `auto`, and no scroll-container ancestor. The construction
-  explorer on the same page has used the identical pattern since July.
-- Verified on test: 37 controls, all real buttons carrying `aria-pressed`, both
-  ranges labelled, the readout an `aria-live` region and the canvas a labelled
-  `img`. At 390 the page is 390 wide with nothing overflowing, no control under
-  32px and the designer live. No PHP notices.
-- Test deployment only. Live is untouched.
+**Both corrections were right, and the second is the one worth keeping.**
+
+- What was built: a canvas configurator at the top of the page drawing the
+  specified window across six layouts, seventeen foils, three bar treatments,
+  horns, six handle finishes, two interior faces and a continuous size. It was
+  honest work. The open sash was exact orthographic projection, every value
+  came from `site-data`, nothing hit-tested the canvas, and nine rendered
+  states were checked by hashing the canvas before and after every control,
+  which is what caught a toggle that changed no pixel.
+- **It was still the wrong thing to build, for two reasons neither of which is
+  a bug.** The site already has a configurator that does the same job and then
+  gives a real price: the WindowCAD tool is the documented differentiator and
+  the strongest lead route on the site. A second one that only draws competes
+  with it for the same click and wins nothing. And a vector drawing of a
+  premium product reads as a game asset next to real photography, however
+  carefully the light is derived. A showcase page for a high end product is
+  photographs.
+- **Removed in full**: the component, the controller, the stylesheet block and
+  the `grain` flag added to `colour_options` for the renderer. Nothing is left
+  behind; `fg-cwd` returns zero in source and in both compiled assets.
+- `HANDOVER.md` records the decision on the casement section so the next
+  session does not rebuild it, and points any future demand for interactivity
+  at the quote embed instead.
+- **The lesson, written down because it cost a day.** Before building an
+  interactive feature, check what the site already does. The test in `AI.md`
+  is whether a configurator answers a question a photograph cannot; the test
+  it does not state, and now does by way of this entry, is whether something
+  on the site already answers it better.
 
 ## 2026-08-04 - Casement page redesigned around film, personalisation and the flush comparison (test, cf54f3b)
 

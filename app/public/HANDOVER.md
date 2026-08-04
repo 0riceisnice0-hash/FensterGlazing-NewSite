@@ -433,12 +433,11 @@ Template: `template-parts\sections\casement-windows-v2.php`, dispatched from `te
 
 Current accepted behaviour, rebuilt 2026-08-04:
 
-- **The page opens on a designer, not on prose.** `template-parts\components\casement-designer.php` draws the window the visitor specifies on a 2D canvas. See the Casement Designer Rule in `AI.md` before touching it; every value it shows comes from `inc\site-data.php`.
-- Section order is designer, evidence strip, film band, intro with the EnergyPlus banner, opening styles, moving parts, casement or flush, construction explorer, real homes gallery, CTA, specification decisions, colour grid, handle grid, quote embed, FAQs, case studies, enquiry, reviews.
+- **The page is photography-led, and the interactive moment is the real quote tool.** A drawn canvas configurator was built here on 2026-08-04 and removed the same day on the owner's instruction: the WindowCAD tool already configures a window *and* prices it, so a second configurator competed with the thing that converts, and a vector drawing read as a game graphic rather than a premium product. Do not rebuild it. If this page needs more interactivity, route harder to `#fenster-product-quote`.
+- Section order is detail strip, film band, intro with the EnergyPlus banner, opening styles, moving parts, casement or flush, construction explorer, real homes gallery, CTA, specification decisions, colour grid, handle grid, quote embed, FAQs, case studies, enquiry, reviews.
 - **A slot near the top is reserved for an installation film.** `$film_src` at the top of the template is empty, so the band renders the installer photograph with an in-production chip. Setting that one variable to a theme path plays the mp4 in the same frame; nothing else needs changing.
-- **The evidence strip under the designer is not decoration.** Astragal and horn, Georgian bars and leaded glass, photographed, so the drawn options are backed by the real thing the way the foil swatches and handle photographs back the colour and handle choices further down.
+- **The detail strip is the decorative options, photographed.** Astragal and horn, Georgian bars and leaded glass, at the scale a customer would see them. It does the same job for bars and lead that the foil swatches and handle photographs do for colour and hardware.
 - **The casement or flush section is annotated photography.** Numbered markers on the Cranfield window point at the proud sash and the directly glazed fixed pane; the flush three-light beside it shows the level sash and matched dummy lights. Both are stated A+ and both figures shown, per the even-handed comparison rule.
-- The five-photograph personalisation stage that briefly stood between these two is gone: the designer answers the same question properly.
 - Opening styles describes hardware, not names. The Leighton Buzzard photograph beside it shows two side-hung sashes around a fixed pane, and the copy says so; it previously claimed three of the four layouts.
 
 ### Colour Options Pages

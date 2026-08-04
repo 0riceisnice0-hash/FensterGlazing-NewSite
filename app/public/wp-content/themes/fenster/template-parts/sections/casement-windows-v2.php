@@ -133,31 +133,21 @@ $faq_schema = [
 ];
 ?>
 
-<?php
-/* The designer opens the page. The hero and the four-tile specification strip
-   have already said what the product is and what it reaches; this is where the
-   visitor starts making the decisions, which is the job the page exists to do.
-   It sits outside the .fg-cw wrapper because it paints its own dark canvas and
-   owns its own type, the same arrangement the gallery band uses. */
-get_template_part('template-parts/components/casement-designer', null, [
-    'quote_url' => $quote_url,
-]);
-?>
-
 <div class="fg-cw">
     <?php
-    /* Photographs of the three dressings the designer draws, so the drawing is
-       backed by the real thing rather than asking to be taken on trust. The
-       same job the foil swatches and handle photographs do further down. */
+    /* The decorative detail, photographed at the scale you would actually see
+       it. Bars, horns and lead are the difference between a replacement window
+       and one that suits the house, and they are the three things customers
+       ask to see rather than read about. */
     ?>
     <section class="fg-cw-proof" aria-labelledby="fg-cw-proof-title">
         <div class="container">
             <div class="fg-cw-head">
                 <div>
-                    <p class="eyebrow"><?php esc_html_e('Photographed, not drawn', 'fenster'); ?></p>
-                    <h2 id="fg-cw-proof-title"><?php esc_html_e('The same three options, on real windows.', 'fenster'); ?></h2>
+                    <p class="eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
+                    <h2 id="fg-cw-proof-title" class="fg-cw-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('A drawing is only worth looking at if the thing it describes exists. These are ours and Liniar\'s, uncropped and unretouched.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Georgian bars sit inside the sealed unit, so the glass still wipes clean as one pane. Astragal bars are bonded to the face and catch the light. Mock sash horns finish the sash the way a period window does. All three are priced with the window, not added afterwards.', 'fenster'); ?></p>
             </div>
             <div class="fg-cw-proof__grid">
                 <figure>
