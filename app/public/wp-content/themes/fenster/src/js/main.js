@@ -2994,16 +2994,22 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
      rail the two magnets run on. The rail is slim and sits near the right of
      the glass; there is no wide colour matched border, which an earlier pass
      had wrongly drawn all the way round. */
-  const SPACER = 10;
-  const HEADRAIL = 18;
-  const RAIL_W = 10;
-  const RAIL_INSET = 32;
-  const MAGNET_W = 32;
+  /* The blind's own framework inside the sealed unit. It is a U: two side
+     members and a head, and nothing along the bottom, where the blind's bottom
+     rail simply comes to rest on the edge of the glass. The magnets run on the
+     right hand member and overhang it, which is what the reference photograph
+     shows. Anthracite, matched to the window frame. */
+  const CASSETTE = 20;
+  const SPACER = 9;
+  /* The blind's own head rail, hanging inside the cassette head, in the slat
+     colour rather than the frame colour. */
+  const HEADRAIL = 16;
+  const MAGNET_W = 30;
   const MAGNET_H = 58;
   const UNIT_W = GLASS_W + FRAME * 2;
   const UNIT_H = GLASS_H + FRAME * 2;
-  const BLIND_W = GLASS_W - SPACER * 2;
-  const BLIND_H = GLASS_H - SPACER * 2;
+  const BLIND_W = GLASS_W - CASSETTE * 2;
+  const BLIND_H = GLASS_H - CASSETTE - SPACER;
   const DROP = BLIND_H - HEADRAIL - RAIL;
   const SLAT_COUNT = Math.floor(DROP / PITCH);
   /* Real tilt mechanisms stop short of ninety degrees. Stopping at seventy
@@ -3476,31 +3482,35 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
      a magnet drawn somewhere it cannot be grabbed is the obvious way for this
      to break. */
   const magnetTracks = (L) => {
+    const cassettePx = CASSETTE * L.scale;
     const spacerPx = SPACER * L.scale;
-    const blindY = L.glassY + spacerPx;
-    const blindH = L.glassH - spacerPx * 2;
-    const x = L.glassX + L.glassW - spacerPx - RAIL_INSET * L.scale;
+    const top = L.glassY + cassettePx;
+    const bottom = L.glassY + L.glassH - spacerPx;
+    const span = bottom - top;
+    /* Centred on the right hand cassette member. The magnet is wider than the
+       member and overhangs it onto the glass, as it does on the real unit. */
+    const x = L.glassX + L.glassW - cassettePx / 2;
     const w = MAGNET_W * L.scale;
     const h = MAGNET_H * L.scale;
-    const headPx = HEADRAIL * L.scale;
     return {
       x,
       w,
       h,
-      railW: RAIL_W * L.scale,
-      railTop: blindY + headPx,
-      railBottom: blindY + blindH,
-      tilt: { top: blindY + headPx + h * 0.7, bottom: blindY + blindH * 0.36 },
-      /* Lift reads the way the blind moves: the magnet at the top of its
-         travel is the blind raised, at the bottom it is fully down. */
-      lift: { top: blindY + blindH * 0.46, bottom: blindY + blindH - h * 0.7 },
+      memberW: cassettePx,
+      railTop: L.glassY,
+      railBottom: bottom,
+      tilt: { top: top + h * 0.6, bottom: top + span * 0.26 },
+      /* Inverted on the owner's instruction, and it is how the geared magnet
+         actually runs: the magnet at the top of its travel is the blind down
+         and closed, and pulling it down is what raises the blind open. */
+      lift: { top: top + span * 0.46, bottom: bottom - h * 0.6 },
     };
   };
 
   const magnetCentre = (L, which) => {
     const t = magnetTracks(L);
     const track = t[which];
-    const amount = which === 'tilt' ? tilt / 100 : 1 - lift / 100;
+    const amount = which === 'tilt' ? tilt / 100 : lift / 100;
     return { x: t.x, y: track.top + (track.bottom - track.top) * clamp(amount, 0, 1), w: t.w, h: t.h };
   };
 
@@ -3520,51 +3530,57 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
      of it is matched to the window frame rather than to the slats, which is
      what the owner's unit shows: anthracite hardware against silver slats. */
   const drawInternals = (L, blindX, blindY, blindW, blindH) => {
+    const cassettePx = CASSETTE * L.scale;
     const spacerPx = SPACER * L.scale;
     const headPx = HEADRAIL * L.scale;
+    const t = magnetTracks(L);
 
-    /* Warm edge spacer. A thin, near black band round the perimeter of the
-       sealed unit, in front of the blind's own edges. */
-    const spacer = (x, y, w, h, vertical, flip) => {
+    /* The warm edge spacer, visible only along the foot. Everywhere else the
+       cassette stands in front of it. */
+    const foot = ctx.createLinearGradient(0, L.glassY + L.glassH - spacerPx, 0, L.glassY + L.glassH);
+    foot.addColorStop(0, 'rgba(14,17,20,0.98)');
+    foot.addColorStop(0.55, 'rgba(24,28,32,0.96)');
+    foot.addColorStop(1, 'rgba(10,13,16,0.99)');
+    ctx.fillStyle = foot;
+    ctx.fillRect(L.glassX, L.glassY + L.glassH - spacerPx, L.glassW, spacerPx);
+
+    /* The cassette: two side members and a head, and deliberately nothing
+       across the bottom. The owner's photograph shows the bottom rail coming
+       to rest straight on the edge of the glass with no member under it. */
+    const member = (x, y, w, h, vertical, flip) => {
       const grad = vertical
-        ? f2(x, y, x, y + h, flip)
-        : f2(x, y, x + w, y, flip);
+        ? ctx.createLinearGradient(x, y, x + w, y)
+        : ctx.createLinearGradient(x, y, x, y + h);
+      /* Flat faced, with the light only along one edge. A bright band down
+         the middle made each member read as a tube rather than a channel. */
+      grad.addColorStop(0, paint(UPVC, flip ? 0.4 : 0.94, flip ? 0 : 20));
+      grad.addColorStop(0.2, paint(UPVC, flip ? 0.5 : 0.8, flip ? 0 : 8));
+      grad.addColorStop(0.8, paint(UPVC, flip ? 0.8 : 0.5, flip ? 8 : 0));
+      grad.addColorStop(1, paint(UPVC, flip ? 0.94 : 0.4, flip ? 20 : 0));
       ctx.fillStyle = grad;
       ctx.fillRect(x, y, w, h);
     };
-    const f2 = (x0, y0, x1, y1, flip) => {
-      const grad = ctx.createLinearGradient(x0, y0, x1, y1);
-      grad.addColorStop(0, flip ? 'rgba(28,32,36,0.98)' : 'rgba(12,15,18,0.99)');
-      grad.addColorStop(0.6, 'rgba(20,24,28,0.97)');
-      grad.addColorStop(1, flip ? 'rgba(10,13,16,0.99)' : 'rgba(34,39,44,0.96)');
-      return grad;
-    };
-    spacer(L.glassX, L.glassY, L.glassW, spacerPx, true, false);
-    spacer(L.glassX, L.glassY + L.glassH - spacerPx, L.glassW, spacerPx, true, true);
-    spacer(L.glassX, L.glassY, spacerPx, L.glassH, false, false);
-    spacer(L.glassX + L.glassW - spacerPx, L.glassY, spacerPx, L.glassH, false, true);
+    member(L.glassX, L.glassY, cassettePx, L.glassH - spacerPx, true, false);
+    member(L.glassX + L.glassW - cassettePx, L.glassY, cassettePx, L.glassH - spacerPx, true, true);
+    member(L.glassX, L.glassY, L.glassW, cassettePx, false, false);
 
-    /* The blind's head, in the frame colour. */
+    /* A shadow off the inner edge of each member onto the blind behind it. */
+    ctx.fillStyle = 'rgba(8,11,14,0.34)';
+    ctx.fillRect(blindX, blindY, blindW, Math.max(0.7, L.scale * 0.7));
+    ctx.fillRect(blindX, blindY, Math.max(0.7, L.scale * 0.7), blindH);
+    ctx.fillRect(blindX + blindW - Math.max(0.7, L.scale * 0.7), blindY, Math.max(0.7, L.scale * 0.7), blindH);
+
+    /* The blind's own head rail, in the slat colour rather than the frame
+       colour: it is part of the blind, not part of the cassette. */
     const head = ctx.createLinearGradient(0, blindY, 0, blindY + headPx);
-    head.addColorStop(0, paint(UPVC, 0.86, 12));
-    head.addColorStop(0.45, paint(UPVC, 1.04, 20));
-    head.addColorStop(1, paint(UPVC, 0.6));
+    head.addColorStop(0, paint(shownFace, 0.82, 10));
+    head.addColorStop(0.4, paint(shownFace, 1.02, 18));
+    head.addColorStop(0.82, paint(shownFace, 0.74, 4));
+    head.addColorStop(1, paint(shownFace, 0.5));
     ctx.fillStyle = head;
     ctx.fillRect(blindX, blindY, blindW, headPx);
-    ctx.fillStyle = 'rgba(8,11,14,0.4)';
+    ctx.fillStyle = 'rgba(8,11,14,0.42)';
     ctx.fillRect(blindX, blindY + headPx, blindW, Math.max(0.7, L.scale * 0.8));
-
-    const t = magnetTracks(L);
-
-    /* The rail. Slim, and nothing like the wide colour matched border an
-       earlier pass drew: on the real unit the glass runs almost to the bead and
-       the only thing standing in front of the blind is this. */
-    const rail = ctx.createLinearGradient(t.x - t.railW / 2, 0, t.x + t.railW / 2, 0);
-    rail.addColorStop(0, paint(UPVC, 0.3));
-    rail.addColorStop(0.4, paint(UPVC, 0.78, 10));
-    rail.addColorStop(1, paint(UPVC, 0.34));
-    ctx.fillStyle = rail;
-    ctx.fillRect(t.x - t.railW / 2, t.railTop, t.railW, t.railBottom - t.railTop);
 
     ['tilt', 'lift'].forEach((which) => {
       const m = magnetCentre(L, which);
@@ -3688,11 +3704,12 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
     if (scene && scene.view) ctx.drawImage(scene.view, L.glassX, L.glassY, L.glassW, L.glassH);
 
+    const cassettePx = CASSETTE * L.scale;
     const spacerPx = SPACER * L.scale;
-    const blindX = L.glassX + spacerPx;
-    const blindY = L.glassY + spacerPx;
-    const blindW = L.glassW - spacerPx * 2;
-    const blindH = L.glassH - spacerPx * 2;
+    const blindX = L.glassX + cassettePx;
+    const blindY = L.glassY + cassettePx;
+    const blindW = L.glassW - cassettePx * 2;
+    const blindH = L.glassH - cassettePx - spacerPx;
     const headPx = HEADRAIL * L.scale;
     const railPx = RAIL * L.scale;
     const raised = clamp(lift / 100, 0, 1);
@@ -3920,8 +3937,10 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
        overlap, but a fingertip near the join should not have to be precise. */
     return ['tilt', 'lift'].find((which) => {
       const m = magnetCentre(L, which);
+      /* Generous sideways, restrained vertically: the two travels sit close
+         enough at rest that a tall pad makes the hit areas abut. */
       const padX = Math.max(12, m.w);
-      const padY = Math.max(10, m.w * 0.7);
+      const padY = Math.max(6, m.w * 0.3);
       return Math.abs(point.x - m.x) <= m.w / 2 + padX && Math.abs(point.y - m.y) <= m.h / 2 + padY;
     }) || null;
   };
@@ -3930,7 +3949,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     const L = layout();
     const track = magnetTracks(L)[which];
     const along = clamp((point.y - track.top) / Math.max(1, track.bottom - track.top));
-    const value = Math.round((which === 'tilt' ? along : 1 - along) * 200) / 2;
+    const value = Math.round(along * 200) / 2;
 
     if (which === 'tilt') {
       tiltTarget = value;
