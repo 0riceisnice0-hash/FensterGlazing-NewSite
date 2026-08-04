@@ -97,6 +97,16 @@ high end product rather than internet game graphics.
 - `HANDOVER.md` records the decision on the casement section so the next
   session does not rebuild it, and points any future demand for interactivity
   at the quote embed instead.
+- **The removal broke the section below it, and the guard did not catch it.**
+  The designer's stylesheet block sat directly above the film block, and the
+  slice that deleted it ran to the next marker rather than to the end of its
+  own rules, so the film band shipped to test with no dark panel, a full-width
+  poster and its in-production chip loose on the page. The assertion protecting
+  that cut checked the neighbour on the far side and never checked
+  `fg-cw-film` was absent from what it was about to delete. **An assertion on a
+  slice has to name what must not be in it, not only what must.** Found by
+  looking at the rendered page; restored from the previous commit and verified
+  rule by rule in the compiled CSS.
 - **The lesson, written down because it cost a day.** Before building an
   interactive feature, check what the site already does. The test in `AI.md`
   is whether a configurator answers a question a photograph cannot; the test
