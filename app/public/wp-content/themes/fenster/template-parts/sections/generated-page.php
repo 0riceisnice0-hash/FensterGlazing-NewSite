@@ -2208,6 +2208,7 @@ if ($is_colour_options) {
                         /* The reverse face is the whole point of BY012, so say
                            so here rather than leaving the swatch to imply a
                            plain white slat. */
+                        'hex_reverse' => (string) ($slat['reverse'] ?? ''),
                         'finish' => ! empty($slat['reverse'])
                             ? trim($code . ' ' . __('two sided, anthracite outside', 'fenster'))
                             : $code,
@@ -2264,7 +2265,17 @@ if ($is_colour_options) {
                 <ul class="fg-colour-rail__track" data-fg-colour-rail-viewport tabindex="0" role="region" aria-label="<?php echo esc_attr(sprintf(__('%s. Scroll or swipe sideways.', 'fenster'), (string) ($material['label'] ?? 'Colours'))); ?>">
                         <?php foreach ($colours as $colour) : ?>
                         <?php $swatch = (string) ($colour['hex'] ?? '#ffffff'); ?>
-                    <li class="fg-colour-rail__slide" style="<?php echo esc_attr('--swatch:' . $swatch); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
+                        <?php
+                        /* A two sided slat carries its reverse face as well, so
+                           the tile shows both rather than reading as a plain
+                           white one. Only the blind colours use it. */
+                        $swatch_reverse = trim((string) ($colour['hex_reverse'] ?? ''));
+                        $swatch_style = '--swatch:' . $swatch;
+                        if ($swatch_reverse !== '') {
+                            $swatch_style .= ';--swatch-reverse:' . $swatch_reverse;
+                        }
+                        ?>
+                    <li class="fg-colour-rail__slide<?php echo $swatch_reverse !== '' ? ' is-two-sided' : ''; ?>" style="<?php echo esc_attr($swatch_style); ?>" data-fg-colour-slide data-colour-slug="<?php echo esc_attr(sanitize_title((string) ($colour['name'] ?? ''))); ?>">
                             <?php
                             /* A near-white swatch on a white card reads as an
                                empty slot rather than a colour, so it takes a
@@ -4209,8 +4220,8 @@ if ($is_commercial_hub) {
                        belongs to whichever window or door the unit goes into,
                        and there is no hardware on the room side at all. */
                     ?>
-                    <h2><?php echo esc_html($is_integral_blinds ? 'Choose the slat colour and the glass.' : ($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.')); ?></h2>
-                    <p><?php echo esc_html($is_integral_blinds ? 'Two choices are yours on a blind unit: the colour of the slats and whether the glass around them is clear or obscured. Frame colour is settled with the window or door the unit is built into, not here.' : ($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.')); ?></p>
+                    <h2><?php echo esc_html($is_integral_blinds ? 'Choose the glass around the blind.' : ($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.')); ?></h2>
+                    <p><?php echo esc_html($is_integral_blinds ? 'The slat colours are further down this page. The other choice on a blind unit is the glass itself: clear, or obscured where the room needs privacy even with the blind open.' : ($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.')); ?></p>
                 </div>
                 <?php
                 /* Built as a list before rendering so the count is known. The
@@ -4223,32 +4234,15 @@ if ($is_commercial_hub) {
                 /* A route that lays the colours out inline does not also need a
                    card pointing at the colour hub: the grid's own note already
                    links there. Same suppression the uPVC foil routes use. */
+                /* Integral blinds render no colour card at all. Frame colour
+                   is not a decision on that route, because the unit goes into
+                   whichever window or door is being made and takes that frame's
+                   colour; and the slat colours that *are* chosen lay out inline
+                   further down the page, with their own link to the hub. A card
+                   pointing at the hub as well is the duplicate the uPVC foil
+                   routes already suppress. */
                 if ($is_integral_blinds) {
-                    /* Frame colour is not a decision on this route: the unit
-                       goes into whichever window or door is being made, and
-                       takes that frame's colour. What is chosen here is the
-                       slat colour, so the card points at the blind section of
-                       the hub rather than the frame finishes. */
-                    /* The colour card's dots are hardcoded frame finishes in
-                       the stylesheet, which on a blind card promised green and
-                       orange slats. Six of the nine real ones are passed
-                       through instead, from the same data the hub reads. */
-                    $slat_dots = array_slice(array_values(array_filter(
-                        array_map(
-                            static fn ($slat) => is_array($slat) ? (string) ($slat['hex'] ?? '') : '',
-                            (array) fenster_data('notan_blind_colours', [])
-                        ),
-                        static fn (string $hex): bool => (bool) preg_match('/^#[0-9a-f]{6}$/i', $hex)
-                    )), 0, 6);
-
-                    $option_cards[] = [
-                        'modifier' => 'colour',
-                        'url' => home_url('/colour-options/#integral-blind-colours'),
-                        'title' => __('Blind colours', 'fenster'),
-                        'copy' => __('Nine standard Notan slat colours, including a two-sided white and anthracite, plus bespoke RAL to order.', 'fenster'),
-                        'cta' => __('See blind colours', 'fenster'),
-                        'dots' => $slat_dots,
-                    ];
+                    // No colour card.
                 } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
                     $option_cards[] = [
                         'modifier' => 'colour',
@@ -4316,19 +4310,9 @@ if ($is_commercial_hub) {
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 3; ?>
-                        <?php
-                        $card_dots = is_array($option_card['dots'] ?? null) ? $option_card['dots'] : [];
-                        $card_dot_style = '';
-                        if (count($card_dots) === 6) {
-                            foreach ($card_dots as $dot_index => $dot_hex) {
-                                $card_dot_style .= '--dot-' . ($dot_index + 1) . ':' . $dot_hex . ';';
-                            }
-                        }
-                        ?>
                         <a
-                            class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo $is_patched_glass ? ' is-glazed' : ''; ?><?php echo $card_dot_style !== '' ? ' has-dots' : ''; ?>"
+                            class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo $is_patched_glass ? ' is-glazed' : ''; ?>"
                             href="<?php echo esc_url($option_card['url']); ?>"
-                            <?php echo $card_dot_style !== '' ? 'style="' . esc_attr($card_dot_style) . '"' : ''; ?>
                         >
                             <?php if ($is_patched_glass) : ?>
                                 <?php
@@ -4362,6 +4346,13 @@ if ($is_commercial_hub) {
 
         <?php if (isset($aluminium_colour_routes[$slug])) : ?>
             <?php get_template_part('template-parts/components/aluminium-colour-grid', null, ['product_noun' => $aluminium_colour_routes[$slug]]); ?>
+        <?php endif; ?>
+
+        <?php /* Slat colours inline, the same as the uPVC and aluminium routes
+                 lay out their frame finishes, rather than behind a card that
+                 links away. Owner instruction, 2026-08-04. */ ?>
+        <?php if ($is_integral_blinds) : ?>
+            <?php get_template_part('template-parts/components/blind-colour-grid'); ?>
         <?php endif; ?>
 
 

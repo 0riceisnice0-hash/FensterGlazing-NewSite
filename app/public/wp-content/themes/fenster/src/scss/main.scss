@@ -8398,20 +8398,6 @@ html.fg-gallery-lightbox-open body {
     -48px 24px 0 #27394f;
 }
 
-/* The default dots above are frame finishes baked into the stylesheet. A card
-   that carries its own six, set from the data it links to, uses those instead:
-   green and orange dots on a blind colours card promised slats that do not
-   exist. `--dot-1` is the top right one, which the base rule paints directly. */
-.fg-product-option-card--colour.has-dots::before {
-  background: var(--dot-1, #f7f6ef);
-  box-shadow:
-    -24px 0 0 var(--dot-2, #94b59f),
-    -48px 0 0 var(--dot-3, #353b3f),
-    0 24px 0 var(--dot-4, #9a5b25),
-    -24px 24px 0 var(--dot-5, #c2c8bd),
-    -48px 24px 0 var(--dot-6, #27394f);
-}
-
 .fg-product-option-card--glass::before {
   background:
     repeating-linear-gradient(125deg, transparent 0 5px, rgba(84, 124, 134, 0.2) 5px 8px),
@@ -35159,6 +35145,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours,
 .fg-upvc-colours,
 .fg-alu-colours,
+.fg-blind-colours,
 .fg-handle-finishes,
 .fg-heritage-door-enquiry {
   padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
@@ -35348,6 +35335,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-configurations__heading,
 .fg-heritage-door-colours__heading,
 .fg-upvc-colours__heading,
+.fg-blind-colours__heading,
 .fg-alu-colours__heading,
 .fg-handle-finishes__heading,
 .fg-heritage-door-use__heading {
@@ -35362,6 +35350,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__heading .eyebrow,
 .fg-alu-colours__heading .eyebrow,
 .fg-upvc-colours__heading .eyebrow,
+.fg-blind-colours__heading .eyebrow,
 .fg-handle-finishes__heading .eyebrow,
 .fg-heritage-door-use__heading .eyebrow {
   grid-column: 1 / -1;
@@ -35371,6 +35360,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__heading h2,
 .fg-alu-colours__heading h2,
 .fg-upvc-colours__heading h2,
+.fg-blind-colours__heading h2,
 .fg-handle-finishes__heading h2,
 .fg-heritage-door-use__heading h2,
 .fg-heritage-door-detail__copy h2,
@@ -35388,6 +35378,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__heading p:not(.eyebrow),
 .fg-alu-colours__heading p:not(.eyebrow),
 .fg-upvc-colours__heading p:not(.eyebrow),
+.fg-blind-colours__heading p:not(.eyebrow),
 .fg-handle-finishes__heading p:not(.eyebrow) {
   max-width: 56ch;
   margin-bottom: 0.2rem;
@@ -35647,6 +35638,7 @@ html.fg-blinds-reveal-locked {
 .fg-heritage-door-colours__grid,
 .fg-upvc-colours__grid,
 .fg-alu-colours__grid,
+.fg-blind-colours__grid,
 .fg-handle-finishes__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -35673,6 +35665,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid li,
 .fg-upvc-colours__grid li,
+.fg-blind-colours__grid li,
 .fg-alu-colours__grid li,
 .fg-handle-finishes__grid li {
   position: relative;
@@ -35731,7 +35724,8 @@ html.fg-blinds-reveal-locked {
    so it moves into the caption, and the label band is cropped off by showing
    only the top 70% of a square source. Cropping in CSS rather than re-cutting
    the files keeps it reversible and leaves the shared assets untouched. */
-.fg-upvc-colours__grid img {
+.fg-upvc-colours__grid img,
+.fg-blind-colours__grid img {
   display: block;
   width: 100%;
   height: auto;
@@ -35743,6 +35737,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid strong,
 .fg-upvc-colours__grid strong,
+.fg-blind-colours__grid strong,
 .fg-alu-colours__grid strong,
 .fg-handle-finishes__grid strong {
   color: var(--color-ink);
@@ -35752,6 +35747,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-heritage-door-colours__grid span,
 .fg-upvc-colours__grid span,
+.fg-blind-colours__grid span,
 .fg-alu-colours__grid span,
 .fg-handle-finishes__grid span {
   color: var(--color-muted);
@@ -35804,7 +35800,8 @@ html.fg-blinds-reveal-locked {
   border-radius: 6px;
 }
 
-.fg-upvc-colours__grid i {
+.fg-upvc-colours__grid i,
+.fg-blind-colours__grid i {
   display: block;
   width: 100%;
   height: auto;
@@ -35815,8 +35812,21 @@ html.fg-blinds-reveal-locked {
   background: var(--swatch, #ffffff);
 }
 
+/* A two sided slat shows both faces on one swatch. Notan draw it as a vertical
+   split; the owner asked for a diagonal on 2026-08-04. A hard stop, not a
+   blend: it is two painted faces, not a gradient between them. */
+.fg-blind-colours__grid i.is-two-sided {
+  background: linear-gradient(
+    135deg,
+    var(--swatch, #ffffff) 0 calc(50% - 0.5px),
+    rgba(15, 49, 54, 0.24) calc(50% - 0.5px) calc(50% + 0.5px),
+    var(--swatch-reverse, var(--swatch, #ffffff)) calc(50% + 0.5px) 100%
+  );
+}
+
 .fg-heritage-door-colours__note,
 .fg-upvc-colours__note,
+.fg-blind-colours__note,
 .fg-alu-colours__note,
 .fg-handle-finishes__note {
   max-width: 68ch;
@@ -37060,6 +37070,18 @@ html.fg-blinds-reveal-locked {
   box-shadow: inset 0 0 0 1px rgba(15, 49, 54, 0.16);
 }
 
+/* A two sided slat shows both faces on one tile, split on the diagonal, so
+   White/Anthracite is not a plain white square on the hub. Hard stop rather
+   than a blend: two painted faces, not a gradient between them. */
+.fg-colour-rail__slide.is-two-sided .fg-colour-rail__media i {
+  background: linear-gradient(
+    135deg,
+    var(--swatch, #ffffff) 0 calc(50% - 0.5px),
+    rgba(15, 49, 54, 0.24) calc(50% - 0.5px) calc(50% + 0.5px),
+    var(--swatch-reverse, var(--swatch, #ffffff)) calc(50% + 0.5px) 100%
+  );
+}
+
 [data-fg-colour-material="upvc"] .fg-colour-rail__media {
   aspect-ratio: 1.42;
 }
@@ -37311,9 +37333,11 @@ html.fg-blinds-reveal-locked {
   height: 26px;
   border: 1px solid rgba(6, 33, 42, 0.22);
   border-radius: 50%;
-  /* Two stops with a hard edge, so White/Anthracite shows both of its faces
-     on the chip exactly as Notan draw it on their own swatch. */
-  background: linear-gradient(90deg, var(--swatch) 0 50%, var(--swatch-reverse) 50% 100%);
+  /* Two stops with a hard edge, so White/Anthracite shows both of its faces on
+     the chip. Diagonal on the owner's instruction; Notan's own swatch splits
+     it vertically. Kept the same as the slat colour grid so one product does
+     not draw the same colour two ways. */
+  background: linear-gradient(135deg, var(--swatch) 0 50%, var(--swatch-reverse) 50% 100%);
 }
 
 .fg-blind-visualiser__colour-name {
