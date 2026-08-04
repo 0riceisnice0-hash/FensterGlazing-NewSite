@@ -37170,7 +37170,7 @@ html.fg-blinds-reveal-locked {
   position: relative;
   /* Matches the unit the renderer lays out, glass plus frame, so the drawing
      fills the box instead of letterboxing inside it. */
-  aspect-ratio: 554 / 714;
+  aspect-ratio: 616 / 776;
   max-height: 620px;
   margin-inline: auto;
   width: 100%;
@@ -37235,6 +37235,8 @@ html.fg-blinds-reveal-locked {
    the matching magnet on the canvas. */
 .fg-blind-visualiser__a11y {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 1px;
   height: 1px;
   overflow: hidden;

@@ -2970,26 +2970,41 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
      height the slats fall below two pixels each and the tilt stops reading. */
   const GLASS_W = 500;
   const GLASS_H = 660;
-  const FRAME = 27;
   const SLAT = 12.5;
   const SLAT_T = 0.18;
   const PITCH = 11.9;
   const STACK_PITCH = 2.15;
   const RAIL = 15;
-  /* The profile's own top member is the head, so the blind starts directly
-     under it. An earlier pass kept a separate 30mm head inside the profile and
-     it rendered as a strip of bare glass above the first slat. */
-  const HEAD = 0;
   /* The Notan profile: the colour matched frame sealed inside the glass that
      the blind hangs in and that the two magnets run on. Notan describe it as a
      slim 30mm fully symmetrical profile, so it borders the glass on all four
      sides rather than only capping the head. */
-  const NOTAN = 24;
+  /* uPVC section, from the owner's photograph of the showroom unit: an outer
+     frame face, a shadow groove, the sash face, a second groove, then the
+     glazing bead. Anthracite, because that is the unit the reference shows and
+     because the hardware inside the glass is matched to the frame rather than
+     to the slats. */
+  const OUTER = 24;
+  const GROOVE = 3;
+  const SASH = 19;
+  const BEAD = 9;
+  const FRAME = OUTER + GROOVE + SASH + GROOVE + BEAD;
+  const UPVC = { r: 56, g: 62, b: 66 };
+  /* The warm edge spacer round the sealed unit, the blind's own head, and the
+     rail the two magnets run on. The rail is slim and sits near the right of
+     the glass; there is no wide colour matched border, which an earlier pass
+     had wrongly drawn all the way round. */
+  const SPACER = 10;
+  const HEADRAIL = 18;
+  const RAIL_W = 10;
+  const RAIL_INSET = 32;
+  const MAGNET_W = 32;
+  const MAGNET_H = 58;
   const UNIT_W = GLASS_W + FRAME * 2;
   const UNIT_H = GLASS_H + FRAME * 2;
-  const BLIND_W = GLASS_W - NOTAN * 2;
-  const BLIND_H = GLASS_H - NOTAN * 2;
-  const DROP = BLIND_H - HEAD - RAIL;
+  const BLIND_W = GLASS_W - SPACER * 2;
+  const BLIND_H = GLASS_H - SPACER * 2;
+  const DROP = BLIND_H - HEADRAIL - RAIL;
   const SLAT_COUNT = Math.floor(DROP / PITCH);
   /* Real tilt mechanisms stop short of ninety degrees. Stopping at seventy
      eight also trims most of the dead zone at each end of the slider, where
@@ -3339,94 +3354,146 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     const f = frameCanvas.getContext('2d');
     if (!f) return { glass, frame: null };
 
-    const framePx = FRAME * L.scale;
-    const beadPx = framePx * 0.34;
-    const facePx = framePx - beadPx;
-    const band = (x, y, w, h, from, to, horizontal) => {
-      const grad = f.createLinearGradient(x, y, horizontal ? x : x + w, horizontal ? y + h : y);
-      grad.addColorStop(0, from);
-      grad.addColorStop(1, to);
-      f.fillStyle = grad;
-      f.fillRect(x, y, w, h);
-    };
+    /* Anthracite uPVC, built from the owner's photograph of the showroom unit
+       rather than as a bezel. What identifies it is the stepped section: an
+       outer frame face, a shadow groove, the sash face, a second groove, then a
+       bead curving down to the glass, with every band mitred at forty five
+       degrees through the corners and carrying a soft highlight along its top
+       edge. A flat rectangle in the same colour reads as a picture frame. */
+    const bands = [
+      { depth: OUTER, top: 0.78, face: 1.24, bottom: 0.92, dome: true },
+      { depth: GROOVE, top: 0.24, face: 0.3, bottom: 0.4 },
+      { depth: SASH, top: 0.86, face: 1.1, bottom: 0.78, dome: true },
+      { depth: GROOVE, top: 0.22, face: 0.28, bottom: 0.38 },
+      { depth: BEAD, top: 1.04, face: 0.82, bottom: 0.46, dome: true },
+    ];
 
-    /* Rebate shadow first, clipped to the glass, so the frame lands on top of
-       its own shadow rather than beside it. */
-    f.save();
-    f.beginPath();
-    f.rect(L.glassX, L.glassY, L.glassW, L.glassH);
-    f.clip();
-    const rebate = Math.max(1.5, framePx * 0.4);
-    const top = f.createLinearGradient(0, L.glassY, 0, L.glassY + rebate);
-    top.addColorStop(0, 'rgba(18,22,26,0.42)');
-    top.addColorStop(1, 'rgba(18,22,26,0)');
-    f.fillStyle = top;
-    f.fillRect(L.glassX, L.glassY, L.glassW, rebate);
-    const left = f.createLinearGradient(L.glassX, 0, L.glassX + rebate, 0);
-    left.addColorStop(0, 'rgba(18,22,26,0.34)');
-    left.addColorStop(1, 'rgba(18,22,26,0)');
-    f.fillStyle = left;
-    f.fillRect(L.glassX, L.glassY, rebate, L.glassH);
-    const right = f.createLinearGradient(L.glassX + L.glassW - rebate, 0, L.glassX + L.glassW, 0);
-    right.addColorStop(0, 'rgba(18,22,26,0)');
-    right.addColorStop(1, 'rgba(18,22,26,0.24)');
-    f.fillStyle = right;
-    f.fillRect(L.glassX + L.glassW - rebate, L.glassY, rebate, L.glassH);
-    f.restore();
+    const tone = (k) => paint(UPVC, k);
+    let inset = 0;
 
-    f.save();
-    f.beginPath();
-    f.rect(L.x, L.y, L.unitW, L.unitH);
-    f.rect(L.glassX, L.glassY, L.glassW, L.glassH);
-    f.clip('evenodd');
-    band(L.x, L.y, L.unitW, facePx, '#dfe2e4', '#b7bbbf', true);
-    band(L.x, L.y + L.unitH - facePx, L.unitW, facePx, '#95999e', '#b4b8bc', true);
-    band(L.x, L.y, facePx, L.unitH, '#d7dadd', '#b1b5b9', false);
-    band(L.x + L.unitW - facePx, L.y, facePx, L.unitH, '#9fa4a8', '#c3c7ca', false);
-    band(L.glassX - beadPx, L.glassY - beadPx, L.glassW + beadPx * 2, beadPx, '#8b9095', '#b6babe', true);
-    band(L.glassX - beadPx, L.glassY + L.glassH, L.glassW + beadPx * 2, beadPx, '#c2c6c9', '#8b9095', true);
-    band(L.glassX - beadPx, L.glassY, beadPx, L.glassH, '#90959a', '#b8bcbf', false);
-    band(L.glassX + L.glassW, L.glassY, beadPx, L.glassH, '#b6babe', '#90959a', false);
-    f.strokeStyle = 'rgba(70,78,84,0.2)';
-    f.lineWidth = Math.max(0.7, L.scale * 0.7);
+    bands.forEach((band) => {
+      const d = band.depth * L.scale;
+      const x0 = L.x + inset;
+      const y0 = L.y + inset;
+      const w0 = L.unitW - inset * 2;
+      const h0 = L.unitH - inset * 2;
+
+      /* Each band is a ring. Painting it as four trapezia mitred at the
+         corners is what puts the diagonal joint lines in, which is the single
+         clearest sign that this is an extruded frame and not a border. */
+      const ring = (side) => {
+        f.beginPath();
+        if (side === 'top') {
+          f.moveTo(x0, y0); f.lineTo(x0 + w0, y0); f.lineTo(x0 + w0 - d, y0 + d); f.lineTo(x0 + d, y0 + d);
+        } else if (side === 'bottom') {
+          f.moveTo(x0, y0 + h0); f.lineTo(x0 + w0, y0 + h0); f.lineTo(x0 + w0 - d, y0 + h0 - d); f.lineTo(x0 + d, y0 + h0 - d);
+        } else if (side === 'left') {
+          f.moveTo(x0, y0); f.lineTo(x0, y0 + h0); f.lineTo(x0 + d, y0 + h0 - d); f.lineTo(x0 + d, y0 + d);
+        } else {
+          f.moveTo(x0 + w0, y0); f.lineTo(x0 + w0, y0 + h0); f.lineTo(x0 + w0 - d, y0 + h0 - d); f.lineTo(x0 + w0 - d, y0 + d);
+        }
+        f.closePath();
+      };
+
+      const shade = (side, from, to, vertical) => {
+        const grad = vertical
+          ? f.createLinearGradient(0, side === 'bottom' ? y0 + h0 : y0, 0, side === 'bottom' ? y0 + h0 - d : y0 + d)
+          : f.createLinearGradient(side === 'right' ? x0 + w0 : x0, 0, side === 'right' ? x0 + w0 - d : x0 + d, 0);
+        grad.addColorStop(0, tone(from));
+        if (band.dome) grad.addColorStop(0.42, tone((from + to) / 2 + 0.12));
+        grad.addColorStop(1, tone(to));
+        f.fillStyle = grad;
+        ring(side);
+        f.fill();
+      };
+
+      shade('top', band.top, band.face, true);
+      shade('bottom', band.bottom, band.face, true);
+      shade('left', band.top * 0.94, band.face, false);
+      shade('right', band.bottom * 0.94, band.face, false);
+      inset += d;
+    });
+
+    /* The mitre joints themselves, and a hairline where the bead meets the
+       glass so the sealed unit reads as sitting in a rebate. */
+    f.strokeStyle = 'rgba(12,15,18,0.42)';
+    f.lineWidth = Math.max(0.6, L.scale * 0.6);
     f.beginPath();
     [[L.x, L.y, L.glassX, L.glassY], [L.x + L.unitW, L.y, L.glassX + L.glassW, L.glassY],
       [L.x, L.y + L.unitH, L.glassX, L.glassY + L.glassH], [L.x + L.unitW, L.y + L.unitH, L.glassX + L.glassW, L.glassY + L.glassH]]
       .forEach(([ax, ay, bx, by]) => { f.moveTo(ax, ay); f.lineTo(bx, by); });
     f.stroke();
-    f.restore();
 
-    f.strokeStyle = 'rgba(38,46,52,0.5)';
+    /* Woodgrain foil. It runs along the length of each profile, so the head
+       and cill are grained horizontally and the two jambs vertically. Running
+       both ways over the whole frame produced a crosshatch that read as woven
+       fabric rather than as uPVC. */
+    const framePx = FRAME * L.scale;
+    const grainPass = (clipX, clipY, clipW, clipH, vertical, count) => {
+      f.save();
+      f.beginPath();
+      f.rect(clipX, clipY, clipW, clipH);
+      f.clip();
+      f.globalAlpha = 0.055;
+      f.strokeStyle = '#ffffff';
+      f.lineWidth = Math.max(0.4, L.scale * 0.35);
+      f.beginPath();
+      for (let i = 0; i < count; i += 1) {
+        const n = Math.sin(i * 37.31 + (vertical ? 2.3 : 0)) * 8172.19;
+        const t = n - Math.floor(n);
+        if (vertical) {
+          const x = L.x + t * L.unitW;
+          f.moveTo(x, clipY);
+          f.lineTo(x, clipY + clipH);
+        } else {
+          const y = L.y + t * L.unitH;
+          f.moveTo(clipX, y);
+          f.lineTo(clipX + clipW, y);
+        }
+      }
+      f.stroke();
+      f.restore();
+    };
+    grainPass(L.x, L.y, L.unitW, framePx, false, 150);
+    grainPass(L.x, L.y + L.unitH - framePx, L.unitW, framePx, false, 150);
+    grainPass(L.x, L.y, framePx, L.unitH, true, 120);
+    grainPass(L.x + L.unitW - framePx, L.y, framePx, L.unitH, true, 120);
+
+    f.strokeStyle = 'rgba(6,9,12,0.62)';
     f.lineWidth = Math.max(1, L.scale * 1.1);
     f.strokeRect(L.glassX, L.glassY, L.glassW, L.glassH);
-    f.strokeStyle = 'rgba(255,255,255,0.55)';
+    f.strokeStyle = 'rgba(255,255,255,0.24)';
     f.lineWidth = 1;
     f.strokeRect(L.x + 0.5, L.y + 0.5, L.unitW - 1, L.unitH - 1);
 
     return { glass, frame: frameCanvas };
   };
 
-  /* Where the two magnets sit and how far each one travels. Both run on the
-     right hand stile of the Notan profile, the upper one tilting and the lower
-     one lifting, which is how the unit is actually operated. Kept as one
-     function so the renderer and the pointer handling cannot drift apart: a
-     magnet that is drawn somewhere it cannot be grabbed is the obvious way for
-     this to break. */
+  /* Where the two magnets sit and how far each one travels. Both run on one
+     slim vertical rail near the right of the glass, the upper one tilting and
+     the lower one lifting, which is how the unit is actually operated. Kept as
+     one function so the renderer and the pointer handling cannot drift apart:
+     a magnet drawn somewhere it cannot be grabbed is the obvious way for this
+     to break. */
   const magnetTracks = (L) => {
-    const notanPx = NOTAN * L.scale;
-    const blindY = L.glassY + notanPx;
-    const blindH = L.glassH - notanPx * 2;
-    const x = L.glassX + L.glassW - notanPx / 2;
-    const w = notanPx * 0.74;
-    const h = notanPx * 2.5;
+    const spacerPx = SPACER * L.scale;
+    const blindY = L.glassY + spacerPx;
+    const blindH = L.glassH - spacerPx * 2;
+    const x = L.glassX + L.glassW - spacerPx - RAIL_INSET * L.scale;
+    const w = MAGNET_W * L.scale;
+    const h = MAGNET_H * L.scale;
+    const headPx = HEADRAIL * L.scale;
     return {
       x,
       w,
       h,
-      tilt: { top: blindY + blindH * 0.05, bottom: blindY + blindH * 0.3 },
+      railW: RAIL_W * L.scale,
+      railTop: blindY + headPx,
+      railBottom: blindY + blindH,
+      tilt: { top: blindY + headPx + h * 0.7, bottom: blindY + blindH * 0.36 },
       /* Lift reads the way the blind moves: the magnet at the top of its
          travel is the blind raised, at the bottom it is fully down. */
-      lift: { top: blindY + blindH * 0.4, bottom: blindY + blindH * 0.95 },
+      lift: { top: blindY + blindH * 0.46, bottom: blindY + blindH - h * 0.7 },
     };
   };
 
@@ -3448,85 +3515,113 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     c.closePath();
   };
 
-  const drawProfile = (L, notanPx, blindX, blindY, blindW, blindH) => {
-    /* Colour matched, so picking a slat colour moves the profile with it. It
-       is satin rather than the same value as the slats: an extrusion next to a
-       rolled slat in the same paint still reads as a different material. */
-    const body = mixRgb(shownFace, { r: 92, g: 96, b: 98 }, 0.22);
+  /* Everything sealed inside the glass in front of the blind: the spacer round
+     the edge of the unit, the blind's head, the rail and the two magnets. All
+     of it is matched to the window frame rather than to the slats, which is
+     what the owner's unit shows: anthracite hardware against silver slats. */
+  const drawInternals = (L, blindX, blindY, blindW, blindH) => {
+    const spacerPx = SPACER * L.scale;
+    const headPx = HEADRAIL * L.scale;
 
-    const side = (x, y, w, h, from, to, horizontal) => {
-      const grad = ctx.createLinearGradient(x, y, horizontal ? x : x + w, horizontal ? y + h : y);
-      grad.addColorStop(0, paint(body, from.k, from.add));
-      grad.addColorStop(1, paint(body, to.k, to.add));
+    /* Warm edge spacer. A thin, near black band round the perimeter of the
+       sealed unit, in front of the blind's own edges. */
+    const spacer = (x, y, w, h, vertical, flip) => {
+      const grad = vertical
+        ? f2(x, y, x, y + h, flip)
+        : f2(x, y, x + w, y, flip);
       ctx.fillStyle = grad;
       ctx.fillRect(x, y, w, h);
     };
+    const f2 = (x0, y0, x1, y1, flip) => {
+      const grad = ctx.createLinearGradient(x0, y0, x1, y1);
+      grad.addColorStop(0, flip ? 'rgba(28,32,36,0.98)' : 'rgba(12,15,18,0.99)');
+      grad.addColorStop(0.6, 'rgba(20,24,28,0.97)');
+      grad.addColorStop(1, flip ? 'rgba(10,13,16,0.99)' : 'rgba(34,39,44,0.96)');
+      return grad;
+    };
+    spacer(L.glassX, L.glassY, L.glassW, spacerPx, true, false);
+    spacer(L.glassX, L.glassY + L.glassH - spacerPx, L.glassW, spacerPx, true, true);
+    spacer(L.glassX, L.glassY, spacerPx, L.glassH, false, false);
+    spacer(L.glassX + L.glassW - spacerPx, L.glassY, spacerPx, L.glassH, false, true);
 
-    const lit = { k: 1.16, add: 40 };
-    const mid = { k: 0.94, add: 14 };
-    const dark = { k: 0.55, add: 0 };
+    /* The blind's head, in the frame colour. */
+    const head = ctx.createLinearGradient(0, blindY, 0, blindY + headPx);
+    head.addColorStop(0, paint(UPVC, 0.86, 12));
+    head.addColorStop(0.45, paint(UPVC, 1.04, 20));
+    head.addColorStop(1, paint(UPVC, 0.6));
+    ctx.fillStyle = head;
+    ctx.fillRect(blindX, blindY, blindW, headPx);
+    ctx.fillStyle = 'rgba(8,11,14,0.4)';
+    ctx.fillRect(blindX, blindY + headPx, blindW, Math.max(0.7, L.scale * 0.8));
 
-    side(L.glassX, L.glassY, L.glassW, notanPx, lit, dark, true);
-    side(L.glassX, L.glassY + L.glassH - notanPx, L.glassW, notanPx, dark, mid, true);
-    side(L.glassX, L.glassY, notanPx, L.glassH, mid, dark, false);
-    side(L.glassX + L.glassW - notanPx, L.glassY, notanPx, L.glassH, dark, mid, false);
-
-    /* The channel the magnets run in, sunk into the right hand stile. */
     const t = magnetTracks(L);
-    const channelW = t.w * 0.94;
-    const channelTop = t.tilt.top - t.h * 0.5;
-    const channelBottom = t.lift.bottom + t.h * 0.5;
-    const channel = ctx.createLinearGradient(t.x - channelW / 2, 0, t.x + channelW / 2, 0);
-    channel.addColorStop(0, paint(body, 0.24));
-    channel.addColorStop(0.3, paint(body, 0.4));
-    channel.addColorStop(0.7, paint(body, 0.92, 20));
-    channel.addColorStop(1, paint(body, 0.28));
-    ctx.fillStyle = channel;
-    ctx.fillRect(t.x - channelW / 2, channelTop, channelW, channelBottom - channelTop);
 
-    /* A hairline where the profile meets the blind, so the slats read as
-       sitting behind it rather than butted against it. */
-    ctx.strokeStyle = 'rgba(10,13,16,0.34)';
-    ctx.lineWidth = Math.max(0.6, L.scale * 0.6);
-    ctx.strokeRect(blindX, blindY, blindW, blindH);
+    /* The rail. Slim, and nothing like the wide colour matched border an
+       earlier pass drew: on the real unit the glass runs almost to the bead and
+       the only thing standing in front of the blind is this. */
+    const rail = ctx.createLinearGradient(t.x - t.railW / 2, 0, t.x + t.railW / 2, 0);
+    rail.addColorStop(0, paint(UPVC, 0.3));
+    rail.addColorStop(0.4, paint(UPVC, 0.78, 10));
+    rail.addColorStop(1, paint(UPVC, 0.34));
+    ctx.fillStyle = rail;
+    ctx.fillRect(t.x - t.railW / 2, t.railTop, t.railW, t.railBottom - t.railTop);
 
     ['tilt', 'lift'].forEach((which) => {
       const m = magnetCentre(L, which);
       const x = m.x - m.w / 2;
       const y = m.y - m.h / 2;
-      const radius = m.w * 0.34;
+      /* Generously rounded, glossy, and about one to two point two. The
+         owner's photograph is the reference: an earlier pass had them as slim
+         capsules at one to three and a half, which read as pins. */
+      const radius = m.w * 0.14;
 
       ctx.save();
-      ctx.shadowColor = 'rgba(8,11,14,0.5)';
-      ctx.shadowBlur = Math.max(2, m.w * 0.5);
-      ctx.shadowOffsetX = Math.max(1, m.w * 0.12);
-      ctx.shadowOffsetY = Math.max(1, m.w * 0.16);
+      ctx.shadowColor = 'rgba(6,9,12,0.62)';
+      ctx.shadowBlur = Math.max(2.5, m.w * 0.42);
+      ctx.shadowOffsetX = Math.max(1, m.w * 0.1);
+      ctx.shadowOffsetY = Math.max(1.5, m.w * 0.16);
       roundedRect(ctx, x, y, m.w, m.h, radius);
-      const cap = ctx.createLinearGradient(x, y, x + m.w, y);
-      cap.addColorStop(0, paint(body, 0.78, 14));
-      cap.addColorStop(0.3, paint(body, 1.2, 62));
-      cap.addColorStop(0.52, paint(body, 1.02, 34));
-      cap.addColorStop(0.78, paint(body, 0.84, 12));
-      cap.addColorStop(1, paint(body, 0.5));
-      ctx.fillStyle = cap;
+      /* A flat faced block, not a tube. Reading dark, light, dark straight
+         across the width made it look cylindrical; the real one is a broad
+         even face with one crisp turned edge near the right and thin dark
+         returns at both sides. */
+      const body = ctx.createLinearGradient(x, y, x + m.w, y);
+      body.addColorStop(0, paint(UPVC, 0.18));
+      body.addColorStop(0.07, paint(UPVC, 0.54, 2));
+      body.addColorStop(0.22, paint(UPVC, 0.92, 22));
+      body.addColorStop(0.4, paint(UPVC, 1.02, 30));
+      body.addColorStop(0.62, paint(UPVC, 0.84, 14));
+      body.addColorStop(0.7, paint(UPVC, 0.36));
+      body.addColorStop(0.79, paint(UPVC, 0.3));
+      body.addColorStop(0.9, paint(UPVC, 0.6, 4));
+      body.addColorStop(1, paint(UPVC, 0.16));
+      ctx.fillStyle = body;
       ctx.fill();
       ctx.restore();
 
-      /* A brighter cap at each end, which is what the moulding actually looks
-         like and what makes the block read as proud of the stile. */
-      const ends = ctx.createLinearGradient(0, y, 0, y + m.h);
-      ends.addColorStop(0, 'rgba(255,255,255,0.34)');
-      ends.addColorStop(0.16, 'rgba(255,255,255,0)');
-      ends.addColorStop(0.84, 'rgba(0,0,0,0)');
-      ends.addColorStop(1, 'rgba(0,0,0,0.24)');
+      /* The top face catches a hard glint and the bottom rolls into shadow,
+         which is what makes it read as moulded and proud of the glass. */
+      const roll = ctx.createLinearGradient(0, y, 0, y + m.h);
+      roll.addColorStop(0, 'rgba(255,255,255,0.62)');
+      roll.addColorStop(0.055, 'rgba(255,255,255,0.34)');
+      roll.addColorStop(0.1, 'rgba(0,0,0,0.2)');
+      roll.addColorStop(0.18, 'rgba(0,0,0,0.02)');
+      roll.addColorStop(0.62, 'rgba(0,0,0,0)');
+      roll.addColorStop(0.93, 'rgba(0,0,0,0.3)');
+      roll.addColorStop(1, 'rgba(0,0,0,0.62)');
       roundedRect(ctx, x, y, m.w, m.h, radius);
-      ctx.fillStyle = ends;
+      ctx.fillStyle = roll;
       ctx.fill();
+
+      ctx.strokeStyle = 'rgba(4,6,8,0.72)';
+      ctx.lineWidth = Math.max(0.7, L.scale * 0.6);
+      roundedRect(ctx, x, y, m.w, m.h, radius);
+      ctx.stroke();
 
       if (focused === which) {
         ctx.strokeStyle = '#2eac66';
-        ctx.lineWidth = Math.max(1.6, m.w * 0.16);
-        roundedRect(ctx, x - m.w * 0.28, y - m.w * 0.28, m.w * 1.56, m.h + m.w * 0.56, radius * 1.5);
+        ctx.lineWidth = Math.max(1.8, m.w * 0.14);
+        roundedRect(ctx, x - m.w * 0.3, y - m.w * 0.3, m.w * 1.6, m.h + m.w * 0.6, radius * 1.6);
         ctx.stroke();
       }
     });
@@ -3539,9 +3634,6 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = w;
     height = h;
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const scale = Math.min(w / UNIT_W, h / UNIT_H);
     const unitW = UNIT_W * scale;
@@ -3561,6 +3653,21 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
   const draw = (settled = true) => {
     const L = layout();
+
+    /* Resize only when the backing store is genuinely a different size. The
+       assignment is what clears the canvas, so doing it unconditionally throws
+       away a frame's work every time. */
+    const storeW = Math.round(width * dpr);
+    const storeH = Math.round(height * dpr);
+    if (canvas.width !== storeW || canvas.height !== storeH) {
+      canvas.width = storeW;
+      canvas.height = storeH;
+      sceneKey = '';
+      tileKey = '';
+      chromeKey = '';
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
     const phi = ((tilt / 100) - 0.5) * 2 * MAX_TILT;
     const pitchPx = PITCH * L.scale;
     const slatPx = (SLAT * Math.abs(Math.sin(phi)) + SLAT_T * Math.abs(Math.cos(phi))) * L.scale;
@@ -3581,12 +3688,12 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
     if (scene && scene.view) ctx.drawImage(scene.view, L.glassX, L.glassY, L.glassW, L.glassH);
 
-    const notanPx = NOTAN * L.scale;
-    const blindX = L.glassX + notanPx;
-    const blindY = L.glassY + notanPx;
-    const blindW = L.glassW - notanPx * 2;
-    const blindH = L.glassH - notanPx * 2;
-    const headPx = HEAD * L.scale;
+    const spacerPx = SPACER * L.scale;
+    const blindX = L.glassX + spacerPx;
+    const blindY = L.glassY + spacerPx;
+    const blindW = L.glassW - spacerPx * 2;
+    const blindH = L.glassH - spacerPx * 2;
+    const headPx = HEADRAIL * L.scale;
     const railPx = RAIL * L.scale;
     const raised = clamp(lift / 100, 0, 1);
     const stacked = Math.round(SLAT_COUNT * raised);
@@ -3695,7 +3802,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     /* The Notan profile, colour matched to the slats, and the two magnets that
        run on it. This is the product: the controls are on the frame sealed
        inside the glass, not beside the picture of it. */
-    drawProfile(L, notanPx, blindX, blindY, blindW, blindH);
+    drawInternals(L, blindX, blindY, blindW, blindH);
 
     ctx.restore();
 
