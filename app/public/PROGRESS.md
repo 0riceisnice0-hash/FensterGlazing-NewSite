@@ -110,10 +110,11 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   confirmed it added exactly `.fg-blind-visualiser` and `.fg-blind-colours` and
   removed nothing.
 
-## 2026-08-03 - Notan blind visualiser on integral blinds (test only, fa9ccc8)
+## 2026-08-03 - Notan blind visualiser built on test (fa9ccc8, since superseded and live)
 
-- **On test only, at the owner's instruction.** Live is unchanged and still
-  `13354b4`.
+- **On test only at the time.** Superseded: the visualiser went live on
+  2026-08-04 and live is now `1a11109`. The entries above this one carry the
+  corrections that followed; read them before treating anything here as current.
 - `/integral-blinds/` now carries an interactive visualiser: one glazed unit
   drawn face on and fully straight, worked by the two magnets on its own
   profile, in the nine real Notan slat colours. Accepted behaviour is written

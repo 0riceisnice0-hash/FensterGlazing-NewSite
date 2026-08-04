@@ -1,6 +1,6 @@
 # Nick's Laptop (macOS)
 
-Last updated: 2026-07-29
+Last updated: 2026-08-04
 
 ## Read this first
 
@@ -86,8 +86,32 @@ ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglaz
 Deploy to live, only after the range check and explicit owner approval, replacing `<SHA>` with the exact commit verified on test. Never `origin/main`:
 
 ```bash
-ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin main && git reset --hard <SHA> && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush && wp sg purge"
+ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/repos/FensterGlazing-NewSite && git fetch origin --prune && git reset --hard <SHA> && rsync -a --delete ~/repos/FensterGlazing-NewSite/app/public/wp-content/themes/fenster/ ~/www/fensterglazing.com/public_html/web/app/themes/fenster/ && cd ~/www/fensterglazing.com/public_html && wp cache flush"
 ```
+
+**`git fetch origin --prune`, not `git fetch origin main`.** A release SHA usually sits on a release branch, and fetching only `main` leaves it unknown to the server, so the `reset --hard` fails.
+
+**`wp sg purge` does not exist on live and errors there**, which is correct: sg-cachepress is deliberately inactive on live because `siteground_optimizer_lazyload_images` is `1`. Purge live with the Unix socket instead, which touches no plugin state and returns `"msg":"OK"`:
+
+```bash
+ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "cd ~/www/fensterglazing.com/public_html && php -r '
+\$fp = stream_socket_client(\"unix:///chroot/tmp/site-tools.sock\", \$e, \$s, 5);
+fwrite(\$fp, json_encode(array(
+  \"api\"=>\"domain-all\",\"cmd\"=>\"update\",
+  \"params\"=>array(\"flush_cache\"=>\"1\",\"id\"=>\"fensterglazing.com\",\"path\"=>\"/(.*)\"),
+  \"settings\"=>array(\"json\"=>1),
+), JSON_FORCE_OBJECT).\"\n\");
+echo fgets(\$fp, 32*1024);
+'"
+```
+
+**A clean push and a clean rsync are not evidence that anything shipped.** On 2026-08-04 a commit made while checked out on a release branch was pushed with `git push origin main`, which pushed the unmoved local `main` ref, reported success, and the server then deployed the previous commit. Nothing failed loudly. **After every deploy, grep the deployed file for a string from the change**, and remember the compiled JS is minified so grep a numeric literal rather than a variable name:
+
+```bash
+ssh -i ~/.ssh/fenster_siteground_boss -p 18765 u453-m73mh4m4wev2@ssh.fensterglazing.com "grep -c '<a string from the change>' ~/www/fensterglazing.com/public_html/web/app/themes/fenster/<file>"
+```
+
+**Establish live by checksum in the seconds before the rsync, not at the start of the work.** Another session shipped to live mid-session on 2026-08-04 and the release cut from the older live silently removed it. A SHA verified twenty minutes earlier says nothing about the one being overwritten.
 
 For multi-step checks on the server, the base64 trick in `LIVECHANGES.md` exists to survive PowerShell quoting and is not needed here. A quoted heredoc is clearer and safer:
 
@@ -161,7 +185,7 @@ For measurements rather than a picture, link a small script that writes results 
 
 ## Where the work is up to
 
-Live is `8052f65` as of 2026-07-29, with live, `main` and test all level. `LIVECHANGES.md` carries the pointer and `PROGRESS.md` the detail; re-establish it by checksum anyway rather than trusting either.
+`LIVECHANGES.md` carries the live pointer and `PROGRESS.md` the detail. No SHA is repeated here: this line held a stale one for a week while two other docs held two different stale ones. Re-establish live by checksum in the seconds before any deploy rather than trusting any of them.
 
 Owner-confirmed product facts, worth not re-deriving:
 

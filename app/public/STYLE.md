@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-07-22
+Last updated: 2026-08-04
 
 This file is the source of truth for how the site should look and feel.
 
@@ -345,6 +345,19 @@ Three.js is not part of the current live theme.
 - Do not use old `fg-home-hero-3d` or `data-fg-home-3d` references as styling guidance.
 - Do not add a WebGL/canvas hero as a visual shortcut for polish.
 - If the owner asks for 3D later, treat it as a new feature: add the library deliberately, design mobile/reduced-motion fallbacks, and verify that the canvas renders real pixels in browser QA.
+- **The integral blind visualiser is the one live canvas and is 2D on purpose.** It draws a glazed unit face on and fully straight, which is what makes 2D exact rather than approximate: with no perspective a slat projects to a plain rectangle. It is not a decorative canvas and is not a precedent for one. See `HANDOVER.md` under Integral Blinds Page before changing it.
+
+## Product Configurators
+
+A configurator earns its place by answering a question a photograph cannot. Nine
+colours against a continuous tilt and a continuous lift is thousands of images;
+that is the test.
+
+- **Model the product, not a diagram of it.** The controls belong where they are on the real thing. On the blind unit the two magnets sit on the frame inside the glass and are dragged there, because that is how the unit is worked. Sliders parked beside a picture of a product are page furniture, not a configurator.
+- **Every value on screen has to be orderable.** Swatches come from the product data, never from hexes written into the stylesheet. Two of the six dots on the Frame colours card were an invented sage green and an invented navy for months, sitting next to four real finishes, which is exactly how that error survives.
+- **One colour is drawn one way everywhere.** The same finish appears on the configurator, on the inline grid and on the colour hub; all three read the same source and use the same treatment, including the split swatch for a two-sided slat and the flake texture for a metallic one.
+- **Realism comes from the physics, not from filters.** Derive the shading from where the light actually is. Keep a little irregularity, because a perfectly even array reads as a printed rule, but only a little: at four times the right amount the blind read as damaged rather than hung.
+- Interactive stages stay pannable on touch. Only the control itself takes the drag, or the page stops scrolling over the component.
 
 ## QA For Visual Work
 

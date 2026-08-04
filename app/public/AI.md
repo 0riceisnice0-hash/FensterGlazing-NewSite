@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-07-15
+Last updated: 2026-08-04
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -17,7 +17,7 @@ It should not contain dated progress reports, long handover summaries or homepag
 
 ## Important Updates
 
-- **Live is `0b0affe`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `32dcba6` before deploying. Backup: `~/backups/fenster-theme/fenster-pre-0b0affe-20260802-154451.tar.gz` (379M, 1,782 entries). **Still re-establish by checksum before the next release rather than trusting this line, and pick files the candidate commits actually differ in.** On the release before this one, three of five checksummed files tied across two candidates and only two separated them.
+- **The live SHA lives in `LIVECHANGES.md` and nowhere else.** This line used to carry its own copy and was three days and four releases out of date by 2026-08-04, while `HANDOVER.md` and `nick.md` each carried a different stale one. One pointer, one file. **Re-establish live by checksum immediately before any deploy anyway**, on more than one file and on files the candidate commits actually differ in: three of five once tied across two candidates and only two separated them.
 - **`main` is not a release branch on this project.** Two agent sessions have run concurrently in this repo, so `main` can hold several people's unapproved work at once. Always establish what production is actually running before deploying (checksum a few theme files against history: `assets/css/main.css`, `inc/adminbase.php`, `template-parts/sections/generated-page.php`), then run the `git log --oneline <LIVE_SHA>..<SHA>` range check. If the range contains anything unapproved, branch from the live SHA and re-apply only the approved hunks, rebuild the compiled assets from that tree, and verify the compiled output is free of the other work before shipping.
 - Never deploy `origin/main` to live. Reset the server repo cache to the explicit approved SHA and check `git log --oneline <LIVE_SHA>..<SHA>` first. Deploying `main` wholesale put unapproved composite-door work on production on 2026-07-18; see `LIVECHANGES.md` and the 2026-07-20 entry in `PROGRESS.md`.
 - Any feature intended to stay off production needs a real gate, not just an absence of approval. Composite Doors V2 had no host gate and shipped with the theme. `fenster_price_guides_enabled()` shows the host-gate pattern — but note that gate was itself silently opened to live inside an unrelated SEO commit, so changes to a gate must be called out in the commit message and the docs.
@@ -522,6 +522,13 @@ These rules apply to every new section, page change, form, carousel, product pag
 - Major narrative handoffs generally sit around `72–80px`.
 - Compact utility/logo transitions generally sit around `48–64px`.
 - Preserve deliberate overlaps such as the homepage theatre-to-instant-quote bridge.
+
+## Swatch Provenance Rule
+
+- **A colour shown to a customer must come from the product data, never from a hex written into a stylesheet.** The six dots on the Frame colours card were hardcoded in `main.scss`. Four matched real finishes and two, a sage green and a navy, matched nothing anyone could order; that mix is precisely why it went unnoticed. They are read from `colour_options` by name now, through `--dot-N` custom properties, with real values as the CSS fallbacks.
+- **The same colour is drawn the same way on every surface.** A finish that appears on a configurator, an inline grid and the colour hub must read one source and share one treatment. That covers the diagonal split for a two-sided slat and the flake texture for a metallic one.
+- **Sparkle and texture come from noise, not from tiled gradients.** Any lattice of `radial-gradient`s lines up into a visible weave at swatch size and reads as printed fabric. The glitter finishes use an inline SVG of thresholded `feTurbulence`.
+- Before adding a swatch, check whether the value exists in `inc/site-data.php`. If it does not, that is the question to ask, not a gap to fill by eye.
 
 ## Asset And Cache Rules
 

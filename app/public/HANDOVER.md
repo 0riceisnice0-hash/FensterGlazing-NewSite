@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-Last updated: 2026-07-15
+Last updated: 2026-08-04
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -17,7 +17,7 @@ Use:
 
 ## Important Updates
 
-- **Live is `0b0affe`, deployed 2026-08-02, and live, `main` and test are level.** Established by checksum as `32dcba6` before deploying. Backup: `~/backups/fenster-theme/fenster-pre-0b0affe-20260802-154451.tar.gz` (379M, 1,782 entries). **Still re-establish by checksum before the next release rather than trusting this line, and pick files the candidate commits actually differ in.** On the release before this one, three of five checksummed files tied across two candidates and only two separated them.
+- **The live SHA lives in `LIVECHANGES.md` and nowhere else.** This line used to carry its own copy and was three days and four releases out of date by 2026-08-04, while `HANDOVER.md` and `nick.md` each carried a different stale one. One pointer, one file. **Re-establish live by checksum immediately before any deploy anyway**, on more than one file and on files the candidate commits actually differ in: three of five once tied across two candidates and only two separated them.
 - **`/patio-doors/` and `/handle-options/` carry the sliding patio handle** as of 2026-08-02: `patio_handles` in `inc\site-data.php`, assets under `assets\images\products\handles-patio`, five Mila ProLinea finishes. It is a separate family from `door_handles` because a slider takes a D-pull rather than a lever, and it is deliberately not on `/aluminium-sliding-doors/`. See the Patio Handle Rule in `AI.md`.
 - **Deploy trap — read before any live deploy.** The live deploy one-liner in `LIVECHANGES.md` runs `git reset --hard origin/main`, so it ships *everything on `main`*, not the specific commit you verified. On 2026-07-18 a deploy of the small Legend iframe fixes swept fourteen unapproved composite-door commits onto production with them. If you need to release one approved commit, reset the server repo cache to that exact SHA instead of `origin/main`.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
@@ -416,6 +416,9 @@ Current accepted behaviour:
 - Off-screen the animation loop stops, `prefers-reduced-motion` snaps instead of easing but stays fully interactive, and the stage sets `touch-action: pan-y` so a thumb landing on it still scrolls the page, the same rule the obscured glass visualiser follows.
 - The view behind the glass is generated, not a project photograph. At the blur a camera exposed for the room would give it, almost nothing photographic survives except the colour distribution and the large scale light and shade, so it is built from a sky, a treeline, a lawn and dapple. The renderer takes an optional scene image if a real view is ever preferred.
 - No slat dimension is stated anywhere on the page. Notan do not publish one.
+- **Per-slat variation is deliberately small: position and brightness at `0.04`, lean at `0.00105`.** It exists because fifty perfectly level slats read as a printed rule. It was four times stronger and the blind read as damaged rather than hung; the owner asked for roughly seventy five per cent more consistency. Change all three together, or reducing one only shifts which cue reads as the defect.
+- **Metallic Silver and Rose Gold carry `glitter`.** They are flake finishes on the real slats. The canvas widens its tile to 480 for them, because a fleck drawn on the usual 96 stretches into a scratch, and the flecks are deterministic so they do not crawl while a slider moves. The swatches use an inline SVG of thresholded turbulence; tiled gradients lattice into a weave.
+- **The `Frame colours` card elsewhere on the site takes its six dots from `colour_options` by name**, not from the stylesheet. See the Swatch Provenance Rule in `AI.md`. This route renders no colour card at all.
 - **Every photograph in the `integral_blinds` pool has to show a blind.** Three of the five were a plain sliding door, a plain bifold and a sealed unit sample, so the page illustrated integral blinds mostly with doors. If a shot does not show slats, it does not belong in the pool.
 - **The slat colours lay out on the page**, via `template-parts/components/blind-colour-grid.php`, sharing the `.fg-upvc-colours` / `.fg-alu-colours` styles so this route does not look like a different kind of page. Because the grid is inline, the route renders **no colour card at all** in Specification choices: frame colour is not a decision here, and a card pointing at the hub duplicates the grid's own note, which is the same suppression the uPVC foil routes use. The privacy glass card stays, because that choice is real.
 - **White/Anthracite is drawn as a split swatch** in the grid, on the hub tile and on the visualiser chip, so the second face is visible without working the blind. **The split is diagonal on the owner's instruction; Notan themselves draw it vertically**, in both their web swatch and their brochure, so this is house style rather than a match. Hard stop, not a blend: two painted faces, not a gradient.
