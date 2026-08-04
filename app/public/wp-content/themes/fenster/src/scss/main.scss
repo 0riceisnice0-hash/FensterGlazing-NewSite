@@ -36931,41 +36931,11 @@ html.fg-blinds-reveal-locked {
 }
 
 /* Real-homes gallery, retained for /heritage-aluminium-doors/.
-   The casement page that this component was written for now uses its own
-   .fg-cas-mosaic; heritage still renders .fg-cw-gallery--heritage, so these
-   rules stay. Do not delete them with the next casement rewrite. */
-/* Casement windows: 70mm Liniar EnergyPlus product page.
-   Deliberately built on the same vocabulary as /heritage-aluminium-doors/:
-   copy column one side, photography the other, short paragraphs, divided
-   detail lists, white uppercase caption chips. The page canvas is already
-   painted on body, so nothing here repaints --fg-page-gradient. */
-.fg-cw {
-  --cw-line: rgba(0, 45, 58, 0.14);
-  --cw-panel: rgba(255, 255, 255, 0.72);
-  color: var(--color-ink);
-}
-
-/* Divided detail list, matching the heritage-door frame section. */
-.fg-cw-list {
-  display: grid;
-  margin: 1.2rem 0 0;
-}
-
-/* Offset image pair, as used on the heritage-door frame section. */
-.fg-cw-tiles {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  align-items: center;
-  gap: clamp(0.75rem, 1.5vw, 1.25rem);
-}
-
-/* Detail photo pair: two equal cover-cropped portraits, as on the heritage
-   period-details section. */
-.fg-cw-tiles--pair {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-}
-
+   The casement page this was written for now uses its own .fg-cas-mosaic;
+   heritage still renders .fg-cw-gallery--heritage, so these rules stay,
+   media queries and all. Do not prune them by hand: an earlier pass split
+   this on blank lines, dropped the @media wrapper, and left the phone rules
+   applying at every width. */
 /* Real-homes gallery.
    Same feature as the sliding-sash page: dark proof band, mosaic on desktop,
    scroll-snap rail on mobile, thumbnails opening the shared dark lightbox via
@@ -37027,24 +36997,37 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
+
 .fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 6 / 10; }
+
 .fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 10 / 13; }
+
 /* Six pictures as of 2026-08-04: the tall left column plus a 4/3 split on row
    one and a 2/3/2 split on row two. Row one breaks at 10 and row two at 8 and
    11, and those offsets are what keep this reading as a mosaic rather than a
    plain grid. Heritage overrides cells one to four and never renders a fifth
    or sixth, so it is unaffected. */
 .fg-cw-gallery__mosaic figure:nth-child(4) { grid-column: 6 / 8; }
+
 .fg-cw-gallery__mosaic figure:nth-child(5) { grid-column: 8 / 11; }
+
 .fg-cw-gallery__mosaic figure:nth-child(6) { grid-column: 11 / 13; }
 
-/* Heritage doors re-cuts the same twelve-column grid for its four pictures.
+/* The mosaic above is cut for exactly six cells. Heritage doors has four
+   pictures that honestly show a finished door, so its variant re-cuts the same
+   twelve-column, two-row grid to fill without leaving holes. Everything else
+   about the component, the lightbox, the captions and the mobile swipe row, is
+   shared rather than copied.
+
    Cell one is the tall left column because Wolverton is a 3:4 portrait and a
    wide cell would crop the door out of its own photograph. Add a fifth picture
-   and this needs re-cutting again; the base rule will not cover it. */
+   and this needs re-cutting again; the base six-cell rule will not cover it. */
 .fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 5; grid-row: 1 / 3; }
+
 .fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 5 / 13; grid-row: 1 / 2; }
+
 .fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 5 / 9; grid-row: 2 / 3; }
+
 .fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(4) { grid-column: 9 / 13; grid-row: 2 / 3; }
 
 .fg-cw-gallery__mosaic a {
@@ -37097,45 +37080,47 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
+@media (max-width: 860px) {
   /* Mosaic becomes a scroll-snap rail, as on the sliding-sash page. */
-  .fg-cw-gallery__head {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.75rem;
-  }
+    .fg-cw-gallery__head {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.75rem;
+    }
 
   .fg-cw-gallery__copy--desktop {
-    display: none;
-  }
+      display: none;
+    }
 
   .fg-cw-gallery__copy--mobile {
-    display: inline;
-  }
+      display: inline;
+    }
 
   .fg-cw-gallery__mosaic {
-    display: flex;
-    height: auto;
-    padding-bottom: 0.4rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-  }
+      display: flex;
+      height: auto;
+      padding-bottom: 0.4rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
 
   .fg-cw-gallery__mosaic figure {
-    flex: 0 0 82%;
-    aspect-ratio: 4 / 3;
-    scroll-snap-align: center;
-  }
+      flex: 0 0 82%;
+      aspect-ratio: 4 / 3;
+      scroll-snap-align: center;
+    }
 
   .fg-cw-gallery__mosaic figure:nth-child(n) {
-    grid-column: auto;
-    grid-row: auto;
-  }
+      grid-column: auto;
+      grid-row: auto;
+    }
 
   .fg-cw .fg-cw-gallery__hint,
-  .fg-cw-gallery--heritage .fg-cw-gallery__hint {
-    display: block;
-  }
+    .fg-cw-gallery--heritage .fg-cw-gallery__hint {
+      display: block;
+    }
+}
 
 /* ---------------------------------------------------------------------------
    Colour hub rail (/colour-options/)
