@@ -94,6 +94,17 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   easing has settled it stayed black. The owner reported it as "keeps on going
   black after clicking". `layout()` is now measurement only. The general
   lesson: anything the pointer path calls at pointer rate has to be pure.
+- **A photograph of the real thing beat two rounds of careful sourcing.** The
+  slat colours had been taken from Notan's web swatches and cross-checked
+  against their brochure, and were still wrong: Cream was a near-neutral grey
+  and is a warm greige, Rose Gold was a taupe and is a champagne gold, Metallic
+  Silver was a dark grey and is a bright silver. The owner's photograph of the
+  physical sample card settled all three. Where a product exists, ask for a
+  picture of it before trusting a supplier's marketing asset.
+- **Any lattice reads as a lattice.** The glitter finishes were built from tiled
+  radial-gradients, which line up into a visible weave at swatch size and read
+  as printed fabric rather than metallic flake. Replaced with an inline SVG of
+  fractal turbulence thresholded to its brightest tail.
 - **The page around the visualiser needed the same scrutiny as the visualiser.**
   Once the blind itself was right, the owner found four things wrong with the
   page it sits on: three of the five photographs had no blind in them, the
