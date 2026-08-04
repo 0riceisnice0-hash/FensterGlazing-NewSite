@@ -1209,12 +1209,17 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-in-door.webp', 'alt' => 'Clear round pet flap in a glazed door beside a brick wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-glass-closeup.webp', 'alt' => 'Clear round pet flap in a glazed door, seen close up from outside'],
             ],
+            /* Every one of these has to show a blind. Three of the five were a
+               plain sliding door, a plain bifold and a sealed unit sample, none
+               of which had a blind in them, so the page illustrated integral
+               blinds mostly with doors. Owner caught it on 2026-08-04. If a
+               photograph does not show slats, it does not belong in this pool. */
             'integral_blinds' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Blind sealed between panes of glass'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-sliding-door.jpg', 'alt' => 'Large glazed sliding door'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-doors.jpg', 'alt' => 'Wide glazed bifold doors'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Sealed unit detail for between-glass blind systems'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/HiTech-Blinds-Patio-Doors-Blinds-Closed.jpg', 'alt' => 'White patio doors with the integral blinds closed across all three panes'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/HiTech-Blinds-Integral-Blinds-Black-Doors.jpg', 'alt' => 'Anthracite bifold doors with integral blinds lowered inside the glass'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/HiTech-Blinds-French-Doors-open.jpg', 'alt' => 'French doors open, with integral blinds lowered in the side panels'],
             ],
             'roof_lanterns' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-roof-lantern.jpg', 'alt' => 'Roof lantern glazing on a flat roof'],

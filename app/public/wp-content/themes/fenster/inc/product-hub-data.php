@@ -279,14 +279,17 @@ function fenster_product_hub_data(string $slug): array
         ],
         'integral-blinds' => [
             'systems' => [$systems['notan']],
-            'badges' => ['Magnetic control', 'Electric option', '11 standard colours'],
+            /* Nine, not eleven. Notan's Our Blinds page still says eleven; their
+               official brochure lists nine and that is what `notan_blind_colours`
+               carries. See the Notan Integral Blind Rule in AI.md. */
+            'badges' => ['Magnetic control', 'Electric option', '9 standard colours'],
             'heading' => 'Notan integral blinds with control, size and glass-unit detail.',
             'copy' => 'Integral blinds are sealed inside the glass unit, so the key choices are cavity size, glass make-up, controls, colour, maximum blind size and warranty cover.',
             'specs' => [
                 ['label' => 'Glass unit', 'value' => 'NTB 24/28 style cavity options with Low-E, toughened and argon-filled glass options'],
                 ['label' => 'Controls', 'value' => 'Magnetic manual control or electric remote/battery options'],
                 ['label' => 'Testing', 'value' => 'Cycle-tested blind mechanisms, with final warranty depending on control type'],
-                ['label' => 'Colours', 'value' => 'Standard blind colours with RAL conversations where available'],
+                ['label' => 'Colours', 'value' => 'Nine standard slat colours, with bespoke RAL to order'],
             ],
             'choices' => ['Tilt-only or lift-and-tilt blinds depending on size', 'Sliding doors, bifolds, windows and replacement glass units', 'White, grey, black and neutral blind colours', 'Electric charging and remote-control options'],
         ],
