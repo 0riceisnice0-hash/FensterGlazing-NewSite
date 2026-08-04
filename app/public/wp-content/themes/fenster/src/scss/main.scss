@@ -8385,17 +8385,21 @@ html.fg-gallery-lightbox-open body {
   opacity: 0.9;
 }
 
+/* The six dots. Every value comes from the card's own data via `--dot-N`; the
+   fallbacks are only for a card that sets none. Two of the old hardcoded
+   values, a sage green and a navy, were not finishes anyone could order.
+   `--dot-1` is the top right, which the base rule paints directly. */
 .fg-product-option-card--colour::before {
   width: 16px;
   height: 16px;
   border-color: rgba(0, 45, 58, 0.14);
-  background: #f7f6ef;
+  background: var(--dot-1, #f7f6ef);
   box-shadow:
-    -24px 0 0 #94b59f,
-    -48px 0 0 #353b3f,
-    0 24px 0 #9a5b25,
-    -24px 24px 0 #c2c8bd,
-    -48px 24px 0 #27394f;
+    -24px 0 0 var(--dot-2, #b7c8b6),
+    -48px 0 0 var(--dot-3, #9a5b25),
+    0 24px 0 var(--dot-4, #353b3f),
+    -24px 24px 0 var(--dot-5, #c2c8bd),
+    -48px 24px 0 var(--dot-6, #243b64);
 }
 
 .fg-product-option-card--glass::before {

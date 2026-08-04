@@ -4245,10 +4245,35 @@ if ($is_commercial_hub) {
                 if ($is_integral_blinds) {
                     // No colour card.
                 } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
+                    /* The six dots on this card were six hexes invented in the
+                       stylesheet. Four happened to land on real finishes and
+                       two, a sage green and a navy, matched nothing that can be
+                       ordered. They are pulled from the real range by name now,
+                       chosen to show its spread: a white, a heritage green, a
+                       woodgrain, a dark, a pale grey and a strong colour. A
+                       missing name simply drops out and the CSS fallback for
+                       that slot stands. */
+                    $frame_dot_names = ['White', 'Chartwell Green', 'Golden Oak', 'Anthracite Grey', 'Agate Grey', 'Blue'];
+                    $frame_palette = [];
+                    foreach ((array) fenster_data('colour_options.materials.upvc.colours', []) as $frame_colour) {
+                        if (! is_array($frame_colour)) {
+                            continue;
+                        }
+                        $frame_palette[(string) ($frame_colour['name'] ?? '')] = (string) ($frame_colour['hex'] ?? '');
+                    }
+                    $frame_dots = [];
+                    foreach ($frame_dot_names as $frame_dot_name) {
+                        $frame_dot_hex = $frame_palette[$frame_dot_name] ?? '';
+                        if (preg_match('/^#[0-9a-f]{6}$/i', $frame_dot_hex)) {
+                            $frame_dots[] = $frame_dot_hex;
+                        }
+                    }
+
                     $option_cards[] = [
                         'modifier' => 'colour',
                         'url' => home_url('/colour-options/'),
                         'title' => __('Frame colours', 'fenster'),
+                        'dots' => count($frame_dots) === 6 ? $frame_dots : [],
                         'copy' => $slug === 'sliding-sash-windows'
                             ? __('Compare Roseview foils, woodgrain finishes, dual colours and special colour options.', 'fenster')
                             : __('Compare uPVC foils, aluminium powder-coated finishes, dual colour and RAL-matched options.', 'fenster'),
@@ -4311,9 +4336,19 @@ if ($is_commercial_hub) {
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 3; ?>
+                        <?php
+                        /* A card may carry its own swatches, set from the data
+                           it links to, rather than the stylesheet's defaults. */
+                        $card_dots = is_array($option_card['dots'] ?? null) ? $option_card['dots'] : [];
+                        $card_dot_style = '';
+                        foreach ($card_dots as $dot_index => $dot_hex) {
+                            $card_dot_style .= '--dot-' . ($dot_index + 1) . ':' . $dot_hex . ';';
+                        }
+                        ?>
                         <a
                             class="fg-product-option-card fg-product-option-card--<?php echo esc_attr($option_card['modifier']); ?><?php echo $is_patched_glass ? ' is-glazed' : ''; ?>"
                             href="<?php echo esc_url($option_card['url']); ?>"
+                            <?php echo $card_dot_style !== '' ? 'style="' . esc_attr($card_dot_style) . '"' : ''; ?>
                         >
                             <?php if ($is_patched_glass) : ?>
                                 <?php
