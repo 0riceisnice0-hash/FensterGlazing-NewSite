@@ -94,6 +94,14 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   easing has settled it stayed black. The owner reported it as "keeps on going
   black after clicking". `layout()` is now measurement only. The general
   lesson: anything the pointer path calls at pointer rate has to be pure.
+- **The page around the visualiser needed the same scrutiny as the visualiser.**
+  Once the blind itself was right, the owner found four things wrong with the
+  page it sits on: three of the five photographs had no blind in them, the
+  specification choices offered frame colours that are not chosen on this
+  route, the slat colours were nowhere on the colour hub, and the hero offered
+  instant pricing for a product the tool cannot price. All four were inherited
+  from the generic product template and none of them would have shown up in a
+  check of the new component alone.
 - **A pointerdown handler cannot cancel a scroll that has already started.** The
   owner reported that dragging on mobile pulled the whole page. The stage was
   `touch-action: pan-y` and the code switched it to `none` on `pointerdown`,
