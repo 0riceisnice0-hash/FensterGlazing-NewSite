@@ -36810,25 +36810,26 @@ html.fg-blinds-reveal-locked {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
   gap: clamp(1.25rem, 2.6vw, 2.25rem);
-  /* Stretch, not start. The controls column is the taller of the two, and on
-     start the stage left a column of empty dark panel under the drawing. The
-     canvas scales the window to whatever box it is given, so the honest fix is
-     to give it the height rather than to cap the controls. */
-  align-items: stretch;
+  align-items: start;
 }
 
+/* The controls column is much the taller of the two. Stretching the stage to
+   match left a landscape window floating in a portrait box; leaving it at the
+   top left a slab of empty panel beside the controls. Sticky solves both and
+   is better than either: the drawing stays with you while you work down the
+   options, which is the whole point of a configurator. Same treatment the
+   construction explorer on this page already uses for its cutaway. */
 .fg-cwd__stage {
-  display: flex;
-  flex-direction: column;
+  position: sticky;
+  top: calc(var(--site-header-main-height) + 16px);
 }
 
 .fg-cwd__canvas-wrap {
   position: relative;
-  flex: 1;
   overflow: hidden;
   margin: 0;
   border-radius: 10px;
-  min-height: clamp(320px, 42vw, 560px);
+  aspect-ratio: 4 / 3;
   background: #dfe4e2;
   box-shadow: 0 30px 70px rgba(0, 10, 14, 0.45);
 }
@@ -37123,6 +37124,10 @@ html.fg-blinds-reveal-locked {
   .fg-cwd__panel {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .fg-cwd__stage {
+    position: static;
+  }
 }
 
 @media (max-width: 860px) {
@@ -37131,9 +37136,13 @@ html.fg-blinds-reveal-locked {
     gap: 0.75rem;
   }
 
+  /* Nothing sticks on a phone: the stage would sit over the controls it is
+     supposed to be answering. */
+  .fg-cwd__stage {
+    position: static;
+  }
+
   .fg-cwd__canvas-wrap {
-    flex: 0 0 auto;
-    min-height: 0;
     aspect-ratio: 1 / 1;
   }
 
