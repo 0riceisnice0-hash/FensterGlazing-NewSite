@@ -102,6 +102,16 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   only those `touch-action: none`, so a drag on a magnet is a drag and a drag
   anywhere else on the glass is still a scroll. If an element needs to take a
   drag on touch, it has to declare that in CSS before the gesture begins.
+- **The two-sided slat now flips with the tilt.** A venetian presents opposite
+  faces in its two closed positions, so White/Anthracite gives the room white
+  one way and anthracite the other, with the swap landing at edge on where the
+  slat is invisible. The cassette stays on the room-side colour, so the frame on
+  that option stays white. It was previously showing white always and only a
+  sliver of the reverse through the gaps, which understated the option.
+- **A RAL code beats a sampled swatch.** RAL 7016 was carrying `#1A1C1B` from
+  Notan's own swatch disc, which is all but black; the published standard is
+  `#383E42`, a grey, Notan cite the code themselves, and the owner describes the
+  colour as grey. The BY colours have no such standard, so their swatches stand.
 - **The cassette is 50mm and colour matched to the slats**, from a second
   photograph of a bare unit. The magnets slot onto the slim rail at the inner
   edge of the frame rather than sitting in the middle of the member. The window
