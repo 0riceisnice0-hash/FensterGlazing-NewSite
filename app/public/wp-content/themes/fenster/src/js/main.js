@@ -3013,7 +3013,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   const RAIL_W = 11;
   /* Longer and slimmer than it was. The reference photographs put it at about
      one to three, not one to two and a bit. */
-  const MAGNET_W = 19;
+  const MAGNET_W = 25;
   const MAGNET_H = 64;
   const UNIT_W = GLASS_W + FRAME * 2;
   const UNIT_H = GLASS_H + FRAME * 2;
@@ -3043,7 +3043,6 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     face: toRgb(button.dataset.hex),
     back: toRgb(button.dataset.reverse || button.dataset.hex),
     metallic: button.dataset.metallic === '1',
-    twoSided: Boolean(button.dataset.reverse),
     name: button.dataset.name || 'Slat colour',
     code: button.dataset.code || '',
   }));
@@ -3853,15 +3852,22 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
     /* Ladder cords. Fine, taut and only really visible where they cross a dark
        slat, which is why they go on with `lighter` rather than as flat paint:
-       against the gaps they all but disappear, exactly as in the photography. */
-    const cordW = Math.max(0.6, L.scale * 0.9);
-    ctx.save();
-    ctx.globalCompositeOperation = 'lighter';
-    ctx.fillStyle = 'rgba(126,132,128,0.34)';
-    [0.24, 0.76].forEach((at) => {
-      ctx.fillRect(blindX + blindW * at, blindY + headPx, cordW, blindH - headPx);
-    });
-    ctx.restore();
+       against the gaps they all but disappear, exactly as in the photography.
+       They belong to the blind, so they run only from the foot of the stack to
+       the bottom rail and come up with it. Drawn full height they stayed behind
+       as a pair of wires hanging over clear glass once the blind was raised. */
+    const cordTop = topPx;
+    const cordBottom = topPx + deployed * pitchPx + railPx;
+    if (cordBottom - cordTop > 1) {
+      const cordW = Math.max(0.6, L.scale * 0.9);
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = 'rgba(126,132,128,0.34)';
+      [0.24, 0.76].forEach((at) => {
+        ctx.fillRect(blindX + blindW * at, cordTop, cordW, cordBottom - cordTop);
+      });
+      ctx.restore();
+    }
 
     /* The Notan profile, colour matched to the slats, and the two magnets that
        run on it. This is the product: the controls are on the frame sealed
@@ -3902,30 +3908,14 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     }
   };
 
+  /* Names the colour and nothing else. It used to narrate the tilt and lift
+     positions as well, which the owner did not want: the magnets show where
+     they are, and the two range inputs announce their own values to a screen
+     reader, so the commentary was duplicating both. */
   const describe = () => {
     if (!readout) return;
     const swatch = swatches[activeIndex];
-    const t = tiltTarget;
-    const l = liftTarget;
-    let tiltWord = 'tilted part open';
-    if (t <= 6 || t >= 94) tiltWord = 'slats closed';
-    else if (t >= 44 && t <= 56) tiltWord = 'slats fully open';
-    else if (t < 44) tiltWord = 'tilted open, angled up';
-    else tiltWord = 'tilted open, angled down';
-    let liftWord = `raised ${Math.round(l)}%`;
-    if (l <= 1) liftWord = 'blind fully down';
-    else if (l >= 99) liftWord = 'blind fully raised';
-
-    /* On a two sided slat, say which side the room is getting. It is the whole
-       point of the option and it is not obvious from a swatch. */
-    let side = '';
-    if (swatch.twoSided) {
-      const [first, second] = swatch.name.split('/');
-      const showing = t >= 50 ? first : second;
-      if (showing) side = `, showing ${showing.trim().toLowerCase()} to the room`;
-    }
-
-    readout.textContent = `${swatch.name}${swatch.code ? ` ${swatch.code}` : ''} — ${tiltWord}, ${liftWord}${side}.`;
+    readout.textContent = `${swatch.name}${swatch.code ? ` ${swatch.code}` : ''}`;
   };
 
   const step = () => {
