@@ -36668,7 +36668,12 @@ html.fg-blinds-reveal-locked {
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   align-items: center;
   gap: clamp(1.25rem, 4vw, 3.5rem);
+  /* Bottom margin is for the phone, where the band collapses to one column and
+     the footnote would otherwise sit against the figures in the grid below.
+     Longhands, not the shorthand: this element is also a .container, and a
+     `margin: x 0 y` resets the horizontal auto margin that centres it. */
   margin-top: clamp(2rem, 4vw, 3.25rem);
+  margin-bottom: clamp(2rem, 3.5vw, 3rem);
 }
 
 .fg-cas-lock__stage {
@@ -36687,17 +36692,22 @@ html.fg-blinds-reveal-locked {
   transition: transform 120ms linear;
 }
 
-.fg-cas-lock__brand {
+/* These three are qualified with .fg-cas because `.fg-cas p` sets a size, a
+   margin and a max-width at (0,1,1), which beats a bare class. Unqualified,
+   the brand line rendered at 16px and the note lost its top margin and sat
+   flush against the last specification. */
+.fg-cas .fg-cas-lock__brand {
   margin: 0 0 0.6rem;
   color: #ffffff;
   font-size: clamp(1.5rem, 2.6vw, 2.1rem);
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .fg-cas-security .fg-cas-lock__brand { color: #ffffff; }
 
-.fg-cas-lock__lead { max-width: 46ch; margin: 0; }
+.fg-cas .fg-cas-lock__lead { max-width: 46ch; margin: 0; }
 
 .fg-cas-lock__specs {
   display: grid;
@@ -36723,8 +36733,9 @@ html.fg-blinds-reveal-locked {
   line-height: 1.45;
 }
 
-.fg-cas-lock__note {
-  margin: 1.4rem 0 0;
+.fg-cas .fg-cas-lock__note {
+  max-width: 52ch;
+  margin: clamp(1.5rem, 3vw, 2rem) 0 0;
   font-size: 0.8rem;
   line-height: 1.5;
 }

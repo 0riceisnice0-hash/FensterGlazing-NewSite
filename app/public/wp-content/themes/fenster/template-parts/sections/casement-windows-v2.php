@@ -401,7 +401,7 @@ $faq_schema = [
                 <img class="fg-cas-lock__art"
                     src="<?php echo esc_url(fenster_generated_url($studio . 'cas-kenrick-excalibur.webp')); ?>"
                     srcset="<?php echo esc_attr(fenster_generated_url($studio . 'cas-kenrick-excalibur-640w.webp') . ' 640w, ' . fenster_generated_url($studio . 'cas-kenrick-excalibur.webp') . ' 1100w'); ?>"
-                    sizes="(max-width: 860px) 76vw, 40vw"
+                    sizes="(max-width: 860px) 76vw, 520px"
                     alt="<?php esc_attr_e('Kenrick Excalibur multi-point window lock, showing the die-cast gearbox, the square spindle hole, the claws and the steel shoot bolts', 'fenster'); ?>"
                     loading="lazy" width="1100" height="1182">
             </div>
