@@ -67,6 +67,59 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-04 - Casement: the owner's list, and a claim on somebody else's job (test, 597c58e)
+
+- **The proof gallery claimed work that is not ours, and that was mine.** The
+  rebuild put the stone elevation into a section headed "Casements we have
+  fitted" under a line reading "every photograph here is a Fenster
+  installation". It is Liniar photography. It carries the overture now, where
+  nothing claims it, and the gallery is five of our own. Leighton Buzzard is
+  cropped to the downstairs window on the same principle: the upstairs windows
+  on that terrace are not ours. **A section that makes a blanket claim has to
+  be audited photograph by photograph, not assembled from the best pictures.**
+- Gallery captions gained the features each window has, read off each
+  photograph rather than assumed: colour, configuration, glass, opening type.
+  They reveal on hover where there is a fine pointer and are simply always on
+  where there is not, because some touch devices report `hover: hover` and
+  would otherwise never show them.
+- **Key specifications now state one figure: the lowest achievable U-value,
+  starred**, with the star explained under the strip. Both figures moved to the
+  EnergyPlus banner, which now carries 0.95 with 36mm triple and 1.2 with 28mm
+  double side by side. Owner instruction; scoped by `single_u_value_routes` in
+  `site-data.php` so the Liniar routes change now and Sheerline is one list
+  entry away.
+- **Detail is four, and each was verified at full size before it was
+  labelled.** The bay bars are Georgian: the reflection of the street runs
+  straight over them, so they sit inside the sealed unit. The brick bay bars
+  are astragal: moulded, standing proud, throwing a shadow. Mock horns and
+  diamond lead are their own crops. Guessing between Georgian and astragal from
+  a thumbnail would have been a coin toss.
+- **Security leads on the mechanism**: the multi-point locking strip and its
+  cams, beside the keep it drives into, with laminated glass named as the
+  upgrade worth taking and multi-point locking stated as standard, which Liniar
+  publish. **The mechanism is deliberately not branded.** Kenrick Excalibur was
+  offered as "pretty sure" and appears nowhere in this project, so it is not a
+  fact this page can print. One line in `$security_points` when it is confirmed.
+- Combinations became a band rather than a fourth card, so the three studio
+  photographs stay one matched set and the copy can say plainly that there is
+  no standard size and no fixed set of layouts.
+- Standard against flush sits pair-beside-table rather than stacked: 739px
+  against a 900px viewport, where it used to take the whole screen, with both
+  crops wider than before.
+- Privacy glass is back, extracted into
+  `template-parts/components/privacy-glass-card.php`.
+- **Two faults found by rendering, not by reading.** The security captions were
+  the section's white type on the figure's white background, which STYLE.md
+  calls a release blocker. And two counts went stale the moment the sections
+  changed shape: "four ways of opening" after combinations left the card row,
+  "all three are priced" after detail became four.
+- Verified on test: three style cards, four dressings, five gallery cells, the
+  starred figure and its note, both banner figures, no broken images, no PHP
+  notices, no console errors, and 390 wide with no body overflow. The glass
+  patch renders blank in the local file:// harness on every route including
+  ones live since July, so that is the harness, not the card.
+- Test deployment only. Live is untouched.
+
 ## 2026-08-04 - Casement rebuilt around the journey, and held to a car maker's register (test, eb27ff0)
 
 Owner: start afresh, order the elements the way a consumer meets them, no
