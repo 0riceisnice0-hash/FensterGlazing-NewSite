@@ -492,7 +492,16 @@ function fenster_site_data(): array
            CREAM is a warm grey rather than a cream, and their ROSE GOLD is a
            greige rather than a pink. Both were checked twice, against the web
            swatch and against the printed brochure page, and they agree. Do not
-           "correct" them towards what the name suggests.
+           "correct" them towards what the name suggests. Neither has anything
+           but a BY code, so the swatch is the only source there is.
+
+           The two RAL entries are the exception and do not come from the
+           swatches. RAL 7016 is a published standard, Notan cite the code
+           themselves, and the standard is #383E42, a grey. Their swatch disc
+           reads #1A1C1B, which is all but black and is almost certainly a
+           reproduction problem. The owner describes the colour as grey, which
+           agrees with the standard and not with the disc, so the standard
+           wins. Where a colour carries a RAL code, prefer the code.
 
            WHITE/ANTHRACITE BY012 is the only two-sided slat: white on the room
            face, anthracite on the outward face. `reverse` exists for that one
@@ -509,11 +518,11 @@ function fenster_site_data(): array
             ['key' => 'white',            'name' => 'White',            'code' => 'BY001',   'hex' => '#FFFFFF'],
             ['key' => 'cream',            'name' => 'Cream',            'code' => 'BY010',   'hex' => '#9B9690'],
             ['key' => 'rose-gold',        'name' => 'Rose Gold',        'code' => 'BY014',   'hex' => '#9F8F7F'],
-            ['key' => 'anthracite',       'name' => 'Anthracite Grey',  'code' => 'RAL7016', 'hex' => '#1A1C1B'],
+            ['key' => 'anthracite',       'name' => 'Anthracite Grey',  'code' => 'RAL7016', 'hex' => '#383E42'],
             ['key' => 'brown',            'name' => 'Brown',            'code' => 'BY006',   'hex' => '#503723'],
             ['key' => 'dark-brown',       'name' => 'Dark Brown',       'code' => 'BY007',   'hex' => '#2D211B'],
             ['key' => 'metallic-silver',  'name' => 'Metallic Silver',  'code' => 'BY004',   'hex' => '#494A4C', 'metallic' => true],
-            ['key' => 'white-anthracite', 'name' => 'White/Anthracite', 'code' => 'BY012',   'hex' => '#FFFFFF', 'reverse' => '#1A1C1B'],
+            ['key' => 'white-anthracite', 'name' => 'White/Anthracite', 'code' => 'BY012',   'hex' => '#FFFFFF', 'reverse' => '#383E42'],
             ['key' => 'black',            'name' => 'Black',            'code' => 'RAL9005', 'hex' => '#151419'],
         ],
         'product_media' => [

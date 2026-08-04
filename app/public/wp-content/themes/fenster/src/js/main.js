@@ -3010,9 +3010,11 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
   const HEADRAIL = 0;
   /* The slim rail at the inner edge of the frame, at the boundary with the
      clear, that the two magnets slot onto. */
-  const RAIL_W = 12;
-  const MAGNET_W = 22;
-  const MAGNET_H = 52;
+  const RAIL_W = 11;
+  /* Longer and slimmer than it was. The reference photographs put it at about
+     one to three, not one to two and a bit. */
+  const MAGNET_W = 19;
+  const MAGNET_H = 64;
   const UNIT_W = GLASS_W + FRAME * 2;
   const UNIT_H = GLASS_H + FRAME * 2;
   const BLIND_W = GLASS_W - CASSETTE * 2;
@@ -3041,6 +3043,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     face: toRgb(button.dataset.hex),
     back: toRgb(button.dataset.reverse || button.dataset.hex),
     metallic: button.dataset.metallic === '1',
+    twoSided: Boolean(button.dataset.reverse),
     name: button.dataset.name || 'Slat colour',
     code: button.dataset.code || '',
   }));
@@ -3501,7 +3504,13 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     /* On the rail at the inner edge of the right hand member, where the frame
        meets the clear. The magnets slot onto that rail; they do not sit in the
        middle of the frame, which is where an earlier pass put them. */
-    const x = L.glassX + L.glassW - cassettePx;
+    const railX = L.glassX + L.glassW - cassettePx;
+    const railW = RAIL_W * L.scale;
+    /* The rail is a guide, not a seat. The magnet sits alongside it with its
+       near edge against the rail's far edge, on the frame side, which is what
+       both reference photographs show and how it is described. Centring it on
+       the rail put it half over the clear. */
+    const x = railX + railW / 2 + (MAGNET_W * L.scale) / 2;
     const w = MAGNET_W * L.scale;
     const h = MAGNET_H * L.scale;
     return {
@@ -3509,7 +3518,8 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       w,
       h,
       memberW: cassettePx,
-      railW: RAIL_W * L.scale,
+      railX,
+      railW,
       railTop: L.glassY,
       railBottom: bottom,
       tilt: { top: top + h * 0.6, bottom: top + span * 0.26 },
@@ -3590,18 +3600,21 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
     /* The rail, at the inner edge of the right hand member where the frame
        meets the clear. This is what the magnets slot onto. */
-    const rail = ctx.createLinearGradient(t.x - t.railW / 2, 0, t.x + t.railW / 2, 0);
-    rail.addColorStop(0, paint(shell, 0.5));
-    rail.addColorStop(0.3, paint(shell, 0.66));
-    rail.addColorStop(0.62, paint(shell, 1.06, 16));
-    rail.addColorStop(1, paint(shell, 0.54));
+    const rail = ctx.createLinearGradient(t.railX - t.railW / 2, 0, t.railX + t.railW / 2, 0);
+    /* A groove, read by the highlight along its clear-side edge rather than by
+       its own tone: it is the same colour as the member it is cut into. */
+    rail.addColorStop(0, paint(shell, 1.12, 22));
+    rail.addColorStop(0.16, paint(shell, 0.44));
+    rail.addColorStop(0.55, paint(shell, 0.34));
+    rail.addColorStop(0.86, paint(shell, 0.52));
+    rail.addColorStop(1, paint(shell, 0.94, 12));
     ctx.fillStyle = rail;
-    ctx.fillRect(t.x - t.railW / 2, L.glassY + cassettePx * 0.72, t.railW, L.glassH - spacerPx - cassettePx * 0.72);
+    ctx.fillRect(t.railX - t.railW / 2, L.glassY + cassettePx * 0.72, t.railW, L.glassH - spacerPx - cassettePx * 0.72);
 
     /* The magnet caps are the cassette colour taken a shade deeper and read
        glossy against it, so they stand out on a white blind as clearly as on a
        black one. */
-    const cap = mixRgb(shell, { r: 26, g: 29, b: 32 }, 0.34);
+    const cap = mixRgb(shell, { r: 26, g: 29, b: 32 }, 0.42);
 
     ['tilt', 'lift'].forEach((which) => {
       const m = magnetCentre(L, which);
@@ -3610,7 +3623,7 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
       /* Generously rounded, glossy, and about one to two point two. The
          owner's photograph is the reference: an earlier pass had them as slim
          capsules at one to three and a half, which read as pins. */
-      const radius = m.w * 0.14;
+      const radius = m.w * 0.17;
 
       ctx.save();
       ctx.shadowColor = 'rgba(6,9,12,0.62)';
@@ -3622,30 +3635,32 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
          across the width made it look cylindrical; the real one is a broad
          even face with one crisp turned edge near the right and thin dark
          returns at both sides. */
+      /* Matte, not glossy. An earlier pass gave it a hard specular sheet,
+         which is a plastic look the real moulding does not have: the
+         references show a soft, almost even face with the light falling away
+         gently to a darker edge on each side. */
       const body = ctx.createLinearGradient(x, y, x + m.w, y);
-      body.addColorStop(0, paint(cap, 0.22));
-      body.addColorStop(0.07, paint(cap, 0.58, 2));
-      body.addColorStop(0.22, paint(cap, 0.96, 20));
-      body.addColorStop(0.4, paint(cap, 1.08, 28));
-      body.addColorStop(0.62, paint(cap, 0.88, 12));
-      body.addColorStop(0.7, paint(cap, 0.4));
-      body.addColorStop(0.79, paint(cap, 0.34));
-      body.addColorStop(0.9, paint(cap, 0.64, 4));
-      body.addColorStop(1, paint(cap, 0.2));
+      body.addColorStop(0, paint(cap, 0.42));
+      body.addColorStop(0.12, paint(cap, 0.78, 4));
+      body.addColorStop(0.34, paint(cap, 0.98, 12));
+      body.addColorStop(0.58, paint(cap, 0.92, 8));
+      body.addColorStop(0.84, paint(cap, 0.7, 2));
+      body.addColorStop(1, paint(cap, 0.4));
       ctx.fillStyle = body;
       ctx.fill();
       ctx.restore();
 
       /* The top face catches a hard glint and the bottom rolls into shadow,
          which is what makes it read as moulded and proud of the glass. */
+      /* Just enough to round the ends. A hard glint across the top read as
+         polished; the moulding is satin. */
       const roll = ctx.createLinearGradient(0, y, 0, y + m.h);
-      roll.addColorStop(0, 'rgba(255,255,255,0.62)');
-      roll.addColorStop(0.055, 'rgba(255,255,255,0.34)');
-      roll.addColorStop(0.1, 'rgba(0,0,0,0.2)');
-      roll.addColorStop(0.18, 'rgba(0,0,0,0.02)');
-      roll.addColorStop(0.62, 'rgba(0,0,0,0)');
-      roll.addColorStop(0.93, 'rgba(0,0,0,0.3)');
-      roll.addColorStop(1, 'rgba(0,0,0,0.62)');
+      roll.addColorStop(0, 'rgba(255,255,255,0.2)');
+      roll.addColorStop(0.045, 'rgba(255,255,255,0.06)');
+      roll.addColorStop(0.12, 'rgba(0,0,0,0.05)');
+      roll.addColorStop(0.5, 'rgba(0,0,0,0)');
+      roll.addColorStop(0.9, 'rgba(0,0,0,0.12)');
+      roll.addColorStop(1, 'rgba(0,0,0,0.34)');
       roundedRect(ctx, x, y, m.w, m.h, radius);
       ctx.fillStyle = roll;
       ctx.fill();
@@ -3741,7 +3756,18 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
 
     const tKey = `${shownFace.r | 0},${shownFace.g | 0},${shownFace.b | 0},${shownBack.r | 0},${shownBack.g | 0},${shownBack.b | 0},${shownMetallic.toFixed(2)},${phi.toFixed(4)},${pitchPx.toFixed(2)},${slatPx.toFixed(2)}`;
     if (tileKey !== tKey) {
-      tile = buildTile(shownFace, shownBack, shownMetallic > 0.5, phi, pitchPx, slatPx);
+      /* Which side of the slat the room is looking at. A venetian presents
+         opposite faces in its two closed positions, so on a two sided slat
+         tilting one way shows white and the other shows anthracite. The swap
+         happens at edge on, where the slat is invisible, so it is never seen
+         to happen. On the seven single sided colours `back` is `face` and this
+         does nothing. The cassette, the head, the bottom rail and the stack all
+         stay on `shownFace`: they do not rotate, so the room always sees the
+         room side of them, which is why the frame on White/Anthracite stays
+         white however the slats are turned. */
+      const roomSide = phi >= 0 ? shownFace : shownBack;
+      const outSide = phi >= 0 ? shownBack : shownFace;
+      tile = buildTile(roomSide, outSide, shownMetallic > 0.5, phi, pitchPx, slatPx);
       tileKey = tKey;
     }
 
@@ -3889,7 +3915,17 @@ document.querySelectorAll('[data-fg-blind-visualiser]').forEach((root) => {
     let liftWord = `raised ${Math.round(l)}%`;
     if (l <= 1) liftWord = 'blind fully down';
     else if (l >= 99) liftWord = 'blind fully raised';
-    readout.textContent = `${swatch.name}${swatch.code ? ` ${swatch.code}` : ''} — ${tiltWord}, ${liftWord}.`;
+
+    /* On a two sided slat, say which side the room is getting. It is the whole
+       point of the option and it is not obvious from a swatch. */
+    let side = '';
+    if (swatch.twoSided) {
+      const [first, second] = swatch.name.split('/');
+      const showing = t >= 50 ? first : second;
+      if (showing) side = `, showing ${showing.trim().toLowerCase()} to the room`;
+    }
+
+    readout.textContent = `${swatch.name}${swatch.code ? ` ${swatch.code}` : ''} — ${tiltWord}, ${liftWord}${side}.`;
   };
 
   const step = () => {
