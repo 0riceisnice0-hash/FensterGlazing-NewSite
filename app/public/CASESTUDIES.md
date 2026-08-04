@@ -1,6 +1,6 @@
 # Fenster Case Studies — How To Add And Maintain Them
 
-Last updated: 2026-07-17
+Last updated: 2026-08-04
 
 This is the complete guide to the residential case studies system at
 `/case-studies/`. It is written so a future agent (or developer) can add a new
@@ -107,6 +107,19 @@ straight to live.** Verify at 1440x900 and 390x844: no horizontal overflow, H1
 within the `3.6rem` ceiling, product/colour/quote links correct, gallery
 lightbox opens, images load. Only promote to live after the owner approves.
 
+Two traps when verifying by screenshot rather than by eye:
+
+- **Test is Bedrock, so theme assets are at `/app/themes/fenster/...`.** Hand
+  building a `/wp-content/themes/fenster/...` URL to check a photo returns a
+  404 page and looks like a broken deploy. Pull the URLs out of the rendered
+  HTML instead of composing them.
+- **`Page.captureScreenshot` with `captureBeyondViewport` does not trigger
+  `loading="lazy"`.** A full-page shot of a case study shows the first two
+  gallery images and then bare captions, which looks exactly like a broken
+  masonry and is not. Set every `img.loading = 'eager'`, scroll to the bottom
+  and back, and await `decode()` before capturing. See the
+  `local-browser-qa-workaround` memory for the CDP harness.
+
 That is the whole flow. No routing, template or SCSS edits are needed to add a
 normal case study — it is pure data.
 
@@ -199,6 +212,15 @@ Follow `STYLE.md`. In short:
   - `/slide-fold-doors/` — 10-point locking, panels slide and swing separately.
 - **Match reality.** If one window was fitted, write "window" (singular) and
   say "one" in the specs. Do not describe a package when it was a single unit.
+- **A product page figure only transfers if the job actually has that glass.**
+  The Leagrave window is a uPVC casement, but it carries a Notan blind in an
+  NTB 24/28 cavity, so the `0.95 W/m²K` / A+ the other casement studies quote
+  for a 36mm triple unit does not describe it and is not on the page. Same for
+  the frame system: Fenster's uPVC casement is Liniar EnergyPlus, but nothing in
+  the supplied photography proved that one was, so it is not named. Leaving a
+  spec slot for something you can see beats filling it with something you
+  assumed. See the Notan Integral Blind Rule in `AI.md` before writing any
+  integral blind copy, and note it forbids printing a slat width.
 - **Captions** describe each photo, expanded from the owner's filename notes
   (e.g. "outside closed" becomes "The bifold doors closed, seen from the
   garden ..."). The caption doubles as the image `alt`.
@@ -269,6 +291,7 @@ Current job → fitters mapping:
 - Broughton — Andy
 - Leighton Buzzard flush + slide/fold — Zac (Rugman) and Shane
 - Leighton Buzzard casements — Aaron and Shane
+- Leagrave integral blinds — Shane and Zac (Rugman)
 
 If a new fitter joins, add their photo to `assets/images/imported/`, add a
 `$fitter_*` line, and confirm their Meet the Team profile exists so the anchor
@@ -293,6 +316,12 @@ on the bifold job, not a windows job).
   tidy rectangle is fine there.
 - The **gallery** shows every other image **whole** at natural aspect ratio in
   a two-column masonry (`columns: 2 22rem`). Never force a crop here.
+- **The archive card is `16 / 10` with `object-fit: cover`.** When every photo
+  on a job is portrait, `images[0]` gets centre-cropped into a horizontal band
+  and the card shows no window at all. Add a `card_image` cut from the
+  full-resolution original rather than from the 1600px version, and choose the
+  band deliberately: on Leagrave it keeps the head of the blind, both magnets
+  and the handle. Bolbeck Park and Wolverton sash do the same at `1600x1000`.
 - Every hero and gallery image is a lightbox link (`data-fg-gallery-lightbox`).
   Clicking opens the existing in-page lightbox (prev/next, Escape, click
   backdrop) — no new tab. This is wired globally in `src/js/main.js`; you get
@@ -317,8 +346,13 @@ Treatment depends on `orientation`:
 - **`landscape`** → a full-width 16:9 video sits under the title block, in place
   of the hero image (`fg-cs-hero--wide-video`).
 - **`portrait`** → the video is shown as a square in the hero image slot
-  (`fg-cs-hero__media--video`). Crop portrait source to a centre square when
-  encoding.
+  (`fg-cs-hero__media--video`). **Do not crop it to a square when encoding.**
+  `.fg-cs-hero__media--video video` sets `aspect-ratio: 1 / 1` with
+  `object-fit: cover`, so the browser centre-crops it for you, and every portrait
+  study already on the site ships full portrait: Bolbeck Park and Wolverton are
+  `720x1280`, Leagrave is `576x1024`. Encoding a square as well would crop it
+  twice. Encode at native portrait size and let the CSS do it. The poster should
+  be portrait too, so poster and first frame line up.
 
 When a `video` is present the hero has no still image, so **all** `images` go to
 the gallery. Videos autoplay muted, loop and are `playsinline` with the poster
@@ -331,15 +365,19 @@ Encoding (there is no system ffmpeg; use the bundled one via
 # landscape -> 1280x720 web mp4 + poster
 ffmpeg -y -i in.mp4 -vf scale=1280:720 -c:v libx264 -pix_fmt yuv420p -crf 26 -preset medium -an -movflags +faststart cs-x.mp4
 ffmpeg -y -ss 14 -i in.mp4 -vf scale=1600:900 -frames:v 1 -q:v 3 cs-x-poster.jpg
-# portrait 1080x1920 -> centre square 1080x1080 + square poster
-ffmpeg -y -i in.mp4 -vf "crop=1080:1080:0:420" -c:v libx264 -pix_fmt yuv420p -crf 26 -preset medium -an -movflags +faststart cs-y.mp4
-ffmpeg -y -ss 6 -i in.mp4 -vf "crop=1080:1080:0:420" -frames:v 1 -q:v 3 cs-y-poster.jpg
+# portrait -> native size, no crop, no scale. The CSS squares it.
+ffmpeg -y -i in.mp4 -c:v libx264 -pix_fmt yuv420p -crf 26 -preset medium -an -movflags +faststart cs-y.mp4
+ffmpeg -y -ss 4.5 -i in.mp4 -frames:v 1 -q:v 3 cs-y-poster.jpg
 ```
 
 Videos live in `assets/videos/case-studies/`; posters and any stills in
 `assets/images/case-studies/`. Keep videos short (~20s loop) and ideally under
-~7MB. `crop=1080:1080:0:420` takes the centre square of a 1080x1920 clip
-(vertical offset `(1920-1080)/2 = 420`).
+~7MB. `-an` matters: phone clips carry an audio track, and the player is muted
+and looping, so the audio is dead weight. **Check for a rotation matrix before
+you plan a crop.** A phone clip is often stored landscape with
+`displaymatrix: rotation of -90.00 degrees`; `ffmpeg -i` reports the stored size,
+not the displayed one, and ffmpeg auto-rotates before applying `-vf`. The
+Leagrave source reads as `1024x576` and displays as `576x1024`.
 
 Note: `date` is required for ordering — the archive and related sections sort by
 it automatically (newest first, `uasort` in `fenster_case_studies()`), so the
