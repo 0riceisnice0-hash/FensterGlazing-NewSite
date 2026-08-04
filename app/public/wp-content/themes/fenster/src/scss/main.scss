@@ -36307,6 +36307,626 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Casement windows (/casement-windows/)
+
+   Rebuilt 2026-08-04. The register is a car maker's product page: photography
+   carries the drama, type stays quiet and consistent, chapters are numbered,
+   and the only decoration is space. Nothing here is a card with a shadow.
+
+   Sections alternate light and dark deliberately: the two chapters that make a
+   technical claim, EnergyPlus and security, sit on dark so the studio
+   photography reads as lit product rather than as a diagram on a page.
+   --------------------------------------------------------------------------- */
+.fg-cas {
+  --cas-rule: rgba(0, 45, 58, 0.12);
+  --cas-ink: var(--color-ink);
+  color: var(--cas-ink);
+}
+
+.fg-cas section {
+  padding: clamp(3rem, 7vh, 5.5rem) 0;
+}
+
+/* One display size across the page. Chapter titles, section titles and the
+   overture all use it, which is what makes a long page feel composed rather
+   than like a stack of unrelated blocks. Well inside --fg-font-size-max. */
+.fg-cas .fg-cas-display {
+  max-width: 17ch;
+  margin: 0 0 0.9rem;
+  color: inherit;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+}
+
+.fg-cas .fg-cas-eyebrow {
+  margin: 0 0 0.8rem;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fg-cas p {
+  max-width: 54ch;
+  margin: 0 0 0.9rem;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.62;
+}
+
+.fg-cas p:last-child { margin-bottom: 0; }
+
+.fg-cas h3 {
+  margin: 0 0 0.45rem;
+  color: inherit;
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+
+.fg-cas figure { margin: 0; }
+
+.fg-cas .fg-cas-lead {
+  max-width: 58ch;
+  font-size: 1.06rem;
+}
+
+.fg-cas-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.fg-cas-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-accent-dark);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.fg-cas-link::after { content: '\2192'; transition: transform 0.18s ease; }
+.fg-cas-link:hover::after, .fg-cas-link:focus-visible::after { transform: translateX(3px); }
+
+.fg-cas .fg-cas-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.8rem;
+  max-width: none;
+  margin: clamp(1.25rem, 2.4vw, 1.9rem) 0 0;
+}
+
+.fg-cas .fg-cas-note--quiet {
+  display: block;
+  max-width: 68ch;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.fg-cas-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Section and chapter heads share one shape: title left, one line of context
+   right, aligned on their baselines. */
+.fg-cas-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: end;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.fg-cas .fg-cas-section-head > p { max-width: 44ch; margin: 0; }
+
+.fg-cas-chapter__head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  margin-bottom: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+/* The chapter number is a marker, not a headline: large, hairline, quiet. */
+.fg-cas-num {
+  color: transparent;
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  -webkit-text-stroke: 1px rgba(0, 45, 58, 0.28);
+}
+
+/* ---- Overture ---- */
+.fg-cas-overture__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+
+.fg-cas .fg-cas-overture__grid .fg-cas-display { max-width: 14ch; }
+
+/* Full-bleed photography. The container is escaped on purpose: an image that
+   stops at the text column reads as an illustration, one that runs to the edge
+   of the screen reads as a product shot. */
+.fg-cas-bleed {
+  width: 100vw;
+  max-width: 100%;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.fg-cas-bleed img {
+  display: block;
+  width: 100%;
+  height: clamp(280px, 46vw, 620px);
+  object-fit: cover;
+}
+
+/* ---- 01 Versatility: the four ways it opens ---- */
+.fg-cas-styles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+
+.fg-cas-style figure {
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+  border-radius: 4px;
+  aspect-ratio: 4 / 3;
+  background: #f1f3f2;
+}
+
+.fg-cas-style img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cas .fg-cas-style p { font-size: 0.93rem; line-height: 1.55; }
+
+/* ---- Standard against flush ---- */
+.fg-cas-versus { background: #f4f6f5; }
+
+.fg-cas-versus__pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2rem);
+}
+
+.fg-cas-versus__pair figure { background: #ffffff; border-radius: 4px; overflow: hidden; }
+
+.fg-cas-versus__pair img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.fg-cas-versus__pair figcaption { padding: 1rem 1.15rem 1.25rem; }
+
+.fg-cas-versus__pair figcaption strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 1.02rem;
+}
+
+.fg-cas-versus__pair figcaption span {
+  display: block;
+  max-width: 40ch;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.fg-cas-table {
+  width: 100%;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-collapse: collapse;
+}
+
+.fg-cas-table th,
+.fg-cas-table td {
+  padding: 0.85rem 1rem 0.85rem 0;
+  border-top: 1px solid var(--cas-rule);
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.fg-cas-table thead th {
+  border-top: 0;
+  color: var(--cas-ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fg-cas-table tbody th { color: var(--cas-ink); font-weight: 700; }
+
+/* ---- Detail trio ---- */
+.fg-cas-trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+}
+
+.fg-cas-trio figure { overflow: hidden; border-radius: 4px; }
+
+.fg-cas-trio img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.fg-cas-trio figcaption { padding-top: 0.9rem; }
+
+.fg-cas-trio figcaption strong { display: block; margin-bottom: 0.25rem; font-size: 1rem; }
+
+.fg-cas-trio figcaption span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* ---- 02 EnergyPlus. Dark, because the claim is technical. ---- */
+.fg-cas-energy,
+.fg-cas-security {
+  background: linear-gradient(168deg, #06222a 0%, #0c313b 52%, #061d24 100%);
+  color: #ffffff;
+}
+
+.fg-cas-energy .fg-cas-display,
+.fg-cas-security .fg-cas-display { color: #ffffff; }
+
+.fg-cas-energy p,
+.fg-cas-security p { color: rgba(255, 255, 255, 0.74); }
+
+.fg-cas-energy .fg-cas-num,
+.fg-cas-security .fg-cas-num { -webkit-text-stroke-color: rgba(255, 255, 255, 0.32); }
+
+.fg-cas-energy__grid,
+.fg-cas-security__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.fg-cas-energy__media,
+.fg-cas-security__grid figure {
+  overflow: hidden;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.fg-cas-energy__media img,
+.fg-cas-security__grid figure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* The three figures, set like performance stats. */
+.fg-cas-stats { display: grid; gap: 1.5rem; margin: 0; }
+
+.fg-cas-stats dt {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-cas-stats dt span {
+  color: #ffffff;
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+
+.fg-cas-stats dd {
+  max-width: 34ch;
+  margin: 0.3rem 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* Construction list, on the shared [data-fg-anatomy] controller. */
+.fg-cas-anatomy {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.fg-cas-anatomy li { border-bottom: 1px solid rgba(255, 255, 255, 0.16); }
+.fg-cas-anatomy h3 { margin: 0; }
+
+.fg-cas-anatomy__toggle {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 56px;
+  padding: 1rem 0;
+  border: 0;
+  background: none;
+  color: #ffffff;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fg-cas-anatomy__num {
+  color: var(--color-accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.fg-cas-anatomy__mark { position: relative; width: 0.85rem; height: 0.85rem; }
+
+.fg-cas-anatomy__mark::before,
+.fg-cas-anatomy__mark::after {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: var(--color-accent);
+  content: '';
+}
+
+.fg-cas-anatomy__mark::before { width: 100%; height: 2px; }
+.fg-cas-anatomy__mark::after { width: 2px; height: 100%; transition: transform 0.18s ease; }
+.fg-cas-anatomy__toggle[aria-expanded="true"] .fg-cas-anatomy__mark::after { transform: scaleY(0); }
+
+.fg-cas-anatomy__body { padding: 0 0 1.25rem 3.75rem; }
+.fg-cas .fg-cas-anatomy__body p { max-width: 62ch; margin: 0; font-size: 0.95rem; }
+
+/* ---- 03 Security ---- */
+.fg-cas-list { display: grid; margin: 0; }
+
+.fg-cas-list div {
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.fg-cas-list div:first-child { border-top: 0; padding-top: 0; }
+
+.fg-cas-list dt {
+  margin-bottom: 0.3rem;
+  color: #ffffff;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.fg-cas-list dd {
+  max-width: 52ch;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+/* ---- The film ---- */
+.fg-cas-film { background: #f4f6f5; }
+
+.fg-cas-film__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.fg-cas-film__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  aspect-ratio: 16 / 9;
+  background: #dfe4e2;
+}
+
+.fg-cas-film__media img,
+.fg-cas-film__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cas-chip {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(4, 26, 32, 0.82);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fg-cas-chip i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: fg-cas-pulse 1.9s ease-in-out infinite;
+}
+
+@keyframes fg-cas-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.72); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cas-chip i { animation: none; }
+}
+
+/* ---- Proof mosaic. Our own installations only. ---- */
+.fg-cas-proof { background: var(--color-steel); }
+.fg-cas-proof .fg-cas-display { color: #ffffff; }
+.fg-cas-proof p { color: rgba(255, 255, 255, 0.74); }
+.fg-cas-proof__mobile { display: none; }
+
+.fg-cas-mosaic {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: clamp(0.6rem, 1.2vw, 1rem);
+  height: clamp(430px, 46vw, 600px);
+}
+
+.fg-cas-mosaic figure {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--color-steel-90);
+}
+
+.fg-cas-mosaic figure:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
+.fg-cas-mosaic figure:nth-child(2) { grid-column: 6 / 10; }
+.fg-cas-mosaic figure:nth-child(3) { grid-column: 10 / 13; }
+.fg-cas-mosaic figure:nth-child(4) { grid-column: 6 / 8; }
+.fg-cas-mosaic figure:nth-child(5) { grid-column: 8 / 11; }
+.fg-cas-mosaic figure:nth-child(6) { grid-column: 11 / 13; }
+
+.fg-cas-mosaic a { display: block; width: 100%; height: 100%; text-decoration: none; }
+
+.fg-cas-mosaic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.fg-cas-mosaic a:hover img,
+.fg-cas-mosaic a:focus-visible img { transform: scale(1.04); }
+
+.fg-cas-mosaic figcaption {
+  position: absolute;
+  right: 0; bottom: 0; left: 0;
+  padding: 2.5rem 0.9rem 0.85rem;
+  background: linear-gradient(to top, rgba(0, 18, 24, 0.85), transparent);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.fg-cas-mosaic a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+.fg-cas .fg-cas-swipe {
+  display: none;
+  margin: 0.9rem 0 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1080px) {
+  .fg-cas-styles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
+  .fg-cas section { padding: 2.5rem 0; }
+
+  .fg-cas .fg-cas-display,
+  .fg-cas p { max-width: none; }
+
+  .fg-cas-section-head,
+  .fg-cas-overture__grid,
+  .fg-cas-energy__grid,
+  .fg-cas-security__grid,
+  .fg-cas-film__grid,
+  .fg-cas-versus__pair,
+  .fg-cas-trio {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-cas-section-head,
+  .fg-cas-overture__grid { gap: 0.75rem; }
+
+  /* The number sits above the title on a phone rather than stealing a column. */
+  .fg-cas-chapter__head { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .fg-cas-num { font-size: 2.4rem; }
+
+  .fg-cas-styles { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-cas-actions .button { flex: 1 1 auto; text-align: center; }
+
+  .fg-cas-energy__grid figure,
+  .fg-cas-security__grid figure,
+  .fg-cas-film__grid figure { order: -1; }
+
+  .fg-cas-anatomy__toggle { grid-template-columns: 2.4rem minmax(0, 1fr) auto; font-size: 0.98rem; }
+  .fg-cas-anatomy__body { padding-left: 3.15rem; }
+
+  .fg-cas-table th, .fg-cas-table td { padding: 0.7rem 0.5rem 0.7rem 0; font-size: 0.88rem; }
+
+  /* Mosaic becomes a swipe rail, as everywhere else on the site. */
+  .fg-cas-proof__desktop { display: none; }
+  .fg-cas-proof__mobile { display: inline; }
+
+  .fg-cas-mosaic {
+    display: flex;
+    height: auto;
+    padding-bottom: 0.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .fg-cas-mosaic figure {
+    flex: 0 0 82%;
+    aspect-ratio: 4 / 3;
+    scroll-snap-align: center;
+  }
+
+  .fg-cas-mosaic figure:nth-child(n) { grid-column: auto; grid-row: auto; }
+
+  .fg-cas .fg-cas-swipe { display: block; }
+}
+
+/* Real-homes gallery, retained for /heritage-aluminium-doors/.
+   The casement page that this component was written for now uses its own
+   .fg-cas-mosaic; heritage still renders .fg-cw-gallery--heritage, so these
+   rules stay. Do not delete them with the next casement rewrite. */
 /* Casement windows: 70mm Liniar EnergyPlus product page.
    Deliberately built on the same vocabulary as /heritage-aluminium-doors/:
    copy column one side, photography the other, short paragraphs, divided
@@ -36318,248 +36938,10 @@ html.fg-blinds-reveal-locked {
   color: var(--color-ink);
 }
 
-.fg-cw section {
-  padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
-}
-
-/* The technology banner renders inside this wrapper mid-page; keep its own
-   compact rhythm rather than inheriting full section padding. */
-.fg-cw .fg-tech-banner {
-  padding: clamp(1rem, 2vh, 1.6rem) 0;
-}
-
-.fg-cw h2 {
-  max-width: 20ch;
-  margin: 0 0 0.85rem;
-  color: var(--color-ink);
-  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
-  line-height: 1.14;
-}
-
-.fg-cw h3 {
-  margin: 0 0 0.4rem;
-  color: var(--color-ink);
-  font-size: 1.15rem;
-  line-height: 1.25;
-}
-
-/* Display heading for the page's set-piece sections (film, personalisation,
-   flush comparison). Bigger than the working h2 scale, still well under the
-   site-wide --fg-font-size-max ceiling. */
-.fg-cw .fg-cw-display {
-  max-width: 18ch;
-  font-size: clamp(1.75rem, 2.9vw, 2.5rem);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-}
-
-.fg-cw p {
-  max-width: 52ch;
-  margin: 0 0 0.85rem;
-  color: var(--color-muted);
-  font-size: 0.97rem;
-  line-height: 1.58;
-}
-
-.fg-cw p:last-child {
-  margin-bottom: 0;
-}
-
-/* The rule above is (0,1,1), so any classed paragraph has to be scoped with
-   .fg-cw or it silently loses its own colour, size and spacing. */
-.fg-cw .eyebrow {
-  max-width: none;
-  margin: 0 0 0.7rem;
-  color: var(--color-accent);
-  font-size: 0.78rem;
-  line-height: 1.3;
-}
-
-.fg-cw figure {
-  margin: 0;
-}
-
-/* Shared two-column section head: heading block left, supporting line right.
-   The gallery and styles heads are variants of the same shape. */
-.fg-cw-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  align-items: end;
-  gap: clamp(1.5rem, 3vw, 3rem);
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.9rem);
-}
-
-.fg-cw .fg-cw-head > p {
-  max-width: 46ch;
-  margin: 0;
-}
-
-/* Two-column split: copy one side, media the other. */
-.fg-cw-split {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  align-items: center;
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-}
-
-.fg-cw-split--media-first {
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-}
-
-.fg-cw-copy--lead {
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.9rem);
-}
-
-.fg-cw-facts {
-  display: grid;
-  gap: 0.45rem;
-  padding: 0;
-  margin: 1rem 0 0;
-  list-style: none;
-}
-
-.fg-cw-facts li {
-  position: relative;
-  padding-left: 1.45rem;
-  color: var(--color-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.fg-cw-facts li::before {
-  position: absolute;
-  top: 0.5em;
-  left: 0;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  background: var(--color-accent);
-  content: '';
-}
-
-.fg-cw-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.3rem;
-}
-
 /* Divided detail list, matching the heritage-door frame section. */
 .fg-cw-list {
   display: grid;
   margin: 1.2rem 0 0;
-}
-
-.fg-cw-list div {
-  padding: 0.85rem 0;
-  border-top: 1px solid var(--cw-line);
-}
-
-.fg-cw-list div:last-child {
-  padding-bottom: 0;
-}
-
-.fg-cw-list dt {
-  margin-bottom: 0.25rem;
-  color: var(--color-ink);
-  font-size: 0.99rem;
-  font-weight: 700;
-}
-
-.fg-cw-list dd {
-  max-width: 56ch;
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 0.93rem;
-  line-height: 1.55;
-}
-
-.fg-cw-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--color-accent-dark);
-  font-weight: 700;
-  font-size: 0.95rem;
-  text-decoration: none;
-}
-
-.fg-cw-link::after {
-  content: '\2192';
-  transition: transform 0.18s ease;
-}
-
-.fg-cw-link:hover::after,
-.fg-cw-link:focus-visible::after {
-  transform: translateX(3px);
-}
-
-.fg-cw .fg-cw-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.6rem;
-  max-width: none;
-  margin: 1.2rem 0 0;
-}
-
-/* Media panels and caption chips. */
-.fg-cw-media {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--color-steel);
-  aspect-ratio: 16 / 10;
-}
-
-.fg-cw-media--tall {
-  aspect-ratio: 4 / 3;
-}
-
-/* The Classic Heritage Door turntable is a 900x900 render, so the slot is
-   square and the frame is `contain`. Dropping a square source into the shared
-   16/10 box would either crop the top and bottom off the door or stretch it,
-   and STYLE.md rules both out.
-
-   The render carries a near-white background of its own (sampled at 251,251,251
-   in all four corners), so the panel behind it is white. It was the inherited
-   steel first, which put a dark door on a dark field and lost the sightlines
-   that are the entire point of this product. */
-.fg-cw-media--turntable {
-  aspect-ratio: 1;
-  background: #fbfbfb;
-}
-
-.fg-cw-media--turntable video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.fg-cw-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fg-cw-media[data-position="top"] img {
-  object-position: 50% 22%;
-}
-
-.fg-cw-media figcaption,
-.fg-cw-tiles figcaption {
-  position: absolute;
-  z-index: 1;
-  bottom: 1rem;
-  left: 1rem;
-  padding: 0.5rem 0.7rem;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--color-ink);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 /* Offset image pair, as used on the heritage-door frame section. */
@@ -36570,471 +36952,11 @@ html.fg-blinds-reveal-locked {
   gap: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
-.fg-cw-tiles figure {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--color-soft);
-}
-
-/* The profile cutaway runs to the edge of its own frame, so it needs padding
-   inside the tile rather than bleeding off it. */
-/* Scoped past `.fg-cw-tiles figure`, which is (0,1,1) and would otherwise keep
-   the soft tint behind an image that has its own white background. */
-.fg-cw-tiles .fg-cw-tiles__wide {
-  padding: clamp(0.85rem, 1.8vw, 1.5rem);
-  aspect-ratio: 4 / 3;
-  background: #ffffff;
-}
-
-/* The cutaway sits on white, so its caption chip needs an outline to read. */
-.fg-cw-tiles__wide figcaption {
-  border: 1px solid var(--cw-line);
-  background: var(--color-soft);
-}
-
-.fg-cw-tiles__narrow {
-  aspect-ratio: 4 / 5;
-  background: var(--color-steel);
-}
-
-.fg-cw-tiles img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.fg-cw-tiles__narrow img {
-  object-fit: cover;
-}
-
 /* Detail photo pair: two equal cover-cropped portraits, as on the heritage
    period-details section. */
 .fg-cw-tiles--pair {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
-}
-
-.fg-cw-tiles--pair figure {
-  aspect-ratio: 4 / 5;
-  background: var(--color-steel);
-}
-
-.fg-cw-tiles--pair img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Construction explorer: the composite anatomy pattern on the EnergyPlus
-   cutaway. Driven by the shared [data-fg-anatomy] controller; first item is
-   open in the markup so the section reads with JavaScript off. */
-.fg-cw-anatomy__explorer {
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  align-items: start;
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  padding: clamp(1.25rem, 2.4vw, 2rem);
-  border: 1px solid var(--cw-line);
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.fg-cw-anatomy__media {
-  position: sticky;
-  top: calc(var(--site-header-main-height) + 16px);
-  padding: clamp(0.75rem, 1.5vw, 1.25rem);
-  border-radius: 8px;
-  background: var(--color-soft);
-}
-
-.fg-cw-anatomy__media img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.fg-cw-anatomy__items {
-  display: grid;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.fg-cw-anatomy__item {
-  border-top: 1px solid var(--cw-line);
-}
-
-.fg-cw-anatomy__item:first-child {
-  border-top: 0;
-}
-
-.fg-cw-anatomy__item h3 {
-  margin: 0;
-}
-
-.fg-cw-anatomy__toggle {
-  display: grid;
-  grid-template-columns: 2.1rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.6rem;
-  width: 100%;
-  min-height: 44px;
-  padding: 0.85rem 0.25rem;
-  border: 0;
-  background: none;
-  color: var(--color-ink);
-  font: inherit;
-  font-size: 1.05rem;
-  font-weight: 700;
-  text-align: left;
-  cursor: pointer;
-}
-
-.fg-cw-anatomy__num {
-  color: var(--color-accent-dark);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-.fg-cw-anatomy__mark {
-  position: relative;
-  width: 0.85rem;
-  height: 0.85rem;
-}
-
-.fg-cw-anatomy__mark::before,
-.fg-cw-anatomy__mark::after {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  background: var(--color-accent-dark);
-  content: '';
-}
-
-.fg-cw-anatomy__mark::before {
-  width: 100%;
-  height: 2px;
-}
-
-.fg-cw-anatomy__mark::after {
-  width: 2px;
-  height: 100%;
-  transition: transform 0.18s ease;
-}
-
-.fg-cw-anatomy__toggle[aria-expanded="true"] .fg-cw-anatomy__mark::after {
-  transform: scaleY(0);
-}
-
-.fg-cw-anatomy__body {
-  padding: 0 0.25rem 1rem 2.7rem;
-}
-
-.fg-cw .fg-cw-anatomy__body p {
-  max-width: 58ch;
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-/* Compact CTA panel between the gallery and the technical run. */
-.fg-cw-cta__panel {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  padding: clamp(1.4rem, 2.6vw, 2rem);
-  border: 1px solid var(--cw-line);
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.fg-cw .fg-cw-cta__panel h2 {
-  margin-bottom: 0.5rem;
-}
-
-.fg-cw-cta__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-
-/* The film slot. A dark cinematic band that currently frames the poster with
-   an "in production" chip; when the installation film lands, the same frame
-   holds the autoplaying loop. The section paints its own background, so it
-   owns its own text colours, like the gallery below. */
-.fg-cw-film {
-  background: linear-gradient(135deg, #0c2b33 0%, var(--color-steel) 55%, #0a333d 100%);
-}
-
-.fg-cw-film__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  align-items: center;
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-}
-
-.fg-cw .fg-cw-film h2 {
-  color: #ffffff;
-}
-
-.fg-cw .fg-cw-film p {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.fg-cw-film__media {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  aspect-ratio: 16 / 9;
-  background: var(--color-steel-90);
-  box-shadow: 0 24px 60px rgba(0, 12, 16, 0.45);
-}
-
-.fg-cw-film__media img,
-.fg-cw-film__media video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fg-cw-film__chip {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(0, 20, 26, 0.78);
-  color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.fg-cw-film__chip i {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-accent);
-  animation: fg-cw-chip-pulse 1.8s ease-in-out infinite;
-}
-
-@keyframes fg-cw-chip-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.45; transform: scale(0.75); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fg-cw-film__chip i {
-    animation: none;
-  }
-}
-
-/* Detail strip: the decorative options photographed at the scale a customer
-   would see them, beside the colour and handle ranges they belong with. */
-.fg-cw-proof__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.75rem, 1.6vw, 1.25rem);
-}
-
-.fg-cw-proof__grid figure {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  aspect-ratio: 4 / 3;
-  background: var(--color-soft);
-}
-
-.fg-cw-proof__grid img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fg-cw-proof__grid figcaption {
-  position: absolute;
-  z-index: 1;
-  bottom: 0.8rem;
-  left: 0.8rem;
-  padding: 0.42rem 0.62rem;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--color-ink);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-/* Flush comparison: two annotated photographs, then the figures. The markers
-   are decorative numbers matched to the legend under each card, so nothing
-   depends on hover. */
-.fg-cw-versus__cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.6vw, 2.25rem);
-  margin-bottom: clamp(1.25rem, 2.4vw, 2rem);
-}
-
-.fg-cw-versus__media {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--color-steel);
-  aspect-ratio: 4 / 3;
-  margin-bottom: 0.9rem;
-}
-
-.fg-cw-versus__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fg-cw-versus__marker {
-  position: absolute;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 1.7rem;
-  height: 1.7rem;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--color-accent);
-  color: #ffffff;
-  font-size: 0.82rem;
-  font-weight: 800;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85), 0 6px 18px rgba(0, 20, 26, 0.35);
-}
-
-.fg-cw-versus__marker::after {
-  position: absolute;
-  inset: -7px;
-  border: 2px solid rgba(255, 255, 255, 0.65);
-  border-radius: 50%;
-  content: '';
-  animation: fg-cw-marker-pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes fg-cw-marker-pulse {
-  0%, 100% { opacity: 0.9; transform: scale(1); }
-  50% { opacity: 0.2; transform: scale(1.18); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fg-cw-versus__marker::after {
-    animation: none;
-  }
-}
-
-.fg-cw-versus__legend {
-  display: grid;
-  gap: 0.45rem;
-  padding: 0;
-  margin: 0.6rem 0 0;
-  list-style: none;
-  counter-reset: fg-cw-versus;
-}
-
-.fg-cw-versus__legend li {
-  position: relative;
-  padding-left: 2.1rem;
-  color: var(--color-muted);
-  font-size: 0.93rem;
-  line-height: 1.5;
-  counter-increment: fg-cw-versus;
-}
-
-.fg-cw-versus__legend li::before {
-  position: absolute;
-  top: 0.1em;
-  left: 0;
-  display: grid;
-  place-items: center;
-  width: 1.4rem;
-  height: 1.4rem;
-  border-radius: 50%;
-  background: var(--color-accent);
-  color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  content: counter(fg-cw-versus);
-}
-
-.fg-cw .fg-cw-versus__line {
-  max-width: none;
-  margin: 0.6rem 0 0;
-  color: var(--color-ink);
-  font-size: 0.93rem;
-  font-weight: 700;
-}
-
-.fg-cw-versus__tablewrap {
-  overflow-x: auto;
-}
-
-.fg-cw-versus__table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.fg-cw-versus__table th,
-.fg-cw-versus__table td {
-  padding: 0.75rem 0.9rem;
-  border-top: 1px solid var(--cw-line);
-  color: var(--color-muted);
-  font-size: 0.93rem;
-  line-height: 1.45;
-  text-align: left;
-  vertical-align: top;
-}
-
-.fg-cw-versus__table thead th {
-  border-top: 0;
-  color: var(--color-ink);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* The theme has no global screen-reader-text utility, so the corner header's
-   label is hidden here: present for assistive tech, invisible in the layout. */
-.fg-cw-versus__table .screen-reader-text {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.fg-cw-versus__table tbody th {
-  color: var(--color-ink);
-  font-weight: 700;
-}
-
-.fg-cw-versus__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.9rem;
-  margin-top: clamp(1rem, 2vw, 1.5rem);
-}
-
-.fg-cw .fg-cw-versus__actions p {
-  max-width: none;
-  margin: 0;
 }
 
 /* Real-homes gallery.
@@ -37109,15 +37031,10 @@ html.fg-blinds-reveal-locked {
 .fg-cw-gallery__mosaic figure:nth-child(5) { grid-column: 8 / 11; }
 .fg-cw-gallery__mosaic figure:nth-child(6) { grid-column: 11 / 13; }
 
-/* The mosaic above is cut for exactly six cells. Heritage doors has four
-   pictures that honestly show a finished door, so its variant re-cuts the same
-   twelve-column, two-row grid to fill without leaving holes. Everything else
-   about the component, the lightbox, the captions and the mobile swipe row, is
-   shared rather than copied.
-
+/* Heritage doors re-cuts the same twelve-column grid for its four pictures.
    Cell one is the tall left column because Wolverton is a 3:4 portrait and a
    wide cell would crop the door out of its own photograph. Add a fifth picture
-   and this needs re-cutting again; the base six-cell rule will not cover it. */
+   and this needs re-cutting again; the base rule will not cover it. */
 .fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 5; grid-row: 1 / 3; }
 .fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 5 / 13; grid-row: 1 / 2; }
 .fg-cw-gallery--heritage .fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 5 / 9; grid-row: 2 / 3; }
@@ -37173,77 +37090,6 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
-@media (max-width: 860px) {
-  .fg-cw section {
-    padding: 2rem 0;
-  }
-
-  .fg-cw h2,
-  .fg-cw p {
-    max-width: none;
-  }
-
-  .fg-cw-head,
-  .fg-cw-split,
-  .fg-cw-cta__panel,
-  .fg-cw-anatomy__explorer,
-  .fg-cw-film__grid,
-  .fg-cw-versus__cards {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Three narrow cells lose their subject on a phone, so the evidence strip
-     becomes a swipe rail like the gallery above it. */
-  .fg-cw-proof__grid {
-    display: flex;
-    padding-bottom: 0.4rem;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-  }
-
-  .fg-cw-proof__grid figure {
-    flex: 0 0 78%;
-    scroll-snap-align: center;
-  }
-
-  /* Film first on a phone: the frame carries the chip that explains itself. */
-  .fg-cw-film__grid .fg-cw-film__media {
-    order: -1;
-  }
-
-  .fg-cw-versus__actions .button {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-
-  .fg-cw-versus__table th,
-  .fg-cw-versus__table td {
-    padding: 0.6rem 0.6rem;
-    font-size: 0.86rem;
-  }
-
-  .fg-cw-anatomy__media {
-    position: static;
-  }
-
-  .fg-cw-cta__actions .button {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-
-  /* Image before copy on mobile, so the product is visible first. */
-  .fg-cw-split .fg-cw-media,
-  .fg-cw-split .fg-cw-tiles {
-    order: -1;
-  }
-
-  .fg-cw-actions .button {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-
   /* Mosaic becomes a scroll-snap rail, as on the sliding-sash page. */
   .fg-cw-gallery__head {
     grid-template-columns: minmax(0, 1fr);
@@ -37283,24 +37129,6 @@ html.fg-blinds-reveal-locked {
   .fg-cw-gallery--heritage .fg-cw-gallery__hint {
     display: block;
   }
-
-  /* Scoped to match the (0,2,0) desktop rule above, so both tiles square up. */
-  .fg-cw-tiles .fg-cw-tiles__wide,
-  .fg-cw-tiles .fg-cw-tiles__narrow {
-    aspect-ratio: 1 / 1;
-  }
-}
-
-@media (max-width: 520px) {
-  .fg-cw-tiles--pair {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fg-cw-tiles--pair figure {
-    aspect-ratio: 4 / 3;
-  }
-
-}
 
 /* ---------------------------------------------------------------------------
    Colour hub rail (/colour-options/)
