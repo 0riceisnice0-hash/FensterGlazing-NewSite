@@ -94,6 +94,12 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   easing has settled it stayed black. The owner reported it as "keeps on going
   black after clicking". `layout()` is now measurement only. The general
   lesson: anything the pointer path calls at pointer rate has to be pure.
+- **The blind's framework is a U, not a border.** Sides and head, nothing across
+  the bottom, with the bottom rail resting on the edge of the glass. The head
+  rail belongs to the blind, so it takes the slat colour; the cassette belongs
+  to the unit, so it stays matched to the window frame. Lift is also inverted:
+  the magnet at the top is the blind down and closed, and pulling it down
+  raises it open, which is how the geared magnet runs.
 - **The frame and the controls were rebuilt from the owner's photograph of the
   showroom unit**, supplied 2026-08-04. Three things were wrong and none of
   them would have been caught without it: the wide colour matched border round
