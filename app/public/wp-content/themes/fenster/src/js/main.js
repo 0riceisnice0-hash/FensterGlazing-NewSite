@@ -7099,7 +7099,12 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
   const MULL = 76;    // mullion or transom between two cells
   const BEAD = 16;    // glazing bead around a directly glazed pane
   const DEPTH = 62;   // sash thickness, used for the open-sash edge
-  const OPEN_ANGLE = 34 * Math.PI / 180;
+  /* Wide enough that the projection actually reads. At 34 degrees the sash
+     only loses a sixth of its width and the open state looked like a sash
+     that had shrunk next to a dark slot. At 58 it halves, the rebate edge
+     comes to 52mm and the stay has somewhere to be. A casement opens
+     further than this, so it is not a flattering angle, just a legible one. */
+  const OPEN_ANGLE = 58 * Math.PI / 180;
 
   const state = {
     layout: 'three-light',
@@ -7525,22 +7530,22 @@ document.querySelectorAll('[data-fg-casement-designer]').forEach((root) => {
         const gapTop = edge.y + edge.h;
         const gapBottom = r.y + r.h;
         if (gapBottom - gapTop > armT) {
-          arm(r.x + r.w * 0.18, gapBottom, r.x + r.w * 0.26, gapTop);
-          arm(r.x + r.w * 0.82, gapBottom, r.x + r.w * 0.74, gapTop);
+          arm(r.x + r.w * 0.2, gapBottom, r.x + r.w * 0.22, gapTop);
+          arm(r.x + r.w * 0.8, gapBottom, r.x + r.w * 0.78, gapTop);
         }
       } else if (cell.hinge === 'left') {
         const gapLeft = edge.x + edge.w;
         const gapRight = r.x + r.w;
         if (gapRight - gapLeft > armT) {
-          arm(gapRight, r.y + r.h * 0.16, gapLeft, r.y + r.h * 0.24);
-          arm(gapRight, r.y + r.h * 0.84, gapLeft, r.y + r.h * 0.76);
+          arm(gapRight, r.y + r.h * 0.18, gapLeft, r.y + r.h * 0.21);
+          arm(gapRight, r.y + r.h * 0.82, gapLeft, r.y + r.h * 0.79);
         }
       } else {
         const gapRight = edge.x;
         const gapLeft = r.x;
         if (gapRight - gapLeft > armT) {
-          arm(gapLeft, r.y + r.h * 0.16, gapRight, r.y + r.h * 0.24);
-          arm(gapLeft, r.y + r.h * 0.84, gapRight, r.y + r.h * 0.76);
+          arm(gapLeft, r.y + r.h * 0.18, gapRight, r.y + r.h * 0.21);
+          arm(gapLeft, r.y + r.h * 0.82, gapRight, r.y + r.h * 0.79);
         }
       }
       ctx.restore();
