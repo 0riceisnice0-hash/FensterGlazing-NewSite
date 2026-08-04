@@ -36761,8 +36761,84 @@ html.fg-blinds-reveal-locked {
 }
 
 
-/* Evidence strip under the designer: three photographs of the dressings the
-   canvas draws, so the drawing is backed rather than trusted. */
+/* The film slot. A dark cinematic band that currently frames the poster with
+   an "in production" chip; when the installation film lands, the same frame
+   holds the autoplaying loop. The section paints its own background, so it
+   owns its own text colours, like the gallery below. */
+.fg-cw-film {
+  background: linear-gradient(135deg, #0c2b33 0%, var(--color-steel) 55%, #0a333d 100%);
+}
+
+.fg-cw-film__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.fg-cw .fg-cw-film h2 {
+  color: #ffffff;
+}
+
+.fg-cw .fg-cw-film p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-cw-film__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 16 / 9;
+  background: var(--color-steel-90);
+  box-shadow: 0 24px 60px rgba(0, 12, 16, 0.45);
+}
+
+.fg-cw-film__media img,
+.fg-cw-film__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cw-film__chip {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(0, 20, 26, 0.78);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-cw-film__chip i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: fg-cw-chip-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes fg-cw-chip-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.75); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cw-film__chip i {
+    animation: none;
+  }
+}
+
+/* Detail strip: the decorative options photographed at the scale a customer
+   would see them, beside the colour and handle ranges they belong with. */
 .fg-cw-proof__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
