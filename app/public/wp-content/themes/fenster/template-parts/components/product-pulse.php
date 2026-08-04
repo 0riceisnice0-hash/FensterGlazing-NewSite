@@ -37,6 +37,17 @@ $glazing     = is_array($glazing_all) && isset($glazing_all[$pulse_slug]) && is_
 
 $double = (string) ($glazing['double'] ?? '');
 $triple = (string) ($glazing['triple'] ?? '');
+
+/* Owner instruction, 2026-08-04: on the Liniar routes the strip states the
+   lowest achievable figure only, starred, and both figures move to the
+   EnergyPlus banner further down the page. Two numbers at the top of a page
+   ask the visitor to choose between them before anything has explained the
+   difference. The star is the site's existing convention for "lowest
+   achievable, not guaranteed for every size"; Legend already answers on it. */
+$single_routes = (array) fenster_data('single_u_value_routes', []);
+$single_u = in_array($pulse_slug, $single_routes, true);
+$best = $triple !== '' ? $triple : $double;
+$best_glazing = $triple !== '' ? __('36mm triple glazing', 'fenster') : __('28mm double glazing', 'fenster');
 ?>
 <section class="fg-product-pulse fg-product-pulse--usps" aria-label="<?php echo esc_attr($pulse_title . ' key specifications'); ?>">
     <div class="container fg-product-pulse__inner">
@@ -62,12 +73,16 @@ $triple = (string) ($glazing['triple'] ?? '');
                            the two products is legible without a sentence about
                            what is not included. */
                         $rows = [];
-                        if ($triple !== '') {
-                            $rows[] = ['figure' => $triple, 'glazing' => __('Triple', 'fenster')];
+                        if ($single_u) {
+                            $rows[] = ['figure' => $best . '*', 'glazing' => $best_glazing];
+                        } else {
+                            if ($triple !== '') {
+                                $rows[] = ['figure' => $triple, 'glazing' => __('Triple', 'fenster')];
+                            }
+                            $rows[] = ['figure' => $double, 'glazing' => __('Double', 'fenster')];
                         }
-                        $rows[] = ['figure' => $double, 'glazing' => __('Double', 'fenster')];
                         ?>
-                        <span class="fg-product-pulse__glazing-rows">
+                        <span class="fg-product-pulse__glazing-rows<?php echo $single_u ? ' is-single' : ''; ?>">
                             <?php foreach ($rows as $row) : ?>
                                 <span>
                                     <strong><?php echo esc_html($row['figure']); ?></strong>
@@ -84,5 +99,8 @@ $triple = (string) ($glazing['triple'] ?? '');
                 <?php endif; ?>
             <?php endforeach; ?>
         </ul>
+        <?php if ($single_u && $best !== '') : ?>
+            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable whole-window U-value. The figure for your windows follows their size, glass and layout, and is confirmed at survey.', 'fenster'); ?></p>
+        <?php endif; ?>
     </div>
 </section>

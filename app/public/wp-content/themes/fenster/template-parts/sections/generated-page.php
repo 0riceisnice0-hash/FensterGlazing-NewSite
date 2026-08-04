@@ -4304,6 +4304,9 @@ if ($is_commercial_hub) {
                    rather than an effect invented in the stylesheet. Curated for
                    variety, lines against florals against stipple, but anything
                    missing simply falls through to whatever else has a photo. */
+                /* Kept in step with template-parts/components/privacy-glass-card.php,
+                   which renders the same card for routes that build their own
+                   page. If this order changes, change it there too. */
                 $glass_patch_order = ['Reeded', 'Cotswold', 'Stippolyte', 'Contora', 'Everglade'];
                 $glass_patch_by_name = [];
                 $glass_patch_rest = [];

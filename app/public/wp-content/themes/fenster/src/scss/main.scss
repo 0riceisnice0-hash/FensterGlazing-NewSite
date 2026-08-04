@@ -36307,6 +36307,21 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+/* Key-specification strip: the single starred figure, and what the star means.
+   Owner instruction 2026-08-04, Liniar routes first; the routes are listed in
+   `single_u_value_routes` in site-data. */
+.fg-product-pulse__glazing-rows.is-single strong {
+  font-size: 1.15em;
+}
+
+.fg-product-pulse__note {
+  max-width: 62ch;
+  margin: 0.9rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
 /* ---------------------------------------------------------------------------
    Casement windows (/casement-windows/)
 
@@ -36477,7 +36492,7 @@ html.fg-blinds-reveal-locked {
 /* ---- 01 Versatility: the four ways it opens ---- */
 .fg-cas-styles {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1rem, 2.2vw, 2rem);
 }
 
@@ -36501,10 +36516,20 @@ html.fg-blinds-reveal-locked {
 /* ---- Standard against flush ---- */
 .fg-cas-versus { background: #f4f6f5; }
 
+/* Pair and table side by side. Stacked, with the images at half the container
+   width, this section ran a whole viewport for a difference that takes a
+   glance to see. */
+.fg-cas-versus__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+}
+
 .fg-cas-versus__pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1rem, 2.4vw, 2rem);
+  gap: clamp(0.75rem, 1.6vw, 1.15rem);
 }
 
 .fg-cas-versus__pair figure { background: #ffffff; border-radius: 4px; overflow: hidden; }
@@ -36539,7 +36564,6 @@ html.fg-blinds-reveal-locked {
 
 .fg-cas-table {
   width: 100%;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
   border-collapse: collapse;
 }
 
@@ -36567,7 +36591,7 @@ html.fg-blinds-reveal-locked {
 /* ---- Detail trio ---- */
 .fg-cas-trio {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(1rem, 2.2vw, 1.75rem);
 }
 
@@ -36822,12 +36846,14 @@ html.fg-blinds-reveal-locked {
   background: var(--color-steel-90);
 }
 
+/* Five cells: the stone elevation left this gallery because it is Liniar
+   photography of a job that is not ours, and this section claims every picture
+   in it. Row one breaks at 10, row two at 9, so the two rows stay offset. */
 .fg-cas-mosaic figure:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
 .fg-cas-mosaic figure:nth-child(2) { grid-column: 6 / 10; }
 .fg-cas-mosaic figure:nth-child(3) { grid-column: 10 / 13; }
-.fg-cas-mosaic figure:nth-child(4) { grid-column: 6 / 8; }
-.fg-cas-mosaic figure:nth-child(5) { grid-column: 8 / 11; }
-.fg-cas-mosaic figure:nth-child(6) { grid-column: 11 / 13; }
+.fg-cas-mosaic figure:nth-child(4) { grid-column: 6 / 9; }
+.fg-cas-mosaic figure:nth-child(5) { grid-column: 9 / 13; }
 
 .fg-cas-mosaic a { display: block; width: 100%; height: 100%; text-decoration: none; }
 
@@ -36865,6 +36891,105 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
+/* Combinations band: the point of the section, given room rather than squeezed
+   into a fourth card next to three studio details it does not match. */
+.fg-cas-combi {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+}
+
+.fg-cas-combi figure {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.fg-cas-combi img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fg-cas .fg-cas-combi h3 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.15;
+  margin-bottom: 0.7rem;
+}
+
+/* Security: the mechanism first, the keep beside it. */
+.fg-cas-security__media {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.6vw, 1.15rem);
+}
+
+.fg-cas-security__media figure {
+  overflow: hidden;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.fg-cas-security__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fg-cas-security__media figcaption {
+  padding: 0.6rem 0.7rem 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Gallery captions carry what each window actually has. On a pointer device
+   they stay out of the way until the image is hovered or focused; with no
+   hover there is nothing to reveal them, so they are simply always on. */
+.fg-cas-mosaic figcaption strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.fg-cas-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.45rem;
+}
+
+.fg-cas-tags i {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+@media (hover: hover) {
+  .fg-cas-tags {
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease, opacity 0.28s ease, margin-top 0.28s ease;
+  }
+
+  .fg-cas-mosaic a:hover .fg-cas-tags,
+  .fg-cas-mosaic a:focus-visible .fg-cas-tags {
+    max-height: 5rem;
+    margin-top: 0.45rem;
+    opacity: 1;
+  }
+}
+
 @media (max-width: 1080px) {
   .fg-cas-styles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -36880,10 +37005,19 @@ html.fg-blinds-reveal-locked {
   .fg-cas-energy__grid,
   .fg-cas-security__grid,
   .fg-cas-film__grid,
-  .fg-cas-versus__pair,
-  .fg-cas-trio {
+  .fg-cas-versus__body,
+  .fg-cas-combi {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  /* The comparison stays two-up on a phone: side by side is the whole point,
+     and at 390 each image is still 165px wide, which is enough to read a sash
+     face against a flat one. */
+  .fg-cas-trio {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-cas-combi figure { order: -1; }
 
   .fg-cas-section-head,
   .fg-cas-overture__grid { gap: 0.75rem; }

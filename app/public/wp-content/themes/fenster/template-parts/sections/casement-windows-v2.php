@@ -58,17 +58,10 @@ $styles = [
     [
         'name' => 'Fixed pane',
         'copy' => 'No hinges, no gearing, no handle. The glass is bedded straight into the frame, so a fixed pane costs less than an opener the same size and carries a slimmer border and more glass. Ventilation and escape come from the openers around it.',
-        'image' => $studio . 'cas-sash-proud-sq.webp',
+        'image' => $studio . 'cas-sash-proud-w.webp',
         'alt' => 'White uPVC casement window at a transom, the opening sash standing proud of the frame above a directly glazed fixed pane',
     ],
-    [
-        'name' => 'Combinations',
-        'copy' => 'All three share one outer frame, so a single window can do more than one job: a fixed centre for the view, openers either side for the air, a top light over a worktop. Transom and mullion positions decide whether the glass lines up across an elevation.',
-        'image' => $base . 'casement-three-light-stone-600w.webp',
-        'alt' => 'White uPVC three light casement window with Georgian bars in a stone wall',
-    ],
 ];
-
 $versus_rows = [
     ['label' => 'The sash', 'a' => 'Stands proud of the frame', 'b' => 'Closes level with the frame'],
     ['label' => 'Fixed panes', 'a' => 'Glazed into the frame, so more glass', 'b' => 'Matched dummy sash, so equal lines'],
@@ -78,12 +71,16 @@ $versus_rows = [
     ['label' => 'Suits', 'a' => 'Most homes, and the wider specification', 'b' => 'Period and cottage elevations'],
 ];
 
+/* Four dressings, four photographs, each checked at full size before it was
+   labelled. The bay bars are Georgian: the reflection of the street runs
+   straight over them, so they are inside the sealed unit. The brick bay bars
+   are astragal: moulded, standing proud of the glass and casting a shadow. */
 $details = [
-    ['name' => 'Georgian bars', 'copy' => 'Set inside the sealed unit, so the pane still wipes clean in one pass.', 'image' => $base . 'casement-bay-white-1080w.webp', 'w' => 1080, 'h' => 608, 'alt' => 'White uPVC bay window with Georgian bars set inside the sealed units'],
-    ['name' => 'Astragal bars and mock horns', 'copy' => 'Bars bonded to the face of the glass, and horns turned below the sash, the way a period window is finished.', 'image' => $studio . 'cas-mock-horn.webp', 'w' => 1250, 'h' => 857, 'alt' => 'Close up of a mock sash horn and astragal bar on a white uPVC casement window'],
-    ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in squares or diamonds and sealed against the weather. It never needs polishing.', 'image' => $base . 'casement-leaded-bay-1400w.webp', 'w' => 1400, 'h' => 1120, 'alt' => 'White uPVC bay window with square leaded glass on a red brick house, fitted by Fenster'],
+    ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => $base . 'casement-georgian-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of Georgian bars set inside the sealed unit of a white uPVC casement window'],
+    ['name' => 'Astragal bars', 'copy' => 'A moulded bar bonded to the face of the glass, so it catches the light and throws a shadow.', 'image' => $base . 'casement-astragal-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of moulded astragal bars standing proud of the glass on a white uPVC bay window'],
+    ['name' => 'Mock sash horns', 'copy' => 'Turned below the sash, the way a period sash window is finished.', 'image' => $base . 'casement-mock-horn-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of a mock sash horn below the bottom rail of a white uPVC casement sash'],
+    ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares and sealed against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by Fenster in Rushden'],
 ];
-
 $energy_stats = [
     ['figure' => '0.95', 'unit' => 'W/m²K', 'note' => 'Whole window, with the 36mm triple glazed unit'],
     ['figure' => 'A+', 'unit' => 'rated', 'note' => 'On the specification we list'],
@@ -99,23 +96,25 @@ $anatomy = [
 ];
 
 $security_points = [
-    ['name' => 'Multi-point locking', 'copy' => 'Locking points engage down the sash rather than at the handle alone, so it is held into its seals along its length.'],
-    ['name' => 'Reinforced where it counts', 'copy' => 'Reinforcement sized for the individual window. It is what a lock has to pull against, so it is specified with the window rather than assumed.'],
+    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. A gearing strip runs the length of the sash and drives cams into keeps at several points, so the sash is held into its seals along its edge rather than at the handle alone.'],
+    ['name' => 'Reinforced where it counts', 'copy' => 'Reinforcement sized for the individual window. It is what the locking pulls against, so it is specified with the window rather than assumed.'],
     ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we specify to it. Those approvals belong to a tested complete window, not to a profile name.'],
-    ['name' => 'Glass that holds', 'copy' => 'Laminated panes stay together when they break. Worth specifying on ground floors and anywhere out of sight from the road.'],
+    ['name' => 'Laminated glass, worth the upgrade', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. It is the upgrade we would point at first on a ground floor, a side return, or any window out of sight from the road.'],
 ];
-
 // Our own work only. The studio photography carries the rest of the page; proof
 // has to be the real thing.
+/* Our own installations only. The stone elevation that used to sit here is
+   Liniar photography of a job that is not ours; it carries the overture now,
+   where nothing claims it. The Leighton Buzzard frame is cropped to the
+   downstairs window because the upstairs windows on that terrace are not ours.
+   Every tag below is read off its own photograph. */
 $gallery = [
-    ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'alt' => 'Anthracite Liniar casement windows stacked on a corner elevation in Bolbeck Park, fitted by Fenster'],
-    ['file' => 'casement-stone-elevation', 'width' => 1200, 'focus' => '50% 45%', 'caption' => 'A full stone elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
-    ['file' => 'casement-anthracite-bay', 'width' => 1600, 'focus' => '50% 45%', 'caption' => 'Anthracite grey bay', 'alt' => 'Anthracite grey uPVC casement bay window with obscured lower panes, fitted by Fenster'],
-    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
-    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
-    ['file' => 'casement-leighton-buzzard', 'width' => 1400, 'focus' => '50% 55%', 'caption' => 'Leighton Buzzard', 'alt' => 'White Liniar casement windows fitted by Fenster across a Leighton Buzzard terrace'],
+    ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'tags' => ['Anthracite grey', 'Two-storey bay', 'Top opening lights'], 'alt' => 'Anthracite Liniar casement windows stacked over two floors on a corner elevation in Bolbeck Park, fitted by Fenster'],
+    ['file' => 'casement-anthracite-bay', 'width' => 1600, 'focus' => '50% 45%', 'caption' => 'Anthracite grey bay', 'tags' => ['Anthracite grey', 'Splayed bay', 'Obscure glass'], 'alt' => 'Anthracite grey uPVC casement bay window with obscured lower panes, fitted by Fenster'],
+    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'tags' => ['White', 'Diamond lead', 'Side hung openers'], 'alt' => 'White uPVC casement windows with diamond leaded glazing on a red brick house in Rushden, fitted by Fenster'],
+    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'tags' => ['White', 'Splayed bay', 'Top opening lights'], 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
+    ['file' => 'casement-leighton-downstairs', 'width' => 490, 'focus' => '50% 50%', 'caption' => 'Leighton Buzzard', 'tags' => ['White', 'Fixed pane and opener', 'Tile-hung elevation'], 'alt' => 'White Liniar casement window with a wide fixed pane and a side hung opener on a tile hung terrace in Leighton Buzzard, fitted by Fenster'],
 ];
-
 $faqs = [
     ['question' => 'What is a casement window?', 'answer' => 'A window with sashes hinged at the side or the top, opening outwards. Opening sashes and fixed panes are made into one frame, so a single window can do more than one job.'],
     ['question' => 'What is the difference between casement and flush casement windows?', 'answer' => 'The sash. On a standard casement it stands slightly proud of the frame, and fixed panes are glazed straight into the frame so they hold more glass. On a flush casement the sash closes level with the frame for a traditional joinery look, with fixed lights matched to the openers so every pane reads the same. Standard takes 28mm double or 36mm triple glazing and reaches 0.95 W/m²K; flush takes 28mm double and reaches 1.2 W/m²K. Both are A+ rated.'],
@@ -166,9 +165,9 @@ $faq_schema = [
             </div>
         </div>
         <figure class="fg-cas-bleed">
-            <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-house-rear-1600w.webp')); ?>"
-                alt="<?php esc_attr_e('Anthracite grey uPVC casement windows across the rear elevation of a house', 'fenster'); ?>"
-                loading="lazy" width="1600" height="900">
+            <img src="<?php echo esc_url(fenster_generated_url($base . 'gallery/casement-stone-elevation.webp')); ?>"
+                alt="<?php esc_attr_e('White uPVC casement windows across the front elevation and dormers of a stone house', 'fenster'); ?>"
+                loading="lazy" width="1200" height="803">
         </figure>
     </section>
 
@@ -219,6 +218,25 @@ $faq_schema = [
                 <?php endforeach; ?>
             </div>
         </div>
+
+        <?php
+        /* Combinations is not a fourth opening style, it is what you get from
+           mixing the three, so it reads as a band rather than a fourth card.
+           That also keeps the three studio photographs above as one matched
+           set instead of putting an elevation shot among them. */
+        ?>
+        <div class="container fg-cas-combi">
+            <figure>
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-house-rear-1600w.webp')); ?>"
+                    alt="<?php esc_attr_e('Anthracite grey uPVC casement windows in several different configurations across the rear elevation of a house', 'fenster'); ?>"
+                    loading="lazy" width="1600" height="900">
+            </figure>
+            <div>
+                <h3><?php esc_html_e('And any combination of the three.', 'fenster'); ?></h3>
+                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top lights over a worktop, a three light, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
+                <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
+            </div>
+        </div>
     </section>
 
     <?php /* Standard against flush, in matched studio photography. */ ?>
@@ -232,13 +250,14 @@ $faq_schema = [
                 <p><?php esc_html_e('The same 70mm Liniar uPVC, the same sixteen colours, the same fitters. The sash is the difference, and it changes both the look and the glass.', 'fenster'); ?></p>
             </div>
 
+            <div class="fg-cas-versus__body">
             <div class="fg-cas-versus__pair">
                 <figure>
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-sash-proud-sq.webp')); ?>" alt="<?php esc_attr_e('White uPVC standard casement window, the opening sash standing proud of the outer frame', 'fenster'); ?>" loading="lazy" width="857" height="857">
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-sash-proud-w.webp')); ?>" alt="<?php esc_attr_e('White uPVC standard casement window, the opening sash standing proud of the outer frame', 'fenster'); ?>" loading="lazy" width="820" height="857">
                     <figcaption><strong><?php esc_html_e('Standard casement', 'fenster'); ?></strong><span><?php esc_html_e('The sash stands proud. Fixed panes glaze straight into the frame, so they carry more glass.', 'fenster'); ?></span></figcaption>
                 </figure>
                 <figure>
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-flush-level-sq.webp')); ?>" alt="<?php esc_attr_e('White uPVC flush casement window, four sashes closing level with the frame in one plane', 'fenster'); ?>" loading="lazy" width="857" height="857">
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-flush-level-w.webp')); ?>" alt="<?php esc_attr_e('White uPVC flush casement window, four sashes closing level with the frame in one plane', 'fenster'); ?>" loading="lazy" width="820" height="857">
                     <figcaption><strong><?php esc_html_e('Flush casement', 'fenster'); ?></strong><span><?php esc_html_e('Every sash closes level with the frame, in one plane, the way timber joinery sits.', 'fenster'); ?></span></figcaption>
                 </figure>
             </div>
@@ -261,6 +280,7 @@ $faq_schema = [
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
             <p class="fg-cas-note"><a class="fg-cas-link" href="<?php echo esc_url(home_url('/flush-casement-windows/')); ?>"><?php esc_html_e('See flush casements', 'fenster'); ?></a></p>
         </div>
     </section>
@@ -292,6 +312,8 @@ $faq_schema = [
     </section>
 
     <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
+
+    <?php get_template_part('template-parts/components/privacy-glass-card'); ?>
 
     <?php /* ---------- 02 ENERGYPLUS ---------- */ ?>
     <section class="fg-cas-energy" aria-labelledby="fg-cas-ch2-title">
@@ -355,11 +377,20 @@ $faq_schema = [
             </div>
         </div>
         <div class="container fg-cas-security__grid">
-            <figure>
-                <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-security-keep.webp')); ?>"
-                    alt="<?php esc_attr_e('Steel locking keep and reinforced rebate inside a white uPVC casement window frame', 'fenster'); ?>"
-                    loading="lazy" width="1250" height="857">
-            </figure>
+            <div class="fg-cas-security__media">
+                <figure>
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-locking-strip.webp')); ?>"
+                        alt="<?php esc_attr_e('Multi-point locking strip and cams running down the edge of a white uPVC casement sash', 'fenster'); ?>"
+                        loading="lazy" width="1250" height="857">
+                    <figcaption><?php esc_html_e('The locking strip and its cams', 'fenster'); ?></figcaption>
+                </figure>
+                <figure>
+                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-security-keep.webp')); ?>"
+                        alt="<?php esc_attr_e('Steel locking keep and reinforced rebate inside a white uPVC casement window frame', 'fenster'); ?>"
+                        loading="lazy" width="1250" height="857">
+                    <figcaption><?php esc_html_e('The keep it locks into', 'fenster'); ?></figcaption>
+                </figure>
+            </div>
             <dl class="fg-cas-list">
                 <?php foreach ($security_points as $point) : ?>
                     <div>
@@ -404,7 +435,14 @@ $faq_schema = [
                                 sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '46vw' : '23vw'; ?>"
                                 alt="<?php echo esc_attr($image['alt']); ?>" loading="lazy"
                                 style="object-position: <?php echo esc_attr($image['focus']); ?>;">
-                            <figcaption><?php echo esc_html($image['caption']); ?></figcaption>
+                            <figcaption>
+                                <strong><?php echo esc_html($image['caption']); ?></strong>
+                                <span class="fg-cas-tags">
+                                    <?php foreach ((array) $image['tags'] as $tag) : ?>
+                                        <i><?php echo esc_html($tag); ?></i>
+                                    <?php endforeach; ?>
+                                </span>
+                            </figcaption>
                         </a>
                     </figure>
                 <?php endforeach; ?>

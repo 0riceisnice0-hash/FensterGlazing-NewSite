@@ -548,17 +548,30 @@ function fenster_tech_banner_args(string $slug): array
            rather than products (owner, 2026-07-29): the glazing follows
            whichever system the pair or the bay is built from, so there is no
            single figure to print. */
+        /* Owner instruction, 2026-08-04: the key-specification strip at the top
+           of these pages now prints the lowest figure only, so the banner is
+           where both belong. A route that takes one glazing unit still shows
+           one, because there is no second figure to give. */
         $glazing_by_route = [
-            'casement-windows' => ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
-            'tilt-turn-windows' => ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
+            'casement-windows' => [
+                ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
+                ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
+            ],
+            'tilt-turn-windows' => [
+                ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
+                ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
+            ],
             // Owner-confirmed: 28mm double is the only unit this sash takes.
-            'flush-casement-windows' => ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
-            'upvc-doors' => ['value' => '1.0', 'label' => 'W/m²K on the door'],
+            'flush-casement-windows' => [
+                ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
+            ],
+            'upvc-doors' => [
+                ['value' => '1.0', 'label' => 'W/m²K on the door'],
+            ],
         ];
-        $glazing_fact = $glazing_by_route[$slug] ?? null;
 
         $facts = [['value' => '6', 'label' => 'chambers through the frame']];
-        if ($glazing_fact !== null) {
+        foreach ($glazing_by_route[$slug] ?? [] as $glazing_fact) {
             $facts[] = $glazing_fact;
         }
         $facts[] = ['value' => 'Lead-free', 'label' => 'profile formulation'];
