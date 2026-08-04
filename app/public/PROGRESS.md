@@ -67,6 +67,38 @@ recorded in `AI.md`. See the 2026-08-03 entry below. Do not raise it again.
   cost a wrong conclusion about the Mila handle assets on 2026-08-02.
 
 
+## 2026-08-04 - Leagrave integral blinds case study, live (4c85f4a)
+
+- The eleventh case study and the only one where the blind is the product: one
+  uPVC casement in a Luton bathroom with a Notan magnetic blind sealed inside
+  the glass, fitted by Shane and Zac Rugman on 23 June 2026. Owner confirmed a
+  new window rather than a reglaze, and that it was priced at a home
+  consultation, so `priced_by` is set. It is also the first genuine local proof
+  on `/double-glazing-luton/`, which previously matched nothing.
+- **Two specs are deliberately absent and should stay absent.** No frame system:
+  Fenster's uPVC casement is Liniar EnergyPlus, but nothing in the supplied
+  photography proves this one is. No U-value or energy rating: a Notan blind
+  lives in an NTB 24/28 cavity, so the `0.95 W/m²K` / A+ the other casement
+  studies quote for a 36mm triple unit does not describe this glass. The fourth
+  spec slot went to the control, which is visible in the photographs, rather
+  than to a figure carried over from a product page.
+- **`CASESTUDIES.md` was wrong about portrait video and has been corrected.** It
+  said to centre-square the source when encoding. `fg-cs-hero__media--video`
+  already sets `aspect-ratio: 1/1` with `object-fit: cover`, and all three
+  portrait studies ship full portrait, so following it would have cropped the
+  clip twice. Also newly recorded there: the archive card is `16 / 10`, so a job
+  photographed entirely in portrait needs a `card_image` cut from the
+  full-resolution original or the card shows a band of wall and no window.
+- Verification traps worth keeping, all hit in this session. `ffmpeg -i` reports
+  a phone clip's stored size and auto-rotates before `-vf`, so this source reads
+  `1024x576` and displays `576x1024`; plan crops against the displayed size.
+  Test is Bedrock, so a hand-built `/wp-content/` asset URL 404s on a file that
+  deployed fine. `captureBeyondViewport` does not trigger `loading="lazy"`, so a
+  full-page shot showed two gallery images and two bare captions and looked like
+  a broken masonry that measured perfectly. And see `LIVECHANGES.md` for the
+  `www` 301 and the tag-stripping issue, which produced false MISS readings
+  against a page that was correct.
+
 ## 2026-08-04 - Frame colour card shows real finishes (1a11109)
 
 - The six dots on the Frame colours card were six hexes written into the
