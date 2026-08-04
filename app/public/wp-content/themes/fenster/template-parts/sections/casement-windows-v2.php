@@ -2,8 +2,12 @@
 /**
  * Casement windows: 70mm Liniar EnergyPlus product page.
  *
- * Composed on the /heritage-aluminium-doors/ pattern: copy column on one side,
- * real photography on the other, short paragraphs, divided detail lists.
+ * Redesigned 2026-08-04 on the owner's brief: more imagery, a reserved slot
+ * near the top for the installation film being shot, a personalisation stage
+ * in the spirit of Liniar's own customise block, an honest side-by-side with
+ * the flush casement, and the opening-styles copy sense-checked against the
+ * photograph it sits beside.
+ *
  * The shared hero and four-tile specification strip render above this partial
  * and are deliberately untouched.
  *
@@ -21,13 +25,109 @@ $quote_label = (string) ($args['quote_label'] ?? 'uPVC Windows');
 $phone = (string) ($brand['phone'] ?? '01908 429200');
 $asset_base = '/wp-content/themes/fenster/assets/images/products/casement/';
 
-// The page hero already uses casement-stone-cottage-1600w.webp. Every image
-// below is used exactly once.
+/* The film slot. The owner is having a real casement installation filmed;
+   when the asset lands, drop it under assets/videos/ and set $film_src to its
+   theme path. The section then renders an autoplaying muted loop in place of
+   the poster, with no other change needed. Until then the poster and the
+   "in production" chip keep the slot honest rather than looking unfinished. */
+$film_src = '';
+$film_poster = $asset_base . 'casement-installation-900w.webp';
+
+/* The personalisation stage. Each option is one real photograph; the shared
+   [data-fg-door-selector] controller swaps the stage image, name chip and
+   copy line. Thumbs are dedicated 160w files so five chips do not pull five
+   full-size images. */
+$style_options = [
+    [
+        'name' => 'Clean and simple',
+        'file' => 'casement-leighton-front-1400w',
+        'thumb' => 'casement-leighton-front-160w',
+        'width' => 1400,
+        'height' => 1050,
+        'copy' => 'Clear glass and no bars, the slimmest look the system makes. Most modern replacements go out exactly like this.',
+        'alt' => 'White uPVC casement window with clear glass in a tile hung elevation',
+    ],
+    [
+        'name' => 'Georgian bars',
+        'file' => 'casement-bay-white-1080w',
+        'thumb' => 'casement-bay-white-160w',
+        'width' => 1080,
+        'height' => 608,
+        'copy' => 'A bar grid set inside the sealed unit divides the panes without interrupting the glass, so the cottage look wipes clean as one pane.',
+        'alt' => 'White uPVC bay window with Georgian bars between the panes',
+    ],
+    [
+        'name' => 'Astragal bars and horns',
+        'file' => 'casement-astragal-horn-1250w',
+        'thumb' => 'casement-astragal-horn-160w',
+        'width' => 1250,
+        'height' => 857,
+        'copy' => 'Astragal bars sit proud on the glass face, and mock sash horns finish the sash corners, so a casement reads like a period sash window from the street.',
+        'alt' => 'Close up of an astragal glazing bar and mock sash horn on a white uPVC window',
+    ],
+    [
+        'name' => 'Leaded glass',
+        'file' => 'casement-leaded-bay-1400w',
+        'thumb' => 'casement-leaded-bay-160w',
+        'width' => 1400,
+        'height' => 1120,
+        'copy' => 'Lead strip laid over the glass in squares or diamonds, sealed against the weather. It suits bays and older brickwork, and it never needs polishing.',
+        'alt' => 'White uPVC bay window with square leaded glass on a red brick house',
+    ],
+    [
+        'name' => 'Two colours, one window',
+        'file' => 'casement-broughton-two-tone-900w',
+        'thumb' => 'casement-broughton-two-tone-160w',
+        'width' => 900,
+        'height' => 1200,
+        'copy' => 'The colour you choose is the outside face; inside stays smooth white or matches. This Broughton dormer runs basalt grey out and white in.',
+        'alt' => 'Basalt grey uPVC casement window with a white interior face on a dormer in Broughton',
+    ],
+];
+
 $layout_points = [
-    ['name' => 'Side-hung', 'copy' => 'Friction stays hold the sash at any angle. Bedrooms get egress hinges, which swing to 90 degrees so the opening meets the Building Regulations escape minimum: 0.33m², at least 450mm each way.'],
+    ['name' => 'Side-hung', 'copy' => 'Friction stays hold the sash at any angle. Where a bedroom needs its escape route, egress hinges swing to 90 degrees so the clear opening meets the Building Regulations minimum: 0.33m², at least 450mm each way.'],
     ['name' => 'Top-hung', 'copy' => 'Hinged in the top rail with the handle on the bottom one. The open sash sheds rain clear of the opening, and a restrictor holds the first opening to around 100mm where children sleep.'],
     ['name' => 'Fixed pane', 'copy' => 'No hinges, gearing or handle, so it costs less than an opener the same size and holds more glass. Ventilation and escape come from the openers around it.'],
-    ['name' => 'Mixed layout', 'copy' => 'All three share one outer frame. Transom and mullion positions decide whether the glass lines up, so we draw the elevation with every sightline marked before anything is ordered.'],
+    ['name' => 'Combinations', 'copy' => 'All three share one outer frame. Transom and mullion positions decide whether the glass lines up, so we draw the elevation with every sightline marked before anything is ordered.'],
+];
+
+/* The flush comparison. Marker coordinates are percentages against each
+   photograph and are placed by eye on the rendered page; if either image is
+   replaced, re-place its markers. */
+$versus_cards = [
+    [
+        'title' => 'Standard casement',
+        'line' => 'The one on this page. 28mm double or 36mm triple glazing, down to 0.95 W/m²K, A+ rated.',
+        'file' => 'casement-cranfield-1400w',
+        'width' => 1400,
+        'height' => 1050,
+        'alt' => 'White uPVC casement window in Cranfield with a proud sash and a large fixed pane glazed directly into the frame',
+        'markers' => [
+            ['x' => 68, 'y' => 30, 'copy' => 'The sash stands proud of the frame, the classic stepped casement look.'],
+            ['x' => 30, 'y' => 64, 'copy' => 'A fixed pane is glazed straight into the frame, so the border is slimmer and the glass is bigger.'],
+        ],
+    ],
+    [
+        'title' => 'Flush casement',
+        'line' => '28mm double glazing, 1.2 W/m²K, A+ rated, on its own page.',
+        'file' => 'flush-light-grey-stone-1400w',
+        'width' => 1400,
+        'height' => 933,
+        'alt' => 'White Liniar flush casement window in a stone wall with every sash closing level with the frame',
+        'asset_base' => '/wp-content/themes/fenster/assets/images/products/flush-casement/',
+        'markers' => [
+            ['x' => 24, 'y' => 44, 'copy' => 'The sash closes level with the frame, the look of traditional timber joinery.'],
+            ['x' => 52, 'y' => 52, 'copy' => 'Fixed lights carry a matching dummy sash, so every pane reads the same.'],
+        ],
+    ],
+];
+
+$versus_rows = [
+    ['label' => 'Sash face', 'casement' => 'Stands proud of the frame', 'flush' => 'Closes level with the frame'],
+    ['label' => 'Fixed panes', 'casement' => 'Glazed into the frame, the most glass', 'flush' => 'Matched to the openers, equal lines'],
+    ['label' => 'Glazing', 'casement' => '28mm double or 36mm triple', 'flush' => '28mm double'],
+    ['label' => 'Best whole-window U-value', 'casement' => '0.95 W/m²K, A+ rated', 'flush' => '1.2 W/m²K, A+ rated'],
 ];
 
 $anatomy_items = [
@@ -50,25 +150,22 @@ $spec_points = [
 $gallery = [
     ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'alt' => 'Anthracite Liniar casement windows stacked on a corner elevation in Bolbeck Park, fitted by Fenster'],
     ['file' => 'casement-stone-elevation', 'width' => 1200, 'focus' => '50% 45%', 'caption' => 'White casements across a full elevation', 'alt' => 'White uPVC casement windows across the front elevation and dormers of a stone house'],
+    ['file' => 'casement-anthracite-bay', 'width' => 1600, 'focus' => '50% 45%', 'caption' => 'Anthracite grey bay', 'alt' => 'Anthracite grey uPVC casement bay window with obscured lower panes, fitted by Fenster'],
+    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
     ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
     ['file' => 'casement-leighton-buzzard', 'width' => 1400, 'focus' => '50% 55%', 'caption' => 'Leighton Buzzard', 'alt' => 'White Liniar casement windows fitted by Fenster across a Leighton Buzzard terrace'],
-    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'alt' => 'White uPVC casement windows with leaded diamond glazing on a red brick house in Rushden, fitted by Fenster'],
-];
-
-$related = [
-    ['url' => '/flush-casement-windows/', 'name' => 'Flush casement windows', 'view' => 'View flush casements', 'copy' => 'The sash closes level with the frame instead of sitting proud of it.'],
-    ['url' => '/french-casement-windows/', 'name' => 'French casement windows', 'view' => 'View French casements', 'copy' => 'Two sashes and no post between them, for one uninterrupted opening.'],
-    ['url' => '/tilt-turn-windows/', 'name' => 'Tilt and turn windows', 'view' => 'View tilt and turn', 'copy' => 'Tilts in at the top for air, or swings fully inwards for cleaning.'],
 ];
 
 $faqs = [
     ['question' => 'What is a casement window?', 'answer' => 'A window with sashes hinged at the side or the top, opening outwards. Opening sashes and fixed panes are made into one frame, so a single window can do more than one job.'],
+    ['question' => 'What is the difference between casement and flush casement windows?', 'answer' => 'The sash. On a standard casement it stands slightly proud of the frame, and fixed panes are glazed straight into the frame so they hold more glass. On a flush casement the sash closes level with the frame for a traditional joinery look, with fixed lights matched to the openers so every pane reads the same. Standard takes 28mm double or 36mm triple glazing and reaches 0.95 W/m²K; flush takes 28mm double and reaches 1.2 W/m²K. Both are A+ rated.'],
     ['question' => 'Which Liniar system do you fit?', 'answer' => 'The 70mm Liniar EnergyPlus system, a six-chamber uPVC platform used for both replacement and new-build work. Glass, reinforcement and hardware are confirmed for your individual job.'],
     ['question' => 'What U-value can an EnergyPlus casement reach?', 'answer' => '0.95 W/m²K, with the 36mm triple glazed unit, which makes it an A+ window. Size, layout, glass and reinforcement all move the complete-window figure, so the number we agree follows your final specification rather than a brochure.'],
     ['question' => 'Are casement windows secure?', 'answer' => 'They can be specified with reinforced frames, multi-point locking and PAS 24 or Secured by Design options. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we will specify to it. Those approvals belong to a tested complete window rather than to the profile name, so we confirm what applies to your configuration.'],
     ['question' => 'Can I have triple glazing?', 'answer' => 'Yes. The 70mm frame takes a 28mm double glazed unit or a 36mm triple. Whether triple is worth it depends on the sash size, the weight and what you are actually trying to improve, so we will compare it with you rather than treating it as an automatic upgrade.'],
     ['question' => 'Will new casements make the house quieter?', 'answer' => 'They can, when the whole specification is designed for it. Liniar publish around 33 decibels for a standard double glazed unit and up to 37 decibels, rated 37 (-2;-5), where the window is built for acoustics. Reaching the higher figure is the glass doing the work rather than the frame. Pane thicknesses, frame seals and the ventilation path all affect the result, and the ventilation path is the one people forget.'],
     ['question' => 'How many colours are there?', 'answer' => 'Sixteen. The colour you pick is the external face, with the same colour or smooth white on the inside. Liniar publish a wider foil catalogue, but availability, lead time and cost depend on the exact profile and the fabricator, so we confirm before you order.'],
+    ['question' => 'Can I have bars, horns or leaded glass?', 'answer' => 'Yes. Georgian bars sit inside the sealed unit, astragal bars are bonded to the glass face, mock sash horns dress the sash corners, and leaded glass comes in squares or diamonds. All of them are priced with the window rather than added afterwards.'],
     ['question' => 'Can you copy my existing window layout?', 'answer' => 'Usually, though an exact copy is not always the best answer. At survey we check escape, ventilation, handle reach, outside clearance and how the sightlines sit before the drawing is signed off.'],
     ['question' => 'What guarantee comes with them?', 'answer' => 'Two separate ones. Liniar guarantee the frame for ten years, and we guarantee our installation for ten years. They cover different things and come from different people, which is worth knowing if something ever needs putting right.'],
     ['question' => 'Are the frames recyclable?', 'answer' => 'Liniar describe their uPVC profiles as lead-free and recyclable at the end of their useful life. The profiles are designed, extruded and tested in Derbyshire, and independent fabricators make the finished windows.'],
@@ -89,22 +186,34 @@ $faq_schema = [
 ?>
 
 <div class="fg-cw">
+    <section class="fg-cw-film" aria-labelledby="fg-cw-film-title">
+        <div class="container fg-cw-film__grid">
+            <div class="fg-cw-copy">
+                <p class="eyebrow"><?php esc_html_e('Coming to this page', 'fenster'); ?></p>
+                <h2 id="fg-cw-film-title" class="fg-cw-display"><?php esc_html_e('Watch a set of casements go in.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('We are filming a real installation with our own fitters, from the first survey measure to the final wipe-down. No actors and no showroom set, just a local house getting its windows done properly.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The film will sit right here. Until then, the photographs below are the same honest record, one frame at a time.', 'fenster'); ?></p>
+            </div>
+            <figure class="fg-cw-film__media">
+                <?php if ($film_src !== '') : ?>
+                    <video autoplay muted loop playsinline poster="<?php echo esc_url(fenster_generated_url($film_poster)); ?>">
+                        <source src="<?php echo esc_url(fenster_generated_url($film_src)); ?>" type="video/mp4">
+                    </video>
+                <?php else : ?>
+                    <img
+                        src="<?php echo esc_url(fenster_generated_url($film_poster)); ?>"
+                        alt="<?php esc_attr_e('Fenster installer fitting a white uPVC casement window frame in a brick opening', 'fenster'); ?>"
+                        loading="lazy" width="900" height="600">
+                    <span class="fg-cw-film__chip"><i aria-hidden="true"></i><?php esc_html_e('In production', 'fenster'); ?></span>
+                <?php endif; ?>
+            </figure>
+        </div>
+    </section>
+
     <section class="fg-cw-intro" aria-labelledby="fg-cw-intro-title">
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('The system we fit', 'fenster'); ?></p>
-                <?php
-                /* This section used to open by defining the hinge types and
-                   listing side-hung, top-hung and fixed lights, which is
-                   precisely what the Opening styles section below does in
-                   detail. It now says what the window is and why we fit it, and
-                   leaves the mechanics to that section.
-
-                   It stays out of the anatomy section's territory too: chambers,
-                   gaskets and the sealed unit explain how the 0.95 figure is
-                   reached, so the figure is claimed once here and explained
-                   there rather than argued twice. */
-                ?>
                 <h2 id="fg-cw-intro-title"><?php esc_html_e('The most popular window in the country, and the most adaptable.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Casement is the window most UK homes already have, and the one that adapts to the widest range of openings. Every window is made to measure, so the same system covers a small bathroom light, a full bay across the front and everything in between.', 'fenster'); ?></p>
                 <p><?php esc_html_e('We fit the 70mm Liniar EnergyPlus system on every casement. It is what we specify as standard rather than an upgrade tier, and on our listed specification the finished window reaches 0.95 W/m²K, which makes it A+ rated.', 'fenster'); ?></p>
@@ -122,11 +231,11 @@ $faq_schema = [
             </div>
             <figure class="fg-cw-media">
                 <img
-                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-bay-white-1080w.webp')); ?>"
-                    alt="<?php esc_attr_e('White uPVC casement windows with glazing bars and top opening lights on a bay', 'fenster'); ?>"
+                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-open-brick-1400w.webp')); ?>"
+                    alt="<?php esc_attr_e('White uPVC casement windows opened outwards beside a patio door on a new build brick house', 'fenster'); ?>"
                     loading="lazy"
-                    width="1080"
-                    height="608"
+                    width="1400"
+                    height="933"
                 >
                 <figcaption><?php esc_html_e('70mm Liniar EnergyPlus', 'fenster'); ?></figcaption>
             </figure>
@@ -135,13 +244,60 @@ $faq_schema = [
 
     <?php
     /* Rendered here rather than by generated-page.php, which would stack it on
-       the spec strip immediately under the hero. It used to sit further down
-       with the construction section, but at 32% of an 11,000px page it arrived
-       long after the claim it backs up. The intro directly above now leads on
+       the spec strip immediately under the hero. The intro above leads on
        EnergyPlus being what we fit as standard, so the banner belongs against
-       that rather than three sections later. */
+       that claim. */
     get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows'));
     ?>
+
+    <section class="fg-cw-style" aria-labelledby="fg-cw-style-title">
+        <div class="container">
+            <div class="fg-cw-head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Make it yours', 'fenster'); ?></p>
+                    <h2 id="fg-cw-style-title" class="fg-cw-display"><?php esc_html_e('One window, five different characters.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('Bars, horns, lead and colour are chosen per window, not per order. All five of these come out of the same 70mm system.', 'fenster'); ?></p>
+            </div>
+
+            <div class="fg-cw-style__panel" data-fg-door-selector>
+                <figure class="fg-cw-style__stage">
+                    <img
+                        data-fg-choice-image
+                        src="<?php echo esc_url(fenster_generated_url($asset_base . $style_options[0]['file'] . '.webp')); ?>"
+                        alt="<?php echo esc_attr($style_options[0]['alt']); ?>"
+                        loading="lazy"
+                        width="<?php echo esc_attr((string) $style_options[0]['width']); ?>"
+                        height="<?php echo esc_attr((string) $style_options[0]['height']); ?>"
+                    >
+                    <figcaption data-fg-choice-name><?php echo esc_html($style_options[0]['name']); ?></figcaption>
+                </figure>
+                <div class="fg-cw-style__controls">
+                    <div class="fg-cw-style__options" role="group" aria-label="<?php esc_attr_e('Casement window looks', 'fenster'); ?>">
+                        <?php foreach ($style_options as $option_index => $option) : ?>
+                            <button
+                                type="button"
+                                class="fg-cw-style__option"
+                                data-fg-choice-option
+                                aria-pressed="<?php echo $option_index === 0 ? 'true' : 'false'; ?>"
+                                data-preview-src="<?php echo esc_url(fenster_generated_url($asset_base . $option['file'] . '.webp')); ?>"
+                                data-preview-alt="<?php echo esc_attr($option['alt']); ?>"
+                                data-preview-name="<?php echo esc_attr($option['name']); ?>"
+                                data-preview-copy="<?php echo esc_attr($option['copy']); ?>"
+                            >
+                                <img src="<?php echo esc_url(fenster_generated_url($asset_base . $option['thumb'] . '.webp')); ?>" alt="" loading="lazy" width="56" height="56">
+                                <span><?php echo esc_html($option['name']); ?></span>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                    <p class="fg-cw-style__copy" data-fg-choice-copy><?php echo esc_html($style_options[0]['copy']); ?></p>
+                    <p class="fg-cw-links">
+                        <a class="fg-cw-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('All sixteen colours', 'fenster'); ?></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="casement-opening-styles" class="fg-cw-layouts" aria-labelledby="fg-cw-layouts-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
@@ -155,7 +311,7 @@ $faq_schema = [
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Opening styles', 'fenster'); ?></p>
                 <h2 id="fg-cw-layouts-title"><?php esc_html_e('Four layouts, four different jobs.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The names are obvious; the hardware is the actual difference. This Leighton Buzzard window uses three of the four.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The names are obvious; the hardware is the actual difference. This Leighton Buzzard window pairs two side-hung sashes around a fixed centre pane.', 'fenster'); ?></p>
                 <dl class="fg-cw-list">
                     <?php foreach ($layout_points as $point) : ?>
                         <div>
@@ -195,6 +351,115 @@ $faq_schema = [
         </div>
     </section>
 
+    <section class="fg-cw-versus" aria-labelledby="fg-cw-versus-title">
+        <div class="container">
+            <div class="fg-cw-head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Casement or flush casement', 'fenster'); ?></p>
+                    <h2 id="fg-cw-versus-title" class="fg-cw-display"><?php esc_html_e('Same family, two different faces.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('Both are 70mm Liniar uPVC, both come in the same sixteen colours and both are fitted by our own installers. The difference is how the sash meets the frame, and what that does to the glass.', 'fenster'); ?></p>
+            </div>
+
+            <div class="fg-cw-versus__cards">
+                <?php foreach ($versus_cards as $card) : ?>
+                    <?php $card_base = $card['asset_base'] ?? $asset_base; ?>
+                    <article class="fg-cw-versus__card">
+                        <div class="fg-cw-versus__media">
+                            <img
+                                src="<?php echo esc_url(fenster_generated_url($card_base . $card['file'] . '.webp')); ?>"
+                                alt="<?php echo esc_attr($card['alt']); ?>"
+                                loading="lazy"
+                                width="<?php echo esc_attr((string) $card['width']); ?>"
+                                height="<?php echo esc_attr((string) $card['height']); ?>"
+                            >
+                            <?php foreach ($card['markers'] as $marker_index => $marker) : ?>
+                                <span class="fg-cw-versus__marker" style="left: <?php echo esc_attr((string) $marker['x']); ?>%; top: <?php echo esc_attr((string) $marker['y']); ?>%;" aria-hidden="true"><?php echo esc_html((string) ($marker_index + 1)); ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                        <h3><?php echo esc_html($card['title']); ?></h3>
+                        <ol class="fg-cw-versus__legend">
+                            <?php foreach ($card['markers'] as $marker) : ?>
+                                <li><?php echo esc_html($marker['copy']); ?></li>
+                            <?php endforeach; ?>
+                        </ol>
+                        <p class="fg-cw-versus__line"><?php echo esc_html($card['line']); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="fg-cw-versus__tablewrap">
+                <table class="fg-cw-versus__table">
+                    <thead>
+                        <tr>
+                            <th scope="col"><span class="screen-reader-text"><?php esc_html_e('Specification', 'fenster'); ?></span></th>
+                            <th scope="col"><?php esc_html_e('Standard casement', 'fenster'); ?></th>
+                            <th scope="col"><?php esc_html_e('Flush casement', 'fenster'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($versus_rows as $row) : ?>
+                            <tr>
+                                <th scope="row"><?php echo esc_html($row['label']); ?></th>
+                                <td><?php echo esc_html($row['casement']); ?></td>
+                                <td><?php echo esc_html($row['flush']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="fg-cw-versus__actions">
+                <p><?php esc_html_e('Whichever you pick, the price comes off the same live list in the quote tool.', 'fenster'); ?></p>
+                <a class="button button--steel" href="<?php echo esc_url(home_url('/flush-casement-windows/')); ?>"><?php esc_html_e('View flush casements', 'fenster'); ?></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="fg-cw-anatomy" aria-labelledby="fg-cw-anatomy-title">
+        <div class="container">
+            <div class="fg-cw-head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Inside the frame', 'fenster'); ?></p>
+                    <h2 id="fg-cw-anatomy-title"><?php esc_html_e('What is inside an EnergyPlus frame.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('The cutaway is the actual profile. Open a part to see the job it does.', 'fenster'); ?></p>
+            </div>
+
+            <div class="fg-cw-anatomy__explorer" data-fg-anatomy>
+                <figure class="fg-cw-anatomy__media">
+                    <img
+                        src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-energyplus-thermal-600w.webp')); ?>"
+                        alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus profile with a thermal overlay', 'fenster'); ?>"
+                        loading="lazy" width="600" height="400">
+                </figure>
+                <ol class="fg-cw-anatomy__items">
+                    <?php foreach ($anatomy_items as $item_index => $item) : ?>
+                        <?php $item_id = 'fg-cw-anatomy-' . $item_index; ?>
+                        <li class="fg-cw-anatomy__item">
+                            <h3>
+                                <button
+                                    type="button"
+                                    class="fg-cw-anatomy__toggle"
+                                    data-fg-anatomy-toggle
+                                    aria-expanded="<?php echo $item_index === 0 ? 'true' : 'false'; ?>"
+                                    aria-controls="<?php echo esc_attr($item_id); ?>">
+                                    <span class="fg-cw-anatomy__num" aria-hidden="true"><?php echo esc_html(sprintf('%02d', $item_index + 1)); ?></span>
+                                    <span class="fg-cw-anatomy__name"><?php echo esc_html($item['name']); ?></span>
+                                    <span class="fg-cw-anatomy__mark" aria-hidden="true"></span>
+                                </button>
+                            </h3>
+                            <div class="fg-cw-anatomy__body" id="<?php echo esc_attr($item_id); ?>" <?php echo $item_index === 0 ? '' : 'hidden'; ?>>
+                                <p><?php echo esc_html($item['copy']); ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ol>
+            </div>
+
+        </div>
+    </section>
+
     <section class="fg-cw-gallery" aria-labelledby="fg-cw-gallery-title">
         <div class="container">
             <div class="fg-cw-gallery__head">
@@ -203,7 +468,7 @@ $faq_schema = [
                     <h2 id="fg-cw-gallery-title"><?php esc_html_e('Liniar casements on real houses.', 'fenster'); ?></h2>
                 </div>
                 <p>
-                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Bolbeck Park, Leighton Buzzard, Stony Stratford and Rushden are our own installs; the stone elevation is Liniar photography of the same system. Click any image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Five of these six are our own installs, from Bolbeck Park to Rushden; the stone elevation is Liniar photography of the same system. Click any image for a closer look.', 'fenster'); ?></span>
                     <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Swipe through finished installations. Tap any image for a closer look.', 'fenster'); ?></span>
                 </p>
             </div>
@@ -261,52 +526,6 @@ $faq_schema = [
         </div>
     </section>
 
-
-
-    <section class="fg-cw-anatomy" aria-labelledby="fg-cw-anatomy-title">
-        <div class="container">
-            <div class="fg-cw-head">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Inside the frame', 'fenster'); ?></p>
-                    <h2 id="fg-cw-anatomy-title"><?php esc_html_e('What is inside an EnergyPlus frame.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('The cutaway is the actual profile. Open a part to see the job it does.', 'fenster'); ?></p>
-            </div>
-
-            <div class="fg-cw-anatomy__explorer" data-fg-anatomy>
-                <figure class="fg-cw-anatomy__media">
-                    <img
-                        src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-energyplus-thermal-600w.webp')); ?>"
-                        alt="<?php esc_attr_e('Cutaway of the six-chamber Liniar EnergyPlus profile with a thermal overlay', 'fenster'); ?>"
-                        loading="lazy" width="600" height="400">
-                </figure>
-                <ol class="fg-cw-anatomy__items">
-                    <?php foreach ($anatomy_items as $item_index => $item) : ?>
-                        <?php $item_id = 'fg-cw-anatomy-' . $item_index; ?>
-                        <li class="fg-cw-anatomy__item">
-                            <h3>
-                                <button
-                                    type="button"
-                                    class="fg-cw-anatomy__toggle"
-                                    data-fg-anatomy-toggle
-                                    aria-expanded="<?php echo $item_index === 0 ? 'true' : 'false'; ?>"
-                                    aria-controls="<?php echo esc_attr($item_id); ?>">
-                                    <span class="fg-cw-anatomy__num" aria-hidden="true"><?php echo esc_html(sprintf('%02d', $item_index + 1)); ?></span>
-                                    <span class="fg-cw-anatomy__name"><?php echo esc_html($item['name']); ?></span>
-                                    <span class="fg-cw-anatomy__mark" aria-hidden="true"></span>
-                                </button>
-                            </h3>
-                            <div class="fg-cw-anatomy__body" id="<?php echo esc_attr($item_id); ?>" <?php echo $item_index === 0 ? '' : 'hidden'; ?>>
-                                <p><?php echo esc_html($item['copy']); ?></p>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ol>
-            </div>
-
-        </div>
-    </section>
-
     <section class="fg-cw-spec" aria-labelledby="fg-cw-spec-title">
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
@@ -329,11 +548,11 @@ $faq_schema = [
             </div>
             <figure class="fg-cw-media fg-cw-media--tall">
                 <img
-                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-cranfield-1400w.webp')); ?>"
-                    alt="<?php esc_attr_e('White uPVC casement window with a top opening light, a fixed pane and trickle vents, fitted by Fenster in Cranfield', 'fenster'); ?>"
+                    src="<?php echo esc_url(fenster_generated_url($asset_base . 'casement-sill-interior-1200w.webp')); ?>"
+                    alt="<?php esc_attr_e('White uPVC casement window, sill and handle seen from inside a room', 'fenster'); ?>"
                     loading="lazy"
-                    width="1400"
-                    height="1050"
+                    width="1200"
+                    height="800"
                 >
             </figure>
         </div>

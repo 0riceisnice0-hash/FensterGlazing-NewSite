@@ -36343,6 +36343,16 @@ html.fg-blinds-reveal-locked {
   line-height: 1.25;
 }
 
+/* Display heading for the page's set-piece sections (film, personalisation,
+   flush comparison). Bigger than the working h2 scale, still well under the
+   site-wide --fg-font-size-max ceiling. */
+.fg-cw .fg-cw-display {
+  max-width: 18ch;
+  font-size: clamp(1.75rem, 2.9vw, 2.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
 .fg-cw p {
   max-width: 52ch;
   margin: 0 0 0.85rem;
@@ -36751,6 +36761,344 @@ html.fg-blinds-reveal-locked {
 }
 
 
+/* The film slot. A dark cinematic band that currently frames the poster with
+   an "in production" chip; when the installation film lands, the same frame
+   holds the autoplaying loop. The section paints its own background, so it
+   owns its own text colours, like the gallery below. */
+.fg-cw-film {
+  background: linear-gradient(135deg, #0c2b33 0%, var(--color-steel) 55%, #0a333d 100%);
+}
+
+.fg-cw-film__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.fg-cw .fg-cw-film h2 {
+  color: #ffffff;
+}
+
+.fg-cw .fg-cw-film p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-cw-film__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 16 / 9;
+  background: var(--color-steel-90);
+  box-shadow: 0 24px 60px rgba(0, 12, 16, 0.45);
+}
+
+.fg-cw-film__media img,
+.fg-cw-film__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cw-film__chip {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(0, 20, 26, 0.78);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-cw-film__chip i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: fg-cw-chip-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes fg-cw-chip-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.75); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cw-film__chip i {
+    animation: none;
+  }
+}
+
+/* Personalisation stage: one photograph, five looks, driven by the shared
+   [data-fg-door-selector] controller. The stage reuses the caption-chip
+   treatment via its own figcaption. */
+.fg-cw-style__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1.25rem, 2.6vw, 2.25rem);
+  align-items: stretch;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--cw-line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-cw-style__stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-steel);
+  aspect-ratio: 4 / 3;
+}
+
+.fg-cw-style__stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cw-style__stage figcaption {
+  position: absolute;
+  z-index: 1;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-cw-style__controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+.fg-cw-style__options {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.fg-cw-style__option {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 44px;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--cw-line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.fg-cw-style__option img {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+@media (hover: hover) {
+  .fg-cw-style__option:hover {
+    border-color: rgba(0, 45, 58, 0.35);
+  }
+}
+
+.fg-cw-style__option[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  background: rgba(59, 178, 115, 0.08);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+
+.fg-cw .fg-cw-style__copy {
+  min-height: 4.7em;
+  max-width: none;
+  margin: 0;
+}
+
+/* Flush comparison: two annotated photographs, then the figures. The markers
+   are decorative numbers matched to the legend under each card, so nothing
+   depends on hover. */
+.fg-cw-versus__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.6vw, 2.25rem);
+  margin-bottom: clamp(1.25rem, 2.4vw, 2rem);
+}
+
+.fg-cw-versus__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-steel);
+  aspect-ratio: 4 / 3;
+  margin-bottom: 0.9rem;
+}
+
+.fg-cw-versus__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cw-versus__marker {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85), 0 6px 18px rgba(0, 20, 26, 0.35);
+}
+
+.fg-cw-versus__marker::after {
+  position: absolute;
+  inset: -7px;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+  content: '';
+  animation: fg-cw-marker-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes fg-cw-marker-pulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.2; transform: scale(1.18); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cw-versus__marker::after {
+    animation: none;
+  }
+}
+
+.fg-cw-versus__legend {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0;
+  margin: 0.6rem 0 0;
+  list-style: none;
+  counter-reset: fg-cw-versus;
+}
+
+.fg-cw-versus__legend li {
+  position: relative;
+  padding-left: 2.1rem;
+  color: var(--color-muted);
+  font-size: 0.93rem;
+  line-height: 1.5;
+  counter-increment: fg-cw-versus;
+}
+
+.fg-cw-versus__legend li::before {
+  position: absolute;
+  top: 0.1em;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  content: counter(fg-cw-versus);
+}
+
+.fg-cw .fg-cw-versus__line {
+  max-width: none;
+  margin: 0.6rem 0 0;
+  color: var(--color-ink);
+  font-size: 0.93rem;
+  font-weight: 700;
+}
+
+.fg-cw-versus__tablewrap {
+  overflow-x: auto;
+}
+
+.fg-cw-versus__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fg-cw-versus__table th,
+.fg-cw-versus__table td {
+  padding: 0.75rem 0.9rem;
+  border-top: 1px solid var(--cw-line);
+  color: var(--color-muted);
+  font-size: 0.93rem;
+  line-height: 1.45;
+  text-align: left;
+  vertical-align: top;
+}
+
+.fg-cw-versus__table thead th {
+  border-top: 0;
+  color: var(--color-ink);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* The theme has no global screen-reader-text utility, so the corner header's
+   label is hidden here: present for assistive tech, invisible in the layout. */
+.fg-cw-versus__table .screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fg-cw-versus__table tbody th {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.fg-cw-versus__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+}
+
+.fg-cw .fg-cw-versus__actions p {
+  max-width: none;
+  margin: 0;
+}
+
 /* Real-homes gallery.
    Same feature as the sliding-sash page: dark proof band, mosaic on desktop,
    scroll-snap rail on mobile, thumbnails opening the shared dark lightbox via
@@ -36812,16 +37160,16 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 6; grid-row: 1 / 3; }
-.fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 6 / 9; }
-.fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 9 / 13; }
+.fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 6 / 10; }
+.fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 10 / 13; }
+/* Six pictures as of 2026-08-04: the tall left column plus a 4/3 split on row
+   one and a 2/3/2 split on row two. Row one breaks at 10 and row two at 8 and
+   11, and those offsets are what keep this reading as a mosaic rather than a
+   plain grid. Heritage overrides cells one to four and never renders a fifth
+   or sixth, so it is unaffected. */
 .fg-cw-gallery__mosaic figure:nth-child(4) { grid-column: 6 / 8; }
-/* Cell five runs to the end of the row. The casement gallery is five pictures:
-   the second row is a narrow cell and a wide one, and the wide one is sized for
-   a landscape photograph rather than cropped down to a square. Its break at 8
-   stays offset from row one's break at 9, which is what keeps this reading as a
-   mosaic instead of a plain grid. Heritage overrides cells one to four and
-   never renders a fifth, so it is unaffected. */
-.fg-cw-gallery__mosaic figure:nth-child(5) { grid-column: 8 / 13; }
+.fg-cw-gallery__mosaic figure:nth-child(5) { grid-column: 8 / 11; }
+.fg-cw-gallery__mosaic figure:nth-child(6) { grid-column: 11 / 13; }
 
 /* The mosaic above is cut for exactly six cells. Heritage doors has four
    pictures that honestly show a finished door, so its variant re-cuts the same
@@ -36900,8 +37248,31 @@ html.fg-blinds-reveal-locked {
   .fg-cw-head,
   .fg-cw-split,
   .fg-cw-cta__panel,
-  .fg-cw-anatomy__explorer {
+  .fg-cw-anatomy__explorer,
+  .fg-cw-film__grid,
+  .fg-cw-style__panel,
+  .fg-cw-versus__cards {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Film first on a phone: the frame carries the chip that explains itself. */
+  .fg-cw-film__grid .fg-cw-film__media {
+    order: -1;
+  }
+
+  .fg-cw .fg-cw-style__copy {
+    min-height: 0;
+  }
+
+  .fg-cw-versus__actions .button {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .fg-cw-versus__table th,
+  .fg-cw-versus__table td {
+    padding: 0.6rem 0.6rem;
+    font-size: 0.86rem;
   }
 
   .fg-cw-anatomy__media {
