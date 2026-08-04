@@ -401,6 +401,80 @@ function fenster_case_studies(): array
             ],
         ],
 
+        /*
+         * The only study on the site where the blind is the product. Two things
+         * are deliberately absent and should stay absent unless the owner
+         * confirms them. There is no frame system named: Fenster's uPVC casement
+         * is Liniar EnergyPlus, but nothing in the supplied photography proves
+         * this window is, and naming it would be a guess. There is no U-value or
+         * energy rating either: a Notan blind lives in an NTB 24/28 cavity, so
+         * the 0.95 W/m²K figure the other casement studies quote for a 36mm
+         * triple unit does not describe this glass and must not be carried over.
+         *
+         * No slat width is printed, per the Notan Integral Blind Rule in AI.md.
+         * The slat colour is White BY001 from `notan_blind_colours`, and the
+         * control description matches the visualiser on /integral-blinds/: the
+         * top magnet tilts, the bottom one raises and lowers.
+         *
+         * Owner-confirmed 2026-08-04: a new window rather than a replacement
+         * sealed unit into an existing frame, and priced at a home consultation.
+         */
+        'integral-blinds-leagrave-luton' => [
+            'title' => 'uPVC window with integral blinds, Leagrave',
+            'location' => 'Leagrave, Luton',
+            'type' => 'Residential',
+            'date' => '2026-06-23',
+            'priced_by' => 'consultation',
+            'summary' => 'One uPVC casement window in a Leagrave bathroom, with a white Notan blind sealed inside the glass and worked by two magnets on the frame.',
+            'lead' => 'This is a small bathroom window in Leagrave, and the blind is inside the glass rather than in front of it. Obscure glass takes the view away through the day, and the blind is the part you can turn up and down.',
+            'products' => [
+                ['label' => 'Integral blinds', 'url' => home_url('/integral-blinds/')],
+                ['label' => 'uPVC casement windows', 'url' => $casement],
+            ],
+            'colour' => ['label' => 'White', 'url' => $colour_white],
+            'specs' => [
+                ['label' => 'Product', 'value' => 'One uPVC casement window'],
+                ['label' => 'Blind', 'value' => 'Notan magnetic integrated blind'],
+                ['label' => 'Control', 'value' => 'Magnetic, tilt and lift'],
+                ['label' => 'Slat colour', 'value' => 'White (BY001)'],
+            ],
+            'overview' => [
+                'We fitted the window and the blind as one thing. It is one <a href="' . $casement . '">uPVC casement window</a> with a Notan <a href="' . esc_url(home_url('/integral-blinds/')) . '">integral blind</a> sealed between the panes, so what you are looking at is a glass unit with a venetian inside it. A small opening like this one is a good place to see it, because the whole blind is in view at once.',
+                'Obscure glass and a blind do different jobs, and a bathroom is where that shows. The glass keeps the daylight and takes the view away, all day, without anyone touching it. The blind is the part that changes: down and closed at night when the light is on inside, tilted for some shade in the morning, and up out of the way when you want the window clear.',
+                'Two magnetic sliders run up the frame beside the glass. The top one tilts the slats and the bottom one raises and lowers the blind. Nothing crosses the room, and there is no cord, which is worth having in a room with a bath in it. Because the blind is sealed in, the steam and the dust stay on your side of the glass. You clean the window, and the blind stays as it was.',
+                'The slats are white, BY001, chosen to sit with the white frame so the window reads as a plain window when the blind is up. Notan make nine standard slat colours, including anthracite grey and black, with bespoke RAL to order, so the blind can be the thing you notice instead if that suits the room. The frame is <a href="' . $colour_white . '">white</a> uPVC.',
+            ],
+            'installed' => [
+                'One uPVC casement window',
+                'Notan magnetic integrated blind sealed inside the glass unit',
+                'White slats, BY001',
+                'Two magnets on the frame, one to tilt and one to raise and lower',
+                'Obscure glass, with a keyed white handle',
+            ],
+            'installers' => [$fitter_shane, $fitter_zac],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-luton-leagrave-integral-blinds.mp4',
+                'poster' => $img . 'cs-luton-leagrave-integral-blinds-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Video of the integral blind being raised, lowered and tilted in the Leagrave bathroom window',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-luton-leagrave-integral-blinds-closed.jpg', 'caption' => 'The blind down and closed, filling the sash. It is sealed inside the glass unit, so nothing hangs in the room.'],
+                ['src' => $img . 'cs-luton-leagrave-integral-blinds-open.jpg', 'caption' => 'The blind raised, gathered at the head, with the obscure glass clear behind it. The window is open on the latch here.'],
+                ['src' => $img . 'cs-luton-leagrave-integral-blinds-controls.jpg', 'caption' => 'The two magnetic sliders on the frame beside the glass. The top one tilts the slats, the bottom one raises and lowers the blind.'],
+                ['src' => $img . 'cs-luton-leagrave-integral-blinds-handle.jpg', 'caption' => 'The white handle on the opening sash, keyed, with the closed blind alongside it.'],
+            ],
+            /* All four photographs are portrait and the archive card is 16:10,
+               so a centre crop of the hero would show a band of slats and no
+               window. This crop is taken from the full-resolution original and
+               keeps the head of the blind, both magnets and the handle. */
+            'card_image' => ['src' => $img . 'cs-luton-leagrave-integral-blinds-card.jpg', 'caption' => 'The blind down and closed in the white uPVC window, with the two magnetic sliders on the frame.'],
+            'seo' => [
+                'title_tag' => 'Integral Blinds Case Study, Luton | Fenster Glazing',
+                'meta_description' => 'A real Fenster project in Leagrave, Luton: a uPVC casement window with a white Notan blind sealed inside the glass, worked by two magnets on the frame.',
+            ],
+        ],
+
         'upvc-casement-windows-broughton-milton-keynes' => [
             'title' => 'uPVC casement window, Broughton',
             'location' => 'Broughton, Milton Keynes',
