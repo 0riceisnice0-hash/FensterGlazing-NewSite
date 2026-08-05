@@ -5439,7 +5439,12 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
   const PULSE_STAGGER = 110;
   const PULSE_STEPS = 8;
   const PULSE_NUMBER = /\d+(?:\.\d+)?/;
-  const PULSE_LEADING_NUMBER = /^\d+(?:\.\d+)?/;
+  /* A number sitting immediately after an acronym is part of a name, not a
+     quantity: PAS 24, RAL 7016, BS EN 1670. Those must not count, because
+     counting them invents standards and colours that do not exist. Anything
+     else does count, including a number introduced by an ordinary word, so
+     "Up to 7 panes" and "From 1.8 W/m²K" turn like any other readout. */
+  const PULSE_NAMED = /(?:^|\s)[A-Z]{2,}\.?\s*$/;
 
   /* Only the number moves. Owner instruction, 2026-08-05: putting the whole
      line of text on the drum moved "W/m²K" and " options" along with the
@@ -5490,21 +5495,6 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
     const finalText = (el.textContent || '').trim();
     if (finalText === '') return false;
 
-    /* The value has to open with its figure. Owner instruction, 2026-08-05:
-       Security must not count, because PAS 24 is the name of a standard and
-       counting through PAS 8 and PAS 16 invents standards that do not exist.
-
-       The rule is "the number leads", not a list of exceptions, because a
-       number that follows a word is almost always part of a name rather than a
-       quantity. Checked against all 45 spec values live on the site: it holds
-       back PAS 24, "Flush hook-locks, PAS 24", "Up to 7 panes", "Up to 4 panes"
-       and "From 1.8 W/m²K", and lets through every readout that opens with its
-       figure. It would also hold back a future BS EN or Part Q without anyone
-       having to remember to add it. The last three are arguably countable; they
-       are left static deliberately, because erring towards still is the safer
-       side for a specification. */
-    if (!PULSE_LEADING_NUMBER.test(finalText)) return false;
-
     // The U-value is the one figure on the strip where lower is better.
     const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'));
 
@@ -5524,7 +5514,9 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
 
     while (found !== null) {
       if (found.index > cursor) segments.push({ text: finalText.slice(cursor, found.index) });
-      segments.push({ number: found[0] });
+      // Everything to the left decides whether this number is a quantity or
+      // part of a name, so it travels with it.
+      segments.push({ number: found[0], before: finalText.slice(0, found.index) });
       cursor = found.index + found[0].length;
       found = finder.exec(finalText);
     }
@@ -5540,7 +5532,11 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
         return;
       }
 
-      const counted = pulseSequence(segment.number, descending);
+      // Part of a name rather than a quantity: render it and leave it alone.
+      const counted = PULSE_NAMED.test(segment.before)
+        ? null
+        : pulseSequence(segment.number, descending);
+
       if (!counted) {
         shell.appendChild(document.createTextNode(segment.number));
         return;
