@@ -36208,7 +36208,7 @@ html.fg-blinds-reveal-locked {
    Keyed to the panel rather than to either block, because the thing that needs
    the room is whatever a chapter happens to end with, and that has already
    changed once this week. Chapter 03 is excluded: nothing covers it. */
-.fg-cas-stack__panel:not(.fg-cas-stack__panel--security) > *:last-child {
+.fg-cas-stack__panel:not(.fg-cas-stack__panel--finishes) > *:last-child {
   padding-bottom: clamp(7.5rem, 18vh, 15rem);
 }
 
@@ -37340,6 +37340,8 @@ html.fg-blinds-reveal-locked {
 .fg-cas-stack.is-stacked .fg-cas-stack__panel--versatility { z-index: 2; }
 .fg-cas-stack.is-stacked .fg-cas-stack__panel--energy { z-index: 3; }
 .fg-cas-stack.is-stacked .fg-cas-stack__panel--security { z-index: 4; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--options { z-index: 5; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--finishes { z-index: 6; }
 
 /* A panel must be completely opaque, or what is behind it shows through: an
    incoming panel would show the one it is covering, and a pinned one would show
@@ -37360,7 +37362,9 @@ html.fg-blinds-reveal-locked {
    for the same reason. Do not drop the `fixed` half. */
 .fg-cas-stack__panel--opening,
 .fg-cas-stack__panel--versatility,
-.fg-cas-stack__panel--energy {
+.fg-cas-stack__panel--energy,
+.fg-cas-stack__panel--options,
+.fg-cas-stack__panel--finishes {
   background: var(--fg-page-gradient);
   background-attachment: fixed;
 }
@@ -37390,7 +37394,10 @@ html.fg-blinds-reveal-locked {
 }
 
 /* Nothing covers the last panel, so it never needs the overlay. */
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--security::after { content: none; }
+/* The exception is always the last plate, because nothing covers it. It moved
+   from 03 to 05 when the chapters were split on 2026-08-05; if another chapter
+   is ever added below, this and the padding rule above both move with it. */
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--finishes::after { content: none; }
 
 @media (max-width: 860px) {
   /* Restrained on a phone: the same movement, less of the atmosphere around it.
