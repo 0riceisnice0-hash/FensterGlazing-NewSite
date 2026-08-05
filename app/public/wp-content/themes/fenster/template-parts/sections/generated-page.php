@@ -2076,20 +2076,23 @@ if ($is_window_handles) {
            thing you scroll to, and whichever finish happened to sit first in the
            array was the face of the hub.
 
-           Inverted against the colour hub, whose veil is solid white across the
-           left and clears by 70% so its copy reads on the left and the colour wall
-           shows on the right. Both Nikon frames carry the hardware on the LEFT
-           against clean woodgrain, so the veil runs the other way here and the copy
-           sits right. That is the whole reason this works as an overlay: the
-           straight `.fg-hero--compact` treatment shades dark down the left, which
-           is exactly where the subject is, so the text would have landed on it.
+           Same direction as the colour hub: copy left on the solid end of a white
+           veil, picture carrying the right. An inverted version was built first,
+           on the reasoning that the hardware sits left in the frame, and it looked
+           wrong (owner, same day). The fix belonged in the crop rather than in the
+           layout — the file is now cut from the left edge of the original so the
+           lever lands at roughly 72%, out where the veil has cleared.
+
+           The blown-out window that then fills the left of the crop is not a
+           defect, it is what makes the fade seamless: it is already white exactly
+           where the veil is white, so there is no visible join between the solid
+           end of the gradient and the photograph beneath it.
 
            The door frame rather than the window one. The hub covers both families,
            the long backplate carrying a lever and a cylinder is the more
-           substantial piece of hardware, and it has unbroken dark woodgrain to the
-           right of the lever, which is what gives the veil something quiet to fade
-           into. The window-handle frame from the same shoot has a bright, busy
-           driveway behind it that fights the copy at every width. */
+           substantial piece of hardware, and the window frame from the same shoot
+           has a bright, busy driveway behind it that fights the copy at every
+           width. */
         ?>
         <section class="fg-window-handle-hero fg-window-handle-hero--photo">
             <div class="fg-window-handle-hero__photo">

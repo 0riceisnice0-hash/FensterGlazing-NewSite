@@ -9257,13 +9257,16 @@ html.fg-gallery-lightbox-open body {
 }
 
 /* The photograph is the hero, the way a product page opens, with the copy over it
-   on a fade — the colour hub's treatment, run the other way. See the note in
-   generated-page.php for why it is inverted: the hardware is on the left in both
-   Nikon frames, so the veil clears on the left and goes solid under the copy on
-   the right. The old boxed panel and the cut-out it was built for are gone.
+   on a fade. Same direction as the colour hub: veil solid across the left where
+   the words are, clearing by 70% so the picture carries the right.
 
-   Framing is baked into the file rather than nudged here: the blown-out window
-   edge at the far left of the original is cropped out at source. */
+   The inverted version of this was tried and looked wrong (owner, 2026-08-05).
+   What makes the normal direction work is the crop, not the CSS: the hardware
+   sits about 47% across the original frame, so the file is cut from the left edge
+   to put the lever at roughly 72%, out in the clear part of the veil. The
+   blown-out window that occupies the left of that crop is not a problem, it is
+   the reason it works — it is already white where the veil is white, so there is
+   no seam between the solid end of the fade and the photograph under it. */
 .fg-window-handle-hero--photo {
   position: relative;
   display: grid;
@@ -9284,25 +9287,23 @@ html.fg-gallery-lightbox-open body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Anchored left, because that is where the lever is and the right of the frame
-     is woodgrain the veil covers anyway. */
-  object-position: 22% 50%;
+  /* Anchored right. At desktop ratios `cover` crops top and bottom and this does
+     nothing, but between about 900px and 1200px it starts cropping the sides, and
+     the lever is the first thing lost if this sits at centre. */
+  object-position: 70% 50%;
 }
 
-/* Clear where the hardware is, solid where the words are. The stops are close
-   together on purpose: a longer fade puts the copy over a half-lit middle where
-   neither the photograph nor the text is doing well. */
+/* Solid where the words are, clear where the hardware is. */
 .fg-window-handle-hero__veil {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.6) 40%,
-    rgba(255, 255, 255, 0.94) 48%,
-    #ffffff 56%,
-    #ffffff 100%
+    #ffffff 0%,
+    #ffffff 40%,
+    rgba(255, 255, 255, 0.94) 50%,
+    rgba(255, 255, 255, 0.6) 60%,
+    rgba(255, 255, 255, 0) 70%
   );
 }
 
@@ -9313,10 +9314,10 @@ html.fg-gallery-lightbox-open body {
   padding-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
-/* Right half, to sit on the solid end of the veil. */
+/* Left, on the solid end of the veil. Held short of the fade so a long line never
+   runs out into the part of the band where the white is already thinning. */
 .fg-window-handle-hero__copy {
-  max-width: 34rem;
-  margin-left: auto;
+  max-width: min(34rem, 52%);
 }
 
 @media (max-width: 900px) {
@@ -9348,7 +9349,6 @@ html.fg-gallery-lightbox-open body {
 
   .fg-window-handle-hero__copy {
     max-width: none;
-    margin-left: 0;
   }
 }
 
