@@ -2072,11 +2072,26 @@ if ($is_window_handles) {
                     <p><?php esc_html_e('Every handle finish we fit, for windows and for doors, on one page. Windows take the S2 Signature range, tilt and turn takes its own locking lever, hinged doors take a long backplate that carries the lever and the cylinder together, and sliding patio doors take a D-pull. We confirm what a given system can take at specification stage.', 'fenster'); ?></p>
                     <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about handles', 'fenster'); ?></a>
                 </div>
-                <?php if (! empty($window_handle_finishes[0]['image'])) : ?>
-                    <figure class="fg-window-handle-hero__image">
-                        <img src="<?php echo esc_url(fenster_generated_url((string) $window_handle_finishes[0]['image'])); ?>" alt="<?php esc_attr_e('Fenster window handle finish option', 'fenster'); ?>" loading="eager">
-                    </figure>
-                <?php endif; ?>
+                <?php
+                /* A photograph rather than a swatch. This slot used to render
+                   `$window_handle_finishes[0]['image']`, which is the first cut-out
+                   in the grid immediately below it: the hero repeated the first
+                   thing you scroll to, and did it with a catalogue PNG and the alt
+                   text "Fenster window handle finish option". Whichever finish
+                   happened to sit first in the array became the face of the hub.
+
+                   The finishes are still the point of the page and they are still
+                   all there, a few hundred pixels down. The hero's job is to show
+                   what a handle actually looks like on a window, which a cut-out on
+                   white cannot do. Deliberately not named as a finish in the alt
+                   text: the grid below names them against their own swatches, and
+                   this one is here as a photograph, not as a colour reference. */
+                ?>
+                <figure class="fg-window-handle-hero__image">
+                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/handles/handle-hero-detail.jpg')); ?>"
+                        alt="<?php esc_attr_e('A locking window handle and key barrel, on a dark woodgrain frame', 'fenster'); ?>"
+                        width="1000" height="1250" loading="eager">
+                </figure>
             </div>
         </section>
 
