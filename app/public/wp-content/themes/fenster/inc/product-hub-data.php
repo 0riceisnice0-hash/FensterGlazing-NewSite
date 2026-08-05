@@ -587,6 +587,41 @@ function fenster_tech_banner_args(string $slug): array
     }
 
     if (in_array($slug, $thermlock_routes, true)) {
+        /* Owner instruction, 2026-08-05. The key-specification strip states the
+           lowest figure only, and on these routes this banner used to carry no
+           glazing figure at all, so the double value appeared nowhere on the
+           page. The EnergyPlus banner above has always carried both for the
+           Liniar routes; this is the Sheerline half catching up.
+
+           Read from `glazing_u_values` rather than repeated here, so the banner
+           and the strip cannot disagree. The Liniar map above is hardcoded
+           because it also names the unit thickness; Sheerline unit thicknesses
+           are not recorded anywhere in this project, so the labels say triple
+           and double glazed and no millimetre figure is invented. Triple first,
+           matching the strip and the EnergyPlus banner. */
+        $facts = [['value' => 'Multi-chamber', 'label' => 'thermal core, not a polyamide strip']];
+
+        $glazing_all = fenster_data('glazing_u_values', []);
+        $glazing = is_array($glazing_all) && isset($glazing_all[$slug]) && is_array($glazing_all[$slug])
+            ? $glazing_all[$slug]
+            : [];
+
+        foreach ([['triple', 'triple glazed'], ['double', 'double glazed']] as [$unit_key, $unit_word]) {
+            $figure = (string) ($glazing[$unit_key] ?? '');
+
+            // Split "1.0 W/m²K" into the number the banner sets large and the
+            // unit it sets small. A value that does not parse is skipped rather
+            // than printed raw.
+            if ($figure !== '' && preg_match('/^([\d.]+)\s*(.*)$/u', $figure, $parts)) {
+                $facts[] = [
+                    'value' => $parts[1],
+                    'label' => trim($parts[2] . ' ' . $unit_word),
+                ];
+            }
+        }
+
+        $facts[] = ['value' => 'Verified', 'label' => 'independent U-value reports'];
+
         return [
             // Ink variant: the supplied mark is pale grey and disappears on a
             // white panel. Same monochrome wordmark, legible tone.
@@ -595,10 +630,7 @@ function fenster_tech_banner_args(string $slug): array
             'eyebrow' => 'Inside every Sheerline frame',
             'title' => 'Sheerline Thermlock',
             'copy' => 'Most aluminium systems break the cold bridge with a polyamide strip. Sheerline designed their own multi-chamber core instead and put it at close to double the insulation. It is built into every Sheerline product we fit.',
-            'facts' => [
-                ['value' => 'Multi-chamber', 'label' => 'thermal core, not a polyamide strip'],
-                ['value' => 'Verified', 'label' => 'independent U-value reports'],
-            ],
+            'facts' => $facts,
         ];
     }
 
