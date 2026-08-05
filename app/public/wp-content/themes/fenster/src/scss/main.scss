@@ -36310,7 +36310,9 @@ html.fg-blinds-reveal-locked {
 /* Key-specification strip: the single starred figure, and what the star means.
    Owner instruction 2026-08-04, Liniar routes first; the routes are listed in
    `single_u_value_routes` in site-data. */
-.fg-product-pulse__glazing-rows.is-single strong {
+/* Every strip prints one figure now, so the `.is-single` modifier this used to
+   need was always on and has gone with it. */
+.fg-product-pulse__glazing-rows strong {
   font-size: 1.15em;
 }
 

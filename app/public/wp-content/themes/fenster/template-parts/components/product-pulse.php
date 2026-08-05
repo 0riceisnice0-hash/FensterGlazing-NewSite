@@ -2,15 +2,14 @@
 /**
  * Key specifications strip.
  *
- * Four tiles of product fact. Where the route has both glazing figures in
- * `glazing_u_values`, the U-value tile becomes the one interactive thing in the
- * strip: a double/triple toggle that swaps the figure in place.
+ * Four tiles of product fact, all the same shape: a label and a value, no
+ * captions. The U-value tile reads `glazing_u_values` and prints the lowest
+ * figure the route can reach. Where the route has two units that figure is
+ * starred and a one-line note under it says what the star means; where it has
+ * one there is no lower figure to qualify, so it prints plain.
  *
- * The caption slot under the figure is always occupied, either by the toggle or
- * by a static "Double glazed" line, so a route that cannot take triple is the
- * same height as one that can and the row never goes ragged. That static line
- * is also how the page says a system is double-only without writing a sentence
- * about what is not included.
+ * There is no per-route list behind any of that. It is derived from the data, so
+ * adding a route to `glazing_u_values` is the only edit needed.
  *
  * Shared because heritage aluminium doors returns before the generic product
  * tail and rendered its own copy of this markup.
@@ -38,15 +37,25 @@ $glazing     = is_array($glazing_all) && isset($glazing_all[$pulse_slug]) && is_
 $double = (string) ($glazing['double'] ?? '');
 $triple = (string) ($glazing['triple'] ?? '');
 
-/* Owner instruction, 2026-08-04: on the Liniar routes the strip states the
-   lowest achievable figure only, starred, and both figures move to the
-   EnergyPlus banner further down the page. Two numbers at the top of a page
-   ask the visitor to choose between them before anything has explained the
-   difference. The star is the site's existing convention for "lowest
-   achievable, not guaranteed for every size"; Legend already answers on it. */
-$single_routes = (array) fenster_data('single_u_value_routes', []);
-$single_u = in_array($pulse_slug, $single_routes, true);
-$best = $triple !== '' ? $triple : $double;
+/* Owner instruction, 2026-08-04 for the Liniar routes and 2026-08-05 for the
+   rest: every strip states the lowest achievable figure and nothing else. Two
+   numbers at the top of a page ask the visitor to choose between them before
+   anything has explained the difference.
+
+   This is now derived rather than listed. It used to be gated on
+   `single_u_value_routes` in site-data, which was a hand-kept list of the routes
+   that had been converted; with the behaviour universal that list could only
+   drift out of step with the data, so it has gone and the treatment follows the
+   figures themselves.
+
+   The star means "this is the lower of two", so it is earned only where a second
+   figure exists. Owner instruction, 2026-08-05: a route that takes one glazing
+   unit has no lower figure to qualify, so it shows the number plain, with no
+   star and no note. That is why this asks whether both are present rather than
+   whether one is. "Lowest achievable" is the wording AI.md requires wherever the
+   star does appear, and Legend answers on the same distinction. */
+$best     = $triple !== '' ? $triple : $double;
+$has_both = $double !== '' && $triple !== '';
 ?>
 <section class="fg-product-pulse fg-product-pulse--usps" aria-label="<?php echo esc_attr($pulse_title . ' key specifications'); ?>">
     <div class="container fg-product-pulse__inner">
@@ -65,29 +74,14 @@ $best = $triple !== '' ? $triple : $double;
                     <li class="fg-product-pulse__glazing">
                         <small><?php esc_html_e('U-value', 'fenster'); ?></small>
                         <?php
-                        /* Triple above double, on the owner's instruction. Both
-                           are always visible: a system that takes triple shows
-                           two rows, one that does not shows a single row that
-                           still names its glazing, so the difference between
-                           the two products is legible without a sentence about
-                           what is not included. */
-                        $rows = [];
-                        if ($single_u) {
-                            /* Owner instruction, 2026-08-05: the glazing line comes
-                               off and the figure carries the star on its own. The
-                               thickness is stated on the EnergyPlus banner further
-                               down, so naming it twice at the top of the page was
-                               the thing to lose, not the figure. The tile then
-                               matches the other three, which carry no caption. */
-                            $rows[] = ['figure' => $best . '*', 'glazing' => ''];
-                        } else {
-                            if ($triple !== '') {
-                                $rows[] = ['figure' => $triple, 'glazing' => __('Triple', 'fenster')];
-                            }
-                            $rows[] = ['figure' => $double, 'glazing' => __('Double', 'fenster')];
-                        }
+                        /* One row, always. The glazing thickness came off on
+                           2026-08-05: where a route has two units the banner
+                           further down names them, and where it has one there is
+                           nothing to distinguish. That also leaves this tile
+                           shaped like the other three, which carry no caption. */
+                        $rows = [['figure' => $best . ($has_both ? '*' : ''), 'glazing' => '']];
                         ?>
-                        <span class="fg-product-pulse__glazing-rows<?php echo $single_u ? ' is-single' : ''; ?>">
+                        <span class="fg-product-pulse__glazing-rows">
                             <?php foreach ($rows as $row) : ?>
                                 <span>
                                     <strong><?php echo esc_html($row['figure']); ?></strong>
@@ -97,7 +91,7 @@ $best = $triple !== '' ? $triple : $double;
                                 </span>
                             <?php endforeach; ?>
                         </span>
-                        <?php if ($single_u && $best !== '') : ?>
+                        <?php if ($has_both && $best !== '') : ?>
                             <?php
                             /* Owner instruction, 2026-08-05: the note belongs tight
                                under the figure it explains, not below the strip.

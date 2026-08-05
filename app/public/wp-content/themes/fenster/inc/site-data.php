@@ -447,22 +447,16 @@ function fenster_site_data(): array
            doors, French casement, bow and bay) stay absent on purpose: the
            glazing follows whichever system the pair or the bay is built from,
            so no single figure is true for the route. */
-        /* Routes whose key-specification strip prints one figure rather than
-           two: the lowest achievable U-value, starred. Owner instruction,
-           2026-08-04, for the Liniar pages first. Both figures still appear on
-           the EnergyPlus banner further down those pages, so nothing is lost,
-           and the strip stops opening on a number the customer has to choose
-           between. Add the Sheerline routes here when that call is made. */
-        'single_u_value_routes' => [
-            'casement-windows',
-            'tilt-turn-windows',
-            'flush-casement-windows',
-            'upvc-doors',
-            'french-doors',
-            'bow-bay-windows',
-            'french-casement-windows',
-        ],
-
+        /* `single_u_value_routes` was removed on 2026-08-05 and should not come
+           back as a list. It named the routes whose key-specification strip
+           printed one figure instead of two, starting with the Liniar pages on
+           2026-08-04. The owner then extended that treatment to every strip, so
+           a hand-kept list of "the ones we have converted" had nothing left to
+           say and could only fall out of step with the figures below it.
+           product-pulse.php now derives the whole treatment from this data: the
+           lowest figure always, starred only where there are two figures for it
+           to be the lowest of. Add a route here and it behaves correctly with no
+           second edit. */
         'glazing_u_values' => [
             // Liniar EnergyPlus 70mm
             'casement-windows'        => ['double' => '1.2 W/m²K', 'triple' => '0.95 W/m²K'],
