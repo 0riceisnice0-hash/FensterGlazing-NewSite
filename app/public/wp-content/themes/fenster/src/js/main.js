@@ -5434,16 +5434,46 @@ const pulseStrips = [...document.querySelectorAll('.fg-product-pulse')];
 
 if (pulseStrips.length && 'IntersectionObserver' in window) {
   const pulseReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const PULSE_DURATION = 560;
-  const PULSE_STAGGER = 70;
-  const PULSE_STEPS = 3;
+  const PULSE_DURATION = 1100;      // a counting readout, long enough to read
+  const PULSE_TEXT_DURATION = 720;  // a value with no number travels one cell
+  const PULSE_STAGGER = 110;
+  const PULSE_STEPS = 8;
+  const PULSE_NUMBER = /\d+(?:\.\d+)?/;
 
-  // Deterministic, so an intermediate readout is reproducible when this is
-  // measured. Math.random would make the same run unverifiable twice.
-  const pulseScramble = (text, step) => text.replace(
-    /\d/g,
-    (digit, offset) => String((digit.charCodeAt(0) + (offset * 7) + (step * 3)) % 10)
-  );
+  /* The readout counts to its value; it does not shuffle to it. Randomised
+     digits were the first attempt and they read as a fruit machine, which is
+     the one thing this must not look like. Stepping the first number in the
+     string evenly toward the target is what an odometer or a gauge does, and
+     the deceleration in the transform is what turns it into a mechanism
+     braking rather than a list scrolling.
+
+     Direction carries meaning, owner instruction 2026-08-05. A U-value counts
+     DOWN onto its figure, because lower is better and arriving from above reads
+     as settling onto the best the system reaches. Everything else counts UP.
+     The drum travels the same way as its numbers, so the final value physically
+     arrives from above on a U-value and from below on the rest.
+
+     Deterministic throughout: no Math.random, so the same page produces the
+     same intermediates twice and a measurement of it means something. */
+  const pulseSequence = (text, descending) => {
+    const match = text.match(PULSE_NUMBER);
+    if (!match) return null;
+
+    const target = parseFloat(match[0]);
+    if (!Number.isFinite(target) || target === 0) return null;
+
+    const decimals = (match[0].split('.')[1] || '').length;
+    const start = target * (descending ? 1.75 : 0.35);
+    const steps = [];
+
+    for (let step = 0; step < PULSE_STEPS; step += 1) {
+      const progress = step / PULSE_STEPS;
+      const figure = start + ((target - start) * progress);
+      steps.push(text.replace(PULSE_NUMBER, figure.toFixed(decimals)));
+    }
+
+    return steps;
+  };
 
   const revealPulseValue = (el, order) => {
     const finalText = (el.textContent || '').trim();
@@ -5452,21 +5482,29 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
     const rect = el.getBoundingClientRect();
     if (rect.height === 0) return;
 
-    const hasDigit = /\d/.test(finalText);
-    const cells = [];
-    for (let step = 0; step < (hasDigit ? PULSE_STEPS : 1); step += 1) {
-      cells.push(hasDigit ? pulseScramble(finalText, step) : '');
-    }
-    cells.push(finalText);
+    // The U-value is the one figure on the strip where lower is better.
+    const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'));
+    const counted = pulseSequence(finalText, descending);
+
+    // Nothing to count: the value rises into place through the same window
+    // rather than being given invented digits.
+    const cells = counted ? [...counted, finalText] : ['', '', finalText];
+    const last = cells.length - 1;
+
+    // Counting down means arriving from above, which is the stack travelling
+    // down, which is the cells in reverse with the travel run the other way.
+    if (descending && counted) cells.reverse();
+    const finalIndex = (descending && counted) ? 0 : last;
 
     const reel = document.createElement('span');
     reel.className = 'fg-pulse-reel';
     reel.setAttribute('aria-hidden', 'true');
     reel.style.setProperty('--fg-reel-h', `${rect.height}px`);
     reel.style.setProperty('--fg-reel-w', `${Math.ceil(rect.width)}px`);
-    reel.style.setProperty('--fg-reel-last', String(cells.length - 1));
+    reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
+    reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
     reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
-    reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
+    reel.style.setProperty('--fg-reel-dur', `${counted ? PULSE_DURATION : PULSE_TEXT_DURATION}ms`);
 
     const stack = document.createElement('span');
     stack.className = 'fg-pulse-reel__stack';
@@ -5475,15 +5513,16 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
       const cell = document.createElement('span');
       cell.className = 'fg-pulse-reel__cell';
       cell.textContent = text;
-      // Distance from the final cell. The final one is 0, so it lies flat.
-      cell.style.setProperty('--fg-reel-i', String(cells.length - 1 - index));
+      // Distance from the final cell, whichever end of the stack it sits at.
+      // The final one is 0, so it lies flat and renders sharp.
+      cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalIndex)));
       stack.appendChild(cell);
     });
 
     reel.appendChild(stack);
 
     // The true value stays in the accessible tree throughout; only the drum is
-    // hidden from it, so nothing ever announces a scrambled readout.
+    // hidden from it, so no intermediate readout is ever announced.
     const spoken = document.createElement('span');
     spoken.className = 'fg-product-pulse__sr';
     spoken.textContent = finalText;

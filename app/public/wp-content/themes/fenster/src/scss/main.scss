@@ -36343,28 +36343,35 @@ html.fg-blinds-reveal-locked {
           mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
 }
 
+/* The travel runs between two positions rather than to one, because the
+   direction carries meaning: a U-value counts down and arrives from above, so
+   its stack runs the other way. main.js sets both ends in cell units. */
 .fg-pulse-reel__stack {
   display: block;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, calc(var(--fg-reel-h) * var(--fg-reel-from, 0)), 0);
   transform-style: preserve-3d;
 }
 
-/* The travel. One curve, decelerating hard onto the final cell: no overshoot,
-   no bounce, nothing elastic. The class is added a frame after the start
-   position is committed, or there is nothing to transition from. */
+/* One curve, and a hard one. The drum leaves quickly and spends most of the
+   time braking onto the last figure, which is what separates a mechanism
+   settling from a list scrolling past. No overshoot, no bounce, nothing
+   elastic. The class is added a frame after the start position is committed,
+   or there is nothing to transition from. */
 .fg-pulse-reel.is-settling .fg-pulse-reel__stack {
-  transform: translate3d(0, calc(var(--fg-reel-h) * -1 * var(--fg-reel-last)), 0);
-  transition: transform var(--fg-reel-dur, 560ms) cubic-bezier(0.16, 0.86, 0.26, 1) var(--fg-reel-delay, 0ms);
+  transform: translate3d(0, calc(var(--fg-reel-h) * var(--fg-reel-to, 0)), 0);
+  transition: transform var(--fg-reel-dur, 1100ms) cubic-bezier(0.1, 0.72, 0.12, 1) var(--fg-reel-delay, 0ms);
 }
 
-/* Each cell is tipped by its distance from the final one, so the readouts above
-   read as the far side of a cylinder and the one that lands sits flat and sharp
-   at rotateX(0). Twelve degrees a step is enough to see and not enough to blur. */
+/* Each cell is tipped by its distance from the final one, so the readouts
+   queued either side read as the far face of a cylinder while the one that
+   lands sits flat at rotateX(0) and renders sharp. Capped at 40 degrees: past
+   that a cell is nearly edge on, and with eight of them the far end would
+   otherwise fold away to nothing. */
 .fg-pulse-reel__cell {
   display: block;
   width: 100%;
   height: var(--fg-reel-h);
-  transform: rotateX(calc(var(--fg-reel-i, 0) * 12deg));
+  transform: rotateX(min(calc(var(--fg-reel-i, 0) * 13deg), 40deg));
   backface-visibility: hidden;
 }
 
