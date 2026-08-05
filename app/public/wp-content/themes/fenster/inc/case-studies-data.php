@@ -657,21 +657,17 @@ function fenster_case_studies(): array
            September 2023, the back door October 2024, the front elevation and the
            rear flush windows August 2026. The install itself was February 2024.
 
-           Three professional D3300 frames sit in the same folder and are held out
-           pending confirmation, not ruled out. They were shot on 2026-01-20, two
-           years after the install and within 45 minutes of each other, and one of
-           them shows a white outer frame against this house's black externals.
-           They were first held out because they showed black internal faces where
-           the video showed white, but the owner has since confirmed the house is
-           black inside downstairs and white upstairs, so that objection is gone
-           and only the white frame and the date remain. This page's promise is
-           that every photograph is this installation, so they stay out until that
-           is established rather than in on the balance of probability.
+           The two D3300 details are from a later shoot, 2026-01-20, and the owner
+           has confirmed they are this house. They were held out for a while on the
+           reasoning that they showed black internal faces where the video showed
+           white; that was wrong, and instructively so. The video only ever framed
+           an upstairs window, and this house is black inside downstairs and white
+           upstairs, so a single window was being read as if it described the whole
+           house. The third frame from that shoot is not used: it is composed
+           portrait as a macro and turns to mush at the 4:3 the gallery needs.
 
            Colour is owner-stated: black brown externally front and back, black
-           internally downstairs with black handles, white upstairs. The video only
-           ever showed an upstairs window, which is why reading the internal colour
-           off it gave the wrong answer for half the house. */
+           internally downstairs with black handles, white upstairs. */
         'flush-casement-windows-and-composite-door-wolverton' => [
             'title' => 'Flush casement windows and a composite door, Wolverton',
             'location' => 'Wolverton, Milton Keynes',
@@ -685,42 +681,56 @@ function fenster_case_studies(): array
                 ['label' => 'uPVC doors', 'url' => home_url('/upvc-doors/')],
             ],
             'colour' => ['label' => 'Black brown (RAL 8022)', 'url' => $colour_black_brown],
+            /* Four terse rows, as the rest of the archive does it. The internal
+               colour split is a good detail but it is a sentence, not a spec
+               value: it lives in the overview instead of wrapping this box onto
+               three lines. */
             'specs' => [
-                ['label' => 'Products', 'value' => 'Flush casement windows, a composite front door and a uPVC back door'],
+                ['label' => 'Products', 'value' => 'Flush casement windows, composite and uPVC doors'],
                 ['label' => 'System', 'value' => 'Liniar 70mm flush sash uPVC'],
-                ['label' => 'Colour', 'value' => 'Black brown (RAL 8022) outside. Black inside downstairs, white upstairs'],
-                ['label' => 'Energy rating', 'value' => 'A+ (1.2 W/m²K), 28mm double glazed'],
+                ['label' => 'Colour', 'value' => 'Black brown (RAL 8022)'],
+                ['label' => 'Energy rating', 'value' => 'A+ (1.2 W/m²K)'],
             ],
             'overview' => [
                 'The house came to us with white frames and a pink bow motif worked into the leaded glass, in the front door and in the bay alongside it. It is a period detail that dates a house very precisely, and it was the thing the owners most wanted gone. The rest of the frontage was cream render and white uPVC that had done its years.',
-                'We fitted <a href="' . $flush . '">flush casement windows</a> throughout, on the Liniar 70mm flush sash system, where the sash closes level with the outer frame instead of standing proud of it. That flat face is what makes a uPVC window read like painted joinery from the pavement, which matters more than usual on a 1930s bay: the curved run of a bay shows up a stepped sash from right across the road. They are A+ rated and reach 1.2 W/m²K with a 28mm double glazed unit. The finish is <a href="' . $colour_black_brown . '">black brown</a>, RAL 8022, on every external face front and back. Inside, the house is split by floor: black downstairs with black handles to match the living rooms, white upstairs to keep the bedrooms bright. It costs nothing to specify a window that way and it is worth knowing you can, because most people assume the inside has to be one colour.',
+                'We fitted <a href="' . $flush . '">flush casement windows</a> throughout, on the Liniar 70mm flush sash system, where the sash closes level with the outer frame instead of standing proud of it. That flat face is what makes uPVC read like painted joinery from the pavement, and it matters more than usual on a 1930s bay: the curve of a bay shows up a stepped sash from right across the road. They are A+ rated and reach 1.2 W/m²K with a 28mm double glazed unit.',
+                'The finish is <a href="' . $colour_black_brown . '">black brown</a>, RAL 8022, on every external face front and back. Inside, the house is split by floor: black with black handles downstairs, white upstairs to keep the bedrooms bright. A window is foiled on each face separately, so that split costs nothing, and most people do not realise it is an option.',
                 'The front door is a <a href="' . home_url('/composite-doors/') . '">composite door</a> in the same black brown, with a long glazed sidelight to keep light in the hall now the leaded panel has gone, and a <a href="' . home_url('/upvc-doors/') . '">uPVC door</a> serves the back between two flush casements. The chequerboard tiling at the threshold is the original and was kept.',
                 'Worth saying plainly, because the after photographs show it: the render was painted, the drive block paved and the garden landscaped as part of the same restyle, and none of that was our work. We did the windows and the doors. The colour was chosen knowing the walls were going white, which is the part of the job that needed us and the owners to agree early rather than in sequence.',
             ],
             'installed' => [
                 'Liniar 70mm flush casement windows throughout',
-                'Black brown externally, front and back',
-                'Black inside downstairs with black handles, white upstairs',
+                'Black brown outside, black downstairs and white upstairs inside',
                 'Composite front door with a glazed sidelight',
                 'uPVC back door between two flush casements',
                 'A+ rated, 28mm double glazed',
             ],
-            'installers' => [$fitter_tom, $fitter_johnnie],
+            'installers' => [$fitter_tom, $fitter_johnnie, $fitter_shane],
             'video' => [
                 'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-wolverton-restyle.mp4',
                 'poster' => $img . 'cs-wolverton-restyle-poster.jpg',
                 'orientation' => 'portrait',
                 'label' => 'Video of the finished black brown flush casement windows and composite front door on the Wolverton semi',
             ],
+            /* Eight images, every one of them 4:3. The gallery is a two-column
+               grid at `height: auto` with `align-items: start`, so a portrait
+               beside a landscape leaves dead space under the shorter one; its own
+               comment says the two columns exist to put a pair on one row. One
+               ratio throughout is what makes the rows line up.
+
+               Read as four rows: the front pair, the rear pair, then two rows of
+               detail. The front door pair came out — owner, too forced — and the
+               bow motif it carried is still in the front-before shot and the
+               opening paragraph, so nothing is lost by dropping it. */
             'images' => [
                 ['src' => $img . 'cs-wolverton-restyle-front-before.jpg', 'caption' => 'Before: cream render, white frames, and the pink bow motif in the bay glass.'],
                 ['src' => $img . 'cs-wolverton-restyle-front-after.jpg', 'caption' => 'After: black brown flush casements across the bay and the front elevation.'],
-                ['src' => $img . 'cs-wolverton-restyle-door-before.jpg', 'caption' => 'Before: the old front door, with the same pink bow worked into the leaded panel.'],
-                ['src' => $img . 'cs-wolverton-restyle-door-after.jpg', 'caption' => 'After: the composite front door in black brown, with a glazed sidelight. The chequerboard threshold is the original.'],
                 ['src' => $img . 'cs-wolverton-restyle-rear-before.jpg', 'caption' => 'Before: the rear extension in bare brick, with white uPVC.'],
-                ['src' => $img . 'cs-wolverton-restyle-rear-after.jpg', 'caption' => 'After: the same elevation, with the garden and paintwork done by others as part of the restyle.'],
+                ['src' => $img . 'cs-wolverton-restyle-rear-after.jpg', 'caption' => 'After: the same elevation. The paintwork and the garden were done by others as part of the restyle.'],
                 ['src' => $img . 'cs-wolverton-restyle-rear-doors.jpg', 'caption' => 'The uPVC back door, set between two flush casements.'],
                 ['src' => $img . 'cs-wolverton-restyle-flush-rear.jpg', 'caption' => 'The flush sash line at the rear, where the sash closes level with the frame.'],
+                ['src' => $img . 'cs-wolverton-restyle-window-detail.jpg', 'caption' => 'A black handle on a black internal frame downstairs, with obscured glass.'],
+                ['src' => $img . 'cs-wolverton-restyle-door-detail.jpg', 'caption' => 'The composite door hardware, on the black brown woodgrain finish.'],
             ],
             'card_image' => ['src' => $img . 'cs-wolverton-restyle-card.jpg', 'caption' => 'Black brown flush casement windows and a composite front door on a 1930s Wolverton semi.'],
             'seo' => [
