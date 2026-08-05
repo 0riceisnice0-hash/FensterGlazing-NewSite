@@ -357,7 +357,7 @@ $faq_schema = [
             <span class="fg-cas-num" aria-hidden="true">02</span>
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('EnergyPlus', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch2-title" class="fg-cas-display"><?php esc_html_e('Six chambers, and a number to show for them.', 'fenster'); ?></h2>
+                <h2 id="fg-cas-ch2-title" class="fg-cas-display"><?php esc_html_e('Energy efficiency starts in the frame.', 'fenster'); ?></h2>
                 <p class="fg-cas-lead"><?php esc_html_e('A standard uPVC profile has four chambers. EnergyPlus has six, running the length of every frame section, each one interrupting the route heat takes out of the room. It is what we specify as standard on every casement we fit.', 'fenster'); ?></p>
             </div>
         </div>

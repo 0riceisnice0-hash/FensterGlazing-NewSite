@@ -36850,14 +36850,15 @@ html.fg-blinds-reveal-locked {
    Both columns had to come down, because the row is as tall as its taller side
    and capping only the cutaway would have left the statistics setting the
    height. The cutaway is contained rather than cropped, so the profile is still
-   whole, and the statistics tighten rather than lose one. */
+   whole, and the statistics tighten rather than lose one.
+
+   The head's own margin is no longer part of this. It had been cut to 26px and
+   was the one chapter whose head sat differently from the rest; retitling on
+   2026-08-05 took the heading from three lines to two, which paid for putting it
+   back and left the opening shorter than it was with the margin cut. */
 .fg-cas-energy__media img {
   max-height: 300px;
   object-fit: contain;
-}
-
-.fg-cas-energy .fg-cas-chapter__head {
-  margin-bottom: clamp(1.1rem, 2vw, 1.6rem);
 }
 
 .fg-cas-energy .fg-cas-stats {
