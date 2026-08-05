@@ -1727,12 +1727,29 @@ const adTrackerReference = () => {
   return readStoredTrackingValue(adTrackerStorageKey, validAdTrackerValue);
 };
 
+// A Google Ads click carries a click identifier. It only carries utm_source and
+// utm_medium if the account's Final URL suffix is set, and a campaign missing
+// that suffix fails silently: the journey lands with an empty source and a
+// google.com referrer, which is indistinguishable from organic. On 2026-08-05
+// only 15 of roughly 183 Google journeys read as cpc for exactly that reason.
+// Derive the channel from the presence of the identifier so paid can never be
+// filed as organic. The identifier itself is not read, stored or sent here;
+// only the channel labels below travel to the dashboard, which keeps the
+// tracker's rule that ad click ids never reach it. Real UTM values still win,
+// so the Final URL suffix remains the source of campaign and keyword detail.
+const paidClickChannel = (parameters) => {
+  const present = ['gclid', 'gbraid', 'wbraid']
+    .some((key) => (parameters.get(key) || '').trim() !== '');
+  return present ? { source: 'google', medium: 'cpc' } : null;
+};
+
 const currentCampaignContext = () => {
   const parameters = new URLSearchParams(window.location.search);
+  const paidClick = paidClickChannel(parameters);
   return {
     landing_path: window.location.pathname,
-    source: parameters.get('utm_source') || '',
-    medium: parameters.get('utm_medium') || '',
+    source: parameters.get('utm_source') || (paidClick ? paidClick.source : ''),
+    medium: parameters.get('utm_medium') || (paidClick ? paidClick.medium : ''),
     campaign: parameters.get('utm_campaign') || '',
     content: parameters.get('utm_content') || '',
     term: parameters.get('utm_term') || '',

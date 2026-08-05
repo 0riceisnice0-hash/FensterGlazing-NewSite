@@ -5,6 +5,16 @@ This is the execution manual: follow it top to bottom. Everything is filled out 
 
 **One rule before you start: everything gets built PAUSED.** You will build all three campaigns first (Parts 1–5, your request), then wire the tracking (Part 6), and only then press Enable (Part 7). Spending before tracking is how last year happened.
 
+> **Update 2026-08-05 — check the Final URL suffix on every live campaign.**
+> Only 15 of roughly 183 consented Google journeys carried `utm_medium=cpc`, so
+> the suffix specified below was not reaching most paid traffic and those clicks
+> were being recorded as organic. The theme now derives `google`/`cpc` from the
+> `gclid`/`gbraid`/`wbraid` click identifier as a safety net, so the channel is
+> right either way, but **campaign, keyword and ad-group reporting still depend
+> entirely on the suffix.** It is set per campaign under Campaign URL options,
+> so a campaign created outside this guide will not inherit it. See
+> `SEO-LEAD-AUDIT-2026-08-05.md` §5 F5.
+
 ---
 
 ## Part 0 — Account hygiene (10 minutes, do first)
