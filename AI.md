@@ -20,6 +20,6 @@ The GitHub repo is:
 
 `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
 
-Latest known live theme commit when this pointer was updated: `c97aff4` on `fix/windowcad-payload-limit` (2026-08-03 WindowCAD payload-cap fix, on top of the 2 Aug `a8f8388` cat-flaps release). Both were established by checksum, not by trusting a note. This line previously read `616d673` while live had moved on twice, so re-establish by checksum before any deploy rather than trusting it.
+Latest known live theme commit when this pointer was updated: `2781545` on `main` (2026-08-05, the five-chapter casement stack). Established by checksum immediately before the rsync and re-verified on the deployed files after it, not by trusting a note. This line read `c97aff4` while live had moved on five times, so re-establish by checksum before any deploy rather than trusting it.
 
 If you are working from the home PC rather than the work machine, also read `app/public/WORK-AT-HOME.md`.
