@@ -76,14 +76,23 @@ $versus_rows = [
    straight over them, so they are inside the sealed unit. The brick bay bars
    are astragal: moulded, standing proud of the glass and casting a shadow. */
 $details = [
-    /* No photograph, deliberately, and holding a placeholder until one arrives.
-       `casement-georgian-bar-900w` is a crop of `casement-bay-white-1080w` and
-       its bars carry a highlight and a cast shadow, so they sit on the face of
-       the glass: that is astragal, not a bar inside the sealed unit, and it
-       contradicted this tile's own copy. Owner confirmed 2026-08-05. The theme
-       holds no other bar photograph, so the slot is empty rather than filled
-       from a sibling. Set `image` to a real Georgian close-up and the tile
-       renders normally again. */
+    /* Owner's photograph, 2026-08-05, and checked the same way the wrong one was
+       caught: at full size the obscured glass stipple runs unbroken across the
+       faces of the bars, so they are behind the glass surface inside the sealed
+       unit. No moulding, no step, no shadow. That is this tile's own copy, and
+       the opposite of the astragal tile below it.
+
+       Note the filename is reused. `casement-georgian-bar-900w` previously held
+       a crop of `casement-bay-white-1080w` whose bars carried a highlight and a
+       cast shadow, so they sat on the face of the glass: astragal, not a bar
+       inside the unit, which is why this slot held a placeholder. Nothing else
+       referenced it, so the name now holds a photograph that matches it.
+
+       Shot on a phone on its side and rotated upright, then cropped from the
+       whole bathroom window to the bar cross on the left sash, keeping the sash
+       stile and handle for structure and leaving the sill, the bath and the
+       towel rail out. 980x734 of the original down to 900x675, so a downscale,
+       at the astragal tile's ratio. */
     ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => $base . 'casement-georgian-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Georgian bars set inside the sealed unit of a white uPVC casement window, the obscured glass reading unbroken across the bars'],
     ['name' => 'Astragal bars', 'copy' => 'A moulded bar bonded to the face of the glass, so it catches the light and throws a shadow.', 'image' => $base . 'casement-astragal-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of moulded astragal bars standing proud of the glass on a white uPVC bay window'],
     /* The horn photograph was wrong until 2026-08-05: `casement-mock-horn-900w`
