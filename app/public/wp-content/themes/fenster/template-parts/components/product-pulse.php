@@ -97,6 +97,15 @@ $best = $triple !== '' ? $triple : $double;
                                 </span>
                             <?php endforeach; ?>
                         </span>
+                        <?php if ($single_u && $best !== '') : ?>
+                            <?php /* Owner instruction, 2026-08-05: the note belongs
+                                     tight under the figure it explains, not below the
+                                     strip. `__inner` is a two-column grid, so a note
+                                     placed after the list auto-flowed into a second
+                                     row under the heading and stretched the whole
+                                     box; inside the tile it costs no row at all. */ ?>
+                            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable whole-window U-value.', 'fenster'); ?></p>
+                        <?php endif; ?>
                     </li>
                 <?php else : ?>
                     <li>
@@ -106,12 +115,5 @@ $best = $triple !== '' ? $triple : $double;
                 <?php endif; ?>
             <?php endforeach; ?>
         </ul>
-        <?php if ($single_u && $best !== '') : ?>
-            <?php /* Owner instruction, 2026-08-05: the note is the star's meaning
-                     and nothing else. "Lowest achievable" is the load-bearing half
-                     and stays; the survey sentence that followed it is said again
-                     in the FAQ and on the EnergyPlus banner. */ ?>
-            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable whole-window U-value.', 'fenster'); ?></p>
-        <?php endif; ?>
     </div>
 </section>

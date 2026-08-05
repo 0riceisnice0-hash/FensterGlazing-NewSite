@@ -36314,12 +36314,21 @@ html.fg-blinds-reveal-locked {
   font-size: 1.15em;
 }
 
+/* The note sits inside the U-value tile, under the figure. It used to follow the
+   list, which put it in the second row of `__inner`'s two-column grid, under the
+   heading rather than under the number, and gave the whole strip a row it did not
+   need. In the tile it costs no row: `li` is already a grid with a 0.18rem gap, so
+   this carries no margin of its own, and it is a step quieter than the tile label
+   so the tile still reads figure first. */
 .fg-product-pulse__note {
-  max-width: 62ch;
-  margin: 0.9rem 0 0;
+  max-width: none;
+  margin: 0;
   color: var(--color-muted);
-  font-size: 0.78rem;
-  line-height: 1.45;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.3;
+  text-transform: none;
 }
 
 /* ---------------------------------------------------------------------------
