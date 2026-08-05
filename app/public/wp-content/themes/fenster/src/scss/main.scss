@@ -36199,13 +36199,17 @@ html.fg-blinds-reveal-locked {
   padding: clamp(1rem, 2vh, 1.6rem) 0;
 }
 
-/* Inside the casement stack the banner is the last thing in chapter 02, so
-   chapter 03 begins sliding over it the moment it appears and it reads as
-   disappearing on arrival. Owner instruction, 2026-08-05. The room goes below
-   it, which is the part that was missing: enough scroll for the banner to be
-   read whole and held before the next plate starts to cover it. */
-.fg-cas-stack__panel--energy .fg-tech-banner {
-  padding-bottom: clamp(3.5rem, 9vh, 7rem);
+/* Every plate except the last needs scroll distance under its final block, or
+   the next one starts covering it the moment it arrives and it reads as
+   disappearing on sight. Owner, 2026-08-05, twice: first on the EnergyPlus
+   banner, then on the flush comparison, which had become the end of chapter 01
+   when the finishes moved out of it.
+
+   Keyed to the panel rather than to either block, because the thing that needs
+   the room is whatever a chapter happens to end with, and that has already
+   changed once this week. Chapter 03 is excluded: nothing covers it. */
+.fg-cas-stack__panel:not(.fg-cas-stack__panel--security) > *:last-child {
+  padding-bottom: clamp(7.5rem, 18vh, 15rem);
 }
 
 .fg-tech-banner__panel {
