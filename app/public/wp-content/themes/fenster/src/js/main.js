@@ -5477,6 +5477,13 @@ if (pulseStrips.length
      else does count, including a number introduced by an ordinary word, so
      "Up to 7 panes" and "From 1.8 W/m²K" turn like any other readout. */
   const PULSE_NAMED = /(?:^|\s)[A-Z]{2,}\.?\s*$/;
+  /* Tiles that never count, by label. Owner instruction, 2026-08-05: interlock
+     and outer frame are not to animate on any product. They are system
+     dimensions rather than quantities of anything, so counting up to one says
+     nothing, and "80mm or 52mm" is a choice between two specifications rather
+     than a number with a value in between. Matched on letters alone, as the
+     U-value label is, because these render with a non-breaking hyphen. */
+  const PULSE_STATIC = /^(?:interlock|outerframe)$/i;
 
   /* When each reading lands, as a fraction of the run. The gaps grow by a fixed
      ratio, so the drum brakes onto its figure instead of clicking at a constant
@@ -5575,8 +5582,14 @@ if (pulseStrips.length
     const tileLabel = tile && tile.querySelector('small')
       ? (tile.querySelector('small').textContent || '')
       : '';
+    const tileWord = tileLabel.replace(/[^a-z]/gi, '');
+
+    // Left exactly as served, and not counted toward the stagger either, so the
+    // tiles that do run still arrive in an unbroken sequence.
+    if (PULSE_STATIC.test(tileWord)) return 0;
+
     const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'))
-      || /^uvalue/i.test(tileLabel.replace(/[^a-z]/gi, ''));
+      || /^uvalue/i.test(tileWord);
     // Which way the drum turns. Counting up, the next digit rises into the
     // window from below; counting down it drops in from above.
     const spin = descending ? -1 : 1;
