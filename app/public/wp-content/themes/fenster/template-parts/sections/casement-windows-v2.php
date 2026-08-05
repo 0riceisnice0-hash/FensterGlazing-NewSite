@@ -158,6 +158,31 @@ $faq_schema = [
 
 <div class="fg-cas">
 
+    <?php
+    /* ---------- The stack begins ---------------------------------------------
+       The opening is the base plate: it anchors, and chapter 01 rises over it,
+       so 01 behaves like 02 and 03 rather than arriving in ordinary flow.
+       Without something beneath it there is nothing for it to cover.
+
+       The plate is deliberately "the opening", whatever the opening happens to
+       contain, rather than one named section. Today that is the overture alone.
+       When the installation film is delivered it joins this same panel instead
+       of becoming a second plate, because two plates here put two covers on top
+       of one another: measured at 1280x900, the film's own cover ran from 258 to
+       1071 while chapter 01's began at 737, so 334px of scrolling had both
+       running at once. One plate, one cover, whatever the opening holds.
+
+       The page still has a normal-scrolling run-up before any of this: the
+       shared hero and the four-tile specification strip render above this
+       partial and are untouched.
+
+       See the block in main.scss for how the sticky offset is derived and why
+       every panel after the first has to be opaque. ---------------------- */
+    ?>
+    <div class="fg-cas-stack" data-fg-chapter-stack>
+
+    <div class="fg-cas-stack__panel fg-cas-stack__panel--opening">
+
     <?php /* Overture. One claim, the system named once, one wide photograph. */ ?>
     <section class="fg-cas-overture" aria-labelledby="fg-cas-overture-title">
         <div class="container fg-cas-overture__grid">
@@ -184,45 +209,34 @@ $faq_schema = [
     </section>
 
     <?php
-    /* ---------- The stack begins ---------------------------------------------
-       The film is the base plate. It is the section chapter 01 rises over, so
-       01 gets the same treatment as 02 and 03 rather than arriving in ordinary
-       flow; without something anchored beneath it there is nothing for it to
-       cover. It suits the job: a full-width cinematic band, and it already
-       carries a solid background, so the overture scrolling away behind it is
-       hidden without the panel needing one of its own.
+    /* The film band. Owner instruction, 2026-08-05: the placeholder comes off the
+       page for now. The slot itself is kept rather than deleted, because it is
+       reserved work and `$film_src` at the top of this file is already the switch
+       for it; set that to a theme path and the band returns here, inside the
+       opening plate, and plays the mp4 in the same frame.
 
-       See the block in main.scss for how the sticky offset is derived and why
-       every panel after the first has to be opaque. ---------------------- */
+       With no source there is nothing to show but an "In production" chip, which
+       is the placeholder that was asked to go, so the whole section is gated
+       rather than the video element alone. */
     ?>
-    <div class="fg-cas-stack" data-fg-chapter-stack>
-
-    <div class="fg-cas-stack__panel fg-cas-stack__panel--film">
-
-    <?php /* The film, high on the page where a product film belongs. */ ?>
-    <section class="fg-cas-film" aria-labelledby="fg-cas-film-title">
-        <div class="container fg-cas-film__grid">
-            <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('Coming to this page', 'fenster'); ?></p>
-                <h2 id="fg-cas-film-title" class="fg-cas-display"><?php esc_html_e('A set of casements, going in.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('We are filming a real installation with our own fitters, from the first survey measure to the final wipe-down. No actors and no showroom set. It will play here.', 'fenster'); ?></p>
-            </div>
-            <figure class="fg-cas-film__media">
-                <?php if ($film_src !== '') : ?>
+    <?php if ($film_src !== '') : ?>
+        <section class="fg-cas-film" aria-labelledby="fg-cas-film-title">
+            <div class="container fg-cas-film__grid">
+                <div>
+                    <p class="fg-cas-eyebrow"><?php esc_html_e('On this page', 'fenster'); ?></p>
+                    <h2 id="fg-cas-film-title" class="fg-cas-display"><?php esc_html_e('A set of casements, going in.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('A real installation with our own fitters, from the first survey measure to the final wipe-down. No actors and no showroom set.', 'fenster'); ?></p>
+                </div>
+                <figure class="fg-cas-film__media">
                     <video autoplay muted loop playsinline poster="<?php echo esc_url(fenster_generated_url($base . 'casement-installation-900w.webp')); ?>">
                         <source src="<?php echo esc_url(fenster_generated_url($film_src)); ?>" type="video/mp4">
                     </video>
-                <?php else : ?>
-                    <img src="<?php echo esc_url(fenster_generated_url($base . 'casement-installation-900w.webp')); ?>"
-                        alt="<?php esc_attr_e('Fenster installer fitting a white uPVC casement window frame into a brick opening', 'fenster'); ?>"
-                        loading="lazy" width="900" height="600">
-                    <span class="fg-cas-chip"><i aria-hidden="true"></i><?php esc_html_e('In production', 'fenster'); ?></span>
-                <?php endif; ?>
-            </figure>
-        </div>
-    </section>
+                </figure>
+            </div>
+        </section>
+    <?php endif; ?>
 
-    </div><?php /* end the film plate */ ?>
+    </div><?php /* end the opening plate */ ?>
 
     <?php
     /* ---------- The three chapters ---------------------------------------------

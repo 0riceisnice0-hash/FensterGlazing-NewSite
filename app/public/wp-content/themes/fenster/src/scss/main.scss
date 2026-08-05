@@ -37091,9 +37091,11 @@ html.fg-blinds-reveal-locked {
 
 /* ---- The chapters, stacked -------------------------------------------------
    01, 02 and 03 behave as physical panels: each anchors at the foot of the
-   viewport once it has been read, and the next slides up and covers it. The film
-   band is the base plate beneath them, so 01 rises over something in the same way
-   02 and 03 do rather than arriving in ordinary flow.
+   viewport once it has been read, and the next slides up and covers it. The
+   page's opening is the base plate beneath them, so 01 rises over something in
+   the same way 02 and 03 do rather than arriving in ordinary flow. The shared
+   hero and specification strip above the plate still scroll normally, which is
+   the run-up that makes the first cover read as deliberate.
 
    This is `position: sticky`, not a scroll-driven transform, and the distinction
    is the whole reason it feels expensive. The browser owns the movement, so it is
@@ -37142,20 +37144,22 @@ html.fg-blinds-reveal-locked {
   z-index: 1;
 }
 
-/* Each panel paints over the one before it. The film is the base plate: it is
+/* Each panel paints over the one before it. The opening is the base plate: it is
    what chapter 01 rises over, so 01 behaves like 02 and 03 instead of arriving in
    ordinary flow. */
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--film { z-index: 1; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--opening { z-index: 1; }
 .fg-cas-stack.is-stacked .fg-cas-stack__panel--versatility { z-index: 2; }
 .fg-cas-stack.is-stacked .fg-cas-stack__panel--energy { z-index: 3; }
 .fg-cas-stack.is-stacked .fg-cas-stack__panel--security { z-index: 4; }
 
-/* An incoming panel must be completely opaque or the panel beneath shows through
-   it while it travels. The film plate is opaque through its own section
-   background and 03 is the dark security band, so neither needs anything here.
-   01 sits on the page canvas throughout, and 02 is dark for the EnergyPlus
-   chapter but ends on the tech banner, which also sits on the canvas. Both
-   therefore repaint that canvas underneath themselves.
+/* A panel must be completely opaque, or what is behind it shows through: an
+   incoming panel would show the one it is covering, and a pinned one would show
+   the page scrolling up behind it. 03 is the dark security band and needs
+   nothing. The opening plate and 01 both sit on the page canvas throughout, and
+   02 is dark for the EnergyPlus chapter but ends on the tech banner, which also
+   sits on the canvas. All three therefore repaint that canvas underneath
+   themselves. The opening plate needs it in its own right: the shared hero and
+   specification strip scroll up behind it while it is anchored.
 
    This does not breach the continuous-background rule in STYLE.md. That rule
    exists because a second, *scrolling* copy of the gradient slides against the
@@ -37165,6 +37169,7 @@ html.fg-blinds-reveal-locked {
    writes to `:root`, so the two are pixel-identical at every scroll position and
    there is no seam to see. `.fg-heritage-door-page` already uses this exact pair
    for the same reason. Do not drop the `fixed` half. */
+.fg-cas-stack__panel--opening,
 .fg-cas-stack__panel--versatility,
 .fg-cas-stack__panel--energy {
   background: var(--fg-page-gradient);
