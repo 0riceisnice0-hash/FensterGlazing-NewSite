@@ -384,6 +384,7 @@ function fenster_legend_verified_business_context(): string
         'Published product-card specifications are authoritative. A U-value label with an asterisk is the lowest achievable U-value, not a value guaranteed for every size and configuration.',
         'Fenster currently offers Distinction composite doors. Every composite door currently offered includes the published £5,000 security guarantee. Do not extend that claim to future ranges.',
         'Integral blinds are available with magnetic or electric controls and have a 10-year guarantee.',
+        'uPVC frames are foiled on each face separately, so the inside does not have to match the outside and a house can be specified differently room by room or floor by floor. The internal finish is a price difference, not a free choice: white internally is the cheaper option and a foiled internal face costs more. Never say that a colour, a foil or a dual-colour split is free, included or costs nothing. Do not quote figures for any of it.',
         'Do not estimate prices. Direct visitors to the instant quote tool unless a price is explicitly published for the exact request. Do not add a telephone alternative unless the visitor asks to speak to someone or cannot use the quote tool.',
     ];
 
