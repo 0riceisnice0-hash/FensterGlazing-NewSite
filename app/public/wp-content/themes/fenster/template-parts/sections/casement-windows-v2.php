@@ -76,7 +76,15 @@ $versus_rows = [
    straight over them, so they are inside the sealed unit. The brick bay bars
    are astragal: moulded, standing proud of the glass and casting a shadow. */
 $details = [
-    ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => $base . 'casement-georgian-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of Georgian bars set inside the sealed unit of a white uPVC casement window'],
+    /* No photograph, deliberately, and holding a placeholder until one arrives.
+       `casement-georgian-bar-900w` is a crop of `casement-bay-white-1080w` and
+       its bars carry a highlight and a cast shadow, so they sit on the face of
+       the glass: that is astragal, not a bar inside the sealed unit, and it
+       contradicted this tile's own copy. Owner confirmed 2026-08-05. The theme
+       holds no other bar photograph, so the slot is empty rather than filled
+       from a sibling. Set `image` to a real Georgian close-up and the tile
+       renders normally again. */
+    ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => '', 'w' => 900, 'h' => 675, 'alt' => 'Close up of Georgian bars set inside the sealed unit of a white uPVC casement window'],
     ['name' => 'Astragal bars', 'copy' => 'A moulded bar bonded to the face of the glass, so it catches the light and throws a shadow.', 'image' => $base . 'casement-astragal-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of moulded astragal bars standing proud of the glass on a white uPVC bay window'],
     /* The horn photograph was wrong until 2026-08-05: `casement-mock-horn-900w`
        is a studio shot of a mullion meeting the cill and shows no horn at all.
@@ -363,7 +371,15 @@ $faq_schema = [
             <div class="fg-cas-trio">
                 <?php foreach ($details as $detail) : ?>
                     <figure>
-                        <img src="<?php echo esc_url(fenster_generated_url($detail['image'])); ?>" alt="<?php echo esc_attr($detail['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $detail['w']); ?>" height="<?php echo esc_attr((string) $detail['h']); ?>">
+                        <?php if ($detail['image'] !== '') : ?>
+                            <img src="<?php echo esc_url(fenster_generated_url($detail['image'])); ?>" alt="<?php echo esc_attr($detail['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $detail['w']); ?>" height="<?php echo esc_attr((string) $detail['h']); ?>">
+                        <?php else : ?>
+                            <?php /* Holding the slot rather than dropping the tile: the
+                                     option is real and sold, only the photograph is
+                                     missing. Dashed and labelled so it reads as
+                                     deliberate rather than as a failed image. */ ?>
+                            <p class="fg-cas-trio__placeholder"><?php esc_html_e('Photograph to follow', 'fenster'); ?></p>
+                        <?php endif; ?>
                         <figcaption><strong><?php echo esc_html($detail['name']); ?></strong><span><?php echo esc_html($detail['copy']); ?></span></figcaption>
                     </figure>
                 <?php endforeach; ?>

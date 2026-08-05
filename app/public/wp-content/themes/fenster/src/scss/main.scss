@@ -36605,6 +36605,31 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
+/* A detail whose photograph has not arrived yet. Same 4/3 box as the images so
+   the row stays level, dashed and labelled so it reads as a reserved slot rather
+   than a picture that failed to load. Delete nothing when the photograph lands:
+   set `image` on the entry in casement-windows-v2.php and this stops rendering.
+
+   Qualified with the namespace on purpose: this is a <p>, and `.fg-cas p` is
+   (0,1,1), so a bare class would silently lose its margin, size and max-width.
+   That trap is already recorded twice against this page. */
+.fg-cas .fg-cas-trio__placeholder {
+  display: grid;
+  place-items: center;
+  max-width: none;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed rgba(0, 45, 58, 0.28);
+  border-radius: 4px;
+  background: rgba(0, 45, 58, 0.04);
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .fg-cas-trio figcaption { padding-top: 0.9rem; }
 
 .fg-cas-trio figcaption strong { display: block; margin-bottom: 0.25rem; font-size: 1rem; }

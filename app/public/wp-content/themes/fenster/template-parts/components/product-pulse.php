@@ -47,7 +47,6 @@ $triple = (string) ($glazing['triple'] ?? '');
 $single_routes = (array) fenster_data('single_u_value_routes', []);
 $single_u = in_array($pulse_slug, $single_routes, true);
 $best = $triple !== '' ? $triple : $double;
-$best_glazing = $triple !== '' ? __('36mm triple glazing', 'fenster') : __('28mm double glazing', 'fenster');
 ?>
 <section class="fg-product-pulse fg-product-pulse--usps" aria-label="<?php echo esc_attr($pulse_title . ' key specifications'); ?>">
     <div class="container fg-product-pulse__inner">
@@ -74,7 +73,13 @@ $best_glazing = $triple !== '' ? __('36mm triple glazing', 'fenster') : __('28mm
                            what is not included. */
                         $rows = [];
                         if ($single_u) {
-                            $rows[] = ['figure' => $best . '*', 'glazing' => $best_glazing];
+                            /* Owner instruction, 2026-08-05: the glazing line comes
+                               off and the figure carries the star on its own. The
+                               thickness is stated on the EnergyPlus banner further
+                               down, so naming it twice at the top of the page was
+                               the thing to lose, not the figure. The tile then
+                               matches the other three, which carry no caption. */
+                            $rows[] = ['figure' => $best . '*', 'glazing' => ''];
                         } else {
                             if ($triple !== '') {
                                 $rows[] = ['figure' => $triple, 'glazing' => __('Triple', 'fenster')];
@@ -86,7 +91,9 @@ $best_glazing = $triple !== '' ? __('36mm triple glazing', 'fenster') : __('28mm
                             <?php foreach ($rows as $row) : ?>
                                 <span>
                                     <strong><?php echo esc_html($row['figure']); ?></strong>
-                                    <i><?php echo esc_html($row['glazing']); ?></i>
+                                    <?php if ($row['glazing'] !== '') : ?>
+                                        <i><?php echo esc_html($row['glazing']); ?></i>
+                                    <?php endif; ?>
                                 </span>
                             <?php endforeach; ?>
                         </span>
@@ -100,7 +107,11 @@ $best_glazing = $triple !== '' ? __('36mm triple glazing', 'fenster') : __('28mm
             <?php endforeach; ?>
         </ul>
         <?php if ($single_u && $best !== '') : ?>
-            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable whole-window U-value. The figure for your windows follows their size, glass and layout, and is confirmed at survey.', 'fenster'); ?></p>
+            <?php /* Owner instruction, 2026-08-05: the note is the star's meaning
+                     and nothing else. "Lowest achievable" is the load-bearing half
+                     and stays; the survey sentence that followed it is said again
+                     in the FAQ and on the EnergyPlus banner. */ ?>
+            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable whole-window U-value.', 'fenster'); ?></p>
         <?php endif; ?>
     </div>
 </section>
