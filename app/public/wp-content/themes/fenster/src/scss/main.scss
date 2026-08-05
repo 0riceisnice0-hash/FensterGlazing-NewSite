@@ -36310,10 +36310,85 @@ html.fg-blinds-reveal-locked {
 /* Key-specification strip: the single starred figure, and what the star means.
    Owner instruction 2026-08-04, Liniar routes first; the routes are listed in
    `single_u_value_routes` in site-data. */
-/* Every strip prints one figure now, so the `.is-single` modifier this used to
-   need was always on and has gone with it. */
-.fg-product-pulse__glazing-rows strong {
+/* The U-value is the figure the strip is built around, so it sets a step larger
+   than the other three.
+
+   Qualified with `li` on purpose, and do not simplify it. This rule competes with
+   `.fg-product-pulse li strong`, which is (0,1,2) and sets `font-size: 1rem`.
+   It used to carry a second class, `.is-single`, which put it at (0,2,1) and won.
+   Dropping that class on 2026-08-05 took it to (0,1,1), it silently lost, and the
+   figure rendered at 16px like everything else until a measurement caught it.
+   `li` restores the win at (0,2,2). */
+.fg-product-pulse li .fg-product-pulse__glazing-rows strong {
   font-size: 1.15em;
+}
+
+/* ---- The drum the values arrive on ---------------------------------------
+   Built and torn down by main.js; none of this exists in the served markup and
+   none of it survives the reveal. See the note there for why the whole value is
+   one drum rather than one drum per digit.
+
+   The window is exactly one cell tall and pinned to the width the value really
+   rendered at, so an intermediate readout cannot reflow the tile. The mask only
+   bites the outer tenth: the line box carries more leading than that, so it
+   softens the cells passing through without eating the glyphs of the one that
+   lands. It comes off entirely when the markup is restored. */
+.fg-pulse-reel {
+  display: block;
+  width: var(--fg-reel-w);
+  height: var(--fg-reel-h);
+  overflow: hidden;
+  perspective: 460px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.fg-pulse-reel__stack {
+  display: block;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+}
+
+/* The travel. One curve, decelerating hard onto the final cell: no overshoot,
+   no bounce, nothing elastic. The class is added a frame after the start
+   position is committed, or there is nothing to transition from. */
+.fg-pulse-reel.is-settling .fg-pulse-reel__stack {
+  transform: translate3d(0, calc(var(--fg-reel-h) * -1 * var(--fg-reel-last)), 0);
+  transition: transform var(--fg-reel-dur, 560ms) cubic-bezier(0.16, 0.86, 0.26, 1) var(--fg-reel-delay, 0ms);
+}
+
+/* Each cell is tipped by its distance from the final one, so the readouts above
+   read as the far side of a cylinder and the one that lands sits flat and sharp
+   at rotateX(0). Twelve degrees a step is enough to see and not enough to blur. */
+.fg-pulse-reel__cell {
+  display: block;
+  width: 100%;
+  height: var(--fg-reel-h);
+  transform: rotateX(calc(var(--fg-reel-i, 0) * 12deg));
+  backface-visibility: hidden;
+}
+
+/* The value stays in the accessible tree while the drum runs. */
+.fg-product-pulse__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Belt and braces. main.js already declines to build the drum under reduced
+   motion; this catches the case where the setting is turned on mid-reveal. */
+@media (prefers-reduced-motion: reduce) {
+  .fg-pulse-reel.is-settling .fg-pulse-reel__stack {
+    transition: none;
+  }
+
+  .fg-pulse-reel__cell {
+    transform: none;
+  }
 }
 
 /* The note sits inside the U-value tile, under the figure. It used to follow the

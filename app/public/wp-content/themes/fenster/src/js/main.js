@@ -5403,6 +5403,135 @@ if (chapterStack && !window.matchMedia('(prefers-reduced-motion: reduce)').match
   }
 }
 
+/* ---- Key specifications: the values arrive on a drum --------------------------
+   Each value is revealed the way a precision instrument settles rather than by
+   fading in: a short stack of readouts travels up through a masked window and
+   the true value lands flat. It runs once, when the strip first reaches the
+   viewport, and the strip is completely static before and after.
+
+   Three decisions are load-bearing.
+
+   The whole value is one drum, not one drum per digit. Per-character reels look
+   more like an odometer but they need every character in its own box, which
+   breaks wrapping: "Any RAL colour" has to wrap between words, and a row of
+   character boxes wraps anywhere. One drum per value wraps normally, keeps the
+   baseline exactly where it was, and works the same for a value with no digits.
+
+   The recede is a fixed rotateX per cell, keyed to that cell's distance from the
+   final one, so the last cell is `rotateX(0)` and renders perfectly sharp. A
+   real rotating cylinder would need per-frame work and would leave the resting
+   text on a 3D layer, which softens small type: the one thing a premium strip
+   cannot afford. This is a stylisation that stays crisp where it matters.
+
+   The markup is restored to plain text once it settles. That returns the strip
+   byte-for-byte to what it was, drops the mask off the resting value so nothing
+   is softened at its top and bottom edge, and leaves nothing animating.
+
+   Width and height are pinned from the real rendering before the content is
+   swapped, so an intermediate readout that is wider or taller than the true one
+   cannot reflow the tile mid-animation. */
+const pulseStrips = [...document.querySelectorAll('.fg-product-pulse')];
+
+if (pulseStrips.length && 'IntersectionObserver' in window) {
+  const pulseReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const PULSE_DURATION = 560;
+  const PULSE_STAGGER = 70;
+  const PULSE_STEPS = 3;
+
+  // Deterministic, so an intermediate readout is reproducible when this is
+  // measured. Math.random would make the same run unverifiable twice.
+  const pulseScramble = (text, step) => text.replace(
+    /\d/g,
+    (digit, offset) => String((digit.charCodeAt(0) + (offset * 7) + (step * 3)) % 10)
+  );
+
+  const revealPulseValue = (el, order) => {
+    const finalText = (el.textContent || '').trim();
+    if (finalText === '') return;
+
+    const rect = el.getBoundingClientRect();
+    if (rect.height === 0) return;
+
+    const hasDigit = /\d/.test(finalText);
+    const cells = [];
+    for (let step = 0; step < (hasDigit ? PULSE_STEPS : 1); step += 1) {
+      cells.push(hasDigit ? pulseScramble(finalText, step) : '');
+    }
+    cells.push(finalText);
+
+    const reel = document.createElement('span');
+    reel.className = 'fg-pulse-reel';
+    reel.setAttribute('aria-hidden', 'true');
+    reel.style.setProperty('--fg-reel-h', `${rect.height}px`);
+    reel.style.setProperty('--fg-reel-w', `${Math.ceil(rect.width)}px`);
+    reel.style.setProperty('--fg-reel-last', String(cells.length - 1));
+    reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
+    reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
+
+    const stack = document.createElement('span');
+    stack.className = 'fg-pulse-reel__stack';
+
+    cells.forEach((text, index) => {
+      const cell = document.createElement('span');
+      cell.className = 'fg-pulse-reel__cell';
+      cell.textContent = text;
+      // Distance from the final cell. The final one is 0, so it lies flat.
+      cell.style.setProperty('--fg-reel-i', String(cells.length - 1 - index));
+      stack.appendChild(cell);
+    });
+
+    reel.appendChild(stack);
+
+    // The true value stays in the accessible tree throughout; only the drum is
+    // hidden from it, so nothing ever announces a scrambled readout.
+    const spoken = document.createElement('span');
+    spoken.className = 'fg-product-pulse__sr';
+    spoken.textContent = finalText;
+
+    el.textContent = '';
+    el.appendChild(spoken);
+    el.appendChild(reel);
+
+    const settle = () => {
+      if (!el.isConnected) return;
+      el.textContent = finalText;
+    };
+
+    // Read back before adding the class so the start position is committed and
+    // the transition actually runs from it.
+    void reel.offsetHeight;
+    reel.classList.add('is-settling');
+
+    stack.addEventListener('transitionend', settle, { once: true });
+    // transitionend does not fire if the tab is hidden when the delay elapses.
+    window.setTimeout(settle, (order * PULSE_STAGGER) + PULSE_DURATION + 400);
+  };
+
+  const revealPulseStrip = (strip) => {
+    const values = [...strip.querySelectorAll('li strong')];
+    if (!values.length) return;
+
+    // Reduced motion gets the static version, which here means the strip is
+    // simply left alone. The values are already rendered, so doing nothing is
+    // both the least motion and the only option that cannot leave a
+    // specification hidden if something later goes wrong.
+    if (pulseReduce.matches) return;
+
+    values.forEach((el, index) => revealPulseValue(el, index));
+  };
+
+  const pulseObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      // Once only: unobserve before revealing so a re-entry cannot restart it.
+      pulseObserver.unobserve(entry.target);
+      revealPulseStrip(entry.target);
+    });
+  }, { threshold: 0.25 });
+
+  pulseStrips.forEach((strip) => pulseObserver.observe(strip));
+}
+
 document.querySelectorAll('.fg-mk-page').forEach((page) => {
   const revealItems = [...page.querySelectorAll('[data-fg-mk-reveal]')];
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
