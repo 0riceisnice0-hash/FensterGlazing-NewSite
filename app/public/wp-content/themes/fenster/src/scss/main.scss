@@ -36325,70 +36325,92 @@ html.fg-blinds-reveal-locked {
 
 /* ---- The drum the values arrive on ---------------------------------------
    Built and torn down by main.js; none of this exists in the served markup and
-   none of it survives the reveal. See the note there for why the whole value is
-   one drum rather than one drum per digit.
+   none of it survives the reveal. One drum per digit, ten faces each, turning
+   one face per click: see the note in main.js for why a counter has to be built
+   that way and cannot be a single moving strip.
 
    Only the number is on the drum; the text either side of it is static, so this
    sits inline in the middle of a line rather than being a block of its own.
-   `vertical-align: bottom` is what keeps the digits on the same baseline as that
-   text: an inline-block with `overflow: hidden` takes its baseline from its
-   bottom edge, so aligning bottoms and giving the cells the element's own line
+   `vertical-align: bottom` keeps the digits on the same baseline as that text:
+   the faces are all out of flow, so the box has no in-flow line box and takes
+   its baseline from its bottom edge, and giving the faces the element's own line
    height puts the two baselines in the same place.
 
-   No width is set. Shrink-to-fit makes the window exactly as wide as its widest
-   cell, and main.js caps a counting-down sequence so no intermediate is ever
-   wider than the figure that lands, so the text after it never moves. Shorter
-   intermediates align right, which is where a counter's units column sits.
+   The width is set by main.js to the digit that lands, measured in the real
+   font, so the settled wheel is exactly as wide as the character it is standing
+   in for and the text after it does not move when the plain markup comes back.
+   Gibson has no tabular figures, so the other faces are wider than a 1 and
+   overhang the window while they pass. That is why the clipping here is
+   `clip-path` rather than `overflow: hidden`: the window has to cut the faces
+   above and below it without cutting the sides off a digit that is only passing
+   through.
 
    The mask only bites the outer tenth: the line box carries more leading than
-   that, so it softens the cells passing through without eating the glyphs of the
+   that, so it softens the faces passing through without eating the glyphs of the
    one that lands. It comes off entirely when the markup is restored. */
 .fg-pulse-reel {
   display: inline-block;
   vertical-align: bottom;
   height: var(--fg-reel-h);
-  overflow: hidden;
-  /* Centred, not right-aligned, and deliberately not asking for tabular figures.
-     Measured in Gibson: every digit is 10.03px except 1, which is 7.5px, and
-     `font-variant-numeric: tabular-nums` changes nothing because the font ships
-     no tnum table. So a wheel is as wide as its widest digit and a 1 cannot fill
-     it. Right-aligned that read as a 2.5px indent; centred it reads as a digit
-     sitting on its wheel, which is what a counter looks like. The residual is
-     under 3px, only while a 1 is passing, and it is gone the moment the value
-     settles back to plain text. */
+  /* Cuts the faces above and below the window while letting a wider face
+     overhang the sides, since the window is only as wide as the digit that
+     lands. `overflow: hidden` would shave 0.7px off both flanks of every digit
+     that is not a 1. */
+  clip-path: inset(0 -0.5em);
+  /* Centred, and deliberately not asking for tabular figures: measured in
+     Gibson, `font-variant-numeric: tabular-nums` changes nothing because the
+     font ships no tnum table. Centring is what keeps a passing face square over
+     the one that lands. */
   text-align: center;
-  perspective: 460px;
+  perspective: 320px;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
           mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
 }
 
-/* The stack carries no transition. Movement is per-wheel keyframes from
-   main.js, because a transition can only slide a wheel continuously from its
-   first cell to its last: a column that is mostly one digit would still scroll
-   a stack of identical glyphs past the window and read as permanently
+/* The drum itself. It carries no transition: movement is per-wheel keyframes
+   from main.js, because a transition can only turn a wheel continuously from
+   its first face to its last, so a column that is mostly one digit would still
+   roll a run of identical glyphs past the window and read as permanently
    drifting, where a counter holds it dead still and rotates once at the carry.
-   The inline transform here is the settled position, so a wheel whose animation
+   The inline transform here is the settled angle, so a wheel whose animation
    never runs still shows the right digit. */
 .fg-pulse-reel__stack {
+  position: relative;
   display: block;
+  height: var(--fg-reel-h);
   transform-style: preserve-3d;
 }
 
-/* Each cell is tipped by its distance from the final one, so the readouts
-   queued either side read as the far face of a cylinder while the one that
-   lands sits flat at rotateX(0) and renders sharp. Capped at 40 degrees: past
-   that a cell is nearly edge on, and with eight of them the far end would
-   otherwise fold away to nothing. */
+/* Faces on the cylinder. Each is tipped to its own place on the drum and pushed
+   out to the surface by main.js, which knows the line height and so the radius;
+   the drum then turns to bring one face to the window, where it sits at
+   rotateX(0), lies flat and renders sharp.
+
+   They are out of flow so they occupy the one-line window rather than stacking
+   below it. One of them is put back into flow inline, to give the wheel its
+   width. */
 .fg-pulse-reel__cell {
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: var(--fg-reel-h);
-  /* Matching the window height puts every cell's baseline where the static text
+  /* Matching the window height puts every face's baseline where the static text
      around it expects one, which is what stops the digits sitting a pixel off
      the unit beside them. */
   line-height: var(--fg-reel-h);
   white-space: pre;
-  transform: rotateX(min(calc(var(--fg-reel-i, 0) * 13deg), 40deg));
   backface-visibility: hidden;
+}
+
+/* One box per number, so a figure cannot break across two lines mid-number
+   while the drum is running. Each digit is its own inline-block and a break is
+   allowed between adjacent inline-blocks, so "6.5m wide, 2.5m tall" could
+   otherwise split as "2." / "5m tall" for the length of the run and reflow when
+   it settles. Per number rather than around the whole value, so the ordinary
+   break opportunities between words survive. */
+.fg-pulse-figure {
+  white-space: nowrap;
 }
 
 /* The value stays in the accessible tree while the drum runs. */
@@ -36402,16 +36424,12 @@ html.fg-blinds-reveal-locked {
   white-space: nowrap;
 }
 
-/* main.js is the real guard: it declines to build a wheel at all under reduced
-   motion. This only flattens the cylinder if the setting is turned on while a
-   reveal is already on screen. It deliberately does not pretend to stop the
-   movement, because that is a Web Animations animation and CSS cannot cancel
-   one. */
-@media (prefers-reduced-motion: reduce) {
-  .fg-pulse-reel__cell {
-    transform: none;
-  }
-}
+/* There is deliberately no reduced-motion rule for the drum. main.js is the
+   guard and declines to build a wheel at all, so under the setting none of this
+   markup exists. A rule here could only fire if the setting were turned on
+   mid-reveal, and flattening the faces then would collapse ten of them onto one
+   another rather than stop anything: the movement is a Web Animations animation
+   and CSS cannot cancel one. */
 
 /* The note sits inside the U-value tile, under the figure. It used to follow the
    list, which put it in the second row of `__inner`'s two-column grid, under the

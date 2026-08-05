@@ -5408,32 +5408,42 @@ if (chapterStack && !window.matchMedia('(prefers-reduced-motion: reduce)').match
    fading in. It runs once, when the strip first reaches the viewport, and the
    strip is completely static before and after.
 
-   The mechanism is one wheel per digit, and each wheel is driven by its own
-   keyframes. That second half is the part that matters and it is why this is
-   not a CSS transition.
+   Two things make it a counter rather than a number that changes.
 
-   A transition moves a wheel continuously from its first cell to its last over
-   the whole run. A column that is mostly the same digit therefore still scrolls,
-   sliding a stack of identical glyphs past the window, and the digit reads as
-   permanently drifting instead of standing still. On a real odometer the tens
-   wheel does not creep while the units spins: it sits dead still and rotates
-   once, at the carry.
+   It only ever steps by one. The readings walk the last decimal place a single
+   unit at a time, so counting onto 0.95 reads 1.00, 0.99, 0.98, 0.97, 0.96,
+   0.95 and every numeral in between is actually on screen. Spacing a fixed
+   number of readings evenly across the range instead, which is what this did
+   before, jumps five or six hundredths a step: the run ends by flopping from
+   1.0 straight to 0.95, and 2.2 never shows 0.5, 1.2 or 1.9 at all. Nothing
+   mechanical skips.
 
-   So each wheel is given keyframes that hold, click, hold. Its column is
-   collapsed to the readings where that digit actually changes, and a rotation is
-   scheduled only at those moments. Counting 1.8 down to 1.0, the units wheel
-   holds "1" for ninety per cent of the run and clicks to "0" at the end; the
-   tenths wheel clicks nine times; a wheel with nothing to do never moves and is
-   not built at all.
+   The wheels are faces on a cylinder and the cylinder turns. A digit wheel is
+   the full ten faces, 0 through 9, spaced the way a real one is: the window is
+   one face tall, so the drum is 36 degrees per digit and whatever is at the
+   window sits at rotateX(0), lies flat and renders sharp. Because the readings
+   step by one, every wheel advances exactly one face per click and always in
+   the same direction, so a fast wheel simply turns through several complete
+   revolutions. The previous version gave each cell a tilt fixed for the whole
+   run, which meant a cell crossed the window permanently foreshortened: that
+   is distortion, not rotation, and it is what made the digits look bent.
 
-   The readings themselves are spaced on an ease-out curve, so the whole readout
-   spins quickly and brakes onto its figure. That curve lives in the schedule
-   rather than in the easing, because the easing now belongs to the individual
-   clicks.
+   Each wheel is driven by its own keyframes, and that is why this is not a CSS
+   transition. A transition moves a wheel continuously from its first cell to
+   its last over the whole run, so a column that is mostly the same digit still
+   scrolls a stack of identical glyphs past the window and reads as permanently
+   drifting. On a real odometer the tens wheel does not creep while the units
+   spins: it sits dead still and rotates once, at the carry. So a wheel is given
+   keyframes that hold, click, hold, its column collapsed to the readings where
+   that digit actually changes.
 
-   The markup is restored to plain text once everything settles, which returns the
-   strip byte-for-byte to what it was, drops the mask off the resting value and
-   leaves nothing animating. */
+   Deceleration lives in the timing, which is again where a counter puts it. The
+   gaps between readings grow geometrically, so the drum opens fast and the last
+   few clicks are slow enough to read one at a time.
+
+   The markup is restored to plain text once everything settles, which returns
+   the strip byte-for-byte to what it was, drops the mask off the resting value
+   and leaves nothing animating. */
 const pulseStrips = [...document.querySelectorAll('.fg-product-pulse')];
 
 if (pulseStrips.length
@@ -5441,12 +5451,25 @@ if (pulseStrips.length
   && typeof Element.prototype.animate === 'function') {
   const pulseReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const PULSE_DURATION = 1800;   // slow enough to read a digit, twice asked for
-  const PULSE_STAGGER = 150;     // between tiles
-  const PULSE_STEPS = 16;        // readings before the settled one
-  const PULSE_BRAKE = 2.2;       // how hard the readings bunch toward the end
+  const PULSE_MS_PER_CLICK = 69;   // before the caps below
+  const PULSE_MS_MIN = 900;
+  const PULSE_MS_MAX = 1800;
+  const PULSE_STAGGER = 150;       // between tiles
+  /* Single-unit steps mean the range is a click count. Long enough that the
+     higher columns carry the way a real counter does, short enough that the
+     opening is quick rather than a blur: 26 hundredths takes 0.95 back past
+     1.00, so the units wheel turns once and the tenths three times.
+
+     Measured against the brake below, this opens at 32ms a click and closes at
+     127ms. 34 was tried first and opens at 19ms, which is a single frame at
+     60Hz and reads as the blur the owner had already objected to. */
+  const PULSE_MAX_CLICKS = 26;
+  const PULSE_MIN_CLICKS = 3;      // fewer than this and there is nothing to count
+  const PULSE_BRAKE = 4;           // last gap over first gap
+  const PULSE_FACES = 10;          // digits on a wheel
+  const PULSE_ANGLE = 360 / PULSE_FACES;
   const PULSE_CLICK = 'cubic-bezier(0.45, 0, 0.15, 1)';
-  const PULSE_CLICK_MAX = 0.1;   // longest a single click may take, as a fraction
+  const PULSE_CLICK_MS = 130;      // longest a single click may take
   const PULSE_NUMBER = /\d+(?:\.\d+)?/;
   /* A number sitting immediately after an acronym is part of a name, not a
      quantity: PAS 24, RAL 7016, BS EN 1670. Those must not count, because
@@ -5455,42 +5478,68 @@ if (pulseStrips.length
      "Up to 7 panes" and "From 1.8 W/m²K" turn like any other readout. */
   const PULSE_NAMED = /(?:^|\s)[A-Z]{2,}\.?\s*$/;
 
-  /* When reading `index` of `total` is on screen, as a fraction of the run.
-     Ease-out, so the readings fly past at the start and space out at the end. */
-  const pulseReadingTime = (index, total) => (
-    total <= 0 ? 1 : 1 - Math.pow(1 - (index / total), 1 / PULSE_BRAKE)
-  );
+  /* When each reading lands, as a fraction of the run. The gaps grow by a fixed
+     ratio, so the drum brakes onto its figure instead of clicking at a constant
+     rate. Ends at exactly 1 by construction. */
+  const pulseSchedule = (total) => {
+    const times = [0];
+    if (total <= 0) return times;
+    if (total === 1) return [0, 1];
 
-  /* The run is long on purpose: the higher columns have to carry, the way a real
-     counter does, and that only happens across a range wide enough to cross
-     them. Over a long range the units changes on nearly every reading, the tens
-     a handful of times and the hundreds once, so each wheel turns at its own
-     rate.
+    const ratio = Math.pow(PULSE_BRAKE, 1 / (total - 1));
+    const sum = (Math.pow(ratio, total) - 1) / (ratio - 1);
+    for (let step = 1; step <= total; step += 1) {
+      times.push(((Math.pow(ratio, step) - 1) / (ratio - 1)) / sum);
+    }
+    return times;
+  };
+
+  /* The readings, one unit of the last decimal place apart.
 
      No reading ever passes the target, so a figure we do not claim is never on
      screen: counting up approaches from below and stops, counting down from
-     above and stops. Deterministic throughout, no Math.random, so the same page
-     produces the same readings twice and measuring it means something. */
+     above and stops. A wheel is only as wide as the digit that lands, so
+     counting down is capped at the largest number of the same digit count and
+     0.95 cannot start at 10.65. Deterministic throughout, no Math.random, so
+     the same page produces the same readings twice and measuring it means
+     something. */
   const pulseSequence = (numberText, descending) => {
     const target = parseFloat(numberText);
     if (!Number.isFinite(target) || target === 0) return null;
 
     const decimals = (numberText.split('.')[1] || '').length;
+    const unit = Math.pow(10, -decimals);
+    // Counted in units of the last decimal place, so every step is an integer
+    // and the readings cannot drift on binary floating point.
+    const landing = Math.round(target / unit);
+    const digits = Math.floor(Math.abs(target)).toString().length;
+    const ceiling = Math.round(Math.pow(10, digits) / unit) - 1;
 
-    /* A wheel is only as wide as the digit that lands, so a reading must never
-       be wider or it would clip. Counting up is safe by definition; counting
-       down is capped at the largest number of the same digit count, so 0.95 can
-       start at 1.81 and a 9.0 could not start at 15.8. */
-    const intDigits = Math.floor(Math.abs(target)).toString().length;
-    const ceiling = Math.pow(10, intDigits) - Math.pow(10, -decimals);
-    const start = descending ? Math.min(target * 1.9, ceiling) : target * 0.15;
+    /* Counting down is held to twice the figure as well as to the click cap.
+       Without it a tenth-place value takes the full 26 clicks and a 1.2 W/m²K
+       tile opens on 3.8, which is a believable reading of a bad window rather
+       than an obvious counter winding up. Hundredths are unaffected: 0.95 is
+       capped by the clicks, not by this. */
+    const clicks = descending
+      ? Math.min(PULSE_MAX_CLICKS, ceiling - landing, landing)
+      : Math.min(PULSE_MAX_CLICKS, landing - 1);
+
+    // A value one or two clicks from its start has nothing worth watching, and
+    // counting 1 onto the screen would have to show a 0 we do not claim.
+    if (clicks < PULSE_MIN_CLICKS) return null;
 
     const readings = [];
-    for (let step = 0; step < PULSE_STEPS; step += 1) {
-      readings.push((start + ((target - start) * (step / PULSE_STEPS))).toFixed(decimals));
+    for (let step = 0; step <= clicks; step += 1) {
+      const at = descending ? landing + (clicks - step) : landing - clicks + step;
+      readings.push((at * unit).toFixed(decimals));
     }
+    // The last reading is the value itself, exactly as it is written on the page.
+    readings[clicks] = numberText;
 
-    return readings;
+    return {
+      readings,
+      duration: Math.min(PULSE_MS_MAX, Math.max(PULSE_MS_MIN, clicks * PULSE_MS_PER_CLICK)),
+    };
   };
 
   /* Offsets must strictly increase or the animation is rejected. Nudging is
@@ -5506,17 +5555,37 @@ if (pulseStrips.length
 
   const revealPulseValue = (el, order) => {
     const finalText = (el.textContent || '').trim();
-    if (finalText === '') return false;
+    if (finalText === '') return 0;
 
-    // The U-value is the one figure on the strip where lower is better, so it
-    // counts down onto its figure and arrives from above.
-    const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'));
+    /* The U-value is the one figure on the strip where lower is better, so it
+       counts down onto its figure and arrives from above.
+
+       Read off the tile's own label rather than the `__glazing-rows` wrapper.
+       That wrapper only exists where product-pulse.php finds the route in
+       `glazing_u_values`, and uPVC doors and patio doors are deliberately not in
+       it, so their U-value renders through the plain branch. Keyed on the
+       wrapper alone those two counted upward: 0.1, 0.2 ... 0.9 before landing on
+       1.0, putting whole-window U-values better than anything achievable on
+       screen for the length of the run, on the one figure where lower is
+       better. Every U-value tile is labelled "U-value", starred or not.
+
+       Matched on letters alone because the label renders with a non-breaking
+       hyphen, U+2011, not an ASCII one, so /^u-value/ does not match it. */
+    const tile = el.closest('li');
+    const tileLabel = tile && tile.querySelector('small')
+      ? (tile.querySelector('small').textContent || '')
+      : '';
+    const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'))
+      || /^uvalue/i.test(tileLabel.replace(/[^a-z]/gi, ''));
+    // Which way the drum turns. Counting up, the next digit rises into the
+    // window from below; counting down it drops in from above.
+    const spin = descending ? -1 : 1;
 
     /* The window is one line tall, so a wheel sits on the text baseline beside
        the characters that are not moving rather than forming a block. */
     const lineHeight = parseFloat(getComputedStyle(el).lineHeight)
       || el.getBoundingClientRect().height;
-    if (!lineHeight) return false;
+    if (!lineHeight) return 0;
 
     /* Split into alternating text and numbers. Every number is treated on its
        own, so "2.2m x 1m" runs both of them. */
@@ -5539,24 +5608,69 @@ if (pulseStrips.length
     shell.setAttribute('aria-hidden', 'true');
     const animations = [];
 
-    segments.forEach((segment) => {
+    /* One duration for the whole value, taken from its longest count, so a value
+       holding two numbers lands both at once. Timed separately, "6.5m wide, 2.5m
+       tall" settled its height 138ms before its width. */
+    const plans = segments.map((segment) => (
+      segment.text !== undefined || PULSE_NAMED.test(segment.before)
+        ? null
+        : pulseSequence(segment.number, descending)
+    ));
+    const duration = plans.reduce((slowest, plan) => (
+      plan ? Math.max(slowest, plan.duration) : slowest
+    ), 0);
+    const clickMax = duration ? PULSE_CLICK_MS / duration : 0;
+
+    /* A wheel needs an explicit width, because every face is taken out of flow
+       to sit on the cylinder and an empty box would collapse. The width is the
+       widest face it will show, measured here in the real inherited font rather
+       than assumed: Gibson has no tabular figures, so a 1 is 7.5px where every
+       other digit is 10.03px, and a wheel sized on a 1 would clip the digits
+       that follow it.
+
+       Measured once per value off a probe rather than by leaving one face in
+       flow to do the sizing. That was tried and is subtly wrong: an in-flow cell
+       inside the preserve-3d stack does not take its translateZ, so it stays at
+       the window instead of going round to its place on the drum and paints on
+       top of whatever face is actually showing. Measured, it sat at dy=-0.1
+       where the cylinder puts it at -19.1. */
+    const gauge = document.createElement('span');
+    gauge.style.cssText = 'position:absolute;visibility:hidden;white-space:pre';
+    el.appendChild(gauge);
+    const glyphWidth = {};
+    '0123456789 '.split('').forEach((glyph) => {
+      gauge.textContent = glyph;
+      glyphWidth[glyph] = gauge.getBoundingClientRect().width;
+    });
+    el.removeChild(gauge);
+
+    segments.forEach((segment, index) => {
       if (segment.text !== undefined) {
         shell.appendChild(document.createTextNode(segment.text));
         return;
       }
 
       // Part of a name rather than a quantity: render it and leave it alone.
-      const counted = PULSE_NAMED.test(segment.before)
-        ? null
-        : pulseSequence(segment.number, descending);
+      const counted = plans[index];
 
       if (!counted) {
         shell.appendChild(document.createTextNode(segment.number));
         return;
       }
 
-      const readings = [...counted, segment.number];
+      /* Every digit is its own inline-block, and a line break is allowed between
+         adjacent inline-blocks, so without this a figure could split across two
+         lines mid-number for the length of the run and then reflow when it
+         settles: "6.5m wide, 2.5m tall" breaking as "2." / "5m tall". The box is
+         per number, not around the whole value, so the ordinary break
+         opportunities between words survive. */
+      const figure = document.createElement('span');
+      figure.className = 'fg-pulse-figure';
+      shell.appendChild(figure);
+
+      const { readings } = counted;
       const total = readings.length - 1;
+      const times = pulseSchedule(total);
 
       /* Readings are padded on the left, because a counter aligns on its units.
          A shorter reading leaves that column blank, so the tens wheel of "16"
@@ -5577,15 +5691,46 @@ if (pulseStrips.length
 
         // A decimal point, or a digit that never changes: nothing to turn.
         if (!/\d/.test(settledChar) || stops.length < 2) {
-          shell.appendChild(document.createTextNode(settledChar));
+          figure.appendChild(document.createTextNode(settledChar));
           continue;
         }
 
-        const lastStop = stops.length - 1;
-        // Counting down means arriving from above, so the settled cell sits at
-        // the top of the stack and the wheel travels down onto it.
-        const domIndex = (stop) => (descending ? lastStop - stop : stop);
-        const position = (stop) => `translate3d(0, ${-(domIndex(stop) * lineHeight).toFixed(2)}px, 0)`;
+        const clicks = stops.length - 1;
+
+        /* A column that steps a single digit at a time, which after the change
+           above is every column that never went blank, is a real ten-face wheel
+           and can turn as many revolutions as it likes. The one that does go
+           blank is the leading column of a value like 16, which has no wheel to
+           model: it gets a face per stop instead, spaced the same way. */
+        const stepwise = stops.every((stop, index) => index === 0 || (
+          /\d/.test(stop.char)
+          && /\d/.test(stops[index - 1].char)
+          && ((((Number(stop.char) - Number(stops[index - 1].char)) * spin) % 10) + 10) % 10 === 1
+        ));
+
+        const faces = [];
+        if (stepwise) {
+          const first = Number(stops[0].char);
+          for (let face = 0; face < PULSE_FACES; face += 1) {
+            faces.push(String((((first + (spin * face)) % 10) + 10) % 10));
+          }
+        } else {
+          stops.forEach((stop) => faces.push(stop.char));
+        }
+
+        /* Faces touch on the surface, so a window one face tall makes the drum
+           exactly 36 degrees per digit, which is what a real counter is. A real
+           wheel is meant to close on itself at 360, so the ten-face drum takes
+           that angle as given and simply turns through as many revolutions as
+           the count needs. Only the odd blank-led wheel, which is not a wheel
+           anybody makes, has to be checked: faces further apart than 360/n would
+           put two of them in the same place and they would fight. */
+        const angle = stepwise ? PULSE_ANGLE : Math.min(PULSE_ANGLE, 355 / faces.length);
+        const radius = (lineHeight / 2) / Math.tan((angle * Math.PI) / 360);
+        /* The drum is pushed back by its own radius so the face at the window
+           lands on the screen plane. A settled digit is then unscaled and
+           pixel-identical to the plain text that replaces it. */
+        const position = (click) => `translateZ(${(-radius).toFixed(2)}px) rotateX(${(spin * click * angle).toFixed(2)}deg)`;
 
         const reel = document.createElement('span');
         reel.className = 'fg-pulse-reel';
@@ -5595,23 +5740,28 @@ if (pulseStrips.length
         stack.className = 'fg-pulse-reel__stack';
         // Resting state is the settled digit, so a wheel that never runs still
         // shows the right character.
-        stack.style.transform = position(lastStop);
+        stack.style.transform = position(clicks);
 
-        const order2 = descending ? [...stops].reverse() : stops;
-        const finalDom = descending ? 0 : lastStop;
+        /* The window is exactly as wide as the digit that LANDS, not as wide as
+           the widest face it will show. Gibson's 1 is 8.61px against 11.52px for
+           every other digit at this size, so a wheel landing on a 1 and sized on
+           its widest face is 2.91px too wide: "1.1 W/m²K" renders as "1 . 1" for
+           the whole run and then snaps 5.82px left the instant the plain text
+           comes back. Sized on the landing digit, the settled shell is the same
+           width as the text it replaces and nothing moves. Wider faces overhang
+           while they pass, which is why the reel clips vertically only. */
+        reel.style.width = `${(glyphWidth[settledChar] || 0).toFixed(2)}px`;
 
-        order2.forEach((stop, index) => {
+        faces.forEach((face, index) => {
           const cell = document.createElement('span');
           cell.className = 'fg-pulse-reel__cell';
-          cell.textContent = stop.char;
-          // Distance from the settled cell. That one is 0, so it lies flat and
-          // renders sharp; the rest recede like the far face of a cylinder.
-          cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalDom)));
+          cell.textContent = face;
+          cell.style.transform = `rotateX(${(-spin * index * angle).toFixed(2)}deg) translateZ(${radius.toFixed(2)}px)`;
           stack.appendChild(cell);
         });
 
         reel.appendChild(stack);
-        shell.appendChild(reel);
+        figure.appendChild(reel);
 
         /* Hold, click, hold. Each rotation is scheduled at the moment its digit
            actually changes and takes only a slice of the gap before it, so the
@@ -5619,20 +5769,29 @@ if (pulseStrips.length
         const frames = [{ offset: 0, transform: position(0), easing: 'linear' }];
         let previousTime = 0;
 
-        for (let stop = 1; stop <= lastStop; stop += 1) {
-          const time = pulseReadingTime(stops[stop].at, total);
-          const gap = Math.max(0.0002, time - previousTime);
-          const click = Math.min(gap * 0.5, PULSE_CLICK_MAX);
+        for (let click = 1; click <= clicks; click += 1) {
+          const at = stops[click].at;
+          const time = times[at];
+          /* A click takes a slice of the single reading it lands on, never of
+             this wheel's own gap since its last one. That is what makes a carry
+             a carry: the tens turns during the same click that takes the units
+             past 9, so both cross together. Timed off the wheel's own gap
+             instead, a wheel that had been still for ten readings began turning
+             130ms early and was already showing its new digit while the one
+             below it was still counting down, which put 1.12 between 1.22 and
+             1.19, and 0.90 between 1.00 and 0.99. */
+          const span = Math.max(0.0002, time - times[Math.max(0, at - 1)]);
+          const turn = Math.min(span * 0.55, clickMax);
 
-          frames.push({ offset: time - click, transform: position(stop - 1), easing: PULSE_CLICK });
-          frames.push({ offset: time, transform: position(stop), easing: 'linear' });
+          frames.push({ offset: Math.max(previousTime, time - turn), transform: position(click - 1), easing: PULSE_CLICK });
+          frames.push({ offset: time, transform: position(click), easing: 'linear' });
           previousTime = time;
         }
 
-        frames.push({ offset: 1, transform: position(lastStop), easing: 'linear' });
+        frames.push({ offset: 1, transform: position(clicks), easing: 'linear' });
 
         animations.push(stack.animate(pulseTidyFrames(frames), {
-          duration: PULSE_DURATION,
+          duration,
           delay: order * PULSE_STAGGER,
           easing: 'linear',
           fill: 'both',
@@ -5640,7 +5799,7 @@ if (pulseStrips.length
       }
     });
 
-    if (!animations.length) return false;
+    if (!animations.length) return 0;
 
     // The true value stays in the accessible tree throughout; the wheels and the
     // static text around them are hidden from it, so no intermediate reading is
@@ -5666,8 +5825,8 @@ if (pulseStrips.length
       .catch(() => {});
 
     // finished does not resolve if the tab is hidden for the whole run.
-    window.setTimeout(settle, (order * PULSE_STAGGER) + PULSE_DURATION + 500);
-    return true;
+    window.setTimeout(settle, (order * PULSE_STAGGER) + duration + 500);
+    return 1;
   };
 
   const revealPulseStrip = (strip) => {
@@ -5685,7 +5844,7 @@ if (pulseStrips.length
     // remaining tiles would arrive late for no visible reason.
     let revealed = 0;
     values.forEach((el) => {
-      if (revealPulseValue(el, revealed)) revealed += 1;
+      revealed += revealPulseValue(el, revealed);
     });
   };
 
