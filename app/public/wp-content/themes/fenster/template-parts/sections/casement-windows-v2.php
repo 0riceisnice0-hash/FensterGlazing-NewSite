@@ -76,7 +76,7 @@ $styles = [
         'image' => $studio . 'cas-sash-proud-w.webp',
         'w' => 820,
         'h' => 857,
-        'focus' => '50% 80%',
+        'focus' => '50% 92%',
         'alt' => 'White uPVC casement window at a transom, the opening sash standing proud of the frame above a directly glazed fixed pane',
     ],
 ];
@@ -138,18 +138,19 @@ $anatomy = [
 ];
 
 $security_points = [
-    /* The Kenrick test figures used to sit up beside the photograph as their own
-       row of statistics, which gave the mechanism two blocks of copy and made the
-       chapter the longest on the page. Owner instruction, 2026-08-05: merge them
-       into these points, keep what a customer actually weighs, and let the
-       photograph be the feature instead. The cycles, the salt spray and the ten
-       years are here; the attribution moved with them, because they are Kenrick's
-       figures for the mechanism rather than ours for a finished window, and the
-       PAS 24 point below still says approvals belong to a tested whole window. */
-    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. The Excalibur strip drives claws and shoot bolts into keeps down the sash edge, so it is held along its length, not at the handle. Reinforcement is sized per window, because that is what the lock pulls against.'],
+    /* Owner instruction, 2026-08-05: security is the whole window, not the
+       mechanism with the glass as a footnote. So the lock keeps its place as one
+       part of five rather than a branded headline of its own, what it pulls
+       against is a point in its own right, and the glass is named for what it
+       actually does instead of trailing at the end as an upsell. The Kenrick
+       test figures live in the guarantee point; they are Kenrick's figures for a
+       mechanism, and the approval point says what belongs to a whole tested
+       window. */
+    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. The Kenrick Excalibur strip runs the length of the sash, and one turn of the handle throws steel shoot bolts into the frame and bi-directional claws into keeps down the sash edge, so the window is held into its seals along its whole length rather than at the handle.'],
+    ['name' => 'The frame it pulls against', 'copy' => 'A lock is only as good as what it is fixed into. Reinforcement is sized window by window, because a large dark sash on an exposed elevation is stiffened differently from a small one in a sheltered wall.'],
+    ['name' => 'The glass does half the work', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. That is the difference between a broken window and an open one, and it is the upgrade we would point at first on a ground floor or any window out of sight from the road.'],
     ['name' => 'Tested, and guaranteed ten years', 'copy' => 'Kenrick test the mechanism to 100,000 opening cycles and 240 hours of salt spray, beyond what BS EN 1670 asks, and guarantee it for ten years.'],
-    ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is what Part Q calls for on new dwellings and some extensions, so tell us early if your build is covered. The approval belongs to a tested complete window, not a profile name.'],
-    ['name' => 'Laminated glass, worth the upgrade', 'copy' => 'A bonded interlayer holds the pane together instead of letting it break through. The first upgrade we would point at on a ground floor, or any window out of sight from the road.'],
+    ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is what Part Q calls for on new dwellings and some extensions, so tell us early if your build is covered. The approval belongs to a tested complete window, not to a profile name or a lock on its own.'],
 ];
 /* Kenrick's own published figures for the Excalibur, taken from
    kenricks.co.uk/products/window-hardware/excalibur on 2026-08-04. They belong
@@ -377,6 +378,7 @@ $faq_schema = [
             <p class="fg-cas-note">
                 <a class="fg-cas-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
                 <a class="fg-cas-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>
+                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/handle-options/')); ?>"><?php esc_html_e('Handle options', 'fenster'); ?></a>
             </p>
         </div>
     </section>
@@ -400,7 +402,11 @@ $faq_schema = [
                 </figure>
                 <figure>
                     <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-flush-level-w.webp')); ?>" alt="<?php esc_attr_e('White uPVC flush casement window, four sashes closing level with the frame in one plane', 'fenster'); ?>" loading="lazy" width="820" height="857">
-                    <figcaption><strong><?php esc_html_e('Flush casement', 'fenster'); ?></strong><span><?php esc_html_e('Every sash closes level with the frame, in one plane, the way timber joinery sits.', 'fenster'); ?></span></figcaption>
+                    <?php /* Owner instruction, 2026-08-05: the link belongs in the
+                             flush card rather than at the foot of the section, where
+                             it read as a footnote to the comparison instead of the
+                             way on from the half of it people are choosing. */ ?>
+                    <figcaption><strong><?php esc_html_e('Flush casement', 'fenster'); ?></strong><span><?php esc_html_e('Every sash closes level with the frame, in one plane, the way timber joinery sits.', 'fenster'); ?></span><a class="fg-cas-link fg-cas-versus__link" href="<?php echo esc_url(home_url('/flush-casement-windows/')); ?>"><?php esc_html_e('See flush casements', 'fenster'); ?></a></figcaption>
                 </figure>
             </div>
 
@@ -423,7 +429,6 @@ $faq_schema = [
                 </tbody>
             </table>
             </div>
-            <p class="fg-cas-note"><a class="fg-cas-link" href="<?php echo esc_url(home_url('/flush-casement-windows/')); ?>"><?php esc_html_e('See flush casements', 'fenster'); ?></a></p>
         </div>
     </section>
 
@@ -496,30 +501,32 @@ $faq_schema = [
                 <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, what it pulls against, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
             </div>
         </div>
-        <?php /* The mechanism itself. Kenrick's studio photograph with the
-               backdrop and its drop shadow cut away, so the part floats on the
-               band and can drift against it. The drift is the shared
-               [data-fg-depth] controller, which is already clamped and is not
-               gated on an observer; at 0.15 the travel is about 27px, which
-               reads as depth without the seasick effect a heavier setting gave
-               on the about page. Keep the shadow in CSS, not baked into the
-               file, or it cannot sit on any other colour. */ ?>
-        <div class="container fg-cas-lock">
-            <div class="fg-cas-lock__stage" data-fg-depth="0.15">
-                <?php /* The arrival rides on this wrapper and the drift on the image
-                         inside it, so the two transforms never share an element. */ ?>
-                <div class="fg-cas-lock__arrive">
-                <img class="fg-cas-lock__art"
-                    src="<?php echo esc_url(fenster_generated_url($studio . 'cas-kenrick-excalibur.webp')); ?>"
-                    srcset="<?php echo esc_attr(fenster_generated_url($studio . 'cas-kenrick-excalibur-640w.webp') . ' 640w, ' . fenster_generated_url($studio . 'cas-kenrick-excalibur.webp') . ' 1100w'); ?>"
-                    sizes="(max-width: 860px) 76vw, 520px"
-                    alt="<?php esc_attr_e('Kenrick Excalibur multi-point window lock, showing the die-cast gearbox, the square spindle hole, the claws and the steel shoot bolts', 'fenster'); ?>"
-                    loading="lazy" width="1100" height="1182">
+        <?php /* Images left, copy right, which is the arrangement the owner
+                 preferred. The mechanism and the keep share the media column so
+                 the chapter reads as one band rather than a branded feature
+                 followed by a list. */ ?>
+        <div class="container fg-cas-security__grid">
+            <div class="fg-cas-security__media">
+                <?php /* Kenrick's studio photograph with the backdrop and its drop
+                         shadow cut away, so the part floats on the band. The shadow
+                         stays in CSS, not baked into the file, or it cannot sit on
+                         any other colour. The arrival rides the wrapper and the
+                         drift the image inside it, so the two never share a
+                         transform. */ ?>
+                <div class="fg-cas-lock__stage" data-fg-depth="0.15">
+                    <div class="fg-cas-lock__arrive" data-fg-lock-arrive>
+                        <img class="fg-cas-lock__art"
+                            src="<?php echo esc_url(fenster_generated_url($studio . 'cas-kenrick-excalibur.webp')); ?>"
+                            srcset="<?php echo esc_attr(fenster_generated_url($studio . 'cas-kenrick-excalibur-640w.webp') . ' 640w, ' . fenster_generated_url($studio . 'cas-kenrick-excalibur.webp') . ' 1100w'); ?>"
+                            sizes="(max-width: 860px) 76vw, 460px"
+                            alt="<?php esc_attr_e('Kenrick Excalibur multi-point window lock, showing the die-cast gearbox, the square spindle hole, the claws and the steel shoot bolts', 'fenster'); ?>"
+                            loading="lazy" width="1100" height="1182">
+                    </div>
                 </div>
-            </div>
-            <div class="fg-cas-lock__copy">
-                <p class="fg-cas-lock__brand"><?php esc_html_e('Kenrick Excalibur', 'fenster'); ?></p>
-                <p class="fg-cas-lock__lead"><?php esc_html_e('The mechanism inside the sash. One turn of the handle drives the whole strip at once, throwing steel shoot bolts into the frame and patented bi-directional claws into keeps down the sash edge. The gearbox is die-cast and unhanded, so the same mechanism serves a left hung sash and a right hung one.', 'fenster'); ?></p>
+                <?php /* Named here rather than as a heading. The mechanism is one of
+                         five things that make the window secure, not the subject of
+                         the chapter. */ ?>
+                <p class="fg-cas-security__caption"><?php esc_html_e('Kenrick Excalibur multi-point mechanism', 'fenster'); ?></p>
                 <figure class="fg-cas-lock__keep">
                     <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-security-keep.webp')); ?>"
                         alt="<?php esc_attr_e('Steel locking keep and reinforced rebate inside a white uPVC casement window frame', 'fenster'); ?>"
@@ -527,13 +534,7 @@ $faq_schema = [
                     <figcaption><?php esc_html_e('The keep it locks into', 'fenster'); ?></figcaption>
                 </figure>
             </div>
-        </div>
-        <?php /* The points run full width in two columns. With the strip photograph
-                 gone and the keep moved up beside the mechanism, this was a list in
-                 one narrow column beside 178px of empty space, which is what made
-                 the chapter no shorter after the cuts. */ ?>
-        <div class="container">
-            <dl class="fg-cas-list fg-cas-list--split">
+            <dl class="fg-cas-list">
                 <?php foreach ($security_points as $point) : ?>
                     <div>
                         <dt><?php echo esc_html($point['name']); ?></dt>
