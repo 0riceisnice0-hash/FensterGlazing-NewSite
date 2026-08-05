@@ -183,6 +183,22 @@ $faq_schema = [
         </figure>
     </section>
 
+    <?php
+    /* ---------- The stack begins ---------------------------------------------
+       The film is the base plate. It is the section chapter 01 rises over, so
+       01 gets the same treatment as 02 and 03 rather than arriving in ordinary
+       flow; without something anchored beneath it there is nothing for it to
+       cover. It suits the job: a full-width cinematic band, and it already
+       carries a solid background, so the overture scrolling away behind it is
+       hidden without the panel needing one of its own.
+
+       See the block in main.scss for how the sticky offset is derived and why
+       every panel after the first has to be opaque. ---------------------- */
+    ?>
+    <div class="fg-cas-stack" data-fg-chapter-stack>
+
+    <div class="fg-cas-stack__panel fg-cas-stack__panel--film">
+
     <?php /* The film, high on the page where a product film belongs. */ ?>
     <section class="fg-cas-film" aria-labelledby="fg-cas-film-title">
         <div class="container fg-cas-film__grid">
@@ -206,29 +222,20 @@ $faq_schema = [
         </div>
     </section>
 
+    </div><?php /* end the film plate */ ?>
+
     <?php
-    /* ---------- The three chapters, stacked -----------------------------------
+    /* ---------- The three chapters ---------------------------------------------
        01, 02 and 03 read as physical panels: each one anchors at the foot of the
        viewport once you have scrolled through it, and the next slides up over it.
-       That is `position: sticky; bottom: 0` plus a z-index ladder, done in CSS so
-       the browser owns the movement and it stays smooth in both directions. The
-       only JavaScript is the dim on the panel being covered.
 
        A panel is a chapter AND the sections it owns, because the chapters are not
        adjacent in the flow. Chapter 01's own lead paragraph names its run: the
        ways it opens, the two faces, the sixteen colours and the detail. So the
        comparison, the colour grid, the detail trio, the handles and the privacy
        glass card belong to 01, and the EnergyPlus tech banner belongs to 02.
-       Split any other way and the covering sequence breaks.
-
-       Every panel after the first has to be completely opaque or the panel
-       underneath shows through it mid-slide. 02 and 03 are dark already; 02 also
-       carries the tech banner, which sits on the page canvas, so the panel repaints
-       that canvas. See the note in main.scss for why that does not breach the
-       continuous-background rule in STYLE.md. -------------------------------- */
+       Split any other way and the covering sequence breaks. ---------------- */
     ?>
-    <div class="fg-cas-stack" data-fg-chapter-stack>
-
     <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
 
     <?php /* ---------- 01 VERSATILITY ---------- */ ?>

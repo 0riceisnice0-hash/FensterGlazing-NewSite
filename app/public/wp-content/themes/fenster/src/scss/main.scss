@@ -37089,9 +37089,11 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* ---- The three chapters, stacked -------------------------------------------
+/* ---- The chapters, stacked -------------------------------------------------
    01, 02 and 03 behave as physical panels: each anchors at the foot of the
-   viewport once it has been read, and the next slides up and covers it.
+   viewport once it has been read, and the next slides up and covers it. The film
+   band is the base plate beneath them, so 01 rises over something in the same way
+   02 and 03 do rather than arriving in ordinary flow.
 
    This is `position: sticky`, not a scroll-driven transform, and the distinction
    is the whole reason it feels expensive. The browser owns the movement, so it is
@@ -37118,8 +37120,18 @@ html.fg-blinds-reveal-locked {
    them a containing block for the fixed-attachment canvas below and blur the
    text on a pinned layer. Depth comes from the cast shadow and the dim instead.
    -------------------------------------------------------------------------- */
+/* `z-index: 0` makes this a stacking context, which confines the panel ladder
+   below to this element rather than letting values 1 to 4 compete in the root
+   context. The header, Legend and the lightbox all sit far above anyway, but the
+   consent dialog is `z-index: 1` and only rides above everything because it opens
+   with `showModal()` and lands in the top layer; on a browser old enough to take
+   the `setAttribute('open')` fallback in inc/consent.php it would not, and a panel
+   could paint over it. Containing the ladder costs nothing and removes that.
+   A stacking context does not create a containing block for fixed backgrounds, so
+   the viewport-anchored canvas on the panels below is unaffected. */
 .fg-cas-stack {
   position: relative;
+  z-index: 0;
 }
 
 .fg-cas-stack.is-stacked .fg-cas-stack__panel {
@@ -37130,15 +37142,20 @@ html.fg-blinds-reveal-locked {
   z-index: 1;
 }
 
-/* Each panel paints over the one before it. */
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--versatility { z-index: 1; }
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--energy { z-index: 2; }
-.fg-cas-stack.is-stacked .fg-cas-stack__panel--security { z-index: 3; }
+/* Each panel paints over the one before it. The film is the base plate: it is
+   what chapter 01 rises over, so 01 behaves like 02 and 03 instead of arriving in
+   ordinary flow. */
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--film { z-index: 1; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--versatility { z-index: 2; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--energy { z-index: 3; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--security { z-index: 4; }
 
 /* An incoming panel must be completely opaque or the panel beneath shows through
-   it while it travels. 03 is the dark security band and is opaque already. 02 is
-   dark for the EnergyPlus chapter but ends on the tech banner, which sits on the
-   page canvas, so the panel repaints that canvas underneath itself.
+   it while it travels. The film plate is opaque through its own section
+   background and 03 is the dark security band, so neither needs anything here.
+   01 sits on the page canvas throughout, and 02 is dark for the EnergyPlus
+   chapter but ends on the tech banner, which also sits on the canvas. Both
+   therefore repaint that canvas underneath themselves.
 
    This does not breach the continuous-background rule in STYLE.md. That rule
    exists because a second, *scrolling* copy of the gradient slides against the
@@ -37148,6 +37165,7 @@ html.fg-blinds-reveal-locked {
    writes to `:root`, so the two are pixel-identical at every scroll position and
    there is no seam to see. `.fg-heritage-door-page` already uses this exact pair
    for the same reason. Do not drop the `fixed` half. */
+.fg-cas-stack__panel--versatility,
 .fg-cas-stack__panel--energy {
   background: var(--fg-page-gradient);
   background-attachment: fixed;

@@ -5323,14 +5323,21 @@ if (chapterStack && !window.matchMedia('(prefers-reduced-motion: reduce)').match
 
   // Pin point per panel. Re-read on resize and whenever a panel's own height
   // changes; both are rare, and neither happens per frame.
+  const siteHeader = document.querySelector('.site-header');
+
   const measureChapterStack = () => {
     const viewport = Math.max(1, window.innerHeight);
+    // The header is sticky on desktop and fixed on mobile, so a panel pinned at
+    // zero puts its own first line behind it. Short panels stop just below it.
+    const headerHeight = siteHeader ? Math.round(siteHeader.getBoundingClientRect().height) : 0;
 
     stackPanels.forEach((panel) => {
       const height = panel.getBoundingClientRect().height;
-      // A panel shorter than the screen simply pins at the top; taller than the
-      // screen, which is the real case here, pins by its bottom edge.
-      const offset = Math.min(0, viewport - height);
+      // Taller than the screen, which is the case for the three chapters, pins by
+      // the bottom edge: `viewport - height` is negative and a `top` constraint
+      // only ever pushes a box down, so the panel reads in full first. Shorter
+      // than the screen, which the film plate is, pins under the header instead.
+      const offset = Math.min(headerHeight, viewport - height);
       panel.style.setProperty('--fg-stack-top', `${Math.round(offset)}px`);
     });
 
