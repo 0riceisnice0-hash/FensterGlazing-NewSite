@@ -84,7 +84,7 @@ $details = [
        holds no other bar photograph, so the slot is empty rather than filled
        from a sibling. Set `image` to a real Georgian close-up and the tile
        renders normally again. */
-    ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => '', 'w' => 900, 'h' => 675, 'alt' => 'Close up of Georgian bars set inside the sealed unit of a white uPVC casement window'],
+    ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => $base . 'casement-georgian-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Georgian bars set inside the sealed unit of a white uPVC casement window, the obscured glass reading unbroken across the bars'],
     ['name' => 'Astragal bars', 'copy' => 'A moulded bar bonded to the face of the glass, so it catches the light and throws a shadow.', 'image' => $base . 'casement-astragal-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of moulded astragal bars standing proud of the glass on a white uPVC bay window'],
     /* The horn photograph was wrong until 2026-08-05: `casement-mock-horn-900w`
        is a studio shot of a mullion meeting the cill and shows no horn at all.
