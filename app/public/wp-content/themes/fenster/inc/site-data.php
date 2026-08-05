@@ -397,7 +397,19 @@ function fenster_site_data(): array
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
             'secondary-glazing' => [
-                ['label' => 'U-value*', 'value' => 'From 1.8 W/m²K'],
+                /* The U-value claim was removed on 2026-08-05, owner instruction.
+                   It read "From 1.8 W/m²K" against a starred label that nothing
+                   on the route explained, and a secondary glazed figure depends
+                   entirely on the existing window it is fitted inside, so a
+                   single number could not be true of the job. Do not put a
+                   figure back here without one confirmed for this product.
+
+                   The tile is replaced rather than deleted because the strip
+                   only renders with four, and it states the thing that actually
+                   defines the product, in the words the page already uses:
+                   "sits inside the original window line". It is also gone from
+                   Legend, which reads its verified product facts from here. */
+                ['label' => 'Fitting', 'value' => 'Inside the existing window'],
                 ['label' => 'Colour choice', 'value' => 'Full RAL range'],
                 ['label' => 'Frame type', 'value' => 'Slim aluminium'],
                 ['label' => 'Guarantee', 'value' => '10 years'],

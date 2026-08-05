@@ -69,6 +69,22 @@ $has_both = $double !== '' && $triple !== '';
                 $label     = (string) ($usp['label'] ?? '');
                 $value     = (string) ($usp['value'] ?? '');
                 $is_uvalue = $double !== '' && stripos($label, 'U-value') === 0;
+
+                /* A route with no `glazing_u_values` entry never reaches the
+                   branch below, so a star written into its label in site-data
+                   was printed with nothing on the page to explain it. uPVC
+                   doors was the last one doing that: its 1.0 W/m²K is the
+                   triple glazed figure and the star is meant to say so.
+
+                   Rather than duplicate the note, the star is moved off the
+                   label and onto the figure, which is where every other route
+                   carries it, and the same one-line note is rendered under it.
+                   Owner instruction, 2026-08-05. */
+                $starred = ! $is_uvalue && substr($label, -1) === '*';
+                if ($starred) {
+                    $label = rtrim($label, '*');
+                    $value .= '*';
+                }
                 ?>
                 <?php if ($is_uvalue) : ?>
                     <li class="fg-product-pulse__glazing">
@@ -115,6 +131,9 @@ $has_both = $double !== '' && $triple !== '';
                     <li>
                         <small><?php echo esc_html($label); ?></small>
                         <strong><?php echo esc_html($value); ?></strong>
+                        <?php if ($starred) : ?>
+                            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable.', 'fenster'); ?></p>
+                        <?php endif; ?>
                     </li>
                 <?php endif; ?>
             <?php endforeach; ?>
