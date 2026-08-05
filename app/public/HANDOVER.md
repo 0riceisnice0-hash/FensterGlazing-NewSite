@@ -8,6 +8,7 @@ Use:
 
 - `AI.md` for coding rules and QA standards.
 - `AUDIT.md` for the 2026-07-03 master site audit, launch-blocker remediation status and remaining backlog.
+- `SEO-LEAD-AUDIT-2026-08-05.md` for the launch measured against Search Console, the rank-tracker read and the dashboard conversion funnel. It is the current source for what organic traffic does after it lands.
 - `STYLE.md` for site-wide visual styling, continuous background rules, section rhythm and mobile design expectations.
 - `HOMEPAGE.md` for homepage-specific design and implementation context.
 - `PROGRESS.md` for dated progress reports.
