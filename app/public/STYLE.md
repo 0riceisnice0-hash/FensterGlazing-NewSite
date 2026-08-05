@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-08-04
+Last updated: 2026-08-05
 
 This file is the source of truth for how the site should look and feel.
 
@@ -23,6 +23,16 @@ Five pages are the standard. When this file and one of them disagree, look at th
 - `/sliding-sash-windows/` — the richer product page: model comparison, spec comparison, image-led detail sections.
 - `/heritage-aluminium-doors/` — a focused single-system product page.
 - `/roof-lanterns/` — hero pattern and image-led proof.
+
+`/casement-windows/` is deliberately **not** on that list and is a sanctioned
+exception. The owner's instruction on 2026-08-04 was to follow this file loosely
+and ignore it where it constrains, because the house product template was not
+serving the site's most-viewed page: he asked for a car maker's register rather
+than a double glazing one. So it runs its own `.fg-cas` namespace, one display
+size, full-bleed photography, dark technical chapters and no cards or drop
+shadows. **Do not "fix" it back towards this document**, and do not treat it as
+a new standard to copy either until he says so — it is one page with one
+brief. If you are changing it, read the casement section of `HANDOVER.md` first.
 
 Two cautions before copying from them:
 

@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-Last updated: 2026-08-04
+Last updated: 2026-08-05
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -18,6 +18,7 @@ Use:
 ## Important Updates
 
 - **The live SHA lives in `LIVECHANGES.md` and nowhere else.** This line used to carry its own copy and was three days and four releases out of date by 2026-08-04, while `HANDOVER.md` and `nick.md` each carried a different stale one. One pointer, one file. **Re-establish live by checksum immediately before any deploy anyway**, on more than one file and on files the candidate commits actually differ in: three of five once tied across two candidates and only two separated them.
+- **The casement rebuild is finished on test and waiting on the owner.** `main` is ahead of live by 28 commits and 42 theme files (`4c85f4a..e697b12`), all of it unapproved, and a release cut from `main` ships every one of them. It is not confined to `/casement-windows/`: `single_u_value_routes` changes the key-specification strip on **seven** product pages and both compiled assets changed in the range. Read the "ahead of live" entry at the top of `LIVECHANGES.md` before cutting anything.
 - **`/patio-doors/` and `/handle-options/` carry the sliding patio handle** as of 2026-08-02: `patio_handles` in `inc\site-data.php`, assets under `assets\images\products\handles-patio`, five Mila ProLinea finishes. It is a separate family from `door_handles` because a slider takes a D-pull rather than a lever, and it is deliberately not on `/aluminium-sliding-doors/`. See the Patio Handle Rule in `AI.md`.
 - **Deploy trap — read before any live deploy.** The live deploy one-liner in `LIVECHANGES.md` runs `git reset --hard origin/main`, so it ships *everything on `main`*, not the specific commit you verified. On 2026-07-18 a deploy of the small Legend iframe fixes swept fourteen unapproved composite-door commits onto production with them. If you need to release one approved commit, reset the server repo cache to that exact SHA instead of `origin/main`.
 - GitHub is live at `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`. It versions the custom theme and docs only, not the full WordPress install.
@@ -152,6 +153,8 @@ The owner requires every completed change to go to the password-protected test s
 - Visual work must follow `STYLE.md`, especially the continuous page background rule.
 - Mobile and desktop must be designed together.
 - Desktop-only cinematic effects need mobile/reduced-motion fallbacks.
+- **Scroll-drift is a shared controller, not a per-page script.** Put `data-fg-depth="0.04"`–`0.15` on a container and `transform: translateY(var(--fg-parallax-y))` on the child that should move; `src\js\main.js` writes the variable, already clamps to one viewport, and is deliberately not gated on an IntersectionObserver, which is what broke a hand-rolled parallax on 2026-07-29. It has **no reduced-motion check of its own**, so every consumer needs its own `@media (prefers-reduced-motion: reduce) { transform: none; }`. Never write a second parallax.
+- **A page-namespaced element selector outranks a bare class.** `.fg-cas p` is `(0,1,1)` and sets a font size, a margin and a max-width, so a new `.fg-cas-thing` inside it silently loses all three. Qualify new typographic rules with the namespace. The same applies to any element also carrying `.container`: use `margin-top`/`margin-bottom` longhands, because a `margin` shorthand resets the auto margin that centres it.
 - Product + location generated routes use the central matrix in `inc\generated-pages.php`: 13 towns x 21 sensible residential products. They render through `template-parts\sections\location-service.php` with product/location-specific copy and a hero enquiry form. Keep these pages on that shared template rather than reviving scraped per-page layouts.
 
 ## Current Navigation

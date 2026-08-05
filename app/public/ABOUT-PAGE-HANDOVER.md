@@ -77,6 +77,14 @@ Bugs a single glance would have caught, that measurement did not:
   it moves up to 99px and he said it made him feel drunk scrolling. The honest
   read is that heavy multi-image parallax is wrong here. Find a better idea.
 
+  **This is about several images at once, not about parallax as a technique.**
+  The owner asked for one himself on 2026-08-04, on the Kenrick Excalibur
+  cut-out in the casement security band, and it was accepted: a single object
+  at `data-fg-depth="0.15"`, about 27px, moving against a flat colour with
+  nothing else on screen moving. The difference is one subject and a still
+  background. Do not read this bullet as a site-wide ban, and do not put a
+  second moving element in a viewport with one that already moves.
+
 ## What he has asked for
 
 - Something that looks genuinely designed and "sick", in his words.

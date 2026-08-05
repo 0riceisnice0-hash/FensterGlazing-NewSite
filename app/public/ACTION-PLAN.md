@@ -19,11 +19,25 @@ Verified healthy while auditing: zero horizontal overflow on any tested page at 
 | `/sliding-sash-windows/` | 1,818 | 19 | **21,488px (~25 phone screens)** | Wall of text on mobile |
 | `/composite-doors/` | 1,446 | 23 | 17,294px | Long but better image rhythm |
 | `/upvc-doors/` | 1,231 | 16 | 14,983px | Wrong images, self-describing copy |
-| `/casement-windows/` | 1,132 | **8** | 14,022px | Most text-heavy ratio of the product set |
+| ~~`/casement-windows/`~~ | ~~1,132~~ | ~~**8**~~ | ~~14,022px~~ | **Superseded by the 2026-08-04 rebuild — see below** |
+| `/casement-windows/` (rebuilt, on test at `e697b12`) | 2,715 | 44 | **22,283px (~26 phone screens)** | Now the longest page on the site |
 | `/double-glazing-bletchley/` (matrix example) | 1,115 | 6 | 11,984px | 1,100 words, 6 images |
 | `/contact/` | 723 | **1** | 7,086px | Contact hub has almost no imagery left |
 | `/windows-milton-keynes/` | 565 | 10 | 5,960px | Thin for a money page |
 | `/book-a-consultation/` | 589 | 1 | 4,768px | OK (approved composition) |
+
+**The casement row was re-measured on 2026-08-05 and it inverts this table's
+worst case.** The rebuild answered the owner's brief — more imagery, a car
+maker's register, versatility and EnergyPlus and security each given room — and
+the cost is length: 22,283px at 390px wide, past `/sliding-sash-windows/` and
+onto the top of this list, on the site's most-viewed page. Two cautions before
+anyone acts on point 4 below. The image counts are **not** comparable: the
+original column was a hand-picked "meaningful images" judgement and 44 is every
+`<img>` inside `.fg-cas`, which includes the colour and handle grids. And the
+length is the brief, not an accident — the owner rejected a shorter, more
+interactive version of this page on 2026-08-04. Condensing it is an owner
+decision, not a tidy-up. Measured with the harness in `nick.md`; headless
+Chrome clamps at 500px, so this is through a 390px iframe.
 
 ---
 
@@ -82,14 +96,14 @@ Plan:
 
 ## Theme 3 — 60/40 text-to-image rebalance + mobile length
 
-The product template front-loads its images (hero, product info, hub, gallery all in the top 40%) and then runs six consecutive text-only sections (specification choices → handles → FAQs → process rail → quote embed → enquiry form → related links). Casement: 1,132 words, 8 images. Matrix pages: worse.
+The product template front-loads its images (hero, product info, hub, gallery all in the top 40%) and then runs six consecutive text-only sections (specification choices → handles → FAQs → process rail → quote embed → enquiry form → related links). Casement: 1,132 words, 8 images. Matrix pages: worse. **This no longer describes `/casement-windows/`**, which was rebuilt on 2026-08-04 off the shared product template and interleaves its imagery all the way down; it does still describe the rest of the product set and the matrix pages.
 
 Actions, in order of impact:
 
 1. **Deduplicate before decorating.** Much of the length is repetition, not information (see Theme 4 for the sash page). Cutting repeated sections improves the ratio without needing a single new photo.
 2. **Compress the shared back half.** The order-process rail (4 numbered cards + heading + CTA) says nothing product-specific and appears on every page; make it a compact strip. The "Specification choices" cards can be one row. FAQ answers can stay but with tighter intros.
 3. **Add one image moment in the back half** once accurate photos exist (an installed shot beside the FAQs or process strip), so pages do not end with ~8 screens of unbroken text.
-4. **Mobile-specific condensing for the worst pages** (sash 21.5k px, composite 17.3k, uPVC doors 15k, casement 14k — target roughly half): comparison tables become swipeable/toggle components rather than stacked cards; furniture/hardware card sets become a single rail; related-links band shows fewer items behind a "More areas" toggle.
+4. **Mobile-specific condensing for the worst pages** (casement 22.3k px as rebuilt, sash 21.5k, composite 17.3k, uPVC doors 15k — target roughly half, but see the note under the table: casement's length is the owner's brief and shortening it is his call): comparison tables become swipeable/toggle components rather than stacked cards; furniture/hardware card sets become a single rail; related-links band shows fewer items behind a "More areas" toggle.
 5. `/contact/` has one image left (tiny showroom strip); restore the showroom photo as a real visual anchor.
 
 ---

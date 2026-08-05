@@ -1,6 +1,6 @@
 # Nick's Laptop (macOS)
 
-Last updated: 2026-08-04
+Last updated: 2026-08-05
 
 ## Read this first
 
@@ -191,6 +191,7 @@ Owner-confirmed product facts, worth not re-deriving:
 
 - Casement windows are the 70mm Liniar EnergyPlus system, sculptured only. **Glazing is 28mm double or 36mm triple. 40mm is not offered on any uPVC**, which is why 0.95 W/m2K on the 36mm triple is the ceiling and the page must not quote Liniar's lower published figure.
 - The uPVC foil range is sixteen colours. **The colour is the external face, with the same colour or smooth white inside.** Mixing freely is not offered and is deliberately not mentioned either way.
+- **The casement multi-point lock is the Kenrick Excalibur**, confirmed 2026-08-04. Kenrick's published figures for it are on `/casement-windows/` and attributed to Kenrick. "PAS 24 capable" is their wording and stays that way: the approval belongs to a tested complete window, not to a component. Full terms in `AI.md`.
 - Smooth white is RAL 9003 and is the unfoiled profile, so it has no swatch photograph.
 - uPVC doors and patio doors share the window foil range. Sliding sash is Roseview and secondary glazing is aluminium, so neither carries it.
 
