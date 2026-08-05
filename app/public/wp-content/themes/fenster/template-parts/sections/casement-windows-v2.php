@@ -581,7 +581,7 @@ $faq_schema = [
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('Finishes', 'fenster'); ?></p>
                 <h2 id="fg-cas-ch5-title" class="fg-cas-display"><?php esc_html_e('Colour, handles and glass.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Sixteen colours outside, handles in a range of their own, and the glass that decides what the room gives away. All of it priced with the window rather than added to it.', 'fenster'); ?></p>
+                <p class="fg-cas-lead"><?php esc_html_e('Sixteen colours outside, matched or white inside. A choice of handle finishes, and obscured glass for the rooms that need privacy. All of it priced with the window, not added afterwards.', 'fenster'); ?></p>
             </div>
         </div>
     </section>
