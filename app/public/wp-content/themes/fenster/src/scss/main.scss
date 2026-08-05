@@ -36349,6 +36349,11 @@ html.fg-blinds-reveal-locked {
   height: var(--fg-reel-h);
   overflow: hidden;
   text-align: right;
+  /* One wheel per digit, so a column has to be the same width whichever digit
+     is showing. Without tabular figures a 1 is narrower than an 8 and the text
+     after the number would creep as the wheels turn. */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
   perspective: 460px;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
           mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);

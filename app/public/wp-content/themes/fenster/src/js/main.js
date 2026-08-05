@@ -5542,37 +5542,67 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
         return;
       }
 
-      const cells = [...counted, segment.number];
-      const last = cells.length - 1;
+      const readings = [...counted, segment.number];
+      const last = readings.length - 1;
       // Counting down means arriving from above, which is the stack travelling
       // down, which is the cells in reverse with the travel run the other way.
-      if (descending) cells.reverse();
+      if (descending) readings.reverse();
       const finalIndex = descending ? 0 : last;
 
-      const reel = document.createElement('span');
-      reel.className = 'fg-pulse-reel';
-      reel.style.setProperty('--fg-reel-h', `${lineHeight}px`);
-      reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
-      reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
-      reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
-      reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
+      /* One wheel per digit, not one per number. Owner instruction, 2026-08-05:
+         counting 12 to 13 should turn the 2 and leave the 1 alone, the way a
+         mechanical counter does. So the readings are stacked into columns and a
+         column only becomes a wheel if its character actually changes; a digit
+         that holds the same value throughout is printed as plain text and never
+         moves, and so is the decimal point.
 
-      const stack = document.createElement('span');
-      stack.className = 'fg-pulse-reel__stack';
+         Readings are padded on the left, because a counter aligns on its units.
+         A shorter reading leaves that column blank, so the tens wheel of "16"
+         arrives partway through rather than showing a leading zero. */
+      const width = segment.number.length;
+      const padded = readings.map((reading) => reading.padStart(width, ' '));
+      let turned = 0;
 
-      cells.forEach((text, index) => {
-        const cell = document.createElement('span');
-        cell.className = 'fg-pulse-reel__cell';
-        cell.textContent = text;
-        // Distance from the final cell, whichever end of the stack it sits at.
-        // The final one is 0, so it lies flat and renders sharp.
-        cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalIndex)));
-        stack.appendChild(cell);
-      });
+      for (let column = 0; column < width; column += 1) {
+        const chars = padded.map((reading) => reading[column]);
+        const settledChar = segment.number[column];
 
-      reel.appendChild(stack);
-      shell.appendChild(reel);
-      stacks.push({ reel, stack });
+        // A decimal point, or a digit that never changes: nothing to turn.
+        if (!/\d/.test(settledChar) || chars.every((char) => char === chars[0])) {
+          shell.appendChild(document.createTextNode(settledChar));
+          continue;
+        }
+
+        const reel = document.createElement('span');
+        reel.className = 'fg-pulse-reel';
+        reel.style.setProperty('--fg-reel-h', `${lineHeight}px`);
+        reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
+        reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
+        reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
+        reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
+
+        const stack = document.createElement('span');
+        stack.className = 'fg-pulse-reel__stack';
+
+        chars.forEach((char, index) => {
+          const cell = document.createElement('span');
+          cell.className = 'fg-pulse-reel__cell';
+          cell.textContent = char;
+          // Distance from the final cell, whichever end of the stack it sits at.
+          // The final one is 0, so it lies flat and renders sharp.
+          cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalIndex)));
+          stack.appendChild(cell);
+        });
+
+        reel.appendChild(stack);
+        shell.appendChild(reel);
+        stacks.push({ reel, stack });
+        turned += 1;
+      }
+
+      // Every column held steady, so nothing was built for this number. The
+      // text is already appended column by column above.
+      if (turned === 0) return;
     });
 
     if (!stacks.length) return false;
