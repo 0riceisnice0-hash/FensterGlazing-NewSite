@@ -50,6 +50,10 @@ function fenster_case_studies(): array
     $colour_anthracite = $colour_link('aluminium', 'anthracite-grey');
     $colour_anthracite_upvc = $colour_link('upvc', 'anthracite-grey');
     $colour_white = $colour_link('upvc', 'white');
+    // Black Brown is a real Liniar foil, RAL 8022, in the uPVC palette in
+    // site-data.php. The slug follows the same sanitize_title derivation the
+    // other uPVC deep links here already rely on.
+    $colour_black_brown = $colour_link('upvc', 'black-brown');
 
     // The fitters who worked on each job. Each entry links to that person's
     // anchor on Meet the Team, so clicking a name scrolls to their profile.
@@ -646,6 +650,82 @@ function fenster_case_studies(): array
             'seo' => [
                 'title_tag' => 'uPVC Casement Windows Case Study, Leighton Buzzard | Fenster Glazing',
                 'meta_description' => 'A real Fenster project in Leighton Buzzard: crisp white Liniar casement windows replacing tired units for warmer, brighter rooms.',
+            ],
+        ],
+
+        /* Owner's own job, photographed over two years: the rear "before" is from
+           September 2023, the back door October 2024, the front elevation and the
+           rear flush windows August 2026. The install itself was February 2024.
+
+           Three professional D3300 frames sit in the same folder and are held out
+           pending confirmation, not ruled out. They were shot on 2026-01-20, two
+           years after the install and within 45 minutes of each other, and one of
+           them shows a white outer frame against this house's black externals.
+           They were first held out because they showed black internal faces where
+           the video showed white, but the owner has since confirmed the house is
+           black inside downstairs and white upstairs, so that objection is gone
+           and only the white frame and the date remain. This page's promise is
+           that every photograph is this installation, so they stay out until that
+           is established rather than in on the balance of probability.
+
+           Colour is owner-stated: black brown externally front and back, black
+           internally downstairs with black handles, white upstairs. The video only
+           ever showed an upstairs window, which is why reading the internal colour
+           off it gave the wrong answer for half the house. */
+        'flush-casement-windows-and-composite-door-wolverton' => [
+            'title' => 'Flush casement windows and a composite door, Wolverton',
+            'location' => 'Wolverton, Milton Keynes',
+            'type' => 'Residential',
+            'date' => '2024-02-01',
+            'summary' => 'Black brown flush casements, a composite front door and a uPVC back door on a 1930s Wolverton semi, as part of a full restyle.',
+            'lead' => 'We replaced every window and both doors on this 1930s Wolverton semi, in black brown against a white elevation, while the owners restyled the rest of the house around them.',
+            'products' => [
+                ['label' => 'Flush casement windows', 'url' => $flush],
+                ['label' => 'Composite doors', 'url' => home_url('/composite-doors/')],
+                ['label' => 'uPVC doors', 'url' => home_url('/upvc-doors/')],
+            ],
+            'colour' => ['label' => 'Black brown (RAL 8022)', 'url' => $colour_black_brown],
+            'specs' => [
+                ['label' => 'Products', 'value' => 'Flush casement windows, a composite front door and a uPVC back door'],
+                ['label' => 'System', 'value' => 'Liniar 70mm flush sash uPVC'],
+                ['label' => 'Colour', 'value' => 'Black brown (RAL 8022) outside. Black inside downstairs, white upstairs'],
+                ['label' => 'Energy rating', 'value' => 'A+ (1.2 W/m²K), 28mm double glazed'],
+            ],
+            'overview' => [
+                'The house came to us with white frames and a pink bow motif worked into the leaded glass, in the front door and in the bay alongside it. It is a period detail that dates a house very precisely, and it was the thing the owners most wanted gone. The rest of the frontage was cream render and white uPVC that had done its years.',
+                'We fitted <a href="' . $flush . '">flush casement windows</a> throughout, on the Liniar 70mm flush sash system, where the sash closes level with the outer frame instead of standing proud of it. That flat face is what makes a uPVC window read like painted joinery from the pavement, which matters more than usual on a 1930s bay: the curved run of a bay shows up a stepped sash from right across the road. They are A+ rated and reach 1.2 W/m²K with a 28mm double glazed unit. The finish is <a href="' . $colour_black_brown . '">black brown</a>, RAL 8022, on every external face front and back. Inside, the house is split by floor: black downstairs with black handles to match the living rooms, white upstairs to keep the bedrooms bright. It costs nothing to specify a window that way and it is worth knowing you can, because most people assume the inside has to be one colour.',
+                'The front door is a <a href="' . home_url('/composite-doors/') . '">composite door</a> in the same black brown, with a long glazed sidelight to keep light in the hall now the leaded panel has gone, and a <a href="' . home_url('/upvc-doors/') . '">uPVC door</a> serves the back between two flush casements. The chequerboard tiling at the threshold is the original and was kept.',
+                'Worth saying plainly, because the after photographs show it: the render was painted, the drive block paved and the garden landscaped as part of the same restyle, and none of that was our work. We did the windows and the doors. The colour was chosen knowing the walls were going white, which is the part of the job that needed us and the owners to agree early rather than in sequence.',
+            ],
+            'installed' => [
+                'Liniar 70mm flush casement windows throughout',
+                'Black brown externally, front and back',
+                'Black inside downstairs with black handles, white upstairs',
+                'Composite front door with a glazed sidelight',
+                'uPVC back door between two flush casements',
+                'A+ rated, 28mm double glazed',
+            ],
+            'installers' => [$fitter_tom, $fitter_johnnie],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-wolverton-restyle.mp4',
+                'poster' => $img . 'cs-wolverton-restyle-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Video of the finished black brown flush casement windows and composite front door on the Wolverton semi',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-wolverton-restyle-front-before.jpg', 'caption' => 'Before: cream render, white frames, and the pink bow motif in the bay glass.'],
+                ['src' => $img . 'cs-wolverton-restyle-front-after.jpg', 'caption' => 'After: black brown flush casements across the bay and the front elevation.'],
+                ['src' => $img . 'cs-wolverton-restyle-door-before.jpg', 'caption' => 'Before: the old front door, with the same pink bow worked into the leaded panel.'],
+                ['src' => $img . 'cs-wolverton-restyle-door-after.jpg', 'caption' => 'After: the composite front door in black brown, with a glazed sidelight. The chequerboard threshold is the original.'],
+                ['src' => $img . 'cs-wolverton-restyle-rear-before.jpg', 'caption' => 'Before: the rear extension in bare brick, with white uPVC.'],
+                ['src' => $img . 'cs-wolverton-restyle-rear-after.jpg', 'caption' => 'After: the same elevation, with the garden and paintwork done by others as part of the restyle.'],
+                ['src' => $img . 'cs-wolverton-restyle-rear-doors.jpg', 'caption' => 'The uPVC back door, set between two flush casements.'],
+                ['src' => $img . 'cs-wolverton-restyle-flush-rear.jpg', 'caption' => 'The flush sash line at the rear, where the sash closes level with the frame.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-wolverton-restyle-card.jpg', 'caption' => 'Black brown flush casement windows and a composite front door on a 1930s Wolverton semi.'],
+            'seo' => [
+                'title_tag' => 'Flush Casement Windows and Composite Door Case Study, Wolverton | Fenster Glazing',
+                'meta_description' => 'A real Fenster project in Wolverton, Milton Keynes: black brown Liniar flush casement windows, a composite front door and a uPVC back door on a 1930s semi.',
             ],
         ],
 
