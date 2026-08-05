@@ -412,7 +412,7 @@ $faq_schema = [
             <span class="fg-cas-num" aria-hidden="true">03</span>
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch3-title" class="fg-cas-display"><?php esc_html_e('Held shut along the sash, not at the handle.', 'fenster'); ?></h2>
+                <h2 id="fg-cas-ch3-title" class="fg-cas-display"><?php esc_html_e('Secure as standard, and tested to prove it.', 'fenster'); ?></h2>
                 <p class="fg-cas-lead"><?php esc_html_e('Security in a window is a system: the lock, what it pulls against, the glass, and the test the finished window passed. A profile name on its own proves none of it.', 'fenster'); ?></p>
             </div>
         </div>
@@ -581,7 +581,7 @@ $faq_schema = [
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('Finishes', 'fenster'); ?></p>
                 <h2 id="fg-cas-ch5-title" class="fg-cas-display"><?php esc_html_e('Colour, handles and glass.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Sixteen colours outside, a handle chosen to match, and the glass that decides what the room gives away. All of it priced with the window rather than added to it.', 'fenster'); ?></p>
+                <p class="fg-cas-lead"><?php esc_html_e('Sixteen colours outside, handles in a range of their own, and the glass that decides what the room gives away. All of it priced with the window rather than added to it.', 'fenster'); ?></p>
             </div>
         </div>
     </section>
@@ -600,7 +600,7 @@ $faq_schema = [
             <div class="fg-cas-section-head">
                 <div>
                     <p class="fg-cas-eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
-                    <h2 id="fg-cas-proof-title" class="fg-cas-display"><?php esc_html_e('Casements we have fitted.', 'fenster'); ?></h2>
+                    <h2 id="fg-cas-proof-title" class="fg-cas-display"><?php esc_html_e('Casements, fitted by us.', 'fenster'); ?></h2>
                 </div>
                 <p>
                     <span class="fg-cas-proof__desktop"><?php esc_html_e('Every photograph here is a Fenster installation, taken on the day we finished. Click any of them for a closer look.', 'fenster'); ?></span>
