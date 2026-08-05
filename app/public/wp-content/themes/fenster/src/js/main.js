@@ -5404,43 +5404,49 @@ if (chapterStack && !window.matchMedia('(prefers-reduced-motion: reduce)').match
 }
 
 /* ---- Key specifications: the values arrive on a drum --------------------------
-   Each value is revealed the way a precision instrument settles rather than by
-   fading in: a short stack of readouts travels up through a masked window and
-   the true value lands flat. It runs once, when the strip first reaches the
-   viewport, and the strip is completely static before and after.
+   Each value is revealed the way a mechanical counter settles rather than by
+   fading in. It runs once, when the strip first reaches the viewport, and the
+   strip is completely static before and after.
 
-   Three decisions are load-bearing.
+   The mechanism is one wheel per digit, and each wheel is driven by its own
+   keyframes. That second half is the part that matters and it is why this is
+   not a CSS transition.
 
-   The whole value is one drum, not one drum per digit. Per-character reels look
-   more like an odometer but they need every character in its own box, which
-   breaks wrapping: "Any RAL colour" has to wrap between words, and a row of
-   character boxes wraps anywhere. One drum per value wraps normally, keeps the
-   baseline exactly where it was, and works the same for a value with no digits.
+   A transition moves a wheel continuously from its first cell to its last over
+   the whole run. A column that is mostly the same digit therefore still scrolls,
+   sliding a stack of identical glyphs past the window, and the digit reads as
+   permanently drifting instead of standing still. On a real odometer the tens
+   wheel does not creep while the units spins: it sits dead still and rotates
+   once, at the carry.
 
-   The recede is a fixed rotateX per cell, keyed to that cell's distance from the
-   final one, so the last cell is `rotateX(0)` and renders perfectly sharp. A
-   real rotating cylinder would need per-frame work and would leave the resting
-   text on a 3D layer, which softens small type: the one thing a premium strip
-   cannot afford. This is a stylisation that stays crisp where it matters.
+   So each wheel is given keyframes that hold, click, hold. Its column is
+   collapsed to the readings where that digit actually changes, and a rotation is
+   scheduled only at those moments. Counting 1.8 down to 1.0, the units wheel
+   holds "1" for ninety per cent of the run and clicks to "0" at the end; the
+   tenths wheel clicks nine times; a wheel with nothing to do never moves and is
+   not built at all.
 
-   The markup is restored to plain text once it settles. That returns the strip
-   byte-for-byte to what it was, drops the mask off the resting value so nothing
-   is softened at its top and bottom edge, and leaves nothing animating.
+   The readings themselves are spaced on an ease-out curve, so the whole readout
+   spins quickly and brakes onto its figure. That curve lives in the schedule
+   rather than in the easing, because the easing now belongs to the individual
+   clicks.
 
-   Width and height are pinned from the real rendering before the content is
-   swapped, so an intermediate readout that is wider or taller than the true one
-   cannot reflow the tile mid-animation. */
+   The markup is restored to plain text once everything settles, which returns the
+   strip byte-for-byte to what it was, drops the mask off the resting value and
+   leaves nothing animating. */
 const pulseStrips = [...document.querySelectorAll('.fg-product-pulse')];
 
-if (pulseStrips.length && 'IntersectionObserver' in window) {
+if (pulseStrips.length
+  && 'IntersectionObserver' in window
+  && typeof Element.prototype.animate === 'function') {
   const pulseReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  /* Slower than it was twice over, owner instruction 2026-08-05: at a shorter
-     duration the wheels read as a blur rather than as digits. Sixteen readings
-     over 1800ms is about 110ms a step averaged, and the curve spends most of
-     that on the last few, so the end is legible even though the start spins. */
-  const PULSE_DURATION = 1800;
-  const PULSE_STAGGER = 150;
-  const PULSE_STEPS = 16;
+
+  const PULSE_DURATION = 1800;   // slow enough to read a digit, twice asked for
+  const PULSE_STAGGER = 150;     // between tiles
+  const PULSE_STEPS = 16;        // readings before the settled one
+  const PULSE_BRAKE = 2.2;       // how hard the readings bunch toward the end
+  const PULSE_CLICK = 'cubic-bezier(0.45, 0, 0.15, 1)';
+  const PULSE_CLICK_MAX = 0.1;   // longest a single click may take, as a fraction
   const PULSE_NUMBER = /\d+(?:\.\d+)?/;
   /* A number sitting immediately after an acronym is part of a name, not a
      quantity: PAS 24, RAL 7016, BS EN 1670. Those must not count, because
@@ -5449,94 +5455,71 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
      "Up to 7 panes" and "From 1.8 W/m²K" turn like any other readout. */
   const PULSE_NAMED = /(?:^|\s)[A-Z]{2,}\.?\s*$/;
 
-  /* Only the number moves. Owner instruction, 2026-08-05: putting the whole
-     line of text on the drum moved "W/m²K" and " options" along with the
-     figure, which reads as a page element sliding. A counter moves its digits
-     and leaves the dial around them alone, so the value is split into a static
-     prefix, a drum holding just the number, and a static suffix.
+  /* When reading `index` of `total` is on screen, as a fraction of the run.
+     Ease-out, so the readings fly past at the start and space out at the end. */
+  const pulseReadingTime = (index, total) => (
+    total <= 0 ? 1 : 1 - Math.pow(1 - (index / total), 1 / PULSE_BRAKE)
+  );
 
-     A value with no number in it is not animated at all, for the same reason.
-     "A+ rated" has nothing to count, and sliding it into place was motion for
-     its own sake.
+  /* The run is long on purpose: the higher columns have to carry, the way a real
+     counter does, and that only happens across a range wide enough to cross
+     them. Over a long range the units changes on nearly every reading, the tens
+     a handful of times and the hundreds once, so each wheel turns at its own
+     rate.
 
-     The readout counts to its value; it does not shuffle to it. Randomised
-     digits were the first attempt and read as a fruit machine. Stepping the
-     number evenly toward the target is what an odometer does, and the
-     deceleration in the transform is what turns it into a mechanism braking.
-
-     Direction carries meaning. A U-value counts DOWN onto its figure and
-     arrives from above, because lower is better. Everything else counts up
-     from below.
-
-     Deterministic throughout: no Math.random, so the same page produces the
-     same intermediates twice and a measurement of it means something. */
+     No reading ever passes the target, so a figure we do not claim is never on
+     screen: counting up approaches from below and stops, counting down from
+     above and stops. Deterministic throughout, no Math.random, so the same page
+     produces the same readings twice and measuring it means something. */
   const pulseSequence = (numberText, descending) => {
-    /* Only the last digit varies. Everything to its left is repeated
-       identically in every reading, so those columns never become wheels and
-       the figure holds still around the one that is settling: 1.9 to 1.0 turns
-       the tenths and leaves the 1 alone.
-
-       The first attempt scaled the whole number instead, starting at 1.75 times
-       the target counting down. It produced a correct per-digit build and an
-       invisible effect, because over 1.66 to 0.95 every digit changes, so every
-       wheel turned and it looked exactly like the whole number moving.
-
-       The run is long on purpose, owner instruction 2026-08-05: the higher
-       columns should clock over as well, the way a real counter carries. Over a
-       long range the units wheel changes on nearly every reading, the tens a
-       handful of times and the hundreds once or not at all, so each wheel turns
-       at its own rate and the carries are what sell it as a mechanism.
-
-       A short range was the previous attempt and it went too far the other way:
-       varying only the last digit left every other column dead. The two have to
-       be read together, because per-digit wheels with a short range is a single
-       ticking digit, and a long range with one drum for the whole number is the
-       entire figure sliding. It needs both.
-
-       No reading ever passes the target, so a value we do not claim is never on
-       screen: counting up approaches from below and stops, counting down from
-       above and stops. This also means a figure ending in 0 needs no special
-       case, because counting up to 10 reaches its 0 honestly. */
     const target = parseFloat(numberText);
     if (!Number.isFinite(target) || target === 0) return null;
 
     const decimals = (numberText.split('.')[1] || '').length;
 
-    /* The drum is only as wide as the figure that lands, so a reading must
-       never be wider or it would clip. Counting up is safe by definition;
-       counting down is capped at the largest number of the same digit count,
-       so 0.95 can start at 1.81 and a 9.0 could not start at 15.8. */
+    /* A wheel is only as wide as the digit that lands, so a reading must never
+       be wider or it would clip. Counting up is safe by definition; counting
+       down is capped at the largest number of the same digit count, so 0.95 can
+       start at 1.81 and a 9.0 could not start at 15.8. */
     const intDigits = Math.floor(Math.abs(target)).toString().length;
     const ceiling = Math.pow(10, intDigits) - Math.pow(10, -decimals);
-    const start = descending
-      ? Math.min(target * 1.9, ceiling)
-      : target * 0.15;
+    const start = descending ? Math.min(target * 1.9, ceiling) : target * 0.15;
 
     const readings = [];
     for (let step = 0; step < PULSE_STEPS; step += 1) {
-      const progress = step / PULSE_STEPS;
-      readings.push((start + ((target - start) * progress)).toFixed(decimals));
+      readings.push((start + ((target - start) * (step / PULSE_STEPS))).toFixed(decimals));
     }
 
     return readings;
+  };
+
+  /* Offsets must strictly increase or the animation is rejected. Nudging is
+     safe: a pair this close is a click too short to see anyway. */
+  const pulseTidyFrames = (frames) => {
+    let previous = -1;
+    return frames.map((frame) => {
+      const offset = Math.min(1, Math.max(previous + 0.0001, frame.offset));
+      previous = offset;
+      return { ...frame, offset };
+    }).filter((frame) => frame.offset <= 1);
   };
 
   const revealPulseValue = (el, order) => {
     const finalText = (el.textContent || '').trim();
     if (finalText === '') return false;
 
-    // The U-value is the one figure on the strip where lower is better.
+    // The U-value is the one figure on the strip where lower is better, so it
+    // counts down onto its figure and arrives from above.
     const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'));
 
-    /* The window is one line tall, so the drum sits on the text baseline
-       either side of it rather than forming a block of its own. */
+    /* The window is one line tall, so a wheel sits on the text baseline beside
+       the characters that are not moving rather than forming a block. */
     const lineHeight = parseFloat(getComputedStyle(el).lineHeight)
       || el.getBoundingClientRect().height;
     if (!lineHeight) return false;
 
-    /* Split into alternating text and numbers. Every number gets its own drum,
-       so "2.2m x 1m" and "6.5m wide, 2.5m tall" turn both wheels instead of
-       turning the first and leaving the second sitting still. */
+    /* Split into alternating text and numbers. Every number is treated on its
+       own, so "2.2m x 1m" runs both of them. */
     const segments = [];
     const finder = new RegExp(PULSE_NUMBER.source, 'g');
     let cursor = 0;
@@ -5554,7 +5537,7 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
 
     const shell = document.createElement('span');
     shell.setAttribute('aria-hidden', 'true');
-    const stacks = [];
+    const animations = [];
 
     segments.forEach((segment) => {
       if (segment.text !== undefined) {
@@ -5573,72 +5556,93 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
       }
 
       const readings = [...counted, segment.number];
-      const last = readings.length - 1;
-      // Counting down means arriving from above, which is the stack travelling
-      // down, which is the cells in reverse with the travel run the other way.
-      if (descending) readings.reverse();
-      const finalIndex = descending ? 0 : last;
+      const total = readings.length - 1;
 
-      /* One wheel per digit, not one per number. Owner instruction, 2026-08-05:
-         counting 12 to 13 should turn the 2 and leave the 1 alone, the way a
-         mechanical counter does. So the readings are stacked into columns and a
-         column only becomes a wheel if its character actually changes; a digit
-         that holds the same value throughout is printed as plain text and never
-         moves, and so is the decimal point.
-
-         Readings are padded on the left, because a counter aligns on its units.
+      /* Readings are padded on the left, because a counter aligns on its units.
          A shorter reading leaves that column blank, so the tens wheel of "16"
          arrives partway through rather than showing a leading zero. */
       const width = segment.number.length;
       const padded = readings.map((reading) => reading.padStart(width, ' '));
-      let turned = 0;
-
 
       for (let column = 0; column < width; column += 1) {
         const chars = padded.map((reading) => reading[column]);
         const settledChar = segment.number[column];
 
+        /* Collapse the column to the readings where it actually changes. This
+           is what makes a wheel a wheel: its stops are its own, not the run's. */
+        const stops = [];
+        chars.forEach((char, index) => {
+          if (index === 0 || char !== chars[index - 1]) stops.push({ char, at: index });
+        });
+
         // A decimal point, or a digit that never changes: nothing to turn.
-        if (!/\d/.test(settledChar) || chars.every((char) => char === chars[0])) {
+        if (!/\d/.test(settledChar) || stops.length < 2) {
           shell.appendChild(document.createTextNode(settledChar));
           continue;
         }
 
+        const lastStop = stops.length - 1;
+        // Counting down means arriving from above, so the settled cell sits at
+        // the top of the stack and the wheel travels down onto it.
+        const domIndex = (stop) => (descending ? lastStop - stop : stop);
+        const position = (stop) => `translate3d(0, ${-(domIndex(stop) * lineHeight).toFixed(2)}px, 0)`;
+
         const reel = document.createElement('span');
         reel.className = 'fg-pulse-reel';
         reel.style.setProperty('--fg-reel-h', `${lineHeight}px`);
-        reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
-        reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
-        reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
-        reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
 
         const stack = document.createElement('span');
         stack.className = 'fg-pulse-reel__stack';
+        // Resting state is the settled digit, so a wheel that never runs still
+        // shows the right character.
+        stack.style.transform = position(lastStop);
 
-        chars.forEach((char, index) => {
+        const order2 = descending ? [...stops].reverse() : stops;
+        const finalDom = descending ? 0 : lastStop;
+
+        order2.forEach((stop, index) => {
           const cell = document.createElement('span');
           cell.className = 'fg-pulse-reel__cell';
-          cell.textContent = char;
-          // Distance from the final cell, whichever end of the stack it sits at.
-          // The final one is 0, so it lies flat and renders sharp.
-          cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalIndex)));
+          cell.textContent = stop.char;
+          // Distance from the settled cell. That one is 0, so it lies flat and
+          // renders sharp; the rest recede like the far face of a cylinder.
+          cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalDom)));
           stack.appendChild(cell);
         });
 
         reel.appendChild(stack);
         shell.appendChild(reel);
-        stacks.push({ reel, stack });
-        turned += 1;
-      }
 
-      // Every column held steady, so nothing was built for this number. The
-      // text is already appended column by column above.
-      if (turned === 0) return;
+        /* Hold, click, hold. Each rotation is scheduled at the moment its digit
+           actually changes and takes only a slice of the gap before it, so the
+           wheel is motionless the rest of the time. */
+        const frames = [{ offset: 0, transform: position(0), easing: 'linear' }];
+        let previousTime = 0;
+
+        for (let stop = 1; stop <= lastStop; stop += 1) {
+          const time = pulseReadingTime(stops[stop].at, total);
+          const gap = Math.max(0.0002, time - previousTime);
+          const click = Math.min(gap * 0.5, PULSE_CLICK_MAX);
+
+          frames.push({ offset: time - click, transform: position(stop - 1), easing: PULSE_CLICK });
+          frames.push({ offset: time, transform: position(stop), easing: 'linear' });
+          previousTime = time;
+        }
+
+        frames.push({ offset: 1, transform: position(lastStop), easing: 'linear' });
+
+        animations.push(stack.animate(pulseTidyFrames(frames), {
+          duration: PULSE_DURATION,
+          delay: order * PULSE_STAGGER,
+          easing: 'linear',
+          fill: 'both',
+        }));
+      }
     });
 
-    if (!stacks.length) return false;
+    if (!animations.length) return false;
 
-    // The true value stays in the accessible tree throughout; the drums and the
+    // The true value stays in the accessible tree throughout; the wheels and the
     // static text around them are hidden from it, so no intermediate reading is
     // ever announced and the value is never announced twice.
     const spoken = document.createElement('span');
@@ -5649,22 +5653,20 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
     el.appendChild(spoken);
     el.appendChild(shell);
 
+    let settled = false;
     const settle = () => {
-      if (!el.isConnected) return;
+      if (settled || !el.isConnected) return;
+      settled = true;
+      animations.forEach((animation) => animation.cancel());
       el.textContent = finalText;
     };
 
-    // Read back before adding the class so the start position is committed and
-    // the transition actually runs from it. Every drum in a value shares one
-    // delay and one duration, so they turn together and finish together.
-    stacks.forEach(({ reel }) => {
-      void reel.offsetHeight;
-      reel.classList.add('is-settling');
-    });
+    Promise.all(animations.map((animation) => animation.finished))
+      .then(settle)
+      .catch(() => {});
 
-    stacks[0].stack.addEventListener('transitionend', settle, { once: true });
-    // transitionend does not fire if the tab is hidden when the delay elapses.
-    window.setTimeout(settle, (order * PULSE_STAGGER) + PULSE_DURATION + 400);
+    // finished does not resolve if the tab is hidden for the whole run.
+    window.setTimeout(settle, (order * PULSE_STAGGER) + PULSE_DURATION + 500);
     return true;
   };
 

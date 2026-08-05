@@ -36348,35 +36348,30 @@ html.fg-blinds-reveal-locked {
   vertical-align: bottom;
   height: var(--fg-reel-h);
   overflow: hidden;
-  text-align: right;
-  /* One wheel per digit, so a column has to be the same width whichever digit
-     is showing. Without tabular figures a 1 is narrower than an 8 and the text
-     after the number would creep as the wheels turn. */
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'tnum' 1;
+  /* Centred, not right-aligned, and deliberately not asking for tabular figures.
+     Measured in Gibson: every digit is 10.03px except 1, which is 7.5px, and
+     `font-variant-numeric: tabular-nums` changes nothing because the font ships
+     no tnum table. So a wheel is as wide as its widest digit and a 1 cannot fill
+     it. Right-aligned that read as a 2.5px indent; centred it reads as a digit
+     sitting on its wheel, which is what a counter looks like. The residual is
+     under 3px, only while a 1 is passing, and it is gone the moment the value
+     settles back to plain text. */
+  text-align: center;
   perspective: 460px;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
           mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
 }
 
-/* The travel runs between two positions rather than to one, because the
-   direction carries meaning: a U-value counts down and arrives from above, so
-   its stack runs the other way. main.js sets both ends in cell units. */
+/* The stack carries no transition. Movement is per-wheel keyframes from
+   main.js, because a transition can only slide a wheel continuously from its
+   first cell to its last: a column that is mostly one digit would still scroll
+   a stack of identical glyphs past the window and read as permanently
+   drifting, where a counter holds it dead still and rotates once at the carry.
+   The inline transform here is the settled position, so a wheel whose animation
+   never runs still shows the right digit. */
 .fg-pulse-reel__stack {
   display: block;
-  transform: translate3d(0, calc(var(--fg-reel-h) * var(--fg-reel-from, 0)), 0);
   transform-style: preserve-3d;
-}
-
-/* One curve. It still brakes onto the last figure, which is what separates a
-   mechanism settling from a list scrolling past, but it is gentler than it was:
-   the harder curve put almost all the travel in the first third and the digits
-   were unreadable there. No overshoot, no bounce, nothing elastic. The class is
-   added a frame after the start position is committed, or there is nothing to
-   transition from. */
-.fg-pulse-reel.is-settling .fg-pulse-reel__stack {
-  transform: translate3d(0, calc(var(--fg-reel-h) * var(--fg-reel-to, 0)), 0);
-  transition: transform var(--fg-reel-dur, 1800ms) cubic-bezier(0.22, 0.61, 0.16, 1) var(--fg-reel-delay, 0ms);
 }
 
 /* Each cell is tipped by its distance from the final one, so the readouts
@@ -36407,13 +36402,12 @@ html.fg-blinds-reveal-locked {
   white-space: nowrap;
 }
 
-/* Belt and braces. main.js already declines to build the drum under reduced
-   motion; this catches the case where the setting is turned on mid-reveal. */
+/* main.js is the real guard: it declines to build a wheel at all under reduced
+   motion. This only flattens the cylinder if the setting is turned on while a
+   reveal is already on screen. It deliberately does not pretend to stop the
+   movement, because that is a Web Animations animation and CSS cannot cancel
+   one. */
 @media (prefers-reduced-motion: reduce) {
-  .fg-pulse-reel.is-settling .fg-pulse-reel__stack {
-    transition: none;
-  }
-
   .fg-pulse-reel__cell {
     transform: none;
   }
