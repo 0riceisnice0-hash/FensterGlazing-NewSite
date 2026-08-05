@@ -143,13 +143,20 @@ $door_colours = [
         <?php
         /* The tiles were hardcoded here rather than read from product_usps, so
            this route had its own copy of the strip. It uses the shared
-           component now, which is also what gives it the glazing toggle. */
+           component now, which is also what gives it the glazing toggle.
+
+           U-value leads, as it does on every other strip. Owner instruction,
+           2026-08-05: this route opened on sightlines, which was the only one of
+           the twenty-two that did not put the U-value first. Checked against all
+           of them rather than fixed on sight, since being hardcoded is exactly
+           why it drifted and the same could have happened to roof lanterns,
+           which is the other strip written out by hand. It had not. */
         get_template_part('template-parts/components/product-pulse', null, [
             'slug'  => 'heritage-aluminium-doors',
             'title' => __('Sheerline Classic Heritage Door', 'fenster'),
             'usps'  => [
-                ['label' => __('Sightlines', 'fenster'), 'value' => __('60.5mm', 'fenster')],
                 ['label' => __('U-value', 'fenster'), 'value' => __('1.4 W/m²K', 'fenster')],
+                ['label' => __('Sightlines', 'fenster'), 'value' => __('60.5mm', 'fenster')],
                 ['label' => __('Max sash size', 'fenster'), 'value' => __('2.2m x 1m', 'fenster')],
                 ['label' => __('Opening', 'fenster'), 'value' => __('In or out', 'fenster')],
             ],

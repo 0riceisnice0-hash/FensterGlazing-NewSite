@@ -5477,13 +5477,19 @@ if (pulseStrips.length
      else does count, including a number introduced by an ordinary word, so
      "Up to 7 panes" and "From 1.8 W/m²K" turn like any other readout. */
   const PULSE_NAMED = /(?:^|\s)[A-Z]{2,}\.?\s*$/;
-  /* Tiles that never count, by label. Owner instruction, 2026-08-05: interlock
-     and outer frame are not to animate on any product. They are system
-     dimensions rather than quantities of anything, so counting up to one says
-     nothing, and "80mm or 52mm" is a choice between two specifications rather
-     than a number with a value in between. Matched on letters alone, as the
-     U-value label is, because these render with a non-breaking hyphen. */
-  const PULSE_STATIC = /^(?:interlock|outerframe)$/i;
+  /* Tiles that never count, by label. Owner instruction, 2026-08-05: interlock,
+     outer frame and sightlines are not to animate on any product. They are
+     system dimensions rather than quantities of anything, so counting up to one
+     says nothing, and "80mm or 52mm" is a choice between two specifications
+     rather than a number with a value in between. Matched on letters alone, as
+     the U-value label is, because these render with a non-breaking hyphen.
+
+     Sightlines is the only one of the three that reads as a quantity, which is
+     why it was counting: 60.5mm on heritage doors is the width of the frame you
+     see, and a slimmer one is the better one, so winding up to it says the
+     opposite of what the number means. The other four routes carrying the label
+     say "Ultra slim" or "Slimmer" and never had a digit to count. */
+  const PULSE_STATIC = /^(?:interlock|outerframe|sightlines)$/i;
 
   /* When each reading lands, as a fraction of the run. The gaps grow by a fixed
      ratio, so the drum brakes onto its figure instead of clicking at a constant
