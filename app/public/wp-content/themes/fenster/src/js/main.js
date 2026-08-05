@@ -5439,6 +5439,7 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
   const PULSE_STAGGER = 110;
   const PULSE_STEPS = 8;
   const PULSE_NUMBER = /\d+(?:\.\d+)?/;
+  const PULSE_LEADING_NUMBER = /^\d+(?:\.\d+)?/;
 
   /* Only the number moves. Owner instruction, 2026-08-05: putting the whole
      line of text on the drum moved "W/m²K" and " options" along with the
@@ -5489,14 +5490,23 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
     const finalText = (el.textContent || '').trim();
     if (finalText === '') return false;
 
-    // Nothing countable in it: leave the element exactly as it is.
-    const match = finalText.match(PULSE_NUMBER);
-    if (!match) return false;
+    /* The value has to open with its figure. Owner instruction, 2026-08-05:
+       Security must not count, because PAS 24 is the name of a standard and
+       counting through PAS 8 and PAS 16 invents standards that do not exist.
+
+       The rule is "the number leads", not a list of exceptions, because a
+       number that follows a word is almost always part of a name rather than a
+       quantity. Checked against all 45 spec values live on the site: it holds
+       back PAS 24, "Flush hook-locks, PAS 24", "Up to 7 panes", "Up to 4 panes"
+       and "From 1.8 W/m²K", and lets through every readout that opens with its
+       figure. It would also hold back a future BS EN or Part Q without anyone
+       having to remember to add it. The last three are arguably countable; they
+       are left static deliberately, because erring towards still is the safer
+       side for a specification. */
+    if (!PULSE_LEADING_NUMBER.test(finalText)) return false;
 
     // The U-value is the one figure on the strip where lower is better.
     const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'));
-    const counted = pulseSequence(match[0], descending);
-    if (!counted) return false;
 
     /* The window is one line tall, so the drum sits on the text baseline
        either side of it rather than forming a block of its own. */
@@ -5504,51 +5514,79 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
       || el.getBoundingClientRect().height;
     if (!lineHeight) return false;
 
-    const prefix = finalText.slice(0, match.index);
-    const suffix = finalText.slice(match.index + match[0].length);
+    /* Split into alternating text and numbers. Every number gets its own drum,
+       so "2.2m x 1m" and "6.5m wide, 2.5m tall" turn both wheels instead of
+       turning the first and leaving the second sitting still. */
+    const segments = [];
+    const finder = new RegExp(PULSE_NUMBER.source, 'g');
+    let cursor = 0;
+    let found = finder.exec(finalText);
 
-    const cells = [...counted, match[0]];
-    const last = cells.length - 1;
-    // Counting down means arriving from above, which is the stack travelling
-    // down, which is the cells in reverse with the travel run the other way.
-    if (descending) cells.reverse();
-    const finalIndex = descending ? 0 : last;
+    while (found !== null) {
+      if (found.index > cursor) segments.push({ text: finalText.slice(cursor, found.index) });
+      segments.push({ number: found[0] });
+      cursor = found.index + found[0].length;
+      found = finder.exec(finalText);
+    }
+    if (cursor < finalText.length) segments.push({ text: finalText.slice(cursor) });
 
-    const reel = document.createElement('span');
-    reel.className = 'fg-pulse-reel';
-    reel.style.setProperty('--fg-reel-h', `${lineHeight}px`);
-    reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
-    reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
-    reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
-    reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
+    const shell = document.createElement('span');
+    shell.setAttribute('aria-hidden', 'true');
+    const stacks = [];
 
-    const stack = document.createElement('span');
-    stack.className = 'fg-pulse-reel__stack';
+    segments.forEach((segment) => {
+      if (segment.text !== undefined) {
+        shell.appendChild(document.createTextNode(segment.text));
+        return;
+      }
 
-    cells.forEach((text, index) => {
-      const cell = document.createElement('span');
-      cell.className = 'fg-pulse-reel__cell';
-      cell.textContent = text;
-      // Distance from the final cell, whichever end of the stack it sits at.
-      // The final one is 0, so it lies flat and renders sharp.
-      cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalIndex)));
-      stack.appendChild(cell);
+      const counted = pulseSequence(segment.number, descending);
+      if (!counted) {
+        shell.appendChild(document.createTextNode(segment.number));
+        return;
+      }
+
+      const cells = [...counted, segment.number];
+      const last = cells.length - 1;
+      // Counting down means arriving from above, which is the stack travelling
+      // down, which is the cells in reverse with the travel run the other way.
+      if (descending) cells.reverse();
+      const finalIndex = descending ? 0 : last;
+
+      const reel = document.createElement('span');
+      reel.className = 'fg-pulse-reel';
+      reel.style.setProperty('--fg-reel-h', `${lineHeight}px`);
+      reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
+      reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
+      reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
+      reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
+
+      const stack = document.createElement('span');
+      stack.className = 'fg-pulse-reel__stack';
+
+      cells.forEach((text, index) => {
+        const cell = document.createElement('span');
+        cell.className = 'fg-pulse-reel__cell';
+        cell.textContent = text;
+        // Distance from the final cell, whichever end of the stack it sits at.
+        // The final one is 0, so it lies flat and renders sharp.
+        cell.style.setProperty('--fg-reel-i', String(Math.abs(index - finalIndex)));
+        stack.appendChild(cell);
+      });
+
+      reel.appendChild(stack);
+      shell.appendChild(reel);
+      stacks.push({ reel, stack });
     });
 
-    reel.appendChild(stack);
+    if (!stacks.length) return false;
 
-    // The true value stays in the accessible tree throughout; the drum and the
-    // static text around it are hidden from it, so no intermediate reading is
+    // The true value stays in the accessible tree throughout; the drums and the
+    // static text around them are hidden from it, so no intermediate reading is
     // ever announced and the value is never announced twice.
     const spoken = document.createElement('span');
     spoken.className = 'fg-product-pulse__sr';
     spoken.textContent = finalText;
-
-    const shell = document.createElement('span');
-    shell.setAttribute('aria-hidden', 'true');
-    if (prefix !== '') shell.appendChild(document.createTextNode(prefix));
-    shell.appendChild(reel);
-    if (suffix !== '') shell.appendChild(document.createTextNode(suffix));
 
     el.textContent = '';
     el.appendChild(spoken);
@@ -5560,11 +5598,14 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
     };
 
     // Read back before adding the class so the start position is committed and
-    // the transition actually runs from it.
-    void reel.offsetHeight;
-    reel.classList.add('is-settling');
+    // the transition actually runs from it. Every drum in a value shares one
+    // delay and one duration, so they turn together and finish together.
+    stacks.forEach(({ reel }) => {
+      void reel.offsetHeight;
+      reel.classList.add('is-settling');
+    });
 
-    stack.addEventListener('transitionend', settle, { once: true });
+    stacks[0].stack.addEventListener('transitionend', settle, { once: true });
     // transitionend does not fire if the tab is hidden when the delay elapses.
     window.setTimeout(settle, (order * PULSE_STAGGER) + PULSE_DURATION + 400);
     return true;
