@@ -78,7 +78,14 @@ $versus_rows = [
 $details = [
     ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => $base . 'casement-georgian-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of Georgian bars set inside the sealed unit of a white uPVC casement window'],
     ['name' => 'Astragal bars', 'copy' => 'A moulded bar bonded to the face of the glass, so it catches the light and throws a shadow.', 'image' => $base . 'casement-astragal-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of moulded astragal bars standing proud of the glass on a white uPVC bay window'],
-    ['name' => 'Mock sash horns', 'copy' => 'Turned below the sash, the way a period sash window is finished.', 'image' => $base . 'casement-mock-horn-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of a mock sash horn below the bottom rail of a white uPVC casement sash'],
+    /* The horn photograph was wrong until 2026-08-05: `casement-mock-horn-900w`
+       is a studio shot of a mullion meeting the cill and shows no horn at all.
+       So are `casement-astragal-horn-1250w` and `studio/cas-mock-horn` — all
+       three are the same subject under three names, so pick by looking, not by
+       filename. This one is the only asset in the theme that actually shows
+       horns: the curved projections on the bottom corners of the open sashes.
+       It is 600x600 and the trio crops to 4/3, which keeps both of them. */
+    ['name' => 'Mock sash horns', 'copy' => 'Turned below the sash, the way a period sash window is finished.', 'image' => $base . 'casement-mockhorn-detail-600w.webp', 'w' => 600, 'h' => 600, 'alt' => 'Mock sash horns turned on the bottom corners of open white uPVC casement sashes'],
     ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares and sealed against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by Fenster in Rushden'],
 ];
 $energy_stats = [
@@ -343,8 +350,7 @@ $faq_schema = [
         </div>
     </section>
 
-    <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
-
+    <?php /* Detail sits above colours, owner instruction 2026-08-05. */ ?>
     <section class="fg-cas-detail" aria-labelledby="fg-cas-detail-title">
         <div class="container">
             <div class="fg-cas-section-head">
@@ -368,6 +374,8 @@ $faq_schema = [
             </p>
         </div>
     </section>
+
+    <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
 
     <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
 
