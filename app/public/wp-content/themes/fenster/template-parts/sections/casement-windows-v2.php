@@ -206,6 +206,31 @@ $faq_schema = [
         </div>
     </section>
 
+    <?php
+    /* ---------- The three chapters, stacked -----------------------------------
+       01, 02 and 03 read as physical panels: each one anchors at the foot of the
+       viewport once you have scrolled through it, and the next slides up over it.
+       That is `position: sticky; bottom: 0` plus a z-index ladder, done in CSS so
+       the browser owns the movement and it stays smooth in both directions. The
+       only JavaScript is the dim on the panel being covered.
+
+       A panel is a chapter AND the sections it owns, because the chapters are not
+       adjacent in the flow. Chapter 01's own lead paragraph names its run: the
+       ways it opens, the two faces, the sixteen colours and the detail. So the
+       comparison, the colour grid, the detail trio, the handles and the privacy
+       glass card belong to 01, and the EnergyPlus tech banner belongs to 02.
+       Split any other way and the covering sequence breaks.
+
+       Every panel after the first has to be completely opaque or the panel
+       underneath shows through it mid-slide. 02 and 03 are dark already; 02 also
+       carries the tech banner, which sits on the page canvas, so the panel repaints
+       that canvas. See the note in main.scss for why that does not breach the
+       continuous-background rule in STYLE.md. -------------------------------- */
+    ?>
+    <div class="fg-cas-stack" data-fg-chapter-stack>
+
+    <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
+
     <?php /* ---------- 01 VERSATILITY ---------- */ ?>
     <section class="fg-cas-chapter" aria-labelledby="fg-cas-ch1-title">
         <div class="container fg-cas-chapter__head">
@@ -327,6 +352,10 @@ $faq_schema = [
 
     <?php get_template_part('template-parts/components/privacy-glass-card'); ?>
 
+    </div><?php /* end panel 01 */ ?>
+
+    <div class="fg-cas-stack__panel fg-cas-stack__panel--energy">
+
     <?php /* ---------- 02 ENERGYPLUS ---------- */ ?>
     <section class="fg-cas-energy" aria-labelledby="fg-cas-ch2-title">
         <div class="container fg-cas-chapter__head">
@@ -377,6 +406,10 @@ $faq_schema = [
     </section>
 
     <?php get_template_part('template-parts/components/tech-banner', null, fenster_tech_banner_args('casement-windows')); ?>
+
+    </div><?php /* end panel 02 */ ?>
+
+    <div class="fg-cas-stack__panel fg-cas-stack__panel--security">
 
     <?php /* ---------- 03 SECURITY ---------- */ ?>
     <section class="fg-cas-security" aria-labelledby="fg-cas-ch3-title">
@@ -444,6 +477,10 @@ $faq_schema = [
             </dl>
         </div>
     </section>
+
+    </div><?php /* end panel 03 */ ?>
+
+    </div><?php /* end .fg-cas-stack */ ?>
 
     <?php /* ---------- PROOF ---------- */ ?>
     <section class="fg-cas-proof" aria-labelledby="fg-cas-proof-title">

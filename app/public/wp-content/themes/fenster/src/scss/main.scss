@@ -37089,6 +37089,119 @@ html.fg-blinds-reveal-locked {
   }
 }
 
+/* ---- The three chapters, stacked -------------------------------------------
+   01, 02 and 03 behave as physical panels: each anchors at the foot of the
+   viewport once it has been read, and the next slides up and covers it.
+
+   This is `position: sticky`, not a scroll-driven transform, and the distinction
+   is the whole reason it feels expensive. The browser owns the movement, so it is
+   compositor-smooth, it carries Lenis's momentum for free, it behaves identically
+   scrolling back up, and there is no rAF loop to drift or stutter.
+
+   The offset is the part worth understanding, because the two obvious values are
+   both wrong for panels this tall. `top: 0` pins a panel the moment its top edge
+   arrives, and these panels run two to three viewports, so everything below the
+   first screenful would be unreachable. `bottom: 0` shifts a sticky box in *both*
+   directions, so panels 02 and 03 get dragged up to the top of the stack and sit
+   on 01 from the first paint; measured before this was corrected, all three
+   panels reported an identical top offset at scroll zero.
+
+   What is right is a *negative* top of `viewport height - panel height`. A `top`
+   constraint only ever shifts a box down, never up, so each panel stays in normal
+   flow and scrolls through all of its content, then pins exactly when its bottom
+   edge reaches the bottom of the screen. CSS cannot express an element's own
+   height in `top`, so main.js measures it into `--fg-stack-top` and adds
+   `is-stacked`. Without JavaScript nothing here applies and the chapters read as
+   ordinary sections, which is the honest fallback.
+
+   No rotation, no scale, no 3D. A transform on these elements would also make
+   them a containing block for the fixed-attachment canvas below and blur the
+   text on a pinned layer. Depth comes from the cast shadow and the dim instead.
+   -------------------------------------------------------------------------- */
+.fg-cas-stack {
+  position: relative;
+}
+
+.fg-cas-stack.is-stacked .fg-cas-stack__panel {
+  position: sticky;
+  top: var(--fg-stack-top, 0px);
+  /* The ladder is set per panel below. It has to be explicit: source order alone
+     does not decide paint order once these are positioned. */
+  z-index: 1;
+}
+
+/* Each panel paints over the one before it. */
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--versatility { z-index: 1; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--energy { z-index: 2; }
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--security { z-index: 3; }
+
+/* An incoming panel must be completely opaque or the panel beneath shows through
+   it while it travels. 03 is the dark security band and is opaque already. 02 is
+   dark for the EnergyPlus chapter but ends on the tech banner, which sits on the
+   page canvas, so the panel repaints that canvas underneath itself.
+
+   This does not breach the continuous-background rule in STYLE.md. That rule
+   exists because a second, *scrolling* copy of the gradient slides against the
+   fixed one on `body` and reads as banding between sections. `background-attachment:
+   fixed` here anchors this copy to the viewport exactly as `body` anchors its own,
+   and both resolve the same live custom properties the gradient-motion controller
+   writes to `:root`, so the two are pixel-identical at every scroll position and
+   there is no seam to see. `.fg-heritage-door-page` already uses this exact pair
+   for the same reason. Do not drop the `fixed` half. */
+.fg-cas-stack__panel--energy {
+  background: var(--fg-page-gradient);
+  background-attachment: fixed;
+}
+
+/* The leading edge casts onto the panel it is covering. This is the single
+   biggest cue that the panels have thickness, and it costs nothing: the shadow
+   paints inside the incoming panel's own stacking context, which is above the
+   outgoing one. */
+.fg-cas-stack.is-stacked .fg-cas-stack__panel + .fg-cas-stack__panel {
+  box-shadow:
+    0 -36px 64px -20px rgba(2, 20, 26, 0.42),
+    0 -1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* The panel being covered recedes. `--fg-stack-dim` is written by the scroll
+   handler in main.js and is 0 until something starts to cover it. Absolutely
+   positioned over the whole panel rather than the visible part of it: only the
+   pinned viewport is ever rasterised, so the height is free. */
+.fg-cas-stack.is-stacked .fg-cas-stack__panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #04161c;
+  opacity: var(--fg-stack-dim, 0);
+  pointer-events: none;
+}
+
+/* Nothing covers the last panel, so it never needs the overlay. */
+.fg-cas-stack.is-stacked .fg-cas-stack__panel--security::after { content: none; }
+
+@media (max-width: 860px) {
+  /* Restrained on a phone: the same movement, less of the atmosphere around it.
+     A softer shadow because the panels meet within a narrower frame, and the JS
+     halves the dim at this width. */
+  .fg-cas-stack.is-stacked .fg-cas-stack__panel + .fg-cas-stack__panel {
+    box-shadow: 0 -20px 34px -14px rgba(2, 20, 26, 0.34);
+  }
+}
+
+/* Reduced motion gets the page in plain document order. main.js already declines
+   to add `is-stacked`, so this is the guard for a visitor who turns the setting on
+   after the page has loaded, when the class is already there. Panel 02 keeps its
+   canvas repaint, which is invisible against the identical one on `body`. */
+@media (prefers-reduced-motion: reduce) {
+  .fg-cas-stack.is-stacked .fg-cas-stack__panel {
+    position: static;
+    box-shadow: none;
+  }
+
+  .fg-cas-stack.is-stacked .fg-cas-stack__panel::after { content: none; }
+}
+
 @media (max-width: 1080px) {
   .fg-cas-styles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

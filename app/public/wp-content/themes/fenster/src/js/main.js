@@ -5286,6 +5286,116 @@ if (depthItems.length) {
   updateDepthItems();
 }
 
+/* ---- Stacked chapters on /casement-windows/ ---------------------------------
+   Chapters 01, 02 and 03 read as physical panels: each one anchors at the foot of
+   the viewport once it has been scrolled through, and the next slides up over it.
+
+   The movement itself is `position: sticky` in CSS, so the browser owns it and it
+   stays smooth in both directions with no animation loop. This file supplies the
+   two things CSS cannot work out for itself.
+
+   1. The sticky offset. These panels run two to three viewports tall, so the
+      offset has to be a *negative* top of `viewport - panel height`: a `top`
+      constraint only ever pushes a box down, so the panel scrolls normally
+      through its content and pins exactly as its bottom edge reaches the bottom
+      of the screen. `top: 0` would freeze each panel after one screenful and
+      `bottom: 0` drags the later panels up onto the first one from the first
+      paint. Both were measured before this settled on the negative offset.
+   2. The dim on the panel being covered, which is what stops it reading as a hole
+      behind the incoming one and makes the two feel like layers rather than a cut.
+
+   Heights are re-measured through a ResizeObserver rather than on load alone,
+   because these panels contain lazy images and an accordion and their height is
+   not final when the script first runs. Progress for the dim is taken from the
+   incoming panel's top edge, so it is scroll-linked rather than time-linked: it
+   is exact in both directions, cannot drift, and can be checked by measurement
+   rather than by watching, which matters because rAF is throttled in every
+   harness this project has (see nick.md).
+
+   `is-stacked` is added only once a real measurement exists, so with JavaScript
+   off, or under reduced motion, the chapters stay in ordinary document flow. */
+const chapterStack = document.querySelector('[data-fg-chapter-stack]');
+
+if (chapterStack && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const stackPanels = [...chapterStack.querySelectorAll('.fg-cas-stack__panel')];
+  const narrowStack = window.matchMedia('(max-width: 860px)');
+  let stackFrame = 0;
+
+  // Pin point per panel. Re-read on resize and whenever a panel's own height
+  // changes; both are rare, and neither happens per frame.
+  const measureChapterStack = () => {
+    const viewport = Math.max(1, window.innerHeight);
+
+    stackPanels.forEach((panel) => {
+      const height = panel.getBoundingClientRect().height;
+      // A panel shorter than the screen simply pins at the top; taller than the
+      // screen, which is the real case here, pins by its bottom edge.
+      const offset = Math.min(0, viewport - height);
+      panel.style.setProperty('--fg-stack-top', `${Math.round(offset)}px`);
+    });
+
+    if (stackPanels.length) {
+      chapterStack.classList.add('is-stacked');
+    }
+  };
+
+  const updateChapterStack = () => {
+    stackFrame = 0;
+    // Restrained on a phone, where the panels meet in a much narrower frame and
+    // a full-strength dim reads as the screen going out rather than as depth.
+    const maxDim = narrowStack.matches ? 0.16 : 0.32;
+    const viewport = Math.max(1, window.innerHeight);
+
+    stackPanels.forEach((panel, index) => {
+      const incoming = stackPanels[index + 1];
+
+      // The last panel is never covered.
+      if (!incoming) {
+        panel.style.setProperty('--fg-stack-dim', '0');
+        return;
+      }
+
+      // 0 when the incoming panel's top edge is at the bottom of the viewport,
+      // 1 once it has reached the top and is covering completely.
+      const covered = clamp(1 - (incoming.getBoundingClientRect().top / viewport));
+      panel.style.setProperty('--fg-stack-dim', (covered * maxDim).toFixed(3));
+    });
+  };
+
+  const requestChapterStackUpdate = () => {
+    if (!stackFrame) {
+      stackFrame = requestAnimationFrame(updateChapterStack);
+    }
+  };
+
+  const remeasureChapterStack = () => {
+    measureChapterStack();
+    requestChapterStackUpdate();
+  };
+
+  measureChapterStack();
+  requestChapterStackUpdate();
+
+  window.addEventListener('scroll', requestChapterStackUpdate, { passive: true });
+  window.addEventListener('resize', remeasureChapterStack);
+  window.addEventListener('load', remeasureChapterStack);
+
+  if ('ResizeObserver' in window) {
+    // Measuring the panel we are about to resize would loop, so the callback is
+    // deferred a frame and only writes when the value actually moves.
+    const stackObserver = new ResizeObserver(() => {
+      if (!stackFrame) {
+        stackFrame = requestAnimationFrame(() => {
+          measureChapterStack();
+          updateChapterStack();
+        });
+      }
+    });
+
+    stackPanels.forEach((panel) => stackObserver.observe(panel));
+  }
+}
+
 document.querySelectorAll('.fg-mk-page').forEach((page) => {
   const revealItems = [...page.querySelectorAll('[data-fg-mk-reveal]')];
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
