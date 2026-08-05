@@ -268,11 +268,16 @@ $faq_schema = [
        viewport once you have scrolled through it, and the next slides up over it.
 
        A panel is a chapter AND the sections it owns, because the chapters are not
-       adjacent in the flow. Chapter 01's own lead paragraph names its run: the
-       ways it opens, the two faces, the sixteen colours and the detail. So the
-       comparison, the colour grid, the detail trio, the handles and the privacy
-       glass card belong to 01, and the EnergyPlus tech banner belongs to 02.
-       Split any other way and the covering sequence breaks. ---------------- */
+       adjacent in the flow. Chapter 01's own lead paragraph names its run, so it
+       owns the detail trio and the two-faces comparison, in that order, and 02
+       owns the EnergyPlus tech banner. Keep a chapter and the sections it
+       introduces in one panel: split a chapter from its own run and the covering
+       sequence breaks.
+
+       Colour, handles and privacy glass used to be in 01 and are now below the
+       stack entirely, under FINISHES. That is a move out, not a re-split: the
+       lead paragraph no longer promises the sixteen colours, so 01 still ends
+       where its own copy says it does. ------------------------------------- */
     ?>
     <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
 
@@ -283,7 +288,7 @@ $faq_schema = [
             <div>
                 <p class="fg-cas-eyebrow"><?php esc_html_e('Versatility', 'fenster'); ?></p>
                 <h2 id="fg-cas-ch1-title" class="fg-cas-display"><?php esc_html_e('One system. Every opening in the house.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Three ways of opening and any combination of them, two faces, sixteen colours, and the detail that decides whether a window suits a Victorian terrace or a new build. All of it made to measure, none of it an upgrade pack.', 'fenster'); ?></p>
+                <p class="fg-cas-lead"><?php esc_html_e('Three ways of opening and any combination of them, the detail that decides whether a window suits a Victorian terrace or a new build, and a choice of two faces. All of it made to measure, none of it an upgrade pack.', 'fenster'); ?></p>
             </div>
         </div>
 
@@ -318,6 +323,41 @@ $faq_schema = [
                 <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top lights over a worktop, a three light, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
                 <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
             </div>
+        </div>
+    </section>
+
+    <?php /* Owner instruction, 2026-08-05: the detail runs before the two faces.
+             It reads as the closer of the two, so the chapter opens on how the
+             window is put together and closes on which face it wears. */ ?>
+    <section class="fg-cas-detail" aria-labelledby="fg-cas-detail-title">
+        <div class="container">
+            <div class="fg-cas-section-head">
+                <div>
+                    <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
+                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
+                </div>
+                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-cas-trio">
+                <?php foreach ($details as $detail) : ?>
+                    <figure>
+                        <?php if ($detail['image'] !== '') : ?>
+                            <img src="<?php echo esc_url(fenster_generated_url($detail['image'])); ?>" alt="<?php echo esc_attr($detail['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $detail['w']); ?>" height="<?php echo esc_attr((string) $detail['h']); ?>">
+                        <?php else : ?>
+                            <?php /* Holding the slot rather than dropping the tile: the
+                                     option is real and sold, only the photograph is
+                                     missing. Dashed and labelled so it reads as
+                                     deliberate rather than as a failed image. */ ?>
+                            <p class="fg-cas-trio__placeholder"><?php esc_html_e('Photograph to follow', 'fenster'); ?></p>
+                        <?php endif; ?>
+                        <figcaption><strong><?php echo esc_html($detail['name']); ?></strong><span><?php echo esc_html($detail['copy']); ?></span></figcaption>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+            <p class="fg-cas-note">
+                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
+                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>
+            </p>
         </div>
     </section>
 
@@ -366,45 +406,6 @@ $faq_schema = [
             <p class="fg-cas-note"><a class="fg-cas-link" href="<?php echo esc_url(home_url('/flush-casement-windows/')); ?>"><?php esc_html_e('See flush casements', 'fenster'); ?></a></p>
         </div>
     </section>
-
-    <?php /* Detail sits above colours, owner instruction 2026-08-05. */ ?>
-    <section class="fg-cas-detail" aria-labelledby="fg-cas-detail-title">
-        <div class="container">
-            <div class="fg-cas-section-head">
-                <div>
-                    <p class="fg-cas-eyebrow"><?php esc_html_e('Detail', 'fenster'); ?></p>
-                    <h2 id="fg-cas-detail-title" class="fg-cas-display"><?php esc_html_e('Bars, horns and lead.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('The difference between a replacement window and one that belongs on the house. All four are priced with the window, not added afterwards.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-cas-trio">
-                <?php foreach ($details as $detail) : ?>
-                    <figure>
-                        <?php if ($detail['image'] !== '') : ?>
-                            <img src="<?php echo esc_url(fenster_generated_url($detail['image'])); ?>" alt="<?php echo esc_attr($detail['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $detail['w']); ?>" height="<?php echo esc_attr((string) $detail['h']); ?>">
-                        <?php else : ?>
-                            <?php /* Holding the slot rather than dropping the tile: the
-                                     option is real and sold, only the photograph is
-                                     missing. Dashed and labelled so it reads as
-                                     deliberate rather than as a failed image. */ ?>
-                            <p class="fg-cas-trio__placeholder"><?php esc_html_e('Photograph to follow', 'fenster'); ?></p>
-                        <?php endif; ?>
-                        <figcaption><strong><?php echo esc_html($detail['name']); ?></strong><span><?php echo esc_html($detail['copy']); ?></span></figcaption>
-                    </figure>
-                <?php endforeach; ?>
-            </div>
-            <p class="fg-cas-note">
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Obscure glass patterns', 'fenster'); ?></a>
-                <a class="fg-cas-link" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>
-            </p>
-        </div>
-    </section>
-
-    <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
-
-    <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
-
-    <?php get_template_part('template-parts/components/privacy-glass-card'); ?>
 
     </div><?php /* end panel 01 */ ?>
 
@@ -535,6 +536,31 @@ $faq_schema = [
     </div><?php /* end panel 03 */ ?>
 
     </div><?php /* end .fg-cas-stack */ ?>
+
+    <?php
+    /* ---------- FINISHES ------------------------------------------------------
+       Colour, handles and privacy glass, moved out of chapter 01 on the owner's
+       instruction, 2026-08-05, to sit between the security chapter and the
+       gallery the way the other product pages order it.
+
+       It earns its place on tone as well as on order. Security is the darkest
+       block on the page, a #06222a to #0c313b gradient, and the gallery behind
+       it is solid steel, #002d3a. Before this they met with nothing in between,
+       so two dark full-width blocks ran together. These three carry no
+       background of their own, so they come through as the page's own light and
+       break the run.
+
+       Deliberately outside the stack. Adding them to panel 03 would have made
+       the security chapter taller than the plate that has to cover it, and
+       nothing here needs to be covered: the stack still holds the same four
+       panels in the same order. -------------------------------------------- */
+    ?>
+
+    <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
+
+    <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
+
+    <?php get_template_part('template-parts/components/privacy-glass-card'); ?>
 
     <?php /* ---------- PROOF ---------- */ ?>
     <section class="fg-cas-proof" aria-labelledby="fg-cas-proof-title">
