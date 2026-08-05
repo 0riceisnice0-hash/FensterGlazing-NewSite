@@ -37375,6 +37375,22 @@ html.fg-blinds-reveal-locked {
   background-attachment: fixed;
 }
 
+/* 03 was the one panel exempt from the rule above, on the reasoning that the dark
+   security band already covers it. Measured on live 2026-08-05: the panel itself
+   computes to `rgba(0, 0, 0, 0)` and only its child section paints anything, so
+   the sticky layer the compositor handles is transparent while every other panel's
+   is opaque. That is the one panel breaking the invariant this rule exists to
+   state, and a transparent sticky layer over other sticky layers is a plausible
+   source of the dark flicker the owner reported the same day.
+
+   The darkest stop of the section's own gradient, so it is invisible: the section
+   fills the panel exactly (1239px against 1239px when measured) and paints over
+   this completely. Solid rather than the gradient because nothing ever sees it —
+   it exists to give the layer an opaque backing, not to be looked at. */
+.fg-cas-stack__panel--security {
+  background-color: #061d24;
+}
+
 /* The leading edge casts onto the panel it is covering. This is the single
    biggest cue that the panels have thickness, and it costs nothing: the shadow
    paints inside the incoming panel's own stacking context, which is above the
