@@ -287,18 +287,20 @@ $faq_schema = [
     /* ---------- The three chapters ---------------------------------------------
        01, 02 and 03 read as physical panels: each one anchors at the foot of the
        viewport once you have scrolled through it, and the next slides up over it.
+       Security is the last plate, and the page returns to ordinary scrolling under
+       it.
 
        A panel is a chapter AND the sections it owns, because the chapters are not
-       adjacent in the flow. Chapter 01's own lead paragraph names its run, so it
-       owns the detail trio and the two-faces comparison, in that order, and 02
-       owns the EnergyPlus tech banner. Keep a chapter and the sections it
-       introduces in one panel: split a chapter from its own run and the covering
-       sequence breaks.
+       adjacent in the flow: 02 owns the EnergyPlus tech banner that closes it.
+       Keep a chapter and the sections it introduces in one panel — split a chapter
+       from its own run and the covering sequence breaks.
 
-       Colour, handles and privacy glass used to be in 01 and are now below the
-       stack entirely, under FINISHES. That is a move out, not a re-split: the
-       lead paragraph no longer promises the sixteen colours, so 01 still ends
-       where its own copy says it does. ------------------------------------- */
+       01 is now only the ways the window opens, which is what its own heading
+       says. The dressings, the two faces and the finishes all sit below the stack
+       and scroll normally; they carry their own section heads. Three plates is the
+       whole device, and the number of them is deliberate: the stack is for the
+       three things that carry an argument, not for everything on the page.
+       ------------------------------------------------------------------- */
     ?>
     <div class="fg-cas-stack__panel fg-cas-stack__panel--versatility">
 
@@ -462,24 +464,28 @@ $faq_schema = [
 
     </div><?php /* end panel 03 */ ?>
 
-    <div class="fg-cas-stack__panel fg-cas-stack__panel--options">
+    </div><?php /* end .fg-cas-stack — security is the last plate */ ?>
 
-    <?php /* ---------- 04 OPTIONS ---------- */ ?>
-    <?php /* Owner instruction, 2026-08-05: the dressings and the two faces come
-             out of chapter 01 and become a chapter of their own below security.
-             01 is then only the ways it opens, which is what its own heading
-             says, and the choices that make a window belong to a particular
-             house are read together rather than as a tail on the range. */ ?>
-    <section class="fg-cas-chapter fg-cas-chapter--intro" aria-labelledby="fg-cas-ch4-title">
-        <div class="container fg-cas-chapter__head">
-            <span class="fg-cas-num" aria-hidden="true">04</span>
-            <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('Options', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch4-title" class="fg-cas-display"><?php esc_html_e('Options to suit every home.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('The bars, the horns, the lead and the face of the sash. None of it changes how the window works, and all of it decides whether the house looks like it has been repaired or re-fitted.', 'fenster'); ?></p>
-            </div>
-        </div>
-    </section>
+    <?php
+    /* ---------- Everything below scrolls normally --------------------------------
+       Owner instruction, 2026-08-05 (evening): the 04 and 05 chapter heads come
+       off, and these sections stop stacking.
+
+       They were numbered chapters on their own plates for half a day. The stack
+       is a device for the three things that carry an argument — how it opens, how
+       warm it is, how secure it is — and the choosing that follows reads better at
+       ordinary pace than pinned under it. Ending the stack on security also gives
+       the dark band a proper close instead of a light plate sliding over it.
+
+       Their own section heads carry them from here, which is what the rest of the
+       site already does: Detail / Bars, horns and lead, then Two faces / Standard
+       or flush, then the three finishes components with headings of their own.
+       Those are untouched. Nothing below this line is inside `.fg-cas-stack`, so
+       no sticky, no z-index ladder and no dim overlay applies to any of it.
+
+       The chapter numbers therefore run 01, 02, 03 and stop, which is the whole
+       set: there is no 04 or 05 to be missing. ----------------------------- */
+    ?>
 
     <?php /* Owner instruction, 2026-08-05: the detail runs before the two faces.
              It reads as the closer of the two, so the chapter opens on how the
@@ -566,33 +572,11 @@ $faq_schema = [
         </div>
     </section>
 
-    </div><?php /* end panel 04 */ ?>
-
-    <div class="fg-cas-stack__panel fg-cas-stack__panel--finishes">
-
-    <?php /* ---------- 05 FINISHES ---------- */ ?>
-    <?php /* Colour, handles and glass become a plate of their own rather than a
-             group sitting under the stack. They are the last thing chosen and
-             the last thing seen, and being light they are also the break between
-             the dark security chapter and the gallery. */ ?>
-    <section class="fg-cas-chapter fg-cas-chapter--intro" aria-labelledby="fg-cas-ch5-title">
-        <div class="container fg-cas-chapter__head">
-            <span class="fg-cas-num" aria-hidden="true">05</span>
-            <div>
-                <p class="fg-cas-eyebrow"><?php esc_html_e('Finishes', 'fenster'); ?></p>
-                <h2 id="fg-cas-ch5-title" class="fg-cas-display"><?php esc_html_e('Colour, handles and glass.', 'fenster'); ?></h2>
-                <p class="fg-cas-lead"><?php esc_html_e('Sixteen colours outside, matched or white inside. A choice of handle finishes, and obscured glass for the rooms that need privacy. All of it priced with the window, not added afterwards.', 'fenster'); ?></p>
-            </div>
-        </div>
-    </section>
-
+    <?php /* Colour, handles and glass. Each component carries its own heading, so
+             they need nothing above them now the 05 head has gone. */ ?>
     <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => 'casement window']); ?>
     <?php get_template_part('template-parts/components/handle-grid', null, fenster_window_handle_grid_args()); ?>
     <?php get_template_part('template-parts/components/privacy-glass-card'); ?>
-
-    </div><?php /* end panel 05 */ ?>
-
-    </div><?php /* end .fg-cas-stack */ ?>
 
     <?php /* ---------- PROOF ---------- */ ?>
     <section class="fg-cas-proof" aria-labelledby="fg-cas-proof-title">
