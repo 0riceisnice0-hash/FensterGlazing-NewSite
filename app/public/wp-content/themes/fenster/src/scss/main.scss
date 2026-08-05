@@ -37463,6 +37463,219 @@ html.fg-blinds-reveal-locked {
   .fg-cas .fg-cas-swipe { display: block; }
 }
 
+/* ---- The .fg-cw layout, restored -------------------------------------------
+   These rules were deleted wholesale when the casement page was rebuilt onto
+   its own .fg-cas components. That commit kept the gallery below, on the
+   grounds that heritage still rendered it, but it did not check the rest of the
+   block against the rest of the theme, and six templates were still rendering
+   the layout classes. They lost their styling silently: no error, no missing
+   file, just markup with nothing behind it.
+
+   What that looked like on /aluminium-sliding-doors/, which is how it was
+   caught: `.fg-cw-media` carries `aspect-ratio: 16 / 10` with `object-fit:
+   cover` on the image inside it, so every media panel is the same shape
+   whatever it holds. Without it the two close-ups fell back to their own
+   proportions, and they are not the same: the handle is 900x900 and the
+   threshold and track is 900x953. Two panels the page means to read as a pair
+   came out different heights, and the copy beside each sat off its image.
+   `.fg-cw-split` had gone too, so the two-column grid was not there to align
+   them in the first place.
+
+   Restored to what was deleted rather than rewritten, so the pages go back to
+   the layout they were built and signed off against. Only the parts still
+   rendered are here: the casement-era pieces this block also carried
+   (.fg-cw-tiles, .fg-cw-anatomy, .fg-cw-film, .fg-cw-versus, .fg-cw-head,
+   .fg-cw-list, .fg-cw-display) are genuinely dead and stay deleted. The two
+   custom properties on .fg-cw are dropped for the same reason: nothing
+   references them any more.
+
+   Still rendering these: lift-slide-detail.php and heritage-aluminium-doors.php
+   for the split and media rules, and aluminium-colour-grid, upvc-colour-grid,
+   blind-colour-grid and handle-grid for .fg-cw-link. */
+.fg-cw {
+  color: var(--color-ink);
+}
+
+.fg-cw section {
+  padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
+}
+
+.fg-cw h2 {
+  max-width: 20ch;
+  margin: 0 0 0.85rem;
+  color: var(--color-ink);
+  font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+  line-height: 1.14;
+}
+
+.fg-cw h3 {
+  margin: 0 0 0.4rem;
+  color: var(--color-ink);
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.fg-cw p {
+  max-width: 52ch;
+  margin: 0 0 0.85rem;
+  color: var(--color-muted);
+  font-size: 0.97rem;
+  line-height: 1.58;
+}
+
+.fg-cw p:last-child {
+  margin-bottom: 0;
+}
+
+/* The eyebrow has to be requalified inside .fg-cw or it silently loses its own
+   colour, size and spacing to the paragraph rule above. */
+.fg-cw .eyebrow {
+  max-width: none;
+  margin: 0 0 0.7rem;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+.fg-cw figure {
+  margin: 0;
+}
+
+.fg-cw-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.fg-cw-split--media-first {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+}
+
+.fg-cw-facts {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0;
+  margin: 1rem 0 0;
+  list-style: none;
+}
+
+.fg-cw-facts li {
+  position: relative;
+  padding-left: 1.45rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.fg-cw-facts li::before {
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  content: '';
+}
+
+.fg-cw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.3rem;
+}
+
+/* The fixed ratio is the point: it is what makes two panels holding differently
+   proportioned photographs read as a matched pair. */
+.fg-cw-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--color-steel);
+  aspect-ratio: 16 / 10;
+}
+
+.fg-cw-media--turntable {
+  aspect-ratio: 1;
+  background: #fbfbfb;
+}
+
+.fg-cw-media--turntable video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.fg-cw-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cw-media figcaption {
+  position: absolute;
+  z-index: 1;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-cw-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-accent-dark);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.fg-cw-link::after {
+  content: '\2192';
+  transition: transform 0.18s ease;
+}
+
+.fg-cw-link:hover::after,
+.fg-cw-link:focus-visible::after {
+  transform: translateX(3px);
+}
+
+@media (max-width: 860px) {
+  .fg-cw section {
+    padding: 2rem 0;
+  }
+
+  .fg-cw h2,
+  .fg-cw p {
+    max-width: none;
+  }
+
+  .fg-cw-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Image before copy on a phone, so the product is visible first. This is why
+     the markup puts the media first on one section and second on the other:
+     the desktop alternation is the grid's, the phone order is this. */
+  .fg-cw-split .fg-cw-media {
+    order: -1;
+  }
+
+  .fg-cw-actions .button {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
 /* Real-homes gallery, retained for /heritage-aluminium-doors/.
    The casement page this was written for now uses its own .fg-cas-mosaic;
    heritage still renders .fg-cw-gallery--heritage, so these rules stay,
