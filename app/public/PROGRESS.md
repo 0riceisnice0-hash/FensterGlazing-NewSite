@@ -325,6 +325,34 @@ mock horns. STYLE.md to be followed loosely and ignored where it constrains.
   scroll. Desktop reviewed as full-height renders at 1280.
 - Test deployment only. Live is untouched; the owner reviews on test.
 
+## 2026-08-05 - Paid clicks were being counted as organic (live in 18aa909)
+
+- A Google Ads campaign whose Final URL suffix is missing **fails silently**. The
+  journey lands with an empty `source` behind a `google.com` referrer, which the
+  dashboard cannot tell apart from organic. Measured on the live D1: **15 of
+  roughly 183 consented Google journeys read as `cpc`**, so most of the
+  £1,000/month was invisible and `GOOGLE-ADS-PLAN.md` could not be evaluated.
+- `paidClickChannel()` in `src/js/main.js` now derives `source=google` and
+  `medium=cpc` from the presence of `gclid`, `gbraid` or `wbraid`. Real UTM
+  values still win. **Only the two fixed labels are derived; the click
+  identifier is never read into any journey field**, so it still never reaches
+  the dashboard. Verified with nine cases against the bundle production is
+  actually serving, including empty and whitespace identifiers, which must not
+  count as paid.
+- **The suffix still has to be set per campaign.** The theme can recover the
+  channel; it cannot recover campaign, keyword or ad group. `GOOGLE-ADS-SETUP.md`
+  had the correct suffix documented since 24 July and it had never been applied,
+  which is why this went unnoticed for a fortnight.
+- **A doc that specifies a setting does not prove the setting exists.** The
+  suffix was written down, reviewed and believed. Nothing checked the live
+  account against it, and the failure mode produced no error anywhere: the ads
+  ran, the clicks arrived, the leads arrived, and only the channel label was
+  wrong. Where a doc specifies external configuration, the verification has to
+  read the external system, not the doc.
+- Also found while auditing: **`website_lead_outcomes` holds one row.** Until the
+  office marks outcomes, no channel can be judged on jobs rather than form fills,
+  and the Ads offline conversion feed has nothing to send.
+
 ## 2026-08-04 - Leagrave integral blinds case study, live (4c85f4a)
 
 - The eleventh case study and the only one where the blind is the product: one
