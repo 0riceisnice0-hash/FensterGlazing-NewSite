@@ -2072,27 +2072,38 @@ if ($is_window_handles) {
                     <p><?php esc_html_e('Every handle finish we fit, for windows and for doors, on one page. Windows take the S2 Signature range, tilt and turn takes its own locking lever, hinged doors take a long backplate that carries the lever and the cylinder together, and sliding patio doors take a D-pull. We confirm what a given system can take at specification stage.', 'fenster'); ?></p>
                     <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about handles', 'fenster'); ?></a>
                 </div>
-                <?php
-                /* A photograph rather than a swatch. This slot used to render
-                   `$window_handle_finishes[0]['image']`, which is the first cut-out
-                   in the grid immediately below it: the hero repeated the first
-                   thing you scroll to, and did it with a catalogue PNG and the alt
-                   text "Fenster window handle finish option". Whichever finish
-                   happened to sit first in the array became the face of the hub.
-
-                   The finishes are still the point of the page and they are still
-                   all there, a few hundred pixels down. The hero's job is to show
-                   what a handle actually looks like on a window, which a cut-out on
-                   white cannot do. Deliberately not named as a finish in the alt
-                   text: the grid below names them against their own swatches, and
-                   this one is here as a photograph, not as a colour reference. */
-                ?>
-                <figure class="fg-window-handle-hero__image">
-                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/handles/handle-hero-detail.jpg')); ?>"
-                        alt="<?php esc_attr_e('A locking window handle and key barrel, on a dark woodgrain frame', 'fenster'); ?>"
-                        width="1000" height="1250" loading="eager">
-                </figure>
+                <?php /* The photograph is a full-bleed band below this block, not a
+                         panel beside it. See the note on the figure. */ ?>
             </div>
+
+            <?php
+            /* Owner, 2026-08-05: full width. This slot previously rendered
+               `$window_handle_finishes[0]['image']` in a boxed panel beside the
+               text — the first cut-out from the grid a few hundred pixels below,
+               on a white card with a green glow, under the alt text "Fenster
+               window handle finish option". The hero repeated the first thing you
+               scroll to, and whichever finish happened to sit first in the array
+               became the face of the hub.
+
+               Full bleed rather than an overlay hero. `.fg-hero--compact` was the
+               obvious thing to reuse, but its shade runs dark down the left where
+               its copy sits, and this photograph carries the handle on the left
+               against clean woodgrain on the right, so overlaid text would land on
+               the subject. Text above, photograph under it, nothing across it.
+
+               A door handle, not a window one, chosen for the shape of the frame:
+               the hub covers both families, the long backplate carrying lever and
+               cylinder together is the more substantial piece of hardware, and the
+               right two thirds of the frame is unbroken dark woodgrain, which is
+               what lets it crop to a wide band without losing the subject. The
+               window-handle frame from the same shoot has a bright, busy driveway
+               behind it that falls apart at this ratio. */
+            ?>
+            <figure class="fg-window-handle-hero__bleed">
+                <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/handles/handle-hero-detail.jpg')); ?>"
+                    alt="<?php esc_attr_e('A lever handle on the long backplate of a black woodgrain composite door', 'fenster'); ?>"
+                    width="2400" height="1000" loading="eager">
+            </figure>
         </section>
 
         <?php
@@ -2172,6 +2183,45 @@ if ($is_window_handles) {
             'features_label' => 'Lift and slide door handle features',
         ]);
         ?>
+
+        <?php
+        /* Owner, 2026-08-05: a banner through to the colour hub. It sits here,
+           after all five handle families and before the enquiry, because that is
+           where the page has answered the question it was opened for. The enquiry
+           immediately below already says "bring handles, colours and glass
+           together", so the two read as one thought rather than as a CTA landing
+           on top of another.
+
+           The swatches are read from `colour_options.materials.upvc.colours`, the
+           same source the colour hub and the product-page grids use, so this can
+           never drift out of step with the real palette. Eight of them, purely as
+           a visual: they are decoration for a link, not a chooser, so they carry
+           no names and are hidden from assistive tech, which reads the heading and
+           the link instead. Frame colour is the point, and the handle finishes the
+           page just listed are their own decision — deliberately no claim here
+           about one matching the other. */
+        $banner_colours = fenster_data('colour_options.materials.upvc.colours', []);
+        $banner_colours = is_array($banner_colours) ? array_slice(array_values($banner_colours), 0, 8) : [];
+        ?>
+        <?php if ($banner_colours !== []) : ?>
+            <section class="fg-handle-colour-banner" aria-labelledby="fg-handle-colour-banner-title">
+                <div class="container fg-handle-colour-banner__panel">
+                    <div>
+                        <p class="eyebrow"><?php esc_html_e('Next decision', 'fenster'); ?></p>
+                        <h2 id="fg-handle-colour-banner-title"><?php esc_html_e('The frame the handle goes on.', 'fenster'); ?></h2>
+                        <p><?php esc_html_e('Sixteen uPVC foils and any RAL colour in aluminium, with the inside face specified separately from the outside. Every swatch, on one page.', 'fenster'); ?></p>
+                    </div>
+                    <div class="fg-handle-colour-banner__aside">
+                        <span class="fg-handle-colour-banner__swatches" aria-hidden="true">
+                            <?php foreach ($banner_colours as $banner_colour) : ?>
+                                <i style="background: <?php echo esc_attr((string) ($banner_colour['hex'] ?? '#cccccc')); ?>"></i>
+                            <?php endforeach; ?>
+                        </span>
+                        <a class="button" href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See every colour', 'fenster'); ?></a>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
 
         <section id="fenster-enquiry" class="fg-obscure-enquiry">
             <div class="container fg-obscure-enquiry__grid">

@@ -9256,30 +9256,88 @@ html.fg-gallery-lightbox-open body {
   line-height: 1.6;
 }
 
-/* A photo frame, not a product card. This held a transparent cut-out, so it was
-   a white panel with a green glow behind it and the image sized to 58% and
-   `contain`ed, floating in the middle. The hero is a photograph now (see the note
-   in generated-page.php), and a photograph shrunk to 260px on a white card reads
-   as a swatch rather than as a picture, so the frame fills and crops instead.
+/* Full bleed under the copy, on the owner's instruction. The boxed panel that
+   used to sit beside the text is gone along with the cut-out it was built for; a
+   photograph shrunk onto a white card with a green glow read as a swatch rather
+   than a picture. Same escape as `.fg-cas-bleed` on the casement page.
 
-   4:5 because the subject is a lever: it is a tall, narrow thing, and every
-   landscape crop of it either cut the handle in half or closed in so far that it
-   stopped being recognisable as a window handle at all. */
-.fg-window-handle-hero__image {
-  aspect-ratio: 4 / 5;
-  max-height: 540px;
-  margin: 0 0 0 auto;
+   The framing is baked into the file — the blown-out window edge on the far left
+   of the original is cropped out there, not hidden with `object-position` here.
+   What is left to CSS is the ratio: the band is 2.4:1 and renders anywhere from
+   about 1.4:1 on a phone to 3.1:1 on a desktop, so `cover` crops the sides at the
+   narrow end. The lever sits about a third in, so the horizontal anchor is set
+   near that rather than centre, or the subject is the first thing a phone loses. */
+.fg-window-handle-hero__bleed {
+  width: 100vw;
+  max-width: 100%;
+  margin: clamp(2rem, 4vw, 3.2rem) 0 0 calc(50% - 50vw);
   overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  box-shadow: 0 24px 70px rgba(0, 45, 58, 0.14);
 }
 
-.fg-window-handle-hero__image img {
+.fg-window-handle-hero__bleed img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: clamp(260px, 34vw, 460px);
   object-fit: cover;
+  object-position: 35% 50%;
+}
+
+/* Through to the colour hub. Grid rather than flex so the swatch strip and the
+   button can sit together on the right and drop under the copy as one block. */
+.fg-handle-colour-banner {
+  padding: clamp(2.6rem, 5vw, 4rem) 0;
+}
+
+.fg-handle-colour-banner__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.2rem, 3vw, 2.5rem);
+  align-items: center;
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-soft);
+}
+
+.fg-handle-colour-banner h2 {
+  max-width: 18ch;
+  margin: 0.35rem 0 0.6rem;
+}
+
+.fg-handle-colour-banner p:not(.eyebrow) {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.fg-handle-colour-banner__aside {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+}
+
+.fg-handle-colour-banner__swatches {
+  display: flex;
+}
+
+/* Overlapped, so eight colours read as a palette at a glance rather than as a
+   row of eight things to consider. The ring is what keeps a dark foil legible
+   against the one behind it. */
+.fg-handle-colour-banner__swatches i {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--color-soft);
+}
+
+.fg-handle-colour-banner__swatches i + i {
+  margin-left: -9px;
+}
+
+@media (max-width: 720px) {
+  .fg-handle-colour-banner__panel {
+    grid-template-columns: 1fr;
+  }
 }
 
 .fg-window-handles__shell {
@@ -23395,18 +23453,10 @@ a.fg-cs-card__pill:focus-visible {
     font-size: clamp(2.2rem, 12vw, 3.6rem);
   }
 
-  /* One column here, so the figure runs the full width of the container. At 4:5
-     that is about 470px tall on a 375px phone, which pushes the finishes grid —
-     the actual point of the page — most of a screen further down. Capped, and the
-     crop biased up so the head and the key barrel survive it rather than the
-     centre of the lever. `min-height` was for the old cut-out card. */
-  .fg-window-handle-hero__image {
-    max-height: 380px;
-  }
-
-  .fg-window-handle-hero__image img {
-    object-position: 50% 32%;
-  }
+  /* The full-bleed band is already width-limited by the viewport here, and its
+     own `clamp` floor of 260px is a sensible phone height, so it needs nothing at
+     this breakpoint. The rules that sat here were for the boxed panel beside the
+     copy, which no longer exists. */
 
   .fg-window-handles {
     padding: 3rem 0;
