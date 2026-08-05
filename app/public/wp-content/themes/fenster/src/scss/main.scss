@@ -36783,16 +36783,14 @@ html.fg-blinds-reveal-locked {
 .fg-cas-energy .fg-cas-num,
 .fg-cas-security .fg-cas-num { -webkit-text-stroke-color: rgba(255, 255, 255, 0.32); }
 
-.fg-cas-energy__grid,
-.fg-cas-security__grid {
+.fg-cas-energy__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   align-items: center;
   gap: clamp(1.5rem, 4vw, 3.5rem);
 }
 
-.fg-cas-energy__media,
-.fg-cas-security__grid figure {
+.fg-cas-energy__media {
   overflow: hidden;
   border-radius: 4px;
   background: #ffffff;
@@ -36800,11 +36798,80 @@ html.fg-blinds-reveal-locked {
 
 /* The studio files are already framed; letting them keep their own proportion
    means nothing is cropped a second time. */
-.fg-cas-energy__media img,
-.fg-cas-security__grid figure img {
+.fg-cas-energy__media img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Chapter 02 has to open in one screen. Owner instruction, 2026-08-05. Measured
+   at 1280x800 the head and the cutaway ran 709px against a 713px viewport, so it
+   cleared the raw viewport by four pixels and nothing at all once the 72px
+   sticky header sat over it.
+
+   Both columns had to come down, because the row is as tall as its taller side
+   and capping only the cutaway would have left the statistics setting the
+   height. The cutaway is contained rather than cropped, so the profile is still
+   whole, and the statistics tighten rather than lose one. */
+.fg-cas-energy__media img {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.fg-cas-energy .fg-cas-chapter__head {
+  margin-bottom: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+.fg-cas-energy .fg-cas-stats {
+  gap: clamp(0.8rem, 1.6vw, 1.1rem);
+}
+
+/* The statistics, not the cutaway, were setting the row height: a grid row is
+   as tall as its taller side, so capping the photograph alone moved nothing. */
+.fg-cas-energy .fg-cas-stats dt span {
+  font-size: clamp(1.7rem, 2.8vw, 2.35rem);
+}
+
+/* ---- The mechanism arrives -----------------------------------------------
+   Owner instruction, 2026-08-05: the drift on its own was not enough of a
+   feature, so the part now flies in from the left and settles.
+
+   It composes with the drift rather than replacing it. The stage keeps writing
+   `--fg-parallax-y` the whole time and the entrance writes `--fg-lock-x`, so the
+   two live in one transform and neither has to know about the other. Once the
+   part has landed the arrival class comes off and the 120ms transition belongs
+   to the drift again.
+
+   Armed from JavaScript, never from here. A pre-state written in CSS would leave
+   the mechanism invisible on a page whose script failed, and this is the only
+   photograph in the chapter.
+
+   Eased out hard and with no overshoot: a part this heavy bouncing would read as
+   a toy, and the brief was dramatic but still high end. */
+.fg-cas-lock__arrive {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.fg-cas-lock__stage.is-armed .fg-cas-lock__arrive {
+  transform: translateX(-34%);
+  opacity: 0;
+}
+
+.fg-cas-lock__stage.is-arriving .fg-cas-lock__arrive {
+  transition: transform 1150ms cubic-bezier(0.16, 0.84, 0.24, 1), opacity 780ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cas-lock__stage.is-armed .fg-cas-lock__arrive {
+    transform: none;
+    opacity: 1;
+  }
+
+  .fg-cas-lock__stage.is-arriving .fg-cas-lock__arrive {
+    transition: none;
+  }
 }
 
 /* ---- The mechanism, floated on the band ----------------------------------
@@ -36831,7 +36898,9 @@ html.fg-blinds-reveal-locked {
   --fg-parallax-y: 0px;
   display: grid;
   place-items: center;
-  padding: clamp(0.75rem, 2vw, 1.75rem) 0;
+  /* Trimmed on 2026-08-05 with the rest of the chapter. The band is as tall as
+     the photograph, which is now the only thing in it worth being tall. */
+  padding: clamp(0.4rem, 1vw, 0.85rem) 0;
 }
 
 .fg-cas-lock__art {
@@ -36860,38 +36929,6 @@ html.fg-blinds-reveal-locked {
 
 .fg-cas .fg-cas-lock__lead { max-width: 46ch; margin: 0; }
 
-.fg-cas-lock__specs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.35rem clamp(1rem, 2.5vw, 2rem);
-  margin: clamp(1.5rem, 3vw, 2.15rem) 0 0;
-  padding-top: clamp(1.35rem, 3vw, 1.9rem);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.fg-cas-lock__specs dt {
-  color: #ffffff;
-  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-}
-
-.fg-cas-lock__specs dd {
-  max-width: 26ch;
-  margin: 0.3rem 0 0;
-  color: rgba(255, 255, 255, 0.66);
-  font-size: 0.87rem;
-  line-height: 1.45;
-}
-
-.fg-cas .fg-cas-lock__note {
-  max-width: 52ch;
-  margin: clamp(1.5rem, 3vw, 2rem) 0 0;
-  font-size: 0.8rem;
-  line-height: 1.5;
-}
-
-.fg-cas-security .fg-cas-lock__note { color: rgba(255, 255, 255, 0.52); }
 
 /* The controller keeps writing the variable; this is what stops it being read.
    The shared [data-fg-depth] script has no reduced-motion check of its own. */
@@ -36985,6 +37022,47 @@ html.fg-blinds-reveal-locked {
 
 /* ---- 03 Security ---- */
 .fg-cas-list { display: grid; margin: 0; }
+
+/* Two columns for the security points, which is what actually shortened that
+   chapter. The list had been one narrow column beside a photograph less than
+   two thirds its height, so the row was as tall as the list and the column next
+   to it carried 178px of nothing. The top rule belongs to the first row, which
+   is now the first two. */
+.fg-cas-list--split {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.fg-cas-list--split div:nth-child(-n + 2) {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* The keep sits under the mechanism copy now, filling the space the test
+   figures left rather than opening a band of its own below it. */
+.fg-cas-lock__keep {
+  overflow: hidden;
+  margin: clamp(1.35rem, 3vw, 1.9rem) 0 0;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.fg-cas-lock__keep img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 210px;
+  object-fit: cover;
+}
+
+.fg-cas-lock__keep figcaption {
+  padding: 0.6rem 0.75rem 0.7rem;
+  background: #eef1f1;
+  color: var(--color-steel);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
 
 .fg-cas-list div {
   padding: 1rem 0;
@@ -37162,37 +37240,6 @@ html.fg-blinds-reveal-locked {
 }
 
 /* Security: the mechanism first, the keep beside it. */
-.fg-cas-security__media {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(0.75rem, 1.6vw, 1.15rem);
-}
-
-.fg-cas-security__media figure {
-  overflow: hidden;
-  border-radius: 4px;
-  background: #ffffff;
-}
-
-.fg-cas-security__media img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* The figure is white, because it holds a white studio product shot, so the
-   caption cannot take the section's white type. It sits on a pale band in
-   steel ink instead. White on white is a release blocker in STYLE.md and this
-   caption was exactly that until it was looked at. */
-.fg-cas-security__media figcaption {
-  padding: 0.6rem 0.75rem 0.7rem;
-  background: #eef1f1;
-  color: var(--color-steel);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
 /* Gallery captions carry what each window actually has. On a pointer device
    they stay out of the way until the image is hovered or focused; with no
    hover there is nothing to reveal them, so they are simply always on. */
@@ -37389,7 +37436,6 @@ html.fg-blinds-reveal-locked {
   .fg-cas-section-head,
   .fg-cas-overture__grid,
   .fg-cas-energy__grid,
-  .fg-cas-security__grid,
   .fg-cas-lock,
   .fg-cas-film__grid,
   .fg-cas-versus__body,
@@ -37430,8 +37476,11 @@ html.fg-blinds-reveal-locked {
   .fg-cas-actions .button { flex: 1 1 auto; text-align: center; }
 
   .fg-cas-energy__grid figure,
-  .fg-cas-security__grid figure,
   .fg-cas-film__grid figure { order: -1; }
+
+  .fg-cas-list--split { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-cas-list--split div:nth-child(2) { border-top: 1px solid rgba(255, 255, 255, 0.16); padding-top: 1rem; }
 
   .fg-cas-anatomy__toggle { grid-template-columns: 2.4rem minmax(0, 1fr) auto; font-size: 0.98rem; }
   .fg-cas-anatomy__body { padding-left: 3.15rem; }

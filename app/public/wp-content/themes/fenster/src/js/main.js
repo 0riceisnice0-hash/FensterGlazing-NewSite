@@ -5303,6 +5303,71 @@ if (depthItems.length) {
   updateDepthItems();
 }
 
+/* ---- The mechanism arrives on /casement-windows/ -----------------------------
+   The lock photograph flies in from the left and settles, once, when the
+   security chapter first reaches the viewport. Owner instruction, 2026-08-05:
+   the drift on its own was not enough of a feature.
+
+   The arrival rides on a wrapper and the drift on the image inside it, so the
+   two never share a transform. Routing both through one element meant the
+   entrance had to travel on a custom property, and a transition does not
+   reliably fire when what changed is the variable a transform reads: measured,
+   it snapped rather than travelled.
+
+   The arming lives here rather than in the stylesheet on purpose. A pre-state
+   written in CSS would leave the mechanism invisible on any page whose script
+   failed, and it is the only photograph in that chapter, so the resting state
+   stays "visible" and JavaScript is what hides it before showing it.
+
+   Reduced motion is not armed at all, which is the only version that cannot
+   leave the part off screen if something later goes wrong. */
+const lockStage = document.querySelector('.fg-cas-lock__stage');
+
+if (lockStage && 'IntersectionObserver' in window) {
+  const lockArt = lockStage.querySelector('.fg-cas-lock__arrive');
+  const lockReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (lockArt && !lockReduce.matches) {
+    lockStage.classList.add('is-armed');
+
+    /* Only the transform. Opacity finishes first and its transitionend would
+       otherwise strip the transition mid-flight, which snaps the part to its
+       landing instead of letting it travel.
+
+       Disarming here as well as on arrival is deliberate. It is the guarantee
+       that the mechanism ends up visible whatever happens in between: if the
+       transition never runs, never finishes, or the tab is hidden for the whole
+       of it, the timeout below still takes the class off. */
+    const lockLanded = (event) => {
+      if (event && event.propertyName !== 'transform') return;
+      lockStage.classList.remove('is-arriving');
+      lockStage.classList.remove('is-armed');
+      lockArt.removeEventListener('transitionend', lockLanded);
+    };
+
+    const lockObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        // Once only: unobserve before arriving so a re-entry cannot restart it.
+        lockObserver.unobserve(entry.target);
+        lockStage.classList.add('is-arriving');
+        /* Flush the style so the long transition is in place before the offset
+           changes, otherwise the part jumps. Read synchronously rather than
+           waiting on requestAnimationFrame: rAF does not run in a background
+           tab, and measured in headless it did not run at all, which left the
+           mechanism armed and invisible for the life of the page. */
+        void lockArt.offsetWidth;
+        lockStage.classList.remove('is-armed');
+        lockArt.addEventListener('transitionend', lockLanded);
+        // transitionend does not fire if the tab is hidden for the whole run.
+        window.setTimeout(lockLanded, 1800);
+      });
+    }, { threshold: 0.25 });
+
+    lockObserver.observe(lockStage);
+  }
+}
+
 /* ---- Stacked chapters on /casement-windows/ ---------------------------------
    Chapters 01, 02 and 03 read as physical panels: each one anchors at the foot of
    the viewport once it has been scrolled through, and the next slides up over it.

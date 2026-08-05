@@ -42,23 +42,41 @@ $studio = $base . 'studio/';
    change. A chip keeps it honest until then rather than looking unfinished. */
 $film_src = '';
 
+/* The two openers had each other's photograph until 2026-08-05. A friction stay
+   is fitted on the members square to the hinge line, so which member carries the
+   stay names the window: `cas-stay-open` runs its long track along the head and
+   cill with the keep on the jamb, which is a side hung sash, and `cas-hinge-open`
+   carries its stay on the jamb, which is a top hung one. Owner caught it; the
+   photographs read that way round too. Judge these by the stay, not the filename.
+
+   `focus` is the object-position for the 4/3 crop. It is only set where centring
+   cuts the subject: the fixed pane photograph is 820x857, so a centred crop puts
+   the transom across the middle and halves the pane the tile is named after.
+   Owner instruction, 2026-08-05, to lift the split toward the top. */
 $styles = [
     [
         'name' => 'Side hung',
         'copy' => 'Hinged on the stile and held at any angle by a stainless friction stay. Where a bedroom needs its escape route, egress hinges swing the sash to ninety degrees so the clear opening meets the Building Regulations minimum of 0.33m², at least 450mm each way.',
-        'image' => $studio . 'cas-hinge-open.webp',
-        'alt' => 'Corner of a white uPVC casement window opened on its hinge, showing the gearing and the gasket',
+        'image' => $studio . 'cas-stay-open.webp',
+        'w' => 1250,
+        'h' => 857,
+        'alt' => 'Friction stay along the cill of a white uPVC side hung casement, the sash swung open on its stile hinges',
     ],
     [
         'name' => 'Top hung',
         'copy' => 'Hinged in the head with the handle on the bottom rail. The open sash sheds rain clear of the opening, which is why top lights sit above fixed panes and over kitchen worktops. A restrictor holds the first opening to around 100mm where children sleep.',
-        'image' => $studio . 'cas-stay-open.webp',
-        'alt' => 'White uPVC top hung casement sash held open on its friction stay above a fixed pane',
+        'image' => $studio . 'cas-hinge-open.webp',
+        'w' => 1250,
+        'h' => 857,
+        'alt' => 'Friction stay on the jamb of a white uPVC top hung casement, the sash held open from the head',
     ],
     [
         'name' => 'Fixed pane',
         'copy' => 'No hinges, no gearing, no handle. The glass is bedded straight into the frame, so a fixed pane costs less than an opener the same size and carries a slimmer border and more glass. Ventilation and escape come from the openers around it.',
         'image' => $studio . 'cas-sash-proud-w.webp',
+        'w' => 820,
+        'h' => 857,
+        'focus' => '50% 80%',
         'alt' => 'White uPVC casement window at a transom, the opening sash standing proud of the frame above a directly glazed fixed pane',
     ],
 ];
@@ -93,7 +111,7 @@ $details = [
        stile and handle for structure and leaving the sill, the bath and the
        towel rail out. 980x734 of the original down to 900x675, so a downscale,
        at the astragal tile's ratio. */
-    ['name' => 'Georgian bars', 'copy' => 'A flat bar set inside the sealed unit. The pane still wipes clean in one pass.', 'image' => $base . 'casement-georgian-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Georgian bars set inside the sealed unit of a white uPVC casement window, the obscured glass reading unbroken across the bars'],
+    ['name' => 'Georgian bars', 'copy' => 'An 18mm flat bar inside the sealed unit, colour matched to the frame. The pane still wipes clean.', 'image' => $base . 'casement-georgian-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Georgian bars set inside the sealed unit of a white uPVC casement window, the obscured glass reading unbroken across the bars'],
     ['name' => 'Astragal bars', 'copy' => 'A moulded bar bonded to the face of the glass, so it catches the light and throws a shadow.', 'image' => $base . 'casement-astragal-bar-900w.webp', 'w' => 900, 'h' => 675, 'alt' => 'Close up of moulded astragal bars standing proud of the glass on a white uPVC bay window'],
     /* The horn photograph was wrong until 2026-08-05: `casement-mock-horn-900w`
        is a studio shot of a mullion meeting the cill and shows no horn at all.
@@ -102,8 +120,8 @@ $details = [
        filename. This one is the only asset in the theme that actually shows
        horns: the curved projections on the bottom corners of the open sashes.
        It is 600x600 and the trio crops to 4/3, which keeps both of them. */
-    ['name' => 'Mock sash horns', 'copy' => 'Turned below the sash, the way a period sash window is finished.', 'image' => $base . 'casement-mockhorn-detail-600w.webp', 'w' => 600, 'h' => 600, 'alt' => 'Mock sash horns turned on the bottom corners of open white uPVC casement sashes'],
-    ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares and sealed against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by Fenster in Rushden'],
+    ['name' => 'Mock sash horns', 'copy' => 'Turned on the bottom corners of the sash, the way a period sash window was always finished.', 'image' => $base . 'casement-mockhorn-detail-600w.webp', 'w' => 600, 'h' => 600, 'alt' => 'Mock sash horns turned on the bottom corners of open white uPVC casement sashes'],
+    ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares, then sealed into the unit against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by Fenster in Rushden'],
 ];
 $energy_stats = [
     ['figure' => '0.95', 'unit' => 'W/m²K', 'note' => 'Whole window, with the 36mm triple glazed unit'],
@@ -120,10 +138,18 @@ $anatomy = [
 ];
 
 $security_points = [
-    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. The Kenrick Excalibur strip runs the length of the sash and drives claws and shoot bolts into keeps at several points, so the sash is held into its seals along its edge rather than at the handle alone.'],
-    ['name' => 'Reinforced where it counts', 'copy' => 'Reinforcement sized for the individual window. It is what the locking pulls against, so it is specified with the window rather than assumed.'],
-    ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we specify to it. Those approvals belong to a tested complete window, not to a profile name.'],
-    ['name' => 'Laminated glass, worth the upgrade', 'copy' => 'A laminated pane has a bonded interlayer, so it holds together instead of breaking through. It is the upgrade we would point at first on a ground floor, a side return, or any window out of sight from the road.'],
+    /* The Kenrick test figures used to sit up beside the photograph as their own
+       row of statistics, which gave the mechanism two blocks of copy and made the
+       chapter the longest on the page. Owner instruction, 2026-08-05: merge them
+       into these points, keep what a customer actually weighs, and let the
+       photograph be the feature instead. The cycles, the salt spray and the ten
+       years are here; the attribution moved with them, because they are Kenrick's
+       figures for the mechanism rather than ours for a finished window, and the
+       PAS 24 point below still says approvals belong to a tested whole window. */
+    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. The Excalibur strip drives claws and shoot bolts into keeps down the sash edge, so it is held along its length, not at the handle. Reinforcement is sized per window, because that is what the lock pulls against.'],
+    ['name' => 'Tested, and guaranteed ten years', 'copy' => 'Kenrick test the mechanism to 100,000 opening cycles and 240 hours of salt spray, beyond what BS EN 1670 asks, and guarantee it for ten years.'],
+    ['name' => 'PAS 24 and Secured by Design', 'copy' => 'Both available. PAS 24 is what Part Q calls for on new dwellings and some extensions, so tell us early if your build is covered. The approval belongs to a tested complete window, not a profile name.'],
+    ['name' => 'Laminated glass, worth the upgrade', 'copy' => 'A bonded interlayer holds the pane together instead of letting it break through. The first upgrade we would point at on a ground floor, or any window out of sight from the road.'],
 ];
 /* Kenrick's own published figures for the Excalibur, taken from
    kenricks.co.uk/products/window-hardware/excalibur on 2026-08-04. They belong
@@ -131,12 +157,6 @@ $security_points = [
    says capable rather than certified: the approval sits with a tested complete
    window and the security list below already makes that distinction. Do not
    restate any of these as a Fenster figure. */
-$lock_specs = [
-    ['figure' => '10 years', 'label' => 'Mechanical guarantee from Kenrick'],
-    ['figure' => '100,000', 'label' => 'Operating cycles tested'],
-    ['figure' => '240 hours', 'label' => 'Salt spray, exceeding BS EN 1670:2007'],
-    ['figure' => 'PAS 24', 'label' => 'Capable, and a Secured by Design product'],
-];
 // Our own work only. The studio photography carries the rest of the page; proof
 // has to be the real thing.
 /* Our own installations only. The stone elevation that used to sit here is
@@ -297,7 +317,7 @@ $faq_schema = [
                 <?php foreach ($styles as $style) : ?>
                     <article class="fg-cas-style">
                         <figure>
-                            <img src="<?php echo esc_url(fenster_generated_url($style['image'])); ?>" alt="<?php echo esc_attr($style['alt']); ?>" loading="lazy" width="1250" height="857">
+                            <img src="<?php echo esc_url(fenster_generated_url($style['image'])); ?>" alt="<?php echo esc_attr($style['alt']); ?>" loading="lazy" width="<?php echo esc_attr((string) $style['w']); ?>" height="<?php echo esc_attr((string) $style['h']); ?>"<?php if (! empty($style['focus'])) : ?> style="object-position: <?php echo esc_attr($style['focus']); ?>"<?php endif; ?>>
                         </figure>
                         <h3><?php echo esc_html($style['name']); ?></h3>
                         <p><?php echo esc_html($style['copy']); ?></p>
@@ -486,43 +506,34 @@ $faq_schema = [
                file, or it cannot sit on any other colour. */ ?>
         <div class="container fg-cas-lock">
             <div class="fg-cas-lock__stage" data-fg-depth="0.15">
+                <?php /* The arrival rides on this wrapper and the drift on the image
+                         inside it, so the two transforms never share an element. */ ?>
+                <div class="fg-cas-lock__arrive">
                 <img class="fg-cas-lock__art"
                     src="<?php echo esc_url(fenster_generated_url($studio . 'cas-kenrick-excalibur.webp')); ?>"
                     srcset="<?php echo esc_attr(fenster_generated_url($studio . 'cas-kenrick-excalibur-640w.webp') . ' 640w, ' . fenster_generated_url($studio . 'cas-kenrick-excalibur.webp') . ' 1100w'); ?>"
                     sizes="(max-width: 860px) 76vw, 520px"
                     alt="<?php esc_attr_e('Kenrick Excalibur multi-point window lock, showing the die-cast gearbox, the square spindle hole, the claws and the steel shoot bolts', 'fenster'); ?>"
                     loading="lazy" width="1100" height="1182">
+                </div>
             </div>
             <div class="fg-cas-lock__copy">
                 <p class="fg-cas-lock__brand"><?php esc_html_e('Kenrick Excalibur', 'fenster'); ?></p>
                 <p class="fg-cas-lock__lead"><?php esc_html_e('The mechanism inside the sash. One turn of the handle drives the whole strip at once, throwing steel shoot bolts into the frame and patented bi-directional claws into keeps down the sash edge. The gearbox is die-cast and unhanded, so the same mechanism serves a left hung sash and a right hung one.', 'fenster'); ?></p>
-                <dl class="fg-cas-lock__specs">
-                    <?php foreach ($lock_specs as $lock_spec) : ?>
-                        <div>
-                            <dt><?php echo esc_html($lock_spec['figure']); ?></dt>
-                            <dd><?php echo esc_html($lock_spec['label']); ?></dd>
-                        </div>
-                    <?php endforeach; ?>
-                </dl>
-                <p class="fg-cas-lock__note"><?php esc_html_e('Test figures published by Kenrick for the mechanism. Approvals for a finished window are confirmed against your own configuration.', 'fenster'); ?></p>
-            </div>
-        </div>
-        <div class="container fg-cas-security__grid">
-            <div class="fg-cas-security__media">
-                <figure>
-                    <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-locking-strip.webp')); ?>"
-                        alt="<?php esc_attr_e('Multi-point locking strip and cams running down the edge of a white uPVC casement sash', 'fenster'); ?>"
-                        loading="lazy" width="1250" height="857">
-                    <figcaption><?php esc_html_e('The locking strip and its cams', 'fenster'); ?></figcaption>
-                </figure>
-                <figure>
+                <figure class="fg-cas-lock__keep">
                     <img src="<?php echo esc_url(fenster_generated_url($studio . 'cas-security-keep.webp')); ?>"
                         alt="<?php esc_attr_e('Steel locking keep and reinforced rebate inside a white uPVC casement window frame', 'fenster'); ?>"
                         loading="lazy" width="1250" height="857">
                     <figcaption><?php esc_html_e('The keep it locks into', 'fenster'); ?></figcaption>
                 </figure>
             </div>
-            <dl class="fg-cas-list">
+        </div>
+        <?php /* The points run full width in two columns. With the strip photograph
+                 gone and the keep moved up beside the mechanism, this was a list in
+                 one narrow column beside 178px of empty space, which is what made
+                 the chapter no shorter after the cuts. */ ?>
+        <div class="container">
+            <dl class="fg-cas-list fg-cas-list--split">
                 <?php foreach ($security_points as $point) : ?>
                     <div>
                         <dt><?php echo esc_html($point['name']); ?></dt>
