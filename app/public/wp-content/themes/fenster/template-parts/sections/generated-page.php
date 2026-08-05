@@ -2064,46 +2064,48 @@ if ($is_window_handles) {
     $window_handle_intro = (string) ($window_handles['intro'] ?? 'Compare Fenster window handle finishes, locking detail and traditional handle options before the final specification is confirmed.');
     ?>
     <main class="fg-window-handle-page">
-        <section class="fg-window-handle-hero">
+        <?php
+        /* Owner, 2026-08-05: the photograph belongs at the top, the way a product
+           page opens, with the copy over it and fading like the colour hub — and
+           inverted if that suits the picture better. It does, so it is.
+
+           What this replaced: `$window_handle_finishes[0]['image']` in a boxed
+           panel beside the text, which was the first cut-out from the grid a few
+           hundred pixels below, on a white card with a green glow, under the alt
+           text "Fenster window handle finish option". The hero showed the first
+           thing you scroll to, and whichever finish happened to sit first in the
+           array was the face of the hub.
+
+           Inverted against the colour hub, whose veil is solid white across the
+           left and clears by 70% so its copy reads on the left and the colour wall
+           shows on the right. Both Nikon frames carry the hardware on the LEFT
+           against clean woodgrain, so the veil runs the other way here and the copy
+           sits right. That is the whole reason this works as an overlay: the
+           straight `.fg-hero--compact` treatment shades dark down the left, which
+           is exactly where the subject is, so the text would have landed on it.
+
+           The door frame rather than the window one. The hub covers both families,
+           the long backplate carrying a lever and a cylinder is the more
+           substantial piece of hardware, and it has unbroken dark woodgrain to the
+           right of the lever, which is what gives the veil something quiet to fade
+           into. The window-handle frame from the same shoot has a bright, busy
+           driveway behind it that fights the copy at every width. */
+        ?>
+        <section class="fg-window-handle-hero fg-window-handle-hero--photo">
+            <div class="fg-window-handle-hero__photo">
+                <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/handles/handle-hero-detail.jpg')); ?>"
+                    alt="<?php esc_attr_e('A lever handle on the long backplate of a black woodgrain composite door', 'fenster'); ?>"
+                    width="2400" height="1000" loading="eager" fetchpriority="high">
+            </div>
+            <div class="fg-window-handle-hero__veil" aria-hidden="true"></div>
             <div class="container fg-window-handle-hero__grid">
-                <div>
+                <div class="fg-window-handle-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Specification hub', 'fenster'); ?></p>
                     <h1><?php esc_html_e('Window and door handle options.', 'fenster'); ?></h1>
                     <p><?php esc_html_e('Every handle finish we fit, for windows and for doors, on one page. Windows take the S2 Signature range, tilt and turn takes its own locking lever, hinged doors take a long backplate that carries the lever and the cylinder together, and sliding patio doors take a D-pull. We confirm what a given system can take at specification stage.', 'fenster'); ?></p>
                     <a class="button" href="#fenster-enquiry"><?php esc_html_e('Ask about handles', 'fenster'); ?></a>
                 </div>
-                <?php /* The photograph is a full-bleed band below this block, not a
-                         panel beside it. See the note on the figure. */ ?>
             </div>
-
-            <?php
-            /* Owner, 2026-08-05: full width. This slot previously rendered
-               `$window_handle_finishes[0]['image']` in a boxed panel beside the
-               text — the first cut-out from the grid a few hundred pixels below,
-               on a white card with a green glow, under the alt text "Fenster
-               window handle finish option". The hero repeated the first thing you
-               scroll to, and whichever finish happened to sit first in the array
-               became the face of the hub.
-
-               Full bleed rather than an overlay hero. `.fg-hero--compact` was the
-               obvious thing to reuse, but its shade runs dark down the left where
-               its copy sits, and this photograph carries the handle on the left
-               against clean woodgrain on the right, so overlaid text would land on
-               the subject. Text above, photograph under it, nothing across it.
-
-               A door handle, not a window one, chosen for the shape of the frame:
-               the hub covers both families, the long backplate carrying lever and
-               cylinder together is the more substantial piece of hardware, and the
-               right two thirds of the frame is unbroken dark woodgrain, which is
-               what lets it crop to a wide band without losing the subject. The
-               window-handle frame from the same shoot has a bright, busy driveway
-               behind it that falls apart at this ratio. */
-            ?>
-            <figure class="fg-window-handle-hero__bleed">
-                <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/handles/handle-hero-detail.jpg')); ?>"
-                    alt="<?php esc_attr_e('A lever handle on the long backplate of a black woodgrain composite door', 'fenster'); ?>"
-                    width="2400" height="1000" loading="eager">
-            </figure>
         </section>
 
         <?php

@@ -9256,30 +9256,100 @@ html.fg-gallery-lightbox-open body {
   line-height: 1.6;
 }
 
-/* Full bleed under the copy, on the owner's instruction. The boxed panel that
-   used to sit beside the text is gone along with the cut-out it was built for; a
-   photograph shrunk onto a white card with a green glow read as a swatch rather
-   than a picture. Same escape as `.fg-cas-bleed` on the casement page.
+/* The photograph is the hero, the way a product page opens, with the copy over it
+   on a fade — the colour hub's treatment, run the other way. See the note in
+   generated-page.php for why it is inverted: the hardware is on the left in both
+   Nikon frames, so the veil clears on the left and goes solid under the copy on
+   the right. The old boxed panel and the cut-out it was built for are gone.
 
-   The framing is baked into the file — the blown-out window edge on the far left
-   of the original is cropped out there, not hidden with `object-position` here.
-   What is left to CSS is the ratio: the band is 2.4:1 and renders anywhere from
-   about 1.4:1 on a phone to 3.1:1 on a desktop, so `cover` crops the sides at the
-   narrow end. The lever sits about a third in, so the horizontal anchor is set
-   near that rather than centre, or the subject is the first thing a phone loses. */
-.fg-window-handle-hero__bleed {
-  width: 100vw;
-  max-width: 100%;
-  margin: clamp(2rem, 4vw, 3.2rem) 0 0 calc(50% - 50vw);
+   Framing is baked into the file rather than nudged here: the blown-out window
+   edge at the far left of the original is cropped out at source. */
+.fg-window-handle-hero--photo {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: clamp(400px, 44vw, 540px);
+  padding: 0;
   overflow: hidden;
+  background: #ffffff;
 }
 
-.fg-window-handle-hero__bleed img {
+.fg-window-handle-hero__photo {
+  position: absolute;
+  inset: 0;
+}
+
+.fg-window-handle-hero__photo img {
   display: block;
   width: 100%;
-  height: clamp(260px, 34vw, 460px);
+  height: 100%;
   object-fit: cover;
-  object-position: 35% 50%;
+  /* Anchored left, because that is where the lever is and the right of the frame
+     is woodgrain the veil covers anyway. */
+  object-position: 22% 50%;
+}
+
+/* Clear where the hardware is, solid where the words are. The stops are close
+   together on purpose: a longer fade puts the copy over a half-lit middle where
+   neither the photograph nor the text is doing well. */
+.fg-window-handle-hero__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.6) 40%,
+    rgba(255, 255, 255, 0.94) 48%,
+    #ffffff 56%,
+    #ffffff 100%
+  );
+}
+
+.fg-window-handle-hero--photo .fg-window-handle-hero__grid {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* Right half, to sit on the solid end of the veil. */
+.fg-window-handle-hero__copy {
+  max-width: 34rem;
+  margin-left: auto;
+}
+
+@media (max-width: 900px) {
+  /* No width to spare for a side-by-side fade, so the photograph becomes a band
+     above the copy and the veil turns vertical, which is the same move the colour
+     hub makes at this width. The image sits first in the DOM already, so it needs
+     no reordering to work as a band rather than a backdrop. */
+  .fg-window-handle-hero--photo {
+    display: block;
+    min-height: 0;
+  }
+
+  .fg-window-handle-hero__photo {
+    position: relative;
+    inset: auto;
+    height: clamp(220px, 42vw, 300px);
+  }
+
+  .fg-window-handle-hero__veil {
+    top: auto;
+    height: clamp(220px, 42vw, 300px);
+    background: linear-gradient(
+      0deg,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0.72) 26%,
+      rgba(255, 255, 255, 0) 62%
+    );
+  }
+
+  .fg-window-handle-hero__copy {
+    max-width: none;
+    margin-left: 0;
+  }
 }
 
 /* Through to the colour hub. Grid rather than flex so the swatch strip and the
