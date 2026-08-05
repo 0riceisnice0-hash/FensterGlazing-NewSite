@@ -470,7 +470,7 @@ $faq_schema = [
              01 is then only the ways it opens, which is what its own heading
              says, and the choices that make a window belong to a particular
              house are read together rather than as a tail on the range. */ ?>
-    <section class="fg-cas-chapter" aria-labelledby="fg-cas-ch4-title">
+    <section class="fg-cas-chapter fg-cas-chapter--intro" aria-labelledby="fg-cas-ch4-title">
         <div class="container fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true">04</span>
             <div>
@@ -575,7 +575,7 @@ $faq_schema = [
              group sitting under the stack. They are the last thing chosen and
              the last thing seen, and being light they are also the break between
              the dark security chapter and the gallery. */ ?>
-    <section class="fg-cas-chapter" aria-labelledby="fg-cas-ch5-title">
+    <section class="fg-cas-chapter fg-cas-chapter--intro" aria-labelledby="fg-cas-ch5-title">
         <div class="container fg-cas-chapter__head">
             <span class="fg-cas-num" aria-hidden="true">05</span>
             <div>

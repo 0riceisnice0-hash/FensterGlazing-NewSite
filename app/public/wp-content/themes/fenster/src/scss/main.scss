@@ -36482,6 +36482,24 @@ html.fg-blinds-reveal-locked {
   padding: clamp(3rem, 7vh, 5.5rem) 0;
 }
 
+/* Chapters 04 and 05 open with a head and nothing else, where 01, 02 and 03
+   carry theirs inside the section that holds their content. That difference is
+   a section boundary, and a boundary is two lots of padding: measured at
+   1280x800 the gap under those two heads was 95px against 45px on 01 and 03,
+   and another 50px of the following section's own top padding after that.
+
+   So the head-only section gives up its bottom padding and the section after it
+   gives up its top, which leaves the head's own margin doing the spacing, which
+   is exactly what does it on the other three. Qualified with .fg-cas because
+   `.fg-cas section` sets that padding at (0,1,1) and a bare class would lose. */
+.fg-cas .fg-cas-chapter--intro {
+  padding-bottom: 0;
+}
+
+.fg-cas .fg-cas-chapter--intro + section {
+  padding-top: 0;
+}
+
 /* One display size across the page. Chapter titles, section titles and the
    overture all use it, which is what makes a long page feel composed rather
    than like a stack of unrelated blocks. Well inside --fg-font-size-max. */
