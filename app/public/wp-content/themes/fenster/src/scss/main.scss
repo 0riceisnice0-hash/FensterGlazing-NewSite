@@ -36328,16 +36328,27 @@ html.fg-blinds-reveal-locked {
    none of it survives the reveal. See the note there for why the whole value is
    one drum rather than one drum per digit.
 
-   The window is exactly one cell tall and pinned to the width the value really
-   rendered at, so an intermediate readout cannot reflow the tile. The mask only
-   bites the outer tenth: the line box carries more leading than that, so it
-   softens the cells passing through without eating the glyphs of the one that
-   lands. It comes off entirely when the markup is restored. */
+   Only the number is on the drum; the text either side of it is static, so this
+   sits inline in the middle of a line rather than being a block of its own.
+   `vertical-align: bottom` is what keeps the digits on the same baseline as that
+   text: an inline-block with `overflow: hidden` takes its baseline from its
+   bottom edge, so aligning bottoms and giving the cells the element's own line
+   height puts the two baselines in the same place.
+
+   No width is set. Shrink-to-fit makes the window exactly as wide as its widest
+   cell, and main.js caps a counting-down sequence so no intermediate is ever
+   wider than the figure that lands, so the text after it never moves. Shorter
+   intermediates align right, which is where a counter's units column sits.
+
+   The mask only bites the outer tenth: the line box carries more leading than
+   that, so it softens the cells passing through without eating the glyphs of the
+   one that lands. It comes off entirely when the markup is restored. */
 .fg-pulse-reel {
-  display: block;
-  width: var(--fg-reel-w);
+  display: inline-block;
+  vertical-align: bottom;
   height: var(--fg-reel-h);
   overflow: hidden;
+  text-align: right;
   perspective: 460px;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
           mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
@@ -36369,8 +36380,12 @@ html.fg-blinds-reveal-locked {
    otherwise fold away to nothing. */
 .fg-pulse-reel__cell {
   display: block;
-  width: 100%;
   height: var(--fg-reel-h);
+  /* Matching the window height puts every cell's baseline where the static text
+     around it expects one, which is what stops the digits sitting a pixel off
+     the unit beside them. */
+  line-height: var(--fg-reel-h);
+  white-space: pre;
   transform: rotateX(min(calc(var(--fg-reel-i, 0) * 13deg), 40deg));
   backface-visibility: hidden;
 }

@@ -5440,36 +5440,46 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
   const PULSE_STEPS = 8;
   const PULSE_NUMBER = /\d+(?:\.\d+)?/;
 
-  /* The readout counts to its value; it does not shuffle to it. Randomised
-     digits were the first attempt and they read as a fruit machine, which is
-     the one thing this must not look like. Stepping the first number in the
-     string evenly toward the target is what an odometer or a gauge does, and
-     the deceleration in the transform is what turns it into a mechanism
-     braking rather than a list scrolling.
+  /* Only the number moves. Owner instruction, 2026-08-05: putting the whole
+     line of text on the drum moved "W/m²K" and " options" along with the
+     figure, which reads as a page element sliding. A counter moves its digits
+     and leaves the dial around them alone, so the value is split into a static
+     prefix, a drum holding just the number, and a static suffix.
 
-     Direction carries meaning, owner instruction 2026-08-05. A U-value counts
-     DOWN onto its figure, because lower is better and arriving from above reads
-     as settling onto the best the system reaches. Everything else counts UP.
-     The drum travels the same way as its numbers, so the final value physically
-     arrives from above on a U-value and from below on the rest.
+     A value with no number in it is not animated at all, for the same reason.
+     "A+ rated" has nothing to count, and sliding it into place was motion for
+     its own sake.
+
+     The readout counts to its value; it does not shuffle to it. Randomised
+     digits were the first attempt and read as a fruit machine. Stepping the
+     number evenly toward the target is what an odometer does, and the
+     deceleration in the transform is what turns it into a mechanism braking.
+
+     Direction carries meaning. A U-value counts DOWN onto its figure and
+     arrives from above, because lower is better. Everything else counts up
+     from below.
 
      Deterministic throughout: no Math.random, so the same page produces the
      same intermediates twice and a measurement of it means something. */
-  const pulseSequence = (text, descending) => {
-    const match = text.match(PULSE_NUMBER);
-    if (!match) return null;
-
-    const target = parseFloat(match[0]);
+  const pulseSequence = (numberText, descending) => {
+    const target = parseFloat(numberText);
     if (!Number.isFinite(target) || target === 0) return null;
 
-    const decimals = (match[0].split('.')[1] || '').length;
-    const start = target * (descending ? 1.75 : 0.35);
-    const steps = [];
+    const decimals = (numberText.split('.')[1] || '').length;
 
+    /* The drum is only as wide as the figure that lands, so an intermediate
+       must never be wider or it would be clipped. Counting up is safe by
+       definition; counting down is capped at the largest number of the same
+       digit count, so 0.95 starts at 1.66 and a 9.0 could not start at 15.8. */
+    const intDigits = Math.floor(Math.abs(target)).toString().length;
+    const ceiling = Math.pow(10, intDigits) - Math.pow(10, -decimals);
+    let start = target * (descending ? 1.75 : 0.35);
+    if (descending) start = Math.min(start, ceiling);
+
+    const steps = [];
     for (let step = 0; step < PULSE_STEPS; step += 1) {
       const progress = step / PULSE_STEPS;
-      const figure = start + ((target - start) * progress);
-      steps.push(text.replace(PULSE_NUMBER, figure.toFixed(decimals)));
+      steps.push((start + ((target - start) * progress)).toFixed(decimals));
     }
 
     return steps;
@@ -5477,34 +5487,40 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
 
   const revealPulseValue = (el, order) => {
     const finalText = (el.textContent || '').trim();
-    if (finalText === '') return;
+    if (finalText === '') return false;
 
-    const rect = el.getBoundingClientRect();
-    if (rect.height === 0) return;
+    // Nothing countable in it: leave the element exactly as it is.
+    const match = finalText.match(PULSE_NUMBER);
+    if (!match) return false;
 
     // The U-value is the one figure on the strip where lower is better.
     const descending = Boolean(el.closest('.fg-product-pulse__glazing-rows'));
-    const counted = pulseSequence(finalText, descending);
+    const counted = pulseSequence(match[0], descending);
+    if (!counted) return false;
 
-    // Nothing to count: the value rises into place through the same window
-    // rather than being given invented digits.
-    const cells = counted ? [...counted, finalText] : ['', '', finalText];
+    /* The window is one line tall, so the drum sits on the text baseline
+       either side of it rather than forming a block of its own. */
+    const lineHeight = parseFloat(getComputedStyle(el).lineHeight)
+      || el.getBoundingClientRect().height;
+    if (!lineHeight) return false;
+
+    const prefix = finalText.slice(0, match.index);
+    const suffix = finalText.slice(match.index + match[0].length);
+
+    const cells = [...counted, match[0]];
     const last = cells.length - 1;
-
     // Counting down means arriving from above, which is the stack travelling
     // down, which is the cells in reverse with the travel run the other way.
-    if (descending && counted) cells.reverse();
-    const finalIndex = (descending && counted) ? 0 : last;
+    if (descending) cells.reverse();
+    const finalIndex = descending ? 0 : last;
 
     const reel = document.createElement('span');
     reel.className = 'fg-pulse-reel';
-    reel.setAttribute('aria-hidden', 'true');
-    reel.style.setProperty('--fg-reel-h', `${rect.height}px`);
-    reel.style.setProperty('--fg-reel-w', `${Math.ceil(rect.width)}px`);
+    reel.style.setProperty('--fg-reel-h', `${lineHeight}px`);
     reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
     reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
     reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
-    reel.style.setProperty('--fg-reel-dur', `${counted ? PULSE_DURATION : PULSE_TEXT_DURATION}ms`);
+    reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
 
     const stack = document.createElement('span');
     stack.className = 'fg-pulse-reel__stack';
@@ -5521,15 +5537,22 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
 
     reel.appendChild(stack);
 
-    // The true value stays in the accessible tree throughout; only the drum is
-    // hidden from it, so no intermediate readout is ever announced.
+    // The true value stays in the accessible tree throughout; the drum and the
+    // static text around it are hidden from it, so no intermediate reading is
+    // ever announced and the value is never announced twice.
     const spoken = document.createElement('span');
     spoken.className = 'fg-product-pulse__sr';
     spoken.textContent = finalText;
 
+    const shell = document.createElement('span');
+    shell.setAttribute('aria-hidden', 'true');
+    if (prefix !== '') shell.appendChild(document.createTextNode(prefix));
+    shell.appendChild(reel);
+    if (suffix !== '') shell.appendChild(document.createTextNode(suffix));
+
     el.textContent = '';
     el.appendChild(spoken);
-    el.appendChild(reel);
+    el.appendChild(shell);
 
     const settle = () => {
       if (!el.isConnected) return;
@@ -5544,6 +5567,7 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
     stack.addEventListener('transitionend', settle, { once: true });
     // transitionend does not fire if the tab is hidden when the delay elapses.
     window.setTimeout(settle, (order * PULSE_STAGGER) + PULSE_DURATION + 400);
+    return true;
   };
 
   const revealPulseStrip = (strip) => {
@@ -5556,7 +5580,13 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
     // specification hidden if something later goes wrong.
     if (pulseReduce.matches) return;
 
-    values.forEach((el, index) => revealPulseValue(el, index));
+    // The stagger counts revealed values, not tiles. A strip whose second tile
+    // has nothing to count would otherwise leave a gap in the sequence and the
+    // remaining tiles would arrive late for no visible reason.
+    let revealed = 0;
+    values.forEach((el) => {
+      if (revealPulseValue(el, revealed)) revealed += 1;
+    });
   };
 
   const pulseObserver = new IntersectionObserver((entries) => {
