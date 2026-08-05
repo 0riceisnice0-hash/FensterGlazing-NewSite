@@ -5434,11 +5434,13 @@ const pulseStrips = [...document.querySelectorAll('.fg-product-pulse')];
 
 if (pulseStrips.length && 'IntersectionObserver' in window) {
   const pulseReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const PULSE_DURATION = 1100;      // ceiling for a long run
-  const PULSE_MIN_DURATION = 520;   // floor, so a two-step run is not a jump
-  const PULSE_STEP_MS = 130;        // pace, so every wheel turns at one speed
-  const PULSE_STAGGER = 110;
-  const PULSE_STEPS = 8;
+  /* Slower than it was twice over, owner instruction 2026-08-05: at a shorter
+     duration the wheels read as a blur rather than as digits. Sixteen readings
+     over 1800ms is about 110ms a step averaged, and the curve spends most of
+     that on the last few, so the end is legible even though the start spins. */
+  const PULSE_DURATION = 1800;
+  const PULSE_STAGGER = 150;
+  const PULSE_STEPS = 16;
   const PULSE_NUMBER = /\d+(?:\.\d+)?/;
   /* A number sitting immediately after an acronym is part of a name, not a
      quantity: PAS 24, RAL 7016, BS EN 1670. Those must not count, because
@@ -5479,32 +5481,44 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
        invisible effect, because over 1.66 to 0.95 every digit changes, so every
        wheel turned and it looked exactly like the whole number moving.
 
-       The run never passes the target, so no reading is ever a figure we do not
-       claim. That is also why a digit settling on 0 does not turn at all: the
-       only way a wheel reaches 0 counting up is the long way round from 9, and
-       that would put "19 years" and "89mm" on screen on the way to ten and
-       eighty. Same objection that took Security out of the counting. Those
-       three values are left still, which is the safe side. */
-    let index = -1;
-    for (let i = numberText.length - 1; i >= 0; i -= 1) {
-      if (numberText[i] >= '0' && numberText[i] <= '9') { index = i; break; }
+       The run is long on purpose, owner instruction 2026-08-05: the higher
+       columns should clock over as well, the way a real counter carries. Over a
+       long range the units wheel changes on nearly every reading, the tens a
+       handful of times and the hundreds once or not at all, so each wheel turns
+       at its own rate and the carries are what sell it as a mechanism.
+
+       A short range was the previous attempt and it went too far the other way:
+       varying only the last digit left every other column dead. The two have to
+       be read together, because per-digit wheels with a short range is a single
+       ticking digit, and a long range with one drum for the whole number is the
+       entire figure sliding. It needs both.
+
+       No reading ever passes the target, so a value we do not claim is never on
+       screen: counting up approaches from below and stops, counting down from
+       above and stops. This also means a figure ending in 0 needs no special
+       case, because counting up to 10 reaches its 0 honestly. */
+    const target = parseFloat(numberText);
+    if (!Number.isFinite(target) || target === 0) return null;
+
+    const decimals = (numberText.split('.')[1] || '').length;
+
+    /* The drum is only as wide as the figure that lands, so a reading must
+       never be wider or it would clip. Counting up is safe by definition;
+       counting down is capped at the largest number of the same digit count,
+       so 0.95 can start at 1.81 and a 9.0 could not start at 15.8. */
+    const intDigits = Math.floor(Math.abs(target)).toString().length;
+    const ceiling = Math.pow(10, intDigits) - Math.pow(10, -decimals);
+    const start = descending
+      ? Math.min(target * 1.9, ceiling)
+      : target * 0.15;
+
+    const readings = [];
+    for (let step = 0; step < PULSE_STEPS; step += 1) {
+      const progress = step / PULSE_STEPS;
+      readings.push((start + ((target - start) * progress)).toFixed(decimals));
     }
-    if (index === -1) return null;
 
-    const settled = Number(numberText[index]);
-    const digits = [];
-
-    if (descending) {
-      for (let d = Math.min(9, settled + PULSE_STEPS); d > settled; d -= 1) digits.push(d);
-    } else {
-      for (let d = Math.max(0, settled - PULSE_STEPS); d < settled; d += 1) digits.push(d);
-    }
-
-    if (!digits.length) return null;
-
-    const before = numberText.slice(0, index);
-    const after = numberText.slice(index + 1);
-    return digits.map((digit) => before + digit + after);
+    return readings;
   };
 
   const revealPulseValue = (el, order) => {
@@ -5579,14 +5593,6 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
       const padded = readings.map((reading) => reading.padStart(width, ' '));
       let turned = 0;
 
-      /* A digit two steps from home and one ten steps from home should turn at
-         about the same speed, so the run is paced rather than given a fixed
-         duration. Without this a three-step figure spends 370ms on each digit
-         and reads as stalling. */
-      const duration = Math.max(
-        PULSE_MIN_DURATION,
-        Math.min(PULSE_DURATION, Math.round(PULSE_STEP_MS * last))
-      );
 
       for (let column = 0; column < width; column += 1) {
         const chars = padded.map((reading) => reading[column]);
@@ -5604,7 +5610,7 @@ if (pulseStrips.length && 'IntersectionObserver' in window) {
         reel.style.setProperty('--fg-reel-from', String(finalIndex === 0 ? -last : 0));
         reel.style.setProperty('--fg-reel-to', String(finalIndex === 0 ? 0 : -last));
         reel.style.setProperty('--fg-reel-delay', `${order * PULSE_STAGGER}ms`);
-        reel.style.setProperty('--fg-reel-dur', `${duration}ms`);
+        reel.style.setProperty('--fg-reel-dur', `${PULSE_DURATION}ms`);
 
         const stack = document.createElement('span');
         stack.className = 'fg-pulse-reel__stack';

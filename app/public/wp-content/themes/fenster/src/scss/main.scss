@@ -36368,14 +36368,15 @@ html.fg-blinds-reveal-locked {
   transform-style: preserve-3d;
 }
 
-/* One curve, and a hard one. The drum leaves quickly and spends most of the
-   time braking onto the last figure, which is what separates a mechanism
-   settling from a list scrolling past. No overshoot, no bounce, nothing
-   elastic. The class is added a frame after the start position is committed,
-   or there is nothing to transition from. */
+/* One curve. It still brakes onto the last figure, which is what separates a
+   mechanism settling from a list scrolling past, but it is gentler than it was:
+   the harder curve put almost all the travel in the first third and the digits
+   were unreadable there. No overshoot, no bounce, nothing elastic. The class is
+   added a frame after the start position is committed, or there is nothing to
+   transition from. */
 .fg-pulse-reel.is-settling .fg-pulse-reel__stack {
   transform: translate3d(0, calc(var(--fg-reel-h) * var(--fg-reel-to, 0)), 0);
-  transition: transform var(--fg-reel-dur, 1100ms) cubic-bezier(0.1, 0.72, 0.12, 1) var(--fg-reel-delay, 0ms);
+  transition: transform var(--fg-reel-dur, 1800ms) cubic-bezier(0.22, 0.61, 0.16, 1) var(--fg-reel-delay, 0ms);
 }
 
 /* Each cell is tipped by its distance from the final one, so the readouts
