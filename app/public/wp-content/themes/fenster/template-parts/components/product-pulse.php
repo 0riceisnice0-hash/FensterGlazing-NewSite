@@ -98,13 +98,23 @@ $best = $triple !== '' ? $triple : $double;
                             <?php endforeach; ?>
                         </span>
                         <?php if ($single_u && $best !== '') : ?>
-                            <?php /* Owner instruction, 2026-08-05: the note belongs
-                                     tight under the figure it explains, not below the
-                                     strip. `__inner` is a two-column grid, so a note
-                                     placed after the list auto-flowed into a second
-                                     row under the heading and stretched the whole
-                                     box; inside the tile it costs no row at all. */ ?>
-                            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable whole-window U-value.', 'fenster'); ?></p>
+                            <?php
+                            /* Owner instruction, 2026-08-05: the note belongs tight
+                               under the figure it explains, not below the strip.
+                               `__inner` is a two-column grid, so a note placed after
+                               the list auto-flowed into a second row under the
+                               heading and stretched the whole box; inside the tile it
+                               costs no row at all.
+
+                               Kept to one line on purpose. At two lines the tile grew
+                               and the row stretched with it, which put the height
+                               back. "Whole-window U-value" came off for that: the
+                               tile is already labelled U-value and the figure is
+                               right above, so the star only has to say which figure
+                               it is. "Lowest achievable" is the half AI.md requires
+                               and must survive any further trim. */
+                            ?>
+                            <p class="fg-product-pulse__note"><?php esc_html_e('* Lowest achievable.', 'fenster'); ?></p>
                         <?php endif; ?>
                     </li>
                 <?php else : ?>
