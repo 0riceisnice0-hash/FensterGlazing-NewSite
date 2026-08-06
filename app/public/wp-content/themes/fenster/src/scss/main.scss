@@ -10735,13 +10735,25 @@ html.fg-gallery-lightbox-open body {
   min-height: 0;
 }
 
+/* The space under this heading is grid free space, not a margin — which is why
+   zeroing the last child's margin-bottom did nothing at all.
+
+   `.fg-obscure-picker` stretches its columns, so this one grows to whatever
+   height the tips articles beside it need. It was then `align-content: center`,
+   which takes the leftover height and splits it above and below the content.
+   With the explanatory line in place there was barely any leftover; taking that
+   line out handed the rule sixty-odd pixels to distribute, and half of it landed
+   under the heading.
+
+   So the column stops stretching and stops centring. It is its own height, at the
+   top of the row, and there is no free space left to distribute. */
 .fg-obscure-picker__intro {
   display: grid;
-  align-content: center;
+  align-self: start;
+  align-content: start;
+  gap: 0.35rem;
 }
 
-/* The heading is the last thing in this column since the explanatory line came
-   out, and its bottom margin was left hanging under it as dead space. */
 .fg-obscure-picker__intro > :last-child {
   margin-bottom: 0;
 }
