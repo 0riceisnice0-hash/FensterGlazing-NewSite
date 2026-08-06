@@ -2617,24 +2617,25 @@ if ($is_obscure_glass) {
     <article class="fg-obscure-glass-page">
         <section class="fg-obscure-hero">
             <?php
-            /* The wall, built to the colour hub's own recipe rather than an
-               approximation of it: deliberately more tiles than the widest
-               grid needs, a fixed column count, fixed row height, and the
-               section clipping — so it always runs off the bottom instead of
-               leaving a bald patch when the column count changes. Forty-five
-               tiles could not fill it at any desktop width, which is why it
-               read as a panel floating in the corner.
+            /* The wall. Direct child of the section, not of `.container`, or
+               `inset: 0` resolves against the centred column and the whole thing
+               sits in a box.
 
-               Same stride trick as the colour wall. Walking the texture list
-               in order against a 26-column grid lines identical patterns up
-               into stripes; stepping by a prime and nudging once per row
-               scatters them. */
+               Every pattern once before any of them twice. There are 21 textures
+               and the visible grid is six columns by three rows, so the eighteen
+               tiles anybody actually sees are all different glass — which is the
+               point of a wall on this particular page. Walking the list in order
+               would put Cotswold, Satin and Arctic side by side in row one and
+               again in row four; stepping by 8 instead is a full permutation of
+               21 (they share no factor), so consecutive tiles are never
+               neighbours in the list either. Only the rows below the clip, which
+               exist so the wall never stops short, reuse anything. */
             $obscure_wall_pool = array_values($obscure_glass_textures);
             $obscure_wall_tiles = [];
             if ($obscure_wall_pool !== []) {
                 $obscure_wall_count = count($obscure_wall_pool);
                 for ($i = 0; $i < 36; $i++) {
-                    $obscure_wall_tiles[] = $obscure_wall_pool[(($i * 5) + (intdiv($i, 6) * 2)) % $obscure_wall_count];
+                    $obscure_wall_tiles[] = $obscure_wall_pool[($i * 8) % $obscure_wall_count];
                 }
             }
             ?>
@@ -2718,7 +2719,6 @@ if ($is_obscure_glass) {
                     <div class="fg-obscure-picker__intro">
                         <p class="eyebrow"><?php esc_html_e('Interactive glass selector', 'fenster'); ?></p>
                         <h2><?php esc_html_e('Pick a pattern, then drag the divider across the pane.', 'fenster'); ?></h2>
-                        <p><?php esc_html_e('The left side shows the treated view and the right side keeps a clear reference, so privacy levels are easier to compare.', 'fenster'); ?></p>
                     </div>
                     <div class="fg-obscure-picker__tips" aria-label="<?php esc_attr_e('How to compare Obscured glass options', 'fenster'); ?>">
                         <article>
