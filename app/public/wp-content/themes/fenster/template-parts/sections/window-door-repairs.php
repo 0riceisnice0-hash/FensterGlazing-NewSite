@@ -86,12 +86,14 @@ $glass_url = esc_url(home_url('/double-glazing-replacement/'));
    rather than broader. It is half hardware now, deliberately interleaved so it
    reads as one mixed wall rather than two blocks.
 
-   PROVENANCE. The espagnolette, the friction stay, the door gearbox and the
-   cat flap are Wharfside Supplies product photography, supplied by the owner
-   as a stopgap ("for now"). They are components we genuinely fit and they are
-   isolated on white, which is why they sit with the handle cut-outs. Replace
-   them with our own when we photograph parts, the same standing the AI
-   generated tilt and turn handles have. Everything else here is ours. */
+   PROVENANCE, and it is settled. The espagnolette, the friction stay, the door
+   gearbox and the cat flap are Wharfside Supplies product photography.
+   Wharfside are our SUPPLIER for these parts and are content for us to use
+   their imagery, owner-confirmed 2026-08-06. So this is not a stopgap and not
+   a licence risk: do not re-flag it in an audit, and do not swap them out for
+   worse pictures on provenance grounds. They also happen to be isolated on
+   white, which is why they sit correctly with the handle cut-outs.
+   Everything else here is our own. */
 $wall = [
     ['file' => 'products/repair-parts/window-espag-mechanism.webp', 'alt' => 'Window espagnolette mechanism with its gearbox and cams'],
     ['file' => 'products/handles/s2-chrome-cutout.png', 'alt' => 'Chrome window handle', 'cutout' => true],
