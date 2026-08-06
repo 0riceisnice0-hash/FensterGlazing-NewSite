@@ -128,18 +128,61 @@ $why = [
    describes buying windows. Nobody having a hinge changed gets a technical
    survey or a FENSA certificate.
 
-   Step 1 carries the photograph ask because it is genuinely the fastest route
-   to an accurate answer and it is the only "process" claim on this page that
-   the price list supports outright: a sill repair is quoted from pictures. */
+   Corrected 2026-08-06 against the real office process, which the owner
+   supplied and which is better than what this said. Step 3 used to be "we
+   confirm it at the door", i.e. we always come out. In practice the office can
+   usually diagnose and price remotely from a description and photographs, and
+   where a visit IS needed it is normally free. That is a materially stronger
+   proposition than the one the page was making, and it is why the photograph
+   ask in step 1 matters: it is not a nicety, it is what lets us skip a visit. */
 $process = [
     ['step' => '01', 'title' => 'Tell us what it is doing.', 'copy' => 'In your own words, with a photograph if you can. You do not need the name of the part.'],
-    ['step' => '02', 'title' => 'We say what it usually is.', 'copy' => 'Most faults are recognisable before anyone comes out, so you get a figure to expect.'],
-    ['step' => '03', 'title' => 'We confirm it at the door.', 'copy' => 'On the actual window. If it is not what we expected, you hear that before work starts.'],
+    ['step' => '02', 'title' => 'We price it, usually remotely.', 'copy' => 'Most faults the office can diagnose and quote over the phone or by email, without anyone coming out.'],
+    ['step' => '03', 'title' => 'If it needs looking at, we come.', 'copy' => 'Normally free of charge. You get the figure before you decide anything.'],
     ['step' => '04', 'title' => 'We fix it, or say why not.', 'copy' => 'On older systems parts availability decides it. If a part is obsolete we will tell you.'],
 ];
 ?>
 
 <div class="fg-cw fg-rp">
+
+    <?php /* ---------- What to expect ------------------------------------
+             Stands in the slot the key-specification strip occupies on every
+             other product route. That strip is gated off here because a repair
+             has no specification — owner, 2026-08-06 — and four invented
+             product facts would be worse than nothing.
+
+             All four of these are the real office process, given by the owner
+             on 2026-08-06 and not inferable from the price list:
+               - quoting is normally free, including coming out to look;
+               - the office can often diagnose and estimate remotely, over the
+                 phone or by email, which is the fastest route for most faults;
+               - the minimum charge is a floor on the WORK and applies only if
+                 we do it. It is not a callout fee. Its purpose is that we are
+                 not sending someone out to fit a £20 handle;
+               - we repair other installers' work.
+             "Normally" and "often" are the owner's own hedges and stay. */ ?>
+    <section class="fg-rp-expect" aria-label="<?php esc_attr_e('What to expect from a repair enquiry', 'fenster'); ?>">
+        <div class="container">
+            <ul class="fg-rp-expect__row">
+                <li>
+                    <span class="fg-rp-expect__label"><?php esc_html_e('Quoting', 'fenster'); ?></span>
+                    <span class="fg-rp-expect__value"><?php esc_html_e('Normally free, including coming out', 'fenster'); ?></span>
+                </li>
+                <li>
+                    <span class="fg-rp-expect__label"><?php esc_html_e('Often no visit needed', 'fenster'); ?></span>
+                    <span class="fg-rp-expect__value"><?php esc_html_e('We can usually price it by phone or email', 'fenster'); ?></span>
+                </li>
+                <li>
+                    <span class="fg-rp-expect__label"><?php esc_html_e('We repair', 'fenster'); ?></span>
+                    <span class="fg-rp-expect__value"><?php esc_html_e("Any installer's work, uPVC, aluminium, composite", 'fenster'); ?></span>
+                </li>
+                <li>
+                    <span class="fg-rp-expect__label"><?php esc_html_e('Minimum charge', 'fenster'); ?></span>
+                    <span class="fg-rp-expect__value"><?php esc_html_e('Only applies if you go ahead with the work', 'fenster'); ?></span>
+                </li>
+            </ul>
+        </div>
+    </section>
 
     <?php /* ---------- The finder ------------------------------------------
              First thing after the hero, because the symptom is the only thing
@@ -342,6 +385,9 @@ $process = [
                     <?php if (! empty($prices['range'])) : ?>
                         <p><?php echo esc_html((string) $prices['range']); ?></p>
                     <?php endif; ?>
+                    <?php if (! empty($prices['remote'])) : ?>
+                        <p><?php echo esc_html((string) $prices['remote']); ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <?php if (! empty($prices['examples']) && is_array($prices['examples'])) : ?>
@@ -353,6 +399,10 @@ $process = [
                             </li>
                         <?php endforeach; ?>
                     </ul>
+                <?php endif; ?>
+
+                <?php if (! empty($prices['minimum_note'])) : ?>
+                    <p class="fg-rp-pricing__minimum"><?php echo esc_html((string) $prices['minimum_note']); ?></p>
                 <?php endif; ?>
 
                 <?php if ($price_notes !== []) : ?>
@@ -455,7 +505,7 @@ $process = [
         <div class="container">
             <div class="fg-rp-process__head">
                 <p class="eyebrow"><?php esc_html_e('How a repair works', 'fenster'); ?></p>
-                <h2 id="fg-rp-process-title"><?php esc_html_e('Four steps, and the first one is a photograph.', 'fenster'); ?></h2>
+                <h2 id="fg-rp-process-title"><?php esc_html_e('Most of it happens before anyone visits.', 'fenster'); ?></h2>
             </div>
             <ol class="fg-rp-process__rail">
                 <?php foreach ($process as $step) : ?>

@@ -421,27 +421,26 @@ function fenster_site_data(): array
                 ['label' => 'Frame type', 'value' => 'Slim aluminium'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
-            /* The fourth tile used to read "Guarantee: 10 years" and that was
-               false. The ten year insurance-backed guarantee is CPA cover on
-               NEW windows and doors; repairs sit outside it, which is exactly
-               why the order-process rail scopes its step 4 wording to "new
-               windows and doors". The page was contradicting itself four
-               sections apart. Corrected 2026-08-06.
+            /* THIS NO LONGER RENDERS. The key-specification strip is gated off
+               for this route: a repair has no specification, so a box headed
+               "Key specifications" made no sense on it. Owner, 2026-08-06.
+               The page carries a reassurance strip in that slot instead, built
+               in `window-door-repairs.php`.
 
-               The minimum charge replaces it because it is the first thing
-               anyone wants to know and it is a real published figure. "Clear
-               repair quotes" went for the opposite reason: it stated nothing.
-               Any installer's work is on the strip because it is the genuine
-               differentiator here, and it is what the hub card has always
-               said. */
+               It is kept, and kept accurate, because Legend reads
+               `product_usps` for its verified product facts, so a stale entry
+               here becomes a wrong answer in chat even though no visitor can
+               see it. It previously claimed "Guarantee: 10 years", which is CPA
+               cover on NEW windows and doors and does not apply to repairs.
+
+               The charge line states the condition, because the condition is
+               the whole point of it: it is a floor on the work and applies only
+               if the customer goes ahead. Quoting is normally free. */
             'window-and-door-repairs' => [
-                ['label' => 'We repair', 'value' => 'Windows and doors'],
-                ['label' => 'Including', 'value' => "Any installer's work"],
+                ['label' => 'We repair', 'value' => 'Windows and doors, any installer'],
                 ['label' => 'Materials', 'value' => 'uPVC, aluminium, composite'],
-                /* "Minimum charge £96 inc VAT" read as a tariff line. One
-                   "from" anchor is the price guides' model and is all this
-                   route should carry. Owner instruction, 2026-08-06. */
-                ['label' => 'Repairs from', 'value' => '£96 inc VAT'],
+                ['label' => 'Quoting', 'value' => 'Normally free, often without a visit'],
+                ['label' => 'Minimum charge', 'value' => '£96 inc VAT, only if you go ahead'],
             ],
             /* Two flap types, not three. The old strip listed "Manual, lockable,
                microchip" as if lockable were a separate model; the standard flap
@@ -1806,7 +1805,8 @@ function fenster_site_data(): array
                     ['title' => 'Our own engineers', 'copy' => 'The same team that installs, not a subcontractor sent out under our name.'],
                 ],
                 'faqs' => [
-                    ['question' => 'How much does a window or door repair cost?', 'answer' => 'Repairs start from £96 including VAT, and most land somewhere between that and around £200 depending on which part the job needs. A handle is at the lower end, a door mechanism at the upper. We would rather give you a real figure than a guess, so tell us what it is doing, send a photograph if you can, and we will come back with a price for your actual fault.'],
+                    ['question' => 'How much does a window or door repair cost?', 'answer' => 'Repairs start from £96 including VAT, and most land somewhere between that and around £200 depending on which part the job needs. A handle is at the lower end, a door mechanism at the upper. Rather than guess, tell us what it is doing and send a photograph if you can, and we will come back with a figure for your actual fault.'],
+                    ['question' => 'Do you charge to come out and quote a repair?', 'answer' => 'Normally, no. Most faults we can diagnose and price without coming out at all, from a description and a photograph or two, and where it does need looking at that visit is normally free. There is a minimum charge of £96 including VAT on the work itself, but that only applies if you go ahead. It exists so we are not sending an engineer across Milton Keynes to fit a twenty pound handle.'],
                     ['question' => 'Do you repair windows and doors you did not fit?', 'answer' => 'Yes, and most of our repair work is exactly that. We fit uPVC, aluminium and composite systems every week, so we know the hardware other installers use. The only real limit is parts: on a very old system the gear may no longer be made.'],
                     ['question' => 'My double glazing has gone misty. Is that a repair?', 'answer' => 'It is a glass job rather than a hardware one. The seal around the double glazed unit has failed and moisture is in the cavity, which cannot be dried out, but the glass changes on its own and the frame stays. See our replacement glazed units page for how that works.'],
                     ['question' => 'Can you still get parts for an older window or door?', 'answer' => 'Usually. Hardware is more standardised than it looks, and a mechanism is matched on backset, centres and faceplate rather than on the brand of the window. Where a part genuinely is obsolete we will tell you, and we will say what the alternatives are rather than leaving you with a window that does not lock.'],
@@ -2155,6 +2155,14 @@ function fenster_site_data(): array
         'repair_prices' => [
             'from' => 'From £96',
             'range' => 'Most repairs land somewhere between £96 and around £200 including VAT, depending on which part it needs.',
+            /* The minimum charge is a floor on the WORK, and it applies only if
+               you go ahead. Owner, 2026-08-06. It is not a callout fee and it is
+               not the price of a visit: quoting is normally free, and the floor
+               exists so we are not sending an engineer out to fit a £20 handle.
+               An earlier draft called it "the least a repair visit costs",
+               which read as a charge for turning up and was the opposite of
+               the truth. */
+            'minimum_note' => 'There is a minimum charge of £96 including VAT, but only if you go ahead with the work. Coming out to quote is normally free.',
             'examples' => [
                 ['job' => 'A window handle', 'price' => 'From £96'],
                 ['job' => 'A window mechanism', 'price' => 'From £144'],
@@ -2165,6 +2173,7 @@ function fenster_site_data(): array
                 'What it actually comes to depends on the fault, the parts and how many items are done on the same visit.',
                 'Sill repairs and replacement glass are quoted individually.',
             ],
+            'remote' => 'Most faults we can price without coming out at all. Describe it, send a photograph, and the office will come back with a figure. Where it does need looking at, that visit is normally free.',
         ],
         /* greenteQ Alpha TBT, the tilt and turn handle. Facts are from the VBH
            product bulletin PB_CUS_greenteQ_Alpha_TBT_Handle_101125 (10/11/25).

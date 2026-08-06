@@ -2,6 +2,50 @@
 
 Last updated: 2026-08-06
 
+## 2026-08-06 - Repairs, third pass: the real office process, and no spec box (test)
+
+Owner supplied how repairs actually run, and it is a better offer than the page
+was making.
+
+- **Quoting is normally free, including coming out.** The page had never said
+  so, because the price list does not say so and there was nothing to infer it
+  from.
+- **The office can usually quote remotely**, diagnosing and estimating over the
+  phone or by email. Most faults never need a visit. That reframes the whole
+  process section, which had step 3 as "we confirm it at the door" — i.e. we
+  always come out, which is not what happens.
+- **The minimum charge is a floor on the WORK and only applies if the customer
+  goes ahead.** It is not a callout fee. Its purpose is that we are not sending
+  someone out to fit a £20 handle. The page had it as "the least a repair visit
+  costs", which reads as a charge for turning up and is the opposite of the
+  truth. It now never appears without its condition attached, asserted.
+- All three are in `AI.md` under a new Repair Service Facts heading, because
+  none of them is derivable from anything in the repo.
+
+**"Repairs dont have spec so having a box for it makes no sense."** Right, and
+it had not occurred to me: the key-specification strip is a product device and
+a repair is not a product. `product_pulse` is gated off for the slug and a
+reassurance strip stands in that slot instead — quoting, remote quoting, any
+installer's work, and the conditional minimum charge. It says something true
+about the service where the strip was inventing four facts for something that
+has none.
+
+`product_usps` for the route is kept and kept accurate even though it renders
+nowhere, because **Legend reads `product_usps` for its verified product facts**.
+A stale entry there is a wrong answer in chat that no visitor can see. That is
+the same entry that claimed a ten year guarantee.
+
+**Seven FAQs now, so the cap moved again.** `$product_faq_limit` is 7 for this
+route, the only one. That cap has now silently sliced a correct FAQ off three
+routes; the comment there says to raise it in the same commit as the question.
+
+**The same probe bug, three times in one session.** The no-exact-prices check
+captures N characters of context before each `£` and matches an allow-list
+against it. At 6 characters "between £96" arrived as "tween £96"; widened to
+14, "minimum charge of £96" arrived as "mum charge of £96". Both read as page
+faults and neither was. **Size the context window to the longest phrase you are
+matching**, or the probe fails on exactly the strings it was written to allow.
+
 ## 2026-08-06 - Repairs, second pass: less text, vaguer prices, and keeps do not fail (test)
 
 Owner review of the first build, three things.

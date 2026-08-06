@@ -3524,7 +3524,13 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
-    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors) : ?>
+    <?php /* Repairs has no key specifications, because a repair is not a
+             product with a specification. Owner, 2026-08-06: "repairs dont have
+             spec so having a box for it makes no sense." The bespoke section
+             opens with a reassurance strip in the same slot instead, which says
+             something true about the service rather than inventing four
+             product facts for a service that has none. */ ?>
+    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors && ! $is_repairs) : ?>
         <?php get_template_part('template-parts/components/product-pulse', null, [
             'usps'  => $product_usps,
             'slug'  => $slug,
@@ -4797,12 +4803,14 @@ if ($is_commercial_hub) {
 
                Anything appending a FAQ to a route that already fills its limit has
                to raise the limit too. */
-            /* Repairs joins the six-FAQ list because it needs both the cost
-               question and the repair-or-replace one, and neither can be the
-               one that falls off. This cap has now silently sliced a correctly
-               written FAQ off two routes; if you add a sixth question to a
-               route, add the route here in the same commit. */
-            $product_faq_limit = ($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows' || $is_repairs) ? 6 : 5;
+            /* Repairs takes seven, the only route that does. It needs the cost
+               question, the "do you charge to quote" one, repair-or-replace,
+               parts availability, misted glass and the coverage question, and
+               none of those is the one to lose. This cap has now silently
+               sliced a correctly written FAQ off three routes; if you add a
+               question past the limit, raise the route here in the same commit
+               or it renders nowhere and you will not be told. */
+            $product_faq_limit = $is_repairs ? 7 : (($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows') ? 6 : 5);
             $faq_schema = [
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',

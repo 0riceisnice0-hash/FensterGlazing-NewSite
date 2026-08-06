@@ -39007,6 +39007,56 @@ html.fg-blinds-reveal-locked {
    register STYLE.md rules out.
    ========================================================================== */
 
+/* ---------- What to expect ----------------------------------------------
+   Sits where the key-specification strip sits on every other product route,
+   because a repair has no specification. Reads as four short facts about the
+   service rather than as a spec table: label above, value below, hairline
+   between, no card chrome. Deliberately quieter than the strip it replaces —
+   it is reassurance on the way to the finder, not the subject of the page. */
+
+.fg-rp-expect {
+  padding-bottom: 0 !important;
+}
+
+.fg-rp-expect__row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  padding: 1.25rem 0 0;
+  margin: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-line);
+}
+
+.fg-rp-expect__row li {
+  padding: 0 1.5rem;
+}
+
+.fg-rp-expect__row li:first-child {
+  padding-left: 0;
+}
+
+.fg-rp-expect__row li + li {
+  border-left: 1px solid var(--color-line);
+}
+
+.fg-rp-expect__label {
+  display: block;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-rp-expect__value {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-ink);
+  font-size: 0.94rem;
+  line-height: 1.4;
+}
+
 /* ---------- The finder ---------------------------------------------------- */
 
 .fg-rp-finder__head {
@@ -39303,6 +39353,15 @@ html.fg-blinds-reveal-locked {
   line-height: 1.1;
 }
 
+.fg-cw .fg-rp-pricing__minimum {
+  max-width: 46rem;
+  margin: 1.25rem 0 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-accent);
+  color: var(--color-ink);
+  font-size: 0.94rem;
+}
+
 .fg-cw .fg-rp-pricing__caveat {
   max-width: 46rem;
   margin: 1.1rem 0 0;
@@ -39478,6 +39537,21 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Two by two rather than four across, which at tablet gave each value about
+     nine characters of width. */
+  .fg-rp-expect__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.25rem;
+  }
+
+  .fg-rp-expect__row li:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .fg-rp-expect__row li:nth-child(3) {
+    border-left: 0;
+  }
+
   .fg-rp-process__rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -39499,6 +39573,17 @@ html.fg-blinds-reveal-locked {
   .fg-rp-parts__grid,
   .fg-rp-why__grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-rp-expect__row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1rem;
+  }
+
+  .fg-rp-expect__row li,
+  .fg-rp-expect__row li:nth-child(odd) {
+    padding: 0;
+    border-left: 0;
   }
 
   /* The chip row becomes a snap scroller, and stays INSIDE the container. An

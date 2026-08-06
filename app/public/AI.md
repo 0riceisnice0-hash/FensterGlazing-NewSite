@@ -256,6 +256,22 @@ PHP lint example:
 - **Do not claim a guarantee on repair work.** The ten year insurance-backed CPA cover is on new windows and doors and repairs sit outside it. The key-specification strip on that route claimed "Guarantee: 10 years" until 2026-08-06 while the process rail on the same page correctly said "new windows and doors"; the page contradicted itself for months. Nothing on a repair route may state or imply that cover, and no accreditation mark belongs in repair copy either — FENSA and CPA sit in the site-wide trust strip, where they are about the company rather than about the repair.
 - **Do not invent response times, callout windows, same-day or emergency service, or free diagnosis.** The price list supports none of them, and the page is deliberately written without them.
 
+## Repair Service Facts
+
+Owner-supplied, 2026-08-06. None of this is inferable from the price list and
+none of it may be softened or dropped, because between them these three facts
+are the repair proposition.
+
+- **Quoting a repair is normally free, including coming out to look.** "Generally" and "normally" are the owner's own hedges and stay; do not harden them into a guarantee.
+- **The office can usually diagnose and quote remotely**, over the phone or by email, from a description and photographs. Most faults never need a visit at all. This is why the page asks for a photograph in step 1 of the process: it is not a nicety, it is what lets us skip the visit.
+- **The minimum charge is a floor on the WORK and applies only if the customer goes ahead.** It is not a callout fee and not the price of a visit. Its purpose is that we are not sending an engineer out to fit a £20 handle. **Never state it without that condition attached** — an earlier draft called it "the least a repair visit costs", which read as a charge for turning up and was the opposite of the truth.
+- It is therefore the one exact figure allowed on the route, because a minimum is a threshold rather than a job price and "from £96 minimum" would be incoherent. Everything else reads "From".
+
+## Repair Page Rule
+
+- **A repair has no specification, so `/window-and-door-repairs/` renders no key-specification strip.** Owner, 2026-08-06: "repairs dont have spec so having a box for it makes no sense." `product_pulse` is gated off for the slug and a reassurance strip stands in that slot instead, saying what to expect from the service rather than inventing four product facts for something that has none.
+- `product_usps['window-and-door-repairs']` is kept and kept accurate even though it no longer renders, because **Legend reads `product_usps` for its verified product facts**. A stale entry there becomes a wrong answer in chat that no visitor can see and nobody will catch. That entry claimed a ten year guarantee until 2026-08-06.
+
 ## Repair Diagnosis Facts
 
 - **Keeps do not fail.** Owner correction, 2026-08-06. A keep is a folded piece of steel with nothing in it to wear out; what moves is the sash or the door around it, which is a realignment job rather than a part failure. The first build of the repairs page listed keeps as one of the three things that fail, which was invented. **The check that would have caught it: all three should map to a line on the repairs price list, and keeps are not on it.** The three that are, and that the page now names, are the mechanism, the hinges and the handle.
