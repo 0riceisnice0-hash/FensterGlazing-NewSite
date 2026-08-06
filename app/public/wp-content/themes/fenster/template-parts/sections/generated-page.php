@@ -2463,7 +2463,7 @@ if ($is_colour_options) {
     $colour_wall_tiles = [];
     if ($colour_wall_pool !== []) {
         $colour_wall_count = count($colour_wall_pool);
-        for ($i = 0; $i < 336; $i++) {
+        for ($i = 0; $i < 36; $i++) {
             $colour_wall_tiles[] = $colour_wall_pool[(($i * 11) + (intdiv($i, 28) * 5)) % $colour_wall_count];
         }
     }
@@ -2643,8 +2643,8 @@ if ($is_obscure_glass) {
                 $obscure_wall_tiles = [];
                 if ($obscure_wall_pool !== []) {
                     $obscure_wall_count = count($obscure_wall_pool);
-                    for ($i = 0; $i < 336; $i++) {
-                        $obscure_wall_tiles[] = $obscure_wall_pool[(($i * 7) + (intdiv($i, 26) * 3)) % $obscure_wall_count];
+                    for ($i = 0; $i < 36; $i++) {
+                        $obscure_wall_tiles[] = $obscure_wall_pool[(($i * 5) + (intdiv($i, 6) * 2)) % $obscure_wall_count];
                     }
                 }
                 ?>
