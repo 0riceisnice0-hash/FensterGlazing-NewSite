@@ -2616,6 +2616,34 @@ if ($is_obscure_glass) {
     ?>
     <article class="fg-obscure-glass-page">
         <section class="fg-obscure-hero">
+            <?php
+            /* The wall, built to the colour hub's own recipe rather than an
+               approximation of it: deliberately more tiles than the widest
+               grid needs, a fixed column count, fixed row height, and the
+               section clipping — so it always runs off the bottom instead of
+               leaving a bald patch when the column count changes. Forty-five
+               tiles could not fill it at any desktop width, which is why it
+               read as a panel floating in the corner.
+
+               Same stride trick as the colour wall. Walking the texture list
+               in order against a 26-column grid lines identical patterns up
+               into stripes; stepping by a prime and nudging once per row
+               scatters them. */
+            $obscure_wall_pool = array_values($obscure_glass_textures);
+            $obscure_wall_tiles = [];
+            if ($obscure_wall_pool !== []) {
+                $obscure_wall_count = count($obscure_wall_pool);
+                for ($i = 0; $i < 36; $i++) {
+                    $obscure_wall_tiles[] = $obscure_wall_pool[(($i * 5) + (intdiv($i, 6) * 2)) % $obscure_wall_count];
+                }
+            }
+            ?>
+            <div class="fg-obscure-hero__preview" aria-hidden="true">
+                <?php foreach ($obscure_wall_tiles as $texture) : ?>
+                    <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . ';'); ?>"></span>
+                <?php endforeach; ?>
+            </div>
+            <div class="fg-obscure-hero__veil" aria-hidden="true"></div>
             <div class="container fg-obscure-hero__grid">
                 <div class="fg-obscure-hero__copy">
                     <p class="eyebrow"><?php esc_html_e('Glass privacy choices', 'fenster'); ?></p>
@@ -2625,33 +2653,6 @@ if ($is_obscure_glass) {
                         <a class="button" href="#fg-obscure-visualiser"><?php esc_html_e('Try the glass preview', 'fenster'); ?></a>
                         <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Ask about glass options', 'fenster'); ?></a>
                     </div>
-                </div>
-                <?php
-                /* The wall, built to the colour hub's own recipe rather than an
-                   approximation of it: deliberately more tiles than the widest
-                   grid needs, a fixed column count, fixed row height, and the
-                   section clipping — so it always runs off the bottom instead of
-                   leaving a bald patch when the column count changes. Forty-five
-                   tiles could not fill it at any desktop width, which is why it
-                   read as a panel floating in the corner.
-
-                   Same stride trick as the colour wall. Walking the texture list
-                   in order against a 26-column grid lines identical patterns up
-                   into stripes; stepping by a prime and nudging once per row
-                   scatters them. */
-                $obscure_wall_pool = array_values($obscure_glass_textures);
-                $obscure_wall_tiles = [];
-                if ($obscure_wall_pool !== []) {
-                    $obscure_wall_count = count($obscure_wall_pool);
-                    for ($i = 0; $i < 36; $i++) {
-                        $obscure_wall_tiles[] = $obscure_wall_pool[(($i * 5) + (intdiv($i, 6) * 2)) % $obscure_wall_count];
-                    }
-                }
-                ?>
-                <div class="fg-obscure-hero__preview" aria-hidden="true">
-                    <?php foreach ($obscure_wall_tiles as $texture) : ?>
-                        <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . ';'); ?>"></span>
-                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
