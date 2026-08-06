@@ -7779,101 +7779,132 @@ document.querySelectorAll('[data-fg-wipe]').forEach((stage) => {
   paint();
 });
 
-/* Repair problem finder — /window-and-door-repairs/
+/* Repair diagnostics — /window-and-door-repairs/
    ---------------------------------------------------------------------------
-   Two jobs, both small.
+   Symptom in, part out, drawn. Choosing a symptom does three things: lights the
+   matching group on the schematic, swaps the part panel, and swaps the caption
+   under the drawing.
 
-   1. Filter the problem grid by group. Every card is already in the DOM with
-      its diagnosis and its price; this only shows and hides. That is what keeps
-      the symptom language indexable, keeps the page working with JavaScript
-      off, and means there is no second copy of the content to drift. Do not
-      turn this into something that renders cards from data.
+   The part copy lives in ONE place in the DOM and is swapped, rather than a
+   hidden panel per symptom. Twelve symptoms across two products share nine
+   parts, so per-symptom panels would have meant duplicated copy and the two
+   drifting apart the first time somebody edited one.
 
-   2. Carry the chosen symptom into the enquiry form. Somebody who taps
-      "The door will not lock" should not then have to describe it in a
-      textarea, which is the whole "you do not need to diagnose it yourself"
-      promise the page makes.
+   Everything the controller needs rides on the buttons as data attributes, and
+   the part library is read once out of a JSON script block. Nothing is fetched.
 
-   The filter row is `hidden` in the markup and revealed here, so a filter that
-   cannot filter never appears. Cards are hidden with the `hidden` property
-   rather than removed, so their ids survive and a deep link to a specific
-   problem still resolves after a filter.
+   Progressive enhancement: the interactive shell is `hidden` in the markup and
+   revealed here, and the plain symptom-to-part list is hidden here instead. So
+   with no JavaScript you get real content rather than dead controls, and the
+   symptom language is in the HTML either way. */
+document.querySelectorAll('[data-fg-repair-diag]').forEach((diag) => {
+  const shell = diag.querySelector('[data-fg-diag-shell]');
+  const fallback = diag.querySelector('[data-fg-diag-fallback]');
+  const store = diag.querySelector('[data-fg-diag-parts]');
+  if (!shell || !store) return;
 
-   No `scrollIntoView` anywhere. Lenis owns the scroll on this site and moves
-   the painted position independently, which is recorded in nick.md; the
-   request links are real anchors and the browser handles them. */
-document.querySelectorAll('[data-fg-repair-finder]').forEach((finder) => {
-  const grid = finder.querySelector('[data-fg-repair-grid]');
-  const filters = finder.querySelector('[data-fg-repair-filters]');
-  const cards = [...finder.querySelectorAll('[data-fg-repair-card]')];
-  if (!grid || !filters || !cards.length) return;
+  let parts;
+  try {
+    parts = JSON.parse(store.textContent || '{}');
+  } catch (e) {
+    return; // Leave the fallback showing rather than a broken widget.
+  }
 
-  const buttons = [...filters.querySelectorAll('[data-fg-repair-group]')];
-  const status = finder.querySelector('[data-fg-repair-status]');
-  const empty = finder.querySelector('[data-fg-repair-empty]');
-  if (!buttons.length) return;
+  const panel = {
+    image: diag.querySelector('[data-fg-diag-image]'),
+    sub: diag.querySelector('[data-fg-diag-sub]'),
+    name: diag.querySelector('[data-fg-diag-name]'),
+    what: diag.querySelector('[data-fg-diag-what]'),
+    fix: diag.querySelector('[data-fg-diag-fix]'),
+    link: diag.querySelector('[data-fg-diag-link]'),
+    caption: diag.querySelector('[data-fg-diag-caption]'),
+  };
+  const svgs = [...diag.querySelectorAll('[data-fg-diag-svg]')];
+  const lists = [...diag.querySelectorAll('[data-fg-diag-list]')];
+  const productButtons = [...diag.querySelectorAll('[data-fg-diag-product]')];
 
-  filters.hidden = false;
+  shell.hidden = false;
+  if (fallback) fallback.hidden = true;
 
-  const apply = (group, announce) => {
-    let shown = 0;
+  const showPart = (button) => {
+    const key = button.dataset.part;
+    const part = parts[key];
+    if (!part) return;
 
-    cards.forEach((card) => {
-      const match = group === 'all' || card.dataset.group === group;
-      card.hidden = !match;
-      if (match) shown += 1;
-    });
-
-    buttons.forEach((button) => {
-      const active = button.dataset.fgRepairGroup === group;
-      button.classList.toggle('is-active', active);
-      button.setAttribute('aria-pressed', active ? 'true' : 'false');
-    });
-
-    if (empty) empty.hidden = shown > 0;
-
-    /* Announced rather than just drawn, because the change happens below the
-       controls and a screen reader user gets no other signal that the list
-       under them is now shorter.
-
-       Only after a real interaction. On load the count is not news to anyone —
-       the grid is right there — and printing it put a line of dead text
-       between the controls and the first card, which on a phone is a line you
-       have to scroll past to reach the content. */
-    if (status && announce) {
-      status.textContent = shown === 1
-        ? 'Showing 1 problem.'
-        : `Showing ${shown} problems.`;
+    if (panel.image) {
+      panel.image.src = part.image;
+      panel.image.alt = part.alt || '';
+      // Cut-outs are contained and given air; photographs cover their box.
+      panel.image.closest('.fg-rp-diag__media').classList.toggle('is-cutout', !!part.cutout);
     }
+    if (panel.sub) panel.sub.textContent = part.sub || '';
+    if (panel.name) panel.name.textContent = part.name || '';
+    if (panel.what) panel.what.textContent = part.what || '';
+    if (panel.fix) panel.fix.textContent = part.fix || '';
+    if (panel.caption) panel.caption.textContent = part.name || '';
+
+    if (panel.link) {
+      if (part.link) {
+        panel.link.href = part.link;
+        panel.link.textContent = part.link_label || '';
+        panel.link.hidden = false;
+      } else {
+        panel.link.hidden = true;
+      }
+    }
+
+    // Light the group on whichever schematic is showing.
+    const target = button.dataset.svg;
+    svgs.forEach((svg) => {
+      const active = !svg.hasAttribute('hidden');
+      svg.classList.toggle('is-focused', active);
+      svg.querySelectorAll('[data-part]').forEach((g) => {
+        g.classList.toggle('is-active', active && g.dataset.part === target);
+      });
+    });
   };
 
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => apply(button.dataset.fgRepairGroup || 'all', true));
-  });
-
-  apply('all', false);
-
-  /* The symptom goes into the message field, appended rather than assigned so
-     a visitor who has already typed something does not lose it, and only once
-     per symptom so repeated taps do not stack duplicates. */
-  finder.querySelectorAll('[data-fg-repair-request]').forEach((link) => {
-    link.addEventListener('click', () => {
-      const symptom = link.getAttribute('data-fg-repair-request');
-      const form = document.querySelector('#fenster-enquiry [data-fg-enquiry-form]')
-        || document.querySelector('[data-fg-enquiry-form]');
-      if (!symptom || !form) return;
-
-      const message = form.querySelector('textarea[name="message"]');
-      if (!message) return;
-
-      const line = `Repair needed: ${symptom}`;
-      if (message.value.includes(line)) return;
-
-      message.value = message.value.trim() ? `${message.value.trim()}\n${line}` : line;
-
-      /* Lets the AJAX layer and any validation see the change. Assigning
-         `.value` fires nothing on its own. */
-      message.dispatchEvent(new Event('input', { bubbles: true }));
+  const selectSymptom = (button) => {
+    const list = button.closest('[data-fg-diag-list]');
+    list.querySelectorAll('[data-fg-diag-symptom]').forEach((other) => {
+      other.setAttribute('aria-pressed', other === button ? 'true' : 'false');
     });
+    showPart(button);
+  };
+
+  diag.querySelectorAll('[data-fg-diag-symptom]').forEach((button) => {
+    button.addEventListener('click', () => selectSymptom(button));
   });
+
+  const selectProduct = (key) => {
+    productButtons.forEach((b) => b.setAttribute('aria-pressed', b.dataset.fgDiagProduct === key ? 'true' : 'false'));
+    lists.forEach((l) => { l.hidden = l.dataset.fgDiagList !== key; });
+
+    /* `setAttribute`, not `.hidden`. The `hidden` IDL property is defined on
+       HTMLElement and an <svg> is an SVGElement, which does not inherit it —
+       so `svg.hidden = false` quietly sets a JS expando, the markup attribute
+       never moves, and switching product changed the symptom list while the
+       drawing stayed on the window. The lists above are real HTML elements and
+       the property is fine there. */
+    svgs.forEach((s) => {
+      if (s.dataset.fgDiagSvg === key) {
+        s.removeAttribute('hidden');
+      } else {
+        s.setAttribute('hidden', '');
+      }
+    });
+
+    // Re-assert the visible list's current selection so the drawing and the
+    // panel match the product you just switched to.
+    const list = lists.find((l) => !l.hidden);
+    if (!list) return;
+    const current = list.querySelector('[aria-pressed="true"]') || list.querySelector('[data-fg-diag-symptom]');
+    if (current) selectSymptom(current);
+  };
+
+  productButtons.forEach((b) => {
+    b.addEventListener('click', () => selectProduct(b.dataset.fgDiagProduct));
+  });
+
+  selectProduct('window');
 });
