@@ -500,6 +500,15 @@ function fenster_gsc_seo_overrides(): array
         'what-are-integral-blinds' => [
             'meta_description' => 'Learn how integral blinds work inside double glazing, including their benefits, controls and suitability for windows and doors.',
         ],
+        // The scrape record for this route is titled "Book a Consultation",
+        // which was still reaching the BreadcrumbList as the page name on live:
+        // the quote page told Google it was the consultation page, and there is
+        // a real /book-a-consultation/ route for it to be confused with. The
+        // title override fixes the breadcrumb as well as the snippet.
+        'online-quote' => [
+            'title_tag' => 'Online Quote | Price Your Windows and Doors | Fenster Glazing',
+            'meta_description' => 'Price your own windows and doors online in about ten minutes. Choose sizes, colours, glass and handles, then see the figure we would charge to fit them.',
+        ],
     ];
 }
 
@@ -2360,9 +2369,19 @@ function fenster_render_site_schema(): void
         ];
     }
 
-    $breadcrumb_title = $slug === 'customer-portal'
-        ? 'Customer Portal'
-        : (string) ($page['title'] ?? get_bloginfo('name'));
+    /* Breadcrumb names come from the imported page record, and on a few routes
+       that record is scrape-era junk. `/online-quote/` carried "Book a
+       Consultation", so the quote page was telling Google it was the
+       consultation page, and there is a real /book-a-consultation/ route for it
+       to be confused with. Name those routes here rather than editing the 4.6MB
+       scrape file; the SEO title override does not reach this schema. */
+    $breadcrumb_names = [
+        'customer-portal' => 'Customer Portal',
+        'online-quote' => 'Online Quote',
+    ];
+
+    $breadcrumb_title = $breadcrumb_names[$slug]
+        ?? (string) ($page['title'] ?? get_bloginfo('name'));
 
     $breadcrumb_items[] = [
         '@type' => 'ListItem',
