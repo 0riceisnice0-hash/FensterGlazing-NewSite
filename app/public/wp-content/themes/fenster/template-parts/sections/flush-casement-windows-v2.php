@@ -63,34 +63,49 @@ $colour_link = home_url('/colour-options/?material=upvc');
 $versus_rows = [
     ['label' => 'The sash', 'a' => 'Closes level with the frame', 'b' => 'Stands proud of the frame'],
     ['label' => 'Fixed panes', 'a' => 'Matched dummy sash, so every pane reads the same', 'b' => 'Glazed into the frame, so more glass'],
-    ['label' => 'Glazing', 'a' => '28mm double', 'b' => '28mm double or 36mm triple'],
-    ['label' => 'Whole window U-value', 'a' => '1.2 W/m²K', 'b' => '0.95 W/m²K'],
+    ['label' => 'Glazing', 'a' => '28mm double', 'b' => '28mm double, or 36mm triple'],
+    /* This row read as if flush were the colder window. It gave flush its double
+       glazed figure and standard its TRIPLE glazed one, which is not a
+       comparison — like for like on 28mm double both are 1.2 W/m²K, and the 0.95
+       is what standard reaches only because it takes a triple unit and flush does
+       not. Stating both figures on the standard side is the honest way to show an
+       advantage that is real but conditional. */
+    ['label' => 'Whole window U-value', 'a' => '1.2 W/m²K', 'b' => '1.2 W/m²K, or 0.95 with triple'],
     ['label' => 'Energy rating', 'a' => 'A+', 'b' => 'A+'],
     ['label' => 'Suits', 'a' => 'Period frontages, and modern elevations wanting a flatter line', 'b' => 'Most homes, and the wider specification'],
 ];
 
+/* Customer first, the figure second. These were headed "Six chambers in the outer
+   frame" and "35 decibels of sound reduction", which is what the window has
+   rather than what it does for the person paying for it. Same facts, same
+   figures, told from the other end. Copy lengths are deliberately close so the
+   four cards sit level. */
 $performance = [
-    ['name' => 'Six chambers in the outer frame', 'copy' => 'The flush sash runs on Liniar\'s EnergyPlus outer frame, so the profile carries six sealed chambers rather than the four a standard profile has. Each one interrupts the route heat takes out of the room.'],
-    ['name' => 'A gasket formed with the profile', 'copy' => 'The weather seal is co-extruded with the frame rather than pushed into a groove afterwards, so it runs unbroken around the corners. Corners are where a pushed-in gasket fails first.'],
-    ['name' => '1.2 W/m²K, A+ rated', 'copy' => 'Whole window, with the 28mm double glazed unit this system takes. Size, layout and glass all move the final figure, so the number we agree follows your specification rather than a brochure.'],
-    ['name' => '35 decibels of sound reduction', 'copy' => 'Liniar publish 35 (-1;-4) for this profile. It is the frame and the glass together, and if noise is the reason you are replacing the windows, say so early: the glass does most of that work and it is specified differently.'],
+    ['name' => 'The room holds its heat', 'copy' => 'Six sealed chambers run through the frame instead of the usual four, and each one interrupts the route warmth takes out of the room. It is the same EnergyPlus platform we fit on the standard casement.'],
+    ['name' => 'No draught at the corners', 'copy' => 'The weather seal is formed with the frame rather than pushed into a groove afterwards, so it runs unbroken around every corner. Corners are where a pushed-in seal lets go first, usually a few winters in.'],
+    ['name' => 'A+ rated, and 1.2 W/m²K', 'copy' => 'Whole window, on the 28mm double glazed unit this system takes. Size, layout and glass all move the real figure, so the number we agree follows your actual windows rather than a brochure.'],
+    ['name' => 'Quieter rooms on a busy road', 'copy' => 'Liniar publish 35 decibels of sound reduction for this frame. If noise is the reason you are replacing the windows, say so at survey: the glass does most of that work and it is specified differently.'],
 ];
 
 $security = [
-    ['name' => 'PAS 24, and Secured by Design', 'copy' => 'Both available on this system, and PAS 24 is what Part Q asks for on new dwellings and some extensions. Tell us early if your build is covered by it. The approval belongs to a tested complete window rather than to a profile name.'],
-    ['name' => 'Multi-point locking as standard', 'copy' => 'Not an upgrade. One turn of the handle throws the locking points down the sash edge, so the window is held into its seals along its length rather than at the handle alone.'],
-    ['name' => 'Laminated glass where it matters', 'copy' => 'A bonded interlayer holds a broken pane together instead of letting it break through. It is the upgrade we would point at first on a ground floor, or on any window out of sight from the road.'],
+    ['name' => 'Held shut along the whole sash', 'copy' => 'One turn of the handle throws locking points down the full edge of the sash, so the window is held into its seals along its length rather than at the handle alone. That is standard on every one we fit, not an upgrade.'],
+    ['name' => 'Glass that holds together', 'copy' => 'A laminated pane has a bonded interlayer, so it stays in one piece instead of breaking through. It is the first thing we would suggest on a ground floor window, or any window out of sight from the road.'],
+    ['name' => 'Tested, and certified if you need it', 'copy' => 'Available to PAS 24 and Secured by Design, which is what building control asks for on a new dwelling and some extensions. Tell us early if your build is covered and we will specify to it from the start.'],
 ];
 
-/* Our own installations. The two aluminium frames that used to sit in this set
-   are gone: judge a replacement by the sash-to-frame junction, not by a filename
-   that says flush. */
+/* Our own installations, every one 4:3 so the rows sit square rather than
+   ragged. Chosen for variation as much as quality: three colours, a period
+   frontage, a bay, a modern elevation and one close enough to read the sash
+   line. Two come from case studies — the Green Man and Leighton Buzzard — which
+   are the best-photographed flush jobs we have and were not being used here at
+   all. */
 $gallery = [
-    ['file' => 'flush-white-bay-brick-1400w.webp', 'caption' => 'A bay, built in flush sashes', 'alt' => 'White flush casement bay window on a tile hung house'],
-    ['file' => 'flush-modern-elevation-1600w.webp', 'caption' => 'Anthracite, across a rear elevation', 'alt' => 'Anthracite flush casement windows across the rear elevation of a red brick house'],
-    ['file' => 'flush-cream-bars-1400w.webp', 'caption' => 'Cream, with Georgian bars', 'alt' => 'Cream flush casement windows with Georgian bars on a buff brick house'],
-    ['file' => 'flush-stone-cottage-1400w.webp', 'caption' => 'A stone cottage frontage', 'alt' => 'White flush casement windows in a stone cottage elevation'],
-    ['file' => 'flush-oak-dormers-1400w.webp', 'caption' => 'Golden oak dormers', 'alt' => 'Golden oak flush casement windows in two dormer gables'],
+    ['file' => 'g-green-man-bay.webp', 'caption' => 'The Green Man, Eversholt', 'alt' => 'White flush casement windows and a bay on the period frontage of The Green Man at Eversholt'],
+    ['file' => 'g-wolverton-black.webp', 'caption' => 'Black, on white brick', 'alt' => 'Black flush casement windows standing open on a white painted brick elevation in Wolverton'],
+    ['file' => 'g-cream-bars.webp', 'caption' => 'Cream, with Georgian bars', 'alt' => 'Cream flush casement window with Georgian bars in a buff brick elevation'],
+    ['file' => 'g-white-detail.webp', 'caption' => 'The sash line, up close', 'alt' => 'White flush casement window in red brick, the sashes closing level with the outer frame'],
+    ['file' => 'g-leighton.webp', 'caption' => 'Leighton Buzzard', 'alt' => 'White flush casement window in a pebbledashed elevation in Leighton Buzzard'],
+    ['file' => 'g-white-bay.webp', 'caption' => 'A bay, built in flush sashes', 'alt' => 'White flush casement bay window on a tile hung house'],
 ];
 ?>
 
@@ -128,10 +143,13 @@ $gallery = [
     <section class="fg-cw-intro" aria-labelledby="fg-flush-modern-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
             <figure class="fg-cw-media">
-                <img src="<?php echo esc_url(fenster_generated_url($base . 'flush-white-detail-1400w.webp')); ?>"
-                    alt="<?php esc_attr_e('White flush casement window in red brick, the sashes closing level with the outer frame', 'fenster'); ?>"
-                    loading="lazy" width="1400" height="1050">
-                <figcaption><?php esc_html_e('The sash, closing level', 'fenster'); ?></figcaption>
+<?php /* This section says the window is not only for period houses, and was
+         illustrated with a Victorian red brick frontage, which argued the
+         opposite. It is a modern elevation now. */ ?>
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'flush-modern-elevation-1600w.webp')); ?>"
+                    alt="<?php esc_attr_e('Anthracite flush casement windows across the rear elevation of a modern brick house', 'fenster'); ?>"
+                    loading="lazy" width="1600" height="1200">
+                <figcaption><?php esc_html_e('Anthracite, on a modern elevation', 'fenster'); ?></figcaption>
             </figure>
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('And the other half', 'fenster'); ?></p>
@@ -153,9 +171,9 @@ $gallery = [
             <div class="fg-flush-band__head">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Performance', 'fenster'); ?></p>
-                    <h2 id="fg-flush-perf-title"><?php esc_html_e('A traditional face on a modern frame.', 'fenster'); ?></h2>
+                    <h2 id="fg-flush-perf-title"><?php esc_html_e('It looks traditional. It does not behave traditionally.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('The look is the reason people choose it. The frame behind the look is the same six-chamber platform we fit everywhere else.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The look is why people choose it. Behind the look is the same six-chamber frame we fit on every other Liniar window.', 'fenster'); ?></p>
             </div>
             <dl class="fg-flush-list">
                 <?php foreach ($performance as $item) : ?>
@@ -175,9 +193,9 @@ $gallery = [
             <div class="fg-flush-band__head">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
-                    <h2 id="fg-flush-sec-title"><?php esc_html_e('Tested to the standard Part Q asks for.', 'fenster'); ?></h2>
+                    <h2 id="fg-flush-sec-title"><?php esc_html_e('Locked along the sash, not just at the handle.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('A flatter sash does not mean a softer window. This system is available tested and approved, and the glass is where most of the rest is decided.', 'fenster'); ?></p>
+                <p><?php esc_html_e('A flatter sash is not a softer window. It locks the same way every casement we fit does, and the glass decides most of the rest.', 'fenster'); ?></p>
             </div>
             <dl class="fg-flush-list">
                 <?php foreach ($security as $item) : ?>
@@ -224,7 +242,11 @@ $gallery = [
                     <tr>
                         <th scope="col"><span class="fg-cas-sr"><?php esc_html_e('Specification', 'fenster'); ?></span></th>
                         <th scope="col"><?php esc_html_e('Flush', 'fenster'); ?></th>
-                        <th scope="col"><?php esc_html_e('Standard', 'fenster'); ?></th>
+                        <?php /* The link lives in the column it belongs to. Sitting in a
+                                 note under the table it read as a footnote to both
+                                 sides; here it is plainly the way on from the half
+                                 somebody has just decided they prefer. */ ?>
+                        <th scope="col"><a class="fg-cas-link" href="<?php echo $casement; ?>"><?php esc_html_e('Standard', 'fenster'); ?></a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -238,7 +260,6 @@ $gallery = [
                 </tbody>
             </table>
             <p class="fg-flush-note">
-                <a class="fg-cas-link" href="<?php echo $casement; ?>"><?php esc_html_e('See standard casement windows', 'fenster'); ?></a>
                 <a class="fg-cas-link" href="<?php echo esc_url($colour_link); ?>"><?php esc_html_e('Every colour', 'fenster'); ?></a>
             </p>
         </div>

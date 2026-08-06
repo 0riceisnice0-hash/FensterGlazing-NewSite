@@ -38750,24 +38750,49 @@ html.fg-blinds-reveal-locked {
   color: var(--color-muted);
 }
 
+/* Cards rather than loose text. As four bare blocks these read as ragged: the
+   copy is never the same length twice, so the terms sat at different heights and
+   the section looked unfinished however the words were trimmed. Giving each one
+   the same box makes the grid do the levelling instead of the copy — the cards
+   stretch to a common height, and only the text inside them varies.
+
+   `align-content: start` inside the card keeps the term hard against the top, so
+   the headings line up across the row even when one card runs a line longer. */
 .fg-flush-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-  gap: clamp(1.2rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.4rem);
   margin: 0;
 }
 
+.fg-flush-list > div {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-soft);
+}
+
 .fg-flush-list dt {
-  margin-bottom: 0.4rem;
   font-weight: 850;
+  font-size: 1.02rem;
   line-height: 1.2;
 }
 
 .fg-flush-list dd {
   margin: 0;
   color: var(--color-muted);
-  font-size: 0.97rem;
+  font-size: 0.95rem;
   line-height: 1.55;
+}
+
+/* On the dark band the card cannot borrow the page's soft grey, so it lifts off
+   the gradient instead. */
+.fg-flush-band--dark .fg-flush-list > div {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .fg-flush-note {
