@@ -39350,21 +39350,28 @@ html.fg-blinds-reveal-locked {
   }
 
   /* A phone gets its own composition rather than a squashed copy of the wide
-     one. The back layer comes out entirely: twelve products at this width piled
-     into a cluttered heap, and the three furthest away were the ones adding
-     least. Nine remain, larger, and the range is named in the heading above
-     regardless, so nothing is only available to a wide screen.
+     one, because scaling the scatter up and pulling it inwards piled everything
+     into one corner with dead space beside it.
 
-     The x positions are tuned for a wide stage, so they are scaled with the
-     width too. Left alone they ran to 489px inside a 390px viewport and the
-     stage clipped them in half. */
+     The back layer comes out: nine products at this width is already plenty and
+     the three furthest away added least. The rest alternate left and right down
+     the stage, which cannot clip, cannot cluster and still falls at nine
+     different rates. The range is named in the heading above regardless, so
+     nothing is only available to a wide screen. */
   .fg-oq-spin--back {
     display: none;
   }
 
   .fg-oq-spin {
-    left: calc(var(--fg-spin-x) * 0.68);
-    width: calc(var(--fg-spin-w) * 1.5);
+    width: 54vw;
+  }
+
+  .fg-oq-spin:nth-of-type(odd) {
+    left: 2%;
+  }
+
+  .fg-oq-spin:nth-of-type(even) {
+    left: 42%;
   }
 }
 
@@ -39375,8 +39382,15 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-oq-spin {
-    left: calc(var(--fg-spin-x) * 0.66);
-    width: calc(var(--fg-spin-w) * 1.7);
+    width: 60vw;
+  }
+
+  .fg-oq-spin:nth-of-type(odd) {
+    left: 1%;
+  }
+
+  .fg-oq-spin:nth-of-type(even) {
+    left: 38%;
   }
 }
 
