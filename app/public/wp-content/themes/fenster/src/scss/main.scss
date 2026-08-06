@@ -18140,7 +18140,7 @@ a.fg-cs-card__pill:focus-visible {
   bottom: 1rem;
   display: grid;
   gap: 0.1rem;
-  max-width: 360px;
+  max-width: 400px;
   padding: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
@@ -20259,7 +20259,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-home-route-card small {
-  max-width: 360px;
+  max-width: 400px;
   color: rgba(255, 255, 255, 0.84);
   font-size: 0.98rem;
 }
@@ -20506,7 +20506,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-home-partner-strip__copy h2 {
-  max-width: 360px;
+  max-width: 400px;
   color: var(--color-steel);
   font-size: clamp(1.55rem, 2.4vw, 2.2rem);
   line-height: 1;
@@ -39222,23 +39222,44 @@ html.fg-blinds-reveal-locked {
 
 .fg-rp-svg {
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   height: auto;
   fill: none;
-  stroke: rgba(255, 255, 255, 0.34);
-  stroke-width: 1.25;
+  stroke: rgba(255, 255, 255, 0.38);
+  /* One weight for the whole object, like a drawing pen. `vector-effect`
+     keeps it at one pixel however the SVG is scaled, which is what stops it
+     going spidery on a phone and heavy on a wide screen. */
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.fg-rp-svg * {
+  vector-effect: non-scaling-stroke;
 }
 
 .fg-rp-svg__frame {
-  stroke: rgba(255, 255, 255, 0.5);
+  stroke: rgba(255, 255, 255, 0.58);
+}
+
+/* Centre lines and the dimension rule. Hairline and dashed so they read as
+   setting-out rather than as part of the window. */
+.fg-rp-svg__construct {
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-dasharray: 10 4 2 4;
 }
 
 .fg-rp-svg__cill {
-  fill: rgba(255, 255, 255, 0.06);
+  fill: rgba(255, 255, 255, 0.05);
+}
+
+/* The gasket is drawn as a seal line, dashed, because it is compressible and
+   it is not a rigid member. */
+.fg-rp-svg__seal {
+  stroke-dasharray: 5 3;
 }
 
 .fg-rp-svg__sheen {
-  stroke: rgba(255, 255, 255, 0.12);
+  stroke: rgba(255, 255, 255, 0.1);
 }
 
 .fg-rp-svg__part {
@@ -39253,8 +39274,14 @@ html.fg-blinds-reveal-locked {
 .fg-rp-svg.is-focused .fg-rp-svg__part.is-active {
   opacity: 1;
   stroke: var(--color-accent);
-  stroke-width: 2.25;
-  filter: drop-shadow(0 0 6px rgba(46, 172, 102, 0.65));
+  stroke-width: 2;
+  filter: drop-shadow(0 0 5px rgba(46, 172, 102, 0.7));
+}
+
+/* The construction lines recede with everything else, so a lit part is the
+   only thing at full strength. */
+.fg-rp-svg.is-focused .fg-rp-svg__construct {
+  opacity: 0.45;
 }
 
 .fg-rp-diag__caption {

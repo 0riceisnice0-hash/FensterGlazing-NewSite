@@ -7853,13 +7853,17 @@ document.querySelectorAll('[data-fg-repair-diag]').forEach((diag) => {
       }
     }
 
-    // Light the group on whichever schematic is showing.
-    const target = button.dataset.svg;
+    /* Light the group, or groups, on whichever schematic is showing.
+       `data-svg` is space separated because some answers are genuinely two
+       things: a window draught is the hinges OR the gasket, and a door that
+       will not lock is the gearbox OR alignment. Lighting both is the honest
+       drawing of that, and it is why this is a list rather than one id. */
+    const targets = (button.dataset.svg || '').split(/\s+/).filter(Boolean);
     svgs.forEach((svg) => {
       const active = !svg.hasAttribute('hidden');
       svg.classList.toggle('is-focused', active);
       svg.querySelectorAll('[data-part]').forEach((g) => {
-        g.classList.toggle('is-active', active && g.dataset.part === target);
+        g.classList.toggle('is-active', active && targets.includes(g.dataset.part));
       });
     });
   };
