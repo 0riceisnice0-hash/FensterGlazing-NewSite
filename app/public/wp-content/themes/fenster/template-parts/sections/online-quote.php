@@ -79,25 +79,29 @@ $steps = [
    as a layered group rather than a marching row. Depths here are deliberately
    stronger than the 0.04-0.15 the shared controller is usually driven at:
    this is the owner's instruction of 2026-08-06 for a big moment, not the
-   quiet drift the rest of the site uses. `ABOUT-PAGE-HANDOVER.md` records
-   heavy multi-image parallax being rejected once before, so the depths are all
-   in one place here and can be taken down without touching markup.
+   quiet drift the rest of the site uses. They were stronger still on the first
+   pass and had to come down: at 0.85 an item travels 153px, which drifted it
+   into the label of the row below. What makes the group read as layers is the
+   spread between the depths, not the size of any one of them.
+   `ABOUT-PAGE-HANDOVER.md` records heavy multi-image parallax being rejected
+   once before, so they are all in one place here and can be taken down
+   further without touching markup.
 
    The glass is genuinely transparent, so the page gradient shows through the
    panes. Do not put these on a flat white panel; the see-through is the point. */
 $spins = [
-    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'depth' => 0.62, 'offset' => -34],
-    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'depth' => 0.34, 'offset' => 18],
-    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'depth' => 0.78, 'offset' => -12],
-    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'depth' => 0.26, 'offset' => 30],
-    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'depth' => 0.70, 'offset' => -26],
-    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'depth' => 0.40, 'offset' => 8],
-    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'depth' => 0.55, 'offset' => 24],
-    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'depth' => 0.85, 'offset' => -40],
-    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'depth' => 0.30, 'offset' => 14],
-    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'depth' => 0.66, 'offset' => -18],
-    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'depth' => 0.44, 'offset' => 26],
-    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'depth' => 0.22, 'offset' => -8],
+    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'depth' => 0.30, 'offset' => -26],
+    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'depth' => 0.16, 'offset' => 14],
+    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'depth' => 0.38, 'offset' => -10],
+    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'depth' => 0.13, 'offset' => 22],
+    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'depth' => 0.34, 'offset' => -20],
+    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'depth' => 0.20, 'offset' => 6],
+    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'depth' => 0.27, 'offset' => 18],
+    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'depth' => 0.36, 'offset' => -28],
+    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'depth' => 0.15, 'offset' => 10],
+    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'depth' => 0.32, 'offset' => -14],
+    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'depth' => 0.22, 'offset' => 20],
+    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'depth' => 0.12, 'offset' => -6],
 ];
 
 $before = [
@@ -212,7 +216,7 @@ $faq_schema = [
         <div class="container">
             <div class="fg-oq-section-head fg-oq-range__head">
                 <p class="eyebrow"><?php esc_html_e('The range', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Everything the tool prices.', 'fenster'); ?></h2>
+                <h2><?php esc_html_e('Everything you can price here.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('Twelve ranges, priced the same way. Windows and doors in uPVC and aluminium, sash windows, patio and bifold doors, replacement glass and secondary glazing.', 'fenster'); ?></p>
             </div>
         </div>

@@ -39222,8 +39222,13 @@ html.fg-blinds-reveal-locked {
 
 .fg-oq-range__field {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: clamp(0.5rem, 1.6vw, 1.5rem) clamp(0.4rem, 1.2vw, 1rem);
+  /* Four across, not six. Six made every product small, and the doors smaller
+     still: a portrait slab contained in a short box is limited by height, so it
+     ends up half the width of a window beside it. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* The row gap has to clear the travel, or an item drifts into the label of
+     the row below. That is what it did at the first attempt. */
+  gap: clamp(2.75rem, 5vw, 4.5rem) clamp(0.5rem, 1.4vw, 1.25rem);
   width: min(100% - 2rem, calc(var(--container) + 6rem));
   margin: 0 auto;
   padding: clamp(2.5rem, 5vw, 4rem) 0;
@@ -39243,7 +39248,7 @@ html.fg-blinds-reveal-locked {
   display: grid;
   place-items: end center;
   width: 100%;
-  height: clamp(112px, 15vh, 200px);
+  height: clamp(150px, 20vh, 250px);
   /* Resting offset plus whatever the shared controller has put in
      --fg-parallax-y. translate3d keeps it on the compositor. */
   transform: translate3d(0, calc(var(--fg-spin-offset, 0px) + var(--fg-parallax-y, 0px)), 0);
@@ -39298,7 +39303,7 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 1180px) {
   .fg-oq-range__field {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -39309,7 +39314,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-oq-spin__media {
-    height: clamp(84px, 13vh, 130px);
+    height: clamp(112px, 16vh, 170px);
   }
 
   .fg-oq-spin__label {
@@ -39324,7 +39329,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-oq-spin__media {
-    height: clamp(96px, 16vh, 140px);
+    height: clamp(118px, 19vh, 165px);
   }
 }
 
