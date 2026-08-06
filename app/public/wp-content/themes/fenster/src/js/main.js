@@ -2887,7 +2887,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   const privacyTarget = visualiser.querySelector('[data-fg-obscure-active-privacy]');
   const backgroundToggle = visualiser.querySelector('[data-fg-obscure-background-toggle]');
   const splitControl = visualiser.querySelector('[data-fg-obscure-split]');
-  const backgroundNames = ['cat', 'house'];
+  /* House first, Legend second. Owner, 2026-08-06: the house is the real-world
+     view somebody came to judge glass against, and Legend is the close-up you
+     click through to — it was the other way round. The toggle label already names
+     the scene you are switching TO, so it reads correctly from either start. */
+  const backgroundNames = ['house', 'cat'];
   let backgroundIndex = 0;
 
   if (!stage || !viewport || !buttons.length) return;
@@ -2945,6 +2949,78 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   splitControl?.addEventListener('input', () => {
     setSplit(splitControl.value);
   });
+
+  /* Dragging, rather than tapping a position.
+     The divider is an `<input type="range">` stretched invisibly across the whole
+     stage. On iOS that only drags when the touch starts on the thumb; a touch
+     anywhere else jumps the value once and then does nothing, which is exactly
+     the "you have to click the position" the owner reported.
+
+     So the gesture is handled here, and the input keeps its value in sync for
+     keyboard and assistive tech. The stage keeps `touch-action: pan-y`, so a
+     vertical drag still scrolls the page: only horizontal movement is claimed,
+     and only once it clearly beats the vertical, so a scroll that happens to
+     start on the visualiser is not stolen from the reader. */
+  const splitFromEvent = (event) => {
+    const rect = viewport.getBoundingClientRect();
+    if (!rect.width) return null;
+    return clamp(((event.clientX - rect.left) / rect.width) * 100, 0, 100);
+  };
+
+  const applySplit = (value) => {
+    setSplit(value);
+    if (splitControl) splitControl.value = String(Math.round(value));
+  };
+
+  let dragId = null;
+  let dragStart = null;
+  let dragLocked = false;
+
+  viewport.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    dragId = event.pointerId;
+    dragStart = { x: event.clientX, y: event.clientY };
+    // A mouse press is unambiguous and grabs at once. A touch has to prove it is
+    // horizontal first, or vertical scrolling breaks.
+    dragLocked = event.pointerType === 'mouse';
+    if (dragLocked) {
+      const value = splitFromEvent(event);
+      if (value !== null) applySplit(value);
+    }
+  });
+
+  viewport.addEventListener('pointermove', (event) => {
+    if (dragId !== event.pointerId || !dragStart) return;
+
+    if (!dragLocked) {
+      const dx = Math.abs(event.clientX - dragStart.x);
+      const dy = Math.abs(event.clientY - dragStart.y);
+      if (dx < 6 || dx <= dy) return;
+      dragLocked = true;
+      if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+    }
+
+    const value = splitFromEvent(event);
+    if (value === null) return;
+    if (event.cancelable) event.preventDefault();
+    applySplit(value);
+  });
+
+  const endDrag = (event) => {
+    if (dragId !== event.pointerId) return;
+    // A tap that never became a drag still positions the divider, which is what
+    // the page already did and is worth keeping.
+    if (!dragLocked && dragStart) {
+      const value = splitFromEvent(event);
+      if (value !== null) applySplit(value);
+    }
+    dragId = null;
+    dragStart = null;
+    dragLocked = false;
+  };
+
+  viewport.addEventListener('pointerup', endDrag);
+  viewport.addEventListener('pointercancel', endDrag);
 
   backgroundToggle?.addEventListener('click', () => {
     backgroundIndex = (backgroundIndex + 1) % backgroundNames.length;

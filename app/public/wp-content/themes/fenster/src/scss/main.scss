@@ -9969,10 +9969,39 @@ html.fg-gallery-lightbox-open body {
   padding: clamp(4rem, 8vw, 7rem) 0;
 }
 
+/* Same treatment as the colour and handle hubs: a wall of the product behind, a
+   white veil fading across it, and the copy reading on the solid end. Here the
+   wall is the glass itself. */
 .fg-obscure-hero {
-  min-height: clamp(560px, 74svh, 760px);
+  position: relative;
+  min-height: clamp(520px, 66svh, 700px);
   display: grid;
   align-items: center;
+  overflow: hidden;
+}
+
+/* The veil. Solid under the copy, clearing by 68% so the glass carries the right
+   of the band. Sits above the tiles and below the text. */
+.fg-obscure-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 34%,
+    rgba(255, 255, 255, 0.94) 46%,
+    rgba(255, 255, 255, 0.55) 58%,
+    rgba(255, 255, 255, 0) 68%
+  );
+}
+
+.fg-obscure-hero__grid,
+.fg-obscure-hero__copy {
+  position: relative;
+  z-index: 2;
 }
 
 .fg-obscure-hero__grid,
@@ -10001,22 +10030,68 @@ html.fg-gallery-lightbox-open body {
   font-size: clamp(1rem, 1.35vw, 1.16rem);
 }
 
+/* Three rows of glass squares rather than five floating panes. The panes were on
+   a perspective stage at roughly 400px across with `background-size: cover`,
+   which blew each texture up so far that Arctic, Cotswold and Stippolyte all read
+   as the same grey haze — on the one page whose job is telling them apart. A tile
+   nearer the picker's own 58px swatch keeps the pattern at a believable scale.
+
+   It runs off the right edge of the viewport on purpose, so the wall reads as
+   continuing rather than as a panel that stops. */
 .fg-obscure-hero__preview {
-  position: relative;
-  min-height: 460px;
-  perspective: 1000px;
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: 0;
+  width: min(62vw, 780px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: clamp(0.5rem, 1vw, 0.85rem);
+  padding: clamp(1rem, 2.5vw, 2rem) 0 clamp(1rem, 2.5vw, 2rem) clamp(1rem, 2.5vw, 2rem);
+  min-height: 0;
+  perspective: none;
 }
 
 .fg-obscure-hero__preview span {
-  position: absolute;
-  inset: 12% 9%;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1)), var(--texture);
+  background-image: var(--texture);
   background-size: cover;
-  box-shadow: 0 32px 90px rgba(0, 45, 58, 0.22);
-  opacity: 0.74;
-  transform: translate3d(calc(var(--delay) * 90px), calc(var(--delay) * 44px), 0) rotateY(calc(-16deg + var(--delay) * 24deg)) rotateZ(calc(-7deg + var(--delay) * 6deg));
+  box-shadow: 0 10px 26px rgba(0, 45, 58, 0.08);
+  opacity: 0;
+  animation: fg-obscure-tile-in 520ms ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fg-obscure-tile-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-obscure-hero__preview span {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  /* No room for a wall beside the copy, so the tiles become a band under it and
+     the veil turns vertical, which is what the colour hub does at this width. */
+  .fg-obscure-hero__preview {
+    position: relative;
+    inset: auto;
+    width: auto;
+    grid-template-rows: repeat(2, 1fr);
+    aspect-ratio: 3 / 2;
+    padding: 0;
+  }
+
+  .fg-obscure-hero__preview span:nth-child(n + 7) { display: none; }
+
+  .fg-obscure-hero::after {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
+  }
 }
 
 .fg-obscure-visualiser__grid {
@@ -10505,6 +10580,13 @@ html.fg-gallery-lightbox-open body {
   clip-path: inset(0 calc(100% - var(--split)) 0 0);
 }
 
+/* Keyboard and assistive tech only. It used to take the pointer as well, and that
+   is what made the divider tap-to-position rather than draggable: a range input
+   stretched across the stage only drags on iOS when the touch lands on its thumb,
+   and everywhere else on the track it jumps once and stops. The gesture is
+   handled in main.js now and writes back to this input, so the value, the keyboard
+   arrows and the announced position all still work — it just no longer swallows
+   the touch that should be a drag. */
 .fg-obscure-stage__range {
   position: absolute;
   inset: 0;
@@ -10514,7 +10596,13 @@ html.fg-gallery-lightbox-open body {
   margin: 0;
   opacity: 0.01;
   cursor: ew-resize;
-  touch-action: pan-y;
+  pointer-events: none;
+}
+
+/* The stage takes the drag instead. `pan-y` keeps vertical scrolling working, and
+   main.js only claims a gesture once it is clearly horizontal. */
+.fg-obscure-stage__viewport {
+  cursor: ew-resize;
 }
 
 .fg-obscure-stage__main-image,

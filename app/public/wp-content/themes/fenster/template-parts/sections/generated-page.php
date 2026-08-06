@@ -2611,9 +2611,15 @@ if ($is_obscure_glass) {
                         <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Ask about glass options', 'fenster'); ?></a>
                     </div>
                 </div>
+                <?php /* Squares of the real glass, the same tile the picker buttons
+                         use, three rows deep. It was five floating panes on a
+                         perspective stage, which zoomed each texture far enough that
+                         the patterns stopped being distinguishable from one another —
+                         the one thing this page exists to show. Nine tiles at their
+                         natural scale read as nine different glasses. */ ?>
                 <div class="fg-obscure-hero__preview" aria-hidden="true">
-                    <?php foreach (array_slice($obscure_glass_textures, 0, 5) as $index => $texture) : ?>
-                        <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --delay:' . ($index * 0.16) . 's;'); ?>"></span>
+                    <?php foreach (array_slice($obscure_glass_textures, 0, 9) as $index => $texture) : ?>
+                        <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --delay:' . ($index * 0.08) . 's;'); ?>"></span>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -2629,10 +2635,13 @@ if ($is_obscure_glass) {
 
                 <div
                     class="fg-obscure-stage"
-                    style="<?php echo esc_attr('--scene-image:url(' . fenster_generated_url($legend_image) . '); --active-texture:' . $active_glass_texture . '; --privacy:' . $active_glass_privacy); ?>"
+                    <?php /* Painted with the house already in place, because the JS
+                             now starts on 'house' too. If this still rendered Legend the
+                             scene would visibly swap the moment the script ran. */ ?>
+                    style="<?php echo esc_attr('--scene-image:url(' . fenster_generated_url($house_image !== '' ? $house_image : $legend_image) . '); --active-texture:' . $active_glass_texture . '; --privacy:' . $active_glass_privacy); ?>"
                     data-cat-image="<?php echo esc_url(fenster_generated_url($legend_image)); ?>"
                     data-house-image="<?php echo esc_url(fenster_generated_url($house_image)); ?>"
-                    data-active-background="cat"
+                    data-active-background="house"
                     data-active-glass="<?php echo esc_attr($active_glass_key); ?>"
                 >
                     <div class="fg-obscure-stage__viewport" data-fg-obscure-tilt>
