@@ -39345,20 +39345,26 @@ html.fg-blinds-reveal-locked {
      they would be thumbnails sliding a long way past each other. */
   .fg-oq-range__stage {
     height: 135vh;
+    margin-top: 2vh;
     --fg-fall: 0.6;
   }
 
-  /* The x positions are tuned for a wide stage. Scaled up on a phone without
-     pulling them in, the right-hand items run off the edge and the stage clips
-     them in half. The percentage is scaled with the width, so the spread still
-     uses the whole screen. */
-  .fg-oq-spin {
-    left: calc(var(--fg-spin-x) * 0.62);
-    width: calc(var(--fg-spin-w) * 1.75);
+  /* A phone gets its own composition rather than a squashed copy of the wide
+     one. The back layer comes out entirely: twelve products at this width piled
+     into a cluttered heap, and the three furthest away were the ones adding
+     least. Nine remain, larger, and the range is named in the heading above
+     regardless, so nothing is only available to a wide screen.
+
+     The x positions are tuned for a wide stage, so they are scaled with the
+     width too. Left alone they ran to 489px inside a 390px viewport and the
+     stage clipped them in half. */
+  .fg-oq-spin--back {
+    display: none;
   }
 
-  .fg-oq-spin--back {
-    opacity: 0.6;
+  .fg-oq-spin {
+    left: calc(var(--fg-spin-x) * 0.68);
+    width: calc(var(--fg-spin-w) * 1.5);
   }
 }
 
@@ -39369,8 +39375,8 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-oq-spin {
-    left: calc(var(--fg-spin-x) * 0.6);
-    width: calc(var(--fg-spin-w) * 2);
+    left: calc(var(--fg-spin-x) * 0.66);
+    width: calc(var(--fg-spin-w) * 1.7);
   }
 }
 
