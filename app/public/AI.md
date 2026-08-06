@@ -570,3 +570,21 @@ A change is not complete until the relevant checks pass:
 - Forms still submit in place.
 - Shared components remain shared.
 - Documentation is updated in the correct file.
+
+## Obscured glass textures
+
+- **If a texture's pixels change, change its filename.** Theme images are emitted
+  through `fenster_generated_url()`, which adds no version string, so replacing a
+  `.webp` in place leaves browsers and the proxy serving the old one while the
+  deploy verifies perfectly. This has cost review rounds twice.
+- **Judge a texture on mean brightness AND standard deviation** against the rest
+  of the set, then look at it on the stage. That layer is `mix-blend-mode:
+  multiply`, so a dark texture does not add pattern, it turns the pane to mud.
+  The set runs roughly mean 120-180, stddev 25-70.
+- **A photographed texture needs a `size`; a CSS gradient does not.** `cover`
+  scales to the box rather than to the glass, so the same photo is dense on a
+  58px swatch and enormous on the stage. The `size` applies to the **stage only** —
+  swatches stay on `cover` because they must show the whole pattern.
+- **Pinning a size makes the photo tile,** and these are not seamless, so expect a
+  soft join every few hundred pixels. Checked at stage width it reads as variation
+  in the glass rather than a repeat.

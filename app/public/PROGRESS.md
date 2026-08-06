@@ -1,6 +1,45 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-05
+Last updated: 2026-08-06
+
+## START HERE, 2026-08-06 (end of session)
+
+**Live is `release/flush-and-glass`, not `main`.** `main` also carries an
+online-quote strand from a parallel session that the owner has not approved.
+Deploying `main` ships it. See the top of `LIVECHANGES.md`, and delete the release
+branch once that strand goes live.
+
+**What shipped this session**
+
+- **Wolverton case study** — flush casements, a composite front door and a uPVC
+  back door, February 2024. Portrait video hero, eight stills at one 4:3 ratio.
+  It is the first study to claim `/upvc-doors/`, which had been falling back to
+  unrelated studies because nothing matched it.
+- **`/casement-windows/`** — chapters 04 and 05 lost their heads and left the
+  stack, so the plates are the opening plus 01, 02, 03.
+- **`/handle-options/`** — hero is a photograph on a colour-hub fade instead of
+  the first swatch repeated from the grid below it, plus a banner to
+  `/colour-options/`.
+- **`/flush-casement-windows/`** — rebuilt as a bespoke middle of the generated
+  template.
+- **`/obscured-glass/`** — colour-hub hero wall, house-first scene, working touch
+  drag, and four texture corrections.
+
+**Corrections worth not undoing**
+
+Mechanical jointing is not offered on the Liniar flush sash. The flush system
+takes a 28mm double unit only. Warwick is privacy 1. uPVC internal finish is a
+price difference — white inside is cheaper, foiled inside dearer — so nothing on
+the site may say a colour split is free; that claim was written and removed, and
+the true relationship is now in Legend's verified facts.
+
+**The lesson this session kept re-teaching**
+
+Verify by looking at the page, not the file. A FAQ was appended correctly and
+sliced off by a render limit; a corrected texture was served from cache under an
+unchanged filename; a fixed texture was too dark to read; a fixed swatch became a
+crop of one petal. Every one passed a source check and a checksum, and every one
+was obvious in a single screenshot of the live page.
 
 ## START HERE, 2026-08-02 (end of session)
 
