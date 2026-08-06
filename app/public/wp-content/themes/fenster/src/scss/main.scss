@@ -10034,20 +10034,25 @@ html.fg-gallery-lightbox-open body {
 }
 
 /* The wall, laid out like the colour hub's: absolute, full bleed, tiles butted
-   edge to edge. No gap, no radius, no border — the same look as a picker swatch
-   repeated across the band, which is what the owner asked for and what makes it
-   read as one sheet of glass rather than a row of cards.
+   edge to edge with no gap, radius or border, and the hero clipping so it runs
+   off the bottom rather than stopping in a line.
 
-   Rows are a fixed height and columns auto-fill at roughly the same measure, so
-   the tiles stay near enough square at any width without needing aspect-ratio on
-   each one. Three rows is what that height gives against the hero's own height. */
+   Bigger tiles than the colour wall, deliberately. That wall is 26 columns of
+   flat colour, and a flat colour reads at any size. A glass texture has to show
+   its pattern or the tile is just grey, so this is 14 columns — roughly double
+   the area, and near enough the picker's own 58px swatch to stay honest about
+   what each pattern looks like.
+
+   Rows are sized in vw to match the column width (100vw / 14 = 7.14vw), so the
+   tiles stay square as the viewport changes instead of stretching wide on a big
+   screen. */
 .fg-obscure-hero__preview {
   position: absolute;
   inset: 0;
   z-index: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(clamp(96px, 11vw, 150px), 1fr));
-  grid-auto-rows: clamp(96px, 11vw, 150px);
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  grid-auto-rows: clamp(68px, 7.14vw, 132px);
   gap: 0;
   padding: 0;
   min-height: 0;
@@ -10081,13 +10086,15 @@ html.fg-gallery-lightbox-open body {
 
 @media (max-width: 900px) {
   /* The colour hub's move at this width: the wall stops being a backdrop beside
-     the copy and becomes a band above it, with the veil turning vertical so the
-     text still has a solid ground to sit on. */
+     the copy and becomes a band above it, with the veil turned vertical so the
+     text still has a solid ground. Six columns rather than fourteen, because a
+     tile a phone splits fourteen ways is too small to show a pattern. */
   .fg-obscure-hero__preview {
     position: relative;
     inset: auto;
-    height: clamp(200px, 42vw, 300px);
-    grid-auto-rows: clamp(96px, 21vw, 150px);
+    height: clamp(200px, 46vw, 300px);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-rows: clamp(64px, 16.6vw, 110px);
   }
 
   .fg-obscure-hero::after {

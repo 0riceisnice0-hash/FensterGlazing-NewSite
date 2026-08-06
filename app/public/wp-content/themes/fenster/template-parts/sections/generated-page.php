@@ -2642,24 +2642,30 @@ if ($is_obscure_glass) {
                     </div>
                 </div>
                 <?php
-                /* The wall, built exactly like the colour hub's: tiles butted edge
-                   to edge with no gap, no radius and no border, filling the band
-                   full width behind a left-hand veil. The texture list is cycled
-                   to a fixed count so the grid always fills — there are fewer
-                   patterns than there are cells at desktop width, and a short list
-                   would leave holes in the wall at the right-hand end, which is
-                   exactly where the veil has cleared and you would see them. */
+                /* The wall, built to the colour hub's own recipe rather than an
+                   approximation of it: deliberately more tiles than the widest
+                   grid needs, a fixed column count, fixed row height, and the
+                   section clipping — so it always runs off the bottom instead of
+                   leaving a bald patch when the column count changes. Forty-five
+                   tiles could not fill it at any desktop width, which is why it
+                   read as a panel floating in the corner.
+
+                   Same stride trick as the colour wall. Walking the texture list
+                   in order against a 26-column grid lines identical patterns up
+                   into stripes; stepping by a prime and nudging once per row
+                   scatters them. */
+                $obscure_wall_pool = array_values($obscure_glass_textures);
                 $obscure_wall_tiles = [];
-                $obscure_wall_source = array_values($obscure_glass_textures);
-                if ($obscure_wall_source !== []) {
-                    for ($i = 0; $i < 45; $i++) {
-                        $obscure_wall_tiles[] = $obscure_wall_source[$i % count($obscure_wall_source)];
+                if ($obscure_wall_pool !== []) {
+                    $obscure_wall_count = count($obscure_wall_pool);
+                    for ($i = 0; $i < 336; $i++) {
+                        $obscure_wall_tiles[] = $obscure_wall_pool[(($i * 7) + (intdiv($i, 26) * 3)) % $obscure_wall_count];
                     }
                 }
                 ?>
                 <div class="fg-obscure-hero__preview" aria-hidden="true">
-                    <?php foreach ($obscure_wall_tiles as $index => $texture) : ?>
-                        <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --delay:' . (($index % 15) * 0.035) . 's;'); ?>"></span>
+                    <?php foreach ($obscure_wall_tiles as $texture) : ?>
+                        <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . ';'); ?>"></span>
                     <?php endforeach; ?>
                 </div>
             </div>
