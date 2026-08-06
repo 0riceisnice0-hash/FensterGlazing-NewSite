@@ -2157,7 +2157,12 @@ function fenster_site_data(): array
                 'label' => 'Doors',
                 'caption' => 'Composite, uPVC and aluminium. French, patio, bifold.',
                 'symptoms' => [
-                    ['id' => 'd-lock', 'symptom' => 'It will not lock', 'part' => 'd-lock', 'svg' => 'gearbox drealign'],
+                    /* Lock side only. It lit the whole leaf outline as well, on the
+                       reasoning that the answer is "gearbox OR alignment", but
+                       the owner's call is that the drawing should point at the
+                       lock. The copy still carries both causes; lighting the
+                       entire leaf for a lock fault says less, not more. */
+                    ['id' => 'd-lock', 'symptom' => 'It will not lock', 'part' => 'd-lock', 'svg' => 'gearbox'],
                     ['id' => 'd-key', 'symptom' => 'The key will not turn, or has snapped', 'part' => 'd-cylinder', 'svg' => 'cylinder'],
                     ['id' => 'd-handle', 'symptom' => 'The handle is floppy or snapped', 'part' => 'd-handle', 'svg' => 'dhandle'],
                     ['id' => 'd-drop', 'symptom' => 'It has dropped, or catches on the frame', 'part' => 'd-realign', 'svg' => 'drealign hinges'],

@@ -406,36 +406,53 @@ $wall = [
                                 <rect x="114" y="680" width="322" height="376"/>
                                 <path d="M100 666 L114 680 M450 666 L436 680 M100 1070 L114 1056 M450 1070 L436 1056"/>
                             </g>
-                            <?php /* DOOR HARDWARE, from the reference part.
-                                     The gearbox is a multi-point: one faceplate
-                                     the height of the leaf, a case set at
-                                     handle height carrying the square spindle
-                                     above and the euro cylinder profile below
-                                     it, a latch and deadbolt at the case, and
-                                     hook bolts standing off the plate above and
-                                     below. The keyhole is drawn as the actual
-                                     euro profile, a circle over a tapered slot,
-                                     because that shape is instantly readable
-                                     and a plain circle is not.
+                            <?php /* THE MULTI-POINT, to the owner's reference
+                                     photograph of the whole lock, mirrored:
+                                     the reference lays the lock out with its
+                                     bolts to one side, and this door is hinged
+                                     left, so everything throws RIGHT into the
+                                     frame.
 
-                                     Dashed: none of it is visible on the
-                                     reference photograph of the door. The
-                                     hinges, the handle and the cylinder face
-                                     ARE visible, so those stay solid. */ ?>
+                                     What the reference fixes is where things
+                                     sit ALONG the length, which is the part
+                                     that was invented before:
+                                       top hook       ~11% down the faceplate
+                                       gearbox case   ~50%, around the spindle
+                                       bottom hook    ~88%
+                                     with roller cams between them and fixing
+                                     screws down the plate. The case is 240mm,
+                                     which is a real gearbox, and it contains
+                                     the spindle at the handle height rather
+                                     than floating near it.
+
+                                     No keyhole on this. The reference shows one
+                                     because it is a photograph of the lock lying
+                                     flat; here the faceplate is edge-on in the
+                                     leaf, so the cylinder shows once, on the
+                                     handle plate. Dashed throughout because none
+                                     of it is visible with the door shut. */ ?>
                             <g data-part="gearbox" class="fg-rp-svg__part fg-rp-svg__hidden">
                                 <path d="M481 96 V1062"/>
                                 <path d="M491 96 V1062"/>
                                 <path d="M481 96 H491 M481 1062 H491"/>
-                                <rect x="477" y="486" width="19" height="168" rx="3"/>
+                                <rect x="475" y="478" width="21" height="125" rx="3"/>
                                 <rect x="482" y="536" width="9" height="9"/>
-                                <path d="M491 200 c14 0 18 8 18 16 M491 216 h18"/>
-                                <path d="M491 830 c14 0 18 8 18 16 M491 846 h18"/>
-                                <path d="M491 300 h13 v18 h-13"/>
-                                <path d="M491 930 h13 v18 h-13"/>
-                                <circle cx="486" cy="150" r="3"/>
-                                <circle cx="486" cy="380" r="3"/>
-                                <circle cx="486" cy="740" r="3"/>
-                                <circle cx="486" cy="1010" r="3"/>
+                                <path d="M496 516 h11 v20 h-11 Z"/>
+                                <path d="M496 556 h9 v12 h-9 Z"/>
+                                <path d="M491 180 h11 v52 h-11 Z"/>
+                                <path d="M502 190 c10 0 15 4 15 10 c0 7 -6 11 -13 11 l-3 0"/>
+                                <path d="M491 920 h11 v52 h-11 Z"/>
+                                <path d="M502 930 c10 0 15 4 15 10 c0 7 -6 11 -13 11 l-3 0"/>
+                                <circle cx="503" cy="310" r="6"/>
+                                <path d="M491 304 h6 M491 316 h6"/>
+                                <circle cx="503" cy="790" r="6"/>
+                                <path d="M491 784 h6 M491 796 h6"/>
+                                <circle cx="486" cy="130" r="3"/>
+                                <circle cx="486" cy="256" r="3"/>
+                                <circle cx="486" cy="400" r="3"/>
+                                <circle cx="486" cy="660" r="3"/>
+                                <circle cx="486" cy="870" r="3"/>
+                                <circle cx="486" cy="1030" r="3"/>
                             </g>
                             <?php /* Butt hinges, three of them, as the
                                      reference shows: two leaves either side of
