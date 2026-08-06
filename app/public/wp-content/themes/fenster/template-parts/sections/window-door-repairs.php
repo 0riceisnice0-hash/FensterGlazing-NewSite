@@ -150,8 +150,8 @@ $wall = [
         <div class="container">
             <div class="fg-rp-diag__head">
                 <p class="eyebrow"><?php esc_html_e('Diagnostics', 'fenster'); ?></p>
-                <h2 id="fg-rp-diag-title"><?php esc_html_e('Tell us what it is doing. We will show you the part.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('You do not need to know what anything is called. Pick the symptom and the drawing shows you where the fault lives and what we do about it.', 'fenster'); ?></p>
+                <h2 id="fg-rp-diag-title"><?php esc_html_e('Most of it is fixable.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Windows and doors are built from parts that are meant to be replaced, so a fault is usually a repair rather than a new window. Pick whichever sounds closest to yours and we will show you what is normally behind it.', 'fenster'); ?></p>
             </div>
 
             <?php /* The part library, once, for the controller to swap from.
@@ -619,9 +619,9 @@ $wall = [
         <div class="container fg-rp-team__inner">
             <div class="fg-rp-team__copy">
                 <p class="eyebrow"><?php esc_html_e('Who comes out', 'fenster'); ?></p>
-                <h2 id="fg-rp-team-title"><?php esc_html_e('Service engineers, not installers between jobs.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Repairs are their trade rather than the gap between fitting weeks, and they have decades each behind them. They are on our books, so nobody arrives at your house under our name who does not work for us.', 'fenster'); ?></p>
-                <p><?php esc_html_e('It is also why the diagnosis usually holds. They have seen the system before, so most faults are recognised from a description and a photograph rather than found on the day.', 'fenster'); ?></p>
+                <h2 id="fg-rp-team-title"><?php esc_html_e('Two engineers, and the parts already on the van.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('They carry the fittings that fail most often: handles, hinges, cylinders, gaskets and the common gearboxes. So it is often fixed on the first visit rather than looked at, ordered and booked in again.', 'fenster'); ?></p>
+                <p><?php esc_html_e('They have decades each behind them, which is the other reason the diagnosis tends to hold. They have seen the system before, so most faults are recognised from a description and a photograph rather than found on the day.', 'fenster'); ?></p>
             </div>
             <div class="fg-rp-team__people">
                 <ul>
