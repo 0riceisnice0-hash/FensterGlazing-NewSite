@@ -38994,512 +38994,679 @@ html.fg-blinds-reveal-locked {
 
 /* ==========================================================================
    Window and door repairs — /window-and-door-repairs/
-   Rebuilt 2026-08-06. Namespace `.fg-rp`, rendered inside `.fg-cw` so it
-   inherits the split grammar, the heading scale and the eyebrow treatment the
-   heritage door and flush pages already use.
+   Third rebuild, 2026-08-06. The first two were card grids and the owner read
+   both as a page of text with no pictures. The register here is a marque's
+   servicing pages: dark technical plates, full-bleed photography, real
+   component imagery, and one interactive drawing.
 
-   Two rules govern the look, both taken from what the page is FOR. It is read
-   by somebody mildly annoyed, often on a phone, who wants an answer rather
-   than an experience: so nothing here animates on load, nothing moves under
-   the reader, and the only motion is a 160ms fade when the finder filters.
-   And the parts photography carries the section headings rather than icons,
-   because a repairs page decorated with spanner glyphs is the exact tradesman
-   register STYLE.md rules out.
+   `.fg-rp` deliberately does NOT sit inside `.fg-cw` this time. The split
+   grammar's `p { max-width: 52ch }` and 0.97rem body size are right for a
+   product story and were part of why this page read as prose; the sections
+   here are image-led and want their own measure.
    ========================================================================== */
 
-/* ---------- What to expect ----------------------------------------------
-   Sits where the key-specification strip sits on every other product route,
-   because a repair has no specification. Reads as four short facts about the
-   service rather than as a spec table: label above, value below, hairline
-   between, no card chrome. Deliberately quieter than the strip it replaces —
-   it is reassurance on the way to the finder, not the subject of the page. */
-
-.fg-rp-expect {
-  padding-bottom: 0 !important;
+.fg-rp-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.fg-rp-expect__row {
+.fg-rp .eyebrow {
+  color: var(--color-accent);
+}
+
+/* ---------- The proposition ---------------------------------------------- */
+
+.fg-rp-prop {
+  padding: clamp(2.5rem, 5vw, 3.75rem) 0;
+  background: var(--color-steel);
+  color: #fff;
+}
+
+.fg-rp-prop__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
-  padding: 1.25rem 0 0;
+  padding: 0;
   margin: 0;
   list-style: none;
-  border-top: 1px solid var(--color-line);
 }
 
-.fg-rp-expect__row li {
-  padding: 0 1.5rem;
+.fg-rp-prop__grid li {
+  padding: 0 clamp(1rem, 2vw, 1.75rem);
 }
 
-.fg-rp-expect__row li:first-child {
+.fg-rp-prop__grid li:first-child {
   padding-left: 0;
 }
 
-.fg-rp-expect__row li + li {
-  border-left: 1px solid var(--color-line);
+.fg-rp-prop__grid li + li {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-.fg-rp-expect__label {
+.fg-rp-prop__num {
   display: block;
+  margin-bottom: 0.9rem;
   color: var(--color-accent);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.fg-rp-prop__grid h3 {
+  margin: 0 0 0.5rem;
+  color: #fff;
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+
+.fg-rp-prop__grid p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* ---------- The diagnostic schematic -------------------------------------
+   The feature. Three columns on a dark plate: symptoms, drawing, part.
+
+   `[hidden]` FIRST, and it is not defensive tidiness. The UA sheet gives
+   `[hidden]` a `display: none` at the lowest possible specificity, so ANY class
+   rule here that sets `display` silently beats it and the element keeps
+   rendering. That is how both schematics drew at once and the no-JavaScript
+   fallback stayed on the page under the working widget. The consent modal's
+   close button was bitten by exactly this on 2026-07-30. Every element in this
+   block that the controller toggles gets an explicit rule. */
+.fg-rp-diag [hidden],
+.fg-rp-diag__shell[hidden],
+.fg-rp-diag__fallback[hidden],
+.fg-rp-svg[hidden] {
+  display: none !important;
+}
+
+.fg-rp-diag {
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
+}
+
+.fg-rp-diag__head {
+  max-width: 44rem;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.fg-rp-diag__head h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  line-height: 1.14;
+}
+
+.fg-rp-diag__head p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.fg-rp-diag__switch {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-surface);
+}
+
+/* 44px, not 40. AI.md sets 44 as the floor for an interactive target and this
+   was the only control on the page under it. */
+.fg-rp-diag__switch button {
+  min-height: 44px;
+  padding: 0.45rem 1.35rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.fg-rp-diag__switch button[aria-pressed='true'] {
+  background: var(--color-steel);
+  color: #fff;
+}
+
+.fg-rp-diag__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.1fr) minmax(0, 1.05fr);
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--color-steel);
+}
+
+/* Column 1 — symptoms */
+
+.fg-rp-diag__symptoms {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.5vw, 1.85rem);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.fg-rp-diag__symptoms ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-rp-diag__symptoms button {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.7rem 0.85rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.74);
+  font: inherit;
+  font-size: 0.94rem;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.fg-rp-diag__symptoms button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+/* The selected symptom keeps a green rule on its leading edge rather than a
+   filled pill: the drawing is the thing that should light up, not the list. */
+.fg-rp-diag__symptoms button[aria-pressed='true'] {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 3px 0 0 var(--color-accent);
+  color: #fff;
+}
+
+.fg-rp-diag__note {
+  margin: auto 0 0;
+  padding-top: 1.25rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+}
+
+.fg-rp-diag__note a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+/* Column 2 — the drawing */
+
+.fg-rp-diag__plate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(46, 172, 102, 0.14), transparent 62%),
+    var(--color-steel);
+}
+
+.fg-rp-svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.34);
+  stroke-width: 1.25;
+}
+
+.fg-rp-svg__frame {
+  stroke: rgba(255, 255, 255, 0.5);
+}
+
+.fg-rp-svg__cill {
+  fill: rgba(255, 255, 255, 0.06);
+}
+
+.fg-rp-svg__sheen {
+  stroke: rgba(255, 255, 255, 0.12);
+}
+
+.fg-rp-svg__part {
+  transition: stroke 200ms ease, opacity 200ms ease;
+}
+
+/* Everything that is not the answer recedes, so the eye lands on the part. */
+.fg-rp-svg.is-focused .fg-rp-svg__part {
+  opacity: 0.4;
+}
+
+.fg-rp-svg.is-focused .fg-rp-svg__part.is-active {
+  opacity: 1;
+  stroke: var(--color-accent);
+  stroke-width: 2.25;
+  filter: drop-shadow(0 0 6px rgba(46, 172, 102, 0.65));
+}
+
+.fg-rp-diag__caption {
+  margin: 1rem 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Column 3 — the part */
+
+.fg-rp-diag__part {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 2.5vw, 1.85rem);
+  margin: 0;
+}
+
+.fg-rp-diag__media {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+  border-radius: 8px;
+  background: #fff;
+  aspect-ratio: 4 / 3;
+}
+
+.fg-rp-diag__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A cut-out is contained and given air; a photograph covers. Both dimensions
+   are set in CSS on purpose — these images carry width/height attributes, and
+   a percentage with no definite containing block silently falls back to the
+   intrinsic size, which is how a portrait part came to overflow its box. */
+.fg-rp-diag__media.is-cutout {
+  padding: clamp(0.85rem, 1.6vw, 1.35rem);
+}
+
+.fg-rp-diag__media.is-cutout img {
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 45, 58, 0.18));
+}
+
+.fg-rp-diag__sub {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-rp-diag__part h3 {
+  margin: 0.35rem 0 0.6rem;
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.fg-rp-diag__part p {
+  margin: 0 0 0.85rem;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.fg-rp-diag__fix {
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.fg-rp-diag__fix span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.fg-rp-expect__value {
-  display: block;
-  margin-top: 0.35rem;
-  color: var(--color-ink);
-  font-size: 0.94rem;
-  line-height: 1.4;
-}
-
-/* ---------- The finder ---------------------------------------------------- */
-
-.fg-rp-finder__head {
-  max-width: 46rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.fg-rp-finder__head h2 {
-  max-width: 24ch;
-}
-
-/* The filter row scrolls sideways on a phone rather than wrapping to three
-   ragged lines. Four chips at 390 need about 430px, so it is a real scroller
-   with a snap, not an overflow accident. */
-.fg-rp-finder__filters {
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
-}
-
-.fg-rp-finder__group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.fg-rp-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.55rem 1rem;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-ink);
-  font: inherit;
+.fg-rp-diag__fix em {
+  color: rgba(255, 255, 255, 0.86);
   font-size: 0.92rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
-}
-
-.fg-rp-chip:hover {
-  border-color: var(--color-accent);
-}
-
-.fg-rp-chip.is-active {
-  border-color: var(--color-steel);
-  background: var(--color-steel);
-  color: #fff;
-}
-
-.fg-rp-chip__count {
-  padding: 0.1rem 0.4rem;
-  border-radius: 999px;
-  background: rgba(0, 45, 58, 0.08);
-  color: var(--color-muted);
-  font-size: 0.76rem;
-  font-variant-numeric: tabular-nums;
-}
-
-.fg-rp-chip.is-active .fg-rp-chip__count {
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
-}
-
-.fg-rp-finder__status {
-  margin: 0.75rem 0 0;
-  color: var(--color-muted);
-  font-size: 0.88rem;
-}
-
-.fg-rp-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
-  gap: clamp(0.85rem, 1.6vw, 1.15rem);
-}
-
-/* `auto-fill` rather than `auto-fit`: filtering to two cards must leave two
-   cards their own width, not stretch them across the row. That is the same
-   trap the privacy-glass card hit on 2026-07-29 and it is why the empty-track
-   behaviour matters here. */
-.fg-rp-card {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(1.15rem, 2vw, 1.5rem);
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: var(--color-surface);
-  transition: border-color 160ms ease, box-shadow 160ms ease;
-}
-
-.fg-rp-card:hover {
-  border-color: rgba(46, 172, 102, 0.45);
-  box-shadow: 0 10px 30px rgba(0, 45, 58, 0.07);
-}
-
-/* Filtered out. Kept in the DOM and hidden with the attribute rather than
-   removed, so the anchor ids on the cards survive a filter and a deep link to
-   #repair-door-wont-lock still resolves. */
-.fg-rp-card[hidden] {
-  display: none;
-}
-
-.fg-rp-card__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.fg-cw .fg-rp-card__top h3 {
-  max-width: 22ch;
-  margin: 0;
-  font-size: 1.06rem;
-  line-height: 1.3;
-}
-
-/* The price is the second thing the eye should reach, after the symptom, so it
-   is set on the baseline of the heading rather than buried at the card foot. */
-.fg-cw .fg-rp-card__price {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  flex-shrink: 0;
-  max-width: none;
-  margin: 0;
-  line-height: 1.1;
-  text-align: right;
-}
-
-.fg-rp-card__price strong {
-  color: var(--color-ink);
-  font-size: 1.02rem;
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-/* The other phrasings. Real on-page text, and the one place a search for
-   "blown double glazing" can match a card headed "misted or cloudy". */
-.fg-cw .fg-rp-card__also {
-  margin: 0.6rem 0 0;
-  color: var(--color-light-blue);
-  font-size: 0.82rem;
-  line-height: 1.45;
-}
-
-/* One line of diagnosis. Was a two-term definition list under "USUALLY" and
-   "WHAT WE DO", which put two paragraphs and two uppercase labels on every one
-   of fifteen cards; the owner read the result as a page of text. */
-.fg-cw .fg-rp-card__cause {
-  margin: 0.85rem 0 0;
-  color: var(--color-ink);
-  font-size: 0.94rem;
+  font-style: normal;
   line-height: 1.55;
 }
 
-/* Pushes the action to the foot so cards in a row line their links up whatever
-   the copy length. */
-.fg-rp-card .fg-cw-link {
+.fg-rp-diag__link {
   margin-top: auto;
   padding-top: 1rem;
+  color: var(--color-accent);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
-.fg-cw .fg-rp-empty {
-  max-width: none;
-  margin: 1.5rem 0 0;
-  padding: 1.5rem;
-  border: 1px dashed var(--color-line);
-  border-radius: 8px;
-  text-align: center;
+.fg-rp-diag__link::after {
+  content: ' \2192';
 }
 
-.fg-cw .fg-rp-finder__foot {
-  max-width: none;
-  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+/* The no-JavaScript view. Real content, so it is styled rather than left bare. */
+
+.fg-rp-diag__fallback {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.fg-rp-diag__fallback h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.fg-rp-diag__fallback dt {
+  margin-top: 0.85rem;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.fg-rp-diag__fallback dd {
+  margin: 0.15rem 0 0;
   color: var(--color-muted);
   font-size: 0.92rem;
+  line-height: 1.55;
 }
 
-.fg-rp-finder__foot .fg-cw-link {
-  margin-left: 0.4rem;
-}
+/* ---------- The engineers ------------------------------------------------- */
 
-/* ---------- The parts ----------------------------------------------------- */
-
-.fg-rp-parts {
-  background: var(--color-soft);
-}
-
-.fg-rp-parts__head {
-  max-width: 46rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.fg-rp-parts__grid {
+.fg-rp-team {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
 }
 
-.fg-rp-part__media {
-  /* `block`, not `grid`, and that is load-bearing. On a grid the image is an
-     item in an auto-sized row, so a `height: 100%` on it is circular: the row
-     sizes to the content and the content sizes to the row. The browser
-     resolves that to `auto`, the image falls back to its intrinsic height, and
-     a portrait cut-out draws 537px tall in a 372px box and gets clipped by the
-     overflow rule. Two passes at `place-items` did not fix it because
-     `place-items` was never the problem. A block box with `aspect-ratio` has a
-     definite height, so the percentage resolves and `object-fit` centres. */
-  display: block;
+.fg-rp-team__media {
   overflow: hidden;
-  margin-bottom: 1.1rem;
-  border-radius: 8px;
-  background: #fff;
-  /* Square, not 4:3. Two of the three are cut-out parts and one of those is
-     steeply portrait; contained in a landscape box the handle drew at about
-     167px wide and read as the weak one of a set. */
-  aspect-ratio: 1;
+  min-height: 420px;
 }
 
-.fg-rp-part__media img {
+.fg-rp-team__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* The mechanism and the handle are cut-outs on transparency, so they are
-   contained and given air rather than cropped like the photograph. */
-.fg-rp-part__media--cutout {
-  padding: clamp(1rem, 2vw, 1.75rem);
+.fg-rp-team__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 4.5rem);
+  background: var(--color-soft);
 }
 
-/* BOTH dimensions are set here on purpose. These images carry explicit width
-   and height attributes, and with `place-items: center` on the box the grid
-   area is content-sized, so a `height: 100%` has nothing to resolve against
-   and silently falls back to the intrinsic height. That is how the handle came
-   to render 537px tall inside a 279px box and get clipped by the overflow
-   rule: it looked like a bad crop and was actually an unresolved percentage.
-   `width: 100%` plus `height: 100%` plus `contain` letterboxes it properly. */
-.fg-rp-part__media--cutout img {
+.fg-rp-team__copy h2 {
+  max-width: 18ch;
+  margin: 0 0 1rem;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  line-height: 1.14;
+}
+
+.fg-rp-team__copy p {
+  max-width: 46ch;
+  margin: 0 0 0.85rem;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- The parts wall ------------------------------------------------ */
+
+.fg-rp-wall {
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
+}
+
+.fg-rp-wall__head {
+  max-width: 46rem;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.fg-rp-wall__head h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  line-height: 1.14;
+}
+
+.fg-rp-wall__head p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.fg-rp-wall__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  padding: 1px;
+  margin: 0;
+  list-style: none;
+  background: var(--color-line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* `block`, not `grid` with `place-items: center`. Third time this trap has
+   bitten on this page: centring leaves the item's grid area content-sized, so
+   the image's `height: 100%` has nothing to resolve against, falls back to the
+   intrinsic height and blows the cell out. Fourteen parts at fourteen
+   different intrinsic sizes made a ragged collage of it, which is the
+   "accidental image collage" STYLE.md calls a defect. A block box with a
+   definite aspect-ratio is what a percentage height needs. */
+.fg-rp-wall__grid li {
+  display: block;
+  padding: clamp(0.75rem, 1.5vw, 1.25rem);
+  background: var(--color-surface);
+  aspect-ratio: 1;
+}
+
+/* `display: block` matters. An image is inline by default, so it sits on the
+   text baseline and the descender space under it adds about 8px to the cell:
+   the square cells measured 90x98 and the grid read as ragged. */
+.fg-rp-wall__grid img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 12px 20px rgba(0, 45, 58, 0.16));
 }
 
-/* ---------- Pricing ------------------------------------------------------- */
-
-.fg-rp-pricing__shell {
-  max-width: none;
+.fg-rp-wall__scope {
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  border-top: 1px solid var(--color-line);
 }
 
-.fg-rp-pricing__intro {
-  max-width: 42rem;
+.fg-rp-wall__scope h3 {
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
 }
 
-/* Three "from" anchors, not a tariff. Set as a row of figures with a hairline
-   between them rather than a table, because a table reads as a price list and
-   that is exactly what this route must not publish. */
-.fg-rp-anchors {
+.fg-rp-wall__scope ul {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  padding: 0;
-  margin: clamp(1.5rem, 3vw, 2rem) 0 0;
-  list-style: none;
-  border-top: 1px solid var(--color-line);
-  border-bottom: 1px solid var(--color-line);
-}
-
-.fg-rp-anchors li {
-  padding: 1.15rem 1.25rem;
-}
-
-.fg-rp-anchors li + li {
-  border-left: 1px solid var(--color-line);
-}
-
-.fg-rp-anchors__job {
-  display: block;
-  color: var(--color-muted);
-  font-size: 0.85rem;
-  line-height: 1.4;
-}
-
-.fg-rp-anchors__price {
-  display: block;
-  margin-top: 0.3rem;
-  color: var(--color-ink);
-  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.fg-cw .fg-rp-pricing__minimum {
-  max-width: 46rem;
-  margin: 1.25rem 0 0;
-  padding-left: 1rem;
-  border-left: 2px solid var(--color-accent);
-  color: var(--color-ink);
-  font-size: 0.94rem;
-}
-
-.fg-cw .fg-rp-pricing__caveat {
-  max-width: 46rem;
-  margin: 1.1rem 0 0;
-  font-size: 0.85rem;
-}
-
-/* ---------- Repair or replace --------------------------------------------- */
-
-.fg-rp-verdict__panels {
-  display: grid;
-  gap: 1rem;
-}
-
-.fg-rp-verdict__panel {
-  padding: clamp(1.15rem, 2vw, 1.5rem);
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: var(--color-surface);
-}
-
-.fg-cw .fg-rp-verdict__panel h3 {
-  margin-bottom: 0.8rem;
-  padding-bottom: 0.65rem;
-  border-bottom: 1px solid var(--color-line);
-}
-
-.fg-rp-verdict__panel ul {
-  display: grid;
-  gap: 0.45rem;
+  gap: 0.5rem 2rem;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-.fg-rp-verdict__panel li {
+.fg-rp-wall__scope li {
   position: relative;
-  padding-left: 1.45rem;
-  color: var(--color-muted);
-  font-size: 0.92rem;
+  padding-left: 1.15rem;
+  color: var(--color-ink);
+  font-size: 0.94rem;
   line-height: 1.5;
 }
 
-.fg-rp-verdict__panel li::before {
+.fg-rp-wall__scope li::before {
   position: absolute;
-  top: 0.5em;
+  top: 0.55em;
   left: 0;
-  width: 0.55rem;
-  height: 0.55rem;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--color-accent);
   content: '';
 }
 
-/* The replace column is not the bad column. It reads in steel rather than
-   green because it is the other answer, not the wrong one — the same
-   even-handedness rule AI.md sets for comparing two products we both sell. */
-.fg-rp-verdict__panel--alt li::before {
-  background: var(--color-light-blue);
-}
+/* ---------- Repair or replace, and the glass hand-off --------------------- */
 
-/* ---------- Replacement glass band ---------------------------------------- */
-
-.fg-rp-glass__shell {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  align-items: center;
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-  padding: clamp(1.75rem, 3.5vw, 2.75rem);
-  border-radius: 10px;
-  background: var(--color-steel);
-}
-
-.fg-cw .fg-rp-glass__copy .eyebrow {
-  color: #7fd3a4;
-}
-
-.fg-cw .fg-rp-glass__copy h2,
-.fg-cw .fg-rp-glass__copy p {
-  color: #fff;
-}
-
-.fg-cw .fg-rp-glass__copy p {
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.fg-rp-glass__copy .button {
-  margin-top: 1.25rem;
-}
-
-.fg-rp-glass__media {
-  overflow: hidden;
-  border-radius: 8px;
-  aspect-ratio: 16 / 10;
-}
-
-.fg-rp-glass__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ---------- Why Fenster --------------------------------------------------- */
-
-.fg-rp-why__head {
-  max-width: 46rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.fg-rp-why__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.25rem, 2.5vw, 2rem);
-}
-
-.fg-rp-why__card {
-  padding-top: 1.1rem;
-  border-top: 2px solid var(--color-steel);
-}
-
-.fg-rp-why__number {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--color-accent);
-  font-size: 0.8rem;
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-/* ---------- How a repair works -------------------------------------------- */
-
-.fg-rp-process {
+.fg-rp-verdict {
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
   background: var(--color-soft);
 }
 
+.fg-rp-verdict__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: start;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.fg-rp-verdict h2 {
+  max-width: 20ch;
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  line-height: 1.14;
+}
+
+.fg-rp-verdict > .container > div > p {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.fg-rp-verdict__lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.fg-rp-verdict__lists h3 {
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 0.98rem;
+}
+
+.fg-rp-verdict__lists ul {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-rp-verdict__lists li {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* The glass hand-off is one big photographic link rather than a band with a
+   button, because on this page it is a route out and it should read as one. */
+.fg-rp-glass {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+  aspect-ratio: 4 / 3;
+  text-decoration: none;
+}
+
+.fg-rp-glass img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+.fg-rp-glass:hover img {
+  transform: scale(1.03);
+}
+
+.fg-rp-glass__body {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: block;
+  padding: clamp(1.25rem, 2.5vw, 1.85rem);
+  background: linear-gradient(to top, rgba(0, 45, 58, 0.94), rgba(0, 45, 58, 0.72) 55%, transparent);
+  color: #fff;
+}
+
+.fg-rp-glass__body .eyebrow {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #7fd3a4;
+}
+
+.fg-rp-glass__body strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.fg-rp-glass__body > span:not(.fg-rp-glass__cta) {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.fg-rp-glass__cta {
+  display: inline-block;
+  margin-top: 0.85rem;
+  color: var(--color-accent);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.fg-rp-glass__cta::after {
+  content: ' \2192';
+}
+
+/* ---------- How it works -------------------------------------------------- */
+
+.fg-rp-process {
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
+}
+
 .fg-rp-process__head {
-  max-width: 46rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 44rem;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.fg-rp-process__head h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  line-height: 1.14;
 }
 
 .fg-rp-process__rail {
@@ -39513,139 +39680,151 @@ html.fg-blinds-reveal-locked {
 
 .fg-rp-process__rail li {
   padding-top: 1rem;
-  border-top: 1px solid var(--color-line);
+  border-top: 2px solid var(--color-steel);
 }
 
-.fg-rp-process__number {
+.fg-rp-process__rail span {
   display: block;
   margin-bottom: 0.5rem;
   color: var(--color-accent);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
   letter-spacing: 0.08em;
 }
 
+.fg-rp-process__rail h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+
+.fg-rp-process__rail p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.fg-rp-process__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
 /* ---------- Tablet -------------------------------------------------------- */
 
 @media (max-width: 1080px) {
-  .fg-rp-glass__shell {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fg-rp-parts__grid {
+  .fg-rp-prop__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.75rem;
   }
 
-  /* Two by two rather than four across, which at tablet gave each value about
-     nine characters of width. */
-  .fg-rp-expect__row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 1.25rem;
-  }
-
-  .fg-rp-expect__row li:nth-child(odd) {
+  .fg-rp-prop__grid li:nth-child(odd) {
     padding-left: 0;
   }
 
-  .fg-rp-expect__row li:nth-child(3) {
+  .fg-rp-prop__grid li:nth-child(3) {
     border-left: 0;
+  }
+
+  /* The drawing goes full width above, symptoms and part below it, so the
+     schematic keeps its scale instead of being squeezed to a third. */
+  .fg-rp-diag__stage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-rp-diag__plate {
+    grid-column: 1 / -1;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .fg-rp-team {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-rp-team__media {
+    min-height: 300px;
+    max-height: 380px;
+  }
+
+  .fg-rp-wall__grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .fg-rp-wall__scope ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-rp-verdict__grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .fg-rp-process__rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* Media above copy on the glass band once it stacks, because a dark panel
-     that opens on a paragraph has nothing to hold the eye. */
-  .fg-rp-glass__media {
-    order: -1;
   }
 }
 
 /* ---------- Phone --------------------------------------------------------- */
 
 @media (max-width: 860px) {
-  .fg-rp-grid {
+  .fg-rp-prop__grid {
     grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.5rem;
   }
 
-  .fg-rp-parts__grid,
-  .fg-rp-why__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fg-rp-expect__row {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 1rem;
-  }
-
-  .fg-rp-expect__row li,
-  .fg-rp-expect__row li:nth-child(odd) {
+  .fg-rp-prop__grid li,
+  .fg-rp-prop__grid li:nth-child(odd) {
     padding: 0;
     border-left: 0;
   }
 
-  /* The chip row becomes a snap scroller, and stays INSIDE the container. An
-     earlier version bled it to the screen edge with a negative inline margin,
-     which STYLE.md rules out without a measured reason and which would have
-     over-bled anyway: the container gutter is 1rem (`min(100% - 2rem, …)`) and
-     the rule guessed 1.25rem, so it would have pushed 0.25rem of horizontal
-     body scroll at exactly the width that is a release blocker. */
-  .fg-rp-finder__group {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 0.35rem;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .fg-rp-finder__group::-webkit-scrollbar {
-    display: none;
-  }
-
-  .fg-rp-chip {
-    scroll-snap-align: start;
-  }
-
-  /* Stacks under the symptom rather than sitting beside it: at 390 a right
-     aligned price left the heading about 14 characters of width. */
-  .fg-rp-card__top {
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .fg-cw .fg-rp-card__price {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0.4rem;
-    text-align: left;
-  }
-
-  /* Anchors stack rather than squeezing three figures across 390. */
-  .fg-rp-anchors {
+  .fg-rp-diag__stage {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .fg-rp-anchors li + li {
-    border-top: 1px solid var(--color-line);
-    border-left: 0;
+  .fg-rp-diag__symptoms {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
+  .fg-rp-svg {
+    max-width: 240px;
+  }
+
+  .fg-rp-diag__fallback {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Four across at 390 gives each part about 80px, which is enough to tell a
+     gold handle from a black one and keeps the wall reading as a wall. */
+  .fg-rp-wall__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fg-rp-wall__scope ul,
+  .fg-rp-verdict__lists,
   .fg-rp-process__rail {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .fg-rp-process__actions .button {
+    flex: 1 1 100%;
+    text-align: center;
+  }
 }
 
-/* Nothing on this page animates except the filter fade, and that is the one
-   thing to switch off. */
 @media (prefers-reduced-motion: reduce) {
-  .fg-rp-card,
-  .fg-rp-chip {
+  .fg-rp-svg__part,
+  .fg-rp-glass img,
+  .fg-rp-diag__switch button,
+  .fg-rp-diag__symptoms button {
     transition: none;
+  }
+
+  .fg-rp-glass:hover img {
+    transform: none;
   }
 }

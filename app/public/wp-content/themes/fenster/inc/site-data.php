@@ -1985,195 +1985,172 @@ function fenster_site_data(): array
                 ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
             ],
         ],
-        /* Repairs: the symptom map behind /window-and-door-repairs/.
+        /* Repairs: what we fix, and where it lives on the window.
            ------------------------------------------------------------------
-           Ordered by what the customer says, not by what the part is called,
-           because nobody rings up asking for an espagnolette.
+           Rebuilt 2026-08-06 (third time) on the owner's brief: the page was
+           reading as a one-man-band service list, and it should read like a
+           marque's servicing pages. Aston Martin, not the local garage.
 
-           KEEP THE COPY SHORT. Owner, 2026-08-06, on the first build: it read
-           as a big page of text. `cause` is ONE sentence and there is no
-           second paragraph. A visitor with a broken handle wants to know
-           whether we fix it and roughly what it costs; they do not want an
-           essay on the gearbox. If a line here grows past about 110
-           characters it is going the wrong way.
+           NO PRICES. Owner instruction: the office price list is now the source
+           of WHAT WE OFFER and nothing else. Every figure came off the page,
+           the price table went, and the services below are the line items from
+           that list expressed as work rather than as a tariff. Do not put
+           prices back without asking; see the Repair Pricing Rule in AI.md.
 
-           PRICES ARE DELIBERATELY VAGUE. Owner, 2026-08-06: a published tariff
-           invites people to use us as a benchmark and shop the list round our
-           competitors, so nothing here is an exact figure. Every price reads
-           "From", the granular multiples that used to sit under each card
-           ("three or more, £108 each") are gone, and there is no price table
-           anywhere on the page. A single "from" anchor is the model the price
-           guides already use. See the Repair Pricing Rule in AI.md.
+           SHAPE. `repair_parts` is the component library: each entry is a real
+           part with real studio photography and what actually happens to it.
+           `repair_diagnostics` maps a symptom to one of those parts, per
+           product. The page draws a technical schematic, and choosing a symptom
+           highlights the part on the drawing and shows its photograph. That is
+           why `part` here must always match a key in `repair_parts`, and why
+           `svg` must match a `data-part` group in the schematic markup — three
+           places, and the render harness asserts all three line up.
 
-           The underlying figures still come from the office Customer Repairs
-           Price List, `OneDrive/Office Information/Price Lists/Repairs Price
-           List/Customer Price List 04022025.pdf`, header "Last updated:
-           12/02/25", inc-VAT column. Nothing is invented; it is the same
-           numbers, stated as floors rather than as a tariff.
-
-           `also` carries the other ways people phrase the same fault. It is
-           real on-page text and it is what makes a search for "window won't
-           lock" land on the right card.
-
-           `link` is set only where the honest answer is a different page. */
-        'repair_problems' => [
-            [
-                'id' => 'window-wont-lock',
-                'group' => 'window',
-                'symptom' => 'The handle turns but the window does not lock.',
-                'also' => 'Handle spins, lock will not engage, window will not stay shut',
-                'cause' => 'Usually the multi-point mechanism in the sash edge, which is the part the handle drives.',
-                'price' => 'From £144',
+           The copy stays SHORT. This is the third pass at that: a paragraph per
+           item is what made the last two versions a wall of text. */
+        'repair_parts' => [
+            'mechanism' => [
+                'name' => 'Multi-point mechanism',
+                'sub' => 'The gear behind the handle',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-kenrick-excalibur.webp',
+                'alt' => 'Multi-point locking mechanism removed from a sash, showing the gearbox and cams',
+                'cutout' => true,
+                'what' => 'Runs the height of the sash edge and throws the locking points when you turn the handle.',
+                'fix' => 'Identified from the backset, centres and faceplate, then replaced with the correct gear and the keeps reset.',
             ],
-            [
-                'id' => 'window-handle-broken',
-                'group' => 'window',
-                'symptom' => 'The handle is loose, stiff or snapped off.',
-                'also' => 'Broken window handle, floppy handle, handle came off in my hand',
-                'cause' => 'The spindle has rounded off, or the fixings have pulled out of the sash.',
-                'price' => 'From £96',
+            'stays' => [
+                'name' => 'Friction stays',
+                'sub' => 'The hinges a casement swings on',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/casement-friction-stay-1200w.webp',
+                'alt' => 'Stainless friction stay along the bottom of an open window sash',
+                'what' => 'Carry the whole weight of the sash every time it opens, and corrode and bind rather than snap.',
+                'fix' => 'Replaced as a pair, sized to the sash weight and the egress the opening needs.',
             ],
-            [
-                'id' => 'window-wont-open',
-                'group' => 'window',
-                'symptom' => 'The window will not open, or it is heavy to push.',
-                'also' => 'Stiff window, seized hinges, window stuck shut',
-                'cause' => 'Nearly always the friction stays, the scissor hinges running along the sash.',
-                'price' => 'From £144',
+            'handle' => [
+                'name' => 'Handle',
+                'sub' => 'The part you touch every day',
+                'image' => '/wp-content/themes/fenster/assets/images/products/handles/s2-chrome-cutout.png',
+                'alt' => 'Chrome window handle with its key, off the window',
+                'cutout' => true,
+                'what' => 'Wears before anything else on the window. Usually the spindle rounding off rather than the handle breaking.',
+                'fix' => 'Matched to the spindle length and fixing centres already in the sash, in the finish that suits the rest.',
             ],
-            [
-                'id' => 'window-wont-close',
-                'group' => 'window',
-                'symptom' => 'The window will not close properly, or it catches.',
-                'also' => 'Window catching on the frame, sash dropped, will not sit flush',
-                'cause' => 'The sash has settled out of square. Rarely anything broken, and the cheapest fault here to put right.',
-                'price' => 'From £96',
+            'keeps' => [
+                'name' => 'Keeps and cams',
+                'sub' => 'What the lock closes into',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-locking-strip.webp',
+                'alt' => 'Locking cams along a sash edge, with the keeps they close into set in the frame',
+                'what' => 'The steel the locking points engage. Nothing wears out here; what moves is the sash around them.',
+                'fix' => 'Re-set so the sash pulls into its seals and locks under its own weight rather than being forced.',
             ],
-            [
-                'id' => 'window-draughty',
-                'group' => 'window',
-                'symptom' => 'There is a draught round the window.',
-                'also' => 'Cold air coming in, whistling window, seal perished',
-                'cause' => 'The gasket has flattened or shrunk back, usually letting go at one corner first.',
-                'price' => 'From £96',
+            'gasket' => [
+                'name' => 'Weather seal',
+                'sub' => 'The gasket round the sash',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-profile-cutaway.webp',
+                'alt' => 'Cut-through of a window profile showing the chambers and the seal against the sash',
+                'what' => 'Flattens and shrinks back with age, and lets go at a corner first, which is where a draught is felt.',
+                'fix' => 'Stripped and re-run in one length round the sash, so there is no join for air to find.',
             ],
-            [
-                'id' => 'sill-damage',
-                'group' => 'window',
-                'symptom' => 'The sill underneath is damaged or breaking up.',
-                'also' => 'Cracked sill, rotten sill, water sitting under the window',
-                'cause' => 'Sills take the weather for the whole window, so we look at photographs before quoting this one.',
-                'price' => '',
-            ],
-            [
-                'id' => 'door-wont-lock',
-                'group' => 'door',
-                'symptom' => 'The door will not lock, or the key turns and nothing happens.',
-                'also' => 'Lock will not engage, key spins, cannot lift the handle to lock',
-                'cause' => 'The multi-point gearbox in the door edge, and the most common door failure we are called to.',
-                'price' => 'From £204',
-            ],
-            [
-                'id' => 'door-wont-close',
-                'group' => 'door',
-                'symptom' => 'The door catches on the frame, or has dropped.',
-                'also' => 'Door rubbing, door dropped, will not shut without lifting it',
-                'cause' => 'The door has moved in its frame, which puts the whole load on the gearbox.',
-                'price' => 'From £120',
-            ],
-            [
-                'id' => 'door-handle-broken',
-                'group' => 'door',
-                'symptom' => 'The door handle is loose, floppy or snapped.',
-                'also' => 'Broken door handle, handle hanging down, will not spring back',
-                'cause' => 'The return spring inside the handle has gone, or the spindle has rounded off.',
-                'price' => 'From £96',
-            ],
-            [
-                'id' => 'door-hinges',
-                'group' => 'door',
-                'symptom' => 'The door has dropped on its hinges.',
-                'also' => 'Worn hinges, door sagging, gap at the top of the door',
-                'cause' => 'Hinges carry the whole weight of the door every time it swings, so they are a wearing part.',
-                'price' => 'From £96',
-            ],
-            [
-                'id' => 'patio-bifold-stiff',
-                'group' => 'door',
-                'symptom' => 'A patio or bifold door is stiff, or will not run properly.',
-                'also' => 'Sliding door hard to move, bifold not folding, door juddering on the track',
-                'cause' => 'Alignment. A few millimetres out at one end of the track is felt at the handle.',
-                'price' => 'From £132',
-            ],
-            [
-                'id' => 'locked-out',
-                'group' => 'door',
-                'symptom' => 'Locked out, or the key has snapped in the lock.',
-                'also' => 'Cannot get in, key broken in the door, lost keys',
-                'cause' => 'A snapped key or a seized cylinder. Getting you back in comes first and diagnosis second.',
-                'price' => 'From £108',
-            ],
-            [
-                'id' => 'change-locks',
-                'group' => 'door',
-                'symptom' => 'I want the locks changed, or keys that match.',
-                'also' => 'New cylinder, change the barrel, keyed alike, moved house',
-                'cause' => 'Nothing is broken. Moving in, losing a set of keys, or wanting one key for the front and back door.',
-                'price' => 'From £108',
-            ],
-            [
-                'id' => 'misted-glass',
-                'group' => 'glass',
-                'symptom' => 'The glass is misted or cloudy between the panes.',
-                'also' => 'Blown double glazing, condensation inside the glass, foggy window',
-                'cause' => 'The sealed unit has failed. It cannot be dried out, but the frame stays and only the glass changes.',
-                'price' => '',
+            'glass' => [
+                'name' => 'Sealed unit',
+                'sub' => 'The glass itself',
+                'image' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg',
+                'alt' => 'Sealed double glazed unit cut through to show the two panes and the cavity',
+                'what' => 'When the perimeter seal fails, moisture gets into the cavity and cannot be dried out.',
+                'fix' => 'Measured and replaced on its own. The frame stays where it is.',
                 'link' => '/double-glazing-replacement/',
-                'link_label' => 'See replacement glazed units',
+                'link_label' => 'Replacement glazed units',
             ],
-            [
-                'id' => 'broken-glass',
-                'group' => 'glass',
-                'symptom' => 'The glass is cracked or broken.',
-                'also' => 'Smashed window, broken pane, glass gone through',
-                'cause' => 'Two jobs in order: make the opening safe, then measure for the replacement unit.',
-                'price' => '',
-                'link' => '/double-glazing-replacement/',
-                'link_label' => 'See replacement glazed units',
+            'cylinder' => [
+                'name' => 'Cylinder',
+                'sub' => 'The barrel the key turns',
+                'image' => '/wp-content/themes/fenster/assets/images/imported/Classic-Door-Lock-Box-900px.webp',
+                'alt' => 'Door lever handle and cylinder keyhole on a dark aluminium door',
+                'what' => 'Seizes, or a key snaps in it. Also the part to change when you move in or lose a set of keys.',
+                'fix' => 'Replaced to the door thickness, and keyed alike if you want one key for the front and back.',
+            ],
+            'gearbox' => [
+                'name' => 'Door gearbox',
+                'sub' => 'The multi-point in the door edge',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-security-keep.webp',
+                'alt' => 'Steel keep set into a frame, the part a locking cam engages',
+                'what' => 'Takes every lift of the handle, and is the most common door failure we are called to.',
+                'fix' => 'Matched on faceplate and backset and replaced, then the keeps set so it locks without lifting hard.',
+            ],
+            'hinges' => [
+                'name' => 'Door hinges',
+                'sub' => 'What the door hangs on',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-hinge-open.webp',
+                'alt' => 'Window hinge at the head of an open sash',
+                'what' => 'Carry the door every time it swings, so on a composite or a heavy uPVC door they are a wearing part.',
+                'fix' => 'Replaced to match, and the door re-hung square so the load comes off the gearbox.',
             ],
         ],
-        /* Price guiding, not a price list. Owner instruction, 2026-08-06,
-           after the first build published eight rows of the office tariff as a
-           table: that encourages shopping around, lets a competitor undercut
-           us line by line, and turns us into somebody else's benchmark.
+        /* Symptom to part. Two products, because a window and a door fail in
+           different places, and the schematic draws them separately.
 
-           What stays is the shape the price guides already use — a small
-           number of "from" anchors so a visitor can tell whether they are in
-           the right ballpark, and nothing precise enough to quote against.
-           Three examples, deliberately spanning the range rather than listing
-           the cheap end. Do not add a fourth, and do not restore the table. */
-        'repair_prices' => [
-            'from' => 'From £96',
-            'range' => 'Most repairs land somewhere between £96 and around £200 including VAT, depending on which part it needs.',
-            /* The minimum charge is a floor on the WORK, and it applies only if
-               you go ahead. Owner, 2026-08-06. It is not a callout fee and it is
-               not the price of a visit: quoting is normally free, and the floor
-               exists so we are not sending an engineer out to fit a £20 handle.
-               An earlier draft called it "the least a repair visit costs",
-               which read as a charge for turning up and was the opposite of
-               the truth. */
-            'minimum_note' => 'There is a minimum charge of £96 including VAT, but only if you go ahead with the work. Coming out to quote is normally free.',
-            'examples' => [
-                ['job' => 'A window handle', 'price' => 'From £96'],
-                ['job' => 'A window mechanism', 'price' => 'From £144'],
-                ['job' => 'A door mechanism', 'price' => 'From £204'],
+           `svg` is the group id in the drawing that lights up. `part` is the
+           key in `repair_parts` above. Both are asserted by the harness. */
+        'repair_diagnostics' => [
+            'window' => [
+                'label' => 'Windows',
+                'caption' => 'Casement, flush, tilt and turn, bay. uPVC and aluminium.',
+                'symptoms' => [
+                    ['id' => 'w-lock', 'symptom' => 'It will not lock', 'part' => 'mechanism', 'svg' => 'mechanism'],
+                    ['id' => 'w-handle', 'symptom' => 'The handle is broken or loose', 'part' => 'handle', 'svg' => 'handle'],
+                    ['id' => 'w-open', 'symptom' => 'It will not open, or it is stiff', 'part' => 'stays', 'svg' => 'stays'],
+                    ['id' => 'w-close', 'symptom' => 'It catches, or will not sit flush', 'part' => 'keeps', 'svg' => 'keeps'],
+                    ['id' => 'w-draught', 'symptom' => 'There is a draught round it', 'part' => 'gasket', 'svg' => 'gasket'],
+                    ['id' => 'w-glass', 'symptom' => 'The glass is misted or broken', 'part' => 'glass', 'svg' => 'glass'],
+                ],
             ],
-            'footnotes' => [
-                'Prices include VAT and are a starting point, not a quote.',
-                'What it actually comes to depends on the fault, the parts and how many items are done on the same visit.',
-                'Sill repairs and replacement glass are quoted individually.',
+            'door' => [
+                'label' => 'Doors',
+                'caption' => 'Composite, uPVC and aluminium. French, patio, bifold.',
+                'symptoms' => [
+                    ['id' => 'd-lock', 'symptom' => 'It will not lock', 'part' => 'gearbox', 'svg' => 'gearbox'],
+                    ['id' => 'd-key', 'symptom' => 'The key will not turn, or has snapped', 'part' => 'cylinder', 'svg' => 'cylinder'],
+                    ['id' => 'd-handle', 'symptom' => 'The handle is floppy or snapped', 'part' => 'handle', 'svg' => 'dhandle'],
+                    ['id' => 'd-drop', 'symptom' => 'It has dropped, or catches on the frame', 'part' => 'hinges', 'svg' => 'hinges'],
+                    ['id' => 'd-draught', 'symptom' => 'There is a draught round it', 'part' => 'gasket', 'svg' => 'dgasket'],
+                    ['id' => 'd-glass', 'symptom' => 'The glass is misted or broken', 'part' => 'glass', 'svg' => 'dglass'],
+                ],
             ],
-            'remote' => 'Most faults we can price without coming out at all. Describe it, send a photograph, and the office will come back with a figure. Where it does need looking at, that visit is normally free.',
+        ],
+        /* The four things that are true about the way we repair, owner-supplied
+           2026-08-06. These are the USPs and they replace "professional
+           service" adjectives with something checkable. Two of them — the
+           service engineers and the parts sourcing — carry their own sections
+           because they are the ones a photograph can prove. */
+        'repair_usps' => [
+            ['title' => 'Quick and efficient', 'copy' => 'Most faults are diagnosed and priced without a visit, so the first thing that happens is an answer rather than an appointment.'],
+            ['title' => 'Dedicated service engineers', 'copy' => 'Not installers between jobs. A repair team with decades of experience between them, on our own books.'],
+            ['title' => 'Transparent', 'copy' => 'You get the figure and the reason for it before anything is agreed, and nothing changes on the day without a conversation.'],
+            ['title' => 'Fairly priced', 'copy' => 'Priced off a set list rather than judged on the doorstep, so the same fault costs the same whoever we send.'],
+        ],
+        /* Scope, taken from the office price list and expressed as work rather
+           than as a tariff. This IS the list, minus the money: realignments,
+           hinges, mechanisms, handles, adjustments, gaskets, cylinders, gaining
+           entry, make-safe, sills, glazing reports and pet flaps. If a service
+           is not on that list it does not belong here. */
+        'repair_services' => [
+            'Window mechanisms and locks',
+            'Window hinges and friction stays',
+            'Window handles, all finishes',
+            'Sash adjustment and realignment',
+            'Weather seals and gaskets',
+            'Door realignment, single and French',
+            'Patio and bifold realignment',
+            'Door gearboxes and multi-point locks',
+            'Euro and rim cylinders, keyed alike',
+            'Door handles and backplates',
+            'Door hinges',
+            'Gaining entry after a lockout',
+            'Making a door safe after a break-in',
+            'Sill repairs',
+            'Misted and broken sealed units',
+            'Cat and dog flaps, into glass or panel',
+            'Written glazing surveys and reports',
         ],
         /* greenteQ Alpha TBT, the tilt and turn handle. Facts are from the VBH
            product bulletin PB_CUS_greenteQ_Alpha_TBT_Handle_101125 (10/11/25).
