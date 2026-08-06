@@ -2313,23 +2313,27 @@ function fenster_site_data(): array
                 ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
                 ['name' => 'Oak', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Oak-privacy-4.webp', 'copy' => 'Leaf-like movement with strong privacy and a warmer decorative feel.'],
                 ['name' => 'Pelerine', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Pelerine-privacy-4.webp', 'copy' => 'Flowing vertical texture for privacy with a quieter, more elegant pattern.'],
-                /* Checked against Pilkington's own Reeded close-up, the clock shot on their
-               decorative glazing page. Two goes at this were wrong in opposite
-               directions: the original photograph scaled with `cover` stretched a
-               few ribs across whatever box it landed in, and the flat 1px stripes
-               that replaced it read as fine wallpaper.
+                /* The real photograph, scaled rather than redrawn. Two attempts at inventing
+               this in CSS were rejected — the flat stripes read as wallpaper and the
+               shaded gradient was still a guess at what glass does. The picture is
+               the picture.
 
-               What the reference actually shows is broad cylindrical flutes, each
-               acting as a lens, with a bright seam where two meet — so the gradient
-               is shaded across each reed rather than being a flat band, which is the
-               part the stripes missed entirely. 14px pitch puts roughly 64 reeds
-               across the full-width stage, which is about right for the ~10mm reeding
-               on a real door pane, and still reads as flutes on the 58px swatch.
+               What was wrong was never the image, it was `background-size: cover`
+               everywhere. The source is 900x474 with about 20 reeds in it, so a reed
+               is ~46px of source. `cover` on a 58px swatch scales that to fill the
+               box and you see barely one reed; on the stage you see five. Hence
+               'too big' at every size.
 
-               CSS cannot refract, so the offset slicing in the reference is not
-               reproduced — only the ribbing. Do not chase that with a filter without
-               checking what it costs on the full-size stage. */
-            ['name' => 'Reeded', 'privacy' => 2, 'texture' => 'repeating-linear-gradient(90deg, rgba(255,255,255,0.97) 0px, rgba(255,255,255,0.30) 2px, rgba(188,212,216,0.32) 7px, rgba(255,255,255,0.50) 12px, rgba(255,255,255,0.97) 14px), linear-gradient(135deg, #f5fafa, #e3eff0)', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
+               `size` pins it instead, so a reed is the same width everywhere rather
+               than a function of the box it lands in. 180px puts a reed at ~9px: six
+               on the 58px swatch, twenty-seven on a hero tile and about seventy across
+               the full stage. Seventy reeds of ~10mm is roughly 700mm of glass, which
+               is a real door pane, so the big view is the one that is honest and the
+               others follow from it. Rendered 140, 180 and 220 side by side at all
+               three box sizes before settling on it.
+               Height 100% because the reeds run vertically, so stretching that axis
+               costs nothing and avoids a horizontal seam where the tile repeats. */
+            ['name' => 'Reeded', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2.webp', 'size' => '180px 100%', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
                 ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
                 ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
                 ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],

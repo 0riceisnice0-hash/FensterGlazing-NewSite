@@ -2928,6 +2928,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
     if (texture) {
       stage.style.setProperty('--active-texture', texture);
+      /* Photographed patterns carry their own scale; a gradient does not need one.
+         Without this the stage kept whichever size the previous pattern set, so
+         switching from Reeded to anything else left the new texture pinned at
+         Reeded's 274px. */
+      stage.style.setProperty('--active-texture-size', button.dataset.size || 'cover');
     }
 
     stage.style.setProperty('--privacy', privacy);
