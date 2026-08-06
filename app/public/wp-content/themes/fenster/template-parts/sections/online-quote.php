@@ -73,38 +73,6 @@ $steps = [
     ],
 ];
 
-/* The range, falling down the whole page.
-
-   This is not a section. There is no band, no heading of its own and no
-   reserved space: the article is the canvas, the products are one layer
-   underneath all of it, and they cross section boundaries as you scroll. An
-   earlier pass gave them their own section and it wasted a screen and a half
-   proving they existed.
-
-   Six, not twelve. Twelve was too much video for a decorative layer and the
-   ranges are already named in full in the walkthrough copy below, so nothing is
-   lost by showing the six that read best at a glance.
-
-   Every one enters from above the top of the screen and flies down across the
-   page, three of them cutting in from a corner as they fall. `start` and `end` are its window inside the
-   article's own 0 to 1 progress, so they arrive spread down the whole page
-   rather than together. `drift` and `tilt` keep it moving after it lands.
-
-   `y` is a percentage of the whole article, `x` of the viewport width, and both
-   run past the edges on purpose so a product is part way off screen as it
-   crosses. They sit behind the content: the page's sections are transparent over the
-   gradient, so a product shows through wherever there is no card, and passes
-   behind the cards where there is one. The glass is genuinely see-through, so
-   the gradient reads through the panes either way. */
-$spins = [
-    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => -9, 'y' => 8,  'w' => 32, 'from' => 'top',   'start' => 0.00, 'end' => 0.24, 'drift' => 0.55, 'tilt' => -0.30, 'layer' => 'front'],
-    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 74, 'y' => 20, 'w' => 34, 'from' => 'topright', 'start' => 0.11, 'end' => 0.36, 'drift' => 0.34, 'tilt' => 0.24,  'layer' => 'mid'],
-    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => -8, 'y' => 37, 'w' => 38, 'from' => 'topleft',  'start' => 0.25, 'end' => 0.50, 'drift' => 0.60, 'tilt' => 0.18,  'layer' => 'front'],
-    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 76, 'y' => 52, 'w' => 30, 'from' => 'top',      'start' => 0.39, 'end' => 0.63, 'drift' => 0.26, 'tilt' => -0.30, 'layer' => 'back'],
-    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => -7, 'y' => 67, 'w' => 30, 'from' => 'topleft',  'start' => 0.53, 'end' => 0.77, 'drift' => 0.42, 'tilt' => 0.26,  'layer' => 'mid'],
-    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 71, 'y' => 81, 'w' => 38, 'from' => 'topright', 'start' => 0.67, 'end' => 0.92, 'drift' => 0.52, 'tilt' => 0.20,  'layer' => 'front'],
-];
-
 $before = [
     'A rough width and height for each opening, in millimetres.',
     'Your address and postcode.',
@@ -212,46 +180,6 @@ $faq_schema = [
             </div>
         </div>
     </section>
-
-    <div class="fg-oq-canvas" data-fg-spin-field data-fg-drop-field aria-hidden="true">
-        <?php foreach ($spins as $index => $spin) : ?>
-            <div
-                class="fg-oq-spin fg-oq-spin--<?php echo esc_attr($spin['layer']); ?> fg-oq-spin--from-<?php echo esc_attr($spin['from']); ?>"
-                data-fg-drop
-                data-drop-start="<?php echo esc_attr((string) $spin['start']); ?>"
-                data-drop-end="<?php echo esc_attr((string) $spin['end']); ?>"
-                data-drop-drift="<?php echo esc_attr((string) $spin['drift']); ?>"
-                data-drop-tilt="<?php echo esc_attr((string) $spin['tilt']); ?>"
-                style="
-                    --fg-spin-x: <?php echo esc_attr((string) $spin['x']); ?>%;
-                    --fg-spin-y: <?php echo esc_attr((string) $spin['y']); ?>%;
-                    --fg-spin-w: <?php echo esc_attr((string) $spin['w']); ?>vw;
-                "
-            >
-                <?php /* The still shows until the video is wanted, and is the whole story
-                         where VP9 alpha is unavailable or the visitor asked for less
-                         motion. It carries alpha too, so every fallback still reads as a
-                         product over the page rather than a grey box. */ ?>
-                <img
-                    <?php echo fenster_image_attr_string(FENSTER_THEME_URI . '/assets/images/spins/' . $spin['slug'] . '-spin.webp', [
-                        'alt' => '',
-                        'loading' => $index < 2 ? 'eager' : 'lazy',
-                        'class' => 'fg-oq-spin__still',
-                    ]); ?>
-                >
-                <video
-                    class="fg-oq-spin__video"
-                    data-fg-spin
-                    data-spin-src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/videos/spins/' . $spin['slug'] . '-spin.webm'); ?>"
-                    muted
-                    loop
-                    playsinline
-                    preload="none"
-                    tabindex="-1"
-                ></video>
-            </div>
-        <?php endforeach; ?>
-    </div>
 
     <section class="fg-oq-steps">
         <div class="container">
