@@ -429,6 +429,48 @@ Current accepted behaviour:
 - **The slat colours are on `/colour-options/` as their own section**, anchored `#integral-blind-colours`, built at render time from `notan_blind_colours` rather than copied into `colour_options`. Keep it derived: the hub and the visualiser must not be able to drift apart.
 - **Instant pricing is off on this route** via `$offers_instant_price`. A blind unit is a sealed unit specification made to its host window or door, and the online tool prices windows and doors, so the button promised a number nobody could get. Both hero variants and the hero card are gated on the same list; add a slug there rather than deleting buttons, or they fall out of step.
 
+### Window And Door Repairs Page
+
+Route: `/window-and-door-repairs/`
+
+Template: `template-parts/sections/window-door-repairs.php`, a bespoke **middle**
+dispatched from `generated-page.php`, the same shape flush casement uses. Not an
+early return. Styling is `.fg-rp` inside the shared `.fg-cw` grammar.
+
+Current accepted model, rebuilt 2026-08-06:
+
+- **The page is ordered by the symptom, because that is the only thing the
+  visitor knows.** They have not decided to buy anything; something has broken.
+  Order is finder, the parts that fail, published prices, repair-or-replace,
+  the replacement-glass hand-off, why us, how a repair works.
+- **The problem finder filters, it does not fetch.** All fifteen problem cards
+  render server-side with their diagnosis and price; the controller only shows
+  and hides. That keeps the symptom language indexable, keeps the page working
+  with JavaScript off, and means there is no second copy of the content. The
+  filter row is `hidden` in the markup and revealed by the controller, so a
+  filter that cannot filter never appears. Cards are hidden with the `hidden`
+  property rather than removed so their ids survive and `#repair-door-wont-lock`
+  still resolves after a filter. **Do not rebuild this to render from JSON.**
+- **Picking a symptom writes it into the enquiry form's message field**, appended
+  rather than assigned so typed text survives, and once per symptom so repeated
+  taps do not stack. That is the page's "you do not need to diagnose it
+  yourself" promise made literal.
+- **Four things are gated off for this slug** and the reasons are in the comment
+  on `$is_repairs` in `generated-page.php`: the specification-choices band
+  (nobody picks a foil colour when a handle has snapped), the quote embed
+  (WindowCAD prices windows and doors, not repairs — the slug is in
+  `$no_instant_price_routes` alongside integral blinds), the shared order-process
+  rail (see the Order Process Rule in `AI.md`), and the case-study strip
+  (nothing claims this route, so the helper's fallback was showing three
+  unrelated installations under a repairs heading).
+- **Imagery is the parts, not a tradesman.** The mechanism, a friction stay and a
+  keep, studio-lit. `imported/window-repair-milton-keynes-scaled.jpg` is stock —
+  a man in blue dungarees with a screwdriver — and `pages.json` still carries it
+  as this route's imported hero. Do not reinstate it.
+- Prices: see the Repair Pricing Rule in `AI.md` before touching a figure.
+- **Not verified on a real phone.** The finder was measured through a 390px
+  iframe and driven programmatically; nobody has used it with a thumb.
+
 ### Casement Windows Page
 
 Route: `/casement-windows/`, the most viewed page on the site.

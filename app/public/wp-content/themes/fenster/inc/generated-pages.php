@@ -305,9 +305,15 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Aluminium Sliding Doors Milton Keynes | Slim Patio Doors',
             'meta_description' => 'Aluminium sliding doors in Milton Keynes with slim sightlines, large glass areas, secure hardware and survey-led installation from Fenster Glazing.',
         ],
+        /* Retitled 2026-08-06 with the page rebuild. The old title led on the
+           parts ("Locks, Glass & Frames"); nobody searches for a part, they
+           search for what the thing is doing. The description now carries the
+           minimum charge, because a published price is the one thing in this
+           SERP that no competitor snippet offers and it pre-qualifies the
+           click. Both stay inside the 60/160 caps the theme enforces. */
         'window-and-door-repairs' => [
-            'title_tag' => 'Window and Door Repairs Milton Keynes | Locks, Glass & Frames',
-            'meta_description' => 'Window and door repairs in Milton Keynes, including replacement glass, misted units, locks, hinges, handles and frame issues from Fenster Glazing.',
+            'title_tag' => 'Window & Door Repairs Milton Keynes | Locks, Handles, Hinges',
+            'meta_description' => 'Window and door repairs across Milton Keynes. Windows that will not lock, doors that will not close, broken handles and hinges. From £96 including VAT.',
         ],
         'aluminium-doors' => [
             'title_tag' => 'Aluminium Doors Milton Keynes | Modern Secure Entrances',

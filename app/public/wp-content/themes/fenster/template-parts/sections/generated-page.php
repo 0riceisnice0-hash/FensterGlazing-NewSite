@@ -169,6 +169,27 @@ $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'alumini
    `fg-product-intel` and `fg-product-visuals`, and the bespoke sections go in
    their place. Not an early return like casement, which owns its own tail. */
 $is_flush_bespoke = $slug === 'flush-casement-windows';
+/* Repairs replaces the middle the same way flush does, and additionally takes
+   more of the tail out than flush needs to, because a repair is not a purchase
+   of a product:
+
+     - the specification-choices band offers colours, privacy glass and
+       hardware, none of which anybody chooses when a handle has snapped;
+     - the quote embed prices new windows and doors, so on this route it
+       pointed a broken-lock visitor at a tool that cannot price their job.
+       Same fault already fixed for integral blinds, and this slug is now in
+       `$no_instant_price_routes` for the same reason;
+     - the order-process rail describes the installation journey, ending at a
+       technical survey and a FENSA certificate. Nobody having a hinge changed
+       gets either. The bespoke section carries a repair-specific process
+       instead. Note AI.md still lists this route as a rail consumer: this is a
+       deliberate deviation and the owner has been told;
+     - the case-study strip had no study claiming this route, so
+       `fenster_case_studies_for_product()` fell through to its documented
+       fallback and showed three unrelated INSTALLATIONS under a repairs
+       heading. Gated rather than fixed with data, because a repair is not a
+       case study we photograph. */
+$is_repairs = $slug === 'window-and-door-repairs';
 $is_window_handles = $slug === 'handle-options';
 $is_trust_page = $slug === 'why-trust-fenster';
 $is_about_page = $slug === 'about';
@@ -776,7 +797,9 @@ $stats = $is_commercial
         ['value' => '100s', 'label' => 'of customer reviews'],
     ];
 
-$cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : 'Start your design consultation');
+/* "Start your design consultation" is the right label for somebody choosing
+   windows and the wrong one for somebody whose door will not lock. */
+$cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : ($is_repairs ? 'Request a repair' : 'Start your design consultation'));
 $instant_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
 $instant_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
 $product_quote_embeds = [
@@ -814,7 +837,7 @@ $product_quote_link = $product_quote_embed_url !== '' ? '#fenster-product-quote'
    cannot get, so the route offers a consultation instead. Owner instruction,
    2026-08-04. Add a slug here rather than deleting the buttons, so the two
    hero variants and the hero card stay in step. */
-$no_instant_price_routes = ['integral-blinds'];
+$no_instant_price_routes = ['integral-blinds', 'window-and-door-repairs'];
 $offers_instant_price = ! in_array($slug, $no_instant_price_routes, true);
 $asset_base = '/wp-content/themes/fenster/assets/images/imported/';
 $hero_overrides = [
@@ -3253,10 +3276,16 @@ if ($is_commercial_hub) {
                 <div class="button-row">
                     <a class="button" href="#fenster-enquiry">
                         <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
-                        <span class="fg-hero-cta__short"><?php esc_html_e('Design consultation', 'fenster'); ?></span>
+                        <span class="fg-hero-cta__short"><?php echo esc_html($is_repairs ? __('Request a repair', 'fenster') : __('Design consultation', 'fenster')); ?></span>
                     </a>
                     <?php if ($offers_instant_price) : ?>
                         <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
+                    <?php elseif ($is_repairs) : ?>
+                        <?php /* The other route in is the phone, not a design
+                                 consultation: a repair customer wants to talk
+                                 to somebody today. STYLE.md requires a phone
+                                 CTA to be a button rather than a text link. */ ?>
+                        <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', (string) ($brand['phone'] ?? '01908429200'))); ?>"><?php echo esc_html(sprintf(/* translators: %s: phone number */ __('Call %s', 'fenster'), (string) ($brand['phone'] ?? '01908 429200'))); ?></a>
                     <?php else : ?>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
                     <?php endif; ?>
@@ -3989,7 +4018,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4153,7 +4182,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4323,7 +4352,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4346,7 +4375,20 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page && ! $is_composite_doors) : ?>
+        <?php /* Repairs sits OUTSIDE the block below on purpose. That block is
+                 gated on the specification-choices band, which this route does
+                 not render, so putting the bespoke section inside it would gate
+                 the page's whole middle on a condition about colour swatches. */ ?>
+        <?php if ($is_repairs) : ?>
+            <?php
+            get_template_part('template-parts/sections/window-door-repairs', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page && ! $is_composite_doors && ! $is_repairs) : ?>
         <?php if ($is_flush_bespoke) : ?>
             <?php
             get_template_part('template-parts/sections/flush-casement-windows-v2', null, [
@@ -4755,7 +4797,12 @@ if ($is_commercial_hub) {
 
                Anything appending a FAQ to a route that already fills its limit has
                to raise the limit too. */
-            $product_faq_limit = ($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows') ? 6 : 5;
+            /* Repairs joins the six-FAQ list because it needs both the cost
+               question and the repair-or-replace one, and neither can be the
+               one that falls off. This cap has now silently sliced a correctly
+               written FAQ off two routes; if you add a sixth question to a
+               route, add the route here in the same commit. */
+            $product_faq_limit = ($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows' || $is_repairs) ? 6 : 5;
             $faq_schema = [
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',
@@ -4793,7 +4840,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && $slug !== 'aluminium-sliding-doors') : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && $slug !== 'aluminium-sliding-doors' && ! $is_repairs) : ?>
         <?php
         get_template_part('template-parts/components/order-process', null, [
             'eyebrow' => $journey_order_eyebrow,
@@ -4999,7 +5046,12 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
-    <?php if ($use_product_journey && function_exists('fenster_case_studies_for_product')) : ?>
+    <?php /* Repairs is excluded because nothing claims it, and this helper's
+             documented fallback is to return ANY three studies when nothing
+             matches. Live, that put three unrelated installations under a
+             heading reading "Real installs, photographed on the day" on a page
+             about a broken lock. */ ?>
+    <?php if ($use_product_journey && ! $is_repairs && function_exists('fenster_case_studies_for_product')) : ?>
         <?php $product_case_cards = fenster_case_studies_for_product($slug, 3); ?>
         <?php if ($product_case_cards !== []) : ?>
             <section class="fg-cs-strip">
@@ -5029,9 +5081,16 @@ if ($is_commercial_hub) {
     <section id="fenster-enquiry" class="fg-enquiry">
         <div class="container fg-enquiry__grid">
             <div class="fg-enquiry__copy">
-                <p class="eyebrow"><?php echo esc_html($is_commercial ? 'Start the conversation' : 'Start your project'); ?></p>
-                <h2><?php echo esc_html($is_commercial ? 'Tell us about the building, package or programme.' : 'Tell us about your project.'); ?></h2>
-                <p><?php echo esc_html($is_commercial ? 'A Fenster specialist can help with early feasibility, system options, budgets and installation planning.' : 'Send the basics and the team can guide you through styles, pricing, survey and installation options.'); ?></p>
+                <?php /* Repairs gets its own three lines. "Start your project"
+                         and "Tell us about your project" are the language of
+                         buying windows; a broken lock is not a project, and
+                         asking about "styles, pricing, survey and installation
+                         options" answers a question this visitor did not ask.
+                         The problem finder above writes the fault straight into
+                         the message field, which is what the last line means. */ ?>
+                <p class="eyebrow"><?php echo esc_html($is_repairs ? 'Book a repair' : ($is_commercial ? 'Start the conversation' : 'Start your project')); ?></p>
+                <h2><?php echo esc_html($is_repairs ? 'Tell us what it is doing.' : ($is_commercial ? 'Tell us about the building, package or programme.' : 'Tell us about your project.')); ?></h2>
+                <p><?php echo esc_html($is_repairs ? 'Describe it in your own words. You do not need to know what the part is called, and a photograph of the fault helps more than a description of it.' : ($is_commercial ? 'A Fenster specialist can help with early feasibility, system options, budgets and installation planning.' : 'Send the basics and the team can guide you through styles, pricing, survey and installation options.')); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '01908429200')); ?>"><?php echo esc_html($brand['phone'] ?? '01908 429200'); ?></a>
                     <a href="mailto:<?php echo esc_attr($brand['email'] ?? 'info@fensterglazing.com'); ?>"><?php echo esc_html($brand['email'] ?? 'info@fensterglazing.com'); ?></a>
@@ -5041,8 +5100,8 @@ if ($is_commercial_hub) {
             get_template_part('template-parts/components/enquiry-form', null, [
                 'class' => 'fg-form',
                 'source' => $title,
-                'button_label' => $is_commercial ? 'Send project enquiry' : 'Send my project details',
-                'project_type' => $is_commercial ? 'Commercial glazing' : ($slug === 'sliding-sash-windows' ? 'Sliding sash windows' : ($is_composite_doors ? 'Composite doors' : 'Residential windows and doors')),
+                'button_label' => $is_repairs ? 'Request a repair' : ($is_commercial ? 'Send project enquiry' : 'Send my project details'),
+                'project_type' => $is_commercial ? 'Commercial glazing' : ($is_repairs ? 'Window or door repair' : ($slug === 'sliding-sash-windows' ? 'Sliding sash windows' : ($is_composite_doors ? 'Composite doors' : 'Residential windows and doors'))),
                 'show_company' => $is_commercial,
                 'lock_project_type' => $is_commercial || $slug === 'sliding-sash-windows' || $is_composite_doors,
                 'compact' => $slug === 'sliding-sash-windows' || $is_composite_doors,
