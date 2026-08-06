@@ -10365,8 +10365,19 @@ html.fg-gallery-lightbox-open body {
 /* min-height: 340px lived here for the old floating-pane stage. The wall is
    absolutely positioned at inset 0 now and takes its height from the hero. */
 
+/* The shared rule above gives every section on this page `clamp(4rem, 8vw, 7rem)`
+   top and bottom, which between two adjacent sections stacks into as much as
+   224px of nothing. The visualiser already ends in a padded white card and the
+   comparison opens with its own heading block, so both were paying for space the
+   other had already provided. Trimmed from both sides of the join rather than one,
+   so neither section ends up looking cramped on its own. */
 .fg-obscure-visualiser {
   padding-top: 2rem;
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.fg-obscure-compare {
+  padding-top: clamp(2rem, 4vw, 3.25rem);
 }
 
 .fg-obscure-visualiser__grid {
