@@ -79,25 +79,34 @@ $img = '/wp-content/themes/fenster/assets/images/';
 $glass_url = esc_url(home_url('/double-glazing-replacement/'));
 
 /* The parts wall. "We can source most parts for most systems" is an assertion
-   until you see the range, so the section shows it: five handle families and
-   the casement hardware set, all real supplier photography already in the
-   theme. Every one of these is a finish or component we actually fit, which is
-   what stops it being a decorative collage. */
+   until you see the range, so the section shows it.
+
+   IT WAS ALL HANDLES, which the owner rightly called out: fourteen handles is
+   not a parts wall, it is a handle range, and it made the claim look thinner
+   rather than broader. It is half hardware now, deliberately interleaved so it
+   reads as one mixed wall rather than two blocks.
+
+   PROVENANCE. The espagnolette, the friction stay, the door gearbox and the
+   cat flap are Wharfside Supplies product photography, supplied by the owner
+   as a stopgap ("for now"). They are components we genuinely fit and they are
+   isolated on white, which is why they sit with the handle cut-outs. Replace
+   them with our own when we photograph parts, the same standing the AI
+   generated tilt and turn handles have. Everything else here is ours. */
 $wall = [
+    ['file' => 'products/repair-parts/window-espag-mechanism.webp', 'alt' => 'Window espagnolette mechanism with its gearbox and cams'],
     ['file' => 'products/handles/s2-chrome-cutout.png', 'alt' => 'Chrome window handle', 'cutout' => true],
+    ['file' => 'products/repair-parts/window-friction-stay.webp', 'alt' => 'Pair of stainless friction stays for a casement sash'],
     ['file' => 'products/handles/s2-gold-finish.png', 'alt' => 'Gold window handle'],
-    ['file' => 'products/handles/s2-black-finish.png', 'alt' => 'Black window handle'],
-    ['file' => 'products/handles/monkey-tail-handle.png', 'alt' => 'Monkey tail window handle'],
+    ['file' => 'products/repair-parts/door-multipoint-gearbox.webp', 'alt' => 'Multi-point door gearboxes with hook bolts'],
     ['file' => 'products/door-handles/chrome-long-plate.png', 'alt' => 'Chrome long-plate door handle'],
+    ['file' => 'products/casement/studio/cas-kenrick-excalibur.webp', 'alt' => 'Multi-point window mechanism removed from a sash', 'cutout' => true],
+    ['file' => 'products/handles/s2-black-finish.png', 'alt' => 'Black window handle'],
+    ['file' => 'products/repair-parts/cat-flap-round.webp', 'alt' => 'Round cat flap for fitting into glass'],
     ['file' => 'products/door-handles/black-long-plate.png', 'alt' => 'Black long-plate door handle'],
-    ['file' => 'products/door-handles/gold-long-plate.png', 'alt' => 'Gold long-plate door handle'],
-    ['file' => 'products/door-handles/brushed-steel-long-plate.png', 'alt' => 'Brushed steel long-plate door handle'],
+    ['file' => 'products/handles/monkey-tail-handle.png', 'alt' => 'Monkey tail window handle'],
     ['file' => 'products/handles-patio/patio-chrome.webp', 'alt' => 'Chrome sliding patio door handle'],
-    ['file' => 'products/handles-patio/patio-black.webp', 'alt' => 'Black sliding patio door handle'],
     ['file' => 'products/handles-tilt-turn/tilt-turn-chrome.png', 'alt' => 'Chrome tilt and turn window handle'],
-    ['file' => 'products/handles-tilt-turn/tilt-turn-white.png', 'alt' => 'White tilt and turn window handle'],
     ['file' => 'products/handles-liftslide/liftslide-black.webp', 'alt' => 'Black lift and slide door lever'],
-    ['file' => 'products/handles-liftslide/liftslide-brushed-stainless-steel.webp', 'alt' => 'Brushed stainless lift and slide door lever'],
 ];
 ?>
 
@@ -252,24 +261,87 @@ $wall = [
                                 <rect x="125" y="120" width="370" height="575"/>
                                 <path d="M150 660 L300 170 M195 660 L345 170" class="fg-rp-svg__sheen"/>
                             </g>
+                            <?php /* HARDWARE, drawn from the real parts rather
+                                     than as marks in roughly the right place.
+                                     Owner, 2026-08-06: make them look real,
+                                     shape and size correct, the way the frames
+                                     are.
+
+                                     THE STAY is a friction stay: a track that
+                                     screws to the frame, a sash arm above it,
+                                     and a diagonal link between the two making
+                                     the triangle that carries the sash out. All
+                                     three members and the four pivots are
+                                     drawn, with the fixing holes at the ends.
+
+                                     THE MECHANISM is an espagnolette: one long
+                                     faceplate with a gearbox housing set about
+                                     a third down at handle height, a square
+                                     spindle hole through it, mushroom cams
+                                     standing off the plate at intervals and
+                                     countersunk fixing holes between them. The
+                                     cams are what the keeps catch, so they line
+                                     up with the keeps opposite.
+
+                                     Both stay dashed: they sit inside the sash
+                                     edge and you cannot see either on the
+                                     reference photograph of the window. */ ?>
                             <g data-part="stays" class="fg-rp-svg__part fg-rp-svg__hidden">
-                                <path d="M92 88 L250 104 M92 104 L200 110"/>
-                                <path d="M92 742 L250 726 M92 726 L200 720"/>
+                                <path d="M74 84 H236"/>
+                                <path d="M74 92 H236"/>
+                                <path d="M86 84 L206 106"/>
+                                <path d="M150 95 L206 84"/>
+                                <circle cx="86" cy="88" r="3"/>
+                                <circle cx="150" cy="95" r="3"/>
+                                <circle cx="206" cy="106" r="3"/>
+                                <circle cx="206" cy="84" r="3"/>
+                                <path d="M74 746 H236"/>
+                                <path d="M74 738 H236"/>
+                                <path d="M86 746 L206 724"/>
+                                <path d="M150 735 L206 746"/>
+                                <circle cx="86" cy="742" r="3"/>
+                                <circle cx="150" cy="735" r="3"/>
+                                <circle cx="206" cy="724" r="3"/>
+                                <circle cx="206" cy="746" r="3"/>
                             </g>
                             <g data-part="mechanism" class="fg-rp-svg__part fg-rp-svg__hidden">
-                                <rect x="543" y="96" width="7" height="638"/>
-                                <path d="M543 170 h-10 M543 300 h-10 M543 430 h-10 M543 560 h-10 M543 680 h-10"/>
+                                <path d="M540 92 V738"/>
+                                <path d="M550 92 V738"/>
+                                <path d="M540 92 H550 M540 738 H550"/>
+                                <rect x="536" y="368" width="19" height="104" rx="3"/>
+                                <rect x="541" y="408" width="9" height="9"/>
+                                <circle cx="545" cy="386" r="3"/>
+                                <circle cx="545" cy="454" r="3"/>
+                                <path d="M550 176 h9 M550 286 h9 M550 556 h9 M550 664 h9"/>
+                                <circle cx="562" cy="176" r="5"/>
+                                <circle cx="562" cy="286" r="5"/>
+                                <circle cx="562" cy="556" r="5"/>
+                                <circle cx="562" cy="664" r="5"/>
+                                <circle cx="545" cy="132" r="3"/>
+                                <circle cx="545" cy="232" r="3"/>
+                                <circle cx="545" cy="610" r="3"/>
+                                <circle cx="545" cy="706" r="3"/>
                             </g>
                             <g data-part="keeps" class="fg-rp-svg__part fg-rp-svg__hidden">
-                                <rect x="556" y="162" width="9" height="18"/>
-                                <rect x="556" y="292" width="9" height="18"/>
-                                <rect x="556" y="422" width="9" height="18"/>
-                                <rect x="556" y="552" width="9" height="18"/>
+                                <path d="M568 166 h10 v20 h-10"/>
+                                <path d="M568 276 h10 v20 h-10"/>
+                                <path d="M568 546 h10 v20 h-10"/>
+                                <path d="M568 654 h10 v20 h-10"/>
                             </g>
+                            <?php /* The S2 handle we actually fit: a rounded
+                                     backplate, the key barrel low on it, and a
+                                     lever that leaves the plate and sweeps down
+                                     with a hooked tail. Solid, because it is
+                                     the one piece of hardware the reference
+                                     photograph shows. */ ?>
                             <g data-part="handle" class="fg-rp-svg__part">
-                                <rect x="512" y="398" width="25" height="46" rx="6"/>
-                                <circle cx="524" cy="416" r="5"/>
-                                <path d="M524 444 C524 492 522 512 519 532" stroke-linecap="round"/>
+                                <rect x="508" y="378" width="33" height="86" rx="16"/>
+                                <circle cx="524" cy="440" r="7"/>
+                                <circle cx="524" cy="440" r="2.5"/>
+                                <path d="M516 400 C516 396 532 396 532 400 L532 412 C532 418 516 418 516 412 Z"/>
+                                <path d="M524 464 C524 500 523 520 520 540 C518 554 514 560 508 562"/>
+                                <path d="M532 464 C532 502 531 522 528 542 C526 558 520 566 508 568"/>
+                                <path d="M508 562 L508 568"/>
                             </g>
                         </svg>
 
@@ -316,26 +388,83 @@ $wall = [
                                 <rect x="114" y="680" width="322" height="376"/>
                                 <path d="M100 666 L114 680 M450 666 L436 680 M100 1070 L114 1056 M450 1070 L436 1056"/>
                             </g>
-                            <g data-part="hinges" class="fg-rp-svg__part">
-                                <rect x="47" y="120" width="20" height="58" rx="3"/>
-                                <rect x="47" y="555" width="20" height="58" rx="3"/>
-                                <rect x="47" y="990" width="20" height="58" rx="3"/>
-                                <path d="M57 120 v58" class="fg-rp-svg__sheen"/>
-                                <path d="M57 555 v58" class="fg-rp-svg__sheen"/>
-                                <path d="M57 990 v58" class="fg-rp-svg__sheen"/>
-                            </g>
+                            <?php /* DOOR HARDWARE, from the reference part.
+                                     The gearbox is a multi-point: one faceplate
+                                     the height of the leaf, a case set at
+                                     handle height carrying the square spindle
+                                     above and the euro cylinder profile below
+                                     it, a latch and deadbolt at the case, and
+                                     hook bolts standing off the plate above and
+                                     below. The keyhole is drawn as the actual
+                                     euro profile, a circle over a tapered slot,
+                                     because that shape is instantly readable
+                                     and a plain circle is not.
+
+                                     Dashed: none of it is visible on the
+                                     reference photograph of the door. The
+                                     hinges, the handle and the cylinder face
+                                     ARE visible, so those stay solid. */ ?>
                             <g data-part="gearbox" class="fg-rp-svg__part fg-rp-svg__hidden">
-                                <rect x="484" y="100" width="7" height="960"/>
-                                <path d="M491 200 h9 M491 400 h9 M491 720 h9 M491 920 h9"/>
+                                <path d="M481 96 V1062"/>
+                                <path d="M491 96 V1062"/>
+                                <path d="M481 96 H491 M481 1062 H491"/>
+                                <rect x="477" y="486" width="19" height="168" rx="3"/>
+                                <rect x="482" y="536" width="9" height="9"/>
+                                <path d="M486 600 a7 7 0 1 1 0.1 0 M482.5 606 h7 l1.5 20 h-10 Z"/>
+                                <path d="M491 200 c14 0 18 8 18 16 M491 216 h18"/>
+                                <path d="M491 830 c14 0 18 8 18 16 M491 846 h18"/>
+                                <path d="M491 300 h13 v18 h-13"/>
+                                <path d="M491 930 h13 v18 h-13"/>
+                                <circle cx="486" cy="150" r="3"/>
+                                <circle cx="486" cy="380" r="3"/>
+                                <circle cx="486" cy="740" r="3"/>
+                                <circle cx="486" cy="1010" r="3"/>
                             </g>
+                            <?php /* Butt hinges, three of them, as the
+                                     reference shows: two leaves either side of
+                                     a knuckle, with the knuckle line down the
+                                     middle and fixing holes in each leaf. */ ?>
+                            <g data-part="hinges" class="fg-rp-svg__part">
+                                <rect x="44" y="118" width="26" height="62" rx="4"/>
+                                <path d="M57 118 V180"/>
+                                <circle cx="50" cy="134" r="2.5"/><circle cx="50" cy="164" r="2.5"/>
+                                <circle cx="64" cy="134" r="2.5"/><circle cx="64" cy="164" r="2.5"/>
+                                <rect x="44" y="553" width="26" height="62" rx="4"/>
+                                <path d="M57 553 V615"/>
+                                <circle cx="50" cy="569" r="2.5"/><circle cx="50" cy="599" r="2.5"/>
+                                <circle cx="64" cy="569" r="2.5"/><circle cx="64" cy="599" r="2.5"/>
+                                <rect x="44" y="988" width="26" height="62" rx="4"/>
+                                <path d="M57 988 V1050"/>
+                                <circle cx="50" cy="1004" r="2.5"/><circle cx="50" cy="1034" r="2.5"/>
+                                <circle cx="64" cy="1004" r="2.5"/><circle cx="64" cy="1034" r="2.5"/>
+                            </g>
+                            <?php /* Long-plate lever, the shape we fit: a tall
+                                     narrow backplate with the lever high on it
+                                     and the cylinder low, which is the layout
+                                     on the reference door. */ ?>
                             <g data-part="dhandle" class="fg-rp-svg__part">
-                                <rect x="466" y="480" width="28" height="180" rx="8"/>
-                                <path d="M480 545 C452 545 436 548 424 553" stroke-linecap="round"/>
-                                <circle cx="480" cy="545" r="5"/>
+                                <rect x="462" y="470" width="34" height="200" rx="16"/>
+                                <path d="M472 522 h14 v26 h-14 Z"/>
+                                <path d="M479 535 C452 535 434 540 421 549 C415 553 414 559 418 562 C422 565 428 563 432 559"/>
+                                <circle cx="479" cy="535" r="4"/>
                             </g>
                             <g data-part="cylinder" class="fg-rp-svg__part">
-                                <circle cx="480" cy="622" r="11"/>
-                                <path d="M480 622 v14" stroke-linecap="round"/>
+                                <path d="M479 604 a12 12 0 1 1 0.1 0"/>
+                                <path d="M473 613 h12 l3 30 h-18 Z"/>
+                                <circle cx="479" cy="602" r="4"/>
+                            </g>
+                            <?php /* A round pet flap in the lower panel, which
+                                     is where one goes on a door like this. Two
+                                     rings for the flange either side of the
+                                     panel, and the flap itself as a rounded
+                                     square, which is the shape of the real one
+                                     we fit. */ ?>
+                            <g data-part="catflap" class="fg-rp-svg__part">
+                                <circle cx="275" cy="880" r="62"/>
+                                <circle cx="275" cy="880" r="54"/>
+                                <rect x="240" y="845" width="70" height="76" rx="10"/>
+                                <path d="M240 858 H310"/>
+                                <path d="M262 921 h10 M282 921 h10"/>
                             </g>
                         </svg>
 
