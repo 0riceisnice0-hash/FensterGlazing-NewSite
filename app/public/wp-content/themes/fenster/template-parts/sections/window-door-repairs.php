@@ -430,8 +430,8 @@ $wall = [
             <div class="fg-rp-team__van">
                 <img
                     src="<?php echo esc_url(fenster_generated_url($van_src)); ?>"
-                    alt="<?php esc_attr_e('A Fenster Glazing service van', 'fenster'); ?>"
-                    loading="lazy" decoding="async">
+                    alt="<?php esc_attr_e('A liveried Fenster Glazing van parked at the yard', 'fenster'); ?>"
+                    width="2200" height="943" loading="lazy" decoding="async">
             </div>
         <?php endif; ?>
         <div class="container fg-rp-team__inner">
