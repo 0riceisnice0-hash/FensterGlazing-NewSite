@@ -17967,30 +17967,36 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__head,
 .fg-quote-page .fg-enquiry-form__head,
+.fg-oq-form .fg-enquiry-form__head,
 .fg-contact-form .fg-enquiry-form__head {
   border-bottom-color: rgba(0, 45, 58, 0.1);
 }
 
 .fg-home-showroom .fg-enquiry-form__head > span,
 .fg-quote-page .fg-enquiry-form__head > span,
+.fg-oq-form .fg-enquiry-form__head > span,
 .fg-contact-form .fg-enquiry-form__head > span {
   color: var(--color-accent-dark);
 }
 
 .fg-home-showroom .fg-enquiry-form__head p,
 .fg-quote-page .fg-enquiry-form__head p,
+.fg-oq-form .fg-enquiry-form__head p,
 .fg-contact-form .fg-enquiry-form__head p,
 .fg-home-showroom .fg-enquiry-form__message small,
 .fg-quote-page .fg-enquiry-form__message small,
+.fg-oq-form .fg-enquiry-form__message small,
 .fg-contact-form .fg-enquiry-form__message small,
 .fg-home-showroom .fg-enquiry-form__footer > small,
 .fg-quote-page .fg-enquiry-form__footer > small,
+.fg-oq-form .fg-enquiry-form__footer > small,
 .fg-contact-form .fg-enquiry-form__footer > small {
   color: var(--color-muted);
 }
 
 .fg-home-showroom .fg-enquiry-form label em,
 .fg-quote-page .fg-enquiry-form label em,
+.fg-oq-form .fg-enquiry-form label em,
 .fg-contact-form .fg-enquiry-form label em {
   color: rgba(0, 45, 58, 0.46);
 }
@@ -17999,8 +18005,11 @@ a.fg-cs-card__pill:focus-visible {
 .fg-home-showroom .fg-enquiry-form select,
 .fg-home-showroom .fg-enquiry-form textarea,
 .fg-quote-page .fg-enquiry-form input:not([type="checkbox"]),
+.fg-oq-form .fg-enquiry-form input:not([type="checkbox"]),
 .fg-quote-page .fg-enquiry-form select,
+.fg-oq-form .fg-enquiry-form select,
 .fg-quote-page .fg-enquiry-form textarea,
+.fg-oq-form .fg-enquiry-form textarea,
 .fg-contact-form input:not([type="checkbox"]),
 .fg-contact-form select,
 .fg-contact-form textarea {
@@ -18016,8 +18025,11 @@ a.fg-cs-card__pill:focus-visible {
 .fg-home-showroom .fg-enquiry-form select:focus,
 .fg-home-showroom .fg-enquiry-form textarea:focus,
 .fg-quote-page .fg-enquiry-form input:not([type="checkbox"]):focus,
+.fg-oq-form .fg-enquiry-form input:not([type="checkbox"]):focus,
 .fg-quote-page .fg-enquiry-form select:focus,
+.fg-oq-form .fg-enquiry-form select:focus,
 .fg-quote-page .fg-enquiry-form textarea:focus,
+.fg-oq-form .fg-enquiry-form textarea:focus,
 .fg-contact-form input:not([type="checkbox"]):focus,
 .fg-contact-form select:focus,
 .fg-contact-form textarea:focus {
@@ -18027,6 +18039,7 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__consent,
 .fg-quote-page .fg-enquiry-form__consent,
+.fg-oq-form .fg-enquiry-form__consent,
 .fg-contact-form .fg-enquiry-form__consent {
   border-color: rgba(0, 45, 58, 0.1);
   background: rgba(0, 45, 58, 0.035);
@@ -18035,18 +18048,21 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__notice,
 .fg-quote-page .fg-enquiry-form__notice,
+.fg-oq-form .fg-enquiry-form__notice,
 .fg-contact-form .fg-enquiry-form__notice {
   color: var(--color-steel);
 }
 
 .fg-home-showroom .fg-enquiry-form__notice span,
 .fg-quote-page .fg-enquiry-form__notice span,
+.fg-oq-form .fg-enquiry-form__notice span,
 .fg-contact-form .fg-enquiry-form__notice span {
   color: var(--color-muted);
 }
 
 .fg-home-showroom .fg-enquiry-form__feedback,
 .fg-quote-page .fg-enquiry-form__feedback,
+.fg-oq-form .fg-enquiry-form__feedback,
 .fg-contact-form .fg-enquiry-form__feedback {
   background: linear-gradient(135deg, #e7f6ed, #f7fbf9);
   color: var(--color-steel);
@@ -18054,6 +18070,7 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__feedback p,
 .fg-quote-page .fg-enquiry-form__feedback p,
+.fg-oq-form .fg-enquiry-form__feedback p,
 .fg-contact-form .fg-enquiry-form__feedback p {
   color: var(--color-muted);
 }
@@ -20809,6 +20826,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-quote-page .fg-quote-form-section__grid > div,
+.fg-oq-form .fg-form,
 .fg-quote-page .fg-form {
   padding: clamp(1.2rem, 3vw, 2.3rem);
   border: 1px solid rgba(0, 45, 58, 0.12);
@@ -20818,16 +20836,21 @@ a.fg-cs-card__pill:focus-visible {
   backdrop-filter: blur(12px);
 }
 
+.fg-oq-form .fg-contact-list a,
 .fg-quote-page .fg-contact-list a {
   color: var(--color-steel);
 }
 
+.fg-oq-form .fg-form label,
 .fg-quote-page .fg-form label {
   color: var(--color-steel);
 }
 
 .fg-quote-page .fg-form input,
+.fg-oq-form .fg-form input,
 .fg-quote-page .fg-form select,
+.fg-oq-form .fg-form select,
+.fg-oq-form .fg-form textarea,
 .fg-quote-page .fg-form textarea {
   border-color: var(--color-line);
   background: #ffffff;
@@ -24686,6 +24709,7 @@ a.fg-cs-card__pill:focus-visible {
   }
 
   .fg-quote-page .fg-quote-form-section__grid > div,
+  .fg-oq-form .fg-form,
   .fg-quote-page .fg-form {
     padding: 1rem;
   }
