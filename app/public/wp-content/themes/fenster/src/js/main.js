@@ -5351,7 +5351,9 @@ if (spinVideos.length) {
         const played = video.play();
         if (played && typeof played.catch === 'function') played.catch(() => {});
       });
-    }, { rootMargin: '200px 0px' });
+      /* A phone has most of the stage within reach at once, so the margin is
+         tighter there: nine loops decoding on a handset is not worth it. */
+    }, { rootMargin: window.innerWidth <= 860 ? '60px 0px' : '200px 0px' });
 
     spinVideos.forEach((video) => spinObserver.observe(video));
   }
