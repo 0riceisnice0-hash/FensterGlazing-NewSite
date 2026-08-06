@@ -146,10 +146,16 @@ $gallery = [
 <?php /* This section says the window is not only for period houses, and was
          illustrated with a Victorian red brick frontage, which argued the
          opposite. It is a modern elevation now. */ ?>
-                <img src="<?php echo esc_url(fenster_generated_url($base . 'flush-modern-elevation-1600w.webp')); ?>"
-                    alt="<?php esc_attr_e('Anthracite flush casement windows across the rear elevation of a modern brick house', 'fenster'); ?>"
+                <?php /* Third image in this slot. The first argued against its own
+                         heading by showing a Victorian frontage; the second was a
+                         phone shot taken at a steep angle that needed a 9.5 degree
+                         rotation to stand up, and still read as leaning. This one
+                         is square to the wall straight out of the camera at
+                         4032x3024 — no rotation, no correction. */ ?>
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'flush-modern-black-1600w.webp')); ?>"
+                    alt="<?php esc_attr_e('Black flush casement windows and a door in a white painted brick extension, with a black flush bay above', 'fenster'); ?>"
                     loading="lazy" width="1600" height="1200">
-                <figcaption><?php esc_html_e('Anthracite, on a modern elevation', 'fenster'); ?></figcaption>
+                <figcaption><?php esc_html_e('Black, on a white brick extension', 'fenster'); ?></figcaption>
             </figure>
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('And the other half', 'fenster'); ?></p>
