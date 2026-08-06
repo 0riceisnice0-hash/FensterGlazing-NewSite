@@ -68,7 +68,6 @@ $problems = is_array($problems) ? array_values($problems) : [];
 
 $prices = fenster_data('repair_prices', []);
 $prices = is_array($prices) ? $prices : [];
-$price_rows = is_array($prices['rows'] ?? null) ? array_values($prices['rows']) : [];
 $price_notes = is_array($prices['footnotes'] ?? null) ? array_values($prices['footnotes']) : [];
 
 $glass_url = esc_url(home_url('/double-glazing-replacement/'));
@@ -103,25 +102,24 @@ foreach ($problems as $problem) {
 $why = [
     [
         'title' => 'We fit these systems every week.',
-        'copy' => 'A repair company guesses at hardware it meets occasionally. We install uPVC, aluminium and composite windows and doors as our main trade, so we recognise the gear, we know which mechanism a symptom points at, and we know what it is compatible with.',
+        'copy' => 'Installing is our main trade, so we recognise the gear rather than guessing at it.',
     ],
     [
         'title' => 'We will tell you when not to bother.',
-        'copy' => 'Repair is usually the right answer and it is the cheaper one, so it is what we lead with. But a window we would be fixing again next winter is not a repair, it is a postponement, and we would rather say so than take the money twice.',
+        'copy' => 'A window we would be fixing again next winter is a postponement, not a repair. You will hear that the first time.',
     ],
     [
-        'title' => 'Our own engineers, not a subcontractor.',
-        'copy' => 'The people who come out are the people who fit our installations. Nobody is sent to your house under our name who does not work for us.',
+        'title' => 'Our own engineers.',
+        'copy' => 'The people who come out are the people who fit our installations. Nobody is sent under our name who does not work for us.',
     ],
     [
-        'title' => 'Established here, with a showroom you can stand in.',
+        'title' => 'Established, with a showroom.',
         /* No accreditation marks in this card. FENSA and CPA are real and they
            are on the trust strip site-wide, but sat in repair copy they read as
            cover on the repair, which is exactly the confusion the guarantee
            claim on this route caused for months. Owner instruction, 2026-08-06:
-           cut it. The card keeps what is genuinely a repair differentiator —
-           local, established, and the same company either way. */
-        'copy' => 'Trading since 2018 from Alston Drive in Bradwell Abbey, with a showroom you can walk into rather than a call centre. If a repair turns into a replacement, you are dealing with the same company for both.',
+           cut it. */
+        'copy' => 'Since 2018, from Alston Drive in Bradwell Abbey. If a repair turns into a replacement, it is the same company either way.',
     ],
 ];
 
@@ -134,10 +132,10 @@ $why = [
    to an accurate answer and it is the only "process" claim on this page that
    the price list supports outright: a sill repair is quoted from pictures. */
 $process = [
-    ['step' => '01', 'title' => 'Tell us what it is doing.', 'copy' => 'In your own words. You do not need the name of the part. A photograph of the fault, and one of the whole window or door, gets you a straighter answer than any description.'],
-    ['step' => '02', 'title' => 'We tell you what it usually is.', 'copy' => 'Most faults on this page are recognisable before anyone comes out, which is what lets us give you a price to expect rather than a range.'],
-    ['step' => '03', 'title' => 'We come and confirm it.', 'copy' => 'The diagnosis is settled at the door, on the actual window. If it turns out to be something other than we expected, you hear that before any work starts, not after.'],
-    ['step' => '04', 'title' => 'We fix it, or we say why not.', 'copy' => 'Parts availability is the one thing that decides it on older systems. Where a part is genuinely obsolete we will tell you what the options are instead of leaving you with a window that does not lock.'],
+    ['step' => '01', 'title' => 'Tell us what it is doing.', 'copy' => 'In your own words, with a photograph if you can. You do not need the name of the part.'],
+    ['step' => '02', 'title' => 'We say what it usually is.', 'copy' => 'Most faults are recognisable before anyone comes out, so you get a figure to expect.'],
+    ['step' => '03', 'title' => 'We confirm it at the door.', 'copy' => 'On the actual window. If it is not what we expected, you hear that before work starts.'],
+    ['step' => '04', 'title' => 'We fix it, or say why not.', 'copy' => 'On older systems parts availability decides it. If a part is obsolete we will tell you.'],
 ];
 ?>
 
@@ -154,7 +152,7 @@ $process = [
             <div class="fg-rp-finder__head">
                 <p class="eyebrow"><?php esc_html_e('What is it doing?', 'fenster'); ?></p>
                 <h2 id="fg-rp-finder-title"><?php esc_html_e('Start with the symptom, not the part.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Nobody rings up asking for an espagnolette. Pick the thing your window or door is actually doing and we will tell you what is usually behind it, what we do about it, and what it costs.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Nobody rings up asking for an espagnolette. Pick what yours is doing and we will tell you what is usually behind it.', 'fenster'); ?></p>
             </div>
 
             <?php /* Hidden until the controller runs. A filter that filters
@@ -195,26 +193,29 @@ $process = [
                         id="repair-<?php echo esc_attr($pid); ?>">
                         <div class="fg-rp-card__top">
                             <h3><?php echo esc_html($symptom); ?></h3>
-                            <?php if ($price !== '') : ?>
-                                <p class="fg-rp-card__price"><span><?php esc_html_e('From', 'fenster'); ?></span><strong><?php echo esc_html($price); ?></strong></p>
-                            <?php else : ?>
-                                <p class="fg-rp-card__price fg-rp-card__price--quoted"><strong><?php esc_html_e('Quoted', 'fenster'); ?></strong></p>
-                            <?php endif; ?>
+                            <?php /* The data carries "From £144" whole rather
+                                     than a bare figure with a "From" label
+                                     rendered beside it. Owner instruction,
+                                     2026-08-06: no exact prices anywhere, so
+                                     there is no code path that can print one.
+                                     A blank price means quoted individually. */ ?>
+                            <p class="fg-rp-card__price">
+                                <strong><?php echo esc_html($price !== '' ? $price : __('Quoted', 'fenster')); ?></strong>
+                            </p>
                         </div>
+
+                        <?php /* One line of diagnosis and nothing else. This
+                                 used to be a two-term definition list under
+                                 "USUALLY" and "WHAT WE DO" labels, which was
+                                 two paragraphs and two uppercase labels per
+                                 card, fifteen times over. Owner, 2026-08-06:
+                                 it read as a big page of text. The label went
+                                 with it — the sentence says "usually" itself
+                                 where it needs to. */ ?>
+                        <p class="fg-rp-card__cause"><?php echo esc_html((string) ($problem['cause'] ?? '')); ?></p>
 
                         <?php if (! empty($problem['also'])) : ?>
                             <p class="fg-rp-card__also"><?php echo esc_html((string) $problem['also']); ?></p>
-                        <?php endif; ?>
-
-                        <dl class="fg-rp-card__detail">
-                            <dt><?php esc_html_e('Usually', 'fenster'); ?></dt>
-                            <dd><?php echo esc_html((string) ($problem['cause'] ?? '')); ?></dd>
-                            <dt><?php esc_html_e('What we do', 'fenster'); ?></dt>
-                            <dd><?php echo esc_html((string) ($problem['fix'] ?? '')); ?></dd>
-                        </dl>
-
-                        <?php if (! empty($problem['price_note'])) : ?>
-                            <p class="fg-rp-card__note"><?php echo esc_html((string) $problem['price_note']); ?></p>
                         <?php endif; ?>
 
                         <?php if ($link !== '') : ?>
@@ -263,7 +264,7 @@ $process = [
             <div class="fg-rp-parts__head">
                 <p class="eyebrow"><?php esc_html_e('What actually fails', 'fenster'); ?></p>
                 <h2 id="fg-rp-parts-title"><?php esc_html_e('Three parts account for most of it.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A window or a door is a frame, some glass and a set of moving metal parts. The frame and the glass last decades. It is the moving parts that wear, and every one of them is designed to be replaced without touching the rest.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The frame and the glass last decades. It is the moving metal that wears, and all of it is designed to come out without touching the rest.', 'fenster'); ?></p>
             </div>
             <div class="fg-rp-parts__grid">
                 <figure class="fg-rp-part">
@@ -271,11 +272,11 @@ $process = [
                         <img
                             src="<?php echo esc_url($img . 'products/casement/studio/cas-kenrick-excalibur.webp'); ?>"
                             alt="<?php esc_attr_e('Multi-point locking mechanism removed from a window sash, showing the gearbox and cams', 'fenster'); ?>"
-                            width="1116" height="1200" loading="lazy" decoding="async">
+                            width="1100" height="1182" loading="lazy" decoding="async">
                     </div>
                     <figcaption>
                         <h3><?php esc_html_e('The mechanism', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Runs the full height of the sash edge and throws the locking points when you turn the handle. When a window or door stops locking, this is nearly always the part, and it comes out on its own.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('Throws the locking points when you turn the handle. When something stops locking, it is nearly always this.', 'fenster'); ?></p>
                     </figcaption>
                 </figure>
                 <figure class="fg-rp-part">
@@ -287,83 +288,76 @@ $process = [
                     </div>
                     <figcaption>
                         <h3><?php esc_html_e('The hinges', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Friction stays carry the whole weight of the sash every time it opens. They seize and bind rather than snap, which is why a stiff window is usually a hinge problem and not a frame problem.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('Friction stays take the sash weight every time it opens. They seize and bind rather than snap.', 'fenster'); ?></p>
                     </figcaption>
                 </figure>
+                <?php /* Was "the keeps", and that was wrong. Owner correction,
+                         2026-08-06: keeps do not fail. They are a folded piece
+                         of steel with nothing to wear out; what moves is the
+                         sash around them, which is the realignment job, not a
+                         part failure. The tell was there and I missed it —
+                         keeps are not a line on the repairs price list, and all
+                         three of these should map to something that is.
+                         Handles are: they are the most common single repair we
+                         are called out for. */ ?>
                 <figure class="fg-rp-part">
-                    <div class="fg-rp-part__media">
+                    <div class="fg-rp-part__media fg-rp-part__media--cutout">
                         <img
-                            src="<?php echo esc_url($img . 'products/casement/studio/cas-security-keep.webp'); ?>"
-                            alt="<?php esc_attr_e('Steel keep fitted into a white window frame, the part the locking cam engages', 'fenster'); ?>"
-                            width="1249" height="855" loading="lazy" decoding="async">
+                            <?php /* `-cutout`, not the handle hub's own file.
+                                     `s2-chrome-finish.png` has an alpha channel
+                                     but an OPAQUE #FAFAFA backdrop, so the CSS
+                                     drop-shadow drew a shadow round the
+                                     rectangle and it read as a card inside a
+                                     card. This is that file flood-filled to
+                                     real transparency, saved under a new name
+                                     rather than replacing a shared asset the
+                                     handle hub also renders. */ ?>
+                            src="<?php echo esc_url($img . 'products/handles/s2-chrome-cutout.png'); ?>"
+                            alt="<?php esc_attr_e('Chrome window handle with its key, off the window', 'fenster'); ?>"
+                            width="421" height="715" loading="lazy" decoding="async">
                     </div>
                     <figcaption>
-                        <h3><?php esc_html_e('The keeps', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('The steel the locking points close into. They drift a millimetre or two as a frame settles, and that is the whole reason a window suddenly needs a shove. Resetting them is the cheapest repair on this page.', 'fenster'); ?></p>
+                        <h3><?php esc_html_e('The handle', 'fenster'); ?></h3>
+                        <p><?php esc_html_e('The part you touch every day, so it wears first. Usually the spindle rounding off rather than the handle breaking.', 'fenster'); ?></p>
                     </figcaption>
                 </figure>
             </div>
         </div>
     </section>
 
-    <?php /* ---------- Pricing --------------------------------------------
-             Eight rows of the eighteen on the office list. The minimum charge
-             leads because it is the first thing anyone wants to know and
-             publishing it filters out the people we cannot help cheaply, which
-             is a kindness to both sides. */ ?>
+    <?php /* ---------- Price guiding ------------------------------------
+             NOT a price list, and it must not become one again. The first
+             build put eight rows of the office tariff on the page as a table.
+             Owner, 2026-08-06: that encourages shopping around, hands a
+             competitor a line-by-line undercut and turns us into somebody
+             else's benchmark. What a visitor needs is enough to know they are
+             in the right ballpark, which is three "from" anchors and a range.
+             Do not add a fourth example and do not restore the table. */ ?>
     <section class="fg-rp-pricing" id="repair-prices" aria-labelledby="fg-rp-pricing-title">
         <div class="container">
             <div class="fg-rp-pricing__shell">
                 <div class="fg-rp-pricing__intro">
-                    <p class="eyebrow"><?php esc_html_e('What it costs', 'fenster'); ?></p>
-                    <h2 id="fg-rp-pricing-title"><?php esc_html_e('Our repair prices, published.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Most companies quote a repair on the doorstep, once someone is already standing in your hall. These are the common jobs at the price we charge for them, so you can decide before anyone comes out.', 'fenster'); ?></p>
-                    <?php if (! empty($prices['minimum'])) : ?>
-                        <div class="fg-rp-minimum">
-                            <p class="fg-rp-minimum__label"><?php esc_html_e('Minimum charge', 'fenster'); ?></p>
-                            <p class="fg-rp-minimum__figure"><?php echo esc_html((string) $prices['minimum']); ?></p>
-                            <?php if (! empty($prices['minimum_note'])) : ?>
-                                <p class="fg-rp-minimum__note"><?php echo esc_html((string) $prices['minimum_note']); ?></p>
-                            <?php endif; ?>
-                        </div>
+                    <p class="eyebrow"><?php esc_html_e('Rough cost', 'fenster'); ?></p>
+                    <h2 id="fg-rp-pricing-title"><?php esc_html_e('What a repair usually comes to.', 'fenster'); ?></h2>
+                    <?php if (! empty($prices['range'])) : ?>
+                        <p><?php echo esc_html((string) $prices['range']); ?></p>
                     <?php endif; ?>
                 </div>
 
-                <div class="fg-rp-pricing__table">
-                    <table>
-                        <?php /* The theme has no global visually-hidden utility;
-                                 casement added its own scoped one for the same
-                                 reason. `.fg-rp-sr` is this block's. */ ?>
-                        <caption class="fg-rp-sr"><?php esc_html_e('Selected window and door repair prices, including VAT', 'fenster'); ?></caption>
-                        <thead>
-                            <tr>
-                                <th scope="col"><?php esc_html_e('Repair', 'fenster'); ?></th>
-                                <th scope="col"><?php esc_html_e('Price', 'fenster'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($price_rows as $row) : ?>
-                                <tr>
-                                    <th scope="row">
-                                        <?php echo esc_html((string) ($row['job'] ?? '')); ?>
-                                        <?php if (! empty($row['note'])) : ?>
-                                            <span><?php echo esc_html((string) $row['note']); ?></span>
-                                        <?php endif; ?>
-                                    </th>
-                                    <td><?php echo esc_html((string) ($row['price'] ?? '')); ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <?php if ($price_notes !== []) : ?>
-                        <ul class="fg-rp-pricing__notes">
-                            <?php foreach ($price_notes as $note) : ?>
-                                <li><?php echo esc_html((string) $note); ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-                    <p class="fg-rp-pricing__caveat"><?php esc_html_e('These are the common jobs, not the whole list. The exact fault, the parts it needs and how many items are done on the same visit all move the final figure, and we confirm it before any work starts.', 'fenster'); ?></p>
-                </div>
+                <?php if (! empty($prices['examples']) && is_array($prices['examples'])) : ?>
+                    <ul class="fg-rp-anchors">
+                        <?php foreach ($prices['examples'] as $example) : ?>
+                            <li>
+                                <span class="fg-rp-anchors__job"><?php echo esc_html((string) ($example['job'] ?? '')); ?></span>
+                                <span class="fg-rp-anchors__price"><?php echo esc_html((string) ($example['price'] ?? '')); ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+
+                <?php if ($price_notes !== []) : ?>
+                    <p class="fg-rp-pricing__caveat"><?php echo esc_html(implode(' ', array_map('strval', $price_notes))); ?></p>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -378,8 +372,7 @@ $process = [
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Repair or replace', 'fenster'); ?></p>
                 <h2 id="fg-rp-verdict-title"><?php esc_html_e('A repair is usually right. Sometimes it is not.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('We would rather fix your window than sell you a new one, and on a sound frame that is genuinely the better answer: the hardware and the glass are the parts designed to be replaced, and replacing them costs a fraction of the window.', 'fenster'); ?></p>
-                <p><?php esc_html_e('What we will not do is take the money for a repair we can see will not hold. If the frame itself has gone, a new mechanism is a postponement rather than a fix, and you should hear that from us the first time rather than the second.', 'fenster'); ?></p>
+                <p><?php esc_html_e('On a sound frame, repair is genuinely the better answer: the hardware and the glass are the parts designed to be replaced, and they cost a fraction of the window. What we will not do is take the money for a repair we can see will not hold.', 'fenster'); ?></p>
                 <div class="fg-cw-actions">
                     <a class="button" href="#fg-repair-finder"><?php esc_html_e('Find your problem', 'fenster'); ?></a>
                     <a class="button button--steel" href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html(sprintf(/* translators: %s: phone number */ __('Call %s', 'fenster'), $phone)); ?></a>
@@ -421,7 +414,7 @@ $process = [
             <div class="fg-rp-glass__copy">
                 <p class="eyebrow"><?php esc_html_e('Misted or broken glass', 'fenster'); ?></p>
                 <h2 id="fg-rp-glass-title"><?php esc_html_e('If it is the glass, the frame stays.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Cloudy glass, condensation you cannot wipe off, a pane you can no longer see the garden through: that is a failed sealed unit, not a failed window. The glass is measured, made to suit the frame you already have, and changed on its own.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Cloudy glass and condensation you cannot wipe off mean a failed sealed unit, not a failed window. The glass is measured to the frame you already have and changed on its own.', 'fenster'); ?></p>
                 <a class="button" href="<?php echo $glass_url; ?>"><?php esc_html_e('See replacement glazed units', 'fenster'); ?></a>
             </div>
             <figure class="fg-rp-glass__media">
@@ -441,7 +434,7 @@ $process = [
             <div class="fg-rp-why__head">
                 <p class="eyebrow"><?php esc_html_e('Why us', 'fenster'); ?></p>
                 <h2 id="fg-rp-why-title"><?php esc_html_e('An installer who repairs, not a repair company.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('That distinction is the whole argument, and it cuts both ways. It is why we recognise the hardware, and it is why we have no reason to talk you into a window you do not need.', 'fenster'); ?></p>
+                <p><?php esc_html_e('That cuts both ways, and both are the point: it is why we recognise the hardware, and why we have no reason to talk you into a window you do not need.', 'fenster'); ?></p>
             </div>
             <div class="fg-rp-why__grid">
                 <?php foreach ($why as $index => $item) : ?>
