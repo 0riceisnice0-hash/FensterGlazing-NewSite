@@ -2165,7 +2165,13 @@ function fenster_site_data(): array
                     ['id' => 'd-lock', 'symptom' => 'It will not lock', 'part' => 'd-lock', 'svg' => 'gearbox'],
                     ['id' => 'd-key', 'symptom' => 'The key will not turn, or has snapped', 'part' => 'd-cylinder', 'svg' => 'cylinder'],
                     ['id' => 'd-handle', 'symptom' => 'The handle is floppy or snapped', 'part' => 'd-handle', 'svg' => 'dhandle'],
-                    ['id' => 'd-drop', 'symptom' => 'It has dropped, or catches on the frame', 'part' => 'd-realign', 'svg' => 'drealign hinges'],
+                    /* Hinges only on the drawing. The ANSWER is still realignment,
+                       which is what the panel says and what the owner confirmed
+                       earlier; this is about where the drawing points. A
+                       dropped door is a hinge-side story, and lighting the
+                       whole leaf outline as well said less rather than more.
+                       Same call he made on "it will not lock". */
+                    ['id' => 'd-drop', 'symptom' => 'It has dropped, or catches on the frame', 'part' => 'd-realign', 'svg' => 'hinges'],
                     ['id' => 'd-draught', 'symptom' => 'There is a draught round it', 'part' => 'd-draught', 'svg' => 'drealign dgasket'],
                     /* Owner, 2026-08-06: keep glass on doors. It was dropped
                        when his door list did not mention it, which made the
