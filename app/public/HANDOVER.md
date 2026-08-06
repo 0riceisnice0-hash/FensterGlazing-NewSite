@@ -460,7 +460,13 @@ Current accepted model, rebuilt 2026-08-06:
   rather than assigned so typed text survives, and once per symptom so repeated
   taps do not stack. That is the page's "you do not need to diagnose it
   yourself" promise made literal.
-- **Four things are gated off for this slug** and the reasons are in the comment
+- **No key-specification strip.** A repair has no specification, so
+  `product_pulse` is gated off for the slug and the bespoke section opens with a
+  reassurance strip in that slot: quoting is normally free, the office can
+  usually price it without a visit, we repair any installer's work, and the
+  minimum charge applies only if you go ahead. `product_usps` for the route is
+  kept accurate anyway because Legend reads it.
+- **Five things are gated off for this slug** and the reasons are in the comment
   on `$is_repairs` in `generated-page.php`: the specification-choices band
   (nobody picks a foil colour when a handle has snapped), the quote embed
   (WindowCAD prices windows and doors, not repairs — the slug is in
