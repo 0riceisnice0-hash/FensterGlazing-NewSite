@@ -2103,7 +2103,7 @@ function fenster_site_data(): array
                 'sub' => 'Door',
                 'image' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-glass-closeup.webp',
                 'alt' => 'Round pet flap fitted into a glazed door panel',
-                'what' => 'Not a fault, and the only thing on this list that is not. It goes into the door panel, or into a new sealed unit made with the aperture already in it.',
+                'what' => 'The one job on this page nobody is unhappy about. It goes into the door panel, or into a new sealed unit made with the aperture already in it.',
                 'fix' => 'A sealed unit cannot be cut once it is made, so which of the two your door needs is settled before anything is ordered.',
                 'link' => '/cat-and-dog-flaps/',
                 'link_label' => 'Cat and dog flaps',
@@ -2175,7 +2175,7 @@ function fenster_site_data(): array
                     /* Last on the door list, owner instruction 2026-08-06. The
                        only entry that is a request rather than a fault, which
                        is why it is at the bottom and why its copy says so. */
-                    ['id' => 'd-catflap', 'symptom' => 'I want a cat or dog flap fitted', 'part' => 'd-catflap', 'svg' => 'catflap'],
+                    ['id' => 'd-catflap', 'symptom' => 'My cat cannot get out', 'part' => 'd-catflap', 'svg' => 'catflap'],
                 ],
             ],
         ],
@@ -2186,7 +2186,7 @@ function fenster_site_data(): array
            because they are the ones a photograph can prove. */
         'repair_usps' => [
             ['title' => 'Quick and efficient', 'copy' => 'Most faults are diagnosed and priced without a visit, so the first thing that happens is an answer rather than an appointment.'],
-            ['title' => 'Dedicated service engineers', 'copy' => 'Not installers between jobs. A repair team with decades of experience between them, on our own books.'],
+            ['title' => 'Dedicated service engineers', 'copy' => 'Two of them, with decades each behind them, and a van carrying the parts that fail most often.'],
             ['title' => 'Transparent', 'copy' => 'You get the figure and the reason for it before anything is agreed, and nothing changes on the day without a conversation.'],
             ['title' => 'Fairly priced', 'copy' => 'Priced off a set list rather than judged on the doorstep, so the same fault costs the same whoever we send.'],
         ],
