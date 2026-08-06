@@ -2,6 +2,70 @@
 
 Last updated: 2026-08-06
 
+## 2026-08-06 - Repairs rebuilt around the symptom, and three live faults fixed (local)
+
+Owner brief: the repairs page is too generic, rethink the structure and the UX
+rather than rewriting the copy, build it around customer problems rather than a
+list of services, use the real repair price list, and make Why Fenster mean
+something.
+
+- **The page was ordered by what we sell. It is now ordered by what has broken**,
+  which is the only thing this visitor knows. Fifteen problems written as the
+  sentence somebody would actually say, each with the part that is usually
+  behind it, what we do, and the price. A filter over the top narrows to
+  windows, doors or glass. Full accepted model in `HANDOVER.md`.
+- **The finder filters rather than fetches, and that is the whole design.** Every
+  card is server-rendered with its diagnosis and price; the controller shows and
+  hides. Symptom language stays indexable, the page works with JavaScript off,
+  and there is no second copy of the content to drift. Verified by stripping the
+  bundle: fifteen cards visible, filter row still hidden, every price in the
+  HTML.
+- **Three faults on the live page were factual, not tonal.** The key
+  specification strip claimed **"Guarantee: 10 years"** on a route that sits
+  outside the CPA insurance-backed cover, while the process rail four sections
+  below correctly scoped the same guarantee to "new windows and doors" — the
+  page had been contradicting itself. The hero offered **instant pricing**,
+  pointing a broken-handle visitor at a tool that cannot price a repair, which
+  is the identical fault already fixed on `/integral-blinds/`. And the
+  case-study strip showed **three unrelated installations** under a repairs
+  heading, because nothing claims this route and
+  `fenster_case_studies_for_product()` falls back to any three. All three found
+  by reading the rendered live page, not the template.
+- **The price list is the source of truth and the page publishes eight rows of
+  eighteen.** Minimum charge £96 inc VAT leads, because it is the first thing
+  anyone wants to know and publishing it is kinder than a doorstep quote. The
+  inc-VAT reading of the list's multiples column is an inference and is recorded
+  as one, in the data comment and in the new Repair Pricing Rule in `AI.md`.
+  **The source list is dated 12/02/25 and wants confirming before this goes
+  live.**
+- **The imagery answer to "no cheesy tradesman aesthetic" was to photograph the
+  parts.** The mechanism cut out on transparency, a friction stay, a keep — all
+  studio-lit assets already in the theme from the casement build, and all of
+  them the actual thing a repair replaces. The route's imported hero,
+  `window-repair-milton-keynes-scaled.jpg`, turned out to be stock: a man in
+  blue dungarees holding a screwdriver on a white background. It is still in
+  `pages.json` and must not come back.
+- **A negative margin was written and then removed before it shipped.** The
+  mobile chip rail bled to the screen edge with
+  `margin-inline: calc(var(--fg-gutter, 1.25rem) * -1)`. `--fg-gutter` does not
+  exist anywhere in the theme, and the container gutter is 1rem, so the fallback
+  would have pushed 0.25rem of horizontal body scroll at exactly the width
+  STYLE.md calls a release blocker. **A `var()` fallback is a number you have
+  guessed**; check the token exists before relying on it.
+- **Six FAQs, so the slug had to join the six-FAQ list.** `$product_faq_limit`
+  caps at five and would have sliced the repair-or-replace answer off. That cap
+  has now silently eaten a correctly written FAQ on three routes; the comment
+  there now says to add the route in the same commit.
+- Verified locally: whole-theme PHP lint clean, build passes, 28 assertions on
+  the rendered section including that every `£` on the page exists in the data
+  and that no banned claim (same day, emergency, free callout, ten year
+  guarantee) appears. `scrollWidth` equals the viewport at 768, 1024 and 1440,
+  and at a **proven** 390 through an iframe (`innerWidth=390`) with no overflow,
+  chips at 44px and the largest heading 32px against the 57.6px cap. The finder
+  driven programmatically: 15/6/7/2 across the four filters, single selection,
+  ids surviving a filter, and the prefill appending without duplicating.
+- **Not deployed.** Local only, and not verified on a real phone.
+
 ## START HERE, 2026-08-06 (end of session)
 
 **Live is `release/flush-and-glass`, not `main`.** `main` also carries an

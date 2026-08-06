@@ -38991,3 +38991,664 @@ html.fg-blinds-reveal-locked {
     align-items: start;
   }
 }
+
+/* ==========================================================================
+   Window and door repairs — /window-and-door-repairs/
+   Rebuilt 2026-08-06. Namespace `.fg-rp`, rendered inside `.fg-cw` so it
+   inherits the split grammar, the heading scale and the eyebrow treatment the
+   heritage door and flush pages already use.
+
+   Two rules govern the look, both taken from what the page is FOR. It is read
+   by somebody mildly annoyed, often on a phone, who wants an answer rather
+   than an experience: so nothing here animates on load, nothing moves under
+   the reader, and the only motion is a 160ms fade when the finder filters.
+   And the parts photography carries the section headings rather than icons,
+   because a repairs page decorated with spanner glyphs is the exact tradesman
+   register STYLE.md rules out.
+   ========================================================================== */
+
+.fg-rp-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- The finder ---------------------------------------------------- */
+
+.fg-rp-finder__head {
+  max-width: 46rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.fg-rp-finder__head h2 {
+  max-width: 24ch;
+}
+
+/* The filter row scrolls sideways on a phone rather than wrapping to three
+   ragged lines. Four chips at 390 need about 430px, so it is a real scroller
+   with a snap, not an overflow accident. */
+.fg-rp-finder__filters {
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.fg-rp-finder__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fg-rp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.fg-rp-chip:hover {
+  border-color: var(--color-accent);
+}
+
+.fg-rp-chip.is-active {
+  border-color: var(--color-steel);
+  background: var(--color-steel);
+  color: #fff;
+}
+
+.fg-rp-chip__count {
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(0, 45, 58, 0.08);
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-rp-chip.is-active .fg-rp-chip__count {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.fg-rp-finder__status {
+  margin: 0.75rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+.fg-rp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  gap: clamp(0.85rem, 1.6vw, 1.15rem);
+}
+
+/* `auto-fill` rather than `auto-fit`: filtering to two cards must leave two
+   cards their own width, not stretch them across the row. That is the same
+   trap the privacy-glass card hit on 2026-07-29 and it is why the empty-track
+   behaviour matters here. */
+.fg-rp-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.15rem, 2vw, 1.5rem);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-surface);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.fg-rp-card:hover {
+  border-color: rgba(46, 172, 102, 0.45);
+  box-shadow: 0 10px 30px rgba(0, 45, 58, 0.07);
+}
+
+/* Filtered out. Kept in the DOM and hidden with the attribute rather than
+   removed, so the anchor ids on the cards survive a filter and a deep link to
+   #repair-door-wont-lock still resolves. */
+.fg-rp-card[hidden] {
+  display: none;
+}
+
+.fg-rp-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fg-cw .fg-rp-card__top h3 {
+  max-width: 22ch;
+  margin: 0;
+  font-size: 1.06rem;
+  line-height: 1.3;
+}
+
+/* The price is the second thing the eye should reach, after the symptom, so it
+   is set on the baseline of the heading rather than buried at the card foot. */
+.fg-cw .fg-rp-card__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  max-width: none;
+  margin: 0;
+  line-height: 1.1;
+  text-align: right;
+}
+
+.fg-rp-card__price span {
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fg-rp-card__price strong {
+  color: var(--color-ink);
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.fg-rp-card__price--quoted strong {
+  color: var(--color-muted);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* The other phrasings. Real on-page text, and the one place a search for
+   "blown double glazing" can match a card headed "misted or cloudy". */
+.fg-cw .fg-rp-card__also {
+  margin: 0.6rem 0 0;
+  color: var(--color-light-blue);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.fg-rp-card__detail {
+  margin: 1rem 0 0;
+}
+
+.fg-rp-card__detail dt {
+  margin-bottom: 0.2rem;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-rp-card__detail dd {
+  margin: 0 0 0.85rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.fg-rp-card__detail dd:last-child {
+  margin-bottom: 0;
+}
+
+.fg-cw .fg-rp-card__note {
+  margin: 0.85rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+/* Pushes the action to the foot so cards in a row line their links up whatever
+   the copy length. */
+.fg-rp-card .fg-cw-link {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.fg-cw .fg-rp-empty {
+  max-width: none;
+  margin: 1.5rem 0 0;
+  padding: 1.5rem;
+  border: 1px dashed var(--color-line);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.fg-cw .fg-rp-finder__foot {
+  max-width: none;
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+.fg-rp-finder__foot .fg-cw-link {
+  margin-left: 0.4rem;
+}
+
+/* ---------- The parts ----------------------------------------------------- */
+
+.fg-rp-parts {
+  background: var(--color-soft);
+}
+
+.fg-rp-parts__head {
+  max-width: 46rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.fg-rp-parts__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.fg-rp-part__media {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+  border-radius: 8px;
+  background: #fff;
+  aspect-ratio: 4 / 3;
+}
+
+.fg-rp-part__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The mechanism is a cut-out on transparency, so it is contained and given air
+   rather than cropped to the box like the two photographs. `contain` plus
+   padding is what stops it reading as a broken image on a white card. */
+.fg-rp-part__media--cutout {
+  padding: clamp(1rem, 2vw, 1.75rem);
+}
+
+.fg-rp-part__media--cutout img {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(0, 45, 58, 0.16));
+}
+
+/* ---------- Pricing ------------------------------------------------------- */
+
+.fg-rp-pricing__shell {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.fg-rp-minimum {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.4rem;
+  border-radius: 8px;
+  background: var(--color-steel);
+  color: #fff;
+}
+
+.fg-cw .fg-rp-minimum__label {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-cw .fg-rp-minimum__figure {
+  margin: 0.2rem 0 0;
+  color: #fff;
+  font-size: clamp(2rem, 3.4vw, 2.6rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.fg-cw .fg-rp-minimum__note {
+  margin: 0.5rem 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.fg-rp-pricing__table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fg-rp-pricing__table thead th {
+  padding: 0 0 0.7rem;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.fg-rp-pricing__table thead th:last-child {
+  text-align: right;
+}
+
+.fg-rp-pricing__table tbody th {
+  padding: 0.85rem 1rem 0.85rem 0;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-ink);
+  font-size: 0.98rem;
+  font-weight: 400;
+  text-align: left;
+}
+
+.fg-rp-pricing__table tbody th span {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.fg-rp-pricing__table tbody td {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-ink);
+  font-size: 1.02rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-align: right;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.fg-rp-pricing__notes {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0;
+  margin: 1.1rem 0 0;
+  list-style: none;
+}
+
+.fg-rp-pricing__notes li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.fg-rp-pricing__notes li::before {
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  content: '\2022';
+}
+
+.fg-cw .fg-rp-pricing__caveat {
+  margin: 1.1rem 0 0;
+  font-size: 0.85rem;
+}
+
+/* ---------- Repair or replace --------------------------------------------- */
+
+.fg-rp-verdict__panels {
+  display: grid;
+  gap: 1rem;
+}
+
+.fg-rp-verdict__panel {
+  padding: clamp(1.15rem, 2vw, 1.5rem);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.fg-cw .fg-rp-verdict__panel h3 {
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-rp-verdict__panel ul {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-rp-verdict__panel li {
+  position: relative;
+  padding-left: 1.45rem;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.fg-rp-verdict__panel li::before {
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  content: '';
+}
+
+/* The replace column is not the bad column. It reads in steel rather than
+   green because it is the other answer, not the wrong one — the same
+   even-handedness rule AI.md sets for comparing two products we both sell. */
+.fg-rp-verdict__panel--alt li::before {
+  background: var(--color-light-blue);
+}
+
+/* ---------- Replacement glass band ---------------------------------------- */
+
+.fg-rp-glass__shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  border-radius: 10px;
+  background: var(--color-steel);
+}
+
+.fg-cw .fg-rp-glass__copy .eyebrow {
+  color: #7fd3a4;
+}
+
+.fg-cw .fg-rp-glass__copy h2,
+.fg-cw .fg-rp-glass__copy p {
+  color: #fff;
+}
+
+.fg-cw .fg-rp-glass__copy p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.fg-rp-glass__copy .button {
+  margin-top: 1.25rem;
+}
+
+.fg-rp-glass__media {
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 16 / 10;
+}
+
+.fg-rp-glass__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Why Fenster --------------------------------------------------- */
+
+.fg-rp-why__head {
+  max-width: 46rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.fg-rp-why__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.fg-rp-why__card {
+  padding-top: 1.1rem;
+  border-top: 2px solid var(--color-steel);
+}
+
+.fg-rp-why__number {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- How a repair works -------------------------------------------- */
+
+.fg-rp-process {
+  background: var(--color-soft);
+}
+
+.fg-rp-process__head {
+  max-width: 46rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.fg-rp-process__rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-rp-process__rail li {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.fg-rp-process__number {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Tablet -------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .fg-rp-pricing__shell,
+  .fg-rp-glass__shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-rp-parts__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fg-rp-process__rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Media above copy on the glass band once it stacks, because a dark panel
+     that opens on a paragraph has nothing to hold the eye. */
+  .fg-rp-glass__media {
+    order: -1;
+  }
+}
+
+/* ---------- Phone --------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .fg-rp-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-rp-parts__grid,
+  .fg-rp-why__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The chip row becomes a snap scroller, and stays INSIDE the container. An
+     earlier version bled it to the screen edge with a negative inline margin,
+     which STYLE.md rules out without a measured reason and which would have
+     over-bled anyway: the container gutter is 1rem (`min(100% - 2rem, …)`) and
+     the rule guessed 1.25rem, so it would have pushed 0.25rem of horizontal
+     body scroll at exactly the width that is a release blocker. */
+  .fg-rp-finder__group {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .fg-rp-finder__group::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fg-rp-chip {
+    scroll-snap-align: start;
+  }
+
+  /* Stacks under the symptom rather than sitting beside it: at 390 a right
+     aligned price left the heading about 14 characters of width. */
+  .fg-rp-card__top {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .fg-cw .fg-rp-card__price {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.4rem;
+    text-align: left;
+  }
+
+  .fg-rp-pricing__table tbody th {
+    font-size: 0.94rem;
+  }
+
+  .fg-rp-process__rail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Nothing on this page animates except the filter fade, and that is the one
+   thing to switch off. */
+@media (prefers-reduced-motion: reduce) {
+  .fg-rp-card,
+  .fg-rp-chip {
+    transition: none;
+  }
+}

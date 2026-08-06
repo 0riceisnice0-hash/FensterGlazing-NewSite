@@ -7778,3 +7778,102 @@ document.querySelectorAll('[data-fg-wipe]').forEach((stage) => {
   range.addEventListener('input', paint);
   paint();
 });
+
+/* Repair problem finder — /window-and-door-repairs/
+   ---------------------------------------------------------------------------
+   Two jobs, both small.
+
+   1. Filter the problem grid by group. Every card is already in the DOM with
+      its diagnosis and its price; this only shows and hides. That is what keeps
+      the symptom language indexable, keeps the page working with JavaScript
+      off, and means there is no second copy of the content to drift. Do not
+      turn this into something that renders cards from data.
+
+   2. Carry the chosen symptom into the enquiry form. Somebody who taps
+      "The door will not lock" should not then have to describe it in a
+      textarea, which is the whole "you do not need to diagnose it yourself"
+      promise the page makes.
+
+   The filter row is `hidden` in the markup and revealed here, so a filter that
+   cannot filter never appears. Cards are hidden with the `hidden` property
+   rather than removed, so their ids survive and a deep link to a specific
+   problem still resolves after a filter.
+
+   No `scrollIntoView` anywhere. Lenis owns the scroll on this site and moves
+   the painted position independently, which is recorded in nick.md; the
+   request links are real anchors and the browser handles them. */
+document.querySelectorAll('[data-fg-repair-finder]').forEach((finder) => {
+  const grid = finder.querySelector('[data-fg-repair-grid]');
+  const filters = finder.querySelector('[data-fg-repair-filters]');
+  const cards = [...finder.querySelectorAll('[data-fg-repair-card]')];
+  if (!grid || !filters || !cards.length) return;
+
+  const buttons = [...filters.querySelectorAll('[data-fg-repair-group]')];
+  const status = finder.querySelector('[data-fg-repair-status]');
+  const empty = finder.querySelector('[data-fg-repair-empty]');
+  if (!buttons.length) return;
+
+  filters.hidden = false;
+
+  const apply = (group, announce) => {
+    let shown = 0;
+
+    cards.forEach((card) => {
+      const match = group === 'all' || card.dataset.group === group;
+      card.hidden = !match;
+      if (match) shown += 1;
+    });
+
+    buttons.forEach((button) => {
+      const active = button.dataset.fgRepairGroup === group;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+
+    if (empty) empty.hidden = shown > 0;
+
+    /* Announced rather than just drawn, because the change happens below the
+       controls and a screen reader user gets no other signal that the list
+       under them is now shorter.
+
+       Only after a real interaction. On load the count is not news to anyone —
+       the grid is right there — and printing it put a line of dead text
+       between the controls and the first card, which on a phone is a line you
+       have to scroll past to reach the content. */
+    if (status && announce) {
+      status.textContent = shown === 1
+        ? 'Showing 1 problem.'
+        : `Showing ${shown} problems.`;
+    }
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => apply(button.dataset.fgRepairGroup || 'all', true));
+  });
+
+  apply('all', false);
+
+  /* The symptom goes into the message field, appended rather than assigned so
+     a visitor who has already typed something does not lose it, and only once
+     per symptom so repeated taps do not stack duplicates. */
+  finder.querySelectorAll('[data-fg-repair-request]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const symptom = link.getAttribute('data-fg-repair-request');
+      const form = document.querySelector('#fenster-enquiry [data-fg-enquiry-form]')
+        || document.querySelector('[data-fg-enquiry-form]');
+      if (!symptom || !form) return;
+
+      const message = form.querySelector('textarea[name="message"]');
+      if (!message) return;
+
+      const line = `Repair needed: ${symptom}`;
+      if (message.value.includes(line)) return;
+
+      message.value = message.value.trim() ? `${message.value.trim()}\n${line}` : line;
+
+      /* Lets the AJAX layer and any validation see the change. Assigning
+         `.value` fires nothing on its own. */
+      message.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  });
+});
