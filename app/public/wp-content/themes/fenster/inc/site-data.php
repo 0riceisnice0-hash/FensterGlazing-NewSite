@@ -2313,13 +2313,23 @@ function fenster_site_data(): array
                 ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
                 ['name' => 'Oak', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Oak-privacy-4.webp', 'copy' => 'Leaf-like movement with strong privacy and a warmer decorative feel.'],
                 ['name' => 'Pelerine', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Pelerine-privacy-4.webp', 'copy' => 'Flowing vertical texture for privacy with a quieter, more elegant pattern.'],
-                /* Reeded ribs are fine — roughly a centimetre apart on real glass, so a
-               pane shows dozens of them. It was a photograph scaled with
-               `background-size: cover`, which stretched perhaps eight ribs across
-               whatever box it landed in and read as heavy fluting. Drawn as a
-               repeating gradient it holds the same pitch at any size, on the
-               swatch and across the full stage alike. */
-            ['name' => 'Reeded', 'privacy' => 2, 'texture' => 'repeating-linear-gradient(90deg, rgba(255,255,255,0.92) 0px, rgba(255,255,255,0.92) 1px, rgba(203,224,226,0.5) 1px, rgba(203,224,226,0.5) 3px, rgba(247,252,252,0.88) 3px, rgba(247,252,252,0.88) 5px), linear-gradient(135deg, #f5fafa, #e3eff0)', 'copy' => 'Linear ribbing with partial screening and a timeless architectural finish.'],
+                /* Checked against Pilkington's own Reeded close-up, the clock shot on their
+               decorative glazing page. Two goes at this were wrong in opposite
+               directions: the original photograph scaled with `cover` stretched a
+               few ribs across whatever box it landed in, and the flat 1px stripes
+               that replaced it read as fine wallpaper.
+
+               What the reference actually shows is broad cylindrical flutes, each
+               acting as a lens, with a bright seam where two meet — so the gradient
+               is shaded across each reed rather than being a flat band, which is the
+               part the stripes missed entirely. 14px pitch puts roughly 64 reeds
+               across the full-width stage, which is about right for the ~10mm reeding
+               on a real door pane, and still reads as flutes on the 58px swatch.
+
+               CSS cannot refract, so the offset slicing in the reference is not
+               reproduced — only the ribbing. Do not chase that with a filter without
+               checking what it costs on the full-size stage. */
+            ['name' => 'Reeded', 'privacy' => 2, 'texture' => 'repeating-linear-gradient(90deg, rgba(255,255,255,0.97) 0px, rgba(255,255,255,0.30) 2px, rgba(188,212,216,0.32) 7px, rgba(255,255,255,0.50) 12px, rgba(255,255,255,0.97) 14px), linear-gradient(135deg, #f5fafa, #e3eff0)', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
                 ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
                 ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
                 ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],
