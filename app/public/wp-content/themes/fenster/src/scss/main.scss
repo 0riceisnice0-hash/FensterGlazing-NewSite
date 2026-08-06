@@ -18009,36 +18009,30 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__head,
 .fg-quote-page .fg-enquiry-form__head,
-.fg-oq-form .fg-enquiry-form__head,
 .fg-contact-form .fg-enquiry-form__head {
   border-bottom-color: rgba(0, 45, 58, 0.1);
 }
 
 .fg-home-showroom .fg-enquiry-form__head > span,
 .fg-quote-page .fg-enquiry-form__head > span,
-.fg-oq-form .fg-enquiry-form__head > span,
 .fg-contact-form .fg-enquiry-form__head > span {
   color: var(--color-accent-dark);
 }
 
 .fg-home-showroom .fg-enquiry-form__head p,
 .fg-quote-page .fg-enquiry-form__head p,
-.fg-oq-form .fg-enquiry-form__head p,
 .fg-contact-form .fg-enquiry-form__head p,
 .fg-home-showroom .fg-enquiry-form__message small,
 .fg-quote-page .fg-enquiry-form__message small,
-.fg-oq-form .fg-enquiry-form__message small,
 .fg-contact-form .fg-enquiry-form__message small,
 .fg-home-showroom .fg-enquiry-form__footer > small,
 .fg-quote-page .fg-enquiry-form__footer > small,
-.fg-oq-form .fg-enquiry-form__footer > small,
 .fg-contact-form .fg-enquiry-form__footer > small {
   color: var(--color-muted);
 }
 
 .fg-home-showroom .fg-enquiry-form label em,
 .fg-quote-page .fg-enquiry-form label em,
-.fg-oq-form .fg-enquiry-form label em,
 .fg-contact-form .fg-enquiry-form label em {
   color: rgba(0, 45, 58, 0.46);
 }
@@ -18047,11 +18041,8 @@ a.fg-cs-card__pill:focus-visible {
 .fg-home-showroom .fg-enquiry-form select,
 .fg-home-showroom .fg-enquiry-form textarea,
 .fg-quote-page .fg-enquiry-form input:not([type="checkbox"]),
-.fg-oq-form .fg-enquiry-form input:not([type="checkbox"]),
 .fg-quote-page .fg-enquiry-form select,
-.fg-oq-form .fg-enquiry-form select,
 .fg-quote-page .fg-enquiry-form textarea,
-.fg-oq-form .fg-enquiry-form textarea,
 .fg-contact-form input:not([type="checkbox"]),
 .fg-contact-form select,
 .fg-contact-form textarea {
@@ -18067,11 +18058,8 @@ a.fg-cs-card__pill:focus-visible {
 .fg-home-showroom .fg-enquiry-form select:focus,
 .fg-home-showroom .fg-enquiry-form textarea:focus,
 .fg-quote-page .fg-enquiry-form input:not([type="checkbox"]):focus,
-.fg-oq-form .fg-enquiry-form input:not([type="checkbox"]):focus,
 .fg-quote-page .fg-enquiry-form select:focus,
-.fg-oq-form .fg-enquiry-form select:focus,
 .fg-quote-page .fg-enquiry-form textarea:focus,
-.fg-oq-form .fg-enquiry-form textarea:focus,
 .fg-contact-form input:not([type="checkbox"]):focus,
 .fg-contact-form select:focus,
 .fg-contact-form textarea:focus {
@@ -18081,7 +18069,6 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__consent,
 .fg-quote-page .fg-enquiry-form__consent,
-.fg-oq-form .fg-enquiry-form__consent,
 .fg-contact-form .fg-enquiry-form__consent {
   border-color: rgba(0, 45, 58, 0.1);
   background: rgba(0, 45, 58, 0.035);
@@ -18090,21 +18077,18 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__notice,
 .fg-quote-page .fg-enquiry-form__notice,
-.fg-oq-form .fg-enquiry-form__notice,
 .fg-contact-form .fg-enquiry-form__notice {
   color: var(--color-steel);
 }
 
 .fg-home-showroom .fg-enquiry-form__notice span,
 .fg-quote-page .fg-enquiry-form__notice span,
-.fg-oq-form .fg-enquiry-form__notice span,
 .fg-contact-form .fg-enquiry-form__notice span {
   color: var(--color-muted);
 }
 
 .fg-home-showroom .fg-enquiry-form__feedback,
 .fg-quote-page .fg-enquiry-form__feedback,
-.fg-oq-form .fg-enquiry-form__feedback,
 .fg-contact-form .fg-enquiry-form__feedback {
   background: linear-gradient(135deg, #e7f6ed, #f7fbf9);
   color: var(--color-steel);
@@ -18112,7 +18096,6 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-home-showroom .fg-enquiry-form__feedback p,
 .fg-quote-page .fg-enquiry-form__feedback p,
-.fg-oq-form .fg-enquiry-form__feedback p,
 .fg-contact-form .fg-enquiry-form__feedback p {
   color: var(--color-muted);
 }
@@ -20868,7 +20851,6 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-quote-page .fg-quote-form-section__grid > div,
-.fg-oq-form .fg-form,
 .fg-quote-page .fg-form {
   padding: clamp(1.2rem, 3vw, 2.3rem);
   border: 1px solid rgba(0, 45, 58, 0.12);
@@ -20878,21 +20860,16 @@ a.fg-cs-card__pill:focus-visible {
   backdrop-filter: blur(12px);
 }
 
-.fg-oq-form .fg-contact-list a,
 .fg-quote-page .fg-contact-list a {
   color: var(--color-steel);
 }
 
-.fg-oq-form .fg-form label,
 .fg-quote-page .fg-form label {
   color: var(--color-steel);
 }
 
 .fg-quote-page .fg-form input,
-.fg-oq-form .fg-form input,
 .fg-quote-page .fg-form select,
-.fg-oq-form .fg-form select,
-.fg-oq-form .fg-form textarea,
 .fg-quote-page .fg-form textarea {
   border-color: var(--color-line);
   background: #ffffff;
@@ -24751,7 +24728,6 @@ a.fg-cs-card__pill:focus-visible {
   }
 
   .fg-quote-page .fg-quote-form-section__grid > div,
-  .fg-oq-form .fg-form,
   .fg-quote-page .fg-form {
     padding: 1rem;
   }
@@ -38993,594 +38969,5 @@ html.fg-blinds-reveal-locked {
   .fg-flush-compare {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   /online-quote/ - the instant quote tool page (.fg-oq)
-
-   The page canvas is already painted on `body` with `background-attachment:
-   fixed`, so nothing here repaints `--fg-page-gradient`. See the background
-   rule in STYLE.md; repainting it stacks a second, scrolling gradient over the
-   fixed one and reads as banding between sections.
-
-   Typographic rules are scoped to their own classes rather than written as
-   `.fg-oq p`, because a page-namespaced element selector is (0,1,1) and
-   silently beats any bare class added inside it later. That trap is recorded
-   twice in the project docs and cost a day each time.
---------------------------------------------------------------------------- */
-
-.fg-oq {
-  --fg-oq-gap: clamp(1rem, 2.4vw, 1.75rem);
-}
-
-.fg-oq-hero {
-  padding: clamp(2rem, 4vw, 3.25rem) 0 clamp(1.75rem, 3.2vw, 2.75rem);
-}
-
-.fg-oq-hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  align-items: center;
-}
-
-.fg-oq-hero__copy h1 {
-  margin: 0 0 0.75rem;
-  font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max));
-  line-height: 1.04;
-}
-
-.fg-oq-hero__lead {
-  max-width: 34rem;
-  margin: 0 0 1.5rem;
-  color: var(--color-muted);
-  font-size: clamp(1rem, 1.15vw, 1.12rem);
-  line-height: 1.6;
-}
-
-.fg-oq-hero__points {
-  display: grid;
-  gap: 0.55rem;
-  margin: 1.5rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-oq-hero__points li {
-  position: relative;
-  padding-left: 1.6rem;
-  color: var(--color-steel);
-  font-size: 0.98rem;
-  font-weight: 600;
-  line-height: 1.45;
-}
-
-.fg-oq-hero__points li::before {
-  content: "";
-  position: absolute;
-  top: 0.42em;
-  left: 0;
-  width: 0.7rem;
-  height: 0.38rem;
-  border-left: 2px solid var(--color-accent);
-  border-bottom: 2px solid var(--color-accent);
-  transform: rotate(-45deg);
-}
-
-.fg-oq-hero__tool {
-  display: grid;
-  gap: 0.75rem;
-  min-width: 0;
-}
-
-.fg-oq-hero__tool-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.fg-oq-hero__tool-bar h2 {
-  margin: 0;
-  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
-  line-height: 1.2;
-}
-
-.fg-oq-hero__tool-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.fg-oq-hero__tool-actions .button {
-  padding: 0.55rem 1rem;
-  font-size: 0.92rem;
-}
-
-.fg-oq-hero__tool-actions .button--light {
-  border-color: var(--color-line);
-  background: var(--color-soft);
-  color: var(--color-steel);
-}
-
-/* The embed mirrors the sizing model every other quote surface uses: a scaled
-   iframe inside a fixed-height box, so the tool stays usable without the box
-   growing to whatever height the tool wants. */
-.fg-oq-hero__frame {
-  position: relative;
-  overflow: hidden;
-  height: clamp(430px, 64vh, 700px);
-  min-height: 0;
-  --fg-quote-tool-scale: 0.82;
-  border: 1px solid rgba(0, 45, 58, 0.14);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: var(--shadow-soft);
-  overscroll-behavior: contain;
-}
-
-.fg-oq-hero__frame iframe {
-  display: block;
-  width: calc(100% / var(--fg-quote-tool-scale));
-  height: calc(100% / var(--fg-quote-tool-scale));
-  border: 0;
-  background: #ffffff;
-  transform: scale(var(--fg-quote-tool-scale));
-  transform-origin: top left;
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-smooth .fg-oq-hero__frame iframe {
-  pointer-events: auto;
-}
-
-.fg-oq-hero__frame.is-loaded .fg-quote-frame-placeholder {
-  display: none;
-}
-
-.fg-oq-hero__frame:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  border-radius: 0;
-}
-
-/* One action per screen: the in-place open on desktop, the same-tab link on
-   mobile. Both visible at once is the pattern the owner rejected. */
-.fg-oq-hero__start-mobile {
-  display: none;
-}
-
-/* Section furniture */
-
-.fg-oq-section-head {
-  max-width: 46rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.fg-oq-section-head h2 {
-  margin: 0.35rem 0 0.6rem;
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.15;
-}
-
-.fg-oq-section-head p {
-  margin: 0;
-  color: var(--color-muted);
-  line-height: 1.6;
-}
-
-/* The six screens */
-
-.fg-oq-steps {
-  padding: clamp(1.75rem, 3.4vw, 2.75rem) 0;
-}
-
-.fg-oq-steps__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--fg-oq-gap);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-oq-step {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: var(--color-surface);
-}
-
-.fg-oq-step__media {
-  margin: 0;
-  border-bottom: 1px solid var(--color-line);
-  background: #ffffff;
-}
-
-.fg-oq-step__media img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.fg-oq-step__copy {
-  padding: clamp(1rem, 1.6vw, 1.35rem);
-}
-
-.fg-oq-step__number {
-  display: block;
-  margin-bottom: 0.3rem;
-  color: var(--color-accent);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.fg-oq-step__copy h3 {
-  margin: 0 0 0.45rem;
-  font-size: clamp(1.15rem, 1.5vw, 1.3rem);
-  line-height: 1.2;
-}
-
-.fg-oq-step__copy p {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 0.97rem;
-  line-height: 1.58;
-}
-
-.fg-oq-steps__action {
-  margin-top: clamp(1.5rem, 3vw, 2.25rem);
-  text-align: center;
-}
-
-/* Before you start, and what happens after */
-
-.fg-oq-practical {
-  padding: clamp(1.75rem, 3.4vw, 2.75rem) 0;
-}
-
-.fg-oq-practical__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--fg-oq-gap);
-  align-items: stretch;
-}
-
-.fg-oq-practical__panel {
-  padding: clamp(1.35rem, 2.4vw, 2rem);
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: var(--color-surface);
-}
-
-.fg-oq-practical__panel h2 {
-  margin: 0.35rem 0 1rem;
-  font-size: clamp(1.35rem, 1.9vw, 1.65rem);
-  line-height: 1.18;
-}
-
-.fg-oq-practical__panel ul {
-  display: grid;
-  gap: 0.7rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-oq-practical__panel li {
-  position: relative;
-  padding-left: 1.5rem;
-  line-height: 1.55;
-}
-
-.fg-oq-practical__panel li::before {
-  content: "";
-  position: absolute;
-  top: 0.58em;
-  left: 0;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-accent);
-}
-
-.fg-oq-practical__note {
-  margin: 1.1rem 0 0;
-  color: var(--color-muted);
-  font-size: 0.94rem;
-  line-height: 1.55;
-}
-
-.fg-oq-practical__panel--dark {
-  border-color: transparent;
-  background: var(--color-steel);
-  color: #ffffff;
-}
-
-.fg-oq-practical__panel--dark .eyebrow,
-.fg-oq-practical__panel--dark h2 {
-  color: #ffffff;
-}
-
-.fg-oq-practical__panel--dark .button-row {
-  margin-top: 1.35rem;
-}
-
-/* FAQs reuse the shared product-FAQ item styling. */
-
-.fg-oq-faq {
-  padding: clamp(1.75rem, 3.4vw, 2.75rem) 0;
-}
-
-.fg-oq-faq__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  align-items: start;
-}
-
-.fg-oq-faq__head h2 {
-  margin: 0.35rem 0 0;
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.15;
-}
-
-/* Enquiry form */
-
-.fg-oq-form {
-  padding: clamp(1.75rem, 3.4vw, 3rem) 0;
-}
-
-.fg-oq-form__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  align-items: start;
-}
-
-.fg-oq-form__copy h2 {
-  margin: 0.35rem 0 0.75rem;
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-  line-height: 1.15;
-}
-
-.fg-oq-form__copy p {
-  margin: 0 0 1.1rem;
-  color: var(--color-muted);
-  line-height: 1.6;
-}
-
-@media (max-width: 1080px) {
-  .fg-oq-hero__grid,
-  .fg-oq-faq__grid,
-  .fg-oq-form__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fg-oq-steps__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .fg-oq-hero__lead {
-    max-width: none;
-  }
-}
-
-@media (max-width: 860px) {
-  .fg-oq-steps__grid,
-  .fg-oq-practical__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Desktop controls off, one same-tab action on. */
-  .fg-oq-hero__start,
-  .fg-oq-hero__tool-actions {
-    display: none;
-  }
-
-  .fg-oq-hero__start-mobile {
-    display: inline-flex;
-  }
-
-  .fg-oq-hero__frame {
-    height: min(520px, 64vh);
-    --fg-quote-tool-scale: 0.7;
-  }
-
-  .fg-oq-hero__tool-bar {
-    justify-content: flex-start;
-  }
-
-  .fg-oq .button-row .button {
-    width: 100%;
-    min-height: 44px;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   /online-quote/ - saying the embed is live
-
-   The embedded tool reads as a screenshot until you touch it, and that is the
-   largest measured drop on the site: in the 24 days to 5 August 2026, 182
-   journeys were shown it and 21 opened it, while 57% of the ones who opened it
-   finished a quote. The loss is entirely at the point of committing to it.
-
-   So: a live pill on the bar, a ring around the frame, and a line under it
-   saying what it is. All three stop as soon as the visitor engages, because a
-   cue that keeps insisting after it has been taken is just noise.
---------------------------------------------------------------------------- */
-
-.fg-oq-hero__tool-bar h2 {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  align-items: center;
-}
-
-.fg-oq-live {
-  display: inline-flex;
-  gap: 0.4rem;
-  align-items: center;
-  padding: 0.2rem 0.55rem 0.2rem 0.45rem;
-  border-radius: 999px;
-  background: rgba(46, 172, 102, 0.12);
-  color: var(--color-accent-dark);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fg-oq-live i {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--color-accent);
-}
-
-/* The ring is on the frame rather than a wrapper so it hugs the tool itself.
-   Colour only, no movement of the box, so nothing reflows while it breathes. */
-.fg-oq-hero__frame {
-  transition: box-shadow 300ms ease;
-}
-
-[data-fg-tool-cue]:not(.is-engaged) .fg-oq-hero__frame {
-  animation: fg-oq-ring 2.6s ease-in-out infinite;
-}
-
-@keyframes fg-oq-ring {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 0 rgba(46, 172, 102, 0.34),
-      var(--shadow-soft);
-  }
-  50% {
-    box-shadow:
-      0 0 0 7px rgba(46, 172, 102, 0),
-      var(--shadow-soft);
-  }
-}
-
-/* The ghost hand.
-
-   `__travel` is the size of the frame, so translating it by a percentage moves
-   the hand by that percentage OF THE FRAME. Translating the 38px hand itself
-   would move it by a percentage of 38px, which is the trap here and the reason
-   for the extra element.
-
-   The path is a demonstration, not decoration: drift in, tap a product, drift
-   to another, tap, leave. Timings on the tap ring and the hand are written
-   against the same 9s clock, so the ring fires where the hand stops. Change one
-   and change the other. */
-.fg-oq-ghost {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  overflow: hidden;
-  /* It sits over the tool, so it must never swallow the first click, which is
-     the exact click it is asking for. */
-  pointer-events: none;
-}
-
-.fg-oq-ghost__travel {
-  position: absolute;
-  inset: 0;
-  animation: fg-oq-ghost-travel 9s cubic-bezier(0.5, 0, 0.2, 1) infinite;
-}
-
-.fg-oq-ghost__hand {
-  position: absolute;
-  top: 0;
-  left: 0;
-  fill: #ffffff;
-  stroke: rgba(0, 45, 58, 0.85);
-  stroke-width: 1.1;
-  stroke-linejoin: round;
-  filter: drop-shadow(0 4px 10px rgba(0, 45, 58, 0.45));
-  animation: fg-oq-ghost-press 9s ease-in-out infinite;
-}
-
-.fg-oq-ghost__tap {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 30px;
-  height: 30px;
-  border: 2px solid var(--color-accent);
-  border-radius: 50%;
-  opacity: 0;
-  animation: fg-oq-ghost-tap 9s ease-out infinite;
-}
-
-/* Two stops, each held long enough to read as a deliberate press. */
-@keyframes fg-oq-ghost-travel {
-  0% { transform: translate(18%, 92%); }
-  10% { transform: translate(22%, 62%); }
-  26%, 34% { transform: translate(30%, 44%); }
-  52%, 60% { transform: translate(64%, 44%); }
-  78%, 86% { transform: translate(64%, 66%); }
-  100% { transform: translate(74%, 96%); }
-}
-
-/* The hand dips on each stop, and fades at both ends of the loop so it arrives
-   and leaves rather than snapping back to the start. */
-@keyframes fg-oq-ghost-press {
-  0% { opacity: 0; transform: scale(1); }
-  8% { opacity: 1; }
-  30% { transform: scale(0.82); }
-  38% { transform: scale(1); }
-  56% { transform: scale(0.82); }
-  64% { transform: scale(1); }
-  82% { transform: scale(0.82); }
-  90% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; }
-}
-
-@keyframes fg-oq-ghost-tap {
-  0%, 28% { opacity: 0; transform: scale(0.35); }
-  32% { opacity: 0.9; transform: scale(0.5); }
-  44% { opacity: 0; transform: scale(1.5); }
-  54% { opacity: 0; transform: scale(0.35); }
-  58% { opacity: 0.9; transform: scale(0.5); }
-  70% { opacity: 0; transform: scale(1.5); }
-  80% { opacity: 0; transform: scale(0.35); }
-  84% { opacity: 0.9; transform: scale(0.5); }
-  96%, 100% { opacity: 0; transform: scale(1.5); }
-}
-
-/* Taken the hint. The hand goes and does not come back for the session. */
-[data-fg-tool-cue].is-engaged .fg-oq-ghost {
-  opacity: 0;
-  transition: opacity 260ms ease;
-}
-
-@media (max-width: 860px) {
-  .fg-oq-ghost__hand {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-
-/* No breathing ring under reduced motion. The pill and the line still say the
-   same thing, which is the part that carries the information. */
-@media (prefers-reduced-motion: reduce) {
-  [data-fg-tool-cue]:not(.is-engaged) .fg-oq-hero__frame {
-    animation: none;
-    box-shadow: 0 0 0 3px rgba(46, 172, 102, 0.3), var(--shadow-soft);
-  }
-
-  /* No hand under reduced motion. The Live pill and the ring say the same
-     thing without anything moving. */
-  .fg-oq-ghost {
-    display: none;
   }
 }

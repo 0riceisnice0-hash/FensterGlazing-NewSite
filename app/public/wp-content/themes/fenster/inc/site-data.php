@@ -2302,7 +2302,11 @@ function fenster_site_data(): array
             ['name' => 'Satin', 'privacy' => 5, 'texture' => 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%), linear-gradient(135deg, #f7fbfb 0%, #eef6f7 46%, #e4f0f1 100%)', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
                 ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
                 ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
-                ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5.webp', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+                /* Sized rather than left to `cover`. The stage paints the texture at 122% on
+               top of cover, so a photographed pattern is enlarged twice over and
+               reads as coarse blobs instead of glass. Pinning the width fixes the
+               pattern's scale wherever it is painted — swatch, wall or stage. */
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
@@ -2310,7 +2314,7 @@ function fenster_site_data(): array
                 ['name' => 'Everglade', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Everglade-privacy-5.webp', 'copy' => 'Dense texture for stronger privacy in exposed or overlooked glazing.'],
                 ['name' => 'Florielle', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Florielle-privacy-4.webp', 'copy' => 'A floral pattern that balances decoration with a useful level of screening.'],
                 ['name' => 'Mayflower', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Mayflower-privacy-4.webp', 'copy' => 'Traditional patterning for entrance doors, side panels and character properties.'],
-                ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
+                ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'size' => '450px auto', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
                 ['name' => 'Oak', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Oak-privacy-4.webp', 'copy' => 'Leaf-like movement with strong privacy and a warmer decorative feel.'],
                 ['name' => 'Pelerine', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Pelerine-privacy-4.webp', 'copy' => 'Flowing vertical texture for privacy with a quieter, more elegant pattern.'],
                 /* The real photograph, scaled rather than redrawn. Two attempts at inventing
@@ -2334,7 +2338,7 @@ function fenster_site_data(): array
                Height 100% because the reeds run vertically, so stretching that axis
                costs nothing and avoids a horizontal seam where the tile repeats. */
             ['name' => 'Reeded', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2.webp', 'size' => '180px 100%', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
-                ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
+                ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'size' => '380px auto', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
                 ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
                 ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],
                 ['name' => 'Tribal', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Tribal-privacy-5.webp', 'copy' => 'High privacy with a bolder decorative pattern for statement glass.'],
