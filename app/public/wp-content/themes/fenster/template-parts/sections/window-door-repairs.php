@@ -288,32 +288,59 @@ $wall = [
                                      Both stay dashed: they sit inside the sash
                                      edge and you cannot see either on the
                                      reference photograph of the window. */ ?>
+                            <?php /* FRICTION STAYS, drawn SHUT and at length.
+                                     Two things were wrong. They were drawn open,
+                                     as a scissor triangle, on a window that is
+                                     drawn closed: with the sash shut the stay
+                                     folds into a flat stack in the rebate, which
+                                     is what the owner's side-profile reference
+                                     shows. And they ran 162 units on a 486 unit
+                                     sash, a third of it, where a stay is about
+                                     two thirds of the opener. They are 324 now.
+
+                                     The stack is 14 units deep, which at this
+                                     drawing's 1 unit = 1mm is the 14mm stack
+                                     height a stay actually folds to: a channel,
+                                     the sash arm and the slider nested inside
+                                     one another, with the pivot rivets through
+                                     them and a step at the closing end. */ ?>
                             <g data-part="stays" class="fg-rp-svg__part fg-rp-svg__hidden">
-                                <path d="M74 84 H236"/>
-                                <path d="M74 92 H236"/>
-                                <path d="M86 84 L206 106"/>
-                                <path d="M150 95 L206 84"/>
-                                <circle cx="86" cy="88" r="3"/>
-                                <circle cx="150" cy="95" r="3"/>
-                                <circle cx="206" cy="106" r="3"/>
-                                <circle cx="206" cy="84" r="3"/>
-                                <path d="M74 746 H236"/>
-                                <path d="M74 738 H236"/>
-                                <path d="M86 746 L206 724"/>
-                                <path d="M150 735 L206 746"/>
-                                <circle cx="86" cy="742" r="3"/>
-                                <circle cx="150" cy="735" r="3"/>
-                                <circle cx="206" cy="724" r="3"/>
-                                <circle cx="206" cy="746" r="3"/>
+                                <rect x="80" y="82" width="324" height="14" rx="2"/>
+                                <path d="M84 86.5 H400"/>
+                                <path d="M84 91 H400"/>
+                                <path d="M386 82 v6 h18"/>
+                                <circle cx="122" cy="89" r="2.5"/>
+                                <circle cx="242" cy="89" r="2.5"/>
+                                <circle cx="352" cy="89" r="2.5"/>
+                                <path d="M92 82 v14 M392 82 v14"/>
+                                <rect x="80" y="734" width="324" height="14" rx="2"/>
+                                <path d="M84 743.5 H400"/>
+                                <path d="M84 739 H400"/>
+                                <path d="M386 748 v-6 h18"/>
+                                <circle cx="122" cy="741" r="2.5"/>
+                                <circle cx="242" cy="741" r="2.5"/>
+                                <circle cx="352" cy="741" r="2.5"/>
+                                <path d="M92 734 v14 M392 734 v14"/>
                             </g>
                             <g data-part="mechanism" class="fg-rp-svg__part fg-rp-svg__hidden">
                                 <path d="M540 92 V738"/>
                                 <path d="M550 92 V738"/>
                                 <path d="M540 92 H550 M540 738 H550"/>
-                                <rect x="536" y="368" width="19" height="104" rx="3"/>
-                                <rect x="541" y="408" width="9" height="9"/>
-                                <circle cx="545" cy="386" r="3"/>
-                                <circle cx="545" cy="454" r="3"/>
+                                <?php /* The gearbox, and it needed to be one.
+                                         It was 19 units against a 10 unit
+                                         faceplate, so it read as a slight
+                                         swelling rather than the housing the
+                                         handle drives. A real espag gearbox is
+                                         about 75 x 25mm, which at 1 unit = 1mm
+                                         is what this is, sitting proud of the
+                                         plate on both sides with the square
+                                         spindle through its centre at exactly
+                                         the height of the handle opposite. */ ?>
+                                <rect x="532" y="375" width="25" height="75" rx="4"/>
+                                <path d="M532 390 H557 M532 435 H557"/>
+                                <rect x="540.5" y="408" width="8" height="8"/>
+                                <circle cx="544.5" cy="383" r="3"/>
+                                <circle cx="544.5" cy="442" r="3"/>
                                 <path d="M550 176 h9 M550 286 h9 M550 556 h9 M550 664 h9"/>
                                 <circle cx="562" cy="176" r="5"/>
                                 <circle cx="562" cy="286" r="5"/>
@@ -435,10 +462,22 @@ $wall = [
                                 <path d="M481 96 V1062"/>
                                 <path d="M491 96 V1062"/>
                                 <path d="M481 96 H491 M481 1062 H491"/>
-                                <rect x="475" y="478" width="21" height="125" rx="3"/>
+                                <?php /* The centre case, which was not reading as a
+                                         gearbox either: 21 units against a 10
+                                         unit faceplate. It is 30 now, standing
+                                         proud both sides, 125 units for a real
+                                         240mm case, with the spindle, the
+                                         latch and the deadbolt on it and a
+                                         division line top and bottom so it is
+                                         plainly a housing rather than a wider
+                                         piece of plate. */ ?>
+                                <rect x="470" y="478" width="30" height="125" rx="4"/>
+                                <path d="M470 500 H500 M470 585 H500"/>
                                 <rect x="482" y="536" width="9" height="9"/>
-                                <path d="M496 516 h11 v20 h-11 Z"/>
-                                <path d="M496 556 h9 v12 h-9 Z"/>
+                                <circle cx="486" cy="512" r="3"/>
+                                <circle cx="486" cy="575" r="3"/>
+                                <path d="M500 516 h11 v20 h-11 Z"/>
+                                <path d="M500 556 h9 v12 h-9 Z"/>
                                 <path d="M491 180 h11 v52 h-11 Z"/>
                                 <path d="M502 190 c10 0 15 4 15 10 c0 7 -6 11 -13 11 l-3 0"/>
                                 <path d="M491 920 h11 v52 h-11 Z"/>
