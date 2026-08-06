@@ -10080,7 +10080,12 @@ html.fg-gallery-lightbox-open body {
   border: 0;
   border-radius: 0;
   background-image: var(--texture);
-  background-size: var(--texture-size, cover);
+  /* `cover` on purpose. The pinned `--texture-size` exists for the stage, where a
+     photograph blown up to fill 900px stops looking like glass. A swatch has the
+     opposite job: show the whole pattern so it can be told apart from the one
+     below it. Honouring the pin here turned the 58px Cassini swatch into a 58/500
+     crop of one dark petal, and Reeded into three fat ribs. */
+  background-size: cover;
   box-shadow: none;
   opacity: 0;
   animation: fg-obscure-tile-in 460ms ease forwards;
@@ -10294,7 +10299,12 @@ html.fg-gallery-lightbox-open body {
   border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 6px;
   background-image: var(--texture);
-  background-size: var(--texture-size, cover);
+  /* `cover` on purpose. The pinned `--texture-size` exists for the stage, where a
+     photograph blown up to fill 900px stops looking like glass. A swatch has the
+     opposite job: show the whole pattern so it can be told apart from the one
+     below it. Honouring the pin here turned the 58px Cassini swatch into a 58/500
+     crop of one dark petal, and Reeded into three fat ribs. */
+  background-size: cover;
 }
 
 .fg-obscure-picker__buttons small {
@@ -10320,7 +10330,12 @@ html.fg-gallery-lightbox-open body {
   display: block;
   aspect-ratio: 4 / 3;
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.48), transparent), var(--texture);
-  background-size: var(--texture-size, cover);
+  /* `cover` on purpose. The pinned `--texture-size` exists for the stage, where a
+     photograph blown up to fill 900px stops looking like glass. A swatch has the
+     opposite job: show the whole pattern so it can be told apart from the one
+     below it. Honouring the pin here turned the 58px Cassini swatch into a 58/500
+     crop of one dark petal, and Reeded into three fat ribs. */
+  background-size: cover;
 }
 
 .fg-obscure-compare__grid article > div {
@@ -23952,7 +23967,12 @@ a.fg-cs-card__pill:focus-visible {
     border: 1px solid rgba(0, 45, 58, 0.12);
     border-radius: 6px;
     background-image: var(--texture);
-    background-size: var(--texture-size, cover);
+  /* `cover` on purpose. The pinned `--texture-size` exists for the stage, where a
+     photograph blown up to fill 900px stops looking like glass. A swatch has the
+     opposite job: show the whole pattern so it can be told apart from the one
+     below it. Honouring the pin here turned the 58px Cassini swatch into a 58/500
+     crop of one dark petal, and Reeded into three fat ribs. */
+    background-size: cover;
   }
 
   .fg-obscure-mobile-picker small {
