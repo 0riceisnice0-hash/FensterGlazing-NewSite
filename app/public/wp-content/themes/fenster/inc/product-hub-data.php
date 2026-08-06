@@ -47,16 +47,31 @@ function fenster_product_hub_data(string $slug): array
         ],
         'flush-casement-windows' => [
             'systems' => [$systems['liniar']],
-            'badges' => [$energyplus_badge, 'Timber-look finish', 'Conservation-friendly style'],
+            'badges' => [$energyplus_badge, 'Timber-look finish', 'PAS 24 as standard'],
             'heading' => 'Flush uPVC windows with timber-look details made clear.',
-            'copy' => 'Flush casements are chosen for the flatter sash line, but the convincing result comes from the details: mechanical-look joints, colour, handle finish, glazing bars and how the frame sits in the reveal.',
+            /* Mechanical jointing came out of both the copy and the choices on
+               2026-08-06, owner: we do not offer it on this system. It had been
+               the first detail named in the sentence and an option in the list,
+               so the page was selling a corner detail a customer cannot have.
+               Liniar do publish mechanical jointing for the 70mm flush sash, which
+               is presumably where it came from — a supplier capability is not the
+               same as ours, and this is the second time that distinction has
+               mattered on this page. What does the work here is the flat sash
+               face, which is the one thing the product has and a standard casement
+               does not. */
+            'copy' => 'Flush casements are chosen for the flatter sash line, and what makes one convincing is the detail around it: colour, handle finish, glazing bars, and how the frame sits in the reveal.',
             'specs' => [
                 ['label' => 'System family', 'value' => 'Liniar 70mm flush sash profile'],
                 ['label' => 'Appearance', 'value' => 'Flush sash, optional heritage hardware and timber-effect foils'],
-                ['label' => 'Performance', 'value' => 'Multi-chamber uPVC profile with modern double glazing options'],
-                ['label' => 'Where it fits', 'value' => 'Period-style homes, conservation-sensitive streets and modern homes wanting a flatter line'],
+                /* Triple glazing is stated here rather than anywhere louder. The
+                   owner's standing rule is not to advertise what we do not offer,
+                   and this is the exception that earns itself: the system takes a
+                   28mm unit only, and finding that out at survey wastes a visit.
+                   A spec row is the smallest honest place to put it. */
+                ['label' => 'Performance', 'value' => 'Six-chamber uPVC, 28mm double glazed unit (no triple on this system)'],
+                ['label' => 'Where it fits', 'value' => 'Period frontages, conservation-sensitive streets, and modern elevations wanting a flatter line'],
             ],
-            'choices' => ['Mechanical-style or welded corner detailing depending on system', 'Astragal or Georgian bar options', 'Cream, Chartwell Green, Irish Oak, Anthracite Grey and other foils', 'Locking handle finishes'],
+            'choices' => ['Astragal or Georgian bar options', 'Cream, Chartwell Green, Irish Oak, Anthracite Grey and other foils', 'Locking handle finishes', 'Obscure, acoustic, toughened or laminated glass where required'],
         ],
         // Systems only, no specs or choices, so the product hub section on the
         // page stays gated off. This exists so the selector hub can show the
