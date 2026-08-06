@@ -38547,23 +38547,23 @@ html.fg-blinds-reveal-locked {
    the box is a straight half-and-half comparison that still makes the point.
    Flush is the layer underneath and always fills the stage: on the flush page,
    the untouched state should be the thing being sold. */
-.fg-wipe {
-  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
-}
-
-.fg-wipe__grid {
+/* The slider sits inside the comparison section rather than owning one, so it
+   needs a two-column shell and nothing else: copy beside the stage, stacking
+   under it on a narrow screen. */
+.fg-flush-compare {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
   align-items: center;
+  margin-bottom: clamp(1.8rem, 4vw, 3rem);
 }
 
-.fg-wipe__title {
-  max-width: 16ch;
-  margin: 0.35rem 0 0.7rem;
+.fg-flush-compare__copy h3 {
+  max-width: 18ch;
+  margin: 0 0 0.6rem;
 }
 
-.fg-wipe__copy p:not(.eyebrow) {
+.fg-flush-compare__copy p {
   max-width: 46ch;
   margin: 0;
   color: var(--color-muted);
@@ -38571,66 +38571,35 @@ html.fg-blinds-reveal-locked {
 
 .fg-wipe__stage {
   position: relative;
-  /* The drawing's own viewBox, so neither side is scaled differently from the
-     other. Both halves share this box exactly; that is what makes the wipe read
-     as one window changing rather than two pictures swapping. */
-  aspect-ratio: 550 / 340;
-  max-height: 460px;
+  /* The pair is 820x857 and the stage holds that ratio, so neither photograph is
+     scaled differently from the other. */
+  aspect-ratio: 820 / 857;
+  max-height: 560px;
   margin: 0 0 0 auto;
   overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: 10px;
-  background: #ffffff;
+  background: var(--color-soft);
   touch-action: pan-y;
 }
 
-/* Both sides are the same drawing at the same size, stacked exactly. If these
-   ever stop sharing a box the wipe stops being a comparison and becomes two
-   pictures sliding over each other, which is the flaw the photographic version
-   had. */
-.fg-wipe__side {
+.fg-wipe__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Standard is revealed from the left, up to the seam. */
+.fg-wipe__layer {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  padding: clamp(1rem, 3vw, 2.2rem);
+  clip-path: inset(0 calc(100% - var(--fg-wipe, 50%)) 0 0);
 }
 
-.fg-wipe-svg {
-  width: 100%;
-  height: auto;
-}
-
-.fg-wipe-svg__frame,
-.fg-wipe-svg__sash,
-.fg-wipe-svg__sectionframe,
-.fg-wipe-svg__sectionsash {
-  fill: #ffffff;
-  stroke: var(--color-steel, #0f3136);
-  stroke-width: 2;
-}
-
-.fg-wipe-svg__glass {
-  fill: rgba(46, 172, 102, 0.09);
-  stroke: rgba(15, 49, 54, 0.35);
-  stroke-width: 1;
-}
-
-/* The step is the whole argument, so it is drawn rather than implied. */
-.fg-wipe-svg__shadow {
-  fill: rgba(15, 49, 54, 0.28);
-  stroke: none;
-}
-
-.fg-wipe-svg__sectionframe { fill: #eef2f1; }
-.fg-wipe-svg__sectionsash { fill: var(--color-accent, #2eac66); stroke: var(--color-steel, #0f3136); }
-.fg-wipe-svg__lead { stroke: rgba(15, 49, 54, 0.5); stroke-width: 1; stroke-dasharray: 3 3; }
-
-.fg-wipe-svg__note {
-  fill: var(--color-steel, #0f3136);
-  font-size: 13px;
-  font-weight: 800;
-  text-anchor: middle;
+.fg-wipe__layer img {
+  position: absolute;
+  inset: 0;
 }
 
 .fg-wipe__seam {
@@ -38801,41 +38770,13 @@ html.fg-blinds-reveal-locked {
   font-size: 0.95rem;
 }
 
-.fg-flush-versus,
-.fg-flush-proof {
+.fg-flush-versus {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
-/* Six shots, and every one of them ours. Uniform ratio so the rows line up —
-   the same lesson the Wolverton case study gallery taught. */
-.fg-flush-mosaic {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-  gap: clamp(1rem, 2vw, 1.6rem);
-}
-
-.fg-flush-mosaic figure {
-  margin: 0;
-}
-
-.fg-flush-mosaic img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border: 1px solid var(--color-line);
-  border-radius: 10px;
-}
-
-.fg-flush-mosaic figcaption {
-  padding-top: 0.6rem;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  font-weight: 800;
-}
-
 @media (max-width: 860px) {
-  .fg-flush-band__head {
+  .fg-flush-band__head,
+  .fg-flush-compare {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
   }

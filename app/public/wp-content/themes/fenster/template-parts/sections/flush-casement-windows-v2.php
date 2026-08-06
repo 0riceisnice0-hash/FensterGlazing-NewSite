@@ -85,16 +85,13 @@ $gallery = [
 
 <div class="fg-cw fg-flush">
 
-    <?php /* ---------- What it is, in one gesture ---------- */ ?>
-    <?php
-    get_template_part('template-parts/components/flush-sash-wipe', null, [
-        'eyebrow' => 'The difference',
-        'heading' => 'Drag it, and watch the step disappear.',
-        'copy' => 'One window, drawn twice. Everything is identical across the seam except the sash: on a standard casement it stands proud of the outer frame and throws a shadow line around every opener, and on a flush casement it closes into the frame so the face is one plane. The section underneath shows why — the sash either sits on the frame, or into it.',
-    ]);
-    ?>
-
-    <?php /* ---------- Where it fits: both halves of the market ---------- */ ?>
+    <?php /* ---------- Where it fits: both halves of the market ----------------
+             The page opens on what the window is and who it suits, not on how it
+             differs from a standard casement. Owner, 2026-08-06: the selling
+             point is the flat sash face, not "compare it with the other one", so
+             the slider moved down to the comparison where somebody is actually
+             choosing between two things. Opening on it framed the whole product
+             as a variant of something else. */ ?>
     <section class="fg-cw-intro" aria-labelledby="fg-flush-period-title">
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
@@ -192,6 +189,25 @@ $gallery = [
                 </div>
                 <p><?php esc_html_e('The same 70mm Liniar uPVC and the same fitters. The sash is the difference, and it changes both the look and the glass the frame will take.', 'fenster'); ?></p>
             </div>
+
+            <?php /* The slider lives here, not at the top. This is the point in
+                     the page where somebody is choosing between two things, which
+                     is the only place a comparison belongs. */ ?>
+            <div class="fg-flush-compare">
+                <div class="fg-flush-compare__copy">
+                    <h3><?php esc_html_e('Drag it, and watch the step disappear.', 'fenster'); ?></h3>
+                    <p><?php esc_html_e('Two windows from the same studio set, shot in the same light against the same white. On the standard casement the sash stands proud of the outer frame and throws a shadow line around every opener. On the flush, it closes into the frame and the face is one plane.', 'fenster'); ?></p>
+                </div>
+                <?php
+                get_template_part('template-parts/components/flush-sash-wipe', null, [
+                    'flush_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-flush-level-w.webp',
+                    'flush_alt' => 'White uPVC flush casement window, every sash closing level with the outer frame in one plane',
+                    'standard_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-sash-proud-w.webp',
+                    'standard_alt' => 'White uPVC standard casement window, the opening sash standing proud of the outer frame',
+                ]);
+                ?>
+            </div>
+
             <table class="fg-cas-table">
                 <thead>
                     <tr>
@@ -217,22 +233,36 @@ $gallery = [
         </div>
     </section>
 
-    <?php /* ---------- Our own work ---------- */ ?>
-    <section class="fg-flush-proof" aria-labelledby="fg-flush-proof-title">
+    <?php /* ---------- Our own work ------------------------------------------
+             `fg-cw-gallery`, the same component the heritage door page uses, on
+             the owner's instruction that this section should look like the rest
+             of the site rather than carry a mosaic of its own. It comes with the
+             lightbox and the desktop/mobile copy split already, which is most of
+             why the other pages read as consistent. */ ?>
+    <section class="fg-cw-gallery" aria-labelledby="fg-flush-proof-title">
         <div class="container">
-            <div class="fg-flush-band__head">
+            <div class="fg-cw-gallery__head">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
                     <h2 id="fg-flush-proof-title"><?php esc_html_e('Flush casements, fitted by us.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('Every photograph here is a Fenster installation. Judge them on the sash line, which is the only thing that separates this window from a standard one.', 'fenster'); ?></p>
+                <p>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Every photograph here is a Fenster installation. Judge them on the sash line, which is the only thing separating this window from a standard one. Click any image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Every photograph is a Fenster installation. Tap any for a closer look.', 'fenster'); ?></span>
+                </p>
             </div>
-            <div class="fg-flush-mosaic">
-                <?php foreach ($gallery as $shot) : ?>
+
+            <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Flush casement window gallery', 'fenster'); ?>">
+                <?php foreach ($gallery as $index => $shot) : ?>
+                    <?php $full = fenster_generated_url($base . $shot['file']); ?>
                     <figure>
-                        <img src="<?php echo esc_url(fenster_generated_url($base . $shot['file'])); ?>"
-                            alt="<?php echo esc_attr($shot['alt']); ?>" loading="lazy">
-                        <figcaption><?php echo esc_html($shot['caption']); ?></figcaption>
+                        <a href="<?php echo esc_url($full); ?>" data-fg-gallery-lightbox
+                            aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $shot['alt'])); ?>">
+                            <img src="<?php echo esc_url($full); ?>"
+                                sizes="(max-width: 860px) 82vw, <?php echo $index === 0 ? '40vw' : '28vw'; ?>"
+                                alt="<?php echo esc_attr($shot['alt']); ?>" loading="lazy">
+                            <figcaption><?php echo esc_html($shot['caption']); ?></figcaption>
+                        </a>
                     </figure>
                 <?php endforeach; ?>
             </div>
