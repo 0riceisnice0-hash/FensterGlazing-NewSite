@@ -39222,61 +39222,53 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ---------------------------------------------------------------------------
-   /online-quote/ - the range field: twelve transparent turntables
+   /online-quote/ - the range falls through a full-bleed stage
 
-   The products are drawn with a real alpha channel, so the page gradient shows
-   through the glass rather than only around the frame. That is the whole point
-   of the section, and it is why there is no panel, card or white background
-   anywhere in here. Do not put these on a solid surface.
+   Twelve transparent turntables scattered across a stage two and a half
+   viewports tall. They are positioned to OVERLAP: the alpha channel is real,
+   so a door crossing behind a window shows through its glass, and that is the
+   entire reason these are video rather than pictures. An earlier pass laid them
+   out as a tidy grid with gaps, which threw that away.
 
-   Movement is the shared `[data-fg-depth]` controller. `--fg-parallax-y` is set
-   on the <li> and read by the child, which is the documented pattern; nothing
-   here runs its own scroll loop. `--fg-spin-offset` is the item's resting
-   position, set inline per product, so the twelve sit as a scattered group
-   rather than a row before a single pixel of scrolling happens.
+   Movement is the shared `[data-fg-depth]` controller and nothing else. It sets
+   `--fg-parallax-y` on the item; everything below is one transform reading that
+   value. `--fg-fall` exists so the whole effect can be scaled per breakpoint
+   from CSS, because the controller's strength lives in a markup attribute and
+   cannot be varied by media query.
+
+   No panel, no card, no background: the page gradient is what you see through
+   the glass.
 --------------------------------------------------------------------------- */
 
 .fg-oq-range {
-  padding: clamp(2rem, 4.5vw, 3.5rem) 0 clamp(1.75rem, 3.4vw, 2.75rem);
-  overflow: hidden; /* the offsets and the drift both overhang the band */
+  position: relative;
+  padding: clamp(2rem, 4.5vw, 3.5rem) 0 0;
+  overflow: hidden; /* the fall overhangs the band at both ends */
 }
 
 .fg-oq-range__head {
-  margin-bottom: clamp(1.75rem, 3.5vw, 3rem);
+  position: relative;
+  z-index: 3;
+  margin-bottom: 0;
 }
 
-.fg-oq-range__field {
-  display: grid;
-  /* Four across, not six. Six made every product small, and the doors smaller
-     still: a portrait slab contained in a short box is limited by height, so it
-     ends up half the width of a window beside it. */
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  /* The row gap has to clear the travel, or an item drifts into the label of
-     the row below. That is what it did at the first attempt. */
-  gap: clamp(2.75rem, 5vw, 4.5rem) clamp(0.5rem, 1.4vw, 1.25rem);
-  width: min(100% - 2rem, calc(var(--container) + 6rem));
-  margin: 0 auto;
-  padding: clamp(2.5rem, 5vw, 4rem) 0;
-  list-style: none;
+.fg-oq-range__stage {
+  position: relative;
+  height: 250vh;
+  margin-top: -6vh;
 }
 
 .fg-oq-spin {
-  display: grid;
-  gap: 0.6rem;
-  align-content: end;
-  justify-items: center;
-  min-width: 0;
-}
-
-.fg-oq-spin__media {
-  position: relative;
-  display: grid;
-  place-items: end center;
-  width: 100%;
-  height: clamp(150px, 20vh, 250px);
-  /* Resting offset plus whatever the shared controller has put in
-     --fg-parallax-y. translate3d keeps it on the compositor. */
-  transform: translate3d(0, calc(var(--fg-spin-offset, 0px) + var(--fg-parallax-y, 0px)), 0);
+  position: absolute;
+  top: var(--fg-spin-y);
+  left: var(--fg-spin-x);
+  width: var(--fg-spin-w);
+  /* Resting position is the scatter; the fall is the shared controller's value,
+     scaled by --fg-fall so a phone can be given less of it. The same value
+     drives a few degrees of tilt, so nothing needs a second controller. */
+  transform:
+    translate3d(0, calc(var(--fg-parallax-y, 0px) * var(--fg-fall, 1)), 0)
+    rotate(calc(var(--fg-parallax-y, 0px) * var(--fg-spin-tilt, 0) * 1deg));
   will-change: transform;
 }
 
@@ -39284,86 +39276,105 @@ html.fg-blinds-reveal-locked {
 .fg-oq-spin__video {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: bottom center;
+  height: auto;
   /* A contact shadow on the alpha rather than a box shadow, so it follows the
      product's real silhouette instead of a rectangle. */
-  filter: drop-shadow(0 14px 18px rgba(0, 45, 58, 0.22));
+  filter: drop-shadow(0 22px 26px rgba(0, 45, 58, 0.24));
 }
 
 .fg-oq-spin__video {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 420ms ease;
+  transition: opacity 500ms ease;
 }
 
-/* The still hands over only once the loop has actual frames, so there is never
-   a blank slot while a video is being fetched. */
+/* The still hands over only once the loop has real frames, so there is never a
+   blank slot while a video is being fetched. */
 .fg-oq-spin.is-spinning .fg-oq-spin__video {
   opacity: 1;
 }
 
 .fg-oq-spin.is-spinning .fg-oq-spin__still {
   opacity: 0;
-  transition: opacity 420ms ease;
+  transition: opacity 500ms ease;
 }
 
-.fg-oq-spin__label {
-  max-width: 14ch;
-  color: var(--color-steel);
-  font-size: 0.82rem;
-  font-weight: 600;
-  line-height: 1.3;
-  text-align: center;
-  text-wrap: balance;
-  transform: translate3d(0, calc(var(--fg-spin-offset, 0px) + var(--fg-parallax-y, 0px)), 0);
+/* Three depths. Back items are smaller, softer and slower, which is what makes
+   this read as distance rather than as products of different sizes. */
+.fg-oq-spin--front {
+  z-index: 3;
+}
+
+.fg-oq-spin--mid {
+  z-index: 2;
+  opacity: 0.96;
+}
+
+.fg-oq-spin--back {
+  z-index: 1;
+  opacity: 0.72;
+}
+
+.fg-oq-spin--back .fg-oq-spin__still,
+.fg-oq-spin--back .fg-oq-spin__video {
+  filter: drop-shadow(0 16px 20px rgba(0, 45, 58, 0.16)) blur(1.4px);
 }
 
 .fg-oq-range__action {
-  margin-top: clamp(0.5rem, 2vw, 1.5rem);
+  position: sticky;
+  bottom: clamp(1.5rem, 5vh, 3rem);
+  z-index: 4;
+  padding-top: 60vh;
   text-align: center;
+  pointer-events: none;
+}
+
+.fg-oq-range__action .button {
+  pointer-events: auto;
 }
 
 @media (max-width: 1180px) {
-  .fg-oq-range__field {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .fg-oq-range__stage {
+    height: 210vh;
+    --fg-fall: 0.85;
   }
 }
 
 @media (max-width: 860px) {
-  .fg-oq-range__field {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: clamp(1.75rem, 6vw, 3rem) 0;
+  /* A phone sees one or two of these at a time, so the stage shortens, the
+     products grow relative to the screen and the fall is damped. Left unchanged
+     they would be thumbnails sliding a long way past each other. */
+  .fg-oq-range__stage {
+    height: 190vh;
+    --fg-fall: 0.6;
   }
 
-  .fg-oq-spin__media {
-    height: clamp(112px, 16vh, 170px);
+  .fg-oq-spin {
+    width: calc(var(--fg-spin-w) * 2.1);
   }
 
-  .fg-oq-spin__label {
-    font-size: 0.74rem;
+  .fg-oq-spin--back {
+    opacity: 0.6;
   }
 }
 
 @media (max-width: 520px) {
-  .fg-oq-range__field {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem 0.75rem;
+  .fg-oq-range__stage {
+    height: 175vh;
+    --fg-fall: 0.45;
   }
 
-  .fg-oq-spin__media {
-    height: clamp(118px, 19vh, 165px);
+  .fg-oq-spin {
+    width: calc(var(--fg-spin-w) * 2.6);
   }
 }
 
 /* The shared drift controller has no reduced-motion check of its own, so every
-   consumer needs this. Recorded in AI.md. The offsets go too: a scattered
-   arrangement that cannot move reads as a mistake rather than as a composition. */
+   consumer needs its own. Recorded in AI.md. The scatter stays because it is
+   the composition; only the movement stops. */
 @media (prefers-reduced-motion: reduce) {
-  .fg-oq-spin__media,
-  .fg-oq-spin__label {
+  .fg-oq-spin {
     transform: none;
   }
 

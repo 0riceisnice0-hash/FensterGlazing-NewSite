@@ -73,35 +73,41 @@ $steps = [
     ],
 ];
 
-/* The range the tool prices, as transparent turntables.
+/* The range the tool prices, falling through a full-bleed stage.
 
-   Each entry carries its own drift depth and resting offset so the twelve fall
-   as a layered group rather than a marching row. Depths here are deliberately
-   stronger than the 0.04-0.15 the shared controller is usually driven at:
-   this is the owner's instruction of 2026-08-06 for a big moment, not the
-   quiet drift the rest of the site uses. They were stronger still on the first
-   pass and had to come down: at 0.85 an item travels 153px, which drifted it
-   into the label of the row below. What makes the group read as layers is the
-   spread between the depths, not the size of any one of them.
-   `ABOUT-PAGE-HANDOVER.md` records heavy multi-image parallax being rejected
-   once before, so they are all in one place here and can be taken down
-   further without touching markup.
+   Twelve turntables scattered across a stage two and a half viewports tall, at
+   three depths. They are meant to OVERLAP: the glass carries a real alpha
+   channel, so a door passing behind a window shows through it, and that is the
+   whole reason for using video here rather than a row of pictures. An earlier
+   pass laid them out as a tidy grid with gaps between them, which threw away
+   the one thing the assets are good for.
 
-   The glass is genuinely transparent, so the page gradient shows through the
-   panes. Do not put these on a flat white panel; the see-through is the point. */
+   `depth` is the shared [data-fg-depth] controller's strength. The controller
+   gives +/-(depth * 180)px, so these run 0.9 to 3.0 and travel 160px to 540px:
+   the item enters high, descends as it crosses the viewport, and the spread
+   between depths is what separates the layers. That is far past the 0.04-0.15
+   the rest of the site drifts at, and it is deliberate. `ABOUT-PAGE-HANDOVER.md`
+   records heavy parallax being rejected once; this is the owner asking for the
+   opposite on 2026-08-06, so every number is in this one array and the whole
+   effect can be calmed from here without touching markup or CSS.
+
+   `tilt` turns the same value into a few degrees of rotation, so nothing needs
+   a second controller. `layer` sets scale, blur and opacity: back items are
+   smaller, softer and slower, which is what makes it read as depth rather than
+   as things of different sizes. */
 $spins = [
-    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'depth' => 0.30, 'offset' => -26],
-    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'depth' => 0.16, 'offset' => 14],
-    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'depth' => 0.38, 'offset' => -10],
-    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'depth' => 0.13, 'offset' => 22],
-    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'depth' => 0.34, 'offset' => -20],
-    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'depth' => 0.20, 'offset' => 6],
-    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'depth' => 0.27, 'offset' => 18],
-    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'depth' => 0.36, 'offset' => -28],
-    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'depth' => 0.15, 'offset' => 10],
-    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'depth' => 0.32, 'offset' => -14],
-    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'depth' => 0.22, 'offset' => 20],
-    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'depth' => 0.12, 'offset' => -6],
+    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => 6,  'y' => 3,  'w' => 21, 'depth' => 2.6, 'tilt' => -0.012, 'layer' => 'front'],
+    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 61, 'y' => 1,  'w' => 16, 'depth' => 1.6, 'tilt' => 0.010,  'layer' => 'mid'],
+    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => 29, 'y' => 11, 'w' => 25, 'depth' => 3.0, 'tilt' => 0.008,  'layer' => 'front'],
+    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 83, 'y' => 15, 'w' => 13, 'depth' => 1.0, 'tilt' => -0.014, 'layer' => 'back'],
+    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => 2,  'y' => 29, 'w' => 15, 'depth' => 1.8, 'tilt' => 0.012,  'layer' => 'mid'],
+    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'x' => 44, 'y' => 33, 'w' => 14, 'depth' => 1.2, 'tilt' => -0.010, 'layer' => 'back'],
+    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 66, 'y' => 39, 'w' => 23, 'depth' => 2.8, 'tilt' => 0.009,  'layer' => 'front'],
+    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'x' => 19, 'y' => 51, 'w' => 14, 'depth' => 2.0, 'tilt' => -0.011, 'layer' => 'mid'],
+    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'x' => 49, 'y' => 61, 'w' => 22, 'depth' => 2.4, 'tilt' => 0.010,  'layer' => 'front'],
+    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'x' => 76, 'y' => 67, 'w' => 19, 'depth' => 1.5, 'tilt' => -0.008, 'layer' => 'mid'],
+    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'x' => 7,  'y' => 73, 'w' => 13, 'depth' => 0.9, 'tilt' => 0.013,  'layer' => 'back'],
+    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'x' => 35, 'y' => 83, 'w' => 15, 'depth' => 1.4, 'tilt' => -0.012, 'layer' => 'mid'],
 ];
 
 $before = [
@@ -220,43 +226,46 @@ $faq_schema = [
                 <p><?php esc_html_e('Twelve ranges, priced the same way. Windows and doors in uPVC and aluminium, sash windows, patio and bifold doors, replacement glass and secondary glazing.', 'fenster'); ?></p>
             </div>
         </div>
-        <ul class="fg-oq-range__field">
+        <div class="fg-oq-range__stage">
             <?php foreach ($spins as $index => $spin) : ?>
-                <li
-                    class="fg-oq-spin"
+                <div
+                    class="fg-oq-spin fg-oq-spin--<?php echo esc_attr($spin['layer']); ?>"
                     data-fg-depth="<?php echo esc_attr((string) $spin['depth']); ?>"
-                    style="--fg-spin-offset: <?php echo esc_attr((string) $spin['offset']); ?>px;"
+                    style="
+                        --fg-spin-x: <?php echo esc_attr((string) $spin['x']); ?>%;
+                        --fg-spin-y: <?php echo esc_attr((string) $spin['y']); ?>%;
+                        --fg-spin-w: <?php echo esc_attr((string) $spin['w']); ?>vw;
+                        --fg-spin-tilt: <?php echo esc_attr((string) $spin['tilt']); ?>;
+                    "
                 >
-                    <div class="fg-oq-spin__media">
-                        <?php /* The still is what shows until the video is wanted, and it is
-                                 also the whole story where VP9 alpha is unavailable or the
-                                 visitor asked for less motion. It carries the alpha, so it
-                                 sits on the gradient exactly as the video does. */ ?>
-                        <img
-                            <?php echo fenster_image_attr_string(FENSTER_THEME_URI . '/assets/images/spins/' . $spin['slug'] . '-spin.webp', [
-                                'alt' => $spin['label'] . ', one of the ranges you can price in the quote tool',
-                                'loading' => $index < 4 ? 'eager' : 'lazy',
-                                'class' => 'fg-oq-spin__still',
-                            ]); ?>
-                        >
-                        <video
-                            class="fg-oq-spin__video"
-                            data-fg-spin
-                            data-spin-src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/videos/spins/' . $spin['slug'] . '-spin.webm'); ?>"
-                            muted
-                            loop
-                            playsinline
-                            preload="none"
-                            aria-hidden="true"
-                            tabindex="-1"
-                        ></video>
-                    </div>
-                    <span class="fg-oq-spin__label"><?php echo esc_html($spin['label']); ?></span>
-                </li>
+                    <?php /* The still is what shows until the video is wanted, and it is also
+                             the whole story where VP9 alpha is unavailable or the visitor asked
+                             for less motion. It carries alpha too, so every fallback still
+                             reads as a product floating over the page rather than a grey box. */ ?>
+                    <img
+                        <?php echo fenster_image_attr_string(FENSTER_THEME_URI . '/assets/images/spins/' . $spin['slug'] . '-spin.webp', [
+                            'alt' => $spin['label'] . ', one of the ranges you can price in the quote tool',
+                            'loading' => $index < 3 ? 'eager' : 'lazy',
+                            'class' => 'fg-oq-spin__still',
+                        ]); ?>
+                    >
+                    <video
+                        class="fg-oq-spin__video"
+                        data-fg-spin
+                        data-spin-src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/videos/spins/' . $spin['slug'] . '-spin.webm'); ?>"
+                        muted
+                        loop
+                        playsinline
+                        preload="none"
+                        aria-hidden="true"
+                        tabindex="-1"
+                    ></video>
+                </div>
             <?php endforeach; ?>
-        </ul>
-        <div class="container fg-oq-range__action">
-            <a class="button" href="#fenster-quote-tool"><?php esc_html_e('Price yours', 'fenster'); ?></a>
+
+            <div class="container fg-oq-range__action">
+                <a class="button" href="#fenster-quote-tool"><?php esc_html_e('Price yours', 'fenster'); ?></a>
+            </div>
         </div>
     </section>
 
