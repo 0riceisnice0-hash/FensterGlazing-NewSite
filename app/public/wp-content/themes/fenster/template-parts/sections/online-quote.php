@@ -184,10 +184,19 @@ $faq_schema = [
                         allow="fullscreen"
                         referrerpolicy="no-referrer-when-downgrade"
                     ></iframe>
-                    <p class="fg-oq-cue">
-                        <span class="fg-oq-cue__arrow" aria-hidden="true"></span>
-                        <?php esc_html_e('Go straight in. This is the real tool, not a picture of one.', 'fenster'); ?>
-                    </p>
+                    <?php /* A ghost hand drifting over the tool and tapping it. Showing
+                             that the embed is live works better than a line of copy
+                             saying so, which is what this replaced. Decorative only:
+                             aria-hidden, no pointer events, and it stops for good the
+                             moment the visitor touches the tool themselves. */ ?>
+                    <div class="fg-oq-ghost" aria-hidden="true">
+                        <div class="fg-oq-ghost__travel">
+                            <span class="fg-oq-ghost__tap"></span>
+                            <svg class="fg-oq-ghost__hand" viewBox="0 0 24 24" width="38" height="38" focusable="false">
+                                <path d="M10 3.6a1.5 1.5 0 0 1 3 0V11h.4a1.9 1.9 0 0 1 3.8 0v.6a1.9 1.9 0 0 1 1.9 1.9V17a4.2 4.2 0 0 1-4.2 4.2h-2.7a4.2 4.2 0 0 1-3-1.3l-3.9-4a1.6 1.6 0 0 1 2.2-2.3L10 15.2Z"/>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
