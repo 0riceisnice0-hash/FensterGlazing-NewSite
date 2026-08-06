@@ -330,20 +330,36 @@ $wall = [
                                 <path d="M568 546 h10 v20 h-10"/>
                                 <path d="M568 654 h10 v20 h-10"/>
                             </g>
-                            <?php /* The S2 handle we actually fit: a rounded
-                                     backplate, the key barrel low on it, and a
-                                     lever that leaves the plate and sweeps down
-                                     with a hooked tail. Solid, because it is
-                                     the one piece of hardware the reference
-                                     photograph shows. */ ?>
+                            <?php /* THE S2 HANDLE, to scale off the owner's
+                                     close-up. This drawing runs at 1 unit = 1mm
+                                     (the reference window is a ~600mm single
+                                     light and the frame is 590 units wide), so
+                                     the handle is drawn at its real 160 x 28mm
+                                     rather than eyeballed. The previous one was
+                                     about 20% oversized in both directions.
+
+                                     Proportions are the photograph's: a 21mm
+                                     cap over a 53mm backplate over an 83mm
+                                     lever, the key barrel 45mm down, and the
+                                     lever cranking about 10mm left as it falls.
+                                     The spindle sits at 64mm, which is why the
+                                     handle is positioned so that lands exactly
+                                     on the gearbox spindle hole opposite. */ ?>
                             <g data-part="handle" class="fg-rp-svg__part">
-                                <rect x="508" y="378" width="33" height="86" rx="16"/>
-                                <circle cx="524" cy="440" r="7"/>
-                                <circle cx="524" cy="440" r="2.5"/>
-                                <path d="M516 400 C516 396 532 396 532 400 L532 412 C532 418 516 418 516 412 Z"/>
-                                <path d="M524 464 C524 500 523 520 520 540 C518 554 514 560 508 562"/>
-                                <path d="M532 464 C532 502 531 522 528 542 C526 558 520 566 508 568"/>
-                                <path d="M508 562 L508 568"/>
+                                <path d="M515 357 A9 9 0 0 1 533 357 L533 371
+                                         C537 378 538 386 538 393
+                                         C538 404 535 414 532 422
+                                         C531 440 528 466 524 486
+                                         C522 496 520 502 518 505
+                                         A6 6 0 0 1 508 503
+                                         C509 496 511 486 513 476
+                                         C516 456 517 438 518 422
+                                         C515 414 512 404 510 393
+                                         C510 386 511 378 515 371 Z"/>
+                                <path d="M515 371 H533"/>
+                                <circle cx="524" cy="393" r="8"/>
+                                <circle cx="524" cy="393" r="4.5"/>
+                                <path d="M524 393 v5"/>
                             </g>
                         </svg>
 
@@ -412,7 +428,6 @@ $wall = [
                                 <path d="M481 96 H491 M481 1062 H491"/>
                                 <rect x="477" y="486" width="19" height="168" rx="3"/>
                                 <rect x="482" y="536" width="9" height="9"/>
-                                <path d="M486 600 a7 7 0 1 1 0.1 0 M482.5 606 h7 l1.5 20 h-10 Z"/>
                                 <path d="M491 200 c14 0 18 8 18 16 M491 216 h18"/>
                                 <path d="M491 830 c14 0 18 8 18 16 M491 846 h18"/>
                                 <path d="M491 300 h13 v18 h-13"/>
@@ -440,20 +455,39 @@ $wall = [
                                 <circle cx="50" cy="1004" r="2.5"/><circle cx="50" cy="1034" r="2.5"/>
                                 <circle cx="64" cy="1004" r="2.5"/><circle cx="64" cy="1034" r="2.5"/>
                             </g>
-                            <?php /* Long-plate lever, the shape we fit: a tall
-                                     narrow backplate with the lever high on it
-                                     and the cylinder low, which is the layout
-                                     on the reference door. */ ?>
+                            <?php /* THE LONG-PLATE HANDLE AND ITS CYLINDER,
+                                     to scale off the owner's close-up. This
+                                     drawing runs at 1 unit = 1.92mm (a ~2150mm
+                                     doorset over 1120 units), so:
+                                       plate      240 x 32mm -> 125 x 17 units
+                                       lever      113mm out  ->  59 units
+                                       spindle     89mm down ->  46 units
+                                       cylinder   181mm down ->  94 units
+                                     The gap between the last two is 92mm, which
+                                     is the standard uPVC PZ centre distance and
+                                     is the check that the photograph was read
+                                     right. The plate was 65 x 384mm before.
+
+                                     The cylinder is drawn ON the plate, not
+                                     beside it, because that is where it shows:
+                                     it passes through the door horizontally, so
+                                     in elevation it appears once, on the face.
+                                     The gearbox in the leaf edge is seen
+                                     edge-on and carries no keyhole, which is
+                                     why one has been taken off it. */ ?>
                             <g data-part="dhandle" class="fg-rp-svg__part">
-                                <rect x="462" y="470" width="34" height="200" rx="16"/>
-                                <path d="M472 522 h14 v26 h-14 Z"/>
-                                <path d="M479 535 C452 535 434 540 421 549 C415 553 414 559 418 562 C422 565 428 563 432 559"/>
-                                <circle cx="479" cy="535" r="4"/>
+                                <rect x="461.5" y="494" width="17" height="125" rx="8.5"/>
+                                <path d="M462 534
+                                         C446 532 424 531 414 532
+                                         C407 533 403 536 403 540
+                                         C403 544 407 547 414 548
+                                         C428 550 448 549 462 547 Z"/>
+                                <circle cx="470" cy="540" r="3.5"/>
                             </g>
                             <g data-part="cylinder" class="fg-rp-svg__part">
-                                <path d="M479 604 a12 12 0 1 1 0.1 0"/>
-                                <path d="M473 613 h12 l3 30 h-18 Z"/>
-                                <circle cx="479" cy="602" r="4"/>
+                                <circle cx="470" cy="588" r="4.5"/>
+                                <path d="M467.4 592 H472.6 L472 601 H468 Z"/>
+                                <circle cx="470" cy="588" r="1.6"/>
                             </g>
                             <?php /* A round pet flap in the lower panel, which
                                      is where one goes on a door like this. Two
