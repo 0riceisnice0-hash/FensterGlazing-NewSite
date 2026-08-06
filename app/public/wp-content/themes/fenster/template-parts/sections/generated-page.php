@@ -162,6 +162,13 @@ $is_case_study = in_array($slug, ['case-studies', 'commercial-projects'], true)
 $is_team = $slug === 'meet-the-team';
 $is_obscure_glass = $slug === 'obscured-glass';
 $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'aluminium-colours'], true);
+/* Flush replaces the middle of this template only — owner, 2026-08-06, "just
+   change the middle". The hero, the specification strip, the technology banner
+   and the whole tail from the specification choices down are the shared ones
+   every product page gets; what comes out is `fg-product-why`,
+   `fg-product-intel` and `fg-product-visuals`, and the bespoke sections go in
+   their place. Not an early return like casement, which owns its own tail. */
+$is_flush_bespoke = $slug === 'flush-casement-windows';
 $is_window_handles = $slug === 'handle-options';
 $is_trust_page = $slug === 'why-trust-fenster';
 $is_about_page = $slug === 'about';
@@ -3446,21 +3453,6 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
-    <?php if ($slug === 'flush-casement-windows') : ?>
-        <?php
-        /* Bespoke from 2026-08-06. The route ran on this generic template until
-           the owner's audit, which is why it read as generated. Hooked here,
-           beside casement, so it keeps the shared hero and specification strip
-           above and owns everything below. */
-        get_template_part('template-parts/sections/flush-casement-windows-v2', null, [
-            'brand' => $brand,
-            'trust_items' => $trust_items,
-            'quote_url' => $product_quote_embed_url,
-            'quote_label' => $product_quote_embed_label,
-        ]);
-        ?>
-    <?php endif; ?>
-
     <?php if ($slug === 'casement-windows') : ?>
         <?php
         get_template_part('template-parts/sections/casement-windows-v2', null, [
@@ -3937,7 +3929,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4101,7 +4093,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4271,7 +4263,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4295,6 +4287,17 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
         <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page && ! $is_composite_doors) : ?>
+        <?php if ($is_flush_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/flush-casement-windows-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+                'quote_url' => $product_quote_embed_url,
+                'quote_label' => $product_quote_embed_label,
+            ]);
+            ?>
+        <?php endif; ?>
+
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">

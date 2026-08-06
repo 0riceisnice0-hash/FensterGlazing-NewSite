@@ -8,17 +8,29 @@
  * with a non-fact in it, and a photo set that included two aluminium windows and
  * an interior shot that cannot show the one thing this product does.
  *
+ * This replaces the MIDDLE of the generic template and nothing else — owner,
+ * 2026-08-06, "just change the middle". The hero, the specification strip, the
+ * technology banner and the whole tail from the specification choices down are
+ * the shared ones every product page gets. What this stands in for is
+ * `fg-product-why`, `fg-product-intel` and `fg-product-visuals`, which are gated
+ * off for this slug in generated-page.php. It is NOT an early return like
+ * casement, which owns its own tail; do not turn it into one.
+ *
  * Built on `.fg-cw`, the split-section grammar the heritage door page and the
  * lift-and-slide component already share, rather than a third layout of its own.
  * Deliberately NOT the casement page's stacked chapters: the owner wants that
- * device to stay unique to casement, so the feature here is the wipe instead.
+ * device to stay unique to casement.
  *
  * The order is the order the decision gets made in:
- *   what is a flush casement          -> the wipe, which shows it in one gesture
- *   does it suit my house             -> period and modern, side by side
+ *   does it suit my house             -> period, then the sash line up close
  *   is it any good                    -> performance and security, Liniar's figures
- *   how does it differ from standard  -> the comparison, flush-first
+ *   how does it differ from standard  -> the comparison, flush-first, with the
+ *                                        slider inside it
  *   have you actually fitted them     -> our own work
+ *
+ * The slider is deliberately late. The selling point is the flat sash face, not
+ * "compare it with the other one", and opening on a comparison framed the whole
+ * product as a variant of something else.
  *
  * Every figure here is Liniar's published specification for the 70mm flush sash:
  * 1.2 W/m²K whole window, A+, 28mm double glazed unit, PAS 24 and Secured by
@@ -74,10 +86,9 @@ $security = [
    are gone: judge a replacement by the sash-to-frame junction, not by a filename
    that says flush. */
 $gallery = [
-    ['file' => 'flush-modern-elevation-1600w.webp', 'caption' => 'Anthracite, across a rear elevation', 'alt' => 'Anthracite flush casement windows across the rear elevation of a red brick house'],
-    ['file' => 'flush-white-detail-1400w.webp', 'caption' => 'White, and the sash line up close', 'alt' => 'White flush casement window in red brick, the sashes closing level with the outer frame'],
-    ['file' => 'flush-cream-bars-1400w.webp', 'caption' => 'Cream, with Georgian bars', 'alt' => 'Cream flush casement windows with Georgian bars on a buff brick house'],
     ['file' => 'flush-white-bay-brick-1400w.webp', 'caption' => 'A bay, built in flush sashes', 'alt' => 'White flush casement bay window on a tile hung house'],
+    ['file' => 'flush-modern-elevation-1600w.webp', 'caption' => 'Anthracite, across a rear elevation', 'alt' => 'Anthracite flush casement windows across the rear elevation of a red brick house'],
+    ['file' => 'flush-cream-bars-1400w.webp', 'caption' => 'Cream, with Georgian bars', 'alt' => 'Cream flush casement windows with Georgian bars on a buff brick house'],
     ['file' => 'flush-stone-cottage-1400w.webp', 'caption' => 'A stone cottage frontage', 'alt' => 'White flush casement windows in a stone cottage elevation'],
     ['file' => 'flush-oak-dormers-1400w.webp', 'caption' => 'Golden oak dormers', 'alt' => 'Golden oak flush casement windows in two dormer gables'],
 ];
@@ -117,10 +128,10 @@ $gallery = [
     <section class="fg-cw-intro" aria-labelledby="fg-flush-modern-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
             <figure class="fg-cw-media">
-                <img src="<?php echo esc_url(fenster_generated_url($base . 'flush-render-detail-1600w.webp')); ?>"
-                    alt="<?php esc_attr_e('Grey flush casement window with a stone cill in a white rendered wall', 'fenster'); ?>"
-                    loading="lazy" width="1600" height="1163">
-                <figcaption><?php esc_html_e('Grey, on white render', 'fenster'); ?></figcaption>
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'flush-white-detail-1400w.webp')); ?>"
+                    alt="<?php esc_attr_e('White flush casement window in red brick, the sashes closing level with the outer frame', 'fenster'); ?>"
+                    loading="lazy" width="1400" height="1050">
+                <figcaption><?php esc_html_e('The sash, closing level', 'fenster'); ?></figcaption>
             </figure>
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('And the other half', 'fenster'); ?></p>
