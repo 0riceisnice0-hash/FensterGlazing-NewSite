@@ -2324,7 +2324,13 @@ function fenster_site_data(): array
                 ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
                 ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],
                 ['name' => 'Tribal', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Tribal-privacy-5.webp', 'copy' => 'High privacy with a bolder decorative pattern for statement glass.'],
-                ['name' => 'Warwick', 'privacy' => 0, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Warwick-privacy-0.webp', 'copy' => 'A handmade-style texture with character, but it is not a privacy glass choice.'],
+                /* Owner correction, 2026-08-06: Warwick is privacy 1, not 0. Zero is a real
+               category on this page — the picker prints "Decorative" instead of a
+               number and the copy said outright it was not a privacy choice — so this
+               was not a rounding difference, it was the wrong category. The filename
+               still says privacy-0; left as is, since renaming the asset is a bigger
+               change than the owner asked for and nothing reads the filename itself. */
+            ['name' => 'Warwick', 'privacy' => 1, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Warwick-privacy-0.webp', 'copy' => 'A handmade-style texture with character and the lightest level of privacy.'],
             ],
         ],
         'colour_options' => [
