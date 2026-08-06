@@ -197,133 +197,145 @@ $wall = [
                              the panel below carries the same information as
                              text. */ ?>
                     <div class="fg-rp-diag__plate">
-                        <?php /* WINDOW ELEVATION, drawn to real proportions.
-                                 Owner, 2026-08-06: make it accurate, like an
-                                 AutoCAD drawing, off the studio photography.
+                        <?php /* WINDOW ELEVATION, traced off the owner's own
+                                 reference photograph of a white uPVC casement
+                                 rather than composed from figures.
 
-                                 Scale is 1 unit = 3mm, so the geometry is the
-                                 real thing rather than a sketch:
-                                   1260 x 900mm two-light casement
-                                   70mm outer frame            = 23 units
-                                   70mm mullion                = 23
-                                   45mm sash face over the frame = 15
-                                   15mm glazing bead           = 5
-                                   30mm cill projection        = 10
-                                 The 45 degree lines at every corner are the
-                                 mitres a uPVC frame is actually welded on, and
-                                 they are most of why this reads as a drawing
-                                 rather than a diagram. Construction lines and
-                                 the dimension rule are hairline and dashed so
-                                 they sit behind the object.
+                                 Proportions are the photograph's, normalised:
+                                 a single side-hung light, hinged LEFT so the
+                                 handle is on the right stile, glass inset 110
+                                 units all round except the bottom rail, which
+                                 is deeper at 125 the way a real one is. The
+                                 cill projects past the frame both sides and
+                                 steps down.
 
-                                 Left light is the opener, hinged on the left,
-                                 so the handle and the gear are on its right
-                                 edge and the keeps are in the mullion opposite.
-                                 That is the arrangement in cas-flush-open. */ ?>
-                        <svg class="fg-rp-svg" viewBox="0 0 468 372" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="window">
+                                 SCULPTURE. The reference has six visible
+                                 outlines between the outer edge and the glass:
+                                 frame edge, frame chamfer, frame rebate, sash
+                                 edge, sash chamfer, bead. Drawing all six is
+                                 what makes it read as a sculptured uPVC
+                                 profile rather than a plain rectangle, and it
+                                 is the main thing the previous version was
+                                 missing.
+
+                                 HIDDEN LINES. The mechanism, the stays and the
+                                 keeps are drawn DASHED because you cannot see
+                                 them on the reference: they sit inside the
+                                 sash edge and the frame rebate. Dashed for
+                                 concealed detail is the drafting convention
+                                 and it happens to be exactly what is true
+                                 here. The handle is solid because it is the
+                                 one piece of hardware the photograph shows. */ ?>
+                        <svg class="fg-rp-svg" viewBox="0 0 620 900" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="window">
                             <g class="fg-rp-svg__construct">
-                                <path d="M250 8 V352 M14 170 H454"/>
-                                <path d="M24 344 H444"/>
-                                <path d="M24 340 v8 M444 340 v8 M250 340 v8"/>
+                                <path d="M310 0 V880 M0 415 H620"/>
+                                <path d="M15 866 H605 M15 862 v8 M605 862 v8"/>
                             </g>
                             <g class="fg-rp-svg__frame">
-                                <rect x="24" y="20" width="420" height="300"/>
-                                <rect x="47" y="43" width="374" height="254"/>
-                                <path d="M24 20 L47 43 M444 20 L421 43 M24 320 L47 297 M444 320 L421 297"/>
-                                <rect x="250" y="43" width="23" height="254"/>
-                                <path d="M14 320 H454 L448 338 H20 Z" class="fg-rp-svg__cill"/>
-                                <path d="M20 334 H448"/>
-                            </g>
-                            <g data-part="glass" class="fg-rp-svg__part">
-                                <rect x="67" y="63" width="163" height="214"/>
-                                <rect x="278" y="48" width="138" height="244"/>
-                                <path d="M78 268 L150 76 M100 268 L172 76" class="fg-rp-svg__sheen"/>
-                                <path d="M290 282 L360 58 M312 282 L382 58" class="fg-rp-svg__sheen"/>
+                                <rect x="15" y="10" width="590" height="810"/>
+                                <rect x="23" y="18" width="574" height="794"/>
+                                <rect x="60" y="55" width="500" height="720"/>
+                                <path d="M15 10 L60 55 M605 10 L560 55 M15 820 L60 775 M605 820 L560 775"/>
+                                <path d="M0 820 H620 L612 852 H8 Z" class="fg-rp-svg__cill"/>
+                                <path d="M8 846 H612"/>
                             </g>
                             <g data-part="realign" class="fg-rp-svg__part">
-                                <rect x="47" y="43" width="203" height="254"/>
-                                <rect x="62" y="58" width="173" height="224"/>
-                                <path d="M47 43 L62 58 M250 43 L235 58 M47 297 L62 282 M250 297 L235 282"/>
+                                <rect x="67" y="62" width="486" height="706"/>
+                                <rect x="81" y="76" width="458" height="678"/>
+                                <path d="M67 62 L81 76 M553 62 L539 76 M67 768 L81 754 M553 768 L539 754"/>
                             </g>
                             <g data-part="gasket" class="fg-rp-svg__part">
-                                <rect x="52" y="48" width="193" height="244" class="fg-rp-svg__seal"/>
+                                <rect x="63" y="58" width="494" height="714" class="fg-rp-svg__seal"/>
                             </g>
-                            <g data-part="stays" class="fg-rp-svg__part">
-                                <path d="M66 52 L150 62 M66 62 L124 66"/>
-                                <path d="M66 288 L150 278 M66 278 L124 274"/>
-                                <circle cx="150" cy="62" r="2.5"/>
-                                <circle cx="150" cy="278" r="2.5"/>
+                            <g data-part="glass" class="fg-rp-svg__part">
+                                <rect x="111" y="106" width="398" height="618"/>
+                                <rect x="125" y="120" width="370" height="575"/>
+                                <path d="M150 660 L300 170 M195 660 L345 170" class="fg-rp-svg__sheen"/>
                             </g>
-                            <g data-part="mechanism" class="fg-rp-svg__part">
-                                <rect x="237" y="63" width="6" height="214"/>
-                                <path d="M237 92 h-8 M237 134 h-8 M237 176 h-8 M237 218 h-8 M237 254 h-8"/>
+                            <g data-part="stays" class="fg-rp-svg__part fg-rp-svg__hidden">
+                                <path d="M92 88 L250 104 M92 104 L200 110"/>
+                                <path d="M92 742 L250 726 M92 726 L200 720"/>
                             </g>
-                            <g data-part="keeps" class="fg-rp-svg__part">
-                                <rect x="252" y="86" width="8" height="13"/>
-                                <rect x="252" y="128" width="8" height="13"/>
-                                <rect x="252" y="170" width="8" height="13"/>
-                                <rect x="252" y="212" width="8" height="13"/>
+                            <g data-part="mechanism" class="fg-rp-svg__part fg-rp-svg__hidden">
+                                <rect x="543" y="96" width="7" height="638"/>
+                                <path d="M543 170 h-10 M543 300 h-10 M543 430 h-10 M543 560 h-10 M543 680 h-10"/>
+                            </g>
+                            <g data-part="keeps" class="fg-rp-svg__part fg-rp-svg__hidden">
+                                <rect x="556" y="162" width="9" height="18"/>
+                                <rect x="556" y="292" width="9" height="18"/>
+                                <rect x="556" y="422" width="9" height="18"/>
+                                <rect x="556" y="552" width="9" height="18"/>
                             </g>
                             <g data-part="handle" class="fg-rp-svg__part">
-                                <rect x="219" y="152" width="15" height="27" rx="2"/>
-                                <path d="M226 179 v36" stroke-linecap="round"/>
-                                <circle cx="226" cy="165" r="3"/>
+                                <rect x="512" y="398" width="25" height="46" rx="6"/>
+                                <circle cx="524" cy="416" r="5"/>
+                                <path d="M524 444 C524 492 522 512 519 532" stroke-linecap="round"/>
                             </g>
                         </svg>
 
-                        <?php /* DOOR ELEVATION, same scale and same rules.
-                                 900 x 2050mm doorset: 70mm frame, 100mm leaf
-                                 stile, mid rail, glazed upper panel. Hinged
-                                 left, so the gear, the cylinder and the handle
-                                 are on the right edge and the hinges on the
-                                 left. Three of the five door symptoms answer
-                                 realignment, which is why `drealign` is the
-                                 leaf outline itself rather than a component. */ ?>
-                        <svg class="fg-rp-svg" viewBox="0 0 468 372" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="door" hidden>
+                        <?php /* DOOR ELEVATION, same treatment, traced off the
+                                 owner's reference of a white uPVC door: glazed
+                                 upper panel, sculptured solid lower panel, mid
+                                 rail with a letterplate, three hinges on the
+                                 left, long-plate lever with the cylinder below
+                                 it on the right, and a threshold.
+
+                                 The hinges ARE visible on the reference, so
+                                 they are solid. The gearbox and its keeps are
+                                 inside the leaf edge and the frame, so they are
+                                 dashed. */ ?>
+                        <svg class="fg-rp-svg fg-rp-svg--door" viewBox="0 0 560 1200" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="door" hidden>
                             <g class="fg-rp-svg__construct">
-                                <path d="M234 8 V364 M120 186 H348"/>
-                                <path d="M128 356 H340"/>
-                                <path d="M128 352 v8 M340 352 v8"/>
+                                <path d="M278 0 V1160 M0 570 H560"/>
+                                <path d="M15 1152 H540 M15 1148 v8 M540 1148 v8"/>
                             </g>
                             <g class="fg-rp-svg__frame">
-                                <rect x="128" y="14" width="212" height="330"/>
-                                <rect x="151" y="37" width="166" height="307"/>
-                                <path d="M128 14 L151 37 M340 14 L317 37"/>
-                                <path d="M120 344 H348 L344 358 H124 Z" class="fg-rp-svg__cill"/>
+                                <rect x="15" y="10" width="525" height="1120"/>
+                                <rect x="23" y="18" width="509" height="1104"/>
+                                <rect x="55" y="50" width="445" height="1040"/>
+                                <path d="M15 10 L55 50 M540 10 L500 50"/>
+                                <path d="M5 1090 H555 L548 1124 H12 Z" class="fg-rp-svg__cill"/>
+                                <path d="M12 1118 H548"/>
                             </g>
                             <g data-part="drealign" class="fg-rp-svg__part">
-                                <rect x="151" y="37" width="166" height="298"/>
-                                <rect x="164" y="50" width="140" height="272"/>
-                                <path d="M151 37 L164 50 M317 37 L304 50"/>
+                                <rect x="61" y="56" width="433" height="1028"/>
+                                <rect x="73" y="68" width="409" height="1004"/>
+                                <path d="M61 56 L73 68 M494 56 L482 68 M61 1084 L73 1072 M494 1084 L482 1072"/>
                             </g>
                             <g data-part="dgasket" class="fg-rp-svg__part">
-                                <rect x="156" y="42" width="156" height="288" class="fg-rp-svg__seal"/>
+                                <rect x="57" y="52" width="441" height="1036" class="fg-rp-svg__seal"/>
                             </g>
                             <g data-part="dglass" class="fg-rp-svg__part">
-                                <rect x="176" y="62" width="116" height="112"/>
-                                <path d="M186 166 L242 70 M208 166 L264 70" class="fg-rp-svg__sheen"/>
+                                <rect x="95" y="90" width="360" height="480"/>
+                                <rect x="107" y="102" width="336" height="456"/>
+                                <path d="M130 520 L250 150 M175 520 L295 150" class="fg-rp-svg__sheen"/>
                             </g>
                             <g class="fg-rp-svg__frame">
-                                <rect x="164" y="186" width="140" height="10"/>
-                                <rect x="176" y="208" width="116" height="102"/>
+                                <rect x="175" y="596" width="200" height="38" rx="4"/>
+                                <rect x="100" y="666" width="350" height="404"/>
+                                <rect x="114" y="680" width="322" height="376"/>
+                                <path d="M100 666 L114 680 M450 666 L436 680 M100 1070 L114 1056 M450 1070 L436 1056"/>
                             </g>
                             <g data-part="hinges" class="fg-rp-svg__part">
-                                <rect x="146" y="72" width="11" height="24" rx="1"/>
-                                <rect x="146" y="174" width="11" height="24" rx="1"/>
-                                <rect x="146" y="276" width="11" height="24" rx="1"/>
+                                <rect x="47" y="120" width="20" height="58" rx="3"/>
+                                <rect x="47" y="555" width="20" height="58" rx="3"/>
+                                <rect x="47" y="990" width="20" height="58" rx="3"/>
+                                <path d="M57 120 v58" class="fg-rp-svg__sheen"/>
+                                <path d="M57 555 v58" class="fg-rp-svg__sheen"/>
+                                <path d="M57 990 v58" class="fg-rp-svg__sheen"/>
                             </g>
-                            <g data-part="gearbox" class="fg-rp-svg__part">
-                                <rect x="306" y="60" width="6" height="252"/>
-                                <path d="M312 96 h8 M312 150 h8 M312 232 h8 M312 286 h8"/>
-                            </g>
-                            <g data-part="cylinder" class="fg-rp-svg__part">
-                                <circle cx="296" cy="212" r="8"/>
-                                <path d="M296 212 v11" stroke-linecap="round"/>
+                            <g data-part="gearbox" class="fg-rp-svg__part fg-rp-svg__hidden">
+                                <rect x="484" y="100" width="7" height="960"/>
+                                <path d="M491 200 h9 M491 400 h9 M491 720 h9 M491 920 h9"/>
                             </g>
                             <g data-part="dhandle" class="fg-rp-svg__part">
-                                <rect x="288" y="160" width="15" height="72" rx="3"/>
-                                <path d="M296 178 h-30" stroke-linecap="round"/>
-                                <circle cx="296" cy="178" r="3"/>
+                                <rect x="466" y="480" width="28" height="180" rx="8"/>
+                                <path d="M480 545 C452 545 436 548 424 553" stroke-linecap="round"/>
+                                <circle cx="480" cy="545" r="5"/>
+                            </g>
+                            <g data-part="cylinder" class="fg-rp-svg__part">
+                                <circle cx="480" cy="622" r="11"/>
+                                <path d="M480 622 v14" stroke-linecap="round"/>
                             </g>
                         </svg>
 
@@ -370,32 +382,84 @@ $wall = [
     </section>
 
     <?php /* ---------- The engineers ---------------------------------------
-             The owner's strongest USP and the one that most needs a face on
-             it. Full-bleed photograph, copy on the plate. */ ?>
-    <section class="fg-rp-team" aria-labelledby="fg-rp-team-title">
-        <?php /* Andy McCullagh, and this is the one portrait on the page for
-                 two reasons. It is genuinely ours, black and white, in a
-                 Fenster fleece, which is the register the owner asked for —
-                 the previous version used a hi-vis installer shot, which is
-                 the local-garage look this page exists to avoid.
+             Rebuilt 2026-08-06. It had been one full-height portrait of Andy
+             beside the copy, and the owner's note was that centring the whole
+             section on one person is too much. So the bold image is the VAN,
+             and the engineers are a quiet row underneath with a route through
+             to Meet the Team.
 
-                 And it is HIM specifically because CASESTUDIES.md records his
-                 job title as Service Engineer. The other portraits in the
-                 theme are fitters, and a row of installers' faces under a
-                 heading reading "service engineers, not installers" would
-                 contradict itself. If the owner wants the whole repair team
-                 here, we need to know who they are first. */ ?>
-        <div class="fg-rp-team__media">
-            <img
-                src="<?php echo esc_url(fenster_generated_url($img . 'imported/7.png')); ?>"
-                alt="<?php esc_attr_e('Andy McCullagh, Fenster service engineer', 'fenster'); ?>"
-                width="2430" height="2430" loading="lazy" decoding="async">
-        </div>
-        <div class="fg-rp-team__copy">
-            <p class="eyebrow"><?php esc_html_e('Who comes out', 'fenster'); ?></p>
-            <h2 id="fg-rp-team-title"><?php esc_html_e('Service engineers, not installers between jobs.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Repairs are their trade rather than the gap between fitting weeks, and there are decades of experience across the team. They are on our books, so nobody arrives at your house under our name who does not work for us.', 'fenster'); ?></p>
-            <p><?php esc_html_e('It is also why the diagnosis usually holds: they have seen the system before, and most faults are recognised from a description and a photograph rather than found on the day.', 'fenster'); ?></p>
+             THE VAN SLOT IS EMPTY UNTIL THE PHOTOGRAPH ARRIVES. Set `$van_src`
+             to a theme path and the band becomes full-bleed; leave it empty and
+             the section renders as copy and portraits on the soft ground, which
+             is a perfectly good section rather than a hole. Same shape as
+             `$film_src` on the casement page. There is deliberately no stand-in
+             image: the About handover records that the theme has no van, no
+             workshop and no group shot, so anything put here would be a stock
+             photograph of somebody else's van.
+
+             THE TWO NAMED PEOPLE ARE THE TWO SERVICE ENGINEERS AND NOBODY ELSE.
+             Owner-confirmed 2026-08-06, and `data/pages.json` agrees: Andy
+             McCullagh and Steven Welch are the only two whose role reads
+             Service Engineer. Tom Carter, Johnnie Greenwell, Zac Rugman and
+             Shane Gowing are Installers, and putting their faces under this
+             heading would contradict it. Note Steve Freezer is a Technical
+             Advisor and a different person from Steven Welch: two Steves, the
+             same trap the two Zacs already set in CASESTUDIES.md.
+
+             "Decades each" is the owner's own phrasing and is his to stand
+             behind. Do not turn it into a number nobody has given. */ ?>
+    <?php
+    /* The van slot is wired to a path rather than a flag, and guarded on the
+       file actually being there. Drop the photograph in at
+       `assets/images/about/fenster-van.jpg` and the band appears; until then
+       the section renders as copy and portraits, which is a complete section
+       rather than a hole. No code change either way, and no broken image if
+       the file never arrives. */
+    $van_rel = 'about/fenster-van.jpg';
+    $van_src = file_exists(get_template_directory() . '/assets/images/' . $van_rel)
+        ? $img . $van_rel
+        : '';
+    $engineers = [
+        ['name' => 'Andy McCullagh', 'image' => 'imported/7.png'],
+        ['name' => 'Steven Welch', 'image' => 'imported/5-2.png'],
+    ];
+    $team_url = esc_url(home_url('/meet-the-team/'));
+    ?>
+    <section class="fg-rp-team<?php echo $van_src !== '' ? ' fg-rp-team--van' : ''; ?>" aria-labelledby="fg-rp-team-title">
+        <?php if ($van_src !== '') : ?>
+            <div class="fg-rp-team__van">
+                <img
+                    src="<?php echo esc_url(fenster_generated_url($van_src)); ?>"
+                    alt="<?php esc_attr_e('A Fenster Glazing service van', 'fenster'); ?>"
+                    loading="lazy" decoding="async">
+            </div>
+        <?php endif; ?>
+        <div class="container fg-rp-team__inner">
+            <div class="fg-rp-team__copy">
+                <p class="eyebrow"><?php esc_html_e('Who comes out', 'fenster'); ?></p>
+                <h2 id="fg-rp-team-title"><?php esc_html_e('Service engineers, not installers between jobs.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Repairs are their trade rather than the gap between fitting weeks, and they have decades each behind them. They are on our books, so nobody arrives at your house under our name who does not work for us.', 'fenster'); ?></p>
+                <p><?php esc_html_e('It is also why the diagnosis usually holds. They have seen the system before, so most faults are recognised from a description and a photograph rather than found on the day.', 'fenster'); ?></p>
+            </div>
+            <div class="fg-rp-team__people">
+                <ul>
+                    <?php foreach ($engineers as $person) : ?>
+                        <li>
+                            <a href="<?php echo $team_url . '#' . esc_attr(sanitize_title($person['name'])); ?>">
+                                <img
+                                    src="<?php echo esc_url(fenster_generated_url($img . $person['image'])); ?>"
+                                    alt="<?php echo esc_attr($person['name']); ?>"
+                                    width="2430" height="2430" loading="lazy" decoding="async">
+                                <span>
+                                    <strong><?php echo esc_html($person['name']); ?></strong>
+                                    <em><?php esc_html_e('Service Engineer', 'fenster'); ?></em>
+                                </span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <a class="fg-rp-team__link" href="<?php echo $team_url; ?>"><?php esc_html_e('Meet the team', 'fenster'); ?></a>
+            </div>
         </div>
     </section>
 

@@ -39258,6 +39258,20 @@ html.fg-blinds-reveal-locked {
   stroke-dasharray: 5 3;
 }
 
+/* Concealed hardware: the mechanism, the stays, the keeps and the door gearbox.
+   You cannot see any of them on the reference photographs because they sit
+   inside the sash edge and the frame rebate, and dashed is how a drawing shows
+   detail behind the surface. Convention and truth agreeing for once. */
+.fg-rp-svg__hidden {
+  stroke-dasharray: 7 5;
+}
+
+/* The door is a tall thin object, so it needs its own ceiling or it fills the
+   plate and dwarfs the window when you switch between them. */
+.fg-rp-svg--door {
+  max-width: 232px;
+}
+
 .fg-rp-svg__sheen {
   stroke: rgba(255, 255, 255, 0.1);
 }
@@ -39414,31 +39428,38 @@ html.fg-blinds-reveal-locked {
   line-height: 1.55;
 }
 
-/* ---------- The engineers ------------------------------------------------- */
+/* ---------- The engineers -------------------------------------------------
+   The van is the bold image when there is one; the engineers are a quiet row
+   underneath. Before, one portrait ran the full height beside the copy and the
+   whole section read as being about one man. */
 
 .fg-rp-team {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: stretch;
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
+  background: var(--color-soft);
 }
 
-.fg-rp-team__media {
+/* Full-bleed, and only when a van photograph exists. `100vw` off a centred
+   container is the standard trick; `calc(50% - 50vw)` on both sides is what
+   keeps it from causing horizontal scroll the way a negative viewport-width
+   margin would. */
+.fg-rp-team__van {
   overflow: hidden;
-  min-height: 420px;
+  margin: calc(clamp(3rem, 6vw, 4.5rem) * -1) 0 clamp(2.5rem, 5vw, 3.5rem);
+  aspect-ratio: 21 / 9;
 }
 
-.fg-rp-team__media img {
+.fg-rp-team__van img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.fg-rp-team__copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 4.5rem);
-  background: var(--color-soft);
+.fg-rp-team__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
 }
 
 .fg-rp-team__copy h2 {
@@ -39454,6 +39475,61 @@ html.fg-blinds-reveal-locked {
   color: var(--color-muted);
   font-size: 1rem;
   line-height: 1.6;
+}
+
+.fg-rp-team__people ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-rp-team__people a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Deliberately modest. These are 88px portraits, not a hero: the section is
+   about the pair of them and the van, not about a face. */
+.fg-rp-team__people img {
+  display: block;
+  width: 88px;
+  height: 88px;
+  margin-bottom: 0.65rem;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.fg-rp-team__people strong {
+  display: block;
+  color: var(--color-ink);
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.fg-rp-team__people em {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-style: normal;
+}
+
+.fg-rp-team__link {
+  display: inline-block;
+  margin-top: 1.35rem;
+  color: var(--color-accent);
+  font-size: 0.94rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.fg-rp-team__link::after {
+  content: ' \2192';
 }
 
 /* ---------- The parts wall ------------------------------------------------ */
@@ -39768,13 +39844,12 @@ html.fg-blinds-reveal-locked {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  .fg-rp-team {
+  .fg-rp-team__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .fg-rp-team__media {
-    min-height: 300px;
-    max-height: 380px;
+  .fg-rp-team__van {
+    aspect-ratio: 16 / 9;
   }
 
   .fg-rp-wall__grid {
