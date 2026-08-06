@@ -2294,7 +2294,12 @@ function fenster_site_data(): array
                    entry used to be a hand-drawn repeating-linear-gradient, which read as
                    pinstripe and contradicted its own description on a customer-facing
                    page. feTurbulence is what actually looks sandblasted. */
-                ['name' => 'Satin', 'privacy' => 5, 'texture' => 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2760%27 height=%2760%27%3E%3Cfilter id=%27s%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.9%27 numOctaves=%274%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix type=%27saturate%27 values=%270%27/%3E%3C/filter%3E%3Crect width=%2760%27 height=%2760%27 filter=%27url(%23s)%27 opacity=%270.55%27/%3E%3C/svg%3E"), radial-gradient(circle at 30% 26%, rgba(255,255,255,0.95), rgba(255,255,255,0) 58%), linear-gradient(135deg, #f6fbfb, #e3eff0)', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
+                /* Satin is smooth. It was drawn with an feTurbulence fractalNoise layer at
+               0.55 opacity, which is a generator of mottle — the one thing real
+               satin does not have. Acid-etched glass is an even, flat frost, so it
+               is an even, flat wash now: a soft diagonal for a little depth and a
+               faint sheen off one corner, and no grain at all. */
+            ['name' => 'Satin', 'privacy' => 5, 'texture' => 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%), linear-gradient(135deg, #f7fbfb 0%, #eef6f7 46%, #e4f0f1 100%)', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
                 ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
                 ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
                 ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5.webp', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
@@ -2308,7 +2313,13 @@ function fenster_site_data(): array
                 ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
                 ['name' => 'Oak', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Oak-privacy-4.webp', 'copy' => 'Leaf-like movement with strong privacy and a warmer decorative feel.'],
                 ['name' => 'Pelerine', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Pelerine-privacy-4.webp', 'copy' => 'Flowing vertical texture for privacy with a quieter, more elegant pattern.'],
-                ['name' => 'Reeded', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2.webp', 'copy' => 'Linear ribbing with partial screening and a timeless architectural finish.'],
+                /* Reeded ribs are fine — roughly a centimetre apart on real glass, so a
+               pane shows dozens of them. It was a photograph scaled with
+               `background-size: cover`, which stretched perhaps eight ribs across
+               whatever box it landed in and read as heavy fluting. Drawn as a
+               repeating gradient it holds the same pitch at any size, on the
+               swatch and across the full stage alike. */
+            ['name' => 'Reeded', 'privacy' => 2, 'texture' => 'repeating-linear-gradient(90deg, rgba(255,255,255,0.92) 0px, rgba(255,255,255,0.92) 1px, rgba(203,224,226,0.5) 1px, rgba(203,224,226,0.5) 3px, rgba(247,252,252,0.88) 3px, rgba(247,252,252,0.88) 5px), linear-gradient(135deg, #f5fafa, #e3eff0)', 'copy' => 'Linear ribbing with partial screening and a timeless architectural finish.'],
                 ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
                 ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
                 ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],
