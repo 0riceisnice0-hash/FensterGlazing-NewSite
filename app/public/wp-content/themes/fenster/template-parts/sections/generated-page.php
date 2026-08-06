@@ -2583,7 +2583,16 @@ if ($is_obscure_glass) {
         $texture_image = trim((string) ($texture['image'] ?? ''));
         return $texture_image !== '' ? 'url("' . fenster_generated_url($texture_image) . '")' : 'none';
     };
+    /* Optional per-pattern scale. Only the photographed textures need it — a CSS
+       gradient has no intrinsic size to get wrong — and without it `cover` blows a
+       photograph up to whatever box it lands in, which is what made Reeded read as
+       giant fluting on a 58px swatch. Defaults to `cover` so nothing else changes. */
+    $obscure_glass_texture_size = static function (array $texture): string {
+        $size = trim((string) ($texture['size'] ?? ''));
+        return $size !== '' ? $size : 'cover';
+    };
     $active_glass_texture = is_array($obscure_glass_first) ? $obscure_glass_texture_value($obscure_glass_first) : 'none';
+    $active_glass_texture_size = is_array($obscure_glass_first) ? $obscure_glass_texture_size($obscure_glass_first) : 'cover';
     $obscure_glass_left = array_slice($obscure_glass_textures, 0, 10, true);
     $obscure_glass_right = array_slice($obscure_glass_textures, 10, null, true);
     $obscure_glass_bottom = [];
@@ -2601,13 +2610,14 @@ if ($is_obscure_glass) {
             class="<?php echo $index === 0 ? 'is-active' : ''; ?>"
             data-fg-obscure-option
             data-texture="<?php echo esc_attr($texture_value); ?>"
+            data-size="<?php echo esc_attr(trim((string) ($texture['size'] ?? 'cover'))); ?>"
             data-name="<?php echo esc_attr($texture_name); ?>"
             data-key="<?php echo esc_attr(sanitize_title($texture_name)); ?>"
             data-privacy="<?php echo esc_attr((string) $privacy); ?>"
             data-copy="<?php echo esc_attr((string) ($texture['copy'] ?? '')); ?>"
             aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
         >
-            <span style="<?php echo esc_attr('--texture:' . $texture_value . ';'); ?>" aria-hidden="true"></span>
+            <span style="<?php echo esc_attr('--texture:' . $texture_value . '; --texture-size:' . trim((string) ($texture['size'] ?? 'cover')) . ';'); ?>" aria-hidden="true"></span>
             <strong><?php echo esc_html($texture_name); ?></strong>
             <small><?php echo esc_html($privacy === 0 ? 'Decorative' : 'Privacy ' . $privacy); ?></small>
         </button>
@@ -2650,7 +2660,7 @@ if ($is_obscure_glass) {
             ?>
             <div class="fg-obscure-hero__preview" aria-hidden="true">
                 <?php foreach ($obscure_wall_tiles as $texture) : ?>
-                    <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . ';'); ?>"></span>
+                    <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --texture-size:' . $obscure_glass_texture_size($texture) . ';'); ?>"></span>
                 <?php endforeach; ?>
             </div>
             <div class="fg-obscure-hero__veil" aria-hidden="true"></div>
@@ -2680,7 +2690,7 @@ if ($is_obscure_glass) {
                     <?php /* Painted with the house already in place, because the JS
                              now starts on 'house' too. If this still rendered Legend the
                              scene would visibly swap the moment the script ran. */ ?>
-                    style="<?php echo esc_attr('--scene-image:url(' . fenster_generated_url($house_image !== '' ? $house_image : $legend_image) . '); --active-texture:' . $active_glass_texture . '; --privacy:' . $active_glass_privacy); ?>"
+                    style="<?php echo esc_attr('--scene-image:url(' . fenster_generated_url($house_image !== '' ? $house_image : $legend_image) . '); --active-texture:' . $active_glass_texture . '; --active-texture-size:' . $active_glass_texture_size . '; --privacy:' . $active_glass_privacy); ?>"
                     data-cat-image="<?php echo esc_url(fenster_generated_url($legend_image)); ?>"
                     data-house-image="<?php echo esc_url(fenster_generated_url($house_image)); ?>"
                     data-active-background="house"
@@ -2767,7 +2777,7 @@ if ($is_obscure_glass) {
                     <?php foreach ($obscure_glass_textures as $texture) : ?>
                         <?php $privacy = (int) ($texture['privacy'] ?? 0); ?>
                         <article>
-                            <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . ';'); ?>" aria-hidden="true"></span>
+                            <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --texture-size:' . $obscure_glass_texture_size($texture) . ';'); ?>" aria-hidden="true"></span>
                             <div>
                                 <h3><?php echo esc_html((string) ($texture['name'] ?? 'Glass pattern')); ?></h3>
                                 <p><?php echo esc_html($privacy === 0 ? 'Decorative texture' : 'Privacy level ' . $privacy); ?></p>
