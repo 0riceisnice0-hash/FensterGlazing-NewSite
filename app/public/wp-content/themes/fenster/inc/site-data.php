@@ -1801,12 +1801,12 @@ function fenster_site_data(): array
                     ['title' => 'We diagnose before we quote', 'copy' => 'We fit these systems every week, so we know what a symptom usually means before we arrive. A window that will not lock is almost always the mechanism, not the whole window.'],
                     ['title' => 'Repair first, where repair is right', 'copy' => 'If the frame is sound, a repair is the sensible answer and we will say so. We will also tell you when it is not worth it, which is the more useful half of that advice.'],
                     ['title' => 'Windows and doors, any installer', 'copy' => 'uPVC, aluminium and composite, whether we fitted it or somebody else did. Parts availability on older systems is the one thing that decides it.'],
-                    ['title' => 'Published repair prices', 'copy' => 'A minimum charge of £96 including VAT, and the common jobs are priced on this page rather than quoted on the doorstep.'],
+                    ['title' => 'Fairly priced', 'copy' => 'Priced off a set list rather than judged on the doorstep, so the same fault costs the same whoever we send. Quoting is normally free and usually does not need a visit.'],
                     ['title' => 'Our own engineers', 'copy' => 'The same team that installs, not a subcontractor sent out under our name.'],
                 ],
                 'faqs' => [
                     ['question' => 'How much does a window or door repair cost?', 'answer' => 'Repairs start from £96 including VAT, and most land somewhere between that and around £200 depending on which part the job needs. A handle is at the lower end, a door mechanism at the upper. Rather than guess, tell us what it is doing and send a photograph if you can, and we will come back with a figure for your actual fault.'],
-                    ['question' => 'Do you charge to come out and quote a repair?', 'answer' => 'Normally, no. Most faults we can diagnose and price without coming out at all, from a description and a photograph or two, and where it does need looking at that visit is normally free. There is a minimum charge of £96 including VAT on the work itself, but that only applies if you go ahead. It exists so we are not sending an engineer across Milton Keynes to fit a twenty pound handle.'],
+                    ['question' => 'Do you charge to come out and quote a repair?', 'answer' => 'Normally, no. Most faults we can diagnose and price without coming out at all, from a description and a photograph or two, and where it does need looking at, that visit is normally free.'],
                     ['question' => 'Do you repair windows and doors you did not fit?', 'answer' => 'Yes, and most of our repair work is exactly that. We fit uPVC, aluminium and composite systems every week, so we know the hardware other installers use. The only real limit is parts: on a very old system the gear may no longer be made.'],
                     ['question' => 'My double glazing has gone misty. Is that a repair?', 'answer' => 'It is a glass job rather than a hardware one. The seal around the double glazed unit has failed and moisture is in the cavity, which cannot be dried out, but the glass changes on its own and the frame stays. See our replacement glazed units page for how that works.'],
                     ['question' => 'Can you still get parts for an older window or door?', 'answer' => 'Usually. Hardware is more standardised than it looks, and a mechanism is matched on backset, centres and faceplate rather than on the brand of the window. Where a part genuinely is obsolete we will tell you, and we will say what the alternatives are rather than leaving you with a window that does not lock.'],
@@ -2098,6 +2098,16 @@ function fenster_site_data(): array
                 'link' => '/double-glazing-replacement/',
                 'link_label' => 'Replacement glazed units',
             ],
+            'd-catflap' => [
+                'name' => 'Cat or dog flap',
+                'sub' => 'Door',
+                'image' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-glass-closeup.webp',
+                'alt' => 'Round pet flap fitted into a glazed door panel',
+                'what' => 'Not a fault, and the only thing on this list that is not. It goes into the door panel, or into a new sealed unit made with the aperture already in it.',
+                'fix' => 'A sealed unit cannot be cut once it is made, so which of the two your door needs is settled before anything is ordered.',
+                'link' => '/cat-and-dog-flaps/',
+                'link_label' => 'Cat and dog flaps',
+            ],
             'd-draught' => [
                 'name' => 'Realignment',
                 'sub' => 'Door',
@@ -2157,6 +2167,10 @@ function fenster_site_data(): array
                        drawn panel an orphan group; it is a real fault and a
                        door panel mists exactly like a window. */
                     ['id' => 'd-glass', 'symptom' => 'The glass is misted or broken', 'part' => 'd-glass', 'svg' => 'dglass'],
+                    /* Last on the door list, owner instruction 2026-08-06. The
+                       only entry that is a request rather than a fault, which
+                       is why it is at the bottom and why its copy says so. */
+                    ['id' => 'd-catflap', 'symptom' => 'I want a cat or dog flap fitted', 'part' => 'd-catflap', 'svg' => 'catflap'],
                 ],
             ],
         ],
