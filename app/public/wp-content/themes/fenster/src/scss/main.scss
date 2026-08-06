@@ -38715,8 +38715,14 @@ html.fg-blinds-reveal-locked {
   color: #ffffff;
 }
 
+/* `.fg-cw h2` sets `--color-ink` at (0,1,1), which beats the section's own white
+   at (0,1,0) — so the security heading rendered dark on dark and was unreadable.
+   Every one of these carries enough specificity to win rather than relying on
+   source order, because this stylesheet is long and the `.fg-cw` block is not
+   next to this one. */
 .fg-flush-band--dark .eyebrow,
-.fg-flush-band--dark dt {
+.fg-flush-band--dark dt,
+.fg-flush-band--dark .fg-flush-band__head h2 {
   color: #ffffff;
 }
 
