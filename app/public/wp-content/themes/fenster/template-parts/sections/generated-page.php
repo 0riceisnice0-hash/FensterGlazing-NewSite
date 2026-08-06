@@ -2626,15 +2626,25 @@ if ($is_obscure_glass) {
                         <a class="button button--light" href="#fenster-enquiry"><?php esc_html_e('Ask about glass options', 'fenster'); ?></a>
                     </div>
                 </div>
-                <?php /* Squares of the real glass, the same tile the picker buttons
-                         use, three rows deep. It was five floating panes on a
-                         perspective stage, which zoomed each texture far enough that
-                         the patterns stopped being distinguishable from one another —
-                         the one thing this page exists to show. Nine tiles at their
-                         natural scale read as nine different glasses. */ ?>
+                <?php
+                /* The wall, built exactly like the colour hub's: tiles butted edge
+                   to edge with no gap, no radius and no border, filling the band
+                   full width behind a left-hand veil. The texture list is cycled
+                   to a fixed count so the grid always fills — there are fewer
+                   patterns than there are cells at desktop width, and a short list
+                   would leave holes in the wall at the right-hand end, which is
+                   exactly where the veil has cleared and you would see them. */
+                $obscure_wall_tiles = [];
+                $obscure_wall_source = array_values($obscure_glass_textures);
+                if ($obscure_wall_source !== []) {
+                    for ($i = 0; $i < 45; $i++) {
+                        $obscure_wall_tiles[] = $obscure_wall_source[$i % count($obscure_wall_source)];
+                    }
+                }
+                ?>
                 <div class="fg-obscure-hero__preview" aria-hidden="true">
-                    <?php foreach (array_slice($obscure_glass_textures, 0, 9) as $index => $texture) : ?>
-                        <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --delay:' . ($index * 0.08) . 's;'); ?>"></span>
+                    <?php foreach ($obscure_wall_tiles as $index => $texture) : ?>
+                        <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --delay:' . (($index % 15) * 0.035) . 's;'); ?>"></span>
                     <?php endforeach; ?>
                 </div>
             </div>
