@@ -4745,9 +4745,17 @@ if ($is_commercial_hub) {
 
         <?php if (! empty($product_faqs)) : ?>
             <?php
-            // Composite doors carries six: the price question was added in front
-            // of the existing five, and the U-value answer must not drop off.
-            $product_faq_limit = ($slug === 'sliding-sash-windows' || $is_composite_doors) ? 6 : 5;
+            /* Composite doors carries six: the price question was added in front of
+               the existing five, and the U-value answer must not drop off. Flush
+               casement is now the same story — the triple glazing answer is appended
+               to five that already exist, so at a limit of five it was built, added
+               to the array, and then sliced off before it ever rendered. The code
+               was on the page and the answer was not, which is the worst version of
+               this bug because nothing looks broken.
+
+               Anything appending a FAQ to a route that already fills its limit has
+               to raise the limit too. */
+            $product_faq_limit = ($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows') ? 6 : 5;
             $faq_schema = [
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',
