@@ -39268,8 +39268,21 @@ html.fg-blinds-reveal-locked {
 
 /* The door is a tall thin object, so it needs its own ceiling or it fills the
    plate and dwarfs the window when you switch between them. */
+/* A 2150mm doorset next to a 600mm window means the door is drawn at its own
+   scale, which is normal on a drawing sheet but does make its hardware small.
+   Given it more width than the window so the cylinder and the lever stay
+   legible; the plate column has the room. */
+/* 292, measured not guessed: the door viewBox is 560 x 1200, the plate is
+   634px tall, and 300px of width made it 643px and overflowed by 9. This is
+   the ceiling, so the door is as large as it can be drawn here. That matters
+   because the drawing is TRUE SCALE and the door is a 2150mm object: a 17mm
+   euro cylinder lands at under 5px whatever we do. Drawing it bigger would
+   make it wrong. The highlight is what makes it findable and the photograph
+   beside it is what shows the detail; if the hardware needs to be readable on
+   the drawing itself, that wants an enlarged detail callout, not a fudged
+   scale. */
 .fg-rp-svg--door {
-  max-width: 232px;
+  max-width: 292px;
 }
 
 .fg-rp-svg__sheen {
