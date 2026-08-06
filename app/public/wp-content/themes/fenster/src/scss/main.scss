@@ -10001,10 +10001,17 @@ html.fg-gallery-lightbox-open body {
   );
 }
 
-.fg-obscure-hero__grid,
+/* One column, the way the colour hub collapses its own hero grid once the wall is
+   behind it. This kept `minmax(0, 0.78fr) minmax(320px, 0.62fr)` from the days
+   when the second column held a panel of floating panes — so the layout went on
+   reserving an empty 320px slot on the right and squeezing the copy into the
+   left fraction, while the wall it was supposed to sit over ran full bleed
+   underneath. That is what made it read as a block in the corner rather than a
+   band. The copy is held by its own measure instead. */
 .fg-obscure-hero__copy {
   position: relative;
   z-index: 2;
+  max-width: min(46rem, 52%);
 }
 
 .fg-obscure-hero__grid,
@@ -10015,8 +10022,20 @@ html.fg-gallery-lightbox-open body {
   align-items: center;
 }
 
+/* One column, the way the colour hub collapses its hero grid once a wall sits
+   behind it. This was `minmax(0, 0.78fr) minmax(320px, 0.62fr)` from the days
+   when the second column held a panel of floating panes, so the layout went on
+   reserving an empty 320px slot on the right and squeezing the copy into the left
+   fraction while the wall ran full bleed underneath it. That is what made the
+   hero read as a block in a corner rather than a band.
+
+   Edited here rather than overridden earlier in the file: a competing rule at the
+   same specificity placed above this one simply loses, which is exactly what
+   happened on the first attempt at this fix. */
 .fg-obscure-hero__grid {
-  grid-template-columns: minmax(0, 0.78fr) minmax(320px, 0.62fr);
+  position: relative;
+  z-index: 2;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .fg-obscure-hero__copy h1 {
@@ -10033,26 +10052,22 @@ html.fg-gallery-lightbox-open body {
   font-size: clamp(1rem, 1.35vw, 1.16rem);
 }
 
-/* The wall, laid out like the colour hub's: absolute, full bleed, tiles butted
-   edge to edge with no gap, radius or border, and the hero clipping so it runs
-   off the bottom rather than stopping in a line.
+/* The wall: absolute, full bleed, tiles butted edge to edge with no gap, radius
+   or border, and the hero clipping so it runs off the bottom.
 
-   Bigger tiles than the colour wall, deliberately. That wall is 26 columns of
-   flat colour, and a flat colour reads at any size. A glass texture has to show
-   its pattern or the tile is just grey, so this is 14 columns — roughly double
-   the area, and near enough the picker's own 58px swatch to stay honest about
-   what each pattern looks like.
-
-   Rows are sized in vw to match the column width (100vw / 14 = 7.14vw), so the
-   tiles stay square as the viewport changes instead of stretching wide on a big
-   screen. */
+   Six columns, not the colour wall's twenty-six. That wall is flat colour and a
+   flat colour reads at any size; a glass texture has to show its pattern or the
+   tile is just grey. Rows are sized to the column width (100vw / 6 = 16.6vw) so
+   the tiles stay square, which puts three rows across the band's height — which
+   is what the owner asked for and, not coincidentally, the largest tile that
+   still lets the wall fill. */
 .fg-obscure-hero__preview {
   position: absolute;
   inset: 0;
   z-index: 0;
   display: grid;
-  grid-template-columns: repeat(14, minmax(0, 1fr));
-  grid-auto-rows: clamp(68px, 7.14vw, 132px);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: clamp(150px, 16.6vw, 260px);
   gap: 0;
   padding: 0;
   min-height: 0;
@@ -10085,16 +10100,19 @@ html.fg-gallery-lightbox-open body {
 }
 
 @media (max-width: 900px) {
-  /* The colour hub's move at this width: the wall stops being a backdrop beside
-     the copy and becomes a band above it, with the veil turned vertical so the
-     text still has a solid ground. Six columns rather than fourteen, because a
-     tile a phone splits fourteen ways is too small to show a pattern. */
+  /* Band above the copy, veil turned vertical — the colour hub's move at this
+     width. Three columns so a tile on a phone is still big enough to show its
+     pattern. */
   .fg-obscure-hero__preview {
     position: relative;
     inset: auto;
-    height: clamp(200px, 46vw, 300px);
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    grid-auto-rows: clamp(64px, 16.6vw, 110px);
+    height: clamp(210px, 66vw, 340px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: clamp(105px, 33vw, 170px);
+  }
+
+  .fg-obscure-hero__copy {
+    max-width: none;
   }
 
   .fg-obscure-hero::after {
