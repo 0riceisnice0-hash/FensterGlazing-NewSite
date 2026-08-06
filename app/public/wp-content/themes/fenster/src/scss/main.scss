@@ -39265,13 +39265,54 @@ html.fg-blinds-reveal-locked {
   top: var(--fg-spin-y);
   left: var(--fg-spin-x);
   width: var(--fg-spin-w);
-  /* Resting position is the scatter; the fall is the shared controller's value,
-     scaled by --fg-fall so a phone can be given less of it. The same value
-     drives a few degrees of tilt, so nothing needs a second controller. */
+
+  /* Every one of these defaults to the landed state, so with JavaScript off, or
+     under reduced motion where the controller is never attached, the products
+     are simply sitting on their marks. Nothing depends on a script running for
+     the section to make sense. */
+  --fg-drop: 1;
+  --fg-from-x: 0vw;
+  --fg-from-y: 0vh;
+  --fg-from-rot: 0deg;
+  --fg-from-scale: 1;
+
+  /* One composed transform. `--fg-drop` runs 0 to 1 as the item flies in, so
+     `(1 - drop)` is how much of the entry offset is still to be given back.
+     `--fg-drift` and `--fg-rot` are the continued movement after landing, and
+     arrive from the controller already in px and deg: multiplying a px value by
+     a bare number and a deg unit inside one calc is not valid CSS, and doing the
+     maths in JavaScript avoids the whole question. */
   transform:
-    translate3d(0, calc(var(--fg-parallax-y, 0px) * var(--fg-fall, 1)), 0)
-    rotate(calc(var(--fg-parallax-y, 0px) * var(--fg-spin-tilt, 0) * 1deg));
+    translate3d(
+      calc((1 - var(--fg-drop)) * var(--fg-from-x)),
+      calc((1 - var(--fg-drop)) * var(--fg-from-y) + var(--fg-drift, 0px) * var(--fg-fall, 1)),
+      0
+    )
+    rotate(calc((1 - var(--fg-drop)) * var(--fg-from-rot) + var(--fg-rot, 0deg)))
+    scale(calc(var(--fg-from-scale) + (1 - var(--fg-from-scale)) * var(--fg-drop)));
   will-change: transform;
+}
+
+/* Where each one comes in from. Well off screen, because the section clips and
+   a product should be fully gone before its window opens. */
+.fg-oq-spin--from-top {
+  --fg-from-y: -125vh;
+  --fg-from-rot: -22deg;
+  --fg-from-scale: 0.62;
+}
+
+.fg-oq-spin--from-left {
+  --fg-from-x: -135vw;
+  --fg-from-y: -18vh;
+  --fg-from-rot: -38deg;
+  --fg-from-scale: 0.7;
+}
+
+.fg-oq-spin--from-right {
+  --fg-from-x: 135vw;
+  --fg-from-y: -14vh;
+  --fg-from-rot: 42deg;
+  --fg-from-scale: 0.7;
 }
 
 .fg-oq-spin__still,
@@ -39397,11 +39438,10 @@ html.fg-blinds-reveal-locked {
 /* The shared drift controller has no reduced-motion check of its own, so every
    consumer needs its own. Recorded in AI.md. The scatter stays because it is
    the composition; only the movement stops. */
+/* The controller is never attached under reduced motion, so --fg-drop stays at
+   its landed default of 1 and every product sits on its mark. Only the fade
+   between still and video needs stopping. */
 @media (prefers-reduced-motion: reduce) {
-  .fg-oq-spin {
-    transform: none;
-  }
-
   .fg-oq-spin__video {
     transition: none;
   }

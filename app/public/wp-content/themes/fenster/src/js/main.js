@@ -5303,6 +5303,59 @@ if (depthItems.length) {
   updateDepthItems();
 }
 
+/* ---- The range drops in on /online-quote/ ----------------------------------
+   Each product flies in from off screen and lands on its mark as the section
+   crosses the viewport. The scroll is the timeline, exactly as the lock arrival
+   above: every item is wherever the scroll has put it, it reverses on the way
+   back up, and there is nothing to trigger or to miss.
+
+   The section has one progress value, 0 when its top is at the bottom of the
+   viewport and 1 when its bottom has left the top. Each item then has its own
+   window inside that, so the twelve land in sequence instead of together.
+
+   **One controller writes the whole transform.** These items deliberately do
+   not also carry [data-fg-depth]: the note on the lock arrival is right that
+   two controllers sharing one transform fight each other, so the continued
+   drift and the tilt are computed here too and handed over as plain px and deg
+   values. CSS composes them; it does the interpolation, this does the maths.
+
+   No CSS transition on these, on purpose. The position is recomputed on every
+   scroll event and a transition on top of that lags behind the wheel.
+
+   Never attached under reduced motion, so the products simply sit where they
+   belong with nothing flying anywhere. */
+const dropField = document.querySelector('[data-fg-drop-field]');
+
+if (dropField && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const dropItems = [...dropField.querySelectorAll('[data-fg-drop]')];
+
+  const updateDropField = () => {
+    const rect = dropField.getBoundingClientRect();
+    const viewport = Math.max(1, window.innerHeight);
+    const progress = clamp((viewport - rect.top) / Math.max(1, rect.height + viewport), 0, 1);
+
+    dropItems.forEach((item) => {
+      const from = Number(item.dataset.dropStart) || 0;
+      const to = Number(item.dataset.dropEnd) || 1;
+      const stage = clamp((progress - from) / Math.max(0.0001, to - from), 0, 1);
+      /* Eased out, so a product decelerates onto its mark rather than tracking
+         the scrollbar one to one. That is the difference between something
+         landing and something sliding. */
+      const eased = 1 - Math.pow(1 - stage, 3);
+      item.style.setProperty('--fg-drop', eased.toFixed(4));
+
+      const drift = Number(item.dataset.dropDrift) || 0;
+      const tilt = Number(item.dataset.dropTilt) || 0;
+      item.style.setProperty('--fg-drift', `${((progress - 0.5) * drift * 260).toFixed(2)}px`);
+      item.style.setProperty('--fg-rot', `${((progress - 0.5) * tilt * 26).toFixed(2)}deg`);
+    });
+  };
+
+  window.addEventListener('scroll', updateDropField, { passive: true });
+  window.addEventListener('resize', updateDropField);
+  updateDropField();
+}
+
 /* ---- Transparent product turntables on /online-quote/ ----------------------
    Twelve VP9-alpha loops, only ever fetched when one is about to be seen and
    only ever decoding while it is on screen. The drift is the shared

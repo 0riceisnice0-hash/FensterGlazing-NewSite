@@ -73,41 +73,40 @@ $steps = [
     ],
 ];
 
-/* The range the tool prices, falling through a full-bleed stage.
+/* The range the tool prices, dropped in on a scroll timeline.
 
-   Twelve turntables scattered across a stage two and a half viewports tall, at
-   three depths. They are meant to OVERLAP: the glass carries a real alpha
-   channel, so a door passing behind a window shows through it, and that is the
-   whole reason for using video here rather than a row of pictures. An earlier
-   pass laid them out as a tidy grid with gaps between them, which threw away
-   the one thing the assets are good for.
+   Each product flies in from off screen - down from the top, or in from the
+   left or the right - and lands on its mark as the section crosses the
+   viewport. The scroll IS the timeline: every item is wherever the scroll has
+   put it, it reverses when you scroll back, and there is nothing to trigger or
+   to miss. Same principle as the lock arriving on /casement-windows/, which is
+   where the easing and the progress maths come from.
 
-   `depth` is the shared [data-fg-depth] controller's strength. The controller
-   gives +/-(depth * 180)px, so these run 0.9 to 3.0 and travel 160px to 540px:
-   the item enters high, descends as it crosses the viewport, and the spread
-   between depths is what separates the layers. That is far past the 0.04-0.15
-   the rest of the site drifts at, and it is deliberate. `ABOUT-PAGE-HANDOVER.md`
-   records heavy parallax being rejected once; this is the owner asking for the
-   opposite on 2026-08-06, so every number is in this one array and the whole
-   effect can be calmed from here without touching markup or CSS.
+   `from` picks the direction. `start` and `end` are that item's window inside
+   the section's own 0 to 1 progress, so the twelve land in sequence rather than
+   together. `drift` and `tilt` keep it moving after it has landed.
 
-   `tilt` turns the same value into a few degrees of rotation, so nothing needs
-   a second controller. `layer` sets scale, blur and opacity: back items are
-   smaller, softer and slower, which is what makes it read as depth rather than
-   as things of different sizes. */
+   They are meant to OVERLAP on the way in: the alpha channel is real, so a door
+   crossing behind a window shows through its glass. That is the whole reason
+   these are video and not pictures, and it is why there is no panel or card
+   anywhere in the section.
+
+   One controller owns the whole transform. These deliberately do NOT carry
+   [data-fg-depth] as well: the casement note in main.js is right that two
+   controllers writing one transform fight each other. */
 $spins = [
-    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => 3,  'y' => 2,  'w' => 25, 'depth' => 2.6, 'tilt' => -0.012, 'layer' => 'front'],
-    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 25, 'y' => 9,  'w' => 21, 'depth' => 1.5, 'tilt' => 0.010,  'layer' => 'mid'],
-    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => 50, 'y' => 1,  'w' => 29, 'depth' => 3.0, 'tilt' => 0.008,  'layer' => 'front'],
-    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 77, 'y' => 10, 'w' => 19, 'depth' => 0.9, 'tilt' => -0.014, 'layer' => 'back'],
-    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => 13, 'y' => 27, 'w' => 20, 'depth' => 1.9, 'tilt' => 0.012,  'layer' => 'mid'],
-    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'x' => 37, 'y' => 32, 'w' => 22, 'depth' => 1.1, 'tilt' => -0.010, 'layer' => 'back'],
-    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 60, 'y' => 25, 'w' => 27, 'depth' => 2.8, 'tilt' => 0.009,  'layer' => 'front'],
-    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'x' => 85, 'y' => 35, 'w' => 17, 'depth' => 2.0, 'tilt' => -0.011, 'layer' => 'mid'],
-    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'x' => 5,  'y' => 53, 'w' => 26, 'depth' => 2.4, 'tilt' => 0.010,  'layer' => 'front'],
-    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'x' => 33, 'y' => 59, 'w' => 25, 'depth' => 1.4, 'tilt' => -0.008, 'layer' => 'mid'],
-    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'x' => 63, 'y' => 56, 'w' => 19, 'depth' => 0.9, 'tilt' => 0.013,  'layer' => 'back'],
-    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'x' => 80, 'y' => 67, 'w' => 21, 'depth' => 1.4, 'tilt' => -0.012, 'layer' => 'mid'],
+    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => 3,  'y' => 2,  'w' => 25, 'from' => 'top',   'start' => 0.00, 'end' => 0.38, 'drift' => 0.55, 'tilt' => -0.30, 'layer' => 'front'],
+    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 25, 'y' => 9,  'w' => 21, 'from' => 'left',  'start' => 0.05, 'end' => 0.43, 'drift' => 0.30, 'tilt' => 0.24,  'layer' => 'mid'],
+    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => 50, 'y' => 1,  'w' => 29, 'from' => 'right', 'start' => 0.02, 'end' => 0.40, 'drift' => 0.62, 'tilt' => 0.18,  'layer' => 'front'],
+    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 77, 'y' => 10, 'w' => 19, 'from' => 'top',   'start' => 0.09, 'end' => 0.47, 'drift' => 0.18, 'tilt' => -0.34, 'layer' => 'back'],
+    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => 13, 'y' => 27, 'w' => 20, 'from' => 'left',  'start' => 0.14, 'end' => 0.52, 'drift' => 0.40, 'tilt' => 0.28,  'layer' => 'mid'],
+    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'x' => 37, 'y' => 32, 'w' => 22, 'from' => 'top',   'start' => 0.18, 'end' => 0.56, 'drift' => 0.22, 'tilt' => -0.22, 'layer' => 'back'],
+    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 60, 'y' => 25, 'w' => 27, 'from' => 'right', 'start' => 0.22, 'end' => 0.60, 'drift' => 0.58, 'tilt' => 0.20,  'layer' => 'front'],
+    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'x' => 85, 'y' => 35, 'w' => 17, 'from' => 'right', 'start' => 0.27, 'end' => 0.65, 'drift' => 0.42, 'tilt' => -0.26, 'layer' => 'mid'],
+    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'x' => 5,  'y' => 53, 'w' => 26, 'from' => 'left',  'start' => 0.32, 'end' => 0.70, 'drift' => 0.50, 'tilt' => 0.24,  'layer' => 'front'],
+    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'x' => 33, 'y' => 59, 'w' => 25, 'from' => 'top',   'start' => 0.37, 'end' => 0.75, 'drift' => 0.28, 'tilt' => -0.18, 'layer' => 'mid'],
+    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'x' => 63, 'y' => 56, 'w' => 19, 'from' => 'right', 'start' => 0.42, 'end' => 0.80, 'drift' => 0.18, 'tilt' => 0.30,  'layer' => 'back'],
+    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'x' => 80, 'y' => 67, 'w' => 21, 'from' => 'left',  'start' => 0.47, 'end' => 0.85, 'drift' => 0.28, 'tilt' => -0.28, 'layer' => 'mid'],
 ];
 
 $before = [
@@ -218,7 +217,7 @@ $faq_schema = [
         </div>
     </section>
 
-    <section class="fg-oq-range" data-fg-spin-field>
+    <section class="fg-oq-range" data-fg-spin-field data-fg-drop-field>
         <div class="container">
             <div class="fg-oq-section-head fg-oq-range__head">
                 <p class="eyebrow"><?php esc_html_e('The range', 'fenster'); ?></p>
@@ -229,13 +228,16 @@ $faq_schema = [
         <div class="fg-oq-range__stage">
             <?php foreach ($spins as $index => $spin) : ?>
                 <div
-                    class="fg-oq-spin fg-oq-spin--<?php echo esc_attr($spin['layer']); ?>"
-                    data-fg-depth="<?php echo esc_attr((string) $spin['depth']); ?>"
+                    class="fg-oq-spin fg-oq-spin--<?php echo esc_attr($spin['layer']); ?> fg-oq-spin--from-<?php echo esc_attr($spin['from']); ?>"
+                    data-fg-drop
+                    data-drop-start="<?php echo esc_attr((string) $spin['start']); ?>"
+                    data-drop-end="<?php echo esc_attr((string) $spin['end']); ?>"
+                    data-drop-drift="<?php echo esc_attr((string) $spin['drift']); ?>"
+                    data-drop-tilt="<?php echo esc_attr((string) $spin['tilt']); ?>"
                     style="
                         --fg-spin-x: <?php echo esc_attr((string) $spin['x']); ?>%;
                         --fg-spin-y: <?php echo esc_attr((string) $spin['y']); ?>%;
                         --fg-spin-w: <?php echo esc_attr((string) $spin['w']); ?>vw;
-                        --fg-spin-tilt: <?php echo esc_attr((string) $spin['tilt']); ?>;
                     "
                 >
                     <?php /* The still is what shows until the video is wanted, and it is also
