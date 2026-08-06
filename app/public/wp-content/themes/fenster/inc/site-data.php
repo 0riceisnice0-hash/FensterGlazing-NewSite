@@ -2302,7 +2302,14 @@ function fenster_site_data(): array
             ['name' => 'Satin', 'privacy' => 5, 'texture' => 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%), linear-gradient(135deg, #f7fbfb 0%, #eef6f7 46%, #e4f0f1 100%)', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
                 ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
                 ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
-                /* The filename carries a suffix because the CONTENT changed. Texture images are
+                /* Brightness matters as much as contrast here, because the stage multiplies the
+               texture over the scene. The first correction fixed the invisibility and
+               created the opposite fault: lifting contrast dropped the mean to 106 against
+               a set that runs 121 to 178, and a dark texture under `multiply` turns the
+               whole pane to mud. Rebalanced to mean 158, stddev 46 — pattern still reads,
+               brightness back inside the set.
+
+               The filename carries a suffix because the CONTENT changed. Texture images are
                emitted without a version string, unlike the stylesheet, so replacing a
                .webp in place leaves every browser and proxy that has seen it serving the
                old one — the corrected Cassini was live and invisible for exactly that
@@ -2313,7 +2320,7 @@ function fenster_site_data(): array
                top of cover, so a photographed pattern is enlarged twice over and
                reads as coarse blobs instead of glass. Pinning the width fixes the
                pattern's scale wherever it is painted — swatch, wall or stage. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-flat-corrected.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
