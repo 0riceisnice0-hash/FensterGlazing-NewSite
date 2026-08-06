@@ -20,6 +20,6 @@ The GitHub repo is:
 
 `https://github.com/0riceisnice0-hash/FensterGlazing-NewSite`
 
-Latest known live theme commit when this pointer was updated: `56015ba` on `main` (2026-08-05, Wolverton case study and the handle hub hero). Established by checksum immediately before the rsync and re-verified on the deployed files after it, not by trusting a note. Re-establish by checksum before any deploy rather than trusting this line; it has been stale at deploy time more often than not.
+Latest known live theme commit when this pointer was updated: `0d283b4` on `release/flush-and-glass` (2026-08-06, flush casement rebuild and the obscured glass hub). Live is deliberately NOT the tip of `main`: an online-quote strand from another session sits on `main` unapproved. Established by checksum immediately before the rsync and re-verified after it. Re-establish by checksum before any deploy rather than trusting this line.
 
 If you are working from the home PC rather than the work machine, also read `app/public/WORK-AT-HOME.md`.
