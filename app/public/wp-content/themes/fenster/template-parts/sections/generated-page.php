@@ -1072,6 +1072,21 @@ if ($slug === 'sliding-sash-windows') {
     ];
 }
 
+/* Flush takes a 28mm double glazed unit and no triple. That was a note in the
+   middle of the page until 2026-08-06; the owner moved it here, which is the
+   better place for it — a thing the product cannot do belongs where somebody goes
+   looking for the awkward answers, not halfway through the argument for it.
+
+   Appended rather than overriding, so the FAQs this page already generates from
+   its own sections survive. It names the alternative, because the honest version
+   of "no" is "not here, and here is where you can". */
+if ($slug === 'flush-casement-windows') {
+    $product_faqs[] = [
+        'question' => 'Can I have triple glazing in a flush casement?',
+        'answer' => 'Not on this system. The uPVC flush sash takes a 28mm double glazed unit only, which is what it reaches 1.2 W/m²K and an A+ rating on. If triple glazing matters more to you than the flat sash line, the standard casement takes a 36mm triple unit and reaches 0.95 W/m²K. We would rather tell you that before a survey than after one.',
+    ];
+}
+
 $upvc_colour_routes = [
     'casement-windows',
     'flush-casement-windows',
