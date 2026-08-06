@@ -149,15 +149,23 @@ $faq_schema = [
                     <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
                 </div>
                 <ul class="fg-oq-hero__points">
-                    <li><?php esc_html_e('About ten minutes from first choice to price', 'fenster'); ?></li>
+                    <li><?php esc_html_e('The tool on the right is live. Start clicking whenever you like', 'fenster'); ?></li>
                     <li><?php esc_html_e('The same price list our office quotes from', 'fenster'); ?></li>
                     <li><?php esc_html_e('Your details come before the number, and nothing is ordered', 'fenster'); ?></li>
                 </ul>
             </div>
 
-            <div class="fg-oq-hero__tool">
+            <?php /* The embed reads as a screenshot until you touch it, which is the
+                     single largest measured drop on the site: 182 journeys were shown
+                     the tool in the 24 days to 5 August 2026 and 21 opened it, while
+                     57% of the ones who opened it finished a quote. Everything in this
+                     block exists to say "this is live, go straight in". */ ?>
+            <div class="fg-oq-hero__tool" data-fg-tool-cue>
                 <div class="fg-oq-hero__tool-bar">
-                    <h2><?php esc_html_e('The quote tool', 'fenster'); ?></h2>
+                    <h2>
+                        <?php esc_html_e('The quote tool', 'fenster'); ?>
+                        <span class="fg-oq-live"><i aria-hidden="true"></i><?php esc_html_e('Live', 'fenster'); ?></span>
+                    </h2>
                     <div class="fg-oq-hero__tool-actions">
                         <button class="button button--light" type="button" data-fullscreen-quote><?php esc_html_e('Expand view', 'fenster'); ?></button>
                         <a class="button" href="<?php echo esc_url($quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
@@ -176,6 +184,10 @@ $faq_schema = [
                         allow="fullscreen"
                         referrerpolicy="no-referrer-when-downgrade"
                     ></iframe>
+                    <p class="fg-oq-cue">
+                        <span class="fg-oq-cue__arrow" aria-hidden="true"></span>
+                        <?php esc_html_e('Go straight in. This is the real tool, not a picture of one.', 'fenster'); ?>
+                    </p>
                 </div>
             </div>
         </div>

@@ -39321,3 +39321,126 @@ html.fg-blinds-reveal-locked {
     min-height: 44px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   /online-quote/ - saying the embed is live
+
+   The embedded tool reads as a screenshot until you touch it, and that is the
+   largest measured drop on the site: in the 24 days to 5 August 2026, 182
+   journeys were shown it and 21 opened it, while 57% of the ones who opened it
+   finished a quote. The loss is entirely at the point of committing to it.
+
+   So: a live pill on the bar, a ring around the frame, and a line under it
+   saying what it is. All three stop as soon as the visitor engages, because a
+   cue that keeps insisting after it has been taken is just noise.
+--------------------------------------------------------------------------- */
+
+.fg-oq-hero__tool-bar h2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.fg-oq-live {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.2rem 0.55rem 0.2rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(46, 172, 102, 0.12);
+  color: var(--color-accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-oq-live i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* The ring is on the frame rather than a wrapper so it hugs the tool itself.
+   Colour only, no movement of the box, so nothing reflows while it breathes. */
+.fg-oq-hero__frame {
+  transition: box-shadow 300ms ease;
+}
+
+[data-fg-tool-cue]:not(.is-engaged) .fg-oq-hero__frame {
+  animation: fg-oq-ring 2.6s ease-in-out infinite;
+}
+
+@keyframes fg-oq-ring {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(46, 172, 102, 0.34),
+      var(--shadow-soft);
+  }
+  50% {
+    box-shadow:
+      0 0 0 7px rgba(46, 172, 102, 0),
+      var(--shadow-soft);
+  }
+}
+
+.fg-oq-cue {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.7rem 1rem;
+  background: linear-gradient(to top, rgba(0, 45, 58, 0.92), rgba(0, 45, 58, 0));
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  /* It sits over the tool, so it must never swallow the first click, which is
+     the exact click it is asking for. */
+  pointer-events: none;
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.fg-oq-cue__arrow {
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-top: 2px solid var(--color-accent);
+  border-left: 2px solid var(--color-accent);
+  transform: rotate(45deg);
+}
+
+/* Taken the hint. Everything settles and stays settled for the session. */
+[data-fg-tool-cue].is-engaged .fg-oq-cue {
+  opacity: 0;
+  transform: translateY(0.5rem);
+}
+
+@media (max-width: 860px) {
+  .fg-oq-cue {
+    font-size: 0.84rem;
+  }
+}
+
+/* No breathing ring under reduced motion. The pill and the line still say the
+   same thing, which is the part that carries the information. */
+@media (prefers-reduced-motion: reduce) {
+  [data-fg-tool-cue]:not(.is-engaged) .fg-oq-hero__frame {
+    animation: none;
+    box-shadow: 0 0 0 3px rgba(46, 172, 102, 0.3), var(--shadow-soft);
+  }
+
+  .fg-oq-cue {
+    transition: none;
+  }
+}
