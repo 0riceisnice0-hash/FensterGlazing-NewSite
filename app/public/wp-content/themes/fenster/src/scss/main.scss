@@ -38571,31 +38571,66 @@ html.fg-blinds-reveal-locked {
 
 .fg-wipe__stage {
   position: relative;
-  /* The pair is 820x857, and the stage holds that ratio so neither photograph is
-     cropped differently from the other — a wipe only reads as one object if both
-     halves are framed identically. */
-  aspect-ratio: 820 / 857;
-  max-height: 620px;
+  /* The drawing's own viewBox, so neither side is scaled differently from the
+     other. Both halves share this box exactly; that is what makes the wipe read
+     as one window changing rather than two pictures swapping. */
+  aspect-ratio: 550 / 340;
+  max-height: 460px;
   margin: 0 0 0 auto;
   overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: 10px;
-  background: var(--color-soft);
+  background: #ffffff;
   touch-action: pan-y;
 }
 
-.fg-wipe__img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Standard is revealed from the left, up to the seam. */
-.fg-wipe__layer {
+/* Both sides are the same drawing at the same size, stacked exactly. If these
+   ever stop sharing a box the wipe stops being a comparison and becomes two
+   pictures sliding over each other, which is the flaw the photographic version
+   had. */
+.fg-wipe__side {
   position: absolute;
   inset: 0;
-  clip-path: inset(0 calc(100% - var(--fg-wipe, 50%)) 0 0);
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2.2rem);
+}
+
+.fg-wipe-svg {
+  width: 100%;
+  height: auto;
+}
+
+.fg-wipe-svg__frame,
+.fg-wipe-svg__sash,
+.fg-wipe-svg__sectionframe,
+.fg-wipe-svg__sectionsash {
+  fill: #ffffff;
+  stroke: var(--color-steel, #0f3136);
+  stroke-width: 2;
+}
+
+.fg-wipe-svg__glass {
+  fill: rgba(46, 172, 102, 0.09);
+  stroke: rgba(15, 49, 54, 0.35);
+  stroke-width: 1;
+}
+
+/* The step is the whole argument, so it is drawn rather than implied. */
+.fg-wipe-svg__shadow {
+  fill: rgba(15, 49, 54, 0.28);
+  stroke: none;
+}
+
+.fg-wipe-svg__sectionframe { fill: #eef2f1; }
+.fg-wipe-svg__sectionsash { fill: var(--color-accent, #2eac66); stroke: var(--color-steel, #0f3136); }
+.fg-wipe-svg__lead { stroke: rgba(15, 49, 54, 0.5); stroke-width: 1; stroke-dasharray: 3 3; }
+
+.fg-wipe-svg__note {
+  fill: var(--color-steel, #0f3136);
+  font-size: 13px;
+  font-weight: 800;
+  text-anchor: middle;
 }
 
 .fg-wipe__seam {
@@ -38693,4 +38728,115 @@ html.fg-blinds-reveal-locked {
 
 @media (prefers-reduced-motion: reduce) {
   .fg-wipe__seam::after { backdrop-filter: none; }
+}
+
+/* ---- Flush casement page ---------------------------------------------------
+   Built on `.fg-cw`, the split grammar the heritage door page already uses, so
+   the two-column sections need nothing here. What follows is only the pieces the
+   flush page adds: the information bands, the comparison and the proof mosaic.
+   Deliberately no stacked chapters — that device stays unique to casement. */
+.fg-flush-band {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+}
+
+/* The dark band is the security one, the same way the casement page darkens its
+   security chapter: the subject changes, so the ground changes with it. */
+.fg-flush-band--dark {
+  background: linear-gradient(168deg, #06222a 0%, #0c313b 52%, #061d24 100%);
+  color: #ffffff;
+}
+
+.fg-flush-band--dark .eyebrow,
+.fg-flush-band--dark dt {
+  color: #ffffff;
+}
+
+.fg-flush-band--dark dd,
+.fg-flush-band--dark .fg-flush-band__head > p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-flush-band__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: end;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.fg-flush-band__head h2 {
+  max-width: 17ch;
+  margin: 0.3rem 0 0;
+}
+
+.fg-flush-band__head > p {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.fg-flush-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  margin: 0;
+}
+
+.fg-flush-list dt {
+  margin-bottom: 0.4rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.fg-flush-list dd {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+
+.fg-flush-note {
+  margin: clamp(1.2rem, 2.5vw, 2rem) 0 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.fg-flush-versus,
+.fg-flush-proof {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+}
+
+/* Six shots, and every one of them ours. Uniform ratio so the rows line up —
+   the same lesson the Wolverton case study gallery taught. */
+.fg-flush-mosaic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+}
+
+.fg-flush-mosaic figure {
+  margin: 0;
+}
+
+.fg-flush-mosaic img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+}
+
+.fg-flush-mosaic figcaption {
+  padding-top: 0.6rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+@media (max-width: 860px) {
+  .fg-flush-band__head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
 }

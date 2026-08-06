@@ -660,7 +660,7 @@ function fenster_site_data(): array
                the sash-to-frame junction, not by the filename: everything in this
                set is called flush-something and two of them were not. */
             'flush-casement-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-modern-elevation-1600w.webp', 'alt' => 'Anthracite flush casement windows across the rear elevation of a red brick house'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-hero-oak-gables-2400w.webp', 'alt' => 'Golden oak flush casement windows in twin gabled dormers on a tile hung roof'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-detail-1400w.webp', 'alt' => 'White flush casement window in red brick, the sashes closing level with the outer frame'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-cream-bars-1400w.webp', 'alt' => 'Cream flush casement windows with Georgian bars on a buff brick house'],
