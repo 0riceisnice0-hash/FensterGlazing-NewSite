@@ -1098,7 +1098,7 @@ function fenster_site_data(): array
                cannot show it, and it was occupying a slot on the one page where that
                is the whole argument. See the note on the hero above. */
             'flush_casement_windows' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-modern-elevation-1600w.webp', 'alt' => 'Anthracite flush casement windows across the rear elevation of a red brick house'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-modern-black-1600w.webp', 'alt' => 'Black flush casement windows in a white painted brick extension'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-detail-1400w.webp', 'alt' => 'White flush casement window in red brick, the sashes closing level with the outer frame'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-cream-bars-1400w.webp', 'alt' => 'Cream flush casement windows with Georgian bars on a buff brick house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-bay-brick-1400w.webp', 'alt' => 'White flush casement bay window on a tile hung house'],
