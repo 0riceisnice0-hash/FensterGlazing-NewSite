@@ -10439,6 +10439,7 @@ html.fg-gallery-lightbox-open body {
   background-image:
     linear-gradient(90deg, rgba(216, 236, 238, 0.44), rgba(246, 252, 252, 0.82)),
     var(--active-texture);
+  background-repeat: no-repeat, repeat;
   background-size: cover, var(--active-texture-size, 122% 122%);
   background-position: center, calc(50% + var(--mx) * 58px) calc(50% + var(--my) * 40px);
   mix-blend-mode: normal;
@@ -10471,6 +10472,7 @@ html.fg-gallery-lightbox-open body {
   background-image:
     linear-gradient(90deg, rgba(232, 248, 250, 0.68), rgba(255, 255, 255, 0.3)),
     var(--active-texture);
+  background-repeat: no-repeat, repeat;
   background-size: cover, var(--active-texture-size, 116% 116%);
   background-position: center, calc(50% + var(--mx) * 62px) calc(50% + var(--my) * 42px);
   opacity: calc(0.64 + min(var(--privacy), 5) * 0.055);
@@ -10599,6 +10601,7 @@ html.fg-gallery-lightbox-open body {
   background:
     linear-gradient(90deg, rgba(205, 230, 232, 0.38), rgba(255, 255, 255, 0.62)),
     var(--active-texture);
+  background-repeat: no-repeat, repeat;
   background-size: cover, var(--active-texture-size, 112% 112%);
   background-position: center;
   opacity: calc(0.72 + min(var(--privacy), 5) * 0.05);
@@ -10649,7 +10652,12 @@ html.fg-gallery-lightbox-open body {
 .fg-obscure-stage__glass {
   background-attachment: scroll;
   background-position: center center;
-  background-repeat: no-repeat;
+  /* Two values, because the glass paints two layers: the scene must not tile, the
+     texture must. This rule sits after the one that stacks those layers and has
+     the same specificity, so a single `no-repeat` here quietly won and painted the
+     pattern once in the middle of the pane. The main image only has one layer and
+     ignores the second value. */
+  background-repeat: no-repeat, repeat;
   background-size: cover;
 }
 
@@ -10685,7 +10693,12 @@ html.fg-gallery-lightbox-open body {
     linear-gradient(90deg, rgba(224, 244, 247, 0.22), rgba(255, 255, 255, 0.14)),
     var(--active-texture);
   background-position: center center;
-  background-repeat: no-repeat;
+  /* Per layer: the scene is one image and must not tile, the texture is a pattern
+     and must. It was `no-repeat` for the whole stack, so the glass was painted
+     once in the middle of the pane at its pinned width and the rest of the pane
+     showed bare scene — which is only visible now the texture has a fixed size
+     rather than being stretched to cover. */
+  background-repeat: no-repeat, repeat;
   background-size: cover, var(--active-texture-size, 100% 100%);
   filter: contrast(1.08);
   opacity: calc(0.84 + min(var(--privacy), 5) * 0.024);
