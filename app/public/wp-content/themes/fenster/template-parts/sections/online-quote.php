@@ -263,9 +263,10 @@ $faq_schema = [
                 </div>
             <?php endforeach; ?>
 
-            <div class="container fg-oq-range__action">
-                <a class="button" href="#fenster-quote-tool"><?php esc_html_e('Price yours', 'fenster'); ?></a>
-            </div>
+        </div>
+
+        <div class="container fg-oq-range__action">
+            <a class="button" href="#fenster-quote-tool"><?php esc_html_e('Price yours', 'fenster'); ?></a>
         </div>
     </section>
 

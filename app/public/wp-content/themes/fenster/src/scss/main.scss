@@ -39323,17 +39323,13 @@ html.fg-blinds-reveal-locked {
   filter: drop-shadow(0 16px 20px rgba(0, 45, 58, 0.16)) blur(1.4px);
 }
 
+/* In normal flow under the stage. It was sticky inside it, which clipped the
+   button against the top of the viewport on the way past. */
 .fg-oq-range__action {
-  position: sticky;
-  bottom: clamp(1.5rem, 5vh, 3rem);
+  position: relative;
   z-index: 4;
-  padding-top: 42vh;
+  padding-bottom: clamp(1.5rem, 4vw, 3rem);
   text-align: center;
-  pointer-events: none;
-}
-
-.fg-oq-range__action .button {
-  pointer-events: auto;
 }
 
 @media (max-width: 1180px) {
