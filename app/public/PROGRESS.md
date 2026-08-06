@@ -2,6 +2,64 @@
 
 Last updated: 2026-08-06
 
+## 2026-08-06 - Repairs, second pass: less text, vaguer prices, and keeps do not fail (test)
+
+Owner review of the first build, three things.
+
+- **"Keeps dont fail lol."** They do not, and the tell was there to be read: a
+  keep is a folded piece of steel with nothing in it to wear out, and it is not
+  a line on the repairs price list. All three parts on that section should map
+  to something that IS on the list, and the third is now the handle, which is
+  the most common single repair we are called out for. Recorded in `AI.md`
+  under a new Repair Diagnosis Facts heading so it cannot be reinvented.
+- **"This is just a big page of text."** Correct. Every card carried a two-term
+  definition list under "USUALLY" and "WHAT WE DO" labels, which was two
+  paragraphs and two uppercase labels per card, fifteen times over, and every
+  other section ran two paragraphs where one would do. Cards are now a symptom,
+  a price, one line of diagnosis and the alternative phrasings. Section markup
+  fell 47.5KB to 34.2KB and the page at 390 fell **14,374px to 10,220px**, a
+  29% cut, with nothing removed that a customer needed. The harness now asserts
+  a maximum `cause` length so it cannot creep back.
+- **"I dont think the USP should be here's our prices."** The first build
+  published eight rows of the office tariff as a table. The owner's read: it
+  encourages shopping around, uses us as a benchmark and leaves us open to
+  being undercut line by line. Table gone. What is left is the price-guide
+  model — one "from" anchor on the specification strip, a range sentence, three
+  "from" examples and a "From £x" per card — and **every figure on the page now
+  reads "From"**, asserted in the harness so an exact price cannot return. The
+  granular multiples went with it; "three or more, £108 each" is precisely the
+  detail a competitor prices against.
+
+**Two CSS bugs found by measuring rather than looking, and the second is worth
+keeping.** The parts images were overflowing their boxes and being clipped by
+`overflow: hidden` — the portrait handle drew 537px tall in a 372px box. Two
+passes at `place-items` did not fix it because `place-items` was never the
+problem: on a grid the image is an item in an auto-sized row, so `height: 100%`
+is circular, the browser resolves it to `auto` and the image falls back to its
+intrinsic height. **A percentage height needs a definite containing block**, so
+the media box is `display: block` with an `aspect-ratio` now. And two of the
+`width`/`height` attributes were wrong because I read them off the rendered
+preview instead of the file: the handle is 421x715, not 425x708. `identify`
+takes a second.
+
+**A source asset that looks like a cutout and is not.** `s2-chrome-finish.png`
+has an alpha channel but an opaque `#FAFAFA` backdrop, so the CSS drop-shadow
+drew a shadow around the rectangle and the tile read as a card inside a card.
+Flood-filled to real transparency and saved as `s2-chrome-cutout.png` rather
+than overwriting a file the handle hub also renders. **Check the corner pixel,
+not the alpha flag**: `%A` said `Blend` on both this and the genuine cutout.
+
+**Two probe failures that were the probe's fault, again.** The no-exact-prices
+assertion captured six characters of context, so "between £96" arrived as
+"tween £96" and failed its own allow-list; and a one-sentence-per-card check was
+scoped to the whole page and matched the verdict paragraph. Neither was a page
+fault. The guard on the flood fill fired the same way: it compared opaque
+fraction before and after, but the source was 100% opaque, so 18% was the
+handle's share of the frame rather than how much of the part survived. Looking
+at the result on magenta settled it in one glance.
+
+Deployed to test. Still not verified on a real phone.
+
 ## 2026-08-06 - Repairs rebuilt around the symptom, and three live faults fixed (local)
 
 Owner brief: the repairs page is too generic, rethink the structure and the UX

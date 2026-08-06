@@ -468,11 +468,27 @@ Current accepted model, rebuilt 2026-08-06:
   rail (see the Order Process Rule in `AI.md`), and the case-study strip
   (nothing claims this route, so the helper's fallback was showing three
   unrelated installations under a repairs heading).
+- **Copy is deliberately short.** Owner, 2026-08-06, on the first build: it read
+  as a big page of text. Each card is a symptom, a "From" price, ONE line of
+  diagnosis and the alternative phrasings. The two-term "USUALLY / WHAT WE DO"
+  list that used to sit on every card is gone, and so are the second paragraphs
+  throughout. If a card's `cause` grows past about 110 characters it is going
+  the wrong way; the render harness asserts on it.
+- **Prices are vague on purpose and there is no price table.** See the Repair
+  Pricing Rule in `AI.md`. Every figure reads "From".
 - **Imagery is the parts, not a tradesman.** The mechanism, a friction stay and a
-  keep, studio-lit. `imported/window-repair-milton-keynes-scaled.jpg` is stock —
-  a man in blue dungarees with a screwdriver — and `pages.json` still carries it
-  as this route's imported hero. Do not reinstate it.
-- Prices: see the Repair Pricing Rule in `AI.md` before touching a figure.
+  handle, studio-lit. `imported/window-repair-milton-keynes-scaled.jpg` is stock
+  — a man in blue dungarees with a screwdriver — and `pages.json` still carries
+  it as this route's imported hero. Do not reinstate it.
+  - The handle uses `products/handles/s2-chrome-cutout.png`, not the handle
+    hub's `s2-chrome-finish.png`. The hub's file has an alpha channel but an
+    opaque `#FAFAFA` backdrop, so a CSS drop-shadow draws round the rectangle.
+    The cutout is that file flood-filled to real transparency under a new name.
+  - `.fg-rp-part__media` is `display: block`, not grid. On a grid the image is an
+    item in an auto-sized row, so `height: 100%` is circular and silently falls
+    back to the intrinsic height: the portrait handle drew 537px tall in a 372px
+    box and was clipped. A block box with `aspect-ratio` gives the percentage
+    something to resolve against.
 - **Not verified on a real phone.** The finder was measured through a 390px
   iframe and driven programmatically; nobody has used it with a thumb.
 

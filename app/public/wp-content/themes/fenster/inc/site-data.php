@@ -438,7 +438,10 @@ function fenster_site_data(): array
                 ['label' => 'We repair', 'value' => 'Windows and doors'],
                 ['label' => 'Including', 'value' => "Any installer's work"],
                 ['label' => 'Materials', 'value' => 'uPVC, aluminium, composite'],
-                ['label' => 'Minimum charge', 'value' => '£96 inc VAT'],
+                /* "Minimum charge £96 inc VAT" read as a tariff line. One
+                   "from" anchor is the price guides' model and is all this
+                   route should carry. Owner instruction, 2026-08-06. */
+                ['label' => 'Repairs from', 'value' => '£96 inc VAT'],
             ],
             /* Two flap types, not three. The old strip listed "Manual, lockable,
                microchip" as if lockable were a separate model; the standard flap
@@ -1803,7 +1806,7 @@ function fenster_site_data(): array
                     ['title' => 'Our own engineers', 'copy' => 'The same team that installs, not a subcontractor sent out under our name.'],
                 ],
                 'faqs' => [
-                    ['question' => 'How much does a window or door repair cost?', 'answer' => 'The minimum charge is £96 including VAT, and that is the least a repair visit costs. Beyond it the common jobs are published: a window handle is £96, a window adjustment £96, window hinges or a window mechanism from £144, a single door realignment £120, a door mechanism from £204 and a euro cylinder £108. The exact fault, the parts and how many items need doing on the visit move the final figure.'],
+                    ['question' => 'How much does a window or door repair cost?', 'answer' => 'Repairs start from £96 including VAT, and most land somewhere between that and around £200 depending on which part the job needs. A handle is at the lower end, a door mechanism at the upper. We would rather give you a real figure than a guess, so tell us what it is doing, send a photograph if you can, and we will come back with a price for your actual fault.'],
                     ['question' => 'Do you repair windows and doors you did not fit?', 'answer' => 'Yes, and most of our repair work is exactly that. We fit uPVC, aluminium and composite systems every week, so we know the hardware other installers use. The only real limit is parts: on a very old system the gear may no longer be made.'],
                     ['question' => 'My double glazing has gone misty. Is that a repair?', 'answer' => 'It is a glass job rather than a hardware one. The seal around the double glazed unit has failed and moisture is in the cavity, which cannot be dried out, but the glass changes on its own and the frame stays. See our replacement glazed units page for how that works.'],
                     ['question' => 'Can you still get parts for an older window or door?', 'answer' => 'Usually. Hardware is more standardised than it looks, and a mechanism is matched on backset, centres and faceplate rather than on the brand of the window. Where a part genuinely is obsolete we will tell you, and we will say what the alternatives are rather than leaving you with a window that does not lock.'],
@@ -1985,177 +1988,146 @@ function fenster_site_data(): array
         /* Repairs: the symptom map behind /window-and-door-repairs/.
            ------------------------------------------------------------------
            Ordered by what the customer says, not by what the part is called,
-           because nobody rings up asking for an espagnolette. Each entry pairs
-           the sentence they would actually use with the part that is usually
-           behind it, what we do about it, and the price from the list.
+           because nobody rings up asking for an espagnolette.
 
-           EVERY price here comes from the office's own Customer Repairs Price
-           List, `OneDrive/Office Information/Price Lists/Repairs Price List/
-           Customer Price List 04022025.pdf`, whose own header reads "Last
-           updated: 12/02/25". Figures are the inc-VAT column, because a
-           homeowner is buying the inc-VAT number. Nothing here is derived,
-           rounded or invented: if a row is not on that list it is not on the
-           page. Re-read the list before changing a figure, and if the list
-           moves, move these with it — they are public and indexable, which
-           AI.md treats as a live-content responsibility.
+           KEEP THE COPY SHORT. Owner, 2026-08-06, on the first build: it read
+           as a big page of text. `cause` is ONE sentence and there is no
+           second paragraph. A visitor with a broken handle wants to know
+           whether we fix it and roughly what it costs; they do not want an
+           essay on the gearbox. If a line here grows past about 110
+           characters it is going the wrong way.
 
-           `group` drives the finder's filter. `also` exists so the card
-           carries the other ways people phrase the same fault; it is real
-           on-page text, not a keyword dump, and it is what makes a search for
-           "window won't lock" land on the right card.
+           PRICES ARE DELIBERATELY VAGUE. Owner, 2026-08-06: a published tariff
+           invites people to use us as a benchmark and shop the list round our
+           competitors, so nothing here is an exact figure. Every price reads
+           "From", the granular multiples that used to sit under each card
+           ("three or more, £108 each") are gone, and there is no price table
+           anywhere on the page. A single "from" anchor is the model the price
+           guides already use. See the Repair Pricing Rule in AI.md.
 
-           `link` is set only where the honest answer is a different page. Both
-           glass faults point at /double-glazing-replacement/ rather than
-           repeating it here.
+           The underlying figures still come from the office Customer Repairs
+           Price List, `OneDrive/Office Information/Price Lists/Repairs Price
+           List/Customer Price List 04022025.pdf`, header "Last updated:
+           12/02/25", inc-VAT column. Nothing is invented; it is the same
+           numbers, stated as floors rather than as a tariff.
 
-           ONE READING TO CHECK IF THE LIST CHANGES. The list's "multiples"
-           column is exc-VAT throughout: it says "£90 each + VAT" and "£50 +
-           VAT" outright, and where it gives a bare number that number matches
-           the exc column (£80 on the cylinder row against £90 exc / £108 inc).
-           So the bare figures on that column are read as exc and converted:
-           £30 -> £36, £2.00 -> £2.40, £80 -> £96, £50 -> £60, £90 -> £108.
-           That is an inference, not something the list states. If the office
-           ever means those as inc-VAT, these five are the numbers to change. */
+           `also` carries the other ways people phrase the same fault. It is
+           real on-page text and it is what makes a search for "window won't
+           lock" land on the right card.
+
+           `link` is set only where the honest answer is a different page. */
         'repair_problems' => [
             [
                 'id' => 'window-wont-lock',
                 'group' => 'window',
                 'symptom' => 'The handle turns but the window does not lock.',
-                'also' => 'Handle spins, lock does not engage, window will not stay shut',
-                'cause' => 'The multi-point mechanism inside the sash edge has worn or broken, so the handle no longer drives the locking points into the frame.',
-                'fix' => 'We identify the gear, fit a replacement to the same backset and centres, and set the keeps so it locks without being forced.',
-                'price' => '£144',
-                'price_note' => 'Three or more in one visit, £108 each.',
+                'also' => 'Handle spins, lock will not engage, window will not stay shut',
+                'cause' => 'Usually the multi-point mechanism in the sash edge, which is the part the handle drives.',
+                'price' => 'From £144',
             ],
             [
                 'id' => 'window-handle-broken',
                 'group' => 'window',
                 'symptom' => 'The handle is loose, stiff or snapped off.',
                 'also' => 'Broken window handle, floppy handle, handle came off in my hand',
-                'cause' => 'Handles wear out long before the window does. The spindle rounds off, the screws pull out of the sash, or the casting cracks at the base.',
-                'fix' => 'We match the handle to the spindle length and fixing centres already in the sash, so the new one drives the existing gear.',
-                'price' => '£96',
-                'price_note' => 'Extra handles on the same visit, £60 each, subject to the minimum charge.',
+                'cause' => 'The spindle has rounded off, or the fixings have pulled out of the sash.',
+                'price' => 'From £96',
             ],
             [
                 'id' => 'window-wont-open',
                 'group' => 'window',
                 'symptom' => 'The window will not open, or it is heavy to push.',
                 'also' => 'Stiff window, seized hinges, window stuck shut',
-                'cause' => 'The friction stays are usually the answer. They are the scissor hinges along the top and bottom of the sash, and they corrode and bind rather than fail outright.',
-                'fix' => 'We replace the stays as a pair, sized to the sash weight and the egress you need, and check the sash still sits square afterwards.',
-                'price' => '£144',
-                'price_note' => 'Three or more in one visit, £108 each.',
+                'cause' => 'Nearly always the friction stays, the scissor hinges running along the sash.',
+                'price' => 'From £144',
             ],
             [
                 'id' => 'window-wont-close',
                 'group' => 'window',
                 'symptom' => 'The window will not close properly, or it catches.',
                 'also' => 'Window catching on the frame, sash dropped, will not sit flush',
-                'cause' => 'A sash that has settled out of square, or keeps that have drifted. It rarely means anything is broken, and it is the cheapest thing on this page to put right.',
-                'fix' => 'We square the sash, reset the keeps and the hinge protectors, and adjust the compression so it closes without a shove.',
-                'price' => '£96',
-                'price_note' => 'First window £96, then £36 for each additional one on the same visit.',
+                'cause' => 'The sash has settled out of square. Rarely anything broken, and the cheapest fault here to put right.',
+                'price' => 'From £96',
             ],
             [
                 'id' => 'window-draughty',
                 'group' => 'window',
                 'symptom' => 'There is a draught round the window.',
                 'also' => 'Cold air coming in, whistling window, seal perished',
-                'cause' => 'The bubble gasket has flattened or shrunk back at the corners. Corners go first, which is why a draught is usually felt at one end of the sash rather than all round it.',
-                'fix' => 'We strip the old gasket and run new seal into the groove, in one length round the sash so there is no join for air to find.',
-                'price' => '£96',
-                'price_note' => 'Plus £2.40 per metre of gasket.',
+                'cause' => 'The gasket has flattened or shrunk back, usually letting go at one corner first.',
+                'price' => 'From £96',
             ],
             [
                 'id' => 'sill-damage',
                 'group' => 'window',
                 'symptom' => 'The sill underneath is damaged or breaking up.',
                 'also' => 'Cracked sill, rotten sill, water sitting under the window',
-                'cause' => 'Sills take the weather for the whole window. What looks like one damaged section is sometimes a drainage problem further up.',
-                'fix' => 'This one we quote from photographs first, because the repair depends on what the sill is made of and how far it has gone.',
+                'cause' => 'Sills take the weather for the whole window, so we look at photographs before quoting this one.',
                 'price' => '',
-                'price_note' => 'Quoted individually. Send us photographs and we will come back with a figure.',
             ],
             [
                 'id' => 'door-wont-lock',
                 'group' => 'door',
                 'symptom' => 'The door will not lock, or the key turns and nothing happens.',
                 'also' => 'Lock will not engage, key spins, cannot lift the handle to lock',
-                'cause' => 'Usually the multi-point gearbox in the door edge. It is the part that takes every lift of the handle, and it is the most common door failure we are called to.',
-                'fix' => 'We identify the gear from the faceplate and backset, fit the correct replacement and reset the keeps so it locks without lifting hard.',
-                'price' => '£204',
-                'price_note' => 'From. The gear and the door type set the final figure.',
+                'cause' => 'The multi-point gearbox in the door edge, and the most common door failure we are called to.',
+                'price' => 'From £204',
             ],
             [
                 'id' => 'door-wont-close',
                 'group' => 'door',
                 'symptom' => 'The door catches on the frame, or has dropped.',
                 'also' => 'Door rubbing, door dropped, will not shut without lifting it',
-                'cause' => 'The door has moved in the frame. Left alone it puts the whole load on the gearbox, which is how a dropped door turns into a door that will not lock.',
-                'fix' => 'We realign the door in the frame, reset the hinges and keeps, and check it closes and locks under its own weight.',
-                'price' => '£120',
-                'price_note' => 'Single door. French or patio £132, bifold £156.',
+                'cause' => 'The door has moved in its frame, which puts the whole load on the gearbox.',
+                'price' => 'From £120',
             ],
             [
                 'id' => 'door-handle-broken',
                 'group' => 'door',
                 'symptom' => 'The door handle is loose, floppy or snapped.',
                 'also' => 'Broken door handle, handle hanging down, will not spring back',
-                'cause' => 'The return spring inside the handle has gone, or the spindle has rounded off. On a door it usually happens gradually and then all at once.',
-                'fix' => 'We match the handle to the existing backplate centres and spindle, so the door is not left with a hole in it.',
-                'price' => '£96',
-                'price_note' => 'From. Long-plate, pad or lever-lever all differ.',
+                'cause' => 'The return spring inside the handle has gone, or the spindle has rounded off.',
+                'price' => 'From £96',
             ],
             [
                 'id' => 'door-hinges',
                 'group' => 'door',
                 'symptom' => 'The door has dropped on its hinges.',
                 'also' => 'Worn hinges, door sagging, gap at the top of the door',
-                'cause' => 'Hinges carry the whole weight of the door every time it swings. On a composite or a heavy uPVC door they are a wearing part.',
-                'fix' => 'We replace the hinges to match the ones already on the door and reset the door square in its frame.',
-                'price' => '£96',
-                'price_note' => 'Per hinge, plus the parts.',
+                'cause' => 'Hinges carry the whole weight of the door every time it swings, so they are a wearing part.',
+                'price' => 'From £96',
             ],
             [
                 'id' => 'patio-bifold-stiff',
                 'group' => 'door',
                 'symptom' => 'A patio or bifold door is stiff, or will not run properly.',
                 'also' => 'Sliding door hard to move, bifold not folding, door juddering on the track',
-                'cause' => 'Alignment. A slider or a folding set has to stay parallel to its track along the whole run, and a few millimetres out at one end is felt at the handle.',
-                'fix' => 'We realign the panels to the track, reset the rollers and check the whole run opens and closes evenly.',
-                'price' => '£132',
-                'price_note' => 'French or patio £132, bifold £156.',
+                'cause' => 'Alignment. A few millimetres out at one end of the track is felt at the handle.',
+                'price' => 'From £132',
             ],
             [
                 'id' => 'locked-out',
                 'group' => 'door',
                 'symptom' => 'Locked out, or the key has snapped in the lock.',
                 'also' => 'Cannot get in, key broken in the door, lost keys',
-                'cause' => 'A snapped key or a seized cylinder. It is the one repair where the job is getting you back in first and diagnosing second.',
-                'fix' => 'We gain entry, then fit a new cylinder if the old one is beyond saving.',
-                'price' => '£108',
-                'price_note' => 'Gaining entry £108. A replacement cylinder is £108, or £96 each for two.',
+                'cause' => 'A snapped key or a seized cylinder. Getting you back in comes first and diagnosis second.',
+                'price' => 'From £108',
             ],
             [
                 'id' => 'change-locks',
                 'group' => 'door',
                 'symptom' => 'I want the locks changed, or keys that match.',
                 'also' => 'New cylinder, change the barrel, keyed alike, moved house',
-                'cause' => 'Nothing is broken. Moving in, losing a set of keys or wanting one key for the front and back door are all ordinary reasons to change a cylinder.',
-                'fix' => 'We fit new euro or rim cylinders to the door thickness, and can key them alike so one key works both doors.',
-                'price' => '£108',
-                'price_note' => 'Two on the same visit, £96 each.',
+                'cause' => 'Nothing is broken. Moving in, losing a set of keys, or wanting one key for the front and back door.',
+                'price' => 'From £108',
             ],
             [
                 'id' => 'misted-glass',
                 'group' => 'glass',
                 'symptom' => 'The glass is misted or cloudy between the panes.',
                 'also' => 'Blown double glazing, condensation inside the glass, foggy window',
-                'cause' => 'The seal round the double glazed unit has failed and moisture is inside the cavity. It cannot be dried out, but it also does not mean a new window.',
-                'fix' => 'The glass is changed on its own and the frame stays. That is its own job with its own page.',
+                'cause' => 'The sealed unit has failed. It cannot be dried out, but the frame stays and only the glass changes.',
                 'price' => '',
-                'price_note' => 'Measured and quoted per unit.',
                 'link' => '/double-glazing-replacement/',
                 'link_label' => 'See replacement glazed units',
             ],
@@ -2164,39 +2136,34 @@ function fenster_site_data(): array
                 'group' => 'glass',
                 'symptom' => 'The glass is cracked or broken.',
                 'also' => 'Smashed window, broken pane, glass gone through',
-                'cause' => 'Two separate jobs, and the order matters: make the opening safe and secure first, then measure for the replacement unit.',
-                'fix' => 'We can board a domestic door to make it safe, then the new glass is measured and ordered to suit the frame.',
-                'price' => '£192',
-                'price_note' => 'Make-safe board to a domestic door £192. The replacement glass is quoted separately.',
+                'cause' => 'Two jobs in order: make the opening safe, then measure for the replacement unit.',
+                'price' => '',
                 'link' => '/double-glazing-replacement/',
                 'link_label' => 'See replacement glazed units',
             ],
         ],
-        /* The published selection, not the whole list. Eight rows out of
-           eighteen, chosen because they are the eight faults people actually
-           ring about; the rest stay in the office list. Same source and same
-           inc-VAT rule as `repair_problems` above. */
+        /* Price guiding, not a price list. Owner instruction, 2026-08-06,
+           after the first build published eight rows of the office tariff as a
+           table: that encourages shopping around, lets a competitor undercut
+           us line by line, and turns us into somebody else's benchmark.
+
+           What stays is the shape the price guides already use — a small
+           number of "from" anchors so a visitor can tell whether they are in
+           the right ballpark, and nothing precise enough to quote against.
+           Three examples, deliberately spanning the range rather than listing
+           the cheap end. Do not add a fourth, and do not restore the table. */
         'repair_prices' => [
-            'minimum' => '£96',
-            /* States the figure and nothing more. An earlier draft said it
-               "covers coming out and diagnosing the fault", which the price
-               list does not say and nobody has confirmed. A minimum charge is
-               a floor; what it buys is the office's to state, not ours. */
-            'minimum_note' => 'Including VAT. It is the least a repair visit costs, not the price of every job.',
-            'rows' => [
-                ['job' => 'Window handle', 'price' => '£96', 'note' => 'Extras on the same visit, £60 each'],
-                ['job' => 'Window adjustment', 'price' => '£96', 'note' => 'Then £36 for each additional window'],
-                ['job' => 'Window hinges', 'price' => 'From £144', 'note' => 'Three or more, £108 each'],
-                ['job' => 'Window mechanism', 'price' => 'From £144', 'note' => 'Three or more, £108 each'],
-                ['job' => 'Single door realignment', 'price' => '£120', 'note' => 'French or patio £132, bifold £156'],
-                ['job' => 'Door mechanism', 'price' => 'From £204', 'note' => 'The gear and the door type set the figure'],
-                ['job' => 'Euro or rim cylinder', 'price' => '£108', 'note' => 'Two on the same visit, £96 each'],
-                ['job' => 'Gaining entry', 'price' => '£108', 'note' => 'A new cylinder afterwards if it is needed'],
+            'from' => 'From £96',
+            'range' => 'Most repairs land somewhere between £96 and around £200 including VAT, depending on which part it needs.',
+            'examples' => [
+                ['job' => 'A window handle', 'price' => 'From £96'],
+                ['job' => 'A window mechanism', 'price' => 'From £144'],
+                ['job' => 'A door mechanism', 'price' => 'From £204'],
             ],
             'footnotes' => [
-                'Every figure includes VAT.',
-                'A sill repair is quoted individually from photographs.',
-                'A written glazing survey or report, for an insurer or a landlord, is £132.',
+                'Prices include VAT and are a starting point, not a quote.',
+                'What it actually comes to depends on the fault, the parts and how many items are done on the same visit.',
+                'Sill repairs and replacement glass are quoted individually.',
             ],
         ],
         /* greenteQ Alpha TBT, the tilt and turn handle. Facts are from the VBH

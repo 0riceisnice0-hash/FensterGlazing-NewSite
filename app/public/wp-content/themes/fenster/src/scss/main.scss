@@ -39007,16 +39007,6 @@ html.fg-blinds-reveal-locked {
    register STYLE.md rules out.
    ========================================================================== */
 
-.fg-rp-sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 /* ---------- The finder ---------------------------------------------------- */
 
 .fg-rp-finder__head {
@@ -39147,24 +39137,12 @@ html.fg-blinds-reveal-locked {
   text-align: right;
 }
 
-.fg-rp-card__price span {
-  color: var(--color-muted);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 .fg-rp-card__price strong {
   color: var(--color-ink);
-  font-size: 1.3rem;
+  font-size: 1.02rem;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
-}
-
-.fg-rp-card__price--quoted strong {
-  color: var(--color-muted);
-  font-size: 1rem;
-  font-weight: 400;
+  white-space: nowrap;
 }
 
 /* The other phrasings. Real on-page text, and the one place a search for
@@ -39176,37 +39154,14 @@ html.fg-blinds-reveal-locked {
   line-height: 1.45;
 }
 
-.fg-rp-card__detail {
-  margin: 1rem 0 0;
-}
-
-.fg-rp-card__detail dt {
-  margin-bottom: 0.2rem;
-  color: var(--color-accent);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fg-rp-card__detail dd {
-  margin: 0 0 0.85rem;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
-.fg-rp-card__detail dd:last-child {
-  margin-bottom: 0;
-}
-
-.fg-cw .fg-rp-card__note {
+/* One line of diagnosis. Was a two-term definition list under "USUALLY" and
+   "WHAT WE DO", which put two paragraphs and two uppercase labels on every one
+   of fifteen cards; the owner read the result as a page of text. */
+.fg-cw .fg-rp-card__cause {
   margin: 0.85rem 0 0;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-line);
-  color: var(--color-muted);
-  font-size: 0.82rem;
-  line-height: 1.45;
+  color: var(--color-ink);
+  font-size: 0.94rem;
+  line-height: 1.55;
 }
 
 /* Pushes the action to the foot so cards in a row line their links up whatever
@@ -39254,13 +39209,23 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-rp-part__media {
-  display: grid;
-  place-items: center;
+  /* `block`, not `grid`, and that is load-bearing. On a grid the image is an
+     item in an auto-sized row, so a `height: 100%` on it is circular: the row
+     sizes to the content and the content sizes to the row. The browser
+     resolves that to `auto`, the image falls back to its intrinsic height, and
+     a portrait cut-out draws 537px tall in a 372px box and gets clipped by the
+     overflow rule. Two passes at `place-items` did not fix it because
+     `place-items` was never the problem. A block box with `aspect-ratio` has a
+     definite height, so the percentage resolves and `object-fit` centres. */
+  display: block;
   overflow: hidden;
   margin-bottom: 1.1rem;
   border-radius: 8px;
   background: #fff;
-  aspect-ratio: 4 / 3;
+  /* Square, not 4:3. Two of the three are cut-out parts and one of those is
+     steeply portrait; contained in a landscape box the handle drew at about
+     167px wide and read as the weak one of a set. */
+  aspect-ratio: 1;
 }
 
 .fg-rp-part__media img {
@@ -39269,16 +39234,21 @@ html.fg-blinds-reveal-locked {
   object-fit: cover;
 }
 
-/* The mechanism is a cut-out on transparency, so it is contained and given air
-   rather than cropped to the box like the two photographs. `contain` plus
-   padding is what stops it reading as a broken image on a white card. */
+/* The mechanism and the handle are cut-outs on transparency, so they are
+   contained and given air rather than cropped like the photograph. */
 .fg-rp-part__media--cutout {
   padding: clamp(1rem, 2vw, 1.75rem);
 }
 
+/* BOTH dimensions are set here on purpose. These images carry explicit width
+   and height attributes, and with `place-items: center` on the box the grid
+   area is content-sized, so a `height: 100%` has nothing to resolve against
+   and silently falls back to the intrinsic height. That is how the handle came
+   to render 537px tall inside a 279px box and get clipped by the overflow
+   rule: it looked like a bad crop and was actually an unresolved percentage.
+   `width: 100%` plus `height: 100%` plus `contain` letterboxes it properly. */
 .fg-rp-part__media--cutout img {
-  width: auto;
-  max-width: 100%;
+  width: 100%;
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 12px 20px rgba(0, 45, 58, 0.16));
@@ -39287,117 +39257,54 @@ html.fg-blinds-reveal-locked {
 /* ---------- Pricing ------------------------------------------------------- */
 
 .fg-rp-pricing__shell {
+  max-width: none;
+}
+
+.fg-rp-pricing__intro {
+  max-width: 42rem;
+}
+
+/* Three "from" anchors, not a tariff. Set as a row of figures with a hairline
+   between them rather than a table, because a table reads as a price list and
+   that is exactly what this route must not publish. */
+.fg-rp-anchors {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  align-items: start;
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-}
-
-.fg-rp-minimum {
-  margin-top: 1.5rem;
-  padding: 1.25rem 1.4rem;
-  border-radius: 8px;
-  background: var(--color-steel);
-  color: #fff;
-}
-
-.fg-cw .fg-rp-minimum__label {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.fg-cw .fg-rp-minimum__figure {
-  margin: 0.2rem 0 0;
-  color: #fff;
-  font-size: clamp(2rem, 3.4vw, 2.6rem);
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.fg-cw .fg-rp-minimum__note {
-  margin: 0.5rem 0 0;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.85rem;
-  line-height: 1.45;
-}
-
-.fg-rp-pricing__table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.fg-rp-pricing__table thead th {
-  padding: 0 0 0.7rem;
-  border-bottom: 1px solid var(--color-line);
-  color: var(--color-muted);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.fg-rp-pricing__table thead th:last-child {
-  text-align: right;
-}
-
-.fg-rp-pricing__table tbody th {
-  padding: 0.85rem 1rem 0.85rem 0;
-  border-bottom: 1px solid var(--color-line);
-  color: var(--color-ink);
-  font-size: 0.98rem;
-  font-weight: 400;
-  text-align: left;
-}
-
-.fg-rp-pricing__table tbody th span {
-  display: block;
-  margin-top: 0.15rem;
-  color: var(--color-muted);
-  font-size: 0.82rem;
-}
-
-.fg-rp-pricing__table tbody td {
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--color-line);
-  color: var(--color-ink);
-  font-size: 1.02rem;
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  text-align: right;
-  vertical-align: top;
-  white-space: nowrap;
-}
-
-.fg-rp-pricing__notes {
-  display: grid;
-  gap: 0.3rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
   padding: 0;
-  margin: 1.1rem 0 0;
+  margin: clamp(1.5rem, 3vw, 2rem) 0 0;
   list-style: none;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
 }
 
-.fg-rp-pricing__notes li {
-  position: relative;
-  padding-left: 1rem;
+.fg-rp-anchors li {
+  padding: 1.15rem 1.25rem;
+}
+
+.fg-rp-anchors li + li {
+  border-left: 1px solid var(--color-line);
+}
+
+.fg-rp-anchors__job {
+  display: block;
   color: var(--color-muted);
   font-size: 0.85rem;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
-.fg-rp-pricing__notes li::before {
-  position: absolute;
-  left: 0;
-  color: var(--color-accent);
-  content: '\2022';
+.fg-rp-anchors__price {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--color-ink);
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 1.1;
 }
 
 .fg-cw .fg-rp-pricing__caveat {
+  max-width: 46rem;
   margin: 1.1rem 0 0;
   font-size: 0.85rem;
 }
@@ -39563,7 +39470,6 @@ html.fg-blinds-reveal-locked {
 /* ---------- Tablet -------------------------------------------------------- */
 
 @media (max-width: 1080px) {
-  .fg-rp-pricing__shell,
   .fg-rp-glass__shell {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -39635,8 +39541,14 @@ html.fg-blinds-reveal-locked {
     text-align: left;
   }
 
-  .fg-rp-pricing__table tbody th {
-    font-size: 0.94rem;
+  /* Anchors stack rather than squeezing three figures across 390. */
+  .fg-rp-anchors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-rp-anchors li + li {
+    border-top: 1px solid var(--color-line);
+    border-left: 0;
   }
 
   .fg-rp-process__rail {
