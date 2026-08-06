@@ -39317,11 +39317,9 @@ html.fg-blinds-reveal-locked {
    you scroll. They gave themselves a band once and it wasted a screen and a
    half proving they existed.
 
-   The layer sits BEHIND the content. Every section on this page is transparent
-   over the page gradient, so a product shows through wherever there is no card
-   and passes behind one where there is, which is the overlap doing real work
-   rather than a decoration parked in a gap. The alpha is genuine, so the
-   gradient reads through the panes either way.
+   The layer sits OVER the content and the products fly across it. The alpha is
+   genuine, so the copy underneath reads through the glass as one passes rather
+   than being blanked out by it, and the layer never takes a click.
 
    Movement is one controller writing one transform; see the note in main.js.
 --------------------------------------------------------------------------- */
@@ -39333,13 +39331,19 @@ html.fg-blinds-reveal-locked {
 .fg-oq-canvas {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  /* OVER the content, not behind it. Owner instruction: the products fly across
+     the page in front of the sections. Behind them they only showed through the
+     margins and read as a sliver of something happening elsewhere.
+
+     `pointer-events: none` is what makes that safe. The layer covers the whole
+     article, so without it every click on a CTA underneath would land here
+     instead. The stills carry `alt=""` and the layer is `aria-hidden`, so
+     nothing here reaches a screen reader either. */
+  z-index: 5;
   overflow: hidden;
   pointer-events: none;
 }
 
-/* The content rides above the layer. Without this the sections have no stacking
-   context of their own and the products land on top of the copy. */
 .fg-oq > section {
   position: relative;
   z-index: 1;
@@ -39385,18 +39389,18 @@ html.fg-blinds-reveal-locked {
   --fg-from-scale: 0.62;
 }
 
-.fg-oq-spin--from-left {
-  --fg-from-x: -130vw;
-  --fg-from-y: -16vh;
-  --fg-from-rot: -38deg;
-  --fg-from-scale: 0.7;
+.fg-oq-spin--from-topleft {
+  --fg-from-x: -70vw;
+  --fg-from-y: -110vh;
+  --fg-from-rot: -34deg;
+  --fg-from-scale: 0.66;
 }
 
-.fg-oq-spin--from-right {
-  --fg-from-x: 130vw;
-  --fg-from-y: -12vh;
-  --fg-from-rot: 42deg;
-  --fg-from-scale: 0.7;
+.fg-oq-spin--from-topright {
+  --fg-from-x: 70vw;
+  --fg-from-y: -110vh;
+  --fg-from-rot: 38deg;
+  --fg-from-scale: 0.66;
 }
 
 .fg-oq-spin__still,
