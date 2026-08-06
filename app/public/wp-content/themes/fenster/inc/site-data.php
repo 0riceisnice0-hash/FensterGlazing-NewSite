@@ -348,11 +348,18 @@ function fenster_site_data(): array
                 ['label' => 'Design', 'value' => 'Fully customisable'],
                 ['label' => 'Security', 'value' => 'Multi-point locking'],
             ],
+            /* "Style: Traditional" was the fourth tile until 2026-08-06 and was
+               the only one of the four that was not a measurement, sitting in a
+               strip whose whole effect is that the numbers count up. It was also
+               half wrong: this window goes on modern elevations as often as period
+               ones. Liniar publish 35 (-1;-4) for the 70mm flush sash, so the slot
+               now carries the acoustic figure. Owner's call between that and PAS
+               24; the decibel number counts and the standard does not. */
             'flush-casement-windows' => [
                 ['label' => 'U-value', 'value' => '1.2 W/m²K'],
                 ['label' => 'Colour choice', 'value' => '16 options'],
                 ['label' => 'Energy rating', 'value' => 'A+ rated'],
-                ['label' => 'Style', 'value' => 'Traditional'],
+                ['label' => 'Sound reduction', 'value' => '35 dB'],
             ],
             'patio-doors' => [
                 ['label' => 'U-value', 'value' => '1.2 W/m²K'],
@@ -642,11 +649,21 @@ function fenster_site_data(): array
                     ['src' => '/wp-content/themes/fenster/assets/images/products/casement/casement-sill-interior-1200w.webp', 'alt' => 'White casement window and sill seen from inside a room'],
                 ],
             ],
+            /* Owner audit, 2026-08-06. The hero here was `flush-stone-elevation`,
+               which is aluminium: slim square sightlines, thin sash sections, a
+               contemporary elevation. We sell aluminium flush windows as a separate
+               product, so the lead image on the uPVC flush page was selling the
+               wrong one. `flush-grey-top-vents` in the mosaic below is the same
+               mistake, with visible metal restrictor arms, and comes out too.
+
+               Both are replaced with our own installations. Judge a replacement by
+               the sash-to-frame junction, not by the filename: everything in this
+               set is called flush-something and two of them were not. */
             'flush-casement-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-stone-elevation-1600w.webp', 'alt' => 'Anthracite flush casement windows on a rendered and stone elevation'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-modern-elevation-1600w.webp', 'alt' => 'Anthracite flush casement windows across the rear elevation of a red brick house'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-bay-brick-1400w.webp', 'alt' => 'White flush casement bay window on a tile hung house'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-grey-interior-1400w.webp', 'alt' => 'Three pane white flush casement window seen from inside'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-detail-1400w.webp', 'alt' => 'White flush casement window in red brick, the sashes closing level with the outer frame'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-cream-bars-1400w.webp', 'alt' => 'Cream flush casement windows with Georgian bars on a buff brick house'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-dual-colour-closeup-1200w.webp', 'alt' => 'Flush casement window with a black outer frame and white sashes'],
                 ],
             ],
@@ -1076,14 +1093,19 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Casement-Windows-Flitwick-10.jpg', 'alt' => 'Casement windows arranged as a bay on a red brick house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Double glazed unit inside a uPVC casement frame'],
             ],
+            /* The two aluminium frames are gone from here too, and our own
+               installations lead. `flush-grey-interior` also came out: flushness is
+               an external characteristic, so a photograph taken from inside the room
+               cannot show it, and it was occupying a slot on the one page where that
+               is the whole argument. See the note on the hero above. */
             'flush_casement_windows' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-stone-elevation-1600w.webp', 'alt' => 'Anthracite flush casement windows on a rendered and stone elevation'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-modern-elevation-1600w.webp', 'alt' => 'Anthracite flush casement windows across the rear elevation of a red brick house'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-detail-1400w.webp', 'alt' => 'White flush casement window in red brick, the sashes closing level with the outer frame'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-cream-bars-1400w.webp', 'alt' => 'Cream flush casement windows with Georgian bars on a buff brick house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-bay-brick-1400w.webp', 'alt' => 'White flush casement bay window on a tile hung house'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-grey-interior-1400w.webp', 'alt' => 'Three pane white flush casement window seen from inside'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-dual-colour-closeup-1200w.webp', 'alt' => 'Flush casement window with a black outer frame and white sashes'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-frame-detail-1200w.webp', 'alt' => 'Close-up of a flush casement sash sitting level with its outer frame'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-oak-dormers-1400w.webp', 'alt' => 'Golden oak flush casement windows in two dormer gables'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-grey-top-vents-1400w.webp', 'alt' => 'Grey flush casement windows with the top lights open on a timber clad house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-light-grey-stone-1400w.webp', 'alt' => 'Light grey flush casement windows set into a stone elevation'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Flush-Casement-Windows-Flitwick-6.jpg', 'alt' => 'Flush casement windows fitted to a home in Flitwick'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Flush-Casement-Windows-Flitwick-7.jpg', 'alt' => 'Golden oak woodgrain flush casement windows on dormer gables'],

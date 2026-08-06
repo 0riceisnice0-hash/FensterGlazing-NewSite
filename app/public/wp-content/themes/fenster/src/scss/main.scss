@@ -38537,3 +38537,160 @@ html.fg-blinds-reveal-locked {
     transform: none;
   }
 }
+
+/* ---- Flush against standard, on one handle ---------------------------------
+   The flush page's whole argument is that the sash closes level with the frame.
+   A table can state it; this shows it. Two matched studio photographs in one
+   box, the join dragged across so the step appears and disappears.
+
+   `--fg-wipe` carries the position and defaults to 50%, so with JavaScript off
+   the box is a straight half-and-half comparison that still makes the point.
+   Flush is the layer underneath and always fills the stage: on the flush page,
+   the untouched state should be the thing being sold. */
+.fg-wipe {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+}
+
+.fg-wipe__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+.fg-wipe__title {
+  max-width: 16ch;
+  margin: 0.35rem 0 0.7rem;
+}
+
+.fg-wipe__copy p:not(.eyebrow) {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.fg-wipe__stage {
+  position: relative;
+  /* The pair is 820x857, and the stage holds that ratio so neither photograph is
+     cropped differently from the other — a wipe only reads as one object if both
+     halves are framed identically. */
+  aspect-ratio: 820 / 857;
+  max-height: 620px;
+  margin: 0 0 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-soft);
+  touch-action: pan-y;
+}
+
+.fg-wipe__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Standard is revealed from the left, up to the seam. */
+.fg-wipe__layer {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--fg-wipe, 50%)) 0 0);
+}
+
+.fg-wipe__seam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--fg-wipe, 50%);
+  width: 2px;
+  margin-left: -1px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 45, 58, 0.25);
+  pointer-events: none;
+}
+
+/* The grip. Drawn on the seam rather than on the input, because the input itself
+   is invisible and stretched across the whole stage so a drag can start anywhere
+   on the picture rather than only on the handle. */
+.fg-wipe__seam::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -50%);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: rgba(0, 45, 58, 0.42);
+  box-shadow: 0 6px 18px rgba(0, 45, 58, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+.fg-wipe__tag {
+  position: absolute;
+  top: 0.9rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(0, 45, 58, 0.72);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.fg-wipe__tag--standard { left: 0.9rem; }
+.fg-wipe__tag--flush { right: 0.9rem; }
+
+/* Invisible, full-bleed, and still a real range input: keyboard operable,
+   announces a value, and inherits the platform's own touch handling. */
+.fg-wipe__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  cursor: ew-resize;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.fg-wipe__range::-webkit-slider-thumb {
+  width: 44px;
+  height: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.fg-wipe__range::-moz-range-thumb {
+  width: 44px;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+}
+
+/* The input carries no visible focus of its own, so the stage wears it. */
+.fg-wipe__stage:has(.fg-wipe__range:focus-visible) {
+  outline: 3px solid var(--color-accent, #2eac66);
+  outline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+  .fg-wipe__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-wipe__stage {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-wipe__seam::after { backdrop-filter: none; }
+}

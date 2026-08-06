@@ -7672,3 +7672,28 @@ document.querySelectorAll('[data-fg-legend-approved]').forEach((block) => {
     window.setTimeout(() => button.classList.remove('is-pressed'), 160);
   });
 });
+
+/* ---- Flush against standard, on one handle ---------------------------------
+   The range input is the whole interaction. It sits invisible and stretched
+   across the stage, so a drag can start anywhere on the photograph rather than
+   only on the grip, and everything else — keyboard, touch, the announced value,
+   the focus ring — comes from the platform rather than from here.
+
+   All this does is copy the input's value onto `--fg-wipe`, which the clip and
+   the seam both read. Nothing is measured and nothing is listened for on the
+   window, so there is no scroll or resize path to get wrong: the component is
+   correct at any width because the value is a percentage.
+
+   No reduced-motion branch, deliberately. This is not motion the page performs
+   at someone; it moves only while a person is actively dragging it, and pinning
+   it would remove the only thing the component does. */
+document.querySelectorAll('[data-fg-wipe]').forEach((stage) => {
+  const range = stage.querySelector('[data-fg-wipe-range]');
+  if (!range) return;
+
+  const paint = () => stage.style.setProperty('--fg-wipe', `${range.value}%`);
+
+  // `input` covers pointer, touch and keyboard on every browser this ships to.
+  range.addEventListener('input', paint);
+  paint();
+});
