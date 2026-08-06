@@ -96,18 +96,18 @@ $steps = [
    smaller, softer and slower, which is what makes it read as depth rather than
    as things of different sizes. */
 $spins = [
-    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => 6,  'y' => 3,  'w' => 21, 'depth' => 2.6, 'tilt' => -0.012, 'layer' => 'front'],
-    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 61, 'y' => 1,  'w' => 16, 'depth' => 1.6, 'tilt' => 0.010,  'layer' => 'mid'],
-    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => 29, 'y' => 11, 'w' => 25, 'depth' => 3.0, 'tilt' => 0.008,  'layer' => 'front'],
-    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 83, 'y' => 15, 'w' => 13, 'depth' => 1.0, 'tilt' => -0.014, 'layer' => 'back'],
-    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => 2,  'y' => 29, 'w' => 15, 'depth' => 1.8, 'tilt' => 0.012,  'layer' => 'mid'],
-    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'x' => 44, 'y' => 33, 'w' => 14, 'depth' => 1.2, 'tilt' => -0.010, 'layer' => 'back'],
-    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 66, 'y' => 39, 'w' => 23, 'depth' => 2.8, 'tilt' => 0.009,  'layer' => 'front'],
-    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'x' => 19, 'y' => 51, 'w' => 14, 'depth' => 2.0, 'tilt' => -0.011, 'layer' => 'mid'],
-    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'x' => 49, 'y' => 61, 'w' => 22, 'depth' => 2.4, 'tilt' => 0.010,  'layer' => 'front'],
-    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'x' => 76, 'y' => 67, 'w' => 19, 'depth' => 1.5, 'tilt' => -0.008, 'layer' => 'mid'],
-    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'x' => 7,  'y' => 73, 'w' => 13, 'depth' => 0.9, 'tilt' => 0.013,  'layer' => 'back'],
-    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'x' => 35, 'y' => 83, 'w' => 15, 'depth' => 1.4, 'tilt' => -0.012, 'layer' => 'mid'],
+    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => 3,  'y' => 2,  'w' => 25, 'depth' => 2.6, 'tilt' => -0.012, 'layer' => 'front'],
+    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 25, 'y' => 9,  'w' => 21, 'depth' => 1.5, 'tilt' => 0.010,  'layer' => 'mid'],
+    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => 50, 'y' => 1,  'w' => 29, 'depth' => 3.0, 'tilt' => 0.008,  'layer' => 'front'],
+    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 77, 'y' => 10, 'w' => 19, 'depth' => 0.9, 'tilt' => -0.014, 'layer' => 'back'],
+    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => 13, 'y' => 27, 'w' => 20, 'depth' => 1.9, 'tilt' => 0.012,  'layer' => 'mid'],
+    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'x' => 37, 'y' => 32, 'w' => 22, 'depth' => 1.1, 'tilt' => -0.010, 'layer' => 'back'],
+    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 60, 'y' => 25, 'w' => 27, 'depth' => 2.8, 'tilt' => 0.009,  'layer' => 'front'],
+    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'x' => 85, 'y' => 35, 'w' => 17, 'depth' => 2.0, 'tilt' => -0.011, 'layer' => 'mid'],
+    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'x' => 5,  'y' => 53, 'w' => 26, 'depth' => 2.4, 'tilt' => 0.010,  'layer' => 'front'],
+    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'x' => 33, 'y' => 59, 'w' => 25, 'depth' => 1.4, 'tilt' => -0.008, 'layer' => 'mid'],
+    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'x' => 63, 'y' => 56, 'w' => 19, 'depth' => 0.9, 'tilt' => 0.013,  'layer' => 'back'],
+    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'x' => 80, 'y' => 67, 'w' => 21, 'depth' => 1.4, 'tilt' => -0.012, 'layer' => 'mid'],
 ];
 
 $before = [

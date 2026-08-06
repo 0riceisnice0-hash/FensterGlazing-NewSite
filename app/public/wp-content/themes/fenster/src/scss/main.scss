@@ -39254,8 +39254,10 @@ html.fg-blinds-reveal-locked {
 
 .fg-oq-range__stage {
   position: relative;
-  height: 250vh;
-  margin-top: -6vh;
+  /* Short enough that several are on screen at once and crossing each other.
+     At 250vh each item sat alone in white space and nothing ever overlapped. */
+  height: 155vh;
+  margin-top: -4vh;
 }
 
 .fg-oq-spin {
@@ -39325,7 +39327,7 @@ html.fg-blinds-reveal-locked {
   position: sticky;
   bottom: clamp(1.5rem, 5vh, 3rem);
   z-index: 4;
-  padding-top: 60vh;
+  padding-top: 42vh;
   text-align: center;
   pointer-events: none;
 }
@@ -39336,7 +39338,7 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 1180px) {
   .fg-oq-range__stage {
-    height: 210vh;
+    height: 150vh;
     --fg-fall: 0.85;
   }
 }
@@ -39346,7 +39348,7 @@ html.fg-blinds-reveal-locked {
      products grow relative to the screen and the fall is damped. Left unchanged
      they would be thumbnails sliding a long way past each other. */
   .fg-oq-range__stage {
-    height: 190vh;
+    height: 135vh;
     --fg-fall: 0.6;
   }
 
@@ -39361,7 +39363,7 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 520px) {
   .fg-oq-range__stage {
-    height: 175vh;
+    height: 125vh;
     --fg-fall: 0.45;
   }
 
