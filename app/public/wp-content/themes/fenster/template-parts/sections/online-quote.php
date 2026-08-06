@@ -90,18 +90,19 @@ $steps = [
    article's own 0 to 1 progress, so they arrive spread down the whole page
    rather than together. `drift` and `tilt` keep it moving after it lands.
 
-   `y` is a percentage of the whole article, `x` of the viewport width. They sit
-   behind the content on purpose: the page's sections are transparent over the
+   `y` is a percentage of the whole article, `x` of the viewport width, and both
+   run past the edges on purpose so a product is part way off screen as it
+   crosses. They sit behind the content: the page's sections are transparent over the
    gradient, so a product shows through wherever there is no card, and passes
    behind the cards where there is one. The glass is genuinely see-through, so
    the gradient reads through the panes either way. */
 $spins = [
-    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => -2, 'y' => 9,  'w' => 17, 'from' => 'left',  'start' => 0.00, 'end' => 0.20, 'drift' => 0.55, 'tilt' => -0.30, 'layer' => 'front'],
-    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 79, 'y' => 21, 'w' => 19, 'from' => 'right', 'start' => 0.10, 'end' => 0.33, 'drift' => 0.34, 'tilt' => 0.24,  'layer' => 'mid'],
-    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => 2,  'y' => 38, 'w' => 22, 'from' => 'top',   'start' => 0.24, 'end' => 0.47, 'drift' => 0.60, 'tilt' => 0.18,  'layer' => 'front'],
-    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 77, 'y' => 53, 'w' => 17, 'from' => 'right', 'start' => 0.38, 'end' => 0.61, 'drift' => 0.26, 'tilt' => -0.30, 'layer' => 'back'],
-    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => -1, 'y' => 68, 'w' => 16, 'from' => 'left',  'start' => 0.52, 'end' => 0.75, 'drift' => 0.42, 'tilt' => 0.26,  'layer' => 'mid'],
-    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 74, 'y' => 82, 'w' => 23, 'from' => 'right', 'start' => 0.66, 'end' => 0.90, 'drift' => 0.52, 'tilt' => 0.20,  'layer' => 'front'],
+    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'x' => -9, 'y' => 8,  'w' => 32, 'from' => 'left',  'start' => 0.00, 'end' => 0.20, 'drift' => 0.55, 'tilt' => -0.30, 'layer' => 'front'],
+    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'x' => 74, 'y' => 20, 'w' => 34, 'from' => 'right', 'start' => 0.10, 'end' => 0.33, 'drift' => 0.34, 'tilt' => 0.24,  'layer' => 'mid'],
+    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'x' => -8, 'y' => 37, 'w' => 38, 'from' => 'top',   'start' => 0.24, 'end' => 0.47, 'drift' => 0.60, 'tilt' => 0.18,  'layer' => 'front'],
+    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'x' => 76, 'y' => 52, 'w' => 30, 'from' => 'right', 'start' => 0.38, 'end' => 0.61, 'drift' => 0.26, 'tilt' => -0.30, 'layer' => 'back'],
+    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'x' => -7, 'y' => 67, 'w' => 30, 'from' => 'left',  'start' => 0.52, 'end' => 0.75, 'drift' => 0.42, 'tilt' => 0.26,  'layer' => 'mid'],
+    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'x' => 71, 'y' => 81, 'w' => 38, 'from' => 'right', 'start' => 0.66, 'end' => 0.90, 'drift' => 0.52, 'tilt' => 0.20,  'layer' => 'front'],
 ];
 
 $before = [
