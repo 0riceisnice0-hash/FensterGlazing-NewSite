@@ -10740,6 +10740,12 @@ html.fg-gallery-lightbox-open body {
   align-content: center;
 }
 
+/* The heading is the last thing in this column since the explanatory line came
+   out, and its bottom margin was left hanging under it as dead space. */
+.fg-obscure-picker__intro > :last-child {
+  margin-bottom: 0;
+}
+
 .fg-obscure-picker__tips {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

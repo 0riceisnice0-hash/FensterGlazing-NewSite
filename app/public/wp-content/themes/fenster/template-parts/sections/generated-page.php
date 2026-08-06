@@ -2630,7 +2630,16 @@ if ($is_obscure_glass) {
                21 (they share no factor), so consecutive tiles are never
                neighbours in the list either. Only the rows below the clip, which
                exist so the wall never stops short, reuse anything. */
-            $obscure_wall_pool = array_values($obscure_glass_textures);
+            /* Mayflower and Tribal are out of the wall on the owner's instruction.
+               They stay in the picker below, where somebody choosing glass can
+               still find them — this only decides what the hero advertises. */
+            $obscure_wall_skip = ['mayflower', 'tribal'];
+            $obscure_wall_pool = array_values(array_filter(
+                $obscure_glass_textures,
+                static function (array $texture) use ($obscure_wall_skip): bool {
+                    return ! in_array(sanitize_title((string) ($texture['name'] ?? '')), $obscure_wall_skip, true);
+                }
+            ));
             $obscure_wall_tiles = [];
             if ($obscure_wall_pool !== []) {
                 $obscure_wall_count = count($obscure_wall_pool);
