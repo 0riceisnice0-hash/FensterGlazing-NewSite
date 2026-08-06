@@ -189,7 +189,6 @@ $gallery = [
                     </div>
                 <?php endforeach; ?>
             </dl>
-            <p class="fg-flush-note"><?php esc_html_e('One thing this system does not do: it takes a 28mm double glazed unit only, so there is no triple glazed option on a uPVC flush casement. Worth knowing before a survey rather than after one.', 'fenster'); ?></p>
         </div>
     </section>
 
