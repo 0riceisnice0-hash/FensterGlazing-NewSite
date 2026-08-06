@@ -1,33 +1,39 @@
 <?php
 /**
- * Flush against standard, on one handle.
+ * Flush against standard: the same window, twice.
  *
  * The page's whole argument is that the sash closes level with the frame instead
- * of standing proud of it. A table can state that; it cannot show it. This puts
- * the two studio photographs in the same box, one over the other, and lets you
- * drag the join across so the step appears and disappears under your thumb.
+ * of standing proud of it. A table can state that; this shows it.
  *
- * The two frames are the pair already used on the casement page's comparison, so
- * they are the same window, the same size and the same light — which is the only
- * reason a wipe reads as one object changing rather than two pictures swapping.
- * Do not substitute a photograph shot on a different day.
+ * Drawn rather than photographed, and that is the point. The first version of
+ * this wiped between two studio photographs, `cas-sash-proud` and
+ * `cas-flush-level`, and the owner caught the flaw immediately: one is a corner
+ * detail and the other a four-way junction, so it was two different windows
+ * swapping rather than one window changing. A wipe only makes its argument if
+ * everything except the thing being demonstrated stays still, and no two
+ * photographs of two real windows can do that.
  *
- * Built to survive its own failure. With no JavaScript the input is still a real
- * range control, and `--fg-wipe` keeps its CSS default of 50%, so the component
- * renders as a straight half-and-half comparison that still makes the point. The
- * flush half is the one that stays underneath and always fills the box, because
- * this is the flush page: what you see when nothing has been touched is the thing
- * we are selling.
+ * So both halves are the same drawing. Identical outer frame, identical mullions,
+ * identical panes, to the pixel — the only thing that changes across the seam is
+ * the sash. On the standard side each opener carries the step that stands proud
+ * of the frame and the shadow it throws; on the flush side that step is gone and
+ * the face is one plane. Because the geometry underneath is shared, the eye has
+ * nowhere else to go.
  *
- * Accessibility: the control is an `<input type="range">` rather than a div with
- * pointer handlers, so it is keyboard operable, announces a value, and inherits
- * the platform's own touch behaviour. Both photographs carry real alt text — the
- * comparison is the content here, not decoration.
+ * A section runs under the elevation for the same reason, because a shadow line
+ * is the symptom and the profile is the cause: standard shows the sash sitting on
+ * top of the frame, flush shows it sitting into it.
  *
- * Args:
- *   flush_src / flush_alt        Flush photograph. Required.
- *   standard_src / standard_alt  Standard casement photograph. Required.
- *   eyebrow / heading / copy     Section furniture.
+ * Built to survive its own failure. `--fg-wipe` keeps a CSS default of 50%, so
+ * with no JavaScript the box is a straight half-and-half comparison that still
+ * makes the point. Flush is the layer underneath and always fills the stage: on
+ * the flush page, the untouched state should be the thing being sold.
+ *
+ * Accessibility: the control is a real `<input type="range">` rather than a div
+ * with pointer handlers, so it is keyboard operable, announces a value and
+ * inherits the platform's touch behaviour. The drawings are decorative — the
+ * copy beside them carries the meaning — so they are hidden from assistive tech
+ * rather than described twice.
  *
  * @package Fenster
  */
@@ -36,19 +42,61 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-$flush_src = (string) ($args['flush_src'] ?? '');
-$standard_src = (string) ($args['standard_src'] ?? '');
-
-if ($flush_src === '' || $standard_src === '') {
-    return;
-}
-
-$flush_alt = (string) ($args['flush_alt'] ?? 'Flush casement window, the sash closing level with the outer frame');
-$standard_alt = (string) ($args['standard_alt'] ?? 'Standard casement window, the sash standing proud of the outer frame');
 $eyebrow = (string) ($args['eyebrow'] ?? 'The difference');
-$heading = (string) ($args['heading'] ?? 'Drag to see the step disappear.');
+$heading = (string) ($args['heading'] ?? 'Drag it, and watch the step disappear.');
 $copy = (string) ($args['copy'] ?? '');
 $uid = 'fg-wipe-' . wp_unique_id();
+
+/* One drawing, rendered twice. `$sashes` is the pane grid, shared by both sides
+   so the two halves cannot drift apart: change a number here and it changes on
+   both sides at once, which is the invariant the whole component rests on. */
+$panes = [
+    ['x' => 40, 'w' => 150],
+    ['x' => 200, 'w' => 150],
+    ['x' => 360, 'w' => 150],
+];
+
+$draw = static function (bool $proud) use ($panes): string {
+    $out = '';
+    foreach ($panes as $pane) {
+        $x = $pane['x'];
+        $w = $pane['w'];
+        if ($proud) {
+            // The sash stands off the frame, so it casts and carries a step.
+            $out .= '<rect x="' . ($x - 4) . '" y="46" width="' . ($w + 8) . '" height="188" rx="2" class="fg-wipe-svg__shadow"/>';
+            $out .= '<rect x="' . ($x - 3) . '" y="45" width="' . ($w + 6) . '" height="186" rx="2" class="fg-wipe-svg__sash"/>';
+            $out .= '<rect x="' . ($x + 8) . '" y="56" width="' . ($w - 16) . '" height="164" rx="1" class="fg-wipe-svg__glass"/>';
+        } else {
+            // Level with the frame: one plane, no step, nothing to shadow.
+            $out .= '<rect x="' . $x . '" y="48" width="' . $w . '" height="182" rx="2" class="fg-wipe-svg__sash"/>';
+            $out .= '<rect x="' . ($x + 11) . '" y="59" width="' . ($w - 22) . '" height="160" rx="1" class="fg-wipe-svg__glass"/>';
+        }
+    }
+    return $out;
+};
+
+/* The section under the elevation. Standard sits the sash on the face of the
+   frame; flush sets it into the frame so the outer faces line up. */
+$section = static function (bool $proud): string {
+    $frame = '<rect x="40" y="300" width="470" height="26" rx="2" class="fg-wipe-svg__sectionframe"/>';
+    if ($proud) {
+        return $frame
+            . '<rect x="150" y="286" width="250" height="16" rx="2" class="fg-wipe-svg__sectionsash"/>'
+            . '<path d="M150 286 L150 300" class="fg-wipe-svg__lead"/>'
+            . '<text x="275" y="279" class="fg-wipe-svg__note">sash sits on the frame</text>';
+    }
+    return $frame
+        . '<rect x="150" y="300" width="250" height="16" rx="2" class="fg-wipe-svg__sectionsash"/>'
+        . '<text x="275" y="279" class="fg-wipe-svg__note">sash sits into the frame</text>';
+};
+
+$svg = static function (bool $proud) use ($draw, $section): string {
+    return '<svg class="fg-wipe-svg" viewBox="0 0 550 340" role="presentation" aria-hidden="true" focusable="false">'
+        . '<rect x="24" y="30" width="502" height="218" rx="3" class="fg-wipe-svg__frame"/>'
+        . $draw($proud)
+        . $section($proud)
+        . '</svg>';
+};
 ?>
 
 <section class="fg-wipe" aria-labelledby="<?php echo esc_attr($uid); ?>-title">
@@ -62,25 +110,15 @@ $uid = 'fg-wipe-' . wp_unique_id();
         </div>
 
         <figure class="fg-wipe__stage" data-fg-wipe>
-            <?php /* Flush underneath, filling the box: the resting state is the
+            <?php /* Flush underneath, filling the stage: the resting state is the
                      product this page sells. */ ?>
-            <img class="fg-wipe__img fg-wipe__img--flush"
-                src="<?php echo esc_url(fenster_generated_url($flush_src)); ?>"
-                alt="<?php echo esc_attr($flush_alt); ?>" loading="lazy" decoding="async">
+            <span class="fg-wipe__side fg-wipe__side--flush"><?php echo $svg(false); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 
             <?php /* Standard on top, revealed from the left by a clip that follows
-                     the slider. `aria-hidden` because the caption and the control
-                     already say which side is which, and a screen reader does not
-                     benefit from two near-identical descriptions of the same
-                     window. The flush image below keeps its alt. */ ?>
-            <span class="fg-wipe__layer" aria-hidden="true">
-                <img class="fg-wipe__img fg-wipe__img--standard"
-                    src="<?php echo esc_url(fenster_generated_url($standard_src)); ?>"
-                    alt="" loading="lazy" decoding="async">
-            </span>
+                     the slider. Same drawing, one difference. */ ?>
+            <span class="fg-wipe__layer"><span class="fg-wipe__side fg-wipe__side--standard"><?php echo $svg(true); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></span>
 
             <span class="fg-wipe__seam" aria-hidden="true"></span>
-
             <span class="fg-wipe__tag fg-wipe__tag--standard" aria-hidden="true"><?php esc_html_e('Standard', 'fenster'); ?></span>
             <span class="fg-wipe__tag fg-wipe__tag--flush" aria-hidden="true"><?php esc_html_e('Flush', 'fenster'); ?></span>
 

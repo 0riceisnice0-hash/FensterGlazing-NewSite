@@ -3446,6 +3446,21 @@ if ($is_commercial_hub) {
         </section>
     <?php endif; ?>
 
+    <?php if ($slug === 'flush-casement-windows') : ?>
+        <?php
+        /* Bespoke from 2026-08-06. The route ran on this generic template until
+           the owner's audit, which is why it read as generated. Hooked here,
+           beside casement, so it keeps the shared hero and specification strip
+           above and owns everything below. */
+        get_template_part('template-parts/sections/flush-casement-windows-v2', null, [
+            'brand' => $brand,
+            'trust_items' => $trust_items,
+            'quote_url' => $product_quote_embed_url,
+            'quote_label' => $product_quote_embed_label,
+        ]);
+        ?>
+    <?php endif; ?>
+
     <?php if ($slug === 'casement-windows') : ?>
         <?php
         get_template_part('template-parts/sections/casement-windows-v2', null, [
@@ -4280,34 +4295,6 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
         <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page && ! $is_composite_doors) : ?>
-        <?php
-        /* Flush only, and only here. Owner, 2026-08-06: the flush page needed a
-           feature of its own rather than a second copy of the casement page's
-           stacked chapters, and the thing this product has that no other window
-           has is a sash that closes level with its frame. That is difficult to
-           write and trivial to show, so it is shown.
-
-           It sits after the mosaic and before the specification choices, which is
-           the point in the page where somebody has seen the windows and is about
-           to start picking colours: the last moment the difference between flush
-           and standard is still a decision rather than a detail.
-
-           The comparison runs flush-first, the reverse of the casement page's
-           table. Same two studio photographs, opposite way round, because on this
-           page flush is the subject and standard is the thing being compared to. */
-        if ($slug === 'flush-casement-windows') {
-            get_template_part('template-parts/components/flush-sash-wipe', null, [
-                'eyebrow' => 'The difference',
-                'heading' => 'Drag it, and watch the step disappear.',
-                'copy' => 'The same window, photographed twice. On a standard casement the sash sits proud of the outer frame and throws a shadow line around every opener. On a flush casement it closes into the frame, so the face is one plane and the shadow goes. It is the whole difference between the two, and it is easier to see than to describe.',
-                'flush_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-flush-level-w.webp',
-                'flush_alt' => 'White uPVC flush casement window, every sash closing level with the outer frame in one plane',
-                'standard_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-sash-proud-w.webp',
-                'standard_alt' => 'White uPVC standard casement window, the opening sash standing proud of the outer frame',
-            ]);
-        }
-        ?>
-
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">
