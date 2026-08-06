@@ -73,6 +73,33 @@ $steps = [
     ],
 ];
 
+/* The range the tool prices, as transparent turntables.
+
+   Each entry carries its own drift depth and resting offset so the twelve fall
+   as a layered group rather than a marching row. Depths here are deliberately
+   stronger than the 0.04-0.15 the shared controller is usually driven at:
+   this is the owner's instruction of 2026-08-06 for a big moment, not the
+   quiet drift the rest of the site uses. `ABOUT-PAGE-HANDOVER.md` records
+   heavy multi-image parallax being rejected once before, so the depths are all
+   in one place here and can be taken down without touching markup.
+
+   The glass is genuinely transparent, so the page gradient shows through the
+   panes. Do not put these on a flat white panel; the see-through is the point. */
+$spins = [
+    ['slug' => 'composite-doors',               'label' => 'Composite doors',               'depth' => 0.62, 'offset' => -34],
+    ['slug' => 'upvc-windows',                  'label' => 'uPVC windows',                  'depth' => 0.34, 'offset' => 18],
+    ['slug' => 'aluminium-bifold-doors',        'label' => 'Aluminium bifold doors',        'depth' => 0.78, 'offset' => -12],
+    ['slug' => 'sliding-sash-windows',          'label' => 'Sliding sash windows',          'depth' => 0.26, 'offset' => 30],
+    ['slug' => 'upvc-doors',                    'label' => 'uPVC doors',                    'depth' => 0.70, 'offset' => -26],
+    ['slug' => 'aluminium-windows',             'label' => 'Aluminium windows',             'depth' => 0.40, 'offset' => 8],
+    ['slug' => 'aluminium-sliding-patio-doors', 'label' => 'Aluminium sliding patio doors', 'depth' => 0.55, 'offset' => 24],
+    ['slug' => 'aluminium-doors',               'label' => 'Aluminium doors',               'depth' => 0.85, 'offset' => -40],
+    ['slug' => 'upvc-sliding-patio-doors',      'label' => 'uPVC sliding patio doors',      'depth' => 0.30, 'offset' => 14],
+    ['slug' => 'slide-fold-doors',              'label' => 'Slide and fold doors',          'depth' => 0.66, 'offset' => -18],
+    ['slug' => 'secondary-glazing',             'label' => 'Secondary glazing',             'depth' => 0.44, 'offset' => 26],
+    ['slug' => 'replacement-glazed-units',      'label' => 'Replacement glazed units',      'depth' => 0.22, 'offset' => -8],
+];
+
 $before = [
     'A rough width and height for each opening, in millimetres.',
     'Your address and postcode.',
@@ -178,6 +205,54 @@ $faq_schema = [
                     ></iframe>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="fg-oq-range" data-fg-spin-field>
+        <div class="container">
+            <div class="fg-oq-section-head fg-oq-range__head">
+                <p class="eyebrow"><?php esc_html_e('The range', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Everything the tool prices.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Twelve ranges, priced the same way. Windows and doors in uPVC and aluminium, sash windows, patio and bifold doors, replacement glass and secondary glazing.', 'fenster'); ?></p>
+            </div>
+        </div>
+        <ul class="fg-oq-range__field">
+            <?php foreach ($spins as $index => $spin) : ?>
+                <li
+                    class="fg-oq-spin"
+                    data-fg-depth="<?php echo esc_attr((string) $spin['depth']); ?>"
+                    style="--fg-spin-offset: <?php echo esc_attr((string) $spin['offset']); ?>px;"
+                >
+                    <div class="fg-oq-spin__media">
+                        <?php /* The still is what shows until the video is wanted, and it is
+                                 also the whole story where VP9 alpha is unavailable or the
+                                 visitor asked for less motion. It carries the alpha, so it
+                                 sits on the gradient exactly as the video does. */ ?>
+                        <img
+                            <?php echo fenster_image_attr_string(FENSTER_THEME_URI . '/assets/images/spins/' . $spin['slug'] . '-spin.webp', [
+                                'alt' => $spin['label'] . ', one of the ranges you can price in the quote tool',
+                                'loading' => $index < 4 ? 'eager' : 'lazy',
+                                'class' => 'fg-oq-spin__still',
+                            ]); ?>
+                        >
+                        <video
+                            class="fg-oq-spin__video"
+                            data-fg-spin
+                            data-spin-src="<?php echo esc_url(FENSTER_THEME_URI . '/assets/videos/spins/' . $spin['slug'] . '-spin.webm'); ?>"
+                            muted
+                            loop
+                            playsinline
+                            preload="none"
+                            aria-hidden="true"
+                            tabindex="-1"
+                        ></video>
+                    </div>
+                    <span class="fg-oq-spin__label"><?php echo esc_html($spin['label']); ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <div class="container fg-oq-range__action">
+            <a class="button" href="#fenster-quote-tool"><?php esc_html_e('Price yours', 'fenster'); ?></a>
         </div>
     </section>
 

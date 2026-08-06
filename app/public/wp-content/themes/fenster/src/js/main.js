@@ -5303,6 +5303,60 @@ if (depthItems.length) {
   updateDepthItems();
 }
 
+/* ---- Transparent product turntables on /online-quote/ ----------------------
+   Twelve VP9-alpha loops, only ever fetched when one is about to be seen and
+   only ever decoding while it is on screen. The drift is the shared
+   [data-fg-depth] controller above; nothing here moves anything.
+
+   **There is no feature test for VP9 alpha.** `canPlayType` answers for the
+   codec, not for the alpha channel, and Safari plays VP9 in WebM while
+   ignoring the alpha - which would paint a black rectangle over the page
+   gradient rather than failing visibly. So WebKit is excluded by user agent
+   and keeps the transparent still, which is the same thing the reduced-motion
+   and Save-Data paths get. If Safari ever ships VP9 alpha, delete the check
+   rather than working around it.
+
+   The stills carry alpha themselves, so every one of those paths still reads
+   as a product floating on the page rather than as a missing video. */
+const spinVideos = [...document.querySelectorAll('video[data-fg-spin]')];
+
+if (spinVideos.length) {
+  const ua = navigator.userAgent;
+  const isWebKit = /iP(ad|hone|od)/.test(ua)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    || (/Safari/i.test(ua) && !/Chrome|Chromium|Android|CriOS|FxiOS|Edg/i.test(ua));
+  const saveData = navigator.connection && navigator.connection.saveData;
+  const stillOnly = isWebKit
+    || saveData
+    || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!stillOnly && 'IntersectionObserver' in window) {
+    const spinObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+
+        if (!entry.isIntersecting) {
+          if (!video.paused) video.pause();
+          return;
+        }
+
+        const src = video.getAttribute('data-spin-src');
+        if (src && !video.src) {
+          video.src = src;
+          video.addEventListener('loadeddata', () => {
+            video.closest('.fg-oq-spin')?.classList.add('is-spinning');
+          }, { once: true });
+        }
+
+        const played = video.play();
+        if (played && typeof played.catch === 'function') played.catch(() => {});
+      });
+    }, { rootMargin: '200px 0px' });
+
+    spinVideos.forEach((video) => spinObserver.observe(video));
+  }
+}
+
 /* ---- The mechanism is drawn in by the scroll on /casement-windows/ ----------
    The lock photograph comes in from the left as the security chapter rises
    through the viewport. Owner instruction, 2026-08-05: the first version fired
