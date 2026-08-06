@@ -2009,51 +2009,44 @@ function fenster_site_data(): array
            The copy stays SHORT. This is the third pass at that: a paragraph per
            item is what made the last two versions a wall of text. */
         'repair_parts' => [
-            'mechanism' => [
-                'name' => 'Multi-point mechanism',
-                'sub' => 'The gear behind the handle',
-                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-kenrick-excalibur.webp',
-                'alt' => 'Multi-point locking mechanism removed from a sash, showing the gearbox and cams',
-                'cutout' => true,
-                'what' => 'Runs the height of the sash edge and throws the locking points when you turn the handle.',
-                'fix' => 'Identified from the backset, centres and faceplate, then replaced with the correct gear and the keeps reset.',
-            ],
-            'stays' => [
-                'name' => 'Friction stays',
-                'sub' => 'The hinges a casement swings on',
-                'image' => '/wp-content/themes/fenster/assets/images/products/casement/casement-friction-stay-1200w.webp',
-                'alt' => 'Stainless friction stay along the bottom of an open window sash',
-                'what' => 'Carry the whole weight of the sash every time it opens, and corrode and bind rather than snap.',
-                'fix' => 'Replaced as a pair, sized to the sash weight and the egress the opening needs.',
-            ],
-            'handle' => [
+            /* WINDOWS */
+            'w-handle' => [
                 'name' => 'Handle',
-                'sub' => 'The part you touch every day',
+                'sub' => 'Window',
                 'image' => '/wp-content/themes/fenster/assets/images/products/handles/s2-chrome-cutout.png',
                 'alt' => 'Chrome window handle with its key, off the window',
                 'cutout' => true,
-                'what' => 'Wears before anything else on the window. Usually the spindle rounding off rather than the handle breaking.',
-                'fix' => 'Matched to the spindle length and fixing centres already in the sash, in the finish that suits the rest.',
+                'what' => 'The part you touch every day, so it wears before anything else on the window.',
+                'fix' => 'Matched to the spindle length and fixing centres already in the sash, in a finish that suits the rest of the house.',
             ],
-            'keeps' => [
-                'name' => 'Keeps and cams',
-                'sub' => 'What the lock closes into',
-                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-locking-strip.webp',
-                'alt' => 'Locking cams along a sash edge, with the keeps they close into set in the frame',
-                'what' => 'The steel the locking points engage. Nothing wears out here; what moves is the sash around them.',
-                'fix' => 'Re-set so the sash pulls into its seals and locks under its own weight rather than being forced.',
+            'w-mechanism' => [
+                'name' => 'Multi-point mechanism',
+                'sub' => 'Window',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-kenrick-excalibur.webp',
+                'alt' => 'Multi-point locking mechanism removed from a sash, showing the gearbox and cams',
+                'cutout' => true,
+                'what' => 'Runs the height of the sash edge and drives the locking points. When a window seizes shut, this is the part.',
+                'fix' => 'Identified from the backset, centres and faceplate, then replaced with the correct gear.',
             ],
-            'gasket' => [
-                'name' => 'Weather seal',
-                'sub' => 'The gasket round the sash',
-                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-profile-cutaway.webp',
-                'alt' => 'Cut-through of a window profile showing the chambers and the seal against the sash',
-                'what' => 'Flattens and shrinks back with age, and lets go at a corner first, which is where a draught is felt.',
-                'fix' => 'Stripped and re-run in one length round the sash, so there is no join for air to find.',
+            'w-realign' => [
+                'name' => 'Realignment',
+                'sub' => 'Window',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-security-keep.webp',
+                'alt' => 'Steel keep set into a window frame, the part a locking cam closes into',
+                'what' => 'Not a broken part at all. The sash has settled out of square, so it meets the frame before it meets its keeps.',
+                'fix' => 'We square the sash and reset the keeps and hinge packers so it closes under its own weight rather than being pulled to.',
             ],
-            'glass' => [
+            'w-draught' => [
+                'name' => 'Hinges, or the seal',
+                'sub' => 'Window',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/casement-friction-stay-1200w.webp',
+                'alt' => 'Stainless friction stay along the bottom of an open window sash',
+                'what' => 'One of two things: the hinges are holding the sash off its seal, or the gasket itself has flattened and let go.',
+                'fix' => 'We check both. Stays reset or replaced, and the gasket re-run in one length round the sash if it has gone.',
+            ],
+            'w-glass' => [
                 'name' => 'Sealed unit',
-                'sub' => 'The glass itself',
+                'sub' => 'Window',
                 'image' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg',
                 'alt' => 'Sealed double glazed unit cut through to show the two panes and the cavity',
                 'what' => 'When the perimeter seal fails, moisture gets into the cavity and cannot be dried out.',
@@ -2061,59 +2054,109 @@ function fenster_site_data(): array
                 'link' => '/double-glazing-replacement/',
                 'link_label' => 'Replacement glazed units',
             ],
-            'cylinder' => [
+            /* DOORS */
+            'd-lock' => [
+                'name' => 'Gearbox, or alignment',
+                'sub' => 'Door',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-locking-strip.webp',
+                'alt' => 'Locking cams along a door edge and the keeps they close into',
+                'what' => 'Either the multi-point gear has failed, or the door has moved and the cams no longer line up with their keeps.',
+                'fix' => 'We check the alignment first, because a new gearbox in a dropped door fails again. Then the gear, if it needs it.',
+            ],
+            'd-cylinder' => [
                 'name' => 'Cylinder',
-                'sub' => 'The barrel the key turns',
-                'image' => '/wp-content/themes/fenster/assets/images/imported/Classic-Door-Lock-Box-900px.webp',
-                'alt' => 'Door lever handle and cylinder keyhole on a dark aluminium door',
+                'sub' => 'Door',
+                'image' => '/wp-content/themes/fenster/assets/images/imported/Lock.jpg',
+                'alt' => 'Euro profile cylinder with a thumbturn, three star rated',
                 'what' => 'Seizes, or a key snaps in it. Also the part to change when you move in or lose a set of keys.',
-                'fix' => 'Replaced to the door thickness, and keyed alike if you want one key for the front and back.',
+                'fix' => 'Replaced to the door thickness, and keyed alike if you want one key for the front and the back.',
             ],
-            'gearbox' => [
-                'name' => 'Door gearbox',
-                'sub' => 'The multi-point in the door edge',
+            'd-handle' => [
+                'name' => 'Door handle',
+                'sub' => 'Door',
+                'image' => '/wp-content/themes/fenster/assets/images/products/door-handles/chrome-long-plate.png',
+                'alt' => 'Chrome long-plate door handle with a cylinder keyhole',
+                'cutout' => true,
+                'what' => 'The return spring goes, or the spindle rounds off. On a door it happens gradually and then all at once.',
+                'fix' => 'Matched to the existing backplate centres and spindle, so the door is not left with holes in it.',
+            ],
+            'd-realign' => [
+                'name' => 'Realignment',
+                'sub' => 'Door',
                 'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-security-keep.webp',
-                'alt' => 'Steel keep set into a frame, the part a locking cam engages',
-                'what' => 'Takes every lift of the handle, and is the most common door failure we are called to.',
-                'fix' => 'Matched on faceplate and backset and replaced, then the keeps set so it locks without lifting hard.',
+                'alt' => 'Steel keep set into a door frame, the part a locking cam closes into',
+                'what' => 'The door has moved in its frame. It is much the most common door fault, and it is an adjustment rather than a part.',
+                'fix' => 'We re-hang the door square and reset the keeps, so it closes and locks without being lifted. Hinges only rarely need changing.',
             ],
-            'hinges' => [
-                'name' => 'Door hinges',
-                'sub' => 'What the door hangs on',
-                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-hinge-open.webp',
-                'alt' => 'Window hinge at the head of an open sash',
-                'what' => 'Carry the door every time it swings, so on a composite or a heavy uPVC door they are a wearing part.',
-                'fix' => 'Replaced to match, and the door re-hung square so the load comes off the gearbox.',
+            'd-glass' => [
+                'name' => 'Sealed unit',
+                'sub' => 'Door',
+                'image' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg',
+                'alt' => 'Sealed double glazed unit cut through to show the two panes and the cavity',
+                'what' => 'A door panel is a sealed unit like any other, so when the seal fails it mists in exactly the same way.',
+                'fix' => 'The glazed panel is measured and changed on its own. The door stays on its hinges.',
+                'link' => '/double-glazing-replacement/',
+                'link_label' => 'Replacement glazed units',
+            ],
+            'd-draught' => [
+                'name' => 'Realignment',
+                'sub' => 'Door',
+                'image' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-profile-cutaway.webp',
+                'alt' => 'Cut-through of a profile showing the chambers and the seal the sash closes onto',
+                'what' => 'A draught round a door is nearly always alignment rather than a perished seal: the leaf is not pulling evenly onto its gasket.',
+                'fix' => 'We adjust the hinges and keeps so the door compresses its seal along the whole edge instead of at one end.',
             ],
         ],
-        /* Symptom to part. Two products, because a window and a door fail in
-           different places, and the schematic draws them separately.
+        /* Symptom to part. Corrected against the owner's own diagnosis,
+           2026-08-06, and every change here is him overruling what the page
+           said:
 
-           `svg` is the group id in the drawing that lights up. `part` is the
-           key in `repair_parts` above. Both are asserted by the harness. */
+             WINDOWS
+             - "It will not lock" REMOVED. It was the first symptom on the
+               list and it is not a useful one.
+             - "Will not open" is the MECHANISM, not the friction stays.
+             - "Catches or not flush" is REALIGNMENT, not the keeps as a part.
+             - "Draught" is hinges OR the gasket, not the gasket alone.
+
+             DOORS
+             - "Will not lock" is the gearbox OR realignment.
+             - "Dropped" is REALIGNMENT, hinges only rarely. It was hinges.
+             - "Draught" is REALIGNMENT. It was the gasket.
+             - The handle entry was showing a WINDOW handle on a door.
+
+           The through-line, and it is worth keeping in the copy: most door
+           faults are an adjustment rather than a broken part. Three of the
+           five door symptoms answer realignment.
+
+           `svg` is space separated and may name more than one group, which is
+           how "hinges or the seal" lights both on the drawing. Every id must
+           exist in the schematic markup; the harness asserts it. */
         'repair_diagnostics' => [
             'window' => [
                 'label' => 'Windows',
                 'caption' => 'Casement, flush, tilt and turn, bay. uPVC and aluminium.',
                 'symptoms' => [
-                    ['id' => 'w-lock', 'symptom' => 'It will not lock', 'part' => 'mechanism', 'svg' => 'mechanism'],
-                    ['id' => 'w-handle', 'symptom' => 'The handle is broken or loose', 'part' => 'handle', 'svg' => 'handle'],
-                    ['id' => 'w-open', 'symptom' => 'It will not open, or it is stiff', 'part' => 'stays', 'svg' => 'stays'],
-                    ['id' => 'w-close', 'symptom' => 'It catches, or will not sit flush', 'part' => 'keeps', 'svg' => 'keeps'],
-                    ['id' => 'w-draught', 'symptom' => 'There is a draught round it', 'part' => 'gasket', 'svg' => 'gasket'],
-                    ['id' => 'w-glass', 'symptom' => 'The glass is misted or broken', 'part' => 'glass', 'svg' => 'glass'],
+                    ['id' => 'w-open', 'symptom' => 'It will not open, or it is stiff', 'part' => 'w-mechanism', 'svg' => 'mechanism'],
+                    ['id' => 'w-handle', 'symptom' => 'The handle is broken or loose', 'part' => 'w-handle', 'svg' => 'handle'],
+                    ['id' => 'w-catch', 'symptom' => 'It catches, or will not sit flush', 'part' => 'w-realign', 'svg' => 'realign keeps'],
+                    ['id' => 'w-draught', 'symptom' => 'There is a draught round it', 'part' => 'w-draught', 'svg' => 'stays gasket'],
+                    ['id' => 'w-glass', 'symptom' => 'The glass is misted or broken', 'part' => 'w-glass', 'svg' => 'glass'],
                 ],
             ],
             'door' => [
                 'label' => 'Doors',
                 'caption' => 'Composite, uPVC and aluminium. French, patio, bifold.',
                 'symptoms' => [
-                    ['id' => 'd-lock', 'symptom' => 'It will not lock', 'part' => 'gearbox', 'svg' => 'gearbox'],
-                    ['id' => 'd-key', 'symptom' => 'The key will not turn, or has snapped', 'part' => 'cylinder', 'svg' => 'cylinder'],
-                    ['id' => 'd-handle', 'symptom' => 'The handle is floppy or snapped', 'part' => 'handle', 'svg' => 'dhandle'],
-                    ['id' => 'd-drop', 'symptom' => 'It has dropped, or catches on the frame', 'part' => 'hinges', 'svg' => 'hinges'],
-                    ['id' => 'd-draught', 'symptom' => 'There is a draught round it', 'part' => 'gasket', 'svg' => 'dgasket'],
-                    ['id' => 'd-glass', 'symptom' => 'The glass is misted or broken', 'part' => 'glass', 'svg' => 'dglass'],
+                    ['id' => 'd-lock', 'symptom' => 'It will not lock', 'part' => 'd-lock', 'svg' => 'gearbox drealign'],
+                    ['id' => 'd-key', 'symptom' => 'The key will not turn, or has snapped', 'part' => 'd-cylinder', 'svg' => 'cylinder'],
+                    ['id' => 'd-handle', 'symptom' => 'The handle is floppy or snapped', 'part' => 'd-handle', 'svg' => 'dhandle'],
+                    ['id' => 'd-drop', 'symptom' => 'It has dropped, or catches on the frame', 'part' => 'd-realign', 'svg' => 'drealign hinges'],
+                    ['id' => 'd-draught', 'symptom' => 'There is a draught round it', 'part' => 'd-draught', 'svg' => 'drealign dgasket'],
+                    /* Owner, 2026-08-06: keep glass on doors. It was dropped
+                       when his door list did not mention it, which made the
+                       drawn panel an orphan group; it is a real fault and a
+                       door panel mists exactly like a window. */
+                    ['id' => 'd-glass', 'symptom' => 'The glass is misted or broken', 'part' => 'd-glass', 'svg' => 'dglass'],
                 ],
             ],
         ],

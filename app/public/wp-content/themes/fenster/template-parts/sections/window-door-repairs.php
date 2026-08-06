@@ -197,72 +197,133 @@ $wall = [
                              the panel below carries the same information as
                              text. */ ?>
                     <div class="fg-rp-diag__plate">
-                        <svg class="fg-rp-svg" viewBox="0 0 400 360" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="window">
+                        <?php /* WINDOW ELEVATION, drawn to real proportions.
+                                 Owner, 2026-08-06: make it accurate, like an
+                                 AutoCAD drawing, off the studio photography.
+
+                                 Scale is 1 unit = 3mm, so the geometry is the
+                                 real thing rather than a sketch:
+                                   1260 x 900mm two-light casement
+                                   70mm outer frame            = 23 units
+                                   70mm mullion                = 23
+                                   45mm sash face over the frame = 15
+                                   15mm glazing bead           = 5
+                                   30mm cill projection        = 10
+                                 The 45 degree lines at every corner are the
+                                 mitres a uPVC frame is actually welded on, and
+                                 they are most of why this reads as a drawing
+                                 rather than a diagram. Construction lines and
+                                 the dimension rule are hairline and dashed so
+                                 they sit behind the object.
+
+                                 Left light is the opener, hinged on the left,
+                                 so the handle and the gear are on its right
+                                 edge and the keeps are in the mullion opposite.
+                                 That is the arrangement in cas-flush-open. */ ?>
+                        <svg class="fg-rp-svg" viewBox="0 0 468 372" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="window">
+                            <g class="fg-rp-svg__construct">
+                                <path d="M250 8 V352 M14 170 H454"/>
+                                <path d="M24 344 H444"/>
+                                <path d="M24 340 v8 M444 340 v8 M250 340 v8"/>
+                            </g>
                             <g class="fg-rp-svg__frame">
-                                <rect x="24" y="18" width="352" height="286" rx="3"/>
-                                <rect x="36" y="30" width="328" height="262" rx="2"/>
-                                <line x1="212" y1="30" x2="212" y2="292"/>
-                                <path d="M18 304 H382 l-10 20 H28 Z" class="fg-rp-svg__cill"/>
+                                <rect x="24" y="20" width="420" height="300"/>
+                                <rect x="47" y="43" width="374" height="254"/>
+                                <path d="M24 20 L47 43 M444 20 L421 43 M24 320 L47 297 M444 320 L421 297"/>
+                                <rect x="250" y="43" width="23" height="254"/>
+                                <path d="M14 320 H454 L448 338 H20 Z" class="fg-rp-svg__cill"/>
+                                <path d="M20 334 H448"/>
                             </g>
                             <g data-part="glass" class="fg-rp-svg__part">
-                                <rect x="52" y="46" width="144" height="230" rx="1"/>
-                                <rect x="228" y="46" width="120" height="230" rx="1"/>
-                                <path d="M60 260 L120 60 M84 260 L144 60" class="fg-rp-svg__sheen"/>
+                                <rect x="67" y="63" width="163" height="214"/>
+                                <rect x="278" y="48" width="138" height="244"/>
+                                <path d="M78 268 L150 76 M100 268 L172 76" class="fg-rp-svg__sheen"/>
+                                <path d="M290 282 L360 58 M312 282 L382 58" class="fg-rp-svg__sheen"/>
+                            </g>
+                            <g data-part="realign" class="fg-rp-svg__part">
+                                <rect x="47" y="43" width="203" height="254"/>
+                                <rect x="62" y="58" width="173" height="224"/>
+                                <path d="M47 43 L62 58 M250 43 L235 58 M47 297 L62 282 M250 297 L235 282"/>
                             </g>
                             <g data-part="gasket" class="fg-rp-svg__part">
-                                <rect x="46" y="40" width="156" height="242" rx="2"/>
+                                <rect x="52" y="48" width="193" height="244" class="fg-rp-svg__seal"/>
                             </g>
                             <g data-part="stays" class="fg-rp-svg__part">
-                                <path d="M56 50 L128 62 M56 62 L104 66"/>
-                                <path d="M56 272 L128 260 M56 260 L104 256"/>
-                                <circle cx="128" cy="62" r="3"/>
-                                <circle cx="128" cy="260" r="3"/>
+                                <path d="M66 52 L150 62 M66 62 L124 66"/>
+                                <path d="M66 288 L150 278 M66 278 L124 274"/>
+                                <circle cx="150" cy="62" r="2.5"/>
+                                <circle cx="150" cy="278" r="2.5"/>
                             </g>
                             <g data-part="mechanism" class="fg-rp-svg__part">
-                                <rect x="192" y="60" width="8" height="202" rx="2"/>
-                                <path d="M192 96 h-9 M192 140 h-9 M192 184 h-9 M192 228 h-9"/>
+                                <rect x="237" y="63" width="6" height="214"/>
+                                <path d="M237 92 h-8 M237 134 h-8 M237 176 h-8 M237 218 h-8 M237 254 h-8"/>
                             </g>
                             <g data-part="keeps" class="fg-rp-svg__part">
-                                <rect x="204" y="90" width="9" height="14" rx="1"/>
-                                <rect x="204" y="134" width="9" height="14" rx="1"/>
-                                <rect x="204" y="178" width="9" height="14" rx="1"/>
-                                <rect x="204" y="222" width="9" height="14" rx="1"/>
+                                <rect x="252" y="86" width="8" height="13"/>
+                                <rect x="252" y="128" width="8" height="13"/>
+                                <rect x="252" y="170" width="8" height="13"/>
+                                <rect x="252" y="212" width="8" height="13"/>
                             </g>
                             <g data-part="handle" class="fg-rp-svg__part">
-                                <rect x="176" y="150" width="16" height="26" rx="3"/>
-                                <path d="M184 176 v34" stroke-linecap="round"/>
+                                <rect x="219" y="152" width="15" height="27" rx="2"/>
+                                <path d="M226 179 v36" stroke-linecap="round"/>
+                                <circle cx="226" cy="165" r="3"/>
                             </g>
                         </svg>
 
-                        <svg class="fg-rp-svg" viewBox="0 0 400 360" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="door" hidden>
-                            <g class="fg-rp-svg__frame">
-                                <rect x="88" y="14" width="224" height="300" rx="3"/>
-                                <rect x="100" y="26" width="200" height="276" rx="2"/>
-                                <path d="M80 314 H320 l-8 18 H88 Z" class="fg-rp-svg__cill"/>
+                        <?php /* DOOR ELEVATION, same scale and same rules.
+                                 900 x 2050mm doorset: 70mm frame, 100mm leaf
+                                 stile, mid rail, glazed upper panel. Hinged
+                                 left, so the gear, the cylinder and the handle
+                                 are on the right edge and the hinges on the
+                                 left. Three of the five door symptoms answer
+                                 realignment, which is why `drealign` is the
+                                 leaf outline itself rather than a component. */ ?>
+                        <svg class="fg-rp-svg" viewBox="0 0 468 372" role="img" aria-hidden="true" focusable="false" data-fg-diag-svg="door" hidden>
+                            <g class="fg-rp-svg__construct">
+                                <path d="M234 8 V364 M120 186 H348"/>
+                                <path d="M128 356 H340"/>
+                                <path d="M128 352 v8 M340 352 v8"/>
                             </g>
-                            <g data-part="dglass" class="fg-rp-svg__part">
-                                <rect x="126" y="52" width="148" height="96" rx="1"/>
-                                <path d="M134 140 L182 60 M158 140 L206 60" class="fg-rp-svg__sheen"/>
+                            <g class="fg-rp-svg__frame">
+                                <rect x="128" y="14" width="212" height="330"/>
+                                <rect x="151" y="37" width="166" height="307"/>
+                                <path d="M128 14 L151 37 M340 14 L317 37"/>
+                                <path d="M120 344 H348 L344 358 H124 Z" class="fg-rp-svg__cill"/>
+                            </g>
+                            <g data-part="drealign" class="fg-rp-svg__part">
+                                <rect x="151" y="37" width="166" height="298"/>
+                                <rect x="164" y="50" width="140" height="272"/>
+                                <path d="M151 37 L164 50 M317 37 L304 50"/>
                             </g>
                             <g data-part="dgasket" class="fg-rp-svg__part">
-                                <rect x="110" y="36" width="180" height="256" rx="2"/>
+                                <rect x="156" y="42" width="156" height="288" class="fg-rp-svg__seal"/>
+                            </g>
+                            <g data-part="dglass" class="fg-rp-svg__part">
+                                <rect x="176" y="62" width="116" height="112"/>
+                                <path d="M186 166 L242 70 M208 166 L264 70" class="fg-rp-svg__sheen"/>
+                            </g>
+                            <g class="fg-rp-svg__frame">
+                                <rect x="164" y="186" width="140" height="10"/>
+                                <rect x="176" y="208" width="116" height="102"/>
                             </g>
                             <g data-part="hinges" class="fg-rp-svg__part">
-                                <rect x="104" y="62" width="12" height="26" rx="2"/>
-                                <rect x="104" y="152" width="12" height="26" rx="2"/>
-                                <rect x="104" y="242" width="12" height="26" rx="2"/>
+                                <rect x="146" y="72" width="11" height="24" rx="1"/>
+                                <rect x="146" y="174" width="11" height="24" rx="1"/>
+                                <rect x="146" y="276" width="11" height="24" rx="1"/>
                             </g>
                             <g data-part="gearbox" class="fg-rp-svg__part">
-                                <rect x="282" y="58" width="8" height="212" rx="2"/>
-                                <path d="M290 96 h9 M290 150 h9 M290 204 h9"/>
+                                <rect x="306" y="60" width="6" height="252"/>
+                                <path d="M312 96 h8 M312 150 h8 M312 232 h8 M312 286 h8"/>
                             </g>
                             <g data-part="cylinder" class="fg-rp-svg__part">
-                                <circle cx="268" cy="200" r="9"/>
-                                <path d="M268 200 v10" stroke-linecap="round"/>
+                                <circle cx="296" cy="212" r="8"/>
+                                <path d="M296 212 v11" stroke-linecap="round"/>
                             </g>
                             <g data-part="dhandle" class="fg-rp-svg__part">
-                                <rect x="260" y="150" width="16" height="34" rx="3"/>
-                                <path d="M268 166 h-34" stroke-linecap="round"/>
+                                <rect x="288" y="160" width="15" height="72" rx="3"/>
+                                <path d="M296 178 h-30" stroke-linecap="round"/>
+                                <circle cx="296" cy="178" r="3"/>
                             </g>
                         </svg>
 
