@@ -39246,9 +39246,12 @@ html.fg-blinds-reveal-locked {
   overflow: hidden; /* the fall overhangs the band at both ends */
 }
 
+/* Above every layer of the field. Products fly past behind the words rather
+   than over them, which keeps the heading readable while still letting the
+   section overlap itself. */
 .fg-oq-range__head {
   position: relative;
-  z-index: 3;
+  z-index: 6;
   margin-bottom: 0;
 }
 
@@ -39282,6 +39285,9 @@ html.fg-blinds-reveal-locked {
      arrive from the controller already in px and deg: multiplying a px value by
      a bare number and a deg unit inside one calc is not valid CSS, and doing the
      maths in JavaScript avoids the whole question. */
+  /* Decorative and behind the copy: never intercept a tap meant for the CTA. */
+  pointer-events: none;
+
   transform:
     translate3d(
       calc((1 - var(--fg-drop)) * var(--fg-from-x)),
