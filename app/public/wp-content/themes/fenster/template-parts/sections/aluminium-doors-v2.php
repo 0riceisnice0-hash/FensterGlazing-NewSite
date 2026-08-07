@@ -68,6 +68,7 @@ $brand = is_array($args['brand'] ?? null) ? $args['brand'] : [];
 $base = '/wp-content/themes/fenster/assets/images/products/aluminium-doors/';
 $colour_link = home_url('/colour-options/?material=aluminium');
 $handles_link = home_url('/handle-options/');
+$flush_link = home_url('/aluminium-flush-windows/');
 
 /* Three cards rather than loose paragraphs, so the terms line up across the row
    whatever length the copy runs to. Same component the flush page uses for its
@@ -102,21 +103,42 @@ $security = [
                 <p class="eyebrow"><?php esc_html_e('Where it fits', 'fenster'); ?></p>
                 <h2 id="fg-alud-fit-title"><?php esc_html_e('The door that matches the windows.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('An aluminium front or back door is usually chosen because something else on the house is already aluminium. It comes off the same Sheerline frames and the same powder coating as our aluminium windows and sliders, so a door sitting in a run of them reads as one set rather than as two separate decisions made a year apart.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The frame is thin for the strength it holds, which is what lets a door carry a tall glazed panel or sit between side screens without the surround thickening up to cope. On a narrow opening that is the difference between daylight in the hall and a dark front door.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The frame is thin for the strength it holds, which is what lets a door carry a tall glazed panel, or sit between windows without the surround thickening up to cope. A French pair with a flush aluminium window either side, all in one black, reads as a single opening rather than as three products that happen to be near each other.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('Twelve standard powder-coated colours, and any RAL beyond them', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Glazed side screens and toplights where the opening allows', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Front, back and side doors on the same system', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Single leaf or a French pair, with side screens and toplights where the opening allows', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Blinds can be sealed inside the glass, as they are here', 'fenster'); ?></li>
                 </ul>
                 <p class="fg-cw-actions">
                     <a class="fg-cw-link" href="<?php echo esc_url($colour_link); ?>"><?php esc_html_e('See the colours', 'fenster'); ?></a>
+                    <a class="fg-cw-link" href="<?php echo esc_url($flush_link); ?>"><?php esc_html_e('Flush aluminium windows', 'fenster'); ?></a>
                 </p>
             </div>
-            <figure class="fg-cw-media fg-alu-door-media--4x3">
-                <img src="<?php echo esc_url(fenster_generated_url($base . 'alu-door-brick-sidescreens.webp')); ?>"
-                    alt="<?php esc_attr_e('Purple aluminium entrance door with a full-height bar handle, set between two obscured glazed side screens in a brick elevation', 'fenster'); ?>"
-                    loading="lazy" width="600" height="450">
-                <figcaption><?php esc_html_e('Door and side screens', 'fenster'); ?></figcaption>
+            <?php /* THE ONE PHOTOGRAPH ON THIS PAGE THAT IS OURS. Supplied by the
+                     owner 2026-08-07 as "the only one i can find we actually
+                     installed", and confirmed by him the same day as aluminium
+                     French doors with flush aluminium windows either side.
+                     Confirmation mattered: the frames read chunky and glossy in
+                     the source and this route's standing defect is a hero that
+                     reads as uPVC, so it was not used until he said what it was.
+
+                     It sits here rather than in the hero, and that was decided by
+                     measuring rather than by preference: the hero is a 3.2:1
+                     letterbox, and a band that shallow across a tall symmetric
+                     subject shows handles and blinds and no door. Forcing it in
+                     would be the "never force tall imagery into a wide box" rule.
+                     It is in this section because this section's heading is the
+                     claim the photograph happens to prove.
+
+                     Default `.fg-cw-media` here, no aspect modifier: the crop is
+                     16:10 to match the box exactly, so nothing is cropped twice.
+                     The source is 3024x4032 and the weeds, hose and garden bench
+                     along the bottom are cropped out rather than published. */ ?>
+            <figure class="fg-cw-media">
+                <img src="<?php echo esc_url(fenster_generated_url($base . 'alu-door-french-flag-install-1600w.webp')); ?>"
+                    alt="<?php esc_attr_e('Black aluminium French doors with a flush aluminium window either side, blinds sealed inside the glass, under a brick arch in a red brick elevation', 'fenster'); ?>"
+                    loading="lazy" width="1600" height="1000">
+                <figcaption><?php esc_html_e('Our install', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </section>

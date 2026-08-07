@@ -475,9 +475,13 @@ Current accepted model:
   replacement in the theme is 600x450 or smaller, which is too small for a
   full-bleed banner, so the 2026-07-29 decision to leave it stands. The rebuild
   did not touch it.
-- **No "our work" gallery, on purpose.** None of the aluminium door photography
-  in the theme is a Fenster installation, so a section claiming otherwise would
-  be the blanket-claim fault already recorded against the casement proof mosaic.
+- **Exactly one photograph on the page is ours.** The opening section carries the
+  owner's own install, supplied 2026-08-07 and confirmed by him as aluminium
+  French doors with flush aluminium windows either side and integral blinds in
+  the glass. It is captioned "Our install" and it is the only one that makes that
+  claim. Everything else is supplier photography, so there is no "our work"
+  gallery and no blanket claim over the imagery, which is the fault already
+  recorded against the casement proof mosaic.
 - **The case-study strip on this route is on its documented fallback**, showing
   two uPVC casement jobs and a bifold under "Real installs, photographed on the
   day", because no study claims `/aluminium-doors/`. Left alone rather than gated:

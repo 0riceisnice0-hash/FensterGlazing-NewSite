@@ -1239,6 +1239,10 @@ function fenster_site_data(): array
                is a genuine photograph and only 300x300, which is smaller than
                the cell it would render into. */
             'aluminium_doors' => [
+                /* First, because it is the only one of these that is ours.
+                   Owner-supplied and owner-confirmed 2026-08-07 as aluminium
+                   French doors with flush aluminium windows either side. */
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-french-flag-install-1600w.webp', 'alt' => 'Black aluminium French doors we fitted, with a flush aluminium window either side and blinds sealed inside the glass'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-brick-sidescreens.webp', 'alt' => 'Purple aluminium entrance door between two obscured glazed side screens in a brick elevation'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-timber-clad.webp', 'alt' => 'Dark grey aluminium entrance door with a recessed groove pattern, beside timber cladding'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2-1.jpg', 'alt' => 'Sage green aluminium entrance door with a full-height bar handle in a recessed porch'],
