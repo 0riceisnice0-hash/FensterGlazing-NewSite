@@ -5,6 +5,46 @@ Last updated: 2026-08-07
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
+## 2026-08-07 - Colour hub hero LIVE (b72f49f): the wall's tile count restored
+
+Owner: "hero has broken on colour hub."
+
+It was, and it had been since 2026-08-06. The hero wall is built from the real
+colour range and sits `position: absolute; inset: 0` behind the copy, on fixed
+height rows, clipped by the section. It was rendering 36 tiles into a 582px hero
+at 26 columns: one full row, ten tiles into a second, then a white void down to
+the buttons. Broken at every breakpoint, worst on desktop.
+
+**Nothing was wrong with the markup or the CSS**, which is why a week of deploys
+never caught it. All 36 tiles rendered correctly, the veil and copy were intact,
+every one of the twenty-odd `.fg-colour-hub-hero*` rules was present in the
+compiled bundle and the geometry was doing exactly what it was told.
+
+The cause was in `generated-page.php`. Yesterday's `b20c486` rebuilt the obscure
+glass hero as six columns of 36 large tiles, which was correct and deliberate and
+is still live. The colour wall, 130 lines further up the same file, carried the
+identical `for ($i = 0; $i < 336; $i++)` it had been seeded from on `4d72959`,
+and the edit landed on both. The commit message reasons carefully about the glass
+hero and never mentions the colour hub, because the author did not know it had
+changed.
+
+Fixed by restoring the count as `$colour_wall_tile_count = 336`, named with the
+reason attached so the two walls cannot be resized together again. Verified on
+test then live at 1440 and at a true 390 through CDP device metrics: 336 tiles,
+hero 582px and wall 582px at 26 columns, mobile wall 203px over 33 rows' worth of
+tiles so it clips as designed, no vertical-neighbour repeats at 26 or 18 columns.
+The glass hero re-checked at 36 and unaffected.
+
+Deployed live with the guard in the script: expected hashes from
+`git show "${sha}:path" | md5 -q`, asserted 32 characters, passed as environment
+variables; backup proven by extracting the template out of the tarball and
+hashing it to the pre-deploy value; pruned to three; socket purge `msg:OK`. One
+PHP file, with `main.css` and `main.js` proven unchanged across the range.
+
+Carried forward: `/aluminium-doors/` still needs a wide hero asset, and
+`product_usps` still claims a ten year guarantee for secondary glazing and
+integral blinds, which Legend reads.
+
 ## 2026-08-07 - Aluminium doors rebuilt as a bespoke middle (test, 6ce498e)
 
 Owner brief: bring `/aluminium-doors/` up to speed with the newer product pages,

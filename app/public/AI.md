@@ -451,6 +451,8 @@ otan.png` is a **positive variant built in this repo**, not a supplier file. The
 - Dragging can move through multiple colours, then release snaps to the nearest colour. Keep the drag sensitivity calm enough for mobile.
 - The colour hub hero visual should be simple and controlled. Do not create overlapping random card piles or crop swatch images so their content is chopped off.
 - Do not add uPVC/aluminium tab buttons that imply separate pages when the page already shows both sections.
+- **The hero colour wall must always overrun the bottom of its section.** It is `position: absolute; inset: 0` inside a clipping section, on fixed-height rows, so PHP cannot know how many rows the CSS chose. `$colour_wall_tile_count` is deliberately far more than the widest grid needs — 336 against 26 columns is about thirteen rows for a hero that shows nine — and the surplus is clipped. Cut it and you get a band of colour above a white void, which is what happened between 2026-08-06 and 2026-08-07. **If the column count or the hero height ever changes, the count only ever goes up.**
+- **The colour wall and the obscure glass wall are different grids that once shared a literal.** `/obscure-glass/` runs six columns of 36 large tiles because a glass texture has to show its pattern; the colour wall runs 26 small ones because flat colour reads at any size. A single edit to "the tile count" hit both on 2026-08-06 and broke the colour hub for a week. The colour count is now a named variable and the glass one is not, so they no longer collide — **do not reintroduce a bare `336` here, and never match one wall's count to the other's.**
 
 ## Window Handle Section Rule
 
