@@ -521,13 +521,13 @@ Current accepted model:
 - **Every photograph is ours**, two from the owner and four from the Winslow
   case study, which the page links to. The old pool was four wrong-product
   images with dishonest alt text and is documented in `AI.md`.
-- **FENSA does not apply and the rail no longer claims it.** Owner-confirmed
-  2026-08-07, along with `/roofline/` and `/integral-blinds/`. All three take
-  the canonical steps with step 04's certificate clause swapped for
-  `order_process.aftercare_without_fensa`; the guarantee sentence inside it is
-  unchanged, because it is already scoped to new windows and doors on purpose.
-  Secondary glazing alone also swaps step 02, since "thresholds" is a
-  measurement it does not have.
+- **Neither FENSA nor the CPA guarantee applies, and the rail claims neither.**
+  Owner-confirmed 2026-08-07, along with `/roofline/`, `/integral-blinds/` and
+  `/double-glazing-replacement/`, and with the rule behind it: FENSA eligibility
+  and the CPA cover are linked, so a route outside one is outside the other. All
+  four take the canonical steps with step 04 swapped for
+  `order_process.aftercare_outside_fensa_and_cpa`. Secondary glazing alone also
+  swaps step 02, since "thresholds" is a measurement it does not have.
 
 ### Window And Door Repairs Page
 

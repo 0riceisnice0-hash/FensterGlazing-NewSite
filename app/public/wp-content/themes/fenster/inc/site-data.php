@@ -2092,23 +2092,38 @@ function fenster_site_data(): array
                 ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, trained on the systems we sell and working carefully in a house someone lives in. We clear up after ourselves before we leave.'],
                 ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
             ],
-            /* Step 04 for the routes where FENSA does not apply. Owner-confirmed
-               2026-08-07: FENSA is not relevant to secondary glazing, roofline
-               or integral blinds. A FENSA certificate covers replacement windows
-               and doors, and none of those three is one, so the canonical step
-               was promising a document that never arrives.
+            /* Step 04 for the routes that are outside both schemes.
+               Owner-confirmed 2026-08-07, in two parts:
 
-               ONLY the certificate clause is removed. The guarantee sentence is
-               word for word the canonical one, because it is already scoped to
-               "new windows and doors" on purpose, precisely so that it stays
-               true on these routes. Do not "simplify" it here to "your
-               installation carries", which is the shortening the Order Process
-               Rule in AI.md explicitly forbids.
+                 1. FENSA is not relevant to secondary glazing, roofline,
+                    integral blinds or double glazing replacement. A FENSA
+                    certificate covers replacement windows and doors and none of
+                    those four is one, so the canonical step was promising a
+                    document that never arrives.
 
-               One string, not three copies. Six step sets across three templates
-               is the mess the 2026-07-29 consolidation cleaned up, and three
-               near-identical aftercare paragraphs is how that starts again. */
-            'aftercare_without_fensa' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors. Anything afterwards, you ring us rather than a call centre, and you are talking to the people who fitted it.',
+                 2. **"all non fensa are non CPA too, they're linked."** That is
+                    the actual rule and it is worth having written down: FENSA
+                    eligibility and the ten year CPA insurance-backed guarantee
+                    go together. So a route outside one is outside the other, and
+                    there is no such thing as a non-FENSA route that still
+                    carries the CPA cover.
+
+               That second point is why this string no longer mentions the
+               guarantee at all. An earlier version kept the canonical sentence
+               on the grounds that it is scoped to "new windows and doors" and
+               therefore still technically true. It is, but leading the aftercare
+               step of a secondary glazing page with a ten year insurance-backed
+               guarantee that does not apply to what the visitor is buying invites
+               exactly the wrong conclusion. Scoping is not the same as honesty.
+
+               It also says nothing about what these products do NOT get, because
+               the owner ruled out that register on 2026-08-02: the site does not
+               write copy stating what is not covered. What is left is what is
+               true and positive, which is that you deal with us.
+
+               One string, not four copies. Six step sets across three templates
+               is the mess the 2026-07-29 consolidation cleaned up. */
+            'aftercare_outside_fensa_and_cpa' => 'Anything afterwards, you ring us rather than a call centre, and you are talking to the same people who fitted it. We look after our own work rather than passing you on.',
         ],
         /* Repairs: what we fix, and where it lives on the window.
            ------------------------------------------------------------------

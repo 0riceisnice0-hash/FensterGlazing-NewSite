@@ -1267,31 +1267,45 @@ if ($is_commercial) {
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Commercial installation is planned around site coordination, safety, sequencing and programme needs.'],
         ['step' => '04', 'title' => 'Aftercare', 'copy' => 'The team remains available for documentation, maintenance guidance and practical project support.'],
     ];
-} elseif (in_array($slug, ['secondary-glazing', 'roofline', 'integral-blinds'], true)) {
-    /* FENSA covers replacement windows and doors. Owner-confirmed 2026-08-07
-       that it is not relevant to any of these three: secondary glazing is an
-       additional window fitted inside the one already there, roofline is fascia,
-       soffit and guttering with no glazing in it at all, and integral blinds are
-       not a replacement window either. The canonical step 04 promises "your
-       FENSA certificate sent direct", so all three were offering a document that
-       never arrives.
+} elseif (in_array($slug, ['secondary-glazing', 'roofline', 'integral-blinds', 'double-glazing-replacement'], true)) {
+    /* The four routes outside BOTH schemes. Owner-confirmed 2026-08-07 in two
+       parts, and the second is the durable one:
 
-       This takes the canonical steps and changes ONE sentence, rather than
-       giving three routes three hand-written journeys. Six step sets across
-       three templates is the mess the 2026-07-29 consolidation cleaned up, and
-       three near-identical aftercare paragraphs is how that starts again.
+         1. FENSA is not relevant to secondary glazing, roofline, integral blinds
+            or double glazing replacement. A FENSA certificate covers replacement
+            windows and doors. Secondary glazing is an additional window inside
+            the one already there, roofline is fascia, soffit and guttering with
+            no glazing in it at all, integral blinds are not a replacement
+            window, and replacing a sealed unit into a frame that stays put is
+            not one either.
 
-       The guarantee sentence is untouched and stays word for word canonical. It
-       is already scoped to "new windows and doors" deliberately, precisely so it
-       stays true on these routes, which sit outside the ten year insurance-backed
-       cover. The Order Process Rule in AI.md forbids shortening it.
+         2. "all non fensa are non CPA too, they're linked." FENSA eligibility
+            and the ten year CPA insurance-backed guarantee travel together, so
+            a route outside one is outside the other. There is no non-FENSA
+            route that still carries the CPA cover.
+
+       So step 04 loses the certificate AND the guarantee, not just the
+       certificate. An earlier pass kept the guarantee sentence on the grounds
+       that it is scoped to "new windows and doors" and therefore still
+       technically true. It is, but leading the aftercare step of a secondary
+       glazing page with a ten year insurance-backed guarantee that does not
+       apply to what the visitor is buying invites the wrong conclusion anyway.
+       Scoping is not the same as honesty.
+
+       The replacement says nothing about what these products do NOT get either,
+       because the owner ruled out that register on 2026-08-02: the site does not
+       write copy stating what is not covered.
+
+       This still takes the canonical steps and changes ONE sentence rather than
+       giving four routes four hand-written journeys. Six step sets across three
+       templates is the mess the 2026-07-29 consolidation cleaned up.
 
        Secondary glazing takes one further change, to step 02: "thresholds" is a
        measurement a secondary glazed unit does not have, and reveal depth is
-       what this product actually turns on. Roofline and integral blinds keep the
-       canonical 02. */
+       what this product actually turns on. The other three keep the canonical
+       02. */
     $product_order_steps = fenster_data('order_process.steps', []);
-    $no_fensa_aftercare = (string) fenster_data('order_process.aftercare_without_fensa', '');
+    $no_fensa_aftercare = (string) fenster_data('order_process.aftercare_outside_fensa_and_cpa', '');
 
     if (is_array($product_order_steps) && $product_order_steps !== [] && $no_fensa_aftercare !== '') {
         $product_order_steps = array_values($product_order_steps);
