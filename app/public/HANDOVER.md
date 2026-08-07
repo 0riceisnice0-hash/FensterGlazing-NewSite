@@ -1,6 +1,6 @@
 # Fenster Glazing Handover
 
-Last updated: 2026-08-06
+Last updated: 2026-08-07
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -18,7 +18,9 @@ Use:
 
 ## Important Updates
 
-- **READ THIS BEFORE ANY DEPLOY: live is a release branch, not `main`.** Live is `release/flush-and-glass`. `main` additionally carries an eighteen-commit **online-quote** strand built by another session in parallel on 2026-08-06 — a bespoke `/online-quote/` template, spin videos and a scroll-timeline animation — which the owner has **not** signed off. Deploying `main` ships it. The release was cut from live and this session's flush/glass commits cherry-picked on, with the compiled assets rebuilt from the branch's own source and `fg-oq` verified absent from both bundles. **Once the online-quote strand is approved and shipped, delete `release/flush-and-glass`** — a stale release branch is a loaded gun that reverts whatever landed after it, which this repo has already been bitten by twice.
+- **READ THIS BEFORE ANY DEPLOY: live is a release branch, not `main`.** Live is `release/repairs-diagnostics` as of 2026-08-07. **The SHA is in `LIVECHANGES.md` and deliberately not repeated here** — this line used to carry its own copy and went four releases stale. `main` carries an eighteen-commit **online-quote** strand built by another session in parallel on 2026-08-06 — a bespoke `/online-quote/` template, spin videos and a scroll-timeline animation — which the owner has **still not signed off**. Deploying `main` ships it. Both live releases since have been cut from the previous live with only the approved commits cherry-picked on, compiled assets rebuilt from the branch's own source, and `fg-oq` verified absent from both bundles rather than assumed. **`release/flush-and-glass` is now superseded and safe to delete; do not deploy it, it would revert the repairs page.** The same will be true of `release/repairs-diagnostics` the moment anything else ships — a stale release branch is a loaded gun, which this repo has been bitten by twice.
+- **The online-quote strand is the one thing blocking a normal `main`-to-live flow.** It has been in this state since 2026-08-06 and has now forced two cherry-picked releases. It wants either owner sign-off or a decision to drop it; until then every release costs an hour of branch surgery and every session has to re-derive the same conclusion.
+- **`/window-and-door-repairs/` was rebuilt from the ground up and went live 2026-08-07.** A symptom-led diagnostic with two to-scale AutoCAD-style schematics that highlight the failing part. See the Window And Door Repairs Page section below before touching it — three builds were needed and the first two were rejected, so most of the constraints there are the owner's corrections rather than preferences.
 - **Two pages were rebuilt on 2026-08-06 and are live.** `/flush-casement-windows/` now replaces only the *middle* of the generated template (`fg-product-why`, `fg-product-intel`, `fg-product-visuals` are gated off for that slug) with `template-parts/sections/flush-casement-windows-v2.php`, built on the `.fg-cw` split grammar the heritage door page uses. It is deliberately **not** an early return like casement, and deliberately **not** given casement's stacked chapters — the owner wants that device unique to casement. `/obscured-glass/` gained the colour-hub hero treatment, starts on the house scene rather than Legend, and its divider now drags properly on touch.
 - **The obscured-glass divider is a `<input type="range">` that no longer takes the pointer.** On iOS a range only drags from its thumb, so the divider was tap-to-position and felt broken. The input is now `pointer-events: none` for keyboard and assistive tech only, and the gesture is handled on the stage with axis-locked pointer events that write the value back to it. `touch-action: pan-y` is retained so a vertical scroll starting on the visualiser still scrolls the page. **This was never verified on a real phone** — it is the one change from that session nobody has touched with a finger.
 - **Product claims corrected on 2026-08-06, do not reinstate.** Mechanical jointing is **not** offered on the Liniar flush sash system — Liniar publish it for the profile, which is their capability and not ours, and it had been sold in both copy and the choices list. The flush system takes a **28mm double glazed unit only**, no triple; that answer lives in the FAQ rather than mid-page. Warwick is **privacy 1**, per Pilkington's own decorative glazing page.
@@ -442,61 +444,118 @@ Template: `template-parts/sections/window-door-repairs.php`, a bespoke **middle*
 dispatched from `generated-page.php`, the same shape flush casement uses. Not an
 early return. Styling is `.fg-rp` inside the shared `.fg-cw` grammar.
 
-Current accepted model, rebuilt 2026-08-06:
+**LIVE since 2026-08-07.** Owner-approved and deployed. The model
+below is the third and accepted rebuild; two earlier builds were rejected and
+are described only in `PROGRESS.md`. **If you find notes describing a "problem
+finder" with fifteen filterable symptom cards carrying prices, that page no
+longer exists** — it was the rejected second pass.
+
+Current accepted model:
 
 - **The page is ordered by the symptom, because that is the only thing the
   visitor knows.** They have not decided to buy anything; something has broken.
-  Order is finder, the parts that fail, published prices, repair-or-replace,
-  the replacement-glass hand-off, why us, how a repair works.
-- **The problem finder filters, it does not fetch.** All fifteen problem cards
-  render server-side with their diagnosis and price; the controller only shows
-  and hides. That keeps the symptom language indexable, keeps the page working
-  with JavaScript off, and means there is no second copy of the content. The
-  filter row is `hidden` in the markup and revealed by the controller, so a
-  filter that cannot filter never appears. Cards are hidden with the `hidden`
-  property rather than removed so their ids survive and `#repair-door-wont-lock`
-  still resolves after a filter. **Do not rebuild this to render from JSON.**
-- **Picking a symptom writes it into the enquiry form's message field**, appended
-  rather than assigned so typed text survives, and once per symptom so repeated
-  taps do not stack. That is the page's "you do not need to diagnose it
-  yourself" promise made literal.
+  Order is proposition strip, diagnostic schematic, van and engineers, parts
+  wall, repair-or-replace with the glass hand-off, then how a repair works.
+- **The diagnostic schematic is the page's one feature.** Left column is a list
+  of symptoms in the customer's own words ("It will not lock", "My cat cannot
+  get out"); the middle is an inline SVG line drawing of a window or a door;
+  the right is a panel describing the part. Picking a symptom highlights the
+  failing part **on the drawing** and swaps the panel. A window/door toggle
+  swaps the whole drawing.
+- **Both drawings are to scale and drawn from the owner's own reference
+  photographs.** Window is `viewBox="0 0 620 900"` at 1 unit = 1mm; door is
+  `viewBox="0 0 560 1200"` at 1 unit = 1.92mm. The register is AutoCAD, not
+  illustration: mitres, construction lines, dimension rules, and **concealed
+  hardware as dashed hidden line**. Strokes carry
+  `vector-effect: non-scaling-stroke`. The owner corrected the geometry of the
+  window handle, the door handle, the cylinder, the friction stays and both
+  multipoint mechanisms individually, so **do not redraw any of them from
+  imagination** — go back to the reference photographs.
+- **The symptom-to-part-to-drawing mapping is a three-way contract**, held in
+  `repair_diagnostics` and `repair_parts` in `inc/site-data.php`. `svg` is a
+  **space-separated** list, so one symptom can light several groups
+  (`d-draught` lights `drealign dgasket`). The render harness asserts that every
+  symptom maps to a real part, every symptom maps to a group that exists in the
+  drawing, and no drawn group is an orphan. Owner-set specifics that must not
+  drift: window "will not open" is the mechanism, door "it has dropped" is the
+  **hinges only**, and door "it will not lock" is the **gearbox only**.
+- **It is progressive enhancement, not a JS page.** The interactive shell ships
+  `hidden` in the markup and is revealed by the controller; underneath it every
+  symptom and diagnosis is server-rendered, so the page works with JavaScript
+  off and the symptom language is indexable. **Do not remove the fallback.**
+- **Two traps are already paid for in this section, both of which cost a
+  review round.** `[hidden]` from the UA sheet is beaten by any class rule that
+  sets `display`, so `.fg-rp` carries explicit `[hidden] { display: none
+  !important }` guards — without them both drawings rendered at once. And
+  `hidden` is an `HTMLElement` IDL property that `SVGElement` does not have, so
+  the controller toggles drawings with `setAttribute`/`removeAttribute`, never
+  `el.hidden`. With `el.hidden` the symptom list switched product and the
+  drawing did not.
 - **No key-specification strip.** A repair has no specification, so
   `product_pulse` is gated off for the slug and the bespoke section opens with a
-  reassurance strip in that slot: quoting is normally free, the office can
-  usually price it without a visit, we repair any installer's work, and the
-  minimum charge applies only if you go ahead. `product_usps` for the route is
-  kept accurate anyway because Legend reads it.
-- **Five things are gated off for this slug** and the reasons are in the comment
-  on `$is_repairs` in `generated-page.php`: the specification-choices band
-  (nobody picks a foil colour when a handle has snapped), the quote embed
-  (WindowCAD prices windows and doors, not repairs — the slug is in
-  `$no_instant_price_routes` alongside integral blinds), the shared order-process
-  rail (see the Order Process Rule in `AI.md`), and the case-study strip
-  (nothing claims this route, so the helper's fallback was showing three
-  unrelated installations under a repairs heading).
-- **Copy is deliberately short.** Owner, 2026-08-06, on the first build: it read
-  as a big page of text. Each card is a symptom, a "From" price, ONE line of
-  diagnosis and the alternative phrasings. The two-term "USUALLY / WHAT WE DO"
-  list that used to sit on every card is gone, and so are the second paragraphs
-  throughout. If a card's `cause` grows past about 110 characters it is going
-  the wrong way; the render harness asserts on it.
-- **Prices are vague on purpose and there is no price table.** See the Repair
-  Pricing Rule in `AI.md`. Every figure reads "From".
-- **Imagery is the parts, not a tradesman.** The mechanism, a friction stay and a
-  handle, studio-lit. `imported/window-repair-milton-keynes-scaled.jpg` is stock
-  — a man in blue dungarees with a screwdriver — and `pages.json` still carries
-  it as this route's imported hero. Do not reinstate it.
+  four-USP proposition strip in that slot. `product_usps` for the route is kept
+  accurate anyway because Legend reads it — and note the old entry claimed
+  "Guarantee: 10 years", which was **false** and has been removed.
+- **Seven things are gated off for this slug** and the reasons are in the
+  comment on `$is_repairs` in `generated-page.php`: `fg-product-why`,
+  `fg-product-intel` and `fg-product-visuals` (replaced by the bespoke middle),
+  the specification-choices band (nobody picks a foil colour when a handle has
+  snapped), the quote embed (WindowCAD prices windows and doors, not repairs —
+  the slug is in `$no_instant_price_routes` alongside integral blinds), the
+  shared order-process rail (see the Order Process Rule in `AI.md`), and the
+  case-study strip (nothing claims this route, so the helper's fallback was
+  showing three unrelated installations under a repairs heading). The FAQ limit
+  is raised to seven for this slug.
+- **Copy is deliberately short.** Owner, 2026-08-06: it read as a big page of
+  text. One line per idea, no second paragraphs. The owner also pulled two
+  specific registers — anything that **talks down to the reader** ("you do not
+  need to know…") and the claim that our engineers are **"not installers between
+  jobs"**, which is sometimes untrue. The van-stock claim replaced the latter.
+- **There is exactly one price on the whole page** and it is in the FAQ: repairs
+  start from £96 including VAT. No table, no range, no average — the owner's
+  reasoning is that a published price list invites benchmarking and undercutting.
+  See the Repair Pricing Rule in `AI.md`. The FAQ answer went through three
+  rejected drafts; the accepted one ties the variable to a physical thing
+  ("depends on which part your window or door needs") because anything vaguer
+  read as though the price could spiral.
+- **Imagery is the parts and the van, not a tradesman.**
+  `imported/window-repair-milton-keynes-scaled.jpg` is stock — a man in blue
+  dungarees with a screwdriver — and `pages.json` still carries it as this
+  route's imported hero. Do not reinstate it.
+  - The four repair-part photographs under
+    `assets/images/products/repair-parts/` are **Wharfside's** supplier
+    photography. They are our supplier and have agreed to our using them.
+  - **Every image path must go through `fenster_generated_url()`, including
+    inside the JSON block the controller reads.** This shipped broken once: the
+    template emitted theme-relative paths, which render fine locally and 404 on
+    Bedrock, and all four part images were missing on test. The local harness had
+    been rewriting them and hiding it.
   - The handle uses `products/handles/s2-chrome-cutout.png`, not the handle
     hub's `s2-chrome-finish.png`. The hub's file has an alpha channel but an
     opaque `#FAFAFA` backdrop, so a CSS drop-shadow draws round the rectangle.
     The cutout is that file flood-filled to real transparency under a new name.
-  - `.fg-rp-part__media` is `display: block`, not grid. On a grid the image is an
-    item in an auto-sized row, so `height: 100%` is circular and silently falls
-    back to the intrinsic height: the portrait handle drew 537px tall in a 372px
-    box and was clipped. A block box with `aspect-ratio` gives the percentage
-    something to resolve against.
-- **Not verified on a real phone.** The finder was measured through a 390px
-  iframe and driven programmatically; nobody has used it with a thumb.
+  - **`.fg-rp-wall__grid li` is `display: block` with `aspect-ratio: 1`, not a
+    centred grid, and its `img` is `display: block` too.** Both are load-bearing
+    and both cost a review round. `place-items: center` leaves the grid area
+    content-sized, so the image's `height: 100%` is circular and silently falls
+    back to intrinsic height — the portrait handle drew 537px in a 372px box and
+    was clipped. And an image is inline by default, so it sits on the text
+    baseline and the descender adds ~8px: the square cells measured 90x98 and the
+    wall read as a ragged collage. The comments are in the stylesheet; keep them.
+- **Not verified on a real phone.** Everything was measured through a 390px
+  headless viewport and driven programmatically; nobody has used the diagnostic
+  with a thumb. This is the one outstanding item on the page.
+- **The door's fine hardware is under 5px at true scale.** The cylinder in
+  particular is barely visible, because the door drawing is already at the
+  ceiling of its plate (643px in a 634px box, trimmed to a 292px max-width). The
+  correct drafting answer is a detail callout at an enlarged scale, which was
+  offered and **not built**. Do not "fix" this by breaking the drawing's scale.
+- **Verification harness:** `render-repairs.php` in the session scratchpad stubs
+  WordPress, renders the section standalone and runs ~40 assertions, including
+  the real `fenster_generated_url()` implementation and every claim the owner has
+  pulled. It is not in the repo. If you do substantial work here, rebuild it —
+  there is no local WordPress on the Mac, so it is the only pre-deploy check
+  short of pushing to test.
 
 ### Casement Windows Page
 

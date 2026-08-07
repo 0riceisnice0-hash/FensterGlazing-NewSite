@@ -1,6 +1,63 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-06
+Last updated: 2026-08-07
+
+Newest first. **The current START HERE block is directly below**; older ones are
+kept in place further down, in date order with the entries they summarise.
+
+## START HERE, 2026-08-07 (end of session)
+
+**Live is `5cde867` on `release/repairs-diagnostics`, not `main`.** `main` still
+carries the eighteen-commit online-quote strand from a parallel session that the
+owner has not approved, so deploying `main` ships it. This is the **second**
+release forced into cherry-picking by that strand; it wants either sign-off or a
+decision to drop it. `release/flush-and-glass` is superseded and safe to delete
+— deploying it now would revert the repairs page. See the top of `LIVECHANGES.md`.
+
+**What shipped this session**
+
+- **`/window-and-door-repairs/`, rebuilt from the ground up and live.** The brief
+  was explicitly "do not just make the current page prettier", and this is the
+  **third** attempt: pass one was a wall of text, pass two was a filterable
+  fifteen-card problem finder with prices. Both were rejected outright. What
+  shipped is a symptom-led diagnostic — the visitor picks "It will not lock" or
+  "My cat cannot get out" and the failing part lights up on a to-scale AutoCAD
+  style line drawing of a window or a door — plus a parts wall of Wharfside's
+  supplier photography, the van and the two Service Engineers, and a cross-link
+  to `/double-glazing-replacement/`. Seven generic product bands are gated off
+  and instant pricing is disabled.
+
+**Corrections worth not undoing**
+
+Keeps do not fail — a keep is folded steel with nothing to wear out, and the
+first build listed them as one of three things that break. The tell was that
+keeps are not a line on the price list, and that check generalises: **a claimed
+failure mode should map to something the office actually charges for.** There is
+now exactly **one price on the whole route** and the owner's reasoning is
+competitive, not editorial — a published tariff invites benchmarking. Two copy
+registers are banned: talking down to the reader, and claiming our engineers are
+"not installers between jobs", which is sometimes untrue.
+
+**The lesson this session kept re-teaching**
+
+Check the probe before believing the result. Every single "failure" this session
+was the measurement, not the code: a context window too short truncated `£96`
+into `tween £96`; `curl` was fed URLs out of a JSON-LD block where slashes are
+escaped `\/`; a `grep` for `glaz` in an href matched every asset on a domain
+called *fensterglazing*.com; a route sweep reported three 404s for slugs that
+were invented from memory rather than read from `page-sitemap.xml`. This sits
+directly alongside the previous session's lesson — **look at the page, not the
+file** — and the two are the same instruction from opposite ends: the source is
+not evidence about the page, and a failing check is not evidence about the code.
+
+**Still outstanding**
+
+- The repairs page has **never been opened on a real phone.** Every layout call
+  is headless Chrome at 390px. Same status as the obscured-glass drag gesture.
+- The door schematic's fine hardware is under 5px at true scale. A detail
+  callout is the right answer and was not built.
+- The repairs price list is dated 12/02/25 and has not been re-confirmed with
+  the office. Flagged three sessions running.
 
 ## 2026-08-07 - Repairs page LIVE (5cde867)
 
@@ -34,6 +91,11 @@ skip it. Three "404s" in the first route sweep were slugs I invented from memory
 judgement so far is headless Chrome at 390px.
 
 ## 2026-08-06 - Repairs, third pass: the real office process, and no spec box (test)
+
+> **SUPERSEDED.** This build was rejected by the owner ("honestly the page is terrible")
+> and replaced by the diagnostic-schematic page that went live on 2026-08-07. The
+> office-process and no-spec-box facts in it are still true and still on the page;
+> the *structure* described here is gone. Kept for the reasoning, not as a spec.
 
 Owner supplied how repairs actually run, and it is a better offer than the page
 was making.
@@ -78,6 +140,10 @@ faults and neither was. **Size the context window to the longest phrase you are
 matching**, or the probe fails on exactly the strings it was written to allow.
 
 ## 2026-08-06 - Repairs, second pass: less text, vaguer prices, and keeps do not fail (test)
+
+> **SUPERSEDED.** The fifteen-card filterable problem finder described here does not
+> exist any more. The pricing and "keeps do not fail" corrections carried forward and
+> are now in `AI.md`. Kept for the reasoning, not as a spec.
 
 Owner review of the first build, three things.
 
@@ -136,6 +202,9 @@ at the result on magenta settled it in one glance.
 Deployed to test. Still not verified on a real phone.
 
 ## 2026-08-06 - Repairs rebuilt around the symptom, and three live faults fixed (local)
+
+> **SUPERSEDED.** First pass, rejected as a wall of text. Kept for the reasoning,
+> not as a spec.
 
 Owner brief: the repairs page is too generic, rethink the structure and the UX
 rather than rewriting the copy, build it around customer problems rather than a
@@ -201,6 +270,10 @@ something.
 
 ## START HERE, 2026-08-06 (end of session)
 
+> **HISTORICAL — not the current state.** Its live pointer (`release/flush-and-glass`) is out of date; live is now `5cde867` on `release/repairs-diagnostics`. The
+> current block is at the top of this file. Everything below is kept for its
+> reasoning and corrections, which still stand.
+
 **Live is `release/flush-and-glass`, not `main`.** `main` also carries an
 online-quote strand from a parallel session that the owner has not approved.
 Deploying `main` ships it. See the top of `LIVECHANGES.md`, and delete the release
@@ -239,6 +312,10 @@ crop of one petal. Every one passed a source check and a checksum, and every one
 was obvious in a single screenshot of the live page.
 
 ## START HERE, 2026-08-02 (end of session)
+
+> **HISTORICAL — not the current state.** Its live pointer is long out of date. The
+> current block is at the top of this file. Everything below is kept for its
+> reasoning and corrections, which still stand.
 
 **The live SHA in this block is stale. `LIVECHANGES.md` is authoritative** and
 records live as `c97aff4` on 2026-08-03, established by checksum. The rest of

@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-08-05
+Last updated: 2026-08-07
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -250,9 +250,11 @@ PHP lint example:
 ## Repair Pricing Rule
 
 - **No exact repair prices on the website, ever.** Owner instruction, 2026-08-06, after the first build published eight rows of the office tariff as a table. A published price list encourages people to shop it round, hands a competitor a line-by-line undercut, and turns us into somebody else's benchmark. Every figure on `/window-and-door-repairs/` reads **"From"**, and there is no price table anywhere on it.
-- **The model is the price guides': a small number of anchors, not a tariff.** One "from" figure on the key-specification strip, one range sentence, three "from" examples, and a "From £x" on each problem card. Do not add a fourth example, do not restore the table, and do not reinstate the granular multiples ("three or more, £108 each") that used to sit under each card — that level of detail is exactly what a competitor prices against.
-- **The underlying figures come from the office Customer Repairs Price List and nowhere else.** `OneDrive/Office Information/Price Lists/Repairs Price List/Customer Price List 04022025.pdf`, header "Last updated: 12/02/25". They live in `repair_problems` and `repair_prices` in `inc/site-data.php`; nothing is priced in a template. Figures are the inc-VAT column, stated as floors.
-- **The source list is dated February 2025 and is public and indexable once shown**, which is a live-content responsibility, the same standing the price guides have. Re-check it against the office before assuming a figure is current.
+- **As shipped 2026-08-07 there is exactly ONE price on the whole route**, and it is in the FAQ: "Repairs start from £96 including VAT." No table, no range, no per-card figure, no worked examples. The owner's position hardened over three passes and this is where it landed — **do not add a second price back**, in any form, without asking.
+- **The wording of that one answer is settled and took three rejected drafts.** "Average" was rejected (a repair really does depend on what is needed), then explaining our own reasoning was rejected ("leave out the *rather than quote you an average*"), then an open-ended phrasing was rejected because it "sounds like the price could spiral". The accepted answer works because it ties the variable to a **physical thing**: the price depends on *which part* your window or door needs. Keep that shape.
+- **The £96 also appears in `product_usps` as "Minimum charge", which does not render** — it is there for Legend. See the Repair Page Rule.
+- **The underlying figures come from the office Customer Repairs Price List and nowhere else.** `OneDrive/Office Information/Price Lists/Repairs Price List/Customer Price List 04022025.pdf`, header "Last updated: 12/02/25". Nothing is priced in a template. Figures are the inc-VAT column, stated as floors. **The `repair_problems` and `repair_prices` arrays these used to live in were deleted with the second-pass build; do not go looking for them.**
+- **The source list is dated February 2025 and has not been re-confirmed with the office.** This has been flagged three times and is still outstanding. Anything that surfaces a figure from it is a live-content responsibility, the same standing the price guides have.
 - **Do not claim a guarantee on repair work.** The ten year insurance-backed CPA cover is on new windows and doors and repairs sit outside it. The key-specification strip on that route claimed "Guarantee: 10 years" until 2026-08-06 while the process rail on the same page correctly said "new windows and doors"; the page contradicted itself for months. Nothing on a repair route may state or imply that cover, and no accreditation mark belongs in repair copy either — FENSA and CPA sit in the site-wide trust strip, where they are about the company rather than about the repair.
 - **Do not invent response times, callout windows, same-day or emergency service, or free diagnosis.** The price list supports none of them, and the page is deliberately written without them.
 
@@ -269,7 +271,10 @@ are the repair proposition.
 
 ## Repair Page Rule
 
-- **A repair has no specification, so `/window-and-door-repairs/` renders no key-specification strip.** Owner, 2026-08-06: "repairs dont have spec so having a box for it makes no sense." `product_pulse` is gated off for the slug and a reassurance strip stands in that slot instead, saying what to expect from the service rather than inventing four product facts for something that has none.
+- **A repair has no specification, so `/window-and-door-repairs/` renders no key-specification strip.** Owner, 2026-08-06: "repairs dont have spec so having a box for it makes no sense." `product_pulse` is gated off for the slug and a four-USP proposition strip stands in that slot instead, saying what to expect from the service rather than inventing four product facts for something that has none. The four come from `repair_usps` in `inc/site-data.php`.
+- **The repairs data now lives in four arrays and they are a contract, not a list.** `repair_parts`, `repair_diagnostics`, `repair_usps` and `repair_services` in `inc/site-data.php`. Every symptom in `repair_diagnostics` names a `part` that must exist in `repair_parts` **and** an `svg` group that must exist in the inline drawing — `svg` is space-separated so one symptom can light several. Change one without the other and the drawing silently highlights nothing. There is no runtime guard; the check is the render harness.
+- **The two rejected builds are not in the docs as options.** Pass one was "a big page of text", pass two was a filterable fifteen-card problem finder with prices. Both were rejected outright by the owner. If an audit or a plan proposes either shape, it is proposing something already refused.
+- **Two copy registers are banned on this route by owner instruction.** Anything that talks down to the reader ("you do not need to know what it is called") — the owner's words were that it sounded condescending — and any claim that our service engineers are "not installers between jobs", which is sometimes untrue. The van-stock claim replaced the latter and is the supportable version of the same idea.
 - `product_usps['window-and-door-repairs']` is kept and kept accurate even though it no longer renders, because **Legend reads `product_usps` for its verified product facts**. A stale entry there becomes a wrong answer in chat that no visitor can see and nobody will catch. That entry claimed a ten year guarantee until 2026-08-06.
 
 ## Repair Imagery Rule
@@ -283,6 +288,20 @@ are the repair proposition.
 - **Keeps do not fail.** Owner correction, 2026-08-06. A keep is a folded piece of steel with nothing in it to wear out; what moves is the sash or the door around it, which is a realignment job rather than a part failure. The first build of the repairs page listed keeps as one of the three things that fail, which was invented. **The check that would have caught it: all three should map to a line on the repairs price list, and keeps are not on it.** The three that are, and that the page now names, are the mechanism, the hinges and the handle.
 - **Handles are the most common single repair.** The part you touch every day, so it wears first, and usually the spindle rounding off rather than the handle itself breaking.
 - **A window that will not lock is nearly always the multi-point mechanism**, not the whole window. A window that will not open is nearly always the friction stays. A door that catches or has dropped has moved in its frame, which then puts the whole load on the gearbox, which is how a dropped door becomes a door that will not lock.
+
+## Repair Schematic Rule
+
+The two inline SVGs on `/window-and-door-repairs/` are technical drawings, not
+illustrations, and the owner corrected them part by part against his own
+reference photographs over three rounds. Treat them as measured drawings.
+
+- **They are to scale.** Window is `viewBox="0 0 620 900"` at 1 unit = 1mm; door is `viewBox="0 0 560 1200"` at 1 unit = 1.92mm. Geometry follows the reference photographs exactly, including sculptured profile detail and visible hardware. **Do not redraw a part from imagination** — every one that was drawn that way came back corrected.
+- **The register is AutoCAD, not illustration.** Mitres drawn, construction lines, dimension rules, and **concealed hardware as dashed hidden line** (`.fg-rp-svg__hidden`). Strokes carry `vector-effect: non-scaling-stroke` so weights hold at any size.
+- **Highlighting works off `data-part` groups**, matched to the space-separated `svg` field on each symptom. A group nobody references and a reference to a group that does not exist are both silent failures; the harness asserts against orphans in both directions.
+- **`[hidden]` from the UA stylesheet loses to any class rule that sets `display`.** `.fg-rp` therefore carries explicit `[hidden] { display: none !important }` guards. Without them both drawings render at once and the no-JS fallback never hides — which is exactly what shipped to test once.
+- **`hidden` is an `HTMLElement` IDL property and `SVGElement` does not have it.** Setting `svg.hidden = true` does nothing at all. Toggle drawings with `setAttribute('hidden','')` / `removeAttribute('hidden')`. The symptom list switching product while the drawing sat still was this.
+- **Owner-set mappings that must not drift:** window "will not open" is the mechanism; door "it has dropped" is the **hinges only**; door "it will not lock" is the **gearbox only**; door draught lights realignment *and* gasket.
+- **True scale and legibility genuinely conflict on the door** and this is unresolved. Its fine hardware is under 5px, and the drawing is already at the ceiling of its plate. The correct answer is a detail callout at an enlarged scale. **Do not resolve it by falsifying the scale.**
 
 ## Product Data Rule
 
