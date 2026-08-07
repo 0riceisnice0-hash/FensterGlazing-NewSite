@@ -497,7 +497,12 @@ function fenster_case_studies(): array
                 'White slim aluminium frames throughout',
             ],
             'installers' => [$fitter_shane, $fitter_zac],
-            'card_image' => $img . 'cs-winslow-secondary-glazing-card.jpg',
+            /* MUST be an array. `fenster_case_study_card()` tests
+               `is_array($study['card_image'])` and silently falls back to
+               images[0] otherwise, which on an all-portrait study is the exact
+               centre-cropped band of wall this key exists to prevent. Written as
+               a bare string first and it failed without a word. */
+            'card_image' => ['src' => $img . 'cs-winslow-secondary-glazing-card.jpg', 'caption' => 'Secondary glazing closed across a leaded window, with the original casement open behind it.'],
             'images' => [
                 ['src' => $img . 'cs-winslow-secondary-glazing-open.jpg', 'caption' => 'The secondary glazing closed across the opening, with the original leaded casement standing open behind it.'],
                 ['src' => $img . 'cs-winslow-secondary-glazing-bedroom-open.jpg', 'caption' => 'A bedroom window, the original casement swung open behind the glazing and the slider closed in front of it.'],
