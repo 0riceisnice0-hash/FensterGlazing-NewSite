@@ -812,11 +812,22 @@ function fenster_site_data(): array
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Close-up of integral blinds between glass panes'],
                 ],
             ],
+            /* Rebuilt 2026-08-07 with the page. The hero was
+               `Joined-Vertical-Slider-Bay.jpg`, an old-site scrape image of a bay
+               so overexposed that the windows read as flat white and the product
+               could not be seen at all. It is now one of our own installs,
+               cropped to the hero's 3.2:1 letterbox: leaded diamond lights in a
+               stone mullioned reveal, which says period property in one glance
+               and is exactly who this page is for.
+
+               The gallery entries were a sealed-unit sample and the stock
+               man-with-a-screwdriver photograph, neither of which is secondary
+               glazing. */
             'secondary-glazing' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/imported/Joined-Vertical-Slider-Bay.jpg', 'alt' => 'Original sliding sash bay window seen from inside a dining room'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-hero-stone-mullion-1200w.jpg', 'alt' => 'Secondary glazing fitted inside a stone mullioned reveal, with the original leaded diamond window behind it'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'White uPVC window section showing the sealed glass unit'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/window-repair-milton-keynes-scaled.jpg', 'alt' => 'Existing window opening checked for glazing upgrade work'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-stone-mullion-leaded.jpg', 'alt' => 'White secondary glazing inside a stone mullioned reveal, with the original leaded window behind'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-leaded-iron-handles.jpg', 'alt' => 'Secondary glazing across a pair of leaded casements with their original black iron handles behind the glass'],
                 ],
             ],
             'roof-lanterns' => [
@@ -1317,11 +1328,28 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Glazing bar and glass detail'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/window-repair-milton-keynes-scaled.jpg', 'alt' => 'Existing window glass checked for replacement work'],
             ],
+            /* Rebuilt 2026-08-07. All four previous entries were the wrong
+               product and all four carried alt text asserting they were not:
+               a sealed-unit sample described as "Secondary glazing panel shown
+               inside a window opening"; `window-repair-milton-keynes-scaled.jpg`,
+               which is STOCK, a man in blue dungarees holding a screwdriver, and
+               which the Repair Imagery Rule already forbids, described as "existing
+               window opening checked for secondary glazing"; a Liniar casement
+               close-up; and a generic old-window shot. This pool feeds every
+               `/secondary-glazing-<town>/` matrix page as well as the product
+               route, so it was wrong across the matrix.
+
+               Every replacement is a Fenster installation. Two came from the
+               owner directly, four from the Winslow job that is now a case study,
+               and they are referenced from `assets/images/case-studies/` rather
+               than copied so there is one file per photograph. */
             'secondary_glazing' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Secondary glazing panel shown inside a window opening'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/window-repair-milton-keynes-scaled.jpg', 'alt' => 'Existing window opening checked for secondary glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'Window frame and glazing detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Replace-old-windows.jpeg', 'alt' => 'Existing window considered for glazing improvement'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-stone-mullion-leaded.jpg', 'alt' => 'White secondary glazing inside a stone mullioned reveal, with the original leaded diamond window behind'],
+                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-open.jpg', 'alt' => 'Secondary glazing closed across a leaded window with the original casement open behind it'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-leaded-iron-handles.jpg', 'alt' => 'Secondary glazing across leaded casements with their original black iron handles behind the glass'],
+                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-kitchen.jpg', 'alt' => 'Secondary glazing across a kitchen window above the worktop'],
+                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-narrow.jpg', 'alt' => 'A narrow window with its original timber sill, the secondary glazing set back in the reveal'],
+                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-catch.jpg', 'alt' => 'The catch on a secondary glazing slider, with the original leaded light behind it'],
             ],
             'window_repairs' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'Window opening detail used for repair checks'],
@@ -1803,12 +1831,30 @@ function fenster_site_data(): array
                     ['title' => 'Slim aluminium frames', 'copy' => 'Slim aluminium frames and RAL colour choice help keep the internal finish discreet.'],
                     ['title' => 'Made around the opening', 'copy' => 'Fenster checks reveal depth, handles, shutters, existing frame condition and access before confirming the secondary glazing style.'],
                 ],
+                /* Rewritten 2026-08-07 with the page rebuild. The five they
+                   replace were the generated set, answered in the third person
+                   ("Fenster will help choose") and told nobody anything they
+                   could act on. These answer what the office is actually asked
+                   and deliberately do not restate the sections above them. The
+                   cap on this route is five, so a sixth would be sliced off the
+                   render silently; raise `$product_faq_limit` in the same commit
+                   if you add one.
+
+                   No decibel figure and no U-value in any answer. We publish
+                   neither, and a secondary glazed figure depends entirely on the
+                   window it is fitted inside. */
                 'faqs' => [
-                    ['question' => 'What is secondary glazing?', 'answer' => 'It is an additional internal glazed panel or frame fitted inside an existing window to improve comfort, noise reduction and usability.'],
-                    ['question' => 'Is secondary glazing suitable for period homes?', 'answer' => 'Yes. It is often used where original windows need to be retained but performance needs to be improved.'],
-                    ['question' => 'Can secondary glazing reduce noise?', 'answer' => 'Yes. A well-specified secondary pane and air gap can significantly soften outside noise compared with the original window alone.'],
-                    ['question' => 'Can the frame colour be matched?', 'answer' => 'Yes. A full RAL colour range can be discussed for the slim aluminium frame.'],
-                    ['question' => 'Do I still open my original window?', 'answer' => 'That depends on the secondary glazing configuration. Fenster will help choose fixed, sliding or opening designs around access and ventilation.'],
+                    ['question' => 'Will it stop me opening my window?', 'answer' => 'No, unless you choose a fixed panel. Horizontal sliders, vertical sliders and hinged units all open, so you reach through, work the original catch and open the window behind exactly as you did before. Fixed panels are for openings nobody uses, and even those can be specified as lift-out so the pane comes away in your hands.'],
+                    ['question' => 'Can I have it on a listed building?', 'answer' => 'It is one of the main reasons people have it. Nothing is removed and nothing is cut, the original window stays exactly as it is, and the outside of the building does not change. Your local authority sets the rules for your property, so check with them before you order, and we will work to whatever they tell you.'],
+                    /* Even-handed on purpose. An earlier draft answered "is it
+                       better than replacing the windows for noise" with "often
+                       the stronger answer", which positions our own replacement
+                       windows as the weaker choice and is exactly what the
+                       comparison rule in TONEOFVOICE.md forbids. Both are things
+                       we sell and fit; each gets what it is genuinely best at. */
+                    ['question' => 'How does it compare with replacing the windows?', 'answer' => 'They do different jobs. A new window brings the frame, the seals and the glass up to standard in one go, and it is the answer where the existing window is past saving or has to come out anyway. Secondary glazing leaves the original where it is, and the run of air between the two windows is far deeper than the cavity inside a sealed unit, which is the part that works on sound. Ask for the laminated glass upgrade if noise is the whole reason you are doing it.'],
+                    ['question' => 'Will it look obvious?', 'answer' => 'The frames are slim aluminium and are made to sit back inside the reveal rather than stand proud of it, so from inside the room the eye reads the original window first. White and brown are the standard colours and any RAL can be matched if a frame needs to disappear into a darker reveal.'],
+                    ['question' => 'Can I get a price online?', 'answer' => 'Yes. Secondary glazing is on our online designer alongside the windows and doors, so you can size it, choose the style and get a real figure without waiting for anybody to call you back.'],
                 ],
             ],
             'roof-lanterns' => [

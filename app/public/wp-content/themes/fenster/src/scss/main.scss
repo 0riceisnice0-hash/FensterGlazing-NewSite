@@ -38914,7 +38914,8 @@ html.fg-blinds-reveal-locked {
    what keeps the two pages in step. If you restyle one, you restyle both, and
    that is deliberate. */
 .fg-flush-band,
-.fg-alu-door-band {
+.fg-alu-door-band,
+.fg-sg-band {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
@@ -38942,7 +38943,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-flush-band__head,
-.fg-alu-door-band__head {
+.fg-alu-door-band__head,
+.fg-sg-band__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2.5rem);
@@ -38951,13 +38953,15 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-flush-band__head h2,
-.fg-alu-door-band__head h2 {
+.fg-alu-door-band__head h2,
+.fg-sg-band__head h2 {
   max-width: 17ch;
   margin: 0.3rem 0 0;
 }
 
 .fg-flush-band__head > p,
-.fg-alu-door-band__head > p {
+.fg-alu-door-band__head > p,
+.fg-sg-band__head > p {
   max-width: 46ch;
   margin: 0;
   color: var(--color-muted);
@@ -38972,7 +38976,8 @@ html.fg-blinds-reveal-locked {
    `align-content: start` inside the card keeps the term hard against the top, so
    the headings line up across the row even when one card runs a line longer. */
 .fg-flush-list,
-.fg-alu-door-list {
+.fg-alu-door-list,
+.fg-sg-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: clamp(0.9rem, 1.8vw, 1.4rem);
@@ -38980,7 +38985,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-flush-list > div,
-.fg-alu-door-list > div {
+.fg-alu-door-list > div,
+.fg-sg-list > div {
   display: grid;
   align-content: start;
   gap: 0.45rem;
@@ -38991,14 +38997,16 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-flush-list dt,
-.fg-alu-door-list dt {
+.fg-alu-door-list dt,
+.fg-sg-list dt {
   font-weight: 850;
   font-size: 1.02rem;
   line-height: 1.2;
 }
 
 .fg-flush-list dd,
-.fg-alu-door-list dd {
+.fg-alu-door-list dd,
+.fg-sg-list dd {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -39025,6 +39033,7 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 860px) {
   .fg-flush-band__head,
   .fg-alu-door-band__head,
+  .fg-sg-band__head,
   .fg-flush-compare {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
@@ -39047,7 +39056,12 @@ html.fg-blinds-reveal-locked {
    clean off. Matching the box to the source is what stops that, and it is the
    same lesson already recorded for the portrait door renders on composite:
    crop the box to the picture, never the picture to the box. */
-.fg-alu-door-media--4x3 {
+/* `.fg-cw-media--4x3` is the shared name and the one to use from now on.
+   `.fg-alu-door-media--4x3` is kept alongside it only because the aluminium
+   doors template already ships with it; they are the same rule. Secondary
+   glazing was the second consumer and it is not worth a third namespace. */
+.fg-alu-door-media--4x3,
+.fg-cw-media--4x3 {
   aspect-ratio: 4 / 3;
 }
 
@@ -40645,4 +40659,14 @@ html.fg-blinds-reveal-locked {
   .fg-oq-ghost {
     display: none;
   }
+}
+
+/* Secondary glazing — /secondary-glazing/
+   The four opening styles render as a `.fg-cw-facts` list where each item leads
+   with a bold style name, so the name needs separating from the sentence that
+   follows it. Everything else on this route is the shared `.fg-cw` grammar and
+   the shared card band. */
+.fg-sg .fg-cw-facts li strong {
+  display: block;
+  color: var(--color-ink);
 }

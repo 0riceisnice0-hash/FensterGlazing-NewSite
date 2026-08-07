@@ -177,6 +177,16 @@ $is_flush_bespoke = $slug === 'flush-casement-windows';
    banner and the whole tail from the specification choices down are untouched
    and still shared. Not an early return. */
 $is_alu_doors_bespoke = $slug === 'aluminium-doors';
+/* Secondary glazing replaces the middle on the same terms, and additionally
+   gates off the key-specification strip the way repairs does. Owner, 2026-08-07:
+   keep the strip "only if we actually have relevant stats, dont want filler
+   there". This product publishes no numbers at all. The starred U-value came off
+   on 2026-08-05 because a secondary glazed figure depends entirely on the window
+   it is fitted inside, and there is no acoustic figure either, so the strip was
+   four facts with no measurement in them, each of which the bespoke sections now
+   say better and in context. `product_usps` is KEPT and kept accurate because
+   Legend reads its verified product facts from there. */
+$is_secondary_bespoke = $slug === 'secondary-glazing';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase
    of a product:
@@ -3553,7 +3563,7 @@ if ($is_commercial_hub) {
              opens with a reassurance strip in the same slot instead, which says
              something true about the service rather than inventing four
              product facts for a service that has none. */ ?>
-    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors && ! $is_repairs) : ?>
+    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors && ! $is_secondary_bespoke && ! $is_repairs) : ?>
         <?php get_template_part('template-parts/components/product-pulse', null, [
             'usps'  => $product_usps,
             'slug'  => $slug,
@@ -4047,7 +4057,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4211,7 +4221,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4381,7 +4391,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4434,6 +4444,16 @@ if ($is_commercial_hub) {
             get_template_part('template-parts/sections/aluminium-doors-v2', null, [
                 'brand' => $brand,
                 'trust_items' => $trust_items,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php if ($is_secondary_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/secondary-glazing-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+                'quote_url' => $product_quote_embed_url,
             ]);
             ?>
         <?php endif; ?>
