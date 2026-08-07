@@ -417,7 +417,16 @@ function fenster_site_data(): array
                    "sits inside the original window line". It is also gone from
                    Legend, which reads its verified product facts from here. */
                 ['label' => 'Fitting', 'value' => 'Inside the existing window'],
-                ['label' => 'Colour choice', 'value' => 'Full RAL range'],
+                /* Owner-confirmed 2026-08-07: the offer is white, brown or any
+                   RAL. It read "Full RAL range", which was not wrong but hid the
+                   two standard colours, and it also invited the assumption that
+                   this product shares the twelve powder-coated finishes on the
+                   aluminium window and door routes. It does not: secondary
+                   glazing has its own range, which is why `/secondary-glazing/`
+                   is correctly absent from `$aluminium_colour_routes` and must
+                   stay absent. Legend reads its verified product facts from
+                   here, so the two standard colours belong in it. */
+                ['label' => 'Colour choice', 'value' => 'White, brown or any RAL'],
                 ['label' => 'Frame type', 'value' => 'Slim aluminium'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
