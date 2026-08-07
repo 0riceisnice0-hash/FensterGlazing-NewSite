@@ -2,6 +2,37 @@
 
 Last updated: 2026-08-06
 
+## 2026-08-07 - Repairs page LIVE (5cde867)
+
+`/window-and-door-repairs/` is on production. Live was `dac7007`; it is now `5cde867` on
+`release/repairs-diagnostics`, cut from live with this session's **18 repairs commits**
+cherry-picked oldest-first. The 31 flush/glass commits in the range were deliberately skipped
+because their content is already live under different hashes, and the **18 online-quote commits
+from another session were excluded** because the owner has not signed them off. `main` is
+therefore still not deployable, and this branch is now the live pointer.
+
+What shipped: the page rebuilt from the ground up as a bespoke middle rather than a rewrite of the
+old one. A symptom-led diagnostic where picking "it will not lock" or "my cat cannot get out"
+highlights the failing part on a to-scale line drawing of a window or a door, drawn from the
+owner's own reference photographs in an AutoCAD register with concealed hardware as hidden line.
+Then the parts wall from Wharfside's photography, the van and the two Service Engineers, and a
+cross-link through to `/double-glazing-replacement/`. Seven generic product bands are gated off
+for this route and instant pricing is disabled, because a repair has no specification to price.
+
+Verification, all as a visitor on a plain URL with no cache-buster: page `200` and zero PHP
+notices, **41 of 41 images `200`**, **62 of 62 internal links `200`**, served CSS and JS
+byte-identical to the build, `fg-oq` zero in both bundles and their template absent, the
+diagnostic shell shipping `hidden` with every symptom server-rendered underneath it for no-JS
+and for search, and fifteen canonical routes `200`. Backup proven by extracting a file out of
+the tarball and hashing it, not by trusting the filename.
+
+**Three notes for whoever is next.** The compiled assets rebuilt byte-identical to the
+cherry-picked artefacts, which is the evidence the rebuild is meant to produce, not a reason to
+skip it. Three "404s" in the first route sweep were slugs I invented from memory — this site has
+`/double-glazing-replacement/` and `/aluminium-bifold-doors/`, and route names should come out of
+`page-sitemap.xml`. And the page has still **never been opened on a real phone**; every layout
+judgement so far is headless Chrome at 390px.
+
 ## 2026-08-06 - Repairs, third pass: the real office process, and no spec box (test)
 
 Owner supplied how repairs actually run, and it is a better offer than the page
