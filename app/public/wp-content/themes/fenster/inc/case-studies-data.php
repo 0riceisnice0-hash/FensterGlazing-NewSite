@@ -41,6 +41,7 @@ function fenster_case_studies(): array
     $bifold = esc_url(home_url('/aluminium-bifold-doors/'));
     $slidefold = esc_url(home_url('/slide-fold-doors/'));
     $sash = esc_url(home_url('/sliding-sash-windows/'));
+    $secondary = esc_url(home_url('/secondary-glazing/'));
     $team = esc_url(home_url('/meet-the-team/'));
     $team_img = FENSTER_THEME_URI . '/assets/images/imported/';
 
@@ -423,6 +424,97 @@ function fenster_case_studies(): array
          * Owner-confirmed 2026-08-04: a new window rather than a replacement
          * sealed unit into an existing frame, and priced at a home consultation.
          */
+        /*
+         * Winslow, and the first secondary glazing study on the site. It closes
+         * a gap PHOTO-CHECKLIST.md has carried since July: "Secondary glazing,
+         * still open. No genuine product image." It is also the first study to
+         * claim /secondary-glazing/, which until now was running
+         * `fenster_case_studies_for_product()`'s all-studies fallback and
+         * showing three unrelated jobs under "Real installs".
+         *
+         * Owner-confirmed 2026-08-07: the building is LISTED, which is why the
+         * original windows stay and is the reason this job exists. It was first
+         * offered as "i think its conservation" and then confirmed as listed, so
+         * the copy states listed and nothing else. Nothing here says anything
+         * about consent or permissions: that is not ours to state.
+         *
+         * NO U-VALUE, and none may be added. The starred "From 1.8 W/m²K" came
+         * off `product_usps['secondary-glazing']` on 2026-08-05 by owner
+         * instruction, because a secondary glazed figure depends entirely on the
+         * existing window it is fitted inside, so no single number is true of a
+         * job.
+         *
+         * NO `colour` DEEP LINK, deliberately. Secondary glazing has its own
+         * colour range, owner-confirmed the same day: white, brown or any RAL.
+         * It is NOT the twelve powder-coated finishes on the aluminium window
+         * and door routes, which is why /secondary-glazing/ is correctly absent
+         * from `$aluminium_colour_routes`. Linking the colour hub here would
+         * send people to the wrong swatches, so the frame colour is stated in
+         * the specs as plain text.
+         *
+         * Owner correction on the copy, worth keeping: an earlier draft said a
+         * horizontal slider is "the one to fit when the window behind still has
+         * to work". That is wrong. Every style except fixed leaves the original
+         * window reachable, so it described secondary glazing generally while
+         * selling it as particular to the slider. What actually separates a
+         * horizontal slider is that it moves sideways and needs no swing space.
+         *
+         * Six units, five sliders and one lift-out, but only FIVE photographs:
+         * two of the six supplied files are pixel-identical, checked by hashing
+         * a 64x64 reduction rather than by comparing filenames.
+         *
+         * `card_image` exists because every photograph is portrait and the
+         * archive card is 16/10. It is cut from the 3840x5120 original rather
+         * than from the 1600px derivative, the same way Leagrave, Bolbeck Park
+         * and Wolverton do it, and the band is chosen to keep the window head
+         * and the open casement rather than a strip of wall.
+         */
+        'secondary-glazing-winslow' => [
+            'title' => 'Secondary glazing, Winslow',
+            'location' => 'Winslow, Buckinghamshire',
+            'type' => 'Residential',
+            'date' => '2026-07-21',
+            'priced_by' => 'consultation',
+            'summary' => 'Six secondary glazing units in a listed Winslow home, five horizontal sliders and one lift-out, fitted inside the original windows in white aluminium.',
+            'lead' => 'The house is listed, so the original windows were always staying. We glazed them a second time from the inside instead: six units in slim white aluminium, sitting behind windows that were not touched.',
+            'products' => [
+                ['label' => 'Secondary glazing', 'url' => $secondary],
+            ],
+            'specs' => [
+                ['label' => 'Product', 'value' => 'Six secondary glazing units'],
+                ['label' => 'Styles', 'value' => 'Five horizontal sliders, one lift-out'],
+                ['label' => 'Frame', 'value' => 'White slim aluminium'],
+                ['label' => 'Original windows', 'value' => 'Kept in place'],
+            ],
+            'overview' => [
+                'On a listed building the windows are part of what is listed, so replacing them was never the job. <a href="' . $secondary . '">Secondary glazing</a> is the other answer: a second window fitted on the inside of the one already there. Nothing came out, nothing was altered, and from the street the house looks exactly as it did. Six openings were done.',
+                'Five of them are horizontal sliders. The panes run sideways past each other on a track, so nothing swings out into the room and nothing needs clear space in front of it, which matters where a window sits behind a deep sill, a radiator or furniture. The sixth is a lift-out unit, a single pane held in its frame that comes out in your hands, for an opening that only needs reaching occasionally.',
+                'The frames are slim white aluminium and sit inside the reveal, which is what stops a second window reading as a second window. White was the choice here. Brown is the other standard colour, and any RAL can be matched if a frame needs to disappear into a darker reveal or pick up something already in the room.',
+            ],
+            'installed' => [
+                'Five horizontal sliding secondary glazing units',
+                'One lift-out secondary glazing unit',
+                'White slim aluminium frames throughout',
+            ],
+            'installers' => [$fitter_shane, $fitter_zac],
+            'card_image' => $img . 'cs-winslow-secondary-glazing-card.jpg',
+            'images' => [
+                ['src' => $img . 'cs-winslow-secondary-glazing-open.jpg', 'caption' => 'The secondary glazing closed across the opening, with the original leaded casement standing open behind it.'],
+                ['src' => $img . 'cs-winslow-secondary-glazing-bedroom-open.jpg', 'caption' => 'A bedroom window, the original casement swung open behind the glazing and the slider closed in front of it.'],
+                ['src' => $img . 'cs-winslow-secondary-glazing-kitchen.jpg', 'caption' => 'The kitchen window, glazed across the full opening above the worktop.'],
+                ['src' => $img . 'cs-winslow-secondary-glazing-narrow.jpg', 'caption' => 'A narrow opening with its original timber sill left alone, the glazing sitting back inside the reveal.'],
+                ['src' => $img . 'cs-winslow-secondary-glazing-catch.jpg', 'caption' => 'The catch on one of the sliders, with the original leaded light immediately behind it.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Secondary Glazing, Winslow | Fenster Glazing',
+                /* 155 characters. The cap is 160 and
+                   `fenster_trim_meta_description()` is a regression guard, not a
+                   licence to run over: a trailing ellipsis is not finished SEO
+                   copy. */
+                'meta_description' => 'Secondary glazing in a listed Winslow home, July 2026. Six units inside the original windows: five horizontal sliders and one lift-out, in white aluminium.',
+            ],
+        ],
+
         'integral-blinds-leagrave-luton' => [
             'title' => 'uPVC window with integral blinds, Leagrave',
             'location' => 'Leagrave, Luton',
