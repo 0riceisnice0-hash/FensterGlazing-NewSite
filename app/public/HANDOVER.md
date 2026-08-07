@@ -436,6 +436,54 @@ Current accepted behaviour:
 - **The slat colours are on `/colour-options/` as their own section**, anchored `#integral-blind-colours`, built at render time from `notan_blind_colours` rather than copied into `colour_options`. Keep it derived: the hub and the visualiser must not be able to drift apart.
 - **Instant pricing is off on this route** via `$offers_instant_price`. A blind unit is a sealed unit specification made to its host window or door, and the online tool prices windows and doors, so the button promised a number nobody could get. Both hero variants and the hero card are gated on the same list; add a slug there rather than deleting buttons, or they fall out of step.
 
+### Aluminium Doors Page
+
+Route: `/aluminium-doors/`
+
+Template: `template-parts/sections/aluminium-doors-v2.php`, a bespoke **middle**
+dispatched from `generated-page.php`, the same shape flush casement uses. Not an
+early return. Styling is `.fg-alu-door` inside the shared `.fg-cw` grammar.
+
+**On test since 2026-08-07, not on live.** Rebuilt because the route was running
+the generic product journey and read like it: "Aluminium Doors" as the H1 and
+then twice more as an H2, a hub band headed "More information on Aluminium
+Doors", and a middle of copy written about no particular system.
+
+Current accepted model:
+
+- **Five sections, in the order the decision gets made in**: where it fits (it
+  matches the windows), the InvisiHinge, Thermlock on a dark band, security as a
+  card band, then the threshold. The security band is deliberately the one
+  section with no photograph, so the page changes shape once in the middle
+  instead of running five images down one rhythm.
+- **The middle quotes no U-value.** See the Aluminium Doors Rule in `AI.md`; the
+  figures are on the specification strip and the Thermlock banner directly above.
+- **The InvisiHinge section carries two owner exclusions** — no fourth hinge, and
+  nothing about installation. Both are recorded in `AI.md` under the InvisiHinge
+  Rule and neither may return without asking.
+- **`.fg-alu-door-band` and `.fg-alu-door-list` are added to the `.fg-flush-band`
+  and `.fg-flush-list` selector lists** rather than given a copy of the
+  component. Restyle one and you restyle both, which is deliberate.
+- **`.fg-cw-media` is a 16/10 cover box and is wrong for every image on this
+  route.** The usable photography is 4:3 at 600x450 and the InvisiHinge composite
+  carries its callout circles hard against the top edge, so cover into 16/10
+  clipped the upper circle off. `.fg-alu-door-media--4x3` and
+  `--tech` match the box to the source instead. Crop the box to the picture.
+- **The hero is still wrong and is still the owner's deferred decision.**
+  `products/curated/sheerline-aluminium-door.jpg` is an interior kitchen shot of
+  a white door that reads as uPVC, noted since 2026-07-21. Every correct
+  replacement in the theme is 600x450 or smaller, which is too small for a
+  full-bleed banner, so the 2026-07-29 decision to leave it stands. The rebuild
+  did not touch it.
+- **No "our work" gallery, on purpose.** None of the aluminium door photography
+  in the theme is a Fenster installation, so a section claiming otherwise would
+  be the blanket-claim fault already recorded against the casement proof mosaic.
+- **The case-study strip on this route is on its documented fallback**, showing
+  two uPVC casement jobs and a bifold under "Real installs, photographed on the
+  day", because no study claims `/aluminium-doors/`. Left alone rather than gated:
+  the composite doors entry of 2026-07-22 records that this affects every product
+  page without its own study and that the fix is site-wide, not per-route.
+
 ### Window And Door Repairs Page
 
 Route: `/window-and-door-repairs/`
@@ -616,16 +664,14 @@ Current accepted behaviour:
 - Door handle data lives in `inc\site-data.php` under `door_handles`.
 - Cropped handle assets live under `assets\images\products\door-handles`.
 - The original supplied nine-handle sheet was cropped into separate transparent PNG assets.
-- The section appears on selected door routes:
+- **The route list here was four releases stale and is corrected as of 2026-08-07.** It still named Patio, Aluminium Bifold, Aluminium Sliding and Slide & Fold, all of which came off `door_handles.slugs` on 2026-07-29 because those systems take a different handle family. The live list is five:
   - Composite Doors
   - uPVC Doors
-  - French Doors
-  - Patio Doors
-  - Aluminium Bifold Doors
-  - Aluminium Sliding Doors
-  - Heritage Aluminium Doors
+  - French Doors *(off on 2026-07-29, put back on 2026-08-07: the owner confirmed a French pair takes the same long-plate handle as the single leaf)*
   - Aluminium Doors
-  - Slide & Fold Doors
+  - Heritage Aluminium Doors
+- Patio, aluminium bifold, slide and fold and aluminium sliding each stay off and each has its own family or its own reason. Aluminium sliding in particular has the architeQ Aspire lift-and-slide furniture in `lift_slide_handles`; do not fold it back in.
+- The full route rules live in `AI.md` under the Door Handle Section Rule. Treat that as the source and this as a summary, because this list is what went stale.
 - It uses the same selector behaviour as the window handle section: finish swatches, active handle image/copy, feature tiles and a static compatibility note.
 
 ## Integral Blinds Desktop Reveal

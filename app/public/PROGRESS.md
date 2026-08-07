@@ -5,6 +5,88 @@ Last updated: 2026-08-07
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
+## 2026-08-07 - Aluminium doors rebuilt as a bespoke middle (test, 6ce498e)
+
+Owner brief: bring `/aluminium-doors/` up to speed with the newer product pages,
+assets are limited, a thermal cut-through would be a good one to use, and the
+InvisiHinge is worth its own section.
+
+- **The route was running the generic product journey and read like it.** Read
+  off the live page rather than the template: "Aluminium Doors" as the H1 and
+  then twice more as an H2, a hub band headed "More information on Aluminium
+  Doors", a gallery band headed "Aluminium Doors: styles, details and fitted
+  examples", and a middle of `product_content` copy written about no particular
+  system. The replacement is five sections on the shared `.fg-cw` split grammar:
+  where it fits, the InvisiHinge, Thermlock on dark, security as a card band,
+  the threshold. Full model in `HANDOVER.md`, rules in `AI.md`.
+- **The middle deliberately states no U-value.** 1.4 double and 1.0 triple are
+  already on the key-specification strip *and* on the Thermlock banner, both of
+  which render immediately above it. A third statement inside 1.5 viewports is
+  precisely what the casement page was corrected for on 2026-07-27. The banner
+  names the technology, the section explains and shows it.
+- **The thermal cut-through wanted a dark band, and that decided the rhythm.**
+  `Thermlock-Technology.jpg` is a lit render on black; dropped on the page canvas
+  it reads as a black rectangle. On dark it reads as lit product, which is the
+  same reasoning the casement page gives for its technical chapters. The security
+  section then became a card band rather than a fifth split, so the page changes
+  shape once in the middle instead of running five photographs down one rhythm.
+- **`.fg-cw-media` is a 16/10 cover box and was wrong for every image here.** The
+  usable photography is 4:3 at 600x450 and the InvisiHinge composite carries its
+  two callout circles hard against the top edge, so cover into 16/10 cropped a
+  tenth off the top and clipped the upper circle clean off. Fixed by matching the
+  box to the source rather than the source to the box.
+- **The imagery was there all along, unused.** The brief said assets were
+  limited, and the page was certainly starved, but `assets/images/imported`
+  already held a purple door with glazed side screens, a dark door against timber
+  cladding, a low-threshold detail, a cylinder-and-handle close-up and the
+  Thermlock cutaway, none of them referenced. All were opened and checked before
+  use. **Look in the imported bank before concluding there is nothing.**
+- **Five of the nine entries in the `aluminium_doors` gallery pool were not this
+  product.** Three were Sheerline **Classic** heritage doors, which have their
+  own route and their own pool, and two were window profiles. That pool feeds
+  every `/aluminium-doors-<town>/` matrix page as well as this route, so it was
+  wrong on about twenty pages. This is the third time a pool has been found
+  carrying a sibling route's product.
+- **Two facts deliberately not claimed.** Flush hook-locks, because every other
+  reference in the theme puts those on the lift-and-slide interlock and a hinged
+  door is not that product; and the name "Prestige", because the windows,
+  bifolds and sliders are named that in `product-hub-data.php` and the
+  residential door is not.
+- **The InvisiHinge section carries two owner exclusions**, both given while it
+  was being built: no fourth hinge at stress points, and nothing about the hinge
+  being easy to install, because the doors arrive with it already fitted.
+  Adjustment after hanging is a different thing and is kept. Both are asserted in
+  the harness so they cannot drift back in.
+- **French doors go back on the long-plate handle grid.** Owner, same day: "can
+  have handle options on french doors in hindsight they all use the same",
+  reversing the 2026-07-29 removal. Aluminium sliding doors stay off and that is
+  not the same question, because they now have their own lift-and-slide family.
+  `HANDOVER.md`'s copy of that route list was four releases stale and named four
+  routes that came off in July; corrected in the same pass.
+- **Both probe failures on the first harness run were the probe.** It asserted
+  five images against a page that correctly has four, because the security band
+  is deliberately imageless; and it asserted a 250-700 word band invented from
+  nothing, against a section that is *shorter* than the live flush casement
+  middle it is modelled on. Measured that at 873 words off the production page
+  and rebased the assertion on it. A third scare, a 0-byte image serving 200, was
+  a racing curl in my own loop: the file is 97,908 bytes on the server.
+- Verified on test: page `200` with zero PHP notices, the three replaced bands
+  absent and the bespoke middle present, all four images `200` and loaded, five
+  deployed files byte-identical to the commit, thirteen routes `200` including
+  the sibling aluminium and heritage routes and a town matrix page, all five new
+  FAQs rendering and the generated ones gone. At 1440 every section fits inside
+  one viewport (550, 539, 657, 414, 515 against 828 usable) with no overflow and
+  the largest text 31.2px against the 57.6 cap. At a **proven** 390 through an
+  iframe, `innerWidth=390`, no horizontal overflow, nothing wider than the
+  viewport, all images loaded and the photograph before the copy on all four
+  splits.
+- **Not done, and still the owner's call: the hero.** It is the interior kitchen
+  shot of a white door that reads as uPVC, flagged since 2026-07-21. Every
+  correct replacement in the theme is 600x450 or smaller, so the 2026-07-29
+  decision to wait for a better asset still holds and the rebuild did not touch
+  it.
+- Test deployment only. Live is untouched.
+
 ## START HERE, 2026-08-07 (end of session)
 
 **Live is `5cde867` on `release/repairs-diagnostics`, not `main`.** `main` still

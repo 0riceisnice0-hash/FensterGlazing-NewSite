@@ -2345,12 +2345,25 @@ function fenster_site_data(): array
             ],
         ],
         'door_handles' => [
-            /* Owner instruction, 2026-07-29: these four routes only. French
-               doors and aluminium sliding doors came off, because those
-               systems do not take the long-plate handle. */
+            /* Owner instruction, 2026-07-29: composite, uPVC, aluminium and
+               heritage aluminium only. French doors and aluminium sliding doors
+               came off, on the understanding that neither system takes the
+               long-plate handle.
+
+               FRENCH DOORS REVERSED, owner 2026-08-07: "can have handle options
+               on french doors in hindsight they all use the same". A French door
+               is a pair on a door system we already sell, which is exactly what
+               AI.md says under the configuration rule, so it takes the same
+               long-plate handle as the single leaf. It is back on the list.
+
+               Aluminium sliding doors stay OFF and that is not an oversight: a
+               slider takes the architeQ Aspire lift-and-slide furniture, which
+               has been its own family in `lift_slide_handles` since 2026-08-03.
+               Do not widen this list to it. */
             'slugs' => [
                 'composite-doors',
                 'upvc-doors',
+                'french-doors',
                 'aluminium-doors',
                 'heritage-aluminium-doors',
             ],
