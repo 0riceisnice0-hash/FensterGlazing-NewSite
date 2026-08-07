@@ -824,7 +824,26 @@ function fenster_site_data(): array
                man-with-a-screwdriver photograph, neither of which is secondary
                glazing. */
             'secondary-glazing' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-hero-stone-mullion-1200w.jpg', 'alt' => 'Secondary glazing fitted inside a stone mullioned reveal, with the original leaded diamond window behind it'],
+                /* Second hero in a day. The first was a 1200x375 band cut from a
+                   1200x1600 photograph of a stone mullioned reveal, and the
+                   owner's read was right on both counts: too low resolution,
+                   because the hero box renders 1440 wide so a 1200 source is
+                   upscaled, and too zoomed in, because a tight band of stone and
+                   leaded glass reads as texture rather than as a room.
+
+                   This is banded from the 3840x5120 Winslow original at 1920
+                   wide, so nothing is upscaled, and the band is taken low enough
+                   to catch the bottom rail, the timber sill and the curtains
+                   either side, with the original casement standing open. It
+                   reads as a window in a room, which is what a hero has to do
+                   when the four sections below it are doing the explaining.
+
+                   A genuinely generic image was considered and there is not an
+                   honest one: every wide, high-resolution photograph in the
+                   theme is a different product (replacement glazing, heritage
+                   aluminium windows, rooflights), and putting one of those here
+                   is exactly the mistake `/aluminium-doors/` is still carrying. */
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-hero-winslow-1920w.jpg', 'alt' => 'Secondary glazing across a leaded window in a period room, with the original casement standing open behind it and a deep timber sill below'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-stone-mullion-leaded.jpg', 'alt' => 'White secondary glazing inside a stone mullioned reveal, with the original leaded window behind'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-leaded-iron-handles.jpg', 'alt' => 'Secondary glazing across a pair of leaded casements with their original black iron handles behind the glass'],
