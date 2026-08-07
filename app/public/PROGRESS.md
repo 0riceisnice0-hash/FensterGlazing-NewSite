@@ -87,6 +87,77 @@ InvisiHinge is worth its own section.
   it.
 - Test deployment only. Live is untouched.
 
+## 2026-08-07 - Secondary glazing rebuilt, and a case study to prove it (test)
+
+Owner brief: full revamp, built from the ground up, using what the newer product
+pages have established. Be critical of the photographs and only use them if they
+are worth it. Drop the key specifications if we have no real stats.
+
+- **The route had nothing of its own.** Generic journey, the product name as an
+  H1 and twice more as an H2, a band headed "More information on Secondary
+  Glazing", and **not one photograph of the product anywhere on it**. Four
+  sections now, in the order the questions arrive in, on the shared `.fg-cw`
+  grammar. Accepted model in `HANDOVER.md`, rules in `AI.md`.
+- **The key-specification strip is gone and that was the right call.** The
+  starred U-value came off this product on 2026-08-05 because a secondary glazed
+  figure depends on the window it is fitted inside, and there is no acoustic
+  figure either. What was left was four facts with no measurement in them, each
+  of which the new sections say better and in context. `product_usps` is kept
+  because Legend reads it.
+- **The imagery was the bigger fault.** The gallery pool held four images and
+  **none of them was secondary glazing**: a sealed-unit sample, a Liniar casement
+  close-up, a generic old-window shot, and the stock man-in-blue-dungarees
+  holding a screwdriver that the Repair Imagery Rule already bans. All four
+  carried alt text asserting they were secondary glazing, and that pool feeds
+  every `/secondary-glazing-<town>/` page. It is six real Fenster installs now.
+- **The hero was an old-site scrape of a bay so overexposed the product could not
+  be seen.** Replaced with our own leaded window in a stone mullioned reveal.
+  Worth recording how it was chosen: the first candidate was a brighter, nicer
+  photograph whose 3.2:1 letterbox turned out to be **mostly trees with no
+  glazing legible at all**. Crop the hero and look at the crop before choosing.
+- **The bespoke middle rendered nowhere on the first deploy.** The dispatch went
+  inside the specification-choices wrapper, which is gated on
+  `! $is_secondary_glazing_page` so that a colour and hardware band does not
+  render where none of those is a decision. The entire page middle was therefore
+  gated on a condition about swatches. The page returned 200, the harness passed
+  against the section in isolation, and the sections simply were not there.
+  **Caught only by reading the rendered page.** The identical warning was already
+  written against the repairs dispatch six lines above.
+- **A stray full stop at the head of four lines**, because the style name is
+  `display: block` and the ". " joining it to its sentence started the next line.
+  Invisible in the markup, obvious in one screenshot.
+- **An even-handed comparison, corrected before it shipped.** A first draft
+  answered "is it better than replacing the windows for noise" with "often the
+  stronger answer", which positions our own replacement windows as the weaker
+  choice and is exactly what `TONEOFVOICE.md` forbids. Both are ours; each now
+  gets what it is genuinely best at.
+- **Winslow case study added the same day**, six units in a listed home, and it
+  is the first study to claim `/secondary-glazing/`. That page had been running
+  the all-studies fallback and showing three unrelated jobs under "Real
+  installs". Two of the six supplied photographs were pixel-identical, caught by
+  hashing a reduction rather than comparing filenames, and `card_image` has to be
+  an **array** or `fenster_case_study_card()` silently falls back to the portrait
+  hero, which on an all-portrait study is a centre-cropped band of wall.
+- **A concurrent session shipped to live mid-task.** The push was rejected;
+  `main` had moved and live is now `7785f877` with the online-quote strand
+  restored. Rebased. The SCSS conflict was a tail append from both sides and the
+  naive resolution **cut through a media query**, leaving the file one brace
+  short and the build refusing. Rebuilt by taking their complete file and
+  re-applying this session's changes onto it, then rebuilding the compiled CSS
+  from merged source rather than hand-merging it, and restoring their compiled
+  JS because a rebuild alone rewrites it. Verified the shipped bundle carries
+  `fg-oq`, `fg-sg`, `fg-alu-door`, `fg-rp` and `fg-cw` together.
+- **Flagged, not changed: FENSA.** The shared order-process rail promises "your
+  FENSA certificate sent direct" on this route. A FENSA certificate covers
+  replacement windows and doors; secondary glazing is an additional internal
+  window. The Order Process Rule says a route-specific `steps` argument needs the
+  owner, so it is his call.
+- Verified on test: page `200` with zero PHP notices, the four generic bands
+  absent and the four bespoke sections present, all four images loaded, the quote
+  embed carrying its real collection, and at a **proven** 390 no horizontal
+  overflow with the photograph before the copy on every split.
+- Test deployment only. Live is untouched by this session.
+
 ## START HERE, 2026-08-07 (end of session)
 
 **Live is `5cde867` on `release/repairs-diagnostics`, not `main`.** `main` still

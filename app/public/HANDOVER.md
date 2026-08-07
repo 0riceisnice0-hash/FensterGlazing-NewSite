@@ -488,6 +488,44 @@ Current accepted model:
   the composite doors entry of 2026-07-22 records that this affects every product
   page without its own study and that the fix is site-wide, not per-route.
 
+### Secondary Glazing Page
+
+Route: `/secondary-glazing/`
+
+Template: `template-parts/sections/secondary-glazing-v2.php`, a bespoke **middle**
+dispatched from `generated-page.php`. Styling is `.fg-sg` inside the shared
+`.fg-cw` grammar.
+
+**On test since 2026-08-07, not on live.** Rebuilt from the ground up because the
+route was running the generic product journey and had nothing of its own: the
+product name as the H1 and twice more as an H2, a band headed "More information
+on Secondary Glazing", and not one photograph of the product on the page.
+
+Current accepted model:
+
+- **Four sections, in the order the questions arrive in**: what it actually is,
+  why people have it, whether you can still open the window behind it, then
+  glass and colour. The USP leads and it is that you keep your own windows.
+- **No key-specification strip.** This product publishes no numbers, so the
+  strip was four facts with no measurement in them. `product_pulse` is gated
+  off with `fg-product-why`, `fg-product-intel` and `fg-product-visuals`.
+  `product_usps` is kept accurate for Legend. See the Secondary Glazing Rule in
+  `AI.md` before adding any of it back.
+- **The "can I still open my window" section is media-first on purpose.** It is
+  the objection everybody arrives with and the photograph answers it before the
+  copy does: one of our own installs with the original casement wide open behind
+  the closed glazing.
+- **The dispatch sits outside the specification-choices wrapper**, which is
+  gated on `! $is_secondary_glazing_page`. Inside it the whole middle rendered
+  nowhere. The repairs dispatch carries the same warning.
+- **Every photograph is ours**, two from the owner and four from the Winslow
+  case study, which the page links to. The old pool was four wrong-product
+  images with dishonest alt text and is documented in `AI.md`.
+- **Open, and needing the owner: FENSA.** The shared order-process rail promises
+  a FENSA certificate on this route and secondary glazing is not a replacement
+  window. Flagged rather than changed, because a route-specific `steps` argument
+  needs him.
+
 ### Window And Door Repairs Page
 
 Route: `/window-and-door-repairs/`
