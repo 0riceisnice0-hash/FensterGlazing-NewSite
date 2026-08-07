@@ -2568,11 +2568,18 @@ if ($is_colour_options) {
 
     /* Deliberately more tiles than the widest grid needs. Rows are a fixed
        height and the section clips, so the wall always runs off the bottom
-       rather than leaving a bald patch when the column count changes. */
+       rather than leaving a bald patch when the column count changes.
+
+       Named rather than a bare number on purpose. The obscure glass hero below
+       ran the identical literal until its wall was rebuilt as six columns of
+       36, and that edit clipped this loop to 36 as well, which left the colour
+       wall a row and a half deep in a section several hundred pixels tall.
+       These are two different grids. Do not match this to the glass count. */
+    $colour_wall_tile_count = 336;
     $colour_wall_tiles = [];
     if ($colour_wall_pool !== []) {
         $colour_wall_count = count($colour_wall_pool);
-        for ($i = 0; $i < 36; $i++) {
+        for ($i = 0; $i < $colour_wall_tile_count; $i++) {
             $colour_wall_tiles[] = $colour_wall_pool[(($i * 11) + (intdiv($i, 28) * 5)) % $colour_wall_count];
         }
     }
