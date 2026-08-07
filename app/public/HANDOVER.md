@@ -521,10 +521,12 @@ Current accepted model:
 - **Every photograph is ours**, two from the owner and four from the Winslow
   case study, which the page links to. The old pool was four wrong-product
   images with dishonest alt text and is documented in `AI.md`.
-- **Open, and needing the owner: FENSA.** The shared order-process rail promises
-  a FENSA certificate on this route and secondary glazing is not a replacement
-  window. Flagged rather than changed, because a route-specific `steps` argument
-  needs him.
+- **FENSA does not apply and the rail no longer claims it.** Owner-confirmed
+  2026-08-07. The route passes its own four steps: 01 and 03 are the canonical
+  wording untouched, 02 swaps thresholds for reveal depth, and 04 drops the
+  certificate. Step 04 says ten years and deliberately does not repeat
+  "insurance-backed through the CPA", which is scoped to new windows and doors
+  elsewhere and is unconfirmed for this product.
 
 ### Window And Door Repairs Page
 

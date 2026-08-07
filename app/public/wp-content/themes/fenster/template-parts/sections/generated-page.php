@@ -1267,6 +1267,34 @@ if ($is_commercial) {
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Commercial installation is planned around site coordination, safety, sequencing and programme needs.'],
         ['step' => '04', 'title' => 'Aftercare', 'copy' => 'The team remains available for documentation, maintenance guidance and practical project support.'],
     ];
+} elseif ($is_secondary_glazing_page) {
+    /* Owner-confirmed 2026-08-07: "fensa is not relevant to secondary". The
+       canonical step 04 promises "your FENSA certificate sent direct", and a
+       FENSA certificate covers replacement windows and doors. Secondary glazing
+       is an additional window fitted inside the one already there, so nothing is
+       being replaced and there is no certificate coming. The page was promising
+       a document that does not exist for this product.
+
+       Steps 01 and 03 are the canonical wording untouched, because both are true
+       here: this product IS on the online designer, and it is fitted by our own
+       installers. Only 02 and 04 differ, and only where they have to.
+
+       02 loses "thresholds", which a secondary glazed unit does not have, and
+       gains reveal depth, which is the measurement this product actually turns
+       on.
+
+       04 states ten years, which is what `product_usps['secondary-glazing']`
+       already carries, and deliberately does NOT repeat "insurance-backed
+       through the CPA". That phrase is scoped to new windows and doors
+       everywhere else on the site and has not been confirmed for this product,
+       so the narrower claim is the safe one. Raise it with the owner before
+       widening it. */
+    $product_order_steps = [
+        ['step' => '01', 'title' => 'Your price', 'copy' => 'Price it yourself on the online tool, or book a free consultation and we build the same quote with you. Both run on the same price list, so the figure matches.'],
+        ['step' => '02', 'title' => 'Technical survey', 'copy' => 'Once you go ahead we survey before anything is made. Not a second sales visit: the reveal depth, the fixings and the sizes the factory needs to build it right.'],
+        ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, trained on the systems we sell and working carefully in a house someone lives in. We clear up after ourselves before we leave.'],
+        ['step' => '04', 'title' => 'Aftercare', 'copy' => 'Ten years on the glazing we fit, and anything afterwards you ring us rather than a call centre. The original window stays yours to look after exactly as it always was.'],
+    ];
 } elseif ($is_pet_flap_page) {
     /* Held back from the canonical set deliberately. A pet flap is a different
        job: nothing is manufactured to survey sizes, and it sits outside the ten
