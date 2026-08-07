@@ -2084,6 +2084,21 @@ if ($is_product_selector_hub) {
     return;
 }
 
+/* `/online-quote/` has its own template. It shared `quote-tool.php` with
+   `/3d-visualiser/` and five other slugs, which made three indexable routes
+   render as the same page with a different H1. The visualiser keeps the shared
+   template until it gets its own treatment; do not fold this back in. */
+if ($slug === 'online-quote') {
+    get_template_part('template-parts/sections/online-quote', null, [
+        'brand' => $brand,
+        'instant_quote_url' => $instant_quote_url,
+        'page' => $page,
+        'title' => $title,
+        'trust_items' => $trust_items,
+    ]);
+    return;
+}
+
 if ($is_quote_tool) {
     get_template_part('template-parts/sections/quote-tool', null, [
         'brand' => $brand,

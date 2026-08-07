@@ -5384,6 +5384,35 @@ if (depthItems.length) {
   updateDepthItems();
 }
 
+/* ---- Settling the "this is live" cue on /online-quote/ ---------------------
+   The embed reads as a screenshot until it is touched, so the frame carries a
+   ring and a line telling the visitor to go straight in. Both stop the moment
+   they do, because a cue that keeps insisting after it has been taken is noise.
+
+   **A click inside a cross-origin iframe cannot be observed.** The window
+   losing focus while that iframe is the active element is the standard proxy
+   for it and is what this listens for, alongside a pointerdown anywhere on the
+   tool for the case where someone grabs the scrollbar or a control first.
+
+   Deliberately does NOT fire `quote_opened`. That metric is the before-and-after
+   for this exact change (21 deliberate opens against 182 exposures in the 24
+   days to 5 August 2026), and widening what counts as an open at the same time
+   as trying to move it would make the comparison meaningless. */
+const toolCue = document.querySelector('[data-fg-tool-cue]');
+
+if (toolCue) {
+  const settleToolCue = () => toolCue.classList.add('is-engaged');
+
+  window.addEventListener('blur', () => {
+    const active = document.activeElement;
+    if (active && active.tagName === 'IFRAME' && toolCue.contains(active)) {
+      settleToolCue();
+    }
+  });
+
+  toolCue.addEventListener('pointerdown', settleToolCue);
+}
+
 /* ---- The mechanism is drawn in by the scroll on /casement-windows/ ----------
    The lock photograph comes in from the left as the security chapter rises
    through the viewport. Owner instruction, 2026-08-05: the first version fired
