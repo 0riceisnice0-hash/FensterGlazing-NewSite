@@ -522,11 +522,12 @@ Current accepted model:
   case study, which the page links to. The old pool was four wrong-product
   images with dishonest alt text and is documented in `AI.md`.
 - **FENSA does not apply and the rail no longer claims it.** Owner-confirmed
-  2026-08-07. The route passes its own four steps: 01 and 03 are the canonical
-  wording untouched, 02 swaps thresholds for reveal depth, and 04 drops the
-  certificate. Step 04 says ten years and deliberately does not repeat
-  "insurance-backed through the CPA", which is scoped to new windows and doors
-  elsewhere and is unconfirmed for this product.
+  2026-08-07, along with `/roofline/` and `/integral-blinds/`. All three take
+  the canonical steps with step 04's certificate clause swapped for
+  `order_process.aftercare_without_fensa`; the guarantee sentence inside it is
+  unchanged, because it is already scoped to new windows and doors on purpose.
+  Secondary glazing alone also swaps step 02, since "thresholds" is a
+  measurement it does not have.
 
 ### Window And Door Repairs Page
 

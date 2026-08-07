@@ -2092,6 +2092,23 @@ function fenster_site_data(): array
                 ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, trained on the systems we sell and working carefully in a house someone lives in. We clear up after ourselves before we leave.'],
                 ['step' => '04', 'title' => 'Aftercare', 'copy' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors, and your FENSA certificate sent direct. Anything afterwards, you ring us, not a call centre.'],
             ],
+            /* Step 04 for the routes where FENSA does not apply. Owner-confirmed
+               2026-08-07: FENSA is not relevant to secondary glazing, roofline
+               or integral blinds. A FENSA certificate covers replacement windows
+               and doors, and none of those three is one, so the canonical step
+               was promising a document that never arrives.
+
+               ONLY the certificate clause is removed. The guarantee sentence is
+               word for word the canonical one, because it is already scoped to
+               "new windows and doors" on purpose, precisely so that it stays
+               true on these routes. Do not "simplify" it here to "your
+               installation carries", which is the shortening the Order Process
+               Rule in AI.md explicitly forbids.
+
+               One string, not three copies. Six step sets across three templates
+               is the mess the 2026-07-29 consolidation cleaned up, and three
+               near-identical aftercare paragraphs is how that starts again. */
+            'aftercare_without_fensa' => 'A ten year insurance-backed guarantee through the CPA on new windows and doors. Anything afterwards, you ring us rather than a call centre, and you are talking to the people who fitted it.',
         ],
         /* Repairs: what we fix, and where it lives on the window.
            ------------------------------------------------------------------

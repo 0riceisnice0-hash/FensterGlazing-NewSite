@@ -1267,34 +1267,45 @@ if ($is_commercial) {
         ['step' => '03', 'title' => 'Installation', 'copy' => 'Commercial installation is planned around site coordination, safety, sequencing and programme needs.'],
         ['step' => '04', 'title' => 'Aftercare', 'copy' => 'The team remains available for documentation, maintenance guidance and practical project support.'],
     ];
-} elseif ($is_secondary_glazing_page) {
-    /* Owner-confirmed 2026-08-07: "fensa is not relevant to secondary". The
-       canonical step 04 promises "your FENSA certificate sent direct", and a
-       FENSA certificate covers replacement windows and doors. Secondary glazing
-       is an additional window fitted inside the one already there, so nothing is
-       being replaced and there is no certificate coming. The page was promising
-       a document that does not exist for this product.
+} elseif (in_array($slug, ['secondary-glazing', 'roofline', 'integral-blinds'], true)) {
+    /* FENSA covers replacement windows and doors. Owner-confirmed 2026-08-07
+       that it is not relevant to any of these three: secondary glazing is an
+       additional window fitted inside the one already there, roofline is fascia,
+       soffit and guttering with no glazing in it at all, and integral blinds are
+       not a replacement window either. The canonical step 04 promises "your
+       FENSA certificate sent direct", so all three were offering a document that
+       never arrives.
 
-       Steps 01 and 03 are the canonical wording untouched, because both are true
-       here: this product IS on the online designer, and it is fitted by our own
-       installers. Only 02 and 04 differ, and only where they have to.
+       This takes the canonical steps and changes ONE sentence, rather than
+       giving three routes three hand-written journeys. Six step sets across
+       three templates is the mess the 2026-07-29 consolidation cleaned up, and
+       three near-identical aftercare paragraphs is how that starts again.
 
-       02 loses "thresholds", which a secondary glazed unit does not have, and
-       gains reveal depth, which is the measurement this product actually turns
-       on.
+       The guarantee sentence is untouched and stays word for word canonical. It
+       is already scoped to "new windows and doors" deliberately, precisely so it
+       stays true on these routes, which sit outside the ten year insurance-backed
+       cover. The Order Process Rule in AI.md forbids shortening it.
 
-       04 states ten years, which is what `product_usps['secondary-glazing']`
-       already carries, and deliberately does NOT repeat "insurance-backed
-       through the CPA". That phrase is scoped to new windows and doors
-       everywhere else on the site and has not been confirmed for this product,
-       so the narrower claim is the safe one. Raise it with the owner before
-       widening it. */
-    $product_order_steps = [
-        ['step' => '01', 'title' => 'Your price', 'copy' => 'Price it yourself on the online tool, or book a free consultation and we build the same quote with you. Both run on the same price list, so the figure matches.'],
-        ['step' => '02', 'title' => 'Technical survey', 'copy' => 'Once you go ahead we survey before anything is made. Not a second sales visit: the reveal depth, the fixings and the sizes the factory needs to build it right.'],
-        ['step' => '03', 'title' => 'Installation', 'copy' => 'Fitted by our own installers rather than subcontractors, trained on the systems we sell and working carefully in a house someone lives in. We clear up after ourselves before we leave.'],
-        ['step' => '04', 'title' => 'Aftercare', 'copy' => 'Ten years on the glazing we fit, and anything afterwards you ring us rather than a call centre. The original window stays yours to look after exactly as it always was.'],
-    ];
+       Secondary glazing takes one further change, to step 02: "thresholds" is a
+       measurement a secondary glazed unit does not have, and reveal depth is
+       what this product actually turns on. Roofline and integral blinds keep the
+       canonical 02. */
+    $product_order_steps = fenster_data('order_process.steps', []);
+    $no_fensa_aftercare = (string) fenster_data('order_process.aftercare_without_fensa', '');
+
+    if (is_array($product_order_steps) && $product_order_steps !== [] && $no_fensa_aftercare !== '') {
+        $product_order_steps = array_values($product_order_steps);
+        $last = count($product_order_steps) - 1;
+        $product_order_steps[$last]['copy'] = $no_fensa_aftercare;
+
+        if ($is_secondary_glazing_page && isset($product_order_steps[1])) {
+            $product_order_steps[1]['copy'] = 'Once you go ahead we survey before anything is made. Not a second sales visit: the reveal depth, the fixings and the sizes the factory needs to build it right.';
+        }
+    } else {
+        /* Fall back to the canonical set rather than to nothing. A missing data
+           key must not silently empty the rail. */
+        $product_order_steps = null;
+    }
 } elseif ($is_pet_flap_page) {
     /* Held back from the canonical set deliberately. A pet flap is a different
        job: nothing is manufactured to survey sizes, and it sits outside the ten
