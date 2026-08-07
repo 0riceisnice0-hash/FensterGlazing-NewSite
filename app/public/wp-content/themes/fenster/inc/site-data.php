@@ -1807,11 +1807,16 @@ function fenster_site_data(): array
                 'faqs' => [
                     /* No average and no range. Owner instruction, 2026-08-06: what a
                        repair costs depends entirely on the fault and the parts,
-                       so quoting a typical spread invites somebody to hold us
-                       to a number that was never about their window. State the
-                       floor, and state that they get the figure before any work
-                       happens, which is the thing that actually reassures. */
-                    ['question' => 'How much does a window or door repair cost?', 'answer' => 'Repairs start from £96 including VAT. Past that it depends entirely on the fault and the parts it needs, so rather than quote you an average that was never about your window, we price the actual job and tell you the figure before any work is done. Nothing changes on the day without a conversation. Tell us what it is doing, send a photograph if you can, and we will come back to you.'],
+                       and a typical spread invites somebody to hold us to a
+                       number that was never about their window. State the floor
+                       and state that they get the figure before work starts,
+                       which is the part that actually reassures.
+
+                       Keep the reasoning OUT of the answer. A first draft said
+                       "rather than quote you an average", which explains our
+                       thinking to a customer who did not ask for it and only
+                       makes the sentence longer. */
+                    ['question' => 'How much does a window or door repair cost?', 'answer' => 'Repairs start from £96 including VAT, and what it comes to after that depends on the fault and the parts it needs. We price your job and give you the figure before any work is done, and nothing changes on the day without a conversation. Tell us what it is doing, send a photograph if you can, and we will come back to you.'],
                     ['question' => 'Do you charge to come out and quote a repair?', 'answer' => 'Normally, no. Most faults we can diagnose and price without coming out at all, from a description and a photograph or two, and where it does need looking at, that visit is normally free.'],
                     ['question' => 'Do you repair windows and doors you did not fit?', 'answer' => 'Yes, and most of our repair work is exactly that. We fit uPVC, aluminium and composite systems every week, so we know the hardware other installers use. The only real limit is parts: on a very old system the gear may no longer be made.'],
                     ['question' => 'My double glazing has gone misty. Is that a repair?', 'answer' => 'It is a glass job rather than a hardware one. The seal around the double glazed unit has failed and moisture is in the cavity, which cannot be dried out, but the glass changes on its own and the frame stays. See our replacement glazed units page for how that works.'],
