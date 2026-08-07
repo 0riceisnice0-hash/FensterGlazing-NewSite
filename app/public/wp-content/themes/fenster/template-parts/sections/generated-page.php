@@ -4427,6 +4427,25 @@ if ($is_commercial_hub) {
             ?>
         <?php endif; ?>
 
+        <?php /* OUTSIDE the specification-choices wrapper below, and it has to
+                 be. That wrapper is gated on `! $is_secondary_glazing_page`,
+                 which predates this rebuild and is what stops the colour, glass
+                 and hardware band rendering on a route where none of those is a
+                 decision. Putting the bespoke middle inside it gated the whole
+                 page's middle on a condition about swatches, and the sections
+                 silently did not render at all. The same warning is already
+                 written against the repairs dispatch immediately above; this is
+                 the second time it has caught someone. */ ?>
+        <?php if ($is_secondary_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/secondary-glazing-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+                'quote_url' => $product_quote_embed_url,
+            ]);
+            ?>
+        <?php endif; ?>
+
         <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page && ! $is_composite_doors && ! $is_repairs) : ?>
         <?php if ($is_flush_bespoke) : ?>
             <?php
@@ -4448,15 +4467,6 @@ if ($is_commercial_hub) {
             ?>
         <?php endif; ?>
 
-        <?php if ($is_secondary_bespoke) : ?>
-            <?php
-            get_template_part('template-parts/sections/secondary-glazing-v2', null, [
-                'brand' => $brand,
-                'trust_items' => $trust_items,
-                'quote_url' => $product_quote_embed_url,
-            ]);
-            ?>
-        <?php endif; ?>
 
         <section class="fg-product-gallery-band">
             <div class="container">
