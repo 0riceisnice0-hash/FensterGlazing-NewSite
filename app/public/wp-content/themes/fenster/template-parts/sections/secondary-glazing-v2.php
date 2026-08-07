@@ -173,8 +173,13 @@ $styles = [
                 <p><?php esc_html_e('This is the question we get asked first, and the answer is yes on everything except the fixed panels. You open the secondary glazing, reach the original catch, open the window itself, and close both again. The photograph is one of ours with the original casement wide open behind the glazing.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Which of the four suits an opening depends on the window behind it and on what is in front of it in the room. We work that out at survey rather than asking you to.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
+                    <?php /* No separator between the name and the copy. The name
+                             is `display: block` in the stylesheet, so a ". "
+                             joining them rendered as a stray full stop at the
+                             start of every second line. Caught by looking at the
+                             page; it reads perfectly well in the markup. */ ?>
                     <?php foreach ($styles as $style) : ?>
-                        <li><strong><?php echo esc_html($style['name']); ?></strong><?php echo esc_html('. ' . $style['copy']); ?></li>
+                        <li><strong><?php echo esc_html($style['name']); ?></strong><?php echo esc_html($style['copy']); ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
