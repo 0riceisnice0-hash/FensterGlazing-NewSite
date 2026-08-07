@@ -743,9 +743,12 @@ function fenster_site_data(): array
             'aluminium-doors' => [
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden view'],
                 'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2-1.jpg', 'alt' => 'Sage green aluminium entrance door with a full-height bar handle and a glazed side screen'],
+                /* The second entry here was `sheerline-heritage-door`, a Sheerline
+                   Classic steel-look door on the modern door route. Same
+                   correction as the gallery pool below. */
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden view'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-door.jpg', 'alt' => 'Steel-look aluminium door in a kitchen'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-brick-sidescreens.webp', 'alt' => 'Purple aluminium entrance door between two obscured glazed side screens in a brick elevation'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-timber-clad.webp', 'alt' => 'Dark grey aluminium entrance door with a recessed groove pattern, beside timber cladding'],
                 ],
             ],
             'heritage-aluminium-doors' => [
@@ -1215,16 +1218,33 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-sliding-door.jpg', 'alt' => 'Aluminium sliding door open onto a decked terrace and countryside'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-sliding/lift-slide-brick-1600w.webp', 'alt' => 'Anthracite aluminium lift and slide patio door on a brick and timber clad elevation'],
             ],
+            /* Curated 2026-08-07, and it needed it: five of the nine entries
+               were not this product. `sheerline-heritage-door`,
+               `sheerline-french-doors` and `Classic-French-Internal-open-B` are
+               Sheerline CLASSIC, which is the steel-look heritage system with
+               its own route and its own `heritage_aluminium_doors` pool;
+               `sheerline-heritage-window-closeup` is a heritage WINDOW, and
+               `sheerline-aluminium-window-closeup` is a window profile. This
+               pool is modern aluminium entrance doors, which is what AI.md has
+               said it is since the heritage pool was split out of it, and it
+               feeds every `/aluminium-doors-<town>/` matrix page as well as this
+               route. Every image below was opened and checked rather than taken
+               on its filename.
+
+               Two deliberate omissions. `aluminium-doors-northampton-2.jpg` is a
+               dusk CGI render of a whole house, and a render sitting in a row of
+               photographs is the first thing the eye lands on — it was pulled
+               off the hub tile on 2026-07-29 for exactly that reason, so it does
+               not belong in the gallery either. `Aluminium-Doors-Northampton-7-1`
+               is a genuine photograph and only 300x300, which is smaller than
+               the cell it would render into. */
             'aluminium_doors' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-door.jpg', 'alt' => 'Aluminium entrance door opened to a garden'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-brick-sidescreens.webp', 'alt' => 'Purple aluminium entrance door between two obscured glazed side screens in a brick elevation'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-timber-clad.webp', 'alt' => 'Dark grey aluminium entrance door with a recessed groove pattern, beside timber cladding'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2-1.jpg', 'alt' => 'Sage green aluminium entrance door with a full-height bar handle in a recessed porch'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Prestige-aluminium-door-in-stone-web.webp', 'alt' => 'White aluminium entrance door in a stone surround'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-door.jpg', 'alt' => 'Steel-look aluminium door in a kitchen'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-french-doors.jpg', 'alt' => 'Heritage style aluminium French doors on a brick home'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Classic-French-Internal-open-B-1.0.webp', 'alt' => 'Steel-look aluminium French door opened from a living room'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Steel-look glazing bar detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium frame profile detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-2.jpg', 'alt' => 'Modern aluminium entrance door with full-height glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/aluminium-doors-northampton-6.jpg', 'alt' => 'Aluminium door low threshold detail'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-cylinder-handle.webp', 'alt' => 'Cylinder lock and full-height bar handle on a dark grey aluminium door'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-doors/alu-door-low-threshold.webp', 'alt' => 'Low aluminium threshold under a sage green door, almost flush with the paving outside'],
             ],
             'heritage_aluminium_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-aluminium/heritage-door-kitchen-1600w.webp', 'alt' => 'Steel-look heritage aluminium door and screen in a green kitchen'],
@@ -1657,12 +1677,22 @@ function fenster_site_data(): array
                     ['title' => 'Threshold planning', 'copy' => 'Fenster checks access, drainage, floor levels and threshold requirements before the final door is ordered.'],
                     ['title' => 'Secure entrance hardware', 'copy' => 'Locks, cylinders, handles and glazing are specified together so the finished door feels reassuring in daily use.'],
                 ],
+                /* Rewritten 2026-08-07 with the page rebuild. The five they
+                   replace were the generated set and answered nothing: "Are
+                   aluminium doors thermally efficient?" was answered with
+                   "Modern aluminium doors use thermal breaks and appropriate
+                   glazing", which is true of every aluminium door on earth.
+                   These answer what the office is actually asked, and they
+                   deliberately do not restate the sections above them. Note the
+                   cap: `$product_faq_limit` is 5 on this route, so a sixth
+                   question here would be silently sliced off the render. Raise
+                   the limit in the same commit if you add one. */
                 'faqs' => [
-                    ['question' => 'Are aluminium doors suitable for front entrances?', 'answer' => 'Yes. Aluminium doors can be specified as front, side or rear doors with secure hardware, colour choice and suitable glazing.'],
-                    ['question' => 'Can aluminium doors include glass?', 'answer' => 'Yes. Glazed panels, side screens and different glass options can be specified depending on privacy, daylight and design needs.'],
-                    ['question' => 'Are aluminium doors thermally efficient?', 'answer' => 'Modern aluminium doors use thermal breaks and appropriate glazing to improve comfort compared with older aluminium systems.'],
-                    ['question' => 'Can I choose a low threshold?', 'answer' => 'Often, yes. Fenster will check floor levels, drainage and access needs before confirming the best threshold detail.'],
-                    ['question' => 'Can the door match aluminium windows?', 'answer' => 'Yes. Colour, frame style and hardware can often be coordinated with aluminium windows, sliders, bifolds or heritage doors.'],
+                    ['question' => 'Is an aluminium front door cold?', 'answer' => 'Aluminium conducts heat, so the thermal break in the middle of the frame is what decides the answer. Sheerline use a multi-chamber core there rather than a polyamide strip, and the doors we fit reach 1.4 W/m²K double glazed and 1.0 triple. A modern aluminium door is not the cold aluminium of the 1980s, which is where the reputation comes from.'],
+                    ['question' => 'Will the door match my aluminium windows?', 'answer' => 'Yes, and it is the usual reason people choose one. The door comes off the same Sheerline frames and the same powder-coated colour range as our aluminium windows, bifolds and sliders, so it can be ordered to the same finish rather than matched by eye afterwards.'],
+                    ['question' => 'What colours can I have?', 'answer' => 'Twelve standard powder-coated colours, and any RAL colour beyond them. The inside and the outside can be specified separately if you want a dark face to the street and something lighter in the hall.'],
+                    ['question' => 'Can I have glass in an aluminium door?', 'answer' => 'Yes. Glazed panels in the door, side screens beside it and a toplight above it are all configurations of the same system, and obscured glass keeps the daylight without the view in. Which ones your opening will take is settled at survey.'],
+                    ['question' => 'What maintenance does an aluminium door need?', 'answer' => 'Washing the frames down two or three times a year is genuinely it. Powder coating does not need painting and will not rot or warp, and the moving parts are the hinges and the lock, both of which we can adjust or replace without touching the door itself.'],
                 ],
             ],
             'heritage-aluminium-doors' => [

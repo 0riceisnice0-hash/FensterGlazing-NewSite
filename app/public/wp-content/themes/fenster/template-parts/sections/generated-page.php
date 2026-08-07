@@ -169,6 +169,14 @@ $is_colour_options = in_array($slug, ['colour-options', 'upvc-colours', 'alumini
    `fg-product-intel` and `fg-product-visuals`, and the bespoke sections go in
    their place. Not an early return like casement, which owns its own tail. */
 $is_flush_bespoke = $slug === 'flush-casement-windows';
+/* Aluminium doors replaces the middle on exactly the same terms as flush, and
+   for the same reason: the route was running the generic journey, so it printed
+   "Aluminium Doors" as an H2 twice under an H1 already saying it, headed its hub
+   band "More information on Aluminium Doors", and filled the middle with copy
+   written about no particular system. Hero, key-specification strip, Thermlock
+   banner and the whole tail from the specification choices down are untouched
+   and still shared. Not an early return. */
+$is_alu_doors_bespoke = $slug === 'aluminium-doors';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase
    of a product:
@@ -4024,7 +4032,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4188,7 +4196,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4358,7 +4366,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4402,6 +4410,15 @@ if ($is_commercial_hub) {
                 'trust_items' => $trust_items,
                 'quote_url' => $product_quote_embed_url,
                 'quote_label' => $product_quote_embed_label,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php if ($is_alu_doors_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/aluminium-doors-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
             ]);
             ?>
         <?php endif; ?>

@@ -38883,7 +38883,14 @@ html.fg-blinds-reveal-locked {
    the two-column sections need nothing here. What follows is only the pieces the
    flush page adds: the information bands, the comparison and the proof mosaic.
    Deliberately no stacked chapters — that device stays unique to casement. */
-.fg-flush-band {
+/* `.fg-alu-door-band` and `.fg-alu-door-list` are added to these selector lists
+   rather than given a copy of the component, which is the same call already made
+   for the composite hero against the heritage one. The aluminium doors page
+   needed one card band and nothing about it differs, so sharing the rules is
+   what keeps the two pages in step. If you restyle one, you restyle both, and
+   that is deliberate. */
+.fg-flush-band,
+.fg-alu-door-band {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
@@ -38910,7 +38917,8 @@ html.fg-blinds-reveal-locked {
   color: rgba(255, 255, 255, 0.78);
 }
 
-.fg-flush-band__head {
+.fg-flush-band__head,
+.fg-alu-door-band__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2.5rem);
@@ -38918,12 +38926,14 @@ html.fg-blinds-reveal-locked {
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.fg-flush-band__head h2 {
+.fg-flush-band__head h2,
+.fg-alu-door-band__head h2 {
   max-width: 17ch;
   margin: 0.3rem 0 0;
 }
 
-.fg-flush-band__head > p {
+.fg-flush-band__head > p,
+.fg-alu-door-band__head > p {
   max-width: 46ch;
   margin: 0;
   color: var(--color-muted);
@@ -38937,14 +38947,16 @@ html.fg-blinds-reveal-locked {
 
    `align-content: start` inside the card keeps the term hard against the top, so
    the headings line up across the row even when one card runs a line longer. */
-.fg-flush-list {
+.fg-flush-list,
+.fg-alu-door-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: clamp(0.9rem, 1.8vw, 1.4rem);
   margin: 0;
 }
 
-.fg-flush-list > div {
+.fg-flush-list > div,
+.fg-alu-door-list > div {
   display: grid;
   align-content: start;
   gap: 0.45rem;
@@ -38954,13 +38966,15 @@ html.fg-blinds-reveal-locked {
   background: var(--color-soft);
 }
 
-.fg-flush-list dt {
+.fg-flush-list dt,
+.fg-alu-door-list dt {
   font-weight: 850;
   font-size: 1.02rem;
   line-height: 1.2;
 }
 
-.fg-flush-list dd {
+.fg-flush-list dd,
+.fg-alu-door-list dd {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -38986,9 +39000,85 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 860px) {
   .fg-flush-band__head,
+  .fg-alu-door-band__head,
   .fg-flush-compare {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
+  }
+}
+
+/* ==========================================================================
+   Aluminium doors — /aluminium-doors/
+   Rebuilt 2026-08-07 as a bespoke middle on the `.fg-cw` split grammar. Almost
+   all of it is shared: the splits, the facts lists, the media panels and the
+   card band above are the same components the flush casement and heritage door
+   pages use. Only what genuinely differs lives here.
+   ========================================================================== */
+
+/* `.fg-cw-media` is a 16/10 box with `object-fit: cover`, which is right for a
+   wide installation photograph and wrong for every image on this route. The
+   usable aluminium door photography is 4:3 at 600x450, and the InvisiHinge
+   composite carries its two callout circles hard against the top edge — cover
+   into 16/10 crops roughly a tenth off the top and clipped the upper circle
+   clean off. Matching the box to the source is what stops that, and it is the
+   same lesson already recorded for the portrait door renders on composite:
+   crop the box to the picture, never the picture to the box. */
+.fg-alu-door-media--4x3 {
+  aspect-ratio: 4 / 3;
+}
+
+/* The Thermlock cutaway is a lit render on a black ground, not a photograph, so
+   it is contained rather than cropped and the panel is darkened to meet it. On
+   the page canvas it would have read as a black rectangle dropped into the
+   layout; against near-black the render has no visible edge at all. */
+.fg-alu-door-media--tech {
+  aspect-ratio: 1;
+  background: #04161c;
+}
+
+.fg-alu-door-media--tech img {
+  object-fit: contain;
+}
+
+/* The Thermlock section runs on dark for the same reason the casement page puts
+   both of its technical chapters there: the subject stops being the house and
+   starts being the product, so the ground changes with it. */
+.fg-alu-door-dark {
+  background: linear-gradient(168deg, #06222a 0%, #0c313b 52%, #061d24 100%);
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+  color: #ffffff;
+}
+
+/* `.fg-cw h2`, `.fg-cw p` and `.fg-cw .eyebrow` are all (0,1,1) and beat a bare
+   class, so white text on this section cannot be set by the section alone — it
+   rendered ink on dark until these were qualified. Exactly the trap already
+   recorded against `.fg-flush-band--dark`; this is the second consumer of it,
+   which is why the comment is repeated rather than cross-referenced. */
+.fg-cw .fg-alu-door-dark h2,
+.fg-cw .fg-alu-door-dark .eyebrow {
+  color: #ffffff;
+}
+
+.fg-cw .fg-alu-door-dark p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-cw .fg-alu-door-dark .fg-cw-facts li {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* The caption chip is a white pill with ink text by default, which is correct on
+   a photograph and wrong floating over a dark technical panel. */
+.fg-alu-door-dark .fg-cw-media figcaption {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+@media (max-width: 860px) {
+  /* `.fg-cw-split` already collapses to one column below this width; the dark
+     section only needs its padding bringing in line with the rest. */
+  .fg-alu-door-dark {
+    padding: clamp(2.25rem, 6vw, 3rem) 0;
   }
 }
 
