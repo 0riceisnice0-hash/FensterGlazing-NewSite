@@ -5,6 +5,77 @@ Last updated: 2026-08-07
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
+## 2026-08-09 - The quote embed kept the consent choice the visitor had reversed
+
+Owner: "the reject cookies url is being attributed to people even if they accept
+it. the whole tracker system is not working."
+
+The dashboard pipe was fine — the endpoint answers, events post, the queue stays
+empty — and the frame does not load before a choice. Both were checked on live
+first. The fault was narrower and worse: **the stamp a frame loads with is the
+stamp it keeps.**
+
+WindowCAD reads its `tracking=` parameter once, when the embed session starts,
+and never looks at the URL again. Two lines in `loadQuoteFrame` wrote the stamped
+URL back over `data-quote-iframe-src` and `data-quote-url`, so the pristine
+address was gone and the stamp could never be re-derived, and the consent
+listener explicitly skipped any frame that already had a `src`. A visitor who
+chose **Use necessary only**, was given a frame stamped `rejected-cookies` and
+then changed their mind through the footer kept that stamp for the rest of the
+session. Their journey id, their links and their consent record all updated
+around a frame still telling the office they had refused, and the quote they
+completed was filed against a choice they had already reversed.
+
+Reproduced on live before touching anything: reject, frame loads
+`tracking=rejected-cookies`, footer **Cookie settings** → **Accept all**, journey
+`FG2-F8932DFC…` issued, both anchors rewritten to it, iframe still on
+`rejected-cookies`. That is the owner's report exactly.
+
+Withdrawal never showed this because withdrawal reloads the page. Granting does
+not, so granting needed the same treatment.
+
+The two source attributes are now left alone — the discipline
+`refreshWindowCadLinks` already used for anchors — and a consent change
+re-stamps a loaded frame. **Reloading the embed throws away whatever has been
+configured in it, so it only happens while the tool is untouched.** Once somebody
+is part way through a job the frame is left where it is and only the links and
+the expand/new-tab URL are corrected: an attribution row costs a row, the lead
+costs the job. Engagement is read from the window-blur/`activeElement` tell, the
+same one the tool cue already uses, since a click inside a cross-origin iframe is
+otherwise invisible. The expand fallback now derives its URL instead of reading
+the wrapper, which had been opening an unstamped WindowCAD session on first
+click.
+
+Consent and the tracking references also survive unwritable storage. A browser
+that blocks site data throws on `setItem`, the write was swallowed, and someone
+who had just pressed **Accept all** read back as having made no choice at all: no
+journey, the quote embed blocked waiting for a decision already taken, and every
+link left `cookie-consent-not-accepted`. The choice is published on `window` and
+every tracking write is mirrored in memory. The mirror matters for more than the
+banner — without it `journeyReference()` fails to persist, finds nothing on the
+next call and mints another id, so one page view would report itself as several
+one-event journeys and stamp WindowCAD with one that joins nothing. It is
+page-scoped, which is as far as a browser that will not remember can be carried.
+It needs no separate purge on rejection: nothing is written to it without the
+matching consent, every reader is already gated, and any withdrawal reloads.
+
+Rejected and no-choice visitors are unchanged. `rejected-cookies` and
+`cookie-consent-not-accepted` still reach the office and still join nothing, and
+`quote_iframe_loaded` remains a diagnostic funnel event rather than a conversion,
+so the re-stamp cannot inflate anything.
+
+Verified on test at `40543e0`, deployed bytes hashed against the local build:
+no choice → frame blocked; necessary only → `rejected-cookies` with the pristine
+base intact and no journey created; **changed mind → accept all → frame
+re-stamped to the live `FG2`**; part-built quote → frame preserved and links
+still corrected; normal first visit → `FG2` immediately. Zero console errors,
+empty event queue, ten routes `200` with the head-term marker present.
+
+**Not verified in the browser pane: the homepage `near` autoload frame.**
+IntersectionObserver does not fire without compositing there, so it never
+triggers — confirmed identical on live, so it is the pane and not the change.
+Its `loadQuoteFrame` path was exercised through the placeholder button instead.
+
 ## 2026-08-07 - Colour hub hero LIVE (b72f49f): the wall's tile count restored
 
 Owner: "hero has broken on colour hub."
