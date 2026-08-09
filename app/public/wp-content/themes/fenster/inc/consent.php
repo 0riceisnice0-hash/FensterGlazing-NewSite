@@ -185,19 +185,38 @@ function fenster_render_cookie_consent(): void
             }).catch(function () {});
         }
 
+        function validPreferences(record) {
+            return Boolean(
+                record &&
+                record.version === consentVersion &&
+                typeof record.analytics === 'boolean' &&
+                typeof record.marketing === 'boolean' &&
+                Number(record.expires_at) > Date.now()
+            );
+        }
+
+        /*
+         * The choice is published on `window` as well as stored, because storage
+         * is not always writable. A browser set to block all site data throws on
+         * setItem, the write below is swallowed, and the visitor who has just
+         * pressed "Accept all" reads back as having made no choice at all: the
+         * banner returns, no journey id is issued, and the quote embed stays
+         * blocked waiting for a decision that was already taken. The published
+         * copy cannot outlive the page, which is the honest limit of a browser
+         * that refuses to remember, but it makes the page they are on behave.
+         */
+        function publishPreferences(preferences) {
+            window.fensterCookieConsent = preferences;
+            return preferences;
+        }
+
         function getPreferences() {
             try {
                 var raw = window.localStorage.getItem(consentKey);
                 var stored = raw ? JSON.parse(raw) : null;
 
-                if (
-                    stored &&
-                    stored.version === consentVersion &&
-                    typeof stored.analytics === 'boolean' &&
-                    typeof stored.marketing === 'boolean' &&
-                    Number(stored.expires_at) > Date.now()
-                ) {
-                    return stored;
+                if (validPreferences(stored)) {
+                    return publishPreferences(stored);
                 }
 
                 if (raw) {
@@ -209,7 +228,7 @@ function fenster_render_cookie_consent(): void
                 } catch (storageError) {}
             }
 
-            return null;
+            return validPreferences(window.fensterCookieConsent) ? window.fensterCookieConsent : null;
         }
 
         function setPreferences(analytics, marketing) {
@@ -220,6 +239,8 @@ function fenster_render_cookie_consent(): void
                 updated_at: new Date().toISOString(),
                 expires_at: Date.now() + consentLifetime
             };
+
+            publishPreferences(preferences);
 
             try {
                 window.localStorage.setItem(consentKey, JSON.stringify(preferences));

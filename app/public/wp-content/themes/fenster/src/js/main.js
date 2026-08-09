@@ -1578,19 +1578,29 @@ const firstTouchStorageKey = 'fenster_website_first_touch';
 const trackingStorageLifetime = 90 * 24 * 60 * 60 * 1000;
 const journeySessionTimeout = Math.max(5, Number(websiteTracking.sessionTimeoutMinutes) || 30) * 60 * 1000;
 
+const validCookieConsentRecord = (record) => Boolean(
+  record
+  && record.version === 2
+  && typeof record.analytics === 'boolean'
+  && typeof record.marketing === 'boolean'
+  && Number(record.expires_at) > Date.now(),
+);
+
+// The banner publishes the live choice on `window` as well as writing it to
+// local storage, and this reads the published copy when storage gives nothing
+// back. Storage is not always writable — a browser set to block all site data
+// throws on setItem — and the write is swallowed, so without this fallback a
+// visitor who pressed "Accept all" still read as having made no choice: no
+// journey id, no consent for the quote embed to load against, and every
+// WindowCAD link left stamped `cookie-consent-not-accepted`. It cannot outlive
+// the page, which is the honest limit of a browser that refuses to remember.
 const cookieConsentPreferences = () => {
   try {
     const raw = window.localStorage.getItem('fenster_cookie_consent');
     const stored = raw ? JSON.parse(raw) : null;
-    if (
-      stored
-      && stored.version === 2
-      && typeof stored.analytics === 'boolean'
-      && typeof stored.marketing === 'boolean'
-      && Number(stored.expires_at) > Date.now()
-    ) return stored;
+    if (validCookieConsentRecord(stored)) return stored;
   } catch (_error) {}
-  return null;
+  return validCookieConsentRecord(window.fensterCookieConsent) ? window.fensterCookieConsent : null;
 };
 
 const trackingConsentAccepted = () => {
@@ -1625,52 +1635,91 @@ const createMarketingAttributionReference = () => {
 
 const validTrackingReference = (value, prefix) => new RegExp(`^${prefix}-[A-Z0-9-]{8,80}$`, 'i').test(value || '');
 
+/* Every write below is mirrored here, and every read falls back to it. When
+   storage is unwritable the mirror is the only thing holding a journey together:
+   without it `journeyReference()` fails to persist, finds nothing on the next
+   call and mints another id, so a single page view would report itself as half a
+   dozen one-event journeys and the id stamped into WindowCAD would match none of
+   them. Page-scoped by nature, which is as far as a browser that will not store
+   anything can be carried. */
+const trackingMemoryStore = new Map();
+
+const liveTrackingRecord = (record, validator) => Boolean(
+  record && validator(record.value) && Number(record.expires_at) > Date.now(),
+);
+
 const readStoredTrackingValue = (key, validator) => {
   try {
     const raw = window.localStorage.getItem(key);
     const record = raw ? JSON.parse(raw) : null;
-    if (record && validator(record.value) && Number(record.expires_at) > Date.now()) return record.value;
+    if (liveTrackingRecord(record, validator)) return record.value;
     window.localStorage.removeItem(key);
   } catch (_error) {}
-  return '';
+
+  const remembered = trackingMemoryStore.get(key);
+  return liveTrackingRecord(remembered, validator) ? remembered.value : '';
 };
 
 const storeTrackingValue = (key, value) => {
   if (!trackingConsentAccepted()) return;
+  const record = { value, expires_at: Date.now() + trackingStorageLifetime };
+  trackingMemoryStore.set(key, record);
   try {
-    window.localStorage.setItem(key, JSON.stringify({ value, expires_at: Date.now() + trackingStorageLifetime }));
+    window.localStorage.setItem(key, JSON.stringify(record));
   } catch (_error) {}
 };
 
+const liveJourneyRecord = (record) => {
+  const now = Date.now();
+  return Boolean(
+    record
+    && validTrackingReference(record.value, 'FG2')
+    && Number(record.expires_at) > now
+    && now - Number(record.last_seen_at || 0) <= journeySessionTimeout,
+  );
+};
+
 const readJourneyReference = () => {
+  let record = null;
+
   try {
     const raw = window.localStorage.getItem(journeyStorageKey);
-    const record = raw ? JSON.parse(raw) : null;
-    const now = Date.now();
-    if (
-      record
-      && validTrackingReference(record.value, 'FG2')
-      && Number(record.expires_at) > now
-      && now - Number(record.last_seen_at || 0) <= journeySessionTimeout
-    ) {
-      record.last_seen_at = now;
-      window.localStorage.setItem(journeyStorageKey, JSON.stringify(record));
-      return record.value;
+    const stored = raw ? JSON.parse(raw) : null;
+    if (liveJourneyRecord(stored)) {
+      record = stored;
+    } else {
+      window.localStorage.removeItem(journeyStorageKey);
     }
-    window.localStorage.removeItem(journeyStorageKey);
   } catch (_error) {}
-  return '';
+
+  if (!record) {
+    const remembered = trackingMemoryStore.get(journeyStorageKey);
+    if (liveJourneyRecord(remembered)) record = remembered;
+  }
+  if (!record) return '';
+
+  // Touching the session keeps the 30 minute window open. The original expiry
+  // stays put, so this rolls the session on without extending the 90 day life.
+  record.last_seen_at = Date.now();
+  trackingMemoryStore.set(journeyStorageKey, record);
+  try {
+    window.localStorage.setItem(journeyStorageKey, JSON.stringify(record));
+  } catch (_error) {}
+
+  return record.value;
 };
 
 const storeJourneyReference = (value) => {
   if (!trackingConsentAccepted()) return;
   const now = Date.now();
+  const record = {
+    value,
+    last_seen_at: now,
+    expires_at: now + trackingStorageLifetime,
+  };
+  trackingMemoryStore.set(journeyStorageKey, record);
   try {
-    window.localStorage.setItem(journeyStorageKey, JSON.stringify({
-      value,
-      last_seen_at: now,
-      expires_at: now + trackingStorageLifetime,
-    }));
+    window.localStorage.setItem(journeyStorageKey, JSON.stringify(record));
   } catch (_error) {}
 };
 
@@ -5135,6 +5184,31 @@ document.querySelectorAll('[data-fg-product-video-final]').forEach((finalVideo) 
   });
 });
 
+/* WindowCAD reads its `tracking` parameter once, when the embed session starts,
+   and never looks at the URL again. So the stamp the frame was loaded with is
+   the stamp the finished quote arrives with, and it has to keep matching what
+   the visitor actually chose.
+
+   Until 2026-08-09 it did not. `loadQuoteFrame` wrote the stamped URL back over
+   `data-quote-iframe-src` and `data-quote-url`, destroying the pristine address,
+   and the consent listener below skipped any frame that already had a `src`. A
+   visitor who chose "necessary only", got a frame stamped `rejected-cookies` and
+   then changed their mind in the footer kept that stamp for the rest of the
+   session: their journey id, their links and their consent record all updated
+   around a frame that was still telling the office they had refused. Every quote
+   completed that way was filed against a choice they had already reversed.
+
+   The two source attributes are now left alone, exactly as `refreshWindowCadLinks`
+   leaves `dataset.fgQuoteBaseUrl` alone, so the stamp can always be re-derived
+   from the address the page was served with. */
+const engagedQuoteFrames = new WeakSet();
+
+const quoteFrameTrackedUrl = (frameWrap) => windowCadUrlWithReference(
+  frameWrap?.querySelector('iframe[data-quote-iframe-src]')?.getAttribute('data-quote-iframe-src')
+    || frameWrap?.getAttribute('data-quote-url')
+    || '',
+);
+
 const loadQuoteFrame = (frameWrap) => {
   const quoteIframe = frameWrap?.querySelector('iframe[data-quote-iframe-src]');
   const quoteSrc = quoteIframe?.getAttribute('data-quote-iframe-src');
@@ -5150,14 +5224,39 @@ const loadQuoteFrame = (frameWrap) => {
 
   delete frameWrap.dataset.quoteWaitingForConsent;
   const trackedQuoteSrc = windowCadUrlWithReference(quoteSrc);
-  quoteIframe.setAttribute('data-quote-iframe-src', trackedQuoteSrc);
   quoteIframe.setAttribute('src', trackedQuoteSrc);
-  frameWrap.setAttribute('data-quote-url', windowCadUrlWithReference(frameWrap.getAttribute('data-quote-url') || quoteSrc));
   trackWebsiteEvent('quote_iframe_loaded', {
     cta: 'Embedded instant quote',
     product_collection: new URL(trackedQuoteSrc).searchParams.get('productCollection') || '',
   });
   frameWrap.classList.add('is-loaded');
+};
+
+/* Re-stamp a frame that is already loaded, because the visitor has just changed
+   what we are allowed to know about them.
+
+   Reloading the embed throws away whatever has been configured in it, so it only
+   happens while the tool is untouched. Once somebody is part way through a job,
+   the half-built quote is worth more than the attribution row and the frame is
+   left where it is; the links and the expand/new-tab URL around it still get
+   corrected. Same order of priorities as the non-blocking Meta relay: losing an
+   attribution row costs a row, losing the lead costs the job. */
+const restampQuoteFrame = (frameWrap) => {
+  const quoteIframe = frameWrap?.querySelector('iframe[data-quote-iframe-src]');
+  const loadedSrc = quoteIframe?.getAttribute('src');
+  if (!loadedSrc || engagedQuoteFrames.has(frameWrap)) return;
+
+  const trackedQuoteSrc = quoteFrameTrackedUrl(frameWrap);
+  if (!trackedQuoteSrc || trackedQuoteSrc === loadedSrc) return;
+
+  quoteIframe.setAttribute('src', trackedQuoteSrc);
+  /* The first load happened without consent, so it was only ever counted as an
+     aggregate total. Record the open against the journey the visitor now has,
+     or the funnel loses the step entirely for everyone who accepts late. */
+  trackWebsiteEvent('quote_iframe_loaded', {
+    cta: 'Embedded instant quote',
+    product_collection: new URL(trackedQuoteSrc).searchParams.get('productCollection') || '',
+  });
 };
 
 const scheduleQuoteFrameLoad = (frameWrap, delay = 0) => {
@@ -5207,9 +5306,36 @@ if ('IntersectionObserver' in window) {
   });
 }
 
+/* A click that lands inside a cross-origin iframe is invisible to us, except
+   that the window loses focus while the iframe becomes the active element. That
+   is the same tell the tool cue uses further down to stop the ghost hand, and it
+   is what keeps `restampQuoteFrame` from reloading a quote somebody is building.
+   The pointer press is the cheaper half of the pair; the placeholder's own
+   buttons are excluded, since pressing "Load quote tool" is not touching it. */
+const quoteFrames = [...document.querySelectorAll('[data-quote-frame-wrap]')];
+
+quoteFrames.forEach((frameWrap) => {
+  frameWrap.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button, a')) return;
+    if (!frameWrap.querySelector('iframe[src]')) return;
+    engagedQuoteFrames.add(frameWrap);
+  });
+});
+
+window.addEventListener('blur', () => {
+  const active = document.activeElement;
+  if (active?.tagName !== 'IFRAME') return;
+  const frameWrap = active.closest('[data-quote-frame-wrap]');
+  if (frameWrap) engagedQuoteFrames.add(frameWrap);
+});
+
 window.addEventListener('fenster:cookie-preferences-updated', () => {
-  quoteAutoloadFrames.forEach((frameWrap) => {
-    if (frameWrap.querySelector('iframe[src]')) return;
+  quoteFrames.forEach((frameWrap) => {
+    if (frameWrap.querySelector('iframe[src]')) {
+      restampQuoteFrame(frameWrap);
+      return;
+    }
+    if (!frameWrap.hasAttribute('data-quote-autoload')) return;
     delete frameWrap.dataset.quoteLoadScheduled;
     scheduleQuoteFrameLoad(frameWrap, frameWrap.dataset.quoteAutoload === 'idle' ? 150 : 0);
   });
@@ -5289,7 +5415,10 @@ document.querySelectorAll('[data-fullscreen-quote]').forEach((quoteFullscreenBut
   quoteFullscreenButton.addEventListener('click', async () => {
     const quoteCard = quoteFullscreenButton.closest('[data-quote-card]') || quoteFullscreenButton.closest('section') || document;
     const frameWrap = quoteCard.querySelector('[data-quote-frame-wrap]');
-    const quoteUrl = frameWrap?.getAttribute('data-quote-url');
+    /* Derived here rather than read off the wrapper. The attribute holds the
+       address the page was served with, so the new-tab fallback used to open an
+       unstamped WindowCAD session and lose the journey altogether. */
+    const quoteUrl = quoteFrameTrackedUrl(frameWrap);
 
     trackWebsiteEvent('quote_opened', { cta: (quoteFullscreenButton.textContent || 'Expand quote tool').trim().slice(0, 120) });
     loadQuoteFrame(frameWrap);
