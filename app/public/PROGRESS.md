@@ -5,6 +5,64 @@ Last updated: 2026-08-07
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
+## 2026-08-09 - Optional cookies are granted until refused
+
+Owner instruction, following the re-stamp fix below: "make it so cookies are
+accepted by default and they are given the tracker and everything for window
+cad... it then only gets changed to rejected cookies IF they reject."
+
+Analytics and marketing are now on when the page loads. Every visitor gets an
+`FGV` visitor, an `FG2` journey and a stamped WindowCAD URL from the first
+paint, and GTM, Clarity and Meta load with the page. `rejected-cookies` now
+means somebody actually refused, which is what the office always read it as.
+`cookie-consent-not-accepted` becomes unreachable; its branch stays so flipping
+the default back restores it, and because leads already carry the value.
+
+The banner still appears on a first visit and still posts `banner_shown`, but it
+does not block and does not gate the tracking. `openDialog` takes the impression
+flag separately from the mandatory flag so the footer re-opener still does not
+record one. A default is never written to storage, so the panel keeps appearing
+until a real choice is made — and because dismissing it leaves no stored choice,
+footer **Cookie settings** is now always visible rather than appearing after a
+choice, or a visitor who dismissed the panel would have had no way back to it.
+
+**The subtle one: a refusal is a withdrawal even on a first visit.** `saveChoice`
+now measures against the effective previous state rather than the stored one. A
+first-time visitor pressing **Use necessary only** has nothing stored to compare
+against, so the old comparison read "nothing withdrawn" and skipped the clear-up:
+the tools they had just refused would have stayed loaded and their identifiers
+issued until they happened to navigate. It clears and reloads either way now.
+
+The Customise switches are preselected from the effective state. Leaving them
+unticked while the tools are visibly running would have been a lie, and saving
+without touching them would have silently refused what the visitor could see was
+already on.
+
+Banner, privacy policy and cookie policy copy corrected to match: they said
+optional cookies were off unless chosen, that analytics loads "if you switch it
+on", and that analytics and marketing are "blocked until you choose them". All
+three would now be untrue on every page. The legal-basis line no longer asserts
+that consent was obtained first; it states what the site does and how to turn it
+off. Swept both policy routes after deploy for leftovers: zero.
+
+**This is deliberately weaker than the ICO's position** that consent must precede
+non-essential storage and that default-on is not valid consent (Planet49). It was
+raised before implementing and it is the owner's decision, recorded here and in
+`AI.md` so it is not mistaken later for an oversight.
+
+Verified on test at `eb86d1d4`: a first visit in a clean tab issues `FG2` and
+stamps the embed with no interaction at all, banner showing and dismissible,
+GTM loaded, nothing written to storage; Customise opens with both switches on;
+an explicit refusal stores `analytics:false`, clears the journey and visitor, and
+the next load serves `tracking=rejected-cookies` with no GTM and no Clarity; a
+refuser who then accepts gets the embed re-stamped to their new `FG2`, so the fix
+below still holds under the new default. Eight routes `200`.
+
+**A note for whoever tests this next.** `window.location.reload()` is a no-op in
+the in-app browser pane — proven by calling it directly and watching the document
+survive — so the withdrawal reload cannot be observed there and looks like a
+missing reload. Verify the post-refusal state with an explicit navigation instead.
+
 ## 2026-08-09 - The quote embed kept the consent choice the visitor had reversed
 
 Owner: "the reject cookies url is being attributed to people even if they accept
