@@ -91,10 +91,10 @@ function fenster_render_cookie_consent(): void
                 <p class="fg-cookie-consent__eyebrow"><?php esc_html_e('Your privacy', 'fenster'); ?></p>
                 <h2 id="fg-cookie-title"><?php esc_html_e('Choose how this website uses cookies', 'fenster'); ?></h2>
                 <p id="fg-cookie-summary">
-                    <?php esc_html_e('Strictly necessary storage keeps the website working and remembers your choice. With your permission, we also use analytics to improve the site and marketing tools to measure advertising.', 'fenster'); ?>
+                    <?php esc_html_e('Strictly necessary storage keeps the website working and remembers your choice. We also use analytics to improve the site and marketing tools to measure advertising.', 'fenster'); ?>
                 </p>
                 <p class="fg-cookie-consent__note">
-                    <?php esc_html_e('Optional cookies stay off unless you choose them. You can change your choice at any time.', 'fenster'); ?>
+                    <?php esc_html_e('Analytics and marketing cookies are already on. You can turn them off in Customise, and change your choice at any time.', 'fenster'); ?>
                 </p>
                 <div class="fg-cookie-consent__actions fg-cookie-consent__actions--two">
                     <button type="button" class="button button--light" data-fg-cookie-customise><?php esc_html_e('Customise', 'fenster'); ?></button>
@@ -105,7 +105,7 @@ function fenster_render_cookie_consent(): void
             <div data-fg-cookie-custom hidden>
                 <p class="fg-cookie-consent__eyebrow"><?php esc_html_e('Cookie settings', 'fenster'); ?></p>
                 <h2 id="fg-cookie-custom-title"><?php esc_html_e('Choose optional cookies', 'fenster'); ?></h2>
-                <p id="fg-cookie-custom-summary"><?php esc_html_e('Necessary storage is always on. The two optional categories below are off unless you switch them on.', 'fenster'); ?></p>
+                <p id="fg-cookie-custom-summary"><?php esc_html_e('Necessary storage is always on. The two optional categories below are on unless you switch them off.', 'fenster'); ?></p>
 
                 <div class="fg-cookie-consent__choices">
                     <div class="fg-cookie-consent__choice">
@@ -208,6 +208,22 @@ function fenster_render_cookie_consent(): void
         function publishPreferences(preferences) {
             window.fensterCookieConsent = preferences;
             return preferences;
+        }
+
+        /*
+         * The state a visitor is in before they say anything. `chosen` is false
+         * so nothing downstream can mistake it for an answered banner; it is
+         * never written to storage, because a default is not a choice and the
+         * banner has to keep appearing until they make one.
+         */
+        function defaultPreferences() {
+            return {
+                version: consentVersion,
+                analytics: true,
+                marketing: true,
+                chosen: false,
+                expires_at: Date.now() + consentLifetime
+            };
         }
 
         function getPreferences() {
@@ -496,7 +512,11 @@ function fenster_render_cookie_consent(): void
         }
 
         function showCustom() {
-            var preferences = getPreferences();
+            // Reflects the effective state, so the switches show what is
+            // actually running. Under granted-by-default they start on, and
+            // saving without touching them keeps them on rather than silently
+            // refusing tools the visitor can see are already loaded.
+            var preferences = getPreferences() || defaultPreferences();
             if (dialog) {
                 dialog.setAttribute('aria-labelledby', 'fg-cookie-custom-title');
                 dialog.setAttribute('aria-describedby', 'fg-cookie-custom-summary');
@@ -517,13 +537,21 @@ function fenster_render_cookie_consent(): void
             }
         }
 
-        function openDialog(isMandatory) {
+        /*
+         * `recordImpression` is separate from `isMandatory` now. The banner is
+         * no longer blocking, but the first-visit impression is still the health
+         * check the dashboard's `banner_shown` depends on: a live figure of zero
+         * means the modal or the consent endpoint has broken. The footer
+         * re-opener must still not record one, or the figure stops meaning
+         * "first visits" at all.
+         */
+        function openDialog(isMandatory, recordImpression) {
             if (! dialog) {
                 return;
             }
 
             mandatoryChoice = Boolean(isMandatory);
-            if (mandatoryChoice && ! bannerShownRecorded) {
+            if (recordImpression && ! bannerShownRecorded) {
                 bannerShownRecorded = true;
                 recordConsentMetric('shown');
             }
@@ -552,12 +580,22 @@ function fenster_render_cookie_consent(): void
         }
 
         function saveChoice(analytics, marketing) {
-            var previous = getPreferences();
+            /*
+             * Measured against the *effective* previous state, not the stored
+             * one. Optional cookies are granted by default, so a first-time
+             * visitor pressing "Use necessary only" has no stored record to
+             * compare against — and treating that as "nothing withdrawn" would
+             * leave the tools they just refused already loaded, with their
+             * `FGV`/`FG2` identifiers already issued, until they happened to
+             * navigate. A rejection is a withdrawal whether or not they had
+             * chosen before.
+             */
+            var previous = getPreferences() || defaultPreferences();
             var preferences = setPreferences(analytics, marketing);
-            var consentWithdrawn = Boolean(previous && (
+            var consentWithdrawn = Boolean(
                 (previous.analytics && ! preferences.analytics) ||
                 (previous.marketing && ! preferences.marketing)
-            ));
+            );
 
             var consentChoice = preferences.analytics && preferences.marketing
                 ? 'all'
@@ -585,13 +623,30 @@ function fenster_render_cookie_consent(): void
             }
         }
 
-        configureGoogleConsent({ analytics: false, marketing: false }, 'default');
-        var preferences = getPreferences();
-        if (preferences) {
-            applyPreferences(preferences);
-            showSettingsButton();
-        } else {
-            openDialog(true);
+        /*
+         * Owner instruction, 2026-08-09: optional cookies are granted by
+         * default and the tools load on the first page view. The banner still
+         * appears on a first visit and still offers Customise and Accept all,
+         * but it no longer blocks and no longer holds the tracking back — a
+         * visitor who dismisses it stays on the defaults. Only an explicit
+         * refusal turns anything off, and `saveChoice` treats that refusal as a
+         * withdrawal so the identifiers are cleared and the page reloads
+         * without the tools.
+         *
+         * This is deliberately weaker than the ICO's position that consent must
+         * be given before non-essential storage and that default-on is not
+         * valid consent. It was raised and it is the owner's decision. Do not
+         * describe it in customer-facing copy as consent having been obtained.
+         */
+        var storedPreferences = getPreferences();
+        var preferences = storedPreferences || publishPreferences(defaultPreferences());
+
+        configureGoogleConsent(preferences, 'default');
+        applyPreferences(preferences);
+        showSettingsButton();
+
+        if (! storedPreferences) {
+            openDialog(false, true);
         }
 
         if (dialog) {
@@ -606,7 +661,7 @@ function fenster_render_cookie_consent(): void
 
         if (settings) {
             settings.addEventListener('click', function () {
-                openDialog(false);
+                openDialog(false, false);
             });
         }
 

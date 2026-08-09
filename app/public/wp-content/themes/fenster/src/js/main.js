@@ -1591,10 +1591,10 @@ const validCookieConsentRecord = (record) => Boolean(
 // back. Storage is not always writable — a browser set to block all site data
 // throws on setItem — and the write is swallowed, so without this fallback a
 // visitor who pressed "Accept all" still read as having made no choice: no
-// journey id, no consent for the quote embed to load against, and every
-// WindowCAD link left stamped `cookie-consent-not-accepted`. It cannot outlive
-// the page, which is the honest limit of a browser that refuses to remember.
-const cookieConsentPreferences = () => {
+// journey id and every WindowCAD link left stamped as a refusal. It cannot
+// outlive the page, which is the honest limit of a browser that refuses to
+// remember.
+const storedCookieConsent = () => {
   try {
     const raw = window.localStorage.getItem('fenster_cookie_consent');
     const stored = raw ? JSON.parse(raw) : null;
@@ -1602,6 +1602,22 @@ const cookieConsentPreferences = () => {
   } catch (_error) {}
   return validCookieConsentRecord(window.fensterCookieConsent) ? window.fensterCookieConsent : null;
 };
+
+/* Owner instruction, 2026-08-09: optional cookies are granted until refused.
+   This file runs before `inc/consent.php`'s inline script, so it cannot wait to
+   be told the default — it has to carry the same one, and the two must not be
+   allowed to drift. Only an explicit refusal is ever stored as `analytics:
+   false`, and refusing reloads the page, so nothing here can hand a rejected
+   visitor an identifier. */
+const defaultCookieConsent = () => ({
+  version: 2,
+  analytics: true,
+  marketing: true,
+  chosen: false,
+  expires_at: Date.now() + (180 * 24 * 60 * 60 * 1000),
+});
+
+const cookieConsentPreferences = () => storedCookieConsent() || defaultCookieConsent();
 
 const trackingConsentAccepted = () => {
   const preferences = cookieConsentPreferences();
@@ -1613,6 +1629,12 @@ const marketingConsentAccepted = () => {
   return Boolean(preferences && preferences.marketing);
 };
 
+/* "We hold a consent state we can act on", which under granted-by-default is
+   true from the first paint — so the quote embed no longer waits for anything.
+   The callers keep their guards rather than having them deleted as dead code:
+   they cost nothing, they are correct under either model, and they are what
+   stops the embed loading before a decision if the default is ever flipped
+   back. Deleting them would make that flip silently unsafe. */
 const cookieConsentChoiceMade = () => Boolean(cookieConsentPreferences());
 
 const createJourneyReference = () => {
@@ -2014,6 +2036,11 @@ const windowCadUrlWithReference = (value) => {
 
   try {
     const url = new URL(value, window.location.href);
+    /* Under granted-by-default the first branch answers for everyone who has
+       not refused, so `rejected-cookies` now means a real refusal and
+       `cookie-consent-not-accepted` is unreachable. The branch stays because
+       flipping the default back has to restore the no-choice value with it;
+       leads carrying the old value are still in WindowCAD either way. */
     const trackingValue = journeyReference()
       || marketingAttributionReference()
       || (cookieConsentChoiceMade() ? 'rejected-cookies' : 'cookie-consent-not-accepted');

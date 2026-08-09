@@ -1080,15 +1080,15 @@ function fenster_get_generated_page(?string $slug = null): ?array
                 [
                     'heading' => 'Cookies, analytics and tracking',
                     'body' => [
-                        'The website uses strictly necessary cookies or browser storage for basic functions and to remember your cookie choice. On your first visit, the site asks you to choose before you continue. Optional categories are off unless you choose them.',
-                        'You can accept all optional cookies or customise analytics and marketing separately. Within Customise, you can leave both categories off and use strictly necessary storage only. Analytics can help Fenster understand page views, clicks, scroll behaviour, quote-tool use and form performance. Marketing tools can help measure advertising and enquiries from ads.',
+                        'The website uses strictly necessary cookies or browser storage for basic functions and to remember your cookie choice. On your first visit a cookie panel appears, and analytics and marketing cookies are already on at that point.',
+                        'You can accept all optional cookies or customise analytics and marketing separately. Within Customise, you can switch both categories off and use strictly necessary storage only. Analytics can help Fenster understand page views, clicks, scroll behaviour, quote-tool use and form performance. Marketing tools can help measure advertising and enquiries from ads.',
                     ],
                 ],
                 [
                     'heading' => 'Legal reasons for using information',
                     'body' => [
                         'Fenster usually uses enquiry information because it is necessary to respond before entering into a contract, to perform a contract, or because Fenster has a legitimate interest in managing customer enquiries and business records.',
-                        'Where optional analytics or marketing cookies are used, Fenster relies on your consent. You can change or withdraw that consent at any time using Cookie settings in the website footer.',
+                        'Optional analytics and marketing cookies are switched on when you arrive and stay on unless you turn them off. You can turn either category off at any time using Cookie settings in the website footer, and the website then removes the first-party identifiers it created for that category.',
                     ],
                 ],
                 [
@@ -1152,22 +1152,22 @@ function fenster_get_generated_page(?string $slug = null): ?array
                 [
                     'heading' => 'Optional analytics',
                     'body' => [
-                        'If you switch on analytics, the site may load Microsoft Clarity and analytics tags managed through Google Tag Manager. Fenster also creates anonymous website visitor and journey references in local storage for up to 90 days. These tools help Fenster understand which pages are useful, how visitors move through the site, and how quote tools and forms perform.',
+                        'Unless you switch analytics off, the site loads Microsoft Clarity and analytics tags managed through Google Tag Manager. Fenster also creates anonymous website visitor and journey references in local storage for up to 90 days. These tools help Fenster understand which pages are useful, how visitors move through the site, and how quote tools and forms perform.',
                         'Microsoft and Google may receive technical information such as your device, browser, pages viewed and interactions. Their services may set analytics cookies, including names beginning _cl or _ga, with retention periods set by those providers and the site configuration.',
                     ],
                 ],
                 [
                     'heading' => 'Optional marketing',
                     'body' => [
-                        'If you switch on marketing, the site may load Google advertising tags through Google Tag Manager and Meta Pixel. These tools help Fenster measure whether advertising leads to an enquiry. Advertising click references may be kept in local storage for up to 90 days.',
+                        'Unless you switch marketing off, the site loads Google advertising tags through Google Tag Manager and Meta Pixel. These tools help Fenster measure whether advertising leads to an enquiry. Advertising click references may be kept in local storage for up to 90 days.',
                         'Google and Meta may receive technical information about visits and enquiries and may set advertising cookies, including names beginning _gcl, _fbp or _fbc. Their own privacy information explains how they use information they receive.',
-                        'Analytics and marketing are blocked until you choose them. You can leave both off and still use the website, read pages, call Fenster, email the team or send an enquiry.',
+                        'Analytics and marketing run unless you turn them off. You can switch both off and still use the website, read pages, call Fenster, email the team or send an enquiry.',
                     ],
                 ],
                 [
                     'heading' => 'Anonymous aggregate statistics',
                     'body' => [
-                        'The website may record anonymous aggregate statistics even when optional cookies are rejected or no choice has been made. This helps Fenster understand overall page demand, broad device usage, referrer types, page performance and aggregate quote or enquiry activity.',
+                        'The website may record anonymous aggregate statistics even when optional cookies have been switched off. This helps Fenster understand overall page demand, broad device usage, referrer types, page performance and aggregate quote or enquiry activity.',
                         'This statistical measurement is stored only in hourly totals. It does not create a visitor or journey ID, does not build an individual browsing timeline, does not use fingerprinting, and is not used for advertising, remarketing or cross-site tracking. It cannot be used to identify you as an individual.',
                         'Use the “Opt out of anonymous statistics” control in the footer if you do not want your visits included. The website records that preference using only the minimum storage needed to remember the request.',
                     ],
