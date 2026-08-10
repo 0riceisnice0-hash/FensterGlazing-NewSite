@@ -219,8 +219,14 @@ $takes_glass = [
                     </div>
                 <?php endforeach; ?>
             </dl>
+            <?php /* Was three sentences and the owner called it waffle, which it
+                     was. The warmth half of it was also saying the same thing as
+                     the "will new glass make the room warmer" FAQ, so it goes
+                     there and only there. What is left is the part that earns
+                     its place: we will talk you out of it, and it costs nothing
+                     to find out. */ ?>
             <p class="fg-rg-band__note">
-                <?php esc_html_e('Where a frame has gone soft or stopped closing properly, we will tell you, and whether it is worth putting new glass into varies window by window. If warmth is what you are after, say so at the survey: how much difference new glass makes depends on the frame around it, and we would rather be straight about that before you spend anything. The survey is free either way.', 'fenster'); ?>
+                <?php esc_html_e('If a frame has gone soft or stopped closing, we will say so rather than sell you glass for it. The survey is free either way.', 'fenster'); ?>
             </p>
         </div>
     </section>
