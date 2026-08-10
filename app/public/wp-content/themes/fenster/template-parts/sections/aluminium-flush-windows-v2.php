@@ -119,8 +119,8 @@ $aluminium_gives = [
                              flush-against-standard pair would have had to borrow
                              a Classic corner from a different range and label it
                              as something it is not. */ ?>
-                    <img src="<?php echo esc_url(fenster_generated_url($base . 'afw-prestige-flush-corner-900w.png')); ?>"
-                        alt="<?php esc_attr_e('Cutaway corner of a Sheerline Prestige flush aluminium window in anthracite grey, the sash face sitting level with the outer frame', 'fenster'); ?>"
+                    <img src="<?php echo esc_url(fenster_generated_url($base . 'afw-prestige-flush-corner-agate-900w.png')); ?>"
+                        alt="<?php esc_attr_e('Cutaway corner of a Sheerline Prestige flush aluminium window in agate grey, the sash face sitting level with the outer frame', 'fenster'); ?>"
                         loading="lazy" width="900" height="871">
                     <figcaption><?php esc_html_e('The Prestige flush corner. The sash face and the frame face finish in one plane.', 'fenster'); ?></figcaption>
                 </figure>
