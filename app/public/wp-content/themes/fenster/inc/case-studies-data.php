@@ -76,6 +76,13 @@ function fenster_case_studies(): array
     $fitter_zac = $fitter('Zac Rugman', 'Installer', '8.png');
     $fitter_shane = $fitter('Shane Gowing', 'Installer', '20250617_1628580-scaled.jpg');
     $fitter_aaron = $fitter('Aaron Isaacs', 'Installer', 'aaron-isaacs-cropped-bw.jpg', FENSTER_THEME_URI . '/assets/team/');
+    /* Not fitters. Both are named on the Bletchley study, where the people who
+       matter are the one who surveyed it and the one who ran it. Roles verified
+       against Meet the Team on 2026-08-10 so the anchors and the job titles both
+       land: David Foord is Installation Manager, Adam Butcher is Commercial
+       Director. That study sets `team_label` accordingly. */
+    $surveyor_david = $fitter('David Foord', 'Installation Manager', 'David-Foord.jpg');
+    $director_adam = $fitter('Adam Butcher', 'Commercial Director', 'adam-butcher-scaled.jpg');
 
     $cache = [
         /*
@@ -98,6 +105,79 @@ function fenster_case_studies(): array
          * obligation rather than a client name. Confirm the licence covers our own
          * marketing use before this goes to production.
          */
+        /*
+         * Bletchley rail depot, added 2026-08-10 from the owner's brief and the
+         * internal commercial projects deck.
+         *
+         * THE CLIENT IS NOT NAMED and the CONTRACT VALUE IS NOT PUBLISHED. Both
+         * are in the source deck; neither belongs on the website. See the
+         * Commercial Client Anonymity Rule in AI.md. We were engaged by the main
+         * contractor for the window package, on an existing relationship.
+         *
+         * Scope is deliberately exact, because it is the thing that goes wrong:
+         * 65 windows, 6 doors and 1 curtain wall screen, within a wider depot
+         * refurbishment that was not ours. Do not widen it into the refurb.
+         *
+         * The health and safety material is the substance of this study and it
+         * is the contractor's own emphasis, not ours: an operational rail yard,
+         * intensive inductions before anyone set foot on the depot, full PPE on
+         * and around live rail infrastructure.
+         *
+         * People confirmed against Meet the Team on 2026-08-10: David Foord is
+         * Installation Manager and Adam Butcher is Commercial Director, and the
+         * `$fitter` helper slugs those names into real anchors. `team_label` is
+         * set because "Installers" would be wrong for a surveyor and a director.
+         *
+         * ONE PHOTOGRAPH ONLY so far, and it is extracted from the deck's own
+         * page rather than supplied as a file, so it is 1600x1200 rather than a
+         * phone original. Four more exist and should replace and extend this the
+         * moment they arrive as files: two entrance doorsets, the curtain wall
+         * head detail, and the internal reception screen.
+         */
+        'bletchley-rail-depot-refurbishment' => [
+            'title' => 'Curtain walling, windows and doors, Bletchley rail depot',
+            'location' => 'Bletchley, Milton Keynes',
+            'type' => 'Commercial',
+            'sector' => 'Rail and logistics',
+            'service' => 'Aluminium windows, doors and curtain walling',
+            'sector_url' => home_url('/commercial-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
+            'date' => '2025-09-01',
+            'summary' => 'Sixty-five aluminium windows, six doors and a curtain wall screen for the refurbishment of a working rail depot at Bletchley.',
+            'lead' => 'A rail depot does not stop for a refurbishment. We supplied and fitted the window, door and curtain walling package across a depot that stayed operational throughout, on a site where getting through the induction takes longer than getting through the first day of work.',
+            'products' => [
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+                ['label' => 'Commercial automation', 'url' => home_url('/commercial-automation/')],
+            ],
+            'specs' => [
+                ['label' => 'Windows', 'value' => '65 aluminium'],
+                ['label' => 'Doors', 'value' => '6, including automatic entrances'],
+                ['label' => 'Screens', 'value' => '1 curtain wall'],
+                ['label' => 'Completed', 'value' => 'September 2025'],
+            ],
+            'overview' => [
+                'Bletchley depot was refurbished while it carried on working. Our part was the glazing package: sixty-five <a href="' . esc_url(home_url('/aluminium-windows/')) . '">aluminium windows</a>, six doors and a single curtain wall screen, fitted into a building that had to keep functioning around us. The wider refurbishment was the main contractor\'s; we were brought in for the windows and doors on the back of work we had already done for them.',
+                'The doors are the part that varies most. Automatic entrance doors at the two main ways in, fire exit doors where the escape route needed them, and heavy-duty commercial hardware throughout, specified for an industrial building rather than an office. There are fire rated windows in the package as well, and an internal reception screen, which is the sort of thing that never appears in a photograph of a facade but takes as long to get right as anything on the outside.',
+                'A rail depot is a strict site, and that is the honest headline of this job. Nobody goes anywhere near it without completing the site induction first, and it is a long one. Full PPE is enforced at all times on and around live rail infrastructure, and every part of the work has to be delivered to the compliance standards a rail environment demands. It changes how you programme a job: access is booked rather than assumed, and the paperwork is part of the build rather than an afterthought.',
+                'The finish detail worth mentioning is the flashings. Custom aluminium flashings were powder coated to match the window frames right through the package, so the junctions between new glazing and existing structure read as one thing rather than as a set of patches.',
+            ],
+            'installed' => [
+                '65 aluminium windows across the depot elevations',
+                'Automatic entrance doors, fire exit doors and fire rated windows',
+                'One curtain wall screen, plus an internal reception screen',
+                'Custom aluminium flashings powder coated to match the frames',
+            ],
+            'team_label' => 'Surveyed and managed by',
+            'installers' => [$surveyor_david, $director_adam],
+            'images' => [
+                ['src' => $img . 'cs-bletchley-rail-depot-elevation.webp', 'caption' => 'The main elevation, with the run of aluminium windows under the new cladding line.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Bletchley Rail Depot: Commercial Windows, Doors and Curtain Walling',
+                'meta_description' => 'A Fenster commercial project: 65 aluminium windows, 6 doors and a curtain wall screen for the refurbishment of a working rail depot at Bletchley, completed September 2025.',
+            ],
+        ],
         'headrow-court-student-accommodation-leeds' => [
             'title' => 'Aluminium windows, Headrow Court, Leeds',
             'location' => 'Leeds city centre',

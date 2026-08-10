@@ -353,9 +353,16 @@ $hero_intro_html = ob_get_clean();
                     </div>
                 <?php endif; ?>
 
+                <?php /* The label is a study field now, added 2026-08-10. It was
+                         hardcoded to "Installers", which is right for the
+                         residential studies and wrong for a commercial one whose
+                         named people are the surveyor and the commercial
+                         director. Naming people is the strongest trust signal
+                         these pages have, and it only works if the label is
+                         true. Defaults to "Installers" so nothing else moves. */ ?>
                 <?php if (! empty($installers)) : ?>
                     <div class="fg-cs-aside__block fg-cs-installers">
-                        <span class="fg-cs-aside__label"><?php esc_html_e('Installers', 'fenster'); ?></span>
+                        <span class="fg-cs-aside__label"><?php echo esc_html((string) ($study['team_label'] ?? __('Installers', 'fenster'))); ?></span>
                         <ul class="fg-cs-installers__list">
                             <?php foreach ($installers as $person) : ?>
                                 <?php
