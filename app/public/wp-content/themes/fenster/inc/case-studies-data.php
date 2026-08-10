@@ -179,12 +179,20 @@ function fenster_case_studies(): array
             /* images[0] is the HERO and the rest are the gallery, so the
                finished elevation leads and the before sits first in the gallery
                with a caption that points back at it. The two cannot sit side by
-               side because one of them is the hero. */
+               side because one of them is the hero.
+
+               There WAS a second entrance photograph and it was dropped on
+               2026-08-10: it is the same doorset from the ramp, not a second
+               entrance, and the caption claimed otherwise. Two angles of one
+               door in a gallery this size is repetition, and four gallery images
+               also fill two rows exactly where five left a trailing single.
+               Check whether two photographs are two THINGS before captioning
+               them as such: the CCTV sign, the brick pier and the handrail are
+               identical in both. */
             'images' => [
                 ['src' => $img . 'cs-bletchley-rail-depot-elevation.webp', 'caption' => 'The finished elevation, with the run of aluminium windows under the new cladding line.'],
                 ['src' => $img . 'cs-bletchley-rail-depot-before.webp', 'caption' => 'The same elevation before we started. The old frames had rusted through at the mullions and were staining the sills below them.'],
                 ['src' => $img . 'cs-bletchley-rail-depot-entrance.webp', 'caption' => 'One of the automatic entrance doorsets, with fixed sidelights and a screen over.'],
-                ['src' => $img . 'cs-bletchley-rail-depot-entrance-wide.webp', 'caption' => 'The second entrance, on the ramped approach.'],
                 ['src' => $img . 'cs-bletchley-rail-depot-head-detail.webp', 'caption' => 'The window head against the new cladding line, frames colour-matched through the package.'],
                 ['src' => $img . 'cs-bletchley-rail-depot-reception.webp', 'caption' => 'The internal reception screen, with its sliding hatch onto the corridor.'],
             ],
