@@ -3426,7 +3426,15 @@ if ($is_commercial_hub) {
                 <div class="button-row">
                     <a class="button" href="#fenster-enquiry">
                         <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
-                        <span class="fg-hero-cta__short"><?php echo esc_html($is_repairs ? __('Request a repair', 'fenster') : __('Design consultation', 'fenster')); ?></span>
+                        <?php /* The short label is a SEPARATE string, not a
+                                 truncation of `$cta_label`, so a route that
+                                 overrides the full label has to override this
+                                 one too or the phone quietly says something
+                                 else. Replacement glazing said "Send us the
+                                 sizes" on desktop and "Design consultation" on
+                                 mobile until 2026-08-10, and only a mobile
+                                 screenshot showed it. */ ?>
+                        <span class="fg-hero-cta__short"><?php echo esc_html($is_repairs ? __('Request a repair', 'fenster') : ($is_replacement_bespoke ? __('Send us the sizes', 'fenster') : __('Design consultation', 'fenster'))); ?></span>
                     </a>
                     <?php if ($offers_instant_price) : ?>
                         <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
