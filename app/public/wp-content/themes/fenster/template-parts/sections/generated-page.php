@@ -4813,7 +4813,7 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
         <?php if (isset($aluminium_colour_routes[$slug])) : ?>
-            <?php get_template_part('template-parts/components/aluminium-colour-grid', null, ['product_noun' => $aluminium_colour_routes[$slug], 'corner_set' => $is_alu_flush_bespoke ? 'prestige-flush' : '']); ?>
+            <?php get_template_part('template-parts/components/aluminium-colour-grid', null, ['product_noun' => $aluminium_colour_routes[$slug], 'corner_set' => in_array($slug, ['aluminium-flush-windows', 'aluminium-windows'], true) ? 'prestige-flush' : '']); ?>
         <?php endif; ?>
 
         <?php /* Slat colours inline, the same as the uPVC and aluminium routes

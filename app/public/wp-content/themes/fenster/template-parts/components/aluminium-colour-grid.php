@@ -30,8 +30,15 @@ if (! defined('ABSPATH')) {
    standing proud and putting that on the flush page contradicted the page.
    Filenames were deliberately matched one for one so this is a string swap.
 
-   There is no Prestige STANDARD corner render published, so /aluminium-windows/
-   still shows a Classic corner and is still slightly wrong. Ask Sheerline. */
+   /aluminium-windows/ uses the same set, on the owner's instruction 2026-08-10.
+   Sheerline publish no Prestige STANDARD corner render, and standard and flush
+   are the same system on a different outer frame, so a Prestige corner is much
+   closer to what that route sells than a Classic corner from another range.
+   The render's job here is the colour.
+
+   /heritage-windows/ deliberately KEEPS Classic, because it genuinely sells the
+   Classic system. The door routes keep it too and were not part of that
+   instruction. */
 $corner_set = (string) ($args['corner_set'] ?? '');
 
 $corner_src = static function (string $src) use ($corner_set): string {
@@ -94,7 +101,7 @@ $swatch_count = count($aluminium_swatches);
                        is showing the colour rather than the system that route
                        sells. */
                     $corner_alt = $corner_set === 'prestige-flush'
-                        ? sprintf(__('Sheerline Prestige flush window corner, powder coated in %s', 'fenster'), $colour_name)
+                        ? sprintf(__('Sheerline Prestige aluminium window corner, powder coated in %s', 'fenster'), $colour_name)
                         : sprintf(__('Powder-coated aluminium frame corner in %s', 'fenster'), $colour_name);
                     ?>
                     <img src="<?php echo esc_url(fenster_generated_url($corner_src((string) $colour['image']))); ?>" alt="<?php echo esc_attr($corner_alt); ?>" loading="lazy">
