@@ -5,6 +5,53 @@ Last updated: 2026-08-07
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
+## 2026-08-10 - Replacement glazing rebuilt around the fault (test, 1ea5b77)
+
+**On test, not live.** Owner brief: a full rework in the same style as the other
+product pages, with a misted-to-clear slider, and a long round of questions
+first so nothing was assumed.
+
+The old page ran the generic journey: the route title as the H1 and twice more
+as an H2, the same five benefit tiles rendered twice, and a case-study strip
+showing secondary glazing, casements and bifolds because no study for this
+product exists and the helper falls back to all of them.
+
+Two claims were untrue rather than thin. The specification band offered **frame
+colours** on the one route whose premise is that the frame stays put. And a
+key-spec tile claimed an **A+ energy rating**, which belongs to a complete
+window and cannot attach to a unit going into somebody else's frame.
+
+The bigger change is the subject. Asked whether new glass warms a room the owner
+said it can, "but thats not really why we do it as a lot of energy will be lost
+in an old frame so often a false economy", and confirmed we do not convert
+single glazing to double. So the energy angle is gone and the page is now: your
+window failed, the frame is fine, the glass is the job, and we will say so when
+it is the other way round.
+
+Six bespoke sections — what has happened, the wipe, on the day, what we put
+glass into, while the glass is being made, our work — plus route-specific order
+steps 01, 02 and 04, a new CTA, and rewritten FAQs.
+
+**Nine photographs, all Fenster jobs**, supplied by the owner from the archive
+after a written shoot brief went into `PHOTO-CHECKLIST.md`. The wipe pair is one
+window five minutes apart with the panes either side clear in both frames, so it
+carries its own control. They were handheld and 30px right and 178px down out of
+register; corrected off a patch of frame and verified at two heights. All assets
+EXIF-stripped, because the originals carried the customers' GPS coordinates, and
+a number plate and a street name sign were blurred out of one frame.
+
+`flush-sash-wipe.php` is now `compare-wipe.php`, generalised rather than copied,
+with the stage ratio as an argument. The flush page was re-verified after the
+rename and is unchanged.
+
+**Four faults found by looking at the rendered page rather than the source**: the
+gallery left half a row empty because the mosaic has no three-cell cut; the hero
+button said "Start your design consultation" on a page where nothing is
+designed; the mobile hero button kept saying "Design consultation" because the
+short label is a separate string; and a sentence-style H1 leaked verbatim into
+the breadcrumb schema and the enquiry form's lead-source field, because every
+other route title is a noun phrase and three consumers assume it.
+
 ## 2026-08-09 - Optional cookies are granted until refused
 
 Owner instruction, following the re-stamp fix below: "make it so cookies are

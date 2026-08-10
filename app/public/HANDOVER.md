@@ -529,6 +529,38 @@ Current accepted model:
   `order_process.aftercare_outside_fensa_and_cpa`. Secondary glazing alone also
   swaps step 02, since "thresholds" is a measurement it does not have.
 
+### Replacement Glazing Page
+
+Route: `/double-glazing-replacement/`
+
+- **Bespoke middle** in `template-parts/sections/replacement-glazing-v2.php`,
+  dispatched from `generated-page.php` on `$is_replacement_bespoke`. Six
+  sections: what has happened, the before-and-after wipe, on the day, what we
+  put glass into, while the glass is being made, our work.
+- **The dispatch sits OUTSIDE the specification-choices wrapper**, like repairs
+  and secondary glazing. Inside it, the whole middle would be gated on a
+  condition about colour swatches and would silently render nothing.
+- **Gated off for this route:** the key-specification pulse, both generic middle
+  bands, the specification-choices band (it offers frame colours, on the one
+  page whose premise is that the frame stays) and the case-study strip (no study
+  for this product exists and the helper falls back to showing all of them).
+- **Not an energy page**, owner-confirmed. See the Replacement Glazing Rule in
+  `AI.md` before writing any copy for it, and the standing ban on exclusions.
+- **Order process:** steps 01, 02 and 04 are all overridden. 01 because this is
+  the one route that can be priced remotely from sizes and a photograph, 02
+  because the canonical step names thresholds a sealed unit does not have, and
+  04 because it carries the ten year sealed-unit guarantee that the shared
+  no-scheme string is silent on.
+- **The hero CTA is overridden in two places.** `$cta_label` and the separate
+  `fg-hero-cta__short` string for narrow screens. Override one and the phone
+  quietly says something else.
+- **The wipe is `template-parts/components/compare-wipe.php`**, shared with the
+  flush casement page. It takes `base_*` and `overlay_*` plus `ratio`; the base
+  layer is underneath and always fills the stage, so it should be the thing the
+  page is selling. Renamed from `flush-sash-wipe.php` on 2026-08-10.
+- Images live in `assets/images/products/replacement-glazing/`, with the two
+  integral blind photographs in `assets/images/products/integral-blinds/`.
+
 ### Window And Door Repairs Page
 
 Route: `/window-and-door-repairs/`
