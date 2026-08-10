@@ -834,7 +834,12 @@ $stats = $is_commercial
 
 /* "Start your design consultation" is the right label for somebody choosing
    windows and the wrong one for somebody whose door will not lock. */
-$cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : ($is_repairs ? 'Request a repair' : 'Start your design consultation'));
+/* Replacement glazing gets its own, added 2026-08-10. "Start your design
+   consultation" is the right invitation for somebody choosing a window and the
+   wrong one for somebody with a misted pane who wants it gone: there is nothing
+   to design. The owner's actual route in is that rough sizes and a photograph
+   are enough to get a price without a visit, so the button says that. */
+$cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : ($is_repairs ? 'Request a repair' : ($is_replacement_bespoke ? 'Send us the sizes' : 'Start your design consultation')));
 $instant_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
 $instant_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
 $product_quote_embeds = [
@@ -5290,9 +5295,9 @@ if ($is_commercial_hub) {
                          options" answers a question this visitor did not ask.
                          The problem finder above writes the fault straight into
                          the message field, which is what the last line means. */ ?>
-                <p class="eyebrow"><?php echo esc_html($is_repairs ? 'Book a repair' : ($is_commercial ? 'Start the conversation' : 'Start your project')); ?></p>
-                <h2><?php echo esc_html($is_repairs ? 'Tell us what it is doing.' : ($is_commercial ? 'Tell us about the building, package or programme.' : 'Tell us about your project.')); ?></h2>
-                <p><?php echo esc_html($is_repairs ? 'In your own words is fine, and a photograph of the fault tells us more than any description will. We will come back with what it usually turns out to be.' : ($is_commercial ? 'A Fenster specialist can help with early feasibility, system options, budgets and installation planning.' : 'Send the basics and the team can guide you through styles, pricing, survey and installation options.')); ?></p>
+                <p class="eyebrow"><?php echo esc_html($is_repairs ? 'Book a repair' : ($is_commercial ? 'Start the conversation' : ($is_replacement_bespoke ? 'Get it priced' : 'Start your project'))); ?></p>
+                <h2><?php echo esc_html($is_repairs ? 'Tell us what it is doing.' : ($is_commercial ? 'Tell us about the building, package or programme.' : ($is_replacement_bespoke ? 'Tell us which window it is.' : 'Tell us about your project.'))); ?></h2>
+                <p><?php echo esc_html($is_repairs ? 'In your own words is fine, and a photograph of the fault tells us more than any description will. We will come back with what it usually turns out to be.' : ($is_commercial ? 'A Fenster specialist can help with early feasibility, system options, budgets and installation planning.' : ($is_replacement_bespoke ? 'Rough sizes and a photograph are usually enough for us to price it without coming out. Tell us how many units and roughly how big, and say if anything about the glass wants changing while it is made.' : 'Send the basics and the team can guide you through styles, pricing, survey and installation options.'))); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $brand['phone'] ?? '01908429200')); ?>"><?php echo esc_html($brand['phone'] ?? '01908 429200'); ?></a>
                     <a href="mailto:<?php echo esc_attr($brand['email'] ?? 'info@fensterglazing.com'); ?>"><?php echo esc_html($brand['email'] ?? 'info@fensterglazing.com'); ?></a>

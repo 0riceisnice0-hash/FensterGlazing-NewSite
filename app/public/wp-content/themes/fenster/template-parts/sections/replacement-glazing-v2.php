@@ -263,7 +263,7 @@ $takes_glass = [
              `fg-cw-gallery`, the shared component the flush and heritage door pages
              use, so this section looks like the rest of the site and inherits the
              lightbox. Three photographs, all Fenster jobs. */ ?>
-    <section class="fg-cw-gallery" aria-labelledby="fg-rg-proof-title">
+    <section class="fg-cw-gallery fg-cw-gallery--trio" aria-labelledby="fg-rg-proof-title">
         <div class="container">
             <div class="fg-cw-gallery__head">
                 <div>
@@ -278,7 +278,17 @@ $takes_glass = [
 
             <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Replacement glazing gallery', 'fenster'); ?>">
                 <?php
+                /* Order matters to the cut above. Cell one is the near-square
+                   tall cell, so it takes the photograph that survives losing a
+                   little from each side; the before and after go in cells two
+                   and three, which stack, so they sit directly above one
+                   another and read as a pair. */
                 $gallery = [
+                    [
+                        'src' => $blinds . 'ib-retrofit-open-1600w.jpg',
+                        'alt' => 'A window with integral blinds drawn up inside the glass, the slats stacked at the head of each pane and the view clear below',
+                        'caption' => __('Integral blinds, drawn up', 'fenster'),
+                    ],
                     [
                         'src' => $base . 'rg-view-misted-1400w.jpg',
                         'alt' => 'A large picture window with a failed sealed unit, the countryside beyond it veiled and streaked',
@@ -288,11 +298,6 @@ $takes_glass = [
                         'src' => $base . 'rg-view-clear-1400w.jpg',
                         'alt' => 'The same picture window after the unit was replaced, with the fields and the horizon sharp through it',
                         'caption' => __('After: the same window', 'fenster'),
-                    ],
-                    [
-                        'src' => $blinds . 'ib-retrofit-open-1600w.jpg',
-                        'alt' => 'A window with integral blinds drawn up inside the glass, the slats stacked at the head of each pane and the view clear below',
-                        'caption' => __('Integral blinds, drawn up', 'fenster'),
                     ],
                 ];
                 ?>
