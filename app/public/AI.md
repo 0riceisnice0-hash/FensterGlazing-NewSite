@@ -279,6 +279,15 @@ PHP lint example:
 - **The hero was an old-site scrape of a bay so overexposed the product could not be seen.** It is now one of our own leaded windows in a stone mullioned reveal, cropped to the hero's 3.2:1. **Check what a hero crop actually shows before choosing it**: the first candidate tried here was a brighter photograph whose letterbox band turned out to be mostly trees, with no secondary glazing legible at all.
 - **The section photographs are portrait and the media panel is 16:10**, so each is cropped to 4:3 centred on the window and the panel carries `.fg-cw-media--4x3`. Crop the box to the picture, never the picture to the box.
 
+## Commercial Client Anonymity Rule
+
+- **Do not name the client in a commercial case study.** Owner rule, 2026-08-10: "our clients names are not mentioned in commercial case studies... opens us up to poaching." Naming the main contractor or developer who hired us hands a competitor a qualified, warm lead and tells them exactly which firms buy glazing from us. Write "the main contractor" and carry on; the sentence never needs the name.
+- **This applies to the whole page, not just the prose.** The name was in the Headrow Court overview paragraph AND in an image filename, `Fortis-Vision-Headrow-From-Above.jpg`, which was publicly reachable on live and referenced by nothing. **Check filenames, alt text, captions and `pages.json` records, not only body copy** — an asset URL is as public as a paragraph and nobody proofreads it.
+- **It applies to source comments too.** The repository is not obviously private, and a comment naming a client leaks the same fact to anyone who can read the code. Record the relationship as "the main contractor".
+- **The building keeps its name.** Headrow Court, the Green Man, Sunrise: the property is the subject of the study and a study about an anonymous building is worthless. It is the *organisation that engaged us* that goes unnamed.
+- **Photographer credits stay.** "Photograph by Ben Harrison Photography" is an attribution obligation, not a client name.
+- **Open question, flagged to the owner and not changed unilaterally:** the Green Man study says the work was "commissioned by Simon, the pub's owner, who we had already worked with at Water End Barn". That is a client, named, though only by first name — and it is also the best repeat-custom proof on the site. The owner's call, because the trade-off is real.
+
 ## Replacement Glazing Rule
 
 - **The route is `/double-glazing-replacement/` and it is NOT an energy page.** Owner, 2026-08-10, asked directly whether a new unit makes a room warmer: "they can but thats not really why we do it as a lot of energy will be lost in an old frame so often a false economy". He also confirmed **we do not convert single glazing to double**. The old page sold this as a thermal upgrade and led on an A+ rating. Do not put that angle back. What the page sells is that the frame is fine and only the glass has failed.

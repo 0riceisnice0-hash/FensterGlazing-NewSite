@@ -83,13 +83,20 @@ function fenster_case_studies(): array
          * commercial studies still sit in the legacy pages.json records. Project
          * facts (108 studios, £12.5m, 16 months, four former office buildings,
          * completed October 2025) are the main contractor's own published figures,
-         * and the scope line is deliberately narrow: Fortis Vision replaced the
-         * whole facade, we did the aluminium windows within it. Do not widen that
-         * into a claim that we delivered the scheme.
+         * and the scope line is deliberately narrow: the main contractor replaced
+         * the whole facade, we did the aluminium windows within it. Do not widen
+         * that into a claim that we delivered the scheme.
          *
-         * Photography is by Ben Harrison Photography, supplied through Fortis
-         * Vision. Credit is kept in the caption. Confirm the licence covers our
-         * own marketing use before this goes to production.
+         * THE CONTRACTOR IS NOT NAMED, HERE OR IN THE COPY. Owner rule, 2026-08-10:
+         * clients are not named in commercial case studies, because naming the firm
+         * that hired us hands a competitor a warm lead. The name was in the overview
+         * paragraph and in an image filename; both are gone. See the Commercial
+         * Client Anonymity Rule in AI.md before writing any commercial study.
+         *
+         * Photography is by Ben Harrison Photography, supplied through the main
+         * contractor. Credit is kept in the caption because that is an attribution
+         * obligation rather than a client name. Confirm the licence covers our own
+         * marketing use before this goes to production.
          */
         'headrow-court-student-accommodation-leeds' => [
             'title' => 'Aluminium windows, Headrow Court, Leeds',
@@ -113,7 +120,7 @@ function fenster_case_studies(): array
                 ['label' => 'Completed', 'value' => 'October 2025'],
             ],
             'overview' => [
-                'Headrow Court sits opposite Leeds Town Hall, and until recently it was four separate office buildings. Fortis Vision took the scheme on as main contractor for a £12.5m, sixteen month conversion into 108 purpose built student studios with reception, study and dining space, finishing in October 2025.',
+                'Headrow Court sits opposite Leeds Town Hall, and until recently it was four separate office buildings. The main contractor took the scheme on as a £12.5m, sixteen month conversion into 108 purpose built student studios with reception, study and dining space, finishing in October 2025.',
                 'The facade was replaced rather than patched, and our part of that was the <a href="' . esc_url(home_url('/aluminium-windows/')) . '">aluminium windows</a>. On a city centre building of this age that is less about the product and more about the openings: four buildings that were never built to match, brought into one elevation, with the window line expected to read as one thing from the street.',
                 'The projecting bays are the part people notice. They wrap the corner of the building in dark framing above the shopfronts, and they are the reason the elevation reads as a single new building rather than four old ones stitched together. Behind them, every studio needed a window that opens safely, keeps street noise down and holds heat in a building now lived in all year rather than occupied nine to five.',
                 'The wider scheme connects to the Leeds Pipes district heating network and diverted 98% of its site waste from landfill. That is the contractor\'s achievement rather than ours, but it is the kind of scheme our commercial work tends to sit inside: an existing building kept and upgraded instead of demolished.',
