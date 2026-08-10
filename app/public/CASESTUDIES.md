@@ -195,6 +195,36 @@ through. Commercial studies never print the line.
 
 ---
 
+### Fields added since this guide was written
+
+- **`team_label`** (optional, string). The heading over the named people in the
+  aside. Defaults to `Installers`, which is right for residential studies and
+  wrong for a commercial one whose named people are a surveyor and a director.
+  Bletchley sets `Surveyed and managed by`. Added 2026-08-10.
+- **`date_confirmed`** (optional, `false`). Use when a completion date is
+  approximate rather than guessing one.
+
+### Gallery images are squared, and you do not crop the sources
+
+Every gallery image renders `aspect-ratio: 1 / 1` with `object-fit: cover`, on
+`.fg-cs-shot img`. Owner rule, 2026-08-10: galleries line up, commercial and
+residential alike. **Do not pre-crop source files to square** — the crop happens
+at render time, so the originals stay whole and a future change of shape costs
+one line. Publish at the photograph's natural aspect.
+
+### Commercial studies: name the building, not the firm that hired you
+
+Full rule in `AI.md`. In short: the property is the subject and keeps its name;
+the organisation that engaged us does not appear, in copy, captions, filenames,
+`pages.json` or source comments. **Where the client and the building are the same
+organisation** — a council on its own building, a university on its own campus —
+**name it**, because the poaching risk the rule protects against is a contractor
+or developer who buys glazing repeatedly, not a body procuring its own estate.
+
+### Never publish a contract value
+
+The internal commercial deck carries them. The website does not.
+
 ## 4. Writing the copy
 
 Follow `STYLE.md`. In short:

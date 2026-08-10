@@ -1,5 +1,52 @@
 # Fenster Glazing Handover
 
+## Handover state, 2026-08-10
+
+**Live is `93ae15e` and level with `main`.** No release branch outstanding, no
+divergence, working tree clean. `LIVECHANGES.md` is the authority on what is
+live; `PROGRESS.md` is a log and some of its older entries are still titled
+"(test)" long after shipping.
+
+**Read in this order:** the START HERE block at the top of `PROGRESS.md`, then
+the Current Truth section of `LIVECHANGES.md`, then the rule for whichever page
+you are touching in `AI.md`.
+
+**The EIGHT routes with a bespoke middle** — verified against the dispatch in
+`generated-page.php`, not from memory. These do NOT use the generic product
+journey, and each has a rule in `AI.md` to read before editing:
+
+| Route | Template |
+|---|---|
+| `/casement-windows/` | `casement-windows-v2.php` |
+| `/flush-casement-windows/` | `flush-casement-windows-v2.php` |
+| `/aluminium-doors/` | `aluminium-doors-v2.php` |
+| `/aluminium-flush-windows/` | `aluminium-flush-windows-v2.php` |
+| `/secondary-glazing/` | `secondary-glazing-v2.php` |
+| `/double-glazing-replacement/` | `replacement-glazing-v2.php` |
+| `/window-and-door-repairs/` | `window-door-repairs.php` |
+| `/composite-doors/` | `composite-doors-v2.php` |
+
+`/heritage-aluminium-doors/` has a rule in `AI.md` but **no** bespoke template;
+it runs the generic journey with route-specific data.
+
+**Every bespoke dispatch sits OUTSIDE the specification-choices wrapper.** Put
+one inside and the whole middle is gated on a condition about colour swatches and
+silently renders nothing. That has caught two people; the warning is in the code.
+
+**Open and needing the owner, not code:**
+
+- Roehampton case study, parked on four facts.
+- A typical flush aluminium job with dummy sashes in the fixed lights.
+- A Prestige STANDARD corner render from Sheerline.
+- A wide, honest hero for `/aluminium-doors/`. Longest-standing gap on the site.
+- Thirteen stale `release/*` branches on origin, each one a loaded gun if
+  deployed later.
+
+**Known and deliberately not fixed:** all 23 routes that render the
+key-specification strip repeat their own H1 as an H2 inside it.
+`/aluminium-flush-windows/` overrides it; the rest do not.
+
+
 Last updated: 2026-08-07
 
 This file gives a new AI agent the current context needed to work on the whole site.
@@ -49,7 +96,7 @@ Use:
 - Google Ads quote attribution is completion-led. Campaign suffixes carry `ads={adgroupid}` into the Fenster landing URL; the theme preserves that tracker and copies it into every WindowCAD URL alongside the existing `tracking=FG2-...` value. Accepted ad clicks also store `gclid`/`gbraid`/`wbraid` in WordPress against the FG2 journey through `/wp-json/fenster/v1/ad-attribution`. When WindowCAD posts a completed quote back, the private `fenster_enquiry` receives the ads tracker and click ID needed for offline conversion import. The click ID never goes to the Marketing Dashboard or AdminBase. `quote_opened` and `quote_iframe_loaded` remain diagnostic funnel events only.
 - Consent health is aggregate-only and granular: `necessary_only`, `analytics_only`, `marketing_only` and `all`, per day and per environment. Rejected visitors must never get a visitor/journey ID or browsing event. **Banner impressions are counted again** (`shown` from the mandatory modal into `banner_shown`), on the owner's 2026-08-02 instruction; they are a health check only and must never be used as a denominator, because they structurally undercount against choices. See the consent rules in `AI.md` before touching either. Future Focus Group call integration should send actual call outcomes into the dashboard only after an API/webhook or scheduled export is available; phone taps alone remain intent, not confirmed calls.
 - Non-consented traffic now has a separate statistical-only aggregate path. It records hourly totals for page views, engagement, quote/form starts or sends and contact intent, grouped by page, broad device class and referrer host. It never creates `FGV`/`FG2`, visitor timelines, fingerprinting values, IP-derived identifiers, ad joins or lead joins. The footer provides an anonymous-statistics opt-out.
-- Office email delivery currently uses the old proven envelope: `WordPress <wordpress@fensterglazing.com>` to `Fenster Glazing <info@fensterglazing.com>`. Customer confirmation emails are paused unless authenticated SMTP is configured, so public form copy must not promise a confirmation email.
+- Office email delivery currently uses the old proven envelope: `WordPress <wordpress@fensterglazing.com>` to `Fenster Glazing <info@fensterglazing.com>`. **Owner-confirmed 2026-08-10 that `info@` is the correct recipient**; there is no override constant and no filter on live, so `fenster_enquiry_recipient()` returns the default. Customer confirmation emails are paused unless authenticated SMTP is configured, so public form copy must not promise a confirmation email.
 - Enquiry forms support optional file uploads (`attachments[]`) for photos, drawings, schedules and documents. Files are stored against the private enquiry and attached to the office email.
 - Live mail deliverability still needs authenticated SMTP for future customer-facing sends. The mailbox MX is Microsoft 365, and unauthenticated PHP mail can show Outlook verification warnings. The theme supports `FENSTER_SMTP_HOST`, `FENSTER_SMTP_PORT`, `FENSTER_SMTP_USERNAME`, `FENSTER_SMTP_PASSWORD`, `FENSTER_SMTP_SECURE`, `FENSTER_MAIL_FROM` and `FENSTER_MAIL_FROM_NAME` from Bedrock `.env` or PHP constants.
 - Legend's AI chat backend is theme-owned in `inc\legend-assistant.php` and exposed only through `POST /wp-json/fenster/v1/legend/chat`. Both test and live Bedrock environments are separately configured with `FENSTER_OPENAI_API_KEY`; `FENSTER_OPENAI_MODEL` is optional and defaults to `gpt-5.4-mini`. Never commit, publish, place in JavaScript or paste either key into project documentation. The complete approved Legend release is live through source commit `cd5b430` (latest theme-code commit `d9b9ffc`) as of 2026-07-16.
@@ -528,6 +575,32 @@ Current accepted model:
   four take the canonical steps with step 04 swapped for
   `order_process.aftercare_outside_fensa_and_cpa`. Secondary glazing alone also
   swaps step 02, since "thresholds" is a measurement it does not have.
+
+### Aluminium Flush Windows Page
+
+Route: `/aluminium-flush-windows/`
+
+- **Bespoke middle** in `template-parts/sections/aluminium-flush-windows-v2.php`,
+  dispatched on `$is_alu_flush_bespoke`, OUTSIDE the specification-choices
+  wrapper like the other bespoke routes. The generic middle bands are gated off;
+  the wrapper itself is KEPT, because the colour grid and handle grid inside it
+  are real decisions on this product.
+- **The page is about the flat face**, not about fixed lights. See the Aluminium
+  Flush Windows Rule in `AI.md` before writing any copy for it.
+- **The key-specification pulse is kept**, unlike secondary and replacement
+  glazing, because this product has real numbers. Its heading is overridden here
+  so it does not repeat the H1 — a fault shared by all 23 routes that render the
+  strip, flagged and not yet fixed site-wide.
+- **The comparison is Sheerline's own render, cropped hard on the sash edge.**
+  At full frame the two renders are nearly identical. Do not widen that crop.
+- **Twelve Prestige corner renders** live in
+  `assets/images/products/colours/sheerline-prestige-flush/`. The colour grid
+  takes a `corner_set` argument; `/aluminium-flush-windows/` and
+  `/aluminium-windows/` pass `prestige-flush`, heritage and the door routes do
+  not. Sheerline publish no Prestige STANDARD corner.
+- **Our one install is atypical.** Its fixed panes are direct glazed rather than
+  dummy sashes, so the openers stand proud. Never claim flushness from those
+  photographs.
 
 ### Replacement Glazing Page
 

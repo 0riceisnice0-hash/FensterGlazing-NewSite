@@ -1,9 +1,62 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-07
+Last updated: 2026-08-10
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
+
+**Dated entries are a LOG, not a status board.** Several older ones are still
+titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
+what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## START HERE, 2026-08-10 (end of session)
+
+**Live is `93ae15e` and level with `main`.** No release branch outstanding, no
+divergence in either direction, working tree clean.
+
+### What shipped today
+
+Six releases, each guarded, backed up and verified as a visitor:
+
+1. **`/double-glazing-replacement/` rebuilt** as a bespoke middle around the
+   fault rather than the frame. Misted-to-clear drag comparison, nine of our own
+   photographs, route-specific order steps and CTA. **It is not an energy page**
+   and must not become one: the owner's position is that most of the heat leaves
+   through an old frame, so new glass is often a false economy.
+2. **Case study galleries aligned site-wide.** One shape for every image,
+   commercial and residential, on `.fg-cs-shot img`.
+3. **A second real louvre** on `/louvre-vents/`, replacing a generic shot.
+4. **The Bletchley rail depot case study**, our first commercial one since
+   Headrow, with a genuine before-and-after of the same elevation.
+5. **`/aluminium-flush-windows/` rebuilt** around the flat face, with Sheerline's
+   own drag comparison and a Sheerline hero.
+6. **Twelve Sheerline Prestige corner renders** replacing Classic ones on both
+   Prestige window routes.
+
+### What needs the owner, and nothing else
+
+- **Roehampton case study is PARKED on four facts.** See its own entry below. The
+  deck's photograph is probably not our work and should not be published as it.
+- **A typical flush aluminium job.** The one install we have is atypical: its
+  fixed panes are direct glazed rather than dummy sashes, so the openers stand
+  proud and there IS a step. Two captions claimed otherwise and were corrected.
+- **A Prestige STANDARD corner render.** Sheerline publish none. Both Prestige
+  window routes currently show the flush corner, on the owner's instruction.
+- **`/aluminium-doors/` still has no honest wide hero.** Longest-standing gap.
+
+### The three habits that caught the most this session
+
+- **Look at the rendered page, not the source.** Every visual fault this session
+  passed a lint and a checksum: the colour wall reduced to a row and a half, a
+  gallery leaving half a row empty, a mobile button reading something different
+  from the desktop one, a drawing too small to make its own point.
+- **Verify the probe before believing the result.** A probe reported "no PHP
+  notices" against a 19-byte 401. `grep -c` on minified CSS returns 1 whether
+  there is one match or fifty. `git branch -r | head` hid a branch that was
+  there. `set -- $var` does not split in zsh, three times.
+- **Numbers need a source.** Two invented figures reached test on one page: a
+  sightline belonging to the opposite product, and a guarantee rounded up
+  because it sounded better.
 
 ## 2026-08-10 - The office enquiry email stops linking into wp-admin (LIVE, e5fb592)
 
@@ -38,6 +91,94 @@ Verified by rendering `fenster_enquiry_office_email()` against the deployed them
 in all three attachment states rather than by reading the source: the row reads
 correctly at zero, one and three, and `wp-admin` appears zero times in the HTML.
 No SCSS or JS changed, so `main.css` and `main.js` are untouched across the range.
+
+## 2026-08-10 - Aluminium flush windows rebuilt (LIVE, 93ae15e)
+
+Owner brief: bring the page up to the standard of the recent rebuilds, keep it
+customer focused, and "just make it look and feel cool" while staying high end.
+
+**The page is about the FLAT FACE.** The sash closes into the frame instead of
+onto it, so the outside is one plane. The first concept was built around fixed
+lights having slimmer frames than openers and the owner rejected it exactly:
+"too much focus on the fixed pane which is not the whole flush part."
+
+**The angle** that separates it from `/flush-casement-windows/`, the uPVC one:
+aluminium is the material that suits an OLD building. That reverses the previous
+copy, which said flush aluminium was for modern homes and sharper renovations.
+
+**Four rounds of owner correction, and each one was a real fault:**
+
+1. The hand-drawn SVG comparison was "terrible... do something high end not bad
+   graphics". Scrapped for Sheerline's own renders.
+2. The page leaned on one niche install. A Sheerline photograph is the hero now.
+3. Two spec figures were invented. A "From 46mm" sightline is the slim end of a
+   range that belongs to the STANDARD casement, because standard and flush are
+   the same window on a different outer frame and **flush is the larger**. And a
+   claim the window would "still be there in thirty years" rounded up a 25 year
+   guarantee whose terms I had not read.
+4. Two captions asserted flushness from photographs of a job that does not have
+   it. Deleting the photographs was an over-correction and the owner reversed it:
+   the fix was the caption.
+
+**Twelve Prestige corner renders** were obtained from Sheerline's trade page
+after the owner pointed at it, matched one for one to the colours already in
+`colour_options`, and served through a `corner_set` argument. Both Prestige
+window routes use them; heritage and the door routes keep Classic.
+
+**What would improve it:** a typical flush job, with dummy sashes in the fixed
+lights, photographed close at the sash line.
+
+## 2026-08-10 - Bletchley rail depot case study (LIVE, 862661f)
+
+Our first commercial study since Headrow, built from the owner's brief and the
+internal commercial projects deck.
+
+**Scope drawn exactly**, because that is what goes wrong on commercial studies:
+65 aluminium windows, 6 doors and 1 curtain wall screen, inside a wider depot
+refurbishment that was not ours.
+
+**The substance is the health and safety**, and it is the site's own emphasis
+rather than ours: an operational rail yard, intensive inductions before anyone
+sets foot on the depot, full PPE around live rail infrastructure. That is what
+makes it a case study rather than a listing.
+
+**Neither the client nor the contract value appears.** Both are in the deck.
+**Treat `Fenster Glazing Projects.pdf` as internal** — it carries the same for
+Headrow, Tottenham, Franklin House and Roehampton.
+
+**Six photographs including a genuine before**, the same elevation with the old
+frames rusted through at the mullions. Three faces blurred in it: depot staff
+inside and a third party in hi-vis outside, none of them ours.
+
+Finding the photographs took four failed searches. They were a `PHOTO-2025-12-10`
+batch at full phone resolution, and I had been searching for the dimensions
+visible in the chat attachment, which are the DISPLAY size and not the file's.
+
+One correction from the owner after it went live: two photographs were the same
+doorset from different angles and I had captioned the second as "the second
+entrance". Dropped rather than reworded.
+
+**The team label is a study field now.** It was hardcoded to "Installers", which
+is wrong for a surveyor and a director. This one reads "Surveyed and managed by".
+
+## 2026-08-10 - Case study galleries aligned, and a second louvre (LIVE, 3cbb42e)
+
+Owner rule, for every study, commercial and residential: "make the pics line
+up... crop them a bit if you have to but make sure theyre not misaligned".
+
+**It was never a one-study problem.** The library is 48 portrait against 30
+landscape and **five of the fifteen studies mix both inside one gallery**,
+including residential ones that long predate the commercial work.
+
+**Square is the fair middle, not a taste.** Forcing landscape takes 44% off the
+height of the 39 portrait images that dominate the library; forcing portrait does
+the same to the width of every commercial study. One line on `.fg-cs-shot img`,
+and the crop is `object-fit` at render time so **no original is touched**.
+
+Also a second real louvre on `/louvre-vents/` — a fully louvred plant room
+doorset, a different product from the fixed panel already there — replacing a
+generic commercial glazing shot. That page now shows two real louvres where a
+week ago it showed none.
 
 ## 2026-08-10 - Roehampton PARKED, waiting on facts
 
@@ -75,9 +216,10 @@ by councils on their own buildings.
 written down — a fully occupied building phased floor by floor so public services
 never stopped — and it needs the same four facts.
 
-## 2026-08-10 - Replacement glazing rebuilt around the fault (test, 1ea5b77)
+## 2026-08-10 - Replacement glazing rebuilt around the fault (LIVE, c165fd2)
 
-**On test, not live.** Owner brief: a full rework in the same style as the other
+**Shipped live the same day**, after two copy corrections from the owner.
+Originally logged as test-only. Owner brief: a full rework in the same style as the other
 product pages, with a misted-to-clear slider, and a long round of questions
 first so nothing was assumed.
 

@@ -79,9 +79,20 @@ adding anything to this list.
 
 - ~~uPVC panel doors (front and back doors)~~ — **closed.** Seven real installs pulled in.
 - ~~Aluminium windows on a local home~~ — **closed**, though only one photograph exists. More would help.
-- **Secondary glazing — still open.** No genuine product image, and no folder for it in the image bank either.
+- ~~Secondary glazing~~ — **closed 2026-08-07.** Every photograph on the route is now a Fenster installation: two from the owner and four from the Winslow job, which is also a case study. More would still help; there is one property.
 - **Sliding sash installs in towns other than Flitwick — still open.** The bank has three plus a social post set that are worth a look.
 - ~~Any before/after pair (same angle) for the repairs and replacement-glazing pages~~ — **closed 2026-08-10.** The owner found three genuine before/after pairs in the archive, EXIF-dated minutes apart on the same afternoons, plus an action shot of a bead being cut out beside a shattered unit. The brief above stands for the next job, because all four are from 2019 and there is still nothing recent.
 - **Photographs taken in customers' homes carry GPS coordinates of their address.** All three pairs did. Every asset published from them was `-strip`ped, and a sample of 40 existing case-study and team images came back clean, so this is a rule to keep rather than a leak to fix. **Strip EXIF on anything shot at a customer's property**, and check the view out of the window too: one frame had a legible number plate and a street name sign on the wall opposite, both of which identify the customer's address and both of which were blurred before publishing.
+- **A TYPICAL flush aluminium job — new gap, 2026-08-10.** The only install on
+  `/aluminium-flush-windows/` has its fixed panes glazed straight into the frame
+  rather than into dummy sashes, so the openers stand proud of them and it does
+  not demonstrate a flush face. It is a nice job and it stays on the page, but
+  the shot that page really wants is a close one at the sash line of a job with
+  dummy sashes, where the faces genuinely run level.
+- **Roehampton — blocked, not just missing.** The commercial deck's photograph for
+  it is a 1080x1080 web crop of a modern building, while the scope describes
+  shaped uPVC replacing timber and Georgian bars. Either the deck used a stock
+  campus shot or the work was on a different building. **Do not publish it as our
+  work.** Phone photos from whoever ran the job would unblock the study.
 - **Aluminium doors — new gap.** `/aluminium-doors/` has an interior kitchen shot of a white single door as its hero, which reads as uPVC. The bank's `Doors/aluminium` folder is empty.
 - Tilt and turn, heritage windows, heritage doors, aluminium sliders and uPVC sliding all have **empty folders** in the bank, so those pages stay on supplier imagery.
