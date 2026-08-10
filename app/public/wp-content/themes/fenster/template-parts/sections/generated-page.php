@@ -204,6 +204,12 @@ $is_secondary_bespoke = $slug === 'secondary-glazing';
        nothing matches, so the route was showing secondary glazing, casements
        and bifolds as though they were this. Same reason repairs gates it. */
 $is_replacement_bespoke = $slug === 'double-glazing-replacement';
+/* Aluminium flush windows, 2026-08-10. Bespoke middle, generic bands off. The
+   key-specification pulse is KEPT here, unlike secondary glazing and
+   replacement glazing, because this product genuinely has numbers: a U-value, a
+   published sightline and a colour range. Two of its four tiles were corrected
+   rather than removed; see `product_usps` in `inc/site-data.php`. */
+$is_alu_flush_bespoke = $slug === 'aluminium-flush-windows';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase
    of a product:
@@ -4185,7 +4191,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4349,7 +4355,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4519,7 +4525,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4582,6 +4588,21 @@ if ($is_commercial_hub) {
         <?php if ($is_replacement_bespoke) : ?>
             <?php
             get_template_part('template-parts/sections/replacement-glazing-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+                'quote_url' => $product_quote_embed_url,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php /* OUTSIDE the wrapper below, same as the four above. This route
+                 DOES still render the specification-choices band, because the
+                 aluminium colour grid and the handle grid inside it are real
+                 decisions on this product, so it is not excluded from the
+                 wrapper the way replacement glazing is. */ ?>
+        <?php if ($is_alu_flush_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/aluminium-flush-windows-v2', null, [
                 'brand' => $brand,
                 'trust_items' => $trust_items,
                 'quote_url' => $product_quote_embed_url,

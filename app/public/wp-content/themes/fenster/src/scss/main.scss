@@ -38235,6 +38235,14 @@ html.fg-blinds-reveal-locked {
 
 .fg-cw-gallery--trio .fg-cw-gallery__mosaic figure:nth-child(3) { grid-column: 7 / 13; grid-row: 2 / 3; }
 
+/* Two-cell cut, added 2026-08-10 for aluminium flush windows, which has exactly
+   two photographs of the one install we have fitted. Two tall columns rather
+   than two wide cells because both sources are portrait: a window is a tall
+   thing and the alternative was cropping the sill off each one. */
+.fg-cw-gallery--pair .fg-cw-gallery__mosaic figure:nth-child(1) { grid-column: 1 / 7; grid-row: 1 / 3; }
+
+.fg-cw-gallery--pair .fg-cw-gallery__mosaic figure:nth-child(2) { grid-column: 7 / 13; grid-row: 1 / 3; }
+
 .fg-cw-gallery__mosaic a {
   display: block;
   width: 100%;
@@ -38973,7 +38981,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-band,
 .fg-alu-door-band,
 .fg-sg-band,
-.fg-rg-band {
+.fg-rg-band,
+.fg-afw-band {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
@@ -39003,7 +39012,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-band__head,
 .fg-alu-door-band__head,
 .fg-sg-band__head,
-.fg-rg-band__head {
+.fg-rg-band__head,
+.fg-afw-band__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2.5rem);
@@ -39014,7 +39024,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-band__head h2,
 .fg-alu-door-band__head h2,
 .fg-sg-band__head h2,
-.fg-rg-band__head h2 {
+.fg-rg-band__head h2,
+.fg-afw-band__head h2 {
   max-width: 17ch;
   margin: 0.3rem 0 0;
 }
@@ -39022,7 +39033,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-band__head > p,
 .fg-alu-door-band__head > p,
 .fg-sg-band__head > p,
-.fg-rg-band__head > p {
+.fg-rg-band__head > p,
+.fg-afw-band__head > p {
   max-width: 46ch;
   margin: 0;
   color: var(--color-muted);
@@ -39039,7 +39051,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-list,
 .fg-alu-door-list,
 .fg-sg-list,
-.fg-rg-list {
+.fg-rg-list,
+.fg-afw-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: clamp(0.9rem, 1.8vw, 1.4rem);
@@ -39049,7 +39062,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-list > div,
 .fg-alu-door-list > div,
 .fg-sg-list > div,
-.fg-rg-list > div {
+.fg-rg-list > div,
+.fg-afw-list > div {
   display: grid;
   align-content: start;
   gap: 0.45rem;
@@ -39062,7 +39076,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-list dt,
 .fg-alu-door-list dt,
 .fg-sg-list dt,
-.fg-rg-list dt {
+.fg-rg-list dt,
+.fg-afw-list dt {
   font-weight: 850;
   font-size: 1.02rem;
   line-height: 1.2;
@@ -39071,7 +39086,8 @@ html.fg-blinds-reveal-locked {
 .fg-flush-list dd,
 .fg-alu-door-list dd,
 .fg-sg-list dd,
-.fg-rg-list dd {
+.fg-rg-list dd,
+.fg-afw-list dd {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -39086,7 +39102,8 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-flush-note,
-.fg-rg-band__note {
+.fg-rg-band__note,
+.fg-afw-band__note {
   margin: clamp(1.2rem, 2.5vw, 2rem) 0 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -39101,9 +39118,149 @@ html.fg-blinds-reveal-locked {
   .fg-alu-door-band__head,
   .fg-sg-band__head,
   .fg-rg-band__head,
+  .fg-afw-band__head,
   .fg-flush-compare {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
+  }
+}
+
+/* ==========================================================================
+   Aluminium flush windows — /aluminium-flush-windows/
+   ========================================================================== */
+
+/* THE PLATE. The owner asked for this page to look and feel cool while staying
+   trustworthy, and this is where that is spent: one dark section carrying the
+   photograph of the join beside a drawn section of the same junction. Aluminium
+   takes a dark ground, and the drawing only reads in white line on dark.
+
+   Everything else on the page uses the shared `.fg-cw` grammar, so this is the
+   only bespoke component here. That is deliberate — one plate is a moment, three
+   would be a theme park. */
+.fg-afw-plate {
+  padding: clamp(3rem, 6vw, 5.5rem) 0;
+  background: linear-gradient(168deg, #06222a 0%, #0c313b 52%, #061d24 100%);
+  color: #ffffff;
+}
+
+.fg-afw-plate__head {
+  max-width: 60ch;
+  margin: 0 0 clamp(1.8rem, 4vw, 3rem);
+}
+
+/* `.fg-cw h2` sets `--color-ink` at a specificity this cannot beat from the
+   section alone, which is the same trap the flush dark band already documents:
+   the heading rendered dark on dark. Qualified so it wins on merit. */
+.fg-afw-plate .eyebrow,
+.fg-afw-plate__head h2 {
+  color: #ffffff;
+}
+
+.fg-afw-plate__head h2 {
+  max-width: 20ch;
+  margin: 0.35rem 0 0;
+}
+
+.fg-afw-plate__head > p {
+  margin: 1rem 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  max-width: 58ch;
+}
+
+.fg-afw-plate__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: start;
+}
+
+.fg-afw-plate__shot,
+.fg-afw-plate__draw {
+  margin: 0;
+}
+
+.fg-afw-plate__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* The drawing sits on a slightly lifted panel rather than straight on the
+   gradient, so it reads as a drawing pinned to the page rather than as a
+   watermark floating behind it. */
+.fg-afw-plate__draw {
+  display: grid;
+  align-content: center;
+  min-height: 60%;
+  padding: clamp(1.2rem, 3vw, 2.2rem);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.fg-afw-plate figcaption {
+  margin-top: 0.85rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+/* Same drawing register as the repair schematics: one pen weight for the whole
+   object, held at a single pixel however the SVG scales. */
+.fg-afw-svg {
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.fg-afw-svg * {
+  vector-effect: non-scaling-stroke;
+}
+
+.fg-afw-svg__frame {
+  stroke: rgba(255, 255, 255, 0.72);
+}
+
+.fg-afw-svg__glass {
+  stroke: rgba(255, 255, 255, 0.42);
+}
+
+/* The datum and the step marker. Hairline and dashed so they read as
+   setting-out rather than as part of the window. */
+.fg-afw-svg__construct {
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-dasharray: 10 4 2 4;
+}
+
+.fg-afw-svg__label text {
+  fill: rgba(255, 255, 255, 0.82);
+  stroke: none;
+  font-size: 19px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.fg-afw-svg__label .fg-afw-svg__note {
+  fill: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 860px) {
+  /* Photograph above drawing on a phone. The drawing is the explanation and the
+     photograph is the evidence, and evidence goes first. */
+  .fg-afw-plate__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-afw-plate__draw {
+    min-height: 0;
   }
 }
 

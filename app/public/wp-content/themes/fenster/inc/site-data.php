@@ -289,11 +289,26 @@ function fenster_site_data(): array
                 ['label' => 'Performance', 'value' => 'Thermally efficient'],
                 ['label' => 'Security', 'value' => 'PAS 24'],
             ],
+            /* Two tiles corrected 2026-08-10 against Sheerline's own published
+               specification for the Prestige system.
+
+               "Energy rating: A+ rated" became "Up to A+", which is Sheerline's
+               wording. The old phrasing asserted a rating every build achieves;
+               a WER depends on the glass and the configuration.
+
+               "Outer frame: 80mm" is gone. Sheerline describes ONE "72-80mm wide
+               system" across the range, and we were quoting the top of that range
+               on flush and the bottom of it on `aluminium-windows`, which made
+               flush look like the chunkier product when it is the same system. It
+               is also a frame DEPTH, which no customer is choosing on. Replaced
+               with the sightline, which is the number that decides how much glass
+               you get: 46mm on a fixed light, 88mm on a casement, so "From 46mm"
+               is the honest floor of a published range. */
             'aluminium-flush-windows' => [
                 ['label' => 'U-value*', 'value' => '1.0 W/m²K'],
                 ['label' => 'Colour choice', 'value' => 'Any RAL colour'],
-                ['label' => 'Energy rating', 'value' => 'A+ rated'],
-                ['label' => 'Outer frame', 'value' => '80mm'],
+                ['label' => 'Energy rating', 'value' => 'Up to A+'],
+                ['label' => 'Sightlines', 'value' => 'From 46mm'],
             ],
             'heritage-windows' => [
                 ['label' => 'U-value*', 'value' => '1.1 W/m²K'],
