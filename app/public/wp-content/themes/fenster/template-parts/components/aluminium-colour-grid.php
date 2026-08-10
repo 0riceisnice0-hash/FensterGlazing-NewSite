@@ -19,6 +19,32 @@ if (! defined('ABSPATH')) {
 
 /* Read from the same source the colour options page uses, so a colour added
    there appears here without a second list to keep in step. */
+/* Which corner render to show. The colour DATA is shared by every aluminium
+   route and the colour hub, so the swatch path is rewritten here rather than
+   duplicated in the data.
+
+   Default is the Sheerline Classic corner, which is correct for
+   /heritage-windows/ and is what the rest of the range has always used.
+   `prestige-flush` swaps to Sheerline's own Prestige flush renders, obtained
+   2026-08-10, because a Classic corner has a STEPPED profile with the sash
+   standing proud and putting that on the flush page contradicted the page.
+   Filenames were deliberately matched one for one so this is a string swap.
+
+   There is no Prestige STANDARD corner render published, so /aluminium-windows/
+   still shows a Classic corner and is still slightly wrong. Ask Sheerline. */
+$corner_set = (string) ($args['corner_set'] ?? '');
+
+$corner_src = static function (string $src) use ($corner_set): string {
+    if ($corner_set !== 'prestige-flush') {
+        return $src;
+    }
+    return str_replace(
+        ['/colours/sheerline/', 'Classic-Corner-'],
+        ['/colours/sheerline-prestige-flush/', 'Prestige-Flush-Corner-'],
+        $src
+    );
+};
+
 $aluminium_colours = fenster_data('colour_options.materials.aluminium.colours', []);
 $aluminium_colours = is_array($aluminium_colours) ? $aluminium_colours : [];
 
@@ -62,12 +88,16 @@ $swatch_count = count($aluminium_swatches);
                 ?>
                 <li>
                     <?php
-                    /* The swatch renders are Sheerline Classic corners, used
-                       site-wide for this range. They show the colour, not the
-                       profile, so the alt says exactly that rather than naming a
-                       system this route may not sell. */
+                    /* Alt follows the render actually being shown. On the flush
+                       route it is a Prestige flush corner and the alt says so;
+                       everywhere else it stays generic, because a Classic corner
+                       is showing the colour rather than the system that route
+                       sells. */
+                    $corner_alt = $corner_set === 'prestige-flush'
+                        ? sprintf(__('Sheerline Prestige flush window corner, powder coated in %s', 'fenster'), $colour_name)
+                        : sprintf(__('Powder-coated aluminium frame corner in %s', 'fenster'), $colour_name);
                     ?>
-                    <img src="<?php echo esc_url(fenster_generated_url((string) $colour['image'])); ?>" alt="<?php echo esc_attr(sprintf(__('Powder-coated aluminium frame corner in %s', 'fenster'), $colour_name)); ?>" loading="lazy">
+                    <img src="<?php echo esc_url(fenster_generated_url($corner_src((string) $colour['image']))); ?>" alt="<?php echo esc_attr($corner_alt); ?>" loading="lazy">
                     <strong><?php echo esc_html($colour_name); ?></strong>
                     <?php if ($colour_ref !== '') : ?>
                         <span><?php echo esc_html($colour_ref); ?></span>

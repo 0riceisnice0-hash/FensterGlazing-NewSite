@@ -308,7 +308,14 @@ function fenster_site_data(): array
                 ['label' => 'U-value*', 'value' => '1.0 W/m²K'],
                 ['label' => 'Colour choice', 'value' => 'Any RAL colour'],
                 ['label' => 'Energy rating', 'value' => 'Up to A+'],
-                ['label' => 'Sightlines', 'value' => 'From 46mm'],
+                /* "From 46mm" was removed on 2026-08-10 after the owner
+                   explained the system: Prestige standard and flush are the same
+                   window on a different outer frame, and FLUSH IS THE LARGER of
+                   them. 46mm is the slimmest published sightline in the range,
+                   which makes it a standard-casement figure and not this
+                   product's. Replaced with the system, which is true, specific
+                   and not a number that can be read as a promise. */
+                ['label' => 'System', 'value' => 'Sheerline Prestige'],
             ],
             'heritage-windows' => [
                 ['label' => 'U-value*', 'value' => '1.1 W/m²K'],
@@ -646,7 +653,13 @@ function fenster_site_data(): array
                 ],
             ],
             'aluminium-flush-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-flush-open-1200w.webp', 'alt' => 'Grey aluminium flush windows opened outwards on a rendered wall'],
+                /* Sheerline's own photograph, added 2026-08-10 on the owner's
+                   instruction that the page "cant just have the one project that
+                   is pretty niche". A 1930s red brick house with a bay, which
+                   carries the page's argument that flush aluminium suits an
+                   older building far better than our single Cotswold cottage can
+                   on its own. Our photographs stay, and stay captioned as ours. */
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-flush/afw-hero-brick-house-1920w.jpg', 'alt' => 'Pale grey flush aluminium windows and a bay on a red brick house'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Flush aluminium window frame detail'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Aluminium windows installed on a coastal home'],

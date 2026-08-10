@@ -64,7 +64,7 @@ $alu_standard = esc_url(home_url('/aluminium-windows/'));
 $aluminium_gives = [
     [
         'name' => __('Frames you barely notice', 'fenster'),
-        'copy' => __('Sightlines run from 88mm on a casement and 46mm on a fixed light. Aluminium is strong enough to hold a large pane in a narrow frame, which is the part uPVC cannot follow, and it is why a big opening stays mostly glass.', 'fenster'),
+        'copy' => __('Aluminium carries a big pane in a narrow frame in a way uPVC cannot, which is why an opening stays mostly glass. Prestige is one system with three outer frames and the flush one is the larger of them; across the range Sheerline publish sightlines from 46mm on a fixed light to 112mm on a casement.', 'fenster'),
     ],
     [
         'name' => __('Any colour, inside and out', 'fenster'),
@@ -106,51 +106,23 @@ $aluminium_gives = [
                 </figure>
 
                 <figure class="fg-afw-plate__draw">
-                    <?php /* Plan section through the jamb, outside at the top. The
-                             dashed datum is the outside face of the frame and it
-                             runs across BOTH halves on purpose: the flush sash
-                             sits on that line and the standard sash breaks it,
-                             which is the whole drawing. Deliberately simplified,
-                             and the step carries no dimension because Sheerline
-                             publishes no figure for it. */ ?>
-                    <svg class="fg-afw-svg" viewBox="8 44 624 238" role="img"
-                        aria-label="<?php esc_attr_e('Section drawing comparing a flush window, where the sash face sits level with the frame face, against a standard window, where the sash stands proud of it', 'fenster'); ?>">
-                        <g class="fg-afw-svg__construct">
-                            <path d="M20 100 H620"/>
-                        </g>
+                    <?php /* Was a hand-drawn SVG section comparing flush against
+                             standard. The owner's verdict was "terrible... do
+                             something high end not bad graphics", and he was
+                             right: it was line art competing with a photograph.
+                             This is Sheerline's own render of the Prestige flush
+                             corner, which shows the flat face better than a
+                             drawing of it ever could.
 
-                        <g class="fg-afw-svg__frame">
-                            <rect x="60" y="100" width="70" height="100"/>
-                            <rect x="68" y="108" width="54" height="84"/>
-                            <rect x="130" y="100" width="60" height="85"/>
-                            <rect x="138" y="108" width="44" height="69"/>
-                        </g>
-                        <g class="fg-afw-svg__glass">
-                            <path d="M190 132 H300 M190 152 H300"/>
-                        </g>
-
-                        <g class="fg-afw-svg__frame">
-                            <rect x="380" y="100" width="70" height="100"/>
-                            <rect x="388" y="108" width="54" height="84"/>
-                            <rect x="438" y="64" width="72" height="107"/>
-                            <rect x="446" y="72" width="56" height="91"/>
-                        </g>
-                        <g class="fg-afw-svg__glass">
-                            <path d="M510 108 H620 M510 128 H620"/>
-                        </g>
-                        <g class="fg-afw-svg__construct">
-                            <path d="M424 64 V100 M416 64 h16 M416 100 h16"/>
-                        </g>
-
-                        <g class="fg-afw-svg__label">
-                            <text x="60" y="240"><?php esc_html_e('FLUSH', 'fenster'); ?></text>
-                            <text x="60" y="262" class="fg-afw-svg__note"><?php esc_html_e('faces level', 'fenster'); ?></text>
-                            <text x="380" y="240"><?php esc_html_e('STANDARD', 'fenster'); ?></text>
-                            <text x="380" y="262" class="fg-afw-svg__note"><?php esc_html_e('sash proud of the frame', 'fenster'); ?></text>
-                            <text x="20" y="92" class="fg-afw-svg__note"><?php esc_html_e('outside face', 'fenster'); ?></text>
-                        </g>
-                    </svg>
-                    <figcaption><?php esc_html_e('Section through the jamb, outside at the top. Simplified, and drawn to make one point.', 'fenster'); ?></figcaption>
+                             There is deliberately NO comparison here. Sheerline
+                             publish no Prestige STANDARD corner render, so a
+                             flush-against-standard pair would have had to borrow
+                             a Classic corner from a different range and label it
+                             as something it is not. */ ?>
+                    <img src="<?php echo esc_url(fenster_generated_url($base . 'afw-prestige-flush-corner-900w.png')); ?>"
+                        alt="<?php esc_attr_e('Cutaway corner of a Sheerline Prestige flush aluminium window in anthracite grey, the sash face sitting level with the outer frame', 'fenster'); ?>"
+                        loading="lazy" width="900" height="871">
+                    <figcaption><?php esc_html_e('The Prestige flush corner. The sash face and the frame face finish in one plane.', 'fenster'); ?></figcaption>
                 </figure>
             </div>
         </div>
