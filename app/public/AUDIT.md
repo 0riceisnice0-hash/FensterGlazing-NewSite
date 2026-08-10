@@ -407,7 +407,7 @@ Issues:
 
 - No SMTP constants are defined in `wp-config.php` locally — on production, `wp_mail()` will fall back to PHP `mail()`, which lands in spam or fails silently on most hosts. The constants system exists (`FENSTER_SMTP_*`); it must actually be configured at launch.
 - Office mail currently sends with the old proven envelope `WordPress <wordpress@fensterglazing.com>`, which live testing confirmed reaches `info@fensterglazing.com`. Authenticated SMTP plus SPF/DKIM/DMARC is still needed before enabling customer confirmation emails again.
-- The office email's "View saved enquiry" button links to wp-admin — correct, but make sure the office staff have accounts.
+- ~~The office email's "View saved enquiry" button links to wp-admin — correct, but make sure the office staff have accounts.~~ **Closed 2026-08-10 by owner instruction: the button is removed.** The answer to "do the office staff have accounts" is that they should not need one. The email now carries a single `Reply to <name>` action. See the Shared Form Rule in `AI.md`.
 - Leads are saved before email (excellent). Add the unsent-lead alerting from 6.13.
 - GDPR: enquiries store personal data indefinitely as private posts. The privacy policy should state retention, and a periodic purge (e.g. 24 months) is worth scheduling.
 

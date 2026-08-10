@@ -411,10 +411,24 @@ function fenster_process_enquiry_uploads(int $enquiry_id): array
     return $uploaded;
 }
 
+// The uploads travel with this email as real attachments, so the row states how
+// many to expect rather than listing filenames the mail client already shows. It
+// always renders: "nothing attached" is information, and a missing row is not.
+function fenster_enquiry_attachment_summary(array $attachments): string
+{
+    $count = count($attachments);
+    if ($count === 0) {
+        return 'No images or files attached';
+    }
+
+    return $count === 1 ? '1 attachment' : $count . ' attachments';
+}
+
+// This goes to office sales staff, who have no WordPress logins, so it must not
+// link into wp-admin. Everything needed to act on the lead is in the email.
 function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attachments = []): string
 {
     $logo = FENSTER_THEME_URI . '/assets/brand/18931%20Fenster%20Glazing%20Logo%20-%20White%20Background.png';
-    $admin_url = admin_url('post.php?post=' . $enquiry_id . '&action=edit');
     $phone_href = $data['phone'] !== '' ? 'tel:' . preg_replace('/[^0-9+]/', '', $data['phone']) : '';
     $rows = implode('', [
         fenster_enquiry_email_row('Customer', $data['name']),
@@ -426,7 +440,7 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
         fenster_enquiry_email_row('Preferred consultation', $data['appointment_display'] ?? ''),
         fenster_enquiry_email_row('Timescale', $data['timescale'] !== '' ? $data['timescale'] : 'Not specified'),
         fenster_enquiry_email_row('Source', $data['source']),
-        fenster_enquiry_email_row('Files', ! empty($attachments) ? implode(', ', array_map(static fn (array $file): string => (string) ($file['name'] ?? ''), $attachments)) : ''),
+        fenster_enquiry_email_row('Attachments', fenster_enquiry_attachment_summary($attachments)),
     ]);
 
     return '<!doctype html>
@@ -438,7 +452,7 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
 <tr><td style="padding:30px 28px 12px;"><div style="display:inline-block;padding:7px 10px;border-radius:999px;background:#e6f6ed;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">' . esc_html($data['project_type']) . '</div><h1 style="margin:16px 0 8px;color:#06212a;font-size:28px;line-height:1.12;">' . esc_html($data['name']) . (! empty($data['appointment_display']) ? ' has requested a consultation.' : ' has started a project.') . '</h1><p style="margin:0;color:#60727a;font-size:15px;line-height:1.6;">Reply directly to this email to contact the customer, or use the details below.</p></td></tr>
 <tr><td style="padding:10px 28px 4px;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0">' . $rows . '</table></td></tr>
 <tr><td style="padding:24px 28px;"><div style="padding:22px;border-radius:12px;background:#f3f8f7;border-left:4px solid #2eac66;"><div style="margin-bottom:8px;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Project details</div><div style="color:#06212a;font-size:16px;line-height:1.65;">' . nl2br(esc_html($data['message'])) . '</div></div></td></tr>
-<tr><td style="padding:0 28px 30px;"><table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="border-radius:8px;background:#2eac66;"><a href="mailto:' . esc_attr($data['email']) . '" style="display:inline-block;padding:14px 20px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Reply to ' . esc_html($data['name']) . '</a></td><td width="10"></td><td style="border-radius:8px;border:1px solid #cbdad7;"><a href="' . esc_url($admin_url) . '" style="display:inline-block;padding:13px 20px;color:#003845;text-decoration:none;font-size:15px;font-weight:700;">View saved enquiry</a></td></tr></table></td></tr>
+<tr><td style="padding:0 28px 30px;"><table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="border-radius:8px;background:#2eac66;"><a href="mailto:' . esc_attr($data['email']) . '" style="display:inline-block;padding:14px 20px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Reply to ' . esc_html($data['name']) . '</a></td></tr></table></td></tr>
 <tr><td style="padding:18px 28px;background:#f3f8f7;color:#60727a;font-size:12px;line-height:1.5;">Submitted from <a href="' . esc_url($data['page_url']) . '" style="color:#087943;">' . esc_html($data['page_url']) . '</a><br>The enquiry was saved privately in WordPress before this email was sent.</td></tr>
 </table></td></tr></table></body></html>';
 }
