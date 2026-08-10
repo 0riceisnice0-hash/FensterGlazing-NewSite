@@ -3701,7 +3701,14 @@ if ($is_commercial_hub) {
         <?php get_template_part('template-parts/components/product-pulse', null, [
             'usps'  => $product_usps,
             'slug'  => $slug,
-            'title' => $title,
+            /* The pulse heading is the route title on all 23 routes that render
+               this strip, which means every one of them repeats its own H1 as an
+               H2 a few hundred pixels below it. That is a site-wide structural
+               smell rather than a fault of this route, and it is flagged rather
+               than fixed everywhere here. Aluminium flush is overridden because a
+               duplicate H1 sitting directly above a bespoke middle looks like
+               nobody read the page. */
+            'title' => $is_alu_flush_bespoke ? 'Sheerline Prestige, in four figures.' : $title,
         ]); ?>
     <?php elseif (! $use_product_journey) : ?>
         <section class="fg-intent-band">
