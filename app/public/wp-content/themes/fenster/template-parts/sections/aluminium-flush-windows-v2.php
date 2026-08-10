@@ -113,7 +113,7 @@ $aluminium_gives = [
                              which is the whole drawing. Deliberately simplified,
                              and the step carries no dimension because Sheerline
                              publishes no figure for it. */ ?>
-                    <svg class="fg-afw-svg" viewBox="8 58 624 222" role="img"
+                    <svg class="fg-afw-svg" viewBox="8 44 624 238" role="img"
                         aria-label="<?php esc_attr_e('Section drawing comparing a flush window, where the sash face sits level with the frame face, against a standard window, where the sash stands proud of it', 'fenster'); ?>">
                         <g class="fg-afw-svg__construct">
                             <path d="M20 100 H620"/>
@@ -132,14 +132,14 @@ $aluminium_gives = [
                         <g class="fg-afw-svg__frame">
                             <rect x="380" y="100" width="70" height="100"/>
                             <rect x="388" y="108" width="54" height="84"/>
-                            <rect x="438" y="78" width="72" height="107"/>
-                            <rect x="446" y="86" width="56" height="91"/>
+                            <rect x="438" y="64" width="72" height="107"/>
+                            <rect x="446" y="72" width="56" height="91"/>
                         </g>
                         <g class="fg-afw-svg__glass">
-                            <path d="M510 132 H620 M510 152 H620"/>
+                            <path d="M510 108 H620 M510 128 H620"/>
                         </g>
                         <g class="fg-afw-svg__construct">
-                            <path d="M424 78 V100 M418 78 h12 M418 100 h12"/>
+                            <path d="M424 64 V100 M416 64 h16 M416 100 h16"/>
                         </g>
 
                         <g class="fg-afw-svg__label">
