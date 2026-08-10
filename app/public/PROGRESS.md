@@ -5,7 +5,12 @@ Last updated: 2026-08-07
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
-## 2026-08-10 - The office enquiry email stops linking into wp-admin (6698d90)
+## 2026-08-10 - The office enquiry email stops linking into wp-admin (LIVE, e5fb592)
+
+**On test and live.** Live is `e5fb5925` on `release/office-email-no-admin-link`,
+cut from live `8ba7e1bc` with this one commit cherry-picked on, because `main`
+carries another session's replacement glazing rebuild that is explicitly not for
+live yet. `main` carries the same fix as `6698d904`. See `LIVECHANGES.md`.
 
 Owner instruction: the notification the office receives from the residential and
 commercial forms was sending staff to `post.php?post=<id>&action=edit`, and it
