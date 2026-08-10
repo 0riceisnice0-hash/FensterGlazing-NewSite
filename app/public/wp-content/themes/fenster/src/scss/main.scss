@@ -39167,25 +39167,19 @@ html.fg-blinds-reveal-locked {
   max-width: 58ch;
 }
 
+/* One element now. Our close-up of the join was removed on 2026-08-10 because
+   that install has a genuine step at the fixed panes, so the comparison stands
+   alone and is centred and held to a readable width rather than stretched
+   across the full container. */
 .fg-afw-plate__grid {
   display: grid;
-  /* Even columns now. The left cell is the comparison and the right is our own
-     photograph, and neither should look like the subordinate one. */
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.2rem, 3vw, 2.4rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
 }
 
-.fg-afw-plate__shot {
-  margin: 0;
-}
-
-.fg-afw-plate__shot img {
-  display: block;
+.fg-afw-plate__compare {
   width: 100%;
-  height: auto;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  max-width: 660px;
 }
 
 /* The drawing sits on a slightly lifted panel rather than straight on the
@@ -39218,13 +39212,7 @@ html.fg-blinds-reveal-locked {
 }
 
 
-@media (max-width: 860px) {
-  /* Comparison above photograph on a phone: the wipe is what the section is
-     for, and a touch device is where dragging it is most natural. */
-  .fg-afw-plate__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
+
 
 /* ==========================================================================
    Aluminium doors — /aluminium-doors/
