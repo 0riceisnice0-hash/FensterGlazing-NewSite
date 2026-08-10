@@ -39167,19 +39167,33 @@ html.fg-blinds-reveal-locked {
   max-width: 58ch;
 }
 
-/* One element now. Our close-up of the join was removed on 2026-08-10 because
-   that install has a genuine step at the fixed panes, so the comparison stands
-   alone and is centred and held to a readable width rather than stretched
-   across the full container. */
+/* Two elements: our own photograph and Sheerline's comparison. Even columns,
+   because neither is the subordinate one — ours is the real window in a real
+   wall and theirs is the one that isolates the difference. */
 .fg-afw-plate__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: start;
 }
 
-.fg-afw-plate__compare {
+.fg-afw-plate__shot {
+  margin: 0;
+}
+
+.fg-afw-plate__shot img {
+  display: block;
   width: 100%;
-  max-width: 660px;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+@media (max-width: 860px) {
+  /* Photograph above comparison on a phone. */
+  .fg-afw-plate__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* The drawing sits on a slightly lifted panel rather than straight on the

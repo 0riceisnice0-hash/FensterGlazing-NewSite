@@ -97,18 +97,26 @@ $aluminium_gives = [
                 <p><?php esc_html_e('On a standard casement the opening sash sits on the face of the frame and stands proud of it, so every opener has a step around it and a shadow line that follows the sun round. On a flush window the sash closes down into the frame and the outside of the window is one plane. That is the only difference between the two, and it is the one you see from the garden.', 'fenster'); ?></p>
             </div>
 
-            <?php /* OUR OWN CLOSE-UP OF THE JOIN WAS HERE AND HAD TO COME OUT.
-                     Owner, 2026-08-10: the fixed panes on that job are not dummy
-                     sashes, so the opener genuinely stands proud of them and
-                     there IS a step at that junction. The photograph shows it,
-                     and the caption claimed "no step across it", which was
-                     simply false. It was the worst image on the page: our only
-                     detail shot, illustrating the one thing the product exists
-                     to avoid. Deleted rather than recaptioned.
+            <?php /* THE CAPTION HERE WAS FALSE AND THE FIX IS THE CAPTION, NOT
+                     THE PHOTOGRAPH. It used to say "no step across it". Owner,
+                     2026-08-10: the fixed panes on that job are direct glazed
+                     rather than dummy sashes, so the opener does stand proud of
+                     them and there IS a step at that junction.
 
-                     What is left is Sheerline's comparison, alone and centred.
-                     Do not put a close-up of that install back. */ ?>
+                     The frames are still Prestige flush and it is still our
+                     work, so the picture stays and simply says what it shows.
+                     Naming the reason is better than hiding it: a reader who
+                     spots the step now has the explanation instead of catching
+                     us out. Do not restore any wording claiming the faces run
+                     level on this install. */ ?>
             <div class="fg-afw-plate__grid">
+                <figure class="fg-afw-plate__shot">
+                    <img src="<?php echo esc_url(fenster_generated_url($base . 'afw-flush-join-1300w.jpg')); ?>"
+                        alt="<?php esc_attr_e('Detail of a dove grey aluminium window where an opening sash meets a fixed pane glazed directly into the frame', 'fenster'); ?>"
+                        loading="lazy" width="1300" height="1005">
+                    <figcaption><?php esc_html_e('One of ours, in dove grey. The fixed panes here are glazed straight into the frame rather than into a dummy sash, so they sit back from the opener next to them.', 'fenster'); ?></figcaption>
+                </figure>
+
                 <?php /* THE COMPARISON, and it took three goes. A hand-drawn SVG
                          section was scrapped as "terrible"; a lone corner render
                          showed the flush profile but compared it to nothing.
@@ -207,20 +215,56 @@ $aluminium_gives = [
         </div>
     </section>
 
-    <?php /* THE "OUR WORK" GALLERY IS DELIBERATELY GONE, 2026-08-10.
+    <?php /* ---------- Our work ---------------------------------------------
+             Two photographs of the one flush aluminium job we have. The head
+             copy used to say "look at the sash lines: on every opener the face
+             runs level with the frame around it", which is not true of this
+             install and is why it was briefly pulled altogether. The photographs
+             were never the problem. What is here now describes the house and
+             claims nothing about the sash line. */ ?>
+    <section class="fg-cw-gallery fg-cw-gallery--pair" aria-labelledby="fg-afw-proof-title">
+        <div class="container">
+            <div class="fg-cw-gallery__head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
+                    <h2 id="fg-afw-proof-title"><?php esc_html_e('The house on the stone.', 'fenster'); ?></h2>
+                </div>
+                <p>
+                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('Dove grey Prestige frames on a Cotswold limestone cottage, photographed on a clear November afternoon. Click either image for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('Dove grey frames on Cotswold limestone. Tap either image for a closer look.', 'fenster'); ?></span>
+                </p>
+            </div>
 
-             It carried two photographs of the same house and the line "look at
-             the sash lines: on every opener the face runs level with the frame
-             around it", which is not true of that job. The fixed panes are
-             direct glazed rather than dummy sashes, so the openers stand proud
-             of them. The owner's words: "its a real nice looking job but its a
-             bit outside the norm".
-
-             One install, and an atypical one, does not deserve a gallery of its
-             own on a product page. A single elevation survives in the section
-             above, where it is doing an honest job: showing grey aluminium on a
-             limestone building from far enough away that the detail in question
-             is not what is being claimed. */ ?>
+            <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Aluminium flush window gallery', 'fenster'); ?>">
+                <?php
+                $gallery = [
+                    [
+                        'src' => $base . 'afw-timber-lintel-1100w.jpg',
+                        'alt' => 'A dove grey aluminium window under a timber lintel in a limestone wall, with a fixed pane beside the opening sash',
+                        'caption' => __('Under a timber lintel, with the original stone cill kept', 'fenster'),
+                    ],
+                    [
+                        'src' => $base . 'afw-stone-return-1100w.jpg',
+                        'alt' => 'Dove grey aluminium windows turning a corner on a limestone cottage, seen from the garden',
+                        'caption' => __('The same house, turning the corner', 'fenster'),
+                    ],
+                ];
+                ?>
+                <?php foreach ($gallery as $index => $shot) : ?>
+                    <?php $full = fenster_generated_url($shot['src']); ?>
+                    <figure>
+                        <a href="<?php echo esc_url($full); ?>" data-fg-gallery-lightbox
+                            aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $shot['alt'])); ?>">
+                            <img src="<?php echo esc_url($full); ?>"
+                                sizes="(max-width: 860px) 82vw, 40vw"
+                                alt="<?php echo esc_attr($shot['alt']); ?>" loading="lazy">
+                            <figcaption><?php echo esc_html($shot['caption']); ?></figcaption>
+                        </a>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
 
 
 </div>
