@@ -188,14 +188,20 @@ $aluminium_gives = [
         <div class="container">
             <div class="fg-afw-band__head">
                 <div>
-                    <p class="eyebrow"><?php esc_html_e('Why aluminium', 'fenster'); ?></p>
-                    <h2 id="fg-afw-alu-title"><?php esc_html_e('What the metal buys you.', 'fenster'); ?></h2>
+                    <?php /* Was "What the metal buys you." Owner, 2026-08-10:
+                             "too brash and not customer focused or high end",
+                             and he was right — it is written from the product's
+                             side of the table and it talks about money. This one
+                             is the question the reader is actually asking, which
+                             is whether this is the material for their job. */ ?>
+                    <p class="eyebrow"><?php esc_html_e('Choosing the material', 'fenster'); ?></p>
+                    <h2 id="fg-afw-alu-title"><?php esc_html_e('When aluminium is the right answer.', 'fenster'); ?></h2>
                 </div>
                 <p>
                     <?php
                     printf(
                         /* translators: %s: link to the uPVC flush casement page */
-                        esc_html__('Flush is a shape and you can have it in %s for less. Aluminium is what you choose when the frames need to be thinner than uPVC can go, or a colour it does not come in, or when the window has to still be there in thirty years looking like this.', 'fenster'),
+                        esc_html__('Flush is a shape, and you can have it in %s for less. Aluminium is the answer when the frames need to be thinner than uPVC can go, when you want a colour it does not come in, or when the window needs to go on looking like this rather than merely working.', 'fenster'),
                         '<a class="fg-cw-link" href="' . $upvc_flush . '">' . esc_html__('uPVC', 'fenster') . '</a>'
                     );
                     ?>
