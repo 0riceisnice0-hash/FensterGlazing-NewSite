@@ -39,6 +39,42 @@ in all three attachment states rather than by reading the source: the row reads
 correctly at zero, one and three, and `wp-admin` appears zero times in the HTML.
 No SCSS or JS changed, so `main.css` and `main.js` are untouched across the range.
 
+## 2026-08-10 - Roehampton PARKED, waiting on facts
+
+Started and stopped deliberately. Nothing was written to the theme; the only
+artefact is an image extracted to a scratch directory, which is gone.
+
+**What exists:** the internal commercial deck's page for it. Scope is aluminium
+entrance doors, thermally broken aluminium windows and shaped uPVC replacing
+existing timber, with SKN 176 Coolite solar controlled glass and argon fill. The
+difficulty is already stated and it is a good one: a live university campus,
+works planned around term times and student activity, plus Georgian bar
+detailing to match the building's character.
+
+**Why it stopped.** Four gaps, one of them blocking:
+
+1. **The deck's photograph is probably not our work.** It is 1080x1080, which is
+   a web or social crop rather than a job photo, and it shows a modern stone and
+   glass building. The scope describes shaped uPVC replacing timber and precise
+   Georgian bars, which is a period building. Roehampton has several historic
+   houses on campus. Publishing that image as our work would repeat the
+   /aluminium-doors/ hero fault.
+2. **Which building, or buildings.** If the aluminium entrance doors and the
+   Georgian bar uPVC were on different buildings, the study should say so rather
+   than blur them into one job.
+3. **No completion date** anywhere in the deck. Every other study carries one.
+   `date_confirmed => false` exists if an approximate date is ever acceptable.
+4. **No surveyor or manager named.**
+
+**What WAS decided and is now durable:** where the client and the building are
+the same organisation, name it. See the Commercial Client Anonymity Rule. That
+ruling also unblocks Tottenham Job Centre and Franklin House, both commissioned
+by councils on their own buildings.
+
+**Next best candidate instead:** Tottenham Job Centre. Its difficulty is already
+written down — a fully occupied building phased floor by floor so public services
+never stopped — and it needs the same four facts.
+
 ## 2026-08-10 - Replacement glazing rebuilt around the fault (test, 1ea5b77)
 
 **On test, not live.** Owner brief: a full rework in the same style as the other
