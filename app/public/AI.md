@@ -279,6 +279,15 @@ PHP lint example:
 - **The hero was an old-site scrape of a bay so overexposed the product could not be seen.** It is now one of our own leaded windows in a stone mullioned reveal, cropped to the hero's 3.2:1. **Check what a hero crop actually shows before choosing it**: the first candidate tried here was a brighter photograph whose letterbox band turned out to be mostly trees, with no secondary glazing legible at all.
 - **The section photographs are portrait and the media panel is 16:10**, so each is cropped to 4:3 centred on the window and the panel carries `.fg-cw-media--4x3`. Crop the box to the picture, never the picture to the box.
 
+## Case Study Gallery Alignment Rule
+
+- **Every image in a case study gallery shares one shape, commercial and residential alike.** Owner rule, 2026-08-10: "make the pics line up... crop them a bit if you have to but make sure theyre not misaligned like that." The gallery was `height: auto`, which keeps each photograph's own shape and leaves holes wherever a study mixes orientations.
+- **This was never a one-study problem.** The library is **48 portrait against 30 landscape**, and **five of the fifteen studies mix both inside one gallery** — including residential ones that long predate the commercial work. Fixing a single study would have left four others ragged.
+- **Square is the fair middle, not a taste.** Forcing landscape takes 44% off the height of the 39 portrait images that dominate the library; forcing portrait takes the same off the width of every commercial study. A square cell costs a 3:4 portrait a quarter of its height and a 3:2 landscape a third of its width. It also suits the subject, because windows and doors are tall things.
+- **Alignment then falls out of the grid**: items in a row share the row height, so with one shape every row starts level whatever the captions below them do. The rule lives on `.fg-cs-shot img` in `main.scss` and needs no per-study work.
+- **Do not "fix" this by cropping source files.** The crop is `object-fit: cover` at render time, so the originals stay whole and a future change of shape costs one line.
+- **Two galleries with similar names behave oppositely.** `.fg-cs-gallery__masonry` is the one case studies use. `.fg-case-gallery__grid` is the legacy commercial component with fixed landscape cells and a six-image slice. Check which one a page renders through before judging a photograph by its shape — that mistake nearly binned the best Headrow Court photograph.
+
 ## Commercial Client Anonymity Rule
 
 - **Do not name the client in a commercial case study.** Owner rule, 2026-08-10: "our clients names are not mentioned in commercial case studies... opens us up to poaching." Naming the main contractor or developer who hired us hands a competitor a qualified, warm lead and tells them exactly which firms buy glazing from us. Write "the main contractor" and carry on; the sentence never needs the name.

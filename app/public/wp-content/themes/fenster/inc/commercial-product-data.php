@@ -140,8 +140,14 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'Airflow and free area',
                     'title' => 'Ventilation requirements need to be known before the louvre is priced.',
                     'copy' => 'If the panel serves plant, mechanical ventilation or a specific building-service requirement, Fenster needs the free-area target or consultant schedule so the louvre can be sized properly.',
-                    'image' => $asset_base . 'commercial-5.jpg',
-                    'alt' => 'Commercial glazing package with service access',
+                    /* Was `commercial-5.jpg`, a general commercial glazing shot.
+                       This section is about plant and ventilation and now shows
+                       one of ours: a fully louvred plant room doorset, which is
+                       a different product from the fixed panel in the intro
+                       image above and is the thing the `use_cases` list means by
+                       plant rooms and back-of-house. Added 2026-08-10. */
+                    'image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-plant-doorset-1300w.jpg',
+                    'alt' => 'A pair of fully louvred aluminium plant room doors set into dark brickwork',
                     'points' => ['Free-area checks', 'Plant or ventilation brief', 'Suitable panel size'],
                 ],
                 [
