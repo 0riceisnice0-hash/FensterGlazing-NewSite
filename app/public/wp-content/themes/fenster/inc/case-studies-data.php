@@ -128,11 +128,17 @@ function fenster_case_studies(): array
          * `$fitter` helper slugs those names into real anchors. `team_label` is
          * set because "Installers" would be wrong for a surveyor and a director.
          *
-         * ONE PHOTOGRAPH ONLY so far, and it is extracted from the deck's own
-         * page rather than supplied as a file, so it is 1600x1200 rather than a
-         * phone original. Four more exist and should replace and extend this the
-         * moment they arrive as files: two entrance doorsets, the curtain wall
-         * head detail, and the internal reception screen.
+         * SIX PHOTOGRAPHS, all Fenster's own and all at phone resolution. The
+         * first version of this study ran a 1600x1200 image lifted out of the
+         * deck; that is replaced. The before shot is the same elevation as the
+         * hero, which is what makes the pair worth having.
+         *
+         * THREE FACES ARE BLURRED in the before shot. Depot staff sitting inside
+         * and a third party in hi-vis outside, all identifiable at full size and
+         * none of them ours. The rust on the mullions, which is the entire point
+         * of the photograph, is untouched. A mirrored phone number on a van
+         * reflected in the finished elevation was left: it is a company's own
+         * advertised number, reversed and tiny at render size.
          */
         'bletchley-rail-depot-refurbishment' => [
             'title' => 'Curtain walling, windows and doors, Bletchley rail depot',
@@ -170,8 +176,17 @@ function fenster_case_studies(): array
             ],
             'team_label' => 'Surveyed and managed by',
             'installers' => [$surveyor_david, $director_adam],
+            /* images[0] is the HERO and the rest are the gallery, so the
+               finished elevation leads and the before sits first in the gallery
+               with a caption that points back at it. The two cannot sit side by
+               side because one of them is the hero. */
             'images' => [
-                ['src' => $img . 'cs-bletchley-rail-depot-elevation.webp', 'caption' => 'The main elevation, with the run of aluminium windows under the new cladding line.'],
+                ['src' => $img . 'cs-bletchley-rail-depot-elevation.webp', 'caption' => 'The finished elevation, with the run of aluminium windows under the new cladding line.'],
+                ['src' => $img . 'cs-bletchley-rail-depot-before.webp', 'caption' => 'The same elevation before we started. The old frames had rusted through at the mullions and were staining the sills below them.'],
+                ['src' => $img . 'cs-bletchley-rail-depot-entrance.webp', 'caption' => 'One of the automatic entrance doorsets, with fixed sidelights and a screen over.'],
+                ['src' => $img . 'cs-bletchley-rail-depot-entrance-wide.webp', 'caption' => 'The second entrance, on the ramped approach.'],
+                ['src' => $img . 'cs-bletchley-rail-depot-head-detail.webp', 'caption' => 'The window head against the new cladding line, frames colour-matched through the package.'],
+                ['src' => $img . 'cs-bletchley-rail-depot-reception.webp', 'caption' => 'The internal reception screen, with its sliding hatch onto the corridor.'],
             ],
             'seo' => [
                 'title_tag' => 'Bletchley Rail Depot: Commercial Windows, Doors and Curtain Walling',
