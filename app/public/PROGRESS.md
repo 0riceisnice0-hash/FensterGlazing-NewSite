@@ -5,6 +5,35 @@ Last updated: 2026-08-07
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
+## 2026-08-10 - The office enquiry email stops linking into wp-admin (6698d90)
+
+Owner instruction: the notification the office receives from the residential and
+commercial forms was sending staff to `post.php?post=<id>&action=edit`, and it
+should not, because they are sales staff without WordPress logins.
+
+`AUDIT.md` had this recorded the **other way round** — as correct, with a
+follow-up to make sure the office had accounts. The owner's answer is that they
+should not need one, so the button is gone and the audit line is closed rather
+than left open. The email now carries a single `Reply to <name>` action, and the
+rule against putting an admin link back is in `AI.md` under the Shared Form Rule.
+
+The `Files` row was a second, quieter fault. It only rendered when something had
+been uploaded, so an enquiry with no photos and an enquiry whose attachments had
+been stripped in transit looked identical to the reader. It always renders now:
+`No images or files attached`, or a count — `1 attachment`, `3 attachments`. The
+count rather than the filename list is deliberate; the files travel with the
+email as real attachments and the mail client already names them, so the useful
+thing the body can add is how many *should* have arrived.
+
+**One change covers both forms.** Residential and commercial share one component
+and one handler, per the Shared Form Rule, so there was never a second template
+to find — worth stating because the brief named two forms.
+
+Verified by rendering `fenster_enquiry_office_email()` against the deployed theme
+in all three attachment states rather than by reading the source: the row reads
+correctly at zero, one and three, and `wp-admin` appears zero times in the HTML.
+No SCSS or JS changed, so `main.css` and `main.js` are untouched across the range.
+
 ## 2026-08-10 - Replacement glazing rebuilt around the fault (test, 1ea5b77)
 
 **On test, not live.** Owner brief: a full rework in the same style as the other
