@@ -129,6 +129,23 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-headrow-court-oriels.webp', 'caption' => 'The projecting bays wrapping the corner above the shopfronts. Photograph by Ben Harrison Photography.'],
                 ['src' => $img . 'cs-headrow-court-gables.webp', 'caption' => 'The gabled upper floors, where the window line runs across what were once four separate buildings. Photograph by Ben Harrison Photography.'],
                 ['src' => $img . 'cs-headrow-court-bay-detail.webp', 'caption' => 'A closer view of a bay, showing the dark framing against the red brick. Photograph by Ben Harrison Photography.'],
+                /* Two of our own, added 2026-08-10, and chosen for what the
+                   commissioned set cannot show rather than for being better
+                   photographs, which they are not. Ben Harrison's four are
+                   finished-building photography: straight verticals, clean
+                   light, no clutter. Neither of them shows the job happening or
+                   the building at eye level from the pavement.
+
+                   They also reduce this page's dependence on photography whose
+                   licence for our own marketing is still unconfirmed, per the
+                   note at the top. That note stays until somebody confirms it.
+
+                   The gallery renders SIX images in landscape cells with
+                   `object-fit: cover`, so both are cropped to the 3:2 of the
+                   existing four. Portrait shots from this set were left out for
+                   that reason, not because they are worse. */
+                ['src' => $img . 'cs-headrow-court-platform.webp', 'caption' => 'Working from a platform with the street closed beneath it. A city centre elevation is reached out of hours, not in the middle of the day.'],
+                ['src' => $img . 'cs-headrow-court-bays-street.webp', 'caption' => 'The finished bays from the pavement, running the length of the elevation.'],
             ],
             'seo' => [
                 'title_tag' => 'Headrow Court, Leeds: Student Accommodation Glazing',

@@ -110,8 +110,16 @@ function fenster_commercial_product_pages(): array
             'intro_heading' => 'Ventilation louvres integrated into commercial glazing and facades.',
             'hero_image' => $asset_base . 'commercial-4.jpg',
             'hero_alt' => 'Commercial glazing with ventilation requirements',
-            'intro_image' => $asset_base . 'SM-037-001.jpg',
-            'intro_alt' => 'Commercial aluminium glazing detail',
+            /* Was `SM-037-001.jpg`, a generic aluminium glazing detail. This is
+               a page about louvres and it carried no photograph of a louvre
+               anywhere on it. This one is ours, from Headrow Court in Leeds.
+
+               The hero above is still a general commercial elevation, which is
+               defensible for a banner: a wide crop of a single louvre panel
+               reads as blade texture rather than as a louvre, the same trap the
+               secondary glazing and replacement glazing heroes both hit. */
+            'intro_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-vent-headrow-1500w.jpg',
+            'intro_alt' => 'A dark grey aluminium louvre vent panel set into red brickwork',
             'summary' => [
                 'Louvres are used where a building needs airflow, screening or ventilation without leaving an opening exposed. They are common around plant rooms, service areas, bin stores, back-of-house spaces and commercial facades.',
                 'Fenster can include louvre panels within aluminium window, door and curtain walling packages, matching colour and frame details where practical. Free-area requirements, weather exposure and maintenance access should be confirmed before specification.',

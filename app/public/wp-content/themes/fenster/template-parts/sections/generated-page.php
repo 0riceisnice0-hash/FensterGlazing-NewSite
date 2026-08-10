@@ -3050,7 +3050,10 @@ if ($is_commercial_hub) {
             'title' => 'Louvres and ventilation',
             'copy' => 'Louvre, airflow and screening products coordinated with the wider glazing requirement.',
             'url' => home_url('/louvre-vents/'),
-            'image' => $asset_base . 'IKL33louvresystem.png',
+            /* Was a supplier system render on white. One of ours, installed, from
+               Headrow Court, 2026-08-10 — real over supplier, the same call this
+               file makes everywhere else. */
+            'image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-vent-headrow-1500w.jpg',
         ],
         [
             'title' => 'AOV and automation',
