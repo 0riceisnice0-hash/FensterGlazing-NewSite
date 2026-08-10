@@ -12680,10 +12680,30 @@ a.fg-cs-installer:hover {
   margin: 0;
 }
 
+/* CASE STUDY GALLERY IMAGES ALL SHARE ONE SHAPE. Owner rule, 2026-08-10, for
+   every study, commercial and residential: they line up, and crop a bit if they
+   have to rather than sit ragged.
+
+   This was `height: auto`, which kept each photograph's own shape and therefore
+   left holes wherever a gallery mixed orientations. That is not an edge case:
+   the library is 48 portrait against 30 landscape, and FIVE of the fifteen
+   studies mix both inside one gallery.
+
+   Square is the fair middle rather than a preference. Forcing landscape would
+   take 44% off the height of the 39 portrait images that dominate the library;
+   forcing portrait would take the same off the width of every commercial study.
+   A square cell costs a 3:4 portrait a quarter of its height and a 3:2 landscape
+   a third of its width, which is even-handed. It also suits the subject: windows
+   and doors are tall things, so square holds more of one than 4:3 would.
+
+   Alignment then follows from the grid itself. Items in a row share the row's
+   height, so with every image the same shape each row starts level, whatever the
+   captions below them do. */
 .fg-cs-shot img {
   display: block;
   width: 100%;
-  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   border: 1px solid var(--color-line);
   border-radius: 10px;
   background: var(--color-soft);
