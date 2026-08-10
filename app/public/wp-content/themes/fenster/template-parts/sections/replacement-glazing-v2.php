@@ -175,7 +175,7 @@ $takes_glass = [
                 <p class="eyebrow"><?php esc_html_e('On the day', 'fenster'); ?></p>
                 <h2 id="fg-rg-day-title"><?php esc_html_e('The frame stays exactly where it is.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The beads come off, the old unit lifts out, the new one goes in and the beads go back. The beads and gaskets already on your window are almost always the ones that go back on it, so the frame, the hinges, the handles and the locks are all left as they were.', 'fenster'); ?></p>
-                <p><?php esc_html_e('It is usually one of our service engineers, sometimes a fitter, and it is a quiet job. No scaffolding, no plaster, no making good afterwards.', 'fenster'); ?></p>
+                <p><?php esc_html_e('It is usually one of our service engineers, sometimes a fitter, and it is a quiet job. We leave the room as we found it.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('About an hour for a typical unit, longer for several or for something awkward', 'fenster'); ?></li>
                     <li><?php esc_html_e('We need to reach the window from inside and out', 'fenster'); ?></li>
@@ -226,7 +226,7 @@ $takes_glass = [
                      its place: we will talk you out of it, and it costs nothing
                      to find out. */ ?>
             <p class="fg-rg-band__note">
-                <?php esc_html_e('If a frame has gone soft or stopped closing, we will say so rather than sell you glass for it. The survey is free either way.', 'fenster'); ?>
+                <?php esc_html_e('If the frame is rotten or no longer closing properly, we will say so rather than sell you glass for it. The survey is free either way.', 'fenster'); ?>
             </p>
         </div>
     </section>
