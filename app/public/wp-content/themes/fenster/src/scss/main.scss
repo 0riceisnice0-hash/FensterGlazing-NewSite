@@ -3897,7 +3897,10 @@ h3 {
 
 .fg-product-quote-embed__grid {
   display: grid;
-  grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
+  /* Widened from 0.34fr on 2026-08-10. The copy column measured 293px, and the
+     heading beside it is a display size, so long product labels broke one word
+     to a line. The iframe loses about 50px and does not care. */
+  grid-template-columns: minmax(260px, 0.4fr) minmax(0, 1fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   align-items: stretch;
 }
@@ -3916,11 +3919,22 @@ h3 {
   padding: clamp(1.2rem, 2vw, 1.65rem);
 }
 
+/* This heading interpolates the product label, so its length is not fixed: it
+   runs from "Design and price your uPVC Doors online." to "...your Aluminium
+   Sliding Patio Doors online.", 40 characters to 59, across 21 routes. At the
+   old 3rem in a 293px column that longest one broke into six lines with
+   "Sliding" alone on one of them, and the owner reported it as messed up.
+
+   Two constraints were fighting: `max-width: 13ch` AND a column narrower than
+   13ch resolves to. The cap is gone, the column now does the constraining, and
+   the size is set so the WORST label still reads. `balance` evens the rag out
+   so short labels do not end on a widow. Check the long routes, not the short
+   ones, if you ever change this. */
 .fg-product-quote-embed__copy h2 {
-  max-width: 13ch;
   margin: 0;
-  font-size: clamp(1.9rem, 2.9vw, 3rem);
-  line-height: 1;
+  font-size: clamp(1.5rem, 1.95vw, 2.05rem);
+  line-height: 1.06;
+  text-wrap: balance;
 }
 
 .fg-product-quote-embed__copy p:not(.eyebrow) {
@@ -22410,8 +22424,10 @@ a.fg-cs-card__pill:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  /* One column here, so the heading has the full width available and the old
+     14ch cap was squeezing it back down to about seven characters a line. */
   .fg-product-quote-embed__copy h2 {
-    max-width: 14ch;
+    max-width: 22ch;
   }
 
   .fg-product-quote-embed__bar {
