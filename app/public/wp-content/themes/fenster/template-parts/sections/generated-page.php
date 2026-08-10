@@ -1216,7 +1216,17 @@ $journey_why_button = $is_about ? 'Talk to the team' : ($is_commercial ? 'Start 
 $journey_gallery_eyebrow = $is_about ? 'People and proof' : ($is_commercial ? 'Projects and systems' : 'Gallery and choices');
 $journey_gallery_heading = $is_about ? 'See the team, work and details behind the company.' : ($is_commercial ? 'See the commercial work, systems and details before you enquire.' : 'See the styles, finishes and details before you enquire.');
 $journey_faq_eyebrow = $is_about ? 'Company questions' : ($is_commercial ? 'Commercial questions' : 'Product questions');
+/* This heading interpolates the route title, which works because every other
+   title in `pages.json` is a noun phrase: "Flush Casement Windows", "Secondary
+   Glazing". Replacement glazing's H1 was rewritten on 2026-08-10 to lead with
+   the fault rather than the trade term, on the owner's steer, and a sentence
+   with a full stop in it reads as nonsense once "FAQs about " is bolted to the
+   front of it. Overridden below, the way cat and dog flaps already does. If any
+   future route takes a sentence for a title, it needs the same treatment. */
 $journey_faq_heading = $is_about ? 'FAQs about Fenster Glazing' : ($is_commercial ? 'FAQs about commercial glazing' : 'FAQs about ' . $title);
+if ($is_replacement_bespoke) {
+    $journey_faq_heading = 'FAQs about replacement glazing';
+}
 $journey_order_eyebrow = $is_commercial ? 'Project process' : ($is_about ? 'How Fenster works' : 'Order process');
 $journey_order_heading = $is_commercial ? 'A clear process from early brief to delivery.' : ($is_about ? 'A clear process from first conversation to aftercare.' : 'A clear process from first quote to aftercare.');
 $journey_order_copy = $is_commercial
