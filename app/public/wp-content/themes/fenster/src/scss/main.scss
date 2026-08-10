@@ -38774,9 +38774,11 @@ html.fg-blinds-reveal-locked {
 
 .fg-wipe__stage {
   position: relative;
-  /* The pair is 820x857 and the stage holds that ratio, so neither photograph is
-     scaled differently from the other. */
-  aspect-ratio: 820 / 857;
+  /* The stage holds the ratio of the pair it is given, so neither photograph is
+     scaled differently from the other. The default is the flush studio pair's
+     820x857; `/double-glazing-replacement/` passes 16/10 for its landscape
+     before-and-after. Set inline by the component, per instance. */
+  aspect-ratio: var(--fg-wipe-ratio, 820 / 857);
   max-height: 560px;
   margin: 0 0 0 auto;
   overflow: hidden;
@@ -38848,8 +38850,11 @@ html.fg-blinds-reveal-locked {
   pointer-events: none;
 }
 
-.fg-wipe__tag--standard { left: 0.9rem; }
-.fg-wipe__tag--flush { right: 0.9rem; }
+/* The overlay is revealed from the left, so its label sits left and the base
+   layer's sits right. Renamed off flush/standard on 2026-08-10 when the
+   component was generalised; the sides are what these mean, not the products. */
+.fg-wipe__tag--overlay { left: 0.9rem; }
+.fg-wipe__tag--base { right: 0.9rem; }
 
 /* Invisible, full-bleed, and still a real range input: keyboard operable,
    announces a value, and inherits the platform's own touch handling. */
@@ -38907,15 +38912,16 @@ html.fg-blinds-reveal-locked {
    the two-column sections need nothing here. What follows is only the pieces the
    flush page adds: the information bands, the comparison and the proof mosaic.
    Deliberately no stacked chapters — that device stays unique to casement. */
-/* `.fg-alu-door-band` and `.fg-alu-door-list` are added to these selector lists
-   rather than given a copy of the component, which is the same call already made
-   for the composite hero against the heritage one. The aluminium doors page
-   needed one card band and nothing about it differs, so sharing the rules is
-   what keeps the two pages in step. If you restyle one, you restyle both, and
-   that is deliberate. */
+/* `.fg-alu-door-band`, `.fg-sg-band` and `.fg-rg-band` are added to these
+   selector lists rather than given a copy of the component, which is the same
+   call already made for the composite hero against the heritage one. Four pages
+   needed one card band each and nothing about them differs, so sharing the rules
+   is what keeps them in step. If you restyle one, you restyle all four, and that
+   is deliberate. */
 .fg-flush-band,
 .fg-alu-door-band,
-.fg-sg-band {
+.fg-sg-band,
+.fg-rg-band {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
@@ -38944,7 +38950,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-flush-band__head,
 .fg-alu-door-band__head,
-.fg-sg-band__head {
+.fg-sg-band__head,
+.fg-rg-band__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2.5rem);
@@ -38954,14 +38961,16 @@ html.fg-blinds-reveal-locked {
 
 .fg-flush-band__head h2,
 .fg-alu-door-band__head h2,
-.fg-sg-band__head h2 {
+.fg-sg-band__head h2,
+.fg-rg-band__head h2 {
   max-width: 17ch;
   margin: 0.3rem 0 0;
 }
 
 .fg-flush-band__head > p,
 .fg-alu-door-band__head > p,
-.fg-sg-band__head > p {
+.fg-sg-band__head > p,
+.fg-rg-band__head > p {
   max-width: 46ch;
   margin: 0;
   color: var(--color-muted);
@@ -38977,7 +38986,8 @@ html.fg-blinds-reveal-locked {
    the headings line up across the row even when one card runs a line longer. */
 .fg-flush-list,
 .fg-alu-door-list,
-.fg-sg-list {
+.fg-sg-list,
+.fg-rg-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: clamp(0.9rem, 1.8vw, 1.4rem);
@@ -38986,7 +38996,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-flush-list > div,
 .fg-alu-door-list > div,
-.fg-sg-list > div {
+.fg-sg-list > div,
+.fg-rg-list > div {
   display: grid;
   align-content: start;
   gap: 0.45rem;
@@ -38998,7 +39009,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-flush-list dt,
 .fg-alu-door-list dt,
-.fg-sg-list dt {
+.fg-sg-list dt,
+.fg-rg-list dt {
   font-weight: 850;
   font-size: 1.02rem;
   line-height: 1.2;
@@ -39006,7 +39018,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-flush-list dd,
 .fg-alu-door-list dd,
-.fg-sg-list dd {
+.fg-sg-list dd,
+.fg-rg-list dd {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -39020,7 +39033,8 @@ html.fg-blinds-reveal-locked {
   background: rgba(255, 255, 255, 0.05);
 }
 
-.fg-flush-note {
+.fg-flush-note,
+.fg-rg-band__note {
   margin: clamp(1.2rem, 2.5vw, 2rem) 0 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -39034,6 +39048,7 @@ html.fg-blinds-reveal-locked {
   .fg-flush-band__head,
   .fg-alu-door-band__head,
   .fg-sg-band__head,
+  .fg-rg-band__head,
   .fg-flush-compare {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
@@ -39063,6 +39078,16 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-media--4x3,
 .fg-cw-media--4x3 {
   aspect-ratio: 4 / 3;
+}
+
+/* Portrait, added 2026-08-10 for the replacement glazing page. The only
+   photograph we have of the work itself rather than the result is portrait, and
+   the default 16/10 cropped it to the fitter's shoulder and a strip of glass.
+   Better to hold the shape the photograph was taken in than to crop the subject
+   out of it: object-fit still covers, so a landscape source in this box is
+   simply a centre crop rather than a broken layout. */
+.fg-cw-media--4x5 {
+  aspect-ratio: 4 / 5;
 }
 
 /* The Thermlock cutaway is a lit render on a black ground, not a photograph, so

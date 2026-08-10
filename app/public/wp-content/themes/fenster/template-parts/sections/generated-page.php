@@ -187,6 +187,23 @@ $is_alu_doors_bespoke = $slug === 'aluminium-doors';
    say better and in context. `product_usps` is KEPT and kept accurate because
    Legend reads its verified product facts from there. */
 $is_secondary_bespoke = $slug === 'secondary-glazing';
+/* Replacement glazing, 2026-08-10. Bespoke middle, and it drops the same two
+   tail pieces secondary drops plus one more:
+
+     - the KEY-SPECIFICATION PULSE, because one of its four tiles claimed an
+       "A+ rated" energy rating. A+ is a Window Energy Rating and belongs to a
+       complete window; a sealed unit going into somebody else's frame cannot
+       carry one. What was left after removing it is process rather than
+       specification, so the strip goes the way secondary's went. `product_usps`
+       is KEPT and corrected, because Legend reads its verified facts from there.
+     - the SPECIFICATION-CHOICES band, which offers frame colours. On the one
+       route whose entire premise is that the frame stays exactly where it is,
+       inviting somebody to choose a frame colour is incoherent.
+     - the CASE-STUDY strip, because no replacement glazing study exists and
+       `fenster_case_studies_for_product()` falls back to ALL studies when
+       nothing matches, so the route was showing secondary glazing, casements
+       and bifolds as though they were this. Same reason repairs gates it. */
+$is_replacement_bespoke = $slug === 'double-glazing-replacement';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase
    of a product:
@@ -1314,6 +1331,31 @@ if ($is_commercial) {
 
         if ($is_secondary_glazing_page && isset($product_order_steps[1])) {
             $product_order_steps[1]['copy'] = 'Once you go ahead we survey before anything is made. Not a second sales visit: the reveal depth, the fixings and the sizes the factory needs to build it right.';
+        }
+
+        /* Replacement glazing takes three, all owner-confirmed 2026-08-10.
+
+           01, because this is the one route you can be priced on without anybody
+           coming out: "if they have rough sizes (and/or pics) we can price
+           remotely or they can use our windowcad tool."
+
+           02, because the canonical step names thresholds, which a sealed unit
+           does not have, and because "we always measure before ordering" and the
+           survey is free.
+
+           04, because the shared no-scheme string is silent on guarantees and
+           this product genuinely carries one: "we guarantee sealed units for 10
+           years (what we get from manufacturer)". It is stated as ours and whose
+           it is, and it names no scheme, which is what keeps it clear of both
+           the CPA claim and the rule against writing what is not covered. */
+        if ($is_replacement_bespoke) {
+            if (isset($product_order_steps[0])) {
+                $product_order_steps[0]['copy'] = 'Send rough sizes and a photograph and we can usually price it without coming out, or price it yourself on the online tool. There is no minimum: one unit is a job worth doing.';
+            }
+            if (isset($product_order_steps[1])) {
+                $product_order_steps[1]['copy'] = 'Once you go ahead we come and measure before anything is ordered: the glass size, the spacer, the frame it goes back into and whether the position calls for toughened or laminated. The survey is free.';
+            }
+            $product_order_steps[$last]['copy'] = 'Ten years on the sealed unit, which is the guarantee the manufacturer gives us and we pass straight on. Anything afterwards you ring us rather than a call centre, and you are talking to the same people who fitted it.';
         }
     } else {
         /* Fall back to the canonical set rather than to nothing. A missing data
@@ -3623,7 +3665,7 @@ if ($is_commercial_hub) {
              opens with a reassurance strip in the same slot instead, which says
              something true about the service rather than inventing four
              product facts for a service that has none. */ ?>
-    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors && ! $is_secondary_bespoke && ! $is_repairs) : ?>
+    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs) : ?>
         <?php get_template_part('template-parts/components/product-pulse', null, [
             'usps'  => $product_usps,
             'slug'  => $slug,
@@ -4117,7 +4159,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4281,7 +4323,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4451,7 +4493,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4506,7 +4548,22 @@ if ($is_commercial_hub) {
             ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page && ! $is_composite_doors && ! $is_repairs) : ?>
+        <?php /* OUTSIDE the wrapper below for the same reason as the two above.
+                 Replacement glazing is additionally excluded FROM that wrapper,
+                 because it contains the specification-choices band and that band
+                 offers frame colours: the one route where the frame is the thing
+                 staying put. */ ?>
+        <?php if ($is_replacement_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/replacement-glazing-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+                'quote_url' => $product_quote_embed_url,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php if (! $is_pet_flap_page && ! $is_secondary_glazing_page && ! $is_composite_doors && ! $is_replacement_bespoke && ! $is_repairs) : ?>
         <?php if ($is_flush_bespoke) : ?>
             <?php
             get_template_part('template-parts/sections/flush-casement-windows-v2', null, [
@@ -5181,7 +5238,12 @@ if ($is_commercial_hub) {
              matches. Live, that put three unrelated installations under a
              heading reading "Real installs, photographed on the day" on a page
              about a broken lock. */ ?>
-    <?php if ($use_product_journey && ! $is_repairs && function_exists('fenster_case_studies_for_product')) : ?>
+    <?php /* `$is_replacement_bespoke` is excluded because no replacement glazing
+             case study exists, and the helper below falls back to ALL studies
+             when a product matches none. The route was showing secondary glazing,
+             casement windows and bifold doors under a heading about real installs
+             of this product. Remove the exclusion when a study exists. */ ?>
+    <?php if ($use_product_journey && ! $is_repairs && ! $is_replacement_bespoke && function_exists('fenster_case_studies_for_product')) : ?>
         <?php $product_case_cards = fenster_case_studies_for_product($slug, 3); ?>
         <?php if ($product_case_cards !== []) : ?>
             <section class="fg-cs-strip">

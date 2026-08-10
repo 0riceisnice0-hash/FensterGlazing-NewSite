@@ -397,9 +397,25 @@ function fenster_site_data(): array
                 ['label' => 'Fascia depth', 'value' => '20mm'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
+            /* The strip itself no longer renders on this route, for the reasons
+               in `generated-page.php`, but this array is KEPT and kept accurate
+               because Legend reads its verified product facts from here.
+
+               "Energy rating: A+ rated" was removed on 2026-08-10. A+ is a
+               Window Energy Rating and it belongs to a complete window: frame,
+               glass and hardware rated together. A sealed unit going into
+               somebody else's frame cannot carry one, so the claim was not true
+               of anything we sell on this route and Legend could have repeated
+               it in chat. Replaced with the fact that actually defines the
+               product, in the words the page uses.
+
+               "Guarantee: 10 years" is CORRECT and owner-confirmed 2026-08-10:
+               "we guarantee sealed units for 10 years (what we get from
+               manufacturer). same for integral blinds and secondary." It is not
+               CPA-backed and no copy anywhere says it is. */
             'double-glazing-replacement' => [
                 ['label' => 'Glazing option', 'value' => 'Made-to-measure units'],
-                ['label' => 'Energy rating', 'value' => 'A+ rated'],
+                ['label' => 'Fitted into', 'value' => 'Your existing frames'],
                 ['label' => 'Gas fill', 'value' => 'Argon'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
@@ -651,11 +667,22 @@ function fenster_site_data(): array
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Soffit and fascia detail beneath a roof overhang'],
                 ],
             ],
+            /* Hero replaced 2026-08-10. It was a stock photograph of a uPVC
+               profile corner sample standing on a windowsill, from the same
+               stock shoot as its one gallery mate, and it showed neither our
+               work nor a failed unit. The route now leads on a Fenster job: a
+               window where one sealed unit has gone and the pane beside it has
+               not, which is the whole product in one frame.
+
+               The crop was chosen at the size the hero renders. A tighter band
+               read as texture rather than as a window, which is exactly the
+               fault the secondary glazing hero shipped with on 2026-08-07;
+               enough mullion is kept for it to read as glass in a room. */
             'double-glazing-replacement' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Double glazed window unit showing the sealed glass edge'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-hero-misted-view-1920w.jpg', 'alt' => 'A large window with one failed sealed unit veiling the countryside beyond it, beside a pane that is still clear'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Double glazed window unit showing the sealed glass edge'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'uPVC window opening detail with double glazing'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-view-misted-1400w.jpg', 'alt' => 'A picture window with a misted sealed unit, the view beyond it veiled and streaked'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-view-clear-1400w.jpg', 'alt' => 'The same picture window after the failed unit was replaced, with the view sharp through it'],
                 ],
             ],
             'double-glazing' => [
@@ -1541,21 +1568,33 @@ function fenster_site_data(): array
                     ['question' => 'Is roofline work surveyed first?', 'answer' => 'Yes. Fenster checks the existing roof edge, boards, access and drainage details before confirming the specification.'],
                 ],
             ],
+            /* Rewritten 2026-08-10 with the page. Two things changed beyond the
+               register. The old copy sold this as a thermal upgrade, which the
+               owner corrected: a new unit can improve things, "but thats not
+               really why we do it as a lot of energy will be lost in an old
+               frame so often a false economy". And the hedging was doing damage
+               — "can often", "can sometimes", "where suitable" on every answer
+               reads as a company that will not commit to anything. The facts are
+               all owner-confirmed, so the answers say them.
+
+               Only FIVE FAQs render on this route (`$product_faq_limit`), so
+               these are the five questions that actually arrive, in order. Adding
+               a sixth here renders nothing; raise the limit as well. */
             'double-glazing-replacement' => [
-                'intro' => 'Double glazing replacement restores failed, misted or damaged sealed units without replacing the whole frame where the frame is still sound. Fenster measures the glass, checks the safety requirements and orders the correct made-to-measure unit.',
+                'intro' => 'Replacement glazing is a new sealed unit, made to fit the frame you already have. When the seal around a unit fails, damp air gets into the gap between the panes and mists the glass from a side no cloth will ever reach. Fenster measures the opening, checks what the position needs and fits a new unit into the existing frame.',
                 'benefits' => [
-                    ['title' => 'Replace failed sealed units', 'copy' => 'Misted, blown or damaged double glazed units can often be replaced without changing the whole frame.'],
-                    ['title' => 'Keeps existing frames', 'copy' => 'Where frames are sound, replacement glass restores clarity and performance while keeping disruption lower.'],
-                    ['title' => 'Made-to-measure glass', 'copy' => 'Each replacement unit is measured and ordered to suit the existing frame, spacer and glazing requirements.'],
-                    ['title' => 'Improves comfort and clarity', 'copy' => 'Fresh sealed units can help address condensation between panes, damaged glass and reduced thermal performance.'],
-                    ['title' => 'Surveyed before ordering', 'copy' => 'Fenster checks the unit size, glass type, safety requirements and frame condition before replacement glass is manufactured.'],
+                    ['title' => 'The frame stays put', 'copy' => 'The beads come off, the failed unit lifts out and a new one goes in. Frame, hinges, handles and locks are left exactly as they are, and the beads and gaskets already on the window are almost always the ones that go back on it.'],
+                    ['title' => 'Every frame, and doors too', 'copy' => 'uPVC, aluminium and timber, beaded or putty glazed, windows and doors alike. Leaded and Georgian bar patterns are matched into the new unit so a period window comes back looking like itself.'],
+                    ['title' => 'Made to your measurements', 'copy' => 'We measure the glass, the spacer and the frame it has to go back into before anything is ordered, and check whether the position calls for toughened or laminated glass.'],
+                    ['title' => 'The cheapest moment to change something', 'copy' => 'The unit is built from scratch, so integral blinds, obscure glass, a pet flap aperture or acoustic and solar control glass cost far less now than as a job of their own later.'],
+                    ['title' => 'One unit is a job', 'copy' => 'There is no minimum. Send rough sizes and a photograph and we can usually price it without coming out, and the survey is free either way.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Can blown double glazing be replaced without a new window?', 'answer' => 'Often, yes. If the frame is still sound, Fenster can replace the failed sealed glass unit rather than the whole window.'],
-                    ['question' => 'What causes misting between panes?', 'answer' => 'Misting usually means the sealed unit has failed, allowing moisture between the panes of glass.'],
-                    ['question' => 'Can replacement glass improve comfort?', 'answer' => 'A new sealed unit can restore performance where the old unit has failed, helping improve clarity and comfort.'],
-                    ['question' => 'Do you measure the existing unit first?', 'answer' => 'Yes. The glass size, thickness, spacer, safety requirements and frame condition are checked before ordering.'],
-                    ['question' => 'Can pet flaps or integral blinds be included?', 'answer' => 'Where suitable, a new sealed unit can sometimes be specified with options such as a pet-flap aperture or integral blinds.'],
+                    ['question' => 'Can misted double glazing be replaced without a new window?', 'answer' => 'Usually, yes. If the frame is sound and still opening and closing properly, the failed unit comes out and a new one made to the same size goes back into it. The frame, the hinges and the handles all stay. Where a frame has gone soft or stopped closing we will tell you what we think is worth doing.'],
+                    ['question' => 'Why does cleaning it make no difference?', 'answer' => 'Because the moisture is sealed between the two panes rather than on either surface. Once the seal has failed, damp air gets into that gap and condenses against the inside of the glass, which is why the haze comes back whatever you clean it with and why it often looks worse on a cold morning.'],
+                    ['question' => 'How long does it take?', 'answer' => 'Around one to two weeks from the order, because every unit is made to your measurements. We measure first, then come back to fit, and a typical unit takes about an hour once we are there. We need to get to the window from inside and out, and the old glass leaves with us.'],
+                    ['question' => 'What does it cost?', 'answer' => 'It depends on the size of the unit, the glass in it and how many there are, so we price each one rather than publish a range. Send rough sizes and a photograph and we can usually give you a price without coming out, or price it yourself on our online tool. There is no minimum.'],
+                    ['question' => 'Will new glass make the room warmer?', 'answer' => 'A new unit performs the way a working one should, so where the old one had failed you will notice it. How much difference it makes overall depends on the frame around it, which is why we would rather look at the window than promise a figure. If warmth across the whole house is the aim, that is a conversation about the windows rather than the glass, and we will say so.'],
                 ],
             ],
             'double-glazing' => [

@@ -233,11 +233,13 @@ $gallery = [
                     <p><?php esc_html_e('Two windows from the same studio set, shot in the same light against the same white. On the standard casement the sash stands proud of the outer frame and throws a shadow line around every opener. On the flush, it closes into the frame and the face is one plane.', 'fenster'); ?></p>
                 </div>
                 <?php
-                get_template_part('template-parts/components/flush-sash-wipe', null, [
-                    'flush_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-flush-level-w.webp',
-                    'flush_alt' => 'White uPVC flush casement window, every sash closing level with the outer frame in one plane',
-                    'standard_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-sash-proud-w.webp',
-                    'standard_alt' => 'White uPVC standard casement window, the opening sash standing proud of the outer frame',
+                get_template_part('template-parts/components/compare-wipe', null, [
+                    'base_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-flush-level-w.webp',
+                    'base_alt' => 'White uPVC flush casement window, every sash closing level with the outer frame in one plane',
+                    'overlay_src' => '/wp-content/themes/fenster/assets/images/products/casement/studio/cas-sash-proud-w.webp',
+                    'base_tag' => __('Flush', 'fenster'),
+                    'overlay_tag' => __('Standard', 'fenster'),
+                    'sr_label' => __('Reveal the standard casement over the flush one', 'fenster'),
                 ]);
                 ?>
             </div>

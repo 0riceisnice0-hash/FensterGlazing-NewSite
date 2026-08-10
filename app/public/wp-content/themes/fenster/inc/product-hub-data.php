@@ -318,7 +318,11 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'Safety', 'value' => 'Critical locations checked for toughened or laminated safety glass'],
                 ['label' => 'Best for', 'value' => 'Misted, blown, cracked or failed sealed units where frames remain sound'],
             ],
-            'choices' => ['Like-for-like replacement glass', 'Obscured glass upgrades', 'Pet-flap apertures in new sealed units', 'Integral blind units where suitable'],
+            /* "Integral blind units where suitable" firmed up 2026-08-10. The
+               owner confirmed this is a real and frequent job — plenty of them
+               retrofitted into frames we never fitted — and the hedge was
+               reading as though we were not sure we could do it. */
+            'choices' => ['Like-for-like replacement glass', 'Obscured glass upgrades', 'Pet-flap apertures in new sealed units', 'Integral blinds sealed inside the new unit'],
         ],
         'secondary-glazing' => [
             'badges' => ['Acoustic improvement', 'Internal aluminium frame', 'RAL colour'],
