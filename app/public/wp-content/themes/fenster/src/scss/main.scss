@@ -39169,9 +39169,9 @@ html.fg-blinds-reveal-locked {
 
 .fg-afw-plate__grid {
   display: grid;
-  /* The drawing gets the wider column. It is line work with labels in it and it
-     goes weak and spidery at the same width that suits a photograph. */
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  /* Even columns now. The left cell is the comparison and the right is our own
+     photograph, and neither should look like the subordinate one. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1.2rem, 3vw, 2.4rem);
   align-items: start;
 }
@@ -39192,25 +39192,23 @@ html.fg-blinds-reveal-locked {
 /* The drawing sits on a slightly lifted panel rather than straight on the
    gradient, so it reads as a drawing pinned to the page rather than as a
    watermark floating behind it. */
-/* Holds Sheerline's corner render, which is a cutaway on transparency. It gets
-   a lifted panel rather than sitting straight on the gradient, so the profile
-   reads as a specimen presented on a surface instead of a cutout floating over
-   a photograph. */
-.fg-afw-plate__draw {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  padding: clamp(1.4rem, 3vw, 2.6rem);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.045);
+/* The comparison wipe. `.fg-wipe__stage` carries light-theme values for its
+   border and backing, which disappear on this gradient, so both are restated
+   for the dark ground. The stage's own `max-height` and right-alignment are
+   also released: on the flush page it is the leading element of the plate, not
+   a late aside beside a table the way it is on the uPVC flush page. */
+.fg-afw-plate__compare .fg-wipe__stage {
+  max-height: none;
+  margin: 0;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.fg-afw-plate__draw img {
-  display: block;
-  width: 100%;
-  max-width: 340px;
-  height: auto;
+.fg-afw-plate__caption {
+  margin: 0.85rem 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 .fg-afw-plate figcaption {
@@ -39222,14 +39220,10 @@ html.fg-blinds-reveal-locked {
 
 
 @media (max-width: 860px) {
-  /* Photograph above drawing on a phone. The drawing is the explanation and the
-     photograph is the evidence, and evidence goes first. */
+  /* Comparison above photograph on a phone: the wipe is what the section is
+     for, and a touch device is where dragging it is most natural. */
   .fg-afw-plate__grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fg-afw-plate__draw {
-    min-height: 0;
   }
 }
 

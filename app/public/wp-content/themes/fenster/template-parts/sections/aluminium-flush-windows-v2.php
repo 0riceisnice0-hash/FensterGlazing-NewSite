@@ -105,25 +105,37 @@ $aluminium_gives = [
                     <figcaption><?php esc_html_e('One of ours. The join between the opener and the fixed light, and no step across it.', 'fenster'); ?></figcaption>
                 </figure>
 
-                <figure class="fg-afw-plate__draw">
-                    <?php /* Was a hand-drawn SVG section comparing flush against
-                             standard. The owner's verdict was "terrible... do
-                             something high end not bad graphics", and he was
-                             right: it was line art competing with a photograph.
-                             This is Sheerline's own render of the Prestige flush
-                             corner, which shows the flat face better than a
-                             drawing of it ever could.
+                <?php /* THE COMPARISON, and it took three goes. A hand-drawn SVG
+                         section was scrapped as "terrible"; a lone corner render
+                         showed the flush profile but compared it to nothing.
+                         These are Sheerline's own renders of ONE window in one
+                         wall, rendered twice with only the outer frame changed,
+                         which is the ideal comparison pair: same scene, same
+                         light, one variable.
 
-                             There is deliberately NO comparison here. Sheerline
-                             publish no Prestige STANDARD corner render, so a
-                             flush-against-standard pair would have had to borrow
-                             a Classic corner from a different range and label it
-                             as something it is not. */ ?>
-                    <img src="<?php echo esc_url(fenster_generated_url($base . 'afw-prestige-flush-corner-agate-900w.png')); ?>"
-                        alt="<?php esc_attr_e('Cutaway corner of a Sheerline Prestige flush aluminium window in agate grey, the sash face sitting level with the outer frame', 'fenster'); ?>"
-                        loading="lazy" width="900" height="871">
-                    <figcaption><?php esc_html_e('The Prestige flush corner. The sash face and the frame face finish in one plane.', 'fenster'); ?></figcaption>
-                </figure>
+                         CROPPED HARD ON THE SASH EDGE ON PURPOSE. At full frame
+                         the two are almost identical — measured, the mean
+                         difference is 1.79/255 and only 3.4% of pixels differ at
+                         all — and a wipe of the whole window would look broken.
+                         The difference lives in a few millimetres at the sash
+                         face, so that is what the crop shows.
+
+                         Sheerline state these styles span both the Classic and
+                         Prestige ranges, so they are legitimate here. */ ?>
+                <div class="fg-afw-plate__compare">
+                    <?php
+                    get_template_part('template-parts/components/compare-wipe', null, [
+                        'base_src' => $base . 'afw-style-flush-1120w.jpg',
+                        'base_alt' => 'A flush aluminium window in a stone wall, the opening sash finishing level with the outer frame',
+                        'overlay_src' => $base . 'afw-style-standard-1120w.jpg',
+                        'base_tag' => __('Flush', 'fenster'),
+                        'overlay_tag' => __('Standard', 'fenster'),
+                        'ratio' => '4 / 3',
+                        'sr_label' => __('Reveal the standard outer frame over the flush one', 'fenster'),
+                    ]);
+                    ?>
+                    <p class="fg-afw-plate__caption"><?php esc_html_e('Drag it. One window, rendered twice, and the only thing changing is the outer frame. Sheerline put it best: a flush frame brings the perimeter of the frame and the opening sash in line with each other.', 'fenster'); ?></p>
+                </div>
             </div>
         </div>
     </section>
