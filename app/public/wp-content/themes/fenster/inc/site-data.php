@@ -1365,14 +1365,22 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/french-doors/french-doors-white-brick.webp', 'alt' => 'White uPVC French doors opening onto a patio from a brick home'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/french-doors/french-doors-rosewood-patio.webp', 'alt' => 'uPVC French doors in a rosewood woodgrain finish, opening onto a paved patio'],
             ],
+            /* Rebuilt 2026-08-10. Every one of the five was the WRONG PRODUCT:
+               a stock sealed-unit sample, a casement close-up, casements on a
+               house, a flush window and a bay — all of them whole new windows,
+               which is the one thing this route is not, and all carrying alt
+               text asserting they were replacement glazing.
+
+               The band that renders this pool is gated off for the route, so it
+               was dormant rather than visible, but a dormant pool of wrong
+               images with confident alt text is a trap for whoever ungates it.
+               These are the real photographs the owner supplied. */
             'replacement_glazing' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Double glazed unit showing sealed glass construction'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'Opening window and glazing detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-exterior.jpg', 'alt' => 'Double glazed windows on a modern home'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-flush-window.jpg', 'alt' => 'Flush window with replacement glazing'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-bay-window.jpg', 'alt' => 'Bay window with multiple glazed units'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Glazing bar and glass detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/window-repair-milton-keynes-scaled.jpg', 'alt' => 'Existing window glass checked for replacement work'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-view-misted-1400w.jpg', 'alt' => 'A picture window with a failed sealed unit, the view beyond it veiled and streaked'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-view-clear-1400w.jpg', 'alt' => 'The same picture window after the failed unit was replaced, with the view sharp through it'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-failed-unit-leaded-1600w.jpg', 'alt' => 'A failed sealed unit in a leaded window, with condensation trapped between the panes'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-bead-out-1000w.jpg', 'alt' => 'A glazing bead being cut away from a uPVC frame beside a broken glass unit'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/integral-blinds/ib-retrofit-open-1600w.jpg', 'alt' => 'Integral blinds drawn up inside the glass of a retrofitted window'],
             ],
             /* Rebuilt 2026-08-07. All four previous entries were the wrong
                product and all four carried alt text asserting they were not:
@@ -1399,7 +1407,7 @@ function fenster_site_data(): array
             ],
             'window_repairs' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'Window opening detail used for repair checks'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg', 'alt' => 'Double glazed unit detail for replacement glazing'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-failed-unit-leaded-1600w.jpg', 'alt' => 'A misted sealed unit, the fault that sends a repair call to replacement glazing'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/window-repair-milton-keynes-scaled.jpg', 'alt' => 'Window hinge and locking gear adjusted during a repair'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Replace-old-windows.jpeg', 'alt' => 'Older window reviewed for repair or replacement'],
             ],
@@ -2242,11 +2250,22 @@ function fenster_site_data(): array
                 'what' => 'One of two things: the hinges are holding the sash off its seal, or the gasket itself has flattened and let go.',
                 'fix' => 'We check both. Stays reset or replaced, and the gasket re-run in one length round the sash if it has gone.',
             ],
+            /* The image was a stock cutaway of a HEALTHY unit illustrating copy
+               about a failed one. Replaced 2026-08-10 with one of ours where the
+               moisture is actually visible in the cavity, which is the whole
+               point of the entry. Here a close-up is right, because the subject
+               is the moisture rather than the window.
+
+               `d-glass` below deliberately KEEPS the generic cutaway: we have no
+               photograph of a misted door panel, and a window under a heading
+               that says Door is the wrong-product error this file is littered
+               with corrections for. A generic sample is the honest placeholder
+               until somebody photographs a door. */
             'w-glass' => [
                 'name' => 'Sealed unit',
                 'sub' => 'Window',
-                'image' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-double-glazed-unit.jpeg',
-                'alt' => 'Sealed double glazed unit cut through to show the two panes and the cavity',
+                'image' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-failed-unit-leaded-1600w.jpg',
+                'alt' => 'A failed sealed unit with condensation and water trapped between the two panes',
                 'what' => 'When the perimeter seal fails, moisture gets into the cavity and cannot be dried out.',
                 'fix' => 'Measured and replaced on its own. The frame stays where it is.',
                 'link' => '/double-glazing-replacement/',

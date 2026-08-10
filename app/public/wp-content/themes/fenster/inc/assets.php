@@ -406,7 +406,20 @@ function fenster_link_card_image(string $url): string
             'roof-lanterns' => $curated . 'sheerline-roof-lantern.jpg',
             'flat-rooflights' => $curated . 'sheerline-roof-lantern-interior.jpg',
             'cat-and-dog-flaps' => $curated . 'fenster-cat-flap-glass.jpg',
-            'window-and-door-repairs' => $curated . 'fenster-double-glazed-unit.jpeg',
+            /* Was `fenster-double-glazed-unit.jpeg`, a stock cut-through sample.
+               Wrong twice over as of 2026-08-10: it is stock on a site that
+               prefers its own work, and it shows a SEALED UNIT, which the owner
+               has now drawn as the line AGAINST repairs — "new unit must be
+               ordered" makes that /double-glazing-replacement/, not this. A
+               thumbnail that illustrates the neighbouring product is exactly the
+               wrong-material case the note above warns about. Our own van. */
+            'window-and-door-repairs' => '/wp-content/themes/fenster/assets/images/about/fenster-van.jpg',
+            /* Added 2026-08-10. This route had no entry, so it rendered as a bare
+               text link wherever it was related-linked, because until the owner
+               found the archive pairs there was no honest photograph of it. A
+               whole misted window rather than the leaded close-up: at card size a
+               scene reads and a close-up reads as texture. */
+            'double-glazing-replacement' => '/wp-content/themes/fenster/assets/images/products/replacement-glazing/rg-view-misted-1400w.jpg',
             'roofline' => $curated . 'liniar-roofline-fascia.jpg',
         ];
     }
