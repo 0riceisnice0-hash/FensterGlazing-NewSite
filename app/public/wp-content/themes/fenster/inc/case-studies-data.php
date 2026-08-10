@@ -147,12 +147,15 @@ function fenster_case_studies(): array
                    licence for our own marketing is still unconfirmed, per the
                    note at the top. That note stays until somebody confirms it.
 
-                   The gallery renders SIX images in landscape cells with
-                   `object-fit: cover`, so both are cropped to the 3:2 of the
-                   existing four. Portrait shots from this set were left out for
-                   that reason, not because they are worse. */
+                   ASPECT: this study renders through `.fg-cs-gallery__masonry`,
+                   which is two auto-fit columns with `height: auto`, so images
+                   keep their own shape and nothing is cropped. Portrait is fine
+                   here. It is the OTHER gallery, `.fg-case-gallery__grid`, that
+                   crops to fixed landscape cells; the legacy commercial records
+                   use that one. Check which component a study renders through
+                   before ruling a photograph out on its shape. */
+                ['src' => $img . 'cs-headrow-court-bay-lookup.webp', 'caption' => 'A projecting bay from directly beneath it, showing the standing seam cladding and the glazing line above the brick.'],
                 ['src' => $img . 'cs-headrow-court-platform.webp', 'caption' => 'Working from a platform with the street closed beneath it. A city centre elevation is reached out of hours, not in the middle of the day.'],
-                ['src' => $img . 'cs-headrow-court-bays-street.webp', 'caption' => 'The finished bays from the pavement, running the length of the elevation.'],
             ],
             'seo' => [
                 'title_tag' => 'Headrow Court, Leeds: Student Accommodation Glazing',
