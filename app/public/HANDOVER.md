@@ -169,6 +169,7 @@ Current server reality:
 - Test root: `~/www/test.fensterglazing.com/public_html`.
 - Live root: `~/www/fensterglazing.com/public_html`.
 - Bedrock theme folder on both: `web/app/themes/fenster`.
+- Search Console ownership token on live: `web/googleadc94090a74b9054.html`. It is not in the repo, because the repo tracks the theme and docs, not the Bedrock root. See `LIVECHANGES.md` "What Not To Touch".
 
 Accepted deploy model:
 

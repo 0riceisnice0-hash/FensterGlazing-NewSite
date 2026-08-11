@@ -287,6 +287,7 @@ ssh -i 'C:/Users/zacpl/.ssh/fenster_siteground_codex' -p 18765 u453-m73mh4m4wev2
 - Do not re-enable customer confirmation emails until authenticated SMTP is configured.
 - Do not restore the old mobile quote controls with separate expand/new-tab options.
 - Do not reintroduce the removed loading screen.
+- Do not delete `~/www/fensterglazing.com/public_html/web/googleadc94090a74b9054.html`. It is the Google Search Console ownership token for the `https://fensterglazing.com/` property, uploaded 2026-08-11. It sits in the Bedrock document root, outside the theme rsync, so no deploy touches it. If it is ever lost, recreate it with the single line `google-site-verification: googleadc94090a74b9054.html` — the content is just the filename.
 
 ## Before Deploy Checklist
 

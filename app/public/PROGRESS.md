@@ -4408,3 +4408,11 @@ Do not use this as the primary rulebook or handover. Use:
 - Connected the feed to the Primary `Instant quote submitted` conversion action in Google Ads Data Manager. It runs daily, filters `record_type = conversion`, and excludes the schema-only row used to establish the connection before the first real ad-attributed quote exists.
 - Verified live: unauthorised feed requests return 401, the tokenized feed returns CSV with `no-store` and `noindex`, and the existing homepage, quote, product and Milton Keynes routes remain healthy.
 
+
+## 2026-08-11 - Search Console Ownership Restored
+
+- Search Console asked for the `https://fensterglazing.com/` property to be verified again. Nothing had been deleted: no `google*.html` has ever been committed to the repo, none was ever deleted from it, and an account-wide search of `~/www` and `~/repos` on the server found no verification file anywhere. Theme-only rsync deploys never touch the Bedrock document root, so a deploy could not have removed one either.
+- Cause: the property was originally verified through Site Kit's Google account handshake, which leaves nothing durable on the site. Live user 4 has `googlesitekit_site_verified_meta = verified` but no stored verification-meta token, and the live HTML serves no `google-site-verification` tag. When Google re-checked ownership it found nothing and unverified the property.
+- The Analytics and Tag Manager verification methods cannot cover this site. Since `inc/consent.php` (2026-07-06) the GTM container loads via JavaScript only after cookie consent, so the raw HTML Google fetches contains no analytics snippet. Use the file, meta tag or DNS methods only.
+- Fix: uploaded `googleadc94090a74b9054.html` to the live Bedrock document root `~/www/fensterglazing.com/public_html/web/`. It returns 200 with the expected single-line body, and `www` 301s to the canonical non-www URL. The path is recorded in `HANDOVER.md` and in the `LIVECHANGES.md` "What Not To Touch" list.
+- Noted while on the server, not actioned: `web/php_errorlog` has grown to about 57 MB. Worth pruning given the account's past disk-quota problems.
