@@ -41550,7 +41550,7 @@ html.fg-blinds-reveal-locked {
   color: #fff;
 }
 
-.fg-upd-shuffle__head p {
+.fg-upd .fg-upd-shuffle__head p {
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -41606,7 +41606,7 @@ html.fg-blinds-reveal-locked {
   color: rgba(15, 28, 28, 0.38);
 }
 
-.fg-upd-spec__label {
+.fg-upd .fg-upd-spec__label {
   font-size: 0.74rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -41616,7 +41616,7 @@ html.fg-blinds-reveal-locked {
 
 /* The colour name is the display element on this page and the only thing at
    this size. Capped at the site-wide ceiling token like everything else. */
-.fg-upd-spec__name {
+.fg-upd .fg-upd-spec__name {
   font-size: clamp(2.1rem, 4.2vw, var(--fg-font-size-max));
   line-height: 1.02;
   letter-spacing: -0.01em;
@@ -41624,7 +41624,7 @@ html.fg-blinds-reveal-locked {
   color: #fff;
 }
 
-.fg-upd-spec__note {
+.fg-upd .fg-upd-spec__note {
   font-size: 0.92rem;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.55);
@@ -41729,7 +41729,7 @@ html.fg-blinds-reveal-locked {
   box-shadow: 0 0 0 2px #7fd8ad;
 }
 
-.fg-upd-spec__foot {
+.fg-upd .fg-upd-spec__foot {
   font-size: 0.86rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.55);
@@ -41858,7 +41858,7 @@ html.fg-blinds-reveal-locked {
   margin: 0;
 }
 
-.fg-upd-context__cell figcaption {
+.fg-upd .fg-upd-context__cell figcaption {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-ink);
