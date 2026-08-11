@@ -58,6 +58,44 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
+## 2026-08-11 - Louvre vents rebuilt on the IKON range (test)
+
+Owner brief: a full overhaul, the IKON louvre suite is what we offer, add real
+detail but "maybe not QUITE as hard as they go", exclude the composite panels,
+placeholders where we are short of photographs.
+
+**The old page could have described any product on the site.** "Fenster can
+include louvre panels within aluminium window, door and curtain walling
+packages" is true and tells a specifier nothing. It now carries the range: the
+IKL33 we fit most, the four standard systems in a table, the continuous
+versions, turret louvres, plenum boxes, the five frame types and the options.
+
+**The pitch is deliberately a step below IKON's own.** Their pages carry
+pressure-loss curves, K-factors and BSRIA report numbers. Ours carries blade
+centres, angles, frame depths and free areas, which is what somebody deciding
+between systems needs. Anyone who wants the rest will ask.
+
+**Free area gets its own section, because that is where these enquiries go
+wrong.** Visual free area is what you see through; physical free area is what
+air passes through, and it is the one a mechanical schedule means. The two are
+59% and 43.5% on the IKL33, which is a long way apart.
+
+**The page admits the IKL33 has the lowest free area of the four.** It leads on
+frequency, not performance, and saying so is cheaper than a consultant finding
+out.
+
+**Composite panels are excluded**, owner instruction: IKON list them in the same
+range and we do not offer them.
+
+**Two marked placeholders ship on it.** A dashed panel saying "Photograph to
+follow" and what should be in it, rather than a broken image or a borrowed
+product shot. That is now a documented pattern.
+
+**One fault on the first render, and it is the third of the day.** `.fg-lv p` is
+(0,1,1) and repaints every paragraph in the section muted and small, so the two
+big free-area figures rendered as grey body text. Count specificity before
+rewriting a rule that looks ignored.
+
 ## 2026-08-11 - Commercial studies come off the residential pages (LIVE, 115ff56)
 
 Owner: "dont mix commercial case studies with resi product pages." Enforced in

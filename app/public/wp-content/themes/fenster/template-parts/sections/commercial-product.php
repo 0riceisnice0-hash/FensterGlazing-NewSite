@@ -92,7 +92,21 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
         </div>
     </section>
 
-    <?php if (! empty($capabilities)) : ?>
+    <?php /* Louvre vents replaces the two generic middle bands with a bespoke
+             section, 2026-08-11, the same shape the residential routes use: the
+             hero, the intro, the settings strip, the related band and the
+             enquiry are all still the shared ones. The capabilities grid and the
+             alternating detail sections are what it stands in for, because on
+             this route they described a service in the abstract while the page
+             was about a product with published numbers.
+
+             Gated on the slug rather than on the presence of data, so the data
+             the other four commercial routes rely on is untouched. */ ?>
+    <?php if ($slug === 'louvre-vents') : ?>
+        <?php get_template_part('template-parts/sections/louvre-vents-v2'); ?>
+    <?php endif; ?>
+
+    <?php if ($slug !== 'louvre-vents' && ! empty($capabilities)) : ?>
         <section class="fg-commercial-product-checks">
             <div class="container">
                 <div class="fg-commercial-product-section-head">
@@ -112,7 +126,7 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
         </section>
     <?php endif; ?>
 
-    <?php if (! empty($detail_sections)) : ?>
+    <?php if ($slug !== 'louvre-vents' && ! empty($detail_sections)) : ?>
         <section class="fg-commercial-product-details">
             <div class="container">
                 <?php foreach ($detail_sections as $index => $detail) : ?>

@@ -106,8 +106,8 @@ function fenster_commercial_product_pages(): array
         'louvre-vents' => [
             'eyebrow' => 'Louvre vents',
             'title' => 'Louvre vents',
-            'subtitle' => 'Aluminium louvre vents and ventilation panels for plant rooms, service areas, commercial facades and glazing packages.',
-            'intro_heading' => 'Ventilation louvres integrated into commercial glazing and facades.',
+            'subtitle' => 'The IKON aluminium louvre range, supplied and fitted as part of the glazing package: plant rooms, service areas, screened openings and continuous facade runs.',
+            'intro_heading' => 'A hole in a wall that has to breathe, keep the weather out and still look deliberate.',
             'hero_image' => $asset_base . 'commercial-4.jpg',
             'hero_alt' => 'Commercial glazing with ventilation requirements',
             /* Was `SM-037-001.jpg`, a generic aluminium glazing detail. This is
@@ -121,13 +121,13 @@ function fenster_commercial_product_pages(): array
             'intro_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-vent-headrow-1500w.jpg',
             'intro_alt' => 'A dark grey aluminium louvre vent panel set into red brickwork',
             'summary' => [
-                'Louvres are used where a building needs airflow, screening or ventilation without leaving an opening exposed. They are common around plant rooms, service areas, bin stores, back-of-house spaces and commercial facades.',
-                'Fenster can include louvre panels within aluminium window, door and curtain walling packages, matching colour and frame details where practical. Free-area requirements, weather exposure and maintenance access should be confirmed before specification.',
+                'A louvre is what goes in an opening that has to move air: a plant room, a substation, a bin store, a riser, a car park, or a run across a facade that is screening something behind it. It has to let enough air through to satisfy the mechanical schedule, keep out most of the weather, stop people seeing in, and look like it was meant to be there.',
+                'We supply and fit the IKON range as part of the aluminium package, so the louvre is drawn, coloured and fixed alongside the windows and doors either side of it rather than ordered separately and made to fit afterwards. Send us the free area the consultant has asked for and the size of the opening, and we will tell you which system reaches it.',
             ],
             'stats' => [
-                ['value' => 'Airflow', 'label' => 'plant and service ventilation'],
-                ['value' => 'Screening', 'label' => 'back-of-house and service areas'],
-                ['value' => 'Finish', 'label' => 'frame-matched where practical'],
+                ['value' => '43.5-57%', 'label' => 'physical free area across the range'],
+                ['value' => '30-95mm', 'label' => 'blade centres, close-pitched to wide open'],
+                ['value' => 'Any RAL', 'label' => 'powder coated, or anodised to order'],
             ],
             'capabilities' => [
                 ['title' => 'Louvre panels', 'copy' => 'Aluminium louvre panels fitted into suitable commercial openings, windows or facade systems.'],
@@ -159,7 +159,7 @@ function fenster_commercial_product_pages(): array
                     'points' => ['Frame integration', 'Powder-coated finishes', 'Maintenance access'],
                 ],
             ],
-            'use_cases' => ['Plant rooms', 'Service zones', 'Back-of-house areas', 'Schools', 'Retail units', 'Office refurbishments'],
+            'use_cases' => ['Plant rooms', 'Substations', 'Bin stores', 'Risers and ducts', 'Car parks', 'Screened facades', 'Back-of-house', 'Office refurbishments'],
         ],
         'commercial-automation' => [
             'eyebrow' => 'Commercial automation',
@@ -531,6 +531,71 @@ function fenster_commercial_product_pages(): array
                 ],
             ],
             'use_cases' => ['Dental practices', 'Care homes', 'Clinics', 'Treatment rooms', 'Public-sector buildings', 'Occupied refurbishments'],
+        ],
+    ];
+}
+
+/**
+ * The louvre range, as IKON publish it.
+ * ---------------------------------------------------------------------------
+ * Every figure here is IKON's own published specification for the system named,
+ * taken from `ikonaluminium.com` on 2026-08-11, and the page attributes them.
+ * Nothing is restated as a Fenster performance figure, which is the rule the
+ * Kenrick and Sheerline numbers are held to everywhere else.
+ *
+ * COMPOSITE PANELS ARE DELIBERATELY ABSENT. Owner instruction, 2026-08-11: they
+ * are the one product in IKON's louvre range we do not offer. IKON list them
+ * alongside these systems; we do not. Do not add them back from their website.
+ *
+ * The blade centre on IKL33 really is 34mm — the system name and the blade
+ * pitch do not match, and that is IKON's naming rather than a typo here.
+ *
+ * "Visual" and "physical" free area are two different measurements and the page
+ * explains the difference, because a consultant's schedule means the physical
+ * one and the difference between them is most of the confusion on this product.
+ */
+function fenster_louvre_systems(): array
+{
+    return [
+        'standard' => [
+            ['code' => 'IKL30-PFA50', 'centre' => '30mm', 'angle' => '59°', 'visual' => '58%', 'physical' => '50%', 'depth' => '36.2mm'],
+            ['code' => 'IKL33', 'centre' => '34mm', 'angle' => '60°', 'visual' => '59%', 'physical' => '43.5%', 'depth' => '36.2mm', 'common' => true],
+            ['code' => 'IKL50', 'centre' => '50mm', 'angle' => '45°', 'visual' => '79%', 'physical' => '50%', 'depth' => '64.2mm'],
+            ['code' => 'IKL75', 'centre' => '75mm', 'angle' => '45°', 'visual' => '86%', 'physical' => '57%', 'depth' => '80.8mm'],
+        ],
+        'continuous' => [
+            ['code' => 'IKCL33', 'centre' => '34mm', 'angle' => '60°', 'visual' => '59%', 'physical' => '43.5%'],
+            ['code' => 'IKCL50', 'centre' => '50mm', 'angle' => '45°', 'visual' => '79%', 'physical' => '50%'],
+            ['code' => 'IKCL75', 'centre' => '75mm', 'angle' => '45°', 'visual' => '86%', 'physical' => '57%'],
+            ['code' => 'IKCL95', 'centre' => '95mm', 'angle' => '45°', 'visual' => '81%', 'physical' => '56%'],
+        ],
+        /* Not blade systems, so they are described rather than tabulated: a
+           table with two empty columns invites somebody to fill them in. */
+        'specials' => [
+            [
+                'name' => 'Turret louvres',
+                'copy' => 'A roof-mounted box louvred on its sides, for intake and discharge at high level. Built from the 50mm, 75mm or 95mm blade depending on the airflow, flat topped, sloping, hipped or bespoke, and it can serve intake and discharge at once with divider plates inside. IKON put its maximum free area at 57%, using the 75mm blade.',
+            ],
+            [
+                'name' => 'Plenum boxes',
+                'copy' => 'A folded and welded aluminium box behind the louvre, for connecting mechanical and electrical ventilation kit to it. Spigots are usually rectangular or circular, the inside can be insulated, and each one is made for the job rather than picked off a shelf.',
+            ],
+        ],
+        /* The five ways the same louvre meets the opening. This is the part of a
+           louvre specification that most often goes wrong on site, because the
+           frame has to suit the construction it is going into and that is
+           settled at survey rather than on a drawing. */
+        'frames' => [
+            ['name' => 'Flange frame', 'copy' => 'A flange laps onto the face of the opening and covers the joint.'],
+            ['name' => 'Glaze-in frame', 'copy' => 'The louvre glazes into a window or curtain walling system in place of a pane, in 24mm, 28mm or 32mm to suit the sightline.'],
+            ['name' => 'Rebate frame', 'copy' => 'The frame sits into a rebate formed in the structural opening.'],
+            ['name' => 'Face fix frame', 'copy' => 'Fixed to the face of the building where there is no reveal to work into.'],
+            ['name' => 'Structurally glazed frame', 'copy' => 'For elevations where the louvre has to read as part of a structurally glazed line.'],
+        ],
+        'options' => [
+            ['name' => 'Drainage channel', 'copy' => 'Takes water caught by the blades away from the opening rather than down the wall behind it.'],
+            ['name' => 'Insect and bird mesh', 'copy' => 'Behind the blades, where the opening leads somewhere that needs to stay clear of both.'],
+            ['name' => 'Any RAL or BS colour', 'copy' => 'Powder coated, so a louvre can match the windows either side of it or disappear against the wall. Anodising to special order.'],
         ],
     ];
 }

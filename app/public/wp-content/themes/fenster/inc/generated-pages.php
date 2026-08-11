@@ -425,9 +425,13 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Curtain Walling Installers | Commercial Glazed Facades',
             'meta_description' => 'Curtain walling for commercial facades, entrances and screens, with survey and specification support from Fenster.',
         ],
+        /* Retitled 2026-08-11 with the page rebuild. The searches here are
+           "aluminium louvre", "ventilation louvre" and free-area questions, and
+           the meta now carries the two things a specifier is looking for: that
+           it is the IKON range and that free area is what we size from. */
         'louvre-vents' => [
-            'title_tag' => 'Louvre Vents | Commercial Ventilation Louvres',
-            'meta_description' => 'Aluminium louvre vents and ventilation panels for plant rooms, service areas and commercial facades from Fenster.',
+            'title_tag' => 'Aluminium Louvre Vents | Ventilation Louvres | Fenster',
+            'meta_description' => 'Aluminium ventilation louvres from the IKON range, fitted with the glazing package. Blade centres from 30mm to 95mm, sized to the free area you need.',
         ],
         'apecs-ingenious-locks-and-hardware' => [
             'meta_description' => 'APECS and Ingenious locks, cylinders, handles and door hardware from Fenster Glazing, with security options for replacement doors.',

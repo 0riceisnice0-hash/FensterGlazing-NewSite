@@ -332,6 +332,24 @@ PHP lint example:
 - **One install exists.** Three photographs of a single Cotswold-stone house, and the gallery copy says "one house" rather than implying a portfolio. `.fg-cw-gallery--pair` is a two-cell cut for exactly this; both sources are portrait, so it is two tall columns rather than two wide cells.
 - **The plate is the only bespoke component on the page.** One dark section carrying the photograph of the join beside the drawn section of the same junction. Everything else uses the shared `.fg-cw` grammar on purpose: one plate is a moment, three would be a theme park.
 
+## Louvre Vents Rule
+
+- **The route is `/louvre-vents/` and the range is IKON's.** Rebuilt 2026-08-11 as a bespoke middle in `template-parts/sections/louvre-vents-v2.php`, dispatched from `commercial-product.php` on the slug. It replaces that template's capabilities grid and detail sections; the hero, intro, settings strip, related band and enquiry are still the shared ones, and the other four commercial routes are untouched.
+- **COMPOSITE PANELS ARE THE ONE EXCLUSION.** Owner instruction, 2026-08-11: IKON list them in the same louvre range and we do not offer them. Anybody comparing our list against IKON's will find the gap and it is deliberate. **Do not add them back off their website.**
+- **Every figure is IKON's published specification and the page says so.** Blade centres, angles, frame depths and both free areas come from `fenster_louvre_systems()` in `inc/commercial-product-data.php`, read off `ikonaluminium.com` on 2026-08-11. None of it may be restated as a Fenster performance figure, the same rule the Kenrick and Sheerline numbers are held to.
+- **Pitch it below the way IKON pitch it.** Owner: "be good to add some details but maybe not QUITE as hard as they go". So the systems and the free areas are on the page and the pressure-loss curves, K-factors and BSRIA report numbers are not. If a specifier needs those they will ask, and we have them.
+- **IKL33 leads because it is what we fit most, and the page admits it has the lowest free area of the four.** 43.5% physical against 50%, 50% and 57%. A page that leads with its commonest product and quietly hides that product's weakest number is the sort of thing a consultant notices. Do not tidy that sentence away.
+- **The blade centre on the IKL33 is 34mm, not 33.** That is IKON's naming, not a typo, and it has already been checked once.
+- **Free area is explained in two kinds because that is where louvre enquiries go wrong.** Visual free area is what you can see through; physical free area is what air can pass through, and it is what a mechanical schedule means. The page gives both and says which one we size from.
+- **The range table is inside its own scroller.** Six columns cannot fit a phone, and a table that pushes the page sideways is a release blocker. The clipped column is the scroll affordance.
+
+## Marked Placeholders Rule
+
+- **A photograph we have not taken yet is marked as one, never left as a broken image or filled with a stand-in.** `.fg-lv-placeholder` is the pattern: a dashed panel reading "Photograph to follow" with a line saying what belongs there. First used on `/louvre-vents/` on 2026-08-11, at the owner's request, because he has more images coming.
+- **To a visitor, a missing image and an image that failed to load are the same thing, and only one of them is honest.** A placeholder that says what it is waiting for also tells the next person what to shoot.
+- **The alternative is worse.** Filling a gap with a supplier render or a photograph of a neighbouring product is how `/aluminium-doors/` ended up with a hero that reads as uPVC and how the secondary glazing pool ended up with four images of other products.
+- **Replace one by dropping in a real figure and deleting the placeholder call.** The caption already says what the photograph should show.
+
 ## Heritage Windows Rule
 
 - **The route is `/heritage-windows/`, the system is Sheerline Classic, and the product is the STEPPED SASH.** Owner, 2026-08-11: "we use just the stepped sash to keep it a proper steel look (designed to replace crittal or give the same look)". Sheerline publish four aesthetics on Classic — Contemporary, Contemporary Flush, Stepped and Stepped Flush — and **we fit Stepped**. Do not widen that to the other three, and do not let the copy drift into "slim aluminium windows", which is what the old page said and which describes `/aluminium-windows/`.

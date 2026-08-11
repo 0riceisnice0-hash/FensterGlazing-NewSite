@@ -1000,6 +1000,7 @@ Commercial county landing pages are generated from `fenster_commercial_county_pr
 
 Current accepted behaviour:
 
+- **`/louvre-vents/` is a bespoke middle as of 2026-08-11**, in `template-parts/sections/louvre-vents-v2.php`, dispatched from `commercial-product.php` on the slug. It carries the IKON range with IKON's published figures: the IKL33 we fit most, free area explained in its two kinds, a table of the four standard systems, the continuous versions, turrets and plenum boxes, the five frame types and the options. **Composite panels are excluded on owner instruction.** Two marked placeholders ship on it, waiting for photographs. See the Louvre Vents Rule and the Marked Placeholders Rule in `AI.md`.
 - `/commercial-glazing/` is now a stronger v2 commercial landing page, not just a generated service shell. Keep it simple, proof-led and conversion-led: clear project proof, practical service cards, fewer decorative effects, and an obvious commercial enquiry form.
 - Do not restore the removed tiny parallax drift in the "How enquiries move" area. It added motion without meaning.
 - Commercial project proof should use images from the commercial projects/assets already in the theme. Do not point runtime markup at `wp-content\fenster-reference` or unrelated residential/product stock.
