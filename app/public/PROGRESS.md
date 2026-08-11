@@ -58,7 +58,7 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
-## 2026-08-11 - Louvre vents rebuilt around the range (LIVE, pending SHA)
+## 2026-08-11 - Louvre vents rebuilt around the range (LIVE, 1c72d8c)
 
 Owner brief: a full overhaul, the IKON louvre suite is what we offer, add real
 detail but "maybe not QUITE as hard as they go", exclude the composite panels,
@@ -97,8 +97,10 @@ builders and architects rather than homeowners. And with only two louvre
 photographs in existence, the work gallery came out rather than repeat the two
 that are now the hero and the intro image.
 
-**Four owner corrections after the first build, and three were mine to have
-seen.** The supplier brand came off the page, which the site's own rule about
+**Live at 13:14 in two deploys**, the second correcting three lines of copy the
+owner pulled by name.
+
+**Five owner corrections in all, and four were mine to have seen.** The supplier brand came off the page, which the site's own rule about
 supplier provenance already required: model codes stay, the name does not, and
 the figures are attributed to "the system manufacturer". The tone went a step
 more factual, because the readers here are builders and architects rather than
@@ -116,6 +118,16 @@ the end. The marked-placeholder pattern stays documented for the next page.
 the IKL33, and nobody has confirmed what any of these jobs used. A third-party
 sprinkler contractor's sign was cropped out of that frame, and neither fitter's
 face is visible in the scaffold shot, so nothing there is blurred.
+
+**Then the register itself was wrong, which is the correction worth keeping.**
+"Ventilation openings, screened and weathered, in the same aluminium as the
+glazing around them" is waffle: it takes a sentence to say nothing a quantity
+surveyor can price. "The one we fit most" was pushing a fact nobody asked for,
+and "the frame is specified separately from the blade" is not a sentence anybody
+says out loud. The audience here is construction: QSs, estimators and project
+managers. **Lead with the specification, then explain it.** The heading is now
+"IKL33: 34mm blades at 60 degrees", the applications are named rather than
+evoked, and the table chip reads Standard rather than Most used.
 
 **One fault on the first render, and it is the third of the day.** `.fg-lv p` is
 (0,1,1) and repaints every paragraph in the section muted and small, so the two
