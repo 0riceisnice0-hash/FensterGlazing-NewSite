@@ -4700,7 +4700,12 @@ if ($is_commercial_hub) {
             }
             $upvc_glass = fenster_data('obscure_glass', []);
             $upvc_glass = is_array($upvc_glass['textures'] ?? null) ? $upvc_glass['textures'] : [];
-            $upvc_media = $product_media[$slug] ?? [];
+            /* `$product_media` is ALREADY scoped to this slug, three hundred lines
+               above: `fenster_data('product_media.' . $slug)`. Indexing it by the
+               slug again returned nothing and the whole page rendered with no
+               photographs at all, which the source could not show and the first
+               render did. */
+            $upvc_media = $product_media;
             $upvc_gallery = is_array($upvc_media['gallery'] ?? null) ? $upvc_media['gallery'] : [];
             $upvc_pick = static function (string $needle) use ($upvc_gallery): array {
                 foreach ($upvc_gallery as $item) {

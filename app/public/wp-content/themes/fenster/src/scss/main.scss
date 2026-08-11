@@ -41482,6 +41482,13 @@ html.fg-blinds-reveal-locked {
    a class so it wins on its own terms rather than by accident.
    --------------------------------------------------------------------------- */
 
+/* `.fg-cw section` pads sections INSIDE a `.fg-cw` wrapper. These sections ARE
+   the wrapper, so they matched nothing and the four ran into each other with no
+   air between them. Padding them directly, at the same rhythm. */
+.fg-upd {
+  padding: clamp(2.6rem, 5.5vh, 4.2rem) 0;
+}
+
 .fg-upd-media--4x3 {
   aspect-ratio: 4 / 3;
 }
