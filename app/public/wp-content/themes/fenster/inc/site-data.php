@@ -1953,7 +1953,7 @@ function fenster_site_data(): array
                 ],
             ],
             'upvc-doors' => [
-                'intro' => 'A uPVC door is not one thing. The same Liniar system makes a single front or back door, French doors that open from the centre, or a stable door split across the middle so the top half opens on its own. Which one suits you is usually decided by the opening and how the room is used, not by the price.',
+                'intro' => 'A uPVC door is not one thing. The same Liniar system makes a single front or back door, French doors that open from the centre, or a stable door split across the middle so the top half opens on its own. Which one suits you is usually decided by the opening and how the room is used.',
                 'benefits' => [
                     ['title' => 'Efficient Liniar profiles', 'copy' => 'Multi-chambered uPVC profiles help reduce heat transfer and support a warmer entrance specification.'],
                     ['title' => 'Single, French or stable', 'copy' => 'One leaf for a front or back door, French doors for a wider opening onto a garden, or a stable door where you want air in without the whole thing open. All on the same system.'],
