@@ -65,8 +65,13 @@
  *    The composite door's £5,000 break-in guarantee does NOT apply here.
  *  - **PAS 24 and Secured by Design are Liniar's and are attributed**, never
  *    asserted as ours. Same distinction as the Kenrick Excalibur.
- *  - **Cat flaps are cut in on site.** Letterplates, knockers, numerals and
- *    spyholes are specified with the door. Cylinder guards are not offered.
+ *  - **Cat flaps are cut in on site**, once the door is hung. Letterplates,
+ *    knockers, numerals and spyholes are chosen with the door. Cylinder guards
+ *    are not offered.
+ *  - **THIS PAGE SELLS NEW DOORS.** A draft said a cat flap could go into "the
+ *    one you already have", which is true and belongs on
+ *    `/cat-and-dog-flaps/`, not here: on a new-door page it points the reader at
+ *    a different job. Keep retrofit talk off this route.
  *  - **Four thresholds, in our names**, on Liniar's own cutaway drawings.
  *  - **The whole privacy glass range** is available in a door, and the page says
  *    privacy glass rather than obscure glass throughout.
@@ -252,7 +257,7 @@ $photo = static function (string $key) use ($photos): array {
                 ],
                 [
                     'label' => __('The fittings', 'fenster'),
-                    'copy' => __('A letterplate, a knocker, numerals, a spyhole: all chosen with the door. A cat flap is the one that works differently, because it is cut in on site, which means it can go into a new door or into the one you already have.', 'fenster'),
+                    'copy' => __('A letterplate, a knocker, numerals, a spyhole: all chosen with the door. A cat flap goes in too, though it is cut on site once the door is hung rather than arriving in it.', 'fenster'),
                     'image' => 'upvc-door-anthracite-cat-flap.webp',
                     'alt' => __('Anthracite uPVC door with a cat flap cut into the lower panel', 'fenster'),
                 ],
