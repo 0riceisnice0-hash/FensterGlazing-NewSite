@@ -23,9 +23,15 @@
  * loud: a page that leads with its most common product and quietly hides that
  * product's weakest number is the sort of thing a consultant notices.
  *
- * EVERY FIGURE IS IKON'S, and the page attributes them. None of it may be
- * restated as a Fenster performance number, which is the rule the Kenrick lock
- * figures and the Sheerline system figures are both held to.
+ * EVERY FIGURE IS IKON'S, and the page attributes them to "the system
+ * manufacturer" rather than by name. Owner instruction, 2026-08-11: "we dont
+ * want to state the ikon brand. models are ok." So IKL33, IKCL95 and the rest
+ * stay on the page and IKON does not, which is the same position the site takes
+ * on Renolit, Notan, Mila and VBH: a supplier is named only where we
+ * deliberately sell the page around them, as with Sheerline and Liniar. The
+ * name stays in this comment and in the data file so the figures can be
+ * re-verified. None of it may be restated as a Fenster performance number,
+ * which is the rule the Kenrick lock figures are held to.
  *
  * TWO PLACEHOLDERS SHIP HERE DELIBERATELY. The owner has more photographs and
  * asked for placeholders in the meantime. They are marked as such on the page
@@ -86,9 +92,9 @@ $placeholder = static function (string $ratio, string $describes): void {
             <div class="container fg-lv-lead__grid">
                 <div class="fg-lv-lead__copy">
                     <p class="eyebrow"><?php esc_html_e('The one we fit most', 'fenster'); ?></p>
-                    <h2 id="fg-lv-lead-title"><?php esc_html_e('The IKL33, and why it is usually the right answer.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Blades at 34mm centres set to 60 degrees, in a frame 36.2mm deep. Close-pitched blades at a steep angle are what stop somebody seeing into a plant room from the pavement and what keep most of the weather out, and the shallow frame means the louvre can go where a deeper system will not fit.', 'fenster'); ?></p>
-                    <p><?php esc_html_e('It gives away free area to do that, and it is the lowest of the four on that measure. Where a schedule asks for more air through the same hole, we move up the range rather than argue with it.', 'fenster'); ?></p>
+                    <h2 id="fg-lv-lead-title"><?php esc_html_e('The IKL33 is the system we fit most.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Blades at 34mm centres, set to 60 degrees, in a 36.2mm frame. The close pitch and steep angle give sightproofing and weather resistance, and the shallow frame suits openings that will not take a deeper system.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('It trades free area for that performance and is the lowest of the four standard systems at 43.5% physical. Where a schedule needs more air through the same opening, we move up the range.', 'fenster'); ?></p>
                     <dl class="fg-lv-figures">
                         <div>
                             <dt><?php esc_html_e('Blade centres', 'fenster'); ?></dt>
@@ -107,7 +113,7 @@ $placeholder = static function (string $ratio, string $describes): void {
                             <dd><?php echo esc_html((string) $common['physical']); ?></dd>
                         </div>
                     </dl>
-                    <p class="fg-lv-note"><?php esc_html_e('IKON\'s published specification for the IKL33, tested to EN 13030:2002.', 'fenster'); ?></p>
+                    <p class="fg-lv-note"><?php esc_html_e('The system manufacturer\'s published specification for the IKL33, tested to EN 13030:2002.', 'fenster'); ?></p>
                 </div>
                 <?php /* 4:3 rather than the portrait it was: at 4:5 the empty box was taller
                          than the copy beside it and dominated a section that is
@@ -126,23 +132,23 @@ $placeholder = static function (string $ratio, string $describes): void {
             <div class="fg-lv-free__head">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('The number that matters', 'fenster'); ?></p>
-                    <h2 id="fg-lv-free-title"><?php esc_html_e('Free area comes in two kinds, and only one of them is yours.', 'fenster'); ?></h2>
+                    <h2 id="fg-lv-free-title"><?php esc_html_e('Free area is quoted two ways. A schedule means one of them.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('Every louvre carries two free-area figures and they are a long way apart. Quoting the wrong one is how a louvre ends up undersized for the plant behind it, and it is the most common thing we have to unpick on an enquiry.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Every louvre carries both figures and they are a long way apart. Specifying against the visual figure is the most common reason a louvre arrives undersized for the plant behind it.', 'fenster'); ?></p>
             </div>
             <div class="fg-lv-free__pair">
                 <div>
                     <p class="fg-lv-free__value"><?php echo esc_html((string) ($common['visual'] ?? '59%')); ?></p>
                     <h3><?php esc_html_e('Visual free area', 'fenster'); ?></h3>
-                    <p><?php esc_html_e('How much of the opening you can see daylight through. It is the bigger number and it is the one that describes how the louvre looks, not how much air goes through it.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('The proportion of the opening you can see through. It describes appearance, not airflow, and it is always the larger of the two.', 'fenster'); ?></p>
                 </div>
                 <div>
                     <p class="fg-lv-free__value"><?php echo esc_html((string) ($common['physical'] ?? '43.5%')); ?></p>
                     <h3><?php esc_html_e('Physical free area', 'fenster'); ?></h3>
-                    <p><?php esc_html_e('The area air can actually pass through once the blades and the frame are in the way. This is the figure a mechanical schedule means, and the one we size the panel from.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('The proportion air can actually pass through, with the blades and frame deducted. This is the figure a mechanical schedule refers to and the one we size from.', 'fenster'); ?></p>
                 </div>
             </div>
-            <p class="fg-lv-note"><?php esc_html_e('Both figures shown are the IKL33\'s. Send us the free area the consultant has asked for and we will tell you which system reaches it in the opening you have.', 'fenster'); ?></p>
+            <p class="fg-lv-note"><?php esc_html_e('Both figures are the IKL33\'s. Send the free area required and the opening size and we will confirm which system meets it.', 'fenster'); ?></p>
         </div>
     </section>
 
@@ -158,13 +164,13 @@ $placeholder = static function (string $ratio, string $describes): void {
                     <p class="eyebrow"><?php esc_html_e('The range', 'fenster'); ?></p>
                     <h2 id="fg-lv-range-title"><?php esc_html_e('Wider blades, more air, less screening.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('That is the whole trade-off. Open the blades up and you get more air and a longer view in; close them down and you get privacy, weather resistance and a shallower frame. Which one suits depends on what is behind the opening and what the schedule asks for.', 'fenster'); ?></p>
+                <p><?php esc_html_e('That is the trade-off across the range. Wider blade centres raise free area and the view through; closer centres give sightproofing, better weather resistance and a shallower frame.', 'fenster'); ?></p>
             </div>
 
             <?php if ($standard !== []) : ?>
                 <div class="fg-lv-table" tabindex="0" role="region" aria-label="<?php esc_attr_e('Louvre systems and their published free areas', 'fenster'); ?>">
                     <table>
-                        <caption class="screen-reader-text"><?php esc_html_e('IKON louvre systems, blade centres, angles and free areas', 'fenster'); ?></caption>
+                        <caption class="screen-reader-text"><?php esc_html_e('Louvre systems, blade centres, angles and free areas', 'fenster'); ?></caption>
                         <thead>
                             <tr>
                                 <th scope="col"><?php esc_html_e('System', 'fenster'); ?></th>
@@ -200,7 +206,7 @@ $placeholder = static function (string $ratio, string $describes): void {
                 <?php if ($continuous !== []) : ?>
                     <div>
                         <h3><?php esc_html_e('Continuous louvres', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('The same blades run across a whole elevation rather than sitting in separate framed panels, with the reinforcement concealed behind them so the line reads unbroken. Used where the louvre is part of the architecture rather than a vent in a wall.', 'fenster'); ?></p>
+                        <p><?php esc_html_e('The same blades run across a whole elevation rather than sitting in separate framed panels. Reinforcement bars are pre-assembled with glazing clips and concealed once the blades are in, so the line reads unbroken.', 'fenster'); ?></p>
                         <ul class="fg-lv-chips">
                             <?php foreach ($continuous as $system) : ?>
                                 <li>
@@ -224,7 +230,7 @@ $placeholder = static function (string $ratio, string $describes): void {
                 <?php endforeach; ?>
             </div>
 
-            <p class="fg-lv-note"><?php esc_html_e('Figures are IKON\'s published specifications for each system. Which one lands in your opening depends on the free area required, the depth available and the weather exposure, and that is a survey conversation rather than a table.', 'fenster'); ?></p>
+            <p class="fg-lv-note"><?php esc_html_e('Figures are the system manufacturer\'s published specifications, each tested to EN 13030:2002. Which system suits an opening depends on the free area required, the depth available and the exposure, and that is settled at survey.', 'fenster'); ?></p>
         </div>
     </section>
 
@@ -237,9 +243,9 @@ $placeholder = static function (string $ratio, string $describes): void {
             <div class="fg-lv-spec__head">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Specifying it', 'fenster'); ?></p>
-                    <h2 id="fg-lv-spec-title"><?php esc_html_e('The blades are the easy half. The frame is the half that has to fit.', 'fenster'); ?></h2>
+                    <h2 id="fg-lv-spec-title"><?php esc_html_e('The frame is specified separately from the blade.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('The same louvre meets an opening in five different ways, and which one you need depends on the construction it is going into rather than on the louvre itself. It is worth settling at survey, because it is not something a drawing usually shows.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The same louvre meets an opening in five ways, and the right one depends on the construction rather than the louvre. It is worth settling at survey: drawings rarely show it.', 'fenster'); ?></p>
             </div>
             <div class="fg-lv-spec__grid">
                 <div>
@@ -268,50 +274,15 @@ $placeholder = static function (string $ratio, string $describes): void {
         </div>
     </section>
 
-    <?php /* ---------- Our work --------------------------------------------
-             Two photographs, both ours, both genuinely louvres: the fixed panel
-             at Headrow Court and the fully louvred plant doorset, which are two
-             different products rather than two views of one. A third is a
-             placeholder, because the owner has more and this page is short of
-             them. */ ?>
-    <section class="fg-lv-work" aria-labelledby="fg-lv-work-title">
-        <div class="container">
-            <div class="fg-lv-work__head">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
-                    <h2 id="fg-lv-work-title"><?php esc_html_e('Louvres we have fitted.', 'fenster'); ?></h2>
-                </div>
-                <p><?php esc_html_e('Usually as part of a wider glazing package rather than on their own, which is the point: the louvre is the bit of the elevation everybody forgets until the mechanical schedule turns up.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-lv-work__grid">
-                <figure>
-                    <img <?php echo fenster_image_attr_string($louvre_img . 'louvre-vent-headrow-1500w.jpg', [
-                        'alt' => __('A dark grey aluminium louvre vent panel set into red brickwork', 'fenster'),
-                        'loading' => 'lazy',
-                    ]); ?>>
-                    <figcaption><?php esc_html_e('A fixed louvre panel at Headrow Court in Leeds, colour-matched to the windows on the same elevation.', 'fenster'); ?></figcaption>
-                </figure>
-                <figure>
-                    <img <?php echo fenster_image_attr_string($louvre_img . 'louvre-plant-doorset-1300w.jpg', [
-                        'alt' => __('A pair of fully louvred aluminium plant room doors set into dark brickwork', 'fenster'),
-                        'loading' => 'lazy',
-                    ]); ?>>
-                    <figcaption><?php esc_html_e('A plant room doorset louvred over its full height, so the doors ventilate as well as open.', 'fenster'); ?></figcaption>
-                </figure>
-                <figure>
-                    <?php $placeholder('4 / 3', __('the six bespoke louvres at Heal\'s, in golden brown', 'fenster')); ?>
-                    <figcaption>
-                        <?php
-                        printf(
-                            /* translators: %s: link to the Heal's case study */
-                            esc_html__('Six were made for the courtyard elevations at %s, in a golden brown against black windows.', 'fenster'),
-                            '<a href="' . esc_url(home_url('/commercial-projects/heals-tottenham-court-road/')) . '">' . esc_html__('Heal\'s on Tottenham Court Road', 'fenster') . '</a>'
-                        );
-                        ?>
-                    </figcaption>
-                </figure>
-            </div>
-        </div>
-    </section>
+    <?php /* ---------- Where the work section went -------------------------
+             There WAS a three-cell "our work" gallery here and it came out on
+             2026-08-11, when the hero became a louvre. We own exactly two
+             photographs of louvres: one is now the hero and the other is the
+             intro image in the shared template above, so a gallery underneath
+             could only repeat them or run on placeholders alone.
+
+             Put it back the moment more photographs arrive. The Heal's job is
+             the obvious first entry — six bespoke louvres in golden brown — and
+             it already links here from its own study. */ ?>
 
 </div>

@@ -106,10 +106,22 @@ function fenster_commercial_product_pages(): array
         'louvre-vents' => [
             'eyebrow' => 'Louvre vents',
             'title' => 'Louvre vents',
-            'subtitle' => 'The IKON aluminium louvre range, supplied and fitted as part of the glazing package: plant rooms, service areas, screened openings and continuous facade runs.',
-            'intro_heading' => 'A hole in a wall that has to breathe, keep the weather out and still look deliberate.',
-            'hero_image' => $asset_base . 'commercial-4.jpg',
-            'hero_alt' => 'Commercial glazing with ventilation requirements',
+            'subtitle' => 'Aluminium ventilation louvres supplied and fitted as part of the glazing package: plant rooms, service areas, screened openings and continuous facade runs.',
+            'intro_heading' => 'Ventilation openings, screened and weathered, in the same aluminium as the glazing around them.',
+            /* THE HERO IS A LOUVRE NOW. Owner, 2026-08-11: "hero image isnt
+               louvres", and it was not — a timber-and-glass entrance with no
+               louvre anywhere in it, on the louvre page. This is ours, at
+               Headrow Court.
+
+               The note that used to sit here said a wide crop of a single panel
+               reads as blade texture rather than as a louvre, and that is true
+               when the photograph has to PROVE the product. Behind hero copy,
+               under the shade, texture is what a hero background is for, and a
+               wall of blades says louvre before a word is read. A wide shot of
+               a louvre run in context would still be better; it does not exist
+               yet. */
+            'hero_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-vent-headrow-1500w.jpg',
+            'hero_alt' => 'A dark grey aluminium louvre panel set into red brickwork',
             /* Was `SM-037-001.jpg`, a generic aluminium glazing detail. This is
                a page about louvres and it carried no photograph of a louvre
                anywhere on it. This one is ours, from Headrow Court in Leeds.
@@ -118,11 +130,15 @@ function fenster_commercial_product_pages(): array
                defensible for a banner: a wide crop of a single louvre panel
                reads as blade texture rather than as a louvre, the same trap the
                secondary glazing and replacement glazing heroes both hit. */
-            'intro_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-vent-headrow-1500w.jpg',
-            'intro_alt' => 'A dark grey aluminium louvre vent panel set into red brickwork',
+            /* The doorset moves up here now the panel is the hero. Two
+               photographs, each used once: repeating one across a hero and a
+               body section is the fault the residential product template has a
+               whole image queue to avoid. */
+            'intro_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-plant-doorset-1300w.jpg',
+            'intro_alt' => 'A pair of fully louvred aluminium plant room doors set into dark brickwork',
             'summary' => [
-                'A louvre is what goes in an opening that has to move air: a plant room, a substation, a bin store, a riser, a car park, or a run across a facade that is screening something behind it. It has to let enough air through to satisfy the mechanical schedule, keep out most of the weather, stop people seeing in, and look like it was meant to be there.',
-                'We supply and fit the IKON range as part of the aluminium package, so the louvre is drawn, coloured and fixed alongside the windows and doors either side of it rather than ordered separately and made to fit afterwards. Send us the free area the consultant has asked for and the size of the opening, and we will tell you which system reaches it.',
+                'A louvre goes into an opening that has to move air: a plant room, a substation, a bin store, a riser, a car park, or a run across a facade screening something behind it. It has four jobs at once. Pass enough air to meet the mechanical schedule, resist the weather, stop people seeing in, and sit properly in the elevation.',
+                'We supply and fit the range as part of the aluminium package, so the louvre is drawn, coloured and fixed alongside the windows and doors either side of it rather than ordered separately and made to fit afterwards. Send the free area required and the opening size and we will confirm which system meets it.',
             ],
             'stats' => [
                 ['value' => '43.5-57%', 'label' => 'physical free area across the range'],
@@ -574,11 +590,11 @@ function fenster_louvre_systems(): array
         'specials' => [
             [
                 'name' => 'Turret louvres',
-                'copy' => 'A roof-mounted box louvred on its sides, for intake and discharge at high level. Built from the 50mm, 75mm or 95mm blade depending on the airflow, flat topped, sloping, hipped or bespoke, and it can serve intake and discharge at once with divider plates inside. IKON put its maximum free area at 57%, using the 75mm blade.',
+                'copy' => 'A roof-mounted box louvred on its sides, for intake and discharge at high level. Built from the 50mm, 75mm or 95mm blade to suit the airflow, flat topped, sloping, hipped or bespoke, and able to serve intake and discharge together using divider plates, insulated or not. Maximum free area is 57%, using the 75mm blade.',
             ],
             [
                 'name' => 'Plenum boxes',
-                'copy' => 'A folded and welded aluminium box behind the louvre, for connecting mechanical and electrical ventilation kit to it. Spigots are usually rectangular or circular, the inside can be insulated, and each one is made for the job rather than picked off a shelf.',
+                'copy' => 'A folded and welded aluminium box behind the louvre, for connecting mechanical and electrical ventilation equipment. Spigots are usually rectangular or circular, the internal face can be insulated, and each box is fabricated to the job.',
             ],
         ],
         /* The five ways the same louvre meets the opening. This is the part of a
@@ -593,9 +609,9 @@ function fenster_louvre_systems(): array
             ['name' => 'Structurally glazed frame', 'copy' => 'For elevations where the louvre has to read as part of a structurally glazed line.'],
         ],
         'options' => [
-            ['name' => 'Drainage channel', 'copy' => 'Takes water caught by the blades away from the opening rather than down the wall behind it.'],
-            ['name' => 'Insect and bird mesh', 'copy' => 'Behind the blades, where the opening leads somewhere that needs to stay clear of both.'],
-            ['name' => 'Any RAL or BS colour', 'copy' => 'Powder coated, so a louvre can match the windows either side of it or disappear against the wall. Anodising to special order.'],
+            ['name' => 'Drainage channel', 'copy' => 'Takes water caught by the blades away from the opening rather than down the wall behind.'],
+            ['name' => 'Insect and bird mesh', 'copy' => 'Fitted behind the blades where the opening leads somewhere that needs to stay clear of both.'],
+            ['name' => 'Any RAL or BS colour', 'copy' => 'Powder coated to match the surrounding glazing or the wall behind. Anodising to special order.'],
         ],
     ];
 }

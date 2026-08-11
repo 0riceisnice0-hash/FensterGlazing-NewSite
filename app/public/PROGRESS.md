@@ -87,7 +87,17 @@ out.
 **Composite panels are excluded**, owner instruction: IKON list them in the same
 range and we do not offer them.
 
-**Two marked placeholders ship on it.** A dashed panel saying "Photograph to
+**Four owner corrections after the first pass on test.** The supplier brand
+came off the page entirely — model codes stay, figures are now attributed to
+"the system manufacturer" — which is the position the site already takes on
+Renolit, Notan and VBH and which I should have applied without being told. The
+hero became a louvre instead of a timber-and-glass entrance with no louvre in
+it. The copy went more factual throughout, because the readers here are
+builders and architects rather than homeowners. And with only two louvre
+photographs in existence, the work gallery came out rather than repeat the two
+that are now the hero and the intro image.
+
+**One marked placeholder ships on it.** A dashed panel saying "Photograph to
 follow" and what should be in it, rather than a broken image or a borrowed
 product shot. That is now a documented pattern.
 
