@@ -55,6 +55,14 @@ function fenster_case_studies(): array
     // site-data.php. The slug follows the same sanitize_title derivation the
     // other uPVC deep links here already rely on.
     $colour_black_brown = $colour_link('upvc', 'black-brown');
+    /* Agate Grey, RAL 7038, is in the uPVC palette and in the aluminium one.
+       It is NOT in the composite door palette, which stops at Buckingham Grey
+       and Black Brown among the greys, so there is no composite swatch to deep
+       link and this points at the uPVC one. That is the right target anyway on
+       Little Horwood, where the windows are the bulk of the job and the door is
+       finished to match them. Do not "fix" this by inventing a composite slug:
+       check `colour_options.materials.composite` in site-data.php first. */
+    $colour_agate = $colour_link('upvc', 'agate-grey');
 
     // The fitters who worked on each job. Each entry links to that person's
     // anchor on Meet the Team, so clicking a name scrolls to their profile.
@@ -818,6 +826,104 @@ function fenster_case_studies(): array
                    licence to run over: a trailing ellipsis is not finished SEO
                    copy. */
                 'meta_description' => 'Secondary glazing in a listed Winslow home, July 2026. Six units inside the original windows: five horizontal sliders and one lift-out, in white aluminium.',
+            ],
+        ],
+
+        /* Little Horwood, added 2026-08-11 from two photographs and a drone
+         * video the owner supplied.
+         *
+         * FRONT ELEVATION ONLY, owner-confirmed. The copy says so and claims
+         * nothing about the rear, because nothing photographed is the rear: the
+         * drone piece orbits the front and both stills are taken off the drive.
+         * There is also a white uPVC window still in the recess beside the
+         * porch, visible in the frontage shot and in the video, which is why
+         * "every window" would have been wrong even about the front.
+         *
+         * NO WINDOW COUNT. The elevation steps back twice and the porch hides
+         * part of it, so the openings cannot be counted honestly off these
+         * photographs. Bolbeck Park and both Leighton Buzzard studies carry no
+         * count either, so this is the archive's normal rather than a gap.
+         *
+         * SYSTEM IS "Liniar 70mm flush sash", not EnergyPlus. The owner's own
+         * note said "liniar energy plus", and EnergyPlus is the 70mm casement
+         * system: site-data.php attaches it to /casement-windows/ and never to
+         * the flush route, whose figures are 1.2 W/m²K double, A+, 35 dB, and
+         * 28mm IGU only with no triple option. The two existing flush studies,
+         * Wolverton and Leighton Buzzard, both say flush sash. Carrying 0.95
+         * over from a casement study would be the exact fault the guide warns
+         * about.
+         *
+         * NO LOCKING CLAIM ON THE WINDOWS. The casement route publishes a PAS
+         * 24 option; the flush route does not, and neither existing flush study
+         * claims one. NO U-VALUE ON THE DOOR either, per the composite doors
+         * page, which refuses to print one before a doorset is specified.
+         *
+         * THE NUMBER PLATE IS BLURRED in the street shot. It is a private plate
+         * on the customer's own drive and it was legible at full size. Same
+         * treatment as the 2019 before/after pairs; see PHOTO-CHECKLIST.md. The
+         * same car appears side-on in the frontage shot with no plate showing,
+         * so that one is untouched. Neither source file carried EXIF.
+         *
+         * The plantation shutters are the owners' and are said to be, the way
+         * Wolverton says the render and the landscaping were not ours.
+         */
+        'flush-casement-windows-and-composite-door-little-horwood' => [
+            'title' => 'Flush casement windows and a composite door, Little Horwood',
+            'location' => 'Little Horwood, Buckinghamshire',
+            'type' => 'Residential',
+            'date' => '2026-06-24',
+            'summary' => 'Agate grey flush casement windows and a matching composite front door across the front of a rendered village cottage in Little Horwood.',
+            'lead' => 'We did the front of this Little Horwood cottage in one colour. Agate grey flush casement windows across both floors, and a composite front door in the porch finished to match them.',
+            'products' => [
+                ['label' => 'Flush casement windows', 'url' => $flush],
+                ['label' => 'Composite doors', 'url' => home_url('/composite-doors/')],
+            ],
+            'colour' => ['label' => 'Agate grey (RAL 7038)', 'url' => $colour_agate],
+            'specs' => [
+                ['label' => 'Products', 'value' => 'Flush casement windows and a composite door'],
+                ['label' => 'System', 'value' => 'Liniar 70mm flush sash uPVC'],
+                ['label' => 'Colour', 'value' => 'Agate grey (RAL 7038)'],
+                ['label' => 'Energy rating', 'value' => 'A+ (1.2 W/m²K)'],
+            ],
+            'overview' => [
+                'The house is a rendered cottage on a village lane, with red brick heads over the openings and a small tiled porch on the front. We fitted <a href="' . $flush . '">flush casement windows</a> across that elevation on the Liniar 70mm flush sash system, where the sash closes level with the outer frame instead of standing proud of it. On a building of this age the flat face is most of the point. It is how timber windows were made, and it is what stops a replacement window announcing itself from the lane.',
+                'The system is A+ rated and reaches 1.2 W/m²K with a 28mm double glazed unit, and Liniar publish 35 dB of sound reduction for it. The main windows open on side hinges, and there are trickle vents in the heads, so a room can be aired without a window standing open on a village road.',
+                'The front door is a <a href="' . esc_url(home_url('/composite-doors/')) . '">composite door</a> in the same colour, set back in the brick porch with a full height glazed sidelight on each side. The slab itself is boarded rather than glazed, with a long bar handle and a letterplate, so the daylight comes through the sidelights and the door stays solid. We fit Distinction doors, whose slabs are accredited by Secured by Design, and every composite door we fit carries a £5,000 security guarantee.',
+                'The colour is <a href="' . $colour_agate . '">agate grey</a>, RAL 7038, which is a soft green grey rather than a cold one. Against cream render and red brick it settles instead of cutting across them, which is what a dark anthracite would have done here. The windows carry it as a Liniar foil and the door is finished to match, so the front reads as one decision rather than two orders placed in the same month.',
+                'The plantation shutters behind the glass are the owners\' own and were already there. We did the windows and the door.',
+            ],
+            'installed' => [
+                'Liniar 70mm flush sash windows across the front elevation',
+                'Agate grey (RAL 7038) foil, side hung openers with trickle vents',
+                'One composite front door, finished to match the windows',
+                'Boarded door slab, long bar handle, letterplate and a glazed sidelight each side',
+                'A+ rated, 28mm double glazed',
+            ],
+            'installers' => [$fitter_tom, $fitter_johnnie],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-little-horwood-flush.mp4',
+                'poster' => $img . 'cs-little-horwood-flush-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Video of the finished agate grey flush casement windows and composite front door at the Little Horwood cottage',
+            ],
+            /* Four images and only two source photographs. The door and the open
+               window are cut from the 5120x3840 frontage original rather than
+               from its 1600px derivative, which is the same move `card_image`
+               already makes elsewhere in this file and gives a genuine detail
+               shot at full quality. Stills off the video were tried first and
+               dropped: the drone is moving in all of them, and the one through
+               the open door looks into the customer's hall. */
+            'images' => [
+                ['src' => $img . 'cs-little-horwood-flush-frontage.jpg', 'caption' => 'The front of the house finished, with the porch at the centre and the flush casements either side of it.'],
+                ['src' => $img . 'cs-little-horwood-flush-window-open.jpg', 'caption' => 'One of the three light windows upstairs with the right hand light open. The closed sashes finish level with the outer frame.'],
+                ['src' => $img . 'cs-little-horwood-composite-door.jpg', 'caption' => 'The composite front door in the brick porch, boarded rather than glazed, with a sidelight each side and a long bar handle.'],
+                ['src' => $img . 'cs-little-horwood-flush-street.jpg', 'caption' => 'The house from the drive, where the agate grey sits against the cream render and the red brick heads.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-little-horwood-flush-card.jpg', 'caption' => 'Agate grey flush casement windows and a matching composite front door on a rendered Little Horwood cottage.'],
+            'seo' => [
+                'title_tag' => 'Flush Casement Windows and a Composite Door, Little Horwood | Fenster Glazing',
+                /* 147 characters against a 160 cap. */
+                'meta_description' => 'A real Fenster project in Little Horwood: agate grey Liniar flush casement windows and a matching composite front door on a rendered village cottage.',
             ],
         ],
 
