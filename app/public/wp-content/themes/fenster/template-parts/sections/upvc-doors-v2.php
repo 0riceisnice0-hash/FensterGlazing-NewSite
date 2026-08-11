@@ -140,16 +140,19 @@ $randomiser_payload = [
         <div class="fg-cw-split">
             <div class="fg-cw-split__text">
                 <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
-                <h2 id="fg-upd-open-title"><?php esc_html_e('No two of ours leave the factory the same.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A uPVC door is made to the hole in your wall, not picked off a shelf and packed out to fit. The leaf, the frame, the threshold and the glass are all specified for the opening you have, which is why a Victorian back door and a new-build side entrance come off the same system and look nothing like each other.', 'fenster'); ?></p>
-                <p><?php esc_html_e('What changes is everything you can see. One leaf or a pair. Glazed over a flat panel or over shiplap. Any of sixteen finishes outside. Clear glass, obscure glass, or leaded to match what is already in the house. Then the handle, the letterplate and the lock on top of that.', 'fenster'); ?></p>
+                <?php /* THE OLD HEADING CLAIMED "no two of ours leave the factory the
+                         same", and the owner pulled it: a glazed white or grey back door
+                         is one of the commonest things we fit. Saying the awkward thing
+                         first is the house voice and it is also just true — the range is
+                         the point, not the rarity. */ ?>
+                <h2 id="fg-upd-open-title"><?php esc_html_e('Most of ours are a white back door. Yours does not have to be.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('A uPVC door is made to the opening you have, not picked off a shelf and packed out to fit. That is true of the plain white one most people order, and it is what makes everything else possible.', 'fenster'); ?></p>
                 <ul class="fg-flush-list fg-upd-list">
                     <li><?php esc_html_e('Single leaf, a French pair, or a stable door split across the middle', 'fenster'); ?></li>
                     <li><?php esc_html_e('Half glazed over a flat panel, or over a shiplap panel', 'fenster'); ?></li>
                     <li><?php esc_html_e('Sixteen foil finishes, white or the same colour inside', 'fenster'); ?></li>
                     <li><?php esc_html_e('Shaped heads are possible, though they are rare', 'fenster'); ?></li>
                 </ul>
-                <?php $placeholder(__('The furniture on a finished door: letterplate, knocker and numerals together, one arm\'s length away.', 'fenster'), '16 / 9'); ?>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
@@ -222,14 +225,14 @@ $randomiser_payload = [
                     <?php endif; ?>
                 </div>
 
-                <?php /* The rail is not decoration: a randomiser you cannot steer is a
-                         toy, and somebody who has just seen their own colour go past
-                         wants it back. Real buttons, so it works on a keyboard. */ ?>
-                <div class="fg-upd-rail" role="group" aria-label="<?php esc_attr_e('Choose a finish', 'fenster'); ?>">
-                    <?php foreach ($randomiser as $index => $option) : ?>
-                        <button type="button" class="fg-upd-rail__dot" data-door-pick="<?php echo esc_attr((string) $index); ?>" style="--dot: <?php echo esc_attr($option['hex']); ?>" aria-label="<?php echo esc_attr($option['colour']); ?>"<?php echo $index === 0 ? ' aria-current="true"' : ''; ?>></button>
-                    <?php endforeach; ?>
-                </div>
+                <?php /* NO COLOUR SELECTOR HERE. One was built and the owner removed
+                         it, 2026-08-12: "i dont want it to supersede windowcad". The
+                         randomiser is a way of showing the range, not a way of
+                         specifying a door — the moment somebody wants to choose, they
+                         go to the designer, which configures AND prices. That is the
+                         same call already recorded twice, on the casement canvas
+                         configurator and the heritage bar planner. Do not add swatches,
+                         a picker or a filter to this section. */ ?>
 
                 <p class="fg-upd-spec__foot"><?php esc_html_e('Sixteen finishes, thirteen rendered here, and every obscure glass we fit can go in a door.', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See the full range', 'fenster'); ?></a>.</p>
                 <p class="fg-upd-spec__live" data-door-live role="status" aria-live="polite"></p>
@@ -258,6 +261,8 @@ $randomiser_payload = [
                 ['label' => __('Chartwell green on stone or render', 'fenster'), 'brief' => __('A cottage or older elevation. The colour needs an old wall behind it to make its case.', 'fenster')],
                 ['label' => __('A woodgrain front door', 'fenster'), 'brief' => __('Irish oak or golden oak, close enough that the grain in the foil is visible.', 'fenster')],
                 ['label' => __('A white door doing its job', 'fenster'), 'brief' => __('The commonest door we fit and the one we photograph least. Side or utility entrance, clean and ordinary.', 'fenster')],
+                ['label' => __('The door furniture', 'fenster'), 'brief' => __('Letterplate, knocker and numerals on a finished door, one arm\'s length away.', 'fenster')],
+                ['label' => __('White on the inside', 'fenster'), 'brief' => __('A coloured door photographed from indoors, showing the white inside face. It is the thing people are most surprised by.', 'fenster')],
             ];
             foreach ($context_shots as $shot) :
                 ?>

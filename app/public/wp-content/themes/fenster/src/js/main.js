@@ -8285,7 +8285,6 @@ document.querySelectorAll('[data-fg-door-randomiser]').forEach((root) => {
     pre.src = f.image;
   });
 
-  const dots = Array.from(root.querySelectorAll('[data-door-pick]'));
   const indexLabel = root.querySelector('[data-door-index]');
 
   let lastFinish = -1;
@@ -8362,19 +8361,10 @@ document.querySelectorAll('[data-fg-door-randomiser]').forEach((root) => {
     if (indexLabel) {
       indexLabel.textContent = String(finishIndex + 1).padStart(2, '0') + ' / ' + String(finishes.length).padStart(2, '0');
     }
-    dots.forEach((dot, i) => {
-      if (i === finishIndex) {
-        dot.setAttribute('aria-current', 'true');
-      } else {
-        dot.removeAttribute('aria-current');
-      }
-    });
-
     lastFinish = finishIndex;
   };
 
   button.addEventListener('click', () => apply(pick(finishes, lastFinish)));
-  dots.forEach((dot, i) => dot.addEventListener('click', () => apply(i)));
 
   // Open on a real combination rather than on the first render in the file, so
   // two visitors do not both meet the same white door.

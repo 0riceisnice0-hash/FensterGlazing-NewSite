@@ -41489,8 +41489,14 @@ html.fg-blinds-reveal-locked {
   padding: clamp(2.6rem, 5.5vh, 4.2rem) 0;
 }
 
+ /* The source here is a 1200x1600 portrait, and a 4:3 box cropped a door into a
+   letterbox and then filled half the row with it. Portrait box, capped height,
+   so the photograph is the size of a photograph rather than the size of the
+   column it happens to sit in. */
 .fg-upd-media--4x3 {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
+  max-height: 520px;
+  margin-inline: auto;
 }
 
 .fg-upd-media--4x3 img {
@@ -41520,7 +41526,7 @@ html.fg-blinds-reveal-locked {
   position: relative;
   background: #0f1c1c;
   color: #fff;
-  padding: clamp(3.2rem, 7vh, 5.5rem) 0;
+  padding: clamp(2.6rem, 5.5vh, 4rem) 0;
   overflow: hidden;
 }
 
@@ -41577,14 +41583,14 @@ html.fg-blinds-reveal-locked {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  min-height: clamp(360px, 52vh, 560px);
+  min-height: clamp(300px, 42vh, 440px);
 }
 
 .fg-upd-plinth img {
   display: block;
   width: auto;
   max-width: 100%;
-  height: clamp(360px, 52vh, 560px);
+  height: clamp(300px, 42vh, 440px);
   object-fit: contain;
   object-position: bottom center;
   transition: opacity 260ms ease, transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -41628,15 +41634,15 @@ html.fg-blinds-reveal-locked {
   font-size: 0.92rem;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.55);
-  margin-bottom: clamp(1.6rem, 3vw, 2.4rem);
+  margin-bottom: clamp(1.2rem, 2.2vw, 1.8rem);
 }
 
 .fg-upd-spec__pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1rem, 2.5vw, 2rem);
-  margin: 0 0 clamp(1.6rem, 3vw, 2.2rem);
-  padding: 1.3rem 0;
+  margin: 0 0 clamp(1.3rem, 2.4vw, 1.8rem);
+  padding: 1.1rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 }
@@ -41695,41 +41701,10 @@ html.fg-blinds-reveal-locked {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
-  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1.1rem;
 }
 
-/* Every finish reachable in one press, so the shuffle is a way in rather than
-   the only way through. */
-.fg-upd-rail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin-bottom: 1.2rem;
-}
-
-.fg-upd-rail__dot {
-  width: 1.9rem;
-  height: 1.9rem;
-  min-width: 1.9rem;
-  padding: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: var(--dot, #fff);
-  cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-
-.fg-upd-rail__dot:hover,
-.fg-upd-rail__dot:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 2px rgba(127, 216, 173, 0.5);
-}
-
-.fg-upd-rail__dot[aria-current="true"] {
-  box-shadow: 0 0 0 2px #7fd8ad;
-}
-
-.fg-upd .fg-upd-spec__foot {
+.fg-upd-spec__foot {
   font-size: 0.86rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.55);
@@ -41835,9 +41810,6 @@ html.fg-blinds-reveal-locked {
     transform: none;
   }
 
-  .fg-upd-rail__dot {
-    transition: none;
-  }
 }
 
 /* The placeholders are deliberately visible rather than tasteful-and-invisible:
@@ -41850,7 +41822,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-upd-context__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 1.6rem);
 }
 
