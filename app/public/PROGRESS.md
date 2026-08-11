@@ -58,7 +58,11 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
-## 2026-08-11 - Heal's, Tottenham Court Road: a new commercial study (test)
+## 2026-08-11 - Heal's, Tottenham Court Road: a new commercial study (LIVE, 20aeb9d)
+
+**Live at 08:54**, owner-approved including the use of the Heal's name. Guard
+passed on four files, backup proven, deletion list empty, socket purge `msg:OK`,
+fourteen canonical routes `200`.
 
 Owner-supplied brief and six photographs. Sheerline Prestige windows and a
 door, two fixed heritage windows and six bespoke louvres, across the courtyard
