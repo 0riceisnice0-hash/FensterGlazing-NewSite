@@ -876,8 +876,8 @@ function fenster_site_data(): array
                    was opened before it was chosen. */
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-anthracite-brick.webp', 'alt' => 'Anthracite uPVC door with two glazed panes, fitted in a brick opening'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-half-glazed.webp', 'alt' => 'White uPVC back door, half glazed over a solid lower panel'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-rosewood-woodgrain.webp', 'alt' => 'uPVC door in a rosewood woodgrain foil with a glazed upper panel'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-half-glazed.webp', 'alt' => 'White uPVC stable door with both halves glazed, in a brick opening'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-boarded-panel.webp', 'alt' => 'White uPVC back door with a glazed upper panel over a boarded lower panel, with black handle and hinges'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-arched-leaded.webp', 'alt' => 'White uPVC front door with leaded glass under a brick arch'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-garden-room.webp', 'alt' => 'White uPVC door and windows onto a garden room'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-cream-from-inside.webp', 'alt' => 'Cream uPVC glazed door and window seen from inside the room'],
@@ -1437,8 +1437,8 @@ function fenster_site_data(): array
                    every /upvc-doors-<town>/ route too, not just the product
                    page. Replaced 2026-07-29. */
                 ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-anthracite-brick.webp', 'alt' => 'Anthracite uPVC door with two glazed panes, fitted in a brick opening'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-half-glazed.webp', 'alt' => 'White uPVC back door, half glazed over a solid lower panel'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-rosewood-woodgrain.webp', 'alt' => 'uPVC door in a rosewood woodgrain foil with a glazed upper panel'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-half-glazed.webp', 'alt' => 'White uPVC stable door with both halves glazed, in a brick opening'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-boarded-panel.webp', 'alt' => 'White uPVC back door with a glazed upper panel over a boarded lower panel, with black handle and hinges'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-arched-leaded.webp', 'alt' => 'White uPVC front door with leaded glass under a brick arch'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-white-garden-room.webp', 'alt' => 'White uPVC door and windows onto a garden room'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/upvc-doors/upvc-door-cream-from-inside.webp', 'alt' => 'Cream uPVC glazed door and window seen from inside the room'],
