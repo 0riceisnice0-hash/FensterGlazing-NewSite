@@ -420,8 +420,7 @@ $randomiser_payload = [
                          24mm at the highest point for a Part M threshold in a
                          separate product note; that is not this door and it is not
                          on the page. Ask the owner before adding either. */ ?>
-                <p><?php esc_html_e('There are four, drawn below. Which one you get is decided by the house rather than by preference, and we aim for the low aluminium wherever the floor levels allow it.', 'fenster'); ?></p>
-                <p><?php esc_html_e('Which one is right depends on your floor levels inside and out, so it is settled at survey rather than guessed at from a drawing.', 'fenster'); ?></p>
+                <p><?php esc_html_e('There are four, drawn below. Which one you get is decided by the house rather than by preference: it turns on your floor levels inside and out, so it is settled at survey. We aim for the low aluminium wherever those levels allow it.', 'fenster'); ?></p>
                 <?php /* THE BUBBLE GASKET IS LINIAR'S AND IS THEIR TERM FOR IT.
                          Owner approved 2026-08-12. It is worth a sentence because
                          it is the part a customer feels in January rather than
