@@ -47,7 +47,27 @@ function fenster_ad_click_parameters(): array
 }
 
 /**
+ * The ad click identifier in a set of query parameters.
+ *
+ * @return array{type: string, id: string}|array{}
+ */
+function fenster_ad_click_from_params(array $params): array
+{
+    foreach (fenster_ad_click_parameters() as $parameter) {
+        $value = isset($params[$parameter]) ? sanitize_text_field((string) $params[$parameter]) : '';
+        if ($value !== '' && preg_match('/^[A-Za-z0-9_.-]{10,200}$/', $value)) {
+            return ['type' => $parameter, 'id' => $value];
+        }
+    }
+
+    return [];
+}
+
+/**
  * The ad click identifier on the current request, if there is one.
+ *
+ * Still used by the cache-header guard in `inc/generated-pages.php`, which runs
+ * on requests that DO reach PHP.
  *
  * @return array{type: string, id: string}|array{}
  */
@@ -55,17 +75,8 @@ function fenster_ad_click_from_request(): array
 {
     static $click = null;
 
-    if ($click !== null) {
-        return $click;
-    }
-
-    $click = [];
-    foreach (fenster_ad_click_parameters() as $parameter) {
-        $value = isset($_GET[$parameter]) ? sanitize_text_field(wp_unslash((string) $_GET[$parameter])) : '';
-        if ($value !== '' && preg_match('/^[A-Za-z0-9_.-]{10,200}$/', $value)) {
-            $click = ['type' => $parameter, 'id' => $value];
-            break;
-        }
+    if ($click === null) {
+        $click = fenster_ad_click_from_params(wp_unslash($_GET));
     }
 
     return $click;
@@ -80,14 +91,13 @@ function fenster_ad_click_from_request(): array
  * reference — which is what lets it travel to WindowCAD and into the dashboard
  * without breaching the never-share-a-click-id rule.
  */
-function fenster_ad_attribution_reference(): string
+function fenster_ad_attribution_reference_for(string $click_id): string
 {
-    $click = fenster_ad_click_from_request();
-    if ($click === []) {
+    if ($click_id === '') {
         return '';
     }
 
-    return 'FGA-' . strtoupper(substr(hash_hmac('sha256', $click['id'], wp_salt('auth')), 0, 18));
+    return 'FGA-' . strtoupper(substr(hash_hmac('sha256', $click_id, wp_salt('auth')), 0, 18));
 }
 
 /**
@@ -104,10 +114,10 @@ function fenster_ad_click_hash(string $click_id): string
 /**
  * Campaign context from the landing URL's ValueTrack/UTM suffix.
  */
-function fenster_ad_context_from_request(): array
+function fenster_ad_context_from_params(array $params): array
 {
-    $get = static function (string $key): string {
-        return isset($_GET[$key]) ? sanitize_text_field(wp_unslash((string) $_GET[$key])) : '';
+    $get = static function (string $key) use ($params): string {
+        return isset($params[$key]) ? sanitize_text_field((string) $params[$key]) : '';
     };
 
     return [
@@ -156,48 +166,68 @@ function fenster_ad_device_class(): string
 }
 
 /**
- * Record an ad click, once, at the moment it lands.
+ * Record an ad click. REST, because the landing page itself is cached.
  *
- * Runs before any consent decision exists, deliberately. Nothing here touches
- * the visitor's device.
- */
-/*
- * PRIORITY -10, AND IT HAS TO BE NEGATIVE.
+ * THIS WAS A `template_redirect` HOOK AND IT RECORDED NOTHING ON LIVE.
  *
- * `fenster_maybe_render_generated_page()` is hooked to `template_redirect` at
- * priority 0, renders the page and then `exit`s. Every route the ad campaigns
- * point at is a generated page, so anything hooked after it never runs at all —
- * this was written at priority 5 first and would have recorded zero ad clicks
- * while looking entirely correct.
+ * SiteGround's proxy caches the generated pages by PATH, ignoring the query
+ * string. Proven on production: a `?gclid=` value never used before still came
+ * back `X-Proxy-Cache: HIT`, and an extra unknown parameter did not change it.
+ * So on the one request that matters — a paid visitor arriving on a popular
+ * landing page — PHP is never executed at all, the hook never fires, and
+ * `nocache_headers()` cannot help because nothing is running to send it.
+ *
+ * The test site could not have caught this: it is Basic Auth protected, which
+ * disables the proxy cache, so every page there is a cache miss.
+ *
+ * A REST route is not proxy-cached, and the browser runs on a cached page, so
+ * the click is reported from the visitor rather than inferred from their
+ * request. Everything that must stay server-side still is: the hashing, the
+ * salts, the stored context and the relay. The browser only forwards the query
+ * string it was already given.
  */
-add_action('template_redirect', 'fenster_record_ad_click', -10);
-function fenster_record_ad_click(): void
+add_action('rest_api_init', 'fenster_register_ad_click_route');
+function fenster_register_ad_click_route(): void
 {
-    if (is_admin() || wp_doing_ajax() || wp_is_json_request()) {
-        return;
+    register_rest_route('fenster/v1', '/ad-click', [
+        'methods' => WP_REST_Server::CREATABLE,
+        'callback' => 'fenster_record_ad_click',
+        'permission_callback' => 'fenster_ad_attribution_request_allowed',
+    ]);
+}
+
+function fenster_record_ad_click(WP_REST_Request $request): WP_REST_Response
+{
+    // The user agent on this request is the visitor's own, so the crawler gate
+    // still applies exactly as it would on a page view.
+    if (! fenster_request_may_be_tracked()) {
+        return new WP_REST_Response(['reference' => ''], 200);
     }
 
-    $click = fenster_ad_click_from_request();
-    if ($click === [] || ! fenster_request_may_be_tracked()) {
-        return;
+    $params = [];
+    parse_str(ltrim((string) $request->get_param('search'), '?'), $params);
+
+    $click = fenster_ad_click_from_params($params);
+    if ($click === []) {
+        return new WP_REST_Response(['reference' => ''], 200);
     }
 
-    /*
-     * A request carrying a click id must never be served from, or written to, a
-     * shared cache. The response is specific to this arrival and the URL is
-     * unique to it; a cached copy would be both useless and confusing.
-     */
-    nocache_headers();
+    $landing_path = (string) wp_parse_url((string) $request->get_param('path'), PHP_URL_PATH);
+    if ($landing_path === '' || $landing_path[0] !== '/') {
+        $landing_path = '/';
+    }
 
-    $reference = fenster_ad_attribution_reference();
-    $context = fenster_ad_context_from_request();
-    $landing_path = (string) wp_parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
+    $reference = fenster_ad_attribution_reference_for($click['id']);
+    $context = fenster_ad_context_from_params($params);
 
     /*
      * The context is kept server-side against the reference so a lead arriving
      * later in the visit can be attributed without the browser having had to
      * remember anything. 90 days matches the Google Ads conversion window
      * already used for the click id itself.
+     *
+     * `set_transient` is idempotent for a repeated click, and the dashboard
+     * dedupes on the hash, so a reload costs a rewrite and never a second row.
      */
     set_transient(
         fenster_ad_context_key($reference),
@@ -211,6 +241,10 @@ function fenster_record_ad_click(): void
     );
 
     fenster_relay_ad_click($click, $context, $reference, $landing_path);
+
+    // The reference goes back so the browser can stamp forms and the WindowCAD
+    // URL with it. It is one-way and carries no click id.
+    return new WP_REST_Response(['reference' => $reference], 200);
 }
 
 function fenster_website_dashboard_ad_click_url(): string

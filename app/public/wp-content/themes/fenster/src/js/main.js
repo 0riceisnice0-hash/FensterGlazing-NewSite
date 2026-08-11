@@ -1815,18 +1815,24 @@ const visitorReference = () => {
 /* The ad reference is consent-free, and that is the whole reason paid search
    stays measurable under consent-first.
 
-   `websiteTracking.adAttributionRef` is derived SERVER-SIDE from the click id in
-   the landing URL (`inc/ad-attribution.php`). Reading the address of a page
+   It is derived SERVER-SIDE from the click id in the landing URL and handed
+   back by `/wp-json/fenster/v1/ad-click`. Reading the address of a page
    somebody just requested stores nothing on their device, so it needs no
    permission — unlike everything below it, which persists and therefore does.
-   It is empty on any request that did not arrive from an ad.
 
-   Prefer it, so a visitor who refuses cookies or simply never answers the
-   banner still has their click joined to the quote or form they go on to send.
-   The stored branch underneath is kept for consenting visitors, where it
-   survives navigation that the URL-derived value cannot. */
+   It is fetched rather than rendered into the page because the landing page is
+   proxy-cached by path: a reference printed into the HTML would be served to
+   every later visitor of that page, and would never reach the visitor it
+   belonged to. See the note on the REST route.
+
+   Prefer it, so a visitor who refuses cookies or never answers the banner still
+   has their click joined to the quote or form they go on to send. The stored
+   branch underneath is kept for consenting visitors, where it survives
+   navigation that the URL-derived value cannot. */
+let serverAdReference = '';
+
 const marketingAttributionReference = () => {
-  const supplied = (websiteTracking.adAttributionRef || '').trim();
+  const supplied = serverAdReference.trim();
   if (validTrackingReference(supplied, 'FGA')) return supplied;
 
   if (!marketingConsentAccepted()) return '';
@@ -2227,6 +2233,52 @@ const syncAdAttribution = () => {
 };
 
 syncAdAttribution();
+
+/* Report the ad click from the browser, because the landing page is cached.
+
+   SiteGround's proxy serves these pages by path and ignores the query string,
+   so a paid arrival never reaches PHP and the server cannot see its own gclid.
+   The browser can: it is running on the cached page with the real URL in the
+   address bar. It forwards the query string to a REST route, which is not
+   cached, and gets back the one-way reference.
+
+   Everything sensitive stays on the server — the hashing, the salt, the stored
+   context and the dashboard relay. This sends only the query string the visitor
+   was already given, and stores nothing on their device, so it stays outside
+   consent for the same reason the rest of layer 1 does.
+
+   The re-stamp afterwards matters: forms and the WindowCAD URL were already
+   populated with whatever was available at load, and the reference arrives a
+   moment later. Without it the very lead this exists to attribute goes out
+   unstamped. */
+const reportAdClick = () => {
+  const endpoint = websiteTracking.adClickEndpoint;
+  const search = window.location.search;
+  if (!endpoint || !window.fetch) return;
+  if (!/[?&](gclid|gbraid|wbraid)=[^&]/.test(search)) return;
+
+  window.fetch(endpoint, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ search, path: window.location.pathname }),
+  })
+    .then((response) => (response.ok ? response.json() : null))
+    .then((data) => {
+      const reference = (data && data.reference) || '';
+      if (!validTrackingReference(reference, 'FGA')) return;
+      serverAdReference = reference;
+      populateTrackingFields();
+      populateAdClickFields();
+      refreshWindowCadLinks();
+      syncAdAttribution();
+      // Only re-points an untouched frame; a part-built quote is left alone.
+      document.querySelectorAll('[data-quote-frame-wrap]').forEach(restampQuoteFrame);
+    })
+    .catch(() => {});
+};
+
+reportAdClick();
 
 // A visitor arriving from an ad meets the cookie banner before they reach a
 // form, and accepting is what allows the id to be stored at all. Without this
