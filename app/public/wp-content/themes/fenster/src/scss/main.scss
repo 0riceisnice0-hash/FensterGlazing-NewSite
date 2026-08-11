@@ -41621,7 +41621,16 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-.fg-upd-config__grid,
+/* FOUR CONFIGURATIONS, FOUR COLUMNS. The shaped head was added as a fourth card
+   into a three-column grid and sat alone on a second row, which is the ragged
+   last row this project has fixed twice before. The survey grid keeps three,
+   because it has three. */
+.fg-upd-config__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.2vw, 1.8rem);
+}
+
 .fg-upd-detail__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
