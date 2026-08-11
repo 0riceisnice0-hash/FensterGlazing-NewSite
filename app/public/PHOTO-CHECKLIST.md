@@ -95,4 +95,9 @@ adding anything to this list.
   campus shot or the work was on a different building. **Do not publish it as our
   work.** Phone photos from whoever ran the job would unblock the study.
 - **Aluminium doors — new gap.** `/aluminium-doors/` has an interior kitchen shot of a white single door as its hero, which reads as uPVC. The bank's `Doors/aluminium` folder is empty.
+- **HERITAGE WINDOWS — one job, and the two shots we have are one frame. New gap, 2026-08-11.** The page now runs on a single install: white Sheerline Classic in the stone openings of an ironstone gable. It is a good photograph and it stays. What the page has no answer for is the job it was built to sell, which is **replacing original steel windows**, so:
+  - **A steel before-and-after is the single most valuable shot on this list.** Same rules as the misted-unit pair above: mark where you stand, shoot the before with the old steel frames still in, come back to the same mark. Rust at the corners, a frame that has bowed, condensation on the inside — all of it helps.
+  - **A dark job.** Everything we have is white or cream, and a steel-look window is usually specified in Anthracite or Jet Black. One anthracite install would change what the page looks like.
+  - **A close one at the sash line**, arm's length, showing the stepped shoulder and its shadow. That detail is the entire product and we own no photograph of it.
+  - **Georgian or horizontal bars**, either layout, on anything. The planner draws them; nothing photographs them.
 - Tilt and turn, heritage windows, heritage doors, aluminium sliders and uPVC sliding all have **empty folders** in the bank, so those pages stay on supplier imagery.

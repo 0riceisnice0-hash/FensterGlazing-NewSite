@@ -58,6 +58,103 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
+## 2026-08-11 - Heritage windows rebuilt around the steel window (local, not deployed)
+
+Owner brief: a full rework in the style of the aluminium flush rebuild, few
+assets, add a unique feature, keep it high end, and link it to the heritage
+doors both ways.
+
+**The product is the STEPPED SASH, and that is the whole page.** Owner: "we use
+just the stepped sash to keep it a proper steel look (designed to replace
+crittal or give the same look)". Sheerline publish four aesthetics on Classic
+and we fit one. The old page said "slim aluminium windows", which describes
+`/aluminium-windows/` and gave a visitor no reason to be on this route.
+
+**The angle is replacement, not upgrade.** Every other window route sells a
+better version of what you have. This one replaces something specific that is
+rusting, binding and single glazed, so the page opens on that and Crittall is
+named once, as the thing being replaced.
+
+**A bar planner was built as the page's feature and the owner removed it on
+sight.** "Miss out your cartoon planner tool. Already have a way better
+designer/pricing tool that should be the focus." It drew the window to scale
+from lights, bar layout and colour, and the objection is not that it looked bad,
+it is that WindowCAD configures the window *and* prices it, so anything drawn
+in-house competes with the thing that converts and answers less. **This is the
+second time**: a canvas configurator was built and removed on `/casement-windows/`
+on 2026-08-04 for the same reason. The bar layouts are copy now, beside the one
+real photograph of a bar, and the section ends with a button into the designer.
+
+**Two Sheerline photographs came off for being the wrong product, and one of
+them was the flush page's hero.** "Make sure to only use heritage, youre reusing
+a pic from flush." It is the same house on the same shoot as
+`/aluminium-flush-windows/`'s hero, down to the cordyline palm and the sign in
+the window, and I had taken it from Sheerline's Classic page and assumed that
+settled what it showed. It does not: Classic runs both a stepped and a
+contemporary sash, and the page you download from says nothing about which is in
+the frame.
+
+**Triple glazing came off BOTH Classic routes, and the exclusion list Legend
+reads was the thing that nearly got missed.** The doors are the same system and
+the same answer, owner-confirmed, so `/heritage-aluminium-doors/` lost its 1.1
+too — which also empties the triple row out of the Thermlock banner on both,
+because that banner reads `glazing_u_values` rather than carrying its own copy.
+The catch is that Legend's verified business facts carry their own sentence
+about which products can take triple, and it did not know about either. A
+figure removed from a page but left in Legend's facts is a wrong answer in chat
+that no visitor can see and nobody will report, which is the fault already
+recorded against the repairs USPs. `LIVECHAT.md` carries the same list and was
+updated with it.
+
+**And Legend is allowed to say more than the page does.** Owner: triple can be
+done on both, with the contemporary sash, on request. So the pages stay silent —
+publishing it is the muddying the decision exists to prevent — and Legend is
+briefed to answer it if asked, name the sash and quote no U-value. A first pass
+had written "we do not offer triple on this sash" into a specification card and
+a FAQ, which is an exclusion, which the site does not write. Both now state the
+double glazed figure and stop.
+
+**The original decision.** Owner: triple can be done on the
+contemporary sash but is avoided on the stepped one, so the Classic offering does
+not muddy against Prestige. So the strip prints 1.4 W/m²K plain rather than a
+starred 1.1, and the copy says triple is not offered on this sash. Sheerline's
+published 1.1 is real and belongs to a window we choose not to sell.
+
+**A drawn comparison was tried and dropped before it cost a review round.**
+Sheerline's own Stepped and Contemporary style renders are the same window with
+one variable, which is exactly the pair the flush page uses. Measured, they
+differ on 0.6% of pixels, and cropped hard on the sash they still read as the
+same picture. An invisible comparison is worse than none, so the stepped
+profile is carried by the planner's drawing instead.
+
+**Four faults the first render caught, and every one of them is already written
+down in this repo:**
+
+1. **`[hidden]` loses to a class that sets `display`.** The written layouts
+   stayed on screen underneath the working planner, and with JavaScript off the
+   shell would have rendered empty. The repairs schematics carry the identical
+   guard and the identical note.
+2. **`.fg-cw p` is (0,1,1) and repaints anything less specific.** The colour
+   readout and the scale note rendered grey on near-black.
+3. **A shared component's breakpoint list has to name the new class.** The card
+   band was added to the shared selectors but not to the 860px collapse list, so
+   the heading rendered three words wide on a phone. Same trap as the product
+   hub tile counts.
+4. **A CGI render among photographs.** The doors cross-link used a rendered
+   interior; it now uses a photograph that shows a heritage door and a heritage
+   window on one elevation, which makes the section's point without a caption.
+
+**Two data faults fixed in passing.** The route was sharing the
+`aluminium_windows` gallery pool, so a steel-look page illustrated itself with
+contemporary Prestige frames on this route and every town page under it. And the
+specification strip printed "Sightlines: Ultra slim", an adjective in a strip
+whose job is figures, next to a flat "A+ rated" that Sheerline only give with
+triple glazing.
+
+**Positioning, owner's read:** this product has taken over from Smart's heritage
+as the steel-replacement window. The copy carries that confidence without naming
+a competitor, and Crittall is named once, as the thing being replaced.
+
 ## 2026-08-10 - The office enquiry email stops linking into wp-admin (LIVE, e5fb592)
 
 **On test and live.** Live is `e5fb5925` on `release/office-email-no-admin-link`,

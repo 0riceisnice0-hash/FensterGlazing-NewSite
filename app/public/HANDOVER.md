@@ -11,7 +11,7 @@ live; `PROGRESS.md` is a log and some of its older entries are still titled
 the Current Truth section of `LIVECHANGES.md`, then the rule for whichever page
 you are touching in `AI.md`.
 
-**The EIGHT routes with a bespoke middle** — verified against the dispatch in
+**The NINE routes with a bespoke middle** — verified against the dispatch in
 `generated-page.php`, not from memory. These do NOT use the generic product
 journey, and each has a rule in `AI.md` to read before editing:
 
@@ -21,6 +21,7 @@ journey, and each has a rule in `AI.md` to read before editing:
 | `/flush-casement-windows/` | `flush-casement-windows-v2.php` |
 | `/aluminium-doors/` | `aluminium-doors-v2.php` |
 | `/aluminium-flush-windows/` | `aluminium-flush-windows-v2.php` |
+| `/heritage-windows/` | `heritage-windows-v2.php` |
 | `/secondary-glazing/` | `secondary-glazing-v2.php` |
 | `/double-glazing-replacement/` | `replacement-glazing-v2.php` |
 | `/window-and-door-repairs/` | `window-door-repairs.php` |
@@ -39,6 +40,9 @@ silently renders nothing. That has caught two people; the warning is in the code
 - A typical flush aluminium job with dummy sashes in the fixed lights.
 - A Prestige STANDARD corner render from Sheerline.
 - A wide, honest hero for `/aluminium-doors/`. Longest-standing gap on the site.
+- **A second heritage window job, and ideally a steel before-and-after.** One
+  install exists and the case-study strip is gated off for that reason. A dark
+  one would change what the page looks like; everything we own is white.
 - Thirteen stale `release/*` branches on origin, each one a loaded gun if
   deployed later.
 
@@ -601,6 +605,36 @@ Route: `/aluminium-flush-windows/`
 - **Our one install is atypical.** Its fixed panes are direct glazed rather than
   dummy sashes, so the openers stand proud. Never claim flushness from those
   photographs.
+
+### Heritage Windows Page
+
+Route: `/heritage-windows/`
+
+- **Bespoke middle** in `template-parts/sections/heritage-windows-v2.php`,
+  dispatched on `$is_heritage_bespoke`, OUTSIDE the specification-choices
+  wrapper like every other bespoke route. The generic middle bands are gated
+  off; the wrapper itself is KEPT, because the Classic colour grid and the S2
+  handle grid inside it are real decisions on this product. The pulse and the
+  instant-price button are kept too.
+- **The product is the Sheerline Classic STEPPED sash**, and only that one of
+  Sheerline's four aesthetics. Read the Heritage Windows Rule in `AI.md` before
+  writing any copy for it, in particular before quoting a sightline.
+- **NO CONFIGURATOR, deliberately.** An interactive bar planner was built here
+  and the owner removed it: WindowCAD configures and prices in one place, so a
+  drawn tool competes with the thing that converts. The dark section carries the
+  three bar layouts as copy and hands over to the designer with a
+  `Design and price it` button. Casement had the same call in August. Do not
+  build a third.
+- **No triple glazing on this route.** Owner-confirmed 2026-08-11: triple is
+  available on the Classic contemporary sash and deliberately not offered on the
+  stepped one, so Classic does not muddy against Prestige. The strip prints
+  1.4 W/m²K plain, with no star and no lowest-achievable note.
+- **The case-study strip is gated off**: no study claims this route and the
+  helper falls back to showing all of them.
+- **One install of ours**, shown twice from one frame, and the copy does not
+  mention that it is the only one. See the Heritage Windows Imagery Rule.
+- **It links to `/heritage-aluminium-doors/` and that page links back**, both
+  through deliberate sections rather than a line in a list. Owner instruction.
 
 ### Replacement Glazing Page
 
