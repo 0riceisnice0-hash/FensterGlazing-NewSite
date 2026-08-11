@@ -114,14 +114,14 @@ $photo = static function (string $key) use ($photos): array {
         <div class="fg-cw-split">
             <div class="fg-cw-split__text">
                 <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
-                <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into, whatever shape that is.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most and it is made exactly the same way as the arched one here, to the hole in your wall.', 'fenster'); ?></p>
+                <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most, and it is made the same way as anything rarer: to the hole in your wall. Shaped heads are possible too, though they are rare.', 'fenster'); ?></p>
                 <p><?php esc_html_e('What follows is everything you get to decide, roughly in the order it gets decided.', 'fenster'); ?></p>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
                     <img src="<?php echo esc_url($photo('opening')['src']); ?>" alt="<?php echo esc_attr($photo('opening')['alt'] ?? ''); ?>" loading="lazy" decoding="async" width="1280" height="1600">
-                    <figcaption><?php esc_html_e('Our install. A curved head made to a Victorian brick arch, with leaded glass and a full panel below.', 'fenster'); ?></figcaption>
+                    <figcaption><?php esc_html_e('Our install. A back door glazed over a shiplap panel, with black furniture against a white frame.', 'fenster'); ?></figcaption>
                 </figure>
             <?php endif; ?>
         </div>
@@ -132,11 +132,13 @@ $photo = static function (string $key) use ($photos): array {
          the first real question a homeowner has and it is answered entirely in
          our own photographs.
 
-         A SHAPED HEAD IS NOT A WAY OF OPENING. It was a fourth card here and the
-         owner pulled it, 2026-08-12: an arched door is still a single leaf, so
-         it said nothing about opening and broke the one idea the section has.
-         The photograph now opens the page instead, where "made for the opening
-         it goes into" is the sentence it proves. */ ?>
+         A SHAPED HEAD IS NOT A WAY OF OPENING and it is not on this page as a
+         picture at all. It was a fourth card here and the owner pulled it,
+         2026-08-12: an arched door is still a single leaf, so it said nothing
+         about opening. It was then promoted to the opening photograph, and he
+         pulled it again — shaped heads are **super niche**, so leading the page
+         on one misrepresents what we sell. It gets one clause in the intro copy
+         and no photograph. Do not promote it again. */ ?>
 <section class="fg-cw fg-upd fg-upd-config" aria-labelledby="fg-upd-config-title">
     <div class="container">
         <div class="fg-upd-config__head">

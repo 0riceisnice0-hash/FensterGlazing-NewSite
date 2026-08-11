@@ -4743,15 +4743,15 @@ if ($is_commercial_hub) {
                 'renders' => $upvc_render_args,
                 'handles' => is_array($door_handle_finishes) ? $door_handle_finishes : [],
                 'glass' => $upvc_glass,
-                /* THE ARCH OPENS THE PAGE. "Made for the opening it goes into,
-                   whatever shape that is" is a sentence a curved head in a
-                   Victorian brick arch proves on sight, and the shiplap back
-                   door that used to sit here proves nothing in particular. It is
-                   still on the page, as the single leaf in the configurations. */
+                /* THE COMMON DOOR OPENS THE PAGE, not the arch. The arched one
+                   was tried here and the owner pulled it: shaped heads are super
+                   niche, and leading on one misrepresents what we actually sell.
+                   A white back door glazed over a shiplap panel is the honest
+                   picture of this product. */
                 'photos' => [
                     'opening' => [
-                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-white-arched-leaded.webp'),
-                        'alt' => __('White uPVC door with a curved head and leaded glass in an arched brick opening', 'fenster'),
+                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-white-shiplap-brick.webp'),
+                        'alt' => __('White uPVC back door glazed over a shiplap panel in a brick opening', 'fenster'),
                     ],
                 ],
             ]);
