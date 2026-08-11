@@ -30,7 +30,9 @@
  *  - **Same colour range and the same theory as the uPVC windows**: 16 foils,
  *    the colour on the outside face, white or the same colour inside, and the
  *    inside foil costs more. Do not restate that as a free choice.
- *  - **The whole obscure glass range is available** in a door.
+ *  - **The whole privacy glass range is available** in a door. The page says
+ *    privacy glass rather than obscure glass throughout, on the owner's
+ *    instruction of 2026-08-12; the route it links to keeps its own name.
  *  - **1.0 W/m²K is the TRIPLE glazed figure.** Liniar publish 0.99 whole-door
  *    triple on the 70mm residential door and publish NO double glazed figure,
  *    so there is no second number and none may be borrowed from the windows.
@@ -173,7 +175,7 @@ $randomiser_payload = [
          our own photographs.
 
          THE ARITHMETIC IS REAL and it is computed from the data on this page
-         rather than typed in: 16 foils, 3 panel styles, the obscure glass range
+         rather than typed in: the foils, the panel arrangements, the privacy glass range
          plus clear, and the door handle finishes. If any of those lists change,
          the number changes with them. Never round it up to something rhetorical
          — the whole force of it is that it is a count, not a boast. */ ?>
@@ -416,9 +418,9 @@ $randomiser_payload = [
             </article>
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The glass, which is a privacy decision.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('Every obscure glass we fit can go in a door, graded one to five for how much they hide. A bathroom or a front door onto a street usually wants a five; a back door onto your own garden usually does not.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Every style of privacy glass we fit can go in a door, graded one to five for how much it hides. A bathroom or a front door onto a street usually wants a five; a back door onto your own garden usually does not.', 'fenster'); ?></p>
                 <?php $placeholder(__('Obscure glass in a door panel, shot from outside at dusk with the hall light on, so it reads as privacy rather than as texture.', 'fenster'), '16 / 10'); ?>
-                <p><a href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Compare the obscure glass range', 'fenster'); ?></a></p>
+                <p><a href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Compare the privacy glass', 'fenster'); ?></a></p>
             </article>
         </div>
     </div>

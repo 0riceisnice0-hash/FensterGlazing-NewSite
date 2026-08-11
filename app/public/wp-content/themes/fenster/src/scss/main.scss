@@ -41707,9 +41707,15 @@ html.fg-blinds-reveal-locked {
   margin: 0;
 }
 
-.fg-upd .fg-upd-context__cell img {
+.fg-upd /* `height: auto` is load-bearing. The markup carries width="1280" height="1600"
+   for layout stability, and without an explicit height the attribute wins over
+   `aspect-ratio`: these rendered 376x1600 each, four full-height photographs
+   down the page. The tiles in the decisions grid escaped it only because they
+   set `height: 100%`. */
+.fg-upd-context__cell img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: 4px;
