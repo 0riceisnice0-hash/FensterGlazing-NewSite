@@ -1,15 +1,39 @@
 # Fenster Case Studies — How To Add And Maintain Them
 
-Last updated: 2026-08-04
+Last updated: 2026-08-11
 
 This is the complete guide to the residential case studies system at
 `/case-studies/`. It is written so a future agent (or developer) can add a new
 case study end to end in one pass, with no back and forth. Read it fully before
 touching case studies.
 
-The commercial archive at `/commercial-projects/` is a **separate, older**
-system driven by `data/pages.json`. Do not confuse the two. Everything below is
-about the curated residential case studies only.
+**Commercial studies now use the SAME system.** This was true when the line
+below was written and is no longer: `/commercial-projects/` still has legacy
+entries driven by `data/pages.json`, but a study added today goes in
+`inc/case-studies-data.php` with `'type' => 'Commercial'` regardless of which
+archive it belongs to. `fenster_case_study_base()` reads that field and routes
+it to `/commercial-projects/<slug>/`; `case-studies-residential.php` renders
+both archives from an `is_commercial` flag. Heal's, Tottenham Court Road
+(2026-08-11) is the worked example to copy — a main-contractor job, which is
+how most commercial work reaches us, so the client field names the end client
+and the overview says we were appointed through the contractor.
+
+**Commercial and residential studies must NOT mix on product pages.**
+`fenster_case_studies_for_product()` takes a `$type` argument defaulting to
+`residential`; the commercial template passes `commercial`. Before this filter
+existed, Heal's appeared on residential product pages, which is what surfaced
+it. Two consequences to know before you "fix" anything:
+
+- `/aluminium-windows/` and `/heritage-windows/` have their case-study strip
+  **deliberately gated off**, because with no residential study of their own the
+  helper falls back to whatever else matches — secondary glazing and uPVC
+  casements — which is worse than showing nothing. Add a residential study for
+  either route and remove it from the gate; do not remove the gate first.
+- `fenster_case_studies_for_product_group()` is filtered to residential too, for
+  the product hubs.
+
+Everything below is about the curated case studies system, residential unless
+it says otherwise.
 
 ---
 

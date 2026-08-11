@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-10
+Last updated: 2026-08-11
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -8,6 +8,54 @@ kept in place further down, in date order with the entries they summarise.
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## START HERE, 2026-08-11 (end of session)
+
+**Live is `5aa5d43`. `main` is `2bc8b17`, one docs-only commit ahead, and no
+theme file differs between them. TEST IS LEVEL WITH LIVE.** No release branch
+outstanding, working tree clean.
+
+### What shipped today, in four releases
+
+1. **`/heritage-windows/` rebuilt** as the ninth bespoke residential middle,
+   around the steel window it replaces rather than the metal it is made of.
+2. **Triple glazing came off BOTH Sheerline Classic routes**, windows and doors.
+   It needs the contemporary sash and we fit the stepped one, deliberately, so
+   Classic stays distinct from Prestige. The energy tile followed to "A rated",
+   because A+ was the triple figure.
+3. **The Heal's, Tottenham Court Road commercial case study.**
+4. **Commercial case studies no longer appear on residential product pages**,
+   and `/louvre-vents/` was rebuilt around the louvre range.
+
+### The four rules learned today, all of them the hard way
+
+- **A figure can be true of the system and untrue of the product.** A+ is real
+  on Classic and belongs to a sash we do not sell. Same shape as the flush
+  page's "From 46mm" a day earlier. Check what we actually fit before quoting.
+- **A removed fact survives in three places nobody looks at**: Legend's verified
+  facts, where a wrong answer is invisible to everyone; the page head, where the
+  supplier name outlived the debranding pass by four hours in the meta
+  description; and a supplier logo inside a product photograph.
+- **Filtering a list can turn one fault into another.** Taking commercial
+  studies off residential pages left `/aluminium-windows/` falling back to
+  secondary glazing and uPVC casements. Look at what the fallback does next.
+- **Specificity, three times in one day.** `.fg-cw p` and `.fg-lv p` are (0,1,1)
+  and repaint anything less specific. If a rule looks ignored, count before
+  rewriting.
+
+### What needs the owner, and nothing else
+
+- **A residential heritage window study and a residential aluminium window
+  study.** Both routes have their case-study strip gated off for want of one.
+- **Photographs**: a steel before-and-after and a dark job for heritage
+  windows; a wide louvre run in context; the Heal's louvres, unphotographed.
+- **Which louvre systems those photographed jobs used.** No caption names one.
+- **Blanking panels** on the louvre page: left out because composite panels
+  were excluded, and never ruled on.
+- **A wide, honest hero for `/aluminium-doors/`.** Longest-standing gap on the
+  site. The Heal's door was tested and fails: a 3:1 band cannot hold a door.
+- Fourteen stale `release/*` branches on origin, each a loaded gun if deployed.
+- Two `.DS_Store` files are tracked in the theme from an earlier session.
 
 ## START HERE, 2026-08-10 (end of session)
 

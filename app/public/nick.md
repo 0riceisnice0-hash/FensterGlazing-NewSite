@@ -1,6 +1,6 @@
 # Nick's Laptop (macOS)
 
-Last updated: 2026-08-05
+Last updated: 2026-08-11
 
 ## Read this first
 
@@ -194,6 +194,8 @@ Owner-confirmed product facts, worth not re-deriving:
 - **The casement multi-point lock is the Kenrick Excalibur**, confirmed 2026-08-04. Kenrick's published figures for it are on `/casement-windows/` and attributed to Kenrick. "PAS 24 capable" is their wording and stays that way: the approval belongs to a tested complete window, not to a component. Full terms in `AI.md`.
 - Smooth white is RAL 9003 and is the unfoiled profile, so it has no swatch photograph.
 - uPVC doors and patio doors share the window foil range. Sliding sash is Roseview and secondary glazing is aluminium, so neither carries it.
+- **Heritage windows and heritage doors are Sheerline Classic, stepped sash only**, confirmed 2026-08-11. The stepped sash is what gives the steel look, and the product has largely taken over from Smart's heritage range as the Crittall replacement. **Triple glazing is not offered on either**: it needs the contemporary sash, and we avoid that deliberately so Classic does not blur into Prestige. So A rated, not A+, and 1.4 W/m2K double. Beaded frames, 60.5mm sightline. S2 handles, same as the rest of the range.
+- **Louvres are specified by free area, and there are two kinds.** Visual free area is what you see through; physical free area is what air actually gets through, tested to EN 13030:2002, and it is the lower number and the one a schedule means. Blade centres run 30mm to 95mm across the range. IKL33 is what we fit most. **Composite panels are excluded from what we offer.**
 
 Open, and needing the owner rather than a decision from you:
 
@@ -203,3 +205,7 @@ Open, and needing the owner rather than a decision from you:
 - ~~Tilt and turn and bow and bay carry the colour grid but not the handle grid.~~ **Closed 2026-07-29.** Neither page is short. Tilt and turn takes a different handle family, not S2, so the S2 grid would be wrong there; the owner is sending the details. Bow and bay is a configuration rather than a product, so it carries no handle of its own. See the owner-confirmed facts in `AI.md`.
 - The Barn Hotel and Sunrise Care Home completion months are still unconfirmed, so those two case studies print no date.
 - Whether Fenster takes industrial and logistics work. The sector page was deliberately not built.
+- **A residential heritage window study and a residential aluminium window study.** Both routes have their case-study strip switched off for want of one, because the alternative was showing secondary glazing and uPVC casements on an aluminium page.
+- **Whether the louvre page should mention blanking panels.** Left out when composite panels were excluded from the range, and never actually ruled on.
+- **Which louvre systems the four photographed jobs used**, so the photographs can be captioned honestly.
+- **Legend's triple-glazing answer has not been tested in live chat.** It is allowed to offer triple on request, naming the contemporary sash, and forbidden from quoting a U-value for it.

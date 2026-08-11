@@ -1,19 +1,21 @@
 # Fenster Glazing Handover
 
-## Handover state, 2026-08-10
+## Handover state, 2026-08-11
 
-**Live is `93ae15e` and level with `main`.** No release branch outstanding, no
-divergence, working tree clean. `LIVECHANGES.md` is the authority on what is
-live; `PROGRESS.md` is a log and some of its older entries are still titled
-"(test)" long after shipping.
+**Live is `5aa5d43`. `main` is `2bc8b17`, one docs-only commit ahead, and no
+theme file differs between the two, so live is level with `main` in everything
+that renders. Test is level with live.** No release branch outstanding, working
+tree clean. `LIVECHANGES.md` is the authority on what is live; `PROGRESS.md` is
+a log and some of its older entries are still titled "(test)" long after
+shipping.
 
 **Read in this order:** the START HERE block at the top of `PROGRESS.md`, then
 the Current Truth section of `LIVECHANGES.md`, then the rule for whichever page
 you are touching in `AI.md`.
 
-**The NINE routes with a bespoke middle** — verified against the dispatch in
-`generated-page.php`, not from memory. These do NOT use the generic product
-journey, and each has a rule in `AI.md` to read before editing:
+**The NINE residential routes with a bespoke middle** — verified against the
+dispatch in `generated-page.php`, not from memory. These do NOT use the generic
+product journey, and each has a rule in `AI.md` to read before editing:
 
 | Route | Template |
 |---|---|
@@ -27,6 +29,13 @@ journey, and each has a rule in `AI.md` to read before editing:
 | `/window-and-door-repairs/` | `window-door-repairs.php` |
 | `/composite-doors/` | `composite-doors-v2.php` |
 
+**And ONE commercial route**, dispatched from `commercial-product.php` rather
+than `generated-page.php`, which is a separate template with its own bands:
+
+| Route | Template |
+|---|---|
+| `/louvre-vents/` | `louvre-vents-v2.php` |
+
 `/heritage-aluminium-doors/` has a rule in `AI.md` but **no** bespoke template;
 it runs the generic journey with route-specific data.
 
@@ -34,25 +43,40 @@ it runs the generic journey with route-specific data.
 one inside and the whole middle is gated on a condition about colour swatches and
 silently renders nothing. That has caught two people; the warning is in the code.
 
+**Commercial and residential case studies do not mix.**
+`fenster_case_studies_for_product()` takes a `$type` argument defaulting to
+`residential`, and the commercial template passes `commercial`. Filtering it
+that way is what gated the strip off `/aluminium-windows/` and
+`/heritage-windows/`: with no residential study of their own they fell back to
+secondary glazing and uPVC casements, which is worse than showing nothing.
+
 **Open and needing the owner, not code:**
 
 - Roehampton case study, parked on four facts.
 - A typical flush aluminium job with dummy sashes in the fixed lights.
 - A Prestige STANDARD corner render from Sheerline.
 - A wide, honest hero for `/aluminium-doors/`. Longest-standing gap on the site.
+  The Heal's door was tested against it and fails: a 3:1 band cannot hold a door.
+- **A residential heritage window study and a residential aluminium window
+  study.** Each un-gates a case-study strip that is currently switched off.
 - **A second heritage window job, and ideally a steel before-and-after.** One
   residential install exists, plus the two fixed heritage windows inside the
   Heal's commercial study. A dark job would change what the page looks like:
   everything of our own is white.
-- Thirteen stale `release/*` branches on origin, each one a loaded gun if
+- **Louvres**: a wide run in context, and the Heal's louvres, unphotographed.
+  No caption anywhere names which system a photographed job used, so none do.
+- **Blanking panels** on the louvre page: left out when composite panels were
+  excluded from the range, and never actually ruled on.
+- Fourteen stale `release/*` branches on origin, each one a loaded gun if
   deployed later.
+- Two `.DS_Store` files tracked in the theme from an earlier session.
 
 **Known and deliberately not fixed:** all 23 routes that render the
 key-specification strip repeat their own H1 as an H2 inside it.
 `/aluminium-flush-windows/` overrides it; the rest do not.
 
 
-Last updated: 2026-08-07
+Last updated: 2026-08-11
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -70,8 +94,36 @@ Use:
 
 ## Important Updates
 
-- **READ THIS BEFORE ANY DEPLOY: live is a release branch, not `main`.** Live is `release/repairs-diagnostics` as of 2026-08-07. **The SHA is in `LIVECHANGES.md` and deliberately not repeated here** — this line used to carry its own copy and went four releases stale. `main` carries an eighteen-commit **online-quote** strand built by another session in parallel on 2026-08-06 — a bespoke `/online-quote/` template, spin videos and a scroll-timeline animation — which the owner has **still not signed off**. Deploying `main` ships it. Both live releases since have been cut from the previous live with only the approved commits cherry-picked on, compiled assets rebuilt from the branch's own source, and `fg-oq` verified absent from both bundles rather than assumed. **`release/flush-and-glass` is now superseded and safe to delete; do not deploy it, it would revert the repairs page.** The same will be true of `release/repairs-diagnostics` the moment anything else ships — a stale release branch is a loaded gun, which this repo has been bitten by twice.
-- **The online-quote strand is the one thing blocking a normal `main`-to-live flow.** It has been in this state since 2026-08-06 and has now forced two cherry-picked releases. It wants either owner sign-off or a decision to drop it; until then every release costs an hour of branch surgery and every session has to re-derive the same conclusion.
+- **`/heritage-windows/` was rebuilt on 2026-08-11 and is live**, as the ninth
+  bespoke residential middle. It is written around the steel window it replaces
+  rather than the metal it is made of. We fit the Sheerline Classic **stepped**
+  sash only. Read the Heritage Windows Rule and the Heritage Windows Imagery
+  Rule in `AI.md` before touching it: most of what is there is an owner
+  correction, including the removal of a bar-layout planner (WindowCAD is the
+  interactive tool on this site, and that is now twice a built one was cut).
+- **Triple glazing is NOT available on either Sheerline Classic route.** It
+  needs the contemporary sash; we fit the stepped one deliberately, to keep
+  Classic distinct from Prestige. It came off `/heritage-windows/` and
+  `/heritage-aluminium-doors/` on 2026-08-11, and the energy tile went with it
+  to "A rated" because A+ was the triple figure. Legend may offer triple on
+  request, naming the contemporary sash, and may not quote a U-value for it.
+- **`/louvre-vents/` was rebuilt on 2026-08-11** around the full louvre range
+  and is the only commercial route with a bespoke middle. **Do not name the
+  system manufacturer anywhere on it** — model codes are fine, the brand is not,
+  and the meta description outlived the first debranding pass by four hours
+  because that pass read rendered text and never the head.
+- **The Heal's, Tottenham Court Road commercial case study went live 2026-08-11.**
+
+- **Live is on `main` lineage again, and has been since 2026-08-07.** The
+online-quote strand that forced two cherry-picked releases shipped with `e70bb96`
+and the divergence closed in both directions; four releases have gone out from
+`main` since, this one included. **The live SHA is in `LIVECHANGES.md` and
+deliberately not repeated here** — this line used to carry its own copy and went
+four releases stale. **FOURTEEN `release/*` branches survive on origin**, the newest dated
+2026-08-07 and the oldest 2026-07-21. None is on live's lineage — they were cut
+from live and cherry-picked, so their content is live under different hashes and
+the commits themselves diverge. Deploying any of them reverts real work; this
+repo has been bitten by exactly that twice.
 - **`/window-and-door-repairs/` was rebuilt from the ground up and went live 2026-08-07.** A symptom-led diagnostic with two to-scale AutoCAD-style schematics that highlight the failing part. See the Window And Door Repairs Page section below before touching it — three builds were needed and the first two were rejected, so most of the constraints there are the owner's corrections rather than preferences.
 - **Two pages were rebuilt on 2026-08-06 and are live.** `/flush-casement-windows/` now replaces only the *middle* of the generated template (`fg-product-why`, `fg-product-intel`, `fg-product-visuals` are gated off for that slug) with `template-parts/sections/flush-casement-windows-v2.php`, built on the `.fg-cw` split grammar the heritage door page uses. It is deliberately **not** an early return like casement, and deliberately **not** given casement's stacked chapters — the owner wants that device unique to casement. `/obscured-glass/` gained the colour-hub hero treatment, starts on the house scene rather than Legend, and its divider now drags properly on touch.
 - **The obscured-glass divider is a `<input type="range">` that no longer takes the pointer.** On iOS a range only drags from its thumb, so the divider was tap-to-position and felt broken. The input is now `pointer-events: none` for keyboard and assistive tech only, and the gesture is handled on the stage with axis-locked pointer events that write the value back to it. `touch-action: pan-y` is retained so a vertical scroll starting on the visualiser still scrolls the page. **This was never verified on a real phone** — it is the one change from that session nobody has touched with a finger.

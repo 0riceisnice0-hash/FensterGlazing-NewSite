@@ -1,6 +1,6 @@
 # Fenster Glazing Live Changes Runbook
 
-Last updated: 2026-08-10
+Last updated: 2026-08-11
 
 This is the short operational guide for any Codex agent or developer making changes after launch. Read this before touching test or live.
 

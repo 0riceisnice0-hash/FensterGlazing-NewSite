@@ -1,6 +1,6 @@
 # Fenster Glazing Legend Live Chat
 
-Last updated: 2026-07-16
+Last updated: 2026-08-11
 
 This document explains the Legend AI assistant deployed on the Fenster website. It covers the customer experience, frontend animation, WordPress and OpenAI integration, privacy and consent rules, deployment status, main files and implementation commits.
 

@@ -99,5 +99,24 @@ adding anything to this list.
   - **A steel before-and-after is the single most valuable shot on this list.** Same rules as the misted-unit pair above: mark where you stand, shoot the before with the old steel frames still in, come back to the same mark. Rust at the corners, a frame that has bowed, condensation on the inside — all of it helps.
   - **A dark job.** Everything we have is white or cream, and a steel-look window is usually specified in Anthracite or Jet Black. One anthracite install would change what the page looks like.
   - **A close one at the sash line**, arm's length, showing the stepped shoulder and its shadow. That detail is the entire product and we own no photograph of it.
-  - **Georgian or horizontal bars**, either layout, on anything. The planner draws them; nothing photographs them.
+  - **Georgian or horizontal bars**, either layout, on anything. The page
+    describes the layouts in words and illustrates none of them.
+- **LOUVRES — four photographs, none of them wide, and none identified. New gap,
+  2026-08-11.** `/louvre-vents/` was rebuilt around the full range and the four
+  photographs the owner found are all fairly close in: plant doors, a run beside
+  a glazing line, a blade detail and a boiler screen. Deliberately not captioned
+  as "our work" in a block, but placed through the page where each one is
+  actually about the point being made. What is missing:
+  - **A wide run in context** — a louvred elevation from far enough back to read
+    as a building, so the page has something to open on other than a doorway.
+  - **Which system each photographed job used.** Nobody knows, so no caption
+    names one, and the page cannot show a real IKL33 next to the text about it.
+  - **The Heal's louvres.** Six bespoke aluminium louvres went in on that job
+    and not one was photographed; the case study has none of them either.
+  - Same rules as everything else: square on, daylight, no vans in shot. Louvres
+    are usually high up, so back off and zoom rather than shooting steeply up.
+- **Commercial jobs generally.** The Heal's study runs on five photographs, all
+  1024px, which is the smallest set on the site and the reason its gallery is
+  laid out the way it is. On a scaffolded commercial job, five full-resolution
+  shots from the lift on the last day is worth more than anything taken later.
 - Tilt and turn, heritage windows, heritage doors, aluminium sliders and uPVC sliding all have **empty folders** in the bank, so those pages stay on supplier imagery.

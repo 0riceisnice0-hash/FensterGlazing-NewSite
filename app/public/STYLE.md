@@ -1,6 +1,6 @@
 # Fenster Glazing Styling And Design Contract
 
-Last updated: 2026-08-05
+Last updated: 2026-08-11
 
 This file is the source of truth for how the site should look and feel.
 
@@ -288,6 +288,22 @@ There is one shared live customer form:
 - Remove motion that does not help comprehension or conversion.
 - Form sections should make the enquiry task obvious: moderate supporting copy, visible fields, clear file-upload language and a strong submit button.
 - Do not expose internal area-review language or commercial county plumbing as customer-facing navigation.
+- **Write for the person pricing it, not the person living in it** (owner,
+  2026-08-11). The audience on these pages is contractors, architects, QSs,
+  estimators and project managers. Lead with the fact and let it carry the
+  sentence: "IKL33: 34mm blades at 60 degrees" over "the one we fit most",
+  "Five frame options, chosen to suit the opening" over "the frame is specified
+  separately from the blade". Three phrasings were rejected on the louvre page
+  for reading as marketing warm-up before the information. Still Fenster's
+  voice, just with the softening taken out — plainer, not colder, and never a
+  spec sheet with the human removed.
+- **Give them the number they have to put in a schedule.** Free areas, blade
+  centres, depths, RAL. A commercial page that describes a product without its
+  figures has not done its job.
+- **Do not name the system manufacturer.** Model codes are fine and useful;
+  the supplier's brand is not ours to advertise. Check the head as well as the
+  body — the louvre meta description kept a brand name four hours past the
+  debranding pass because that pass only read rendered text.
 
 ## Colour And Specification Hubs
 
