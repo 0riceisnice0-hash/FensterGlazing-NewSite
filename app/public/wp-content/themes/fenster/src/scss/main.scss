@@ -41682,68 +41682,6 @@ html.fg-blinds-reveal-locked {
 
 }
 
-/* The cross-fade is the only motion here and it is decorative, so it goes. The
-   shuffle itself keeps working, which is the rule: reduced motion gets
-   simplified content, never broken content. */
-@media (prefers-reduced-motion: reduce) {
-
-}
-
-/* The placeholders are deliberately visible rather than tasteful-and-invisible:
-   to a visitor a missing image and a broken one look the same, and only one of
-   them is honest. They sit on the same grid as the real photographs so the
-   page reads as complete-with-gaps rather than as unfinished. */
-.fg-upd-placeholder {
-  margin-bottom: 1rem;
-}
-
-.fg-upd-context__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.6rem);
-}
-
-.fg-upd-context__cell {
-  margin: 0;
-}
-
-.fg-upd /* `height: auto` is load-bearing. The markup carries width="1280" height="1600"
-   for layout stability, and without an explicit height the attribute wins over
-   `aspect-ratio`: these rendered 376x1600 each, four full-height photographs
-   down the page. The tiles in the decisions grid escaped it only because they
-   set `height: 100%`. */
-.fg-upd-context__cell img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 0.7rem;
-}
-
-.fg-upd-context__cell figcaption {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-ink);
-}
-
-.fg-upd-config__card--wanted h3 {
-  color: var(--color-muted, #5b6a6a);
-}
-
-@media (max-width: 980px) {
-  .fg-upd-context__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
-  .fg-upd-context__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 /* The attributed line under the lock copy: a supplier's certification is not
    our claim, so it is set quieter than the copy it sits under. */
 .fg-upd .fg-upd-detail__note {
@@ -41816,5 +41754,108 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 700px) {
   .fg-upd-thresholds {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* THE FINISH CHART. Thirteen renders of the same door, which is the whole range
+   for a door, so it reads as a chart rather than as a gallery: equal cells, one
+   name under each, no card and no shadow. `auto-fit` rather than a fixed column
+   count, because thirteen divides badly into any of them and a ragged last row
+   is what a paint chart looks like anyway.
+
+   The renders are 640x1600 of door and nothing else, cropped through one shared
+   window, so they can be laid out tight without any of them jumping. */
+.fg-upd-chart {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: clamp(0.8rem, 1.6vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-upd-chart__item {
+  text-align: center;
+}
+
+.fg-upd-chart__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 5;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 3px;
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.fg-upd-chart__item:hover img {
+  transform: translateY(-4px);
+}
+
+.fg-upd-chart__name {
+  display: block;
+  margin-top: 0.55rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--color-muted, #5b6a6a);
+}
+
+/* The inside face sits under the chart as a quiet aside rather than as another
+   full section: it is one fact and one photograph, and it belongs to the finish
+   rather than standing beside it. */
+.fg-upd-inside {
+  display: grid;
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  align-items: center;
+  margin-top: clamp(2.2rem, 4vw, 3.4rem);
+  padding-top: clamp(1.6rem, 3vw, 2.4rem);
+  border-top: 1px solid rgba(20, 40, 40, 0.14);
+}
+
+.fg-upd-inside figure {
+  margin: 0;
+}
+
+.fg-upd-inside img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.fg-upd .fg-upd-inside__text h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.fg-upd .fg-upd-inside__text p {
+  max-width: 54ch;
+  margin: 0;
+}
+
+.fg-upd-finish__head {
+  max-width: 46rem;
+  margin-bottom: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+
+@media (max-width: 700px) {
+  .fg-upd-inside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-upd-chart {
+    grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-upd-chart__item img,
+  .fg-upd-chart__item:hover img {
+    transition: none;
+    transform: none;
   }
 }

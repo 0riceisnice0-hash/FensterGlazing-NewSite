@@ -335,7 +335,13 @@ $upvc_foil_routes = [
     'french-casement-windows' => 'French casement window',
     'tilt-turn-windows' => 'tilt and turn window',
     'bow-bay-windows' => 'bow or bay window',
-    'upvc-doors' => 'door',
+    /* uPVC DOORS CAME OFF THIS LIST, 2026-08-12. The shared grid is headed
+       "Sixteen colours outside" and a door takes thirteen, so on that route it
+       was both a duplicate and a contradiction. `/upvc-doors/` shows its own
+       finish chart instead — a render of the actual door in every finish it can
+       have — which the window routes have no equivalent of. Do not put the slug
+       back without changing the heading, and note the chart is complete rather
+       than a sample, so it must stay in step with `upvc_door_renders`. */
     'patio-doors' => 'patio door',
 ];
 $shows_upvc_colour_grid = isset($upvc_foil_routes[$slug]) || $slug === 'casement-windows';
@@ -3774,7 +3780,11 @@ if ($is_commercial_hub) {
     // Aluminium sliding doors places it itself, further down, for the same
     // reason: stacked straight onto the specification strip it repeats the
     // numbers the strip has just given inside a single viewport.
-    $defer_tech_banner = $slug === 'aluminium-sliding-doors';
+    /* Deferred so the bespoke middle can place it. On sliding doors that is the
+       heritage rhythm; on uPVC doors it is because a profile cutaway with chamber
+       counts and U-values was landing before the page had said what the product
+       is. Both render it themselves. */
+    $defer_tech_banner = in_array($slug, ['aluminium-sliding-doors', 'upvc-doors'], true);
     if (! empty($tech_banner) && ! $defer_tech_banner) {
         get_template_part('template-parts/components/tech-banner', null, $tech_banner);
     }
@@ -4705,6 +4715,16 @@ if ($is_commercial_hub) {
                slug again returned nothing and the whole page rendered with no
                photographs at all, which the source could not show and the first
                render did. */
+            /* `$product_media` is ALREADY scoped to this slug, three hundred
+               lines above. Indexing it by the slug again returned nothing and the
+               whole page rendered with no photographs at all.
+
+               THE CONFIGURATION AND DECISION IMAGES ARE NOT PASSED IN. They come
+               from the curated set the template names directly, because they are
+               cropped and graded as one run and the gallery pool is not: the pool
+               feeds the town matrix pages and has to stay as it is. Only the two
+               photographs that are genuinely shared with the pool are looked up
+               here. */
             $upvc_media = $product_media;
             $upvc_gallery = is_array($upvc_media['gallery'] ?? null) ? $upvc_media['gallery'] : [];
             $upvc_pick = static function (string $needle) use ($upvc_gallery): array {
@@ -4715,23 +4735,20 @@ if ($is_commercial_hub) {
                 }
                 return [];
             };
-            $upvc_french_pool = fenster_data('product_gallery_pools', []);
-            $upvc_french_pool = $upvc_french_pool['upvc_french_doors'] ?? [];
-            $upvc_french = [];
-            if (! empty($upvc_french_pool[1]['src'])) {
-                $upvc_french = ['src' => fenster_generated_url((string) $upvc_french_pool[1]['src']), 'alt' => (string) ($upvc_french_pool[1]['alt'] ?? '')];
-            }
+            $upvc_curated = '/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/';
             get_template_part('template-parts/sections/upvc-doors-v2', null, [
                 'brand' => $brand,
                 'quote_url' => $product_quote_embed_url,
+                'tech_banner' => is_array($tech_banner ?? null) ? $tech_banner : [],
                 'renders' => $upvc_render_args,
                 'handles' => is_array($door_handle_finishes) ? $door_handle_finishes : [],
                 'glass' => $upvc_glass,
                 'photos' => [
                     'opening' => $upvc_pick('upvc-door-white-boarded-panel'),
-                    'single' => ['src' => fenster_generated_url((string) ($upvc_media['hero']['src'] ?? '')), 'alt' => (string) ($upvc_media['hero']['alt'] ?? '')],
-                    'french' => $upvc_french,
-                    'stable' => $upvc_pick('upvc-door-white-half-glazed'),
+                    'inside' => [
+                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-cream-inside-bars.webp'),
+                        'alt' => __('A uPVC door with Georgian bars seen from inside the room, looking onto a garden', 'fenster'),
+                    ],
                 ],
             ]);
             ?>
@@ -4759,6 +4776,12 @@ if ($is_commercial_hub) {
         <?php endif; ?>
 
 
+        <?php /* GATED OFF FOR uPVC DOORS, 2026-08-12. This band is three cards
+                 pointing at colour, privacy glass and handles. On that route the
+                 finish chart, the privacy glass card and the full handle grid are
+                 all on the page already, so the cards were a table of contents for
+                 things three sections away. */ ?>
+        <?php if (! $is_upvc_doors_bespoke) : ?>
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">
@@ -4926,6 +4949,7 @@ if ($is_commercial_hub) {
                 </div>
             </div>
         </section>
+        <?php endif; ?>
         <?php endif; ?>
 
         <?php if (isset($upvc_foil_routes[$slug])) : ?>

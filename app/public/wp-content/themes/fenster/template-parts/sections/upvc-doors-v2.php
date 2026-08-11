@@ -8,56 +8,72 @@
  * on a condition about colour swatches, so a bespoke middle placed inside it
  * silently renders nothing.
  *
- * WHAT THIS REPLACES. `fg-product-why`, `fg-product-intel` and
- * `fg-product-visuals`, which between them said "uPVC doors can include
- * multi-point locking", "threshold details can be reviewed" and "profiles help
- * reduce heat transfer". Every one of those sentences would survive unchanged
- * on a competitor's site, which is the test `TONEOFVOICE.md` sets and fails.
+ * RESTRUCTURED 2026-08-12, and the restructure is the point of this file.
+ * The page had grown to eighteen sections in a fortnight of adding, and it said
+ * the same things repeatedly: COLOUR appeared five times (the intro list, a
+ * decisions tile, a whole photographic band, the specification-choices card and
+ * the shared sixteen-swatch grid), PRIVACY GLASS three times and HARDWARE three
+ * times. It also contradicted itself, because the shared grid is headed
+ * "Sixteen colours" and this route is thirteen.
  *
- * WHAT IS KEPT AND WHY. The key-specification pulse, because this product has
- * real published figures. The specification-choices wrapper, because colour,
- * glass and handles are all genuine decisions here and the long-plate handle
- * grid lives inside it. The quote embed, because the uPVC Doors collection
- * prices this exact product. The order-process rail and the case-study strip,
- * because a new door is a normal installation and the Wolverton study claims
- * this route.
+ * The order now runs: what it is, how it opens, what it looks like, what else
+ * you choose, what it is made of, what gets settled at survey. Nothing is said
+ * twice, and each section answers the question a customer asks next.
  *
- * OWNER-CONFIRMED, 2026-08-12, and none of it may be softened or widened:
+ * WHAT WAS REMOVED, so nobody rebuilds it out of habit:
+ *
+ *  - **The "on a real house" band.** Five photographs and a placeholder making
+ *    the colour argument that the finish chart now makes better, with a render
+ *    of every finish rather than five examples of four of them.
+ *  - **The specification-choices band** (`fg-product-gallery-band`), gated off
+ *    in `generated-page.php`. Three cards pointing at colour, privacy glass and
+ *    handles, all three of which are on this page in full, below it.
+ *  - **The shared sixteen-swatch uPVC colour grid**, by taking this slug out of
+ *    `$upvc_colour_routes`. Wrong count for a door, and the finish chart
+ *    replaces it. The window routes keep it, untouched.
+ *  - **Every marked placeholder.** Owner, 2026-08-12: the useful assets are
+ *    exhausted, so no section may depend on a photograph that does not exist.
+ *  - **The intro bullet list**, which was a contents page for the sections
+ *    underneath it.
+ *  - **The randomiser payload**, dead since the randomiser came out.
+ *
+ * THE TECH BANNER IS DEFERRED INTO THIS FILE rather than rendering in its usual
+ * slot under the key-specification strip. It is a profile cutaway with chamber
+ * counts and U-values, and it was landing before the page had said what the
+ * product is. It now sits after the choosing and before the survey detail,
+ * which is where "what am I actually getting" belongs. Same mechanism
+ * `/aluminium-sliding-doors/` already uses.
+ *
+ * OWNER-CONFIRMED, and none of it may be softened or widened:
  *
  *  - **We do not advertise the full infill panel**, the moulded 2000s front
- *    door slab. What we sell is a half-glazed door over a flat panel, or a
- *    shiplap panel. Do not add decorative infill panels to this page.
- *  - **Same colour range and the same theory as the uPVC windows**: 16 foils,
- *    the colour on the outside face, white or the same colour inside, and the
- *    inside foil costs more. Do not restate that as a free choice.
- *  - **The whole privacy glass range is available** in a door. The page says
- *    privacy glass rather than obscure glass throughout, on the owner's
- *    instruction of 2026-08-12; the route it links to keeps its own name.
- *  - **1.0 W/m²K is the TRIPLE glazed figure.** Liniar publish 0.99 whole-door
- *    triple on the 70mm residential door and publish NO double glazed figure,
- *    so there is no second number and none may be borrowed from the windows.
- *  - **Security is a multi-point lock and a one star cylinder as standard, with
- *    a three star upgrade available.** The composite door's £5,000 break-in
- *    guarantee does NOT apply here and must never appear on this route.
- *  - **PAS 24 is deliberately not claimed.** Liniar publish PAS24 and Secured by
- *    Design for the system; that belongs to a tested complete doorset and we fit
- *    a one star cylinder as standard, so the page stays quiet on it. Same
- *    distinction already recorded for the Kenrick Excalibur.
- *  - **Letterplates, knockers, numerals and spyholes are offered; cylinder
- *    guards are not.** No models are confirmed, so none is named.
- *  - **Shaped doors are possible and very niche**, so the page mentions it once
- *    and does not build a section on it.
- *  - The ten year insurance-backed guarantee and FENSA both apply.
+ *    door slab. What we sell is half glazed over a flat panel, over shiplap, or
+ *    glass top to bottom.
+ *  - **Thirteen foils on a door**, not the windows' sixteen, and the theme holds
+ *    a render of every one. The colour is the outside face, white or the same
+ *    colour inside, and the inside foil costs more.
+ *  - **28mm double or 36mm triple on the sculptured EnergyPlus outer frame.**
+ *    Liniar also publish a 40mm unit, a standard outer frame and a chamfered
+ *    profile; none of those is what we fit.
+ *  - **1.0 W/m²K is the triple figure and 1.2 is the window's**, borrowed on the
+ *    owner's ruling because Liniar publish no double glazed figure for this
+ *    door. See the comment in `glazing_u_values`.
+ *  - **Multi-point lock, one star cylinder as standard, three star upgrade.**
+ *    The composite door's £5,000 break-in guarantee does NOT apply here.
+ *  - **PAS 24 and Secured by Design are Liniar's and are attributed**, never
+ *    asserted as ours. Same distinction as the Kenrick Excalibur.
+ *  - **Cat flaps are cut in on site.** Letterplates, knockers, numerals and
+ *    spyholes are specified with the door. Cylinder guards are not offered.
+ *  - **Four thresholds, in our names**, on Liniar's own cutaway drawings.
+ *  - **The whole privacy glass range** is available in a door, and the page says
+ *    privacy glass rather than obscure glass throughout.
  *
- * ON NOT SELLING AGAINST OURSELVES. The owner's own summary of why a customer
- * picks uPVC over composite is that it is cheaper, and stable doors and French
- * pairs are both available in composite too. `TONEOFVOICE.md` forbids
+ * ON NOT SELLING AGAINST OURSELVES. The owner's summary of why a customer picks
+ * uPVC over composite is that it is cheaper, and `TONEOFVOICE.md` forbids
  * positioning one of our own products as the budget option, in those words and
- * in the softer ones, so the page argues what this door DOES: it is made to the
- * opening, in the full foil range, with the glass and hardware chosen on top.
- * Price belongs on the quote tool, where it comes with a real figure. The owner
- * also asked that composite barely be mentioned, so it is named once, in the
- * FAQ, where somebody is actually asking.
+ * the softer ones. The page argues what this door DOES and lets the quote tool
+ * carry the number. Composite is named once, in the FAQ, where somebody is
+ * actually asking.
  */
 
 $args = wp_parse_args(
@@ -66,10 +82,10 @@ $args = wp_parse_args(
         'brand' => [],
         'quote_url' => '',
         'renders' => [],
-        'colours' => [],
         'handles' => [],
         'glass' => [],
         'photos' => [],
+        'tech_banner' => [],
     ]
 );
 
@@ -77,85 +93,27 @@ $renders = is_array($args['renders']) ? $args['renders'] : [];
 $handles = is_array($args['handles']) ? $args['handles'] : [];
 $glass = is_array($args['glass']) ? $args['glass'] : [];
 $photos = is_array($args['photos']) ? $args['photos'] : [];
-$quote_url = (string) $args['quote_url'];
+$tech_banner = is_array($args['tech_banner']) ? $args['tech_banner'] : [];
+
+$curated = '/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/';
 
 $photo = static function (string $key) use ($photos): array {
     $found = $photos[$key] ?? null;
     return is_array($found) ? $found : [];
 };
-
-/* MARKED PLACEHOLDERS, per the rule in AI.md: a photograph we have not taken
-   is marked as one, never left as a gap and never filled with a supplier render
-   or a shot of a neighbouring product. Each one carries the brief for the
-   picture that belongs there, so the panel doubles as the shot list — the next
-   person with a phone on a job knows exactly what is wanted. Delete the call
-   and drop the real figure in; the caption already says what it should show.
-   `.fg-lv-placeholder` is the louvre page's component, kept in the stylesheet
-   for the next page that needed it. */
-$placeholder = static function (string $brief, string $ratio = '4 / 3'): void {
-    ?>
-    <div class="fg-lv-placeholder fg-upd-placeholder" style="--fg-lv-ratio: <?php echo esc_attr($ratio); ?>">
-        <span><?php esc_html_e('Photograph to follow', 'fenster'); ?></span>
-        <small><?php echo esc_html($brief); ?></small>
-    </div>
-    <?php
-};
-
-/* The randomiser payload. Everything the controller shuffles is a real asset:
-   a render per finish, a photograph per handle, a texture or a CSS surface per
-   glass. Nothing is tinted, generated or implied. */
-$randomiser = [];
-foreach ($renders as $render) {
-    if (empty($render['file']) || empty($render['colour'])) {
-        continue;
-    }
-    $randomiser[] = [
-        'colour' => (string) $render['colour'],
-        'finish' => (string) ($render['finish'] ?? ''),
-        'hex' => (string) ($render['hex'] ?? '#ffffff'),
-        'image' => fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/renders/' . $render['file']),
-    ];
-}
-
-$randomiser_payload = [
-    'finishes' => $randomiser,
-    'handles' => array_values(array_map(static function (array $h): array {
-        return [
-            'name' => (string) ($h['name'] ?? ''),
-            'image' => isset($h['image']) ? fenster_generated_url((string) $h['image']) : '',
-            'hex' => (string) ($h['hex'] ?? '#111313'),
-        ];
-    }, $handles)),
-    'glass' => array_values(array_map(static function (array $g): array {
-        return [
-            'name' => (string) ($g['name'] ?? ''),
-            'privacy' => (int) ($g['privacy'] ?? 0),
-            'image' => ! empty($g['image']) ? fenster_generated_url((string) $g['image']) : '',
-            'texture' => (string) ($g['texture'] ?? ''),
-        ];
-    }, $glass)),
-];
 ?>
 
+<?php /* 1. WHAT IT IS. One idea, one photograph, no list. The bullets that were
+         here named the four sections below them, which is a contents page
+         rather than an argument. */ ?>
 <section class="fg-cw fg-upd fg-upd-open" aria-labelledby="fg-upd-open-title">
     <div class="container">
         <div class="fg-cw-split">
             <div class="fg-cw-split__text">
                 <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
-                <?php /* THE OLD HEADING CLAIMED "no two of ours leave the factory the
-                         same", and the owner pulled it: a glazed white or grey back door
-                         is one of the commonest things we fit. Saying the awkward thing
-                         first is the house voice and it is also just true — the range is
-                         the point, not the rarity. */ ?>
                 <h2 id="fg-upd-open-title"><?php esc_html_e('Most of ours are a white back door. Yours does not have to be.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A uPVC door is made to the opening you have, not picked off a shelf and packed out to fit. That is true of the plain white one most people order, and it is what makes everything else possible.', 'fenster'); ?></p>
-                <ul class="fg-flush-list fg-upd-list">
-                    <li><?php esc_html_e('A single leaf, French doors, or a stable door split across the middle', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Half glazed over a flat panel, or over a shiplap panel', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Thirteen foil finishes, white or the same colour inside', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Shaped heads are possible, though they are rare', 'fenster'); ?></li>
-                    <li><?php esc_html_e('28mm double glazed, or 36mm triple, on the sculptured EnergyPlus frame', 'fenster'); ?></li>
-                </ul>
+                <p><?php esc_html_e('A uPVC door is made to the opening you have, not picked off a shelf and packed out to fit. That is true of the plain white one most people order, and it is what makes everything else possible: the leaf, the frame, the threshold and the glass are all specified for your house.', 'fenster'); ?></p>
+                <p><?php esc_html_e('What follows is everything you get to decide, roughly in the order it gets decided.', 'fenster'); ?></p>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
@@ -167,184 +125,22 @@ $randomiser_payload = [
     </div>
 </section>
 
-<?php /* THE RANDOMISER IS GONE, 2026-08-12, and this replaces it. It was the
-         owner's idea and he took it back the same day: shuffling a render was a
-         gimmick standing where the argument should be, and the moment it grew a
-         colour picker it started competing with WindowCAD, which configures AND
-         prices. What a customer actually wants to know is what they get to
-         choose, so the page now says exactly that, one decision per tile, in
-         our own photographs.
-
-         THE ARITHMETIC IS REAL and it is computed from the data on this page
-         rather than typed in: the foils, the panel arrangements, the privacy glass range
-         plus clear, and the door handle finishes. If any of those lists change,
-         the number changes with them. Never round it up to something rhetorical
-         — the whole force of it is that it is a count, not a boast. */ ?>
-<section class="fg-cw fg-upd fg-upd-ways" aria-labelledby="fg-upd-ways-title">
-    <div class="container">
-        <div class="fg-upd-ways__head">
-            <p class="eyebrow"><?php esc_html_e('What you choose', 'fenster'); ?></p>
-            <h2 id="fg-upd-ways-title"><?php esc_html_e('Everything you can see is a decision.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Six of them, taken in about ten minutes at the survey, and none of them changes how long the job takes. This is the part where a door stops being a door and starts being yours.', 'fenster'); ?></p>
-        </div>
-
-        <div class="fg-upd-ways__grid">
-            <?php
-            $ways = [
-                [
-                    'label' => __('The colour', 'fenster'),
-                    'copy' => __('Thirteen foils, bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Most carry a woodgrain you can feel; a few are smooth. The greens and the oaks are the ones people put a hand on to check.', 'fenster'),
-                    'image' => 'upvc-door-green-stable.webp',
-                    'alt' => __('Chartwell green uPVC stable door with a letterplate and house number on red brick', 'fenster'),
-                ],
-                [
-                    'label' => __('The panel', 'fenster'),
-                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover: none at all for glass top to bottom, a quarter, a half, three quarters, or the full panel above with no glass in it.', 'fenster'),
-                    'image' => 'upvc-door-anthracite-solid-shiplap.webp',
-                    'alt' => __('Anthracite uPVC door with a full shiplap panel and no glazing, on yellow brick', 'fenster'),
-                ],
-                [
-                    'label' => __('The privacy glass', 'fenster'),
-                    'copy' => __('Every style of privacy glass we fit goes in a door, graded one to five for how much it hides. Clear is the right answer onto your own garden and the wrong one onto a street.', 'fenster'),
-                    'image' => 'upvc-door-white-obscure-glass.webp',
-                    'alt' => __('White uPVC door with privacy glass in the upper panel', 'fenster'),
-                ],
-                [
-                    'label' => __('Bars and lead', 'fenster'),
-                    'copy' => __('Georgian bars set inside the unit, astragal bars applied to the face so they throw a real shadow, or leaded work in squares or diamonds. It is what stops a new door looking new beside old windows.', 'fenster'),
-                    'image' => 'upvc-detail-rosewood-woodgrain-bars.webp',
-                    'alt' => __('Close detail of a rosewood woodgrain uPVC door with bars across the glass', 'fenster'),
-                ],
-                [
-                    'label' => __('The inside face', 'fenster'),
-                    'copy' => __('White inside as standard, whatever the outside is doing, and it is what most people keep because it disappears into the room. The same colour on both faces if you would rather see it from the sofa.', 'fenster'),
-                    'image' => 'upvc-door-cream-inside-bars.webp',
-                    'alt' => __('A uPVC door with Georgian bars seen from inside the room, looking onto a garden', 'fenster'),
-                ],
-                [
-                    'label' => __('What goes through it', 'fenster'),
-                    'copy' => __('A cat flap is cut in on site, into a new door or the one you already have. The letterplate, the knocker, the numerals and a spyhole are specified with the door and arrive fitted.', 'fenster'),
-                    'image' => 'upvc-door-anthracite-cat-flap.webp',
-                    'alt' => __('Anthracite uPVC door with a cat flap cut into the lower panel', 'fenster'),
-                ],
-            ];
-            foreach ($ways as $way) :
-                ?>
-                <article class="fg-upd-way">
-                    <figure>
-                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/' . $way['image'])); ?>" alt="<?php echo esc_attr($way['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
-                    </figure>
-                    <h3><?php echo esc_html($way['label']); ?></h3>
-                    <p><?php echo esc_html($way['copy']); ?></p>
-                </article>
-            <?php endforeach; ?>
-        </div>
-
-        <?php
-        /* THE COUNT IS A COUNT, NOT A BOAST, so it is worked out here rather
-           than typed in, and it is worked out the way the door is actually
-           specified. The first version said "3 panel styles" and the owner
-           corrected it: there are two panel FACES, flat and shiplap, and
-           separately how far up the door the panel goes — none, a quarter, a
-           half, three quarters or full. So:
-
-             - fully glazed, no panel .................. 1 arrangement, has glass
-             - quarter, half or three-quarter panel .... 3 x 2 faces, has glass
-             - full panel ............................. 2 faces, NO glass
-
-           A full-panel door has no glass in it, so it cannot be multiplied by
-           the glass range, which is why the two are added rather than lumped
-           together. Glass is the privacy range plus clear. If any of these
-           lists change the number changes with them; never round it. */
-        $way_finishes = 13;
-        $way_glass = count($glass) + 1;
-        $way_handles = max(1, count($handles));
-        $way_glazed_arrangements = 1 + (3 * 2);
-        $way_solid_arrangements = 2;
-        $way_total = ($way_finishes * $way_glazed_arrangements * $way_glass * $way_handles)
-            + ($way_finishes * $way_solid_arrangements * $way_handles);
-        ?>
-        <div class="fg-upd-ways__sum">
-            <p class="fg-upd-ways__figure"><?php echo esc_html(number_format($way_total)); ?></p>
-            <div class="fg-upd-ways__sumtext">
-                <p><?php
-                    printf(
-                        /* translators: 1: foil count, 2: privacy glass count, 3: handle finish count */
-                        esc_html__('That is %1$d finishes against nine ways to split the panel and the glass, %2$d glasses and %3$d handle finishes, counted before anybody adds a bar, a letterplate or a leaded pattern. Nobody needs twenty thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
-                        (int) $way_finishes,
-                        (int) $way_glass,
-                        (int) $way_handles
-                    );
-                ?></p>
-                <?php if ($quote_url !== '') : ?>
-                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Build yours and see the price', 'fenster'); ?></a>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-</section>
-
-<?php /* WORK WITH WHAT WE HAVE. This band was six placeholders until
-         2026-08-12; the owner's instruction was that he had given us every
-         photograph he has, so the page uses them. Four real installs carry it
-         and two placeholders remain for the shots that genuinely do not exist:
-         a dark front door on a modern elevation, and the same door photographed
-         inside and out. Do not add a placeholder here for something we already
-         hold a picture of — check `assets/images/products/upvc-doors` first,
-         which is where the arched leaded door sat unused for a month. */ ?>
-<section class="fg-cw fg-upd fg-upd-context" aria-labelledby="fg-upd-context-title">
-    <div class="container">
-        <div class="fg-upd-context__head">
-            <p class="eyebrow"><?php esc_html_e('On a real house', 'fenster'); ?></p>
-            <h2 id="fg-upd-context-title"><?php esc_html_e('A colour is a different thing on brick than it is on a screen.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Anthracite reads almost black against red brick and blue-grey against render. A cream looks warm on stone and flat on a new build. All of these are ours, photographed on the day we finished.', 'fenster'); ?></p>
-        </div>
-        <div class="fg-upd-context__grid">
-            <?php
-            $context_shots = [
-                ['label' => __('Cream, on stone', 'fenster'), 'image' => 'upvc-door-cream-glazed-stone.webp', 'alt' => __('Cream uPVC door with two glazed panes in a white stone wall', 'fenster')],
-                ['label' => __('The arch, close up', 'fenster'), 'image' => 'upvc-detail-arch-lead.webp', 'alt' => __('Close detail of a curved uPVC door frame against brick', 'fenster')],
-                ['label' => __('Green, on a cottage', 'fenster'), 'image' => 'upvc-door-green-stable.webp', 'alt' => __('Chartwell green uPVC stable door on a red brick cottage', 'fenster')],
-                ['label' => __('White, doing its job', 'fenster'), 'image' => 'upvc-door-white-shiplap-brick.webp', 'alt' => __('White uPVC back door glazed over a shiplap panel', 'fenster')],
-                /* White French doors are one of the commonest things we fit, so
-                   they earn a place in the band as well as in the configurations
-                   above. Owner instruction, 2026-08-12. */
-                ['label' => __('White French doors, onto decking', 'fenster'), 'image' => 'upvc-door-white-french-decking.webp', 'alt' => __('White uPVC French doors opening onto a deck', 'fenster')],
-            ];
-            foreach ($context_shots as $shot) :
-                ?>
-                <figure class="fg-upd-context__cell">
-                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/' . $shot['image'])); ?>" alt="<?php echo esc_attr($shot['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
-                    <figcaption><?php echo esc_html($shot['label']); ?></figcaption>
-                </figure>
-            <?php endforeach; ?>
-
-            <figure class="fg-upd-context__cell">
-                <?php $placeholder(__('A dark front door on a rendered elevation, straight on. We fit them constantly and have photographed none.', 'fenster'), '4 / 5'); ?>
-                <figcaption><?php esc_html_e('Anthracite, on render', 'fenster'); ?></figcaption>
-            </figure>
-        </div>
-    </div>
-</section>
-
+<?php /* 2. HOW IT OPENS. Moved up from the bottom half of the old page: it is
+         the first real question a homeowner has, it is answered entirely in our
+         own photographs, and it sets up the finish chart underneath. */ ?>
 <section class="fg-cw fg-upd fg-upd-config" aria-labelledby="fg-upd-config-title">
     <div class="container">
         <div class="fg-upd-config__head">
             <p class="eyebrow"><?php esc_html_e('How it opens', 'fenster'); ?></p>
-            <h2 id="fg-upd-config-title"><?php esc_html_e('Three ways the same system opens.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Which one suits you is decided by the opening and how the room gets used, not by the price of it.', 'fenster'); ?></p>
+            <h2 id="fg-upd-config-title"><?php esc_html_e('Four ways the same system opens.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Decided by the opening and how the room gets used, not by the price of it.', 'fenster'); ?></p>
         </div>
         <div class="fg-upd-config__grid">
             <?php
-            /* FOUR REAL ONES NOW. The stable door and the shaped head were
-               placeholders until 2026-08-12, when the owner pointed out we
-               already held photographs of both — the arched leaded door had
-               been in the theme since launch and is the best photograph on the
-               route. Do not put those placeholders back. */
             $configs = [
                 [
                     'title' => __('A single leaf', 'fenster'),
-                    'copy' => __('The everyday one. Front, back, side or utility, hinged on the side that keeps the path clear and opening whichever way the room needs.', 'fenster'),
+                    'copy' => __('The everyday one. Front, back, side or utility, hinged on the side that keeps the path clear.', 'fenster'),
                     'image' => 'upvc-door-white-shiplap-brick.webp',
                     'alt' => __('White uPVC back door glazed over a shiplap panel in a brick opening', 'fenster'),
                     'link' => '',
@@ -352,7 +148,7 @@ $randomiser_payload = [
                 ],
                 [
                     'title' => __('French doors', 'fenster'),
-                    'copy' => __('Two leaves opening from the centre onto a garden or a patio. One is used day to day and the second unbolts when you want the whole opening.', 'fenster'),
+                    'copy' => __('Two leaves opening from the centre onto a garden. One is used day to day and the second unbolts when you want the whole opening.', 'fenster'),
                     'image' => 'upvc-door-white-french-decking.webp',
                     'alt' => __('White uPVC French doors opening onto decking', 'fenster'),
                     'link' => home_url('/french-doors/'),
@@ -360,7 +156,7 @@ $randomiser_payload = [
                 ],
                 [
                     'title' => __('A stable door', 'fenster'),
-                    'copy' => __('Split across the middle so the top half opens on its own: air in, the dog and the toddler still in. Glazed or panelled in either half.', 'fenster'),
+                    'copy' => __('Split across the middle so the top half opens on its own: air in, the dog and the toddler still in.', 'fenster'),
                     'image' => 'upvc-door-white-stable.webp',
                     'alt' => __('White uPVC stable door with both halves glazed, in a brick opening', 'fenster'),
                     'link' => '',
@@ -368,7 +164,7 @@ $randomiser_payload = [
                 ],
                 [
                     'title' => __('A shaped head', 'fenster'),
-                    'copy' => __('An arched or angled head, made to the opening rather than squared off inside it. Rare, and the reason a Victorian arch keeps its arch.', 'fenster'),
+                    'copy' => __('Arched or angled, made to the opening rather than squared off inside it. Rare, and the reason a Victorian arch keeps its arch.', 'fenster'),
                     'image' => 'upvc-door-white-arched-leaded.webp',
                     'alt' => __('White uPVC door with a curved head and leaded glass in an arched brick opening', 'fenster'),
                     'link' => '',
@@ -379,7 +175,7 @@ $randomiser_payload = [
                 ?>
                 <article class="fg-upd-config__card">
                     <figure>
-                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/' . $config['image'])); ?>" alt="<?php echo esc_attr($config['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
+                        <img src="<?php echo esc_url(fenster_generated_url($curated . $config['image'])); ?>" alt="<?php echo esc_attr($config['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
                     </figure>
                     <h3><?php echo esc_html($config['title']); ?></h3>
                     <p><?php echo esc_html($config['copy']); ?></p>
@@ -392,77 +188,169 @@ $randomiser_payload = [
     </div>
 </section>
 
-<?php /* THE THREE THINGS THAT GET DECIDED AT SURVEY, and the one section on the
-         page where the awkward thing is said first, per TONEOFVOICE.md. The
-         cylinder is one star as standard with a three star upgrade, and saying
-         so is worth more than a security adjective. Note what is NOT here: no
-         PAS 24 claim, no Secured by Design badge, and no £5,000 guarantee,
-         which belongs to the composite door and to nothing else. */ ?>
+<?php /* 3. THE FINISH. This replaces five separate goes at colour, and it is the
+         one section on the page that could not exist anywhere else: the same
+         door drawn in every finish we offer. The renders sat unused in the theme
+         for a month.
+
+         THIRTEEN IS THE WHOLE RANGE for a door, so the chart is complete rather
+         than a sample, and nothing here says "and more besides". */ ?>
+<?php if (! empty($renders)) : ?>
+    <section class="fg-cw fg-upd fg-upd-finish" aria-labelledby="fg-upd-finish-title">
+        <div class="container">
+            <div class="fg-upd-finish__head">
+                <p class="eyebrow"><?php esc_html_e('The finish', 'fenster'); ?></p>
+                <h2 id="fg-upd-finish-title"><?php esc_html_e('Thirteen finishes. This is all of them.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Most carry a woodgrain you can feel; a few are smooth.', 'fenster'); ?></p>
+            </div>
+
+            <ul class="fg-upd-chart">
+                <?php foreach ($renders as $render) : ?>
+                    <?php if (empty($render['file']) || empty($render['colour'])) { continue; } ?>
+                    <li class="fg-upd-chart__item">
+                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/renders/' . $render['file'])); ?>" alt="<?php printf(esc_attr__('uPVC residential door in %s', 'fenster'), esc_attr((string) $render['colour'])); ?>" width="640" height="1600" loading="lazy" decoding="async">
+                        <span class="fg-upd-chart__name"><?php echo esc_html((string) $render['colour']); ?></span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+
+            <?php if (! empty($photo('inside')['src'])) : ?>
+                <div class="fg-upd-inside">
+                    <figure>
+                        <img src="<?php echo esc_url($photo('inside')['src']); ?>" alt="<?php echo esc_attr($photo('inside')['alt'] ?? ''); ?>" width="1280" height="1600" loading="lazy" decoding="async">
+                    </figure>
+                    <div class="fg-upd-inside__text">
+                        <h3><?php esc_html_e('And the side you actually look at.', 'fenster'); ?></h3>
+                        <p><?php esc_html_e('Those are the outside faces. Inside is white as standard whatever the outside is doing, and it is what most people keep, because it disappears into the room. The same colour on both faces if you would rather see it from the sofa.', 'fenster'); ?></p>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php /* 4. THE REST OF THE DECISIONS. Three now, not six: colour has its own
+         section above, and privacy glass belongs with the survey detail below
+         where the decision actually gets made. */ ?>
+<section class="fg-cw fg-upd fg-upd-ways" aria-labelledby="fg-upd-ways-title">
+    <div class="container">
+        <div class="fg-upd-ways__head">
+            <p class="eyebrow"><?php esc_html_e('What else you choose', 'fenster'); ?></p>
+            <h2 id="fg-upd-ways-title"><?php esc_html_e('Everything you can see is a decision.', 'fenster'); ?></h2>
+        </div>
+
+        <div class="fg-upd-ways__grid">
+            <?php
+            $ways = [
+                [
+                    'label' => __('The panel', 'fenster'),
+                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover: none at all for glass top to bottom, a quarter, a half, three quarters, or the full panel above with no glass in it.', 'fenster'),
+                    'image' => 'upvc-door-anthracite-solid-shiplap.webp',
+                    'alt' => __('Anthracite uPVC door with a full shiplap panel and no glazing, on yellow brick', 'fenster'),
+                ],
+                [
+                    'label' => __('Bars and lead', 'fenster'),
+                    'copy' => __('Georgian bars set inside the unit, astragal bars applied to the face so they throw a real shadow, or leaded work in squares or diamonds. It is what stops a new door looking new beside old windows.', 'fenster'),
+                    'image' => 'upvc-detail-rosewood-woodgrain-bars.webp',
+                    'alt' => __('Close detail of a rosewood woodgrain uPVC door with bars across the glass', 'fenster'),
+                ],
+                [
+                    'label' => __('What goes through it', 'fenster'),
+                    'copy' => __('A cat flap is cut in on site, into a new door or the one you already have. The letterplate, the knocker, the numerals and a spyhole are specified with the door and arrive fitted.', 'fenster'),
+                    'image' => 'upvc-door-anthracite-cat-flap.webp',
+                    'alt' => __('Anthracite uPVC door with a cat flap cut into the lower panel', 'fenster'),
+                ],
+            ];
+            foreach ($ways as $way) :
+                ?>
+                <article class="fg-upd-way">
+                    <figure>
+                        <img src="<?php echo esc_url(fenster_generated_url($curated . $way['image'])); ?>" alt="<?php echo esc_attr($way['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
+                    </figure>
+                    <h3><?php echo esc_html($way['label']); ?></h3>
+                    <p><?php echo esc_html($way['copy']); ?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
+
+        <?php
+        /* THE COUNT IS A COUNT, NOT A BOAST, so it is worked out here rather
+           than typed in, and it is worked out the way the door is actually
+           specified: two panel faces, flat and shiplap, and separately how far
+           up the door the panel goes — none, a quarter, a half, three quarters
+           or full.
+
+             - fully glazed, no panel .................. 1 arrangement, has glass
+             - quarter, half or three-quarter panel .... 3 x 2 faces, has glass
+             - full panel ............................. 2 faces, NO glass
+
+           A full-panel door has no glass in it, so it cannot be multiplied by
+           the glass range, which is why the two are added rather than lumped
+           together. Glass is the privacy range plus clear. If any of these lists
+           change the number changes with them; never round it. */
+        $way_finishes = count($renders) ?: 13;
+        $way_glass = count($glass) + 1;
+        $way_handles = max(1, count($handles));
+        $way_total = ($way_finishes * 7 * $way_glass * $way_handles) + ($way_finishes * 2 * $way_handles);
+        ?>
+        <div class="fg-upd-ways__sum">
+            <p class="fg-upd-ways__figure"><?php echo esc_html(number_format($way_total)); ?></p>
+            <div class="fg-upd-ways__sumtext">
+                <p><?php
+                    printf(
+                        /* translators: 1: foil count, 2: privacy glass count, 3: handle finish count */
+                        esc_html__('%1$d finishes against nine ways to split the panel and the glass, %2$d glasses and %3$d handle finishes, counted before anybody adds a bar or a letterplate. Nobody needs twenty thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
+                        (int) $way_finishes,
+                        (int) $way_glass,
+                        (int) $way_handles
+                    );
+                ?></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php /* 5. WHAT IT IS MADE OF. The deferred tech banner: chambers, both
+         U-values and the lead-free formulation, landing after the choosing
+         rather than before the page has said what the product is. */ ?>
+<?php if (! empty($tech_banner)) : ?>
+    <?php get_template_part('template-parts/components/tech-banner', null, $tech_banner); ?>
+<?php endif; ?>
+
+<?php /* 6. WHAT GETS SETTLED AT SURVEY. The three practical decisions, with
+         privacy glass merged in from the old decisions grid so it is stated
+         once, in the place where somebody is deciding it. */ ?>
 <section class="fg-cw fg-upd fg-upd-detail" aria-labelledby="fg-upd-detail-title">
     <div class="container">
         <div class="fg-upd-detail__head">
-            <p class="eyebrow"><?php esc_html_e('The three that matter', 'fenster'); ?></p>
+            <p class="eyebrow"><?php esc_html_e('Settled at survey', 'fenster'); ?></p>
             <h2 id="fg-upd-detail-title"><?php esc_html_e('The parts nobody thinks about until they live with them.', 'fenster'); ?></h2>
         </div>
         <div class="fg-upd-detail__grid">
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The threshold you step over.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it.', 'fenster'); ?></p>
-                <?php /* FOUR, AND THEY ARE OUR NAMES RATHER THAN LINIAR'S. Owner
-                         confirmed 2026-08-12: of the eight Liniar publish we offer
-                         three, in the slim frame only, and the customer meets them
-                         as large uPVC, low uPVC, low aluminium and Part M low. Same
-                         rule the handle families follow — a customer should not have
-                         to learn two vocabularies to compare a door with a window.
-
-                         NOTHING IS SAID ABOUT WHAT EACH IS BEST FOR, and no height
-                         is printed, because neither has been confirmed. Liniar quote
-                         24mm at the highest point for a Part M threshold in a
-                         separate product note; that is not this door and it is not
-                         on the page. Ask the owner before adding either. */ ?>
-                <p><?php esc_html_e('There are four, drawn below. Which one you get is decided by the house rather than by preference: it turns on your floor levels inside and out, so it is settled at survey. We aim for the low aluminium wherever those levels allow it.', 'fenster'); ?></p>
-                <?php /* THE BUBBLE GASKET IS LINIAR'S AND IS THEIR TERM FOR IT.
-                         Owner approved 2026-08-12. It is worth a sentence because
-                         it is the part a customer feels in January rather than
-                         reads on a data sheet. Attributed, like the PAS 24 line
-                         below: it is a feature of the profile we buy. */ ?>
+                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. There are four, drawn below. Which one you get turns on your floor levels inside and out, so it is settled at survey, and we aim for the low aluminium wherever those levels allow it.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The seal itself is Liniar\'s patented bubble gasket, which is the part you feel in January rather than read on a data sheet: it squashes to the shape of the gap rather than relying on the door shutting in exactly the same place every time.', 'fenster'); ?></p>
-                <?php $placeholder(__('A Part M low threshold at the sill, camera down at ankle height, showing how little there is to step over.', 'fenster'), '16 / 10'); ?>
             </article>
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The lock, and what comes as standard.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the leaf, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The cylinder that comes with it is a one star. A three star cylinder is an upgrade and it is worth asking for: it is the part that resists snapping, and it is the cheapest thing on the whole door to improve.', 'fenster'); ?></p>
-                <?php /* LINIAR'S CERTIFICATION, IN LINIAR'S TERMS, AND ATTRIBUTED TO
-                         THEM. Owner ruling, 2026-08-12: say the system is capable,
-                         do not claim every door we fit is a certified doorset. That
-                         is the same distinction the casement page holds the Kenrick
-                         Excalibur to, and it matters more here because our standard
-                         cylinder is a one star. Do not promote this to a flat "our
-                         doors are PAS 24". */ ?>
                 <p class="fg-upd-detail__note"><?php esc_html_e('Liniar test the system to PAS 24, it is a Secured by Design product, and the profile carries a BSI Kitemark to BS EN 12608-1. Those are their figures for the profile, not a certificate for a particular door, so ask us what a specific doorset is built to.', 'fenster'); ?></p>
-                <?php $placeholder(__('The open leaf edge, showing the hooks and rollers of the multi-point up the length of it. Close, sharp, plain background.', 'fenster'), '16 / 10'); ?>
             </article>
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The glass, which is a privacy decision.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('Every style of privacy glass we fit can go in a door, graded one to five for how much it hides. A bathroom or a front door onto a street usually wants a five; a back door onto your own garden usually does not.', 'fenster'); ?></p>
-                <?php $placeholder(__('Privacy glass in a door panel, shot from outside at dusk with the hall light on, so it reads as privacy rather than as texture.', 'fenster'), '16 / 10'); ?>
                 <p><a href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Compare the privacy glass', 'fenster'); ?></a></p>
             </article>
         </div>
 
-        <?php /* THE FOUR SECTIONS ARE LINIAR'S OWN RENDERS, used on the owner's
-                 instruction of 2026-08-12 and a deliberate exception to "do not
-                 use their photos": these are technical cutaways of the profile we
-                 buy, not photographs of somebody else's installation, and this
-                 route already names Liniar throughout.
-
-                 THEY ARE OUR NAMES ON THEIR DRAWINGS. Liniar call them Frame
-                 Only, Slim Frame Only, Low Threshold and Part M Low Threshold;
-                 the customer meets large uPVC, low uPVC, low aluminium and Part
-                 M low, which is the same rule the Mila and greenteQ handle
-                 families follow. NO HEIGHT IS PRINTED on any of them, because
-                 none has been confirmed for this door. */ ?>
+        <?php /* Liniar's own cutaway sections, used on the owner's instruction of
+                 2026-08-12 and a deliberate exception to not using their imagery:
+                 technical drawings of the profile we buy rather than photographs
+                 of somebody else's installation. Our names on their drawings, and
+                 no height on any of them, because none has been confirmed for
+                 this door. */ ?>
         <div class="fg-upd-thresholds">
             <?php
             $threshold_options = [
@@ -474,7 +362,7 @@ $randomiser_payload = [
             foreach ($threshold_options as $threshold) :
                 ?>
                 <figure class="fg-upd-threshold">
-                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/thresholds/' . $threshold['file'])); ?>" alt="<?php printf(esc_attr__('Cutaway section of the %s door threshold', 'fenster'), esc_attr(strtolower($threshold['name']))); ?>" width="960" height="900" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/thresholds/' . $threshold['file'])); ?>" alt="<?php printf(esc_attr__('Cutaway section of the %s door threshold', 'fenster'), esc_attr(strtolower((string) $threshold['name']))); ?>" width="960" height="900" loading="lazy" decoding="async">
                     <figcaption>
                         <strong><?php echo esc_html($threshold['name']); ?></strong>
                         <span><?php echo esc_html($threshold['note']); ?></span>
