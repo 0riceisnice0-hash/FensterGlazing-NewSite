@@ -2675,23 +2675,33 @@ function fenster_site_data(): array
            WindowCAD supply per-style renders at this size and angle, add a
            `style` key here and the controller picks it up without a rewrite.
 
+           CROPPED THROUGH ONE SHARED WINDOW, 2026-08-12. The supplied renders
+           are 1300x867 with the door occupying a 258x762 strip in the middle,
+           so on the page the door sat tiny in a field of white. All thirteen
+           turned out to be pixel-registered — identical content boxes — so one
+           crop, `320x800+522+28`, fits every one of them and the doors stay the
+           same size as each other. Same rule as the heritage configuration
+           renders and the tilt and turn handles: never re-trim them
+           individually. Originals are untouched in
+           `assets/images/products/colours/liniar-door`.
+
            Names are the site's own, and each one joins to `colour_options` by
            name at render time so the chip and the swatch cannot drift apart.
            See the Swatch Provenance Rule in AI.md. */
         'upvc_door_renders' => [
-            ['colour' => 'White', 'file' => 'door_exterior_render-White-White-exterior-door-render.webp'],
-            ['colour' => 'Cream', 'file' => 'door_exterior_render-Cream-Woodgrain-Cream-Woodgrain-exterior-door-render.webp'],
-            ['colour' => 'Chartwell Green', 'file' => 'door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp'],
-            ['colour' => 'Irish Oak', 'file' => 'door_exterior_render-Irish-Oak-Irish-Oak-exterior-door-render.webp'],
-            ['colour' => 'Golden Oak', 'file' => 'door_exterior_render-Golden-Oak-Golden-Oak-exterior-door-render.webp'],
-            ['colour' => 'Rosewood', 'file' => 'door_exterior_render-Rosewood-Rosewood-exterior-door-render.webp'],
-            ['colour' => 'Anthracite Grey', 'file' => 'door_exterior_render-7016-Grey-7016-Grey-exterior-door-render.webp'],
-            ['colour' => 'Black Brown', 'file' => 'door_exterior_render-Black-Brown-Black-Brown-exterior-door-render.webp'],
-            ['colour' => 'Agate Grey', 'file' => 'door_exterior_render-Agate-Grey-Agate-Grey-exterior-door-render.webp'],
-            ['colour' => 'Gale Grey Finesse (Anthracite Smooth)', 'file' => 'door_exterior_render-Gale-Grey-Finesse-Gale-Grey-Finesse-exterior-door-render.webp'],
-            ['colour' => 'Blue', 'file' => 'door_exterior_render-Blue-Blue-exterior-door-render.webp'],
-            ['colour' => 'Dark Green', 'file' => 'door_exterior_render-Dark-Green-Dark-Green-exterior-door-render.webp'],
-            ['colour' => 'Dark Red', 'file' => 'door_exterior_render-Dark-Red-Dark-Red-exterior-door-render.webp'],
+            ['colour' => 'White', 'file' => 'upvc-door-render-white.webp'],
+            ['colour' => 'Cream', 'file' => 'upvc-door-render-cream.webp'],
+            ['colour' => 'Chartwell Green', 'file' => 'upvc-door-render-chartwell-green.webp'],
+            ['colour' => 'Irish Oak', 'file' => 'upvc-door-render-irish-oak.webp'],
+            ['colour' => 'Golden Oak', 'file' => 'upvc-door-render-golden-oak.webp'],
+            ['colour' => 'Rosewood', 'file' => 'upvc-door-render-rosewood.webp'],
+            ['colour' => 'Anthracite Grey', 'file' => 'upvc-door-render-anthracite-grey.webp'],
+            ['colour' => 'Black Brown', 'file' => 'upvc-door-render-black-brown.webp'],
+            ['colour' => 'Agate Grey', 'file' => 'upvc-door-render-agate-grey.webp'],
+            ['colour' => 'Gale Grey Finesse (Anthracite Smooth)', 'file' => 'upvc-door-render-gale-grey-finesse.webp'],
+            ['colour' => 'Blue', 'file' => 'upvc-door-render-blue.webp'],
+            ['colour' => 'Dark Green', 'file' => 'upvc-door-render-dark-green.webp'],
+            ['colour' => 'Dark Red', 'file' => 'upvc-door-render-dark-red.webp'],
         ],
         'door_handles' => [
             /* Owner instruction, 2026-07-29: composite, uPVC, aluminium and

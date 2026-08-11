@@ -94,7 +94,7 @@ foreach ($renders as $render) {
         'colour' => (string) $render['colour'],
         'finish' => (string) ($render['finish'] ?? ''),
         'hex' => (string) ($render['hex'] ?? '#ffffff'),
-        'image' => fenster_generated_url('/wp-content/themes/fenster/assets/images/products/colours/liniar-door/' . $render['file']),
+        'image' => fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/renders/' . $render['file']),
     ];
 }
 
@@ -168,7 +168,7 @@ $randomiser_payload = [
         <div class="fg-upd-shuffle__stage">
             <figure class="fg-upd-door">
                 <?php $first = $randomiser[0] ?? null; ?>
-                <img data-door-image src="<?php echo esc_url($first['image'] ?? ''); ?>" alt="<?php esc_attr_e('uPVC residential door shown in the selected finish', 'fenster'); ?>" width="1300" height="867" loading="lazy" decoding="async">
+                <img data-door-image src="<?php echo esc_url($first['image'] ?? ''); ?>" alt="<?php esc_attr_e('uPVC residential door shown in the selected finish', 'fenster'); ?>" width="640" height="1600" loading="lazy" decoding="async">
                 <figcaption data-door-caption><?php esc_html_e('The render shows the finish. The handle and glass beside it are the ones chosen.', 'fenster'); ?></figcaption>
             </figure>
 

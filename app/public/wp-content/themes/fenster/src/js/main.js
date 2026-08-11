@@ -8299,9 +8299,17 @@ document.querySelectorAll('[data-fg-door-randomiser]').forEach((root) => {
     const handle = handles.length ? handles[Math.floor(Math.random() * handles.length)] : null;
 
     if (doorFigure) doorFigure.classList.add('is-swapping');
+
+    /* THE TEXT MOVES WITH THE PICTURE, NEVER BEFORE IT. Written the other way
+       round first, and a render that failed to load left the panel naming a
+       Dark Red door beside a white one. A spec that describes something the
+       visitor is not looking at is worse than a slow swap. */
     const swap = () => {
       if (finish.image) image.src = finish.image;
       image.alt = 'uPVC residential door rendered in ' + finish.colour;
+      if (colourName) colourName.textContent = finish.colour;
+      if (colourNote) colourNote.textContent = finish.finish || '';
+      if (colourChip) colourChip.style.background = finish.hex || '#ffffff';
       if (doorFigure) doorFigure.classList.remove('is-swapping');
     };
     // Wait for the decode rather than a timer, so the fade never uncovers a
@@ -8318,10 +8326,6 @@ document.querySelectorAll('[data-fg-door-randomiser]').forEach((root) => {
     } else {
       swap();
     }
-
-    if (colourName) colourName.textContent = finish.colour;
-    if (colourNote) colourNote.textContent = finish.finish || '';
-    if (colourChip) colourChip.style.background = finish.hex || '#ffffff';
 
     if (glass && glassName) {
       glassName.textContent = glass.name;

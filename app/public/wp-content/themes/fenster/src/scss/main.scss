@@ -41525,10 +41525,15 @@ html.fg-blinds-reveal-locked {
   border: 1px solid rgba(20, 40, 40, 0.08);
 }
 
+/* The render is 640x1600 of door and nothing else, so the cell is sized to a
+   tall subject and the image is contained rather than covered: cropping a door
+   render to fill a box would cut the top or the threshold off it. */
 .fg-upd-door img {
   display: block;
   width: 100%;
-  height: auto;
+  height: clamp(320px, 46vh, 460px);
+  object-fit: contain;
+  object-position: center;
   /* The render swap is the whole point of the feature, so it gets a short
      cross-fade rather than a hard cut. Anything longer reads as a page loading
      rather than as a door changing. */
