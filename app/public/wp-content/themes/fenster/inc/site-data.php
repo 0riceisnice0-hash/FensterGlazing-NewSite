@@ -397,7 +397,11 @@ function fenster_site_data(): array
                makes, so the slot carries the guarantee instead. */
             'upvc-doors' => [
                 ['label' => 'U-value*', 'value' => '1.0 W/m²K'],
-                ['label' => 'Colour choice', 'value' => '16 options'],
+                /* THIRTEEN ON A DOOR, not the sixteen the windows carry. Owner
+                   ruling 2026-08-12, against Liniar's own list for the 70mm
+                   residential door. It also means the theme holds a render for
+                   every finish offered, which is why the page can say so. */
+                ['label' => 'Colour choice', 'value' => '13 options'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
                 ['label' => 'Security', 'value' => 'Multi-point locking'],
             ],

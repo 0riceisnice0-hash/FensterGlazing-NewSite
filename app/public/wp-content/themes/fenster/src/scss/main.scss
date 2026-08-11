@@ -41743,3 +41743,12 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* The attributed line under the lock copy: a supplier's certification is not
+   our claim, so it is set quieter than the copy it sits under. */
+.fg-upd .fg-upd-detail__note {
+  font-size: 0.86rem;
+  color: var(--color-muted, #5b6a6a);
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(20, 40, 40, 0.12);
+}

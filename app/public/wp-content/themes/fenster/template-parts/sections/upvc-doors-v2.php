@@ -152,8 +152,9 @@ $randomiser_payload = [
                 <ul class="fg-flush-list fg-upd-list">
                     <li><?php esc_html_e('A single leaf, French doors, or a stable door split across the middle', 'fenster'); ?></li>
                     <li><?php esc_html_e('Half glazed over a flat panel, or over a shiplap panel', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Sixteen foil finishes, white or the same colour inside', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Thirteen foil finishes, white or the same colour inside', 'fenster'); ?></li>
                     <li><?php esc_html_e('Shaped heads are possible, though they are rare', 'fenster'); ?></li>
+                    <li><?php esc_html_e('28mm double glazed, or 36mm triple, on the sculptured EnergyPlus frame', 'fenster'); ?></li>
                 </ul>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
@@ -192,7 +193,7 @@ $randomiser_payload = [
             $ways = [
                 [
                     'label' => __('The colour', 'fenster'),
-                    'copy' => __('Sixteen foils, bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Most carry a woodgrain you can feel; a few are smooth. The greens and the oaks are the ones people put a hand on to check.', 'fenster'),
+                    'copy' => __('Thirteen foils, bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Most carry a woodgrain you can feel; a few are smooth. The greens and the oaks are the ones people put a hand on to check.', 'fenster'),
                     'image' => 'upvc-door-green-stable.webp',
                     'alt' => __('Chartwell green uPVC stable door with a letterplate and house number on red brick', 'fenster'),
                 ],
@@ -255,7 +256,7 @@ $randomiser_payload = [
            the glass range, which is why the two are added rather than lumped
            together. Glass is the privacy range plus clear. If any of these
            lists change the number changes with them; never round it. */
-        $way_finishes = 16;
+        $way_finishes = 13;
         $way_glass = count($glass) + 1;
         $way_handles = max(1, count($handles));
         $way_glazed_arrangements = 1 + (3 * 2);
@@ -414,6 +415,14 @@ $randomiser_payload = [
                 <h3><?php esc_html_e('The lock, and what comes as standard.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the leaf, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The cylinder that comes with it is a one star. A three star cylinder is an upgrade and it is worth asking for: it is the part that resists snapping, and it is the cheapest thing on the whole door to improve.', 'fenster'); ?></p>
+                <?php /* LINIAR'S CERTIFICATION, IN LINIAR'S TERMS, AND ATTRIBUTED TO
+                         THEM. Owner ruling, 2026-08-12: say the system is capable,
+                         do not claim every door we fit is a certified doorset. That
+                         is the same distinction the casement page holds the Kenrick
+                         Excalibur to, and it matters more here because our standard
+                         cylinder is a one star. Do not promote this to a flat "our
+                         doors are PAS 24". */ ?>
+                <p class="fg-upd-detail__note"><?php esc_html_e('Liniar test the system to PAS 24 and it is a Secured by Design product, to BS EN 12608-1. Those are their figures for the profile, not a certificate for a particular door, so ask us what a specific doorset is built to.', 'fenster'); ?></p>
                 <?php $placeholder(__('The open leaf edge, showing the hooks and rollers of the multi-point up the length of it. Close, sharp, plain background.', 'fenster'), '16 / 10'); ?>
             </article>
             <article class="fg-upd-detail__card">
