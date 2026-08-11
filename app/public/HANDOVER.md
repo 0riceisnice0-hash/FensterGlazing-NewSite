@@ -2,9 +2,11 @@
 
 ## Handover state, 2026-08-11
 
-**Live is `5aa5d43`. `main` is `2bc8b17`, one docs-only commit ahead, and no
-theme file differs between the two, so live is level with `main` in everything
-that renders. Test is level with live.** No release branch outstanding, working
+**Live is `5aa5d43`, and `main` is ahead of it by docs commits only — no theme
+file differs between the two, so live is level with `main` in everything that
+renders. Test is level with live.** (Two of those docs commits are another
+session's Google Ads work, landed the same afternoon; they touched no theme
+file either.) No release branch outstanding, working
 tree clean. `LIVECHANGES.md` is the authority on what is live; `PROGRESS.md` is
 a log and some of its older entries are still titled "(test)" long after
 shipping.
@@ -84,6 +86,11 @@ Use:
 
 - `AI.md` for coding rules and QA standards.
 - `AUDIT.md` for the 2026-07-03 master site audit, launch-blocker remediation status and remaining backlog.
+- `GOOGLE-ADS-AUDIT-2026-08-11.md` and `GOOGLE-ADS-FIX-2026-08-11.md` for the
+  11 August paid-search rebuild: the evidence, and what was changed in the
+  account. Between them they correct `GOOGLE-ADS-PLAN.md`'s reading of a high
+  CTR on price keywords, which was a warning and not the positive it was taken
+  for. Read these before acting on `GOOGLE-ADS-PLAN.md`.
 - `SEO-LEAD-AUDIT-2026-08-05.md` for the launch measured against Search Console, the rank-tracker read and the dashboard conversion funnel. It is the current source for what organic traffic does after it lands.
 - `STYLE.md` for site-wide visual styling, continuous background rules, section rhythm and mobile design expectations.
 - `HOMEPAGE.md` for homepage-specific design and implementation context.
