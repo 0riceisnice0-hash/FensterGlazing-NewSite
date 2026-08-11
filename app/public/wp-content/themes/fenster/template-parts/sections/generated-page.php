@@ -4743,11 +4743,15 @@ if ($is_commercial_hub) {
                 'renders' => $upvc_render_args,
                 'handles' => is_array($door_handle_finishes) ? $door_handle_finishes : [],
                 'glass' => $upvc_glass,
+                /* THE ARCH OPENS THE PAGE. "Made for the opening it goes into,
+                   whatever shape that is" is a sentence a curved head in a
+                   Victorian brick arch proves on sight, and the shiplap back
+                   door that used to sit here proves nothing in particular. It is
+                   still on the page, as the single leaf in the configurations. */
                 'photos' => [
-                    'opening' => $upvc_pick('upvc-door-white-boarded-panel'),
-                    'inside' => [
-                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-cream-inside-bars.webp'),
-                        'alt' => __('A uPVC door with Georgian bars seen from inside the room, looking onto a garden', 'fenster'),
+                    'opening' => [
+                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-white-arched-leaded.webp'),
+                        'alt' => __('White uPVC door with a curved head and leaded glass in an arched brick opening', 'fenster'),
                     ],
                 ],
             ]);

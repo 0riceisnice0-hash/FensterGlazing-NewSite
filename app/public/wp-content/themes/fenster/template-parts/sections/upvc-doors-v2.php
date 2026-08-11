@@ -114,14 +114,14 @@ $photo = static function (string $key) use ($photos): array {
         <div class="fg-cw-split">
             <div class="fg-cw-split__text">
                 <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
-                <h2 id="fg-upd-open-title"><?php esc_html_e('Most of ours are a white back door. Yours does not have to be.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A uPVC door is made to the opening you have, not picked off a shelf and packed out to fit. That is true of the plain white one most people order, and it is what makes everything else possible: the leaf, the frame, the threshold and the glass are all specified for your house.', 'fenster'); ?></p>
+                <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into, whatever shape that is.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most and it is made exactly the same way as the arched one here, to the hole in your wall.', 'fenster'); ?></p>
                 <p><?php esc_html_e('What follows is everything you get to decide, roughly in the order it gets decided.', 'fenster'); ?></p>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
-                    <img src="<?php echo esc_url($photo('opening')['src']); ?>" alt="<?php echo esc_attr($photo('opening')['alt'] ?? ''); ?>" loading="lazy" decoding="async" width="1200" height="1600">
-                    <figcaption><?php esc_html_e('Our install. A back door glazed over a shiplap panel, with black furniture against a white frame.', 'fenster'); ?></figcaption>
+                    <img src="<?php echo esc_url($photo('opening')['src']); ?>" alt="<?php echo esc_attr($photo('opening')['alt'] ?? ''); ?>" loading="lazy" decoding="async" width="1280" height="1600">
+                    <figcaption><?php esc_html_e('Our install. A curved head made to a Victorian brick arch, with leaded glass and a full panel below.', 'fenster'); ?></figcaption>
                 </figure>
             <?php endif; ?>
         </div>
@@ -129,14 +129,20 @@ $photo = static function (string $key) use ($photos): array {
 </section>
 
 <?php /* 2. HOW IT OPENS. Moved up from the bottom half of the old page: it is
-         the first real question a homeowner has, it is answered entirely in our
-         own photographs, and it sets up the finish chart underneath. */ ?>
+         the first real question a homeowner has and it is answered entirely in
+         our own photographs.
+
+         A SHAPED HEAD IS NOT A WAY OF OPENING. It was a fourth card here and the
+         owner pulled it, 2026-08-12: an arched door is still a single leaf, so
+         it said nothing about opening and broke the one idea the section has.
+         The photograph now opens the page instead, where "made for the opening
+         it goes into" is the sentence it proves. */ ?>
 <section class="fg-cw fg-upd fg-upd-config" aria-labelledby="fg-upd-config-title">
     <div class="container">
         <div class="fg-upd-config__head">
             <p class="eyebrow"><?php esc_html_e('How it opens', 'fenster'); ?></p>
-            <h2 id="fg-upd-config-title"><?php esc_html_e('Four ways the same system opens.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Decided by the opening and how the room gets used, not by the price of it.', 'fenster'); ?></p>
+            <h2 id="fg-upd-config-title"><?php esc_html_e('Three ways the same system opens.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Decided by the opening and how the room gets used.', 'fenster'); ?></p>
         </div>
         <div class="fg-upd-config__grid">
             <?php
@@ -162,14 +168,6 @@ $photo = static function (string $key) use ($photos): array {
                     'copy' => __('Split across the middle so the top half opens on its own: air in, the dog and the toddler still in.', 'fenster'),
                     'image' => 'upvc-door-white-stable.webp',
                     'alt' => __('White uPVC stable door with both halves glazed, in a brick opening', 'fenster'),
-                    'link' => '',
-                    'link_label' => '',
-                ],
-                [
-                    'title' => __('A shaped head', 'fenster'),
-                    'copy' => __('Arched or angled, made to the opening rather than squared off inside it. Rare, and the reason a Victorian arch keeps its arch.', 'fenster'),
-                    'image' => 'upvc-door-white-arched-leaded.webp',
-                    'alt' => __('White uPVC door with a curved head and leaded glass in an arched brick opening', 'fenster'),
                     'link' => '',
                     'link_label' => '',
                 ],
@@ -204,7 +202,7 @@ $photo = static function (string $key) use ($photos): array {
             <div class="fg-upd-finish__head">
                 <p class="eyebrow"><?php esc_html_e('The finish', 'fenster'); ?></p>
                 <h2 id="fg-upd-finish-title"><?php esc_html_e('Thirteen finishes. This is all of them.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Most carry a woodgrain you can feel; a few are smooth.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Bonded to the profile at the factory rather than painted on, so the colour lasts as long as the door does. Most carry a woodgrain you can feel; a few are smooth. Inside is white as standard, or the same colour on both faces if you would rather see it from the sofa.', 'fenster'); ?></p>
             </div>
 
             <ul class="fg-upd-chart">
@@ -217,17 +215,6 @@ $photo = static function (string $key) use ($photos): array {
                 <?php endforeach; ?>
             </ul>
 
-            <?php if (! empty($photo('inside')['src'])) : ?>
-                <div class="fg-upd-inside">
-                    <figure>
-                        <img src="<?php echo esc_url($photo('inside')['src']); ?>" alt="<?php echo esc_attr($photo('inside')['alt'] ?? ''); ?>" width="1280" height="1600" loading="lazy" decoding="async">
-                    </figure>
-                    <div class="fg-upd-inside__text">
-                        <h3><?php esc_html_e('And the side you actually look at.', 'fenster'); ?></h3>
-                        <p><?php esc_html_e('Those are the outside faces. Inside is white as standard whatever the outside is doing, and it is what most people keep, because it disappears into the room. The same colour on both faces if you would rather see it from the sofa.', 'fenster'); ?></p>
-                    </div>
-                </div>
-            <?php endif; ?>
         </div>
     </section>
 <?php endif; ?>
@@ -247,19 +234,19 @@ $photo = static function (string $key) use ($photos): array {
             $ways = [
                 [
                     'label' => __('The panel', 'fenster'),
-                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover. A quarter, a half, three quarters, all of it like the one above, none of it at all for glass top to bottom. It is drawn where you want it rather than picked off a list.', 'fenster'),
+                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover. A quarter, a half, three quarters, all of it like the one above, or glass top to bottom. You say where it stops and it is drawn to that.', 'fenster'),
                     'image' => 'upvc-door-anthracite-solid-shiplap.webp',
                     'alt' => __('Anthracite uPVC door with a full shiplap panel and no glazing, on yellow brick', 'fenster'),
                 ],
                 [
                     'label' => __('Bars and lead', 'fenster'),
-                    'copy' => __('Georgian bars set inside the unit, astragal bars applied to the face so they throw a real shadow, or leaded work in squares or diamonds. It is what stops a new door looking new beside old windows.', 'fenster'),
+                    'copy' => __('Georgian bars set inside the unit, astragal bars applied to the face so they throw a real shadow, or leaded work in squares or diamonds. On an older house it is what ties the door to the windows either side of it.', 'fenster'),
                     'image' => 'upvc-detail-rosewood-woodgrain-bars.webp',
                     'alt' => __('Close detail of a rosewood woodgrain uPVC door with bars across the glass', 'fenster'),
                 ],
                 [
                     'label' => __('What goes through it', 'fenster'),
-                    'copy' => __('A cat flap is cut in on site, into a new door or the one you already have. The letterplate, the knocker, the numerals and a spyhole are specified with the door and arrive fitted.', 'fenster'),
+                    'copy' => __('A cat flap is cut in on site, into a new door or the one you already have. Letterplates, knockers, numerals and spyholes are chosen with the door.', 'fenster'),
                     'image' => 'upvc-door-anthracite-cat-flap.webp',
                     'alt' => __('Anthracite uPVC door with a cat flap cut into the lower panel', 'fenster'),
                 ],
@@ -329,12 +316,40 @@ $photo = static function (string $key) use ($photos): array {
             <p class="eyebrow"><?php esc_html_e('Settled at survey', 'fenster'); ?></p>
             <h2 id="fg-upd-detail-title"><?php esc_html_e('The parts nobody thinks about until they live with them.', 'fenster'); ?></h2>
         </div>
-        <div class="fg-upd-detail__grid">
-            <article class="fg-upd-detail__card">
+        <?php /* THE DRAWINGS BELONG TO THE CARD THAT DESCRIBES THEM. They sat
+                 in a strip under all three cards and read as an orphan, which is
+                 what the owner called out. The threshold now takes a row of its
+                 own with its four sections beside the copy, and the two
+                 text-only decisions sit under it as a pair. It also gives the
+                 section a shape rather than three columns and a loose band. */ ?>
+        <div class="fg-upd-threshold-row">
+            <div class="fg-upd-threshold-row__text">
                 <h3><?php esc_html_e('The threshold you step over.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. There are four, drawn below. Which one you get turns on your floor levels inside and out, so it is settled at survey, and we aim for the low aluminium wherever those levels allow it.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. Which one you get turns on your floor levels inside and out, so it is settled at survey, and we aim for the low aluminium wherever those levels allow it.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The seal itself is Liniar\'s patented bubble gasket, which is the part you feel in January rather than read on a data sheet: it squashes to the shape of the gap rather than relying on the door shutting in exactly the same place every time.', 'fenster'); ?></p>
-            </article>
+            </div>
+            <div class="fg-upd-thresholds">
+                <?php
+                $threshold_options = [
+                    ['name' => __('Large uPVC', 'fenster'), 'file' => 'upvc-threshold-large-upvc.webp', 'note' => __('The full upstand', 'fenster')],
+                    ['name' => __('Low uPVC', 'fenster'), 'file' => 'upvc-threshold-low-upvc.webp', 'note' => __('A slimmer section', 'fenster')],
+                    ['name' => __('Low aluminium', 'fenster'), 'file' => 'upvc-threshold-low-aluminium.webp', 'note' => __('What we aim for', 'fenster')],
+                    ['name' => __('Part M low', 'fenster'), 'file' => 'upvc-threshold-part-m-low.webp', 'note' => __('For wheelchair access', 'fenster')],
+                ];
+                foreach ($threshold_options as $threshold) :
+                    ?>
+                    <figure class="fg-upd-threshold">
+                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/thresholds/' . $threshold['file'])); ?>" alt="<?php printf(esc_attr__('Cutaway section of the %s door threshold', 'fenster'), esc_attr(strtolower((string) $threshold['name']))); ?>" width="960" height="900" loading="lazy" decoding="async">
+                        <figcaption>
+                            <strong><?php echo esc_html($threshold['name']); ?></strong>
+                            <span><?php echo esc_html($threshold['note']); ?></span>
+                        </figcaption>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="fg-upd-detail__grid fg-upd-detail__grid--pair">
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The lock, and what comes as standard.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the leaf, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
@@ -348,31 +363,6 @@ $photo = static function (string $key) use ($photos): array {
             </article>
         </div>
 
-        <?php /* Liniar's own cutaway sections, used on the owner's instruction of
-                 2026-08-12 and a deliberate exception to not using their imagery:
-                 technical drawings of the profile we buy rather than photographs
-                 of somebody else's installation. Our names on their drawings, and
-                 no height on any of them, because none has been confirmed for
-                 this door. */ ?>
-        <div class="fg-upd-thresholds">
-            <?php
-            $threshold_options = [
-                ['name' => __('Large uPVC', 'fenster'), 'file' => 'upvc-threshold-large-upvc.webp', 'note' => __('The full upstand, where the levels suit it', 'fenster')],
-                ['name' => __('Low uPVC', 'fenster'), 'file' => 'upvc-threshold-low-upvc.webp', 'note' => __('The same in a slimmer section', 'fenster')],
-                ['name' => __('Low aluminium', 'fenster'), 'file' => 'upvc-threshold-low-aluminium.webp', 'note' => __('What we aim for where we can', 'fenster')],
-                ['name' => __('Part M low', 'fenster'), 'file' => 'upvc-threshold-part-m-low.webp', 'note' => __('For wheelchair access', 'fenster')],
-            ];
-            foreach ($threshold_options as $threshold) :
-                ?>
-                <figure class="fg-upd-threshold">
-                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/thresholds/' . $threshold['file'])); ?>" alt="<?php printf(esc_attr__('Cutaway section of the %s door threshold', 'fenster'), esc_attr(strtolower((string) $threshold['name']))); ?>" width="960" height="900" loading="lazy" decoding="async">
-                    <figcaption>
-                        <strong><?php echo esc_html($threshold['name']); ?></strong>
-                        <span><?php echo esc_html($threshold['note']); ?></span>
-                    </figcaption>
-                </figure>
-            <?php endforeach; ?>
-        </div>
         <p class="fg-upd-thresholds__note"><?php esc_html_e('Sections drawn by Liniar, whose profile this is.', 'fenster'); ?></p>
     </div>
 </section>

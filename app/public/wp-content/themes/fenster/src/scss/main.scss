@@ -41771,25 +41771,33 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* THE FINISH CHART. Thirteen renders of the same door, which is the whole range
-   for a door, so it reads as a chart rather than as a gallery: equal cells, one
-   name under each, no card and no shadow. `auto-fit` rather than a fixed column
-   count, because thirteen divides badly into any of them and a ragged last row
-   is what a paint chart looks like anyway.
+/* THE FINISH STRIP. Thirteen renders of the same door, and the owner's note on
+   the first version was that they should be on one line and squeezed together
+   into a single thing rather than sitting as a grid of separate tiles. So they
+   abut: no gaps between the doors, one hairline surface behind the lot, and the
+   names below the strip rather than under each cell. It reads as one object,
+   which is the only reason it earns its place over a link to the colour hub.
 
-   The renders are 640x1600 of door and nothing else, cropped through one shared
-   window, so they can be laid out tight without any of them jumping. */
+   Thirteen equal columns at any width above a phone. Below that it is a
+   scroll-snap rail, which is the site's own pattern, because thirteen doors at
+   390px would be 26px each. */
 .fg-upd-chart {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-  gap: clamp(0.8rem, 1.6vw, 1.5rem);
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(20, 40, 40, 0.1);
 }
 
 .fg-upd-chart__item {
+  position: relative;
   text-align: center;
+  padding: clamp(0.6rem, 1.2vw, 1rem) 0 0;
 }
 
 .fg-upd-chart__item img {
@@ -41798,62 +41806,40 @@ html.fg-blinds-reveal-locked {
   height: auto;
   aspect-ratio: 2 / 5;
   object-fit: contain;
-  background: #fff;
-  border-radius: 3px;
   transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.fg-upd-chart__item:hover img {
-  transform: translateY(-4px);
+.fg-upd-chart__item:hover {
+  background: #f4f8f8;
 }
 
-/* A reserved two lines, because "Gale Grey Finesse (Anthracite Smooth)" runs to
-   three and dragged its whole row out of line with the others. The name is the
-   site's own and is not shortened for layout — the swatch on the colour hub
-   carries the same one. */
+.fg-upd-chart__item:hover img {
+  transform: translateY(-3px);
+}
+
 .fg-upd-chart__name {
   display: block;
-  min-height: 2.7em;
-  margin-top: 0.55rem;
-  font-size: 0.78rem;
-  line-height: 1.35;
+  padding: 0.5rem 0.2rem 0.7rem;
+  font-size: 0.68rem;
+  line-height: 1.25;
   color: var(--color-muted, #5b6a6a);
+  hyphens: auto;
 }
 
-/* The inside face sits under the chart as a quiet aside rather than as another
-   full section: it is one fact and one photograph, and it belongs to the finish
-   rather than standing beside it. */
-.fg-upd-inside {
-  display: grid;
-  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
-  gap: clamp(1.4rem, 3vw, 2.6rem);
-  align-items: center;
-  margin-top: clamp(2.2rem, 4vw, 3.4rem);
-  padding-top: clamp(1.6rem, 3vw, 2.4rem);
-  border-top: 1px solid rgba(20, 40, 40, 0.14);
-}
+@media (max-width: 860px) {
+  /* A rail rather than thirteen 26px slivers. The site uses scroll-snap for
+     every other horizontal run, and the clipped last door is the affordance. */
+  .fg-upd-chart {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
 
-.fg-upd-inside figure {
-  margin: 0;
-}
-
-.fg-upd-inside img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.fg-upd .fg-upd-inside__text h3 {
-  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
-  margin-bottom: 0.5rem;
-}
-
-.fg-upd .fg-upd-inside__text p {
-  max-width: 54ch;
-  margin: 0;
+  .fg-upd-chart__item {
+    flex: 0 0 26%;
+    scroll-snap-align: start;
+  }
 }
 
 .fg-upd-finish__head {
@@ -41862,13 +41848,6 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 700px) {
-  .fg-upd-inside {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .fg-upd-chart {
-    grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -41876,5 +41855,46 @@ html.fg-blinds-reveal-locked {
   .fg-upd-chart__item:hover img {
     transition: none;
     transform: none;
+  }
+}
+
+/* The threshold and its four sections as one row: copy on the left, drawings on
+   the right, so the drawings belong to the words that describe them instead of
+   sitting in a band under three unrelated cards. */
+.fg-upd-threshold-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: center;
+}
+
+.fg-upd .fg-upd-threshold-row__text h3 {
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  margin-bottom: 0.6rem;
+}
+
+.fg-upd .fg-upd-threshold-row__text p {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin-bottom: 0.8rem;
+}
+
+.fg-upd-threshold-row .fg-upd-thresholds {
+  margin-top: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fg-upd-detail__grid--pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+@media (max-width: 860px) {
+  .fg-upd-threshold-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-upd-detail__grid--pair {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
