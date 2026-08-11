@@ -120,8 +120,8 @@ function fenster_commercial_product_pages(): array
                wall of blades says louvre before a word is read. A wide shot of
                a louvre run in context would still be better; it does not exist
                yet. */
-            'hero_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-vent-headrow-1500w.jpg',
-            'hero_alt' => 'A dark grey aluminium louvre panel set into red brickwork',
+            'hero_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-plant-doors-2048w.webp',
+            'hero_alt' => 'Two pairs of louvred aluminium plant room doors in a red brick elevation, labelled Plant and UPS Plant',
             /* Was `SM-037-001.jpg`, a generic aluminium glazing detail. This is
                a page about louvres and it carried no photograph of a louvre
                anywhere on it. This one is ours, from Headrow Court in Leeds.
@@ -134,8 +134,13 @@ function fenster_commercial_product_pages(): array
                photographs, each used once: repeating one across a hero and a
                body section is the fault the residential product template has a
                whole image queue to avoid. */
-            'intro_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-plant-doorset-1300w.jpg',
-            'intro_alt' => 'A pair of fully louvred aluminium plant room doors set into dark brickwork',
+            /* The scope-of-works image is the one that shows the argument the
+               copy makes: a louvre panel and a window in the same frame line,
+               being fitted from the same scaffold on the same day. Two fitters
+               are in it and neither face is visible — both are turned away —
+               so nothing is blurred here, unlike the Heal's study. */
+            'intro_image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-glazing-line-1200w.webp',
+            'intro_alt' => 'A grey aluminium louvre panel and a window in the same frame line, being installed from a scaffold',
             'summary' => [
                 'A louvre goes into an opening that has to move air: a plant room, a substation, a bin store, a riser, a car park, or a run across a facade screening something behind it. It has four jobs at once. Pass enough air to meet the mechanical schedule, resist the weather, stop people seeing in, and sit properly in the elevation.',
                 'We supply and fit the range as part of the aluminium package, so the louvre is drawn, coloured and fixed alongside the windows and doors either side of it rather than ordered separately and made to fit afterwards. Send the free area required and the opening size and we will confirm which system meets it.',

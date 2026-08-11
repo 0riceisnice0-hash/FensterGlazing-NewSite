@@ -67,18 +67,10 @@ foreach ($standard as $system) {
     }
 }
 
-/** A marked placeholder. Deliberately not an <img>: a broken image and a
- *  photograph we have not taken yet look the same to a visitor, and only one of
- *  them is honest. */
-$placeholder = static function (string $ratio, string $describes): void {
-    ?>
-    <div class="fg-lv-placeholder" style="--fg-lv-ratio: <?php echo esc_attr($ratio); ?>" role="img"
-        aria-label="<?php echo esc_attr(sprintf(__('Photograph to follow: %s', 'fenster'), $describes)); ?>">
-        <span><?php esc_html_e('Photograph to follow', 'fenster'); ?></span>
-        <small><?php echo esc_html($describes); ?></small>
-    </div>
-    <?php
-};
+/* The placeholder helper that lived here is gone: every slot it covered
+   now has a real photograph. The pattern itself is written up in AI.md under
+   the Marked Placeholders Rule, and `.fg-lv-placeholder` stays in the
+   stylesheet for the next page that needs it. */
 ?>
 
 <div class="fg-lv">
@@ -89,7 +81,7 @@ $placeholder = static function (string $ratio, string $describes): void {
              the table below cannot drift apart. */ ?>
     <?php if ($common !== []) : ?>
         <section class="fg-lv-lead" aria-labelledby="fg-lv-lead-title">
-            <div class="container fg-lv-lead__grid">
+            <div class="container fg-lv-lead__grid fg-lv-lead__grid--single">
                 <div class="fg-lv-lead__copy">
                     <p class="eyebrow"><?php esc_html_e('The one we fit most', 'fenster'); ?></p>
                     <h2 id="fg-lv-lead-title"><?php esc_html_e('The IKL33 is the system we fit most.', 'fenster'); ?></h2>
@@ -115,10 +107,6 @@ $placeholder = static function (string $ratio, string $describes): void {
                     </dl>
                     <p class="fg-lv-note"><?php esc_html_e('The system manufacturer\'s published specification for the IKL33, tested to EN 13030:2002.', 'fenster'); ?></p>
                 </div>
-                <?php /* 4:3 rather than the portrait it was: at 4:5 the empty box was taller
-                         than the copy beside it and dominated a section that is
-                         mostly numbers. */ ?>
-                <?php $placeholder('4 / 3', __('an IKL33 run photographed close, square to the blades', 'fenster')); ?>
             </div>
         </section>
     <?php endif; ?>
@@ -202,6 +190,21 @@ $placeholder = static function (string $ratio, string $describes): void {
                 </div>
             <?php endif; ?>
 
+            <?php /* Wide blades, photographed. This is a plant doorset on one of
+                     our jobs and the blades are visibly further apart than the
+                     IKL33's; it earns its place here rather than in the IKL33
+                     section above precisely because it is NOT that system.
+                     Nothing in the caption names a system, because nobody has
+                     confirmed which one it is. The third-party sprinkler
+                     contractor's sign in the original frame is cropped out. */ ?>
+            <figure class="fg-lv-figure fg-lv-figure--wide">
+                <img <?php echo fenster_image_attr_string($louvre_img . 'louvre-blade-detail-1150w.webp', [
+                    'alt' => __('Close view of wide-pitched aluminium louvre blades on a pair of plant room doors, with the lock between them', 'fenster'),
+                    'loading' => 'lazy',
+                ]); ?>>
+                <figcaption><?php esc_html_e('Wider blade centres on a plant doorset. More air and a longer view in, on an opening where neither matters.', 'fenster'); ?></figcaption>
+            </figure>
+
             <div class="fg-lv-range__more">
                 <?php if ($continuous !== []) : ?>
                     <div>
@@ -247,6 +250,17 @@ $placeholder = static function (string $ratio, string $describes): void {
                 </div>
                 <p><?php esc_html_e('The same louvre meets an opening in five ways, and the right one depends on the construction rather than the louvre. It is worth settling at survey: drawings rarely show it.', 'fenster'); ?></p>
             </div>
+            <?php /* A louvre and a glazed panel in one screen, which is what the
+                     glaze-in frame in the list below actually looks like built.
+                     Ours, on a boiler house. */ ?>
+            <figure class="fg-lv-figure fg-lv-figure--wide">
+                <img <?php echo fenster_image_attr_string($louvre_img . 'louvre-screen-boiler-1400w.webp', [
+                    'alt' => __('A wide louvre panel with obscured glazing above it, framed as one screen in a brick elevation', 'fenster'),
+                    'loading' => 'lazy',
+                ]); ?>>
+                <figcaption><?php esc_html_e('Louvre below, glazing above, in one screen and one frame line. The plant behind it gets its air and the elevation keeps a single opening.', 'fenster'); ?></figcaption>
+            </figure>
+
             <div class="fg-lv-spec__grid">
                 <div>
                     <h3><?php esc_html_e('How it meets the opening', 'fenster'); ?></h3>
@@ -274,15 +288,52 @@ $placeholder = static function (string $ratio, string $describes): void {
         </div>
     </section>
 
-    <?php /* ---------- Where the work section went -------------------------
-             There WAS a three-cell "our work" gallery here and it came out on
-             2026-08-11, when the hero became a louvre. We own exactly two
-             photographs of louvres: one is now the hero and the other is the
-             intro image in the shared template above, so a gallery underneath
-             could only repeat them or run on placeholders alone.
+    <?php /* ---------- Two more of ours ----------------------------------
+             The section came out earlier in the day, when we owned two louvre
+             photographs and both were needed above. Four more arrived and it is
+             back, using the two that are not doing a job further up: the fixed
+             panel at Headrow and a plant doorset on another site.
 
-             Put it back the moment more photographs arrive. The Heal's job is
-             the obvious first entry — six bespoke louvres in golden brown — and
-             it already links here from its own study. */ ?>
+             Owner instruction, 2026-08-11: the new photographs were not to be
+             dumped into a gallery under "our work". They are placed where they
+             argue for something instead — the plant doors as the hero, the
+             scaffold shot against the scope copy, the blade detail against the
+             blade-pitch trade-off, the screen against the frame types. These
+             two are the ones that are genuinely just proof. */ ?>
+    <section class="fg-lv-work" aria-labelledby="fg-lv-work-title">
+        <div class="container">
+            <div class="fg-lv-work__head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('Elsewhere on site', 'fenster'); ?></p>
+                    <h2 id="fg-lv-work-title"><?php esc_html_e('Two more, on different jobs.', 'fenster'); ?></h2>
+                </div>
+                <p>
+                    <?php
+                    printf(
+                        /* translators: %s: link to the Heal's case study */
+                        esc_html__('Louvres normally arrive as part of a wider package. Six bespoke ones went into the courtyard elevations at %s, in a golden brown against black windows.', 'fenster'),
+                        '<a href="' . esc_url(home_url('/commercial-projects/heals-tottenham-court-road/')) . '">' . esc_html__('Heal\'s on Tottenham Court Road', 'fenster') . '</a>'
+                    );
+                    ?>
+                </p>
+            </div>
+            <div class="fg-lv-work__grid">
+                <figure>
+                    <img <?php echo fenster_image_attr_string($louvre_img . 'louvre-vent-headrow-1500w.jpg', [
+                        'alt' => __('A dark grey aluminium louvre panel set into red brickwork', 'fenster'),
+                        'loading' => 'lazy',
+                    ]); ?>>
+                    <figcaption><?php esc_html_e('Fixed louvre panel, Headrow Court, Leeds. Colour-matched to the windows on the same elevation.', 'fenster'); ?></figcaption>
+                </figure>
+                <figure>
+                    <img <?php echo fenster_image_attr_string($louvre_img . 'louvre-plant-doorset-1300w.jpg', [
+                        'alt' => __('A pair of fully louvred aluminium plant room doors set into dark brickwork', 'fenster'),
+                        'loading' => 'lazy',
+                    ]); ?>>
+                    <figcaption><?php esc_html_e('Plant room doorset, louvred over its full height, so the doors ventilate as well as open.', 'fenster'); ?></figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
 
 </div>

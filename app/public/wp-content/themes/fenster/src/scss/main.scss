@@ -14278,10 +14278,46 @@ a.fg-cs-card__pill:focus-visible {
   line-height: 1.55;
 }
 
-/* Our work: three cells, two photographs and one placeholder. */
+/* A photograph that runs the full width of a section, used where the picture
+   is making the section's argument rather than sitting beside it. */
+.fg-lv-figure--wide {
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+}
+
+.fg-lv-figure--wide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.fg-lv .fg-lv-figure--wide figcaption {
+  margin-top: 0.7rem;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* The lead section has no image now that the IKL33 figures carry it, so its
+   grid is a single column and the four figures spread across the width. */
+.fg-lv-lead__grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fg-lv-lead__grid--single .fg-lv-figures {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fg-lv-lead__grid--single .fg-lv-lead__copy p {
+  max-width: 62ch;
+}
+
+/* Two photographs, side by side. */
 .fg-lv-work__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -14344,7 +14380,8 @@ a.fg-cs-card__pill:focus-visible {
   .fg-lv-spec__head,
   .fg-lv-spec__grid,
   .fg-lv-work__head,
-  .fg-lv-work__grid {
+  .fg-lv-work__grid,
+  .fg-lv-lead__grid--single .fg-lv-figures {
     grid-template-columns: minmax(0, 1fr);
   }
 
