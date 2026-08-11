@@ -41517,11 +41517,14 @@ html.fg-blinds-reveal-locked {
   align-items: center;
 }
 
+/* Flat white, not a gradient. The renders are on an opaque white background
+   with no alpha, so any tint behind them draws a visible rectangle where the
+   render ends and the panel begins. */
 .fg-upd-door {
   margin: 0;
   padding: clamp(1rem, 2vw, 2rem);
   border-radius: 8px;
-  background: linear-gradient(180deg, #f7f9f9 0%, #eef3f3 100%);
+  background: #fff;
   border: 1px solid rgba(20, 40, 40, 0.08);
 }
 
