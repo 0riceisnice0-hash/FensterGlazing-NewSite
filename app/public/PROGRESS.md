@@ -58,7 +58,19 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
-## 2026-08-11 - Heritage windows rebuilt around the steel window (local, not deployed)
+## 2026-08-11 - Heritage windows rebuilt around the steel window (LIVE, 0a158fb)
+
+**Shipped to live at 08:02** after the owner reviewed it on test, with two
+corrections in between. Guard passed on four files, backup proven by extracting
+from the tarball, deletion list asserted empty, socket purge `msg:OK`, served
+stylesheet re-hashed to the built value, seventeen canonical routes `200`.
+
+**The deploy's own near-miss is worth more than the page.** The first attempt
+built its guard from `git show "$sha:app/..."` unbraced, which zsh reads as a
+parameter modifier: `git show` printed nothing and `md5 -q` returned the hash of
+the empty string for all eight values. The length assertion passed, because that
+hash is 32 characters long. Both halves are written down in `nick.md` and it
+still happened. Assert against `d41d8cd98f00b204e9800998ecf8427e` by name.
 
 Owner brief: a full rework in the style of the aluminium flush rebuild, few
 assets, add a unique feature, keep it high end, and link it to the heritage
