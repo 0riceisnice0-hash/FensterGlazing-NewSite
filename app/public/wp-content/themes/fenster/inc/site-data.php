@@ -579,6 +579,16 @@ function fenster_site_data(): array
             'tilt-turn-windows'       => ['double' => '1.2 W/m²K', 'triple' => '0.95 W/m²K'],
             // 28mm IGU only, so no triple. Liniar's own specification confirms it.
             'flush-casement-windows'  => ['double' => '1.2 W/m²K'],
+            /* uPVC DOORS. The triple figure is Liniar's own published 0.99
+               W/m2K whole-door on the 70mm residential door, rounded to the 1.0
+               the strip has always shown. THE DOUBLE FIGURE IS THE WINDOW'S,
+               1.2, on the owner's ruling of 2026-08-12: Liniar publish no double
+               glazed figure for this door, and rather than leave the standard
+               specification with no number at all we state the figure for the
+               same 70mm EnergyPlus system in a window. It is a borrowed figure
+               and that is a deliberate decision, not an oversight — if Liniar
+               ever publish a door-specific double, use theirs. */
+            'upvc-doors'              => ['double' => '1.2 W/m²K', 'triple' => '1.0 W/m²K'],
             // Sheerline Prestige
             'aluminium-windows'       => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
             'aluminium-flush-windows' => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],

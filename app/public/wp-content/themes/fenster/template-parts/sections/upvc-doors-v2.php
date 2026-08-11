@@ -409,6 +409,12 @@ $randomiser_payload = [
                 <h3><?php esc_html_e('The threshold you step over.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. Liniar publish eight for this system, including a Part M low threshold for level access.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Which one is right depends on your floor levels inside and out, so it is settled at survey rather than guessed at from a drawing.', 'fenster'); ?></p>
+                <?php /* THE BUBBLE GASKET IS LINIAR'S AND IS THEIR TERM FOR IT.
+                         Owner approved 2026-08-12. It is worth a sentence because
+                         it is the part a customer feels in January rather than
+                         reads on a data sheet. Attributed, like the PAS 24 line
+                         below: it is a feature of the profile we buy. */ ?>
+                <p><?php esc_html_e('The seal itself is Liniar\'s patented bubble gasket, which is the part you feel in January rather than read on a data sheet: it squashes to the shape of the gap rather than relying on the door shutting in exactly the same place every time.', 'fenster'); ?></p>
                 <?php $placeholder(__('A Part M low threshold at the sill, camera down at ankle height, showing how little there is to step over.', 'fenster'), '16 / 10'); ?>
             </article>
             <article class="fg-upd-detail__card">
@@ -422,7 +428,7 @@ $randomiser_payload = [
                          Excalibur to, and it matters more here because our standard
                          cylinder is a one star. Do not promote this to a flat "our
                          doors are PAS 24". */ ?>
-                <p class="fg-upd-detail__note"><?php esc_html_e('Liniar test the system to PAS 24 and it is a Secured by Design product, to BS EN 12608-1. Those are their figures for the profile, not a certificate for a particular door, so ask us what a specific doorset is built to.', 'fenster'); ?></p>
+                <p class="fg-upd-detail__note"><?php esc_html_e('Liniar test the system to PAS 24, it is a Secured by Design product, and the profile carries a BSI Kitemark to BS EN 12608-1. Those are their figures for the profile, not a certificate for a particular door, so ask us what a specific doorset is built to.', 'fenster'); ?></p>
                 <?php $placeholder(__('The open leaf edge, showing the hooks and rollers of the multi-point up the length of it. Close, sharp, plain background.', 'fenster'), '16 / 10'); ?>
             </article>
             <article class="fg-upd-detail__card">
