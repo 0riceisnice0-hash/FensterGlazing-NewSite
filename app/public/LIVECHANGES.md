@@ -207,6 +207,10 @@ If a change touches forms, SEO output, redirects, sitemaps, generated routing, e
 
 Direct-to-live is not the normal workflow, including for small or low-risk edits. Always use local edit, build/lint, commit, push, theme-only test rsync, test cache flush and test verification first. Do not edit live files by hand. Skip test only when the owner explicitly overrides this rule for the current task.
 
+**THE LOCAL SITE IS NOT A DEPLOY TARGET AND NOT A VERIFICATION TARGET.** Owner instruction, 2026-08-11: never push to Local, always push to test. Local by Flywheel is where files are edited; it is not where anything is proven. It has to be running and often is not, and its failure mode is misleading — `http://fenster-glazing.local/` returned Local's own `502` page on 2026-08-11 while `nginx`, `mysqld` and `php-cgi` were all in the process list, because those processes belonged to a different Local site. Its database also drifts from production, so a route can render there and 404 on a real server. **Do not wait for Local, and never report a page as verified because it rendered locally.** The local pass is the part that needs no site at all: `npm.cmd run build` if assets changed, PHP lint, and any data harness. Everything after that happens on test.
+
+**Rebase onto `origin/main` immediately before you push.** The test deploy runs `git reset --hard origin/main`, so a commit built on a stale checkout does not just miss the newer work, it reverts it on test and queues the same revert for live. This is the same class of failure as the 2026-08-04 double-deploy, arriving through a stale local branch instead of a cherry-pick. It nearly happened on 2026-08-11: the Little Horwood case study was written against an `inc/case-studies-data.php` four commits behind `origin/main` and would have removed the All Hallows study and both town-matching fixes. `git fetch origin main`, branch from `origin/main`, re-apply, and re-run the lint and harness on the rebased file rather than trusting the pre-rebase run.
+
 ## Commands Codex Has Been Using
 
 From the local theme directory:

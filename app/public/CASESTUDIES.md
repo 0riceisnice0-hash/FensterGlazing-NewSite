@@ -122,7 +122,11 @@ Open `inc/case-studies-data.php` and add an entry to the array returned by
 `fenster_case_studies()`, keyed by the detail slug (the part after
 `case-studies/`). Order is newest first. Use the schema in section 3.
 
-### Step 3 — Build, lint, verify locally
+### Step 3 — Build, lint and run the data harness
+
+**These are the only local checks. The Local site is not where a case study
+gets verified** — see the rule under Step 4.
+
 
 ```powershell
 cd app/public/wp-content/themes/fenster
@@ -144,11 +148,29 @@ foreach (fenster_case_studies() as $slug=>$cs) { /* check $cs['images'] files ex
 
 ### Step 4 — Deploy to test and verify
 
+**Verification happens on the test site, never on the Local site.** Owner
+instruction, 2026-08-11. Local by Flywheel is a place to edit files, not a
+place to prove a page: it has to be running and it frequently is not (the
+router answers `502` while nginx, MySQL and php-cgi are all up, because those
+processes belong to a different Local site), its database drifts from
+production, and a page that renders there has been proven on nobody's server.
+Do not stall a case study waiting for Local to come back, and do not report a
+route as checked because it rendered locally. Lint and the data harness in
+Step 3 need no site at all; everything past them goes to test.
+
 Follow `LIVECHANGES.md`: commit, push to GitHub `main`, rsync the theme to the
-password-protected test site, flush its cache, then verify. **Never deploy
+password-protected test site, flush its cache, then verify there. **Never deploy
 straight to live.** Verify at 1440x900 and 390x844: no horizontal overflow, H1
 within the `3.6rem` ceiling, product/colour/quote links correct, gallery
 lightbox opens, images load. Only promote to live after the owner approves.
+
+**Rebase before you push, because `main` moves under you.** This file is a
+single array that every case study shares, so a session that edits it against
+a stale checkout reverts whatever landed in the meantime. Little Horwood was
+written against a `case-studies-data.php` four commits behind `origin/main` and
+would have removed the All Hallows study and the town-matching fixes had it
+been pushed as written. `git fetch origin main` first, branch from it, and
+re-apply your entry on top.
 
 Two traps when verifying by screenshot rather than by eye:
 
@@ -498,5 +520,7 @@ If you want more entry points, add them tastefully (avoid filler link bands per
 3. Confirm product routes and colour slugs exist; confirm fitter photos/anchors.
 4. No em dashes; singular vs plural matches reality; specs match the product page.
 5. `npm.cmd run build` (if SCSS/JS changed), PHP-lint, run the data harness.
-6. Commit, push, deploy to test, flush cache, verify at 1440 and 390.
+   That is the whole local pass. Do not try to verify on the Local site.
+6. `git fetch origin main` and rebase onto it, then commit, push, deploy to
+   test, flush cache, verify at 1440 and 390 **on test**.
 7. Get owner approval, then promote to live.

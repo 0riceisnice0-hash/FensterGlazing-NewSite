@@ -87,6 +87,8 @@ PHP lint example:
 - Edit source files, not compiled assets directly.
 - After SCSS or JS changes, run `npm.cmd run build`.
 - Lint any changed PHP template or PHP include.
+- **Never push to the Local site. Always push to test.** Owner instruction, 2026-08-11. Local is for editing files; nothing is verified there. It is often not running, and it fails misleadingly: the router returns `502` while `nginx`, `mysqld` and `php-cgi` sit in the process list belonging to a different Local site. Its database drifts from production too, so a route can render locally and 404 on a real server. The local pass is only what needs no site — build, lint, data harness. Everything past that goes to `test.fensterglazing.com` and is verified there. Do not stall waiting for Local, and never call a page verified because it rendered locally. Full procedure in `LIVECHANGES.md`.
+- **Rebase onto `origin/main` immediately before pushing.** The test deploy is `git reset --hard origin/main`, so a commit built on a stale checkout reverts whatever landed while you were working. Shared single-file data sources (`inc/case-studies-data.php`, `inc/site-data.php`) are where this bites.
 - Preserve user changes in the working tree. Do not reset, checkout or delete unrelated work.
 - Do not rebuild the site around ACF, Elementor or editable admin fields unless the owner explicitly changes direction.
 - The theme is intentionally code-driven and hardcoded where appropriate.
