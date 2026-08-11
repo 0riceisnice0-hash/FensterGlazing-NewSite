@@ -901,7 +901,11 @@ function fenster_case_studies(): array
             ],
             'installed' => [
                 'Liniar 70mm flush sash windows across the front elevation',
-                'Agate grey (RAL 7038) foil, side hung openers with trickle vents',
+                /* Not "side hung openers": the small window over the porch is
+                   not one, so the bullet was claiming of every opening what is
+                   only true of the big ones. The overview says "the main
+                   windows" for the same reason. */
+                'Agate grey (RAL 7038) foil, with trickle vents in the frame heads',
                 'One composite front door, finished to match the windows',
                 'Boarded door slab, long bar handle, letterplate and a glazed sidelight each side',
                 'A+ rated, 28mm double glazed',
