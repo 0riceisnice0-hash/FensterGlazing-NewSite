@@ -584,8 +584,17 @@ function fenster_tech_banner_args(string $slug): array
             'flush-casement-windows' => [
                 ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
             ],
+            /* BOTH FIGURES SINCE 2026-08-12. The route carried the triple
+               figure alone, so the strip printed it starred as the lowest
+               achievable and the standard specification had no number anywhere
+               on the page. Owner's ruling: use the window's double figure. 1.2
+               is Liniar's for the same 70mm EnergyPlus system in a casement,
+               and they publish no double glazed figure for the door. It is
+               borrowed on purpose and `glazing_u_values` says so; replace it
+               the day Liniar publish a door-specific one. */
             'upvc-doors' => [
-                ['value' => '1.0', 'label' => 'W/m²K on the door'],
+                ['value' => '1.0', 'label' => 'W/m²K with 36mm triple glazing'],
+                ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
             ],
         ];
 
