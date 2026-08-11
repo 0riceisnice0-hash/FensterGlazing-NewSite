@@ -239,8 +239,20 @@ $classic_gives = [
              section also is, but two sections sit between them. */ ?>
     <section class="fg-cw-intro fg-hw-work" aria-labelledby="fg-hw-proof-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
-            <figure class="fg-cw-media fg-cw-media--4x5">
-                <img <?php echo fenster_image_attr_string($base . 'hw-install-stone-mullion-1200w.webp', [
+            <?php /* SQUARE, not the 4:5 this was. Owner, 2026-08-11: "looks
+                     super tall vs text", and he is right — a portrait cell
+                     beside four lines of copy leaves the section lopsided. The
+                     crop is cut from the original rather than from the
+                     published 1200px copy, and it drops the blank gable above
+                     the opening rather than any of the work.
+
+                     NEW FILENAME, because the pixels changed. Theme images
+                     carry no version string, so overwriting one leaves every
+                     browser and the proxy serving the old crop while the deploy
+                     verifies perfectly. That has cost review rounds twice on
+                     this project. */ ?>
+            <figure class="fg-cw-media fg-hw-media--square">
+                <img <?php echo fenster_image_attr_string($base . 'hw-install-stone-gable-1200w.webp', [
                     'alt' => __('White heritage aluminium windows in the stone mullioned openings of a cottage gable', 'fenster'),
                     'loading' => 'lazy',
                 ]); ?>>

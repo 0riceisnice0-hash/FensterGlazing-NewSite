@@ -39239,6 +39239,20 @@ html.fg-blinds-reveal-locked {
   line-height: 1.45;
 }
 
+/* Our install sits in a square rather than the 4:5 the flush route uses. Owner,
+   2026-08-11: against four lines of copy a portrait cell reads as far too tall,
+   and the picture loses nothing but blank gable.
+
+   THE RATIO GOES ON THE FIGURE, not the image. `.fg-cw-media` sets
+   `aspect-ratio: 16 / 10` on the figure and the image inside it is
+   `height: 100%`, so a ratio set on the image computes and then does nothing —
+   the box still governs. Written on the image first and it rendered a 576x360
+   letterbox that cropped the head off the window. `--turntable` above is the
+   existing example of doing this correctly. */
+.fg-hw-media--square {
+  aspect-ratio: 1;
+}
+
 /* The heritage door page's cross-link section carries `.fg-cw` on the <section>
    itself rather than on a wrapper around it, because that page has no `.fg-cw`
    ancestor to inherit from. `.fg-cw section` is a descendant selector, so it

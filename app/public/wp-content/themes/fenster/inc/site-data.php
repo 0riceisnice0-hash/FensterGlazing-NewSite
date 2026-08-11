@@ -835,7 +835,7 @@ function fenster_site_data(): array
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-hero-steel-look-2048w.webp', 'alt' => 'Tall steel-look aluminium window with slim dark glazing bars in a paneled living room'],
                 'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/C08-Classic-Windows-Heritage-Style-Anthracite-2048x1366-1.jpg', 'alt' => 'Steel-look heritage aluminium windows seen from inside a living room'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-stone-mullion-1200w.webp', 'alt' => 'White heritage aluminium windows fitted into the stone mullioned openings of a cottage gable'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-stone-gable-1200w.webp', 'alt' => 'White heritage aluminium windows fitted into the stone mullioned openings of a cottage gable'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Slim heritage glazing bar detail'],
                 ],
             ],
@@ -1340,7 +1340,7 @@ function fenster_site_data(): array
                pool feeds the town matrix pages too, and a real local job
                outranks supplier photography there. */
             'heritage_windows' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-stone-mullion-1200w.webp', 'alt' => 'White heritage aluminium windows in the stone mullioned openings of a cottage gable'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-stone-gable-1200w.webp', 'alt' => 'White heritage aluminium windows in the stone mullioned openings of a cottage gable'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage aluminium windows along a traditional terrace'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Slim steel-look glazing bar detail on a heritage aluminium window'],
             ],
