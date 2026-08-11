@@ -1964,8 +1964,8 @@ function fenster_site_data(): array
                 'faqs' => [
                     ['question' => 'What configurations do uPVC doors come in?', 'answer' => 'A single leaf for a front, back or side entrance; French doors that open from the centre for a wider opening; or a stable door split across the middle, so the top half can open on its own. Panel design, glass, colour, handles and letterplates are chosen on top of whichever you pick.'],
                     ['question' => 'Are uPVC doors good for front doors?', 'answer' => 'Yes. uPVC doors can be specified for front, rear or side entrances with secure locking, glazing and panel choices.'],
-                    ['question' => 'How secure are uPVC doors?', 'answer' => 'uPVC doors can include multi-point locking, with hardware and cylinder options confirmed during the quote and survey process.'],
-                    ['question' => 'Can uPVC doors be coloured?', 'answer' => 'Yes. uPVC doors can be specified in white, woodgrain-style foils and selected colours depending on the system.'],
+                    ['question' => 'How secure are uPVC doors?', 'answer' => 'Every door we fit has a multi-point mechanism as standard, throwing hooks or bolts into the frame at several points up the leaf. The cylinder that comes with it is a one star, and a three star cylinder is an upgrade worth asking for, because it is the part that resists snapping.'],
+                    ['question' => 'Can uPVC doors be coloured?', 'answer' => 'Thirteen foils, bonded to the profile at the factory rather than painted on. Most carry a woodgrain you can feel and a few are smooth. The colour is the outside face and inside is white as standard, or the same colour on both faces if you prefer.'],
                     ['question' => 'Can I include side panels or glass?', 'answer' => 'Yes. Glazing, sidelights and privacy glass can be included where the opening and design allow.'],
                     ['question' => 'Will a uPVC door be made to measure?', 'answer' => 'Yes. Fenster checks the opening, threshold, frame, hardware and access requirements before manufacture.'],
                 ],
