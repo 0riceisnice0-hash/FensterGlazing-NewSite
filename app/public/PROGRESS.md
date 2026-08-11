@@ -58,7 +58,7 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
-## 2026-08-11 - Louvre vents rebuilt around the range (LIVE, 1c72d8c)
+## 2026-08-11 - Louvre vents rebuilt around the range (LIVE, 5aa5d43)
 
 Owner brief: a full overhaul, the IKON louvre suite is what we offer, add real
 detail but "maybe not QUITE as hard as they go", exclude the composite panels,
@@ -97,8 +97,21 @@ builders and architects rather than homeowners. And with only two louvre
 photographs in existence, the work gallery came out rather than repeat the two
 that are now the hero and the intro image.
 
-**Live at 13:14 in two deploys**, the second correcting three lines of copy the
-owner pulled by name.
+**Live in four deploys across the afternoon**, the later ones correcting copy,
+filling a gap in the specification section with the manufacturer's own product
+view, and taking the supplier name out of the meta description.
+
+**The debranding missed the head, and nobody would have found it by looking at
+the page.** "From the IKON range" stayed in the meta description, the
+og:description and the twitter description for about four hours of live traffic,
+because the check after the instruction stripped the tags before searching. It
+surfaced only because a later grep counted the raw HTML rather than the rendered
+text. The head is the most public part of a page: it is what Google prints and
+what travels when somebody shares the link.
+
+**And the product render carried a maker's badge on one blade**, illegible at
+render size and still the brand. Patched out with a strip of the same blade;
+the first attempt was too wide and erased the frame upright.
 
 **Five owner corrections in all, and four were mine to have seen.** The supplier brand came off the page, which the site's own rule about
 supplier provenance already required: model codes stay, the name does not, and
