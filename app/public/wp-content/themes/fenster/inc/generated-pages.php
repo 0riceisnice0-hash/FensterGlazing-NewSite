@@ -426,12 +426,20 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Curtain walling for commercial facades, entrances and screens, with survey and specification support from Fenster.',
         ],
         /* Retitled 2026-08-11 with the page rebuild. The searches here are
-           "aluminium louvre", "ventilation louvre" and free-area questions, and
-           the meta now carries the two things a specifier is looking for: that
-           it is the IKON range and that free area is what we size from. */
+           "aluminium louvre", "ventilation louvre" and free-area questions, so
+           the meta leads on the blade range and on free area, which is what a
+           specifier is actually looking for.
+
+           IT NAMED THE SUPPLIER UNTIL LATER THE SAME DAY, and that is the one
+           place the debranding pass missed: the instruction was checked against
+           the visible page and not against the head, so the brand went on
+           living in the description, the og:description and the twitter
+           description — which is the copy Google prints and the copy that
+           travels when somebody shares the link. **When a name has to come off
+           a page, grep the head as well as the body.** */
         'louvre-vents' => [
             'title_tag' => 'Aluminium Louvre Vents | Ventilation Louvres | Fenster',
-            'meta_description' => 'Aluminium ventilation louvres from the IKON range, fitted with the glazing package. Blade centres from 30mm to 95mm, sized to the free area you need.',
+            'meta_description' => 'Aluminium ventilation louvres supplied and fitted with the glazing package. Blade centres from 30mm to 95mm, sized to the free area your schedule needs.',
         ],
         'apecs-ingenious-locks-and-hardware' => [
             'meta_description' => 'APECS and Ingenious locks, cylinders, handles and door hardware from Fenster Glazing, with security options for replacement doors.',
