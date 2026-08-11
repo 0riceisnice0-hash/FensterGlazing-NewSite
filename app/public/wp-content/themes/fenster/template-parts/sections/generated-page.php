@@ -5336,14 +5336,15 @@ if ($is_commercial_hub) {
              when a product matches none. The route was showing secondary glazing,
              casement windows and bifold doors under a heading about real installs
              of this product. Remove the exclusion when a study exists. */ ?>
-    <?php /* `$is_heritage_bespoke` is excluded for the same reason, added
-             2026-08-11: no study claims heritage windows, so the strip fell
-             through to the same fallback and put a bifold job and two casement
-             jobs under a heading about real installs of a steel-look window,
-             directly below a section showing a real one. Remove the exclusion
-             the moment a heritage window study exists — the two heritage DOOR
-             studies do not count, because those jobs had no windows in them. */ ?>
-    <?php if ($use_product_journey && ! $is_repairs && ! $is_replacement_bespoke && ! $is_heritage_bespoke && function_exists('fenster_case_studies_for_product')) : ?>
+    <?php /* Heritage windows WAS excluded here, from 2026-08-11 until later the
+             same day: no study claimed the route, so the strip fell through to
+             its documented fallback and put a bifold job and two casement jobs
+             under a heading about real installs of a steel-look window. The
+             Heal's study claims `/heritage-windows/`, so the exclusion is gone
+             and the route now shows one card, which is its own. If that study is
+             ever unpicked, put the gate back rather than letting the fallback
+             return. */ ?>
+    <?php if ($use_product_journey && ! $is_repairs && ! $is_replacement_bespoke && function_exists('fenster_case_studies_for_product')) : ?>
         <?php $product_case_cards = fenster_case_studies_for_product($slug, 3); ?>
         <?php if ($product_case_cards !== []) : ?>
             <section class="fg-cs-strip">

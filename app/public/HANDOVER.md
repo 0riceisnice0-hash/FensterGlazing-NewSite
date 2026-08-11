@@ -41,8 +41,9 @@ silently renders nothing. That has caught two people; the warning is in the code
 - A Prestige STANDARD corner render from Sheerline.
 - A wide, honest hero for `/aluminium-doors/`. Longest-standing gap on the site.
 - **A second heritage window job, and ideally a steel before-and-after.** One
-  install exists and the case-study strip is gated off for that reason. A dark
-  one would change what the page looks like; everything we own is white.
+  residential install exists, plus the two fixed heritage windows inside the
+  Heal's commercial study. A dark job would change what the page looks like:
+  everything of our own is white.
 - Thirteen stale `release/*` branches on origin, each one a loaded gun if
   deployed later.
 
@@ -629,8 +630,8 @@ Route: `/heritage-windows/`
   available on the Classic contemporary sash and deliberately not offered on the
   stepped one, so Classic does not muddy against Prestige. The strip prints
   1.4 W/m²K plain, with no star and no lowest-achievable note.
-- **The case-study strip is gated off**: no study claims this route and the
-  helper falls back to showing all of them.
+- **The case-study strip is live again** as of 2026-08-11: the Heal's study
+  claims this route, so it shows one card of its own rather than the fallback.
 - **One install of ours and one photograph of it**, in a split rather than a
   gallery, and the copy does not mention that it is the only one. A close crop
   of the same frame was pulled because the finishing on it is not good enough

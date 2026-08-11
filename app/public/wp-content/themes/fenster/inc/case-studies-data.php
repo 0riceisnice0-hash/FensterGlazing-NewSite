@@ -140,6 +140,82 @@ function fenster_case_studies(): array
          * reflected in the finished elevation was left: it is a company's own
          * advertised number, reversed and tiny at render size.
          */
+        /* Heal's, Tottenham Court Road, added 2026-08-11.
+         *
+         * THE BUILDING IS NAMED AND THE CLIENT IS NOT, which is the Commercial
+         * Client Anonymity Rule working exactly as written. Heal's is the
+         * building and the subject; we were appointed by a main contractor who
+         * is a long-standing repeat client, and naming them would hand a
+         * competitor a warm lead. "The main contractor" is all the copy needs,
+         * and the repeat relationship is worth saying because it is proof.
+         *
+         * COMPLETION IS KNOWN TO THE MONTH ONLY, so `date_confirmed` is false:
+         * the date still orders the study and nothing prints a day we do not
+         * have. March 2024 appears in the specification strip instead, which is
+         * where a reader looks for it.
+         *
+         * FOUR FACES ARE BLURRED across two photographs. Two people in the
+         * courtyard shot, one of them a third party at the railing, and two
+         * more behind the glass in the elevation shot. Same treatment as
+         * Bletchley and Headrow.
+         *
+         * THE PHOTOGRAPHS ARE 1024px, which is under the 1600px the guide asks
+         * for, and they are not upscaled. They are what exists of this job.
+         *
+         * WHAT IS NOT PHOTOGRAPHED: the louvres and the two heritage windows.
+         * The scope lists them because we supplied them; no caption claims to
+         * show them. Do not caption the toplight over the door as a heritage
+         * window without checking, which is the fault the flush aluminium page
+         * already paid for. */
+        'heals-tottenham-court-road' => [
+            'title' => 'Aluminium windows and louvres, Heal\'s, Tottenham Court Road',
+            'location' => 'Tottenham Court Road, London',
+            'type' => 'Commercial',
+            'sector' => 'Retail and offices',
+            'service' => 'Aluminium windows, doors and louvres',
+            'sector_url' => home_url('/commercial-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
+            'date' => '2024-03-01',
+            'date_confirmed' => false,
+            'summary' => 'Sheerline Prestige windows and a door, two heritage windows and six bespoke louvres, fitted into the courtyard elevations of the Heal\'s building during its refurbishment.',
+            'lead' => 'The Heal\'s building on Tottenham Court Road was being reworked to put modern offices above the shop. Our part was the courtyard elevations on the first and second floors: a run of aluminium glazing, a door, two heritage windows and six louvres made specially for the openings they went into.',
+            'products' => [
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+                ['label' => 'Heritage windows', 'url' => home_url('/heritage-windows/')],
+                ['label' => 'Louvre vents', 'url' => home_url('/louvre-vents/')],
+            ],
+            'specs' => [
+                ['label' => 'Windows', 'value' => '4 Prestige, 2 heritage'],
+                ['label' => 'Louvres', 'value' => '6, bespoke'],
+                ['label' => 'Finish', 'value' => 'RAL 9005 Jet Black'],
+                ['label' => 'Completed', 'value' => 'March 2024'],
+            ],
+            'overview' => [
+                'Heal\'s has stood on Tottenham Court Road since the shop was built around it, and the refurbishment kept the store trading while the floors above became offices. We worked on the courtyard elevations at first and second floor level: four large fixed <a href="' . esc_url(home_url('/aluminium-windows/')) . '">Sheerline Prestige aluminium windows</a>, a single Prestige door, two fixed <a href="' . esc_url(home_url('/heritage-windows/')) . '">heritage aluminium windows</a> and six bespoke <a href="' . esc_url(home_url('/louvre-vents/')) . '">aluminium louvres</a>.',
+                'The two heritage windows replaced openings that had been stripped out earlier in the programme, when the building needed a way to get materials and plant inside. That is a common enough sequence on a refurbishment and it leaves you fitting a finished window into an opening that has been working as a doorway for months.',
+                'We were appointed through the main contractor, who we have worked with on a long run of projects, and part of what we were asked for was help finalising the design rather than just a price against a drawing. The brief was sleek and contemporary, and the harder half of it was making the new aluminium sit properly against a building that was already there: getting the different finishes and profiles to read as one intention rather than as three separate orders. The windows and door are RAL 9005 Jet Black; the louvres are a golden brown, IGP-HWF Classic 519T.',
+                'The work ran in stages across about six months, reached from scaffold the main contractor provided. It was an active construction site throughout and nobody was occupying the floors we were working on, which makes for a straightforward programme by London standards: the constraint was sequence and access rather than working around people.',
+            ],
+            'installed' => [
+                '4 large fixed Sheerline Prestige aluminium windows',
+                '1 single Sheerline Prestige aluminium door',
+                '2 fixed heritage aluminium windows',
+                '6 bespoke aluminium louvres, IGP-HWF Classic 519T Golden Brown',
+                'All Prestige frames in RAL 9005 Jet Black',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-heals-tottenham-court-elevation.webp', 'caption' => 'The courtyard elevation glazed, with the fixed Prestige windows in jet black against the existing concrete frame.'],
+                ['src' => $img . 'cs-heals-tottenham-court-courtyard.webp', 'caption' => 'The same courtyard partway through, with the openings still bare and the deck being used as the working platform.'],
+                ['src' => $img . 'cs-heals-tottenham-court-door.webp', 'caption' => 'The single Prestige door at the end of the run, with a fixed light over it.'],
+                ['src' => $img . 'cs-heals-tottenham-court-run.webp', 'caption' => 'Looking along the run. The frames follow the existing structural bays rather than cutting across them.'],
+                ['src' => $img . 'cs-heals-tottenham-court-looking-up.webp', 'caption' => 'The courtyard from the deck, five floors of the existing building above the new glazing.'],
+            ],
+            'seo' => [
+                'title_tag' => 'Heal\'s, Tottenham Court Road: Commercial Aluminium Glazing',
+                'meta_description' => 'A Fenster commercial project: Sheerline Prestige windows and a door, two heritage windows and six bespoke louvres for the refurbishment of the Heal\'s building, Tottenham Court Road.',
+            ],
+        ],
         'bletchley-rail-depot-refurbishment' => [
             'title' => 'Curtain walling, windows and doors, Bletchley rail depot',
             'location' => 'Bletchley, Milton Keynes',

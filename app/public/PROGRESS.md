@@ -58,6 +58,41 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
+## 2026-08-11 - Heal's, Tottenham Court Road: a new commercial study (test)
+
+Owner-supplied brief and six photographs. Sheerline Prestige windows and a
+door, two fixed heritage windows and six bespoke louvres, across the courtyard
+elevations of the Heal's building while the floors above the shop became
+offices. Completed March 2024.
+
+**The building is named and the client is not, and this is the cleanest example
+of that rule so far.** Heal's is the subject. We were appointed by a main
+contractor who is a long-standing repeat client, which is exactly the
+"contractor or developer who buys glazing repeatedly" the anonymity rule exists
+to protect. The repeat relationship is still stated, because it is proof; it
+just does not carry a name.
+
+**Completion is known to the month, so nothing prints a day.** `date_confirmed`
+is false, which keeps the ordering and suppresses the printed date, and March
+2024 sits in the specification strip where a reader looks for it.
+
+**Four faces blurred across two photographs**, one of them a third party at the
+railing with nothing to do with the job. Same treatment as Bletchley and
+Headrow. The photographs are 1024px against the 1600px the guide asks for and
+they are NOT upscaled: they are what exists of this job.
+
+**The louvres and the heritage windows are in the scope and in none of the
+photographs.** The captions describe what is in frame and stop. It would have
+been easy to call the fixed light over the door a heritage window, and nobody
+has checked that it is.
+
+**One knock-on, and a good one: `/heritage-windows/` gets its case-study strip
+back.** It had been gated off that morning precisely because no study claimed
+the route and the helper falls back to showing everything. This study claims it,
+so the strip now shows a single card that is genuinely about the product.
+Adding a study still changes other pages silently — `/aluminium-windows/` picked
+this up as one of its three — so check the product pages after adding one.
+
 ## 2026-08-11 - Heritage windows rebuilt around the steel window (LIVE, 0a158fb)
 
 **Shipped to live at 08:02** after the owner reviewed it on test, with two
