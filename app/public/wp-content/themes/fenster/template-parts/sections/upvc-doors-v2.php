@@ -49,6 +49,9 @@
  *  - **We do not advertise the full infill panel**, the moulded 2000s front
  *    door slab. What we sell is half glazed over a flat panel, over shiplap, or
  *    glass top to bottom.
+ *  - **WHERE THE PANEL STOPS IS NOT A LIST.** Owner, 2026-08-12: a quarter, a
+ *    half, three quarters and full are examples, not a range, and it is drawn
+ *    on the door. Do not enumerate it and do not multiply by it.
  *  - **Thirteen foils on a door**, not the windows' sixteen, and the theme holds
  *    a render of every one. The colour is the outside face, white or the same
  *    colour inside, and the inside foil costs more.
@@ -244,7 +247,7 @@ $photo = static function (string $key) use ($photos): array {
             $ways = [
                 [
                     'label' => __('The panel', 'fenster'),
-                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover: none at all for glass top to bottom, a quarter, a half, three quarters, or the full panel above with no glass in it.', 'fenster'),
+                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover. A quarter, a half, three quarters, all of it like the one above, none of it at all for glass top to bottom. It is drawn where you want it rather than picked off a list.', 'fenster'),
                     'image' => 'upvc-door-anthracite-solid-shiplap.webp',
                     'alt' => __('Anthracite uPVC door with a full shiplap panel and no glazing, on yellow brick', 'fenster'),
                 ],
@@ -274,24 +277,24 @@ $photo = static function (string $key) use ($photos): array {
         </div>
 
         <?php
-        /* THE COUNT IS A COUNT, NOT A BOAST, so it is worked out here rather
-           than typed in, and it is worked out the way the door is actually
-           specified: two panel faces, flat and shiplap, and separately how far
-           up the door the panel goes — none, a quarter, a half, three quarters
-           or full.
+        /* THE COUNT ONLY MULTIPLIES THINGS THAT ARE ACTUALLY LISTS. It used to
+           include "nine ways to split the panel", worked out from the owner's
+           own examples — none, a quarter, a half, three quarters, full, against
+           two faces. He corrected it on 2026-08-12: those were examples, not a
+           range. Where the panel stops is drawn on the door, so it has no count
+           and multiplying by an invented one made every figure on the line
+           false.
 
-             - fully glazed, no panel .................. 1 arrangement, has glass
-             - quarter, half or three-quarter panel .... 3 x 2 faces, has glass
-             - full panel ............................. 2 faces, NO glass
-
-           A full-panel door has no glass in it, so it cannot be multiplied by
-           the glass range, which is why the two are added rather than lumped
-           together. Glass is the privacy range plus clear. If any of these lists
-           change the number changes with them; never round it. */
+           What is left is three genuine lists: the thirteen foils, the privacy
+           glass range plus clear, and the door handle finishes. The panel is
+           named after the figure as the thing that is NOT on it, which is a
+           better line than the one it replaces. If any of the three lists
+           change the number changes with them; never round it, and never add a
+           dimension that cannot be counted. */
         $way_finishes = count($renders) ?: 13;
         $way_glass = count($glass) + 1;
         $way_handles = max(1, count($handles));
-        $way_total = ($way_finishes * 7 * $way_glass * $way_handles) + ($way_finishes * 2 * $way_handles);
+        $way_total = $way_finishes * $way_glass * $way_handles;
         ?>
         <div class="fg-upd-ways__sum">
             <p class="fg-upd-ways__figure"><?php echo esc_html(number_format($way_total)); ?></p>
@@ -299,7 +302,7 @@ $photo = static function (string $key) use ($photos): array {
                 <p><?php
                     printf(
                         /* translators: 1: foil count, 2: privacy glass count, 3: handle finish count */
-                        esc_html__('%1$d finishes against nine ways to split the panel and the glass, %2$d glasses and %3$d handle finishes, counted before anybody adds a bar or a letterplate. Nobody needs twenty thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
+                        esc_html__('%1$d finishes against %2$d glasses and %3$d handle finishes, and that is before the panel, which is not a list of options at all: where it stops is drawn on the door. Nobody needs two thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
                         (int) $way_finishes,
                         (int) $way_glass,
                         (int) $way_handles
