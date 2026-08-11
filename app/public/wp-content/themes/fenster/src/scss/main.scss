@@ -41675,20 +41675,23 @@ html.fg-blinds-reveal-locked {
   border: 1px solid rgba(20, 40, 40, 0.08);
 }
 
+/* TABLET KEEPS TWO COLUMNS. Both grids used to drop to a single column at
+   860px, which put four tall door photographs one under another on a 768
+   screen and made the section three times taller than it needed to be. Two
+   across holds all the way down to a phone, where one is genuinely right. */
 @media (max-width: 980px) {
-
   .fg-upd-config__grid,
-  .fg-upd-detail__grid {
+  .fg-upd-detail__grid,
+  .fg-upd-thresholds {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 560px) {
   .fg-upd-config__grid,
   .fg-upd-detail__grid {
     grid-template-columns: minmax(0, 1fr);
   }
-
 }
 
 /* The attributed line under the lock copy: a supplier's certification is not
