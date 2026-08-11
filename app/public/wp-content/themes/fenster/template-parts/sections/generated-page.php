@@ -218,6 +218,14 @@ $is_alu_flush_bespoke = $slug === 'aluminium-flush-windows';
    owner-confirmed on 2026-08-11 that the Aluminium Windows collection covers
    it — so nothing points at a tool that cannot price the job. */
 $is_heritage_bespoke = $slug === 'heritage-windows';
+/* uPVC doors, 2026-08-12. Bespoke middle, generic bands off, and the same two
+   things KEPT as on flush aluminium and heritage: the key-specification pulse,
+   because this product has real published figures, and the specification-choices
+   wrapper, because colour, glass and the long-plate handle grid inside it are
+   all genuine decisions on a uPVC door. The quote embed stays too: the uPVC
+   Doors collection prices this exact product, so the randomiser can hand over
+   to something that gives a real number. */
+$is_upvc_doors_bespoke = $slug === 'upvc-doors';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase
    of a product:
@@ -4220,7 +4228,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4384,7 +4392,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4554,7 +4562,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4652,6 +4660,74 @@ if ($is_commercial_hub) {
                 'brand' => $brand,
                 'trust_items' => $trust_items,
                 'quote_url' => $product_quote_embed_url,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php /* OUTSIDE the wrapper below, same as every bespoke middle above
+                 it. This route DOES still render the wrapper itself, because
+                 the colour, privacy glass and handle cards inside it are real
+                 decisions on a uPVC door.
+
+                 The randomiser needs three things joined together, and each is
+                 read from its own source rather than copied: the door renders
+                 join to `colour_options` by name so a chip cannot drift from
+                 its swatch, the handles come from the same `door_handles`
+                 finishes the grid below renders, and the glass comes from
+                 `obscure_glass`, which is what `/obscured-glass/` runs on. */ ?>
+        <?php if ($is_upvc_doors_bespoke) : ?>
+            <?php
+            $upvc_renders = fenster_data('upvc_door_renders', []);
+            $upvc_renders = is_array($upvc_renders) ? $upvc_renders : [];
+            $upvc_colour_data = fenster_data('colour_options', []);
+            $upvc_colour_list = $upvc_colour_data['materials']['upvc']['colours'] ?? [];
+            $upvc_colour_index = [];
+            foreach ((array) $upvc_colour_list as $upvc_colour) {
+                if (! empty($upvc_colour['name'])) {
+                    $upvc_colour_index[(string) $upvc_colour['name']] = $upvc_colour;
+                }
+            }
+            $upvc_render_args = [];
+            foreach ($upvc_renders as $upvc_render) {
+                $name = (string) ($upvc_render['colour'] ?? '');
+                $match = $upvc_colour_index[$name] ?? [];
+                $upvc_render_args[] = [
+                    'colour' => $name,
+                    'file' => (string) ($upvc_render['file'] ?? ''),
+                    'hex' => (string) ($match['hex'] ?? '#ffffff'),
+                    'finish' => (string) ($match['finish'] ?? ''),
+                ];
+            }
+            $upvc_glass = fenster_data('obscure_glass', []);
+            $upvc_glass = is_array($upvc_glass['textures'] ?? null) ? $upvc_glass['textures'] : [];
+            $upvc_media = $product_media[$slug] ?? [];
+            $upvc_gallery = is_array($upvc_media['gallery'] ?? null) ? $upvc_media['gallery'] : [];
+            $upvc_pick = static function (string $needle) use ($upvc_gallery): array {
+                foreach ($upvc_gallery as $item) {
+                    if (! empty($item['src']) && str_contains((string) $item['src'], $needle)) {
+                        return ['src' => fenster_generated_url((string) $item['src']), 'alt' => (string) ($item['alt'] ?? '')];
+                    }
+                }
+                return [];
+            };
+            $upvc_french_pool = fenster_data('product_gallery_pools', []);
+            $upvc_french_pool = $upvc_french_pool['upvc_french_doors'] ?? [];
+            $upvc_french = [];
+            if (! empty($upvc_french_pool[1]['src'])) {
+                $upvc_french = ['src' => fenster_generated_url((string) $upvc_french_pool[1]['src']), 'alt' => (string) ($upvc_french_pool[1]['alt'] ?? '')];
+            }
+            get_template_part('template-parts/sections/upvc-doors-v2', null, [
+                'brand' => $brand,
+                'quote_url' => $product_quote_embed_url,
+                'renders' => $upvc_render_args,
+                'handles' => is_array($door_handle_finishes) ? $door_handle_finishes : [],
+                'glass' => $upvc_glass,
+                'photos' => [
+                    'opening' => $upvc_pick('upvc-door-white-boarded-panel'),
+                    'single' => ['src' => fenster_generated_url((string) ($upvc_media['hero']['src'] ?? '')), 'alt' => (string) ($upvc_media['hero']['alt'] ?? '')],
+                    'french' => $upvc_french,
+                    'stable' => $upvc_pick('upvc-door-white-half-glazed'),
+                ],
             ]);
             ?>
         <?php endif; ?>

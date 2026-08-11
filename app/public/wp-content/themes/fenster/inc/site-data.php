@@ -383,10 +383,22 @@ function fenster_site_data(): array
                 ['label' => 'Energy rating', 'value' => 'A+ rated'],
                 ['label' => 'Security', 'value' => 'PAS 24'],
             ],
+            /* THE U-VALUE IS THE TRIPLE GLAZED FIGURE and the star says so, which is
+               why the note under the strip has to stay. Owner-confirmed 2026-08-12,
+               and it matches Liniar's own published 0.99 W/m²K whole-door figure for
+               the 70mm residential door triple glazed. LINIAR PUBLISH NO DOUBLE
+               GLAZED FIGURE for this door, so there is no second number to print and
+               none may be inferred from the window range.
+
+               "14 options" was wrong: the door takes the same foil range as the
+               windows, owner-confirmed 2026-08-12, which is 16. "Design: Fully
+               customisable" was an adjective sitting in a strip whose whole effect is
+               that the numbers count up, and it is the claim the whole page now
+               makes, so the slot carries the guarantee instead. */
             'upvc-doors' => [
                 ['label' => 'U-value*', 'value' => '1.0 W/m²K'],
-                ['label' => 'Colour choice', 'value' => '14 options'],
-                ['label' => 'Design', 'value' => 'Fully customisable'],
+                ['label' => 'Colour choice', 'value' => '16 options'],
+                ['label' => 'Guarantee', 'value' => '10 years'],
                 ['label' => 'Security', 'value' => 'Multi-point locking'],
             ],
             /* "Style: Traditional" was the fourth tile until 2026-08-06 and was
@@ -2643,6 +2655,43 @@ function fenster_site_data(): array
                     'copy' => 'The muted metallic, bright without the mirror. The most common choice on grey frames.',
                 ],
             ],
+        ],
+        /* THIRTEEN uPVC DOOR RENDERS, one door in thirteen colours, 1300x867
+           on white and all from the same angle and light. They have been in
+           `assets/images/products/colours/liniar-door` since launch, referenced
+           by nothing, with a note on the Colour Hub Rule reserving them "for
+           later door-page use". This is that use.
+
+           THE RANGE IS 16 AND THESE ARE 13 OF IT, so nothing on the page states
+           a count against these renders and the colour card still sends people
+           to `/colour-options/`, which carries the lot. Smooth White, Silver
+           Grey, Basalt Grey and Slate Grey have no door render.
+
+           THEY ARE ALL THE SAME DOOR. That is the constraint the randomiser is
+           built around: it may shuffle the finish, because a real render exists
+           for each one, and it may NOT shuffle the panel style, because we hold
+           one style and captioning a shiplap panel over a flat-panel render
+           would be a lie about a product somebody is about to order. When
+           WindowCAD supply per-style renders at this size and angle, add a
+           `style` key here and the controller picks it up without a rewrite.
+
+           Names are the site's own, and each one joins to `colour_options` by
+           name at render time so the chip and the swatch cannot drift apart.
+           See the Swatch Provenance Rule in AI.md. */
+        'upvc_door_renders' => [
+            ['colour' => 'White', 'file' => 'door_exterior_render-White-White-exterior-door-render.webp'],
+            ['colour' => 'Cream', 'file' => 'door_exterior_render-Cream-Woodgrain-Cream-Woodgrain-exterior-door-render.webp'],
+            ['colour' => 'Chartwell Green', 'file' => 'door_exterior_render-Chartwell-Green-Chartwell-Green-exterior-door-render.webp'],
+            ['colour' => 'Irish Oak', 'file' => 'door_exterior_render-Irish-Oak-Irish-Oak-exterior-door-render.webp'],
+            ['colour' => 'Golden Oak', 'file' => 'door_exterior_render-Golden-Oak-Golden-Oak-exterior-door-render.webp'],
+            ['colour' => 'Rosewood', 'file' => 'door_exterior_render-Rosewood-Rosewood-exterior-door-render.webp'],
+            ['colour' => 'Anthracite Grey', 'file' => 'door_exterior_render-7016-Grey-7016-Grey-exterior-door-render.webp'],
+            ['colour' => 'Black Brown', 'file' => 'door_exterior_render-Black-Brown-Black-Brown-exterior-door-render.webp'],
+            ['colour' => 'Agate Grey', 'file' => 'door_exterior_render-Agate-Grey-Agate-Grey-exterior-door-render.webp'],
+            ['colour' => 'Gale Grey Finesse (Anthracite Smooth)', 'file' => 'door_exterior_render-Gale-Grey-Finesse-Gale-Grey-Finesse-exterior-door-render.webp'],
+            ['colour' => 'Blue', 'file' => 'door_exterior_render-Blue-Blue-exterior-door-render.webp'],
+            ['colour' => 'Dark Green', 'file' => 'door_exterior_render-Dark-Green-Dark-Green-exterior-door-render.webp'],
+            ['colour' => 'Dark Red', 'file' => 'door_exterior_render-Dark-Red-Dark-Red-exterior-door-render.webp'],
         ],
         'door_handles' => [
             /* Owner instruction, 2026-07-29: composite, uPVC, aluminium and
