@@ -1644,6 +1644,41 @@ const marketingConsentAccepted = () => {
    granted-by-default — means they have not been asked yet. */
 const cookieConsentChoiceMade = () => Boolean(storedCookieConsent());
 
+/* PURGE IDENTIFIERS THAT OUTLIVED THE MODEL THAT MINTED THEM.
+   Caught in a real browser on the test site, and it would have shipped
+   silently. Under granted-by-default an `FG2` and `FGV` were issued on the
+   first paint, before the banner rendered. Those records carry no `chosen`, so
+   consent-first correctly refuses to treat them as consent and asks again — but
+   the IDENTIFIERS were still sitting in local storage. The first genuine
+   "Accept all" then read them straight back, so the visitor was silently
+   reattached to an identity built while they had never chosen, along with the
+   90 days of history already joined to it in the dashboard.
+
+   So: whenever there is no valid stored choice, clear the analytics and
+   marketing values before anything can read them. Nothing legitimately writes
+   these before a choice — every writer is already consent-gated — so this only
+   ever removes residue. The first real consent then mints a genuinely fresh
+   identity, which is the whole point of asking.
+
+   It deliberately does NOT ask the dashboard to delete the old rows. Those stay
+   as `unclassified` history rather than being mass-deleted on flip day; an
+   explicit refusal is what triggers erasure, through `withdrawTrackedData`. */
+if (!storedCookieConsent()) {
+  [
+    'fenster_quote_journey_ref',
+    'fenster_website_visitor_id',
+    'fenster_website_first_touch',
+    'fenster_website_event_queue',
+    'fenster_marketing_attribution_ref',
+    'fenster_ad_click_id',
+    'fenster_ads_tracker',
+  ].forEach((key) => {
+    try {
+      window.localStorage.removeItem(key);
+    } catch (_error) {}
+  });
+}
+
 const createJourneyReference = () => {
   const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
     || `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
