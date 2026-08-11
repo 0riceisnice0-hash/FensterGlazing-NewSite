@@ -1408,7 +1408,14 @@ function fenster_case_studies_for_town(string $town_slug, int $limit = 2, string
             continue;
         }
 
-        if (str_contains($location, $town_words)) {
+        /* WORD BOUNDARIES, NOT A BARE SUBSTRING. `str_contains()` matched
+           "bedford" inside "Leighton Buzzard, Bedfordshire", so every Bedford
+           route printed "Jobs we have finished in Bedford" over a Leighton
+           Buzzard job and the Green Man at Eversholt. Verified on live
+           2026-08-12; the heading makes it a false claim of local work rather
+           than a loose match. A county name in a `location` field is not a
+           town match. */
+        if (preg_match('/\b' . preg_quote($town_words, '/') . '\b/', $location) === 1) {
             $exact[$short] = $study;
             continue;
         }

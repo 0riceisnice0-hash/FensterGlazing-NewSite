@@ -37,6 +37,13 @@ it. Two consequences to know before you "fix" anything:
   town route, because that helper matches on `location` and a study carrying
   "Milton Keynes" counts as area proof for all twelve suburbs. **A town whose
   only local match was commercial now renders no strip**, which is deliberate.
+- **A COUNTY NAME IN `location` USED TO READ AS A TOWN MATCH.** The town test
+  was a bare substring, so "Leighton Buzzard, Bedfordshire" matched the town
+  `bedford` and every Bedford route printed "Jobs we have finished in Bedford"
+  over a Leighton Buzzard job and the Green Man at Eversholt. That is a false
+  claim of local work, not a loose match, and it was live until 2026-08-12.
+  The test is word-boundary now. **Bedford consequently renders no strip**,
+  because no residential study is in the town.
 - **The location field decides town reach, so check it when you add a study.**
   An exact town-name match puts a study on that town's product matrix pages;
   "Milton Keynes" anywhere in the field puts it on twelve suburb routes at
