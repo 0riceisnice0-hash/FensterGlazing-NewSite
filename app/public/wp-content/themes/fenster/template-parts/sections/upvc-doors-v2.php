@@ -305,6 +305,10 @@ $randomiser_payload = [
                 ['label' => __('The arch, close up', 'fenster'), 'image' => 'upvc-detail-arch-lead.webp', 'alt' => __('Close detail of a curved uPVC door frame against brick', 'fenster')],
                 ['label' => __('Green, on a cottage', 'fenster'), 'image' => 'upvc-door-green-stable.webp', 'alt' => __('Chartwell green uPVC stable door on a red brick cottage', 'fenster')],
                 ['label' => __('White, doing its job', 'fenster'), 'image' => 'upvc-door-white-shiplap-brick.webp', 'alt' => __('White uPVC back door glazed over a shiplap panel', 'fenster')],
+                /* White French doors are one of the commonest things we fit, so
+                   they earn a place in the band as well as in the configurations
+                   above. Owner instruction, 2026-08-12. */
+                ['label' => __('White French doors, onto decking', 'fenster'), 'image' => 'upvc-door-white-french-decking.webp', 'alt' => __('White uPVC French doors opening onto a deck', 'fenster')],
             ];
             foreach ($context_shots as $shot) :
                 ?>
@@ -317,10 +321,6 @@ $randomiser_payload = [
             <figure class="fg-upd-context__cell">
                 <?php $placeholder(__('A dark front door on a rendered elevation, straight on. We fit them constantly and have photographed none.', 'fenster'), '4 / 5'); ?>
                 <figcaption><?php esc_html_e('Anthracite, on render', 'fenster'); ?></figcaption>
-            </figure>
-            <figure class="fg-upd-context__cell">
-                <?php $placeholder(__('One door shot from outside and then from inside, same job, same day. It is the only honest way to show both faces.', 'fenster'), '4 / 5'); ?>
-                <figcaption><?php esc_html_e('Both faces, one door', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </div>
@@ -419,7 +419,7 @@ $randomiser_payload = [
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The glass, which is a privacy decision.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('Every style of privacy glass we fit can go in a door, graded one to five for how much it hides. A bathroom or a front door onto a street usually wants a five; a back door onto your own garden usually does not.', 'fenster'); ?></p>
-                <?php $placeholder(__('Obscure glass in a door panel, shot from outside at dusk with the hall light on, so it reads as privacy rather than as texture.', 'fenster'), '16 / 10'); ?>
+                <?php $placeholder(__('Privacy glass in a door panel, shot from outside at dusk with the hall light on, so it reads as privacy rather than as texture.', 'fenster'), '16 / 10'); ?>
                 <p><a href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Compare the privacy glass', 'fenster'); ?></a></p>
             </article>
         </div>
