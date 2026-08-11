@@ -164,78 +164,108 @@ $randomiser_payload = [
     </div>
 </section>
 
-<?php /* THE RANDOMISER. Owner's idea, 2026-08-12, and the page's one interactive
-         feature. It is deliberately NOT a configurator: it does not price, it
-         does not save, and it hands over to WindowCAD the moment somebody wants
-         a number, which is the standing rule after two home-built configurators
-         were removed on sight.
+<?php /* THE RANDOMISER IS GONE, 2026-08-12, and this replaces it. It was the
+         owner's idea and he took it back the same day: shuffling a render was a
+         gimmick standing where the argument should be, and the moment it grew a
+         colour picker it started competing with WindowCAD, which configures AND
+         prices. What a customer actually wants to know is what they get to
+         choose, so the page now says exactly that, one decision per tile, in
+         our own photographs.
 
-         WHAT IT MAY AND MAY NOT DO. The door image changes because a real render
-         exists for every finish in it. The handle and the glass are shown as
-         their own product photographs beside the door rather than composited
-         onto it, because we do not hold renders of this door wearing each of
-         them, and drawing them on would be inventing a product view. The copy
-         says which is which so the panel cannot be misread. When WindowCAD
-         supply per-style renders, `upvc_door_renders` grows a `style` key and
-         this section gains a dimension without changing shape. */ ?>
-<section class="fg-cw fg-upd fg-upd-shuffle" aria-labelledby="fg-upd-shuffle-title" data-fg-door-randomiser data-door-payload="<?php echo esc_attr(wp_json_encode($randomiser_payload)); ?>">
+         THE ARITHMETIC IS REAL and it is computed from the data on this page
+         rather than typed in: 16 foils, 3 panel styles, the obscure glass range
+         plus clear, and the door handle finishes. If any of those lists change,
+         the number changes with them. Never round it up to something rhetorical
+         — the whole force of it is that it is a count, not a boast. */ ?>
+<section class="fg-cw fg-upd fg-upd-ways" aria-labelledby="fg-upd-ways-title">
     <div class="container">
-        <div class="fg-upd-shuffle__head">
-            <p class="eyebrow"><?php esc_html_e('One door, endlessly', 'fenster'); ?></p>
-            <h2 id="fg-upd-shuffle-title"><?php esc_html_e('Every one of these is a door we can make.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Press the button and it specifies itself: a finish, a glass and a handle, put together the way a real order is. Nothing here is a mock-up. When you find one you like, the designer will price that exact door.', 'fenster'); ?></p>
+        <div class="fg-upd-ways__head">
+            <p class="eyebrow"><?php esc_html_e('What you choose', 'fenster'); ?></p>
+            <h2 id="fg-upd-ways-title"><?php esc_html_e('Everything you can see is a decision.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Six of them, taken in about ten minutes at the survey, and none of them changes how long the job takes. This is the part where a door stops being a door and starts being yours.', 'fenster'); ?></p>
         </div>
 
-        <div class="fg-upd-shuffle__stage">
-            <?php $first = $randomiser[0] ?? null; ?>
-            <div class="fg-upd-plinth">
-                <div class="fg-upd-plinth__inner">
-                    <img data-door-image src="<?php echo esc_url($first['image'] ?? ''); ?>" alt="<?php esc_attr_e('uPVC residential door shown in the selected finish', 'fenster'); ?>" width="640" height="1600" loading="lazy" decoding="async">
-                </div>
-                <span class="fg-upd-plinth__index" data-door-index aria-hidden="true"></span>
-            </div>
+        <div class="fg-upd-ways__grid">
+            <?php
+            $ways = [
+                [
+                    'span' => 'wide',
+                    'label' => __('The colour', 'fenster'),
+                    'copy' => __('Sixteen foils, bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Greys, blacks, a cream, three woodgrains and a green that suits an old house.', 'fenster'),
+                    'image' => 'upvc-door-cream-glazed-stone.webp',
+                    'alt' => __('Cream uPVC door with two glazed panes in a white stone wall', 'fenster'),
+                ],
+                [
+                    'span' => 'wide',
+                    'label' => __('The panel', 'fenster'),
+                    'copy' => __('Half glazed over a flat panel, half glazed over shiplap, or glazed top to bottom for light. The bottom half is the part that takes the knocks, the dog and the hoover, so it is worth a moment.', 'fenster'),
+                    'image' => 'upvc-door-anthracite-solid-shiplap.webp',
+                    'alt' => __('Anthracite uPVC door with a solid shiplap panel on yellow brick', 'fenster'),
+                ],
+                [
+                    'span' => 'third',
+                    'label' => __('The glass', 'fenster'),
+                    'copy' => __('Every obscure glass we fit goes in a door, graded one to five for how much they hide. Clear is the right answer onto your own garden and the wrong one onto a street.', 'fenster'),
+                    'image' => 'upvc-door-white-obscure-glass.webp',
+                    'alt' => __('White uPVC door with obscure glass in the upper panel', 'fenster'),
+                ],
+                [
+                    'span' => 'third',
+                    'label' => __('Bars, or leaded', 'fenster'),
+                    'copy' => __('Georgian bars across the glass, or leaded work matched to what the house already has. It is what stops a new door looking new beside old windows.', 'fenster'),
+                    'image' => 'upvc-detail-rosewood-woodgrain-bars.webp',
+                    'alt' => __('Close detail of a rosewood woodgrain uPVC door with Georgian bars in the glass', 'fenster'),
+                ],
+                [
+                    'span' => 'third',
+                    'label' => __('The inside face', 'fenster'),
+                    'copy' => __('White inside as standard, whatever the outside is doing. The same colour on both faces is an extra, and it is worth seeing the two together before you decide.', 'fenster'),
+                    'image' => 'upvc-door-white-inside-face.webp',
+                    'alt' => __('A uPVC back door seen from inside, showing the white internal face', 'fenster'),
+                ],
+                [
+                    'span' => 'third',
+                    'label' => __('What goes through it', 'fenster'),
+                    'copy' => __('A cat flap through the panel, a letterplate, a knocker, numerals, a spyhole. Specified with the door rather than cut into it afterwards.', 'fenster'),
+                    'image' => 'upvc-door-anthracite-cat-flap.webp',
+                    'alt' => __('Anthracite uPVC door with a cat flap fitted through the lower panel', 'fenster'),
+                ],
+            ];
+            foreach ($ways as $way) :
+                ?>
+                <article class="fg-upd-way fg-upd-way--<?php echo esc_attr($way['span']); ?>">
+                    <figure>
+                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/' . $way['image'])); ?>" alt="<?php echo esc_attr($way['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
+                    </figure>
+                    <h3><?php echo esc_html($way['label']); ?></h3>
+                    <p><?php echo esc_html($way['copy']); ?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
 
-            <div class="fg-upd-spec">
-                <p class="fg-upd-spec__label"><?php esc_html_e('The finish', 'fenster'); ?></p>
-                <p class="fg-upd-spec__name" data-door-colour><?php echo esc_html($first['colour'] ?? ''); ?></p>
-                <p class="fg-upd-spec__note" data-door-colour-note><?php echo esc_html($first['finish'] ?? ''); ?></p>
-
-                <dl class="fg-upd-spec__pair">
-                    <div>
-                        <dt><?php esc_html_e('Glass', 'fenster'); ?></dt>
-                        <dd>
-                            <span class="fg-upd-chip fg-upd-chip--glass" data-door-glass-chip aria-hidden="true"></span>
-                            <span class="fg-upd-spec__value" data-door-glass></span>
-                            <em data-door-glass-note></em>
-                        </dd>
-                    </div>
-                    <div>
-                        <dt><?php esc_html_e('Handle', 'fenster'); ?></dt>
-                        <dd>
-                            <img class="fg-upd-spec__handle" data-door-handle-image src="" alt="" width="120" height="120" loading="lazy" decoding="async">
-                            <span class="fg-upd-spec__value" data-door-handle></span>
-                        </dd>
-                    </div>
-                </dl>
-
-                <div class="fg-upd-spec__actions">
-                    <button type="button" class="button" data-door-shuffle><?php esc_html_e('Shuffle it', 'fenster'); ?></button>
-                    <?php if ($quote_url !== '') : ?>
-                        <a class="button button--light" href="#fenster-product-quote"><?php esc_html_e('Price a door like it', 'fenster'); ?></a>
-                    <?php endif; ?>
-                </div>
-
-                <?php /* NO COLOUR SELECTOR HERE. One was built and the owner removed
-                         it, 2026-08-12: "i dont want it to supersede windowcad". The
-                         randomiser is a way of showing the range, not a way of
-                         specifying a door — the moment somebody wants to choose, they
-                         go to the designer, which configures AND prices. That is the
-                         same call already recorded twice, on the casement canvas
-                         configurator and the heritage bar planner. Do not add swatches,
-                         a picker or a filter to this section. */ ?>
-
-                <p class="fg-upd-spec__foot"><?php esc_html_e('Sixteen finishes, thirteen rendered here, and every obscure glass we fit can go in a door.', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See the full range', 'fenster'); ?></a>.</p>
-                <p class="fg-upd-spec__live" data-door-live role="status" aria-live="polite"></p>
+        <?php
+        $way_finishes = 16;
+        $way_panels = 3;
+        $way_glass = count($glass) + 1;
+        $way_handles = max(1, count($handles));
+        $way_total = $way_finishes * $way_panels * $way_glass * $way_handles;
+        ?>
+        <div class="fg-upd-ways__sum">
+            <p class="fg-upd-ways__figure"><?php echo esc_html(number_format($way_total)); ?></p>
+            <div class="fg-upd-ways__sumtext">
+                <p><?php
+                    printf(
+                        /* translators: 1: foil count, 2: panel style count, 3: glass count, 4: handle finish count */
+                        esc_html__('That is %1$d finishes against %2$d panel styles, %3$d glasses and %4$d handle finishes, and it is the count before anybody adds a bar, a letterplate or a leaded pattern. Nobody needs eight thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
+                        (int) $way_finishes,
+                        (int) $way_panels,
+                        (int) $way_glass,
+                        (int) $way_handles
+                    );
+                ?></p>
+                <?php if ($quote_url !== '') : ?>
+                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Build yours and see the price', 'fenster'); ?></a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
