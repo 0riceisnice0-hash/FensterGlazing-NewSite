@@ -41775,13 +41775,19 @@ html.fg-blinds-reveal-locked {
   margin: 0;
 }
 
+/* A SOFT PANEL, NOT WHITE. The sections are white profile drawn on white, so on
+   a white cell the only thing separating the drawing from the page is its own
+   shadow. Mean brightness on these files is 0.87, which is the number that
+   settles it. The tint is light enough that the aluminium tread still reads as
+   the darker part. */
 .fg-upd-threshold img {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 15;
   object-fit: contain;
-  background: #fff;
+  background: #eef3f3;
+  border: 1px solid rgba(20, 40, 40, 0.08);
   border-radius: 4px;
 }
 
