@@ -160,7 +160,7 @@ matched nothing and only a sweep of every ref found it; and a verification pass
 against `www.` reports the whole site missing, because every route `301`s to the
 apex.
 
-## 2026-08-12 - A window is not a "light" (TEST)
+## 2026-08-12 - A window is not a "light" (LIVE, 9c7b30c)
 
 Owner instruction, site-wide: stop calling windows and openers "lights". The
 permitted exceptions are `toplight` and `sidelight`, and only where that is
@@ -196,6 +196,19 @@ Verified on test by rendering **every one of the 712 routes in the sitemap**
 and stripping tags before matching, not by grepping the source: zero banned
 usages, zero errors, and the only surviving matches are `toplight` and
 `sidelight` on seven door and entrance routes, which is the rule working.
+
+**`leaded light` went back before shipping**, on the owner's ruling that it is a
+genuine industry term. The distinction that decides it: a leaded light names
+the glass, a bathroom "light" named the opening. Five uses restored, and
+because the sweep and the restore cancel out inside
+`secondary-glazing-v2.php`, that file nets to no change at all and drops out
+of the release diff.
+
+Shipped from `release/light-terminology`, cut from live and carrying only the
+two copy commits, because `main` still holds the unapproved tracking rework.
+Every one of its seven files was asserted untouched by name in the deploy
+guard. Verified by fetching all **712 live routes**: zero banned usages, zero
+errors, `roof light` still present 2,905 times.
 
 ## 2026-08-12 - All Hallows, Bedford, and two leaks in the town helper (LIVE, 32e05f2)
 
