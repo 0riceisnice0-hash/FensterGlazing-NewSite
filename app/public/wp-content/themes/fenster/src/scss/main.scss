@@ -41621,14 +41621,16 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* FOUR CONFIGURATIONS, FOUR COLUMNS. The shaped head was added as a fourth card
-   into a three-column grid and sat alone on a second row, which is the ragged
-   last row this project has fixed twice before. The survey grid keeps three,
-   because it has three. */
+/* THREE CONFIGURATIONS, THREE COLUMNS. This was widened to four for the shaped
+   head and never put back when that card came out, so three cards sat in a four
+   column grid with an empty slot and the section stopped two thirds of the way
+   across the page. Keep the column count and the card count equal here: with a
+   fixed track count an empty slot is invisible in the source and obvious on the
+   page. */
 .fg-upd-config__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(1.2rem, 2.2vw, 1.8rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.4rem, 2.6vw, 2.2rem);
 }
 
 .fg-upd-detail__grid {
