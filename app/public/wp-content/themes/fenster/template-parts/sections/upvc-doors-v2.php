@@ -420,12 +420,7 @@ $randomiser_payload = [
                          24mm at the highest point for a Part M threshold in a
                          separate product note; that is not this door and it is not
                          on the page. Ask the owner before adding either. */ ?>
-                <ul class="fg-upd-detail__list">
-                    <li><?php esc_html_e('Large uPVC', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Low uPVC', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Low aluminium', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Part M low, for level access', 'fenster'); ?></li>
-                </ul>
+                <p><?php esc_html_e('There are four, drawn below. Which one you get is decided by the house rather than by preference, and we aim for the low aluminium wherever the floor levels allow it.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Which one is right depends on your floor levels inside and out, so it is settled at survey rather than guessed at from a drawing.', 'fenster'); ?></p>
                 <?php /* THE BUBBLE GASKET IS LINIAR'S AND IS THEIR TERM FOR IT.
                          Owner approved 2026-08-12. It is worth a sentence because
@@ -456,5 +451,38 @@ $randomiser_payload = [
                 <p><a href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Compare the privacy glass', 'fenster'); ?></a></p>
             </article>
         </div>
+
+        <?php /* THE FOUR SECTIONS ARE LINIAR'S OWN RENDERS, used on the owner's
+                 instruction of 2026-08-12 and a deliberate exception to "do not
+                 use their photos": these are technical cutaways of the profile we
+                 buy, not photographs of somebody else's installation, and this
+                 route already names Liniar throughout.
+
+                 THEY ARE OUR NAMES ON THEIR DRAWINGS. Liniar call them Frame
+                 Only, Slim Frame Only, Low Threshold and Part M Low Threshold;
+                 the customer meets large uPVC, low uPVC, low aluminium and Part
+                 M low, which is the same rule the Mila and greenteQ handle
+                 families follow. NO HEIGHT IS PRINTED on any of them, because
+                 none has been confirmed for this door. */ ?>
+        <div class="fg-upd-thresholds">
+            <?php
+            $threshold_options = [
+                ['name' => __('Large uPVC', 'fenster'), 'file' => 'upvc-threshold-large-upvc.webp', 'note' => __('The full upstand, where the levels suit it', 'fenster')],
+                ['name' => __('Low uPVC', 'fenster'), 'file' => 'upvc-threshold-low-upvc.webp', 'note' => __('The same in a slimmer section', 'fenster')],
+                ['name' => __('Low aluminium', 'fenster'), 'file' => 'upvc-threshold-low-aluminium.webp', 'note' => __('What we aim for where we can', 'fenster')],
+                ['name' => __('Part M low', 'fenster'), 'file' => 'upvc-threshold-part-m-low.webp', 'note' => __('For wheelchair access', 'fenster')],
+            ];
+            foreach ($threshold_options as $threshold) :
+                ?>
+                <figure class="fg-upd-threshold">
+                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/thresholds/' . $threshold['file'])); ?>" alt="<?php printf(esc_attr__('Cutaway section of the %s door threshold', 'fenster'), esc_attr(strtolower($threshold['name']))); ?>" width="960" height="900" loading="lazy" decoding="async">
+                    <figcaption>
+                        <strong><?php echo esc_html($threshold['name']); ?></strong>
+                        <span><?php echo esc_html($threshold['note']); ?></span>
+                    </figcaption>
+                </figure>
+            <?php endforeach; ?>
+        </div>
+        <p class="fg-upd-thresholds__note"><?php esc_html_e('Sections drawn by Liniar, whose profile this is.', 'fenster'); ?></p>
     </div>
 </section>

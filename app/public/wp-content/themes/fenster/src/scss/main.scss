@@ -41760,3 +41760,55 @@ html.fg-blinds-reveal-locked {
   line-height: 1.7;
   color: var(--color-ink);
 }
+
+/* The four threshold sections. Technical cutaways, so they sit on white with
+   room around them rather than being cropped into tiles: the whole value of the
+   drawing is the profile shape at the bottom of it. */
+.fg-upd-thresholds {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.8rem, 2vw, 1.6rem);
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.fg-upd-threshold {
+  margin: 0;
+}
+
+.fg-upd-threshold img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 15;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.fg-upd-threshold figcaption {
+  padding-top: 0.6rem;
+}
+
+.fg-upd-threshold strong {
+  display: block;
+  font-size: 0.98rem;
+  color: var(--color-ink);
+}
+
+.fg-upd-threshold span {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-muted, #5b6a6a);
+}
+
+.fg-upd .fg-upd-thresholds__note {
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  color: var(--color-muted, #5b6a6a);
+}
+
+@media (max-width: 700px) {
+  .fg-upd-thresholds {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
