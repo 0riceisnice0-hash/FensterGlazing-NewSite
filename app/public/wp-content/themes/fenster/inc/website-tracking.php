@@ -577,12 +577,20 @@ function fenster_enqueue_website_tracking_config(): void
         'trackable' => $trackable,
         'trafficClass' => fenster_request_traffic_class(),
         /*
-         * The consent-free ad reference for this visit, derived server-side
-         * from the click id in the landing URL. Empty on every request that did
-         * not arrive from an ad, so a clean URL never carries one and a cached
-         * page cannot hand somebody else's reference out.
+         * THE AD REFERENCE IS DELIBERATELY NOT EMITTED HERE, and it used to be.
+         *
+         * This HTML is proxy-cached by path, ignoring the query string — proven
+         * on live, where a brand new `?gclid=` returned `X-Proxy-Cache: HIT`.
+         * So a reference rendered into this config would be baked into the
+         * cached copy and served to every later visitor of that page, handing
+         * one person's ad attribution to everybody else. It also never
+         * populated for the visitor who needed it, because their request never
+         * reached PHP at all.
+         *
+         * The reference now comes from `/wp-json/fenster/v1/ad-click`, which is
+         * a REST route and therefore not cached. See `inc/ad-attribution.php`.
          */
-        'adAttributionRef' => $trackable ? fenster_ad_attribution_reference() : '',
+        'adClickEndpoint' => $trackable ? esc_url_raw(rest_url('fenster/v1/ad-click')) : '',
         'referenceParameter' => fenster_windowcad_reference_parameter(),
         'environment' => fenster_website_tracking_environment(),
         'sessionTimeoutMinutes' => 30,
