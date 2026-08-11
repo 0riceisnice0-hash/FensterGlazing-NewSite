@@ -407,7 +407,25 @@ $randomiser_payload = [
         <div class="fg-upd-detail__grid">
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The threshold you step over.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. Liniar publish eight for this system, including a Part M low threshold for level access.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it.', 'fenster'); ?></p>
+                <?php /* FOUR, AND THEY ARE OUR NAMES RATHER THAN LINIAR'S. Owner
+                         confirmed 2026-08-12: of the eight Liniar publish we offer
+                         three, in the slim frame only, and the customer meets them
+                         as large uPVC, low uPVC, low aluminium and Part M low. Same
+                         rule the handle families follow — a customer should not have
+                         to learn two vocabularies to compare a door with a window.
+
+                         NOTHING IS SAID ABOUT WHAT EACH IS BEST FOR, and no height
+                         is printed, because neither has been confirmed. Liniar quote
+                         24mm at the highest point for a Part M threshold in a
+                         separate product note; that is not this door and it is not
+                         on the page. Ask the owner before adding either. */ ?>
+                <ul class="fg-upd-detail__list">
+                    <li><?php esc_html_e('Large uPVC', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Low uPVC', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Low aluminium', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Part M low, for level access', 'fenster'); ?></li>
+                </ul>
                 <p><?php esc_html_e('Which one is right depends on your floor levels inside and out, so it is settled at survey rather than guessed at from a drawing.', 'fenster'); ?></p>
                 <?php /* THE BUBBLE GASKET IS LINIAR'S AND IS THEIR TERM FOR IT.
                          Owner approved 2026-08-12. It is worth a sentence because
