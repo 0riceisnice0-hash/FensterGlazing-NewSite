@@ -140,6 +140,101 @@ function fenster_case_studies(): array
          * reflected in the finished elevation was left: it is a company's own
          * advertised number, reversed and tiny at render size.
          */
+        /* All Hallows, Bedford, added 2026-08-12 from the owner's brief and his
+         * own photographs.
+         *
+         * THE BUILDING IS NAMED AND THE MAIN CONTRACTOR IS NOT. The brief names
+         * them and they are a repeat client, which makes them exactly the
+         * poachable warm lead the Commercial Client Anonymity Rule protects.
+         * The repeat relationship is stated because it is proof rather than a
+         * lead. Heal's is the same case and the worked example.
+         *
+         * COMPLETION IS KNOWN TO THE MONTH ONLY, so `date_confirmed` is false:
+         * the date still orders the study and no day is printed. July 2025 sits
+         * in the specification strip, which is where a reader looks for it.
+         *
+         * PRODUCT NAMES ARE PUBLISHED HERE ON THE OWNER'S RULING, 2026-08-12,
+         * which is a deliberate exception to the usual position that a
+         * manufacturer is named only where we sell the page around them. These
+         * readers are specifiers and STYLE.md already asks commercial pages for
+         * the figures a schedule needs. THE MANUFACTURER ATTRIBUTION IS NOT
+         * published: the brief says Technal STII and DualFrame 75Si, the owner
+         * adds that DualFrame is a Technal product, and DualFrame is published
+         * elsewhere as a Senior Architectural Systems range. That was not
+         * resolved, so no sentence here says which maker owns which line.
+         * Confirm before ever attributing one.
+         *
+         * NO PERFORMANCE STANDARD IS CLAIMED FOR THE AOVs OR THE DOORSETS. The
+         * doorsets are fire rated because the owner says so; no FD rating is
+         * printed because none was given. `/automatic-opening-vents/` names no
+         * standard either (BS 7346, EN 12101) and the reason is in
+         * inc/commercial-product-data.php: this is life safety, and a wrong
+         * claim is worse than a missing one. The 1.52m2 geometric free area is
+         * attributed to one recorded unit, which is how the brief states it.
+         *
+         * NO CAPTION SAYS WHICH UNITS ARE THE AOVs. Eight of the aluminium
+         * windows are, and nobody has confirmed which of these photographs
+         * shows one. Same rule the louvre page runs on: do not caption a
+         * photograph with a product on a guess. Ask the owner and the captions
+         * can say so.
+         *
+         * THREE PHOTOGRAPHS CARRIED REFLECTED FACES and all three are softened:
+         * five members of the public reflected in the street screen, and the
+         * photographer in the terrace run and in the doorset vision panel. Same
+         * treatment as Bletchley, Headrow and Heal's. The first pass blurred
+         * them so hard they read as grey discs, which is worse than the
+         * reflection; these are feathered and invisible at render size. */
+        'all-hallows-bedford' => [
+            'title' => 'AOV windows, entrance screen and steel doorsets, All Hallows, Bedford',
+            'location' => 'Bedford',
+            'type' => 'Commercial',
+            'sector' => 'Residential refurbishment',
+            'service' => 'Aluminium windows, entrance screens and steel doorsets',
+            'sector_url' => home_url('/commercial-glazing/'),
+            'service_url' => home_url('/commercial-windows-and-doors/'),
+            'date' => '2025-07-01',
+            'date_confirmed' => false,
+            'summary' => 'Eight automatic opening vent windows, a glazed entrance door and screen, a 3010mm by 3030mm fixed aluminium screen and ten steel doorsets, for the refurbishment of 30 to 34 All Hallows in Bedford.',
+            'lead' => 'The refurbishment of 30 to 34 All Hallows turned an existing building over to residential accommodation. Our package was the glazing and the doors within it: eight automatic opening vents forming part of the smoke ventilation strategy, a glazed entrance door and screen, one large fixed aluminium screen and ten steel doorsets.',
+            'products' => [
+                ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+                ['label' => 'AOV smoke ventilation', 'url' => home_url('/automatic-opening-vents/')],
+                ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/')],
+                ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
+            ],
+            'specs' => [
+                ['label' => 'AOV windows', 'value' => '8 aluminium, white'],
+                ['label' => 'Fixed screen', 'value' => '3010 x 3030mm, 9 fields'],
+                ['label' => 'Doorsets', 'value' => '10 steel, fire rated'],
+                ['label' => 'Completed', 'value' => 'July 2025'],
+            ],
+            'overview' => [
+                'Thirty to thirty-four All Hallows sits in the middle of Bedford and was refurbished to serve residential accommodation. The wider refurbishment was the main contractor\'s; we were the glazing and doors subcontractor within it. The package was eight white aluminium DualFrame 75Si <a href="' . esc_url(home_url('/automatic-opening-vents/')) . '">automatic opening vent</a> window units, a Technal STII glazed entrance door and screen, one large fixed <a href="' . esc_url(home_url('/aluminium-windows/')) . '">Sheerline Prestige aluminium screen</a>, ten steel doorsets and the specialist glazing that went with them.',
+                'The AOVs are the part a specifier will look at first. They form part of the building\'s smoke ventilation strategy, so the opening configuration and the free area each unit had to achieve were coordinated against the design rather than settled on site. One recorded unit achieves an approximate geometric free area of 1.52m2. Glazing across the aluminium package is predominantly 28mm double glazed units, laminated and toughened, with a low-E softcoat and argon fill.',
+                'The fixed screen is 3010mm by 3030mm and is formed from nine fixed glazed fields. At that size the difficult part is not the specification, it is getting it into the building. Access was restricted, and the larger and heavier items had to be brought in through tight spaces and limited routes, so deliveries and installation sequencing were planned around that. It is the difference between a screen that arrives in one piece and one that arrives damaged.',
+                'The other technical requirement was the ten steel doorsets, which are fire rated and had to meet the project specification for that. We were appointed by the main contractor, who we have worked with on other projects. What makes this one worth writing up is the breadth of it: automated aluminium windows, a glazed entrance system, a large fixed screen and specialist steel doors are four different products with four different lead times, and coordinating them is a different job from installing one product a hundred times.',
+            ],
+            'installed' => [
+                '8 white aluminium DualFrame 75Si AOV window units',
+                '1 Technal STII glazed entrance door and screen',
+                '1 fixed Sheerline Prestige aluminium screen, 3010 x 3030mm in 9 fields',
+                '10 steel doorsets, fire rated',
+                'Predominantly 28mm laminated and toughened double glazed units, low-E softcoat and argon',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-all-hallows-bedford-screen.webp', 'caption' => 'The fixed screen from the street. Nine glazed fields in one opening, 3010mm by 3030mm.'],
+                ['src' => $img . 'cs-all-hallows-bedford-terrace.webp', 'caption' => 'The terrace elevation finished, with the glazing turning the corner into the entrance door.'],
+                ['src' => $img . 'cs-all-hallows-bedford-terrace-run.webp', 'caption' => 'Along the run. The frames follow the terrace round, with the opening lights set above the transom.'],
+                ['src' => $img . 'cs-all-hallows-bedford-screen-inside.webp', 'caption' => 'The same glazing from inside, part way through the works, with the heads still wrapped.'],
+                ['src' => $img . 'cs-all-hallows-bedford-window-inside.webp', 'caption' => 'One of the window units from inside, scaffold still up and the hardware still protected.'],
+                ['src' => $img . 'cs-all-hallows-bedford-steel-doorset.webp', 'caption' => 'One of the ten steel doorsets, with vision panels top and bottom and the plate still in its film.'],
+                ['src' => $img . 'cs-all-hallows-bedford-doorsets.webp', 'caption' => 'Two more of the doorsets hung and finished, in one of the residential corridors.'],
+            ],
+            'seo' => [
+                'title_tag' => 'All Hallows, Bedford: AOV Windows, Screens and Steel Doorsets',
+                'meta_description' => 'A Fenster commercial project: eight AOV windows, a glazed entrance screen, a 3010mm fixed screen and ten steel doorsets at All Hallows, Bedford.',
+            ],
+        ],
         /* Heal's, Tottenham Court Road, added 2026-08-11.
          *
          * THE BUILDING IS NAMED AND THE CLIENT IS NOT, which is the Commercial
