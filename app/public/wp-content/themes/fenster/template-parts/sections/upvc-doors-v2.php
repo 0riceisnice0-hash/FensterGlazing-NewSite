@@ -251,8 +251,8 @@ $photo = static function (string $key) use ($photos): array {
                     'alt' => __('Close detail of a rosewood woodgrain uPVC door with bars across the glass', 'fenster'),
                 ],
                 [
-                    'label' => __('What goes through it', 'fenster'),
-                    'copy' => __('A cat flap is cut in on site, into a new door or the one you already have. Letterplates, knockers, numerals and spyholes are chosen with the door.', 'fenster'),
+                    'label' => __('The fittings', 'fenster'),
+                    'copy' => __('A letterplate, a knocker, numerals, a spyhole: all chosen with the door. A cat flap is the one that works differently, because it is cut in on site, which means it can go into a new door or into the one you already have.', 'fenster'),
                     'image' => 'upvc-door-anthracite-cat-flap.webp',
                     'alt' => __('Anthracite uPVC door with a cat flap cut into the lower panel', 'fenster'),
                 ],
