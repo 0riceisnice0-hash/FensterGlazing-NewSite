@@ -160,6 +160,43 @@ matched nothing and only a sweep of every ref found it; and a verification pass
 against `www.` reports the whole site missing, because every route `301`s to the
 apex.
 
+## 2026-08-12 - A window is not a "light" (TEST)
+
+Owner instruction, site-wide: stop calling windows and openers "lights". The
+permitted exceptions are `toplight` and `sidelight`, and only where that is
+what the thing actually is, which is the small window above a door and the one
+beside it.
+
+**23 uses across seven files.** Specification cards on both Sheerline routes,
+gallery tags and a FAQ answer on casement, a hub choices list, alt text in two
+places, a section heading on heritage windows, four case-study captions and
+two code comments. The comments are worth calling out: they are where the next
+person copies the wording from, which is how this spread in the first place.
+
+Replacements are not interchangeable and the rule in `AI.md` says so. A
+non-opening pane is a **fixed pane**, an opening one is an **opener** or a
+**sash**, a small window is a **window** ("a bathroom window", not "a bathroom
+light"), a multi-pane window is "a three pane window", and leaded glass is
+**glass**. "Leaded light" is a real trade term and went anyway, on the same
+reasoning.
+
+**`roof light` and `rooflight` are untouched and must stay that way.** They are
+a product we sell and a term the site deliberately ranks for; a careless
+search-and-replace near this rule would take out roof-light keyword coverage
+that the SEO work put in on purpose.
+
+**The sightline sentences are where it mattered most.** Both Sheerline routes
+publish a slim figure belonging to the non-opening pane and a wider one
+belonging to the casement, and every one of those sentences said "fixed
+light". A pane and a casement are visibly different things in a way that two
+kinds of "light" are not, so this also makes the "From 46mm" trap recorded in
+the Aluminium Flush Windows Rule harder to fall into.
+
+Verified on test by rendering **every one of the 712 routes in the sitemap**
+and stripping tags before matching, not by grepping the source: zero banned
+usages, zero errors, and the only surviving matches are `toplight` and
+`sidelight` on seven door and entrance routes, which is the rule working.
+
 ## 2026-08-12 - All Hallows, Bedford, and two leaks in the town helper (LIVE, 32e05f2)
 
 Owner brief plus eleven of his own photographs. The tenth commercial study:
