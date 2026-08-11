@@ -58,6 +58,29 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
+## 2026-08-11 - Commercial studies come off the residential pages (LIVE, 115ff56)
+
+Owner: "dont mix commercial case studies with resi product pages." Enforced in
+`fenster_case_studies_for_product()` and its hub variant rather than in gates,
+because every caller of both is a residential page.
+
+**It had been leaking for as long as the commercial studies have existed.**
+`/aluminium-windows/` was showing three of them and `/flush-casement-windows/`
+was leading with one. Adding Heal's that morning is only what made anybody look.
+
+**The fix created one regression and it was caught before it shipped.** With
+commercial filtered out, `/aluminium-windows/` had nothing claiming it and fell
+through to secondary glazing, uPVC casements and bifold doors. Two of the three
+are the wrong material, which is worse than the commercial cards it replaced, so
+the strip is gated there until a residential aluminium window study exists.
+Filtering a list can turn one fault into another: look at what the fallback
+does afterwards.
+
+**A false positive worth remembering.** Checking live for leaks by searching the
+page text reported a Bletchley card on every route including the gated ones. It
+was the `areaServed` list in the LocalBusiness schema. The check that works
+reads inside the `fg-cs-strip` markup.
+
 ## 2026-08-11 - Heal's, Tottenham Court Road: a new commercial study (LIVE, 20aeb9d)
 
 **Live at 08:54**, owner-approved including the use of the Heal's name. Guard
