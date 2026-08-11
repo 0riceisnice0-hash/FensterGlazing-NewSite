@@ -160,6 +160,70 @@ matched nothing and only a sweep of every ref found it; and a verification pass
 against `www.` reports the whole site missing, because every route `301`s to the
 apex.
 
+## 2026-08-12 - uPVC doors rebuilt around a door randomiser (TEST)
+
+Owner brief: uPVC needs a glow up, it is versatile and endlessly customisable,
+show that, make it high end, no line drawings. The tenth bespoke residential
+middle, and the first page on the site with a feature the owner specified
+himself.
+
+**What it replaces.** "uPVC doors can include multi-point locking", "threshold
+details can be reviewed", "profiles help reduce heat transfer". Three sentences
+that would survive unchanged on a competitor's site, which is the test
+`TONEOFVOICE.md` sets and fails.
+
+**THE RANDOMISER runs on thirteen renders that were already in the theme,
+referenced by nothing.** They had sat in `assets/images/products/colours/
+liniar-door` since launch under a note on the Colour Hub Rule reserving them
+"for later door-page use". One door in thirteen colours, and all thirteen
+turned out to be pixel-registered, so a single shared crop window fits every
+one of them.
+
+**The honesty constraint is the whole design.** All thirteen are the same door
+style, so the image may only change by finish. The handle and the glass are
+shown as their own product photographs beside the door and never composited
+onto it, and the caption says which is which. Captioning a shiplap panel over a
+flat-panel render would be inventing a view of a product somebody is about to
+order. When WindowCAD supply per-style renders at the same angle, the data
+grows a `style` key and the controller gains a dimension without a rewrite.
+
+**Owner-confirmed and now on the page**, none of it inferable from the old
+copy: the same sixteen foils and the same inside-face theory as the windows,
+the whole obscure glass range, a multi-point lock with a ONE star cylinder as
+standard and a three star upgrade, eight Liniar thresholds including Part M,
+and the ten year guarantee. **1.0 W/m²K is the triple figure** and Liniar
+publish no double, so the star and its note stay and nothing is borrowed from
+the window range.
+
+**Deliberately absent:** PAS 24, which belongs to a tested doorset and sits
+oddly beside a one star cylinder; the composite door's £5,000 break-in
+guarantee, which is not this product's; full infill panels, which we do not
+advertise; and any wording making our own uPVC door the budget option. The
+owner's summary of why a customer chooses it is that it is cheaper, and
+`TONEOFVOICE.md` forbids writing that about our own range, so the page argues
+what the door does and lets the quote tool carry the number.
+
+### Four faults, and the source could not see any of them
+
+- **The page rendered with no photographs at all.** `$product_media` is already
+  scoped to the slug where it is built, and indexing it by the slug again
+  returned nothing. Lint passed, the data harness passed, and the first render
+  showed an empty column.
+- **The four sections had no air between them.** `.fg-cw section` pads sections
+  INSIDE a `.fg-cw` wrapper; these sections are the wrapper, so they matched
+  nothing.
+- **The spec panel could describe a door the image was not showing**, because
+  the text updated before the swap resolved. Text and picture move together now.
+- **The door sat tiny in a field of white**, because the render is 1300x867
+  with the door in a 258x762 strip, and the panel behind it was a gradient
+  against an opaque white render, drawing a visible rectangle.
+
+Verified on test: page `200`, zero PHP notices, all 21 randomiser assets `200`,
+payload carries 13 finishes, 8 handles and 21 glasses, generic bands gone, and
+the pulse, wrapper, handle grid and quote embed all still there. Measured at a
+**proved** 390px viewport: `scrollWidth` 390, no page-level overflow, shuffle
+button 366x46. **Nobody has pressed it with a thumb.**
+
 ## 2026-08-12 - A window is not a "light" (LIVE, 9c7b30c)
 
 Owner instruction, site-wide: stop calling windows and openers "lights". The

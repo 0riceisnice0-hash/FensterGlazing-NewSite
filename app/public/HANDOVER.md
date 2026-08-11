@@ -15,7 +15,7 @@ shipping.
 the Current Truth section of `LIVECHANGES.md`, then the rule for whichever page
 you are touching in `AI.md`.
 
-**The NINE residential routes with a bespoke middle** — verified against the
+**The TEN residential routes with a bespoke middle** — verified against the
 dispatch in `generated-page.php`, not from memory. These do NOT use the generic
 product journey, and each has a rule in `AI.md` to read before editing:
 
@@ -30,6 +30,7 @@ product journey, and each has a rule in `AI.md` to read before editing:
 | `/double-glazing-replacement/` | `replacement-glazing-v2.php` |
 | `/window-and-door-repairs/` | `window-door-repairs.php` |
 | `/composite-doors/` | `composite-doors-v2.php` |
+| `/upvc-doors/` | `upvc-doors-v2.php` |
 
 **And ONE commercial route**, dispatched from `commercial-product.php` rather
 than `generated-page.php`, which is a separate template with its own bands:
