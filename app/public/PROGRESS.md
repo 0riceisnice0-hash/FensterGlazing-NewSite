@@ -106,6 +106,60 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
+## 2026-08-11 - Little Horwood: flush casements and a composite door (LIVE, f3829a35)
+
+Two photographs and a 31s portrait drone video from the owner. The twenty-first
+study and the third flush casement one: agate grey Liniar 70mm flush sash across
+the front of a rendered village cottage, with a Distinction composite front door
+in the brick porch finished to match. Tom and Johnnie, 24 June 2026. The video
+leads, so all four stills go to the gallery.
+
+**Front elevation only, owner-confirmed, and the copy claims nothing about the
+rear.** There is still a white uPVC window in the recess beside the porch, in
+both the frontage shot and the video, so "every window" would have been wrong
+even about the front. **No window count either**: the elevation steps back twice
+and the porch hides part of it, and Bolbeck Park and both Leighton Buzzard
+studies carry no count, so a countless study is the archive's normal.
+
+**"Liniar EnergyPlus" is not on the page, although the owner's note said it.**
+EnergyPlus is the 70mm casement system: `site-data.php` attaches it to
+`/casement-windows/` with 0.95 triple, while the flush route is 1.2 double, A+,
+35 dB and 28mm only with no triple option. Both existing flush studies say flush
+sash. Carrying 0.95 across would have been exactly the fault `CASESTUDIES.md`
+warns about, and the folder name is not a specification.
+
+**Two claims dropped for want of a source, and one caught by the rendered page.**
+No locking claim on the windows, because the flush route publishes none where the
+casement route publishes a PAS 24 option. No U-value on the door, because the
+composite doors page refuses to print one before a doorset is specified. And the
+aside said "side hung openers" of the whole job when the small window over the
+porch is not one; the overview had already been corrected to "the main windows"
+and the bullet had not been brought into line. **Reading the deployed page found
+that, not reading the diff.**
+
+**Agate Grey is missing from the composite door palette.** It is RAL 7038 in the
+uPVC list and in the aluminium list, and absent from `composite`, so the colour
+deep link points at the uPVC swatch and a comment in the data file says why. A
+real customer has now bought an agate grey composite door, so the palette is
+worth revisiting.
+
+Four images from two photographs. The door and the open window are cut from the
+5120x3840 original rather than from the 1600px derivative, which is the same move
+`card_image` already makes and gives a genuine detail shot at full quality.
+Video-frame stills were tried first and dropped: the drone is moving in all of
+them and the one through the open door looks into the customer's hall. **The
+number plate is blurred** in the street shot, a private plate on the customer's
+own drive, legible at full size; the same car appears side-on in the frontage
+shot with no plate showing and is untouched. Neither source file carried EXIF.
+
+Deployed with the theme diff over live proven **purely additive**, seven new
+assets and one data file, zero deletions. See `LIVECHANGES.md` for the guard,
+and for the two traps this release hit: live was sitting on a revert commit that
+exists on no branch but `release/all-hallows`, so the usual walk down `origin/main`
+matched nothing and only a sweep of every ref found it; and a verification pass
+against `www.` reports the whole site missing, because every route `301`s to the
+apex.
+
 ## 2026-08-12 - All Hallows, Bedford, and two leaks in the town helper (LIVE, 32e05f2)
 
 Owner brief plus eleven of his own photographs. The tenth commercial study:
