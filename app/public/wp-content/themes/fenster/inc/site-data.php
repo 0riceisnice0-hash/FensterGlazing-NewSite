@@ -1341,7 +1341,6 @@ function fenster_site_data(): array
                outranks supplier photography there. */
             'heritage_windows' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-stone-mullion-1200w.webp', 'alt' => 'White heritage aluminium windows in the stone mullioned openings of a cottage gable'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-sash-detail-1200w.webp', 'alt' => 'Close view of three white heritage aluminium lights divided by original stone mullions'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage aluminium windows along a traditional terrace'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Slim steel-look glazing bar detail on a heritage aluminium window'],
             ],

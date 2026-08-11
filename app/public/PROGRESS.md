@@ -151,6 +151,14 @@ specification strip printed "Sightlines: Ultra slim", an adjective in a strip
 whose job is figures, next to a flat "A+ rated" that Sheerline only give with
 triple glazing.
 
+**Two owner corrections after it reached test.** The close crop of our install
+came off: "the finishing isnt actually great so just have the zoomed out
+version", which is a reminder that how close you shoot is a judgement about the
+work and not just about the framing. It came out of the gallery pool as well as
+the page, or a town matrix page would have carried on showing it. And the doors
+cross-link heading, "The door is the same window with a handle on it", read
+oddly out loud; it is "The doors match, down to the bar spacing." now.
+
 **Positioning, owner's read:** this product has taken over from Smart's heritage
 as the steel-replacement window. The copy carries that confidence without naming
 a competitor, and Crittall is named once, as the thing being replaced.

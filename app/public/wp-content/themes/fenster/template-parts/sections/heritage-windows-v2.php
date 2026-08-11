@@ -40,10 +40,12 @@
  * Classic offering does not muddy against Prestige. Sheerline publish 1.1 for
  * the system; it does not belong to what we sell here.
  *
- * PHOTOGRAPHY. One install of ours, shot as one frame and used twice — the whole
- * gable and a closer crop of the same picture. The rest is Sheerline's, and the
- * page never claims otherwise: supplier work is unattributed and ours is
- * captioned as ours, which is the split the flush aluminium route documents.
+ * PHOTOGRAPHY. One install of ours, one photograph of it. A closer crop of the
+ * same frame was on the page until the owner looked at it — the finishing on
+ * that detail is not good enough to publish, so the close shot is gone from
+ * here and from the gallery pool. The rest is Sheerline's, and the page never
+ * claims otherwise: supplier work is unattributed and ours is captioned as
+ * ours, which is the split the flush aluminium route documents.
  *
  * @package Fenster
  */
@@ -226,51 +228,29 @@ $classic_gives = [
     </section>
 
     <?php /* ---------- Our work ---------------------------------------------
-             ONE job, shot as one frame, shown twice: the gable and a closer crop
-             of the same photograph. The copy describes the house and the work
-             and makes no claim about how many of these we have fitted, which is
-             the owner's instruction. Do not write "our only install" here, and
-             do not imply a portfolio either. */ ?>
-    <section class="fg-cw-gallery fg-cw-gallery--pair" aria-labelledby="fg-hw-proof-title">
-        <div class="container">
-            <div class="fg-cw-gallery__head">
-                <div>
-                    <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
-                    <h2 id="fg-hw-proof-title"><?php esc_html_e('Three lights, three stone openings.', 'fenster'); ?></h2>
-                </div>
-                <p>
-                    <span class="fg-cw-gallery__copy--desktop"><?php esc_html_e('White Classic frames in an ironstone gable, one window per original opening so the stone mullions still carry the elevation. Click either image for a closer look.', 'fenster'); ?></span>
-                    <span class="fg-cw-gallery__copy--mobile"><?php esc_html_e('White Classic frames in an ironstone gable, one window per stone opening. Tap either image for a closer look.', 'fenster'); ?></span>
-                </p>
-            </div>
+             ONE photograph, and it was two until the owner looked at the close
+             crop: "the finishing isnt actually great so just have the zoomed
+             out version". So the detail shot is gone from the page AND from the
+             gallery pool, rather than being left where a town page could pick
+             it up. At the gable's distance the job reads as it should.
 
-            <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Heritage window gallery', 'fenster'); ?>">
-                <?php
-                $gallery = [
-                    [
-                        'src' => $base . 'hw-install-stone-mullion-1200w.webp',
-                        'alt' => __('White heritage aluminium windows in the stone mullioned openings of a cottage gable', 'fenster'),
-                        'caption' => __('The gable, with the original stone kept and the openings unaltered', 'fenster'),
-                    ],
-                    [
-                        'src' => $base . 'hw-install-sash-detail-1200w.webp',
-                        'alt' => __('Close view of three white heritage aluminium lights divided by original stone mullions, each with a top opener', 'fenster'),
-                        'caption' => __('Closer: a top opener over each light, and the frame kept inside the stone', 'fenster'),
-                    ],
-                ];
-                ?>
-                <?php foreach ($gallery as $shot) : ?>
-                    <?php $full = fenster_generated_url($shot['src']); ?>
-                    <figure>
-                        <a href="<?php echo esc_url($full); ?>" data-fg-gallery-lightbox
-                            aria-label="<?php echo esc_attr(sprintf(__('Open full image: %s', 'fenster'), $shot['alt'])); ?>">
-                            <img src="<?php echo esc_url($full); ?>"
-                                sizes="(max-width: 860px) 82vw, 40vw"
-                                alt="<?php echo esc_attr($shot['alt']); ?>" loading="lazy">
-                            <figcaption><?php echo esc_html($shot['caption']); ?></figcaption>
-                        </a>
-                    </figure>
-                <?php endforeach; ?>
+             A split rather than a gallery, because a two-cell mosaic with one
+             cell in it leaves half a row empty. Media first, which the opening
+             section also is, but two sections sit between them. */ ?>
+    <section class="fg-cw-intro fg-hw-work" aria-labelledby="fg-hw-proof-title">
+        <div class="container fg-cw-split fg-cw-split--media-first">
+            <figure class="fg-cw-media fg-cw-media--4x5">
+                <img <?php echo fenster_image_attr_string($base . 'hw-install-stone-mullion-1200w.webp', [
+                    'alt' => __('White heritage aluminium windows in the stone mullioned openings of a cottage gable', 'fenster'),
+                    'loading' => 'lazy',
+                ]); ?>>
+                <figcaption><?php esc_html_e('Our install: the original stone kept, and the openings unaltered', 'fenster'); ?></figcaption>
+            </figure>
+            <div class="fg-cw-copy">
+                <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
+                <h2 id="fg-hw-proof-title"><?php esc_html_e('Three lights, three stone openings.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('White Classic frames in an ironstone gable, one window into each original opening so the stone mullions still carry the elevation rather than being hidden behind a single wide frame. On a building like this the stone is the architecture and the window is a guest in it.', 'fenster'); ?></p>
+                <p><?php esc_html_e('It is also the argument for aluminium on an old house in one picture. A frame this slim leaves the openings looking the size they were built, which is the thing you notice from the road without being able to say why.', 'fenster'); ?></p>
             </div>
         </div>
     </section>
@@ -284,7 +264,7 @@ $classic_gives = [
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('The set', 'fenster'); ?></p>
-                <h2 id="fg-hw-doors-title"><?php esc_html_e('The door is the same window with a handle on it.', 'fenster'); ?></h2>
+                <h2 id="fg-hw-doors-title"><?php esc_html_e('The doors match, down to the bar spacing.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The Classic heritage door is drawn on the same system as these windows, which is why the two sit together properly rather than nearly matching. The stepped face runs on at the same depth, the bars line through at the same spacing, and both come in the same twelve colours, so a garden door between two windows reads as one piece of work.', 'fenster'); ?></p>
                 <p><?php esc_html_e('It is worth deciding both at once even if the door comes later. We can hold the colour and the bar layout on file, and the survey takes the door opening at the same visit.', 'fenster'); ?></p>
                 <p class="fg-cw-actions">

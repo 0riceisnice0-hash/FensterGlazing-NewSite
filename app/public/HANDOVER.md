@@ -631,8 +631,10 @@ Route: `/heritage-windows/`
   1.4 W/m²K plain, with no star and no lowest-achievable note.
 - **The case-study strip is gated off**: no study claims this route and the
   helper falls back to showing all of them.
-- **One install of ours**, shown twice from one frame, and the copy does not
-  mention that it is the only one. See the Heritage Windows Imagery Rule.
+- **One install of ours and one photograph of it**, in a split rather than a
+  gallery, and the copy does not mention that it is the only one. A close crop
+  of the same frame was pulled because the finishing on it is not good enough
+  to publish. See the Heritage Windows Imagery Rule.
 - **It links to `/heritage-aluminium-doors/` and that page links back**, both
   through deliberate sections rather than a line in a list. Owner instruction.
 
