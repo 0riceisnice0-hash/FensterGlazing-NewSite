@@ -824,7 +824,7 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-winslow-secondary-glazing-bedroom-open.jpg', 'caption' => 'A bedroom window, the original casement swung open behind the glazing and the slider closed in front of it.'],
                 ['src' => $img . 'cs-winslow-secondary-glazing-kitchen.jpg', 'caption' => 'The kitchen window, glazed across the full opening above the worktop.'],
                 ['src' => $img . 'cs-winslow-secondary-glazing-narrow.jpg', 'caption' => 'A narrow opening with its original timber sill left alone, the glazing sitting back inside the reveal.'],
-                ['src' => $img . 'cs-winslow-secondary-glazing-catch.jpg', 'caption' => 'The catch on one of the sliders, with the original leaded glass immediately behind it.'],
+                ['src' => $img . 'cs-winslow-secondary-glazing-catch.jpg', 'caption' => 'The catch on one of the sliders, with the original leaded light immediately behind it.'],
             ],
             'seo' => [
                 'title_tag' => 'Secondary Glazing, Winslow | Fenster Glazing',

@@ -1303,7 +1303,7 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/bow-bay/bay-white-brick-dusk-1600w.webp', 'alt' => 'White bay window with Georgian bars on a brick and render home'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_10.jpg', 'alt' => 'Curved white uPVC bow window on a red brick wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_02.jpg', 'alt' => 'Golden oak bow window curving out from a light brick elevation'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_08.jpg', 'alt' => 'Golden oak bay window with leaded top panes'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_08.jpg', 'alt' => 'Golden oak bay window with leaded lights'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-bay-brick-1400w.webp', 'alt' => 'Bay window built in a flush casement style on a tile hung house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Joined-Vertical-Slider-Bay.jpg', 'alt' => 'Sliding sash bay window in a dining room'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bay_7-e1699893445270.jpg', 'alt' => 'Bay window on the front elevation of a detached home'],
@@ -1498,7 +1498,7 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-leaded-iron-handles.jpg', 'alt' => 'Secondary glazing across leaded casements with their original black iron handles behind the glass'],
                 ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-kitchen.jpg', 'alt' => 'Secondary glazing across a kitchen window above the worktop'],
                 ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-narrow.jpg', 'alt' => 'A narrow window with its original timber sill, the secondary glazing set back in the reveal'],
-                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-catch.jpg', 'alt' => 'The catch on a secondary glazing slider, with the original leaded glass behind it'],
+                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-catch.jpg', 'alt' => 'The catch on a secondary glazing slider, with the original leaded light behind it'],
             ],
             'window_repairs' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'Window opening detail used for repair checks'],
