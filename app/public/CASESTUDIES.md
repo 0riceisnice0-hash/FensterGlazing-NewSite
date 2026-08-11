@@ -31,6 +31,18 @@ it. Two consequences to know before you "fix" anything:
   either route and remove it from the gate; do not remove the gate first.
 - `fenster_case_studies_for_product_group()` is filtered to residential too, for
   the product hubs.
+- `fenster_case_studies_for_town()` is filtered to residential as of
+  2026-08-12. It was missed in the original pass and was live: the commercial
+  Bletchley rail depot was leading the local-proof strip on every MK suburb
+  town route, because that helper matches on `location` and a study carrying
+  "Milton Keynes" counts as area proof for all twelve suburbs. **A town whose
+  only local match was commercial now renders no strip**, which is deliberate.
+- **The location field decides town reach, so check it when you add a study.**
+  An exact town-name match puts a study on that town's product matrix pages;
+  "Milton Keynes" anywhere in the field puts it on twelve suburb routes at
+  once. All three helpers are residential-only now, so a commercial study
+  reaches neither, but the same field is what a future commercial town page
+  would read.
 
 Everything below is about the curated case studies system, residential unless
 it says otherwise.

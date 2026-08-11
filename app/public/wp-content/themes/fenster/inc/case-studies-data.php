@@ -1364,15 +1364,38 @@ function fenster_milton_keynes_town_slugs(): array
  * Keynes area for MK suburbs. Deliberately returns nothing when there is no
  * honest local match: a Northampton job is not proof of work in Luton, and a
  * filler card would undermine the page rather than support it.
+ *
+ * COMMERCIAL STUDIES ARE EXCLUDED, for the same reason and by the same owner
+ * instruction of 2026-08-11 as `fenster_case_studies_for_product()`. The only
+ * caller is `location-service.php`, which is the residential town and product
+ * matrix, and its heading reads "Jobs we have finished in <town>" above cards
+ * introduced as real installations with our own photographs. A contractor's
+ * rail depot is not that, on a page selling windows for somebody's house.
+ *
+ * THIS WAS LEAKING ON LIVE, verified 2026-08-11 by reading inside the strip
+ * markup on `/casement-windows-bletchley/` and `/double-glazing-bletchley/`:
+ * both led with the Bletchley rail depot. It reached every MK suburb route as
+ * well as the Bletchley ones, because a study whose location carries "Milton
+ * Keynes" is treated as area proof for all twelve suburbs. The product helper
+ * was filtered on 11 August and this one was missed; it takes the same
+ * `$type` argument so a commercial page can ask for commercial proof.
+ *
+ * Filtering can turn one fault into another, so check what the strip does
+ * next: a town whose only match was commercial now renders no strip at all,
+ * which is the intended outcome and the same call made for `/aluminium-
+ * windows/`. A route showing the wrong proof is worse than a route showing
+ * none.
  */
-function fenster_case_studies_for_town(string $town_slug, int $limit = 2): array
+function fenster_case_studies_for_town(string $town_slug, int $limit = 2, string $type = 'residential'): array
 {
     $town_slug = sanitize_key($town_slug);
     if ($town_slug === '') {
         return [];
     }
 
-    $studies = fenster_case_studies();
+    $studies = function_exists('fenster_case_studies_of_type')
+        ? fenster_case_studies_of_type($type)
+        : fenster_case_studies();
     $town_words = str_replace('-', ' ', $town_slug);
     $is_mk_suburb = isset(fenster_milton_keynes_town_slugs()[$town_slug]);
 
