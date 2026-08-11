@@ -58,7 +58,7 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
-## 2026-08-11 - Louvre vents rebuilt on the IKON range (test)
+## 2026-08-11 - Louvre vents rebuilt around the range (LIVE, pending SHA)
 
 Owner brief: a full overhaul, the IKON louvre suite is what we offer, add real
 detail but "maybe not QUITE as hard as they go", exclude the composite panels,
@@ -97,9 +97,25 @@ builders and architects rather than homeowners. And with only two louvre
 photographs in existence, the work gallery came out rather than repeat the two
 that are now the hero and the intro image.
 
-**One marked placeholder ships on it.** A dashed panel saying "Photograph to
-follow" and what should be in it, rather than a broken image or a borrowed
-product shot. That is now a documented pattern.
+**Four owner corrections after the first build, and three were mine to have
+seen.** The supplier brand came off the page, which the site's own rule about
+supplier provenance already required: model codes stay, the name does not, and
+the figures are attributed to "the system manufacturer". The tone went a step
+more factual, because the readers here are builders and architects rather than
+homeowners. The hero was a stock timber entrance with no louvre in it at all.
+
+**And the placeholders lasted about an hour.** Four photographs arrived with the
+instruction not to dump them into a gallery under "our work", so each one went
+where it argues for something: the plant doorsets as the hero, the scaffold shot
+against the scope copy, the blade close-up against the blade-pitch trade-off in
+the range, and the boiler-house screen against the frame types. The two older
+photographs are the only ones doing nothing but proving, so they are the pair at
+the end. The marked-placeholder pattern stays documented for the next page.
+
+**No caption names a system.** The blade close-up is visibly a wider pitch than
+the IKL33, and nobody has confirmed what any of these jobs used. A third-party
+sprinkler contractor's sign was cropped out of that frame, and neither fitter's
+face is visible in the scaffold shot, so nothing there is blurred.
 
 **One fault on the first render, and it is the third of the day.** `.fg-lv p` is
 (0,1,1) and repaints every paragraph in the section muted and small, so the two

@@ -7,8 +7,8 @@
  * panels within aluminium window, door and curtain walling packages". True, and
  * it tells a specifier nothing they can act on.
  *
- * WHAT THIS PAGE IS NOW. The IKON range we actually offer, with IKON's own
- * published figures, pitched a step below the way IKON publish them. Owner,
+ * WHAT THIS PAGE IS NOW. The range we actually offer, with the manufacturer's
+ * own published figures, pitched a step below the way they publish them. Owner,
  * 2026-08-11: "be good to add some details but maybe not QUITE as hard as they
  * go". So the systems are here, and the free areas are here, and the pressure
  * loss curves and K-factors are not.
@@ -33,12 +33,20 @@
  * re-verified. None of it may be restated as a Fenster performance number,
  * which is the rule the Kenrick lock figures are held to.
  *
- * TWO PLACEHOLDERS SHIP HERE DELIBERATELY. The owner has more photographs and
- * asked for placeholders in the meantime. They are marked as such on the page
- * rather than filled with a supplier render or a stand-in from another product,
- * which is how /aluminium-doors/ ended up with a hero that reads as uPVC.
- * Replace them with `fenster_image_attr_string()` figures and delete the
- * placeholder markup; the captions already say what each one should show.
+ * SIX PHOTOGRAPHS, EACH PLACED WHERE IT ARGUES FOR SOMETHING. Two marked
+ * placeholders shipped here first, and four photographs then arrived with the
+ * instruction not to dump them into a gallery under "our work". So the plant
+ * doorsets are the hero, the scaffold shot sits against the scope copy because
+ * it shows a louvre and a window in one frame line, the blade close-up sits
+ * against the blade-pitch trade-off, and the boiler-house screen sits against
+ * the frame types. The two older photographs are the only ones doing nothing
+ * but proving, so they are the pair at the end.
+ *
+ * NO CAPTION NAMES A SYSTEM. Nobody has confirmed which system any of these
+ * jobs used, and the blade close-up is visibly a wider pitch than the IKL33, so
+ * captions describe what is in frame and stop. A third-party sprinkler
+ * contractor's sign was cropped out of that frame. Neither fitter's face is
+ * visible in the scaffold shot, so nothing there is blurred.
  *
  * @package Fenster
  */
