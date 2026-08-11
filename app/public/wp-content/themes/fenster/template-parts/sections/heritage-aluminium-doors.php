@@ -454,6 +454,37 @@ $door_colours = [
             </div>
         </section>
 
+        <?php /* ---------- The windows ------------------------------------------
+                 Owner instruction, 2026-08-11: the heritage windows and doors
+                 match, and each page has to send people to the other. This page
+                 already mentioned the windows inside a definition list in the
+                 frame section, which is a link nobody sees. This is the
+                 deliberate half of that pair; the windows page carries the
+                 matching section back.
+
+                 Placed straight after colour on purpose, because the reason to
+                 do both together is that they share a colour and a bar spacing,
+                 and the reader has just been looking at the twelve finishes. */ ?>
+        <section class="fg-cw fg-heritage-door-windows" aria-labelledby="fg-heritage-windows-title">
+            <div class="container fg-cw-split fg-cw-split--media-first">
+                <figure class="fg-cw-media">
+                    <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-hero-steel-look-2048w.webp', [
+                        'alt' => __('A tall steel-look heritage aluminium window with slim dark glazing bars', 'fenster'),
+                        'loading' => 'lazy',
+                    ]); ?>>
+                </figure>
+                <div class="fg-cw-copy">
+                    <p class="eyebrow"><?php esc_html_e('The set', 'fenster'); ?></p>
+                    <h2 id="fg-heritage-windows-title"><?php esc_html_e('The windows are the same system.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Sheerline drew the Classic window and the Classic door together, so the stepped face, the bar spacing and all twelve colours carry across. A door on its own next to older windows always looks like a door that was replaced on its own.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('If the windows are coming too, even later, it is worth setting the bar layout now so both match. There is a planner on the windows page that draws it for you.', 'fenster'); ?></p>
+                    <p class="fg-cw-actions">
+                        <a class="fg-cw-link" href="<?php echo esc_url(home_url('/heritage-windows/')); ?>"><?php esc_html_e('See the heritage windows', 'fenster'); ?></a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <?php
         /* This route returns before the shared product tail, so it calls the
            handle grid itself, the same way it calls the tech banner above.

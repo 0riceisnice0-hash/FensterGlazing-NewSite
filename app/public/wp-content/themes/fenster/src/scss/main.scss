@@ -38982,7 +38982,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-band,
 .fg-sg-band,
 .fg-rg-band,
-.fg-afw-band {
+.fg-afw-band,
+.fg-hw-band {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
@@ -39013,7 +39014,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-band__head,
 .fg-sg-band__head,
 .fg-rg-band__head,
-.fg-afw-band__head {
+.fg-afw-band__head,
+.fg-hw-band__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2.5rem);
@@ -39025,7 +39027,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-band__head h2,
 .fg-sg-band__head h2,
 .fg-rg-band__head h2,
-.fg-afw-band__head h2 {
+.fg-afw-band__head h2,
+.fg-hw-band__head h2 {
   max-width: 17ch;
   margin: 0.3rem 0 0;
 }
@@ -39034,7 +39037,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-band__head > p,
 .fg-sg-band__head > p,
 .fg-rg-band__head > p,
-.fg-afw-band__head > p {
+.fg-afw-band__head > p,
+.fg-hw-band__head > p {
   max-width: 46ch;
   margin: 0;
   color: var(--color-muted);
@@ -39052,7 +39056,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-list,
 .fg-sg-list,
 .fg-rg-list,
-.fg-afw-list {
+.fg-afw-list,
+.fg-hw-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: clamp(0.9rem, 1.8vw, 1.4rem);
@@ -39063,7 +39068,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-list > div,
 .fg-sg-list > div,
 .fg-rg-list > div,
-.fg-afw-list > div {
+.fg-afw-list > div,
+.fg-hw-list > div {
   display: grid;
   align-content: start;
   gap: 0.45rem;
@@ -39077,7 +39083,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-list dt,
 .fg-sg-list dt,
 .fg-rg-list dt,
-.fg-afw-list dt {
+.fg-afw-list dt,
+.fg-hw-list dt {
   font-weight: 850;
   font-size: 1.02rem;
   line-height: 1.2;
@@ -39087,7 +39094,8 @@ html.fg-blinds-reveal-locked {
 .fg-alu-door-list dd,
 .fg-sg-list dd,
 .fg-rg-list dd,
-.fg-afw-list dd {
+.fg-afw-list dd,
+.fg-hw-list dd {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -39113,12 +39121,18 @@ html.fg-blinds-reveal-locked {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
+/* Adding a class to the shared band selectors above is only half the job: it has
+   to be named here as well or the head keeps its two columns down to a phone.
+   `.fg-hw-band__head` was missed on the first pass and the heritage heading
+   rendered three words wide at 390px. This is the same trap as the product hub
+   tile counts, which have to appear in both breakpoint lists. */
 @media (max-width: 860px) {
   .fg-flush-band__head,
   .fg-alu-door-band__head,
   .fg-sg-band__head,
   .fg-rg-band__head,
   .fg-afw-band__head,
+  .fg-hw-band__head,
   .fg-flush-compare {
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
@@ -39225,8 +39239,165 @@ html.fg-blinds-reveal-locked {
   line-height: 1.45;
 }
 
+/* The heritage door page's cross-link section carries `.fg-cw` on the <section>
+   itself rather than on a wrapper around it, because that page has no `.fg-cw`
+   ancestor to inherit from. `.fg-cw section` is a descendant selector, so it
+   does not match, and without this the section would run into the colour grid
+   above it with no space at all. */
+.fg-heritage-door-windows {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+}
 
+/* ---- Heritage windows page -------------------------------------------------
+   Built on `.fg-cw` like the four routes above it, so the split sections, the
+   facts list, the gallery mosaic and the card band all come for free —
+   `.fg-hw-band` and `.fg-hw-list` are added to those shared selector lists
+   rather than given a copy. What follows is only the dark "look" plate.
 
+   THIS USED TO STYLE AN INTERACTIVE PLANNER. The owner removed the planner on
+   2026-08-11 in favour of the WindowCAD designer, so the stage, the chips and
+   the swatch grid went with it. What is left is the section that carries the
+   bar layouts and hands over to the tool.
+
+   `.fg-cw h2` is (0,1,1) and `.fg-cw p` sets the muted ink colour, so every
+   text rule here is qualified hard enough to win rather than relying on source
+   order. Both of those rendered dark-on-dark on the first build. */
+.fg-hw-look {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+  background: linear-gradient(168deg, #06222a 0%, #0c313b 52%, #061d24 100%);
+  color: #ffffff;
+}
+
+.fg-hw-look .eyebrow,
+.fg-cw .fg-hw-look h2,
+.fg-cw .fg-hw-look h3 {
+  color: #ffffff;
+}
+
+.fg-cw .fg-hw-look__head > p,
+.fg-cw .fg-hw-look p,
+.fg-cw .fg-hw-layouts p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-hw-look__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: end;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.fg-cw .fg-hw-look__head h2 {
+  max-width: 20ch;
+  margin: 0.3rem 0 0;
+}
+
+.fg-cw .fg-hw-look__head > p {
+  max-width: 46ch;
+  margin: 0;
+}
+
+/* Photograph one side, the three layouts the other. The media column is the
+   smaller of the two because the picture is a detail rather than a scene. */
+.fg-hw-look__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: start;
+}
+
+.fg-hw-look__media {
+  margin: 0;
+}
+
+/* The source is 600x400 and this cell is wider than that on a desktop, so the
+   box is matched to the picture rather than the picture stretched to a box. */
+.fg-hw-look__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.fg-cw .fg-hw-look__media figcaption {
+  margin-top: 0.85rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.fg-hw-layouts {
+  display: grid;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+  align-content: start;
+}
+
+.fg-hw-layouts > div {
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.fg-cw .fg-hw-layouts h3 {
+  margin-bottom: 0.3rem;
+  font-size: 1.02rem;
+}
+
+.fg-cw .fg-hw-layouts p {
+  margin: 0;
+  font-size: 0.93rem;
+}
+
+/* The handover to the designer, which is what this section exists to reach. */
+.fg-hw-look__handover {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: center;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.fg-cw .fg-hw-look__handover > p {
+  max-width: 60ch;
+  margin: 0;
+}
+
+.fg-hw-look__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .fg-hw-look__head,
+  .fg-hw-look__grid,
+  .fg-hw-look__handover {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .fg-hw-look__actions .button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* The heritage door page's cross-link section carries `.fg-cw` on the <section>
+   itself rather than on a wrapper around it, because that page has no `.fg-cw`
+   ancestor to inherit from. `.fg-cw section` is a descendant selector, so it
+   does not match, and without this the section would run into the colour grid
+   above it with no space at all. */
+.fg-heritage-door-windows {
+  padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+}
 
 /* ==========================================================================
    Aluminium doors — /aluminium-doors/

@@ -210,6 +210,14 @@ $is_replacement_bespoke = $slug === 'double-glazing-replacement';
    published sightline and a colour range. Two of its four tiles were corrected
    rather than removed; see `product_usps` in `inc/site-data.php`. */
 $is_alu_flush_bespoke = $slug === 'aluminium-flush-windows';
+/* Heritage windows, 2026-08-11. Bespoke middle, generic bands off, and the same
+   two things KEPT as on flush aluminium: the key-specification pulse, because
+   this product has real published figures, and the specification-choices
+   wrapper, because the Classic colour grid and the S2 handle grid inside it are
+   both genuine decisions here. The route keeps its instant-price button too —
+   owner-confirmed on 2026-08-11 that the Aluminium Windows collection covers
+   it — so nothing points at a tool that cannot price the job. */
+$is_heritage_bespoke = $slug === 'heritage-windows';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase
    of a product:
@@ -846,6 +854,20 @@ $stats = $is_commercial
    to design. The owner's actual route in is that rough sizes and a photograph
    are enough to get a price without a visit, so the button says that. */
 $cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : ($is_repairs ? 'Request a repair' : ($is_replacement_bespoke ? 'Send us the sizes' : 'Start your design consultation')));
+/* The hero eyebrow names the system on a route that is sold around one, which
+   is what composite doors has done since it was rebuilt. Heritage windows joins
+   it on 2026-08-11. The H1 deliberately stays "Heritage Windows": that is the
+   term people search and the one this route already ranks for, so the system
+   name goes in the eyebrow rather than into the heading, which is also where
+   STYLE.md puts the supporting line. */
+$hero_eyebrow = 'Fenster Glazing';
+if ($is_commercial) {
+    $hero_eyebrow = 'Commercial glazing';
+} elseif ($is_composite_doors) {
+    $hero_eyebrow = 'Distinction composite doors';
+} elseif ($is_heritage_bespoke) {
+    $hero_eyebrow = 'Sheerline Classic';
+}
 $instant_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
 $instant_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
 $product_quote_embeds = [
@@ -3428,7 +3450,7 @@ if ($is_commercial_hub) {
         <div class="container fg-hero__inner <?php echo esc_attr($is_home ? 'fg-hero__inner--quote' : ''); ?>">
             <div class="fg-hero__copy">
                 <div class="fg-hero__heading">
-                    <p class="eyebrow"><?php echo esc_html($is_commercial ? 'Commercial glazing' : ($is_composite_doors ? 'Distinction composite doors' : 'Fenster Glazing')); ?></p>
+                    <p class="eyebrow"><?php echo esc_html($hero_eyebrow); ?></p>
                     <h1><?php echo esc_html($title); ?></h1>
                     <p class="fg-hero__intro"><?php echo esc_html($hero_intro); ?></p>
                 </div>
@@ -4198,7 +4220,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4362,7 +4384,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4532,7 +4554,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4610,6 +4632,23 @@ if ($is_commercial_hub) {
         <?php if ($is_alu_flush_bespoke) : ?>
             <?php
             get_template_part('template-parts/sections/aluminium-flush-windows-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+                'quote_url' => $product_quote_embed_url,
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php /* OUTSIDE the wrapper below, same as the five above, and for the
+                 reason spelled out against the secondary glazing dispatch: that
+                 wrapper is gated on a condition about colour swatches, so a
+                 bespoke middle placed inside it silently renders nothing. This
+                 route DOES still render the wrapper itself, because the Classic
+                 colour grid and the handle grid it contains are real decisions
+                 on a heritage window. */ ?>
+        <?php if ($is_heritage_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/heritage-windows-v2', null, [
                 'brand' => $brand,
                 'trust_items' => $trust_items,
                 'quote_url' => $product_quote_embed_url,
@@ -5297,7 +5336,14 @@ if ($is_commercial_hub) {
              when a product matches none. The route was showing secondary glazing,
              casement windows and bifold doors under a heading about real installs
              of this product. Remove the exclusion when a study exists. */ ?>
-    <?php if ($use_product_journey && ! $is_repairs && ! $is_replacement_bespoke && function_exists('fenster_case_studies_for_product')) : ?>
+    <?php /* `$is_heritage_bespoke` is excluded for the same reason, added
+             2026-08-11: no study claims heritage windows, so the strip fell
+             through to the same fallback and put a bifold job and two casement
+             jobs under a heading about real installs of a steel-look window,
+             directly below a section showing a real one. Remove the exclusion
+             the moment a heritage window study exists — the two heritage DOOR
+             studies do not count, because those jobs had no windows in them. */ ?>
+    <?php if ($use_product_journey && ! $is_repairs && ! $is_replacement_bespoke && ! $is_heritage_bespoke && function_exists('fenster_case_studies_for_product')) : ?>
         <?php $product_case_cards = fenster_case_studies_for_product($slug, 3); ?>
         <?php if ($product_case_cards !== []) : ?>
             <section class="fg-cs-strip">

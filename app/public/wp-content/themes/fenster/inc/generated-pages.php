@@ -323,9 +323,14 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Bow and Bay Windows Milton Keynes | Double Glazed Bays',
             'meta_description' => 'Bow and bay windows in Milton Keynes with double glazing, colour options and survey-led replacement for brighter rooms and kerb appeal.',
         ],
+        /* Retitled 2026-08-11 with the page rebuild. "Slim Aluminium Style" is
+           what /aluminium-windows/ sells and it said nothing about why anybody
+           lands here: the searches are steel look, steel replacement and
+           Crittall style. The head term stays first because the route already
+           ranks for it. */
         'heritage-windows' => [
-            'title_tag' => 'Heritage Windows Milton Keynes | Slim Aluminium Style',
-            'meta_description' => 'Heritage windows in Milton Keynes with slim aluminium styling, modern double glazing, colour options and survey-led installation.',
+            'title_tag' => 'Heritage Windows Milton Keynes | Steel-Look Aluminium',
+            'meta_description' => 'Steel-look heritage windows in Milton Keynes. Sheerline Classic aluminium with slim 60.5mm frames, Georgian or 1930s bar layouts and a warm thermal break.',
         ],
         'patio-doors' => [
             'title_tag' => 'Patio Doors Milton Keynes | Sliding Garden Doors',

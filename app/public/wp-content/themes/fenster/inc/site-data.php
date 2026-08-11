@@ -317,11 +317,30 @@ function fenster_site_data(): array
                    and not a number that can be read as a promise. */
                 ['label' => 'System', 'value' => 'Sheerline Prestige'],
             ],
+            /* Two of these four were corrected on 2026-08-11 during the page
+               rebuild, and both faults are ones this file has recorded before.
+               "Sightlines: Ultra slim" was an adjective in a strip whose whole
+               job is figures, so it is now Sheerline's published beaded
+               casement sightline — 60.5mm, owner-confirmed on 2026-08-11 as the
+               variant we fit, and the same figure the heritage door strip
+               already prints because it is the same Classic system. And "A+
+               rated" is now "Up to A+", because Sheerline give A with double
+               glazing and A+ with triple, which their own page notes is only
+               available in certain styles. The identical correction was made on
+               the flush aluminium strip a day earlier. */
             'heritage-windows' => [
-                ['label' => 'U-value*', 'value' => '1.1 W/m²K'],
+                ['label' => 'U-value', 'value' => '1.4 W/m²K'],
                 ['label' => 'Colour choice', 'value' => 'Any RAL colour'],
-                ['label' => 'Energy rating', 'value' => 'A+ rated'],
-                ['label' => 'Sightlines', 'value' => 'Ultra slim'],
+                ['label' => 'Sightlines', 'value' => '60.5mm'],
+                /* "A rated", not "Up to A+", and this follows directly from the
+                   triple decision above. Sheerline give the Classic window an A
+                   WER double glazed and A+ triple glazed. We do not offer
+                   triple on the stepped sash, so A+ is a rating for a window we
+                   do not sell and the honest tile is the one we do. Corrected
+                   2026-08-11, an hour after "A+ rated" was corrected to "Up to
+                   A+" for a different reason — worth noticing that a figure can
+                   be true of the system and still untrue of the product. */
+                ['label' => 'Energy rating', 'value' => 'A rated'],
             ],
             'heritage-aluminium-doors' => [
                 ['label' => 'U-value', 'value' => '1.4 W/m²K'],
@@ -551,8 +570,22 @@ function fenster_site_data(): array
             'aluminium-bifold-doors'  => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
             'aluminium-sliding-doors' => ['double' => '1.4 W/m²K', 'triple' => '1.0 W/m²K'],
             // Sheerline Classic
-            'heritage-windows'          => ['double' => '1.4 W/m²K', 'triple' => '1.1 W/m²K'],
-            'heritage-aluminium-doors'  => ['double' => '1.4 W/m²K', 'triple' => '1.1 W/m²K'],
+            /* NO TRIPLE ON HERITAGE WINDOWS. Owner, 2026-08-11: triple glazing
+               can be done on the Classic CONTEMPORARY sash, but we do not offer
+               it on the STEPPED one, deliberately, so the Classic offering does
+               not muddy against Prestige. So this route has one glazing unit
+               and the strip prints 1.4 plain — no star and no "lowest
+               achievable" note, because there is no lower figure to qualify.
+               Sheerline's published 1.1 belongs to a sash we do not sell here.
+               Do not add it back off their website. */
+            'heritage-windows'          => ['double' => '1.4 W/m²K'],
+            /* The door follows the window, owner-confirmed 2026-08-11: same
+               Classic system, same answer. Triple is only available on the
+               contemporary sash and we fit the stepped one, so there is no
+               triple figure for this route either. This also empties the triple
+               row out of the Thermlock banner, which reads these values, so the
+               banner and the strip cannot end up disagreeing. */
+            'heritage-aluminium-doors'  => ['double' => '1.4 W/m²K'],
             // No triple, per the owner-confirmed exclusion list
             'slide-fold-doors'        => ['double' => '1.4 W/m²K'],
             /* Sheerline S1. Owner-confirmed 2026-08-03: the 1.0 is the double
@@ -788,11 +821,21 @@ function fenster_site_data(): array
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium window frame profile detail'],
                 ],
             ],
+            /* Rebuilt 2026-08-11. The hero was a 1200px-wide photograph of an
+               almshouse terrace being asked to fill a 1440px letterbox, and it
+               showed a row of windows from across a green rather than the thing
+               the page sells. The hero now crops the steel-look interior, which
+               is the one image in the bank that says "Crittall" before a word is
+               read: a tall dark grid against a panelled wall, with the right
+               half quiet enough to carry the hero copy. Supplier photography,
+               unattributed in the hero per the split already documented on the
+               flush aluminium route — our own work is captioned as ours in the
+               page's gallery instead. */
             'heritage-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage style aluminium windows on a traditional property'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-hero-steel-look-2048w.webp', 'alt' => 'Tall steel-look aluminium window with slim dark glazing bars in a paneled living room'],
                 'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/C08-Classic-Windows-Heritage-Style-Anthracite-2048x1366-1.jpg', 'alt' => 'Steel-look heritage aluminium windows seen from inside a living room'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage style aluminium windows on a traditional property'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-stone-mullion-1200w.webp', 'alt' => 'White heritage aluminium windows fitted into the stone mullioned openings of a cottage gable'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Slim heritage glazing bar detail'],
                 ],
             ],
@@ -1175,7 +1218,13 @@ function fenster_site_data(): array
             'bow-bay-windows' => 'bow_bay_windows',
             'aluminium-windows' => 'aluminium_windows',
             'aluminium-flush-windows' => 'aluminium_windows',
-            'heritage-windows' => 'aluminium_windows',
+            /* Given its own pool on 2026-08-11. It had been sharing
+               `aluminium_windows`, which is the fault the window routes were
+               split to fix on 2026-07-24 and which had simply been missed here:
+               a steel-look route was illustrating itself with contemporary
+               Prestige frames, on this page and on every
+               `/heritage-windows-<town>/` matrix page with it. */
+            'heritage-windows' => 'heritage_windows',
             'aluminium-bifold-doors' => 'aluminium_bifold_doors',
             'slide-fold-doors' => 'slide_fold_doors',
             'aluminium-sliding-doors' => 'aluminium_sliding_doors',
@@ -1276,6 +1325,25 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Steel-look aluminium glazing bar detail'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-french-window.jpg', 'alt' => 'Woodgrain French casement window in a kitchen diner'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/C08-Classic-Windows-Heritage-Style-Anthracite-2048x1366-1.jpg', 'alt' => 'Heritage aluminium windows with dark slim frames'],
+            ],
+            /* Heritage windows own their range as of 2026-08-11. EVERY ENTRY
+               HAS TO BE A CLASSIC STEEL-LOOK WINDOW, and that is narrower than
+               it sounds: two Sheerline lifestyle shots were pulled straight
+               back out on the owner's eye, because one of them is the SAME
+               HOUSE, SAME SHOOT as the `/aluminium-flush-windows/` hero — the
+               same cordyline palm and the same sign in the window — and the
+               other could not be shown to be the stepped sash rather than the
+               contemporary one. Both sat on Sheerline's Classic page, which is
+               not the same thing as being this product. **Check a supplier
+               photograph against the flush and aluminium routes before adding
+               it here.** The first entry is deliberately our own install: this
+               pool feeds the town matrix pages too, and a real local job
+               outranks supplier photography there. */
+            'heritage_windows' => [
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-stone-mullion-1200w.webp', 'alt' => 'White heritage aluminium windows in the stone mullioned openings of a cottage gable'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/heritage-windows/hw-install-sash-detail-1200w.webp', 'alt' => 'Close view of three white heritage aluminium lights divided by original stone mullions'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage aluminium windows along a traditional terrace'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Slim steel-look glazing bar detail on a heritage aluminium window'],
             ],
             'aluminium_bifold_doors' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'alt' => 'Anthracite aluminium bifold doors fitted to a brick home'],
@@ -1769,21 +1837,33 @@ function fenster_site_data(): array
                     ['question' => 'Will the sightlines be checked before ordering?', 'answer' => 'Yes. Fenster reviews frame sizes, mullions, opening positions and glass areas during specification and survey.'],
                 ],
             ],
+            /* Rewritten 2026-08-11 with the page. The old copy was written about
+               the category rather than about the window we fit: five benefits
+               that would suit any aluminium window, and FAQs answering
+               questions nobody types. `intro` is the hero lead on this route,
+               so it is the first thing a visitor reads.
+
+               Every figure here is Sheerline's published Classic specification
+               and the 60.5mm is the BEADED casement sightline, owner-confirmed
+               on 2026-08-11 as the variant we fit. Do not swap in the beadless
+               59mm without asking, and do not reach for the 36.5mm fixed-frame
+               figure as though it described a casement — that is the mistake
+               the flush aluminium route made with 46mm. */
             'heritage-windows' => [
-                'intro' => 'Heritage aluminium windows recreate the slim, gridded character of steel-style glazing while giving modern thermal performance and easier maintenance. Fenster helps choose glazing bars, colours, handles and proportions so the final design feels authentic.',
+                'intro' => 'Original steel windows look wonderful and behave badly. This is the aluminium answer to them: the same slim dark grid and the same stepped sash face, with a thermal break through the frame, modern glass and nothing left to rub down and repaint.',
                 'benefits' => [
-                    ['title' => 'Steel-style appearance', 'copy' => 'Slim aluminium frames and heritage glazing-bar layouts create the industrial or period-inspired look often associated with old steel windows.'],
-                    ['title' => 'Modern aluminium performance', 'copy' => 'Thermally broken aluminium and modern glazing help improve comfort compared with original steel or tired single-glazed frames.'],
-                    ['title' => 'Consistent sightlines', 'copy' => 'Fenster helps align bar layouts, sash positions and fixed panes so the heritage pattern looks balanced across the elevation.'],
-                    ['title' => 'Durable powder-coated finish', 'copy' => 'Aluminium frames resist routine corrosion and repainting demands, with powder-coated colours chosen around the property style.'],
-                    ['title' => 'Window and door coordination', 'copy' => 'Heritage windows can be coordinated with heritage aluminium doors where a full steel-look project is required.'],
+                    ['title' => 'It reads as steel from the pavement', 'copy' => 'The Sheerline Classic stepped sash carries the shoulder and shadow line an original steel window has. It is the only sash profile we fit on this system, because the flatter contemporary one loses exactly the detail people come to this page for.'],
+                    ['title' => 'Slim where it counts', 'copy' => 'Beaded casement sightlines of 60.5mm, and fixed lights from 36.5mm, so a small opening keeps its glass instead of losing it to frame.'],
+                    ['title' => 'Warm, which steel never was', 'copy' => 'Sheerline put their Thermlock multi-chamber thermal break through the frame, and double glazed it reaches 1.4 W/m²K, against a single-glazed steel window that runs with condensation every winter morning.'],
+                    ['title' => 'Bars where you want them', 'copy' => 'A Georgian grid or the horizontal 1920s layout, on every light or only some, planned against the elevation rather than dropped on it.'],
+                    ['title' => 'The doors match, because it is one system', 'copy' => 'Our heritage aluminium doors are the same Sheerline Classic system in the same twelve colours, so a run of windows and a garden door line up rather than nearly matching.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Are heritage windows the same as steel windows?', 'answer' => 'No. They are aluminium windows designed to achieve a steel-inspired look with modern glazing, insulation and lower maintenance.'],
-                    ['question' => 'Where do heritage windows work well?', 'answer' => 'They suit period renovations, industrial-style interiors, extensions, cottages and homes where slim dark glazing bars are part of the design.'],
-                    ['question' => 'Can heritage windows improve energy performance?', 'answer' => 'Yes. Modern aluminium frames and double glazing can improve comfort compared with old steel or single-glazed windows.'],
-                    ['question' => 'Can I choose the bar layout?', 'answer' => 'Yes. Fenster will help plan glazing bars, fixed panes and openings so the pattern looks balanced and practical.'],
-                    ['question' => 'Can heritage windows match doors?', 'answer' => 'Yes. Heritage aluminium doors can be specified alongside the windows for a consistent steel-look project.'],
+                    ['question' => 'Are heritage windows the same as steel windows?', 'answer' => 'No, and that is the point. They are thermally broken aluminium shaped to look like steel, so you get the slim gridded appearance of an original Crittall style window without the cold frame, the rust or the repainting.'],
+                    ['question' => 'Can you replace original steel windows with these?', 'answer' => 'Yes, and it is what the system was drawn for. Old steel frames are usually set straight into the masonry, so we survey the opening first and tell you what making good will involve before you order anything.'],
+                    ['question' => 'What bar layouts can I have?', 'answer' => 'A Georgian grid, or the horizontal layout that suits a 1920s and 1930s house. Bars can go on every light or only the ones that need them, and you can set the layout out on this page before you speak to anybody.'],
+                    ['question' => 'Will they be warmer than what I have now?', 'answer' => 'If you are replacing single glazed steel, considerably. Sheerline publish 1.4 W/m²K for the Classic window double glazed, and the thermal break through the frame is what stops the condensation an old steel window collects, which is the thing people actually notice on a February morning.'],
+                    ['question' => 'Do they match your heritage doors?', 'answer' => 'Exactly, because they are the same Sheerline Classic system. The stepped face, the bar spacing and the twelve powder-coated colours are shared, so windows and doors specified together look like one job.'],
                 ],
             ],
             'slide-fold-doors' => [
@@ -2097,6 +2177,31 @@ function fenster_site_data(): array
                         ['name' => 'D Handle', 'image' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/d-handle.jpg'],
                     ],
                 ],
+            ],
+        ],
+        /* Heritage window layouts — the data behind the bar planner on
+           /heritage-windows/.
+           ---------------------------------------------------------------
+           It lives here rather than in the template because these are product
+           options a customer can order, and this file is where those belong.
+           The planner draws from this list, the copy beside it reads from the
+           same list, and the colours come from `colour_options` rather than
+           being repeated, per the Swatch Provenance Rule.
+
+           NO BAR WIDTH IS PUBLISHED and none is printed. Sheerline give
+           sightlines for the frame and nothing for the applied bar, so the
+           planner draws a bar at a believable width and dimensions only the
+           60.5mm frame, which is sourced. Same position the integral blind
+           visualiser takes on slat width. */
+        'heritage_window_layouts' => [
+            /* Sheerline's own two decorative bar layouts. Their wording for the
+               second is a "1920's Art Deco aesthetic"; ours says what it looks
+               like, because a customer searching for this describes the house
+               rather than the movement. */
+            'bars' => [
+                ['key' => 'none', 'label' => 'No bars', 'copy' => 'The frame and the mullions do all the work. Right where the openings are already small, or where the original had no bars in it.'],
+                ['key' => 'georgian', 'label' => 'Georgian grid', 'copy' => 'Bars both ways, squaring the glass up. The layout most people picture when they picture a steel window.'],
+                ['key' => 'horizontal', 'label' => 'Horizontal', 'copy' => 'Bars across only, wider apart. The 1920s and 1930s pattern, and the one that suits a bay or a long low opening.'],
             ],
         ],
         'window_handles' => [
