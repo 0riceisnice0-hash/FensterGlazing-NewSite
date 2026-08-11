@@ -41807,8 +41807,13 @@ html.fg-blinds-reveal-locked {
   transform: translateY(-4px);
 }
 
+/* A reserved two lines, because "Gale Grey Finesse (Anthracite Smooth)" runs to
+   three and dragged its whole row out of line with the others. The name is the
+   site's own and is not shortened for layout — the swatch on the colour hub
+   carries the same one. */
 .fg-upd-chart__name {
   display: block;
+  min-height: 2.7em;
   margin-top: 0.55rem;
   font-size: 0.78rem;
   line-height: 1.35;
