@@ -106,7 +106,7 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
-## 2026-08-12 - All Hallows, Bedford, and two leaks in the town helper (TEST)
+## 2026-08-12 - All Hallows, Bedford, and two leaks in the town helper (LIVE, 32e05f2)
 
 Owner brief plus eleven of his own photographs. The tenth commercial study:
 eight aluminium AOV window units, a glazed entrance door and screen, one fixed
@@ -159,8 +159,21 @@ exact byte sizes, on the commercial archive and in `page-sitemap.xml`, absent
 from `/case-studies/`, the contractor's name zero times, no day printed, and a
 **proved** 390px viewport with `scrollWidth` 390 and nothing overflowing.
 
-Open: **nobody has confirmed which of the photographs shows an AOV**, so no
-caption names one, exactly as on the louvre page.
+The owner confirmed the wrapped black hardware along the heads is the AOV
+actuators, so the two works-in-progress captions name them, and the hero was
+swapped to the terrace run on his call that the lead image could be better.
+
+### Shipped from a release branch, not from `main`
+
+Two other sessions pushed while this was being written: a Little Horwood
+residential study and a tracking rework that touches consent, enquiries,
+AdminBase and the compiled JS. Neither is approved, so the release was cut
+from `main` at the point before both landed, with their study reverted on the
+branch, and proven to be "main minus their work" rather than assumed: eight
+theme files over live, all this session's, and `little-horwood` zero across
+the theme. **Test is deliberately left ahead of live** on `main`, because it
+is where their strands are being verified.
+
 
 ## 2026-08-11 - Louvre vents rebuilt around the range (LIVE, 5aa5d43)
 
