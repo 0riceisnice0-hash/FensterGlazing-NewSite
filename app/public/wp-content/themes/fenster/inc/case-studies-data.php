@@ -180,11 +180,12 @@ function fenster_case_studies(): array
          * claim is worse than a missing one. The 1.52m2 geometric free area is
          * attributed to one recorded unit, which is how the brief states it.
          *
-         * NO CAPTION SAYS WHICH UNITS ARE THE AOVs. Eight of the aluminium
-         * windows are, and nobody has confirmed which of these photographs
-         * shows one. Same rule the louvre page runs on: do not caption a
-         * photograph with a product on a guess. Ask the owner and the captions
-         * can say so.
+         * THE BLACK HARDWARE WRAPPED ON THE HEADS IS THE AOV ACTUATORS, owner
+         * confirmed 2026-08-12. Two captions called it protected hardware
+         * because nobody had said what it was, and that was the right caution
+         * at the time; now it is named. It also means the two works-in-progress
+         * photographs are the only ones on the page that show an AOV unit as an
+         * AOV, so they are the ones that say so.
          *
          * THREE PHOTOGRAPHS CARRIED REFLECTED FACES and all three are softened:
          * five members of the public reflected in the street screen, and the
@@ -229,12 +230,18 @@ function fenster_case_studies(): array
                 '10 steel doorsets, fire rated',
                 'Predominantly 28mm laminated and toughened double glazed units, low-E softcoat and argon',
             ],
+            /* images[0] is the HERO and the archive card. It was the street
+               screen, which proves the nine fields in one frame and is now the
+               first gallery cell instead: the owner asked for a stronger lead
+               image and the terrace run is the one that carries the job. It is
+               also the only landscape source in the set, so it fills the hero
+               panel without being cropped to a band. */
             'images' => [
+                ['src' => $img . 'cs-all-hallows-bedford-terrace-run.webp', 'caption' => 'The finished run along the terrace elevation, with the opening lights set above the transom.'],
                 ['src' => $img . 'cs-all-hallows-bedford-screen.webp', 'caption' => 'The fixed screen from the street. Nine glazed fields in one opening, 3010mm by 3030mm.'],
                 ['src' => $img . 'cs-all-hallows-bedford-terrace.webp', 'caption' => 'The terrace elevation finished, with the glazing turning the corner into the entrance door.'],
-                ['src' => $img . 'cs-all-hallows-bedford-terrace-run.webp', 'caption' => 'Along the run. The frames follow the terrace round, with the opening lights set above the transom.'],
-                ['src' => $img . 'cs-all-hallows-bedford-screen-inside.webp', 'caption' => 'The same glazing from inside, part way through the works, with the heads still wrapped.'],
-                ['src' => $img . 'cs-all-hallows-bedford-window-inside.webp', 'caption' => 'One of the window units from inside, scaffold still up and the hardware still protected.'],
+                ['src' => $img . 'cs-all-hallows-bedford-screen-inside.webp', 'caption' => 'The same glazing from inside, part way through the works, with the AOV actuators still wrapped along the heads.'],
+                ['src' => $img . 'cs-all-hallows-bedford-window-inside.webp', 'caption' => 'One of the AOV units from inside, scaffold still up and its actuators still in their wrapping.'],
                 ['src' => $img . 'cs-all-hallows-bedford-steel-doorset.webp', 'caption' => 'One of the ten steel doorsets, with vision panels top and bottom and the plate still in its film.'],
                 ['src' => $img . 'cs-all-hallows-bedford-doorsets.webp', 'caption' => 'Two more of the doorsets hung and finished, in one of the residential corridors.'],
             ],
