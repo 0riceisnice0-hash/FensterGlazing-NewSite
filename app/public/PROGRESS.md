@@ -106,6 +106,62 @@ Six releases, each guarded, backed up and verified as a visitor:
   sightline belonging to the opposite product, and a guarantee rounded up
   because it sounded better.
 
+## 2026-08-12 - All Hallows, Bedford, and two leaks in the town helper (TEST)
+
+Owner brief plus eleven of his own photographs. The tenth commercial study:
+eight aluminium AOV window units, a glazed entrance door and screen, one fixed
+screen at 3010mm by 3030mm in nine fields, ten fire rated steel doorsets, and
+the specialist glazing with them. Completed July 2025, month only, so
+`date_confirmed` is false and no day prints.
+
+Seven photographs used of eleven. Reflected faces softened in three: five
+members of the public in the street screen, the photographer in the terrace run
+and again in a doorset vision panel.
+
+**The building is named and the main contractor is not.** They are a repeat
+client, which is exactly what the Commercial Client Anonymity Rule protects
+against, and the repeat relationship is stated without them. Heal's set the
+pattern the day before.
+
+**Product names are published here on the owner's ruling and the manufacturer
+attribution is not.** The brief says Technal STII and DualFrame 75Si; the owner
+says DualFrame is a Technal product; DualFrame is published elsewhere as a
+Senior Architectural Systems range. Naming the products was the instruction, so
+the products are named and no sentence says which maker owns which line.
+
+### Two faults in one helper, both live, both found by verifying rather than by looking for them
+
+- **`fenster_case_studies_for_town()` had no commercial filter.** The 11 August
+  pass filtered the two product helpers and missed the third, which renders on
+  more routes than either. The Bletchley rail depot was leading "Jobs we have
+  finished in Bletchley" on `/casement-windows-bletchley/` and
+  `/double-glazing-bletchley/`, and reached every MK suburb route, because a
+  study whose location carries "Milton Keynes" counts as area proof for all
+  twelve. **When a rule goes into a helper, grep for the other helpers that
+  answer the same question.**
+- **A bare substring made a county read as a town.** `str_contains('leighton
+  buzzard, bedfordshire', 'bedford')` is true, so every Bedford route printed
+  "Jobs we have finished in Bedford" over a Leighton Buzzard job and the Green
+  Man at Eversholt. That is a false claim of local work, not a loose match, and
+  it was live. Word-boundary test now, checked against every study location.
+  **Bedford renders no strip at all as a result**, which is honest and is the
+  same call already made for `/aluminium-windows/`.
+
+### Three fixes that only the rendered page showed
+
+The H1 ran to four lines at 1440, an address spelled out in words read oddly
+against the rule that data takes figures, and `1.52m2` printed an ASCII 2 where
+the rest of the site uses the superscript. All three passed the lint and the
+data assertions. **Look at the page.**
+
+Verified on test: page `200` with zero PHP notices, seven images `200` at their
+exact byte sizes, on the commercial archive and in `page-sitemap.xml`, absent
+from `/case-studies/`, the contractor's name zero times, no day printed, and a
+**proved** 390px viewport with `scrollWidth` 390 and nothing overflowing.
+
+Open: **nobody has confirmed which of the photographs shows an AOV**, so no
+caption names one, exactly as on the louvre page.
+
 ## 2026-08-11 - Louvre vents rebuilt around the range (LIVE, 5aa5d43)
 
 Owner brief: a full overhaul, the IKON louvre suite is what we offer, add real

@@ -119,6 +119,13 @@ Use:
   system manufacturer anywhere on it** — model codes are fine, the brand is not,
   and the meta description outlived the first debranding pass by four hours
   because that pass read rendered text and never the head.
+- **The All Hallows, Bedford commercial case study is ON TEST as of 2026-08-12**,
+  and with it two fixes to `fenster_case_studies_for_town()`: commercial studies
+  are filtered out of the residential town matrix, and a town match is
+  word-boundary rather than substring. Both faults were live. The Bletchley rail
+  depot was rendering as local proof across the MK suburb routes, and every
+  Bedford route was claiming a Leighton Buzzard job because "Bedfordshire"
+  contains "Bedford". Bedford now renders no strip, deliberately.
 - **The Heal's, Tottenham Court Road commercial case study went live 2026-08-11.**
 
 - **Live is on `main` lineage again, and has been since 2026-08-07.** The
