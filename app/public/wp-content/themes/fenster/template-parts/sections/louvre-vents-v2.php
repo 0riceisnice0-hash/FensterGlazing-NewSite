@@ -18,10 +18,12 @@
  * systems on IKON's own site, so anybody comparing the two lists will notice
  * the gap, and it is deliberate.
  *
- * IKL33 LEADS BECAUSE IT IS WHAT WE FIT MOST, not because it performs best. On
- * free area it is the lowest of the four at 43.5%, which the copy says out
- * loud: a page that leads with its most common product and quietly hides that
- * product's weakest number is the sort of thing a consultant notices.
+ * IKL33 LEADS BECAUSE IT IS OUR STANDARD, not because it performs best. On free
+ * area it is the lowest of the four at 43.5%, which the copy says out loud: a
+ * page that leads with its commonest product and quietly hides that product's
+ * weakest number is the sort of thing an estimator notices. The owner asked on
+ * 2026-08-11 for the "one we fit most" framing to be played down, so the
+ * heading now leads with the specification and the frequency is one clause.
  *
  * EVERY FIGURE IS IKON'S, and the page attributes them to "the system
  * manufacturer" rather than by name. Owner instruction, 2026-08-11: "we dont
@@ -91,9 +93,9 @@ foreach ($standard as $system) {
         <section class="fg-lv-lead" aria-labelledby="fg-lv-lead-title">
             <div class="container fg-lv-lead__grid fg-lv-lead__grid--single">
                 <div class="fg-lv-lead__copy">
-                    <p class="eyebrow"><?php esc_html_e('The one we fit most', 'fenster'); ?></p>
-                    <h2 id="fg-lv-lead-title"><?php esc_html_e('The IKL33 is the system we fit most.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Blades at 34mm centres, set to 60 degrees, in a 36.2mm frame. The close pitch and steep angle give sightproofing and weather resistance, and the shallow frame suits openings that will not take a deeper system.', 'fenster'); ?></p>
+                    <p class="eyebrow"><?php esc_html_e('Standard specification', 'fenster'); ?></p>
+                    <h2 id="fg-lv-lead-title"><?php esc_html_e('IKL33: 34mm blades at 60 degrees.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Our standard louvre, and the one most schedules end up with. The close pitch and steep blade angle give sightproofing and weather resistance, and the 36.2mm frame suits openings that will not take a deeper system.', 'fenster'); ?></p>
                     <p><?php esc_html_e('It trades free area for that performance and is the lowest of the four standard systems at 43.5% physical. Where a schedule needs more air through the same opening, we move up the range.', 'fenster'); ?></p>
                     <dl class="fg-lv-figures">
                         <div>
@@ -183,7 +185,7 @@ foreach ($standard as $system) {
                                     <th scope="row">
                                         <?php echo esc_html((string) $system['code']); ?>
                                         <?php if (! empty($system['common'])) : ?>
-                                            <span><?php esc_html_e('Most used', 'fenster'); ?></span>
+                                            <span><?php esc_html_e('Standard', 'fenster'); ?></span>
                                         <?php endif; ?>
                                     </th>
                                     <td><?php echo esc_html((string) $system['centre']); ?></td>
@@ -210,7 +212,7 @@ foreach ($standard as $system) {
                     'alt' => __('Close view of wide-pitched aluminium louvre blades on a pair of plant room doors, with the lock between them', 'fenster'),
                     'loading' => 'lazy',
                 ]); ?>>
-                <figcaption><?php esc_html_e('Wider blade centres on a plant doorset. More air and a longer view in, on an opening where neither matters.', 'fenster'); ?></figcaption>
+                <figcaption><?php esc_html_e('Wider blade centres on a plant doorset: more air through the same opening, and more of it visible from outside.', 'fenster'); ?></figcaption>
             </figure>
 
             <div class="fg-lv-range__more">
@@ -254,9 +256,9 @@ foreach ($standard as $system) {
             <div class="fg-lv-spec__head">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Specifying it', 'fenster'); ?></p>
-                    <h2 id="fg-lv-spec-title"><?php esc_html_e('The frame is specified separately from the blade.', 'fenster'); ?></h2>
+                    <h2 id="fg-lv-spec-title"><?php esc_html_e('Five frame options, chosen to suit the opening.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('The same louvre meets an opening in five ways, and the right one depends on the construction rather than the louvre. It is worth settling at survey: drawings rarely show it.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The blade system and the frame are specified separately. Which frame you need depends on the construction the louvre goes into, and drawings rarely show it, so it is worth settling at survey.', 'fenster'); ?></p>
             </div>
             <?php /* A louvre and a glazed panel in one screen, which is what the
                      glaze-in frame in the list below actually looks like built.
@@ -312,14 +314,14 @@ foreach ($standard as $system) {
         <div class="container">
             <div class="fg-lv-work__head">
                 <div>
-                    <p class="eyebrow"><?php esc_html_e('Elsewhere on site', 'fenster'); ?></p>
-                    <h2 id="fg-lv-work-title"><?php esc_html_e('Two more, on different jobs.', 'fenster'); ?></h2>
+                    <p class="eyebrow"><?php esc_html_e('Recent installations', 'fenster'); ?></p>
+                    <h2 id="fg-lv-work-title"><?php esc_html_e('Two more, on other sites.', 'fenster'); ?></h2>
                 </div>
                 <p>
                     <?php
                     printf(
                         /* translators: %s: link to the Heal's case study */
-                        esc_html__('Louvres normally arrive as part of a wider package. Six bespoke ones went into the courtyard elevations at %s, in a golden brown against black windows.', 'fenster'),
+                        esc_html__('Louvres normally form part of a wider glazing package. Six bespoke units went into the courtyard elevations at %s, in a golden brown against black windows.', 'fenster'),
                         '<a href="' . esc_url(home_url('/commercial-projects/heals-tottenham-court-road/')) . '">' . esc_html__('Heal\'s on Tottenham Court Road', 'fenster') . '</a>'
                     );
                     ?>

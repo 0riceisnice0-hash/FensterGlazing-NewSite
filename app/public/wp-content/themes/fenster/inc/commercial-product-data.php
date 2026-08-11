@@ -107,7 +107,7 @@ function fenster_commercial_product_pages(): array
             'eyebrow' => 'Louvre vents',
             'title' => 'Louvre vents',
             'subtitle' => 'Aluminium ventilation louvres supplied and fitted as part of the glazing package: plant rooms, service areas, screened openings and continuous facade runs.',
-            'intro_heading' => 'Ventilation openings, screened and weathered, in the same aluminium as the glazing around them.',
+            'intro_heading' => 'Ventilation louvres for plant, service and screened openings.',
             /* THE HERO IS A LOUVRE NOW. Owner, 2026-08-11: "hero image isnt
                louvres", and it was not — a timber-and-glass entrance with no
                louvre anywhere in it, on the louvre page. This is ours, at
