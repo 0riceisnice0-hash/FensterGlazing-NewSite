@@ -150,7 +150,7 @@ $randomiser_payload = [
                 <h2 id="fg-upd-open-title"><?php esc_html_e('Most of ours are a white back door. Yours does not have to be.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('A uPVC door is made to the opening you have, not picked off a shelf and packed out to fit. That is true of the plain white one most people order, and it is what makes everything else possible.', 'fenster'); ?></p>
                 <ul class="fg-flush-list fg-upd-list">
-                    <li><?php esc_html_e('Single leaf, a French pair, or a stable door split across the middle', 'fenster'); ?></li>
+                    <li><?php esc_html_e('A single leaf, French doors, or a stable door split across the middle', 'fenster'); ?></li>
                     <li><?php esc_html_e('Half glazed over a flat panel, or over a shiplap panel', 'fenster'); ?></li>
                     <li><?php esc_html_e('Sixteen foil finishes, white or the same colour inside', 'fenster'); ?></li>
                     <li><?php esc_html_e('Shaped heads are possible, though they are rare', 'fenster'); ?></li>
@@ -350,7 +350,7 @@ $randomiser_payload = [
                     'link_label' => '',
                 ],
                 [
-                    'title' => __('A French pair', 'fenster'),
+                    'title' => __('French doors', 'fenster'),
                     'copy' => __('Two leaves opening from the centre onto a garden or a patio. One is used day to day and the second unbolts when you want the whole opening.', 'fenster'),
                     'image' => 'upvc-door-white-french-decking.webp',
                     'alt' => __('White uPVC French doors opening onto decking', 'fenster'),

@@ -1939,16 +1939,16 @@ function fenster_site_data(): array
                 ],
             ],
             'upvc-doors' => [
-                'intro' => 'A uPVC door is not one thing. The same Liniar system makes a single front or back door, a French pair that opens from the centre, or a stable door split across the middle so the top half opens on its own. Which one suits you is usually decided by the opening and how the room is used, not by the price.',
+                'intro' => 'A uPVC door is not one thing. The same Liniar system makes a single front or back door, French doors that open from the centre, or a stable door split across the middle so the top half opens on its own. Which one suits you is usually decided by the opening and how the room is used, not by the price.',
                 'benefits' => [
                     ['title' => 'Efficient Liniar profiles', 'copy' => 'Multi-chambered uPVC profiles help reduce heat transfer and support a warmer entrance specification.'],
-                    ['title' => 'Single, French or stable', 'copy' => 'One leaf for a front or back door, a French pair for a wider opening onto a garden, or a stable door where you want air in without the whole thing open. All on the same system.'],
+                    ['title' => 'Single, French or stable', 'copy' => 'One leaf for a front or back door, French doors for a wider opening onto a garden, or a stable door where you want air in without the whole thing open. All on the same system.'],
                     ['title' => 'Secure locking options', 'copy' => 'uPVC doors can include multi-point locking, secure cylinders and reinforced hardware for everyday peace of mind.'],
                     ['title' => 'Low threshold choices', 'copy' => 'Threshold details can be reviewed where easier access, garden access or trip reduction is important.'],
                     ['title' => 'Low-maintenance finish', 'copy' => 'uPVC doors do not need painting and can be cleaned easily, with foiled finishes available for a timber-style look.'],
                 ],
                 'faqs' => [
-                    ['question' => 'What configurations do uPVC doors come in?', 'answer' => 'A single leaf for a front, back or side entrance; a French pair that opens from the centre for a wider opening; or a stable door split across the middle, so the top half can open on its own. Panel design, glass, colour, handles and letterplates are chosen on top of whichever you pick.'],
+                    ['question' => 'What configurations do uPVC doors come in?', 'answer' => 'A single leaf for a front, back or side entrance; French doors that open from the centre for a wider opening; or a stable door split across the middle, so the top half can open on its own. Panel design, glass, colour, handles and letterplates are chosen on top of whichever you pick.'],
                     ['question' => 'Are uPVC doors good for front doors?', 'answer' => 'Yes. uPVC doors can be specified for front, rear or side entrances with secure locking, glazing and panel choices.'],
                     ['question' => 'How secure are uPVC doors?', 'answer' => 'uPVC doors can include multi-point locking, with hardware and cylinder options confirmed during the quote and survey process.'],
                     ['question' => 'Can uPVC doors be coloured?', 'answer' => 'Yes. uPVC doors can be specified in white, woodgrain-style foils and selected colours depending on the system.'],

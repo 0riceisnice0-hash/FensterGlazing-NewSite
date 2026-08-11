@@ -103,10 +103,10 @@ $security = [
                 <p class="eyebrow"><?php esc_html_e('Where it fits', 'fenster'); ?></p>
                 <h2 id="fg-alud-fit-title"><?php esc_html_e('The door that matches the windows.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('An aluminium front or back door is usually chosen because something else on the house is already aluminium. It comes off the same Sheerline frames and the same powder coating as our aluminium windows and sliders, so a door sitting in a run of them reads as one set rather than as two separate decisions made a year apart.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The frame is thin for the strength it holds, which is what lets a door carry a tall glazed panel, or sit between windows without the surround thickening up to cope. A French pair with a flush aluminium window either side, all in one black, reads as a single opening rather than as three products that happen to be near each other.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The frame is thin for the strength it holds, which is what lets a door carry a tall glazed panel, or sit between windows without the surround thickening up to cope. French doors with a flush aluminium window either side, all in one black, reads as a single opening rather than as three products that happen to be near each other.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <li><?php esc_html_e('Twelve standard powder-coated colours, and any RAL beyond them', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Single leaf or a French pair, with side screens and toplights where the opening allows', 'fenster'); ?></li>
+                    <li><?php esc_html_e('A single leaf or French doors, with side screens and toplights where the opening allows', 'fenster'); ?></li>
                     <li><?php esc_html_e('Blinds can be sealed inside the glass, as they are here', 'fenster'); ?></li>
                 </ul>
                 <p class="fg-cw-actions">

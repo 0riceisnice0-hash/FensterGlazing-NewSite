@@ -1995,7 +1995,7 @@ function fenster_blog_posts(): array
                 [
                     'heading' => 'Deciding it in one evening.',
                     'body' => [
-                        'Stand in the room and ask three questions. Where would swinging leaves collide with life? How much does the closed-door view matter against the fully open one? And who uses the threshold, since buggies, wheels and unsteady feet all prefer the French pair\'s flat sill. Then price both in the online tool; at these sizes the difference is usually modest, which frees the decision to be about living rather than budget.',
+                        'Stand in the room and ask three questions. Where would swinging leaves collide with life? How much does the closed-door view matter against the fully open one? And who uses the threshold, since buggies, wheels and unsteady feet all prefer the flat sill on French doors. Then price both in the online tool; at these sizes the difference is usually modest, which frees the decision to be about living rather than budget.',
                     ],
                 ],
             ],
@@ -2546,7 +2546,7 @@ function fenster_blog_posts(): array
                 [
                     'heading' => '',
                     'body' => [
-                        'Between the classic French pair and the premium aluminium bifold sits a format fewer people know to ask about: the slide and fold door. Panels slide along a track and fold to stack at the side, opening most of the wall, with a practicality-first character that suits real family kitchens and sensible budgets.',
+                        'Between classic French doors and the premium aluminium bifold sits a format fewer people know to ask about: the slide and fold door. Panels slide along a track and fold to stack at the side, opening most of the wall, with a practicality-first character that suits real family kitchens and sensible budgets.',
                     ],
                 ],
                 [
