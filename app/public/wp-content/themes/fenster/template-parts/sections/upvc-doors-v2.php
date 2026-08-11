@@ -106,28 +106,6 @@ $photo = static function (string $key) use ($photos): array {
 };
 ?>
 
-<?php /* 1. WHAT IT IS. One idea, one photograph, no list. The bullets that were
-         here named the four sections below them, which is a contents page
-         rather than an argument. */ ?>
-<section class="fg-cw fg-upd fg-upd-open" aria-labelledby="fg-upd-open-title">
-    <div class="container">
-        <div class="fg-cw-split">
-            <div class="fg-cw-split__text">
-                <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
-                <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most, and it is made the same way as anything rarer: to the hole in your wall. Shaped heads are possible too, though they are rare.', 'fenster'); ?></p>
-                <p><?php esc_html_e('What follows is everything you get to decide, roughly in the order it gets decided.', 'fenster'); ?></p>
-            </div>
-            <?php if (! empty($photo('opening')['src'])) : ?>
-                <figure class="fg-cw-media fg-upd-media--4x3">
-                    <img src="<?php echo esc_url($photo('opening')['src']); ?>" alt="<?php echo esc_attr($photo('opening')['alt'] ?? ''); ?>" loading="lazy" decoding="async" width="1280" height="1600">
-                    <figcaption><?php esc_html_e('Our install. A back door glazed over a shiplap panel, with black furniture against a white frame.', 'fenster'); ?></figcaption>
-                </figure>
-            <?php endif; ?>
-        </div>
-    </div>
-</section>
-
 <?php /* 2. HOW IT OPENS. Moved up from the bottom half of the old page: it is
          the first real question a homeowner has and it is answered entirely in
          our own photographs.
@@ -187,6 +165,32 @@ $photo = static function (string $key) use ($photos): array {
                     <?php endif; ?>
                 </article>
             <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<?php /* 2b. WHATEVER SHAPE OR SIZE. This sat at the top of the middle until
+         2026-08-12, when the owner moved it below the three ways of opening: the
+         standard three first, and then the point that a door is made to whatever
+         opening you actually have. The arched door is the proof of that
+         sentence, which is why it is back after two removals — it earns its
+         place here, where it illustrates a claim, rather than at the top where
+         it led the page on a niche product. */ ?>
+<section class="fg-cw fg-upd fg-upd-open" aria-labelledby="fg-upd-open-title">
+    <div class="container">
+        <div class="fg-cw-split">
+            <div class="fg-cw-split__text">
+                <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
+                <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into, whatever shape or size that is.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most, and it is made the same way as the arched one here: to the hole in your wall, whatever shape that hole is in.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Everything from here is what you get to choose.', 'fenster'); ?></p>
+            </div>
+            <?php if (! empty($photo('opening')['src'])) : ?>
+                <figure class="fg-cw-media fg-upd-media--4x3">
+                    <img src="<?php echo esc_url($photo('opening')['src']); ?>" alt="<?php echo esc_attr($photo('opening')['alt'] ?? ''); ?>" loading="lazy" decoding="async" width="1280" height="1600">
+                    <figcaption><?php esc_html_e('Our install. A curved head made to a Victorian brick arch, with leaded glass and a full panel below.', 'fenster'); ?></figcaption>
+                </figure>
+            <?php endif; ?>
         </div>
     </div>
 </section>

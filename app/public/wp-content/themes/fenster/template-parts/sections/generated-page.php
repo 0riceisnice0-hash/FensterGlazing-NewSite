@@ -4743,15 +4743,17 @@ if ($is_commercial_hub) {
                 'renders' => $upvc_render_args,
                 'handles' => is_array($door_handle_finishes) ? $door_handle_finishes : [],
                 'glass' => $upvc_glass,
-                /* THE COMMON DOOR OPENS THE PAGE, not the arch. The arched one
-                   was tried here and the owner pulled it: shaped heads are super
-                   niche, and leading on one misrepresents what we actually sell.
-                   A white back door glazed over a shiplap panel is the honest
-                   picture of this product. */
+                /* THE ARCH ILLUSTRATES "whatever shape or size", and it sits
+                   below the three ways of opening rather than above them. It was
+                   pulled twice on the way here: once from the configurations,
+                   where a shaped head says nothing about opening, and once from
+                   the top of the page, where leading on a niche product
+                   misrepresents what we sell. Under a claim about shape it is
+                   the proof rather than the pitch. */
                 'photos' => [
                     'opening' => [
-                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-white-shiplap-brick.webp'),
-                        'alt' => __('White uPVC back door glazed over a shiplap panel in a brick opening', 'fenster'),
+                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-white-arched-leaded.webp'),
+                        'alt' => __('White uPVC door with a curved head and leaded glass in an arched brick opening', 'fenster'),
                     ],
                 ],
             ]);
