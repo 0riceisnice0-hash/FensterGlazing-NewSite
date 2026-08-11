@@ -75,7 +75,7 @@ $case_study = home_url('/case-studies/secondary-glazing-winslow/');
 $reasons = [
     [
         'name' => __('The windows have to stay', 'fenster'),
-        'copy' => __('A listed building, a conservation area, or a flat where the windows are not yours to change. Original leaded lights or stained glass worth keeping is the other one. Secondary glazing goes on the inside and takes nothing out, so what is there stays there.', 'fenster'),
+        'copy' => __('A listed building, a conservation area, or a flat where the windows are not yours to change. Original leaded or stained glass worth keeping is the other one. Secondary glazing goes on the inside and takes nothing out, so what is there stays there.', 'fenster'),
     ],
     [
         'name' => __('The road is loud', 'fenster'),
@@ -208,7 +208,7 @@ $styles = [
             </div>
             <figure class="fg-cw-media fg-cw-media--4x3">
                 <img src="<?php echo esc_url(fenster_generated_url($base . 'sg-slider-catch-4x3.jpg')); ?>"
-                    alt="<?php esc_attr_e('The catch on a secondary glazing slider, with the original leaded light immediately behind it', 'fenster'); ?>"
+                    alt="<?php esc_attr_e('The catch on a secondary glazing slider, with the original leaded glass immediately behind it', 'fenster'); ?>"
                     loading="lazy" width="1200" height="900">
                 <figcaption><?php esc_html_e('The catch on a slider', 'fenster'); ?></figcaption>
             </figure>

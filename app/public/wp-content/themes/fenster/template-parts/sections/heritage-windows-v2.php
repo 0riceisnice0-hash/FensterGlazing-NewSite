@@ -31,8 +31,8 @@
  * /casement-windows/ on 2026-08-04. Do not build another one.
  *
  * SIGHTLINES ARE THE BEADED FIGURES, 60.5mm on a casement and from 36.5mm on a
- * fixed light, owner-confirmed as the variant we fit. Do not reach for the
- * beadless 59mm, and do not quote the fixed-light figure as though it described
+ * fixed pane, owner-confirmed as the variant we fit. Do not reach for the
+ * beadless 59mm, and do not quote the fixed-pane figure as though it described
  * a casement.
  *
  * NO TRIPLE GLAZING. Owner, 2026-08-11: triple can be done on the Classic
@@ -77,7 +77,7 @@ $classic_gives = [
     ],
     [
         'name' => __('Slim, and slimmest where it shows', 'fenster'),
-        'copy' => __('60.5mm sightlines on a beaded casement, and fixed lights from 36.5mm. On a small stone opening, that is the difference between a window and a frame with some glass in it.', 'fenster'),
+        'copy' => __('60.5mm sightlines on a beaded casement, and fixed panes from 36.5mm. On a small stone opening, that is the difference between a window and a frame with some glass in it.', 'fenster'),
     ],
     [
         'name' => __('Tested to PAS 24, and beyond it if you want', 'fenster'),
@@ -118,7 +118,7 @@ $classic_gives = [
                 <p><?php esc_html_e('Britain put steel windows into a great many houses between the wars, Crittall being the name most people remember, and they are still the reason those houses look the way they do. They are also single glazed, they rust from inside the frame outwards, and by now most of them bind in the wet and run with condensation from October to March.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Sheerline Classic is aluminium drawn to the same proportions and given a thermal break, modern glass and a powder coat that does not need painting. It has quietly become the window the trade reaches for when somebody wants steel back, and we fit it with the stepped sash, which is the profile that keeps the shoulder and the shadow line the original had. Get that wrong and you have a nice window that reads as new.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
-                    <li><?php esc_html_e('60.5mm on a casement, and from 36.5mm on a fixed light', 'fenster'); ?></li>
+                    <li><?php esc_html_e('60.5mm on a casement, and from 36.5mm on a fixed pane', 'fenster'); ?></li>
                     <li><?php esc_html_e('1.4 W/m²K double glazed', 'fenster'); ?></li>
                     <li><?php esc_html_e('Twelve powder-coated colours, or any RAL you can name', 'fenster'); ?></li>
                 </ul>
@@ -260,7 +260,7 @@ $classic_gives = [
             </figure>
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
-                <h2 id="fg-hw-proof-title"><?php esc_html_e('Three lights, three stone openings.', 'fenster'); ?></h2>
+                <h2 id="fg-hw-proof-title"><?php esc_html_e('Three windows, three stone openings.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('White Classic frames in an ironstone gable, one window into each original opening so the stone mullions still carry the elevation rather than being hidden behind a single wide frame. On a building like this the stone is the architecture and the window is a guest in it.', 'fenster'); ?></p>
                 <p><?php esc_html_e('It is also the argument for aluminium on an old house in one picture. A frame this slim leaves the openings looking the size they were built, which is the thing you notice from the road without being able to say why.', 'fenster'); ?></p>
             </div>

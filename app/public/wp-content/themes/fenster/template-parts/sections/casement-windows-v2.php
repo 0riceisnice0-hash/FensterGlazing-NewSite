@@ -64,7 +64,7 @@ $styles = [
     ],
     [
         'name' => 'Top hung',
-        'copy' => 'Hinged in the head with the handle on the bottom rail. The open sash sheds rain clear of the opening, which is why top lights sit above fixed panes and over kitchen worktops. A restrictor holds the first opening to around 100mm where children sleep.',
+        'copy' => 'Hinged in the head with the handle on the bottom rail. The open sash sheds rain clear of the opening, which is why top-hung sashes sit above fixed panes and over kitchen worktops. A restrictor holds the first opening to around 100mm where children sleep.',
         'image' => $studio . 'cas-hinge-open.webp',
         'w' => 1250,
         'h' => 857,
@@ -166,15 +166,15 @@ $security_points = [
    downstairs window because the upstairs windows on that terrace are not ours.
    Every tag below is read off its own photograph. */
 $gallery = [
-    ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'tags' => ['Anthracite grey', 'Two-storey bay', 'Top opening lights'], 'alt' => 'Anthracite Liniar casement windows stacked over two floors on a corner elevation in Bolbeck Park, fitted by Fenster'],
+    ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'tags' => ['Anthracite grey', 'Two-storey bay', 'Top opening sashes'], 'alt' => 'Anthracite Liniar casement windows stacked over two floors on a corner elevation in Bolbeck Park, fitted by Fenster'],
     ['file' => 'casement-anthracite-bay', 'width' => 1600, 'focus' => '50% 45%', 'caption' => 'Anthracite grey bay', 'tags' => ['Anthracite grey', 'Splayed bay', 'Obscure glass'], 'alt' => 'Anthracite grey uPVC casement bay window with obscured lower panes, fitted by Fenster'],
     ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'tags' => ['White', 'Diamond lead', 'Side hung openers'], 'alt' => 'White uPVC casement windows with diamond leaded glazing on a red brick house in Rushden, fitted by Fenster'],
-    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'tags' => ['White', 'Splayed bay', 'Top opening lights'], 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
+    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'tags' => ['White', 'Splayed bay', 'Top opening sashes'], 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
     ['file' => 'casement-leighton-downstairs', 'width' => 490, 'focus' => '50% 50%', 'caption' => 'Leighton Buzzard', 'tags' => ['White', 'Fixed pane and opener', 'Tile-hung elevation'], 'alt' => 'White Liniar casement window with a wide fixed pane and a side hung opener on a tile hung terrace in Leighton Buzzard, fitted by Fenster'],
 ];
 $faqs = [
     ['question' => 'What is a casement window?', 'answer' => 'A window with sashes hinged at the side or the top, opening outwards. Opening sashes and fixed panes are made into one frame, so a single window can do more than one job.'],
-    ['question' => 'What is the difference between casement and flush casement windows?', 'answer' => 'The sash. On a standard casement it stands slightly proud of the frame, and fixed panes are glazed straight into the frame so they hold more glass. On a flush casement the sash closes level with the frame for a traditional joinery look, with fixed lights matched to the openers so every pane reads the same. Standard takes 28mm double or 36mm triple glazing and reaches 0.95 W/m²K; flush takes 28mm double and reaches 1.2 W/m²K. Both are A+ rated.'],
+    ['question' => 'What is the difference between casement and flush casement windows?', 'answer' => 'The sash. On a standard casement it stands slightly proud of the frame, and fixed panes are glazed straight into the frame so they hold more glass. On a flush casement the sash closes level with the frame for a traditional joinery look, with fixed panes matched to the openers so every pane reads the same. Standard takes 28mm double or 36mm triple glazing and reaches 0.95 W/m²K; flush takes 28mm double and reaches 1.2 W/m²K. Both are A+ rated.'],
     ['question' => 'Which Liniar system do you fit?', 'answer' => 'The 70mm Liniar EnergyPlus system in the sculptured profile, a six-chamber uPVC platform used for both replacement and new-build work. Glass, reinforcement and hardware are confirmed for your individual job.'],
     ['question' => 'What U-value can an EnergyPlus casement reach?', 'answer' => '0.95 W/m²K, with the 36mm triple glazed unit, which makes it an A+ window. Size, layout, glass and reinforcement all move the complete-window figure, so the number we agree follows your final specification rather than a brochure.'],
     ['question' => 'Are casement windows secure?', 'answer' => 'They can be specified with reinforced frames, multi-point locking and PAS 24 or Secured by Design options. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we will specify to it. Those approvals belong to a tested complete window rather than to the profile name, so we confirm what applies to your configuration.'],
@@ -236,7 +236,7 @@ $faq_schema = [
                 <h2 id="fg-cas-overture-title" class="fg-cas-display"><?php esc_html_e('The window most British homes are built around.', 'fenster'); ?></h2>
             </div>
             <div class="fg-cas-overture__copy">
-                <p><?php esc_html_e('A casement is the everyday window: sashes hinged at the side or the top, opening outwards, made to the millimetre for the hole in your wall. It is the most adaptable window there is, which is why one system covers a bathroom light, a full bay and everything in between.', 'fenster'); ?></p>
+                <p><?php esc_html_e('A casement is the everyday window: sashes hinged at the side or the top, opening outwards, made to the millimetre for the hole in your wall. It is the most adaptable window there is, which is why one system covers a bathroom window, a full bay and everything in between.', 'fenster'); ?></p>
                 <p><?php esc_html_e('We fit one. The 70mm Liniar EnergyPlus profile, sculptured, as standard rather than as an upgrade tier. Everything on this page is that window.', 'fenster'); ?></p>
                 <div class="fg-cas-actions">
                     <?php if ($quote_url !== '') : ?>
@@ -343,7 +343,7 @@ $faq_schema = [
             </figure>
             <div>
                 <h3><?php esc_html_e('And any combination of the three.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top lights over a worktop, a three light, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
+                <p><?php esc_html_e('This is where the range stops being a list. Openers and fixed panes share one outer frame, in any arrangement, at any size we can make: a fixed centre with openers either side, a run of top openers over a worktop, a three pane window, a splayed bay, a bow, a dormer. Transom and mullion positions are drawn for your opening rather than picked from a catalogue.', 'fenster'); ?></p>
                 <p><?php esc_html_e('There is no standard size and no fixed set of layouts. Every window is drawn, made and priced for the hole it goes into, which is why one system covers the whole house.', 'fenster'); ?></p>
             </div>
         </div>

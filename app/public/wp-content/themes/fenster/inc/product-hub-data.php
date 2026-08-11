@@ -43,7 +43,7 @@ function fenster_product_hub_data(string $slug): array
                 ['label' => 'Security', 'value' => 'Multi-point locking with PAS 24 and Secured by Design options where specified'],
                 ['label' => 'Best for', 'value' => 'Everyday replacement windows, bedrooms, kitchens and mixed fixed/opening layouts'],
             ],
-            'choices' => ['Side-hung, top-hung and fixed lights', 'White, foiled woodgrain and selected colours', 'S2 Signature handle finishes', 'Obscure, acoustic, toughened or laminated glass where required'],
+            'choices' => ['Side-hung, top-hung and fixed panes', 'White, foiled woodgrain and selected colours', 'S2 Signature handle finishes', 'Obscure, acoustic, toughened or laminated glass where required'],
         ],
         'flush-casement-windows' => [
             'systems' => [$systems['liniar']],

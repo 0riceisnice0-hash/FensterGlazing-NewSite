@@ -237,7 +237,7 @@ function fenster_case_studies(): array
                also the only landscape source in the set, so it fills the hero
                panel without being cropped to a band. */
             'images' => [
-                ['src' => $img . 'cs-all-hallows-bedford-terrace-run.webp', 'caption' => 'The finished run along the terrace elevation, with the opening lights set above the transom.'],
+                ['src' => $img . 'cs-all-hallows-bedford-terrace-run.webp', 'caption' => 'The finished run along the terrace elevation, with the opening vents set above the transom.'],
                 ['src' => $img . 'cs-all-hallows-bedford-screen.webp', 'caption' => 'The fixed screen from the street. Nine glazed fields in one opening, 3010mm by 3030mm.'],
                 ['src' => $img . 'cs-all-hallows-bedford-terrace.webp', 'caption' => 'The terrace elevation finished, with the glazing turning the corner into the entrance door.'],
                 ['src' => $img . 'cs-all-hallows-bedford-screen-inside.webp', 'caption' => 'The same glazing from inside, part way through the works, with the AOV actuators still wrapped along the heads.'],
@@ -317,7 +317,7 @@ function fenster_case_studies(): array
             'images' => [
                 ['src' => $img . 'cs-heals-tottenham-court-elevation.webp', 'caption' => 'The courtyard elevation glazed, with the fixed Prestige windows in jet black against the existing concrete frame.'],
                 ['src' => $img . 'cs-heals-tottenham-court-courtyard.webp', 'caption' => 'The same courtyard partway through, with the openings still bare and the deck being used as the working platform.'],
-                ['src' => $img . 'cs-heals-tottenham-court-door.webp', 'caption' => 'The single Prestige door at the end of the run, with a fixed light over it.'],
+                ['src' => $img . 'cs-heals-tottenham-court-door.webp', 'caption' => 'The single Prestige door at the end of the run, with a toplight over it.'],
                 ['src' => $img . 'cs-heals-tottenham-court-run.webp', 'caption' => 'Looking along the run. The frames follow the existing structural bays rather than cutting across them.'],
                 ['src' => $img . 'cs-heals-tottenham-court-looking-up.webp', 'caption' => 'The courtyard from the deck, five floors of the existing building above the new glazing.'],
             ],
@@ -824,7 +824,7 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-winslow-secondary-glazing-bedroom-open.jpg', 'caption' => 'A bedroom window, the original casement swung open behind the glazing and the slider closed in front of it.'],
                 ['src' => $img . 'cs-winslow-secondary-glazing-kitchen.jpg', 'caption' => 'The kitchen window, glazed across the full opening above the worktop.'],
                 ['src' => $img . 'cs-winslow-secondary-glazing-narrow.jpg', 'caption' => 'A narrow opening with its original timber sill left alone, the glazing sitting back inside the reveal.'],
-                ['src' => $img . 'cs-winslow-secondary-glazing-catch.jpg', 'caption' => 'The catch on one of the sliders, with the original leaded light immediately behind it.'],
+                ['src' => $img . 'cs-winslow-secondary-glazing-catch.jpg', 'caption' => 'The catch on one of the sliders, with the original leaded glass immediately behind it.'],
             ],
             'seo' => [
                 'title_tag' => 'Secondary Glazing, Winslow | Fenster Glazing',
@@ -926,7 +926,7 @@ function fenster_case_studies(): array
                the open door looks into the customer's hall. */
             'images' => [
                 ['src' => $img . 'cs-little-horwood-flush-frontage.jpg', 'caption' => 'The front of the house finished, with the porch at the centre and the flush casements either side of it.'],
-                ['src' => $img . 'cs-little-horwood-flush-window-open.jpg', 'caption' => 'One of the three light windows upstairs with the right hand light open. The closed sashes finish level with the outer frame.'],
+                ['src' => $img . 'cs-little-horwood-flush-window-open.jpg', 'caption' => 'One of the three pane windows upstairs with the right hand sash open. The closed sashes finish level with the outer frame.'],
                 ['src' => $img . 'cs-little-horwood-composite-door.jpg', 'caption' => 'The composite front door in the brick porch, boarded rather than glazed, with a sidelight each side and a long bar handle.'],
                 ['src' => $img . 'cs-little-horwood-flush-street.jpg', 'caption' => 'The house from the drive, where the agate grey sits against the cream render and the red brick heads.'],
             ],

@@ -30,7 +30,7 @@
  * two registers.
  *
  * THE DRAWING CARRIES NO INVENTED DIMENSIONS. Sheerline publishes sightlines
- * (46/60/70mm for fixed lights, 88/102/112mm for casement and French) and a
+ * (46/60/70mm for fixed panes, 88/102/112mm for casement and French) and a
  * "72-80mm wide system", and those are used. It publishes NO figure for how far
  * a standard sash stands proud, so the step is drawn and labelled in words and
  * is not dimensioned. Do not add a number to it without a source.
@@ -64,7 +64,7 @@ $alu_standard = esc_url(home_url('/aluminium-windows/'));
 $aluminium_gives = [
     [
         'name' => __('Frames you barely notice', 'fenster'),
-        'copy' => __('Aluminium carries a big pane in a narrow frame in a way uPVC cannot, which is why an opening stays mostly glass. Prestige is one system with three outer frames and the flush one is the larger of them; across the range Sheerline publish sightlines from 46mm on a fixed light to 112mm on a casement.', 'fenster'),
+        'copy' => __('Aluminium carries a big pane in a narrow frame in a way uPVC cannot, which is why an opening stays mostly glass. Prestige is one system with three outer frames and the flush one is the larger of them; across the range Sheerline publish sightlines from 46mm on a fixed pane to 112mm on a casement.', 'fenster'),
     ],
     [
         'name' => __('Any colour, inside and out', 'fenster'),

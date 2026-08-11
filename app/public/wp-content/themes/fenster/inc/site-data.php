@@ -302,7 +302,7 @@ function fenster_site_data(): array
                flush look like the chunkier product when it is the same system. It
                is also a frame DEPTH, which no customer is choosing on. Replaced
                with the sightline, which is the number that decides how much glass
-               you get: 46mm on a fixed light, 88mm on a casement, so "From 46mm"
+               you get: 46mm on a fixed pane, 88mm on a casement, so "From 46mm"
                is the honest floor of a published range. */
             'aluminium-flush-windows' => [
                 ['label' => 'U-value*', 'value' => '1.0 W/m²K'],
@@ -1303,7 +1303,7 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/bow-bay/bay-white-brick-dusk-1600w.webp', 'alt' => 'White bay window with Georgian bars on a brick and render home'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_10.jpg', 'alt' => 'Curved white uPVC bow window on a red brick wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_02.jpg', 'alt' => 'Golden oak bow window curving out from a light brick elevation'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_08.jpg', 'alt' => 'Golden oak bay window with leaded top lights'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_08.jpg', 'alt' => 'Golden oak bay window with leaded top panes'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-bay-brick-1400w.webp', 'alt' => 'Bay window built in a flush casement style on a tile hung house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Joined-Vertical-Slider-Bay.jpg', 'alt' => 'Sliding sash bay window in a dining room'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bay_7-e1699893445270.jpg', 'alt' => 'Bay window on the front elevation of a detached home'],
@@ -1498,7 +1498,7 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/secondary-glazing/sg-leaded-iron-handles.jpg', 'alt' => 'Secondary glazing across leaded casements with their original black iron handles behind the glass'],
                 ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-kitchen.jpg', 'alt' => 'Secondary glazing across a kitchen window above the worktop'],
                 ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-narrow.jpg', 'alt' => 'A narrow window with its original timber sill, the secondary glazing set back in the reveal'],
-                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-catch.jpg', 'alt' => 'The catch on a secondary glazing slider, with the original leaded light behind it'],
+                ['src' => '/wp-content/themes/fenster/assets/images/case-studies/cs-winslow-secondary-glazing-catch.jpg', 'alt' => 'The catch on a secondary glazing slider, with the original leaded glass behind it'],
             ],
             'window_repairs' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'Window opening detail used for repair checks'],
@@ -1852,15 +1852,15 @@ function fenster_site_data(): array
                 'intro' => 'Original steel windows look wonderful and behave badly. This is the aluminium answer to them: the same slim dark grid and the same stepped sash face, with a thermal break through the frame, modern glass and nothing left to rub down and repaint.',
                 'benefits' => [
                     ['title' => 'It reads as steel from the pavement', 'copy' => 'The Sheerline Classic stepped sash carries the shoulder and shadow line an original steel window has. It is the only sash profile we fit on this system, because the flatter contemporary one loses exactly the detail people come to this page for.'],
-                    ['title' => 'Slim where it counts', 'copy' => 'Beaded casement sightlines of 60.5mm, and fixed lights from 36.5mm, so a small opening keeps its glass instead of losing it to frame.'],
+                    ['title' => 'Slim where it counts', 'copy' => 'Beaded casement sightlines of 60.5mm, and fixed panes from 36.5mm, so a small opening keeps its glass instead of losing it to frame.'],
                     ['title' => 'Warm, which steel never was', 'copy' => 'Sheerline put their Thermlock multi-chamber thermal break through the frame, and double glazed it reaches 1.4 W/m²K, against a single-glazed steel window that runs with condensation every winter morning.'],
-                    ['title' => 'Bars where you want them', 'copy' => 'A Georgian grid or the horizontal 1920s layout, on every light or only some, planned against the elevation rather than dropped on it.'],
+                    ['title' => 'Bars where you want them', 'copy' => 'A Georgian grid or the horizontal 1920s layout, on every pane or only some, planned against the elevation rather than dropped on it.'],
                     ['title' => 'The doors match, because it is one system', 'copy' => 'Our heritage aluminium doors are the same Sheerline Classic system in the same twelve colours, so a run of windows and a garden door line up rather than nearly matching.'],
                 ],
                 'faqs' => [
                     ['question' => 'Are heritage windows the same as steel windows?', 'answer' => 'No, and that is the point. They are thermally broken aluminium shaped to look like steel, so you get the slim gridded appearance of an original Crittall style window without the cold frame, the rust or the repainting.'],
                     ['question' => 'Can you replace original steel windows with these?', 'answer' => 'Yes, and it is what the system was drawn for. Old steel frames are usually set straight into the masonry, so we survey the opening first and tell you what making good will involve before you order anything.'],
-                    ['question' => 'What bar layouts can I have?', 'answer' => 'A Georgian grid, or the horizontal layout that suits a 1920s and 1930s house. Bars can go on every light or only the ones that need them, and you can put the layout together with the sizes and the colour on our online designer, which prices it as you go.'],
+                    ['question' => 'What bar layouts can I have?', 'answer' => 'A Georgian grid, or the horizontal layout that suits a 1920s and 1930s house. Bars can go on every pane or only the ones that need them, and you can put the layout together with the sizes and the colour on our online designer, which prices it as you go.'],
                     ['question' => 'Will they be warmer than what I have now?', 'answer' => 'If you are replacing single glazed steel, considerably. Sheerline publish 1.4 W/m²K for the Classic window double glazed, and the thermal break through the frame is what stops the condensation an old steel window collects, which is the thing people actually notice on a February morning.'],
                     ['question' => 'Do they match your heritage doors?', 'answer' => 'Exactly, because they are the same Sheerline Classic system. The stepped face, the bar spacing and the twelve powder-coated colours are shared, so windows and doors specified together look like one job.'],
                 ],
