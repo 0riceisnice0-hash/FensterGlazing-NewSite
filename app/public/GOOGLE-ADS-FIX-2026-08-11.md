@@ -161,6 +161,44 @@ From `GOOGLE-ADS-AUDIT-2026-08-11.md` §9: verify the Final URL suffix on every 
 call reporting and Google forwarding numbers, and start recording lead outcomes
 (`website_lead_outcomes` still holds one row). Plus the review-count reconciliation in §0g.
 
+### 0i. The Final URL suffix — the one job that has to be done in the account
+
+**This is now the single most valuable thing anybody can do to this account, and
+it cannot be done from the website side.** The tracking rebuild of 11 August 2026
+made ad attribution consent-free: the site records every paid click and joins it
+to the lead it produced, without needing a cookie. But it can only file that click
+under a campaign name **if the campaign sends one**, and the suffix is what sends it.
+
+`PROGRESS.md` (2026-08-05) records that the suffix documented since 24 July "had
+never been applied", and only 15 of roughly 183 consented Google journeys read as
+`cpc`. If that is still true, every click now being recorded lands with no campaign,
+no ad group and no keyword — the click log will show the traffic and be unable to
+say where it came from.
+
+**It is set per campaign and nothing inherits it**, so a campaign created outside
+the build sheet will not have it.
+
+For each of `MK — Windows` and `MK — Doors`:
+
+1. Campaigns → select the campaign → **Settings**.
+2. Open **Campaign URL options** at the bottom.
+3. Set **Final URL suffix** to the line below, changing `mk-windows` to `mk-doors`
+   on the doors campaign:
+
+```
+utm_source=google&utm_medium=cpc&utm_campaign=mk-windows&utm_term={keyword}&utm_content={creative}&ads={adgroupid}
+```
+
+4. Save, then click **Test** if the button is offered.
+
+**Then prove it, rather than assuming.** Click one of your own live ads, and check
+the address bar on the landing page carries `utm_campaign` and `ads`. That single
+check is worth more than the setting, because this exact suffix has been documented
+as set twice and was not.
+
+Verify a week later in the dashboard: the ad click log should show clicks grouped
+under real campaign names rather than a single blank row.
+
 ---
 
 ## 1. Why the ads themselves are a problem, not just the keywords

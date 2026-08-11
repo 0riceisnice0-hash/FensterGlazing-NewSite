@@ -33,6 +33,11 @@ function fenster_website_dashboard_stat_url(): string
     return (string) preg_replace('#/event/?$#', '/stat', fenster_website_dashboard_url());
 }
 
+function fenster_website_dashboard_withdraw_url(): string
+{
+    return (string) preg_replace('#/event/?$#', '/withdraw', fenster_website_dashboard_url());
+}
+
 function fenster_website_dashboard_chat_url(): string
 {
     return (string) preg_replace('#/event/?$#', '/chat', fenster_website_dashboard_url());
@@ -168,6 +173,16 @@ function fenster_store_ad_attribution(WP_REST_Request $request): WP_REST_Respons
     return new WP_REST_Response(null, 204);
 }
 
+/**
+ * Relay one identified journey event to the dashboard.
+ *
+ * DO NOT add `fenster_request_is_bot()` here. This runs in server-to-server
+ * contexts — the WindowCAD completion callback, the daily reconciliation, WP-CLI
+ * — none of which carry a browser user agent, so a bot check would classify
+ * every completed quote as a crawler and silently stop relaying leads. Browser
+ * traffic is filtered where it belongs, at the config in
+ * `fenster_enqueue_website_tracking_config()`.
+ */
 function fenster_dashboard_track_event(string $event, array $payload = []): void
 {
     $endpoint = fenster_website_dashboard_url();
@@ -537,12 +552,37 @@ function fenster_windowcad_ads_tracker_from_fields(array $fields): string
 add_action('wp_enqueue_scripts', 'fenster_enqueue_website_tracking_config', 20);
 function fenster_enqueue_website_tracking_config(): void
 {
+    /*
+     * A crawler is handed no endpoints at all, which is what actually stops the
+     * inflation: every sender in `src/js/main.js` already bails when its
+     * endpoint is empty, so one gate here disables page views, journeys,
+     * aggregate statistics, the chat relay AND the `banner_shown` impression
+     * without a second copy of the rule living in the JavaScript.
+     *
+     * The flag is published as well as the blanking, so the browser can tell
+     * "not tracked" apart from "misconfigured" when somebody debugs this.
+     */
+    $trackable = fenster_request_may_be_tracked();
+
     $config = [
-        'endpoint' => fenster_website_dashboard_url(),
-        'consentEndpoint' => fenster_website_dashboard_consent_url(),
-        'statEndpoint' => fenster_website_dashboard_stat_url(),
-        'chatEndpoint' => fenster_website_dashboard_chat_url(),
-        'adAttributionEndpoint' => fenster_ad_attribution_endpoint(),
+        'endpoint' => $trackable ? fenster_website_dashboard_url() : '',
+        'consentEndpoint' => $trackable ? fenster_website_dashboard_consent_url() : '',
+        'statEndpoint' => $trackable ? fenster_website_dashboard_stat_url() : '',
+        'chatEndpoint' => $trackable ? fenster_website_dashboard_chat_url() : '',
+        // Always available, even to a request we would not track: somebody
+        // withdrawing consent must be able to erase what was collected before,
+        // whatever we would do with them now.
+        'withdrawEndpoint' => fenster_website_dashboard_withdraw_url(),
+        'adAttributionEndpoint' => $trackable ? fenster_ad_attribution_endpoint() : '',
+        'trackable' => $trackable,
+        'trafficClass' => fenster_request_traffic_class(),
+        /*
+         * The consent-free ad reference for this visit, derived server-side
+         * from the click id in the landing URL. Empty on every request that did
+         * not arrive from an ad, so a clean URL never carries one and a cached
+         * page cannot hand somebody else's reference out.
+         */
+        'adAttributionRef' => $trackable ? fenster_ad_attribution_reference() : '',
         'referenceParameter' => fenster_windowcad_reference_parameter(),
         'environment' => fenster_website_tracking_environment(),
         'sessionTimeoutMinutes' => 30,

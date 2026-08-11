@@ -531,6 +531,7 @@ function fenster_process_enquiry(): array|WP_Error
         'analytics_consent' => sanitize_text_field(wp_unslash($_POST['analytics_consent'] ?? '0')) === '1',
         'ad_click_id' => sanitize_text_field(wp_unslash($_POST['ad_click_id'] ?? '')),
         'ad_tracker' => sanitize_text_field(wp_unslash($_POST['ad_tracker'] ?? '')),
+        'marketing_ref' => sanitize_text_field(wp_unslash($_POST['marketing_ref'] ?? '')),
         'marketing_consent' => sanitize_text_field(wp_unslash($_POST['marketing_consent'] ?? '0')) === '1',
         'appointment_date' => sanitize_text_field(wp_unslash($_POST['appointment_date'] ?? '')),
         'appointment_time' => sanitize_text_field(wp_unslash($_POST['appointment_time'] ?? '')),
@@ -557,6 +558,18 @@ function fenster_process_enquiry(): array|WP_Error
         $data['ad_click_id'] = '';
         $data['ad_tracker'] = '';
     }
+
+    /*
+     * NOT cleared on a marketing refusal, unlike the two above, and the
+     * difference is the point of it. The click id and the ad tracker are values
+     * we persisted about the visitor; this is a one-way hash of the URL they
+     * arrived on, held server-side against a campaign and nothing else. It
+     * identifies an ad click, not a person, and clearing it would lose which
+     * campaign paid for the lead while protecting nobody.
+     */
+    $data['marketing_ref'] = preg_match('/^FGA-[A-Z0-9-]{8,80}$/i', $data['marketing_ref'])
+        ? strtoupper($data['marketing_ref'])
+        : '';
 
     /*
      * Google Ads click identifiers arrive as "gclid:value", "gbraid:value" or
@@ -661,6 +674,7 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_ad_click_type' => $data['ad_click_type'],
         '_fenster_ad_click_id' => $data['ad_click_id'],
         '_fenster_ads_tracker' => $data['ad_tracker'],
+        '_fenster_marketing_ref' => $data['marketing_ref'],
         '_fenster_analytics_consent' => $data['analytics_consent'] ? '1' : '0',
         '_fenster_marketing_consent' => $data['marketing_consent'] ? '1' : '0',
         '_fenster_appointment_date' => $data['appointment_date'],
@@ -725,6 +739,16 @@ function fenster_process_enquiry(): array|WP_Error
             (string) get_post_time('c', true, $enquiry_id)
         );
     }
+    /*
+     * Attach the lead to the ad click that produced it. Independent of the two
+     * branches above: those depend on analytics consent, and this deliberately
+     * does not, which is what keeps cost per lead per campaign measurable for
+     * the majority of paid visitors who never answer the banner.
+     */
+    if ($data['marketing_ref'] !== '') {
+        fenster_relay_ad_click_outcome($data['marketing_ref'], 'form_submitted');
+    }
+
     fenster_meta_track_enquiry(
         (int) $enquiry_id,
         $data['appointment_display'] !== '' ? 'Schedule' : 'Lead',

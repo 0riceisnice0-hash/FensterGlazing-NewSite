@@ -1778,6 +1778,18 @@ function fenster_send_public_cache_headers(int $browser_max_age = 600, int $shar
         return;
     }
 
+    /*
+     * A request carrying an ad click identifier is specific to one arrival and
+     * must not be shared. The response embeds an attribution reference derived
+     * from that click, so a proxy keyed on the path alone could hand it to the
+     * next visitor. `fenster_record_ad_click()` sets no-cache headers at
+     * `template_redirect` -10 and this function runs at 0 and would otherwise
+     * remove them again.
+     */
+    if (function_exists('fenster_ad_click_from_request') && fenster_ad_click_from_request() !== []) {
+        return;
+    }
+
     header_remove('Cache-Control');
     header_remove('Pragma');
     header_remove('Expires');
