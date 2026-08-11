@@ -41531,12 +41531,12 @@ html.fg-blinds-reveal-locked {
   gap: clamp(1.2rem, 2.6vw, 2.4rem);
 }
 
+/* SIX EQUAL TILES, not two wide ones and four small. The wide pair were cropped
+   3:2 and a door is a tall subject, so both lost their heads to the crop. Every
+   tile now gets the same 4:5 window and the same grade, which is what makes a
+   run of photographs read as a catalogue rather than as a scrapbook. */
 .fg-upd-way {
-  grid-column: span 3;
-}
-
-.fg-upd-way--wide {
-  grid-column: span 6;
+  grid-column: span 4;
 }
 
 .fg-upd-way figure {
@@ -41553,10 +41553,6 @@ html.fg-blinds-reveal-locked {
   aspect-ratio: 4 / 5;
   object-fit: cover;
   transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.fg-upd-way--wide img {
-  aspect-ratio: 3 / 2;
 }
 
 .fg-upd-way:hover img {
@@ -41602,20 +41598,14 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 980px) {
-  .fg-upd-way,
-  .fg-upd-way--wide {
+  .fg-upd-way {
     grid-column: span 6;
   }
 }
 
 @media (max-width: 620px) {
-  .fg-upd-way,
-  .fg-upd-way--wide {
+  .fg-upd-way {
     grid-column: span 12;
-  }
-
-  .fg-upd-way--wide img {
-    aspect-ratio: 4 / 5;
   }
 
   .fg-upd-ways__sum {

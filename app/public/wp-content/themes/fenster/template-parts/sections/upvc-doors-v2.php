@@ -189,42 +189,42 @@ $randomiser_payload = [
             <?php
             $ways = [
                 [
-                    'span' => 'wide',
+                    'span' => 'equal',
                     'label' => __('The colour', 'fenster'),
                     'copy' => __('Sixteen foils, bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Greys, blacks, a cream, three woodgrains and a green that suits an old house.', 'fenster'),
                     'image' => 'upvc-door-cream-glazed-stone.webp',
                     'alt' => __('Cream uPVC door with two glazed panes in a white stone wall', 'fenster'),
                 ],
                 [
-                    'span' => 'wide',
+                    'span' => 'equal',
                     'label' => __('The panel', 'fenster'),
                     'copy' => __('Half glazed over a flat panel, half glazed over shiplap, or glazed top to bottom for light. The bottom half is the part that takes the knocks, the dog and the hoover, so it is worth a moment.', 'fenster'),
                     'image' => 'upvc-door-anthracite-solid-shiplap.webp',
                     'alt' => __('Anthracite uPVC door with a solid shiplap panel on yellow brick', 'fenster'),
                 ],
                 [
-                    'span' => 'third',
+                    'span' => 'equal',
                     'label' => __('The glass', 'fenster'),
                     'copy' => __('Every obscure glass we fit goes in a door, graded one to five for how much they hide. Clear is the right answer onto your own garden and the wrong one onto a street.', 'fenster'),
                     'image' => 'upvc-door-white-obscure-glass.webp',
                     'alt' => __('White uPVC door with obscure glass in the upper panel', 'fenster'),
                 ],
                 [
-                    'span' => 'third',
+                    'span' => 'equal',
                     'label' => __('Bars, or leaded', 'fenster'),
                     'copy' => __('Georgian bars across the glass, or leaded work matched to what the house already has. It is what stops a new door looking new beside old windows.', 'fenster'),
                     'image' => 'upvc-detail-rosewood-woodgrain-bars.webp',
                     'alt' => __('Close detail of a rosewood woodgrain uPVC door with Georgian bars in the glass', 'fenster'),
                 ],
                 [
-                    'span' => 'third',
+                    'span' => 'equal',
                     'label' => __('The inside face', 'fenster'),
                     'copy' => __('White inside as standard, whatever the outside is doing. The same colour on both faces is an extra, and it is worth seeing the two together before you decide.', 'fenster'),
                     'image' => 'upvc-door-white-inside-face.webp',
                     'alt' => __('A uPVC back door seen from inside, showing the white internal face', 'fenster'),
                 ],
                 [
-                    'span' => 'third',
+                    'span' => 'equal',
                     'label' => __('What goes through it', 'fenster'),
                     'copy' => __('A cat flap through the panel, a letterplate, a knocker, numerals, a spyhole. Specified with the door rather than cut into it afterwards.', 'fenster'),
                     'image' => 'upvc-door-anthracite-cat-flap.webp',
