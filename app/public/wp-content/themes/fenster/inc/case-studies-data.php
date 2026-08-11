@@ -1408,9 +1408,30 @@ function fenster_case_studies_for_town(string $town_slug, int $limit = 2): array
     return $cards;
 }
 
-function fenster_case_studies_for_product(string $slug, int $limit = 3): array
+/**
+ * Studies for a residential product page.
+ *
+ * COMMERCIAL STUDIES ARE EXCLUDED, and that is an owner instruction of
+ * 2026-08-11: "dont mix commercial case studies with resi product pages". A
+ * contractor's rail depot under a heading about real installs on a page selling
+ * windows for somebody's house is the wrong proof for the reader in front of
+ * it, however good the job was.
+ *
+ * The filter lives here rather than in per-route gates because every caller of
+ * this function is a residential product page — the product journey, casement,
+ * roof lanterns and heritage doors — and commercial routes render their own
+ * templates, which do not call it. One rule, one place. Pass `commercial` if a
+ * commercial page ever needs the same behaviour.
+ *
+ * This was leaking before the instruction, not only after it: `/aluminium-
+ * windows/` was showing three commercial studies and `/flush-casement-windows/`
+ * was leading with one.
+ */
+function fenster_case_studies_for_product(string $slug, int $limit = 3, string $type = 'residential'): array
 {
-    $studies = fenster_case_studies();
+    $studies = function_exists('fenster_case_studies_of_type')
+        ? fenster_case_studies_of_type($type)
+        : fenster_case_studies();
     $target = '/' . trim($slug, '/') . '/';
     $matched = [];
 
@@ -1458,8 +1479,15 @@ function fenster_case_studies_for_product_group(array $slugs, int $limit = 3): a
         $targets['/' . trim((string) $slug, '/') . '/'] = true;
     }
 
+    /* Residential only, same owner instruction as the single-product helper
+       above: the three product-selector hubs that call this are residential
+       pages. Unlike that one this has no fallback, so filtering here simply
+       means a hub shows fewer cards rather than the wrong ones. */
     $matched = [];
-    foreach (fenster_case_studies() as $short => $study) {
+    $pool = function_exists('fenster_case_studies_of_type')
+        ? fenster_case_studies_of_type('residential')
+        : fenster_case_studies();
+    foreach ($pool as $short => $study) {
         foreach ((array) ($study['products'] ?? []) as $product) {
             $path = (string) wp_parse_url((string) ($product['url'] ?? ''), PHP_URL_PATH);
             if ($path === '') {

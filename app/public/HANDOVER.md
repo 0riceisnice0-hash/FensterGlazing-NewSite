@@ -630,8 +630,10 @@ Route: `/heritage-windows/`
   available on the Classic contemporary sash and deliberately not offered on the
   stepped one, so Classic does not muddy against Prestige. The strip prints
   1.4 W/m²K plain, with no star and no lowest-achievable note.
-- **The case-study strip is live again** as of 2026-08-11: the Heal's study
-  claims this route, so it shows one card of its own rather than the fallback.
+- **The case-study strip is gated off.** It was briefly on when the Heal's study
+  claimed the route, then off again when the owner ruled that commercial studies
+  do not belong on residential product pages. It comes back when a RESIDENTIAL
+  heritage window study exists.
 - **One install of ours and one photograph of it**, in a split rather than a
   gallery, and the copy does not mention that it is the only one. A close crop
   of the same frame was pulled because the finishing on it is not good enough

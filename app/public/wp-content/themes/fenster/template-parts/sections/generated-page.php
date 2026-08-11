@@ -5336,15 +5336,35 @@ if ($is_commercial_hub) {
              when a product matches none. The route was showing secondary glazing,
              casement windows and bifold doors under a heading about real installs
              of this product. Remove the exclusion when a study exists. */ ?>
-    <?php /* Heritage windows WAS excluded here, from 2026-08-11 until later the
-             same day: no study claimed the route, so the strip fell through to
-             its documented fallback and put a bifold job and two casement jobs
-             under a heading about real installs of a steel-look window. The
-             Heal's study claims `/heritage-windows/`, so the exclusion is gone
-             and the route now shows one card, which is its own. If that study is
-             ever unpicked, put the gate back rather than letting the fallback
-             return. */ ?>
-    <?php if ($use_product_journey && ! $is_repairs && ! $is_replacement_bespoke && function_exists('fenster_case_studies_for_product')) : ?>
+    <?php /* Heritage windows is excluded, and the reason took three goes in one
+             day to settle. No study claimed the route, so the strip fell through
+             to its documented all-studies fallback and put a bifold job and two
+             casement jobs under a heading about real installs of a steel-look
+             window. The Heal's commercial study then claimed the route, so the
+             gate came off. Then the owner ruled that commercial studies do not
+             belong on residential product pages at all, which is now enforced
+             in `fenster_case_studies_for_product()` itself — so Heal's no longer
+             counts here and the fallback is what would render again. Gate back
+             on. **It comes off when a RESIDENTIAL heritage window study
+             exists**, and not before. */ ?>
+    <?php
+    /* `/aluminium-windows/` joins them, 2026-08-11. It had been showing three
+       COMMERCIAL studies, which the owner's instruction removes, and with those
+       filtered out no residential study claims the route, so the fallback would
+       have put secondary glazing, uPVC casements and bifold doors under a
+       heading about real installs of an aluminium window. Two of those three are
+       the wrong material entirely. That would be a regression caused by the
+       filter rather than something the filter merely revealed, so the strip is
+       off here until a residential aluminium window study exists. */
+    $no_case_study_routes = ['aluminium-windows'];
+    $shows_case_study_strip = $use_product_journey
+        && ! $is_repairs
+        && ! $is_replacement_bespoke
+        && ! $is_heritage_bespoke
+        && ! in_array($slug, $no_case_study_routes, true)
+        && function_exists('fenster_case_studies_for_product');
+    ?>
+    <?php if ($shows_case_study_strip) : ?>
         <?php $product_case_cards = fenster_case_studies_for_product($slug, 3); ?>
         <?php if ($product_case_cards !== []) : ?>
             <section class="fg-cs-strip">

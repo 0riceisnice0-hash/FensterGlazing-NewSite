@@ -90,12 +90,23 @@ photographs.** The captions describe what is in frame and stop. It would have
 been easy to call the fixed light over the door a heritage window, and nobody
 has checked that it is.
 
-**One knock-on, and a good one: `/heritage-windows/` gets its case-study strip
-back.** It had been gated off that morning precisely because no study claimed
-the route and the helper falls back to showing everything. This study claims it,
-so the strip now shows a single card that is genuinely about the product.
-Adding a study still changes other pages silently — `/aluminium-windows/` picked
-this up as one of its three — so check the product pages after adding one.
+**The knock-on went one way and then straight back, which is the useful part.**
+Adding the study claimed `/heritage-windows/`, so the strip I had gated off that
+morning came back on. The owner then ruled: "dont mix commercial case studies
+with resi product pages." So the separation is now enforced inside
+`fenster_case_studies_for_product()` rather than by gates, and the heritage strip
+is off again until a residential study claims the route.
+
+**It was leaking long before this study existed.** `/aluminium-windows/` was
+showing three commercial studies and `/flush-casement-windows/` was leading with
+one. Adding Heal's is what made anybody look.
+
+**Filtering turned one fault into another on one route, and that needed catching
+rather than shipping.** With commercial studies gone, `/aluminium-windows/` had
+nothing claiming it and fell through to secondary glazing, uPVC casements and
+bifold doors, two of them the wrong material entirely. That would have been a
+regression caused by the fix rather than one it revealed, so the strip is gated
+off there too until a residential aluminium window study exists.
 
 ## 2026-08-11 - Heritage windows rebuilt around the steel window (LIVE, 0a158fb)
 
