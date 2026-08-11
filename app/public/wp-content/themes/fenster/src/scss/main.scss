@@ -14300,18 +14300,32 @@ a.fg-cs-card__pill:focus-visible {
   line-height: 1.5;
 }
 
-/* The lead section has no image now that the IKL33 figures carry it, so its
-   grid is a single column and the four figures spread across the width. */
-.fg-lv-lead__grid--single {
-  grid-template-columns: minmax(0, 1fr);
+/* Copy left, a small product view right, and the four figures spread full width
+   underneath rather than inside the copy column. The image is deliberately the
+   smaller half: it is a flat elevation of a panel, so it reads at any size and
+   does not need the room the copy does. */
+.fg-lv-lead__grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.44fr);
+  align-items: center;
 }
 
-.fg-lv-lead__grid--single .fg-lv-figures {
+.fg-lv-lead__media {
+  margin: 0;
+}
+
+/* Contained, not cover: cropping a flat elevation only removes blades. The soft
+   panel gives the render a ground, since it was cut out on near-white. */
+.fg-lv-lead__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 320px;
+  margin-inline: auto;
+  border-radius: 10px;
+}
+
+.fg-lv-figures {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.fg-lv-lead__grid--single .fg-lv-lead__copy p {
-  max-width: 62ch;
 }
 
 /* Two photographs, side by side. */
@@ -14380,9 +14394,14 @@ a.fg-cs-card__pill:focus-visible {
   .fg-lv-spec__head,
   .fg-lv-spec__grid,
   .fg-lv-work__head,
-  .fg-lv-work__grid,
-  .fg-lv-lead__grid--single .fg-lv-figures {
+  .fg-lv-work__grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Two by two on a phone: four figures in one column is a long scroll for
+     four short facts. */
+  .fg-lv-figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .fg-lv-free__head,

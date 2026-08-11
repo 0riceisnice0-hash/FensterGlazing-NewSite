@@ -91,32 +91,57 @@ foreach ($standard as $system) {
              the table below cannot drift apart. */ ?>
     <?php if ($common !== []) : ?>
         <section class="fg-lv-lead" aria-labelledby="fg-lv-lead-title">
-            <div class="container fg-lv-lead__grid fg-lv-lead__grid--single">
+            <div class="container">
+                <div class="fg-lv-lead__grid">
                 <div class="fg-lv-lead__copy">
                     <p class="eyebrow"><?php esc_html_e('Standard specification', 'fenster'); ?></p>
                     <h2 id="fg-lv-lead-title"><?php esc_html_e('IKL33: 34mm blades at 60 degrees.', 'fenster'); ?></h2>
                     <p><?php esc_html_e('Our standard louvre, and the one most schedules end up with. The close pitch and steep blade angle give sightproofing and weather resistance, and the 36.2mm frame suits openings that will not take a deeper system.', 'fenster'); ?></p>
                     <p><?php esc_html_e('It trades free area for that performance and is the lowest of the four standard systems at 43.5% physical. Where a schedule needs more air through the same opening, we move up the range.', 'fenster'); ?></p>
-                    <dl class="fg-lv-figures">
-                        <div>
-                            <dt><?php esc_html_e('Blade centres', 'fenster'); ?></dt>
-                            <dd><?php echo esc_html((string) $common['centre']); ?></dd>
-                        </div>
-                        <div>
-                            <dt><?php esc_html_e('Blade angle', 'fenster'); ?></dt>
-                            <dd><?php echo esc_html((string) $common['angle']); ?></dd>
-                        </div>
-                        <div>
-                            <dt><?php esc_html_e('Frame depth', 'fenster'); ?></dt>
-                            <dd><?php echo esc_html((string) $common['depth']); ?></dd>
-                        </div>
-                        <div>
-                            <dt><?php esc_html_e('Physical free area', 'fenster'); ?></dt>
-                            <dd><?php echo esc_html((string) $common['physical']); ?></dd>
-                        </div>
-                    </dl>
-                    <p class="fg-lv-note"><?php esc_html_e('The system manufacturer\'s published specification for the IKL33, tested to EN 13030:2002.', 'fenster'); ?></p>
+                    </div>
+
+                    <?php /* The manufacturer's own IKL33 product view, small and
+                             contained rather than cropped: it is a flat elevation
+                             of a panel and cropping it would just remove blades.
+                             It fills a gap the placeholder left when the
+                             photographs arrived and none of them was this system.
+
+                             THE MAKER'S BADGE HAS BEEN PATCHED OUT of the bottom
+                             right blade, using a strip of the same blade beside
+                             it. The owner's instruction is that the supplier is
+                             not named on this page, and a logo in a photograph
+                             names them as surely as a sentence does. It is
+                             illegible at render size, which is not the same as
+                             absent. The first patch was too wide and swallowed
+                             the frame upright; check that edge if it is ever
+                             redone. */ ?>
+                    <figure class="fg-lv-lead__media">
+                        <img <?php echo fenster_image_attr_string($louvre_img . 'louvre-ikl33-panel-800w.webp', [
+                            'alt' => __('Front elevation of an IKL33 aluminium louvre panel, blades running the full width of the frame', 'fenster'),
+                            'loading' => 'lazy',
+                        ]); ?>>
+                    </figure>
                 </div>
+
+                <dl class="fg-lv-figures">
+                    <div>
+                        <dt><?php esc_html_e('Blade centres', 'fenster'); ?></dt>
+                        <dd><?php echo esc_html((string) $common['centre']); ?></dd>
+                    </div>
+                    <div>
+                        <dt><?php esc_html_e('Blade angle', 'fenster'); ?></dt>
+                        <dd><?php echo esc_html((string) $common['angle']); ?></dd>
+                    </div>
+                    <div>
+                        <dt><?php esc_html_e('Frame depth', 'fenster'); ?></dt>
+                        <dd><?php echo esc_html((string) $common['depth']); ?></dd>
+                    </div>
+                    <div>
+                        <dt><?php esc_html_e('Physical free area', 'fenster'); ?></dt>
+                        <dd><?php echo esc_html((string) $common['physical']); ?></dd>
+                    </div>
+                </dl>
+                <p class="fg-lv-note"><?php esc_html_e('The system manufacturer\'s published specification for the IKL33, tested to EN 13030:2002.', 'fenster'); ?></p>
             </div>
         </section>
     <?php endif; ?>
