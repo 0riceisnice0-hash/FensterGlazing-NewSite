@@ -82,6 +82,23 @@ $photo = static function (string $key) use ($photos): array {
     return is_array($found) ? $found : [];
 };
 
+/* MARKED PLACEHOLDERS, per the rule in AI.md: a photograph we have not taken
+   is marked as one, never left as a gap and never filled with a supplier render
+   or a shot of a neighbouring product. Each one carries the brief for the
+   picture that belongs there, so the panel doubles as the shot list — the next
+   person with a phone on a job knows exactly what is wanted. Delete the call
+   and drop the real figure in; the caption already says what it should show.
+   `.fg-lv-placeholder` is the louvre page's component, kept in the stylesheet
+   for the next page that needed it. */
+$placeholder = static function (string $brief, string $ratio = '4 / 3'): void {
+    ?>
+    <div class="fg-lv-placeholder fg-upd-placeholder" style="--fg-lv-ratio: <?php echo esc_attr($ratio); ?>">
+        <span><?php esc_html_e('Photograph to follow', 'fenster'); ?></span>
+        <small><?php echo esc_html($brief); ?></small>
+    </div>
+    <?php
+};
+
 /* The randomiser payload. Everything the controller shuffles is a real asset:
    a render per finish, a photograph per handle, a texture or a CSS surface per
    glass. Nothing is tinted, generated or implied. */
@@ -132,6 +149,7 @@ $randomiser_payload = [
                     <li><?php esc_html_e('Sixteen foil finishes, white or the same colour inside', 'fenster'); ?></li>
                     <li><?php esc_html_e('Shaped heads are possible, though they are rare', 'fenster'); ?></li>
                 </ul>
+                <?php $placeholder(__('The furniture on a finished door: letterplate, knocker and numerals together, one arm\'s length away.', 'fenster'), '16 / 9'); ?>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
@@ -166,48 +184,88 @@ $randomiser_payload = [
         </div>
 
         <div class="fg-upd-shuffle__stage">
-            <figure class="fg-upd-door">
-                <?php $first = $randomiser[0] ?? null; ?>
-                <img data-door-image src="<?php echo esc_url($first['image'] ?? ''); ?>" alt="<?php esc_attr_e('uPVC residential door shown in the selected finish', 'fenster'); ?>" width="640" height="1600" loading="lazy" decoding="async">
-                <figcaption data-door-caption><?php esc_html_e('The render shows the finish. The handle and glass beside it are the ones chosen.', 'fenster'); ?></figcaption>
-            </figure>
+            <?php $first = $randomiser[0] ?? null; ?>
+            <div class="fg-upd-plinth">
+                <div class="fg-upd-plinth__inner">
+                    <img data-door-image src="<?php echo esc_url($first['image'] ?? ''); ?>" alt="<?php esc_attr_e('uPVC residential door shown in the selected finish', 'fenster'); ?>" width="640" height="1600" loading="lazy" decoding="async">
+                </div>
+                <span class="fg-upd-plinth__index" data-door-index aria-hidden="true"></span>
+            </div>
 
             <div class="fg-upd-spec">
-                <p class="fg-upd-spec__label"><?php esc_html_e('This one', 'fenster'); ?></p>
-                <dl class="fg-upd-spec__list">
-                    <div class="fg-upd-spec__row">
-                        <dt><?php esc_html_e('Finish', 'fenster'); ?></dt>
-                        <dd>
-                            <span class="fg-upd-chip" data-door-colour-chip aria-hidden="true"></span>
-                            <span data-door-colour><?php echo esc_html($first['colour'] ?? ''); ?></span>
-                            <em data-door-colour-note><?php echo esc_html($first['finish'] ?? ''); ?></em>
-                        </dd>
-                    </div>
-                    <div class="fg-upd-spec__row">
+                <p class="fg-upd-spec__label"><?php esc_html_e('The finish', 'fenster'); ?></p>
+                <p class="fg-upd-spec__name" data-door-colour><?php echo esc_html($first['colour'] ?? ''); ?></p>
+                <p class="fg-upd-spec__note" data-door-colour-note><?php echo esc_html($first['finish'] ?? ''); ?></p>
+
+                <dl class="fg-upd-spec__pair">
+                    <div>
                         <dt><?php esc_html_e('Glass', 'fenster'); ?></dt>
                         <dd>
                             <span class="fg-upd-chip fg-upd-chip--glass" data-door-glass-chip aria-hidden="true"></span>
-                            <span data-door-glass></span>
+                            <span class="fg-upd-spec__value" data-door-glass></span>
                             <em data-door-glass-note></em>
                         </dd>
                     </div>
-                    <div class="fg-upd-spec__row">
+                    <div>
                         <dt><?php esc_html_e('Handle', 'fenster'); ?></dt>
                         <dd>
                             <img class="fg-upd-spec__handle" data-door-handle-image src="" alt="" width="120" height="120" loading="lazy" decoding="async">
-                            <span data-door-handle></span>
+                            <span class="fg-upd-spec__value" data-door-handle></span>
                         </dd>
                     </div>
                 </dl>
+
                 <div class="fg-upd-spec__actions">
                     <button type="button" class="button" data-door-shuffle><?php esc_html_e('Shuffle it', 'fenster'); ?></button>
                     <?php if ($quote_url !== '') : ?>
-                        <a class="button button--steel" href="#fenster-product-quote"><?php esc_html_e('Price a door like it', 'fenster'); ?></a>
+                        <a class="button button--light" href="#fenster-product-quote"><?php esc_html_e('Price a door like it', 'fenster'); ?></a>
                     <?php endif; ?>
                 </div>
-                <p class="fg-upd-spec__foot"><?php esc_html_e('Sixteen finishes are available, thirteen of them rendered here. Every obscure glass we fit can go in a door.', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See the full colour range', 'fenster'); ?></a>.</p>
+
+                <?php /* The rail is not decoration: a randomiser you cannot steer is a
+                         toy, and somebody who has just seen their own colour go past
+                         wants it back. Real buttons, so it works on a keyboard. */ ?>
+                <div class="fg-upd-rail" role="group" aria-label="<?php esc_attr_e('Choose a finish', 'fenster'); ?>">
+                    <?php foreach ($randomiser as $index => $option) : ?>
+                        <button type="button" class="fg-upd-rail__dot" data-door-pick="<?php echo esc_attr((string) $index); ?>" style="--dot: <?php echo esc_attr($option['hex']); ?>" aria-label="<?php echo esc_attr($option['colour']); ?>"<?php echo $index === 0 ? ' aria-current="true"' : ''; ?>></button>
+                    <?php endforeach; ?>
+                </div>
+
+                <p class="fg-upd-spec__foot"><?php esc_html_e('Sixteen finishes, thirteen rendered here, and every obscure glass we fit can go in a door.', 'fenster'); ?> <a href="<?php echo esc_url(home_url('/colour-options/')); ?>"><?php esc_html_e('See the full range', 'fenster'); ?></a>.</p>
                 <p class="fg-upd-spec__live" data-door-live role="status" aria-live="polite"></p>
             </div>
+        </div>
+    </div>
+</section>
+
+<?php /* A render tells you the colour; it does not tell you what the colour
+         does against your own brick. This band is where that gets answered, and
+         it is entirely placeholders on purpose: we own no photograph of a
+         finished door in context that is not already used elsewhere on the
+         page. Four shots, one per kind of elevation, and the briefs are written
+         so anyone on a job can take them. */ ?>
+<section class="fg-cw fg-upd fg-upd-context" aria-labelledby="fg-upd-context-title">
+    <div class="container">
+        <div class="fg-upd-context__head">
+            <p class="eyebrow"><?php esc_html_e('On a real house', 'fenster'); ?></p>
+            <h2 id="fg-upd-context-title"><?php esc_html_e('A colour is a different thing on brick than it is on a screen.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Anthracite reads almost black against red brick and blue-grey against render. Chartwell green looks period on a cottage and odd on a new build. These are the four we are photographing next.', 'fenster'); ?></p>
+        </div>
+        <div class="fg-upd-context__grid">
+            <?php
+            $context_shots = [
+                ['label' => __('Anthracite on red brick', 'fenster'), 'brief' => __('A back door straight on, mid-morning, no cars in shot. The one everybody orders.', 'fenster')],
+                ['label' => __('Chartwell green on stone or render', 'fenster'), 'brief' => __('A cottage or older elevation. The colour needs an old wall behind it to make its case.', 'fenster')],
+                ['label' => __('A woodgrain front door', 'fenster'), 'brief' => __('Irish oak or golden oak, close enough that the grain in the foil is visible.', 'fenster')],
+                ['label' => __('A white door doing its job', 'fenster'), 'brief' => __('The commonest door we fit and the one we photograph least. Side or utility entrance, clean and ordinary.', 'fenster')],
+            ];
+            foreach ($context_shots as $shot) :
+                ?>
+                <figure class="fg-upd-context__cell">
+                    <?php $placeholder($shot['brief'], '4 / 3'); ?>
+                    <figcaption><?php echo esc_html($shot['label']); ?></figcaption>
+                </figure>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -260,6 +318,23 @@ $randomiser_payload = [
                     <?php endif; ?>
                 </article>
             <?php endforeach; ?>
+
+            <?php
+            /* The three above are real installs. These three are the shots that
+               would finish the section, and each is a thing the copy claims and
+               the photography cannot yet show. */
+            $config_wanted = [
+                ['title' => __('The top half open', 'fenster'), 'brief' => __('A stable door with the top leaf open and the bottom closed, from outside, ideally with somebody leaning on it.', 'fenster')],
+                ['title' => __('A pair, fully open', 'fenster'), 'brief' => __('French doors thrown right back onto a garden in summer, straight on, both leaves flat against the wall.', 'fenster')],
+                ['title' => __('A shaped head', 'fenster'), 'brief' => __('An arched or angled head door in its opening. Rare, and we currently illustrate it with nothing at all.', 'fenster')],
+            ];
+            foreach ($config_wanted as $wanted) :
+                ?>
+                <article class="fg-upd-config__card fg-upd-config__card--wanted">
+                    <?php $placeholder($wanted['brief'], '4 / 5'); ?>
+                    <h3><?php echo esc_html($wanted['title']); ?></h3>
+                </article>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -281,15 +356,18 @@ $randomiser_payload = [
                 <h3><?php esc_html_e('The threshold you step over.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. Liniar publish eight for this system, including a Part M low threshold for level access.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Which one is right depends on your floor levels inside and out, so it is settled at survey rather than guessed at from a drawing.', 'fenster'); ?></p>
+                <?php $placeholder(__('A Part M low threshold at the sill, camera down at ankle height, showing how little there is to step over.', 'fenster'), '16 / 10'); ?>
             </article>
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The lock, and what comes as standard.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the leaf, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The cylinder that comes with it is a one star. A three star cylinder is an upgrade and it is worth asking for: it is the part that resists snapping, and it is the cheapest thing on the whole door to improve.', 'fenster'); ?></p>
+                <?php $placeholder(__('The open leaf edge, showing the hooks and rollers of the multi-point up the length of it. Close, sharp, plain background.', 'fenster'), '16 / 10'); ?>
             </article>
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The glass, which is a privacy decision.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('Every obscure glass we fit can go in a door, graded one to five for how much they hide. A bathroom or a front door onto a street usually wants a five; a back door onto your own garden usually does not.', 'fenster'); ?></p>
+                <?php $placeholder(__('Obscure glass in a door panel, shot from outside at dusk with the hall light on, so it reads as privacy rather than as texture.', 'fenster'), '16 / 10'); ?>
                 <p><a href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Compare the obscure glass range', 'fenster'); ?></a></p>
             </article>
         </div>

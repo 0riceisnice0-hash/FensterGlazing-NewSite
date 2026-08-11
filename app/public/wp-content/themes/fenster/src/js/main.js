@@ -8263,7 +8263,7 @@ document.querySelectorAll('[data-fg-door-randomiser]').forEach((root) => {
   const glasses = Array.isArray(payload.glass) ? payload.glass : [];
   if (!finishes.length) return;
 
-  const doorFigure = root.querySelector('.fg-upd-door');
+  const doorFigure = root.querySelector('.fg-upd-plinth');
   const image = root.querySelector('[data-door-image]');
   const colourName = root.querySelector('[data-door-colour]');
   const colourNote = root.querySelector('[data-door-colour-note]');
@@ -8284,6 +8284,9 @@ document.querySelectorAll('[data-fg-door-randomiser]').forEach((root) => {
     const pre = new Image();
     pre.src = f.image;
   });
+
+  const dots = Array.from(root.querySelectorAll('[data-door-pick]'));
+  const indexLabel = root.querySelector('[data-door-index]');
 
   let lastFinish = -1;
   const pick = (list, avoid) => {
@@ -8356,10 +8359,22 @@ document.querySelectorAll('[data-fg-door-randomiser]').forEach((root) => {
         + (handle ? ', ' + handle.name + ' handle' : '');
     }
 
+    if (indexLabel) {
+      indexLabel.textContent = String(finishIndex + 1).padStart(2, '0') + ' / ' + String(finishes.length).padStart(2, '0');
+    }
+    dots.forEach((dot, i) => {
+      if (i === finishIndex) {
+        dot.setAttribute('aria-current', 'true');
+      } else {
+        dot.removeAttribute('aria-current');
+      }
+    });
+
     lastFinish = finishIndex;
   };
 
   button.addEventListener('click', () => apply(pick(finishes, lastFinish)));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => apply(i)));
 
   // Open on a real combination rather than on the first render in the file, so
   // two visitors do not both meet the same white door.
