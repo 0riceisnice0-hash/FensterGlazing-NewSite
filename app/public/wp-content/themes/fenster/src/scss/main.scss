@@ -41707,7 +41707,16 @@ html.fg-blinds-reveal-locked {
   margin: 0;
 }
 
-.fg-upd .fg-upd-context__cell figcaption {
+.fg-upd .fg-upd-context__cell img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.7rem;
+}
+
+.fg-upd-context__cell figcaption {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-ink);

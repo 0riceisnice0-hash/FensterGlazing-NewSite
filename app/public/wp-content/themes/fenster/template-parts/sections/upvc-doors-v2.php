@@ -189,51 +189,45 @@ $randomiser_payload = [
             <?php
             $ways = [
                 [
-                    'span' => 'equal',
                     'label' => __('The colour', 'fenster'),
-                    'copy' => __('Sixteen foils, bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Greys, blacks, a cream, three woodgrains and a green that suits an old house.', 'fenster'),
-                    'image' => 'upvc-door-cream-glazed-stone.webp',
-                    'alt' => __('Cream uPVC door with two glazed panes in a white stone wall', 'fenster'),
+                    'copy' => __('Sixteen foils, bonded to the profile at the factory rather than painted on, so there is nothing to repaint and nothing to flake. Most carry a woodgrain you can feel; a few are smooth. The greens and the oaks are the ones people put a hand on to check.', 'fenster'),
+                    'image' => 'upvc-door-green-stable.webp',
+                    'alt' => __('Chartwell green uPVC stable door with a letterplate and house number on red brick', 'fenster'),
                 ],
                 [
-                    'span' => 'equal',
                     'label' => __('The panel', 'fenster'),
-                    'copy' => __('Half glazed over a flat panel, half glazed over shiplap, or glazed top to bottom for light. The bottom half is the part that takes the knocks, the dog and the hoover, so it is worth a moment.', 'fenster'),
+                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover: none at all for glass top to bottom, a quarter, a half, three quarters, or the full panel above with no glass in it.', 'fenster'),
                     'image' => 'upvc-door-anthracite-solid-shiplap.webp',
-                    'alt' => __('Anthracite uPVC door with a solid shiplap panel on yellow brick', 'fenster'),
+                    'alt' => __('Anthracite uPVC door with a full shiplap panel and no glazing, on yellow brick', 'fenster'),
                 ],
                 [
-                    'span' => 'equal',
-                    'label' => __('The glass', 'fenster'),
-                    'copy' => __('Every obscure glass we fit goes in a door, graded one to five for how much they hide. Clear is the right answer onto your own garden and the wrong one onto a street.', 'fenster'),
+                    'label' => __('The privacy glass', 'fenster'),
+                    'copy' => __('Every style of privacy glass we fit goes in a door, graded one to five for how much it hides. Clear is the right answer onto your own garden and the wrong one onto a street.', 'fenster'),
                     'image' => 'upvc-door-white-obscure-glass.webp',
-                    'alt' => __('White uPVC door with obscure glass in the upper panel', 'fenster'),
+                    'alt' => __('White uPVC door with privacy glass in the upper panel', 'fenster'),
                 ],
                 [
-                    'span' => 'equal',
-                    'label' => __('Bars, or leaded', 'fenster'),
-                    'copy' => __('Georgian bars across the glass, or leaded work matched to what the house already has. It is what stops a new door looking new beside old windows.', 'fenster'),
+                    'label' => __('Bars and lead', 'fenster'),
+                    'copy' => __('Georgian bars set inside the unit, astragal bars applied to the face so they throw a real shadow, or leaded work in squares or diamonds. It is what stops a new door looking new beside old windows.', 'fenster'),
                     'image' => 'upvc-detail-rosewood-woodgrain-bars.webp',
-                    'alt' => __('Close detail of a rosewood woodgrain uPVC door with Georgian bars in the glass', 'fenster'),
+                    'alt' => __('Close detail of a rosewood woodgrain uPVC door with bars across the glass', 'fenster'),
                 ],
                 [
-                    'span' => 'equal',
                     'label' => __('The inside face', 'fenster'),
-                    'copy' => __('White inside as standard, whatever the outside is doing. The same colour on both faces is an extra, and it is worth seeing the two together before you decide.', 'fenster'),
-                    'image' => 'upvc-door-white-inside-face.webp',
-                    'alt' => __('A uPVC back door seen from inside, showing the white internal face', 'fenster'),
+                    'copy' => __('White inside as standard, whatever the outside is doing, and it is what most people keep because it disappears into the room. The same colour on both faces if you would rather see it from the sofa.', 'fenster'),
+                    'image' => 'upvc-door-cream-inside-bars.webp',
+                    'alt' => __('A uPVC door with Georgian bars seen from inside the room, looking onto a garden', 'fenster'),
                 ],
                 [
-                    'span' => 'equal',
                     'label' => __('What goes through it', 'fenster'),
-                    'copy' => __('A cat flap through the panel, a letterplate, a knocker, numerals, a spyhole. Specified with the door rather than cut into it afterwards.', 'fenster'),
+                    'copy' => __('A cat flap is cut in on site, into a new door or the one you already have. The letterplate, the knocker, the numerals and a spyhole are specified with the door and arrive fitted.', 'fenster'),
                     'image' => 'upvc-door-anthracite-cat-flap.webp',
-                    'alt' => __('Anthracite uPVC door with a cat flap fitted through the lower panel', 'fenster'),
+                    'alt' => __('Anthracite uPVC door with a cat flap cut into the lower panel', 'fenster'),
                 ],
             ];
             foreach ($ways as $way) :
                 ?>
-                <article class="fg-upd-way fg-upd-way--<?php echo esc_attr($way['span']); ?>">
+                <article class="fg-upd-way">
                     <figure>
                         <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/' . $way['image'])); ?>" alt="<?php echo esc_attr($way['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
                     </figure>
@@ -244,21 +238,37 @@ $randomiser_payload = [
         </div>
 
         <?php
+        /* THE COUNT IS A COUNT, NOT A BOAST, so it is worked out here rather
+           than typed in, and it is worked out the way the door is actually
+           specified. The first version said "3 panel styles" and the owner
+           corrected it: there are two panel FACES, flat and shiplap, and
+           separately how far up the door the panel goes — none, a quarter, a
+           half, three quarters or full. So:
+
+             - fully glazed, no panel .................. 1 arrangement, has glass
+             - quarter, half or three-quarter panel .... 3 x 2 faces, has glass
+             - full panel ............................. 2 faces, NO glass
+
+           A full-panel door has no glass in it, so it cannot be multiplied by
+           the glass range, which is why the two are added rather than lumped
+           together. Glass is the privacy range plus clear. If any of these
+           lists change the number changes with them; never round it. */
         $way_finishes = 16;
-        $way_panels = 3;
         $way_glass = count($glass) + 1;
         $way_handles = max(1, count($handles));
-        $way_total = $way_finishes * $way_panels * $way_glass * $way_handles;
+        $way_glazed_arrangements = 1 + (3 * 2);
+        $way_solid_arrangements = 2;
+        $way_total = ($way_finishes * $way_glazed_arrangements * $way_glass * $way_handles)
+            + ($way_finishes * $way_solid_arrangements * $way_handles);
         ?>
         <div class="fg-upd-ways__sum">
             <p class="fg-upd-ways__figure"><?php echo esc_html(number_format($way_total)); ?></p>
             <div class="fg-upd-ways__sumtext">
                 <p><?php
                     printf(
-                        /* translators: 1: foil count, 2: panel style count, 3: glass count, 4: handle finish count */
-                        esc_html__('That is %1$d finishes against %2$d panel styles, %3$d glasses and %4$d handle finishes, and it is the count before anybody adds a bar, a letterplate or a leaded pattern. Nobody needs eight thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
+                        /* translators: 1: foil count, 2: privacy glass count, 3: handle finish count */
+                        esc_html__('That is %1$d finishes against nine ways to split the panel and the glass, %2$d glasses and %3$d handle finishes, counted before anybody adds a bar, a letterplate or a leaded pattern. Nobody needs twenty thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
                         (int) $way_finishes,
-                        (int) $way_panels,
                         (int) $way_glass,
                         (int) $way_handles
                     );
@@ -271,36 +281,45 @@ $randomiser_payload = [
     </div>
 </section>
 
-<?php /* A render tells you the colour; it does not tell you what the colour
-         does against your own brick. This band is where that gets answered, and
-         it is entirely placeholders on purpose: we own no photograph of a
-         finished door in context that is not already used elsewhere on the
-         page. Four shots, one per kind of elevation, and the briefs are written
-         so anyone on a job can take them. */ ?>
+<?php /* WORK WITH WHAT WE HAVE. This band was six placeholders until
+         2026-08-12; the owner's instruction was that he had given us every
+         photograph he has, so the page uses them. Four real installs carry it
+         and two placeholders remain for the shots that genuinely do not exist:
+         a dark front door on a modern elevation, and the same door photographed
+         inside and out. Do not add a placeholder here for something we already
+         hold a picture of — check `assets/images/products/upvc-doors` first,
+         which is where the arched leaded door sat unused for a month. */ ?>
 <section class="fg-cw fg-upd fg-upd-context" aria-labelledby="fg-upd-context-title">
     <div class="container">
         <div class="fg-upd-context__head">
             <p class="eyebrow"><?php esc_html_e('On a real house', 'fenster'); ?></p>
             <h2 id="fg-upd-context-title"><?php esc_html_e('A colour is a different thing on brick than it is on a screen.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Anthracite reads almost black against red brick and blue-grey against render. Chartwell green looks period on a cottage and odd on a new build. These are the four we are photographing next.', 'fenster'); ?></p>
+            <p><?php esc_html_e('Anthracite reads almost black against red brick and blue-grey against render. A cream looks warm on stone and flat on a new build. All of these are ours, photographed on the day we finished.', 'fenster'); ?></p>
         </div>
         <div class="fg-upd-context__grid">
             <?php
             $context_shots = [
-                ['label' => __('Anthracite on red brick', 'fenster'), 'brief' => __('A back door straight on, mid-morning, no cars in shot. The one everybody orders.', 'fenster')],
-                ['label' => __('Chartwell green on stone or render', 'fenster'), 'brief' => __('A cottage or older elevation. The colour needs an old wall behind it to make its case.', 'fenster')],
-                ['label' => __('A woodgrain front door', 'fenster'), 'brief' => __('Irish oak or golden oak, close enough that the grain in the foil is visible.', 'fenster')],
-                ['label' => __('A white door doing its job', 'fenster'), 'brief' => __('The commonest door we fit and the one we photograph least. Side or utility entrance, clean and ordinary.', 'fenster')],
-                ['label' => __('The door furniture', 'fenster'), 'brief' => __('Letterplate, knocker and numerals on a finished door, one arm\'s length away.', 'fenster')],
-                ['label' => __('White on the inside', 'fenster'), 'brief' => __('A coloured door photographed from indoors, showing the white inside face. It is the thing people are most surprised by.', 'fenster')],
+                ['label' => __('Cream, on stone', 'fenster'), 'image' => 'upvc-door-cream-glazed-stone.webp', 'alt' => __('Cream uPVC door with two glazed panes in a white stone wall', 'fenster')],
+                ['label' => __('The arch, close up', 'fenster'), 'image' => 'upvc-detail-arch-lead.webp', 'alt' => __('Close detail of a curved uPVC door frame against brick', 'fenster')],
+                ['label' => __('Green, on a cottage', 'fenster'), 'image' => 'upvc-door-green-stable.webp', 'alt' => __('Chartwell green uPVC stable door on a red brick cottage', 'fenster')],
+                ['label' => __('White, doing its job', 'fenster'), 'image' => 'upvc-door-white-shiplap-brick.webp', 'alt' => __('White uPVC back door glazed over a shiplap panel', 'fenster')],
             ];
             foreach ($context_shots as $shot) :
                 ?>
                 <figure class="fg-upd-context__cell">
-                    <?php $placeholder($shot['brief'], '4 / 3'); ?>
+                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/' . $shot['image'])); ?>" alt="<?php echo esc_attr($shot['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
                     <figcaption><?php echo esc_html($shot['label']); ?></figcaption>
                 </figure>
             <?php endforeach; ?>
+
+            <figure class="fg-upd-context__cell">
+                <?php $placeholder(__('A dark front door on a rendered elevation, straight on. We fit them constantly and have photographed none.', 'fenster'), '4 / 5'); ?>
+                <figcaption><?php esc_html_e('Anthracite, on render', 'fenster'); ?></figcaption>
+            </figure>
+            <figure class="fg-upd-context__cell">
+                <?php $placeholder(__('One door shot from outside and then from inside, same job, same day. It is the only honest way to show both faces.', 'fenster'), '4 / 5'); ?>
+                <figcaption><?php esc_html_e('Both faces, one door', 'fenster'); ?></figcaption>
+            </figure>
         </div>
     </div>
 </section>
@@ -314,60 +333,56 @@ $randomiser_payload = [
         </div>
         <div class="fg-upd-config__grid">
             <?php
+            /* FOUR REAL ONES NOW. The stable door and the shaped head were
+               placeholders until 2026-08-12, when the owner pointed out we
+               already held photographs of both — the arched leaded door had
+               been in the theme since launch and is the best photograph on the
+               route. Do not put those placeholders back. */
             $configs = [
                 [
                     'title' => __('A single leaf', 'fenster'),
-                    'copy' => __('The everyday one. Front, back, side or utility, hung to open whichever way the room needs and hinged on the side that keeps the path clear.', 'fenster'),
-                    'photo' => $photo('single'),
+                    'copy' => __('The everyday one. Front, back, side or utility, hinged on the side that keeps the path clear and opening whichever way the room needs.', 'fenster'),
+                    'image' => 'upvc-door-white-shiplap-brick.webp',
+                    'alt' => __('White uPVC back door glazed over a shiplap panel in a brick opening', 'fenster'),
                     'link' => '',
                     'link_label' => '',
                 ],
                 [
                     'title' => __('A French pair', 'fenster'),
-                    'copy' => __('Two leaves opening from the centre, for a wider opening onto a garden or patio. One leaf is used day to day and the second unbolts when you want the whole opening.', 'fenster'),
-                    'photo' => $photo('french'),
+                    'copy' => __('Two leaves opening from the centre onto a garden or a patio. One is used day to day and the second unbolts when you want the whole opening.', 'fenster'),
+                    'image' => 'upvc-door-white-french-decking.webp',
+                    'alt' => __('White uPVC French doors opening onto decking', 'fenster'),
                     'link' => home_url('/french-doors/'),
                     'link_label' => __('More on French doors', 'fenster'),
                 ],
                 [
                     'title' => __('A stable door', 'fenster'),
-                    'copy' => __('Split across the middle so the top half opens on its own: air in, the dog and the toddler still in. Available glazed or panelled in each half.', 'fenster'),
-                    'photo' => $photo('stable'),
+                    'copy' => __('Split across the middle so the top half opens on its own: air in, the dog and the toddler still in. Glazed or panelled in either half.', 'fenster'),
+                    'image' => 'upvc-door-white-stable.webp',
+                    'alt' => __('White uPVC stable door with both halves glazed, in a brick opening', 'fenster'),
+                    'link' => '',
+                    'link_label' => '',
+                ],
+                [
+                    'title' => __('A shaped head', 'fenster'),
+                    'copy' => __('An arched or angled head, made to the opening rather than squared off inside it. Rare, and the reason a Victorian arch keeps its arch.', 'fenster'),
+                    'image' => 'upvc-door-white-arched-leaded.webp',
+                    'alt' => __('White uPVC door with a curved head and leaded glass in an arched brick opening', 'fenster'),
                     'link' => '',
                     'link_label' => '',
                 ],
             ];
             foreach ($configs as $config) :
-                if (empty($config['photo']['src'])) {
-                    continue;
-                }
                 ?>
                 <article class="fg-upd-config__card">
                     <figure>
-                        <img src="<?php echo esc_url($config['photo']['src']); ?>" alt="<?php echo esc_attr($config['photo']['alt'] ?? ''); ?>" loading="lazy" decoding="async">
+                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/curated/' . $config['image'])); ?>" alt="<?php echo esc_attr($config['alt']); ?>" width="1280" height="1600" loading="lazy" decoding="async">
                     </figure>
                     <h3><?php echo esc_html($config['title']); ?></h3>
                     <p><?php echo esc_html($config['copy']); ?></p>
                     <?php if ($config['link'] !== '') : ?>
                         <a class="fg-upd-config__link" href="<?php echo esc_url($config['link']); ?>"><?php echo esc_html($config['link_label']); ?></a>
                     <?php endif; ?>
-                </article>
-            <?php endforeach; ?>
-
-            <?php
-            /* The three above are real installs. These three are the shots that
-               would finish the section, and each is a thing the copy claims and
-               the photography cannot yet show. */
-            $config_wanted = [
-                ['title' => __('The top half open', 'fenster'), 'brief' => __('A stable door with the top leaf open and the bottom closed, from outside, ideally with somebody leaning on it.', 'fenster')],
-                ['title' => __('A pair, fully open', 'fenster'), 'brief' => __('French doors thrown right back onto a garden in summer, straight on, both leaves flat against the wall.', 'fenster')],
-                ['title' => __('A shaped head', 'fenster'), 'brief' => __('An arched or angled head door in its opening. Rare, and we currently illustrate it with nothing at all.', 'fenster')],
-            ];
-            foreach ($config_wanted as $wanted) :
-                ?>
-                <article class="fg-upd-config__card fg-upd-config__card--wanted">
-                    <?php $placeholder($wanted['brief'], '4 / 5'); ?>
-                    <h3><?php echo esc_html($wanted['title']); ?></h3>
                 </article>
             <?php endforeach; ?>
         </div>
