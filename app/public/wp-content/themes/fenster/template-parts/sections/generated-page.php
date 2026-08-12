@@ -1943,7 +1943,37 @@ foreach ($known_locations as $location_slug => $location_label) {
 $route_exists = static function (string $target_slug) use ($generated_pages, $virtual_page_titles): bool {
     return $target_slug === 'home' || isset($generated_pages[$target_slug]) || isset($virtual_page_titles[$target_slug]);
 };
+/* A MATRIX ROUTE IS NAMED BY THE MATRIX, NOT BY `pages.json`, AND THAT WAS THE
+   SEVENTH PLACE THE 2026-08-12 RENAME HAD TO REACH.
+
+   `data/pages.json` still carries scrape-era records for some town routes —
+   eight for patio doors alone — and `fenster_generated_pages_index()` hands
+   those raw titles back. The page itself never uses them, because
+   `fenster_location_matrix_page()` overrides the title from
+   `fenster_location_matrix_products()` when it builds the route. The related-
+   links band did use them, so `/patio-doors/` rendered a row of links reading
+   "Patio Doors Northampton" straight underneath its own H1 reading "uPVC
+   Sliding Doors", and the page it linked to was titled "uPVC Sliding Doors
+   Northampton" when you got there.
+
+   So the matrix name wins here too, and it is derived rather than restated:
+   change `fenster_location_matrix_products()` and this follows. Fixing the
+   eight stale `pages.json` records instead would have left the same trap armed
+   for the next rename. */
 $route_title = static function (string $target_slug) use ($generated_pages, $virtual_page_titles, $known_locations): string {
+    $matrix_products = function_exists('fenster_location_matrix_products') ? fenster_location_matrix_products() : [];
+
+    foreach ($known_locations as $location_slug => $location_name) {
+        if (! str_ends_with($target_slug, '-' . $location_slug)) {
+            continue;
+        }
+        $product_slug = substr($target_slug, 0, -strlen('-' . $location_slug));
+        if (isset($matrix_products[$product_slug])) {
+            return $matrix_products[$product_slug] . ' ' . $location_name;
+        }
+        break;
+    }
+
     $label = trim((string) ($virtual_page_titles[$target_slug] ?? $generated_pages[$target_slug]['title'] ?? ''));
 
     foreach ($known_locations as $location_slug => $location_name) {
