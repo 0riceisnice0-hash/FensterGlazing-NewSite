@@ -64,8 +64,12 @@
  *  - **1.0 W/m²K is the triple figure and 1.2 is the window's**, borrowed on the
  *    owner's ruling because Liniar publish no double glazed figure for this
  *    door. See the comment in `glazing_u_values`.
- *  - **Multi-point lock, one star cylinder as standard, three star upgrade.**
- *    The composite door's £5,000 break-in guarantee does NOT apply here.
+ *  - **Multi-point lock, one star cylinder as standard, three star upgrade,
+ *    and laminated glass as a second upgrade** (owner, 2026-08-12). The
+ *    composite door's £5,000 break-in guarantee does NOT apply here, and no
+ *    thickness, standard or rating is published for the laminate because none
+ *    is confirmed. **Triple glazing stays out of the security card**: it is a
+ *    thermal choice and it is already on the EnergyPlus banner.
  *  - **PAS 24 and Secured by Design are Liniar's and are attributed**, never
  *    asserted as ours. Same distinction as the Kenrick Excalibur.
  *  - **Cat flaps are cut in on site**, once the door is hung. Letterplates,
@@ -378,9 +382,25 @@ get_template_part('template-parts/components/privacy-glass-card', null, [
             </article>
 
             <article class="fg-upd-detail__card">
-                <h3><?php esc_html_e('The lock, and what comes as standard.', 'fenster'); ?></h3>
+                <h3><?php esc_html_e('The lock, and the two upgrades worth asking for.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the leaf, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The cylinder that comes with it is a one star. A three star cylinder is an upgrade and it is worth asking for: it is the part that resists snapping, and it is the cheapest thing on the whole door to improve.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The cylinder that comes with it is a one star. A three star cylinder is the first upgrade worth asking for: it is the part that resists snapping, and it is the cheapest thing on the whole door to improve.', 'fenster'); ?></p>
+                <?php /* LAMINATED IS THE SECOND UPGRADE AND IT BELONGS HERE, not on
+                         the glass card above, because the reason to have it is
+                         security rather than privacy. Owner raised it 2026-08-12.
+
+                         TRIPLE GLAZING WAS RAISED IN THE SAME BREATH AND IS
+                         DELIBERATELY NOT HERE. It is a thermal choice, not a
+                         security one, and 36mm triple is already stated on the
+                         EnergyPlus banner two sections above; repeating it in a
+                         card about locks is the duplication this page was just
+                         rebuilt to remove.
+
+                         NO FIGURE IS GIVEN for the laminate — no thickness, no
+                         standard, no rating — because none is confirmed. What is
+                         described is how laminated glass behaves, which is the
+                         same in a door as it is in a windscreen. */ ?>
+                <p><?php esc_html_e('Laminated glass is the second. It has a plastic interlayer bonded between two panes, so when it breaks it holds together rather than clearing the opening, the same way a car windscreen does. Worth asking about on a front door, or anything reachable from a quiet side path.', 'fenster'); ?></p>
                 <p class="fg-upd-detail__note"><?php esc_html_e('Liniar test the system to PAS 24, it is a Secured by Design product, and the profile carries a BSI Kitemark to BS EN 12608-1. Those are their figures for the profile, not a certificate for a particular door, so ask us what a specific doorset is built to.', 'fenster'); ?></p>
             </article>
         </div>
