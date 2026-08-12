@@ -11,8 +11,9 @@ what is live; when the two disagree, `LIVECHANGES.md` is right.
 
 ## START HERE, 2026-08-12 (tilt and turn session)
 
-**Live is `d7118d7f` and level with `main`. TEST IS LEVEL WITH LIVE.** Owner
-approved and shipped the same day. No release branch outstanding, working tree
+**Live is `831bfa44` and level with `main`. TEST IS LEVEL WITH LIVE.** Owner
+approved and shipped the same day, plus one caption correction after he spotted
+a keep captioned as a cam on the live page. No release branch outstanding, working tree
 clean. `LIVECHANGES.md` carries the deploy record.
 
 ### What this session did
