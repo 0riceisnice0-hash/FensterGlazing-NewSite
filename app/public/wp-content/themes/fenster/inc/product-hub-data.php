@@ -86,14 +86,28 @@ function fenster_product_hub_data(string $slug): array
             'systems' => [$systems['liniar']],
             'badges' => ['Secure ventilation', 'Easy cleaning', 'Large opening option'],
             'heading' => 'Tilt and turn windows for safe ventilation and easier cleaning.',
-            'copy' => 'Tilt and turn windows are a practical choice for upper floors, flats, bedrooms and larger openings because one sash can tilt inwards for ventilation or turn inwards for cleaning and escape-style access.',
+            /* THIS BAND NO LONGER RENDERS on the route: the bespoke middle added
+               on 2026-08-12 stands in for `fg-product-intel`. It is kept accurate
+               anyway, on the same reasoning as the repairs `product_usps` entry —
+               a stale block is invisible to everyone right up until something
+               ungates it, and then it is wrong in public.
+
+               Three things were corrected when it was parked. The profile row
+               read "Liniar uPVC profile options, including higher-performance
+               choices where suitable", which names nothing and commits to
+               nothing. The chamber count is four on this system, not the six the
+               casement carries. And "escape-style access" went: egress copy was
+               pulled off the handle hub once already and Liniar's own "fire
+               escape solution" wording is not something to inherit without the
+               owner asking for it. */
+            'copy' => 'Tilt and turn windows are a practical choice for upper floors, flats and bedrooms, because the sash comes into the room: it tilts at the top for ventilation, or swings right in so the outside of the glass can be cleaned from indoors.',
             'specs' => [
-                ['label' => 'Operation', 'value' => 'Dual-action inward opening: tilt for ventilation, turn for access and cleaning'],
-                ['label' => 'Profile system', 'value' => 'Liniar uPVC profile options, including higher-performance choices where suitable'],
-                ['label' => 'Security', 'value' => 'Locking handle and multi-point locking around the sash'],
-                ['label' => 'Best for', 'value' => 'Upper floors, restricted outside access and rooms needing controlled ventilation'],
+                ['label' => 'Operation', 'value' => 'Inward opening, two positions off one handle: tilt at the top, or the full swing'],
+                ['label' => 'Profile system', 'value' => 'Liniar 70mm EnergyPlus, four chambers through the frame'],
+                ['label' => 'Performance', 'value' => '28mm double glazed at 1.3 W/m²K, or 36mm triple at 0.93, A++ rated'],
+                ['label' => 'Security', 'value' => 'Key-locking handle with a tilt-only setting, and mushroom cams around the sash'],
             ],
-            'choices' => ['Single large sashes or mixed fixed/opening layouts', 'Safety glass where Building Regulations require it', 'Obscured glass for bathrooms', 'Restrictor and ventilation conversations during survey'],
+            'choices' => ['Single large sashes or mixed fixed and opening layouts', 'The tilt-only key setting for bedrooms and anything above a drop', 'Obscured glass for bathrooms', 'Safety glass where Building Regulations require it'],
         ],
         'sliding-sash-windows' => [
             'systems' => [$systems['roseview']],
@@ -598,7 +612,26 @@ function fenster_tech_banner_args(string $slug): array
             ],
         ];
 
-        $facts = [['value' => '6', 'label' => 'chambers through the frame']];
+        /* THE CHAMBER COUNT IS NOT SIX EVERYWHERE, and this banner asserted that
+           it was on all seven routes until 2026-08-12. Six is Liniar's figure
+           for the EnergyPlus casement; their published specification for the
+           70mm TILT AND TURN is four symmetrical chambers. The banner was
+           therefore printing "6 chambers through the frame" and "Liniar's
+           six-chamber profile" directly above a bespoke middle that correctly
+           said four, on the same screen.
+
+           Same shape as the glazing contradiction this function already exists
+           to solve, and the same fix: state it per route and default to the
+           casement figure rather than inheriting it silently. If a route's
+           count is ever unconfirmed, give it no number rather than this one. */
+        $chambers_by_route = [
+            'tilt-turn-windows' => '4',
+        ];
+        $chambers = $chambers_by_route[$slug] ?? '6';
+        $chamber_words = ['4' => 'four', '6' => 'six'];
+        $chamber_word = $chamber_words[$chambers] ?? $chambers;
+
+        $facts = [['value' => $chambers, 'label' => 'chambers through the frame']];
         foreach ($glazing_by_route[$slug] ?? [] as $glazing_fact) {
             $facts[] = $glazing_fact;
         }
@@ -609,7 +642,10 @@ function fenster_tech_banner_args(string $slug): array
             'logo_alt' => 'EnergyPlus by Liniar',
             'eyebrow' => 'The profile we specify',
             'title' => 'Liniar EnergyPlus',
-            'copy' => 'Liniar\'s six-chamber profile. The chambers sit inside the frame where you never see them, and the weather seal is extruded as part of the profile rather than pushed into a groove afterwards, so it cannot work loose at a corner.',
+            'copy' => sprintf(
+                'Liniar\'s %s-chamber profile. The chambers sit inside the frame where you never see them, and the weather seal is extruded as part of the profile rather than pushed into a groove afterwards, so it cannot work loose at a corner.',
+                $chamber_word
+            ),
             'facts' => $facts,
         ];
     }
