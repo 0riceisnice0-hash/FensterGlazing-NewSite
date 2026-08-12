@@ -66,7 +66,11 @@ by saying sixteen where a door takes thirteen.
   page on the strength of the owner raising it in passing; no thickness,
   standard or rating is published because none is confirmed.
 - Photography: the standing gaps in `PHOTO-CHECKLIST.md` are unchanged.
-- Sixteen stale `release/*` branches on origin, two of them this session's.
+- **Fifteen stale `release/*` branches on origin**, down from seventeen: this
+  session's two were deleted after proving nothing on them was absent from
+  `main`. `release/all-hallows` carried only a revert nobody wants; the
+  terminology commits exist on `main` under different hashes. The other fifteen
+  are not this session's to delete and each is a loaded gun if deployed.
 - Two `.DS_Store` files tracked in the theme from an earlier session.
 
 ## START HERE, 2026-08-11 (end of session)
