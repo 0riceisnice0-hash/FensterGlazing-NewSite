@@ -289,8 +289,12 @@ function fenster_case_studies(): array
             'date_confirmed' => false,
             'summary' => 'Sheerline Prestige windows and a door, two heritage windows and six bespoke louvres, fitted into the courtyard elevations of the Heal\'s building during its refurbishment.',
             'lead' => 'The Heal\'s building on Tottenham Court Road was being reworked to put modern offices above the shop. Our part was the courtyard elevations on the first and second floors: a run of aluminium glazing, a door, two heritage windows and six louvres made specially for the openings they went into.',
+            /* Retail claim added 2026-08-12: Heal's is a department store, so it
+               is the one genuine retail-building study we own and
+               /office-and-retail-glazing/ had no proof on it at all. */
             'products' => [
                 ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+                ['label' => 'Office and retail glazing', 'url' => home_url('/office-and-retail-glazing/')],
                 ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
                 ['label' => 'Heritage windows', 'url' => home_url('/heritage-windows/')],
                 ['label' => 'Louvre vents', 'url' => home_url('/louvre-vents/')],
@@ -337,8 +341,15 @@ function fenster_case_studies(): array
             'date' => '2025-09-01',
             'summary' => 'Sixty-five aluminium windows, six doors and a curtain wall screen for the refurbishment of a working rail depot at Bletchley.',
             'lead' => 'A rail depot does not stop for a refurbishment. We supplied and fitted the window, door and curtain walling package across a depot that stayed operational throughout, on a site where getting through the induction takes longer than getting through the first day of work.',
+            /* Two claims added 2026-08-12. Both are already in this study's own
+               spec rows below — "1 curtain wall" and "65 aluminium windows, 6
+               doors" — and neither route was being proved by it, so
+               /curtain-walling/ rendered no proof at all while the one job that
+               demonstrates it sat here unclaimed. */
             'products' => [
                 ['label' => 'Commercial glazing', 'url' => home_url('/commercial-glazing/')],
+                ['label' => 'Curtain walling', 'url' => home_url('/curtain-walling/')],
+                ['label' => 'Commercial windows and doors', 'url' => home_url('/commercial-windows-and-doors/')],
                 ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/')],
                 ['label' => 'Commercial automation', 'url' => home_url('/commercial-automation/')],
             ],
@@ -1710,7 +1721,7 @@ function fenster_case_studies_for_product(string $slug, int $limit = 3, string $
  * @param string[] $slugs Product route slugs in the group.
  * @return array<int, array<string, mixed>> Case study cards, empty when none match.
  */
-function fenster_case_studies_for_product_group(array $slugs, int $limit = 3): array
+function fenster_case_studies_for_product_group(array $slugs, int $limit = 3, string $type = 'residential'): array
 {
     if ($slugs === []) {
         return [];
@@ -1721,13 +1732,22 @@ function fenster_case_studies_for_product_group(array $slugs, int $limit = 3): a
         $targets['/' . trim((string) $slug, '/') . '/'] = true;
     }
 
-    /* Residential only, same owner instruction as the single-product helper
-       above: the three product-selector hubs that call this are residential
-       pages. Unlike that one this has no fallback, so filtering here simply
-       means a hub shows fewer cards rather than the wrong ones. */
+    /* Residential BY DEFAULT, same owner instruction as the single-product
+       helper above: the three product-selector hubs that call this are
+       residential pages. Unlike that one this has no fallback, so filtering here
+       simply means a hub shows fewer cards rather than the wrong ones.
+     *
+     * THE COMMERCIAL ROUTES CALL THIS ONE RATHER THAN THE SINGLE-PRODUCT HELPER,
+     * added 2026-08-12, and the missing fallback is exactly why. Ask
+     * fenster_case_studies_for_product() for a route nothing claims and it hands
+     * back EVERY study — the documented fault that put Winslow secondary glazing
+     * under "Real installs" on /tilt-turn-windows/ and three commercial jobs on
+     * /aluminium-windows/. On a commercial page that would put a care home under
+     * a curtain walling heading. A route with no study of its own renders no
+     * strip, which is the right answer. */
     $matched = [];
     $pool = function_exists('fenster_case_studies_of_type')
-        ? fenster_case_studies_of_type('residential')
+        ? fenster_case_studies_of_type($type)
         : fenster_case_studies();
     foreach ($pool as $short => $study) {
         foreach ((array) ($study['products'] ?? []) as $product) {
