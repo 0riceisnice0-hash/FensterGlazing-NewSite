@@ -20,6 +20,19 @@ function fenster_site_data(): array
             'tagline' => 'Windows, doors, glazing, repairs and project support for homes and businesses.',
             'phone' => '01908 429200',
             'email' => 'info@fensterglazing.com',
+            /* THE COMMERCIAL PAGES SHOW THIS ONE, owner-confirmed 2026-08-12.
+               `info@` stays the residential and general address and is still where
+               the enquiry FORM delivers on every route — see the note in
+               `inc/enquiries.php` and the Shared Form Rule. This key only changes
+               the address a commercial visitor is shown and can click.
+
+               So a commercial buyer who emails goes to `commercial@` and one who
+               submits the form goes to `info@`. That split is deliberate for now
+               because form routing is an email-delivery change rather than a copy
+               one, and `fenster_enquiry_recipient()` is owner-confirmed on `info@`
+               with no override on live. If commercial form leads should follow the
+               address, that is a separate decision and a separate release. */
+            'commercial_email' => 'commercial@fensterglazing.com',
             'address' => [
                 '98 Alston Drive',
                 'Bradwell Abbey',

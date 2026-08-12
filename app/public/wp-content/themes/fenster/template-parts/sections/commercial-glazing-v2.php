@@ -50,6 +50,10 @@ $related_links = is_array($args['related_links'] ?? null) ? $args['related_links
 
 $brand_phone = (string) ($brand['phone'] ?? '01908 429200');
 $brand_email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
+/* Commercial pages show the commercial address. See the note on
+   `brand.commercial_email` in `inc/site-data.php` for why the enquiry form still
+   delivers to `info@`. */
+$commercial_email = (string) ($brand['commercial_email'] ?? $brand_email);
 $phone_href = preg_replace('/\s+/', '', $brand_phone);
 
 $commercial_img = '/wp-content/themes/fenster/assets/images/commercial/';
@@ -357,7 +361,7 @@ foreach ($commercial_studies as $short => $study) {
                 </ul>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($brand_phone); ?></a>
-                    <a href="mailto:<?php echo esc_attr($brand_email); ?>"><?php echo esc_html($brand_email); ?></a>
+                    <a href="mailto:<?php echo esc_attr($commercial_email); ?>"><?php echo esc_html($commercial_email); ?></a>
                 </div>
             </div>
             <?php

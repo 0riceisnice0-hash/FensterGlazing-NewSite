@@ -24,6 +24,10 @@ $towns = is_array($profile['towns'] ?? null) ? array_values($profile['towns']) :
 $context = (string) ($profile['context'] ?? 'commercial buildings, public estates and phased refurbishment projects');
 $brand_phone = (string) ($brand['phone'] ?? '01908 429200');
 $brand_email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
+/* The county routes are commercial pages too — around forty of them — so they
+   show the commercial address like the rest of the set. See the note on
+   `brand.commercial_email` in `inc/site-data.php`. */
+$commercial_email = (string) ($brand['commercial_email'] ?? $brand_email);
 $phone_href = preg_replace('/\s+/', '', $brand_phone);
 $town_summary = implode(', ', array_slice($towns, 0, 4));
 
@@ -149,7 +153,7 @@ $faqs = [
                     'show_company' => true,
                 ]);
                 ?>
-                <p class="fg-county-hero__email"><?php esc_html_e('Prefer email?', 'fenster'); ?> <a href="mailto:<?php echo esc_attr($brand_email); ?>"><?php echo esc_html($brand_email); ?></a></p>
+                <p class="fg-county-hero__email"><?php esc_html_e('Prefer email?', 'fenster'); ?> <a href="mailto:<?php echo esc_attr($commercial_email); ?>"><?php echo esc_html($commercial_email); ?></a></p>
             </aside>
         </div>
     </section>

@@ -408,7 +408,7 @@ $is_louvre = $slug === 'louvre-vents';
                 <ul class="fg-commercial-enquiry__notes">
                     <li><?php esc_html_e('Phone lines are open 24/7.', 'fenster'); ?></li>
                     <li><?php esc_html_e('The office team picks up drawings and schedules during working hours.', 'fenster'); ?></li>
-                    <li><a href="mailto:<?php echo esc_attr($brand_email); ?>"><?php echo esc_html($brand_email); ?></a></li>
+                    <li><a href="mailto:<?php echo esc_attr($commercial_email); ?>"><?php echo esc_html($commercial_email); ?></a></li>
                 </ul>
             </div>
             <?php
