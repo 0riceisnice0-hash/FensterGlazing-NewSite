@@ -11,9 +11,9 @@ what is live; when the two disagree, `LIVECHANGES.md` is right.
 
 ## START HERE, 2026-08-12 (tilt and turn session)
 
-**Live is still `0f8e8bf5`. `main` is `79fe2d4d`, five commits ahead, and the
-tilt and turn rebuild is ON TEST AND NOT APPROVED FOR LIVE.** Test is therefore
-deliberately ahead of live. Working tree clean, no release branch outstanding.
+**Live is `d7118d7f` and level with `main`. TEST IS LEVEL WITH LIVE.** Owner
+approved and shipped the same day. No release branch outstanding, working tree
+clean. `LIVECHANGES.md` carries the deploy record.
 
 ### What this session did
 
@@ -83,8 +83,19 @@ said it belongs since 2026-07-29.
 
 ### Still needs the owner
 
-- **Approval to ship.** It is on test and verified there; live is untouched.
-- **A photograph of one tilting or turning**, whenever a job comes up.
+- **A photograph of one tilting or turning**, whenever a job comes up. Everything
+  else on this route is closed.
+
+### Three probe faults in the live verification, all in one sweep
+
+Worth recording because they arrived together and every one looked like a
+failed deploy. A `d41d8cd9…` on the served stylesheet, which is the md5 of the
+empty string and means the href grep matched nothing rather than that the CSS
+failed to ship. `0.93` counted twice, because the key-specification strip and
+the EnergyPlus banner both carry it by design. `1.3` counted three times,
+because the FAQ answer is also copied into the FAQPage JSON-LD. **A
+verification failure is not evidence until the probe is checked**, and this is
+the third session running where that sentence earned its place.
 
 ## START HERE, 2026-08-12 (end of session)
 

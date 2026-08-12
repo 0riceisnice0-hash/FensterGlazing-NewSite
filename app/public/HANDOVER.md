@@ -2,7 +2,7 @@
 
 ## Handover state, 2026-08-12
 
-**Live is `0f8e8bf5` and level with `main`. Test is level with live.** No
+**Live is `d7118d7f` and level with `main`. Test is level with live.** No
 release branch outstanding from this session, working tree clean.
 `LIVECHANGES.md` is the authority on what is live; `PROGRESS.md` is a log and
 some of its older entries are still titled "(test)" long after shipping.
@@ -68,7 +68,7 @@ that way is what gated the strip off `/aluminium-windows/` and
 `/heritage-windows/`: with no residential study of their own they fell back to
 secondary glazing and uPVC casements, which is worse than showing nothing.
 
-**`/tilt-turn-windows/` was rebuilt on 2026-08-12 and is ON TEST, not live.**
+**`/tilt-turn-windows/` was rebuilt on 2026-08-12 and IS LIVE (`d7118d7f`).**
 Read the Tilt And Turn Windows Rule and the Tilt And Turn Imagery Rule in
 `AI.md` before touching it. Three things about it are worth knowing before
 anything else:
