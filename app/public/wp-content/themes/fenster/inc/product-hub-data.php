@@ -590,9 +590,16 @@ function fenster_tech_banner_args(string $slug): array
                 ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
                 ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
             ],
+            /* LINIAR'S OWN PAIR FOR THIS WINDOW, not the casement's. Owner ruling
+               2026-08-12. This route came off the shared 0.95/1.2 in
+               `glazing_u_values` and this map has to move with it, or the banner
+               prints one pair and the key-specification strip a few hundred
+               pixels above prints another — which is the exact contradiction
+               this map was created to end on 2026-07-29. The two are separate
+               arrays and nothing joins them, so change both or neither. */
             'tilt-turn-windows' => [
-                ['value' => '0.95', 'label' => 'W/m²K with 36mm triple glazing'],
-                ['value' => '1.2', 'label' => 'W/m²K with 28mm double glazing'],
+                ['value' => '0.93', 'label' => 'W/m²K with 36mm triple glazing'],
+                ['value' => '1.3', 'label' => 'W/m²K with 28mm double glazing'],
             ],
             // Owner-confirmed: 28mm double is the only unit this sash takes.
             'flush-casement-windows' => [

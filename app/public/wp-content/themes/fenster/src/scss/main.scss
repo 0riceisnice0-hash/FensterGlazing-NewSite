@@ -39890,10 +39890,15 @@ html.fg-blinds-reveal-locked {
   color: #ffffff;
 }
 
+/* THE ATTRIBUTION NOTE SITS ON THE DARK GALLERY BAND, so it cannot take
+   `--color-muted`. It did on the first build and rendered charcoal on steel:
+   legible only if you already knew it was there, on the one paragraph that
+   carries the PAS 24 attribution. Third time this exact trap has been recorded
+   in this stylesheet — check the ground before setting a text colour. */
 .fg-cw .fg-tt-secure__note {
   max-width: 78ch;
   margin: clamp(1.1rem, 2.4vw, 1.6rem) 0 0;
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.72);
   font-size: 0.92rem;
 }
 
