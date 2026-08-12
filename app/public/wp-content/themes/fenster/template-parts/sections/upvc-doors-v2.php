@@ -304,7 +304,7 @@ if (! empty($door_colour_names)) {
                 <p><?php
                     printf(
                         /* translators: 1: foil count, 2: privacy glass count, 3: handle finish count */
-                        esc_html__('%1$d finishes against %2$d glasses and %3$d handle finishes, and that is before the panel, which is not a list of options at all: where it stops is drawn on the door. Nobody needs two thousand doors. The point is that yours is not one of six on a list.', 'fenster'),
+                        esc_html__('%1$d finishes against %2$d glasses and %3$d handle finishes, and that is before the style, which is drawn rather than picked. Yours gets specified out of all of it.', 'fenster'),
                         (int) $way_finishes,
                         (int) $way_glass,
                         (int) $way_handles
