@@ -134,4 +134,31 @@ adding anything to this list.
   1024px, which is the smallest set on the site and the reason its gallery is
   laid out the way it is. On a scaffolded commercial job, five full-resolution
   shots from the lift on the last day is worth more than anything taken later.
+- **THE COMMERCIAL LIST, 2026-08-12, written to be forwarded to the commercial
+  team.** The commercial rebuild put every route on real photography and then ran
+  out of it. In priority order, and each one is a gap on a live page:
+  1. **A wide commercial elevation we have glazed** — the hub has no honest hero.
+  2. **Curtain walling, a second job.** One exists (Bletchley) and it is the most
+     searched commercial product we sell. Wanted: the elevation wide enough to
+     read the grid, plus a head or cill interface close up.
+  3. **An automatic entrance showing the operator** above the door head, on a job
+     of ours. The Bletchley doorset is ours; the shot with the operator visible is
+     archive and stays unattributed because of it.
+  4. **Inside a live clinical or care setting** — a treatment or consulting room
+     with the new window in it. Healthcare currently runs on one frontage.
+  5. **A distribution or manufacturing building**, office block at the front with
+     the shed behind. The industrial route has one business unit and a yard.
+  6. **An AOV open, and a control panel.** All Hallows proves we fit them and
+     nothing shows one working.
+  7. **A wide louvre run in context**, plus the Heal's louvres, still unshot.
+  8. **A second commercial replacement glazing job** — all three shots are one job.
+  9. **One exterior per sector**: school, student block, hotel, care home, office
+     or retail frontage. Every sector page repeats its two photographs.
+  10. **Access equipment on site** — spider crane, tracked lifter, scaffold on a
+      commercial elevation. Almost nothing shows how we reach things.
+  11. **A steel doorset**, now that the spec says we fit them up to SR3.
+- **Our own vans in shot are fine on commercial work** and often useful, which is
+  the opposite of the residential rule at the top of this file. On a live site the
+  van proves whose job it is. `comm-industrial-unit-install-1600w.jpg` is the
+  worked example.
 - Tilt and turn, heritage windows, heritage doors, aluminium sliders and uPVC sliding all have **empty folders** in the bank, so those pages stay on supplier imagery. Tilt and turn now has its own entry above; the folder being empty is exactly why.
