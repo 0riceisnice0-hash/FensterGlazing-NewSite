@@ -9,7 +9,82 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-12 (tilt and turn session)
+
+**Live is still `0f8e8bf5`. `main` is `79fe2d4d`, five commits ahead, and the
+tilt and turn rebuild is ON TEST AND NOT APPROVED FOR LIVE.** Test is therefore
+deliberately ahead of live. Working tree clean, no release branch outstanding.
+
+### What this session did
+
+`/tilt-turn-windows/` rebuilt as the **eleventh** bespoke residential middle.
+It was running the generic product journey and reading like it: the product
+name as the H1 and twice more as an H2, five benefit cards arguing the two-way
+opening four times over, and a FAQ answering "are they energy efficient?" with
+"U-value information shown on the page".
+
+The page now argues the only thing that is true of this window and nothing
+else: **it is the only window we fit that opens into the room.** Four sections,
+built on the four Liniar mechanism renders, because those are the only assets
+we own that show the product working. The tilt-only key setting has a section
+of its own rather than a bullet in the handle grid, which is where `AI.md` has
+said it belongs since 2026-07-29.
+
+### Four faults found on the way, all of them live until now
+
+1. **THE HERO WAS NOT A TILT AND TURN.** `tilt-turn-brick-1600w.webp` — Liniar's
+   own `Tilt__Turn_02.jpg` — shows two barrel hinges on the jamb and the sash
+   standing proud of the frame. It is a side-hung casement opening **outward**,
+   and the alt text claimed the sash was "tilted open at the top". The page was
+   asserting the product's one distinguishing feature over a picture of a
+   different window. **A supplier filename from a product photoshoot is not
+   evidence of what is in the frame; the hinges are.**
+2. **The case-study strip was showing three wrong-product studies** under "Real
+   installs, photographed on the day": Winslow secondary glazing, Leighton
+   Buzzard casements and Whitehouse bifolds. Nothing claims this route so the
+   helper fell through to its documented all-studies fallback. Gated.
+3. **The EnergyPlus banner hardcoded six chambers on all seven Liniar routes.**
+   Six is the casement figure; Liniar publish **four** for the 70mm tilt and
+   turn. Per route now, defaulting to six.
+4. **"Opening style: Highly versatile"** was an adjective in a strip whose whole
+   effect is that the numbers count up. Third time: "Design: Fully customisable"
+   on the door, "Style: Traditional" on the flush casement. Replaced with
+   Liniar's 37 dB, which is also the one figure where this window beats its
+   siblings.
+
+### The rules learned today
+
+- **A figure can live in two arrays that nothing joins.** Moving this route onto
+  Liniar's 1.3/0.93 left `$glazing_by_route` in `fenster_tech_banner_args()`
+  still on 0.95/1.2, so the banner contradicted the strip a few hundred pixels
+  above it — the exact fault that map was created to end in July, arriving from
+  the other direction. **Grep for the figure, not for the file you edited.**
+- **Check the ground before setting a text colour.** The PAS 24 attribution note
+  rendered charcoal on the dark gallery band, because the section that turned
+  out to be dark was not the one I had qualified for it. Third recorded
+  instance in this stylesheet.
+- **A shared component can supply the shape you were about to build.**
+  `.fg-cw-gallery` already paints itself steel, so the page got its one dark
+  moment for free and the closing band could stay light. It was built dark
+  first and put two dark sections back to back.
+
+### What needs the owner
+
+- **A photograph of a tilt and turn tilting or turning.** We own none. Now the
+  largest single gap on any window route in `PHOTO-CHECKLIST.md`.
+- **Colours: sixteen or Liniar's nine?** The strip says sixteen, the window foil
+  range. Liniar publish nine standard for this product. Same question that
+  landed on thirteen for the door.
+- **Chamfered as well as sculptured?** Liniar publish both for this system, the
+  casement is sculptured only, and nobody has ruled on this one. The page says
+  nothing either way.
+- **Approval to ship.** It is on test and verified there; live is untouched.
+
 ## START HERE, 2026-08-12 (end of session)
+
+> **Superseded by the block above, 2026-08-12.** Live is still `0f8e8bf5`, but
+> test is no longer level with it: the tilt and turn rebuild sits on test
+> awaiting approval. Everything else in this block still stands.
 
 **Live is `0f8e8bf5` and level with `main`. TEST IS LEVEL WITH LIVE.** No
 release branch outstanding from this session, working tree clean.

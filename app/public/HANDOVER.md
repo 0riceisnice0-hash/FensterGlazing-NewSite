@@ -29,7 +29,7 @@ newer than the one that built live's bundle, so `npm run build` rewrites it even
 when no JavaScript source changed. Check `git status` immediately before any
 rsync, and check the artefact back out if the source did not move.
 
-**The TEN residential routes with a bespoke middle** — verified against the
+**The ELEVEN residential routes with a bespoke middle** — verified against the
 dispatch in `generated-page.php`, not from memory. These do NOT use the generic
 product journey, and each has a rule in `AI.md` to read before editing:
 
@@ -45,6 +45,7 @@ product journey, and each has a rule in `AI.md` to read before editing:
 | `/window-and-door-repairs/` | `window-door-repairs.php` |
 | `/composite-doors/` | `composite-doors-v2.php` |
 | `/upvc-doors/` | `upvc-doors-v2.php` |
+| `/tilt-turn-windows/` | `tilt-turn-windows-v2.php` |
 
 **And ONE commercial route**, dispatched from `commercial-product.php` rather
 than `generated-page.php`, which is a separate template with its own bands:
@@ -67,7 +68,35 @@ that way is what gated the strip off `/aluminium-windows/` and
 `/heritage-windows/`: with no residential study of their own they fell back to
 secondary glazing and uPVC casements, which is worse than showing nothing.
 
+**`/tilt-turn-windows/` was rebuilt on 2026-08-12 and is ON TEST, not live.**
+Read the Tilt And Turn Windows Rule and the Tilt And Turn Imagery Rule in
+`AI.md` before touching it. Three things about it are worth knowing before
+anything else:
+
+- **Its old hero was a side-hung casement opening outward**, not a tilt and
+  turn — barrel hinges on the jamb, sash proud of the frame — and its alt text
+  claimed the sash was tilted. Check hinges before trusting a supplier
+  filename.
+- **It is the only Liniar route off the shared 0.95/1.2**, on the owner's
+  ruling: Liniar's own 1.3 double and 0.93 triple. Their lower 0.85 whole-window
+  figure is almost certainly the 40mm IGU, which we do not fit. **The figures
+  live in two arrays that nothing joins** — `glazing_u_values` and
+  `$glazing_by_route` in `fenster_tech_banner_args()`. Change both or neither.
+- **Its case-study strip was showing three wrong-product studies and is now
+  gated**, alongside `/aluminium-windows/`.
+
 **Open and needing the owner, not code:**
+
+- **Tilt and turn: nothing we own photographs one tilting or turning.** The
+  page runs on four Liniar studio renders of the mechanism because they are the
+  only assets that show the product working. One phone shot of a sash in tilt
+  from inside would change that page more than any other single thing.
+- **Tilt and turn colours: sixteen or Liniar's nine?** The strip says sixteen,
+  which is the window foil range. Liniar publish nine standard for this
+  specific product. Same question that landed on thirteen for the uPVC door.
+- **Is the tilt and turn a chamfered option as well as sculptured?** Liniar
+  publish both for this system; the casement is sculptured only and nobody has
+  ruled on this one, so the page says nothing either way.
 
 - **uPVC doors, two answers outstanding.** Maximum sizes for a single leaf,
   French doors and a stable door, and what each of the four thresholds is best

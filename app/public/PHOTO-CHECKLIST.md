@@ -115,8 +115,23 @@ adding anything to this list.
     and not one was photographed; the case study has none of them either.
   - Same rules as everything else: square on, daylight, no vans in shot. Louvres
     are usually high up, so back off and zoom rather than shooting steeply up.
+- **TILT AND TURN — WE OWN NO PHOTOGRAPH OF ONE OPENING. New gap, 2026-08-12,
+  and it is the largest on any window route.** The page was rebuilt around four
+  Liniar studio renders of the mechanism because they are the only assets that
+  show the product doing its job. The one photograph the route had of a window
+  "tilted open" turned out to be a side-hung casement opening outward.
+  - **A sash in the tilt position, shot from inside the room.** This is the
+    single most valuable photograph on this list after the steel before-and-
+    after. It is the product's whole argument and one phone shot answers it.
+  - **A sash turned fully in**, again from inside, ideally with somebody
+    reaching the outside face of the glass. That is the sentence the page opens
+    with and there is no picture of it anywhere.
+  - **Anything above ground floor.** These sell to flats and upper floors and
+    every asset we have is at eye level.
+  - Same rules as everything else, plus one: with the sash inward, shoot with
+    the room lights on so the frame is not a silhouette against the window.
 - **Commercial jobs generally.** The Heal's study runs on five photographs, all
   1024px, which is the smallest set on the site and the reason its gallery is
   laid out the way it is. On a scaffolded commercial job, five full-resolution
   shots from the lift on the last day is worth more than anything taken later.
-- Tilt and turn, heritage windows, heritage doors, aluminium sliders and uPVC sliding all have **empty folders** in the bank, so those pages stay on supplier imagery.
+- Tilt and turn, heritage windows, heritage doors, aluminium sliders and uPVC sliding all have **empty folders** in the bank, so those pages stay on supplier imagery. Tilt and turn now has its own entry above; the folder being empty is exactly why.
