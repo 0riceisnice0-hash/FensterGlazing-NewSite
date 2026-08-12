@@ -9,7 +9,76 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-12 (product naming session)
+
+**Live is `831bfa44`. `main` is ahead by the product-name alignment, which is ON
+TEST AND NOT APPROVED FOR LIVE.** Test is deliberately ahead. Working tree
+clean, no release branch outstanding.
+
+### What this session did
+
+Product names aligned with the showroom and WindowCAD, on the owner's list.
+**Seven renamed and no URL moved** — asserted by diffing every `home_url`,
+slug and canonical in the change and confirming none appears on only one side.
+
+Short form in the menus, because the dropdown already sits under a "Windows" or
+"Doors" heading. Full name in the H1, the hub tile and the town pages, because
+`STYLE.md` requires the H1 to be the product name and "Aluminium Heritage" on
+its own is not a thing anybody can buy. Owner's ruling.
+
+### The one thing worth carrying forward
+
+**A product name lives in SEVEN registries and none of them checks another.**
+All seven had to change for one rename, and the last two were found by
+rendering pages rather than by grepping the data:
+
+- The **sixth** was `$services` in `location-service.php`, which carries its own
+  sentence-case labels for the town-page H1, eyebrow and form fields. It is a
+  different array from `fenster_location_matrix_products()`, which drives the
+  same pages' title tag. The first pass renamed one and not the other, so ~260
+  routes had a SERP title reading "uPVC Casement Windows Bletchley" over an H1
+  reading "Casement windows in Bletchley".
+- The **seventh** was `$route_title` in `generated-page.php`, feeding the
+  related-links band. `data/pages.json` still holds scrape-era records for some
+  town routes, so `/patio-doors/` rendered a row of links reading "Patio Doors
+  Northampton" under its own H1 reading "uPVC Sliding Doors". It derives the
+  label from the matrix now rather than reading a stale index, so the next
+  rename cannot repeat it.
+
+Full list of the seven, with what each one drives, is in the Product Naming
+Rule in `AI.md`.
+
+### The SEO call, which the owner delegated
+
+**Title tags mostly did not follow the rename, and that is the answer rather
+than an omission.** The head phrase in each is the query the route ranks for,
+and the new names are showroom vocabulary, not queries: nobody searches
+"aluminium heritage" or "uPVC flush sash". Two changed, both because the new
+name **prefixes** rather than displaces — `uPVC Casement Windows Milton Keynes`
+still contains `Casement Windows Milton Keynes` intact and gains a
+4,955-impression term, and patio keeps its head phrase with the new name in the
+tail.
+
+### Probe faults again, twice in one verification
+
+A sweep for stale names reported 14, then 37, then 3. Every one was the probe.
+"Aluminium Heritage Windows" contains "Heritage Windows"; "French Casement
+Windows" contains "Casement Windows" and is a product that correctly keeps its
+name; and the three survivors were the WindowCAD collection label in the quote
+heading, which is the thing being aligned **to** and does not get rewritten.
+**A verification failure is not evidence until the probe is checked** — fourth
+session running.
+
+### What needs the owner
+
+- **Approval to ship.** It is on test and verified there; live is untouched.
+- A photograph of a tilt and turn tilting or turning, whenever a job comes up.
+
 ## START HERE, 2026-08-12 (tilt and turn session)
+
+> **Superseded by the block above.** Live is still `831bfa44`, but test is no
+> longer level with it: the product-name alignment sits on test awaiting
+> approval. Everything else in this block still stands.
 
 **Live is `831bfa44` and level with `main`. TEST IS LEVEL WITH LIVE.** Owner
 approved and shipped the same day, plus one caption correction after he spotted

@@ -68,6 +68,28 @@ that way is what gated the strip off `/aluminium-windows/` and
 `/heritage-windows/`: with no residential study of their own they fell back to
 secondary glazing and uPVC casements, which is worse than showing nothing.
 
+**PRODUCT NAMES WERE ALIGNED WITH THE SHOWROOM AND WINDOWCAD ON 2026-08-12 AND
+ARE ON TEST, NOT LIVE.** Seven renamed, no URL moved. Read the Product Naming
+Rule in `AI.md` before touching any product label, because the one thing worth
+knowing is that **a product name lives in seven registries and none of them
+checks another** — the last two were found by rendering pages, not by grepping,
+after the first pass left ~260 town routes with a renamed SERP title and an
+un-renamed H1.
+
+| Route | Name |
+|---|---|
+| `/casement-windows/` | uPVC Casement Windows |
+| `/flush-casement-windows/` | uPVC Flush Sash Windows |
+| `/tilt-turn-windows/` | uPVC Tilt & Turn Windows |
+| `/aluminium-windows/` | Aluminium Casement Windows |
+| `/heritage-windows/` | Aluminium Heritage Windows |
+| `/patio-doors/` | uPVC Sliding Doors |
+| `/slide-fold-doors/` | Slide & Fold Doors (ampersand only) |
+
+Short form in the menus, full name everywhere else. **SEO title tags
+deliberately did not follow**, except two where the new name prefixes rather
+than displaces the ranking phrase.
+
 **`/tilt-turn-windows/` was rebuilt on 2026-08-12 and IS LIVE (`831bfa44`).**
 Read the Tilt And Turn Windows Rule and the Tilt And Turn Imagery Rule in
 `AI.md` before touching it. Three things about it are worth knowing before

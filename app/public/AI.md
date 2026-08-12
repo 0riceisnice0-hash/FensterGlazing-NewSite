@@ -537,6 +537,41 @@ reference photographs over three rounds. Treat them as measured drawings.
 - **Owner-set mappings that must not drift:** window "will not open" is the mechanism; door "it has dropped" is the **hinges only**; door "it will not lock" is the **gearbox only**; door draught lights realignment *and* gasket.
 - **True scale and legibility genuinely conflict on the door** and this is unresolved. Its fine hardware is under 5px, and the drawing is already at the ceiling of its plate. The correct answer is a detail callout at an enlarged scale. **Do not resolve it by falsifying the scale.**
 
+## Product Naming Rule
+
+- **The customer-facing product names match the showroom and WindowCAD.** Owner instruction, 2026-08-12. A visitor should meet the same words on the board, in the quote tool and on the site. Seven were renamed that day and **no URL moved**, which is a standing condition on any future rename: the slug is not the name.
+
+| Route | Name |
+|---|---|
+| `/casement-windows/` | uPVC Casement Windows |
+| `/flush-casement-windows/` | uPVC Flush Sash Windows |
+| `/sliding-sash-windows/` | Sliding Sash Windows |
+| `/tilt-turn-windows/` | uPVC Tilt & Turn Windows |
+| `/aluminium-windows/` | Aluminium Casement Windows |
+| `/aluminium-flush-windows/` | Aluminium Flush Windows |
+| `/heritage-windows/` | Aluminium Heritage Windows |
+| `/aluminium-bifold-doors/` | Aluminium Bifold Doors |
+| `/slide-fold-doors/` | Slide & Fold Doors |
+| `/aluminium-sliding-doors/` | Aluminium Sliding Doors |
+| `/aluminium-doors/` | Aluminium Doors |
+| `/heritage-aluminium-doors/` | Heritage Aluminium Doors |
+| `/composite-doors/` | Composite Doors |
+| `/upvc-doors/` | uPVC Doors |
+| `/patio-doors/` | uPVC Sliding Doors |
+
+- **SHORT IN THE MENU, FULL EVERYWHERE ELSE.** Owner ruling. The dropdown sits under a "Windows" or "Doors" heading, so it carries `uPVC Tilt & Turn`, `uPVC Flush Sash` and `Aluminium Heritage`. The H1, the hub tile and the town pages carry the complete name, because `STYLE.md` requires the H1 to be the product name and "Aluminium Heritage" on its own is not a thing anybody can buy.
+- **A PRODUCT NAME LIVES IN SEVEN REGISTRIES AND NONE OF THEM CHECKS ANOTHER.** This is the single most useful thing on this page. All seven had to be edited for one rename, and the last two were found by rendering pages rather than by grepping:
+  1. `primary_nav_fallback` in `inc/site-data.php` — desktop dropdown and mobile drawer, short form.
+  2. `product_hub_groups[...]['products'][n]['name']` in `inc/site-data.php` — the hub tiles, full form.
+  3. `data/pages.json` `title` — the H1 on the main product route.
+  4. `fenster_location_matrix_products()` in `inc/generated-pages.php` — the **title tag and meta on ~260 town routes**.
+  5. `$services` in `template-parts/sections/location-service.php` — `label` (sentence case) drives the town-page **H1**, eyebrow, hero alt and enquiry `source`/`project_type`; `name` (lowercase) drives the mid-sentence copy. **This is a different array from 4 and it names the same pages**, so renaming one leaves the town H1 and its own SERP title disagreeing.
+  6. `$route_title` in `template-parts/sections/generated-page.php` — the related-links band. It now derives a matrix route's label from `fenster_location_matrix_products()`, because `data/pages.json` still holds scrape-era records for some town routes and was handing back the pre-rename title.
+  7. The SEO `title_tag` overrides in `inc/generated-pages.php`. See below.
+- **THE TITLE TAG IS NOT THE PRODUCT NAME AND MOSTLY DOES NOT FOLLOW A RENAME.** The head phrase in each is the query the route ranks for; the showroom names are not queries, because nobody searches "aluminium heritage" or "uPVC flush sash". Displacing a ranking phrase with an internal name costs traffic and buys nothing. Change a title only where the new name **prefixes** rather than displaces, so the phrase survives intact — `uPVC Casement Windows Milton Keynes` still contains `Casement Windows Milton Keynes` and gains a 4,955-impression term — or where it can sit in the tail, as `Patio Doors Milton Keynes | uPVC Sliding Doors` does.
+- **The WindowCAD collection label is not the page name and is left alone.** "Design and price your Aluminium Windows online" and "…your uPVC Sliding Patio Doors online" name the collection the quote tool opens. That is the thing being aligned to, so it does not get rewritten to match the page.
+- **Body copy was deliberately not swept.** The instruction was titles, menus and links. Hundreds of in-sentence mentions remain and are not wrong, just older phrasing.
+
 ## Product Data Rule
 
 - Product USP/specification data belongs in `inc\site-data.php` under `product_usps`.
