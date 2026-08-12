@@ -134,12 +134,22 @@ function fenster_commercial_product_pages(): array
                claim and our PAS 24 position on commercial work. Every one is a
                question an estimator asks on the first call, so the rows exist and
                say we are confirming rather than being quietly left out. */
+            /* Owner-confirmed 2026-08-12. Systems named lightly and never as the
+               focus, per the Supplier Naming Rule: these are known brands a
+               specifier recognises, not the fabricator, and a spec row is exactly
+               the "clause not a section" the rule allows.
+
+               PAS 24 IS PHRASED AS AVAILABLE, NOT ASSERTED. The standard belongs
+               to a tested complete doorset, never to a company or a profile —
+               the same distinction the Kenrick Excalibur and Liniar PAS 24 notes
+               are held to. "We can do it where specified" is true; "our
+               commercial glazing is PAS 24" would not be. */
             'specification' => [
-                ['label' => 'Aluminium systems', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Which aluminium systems we fit commercially (Technal, Smart, Senior or other)'],
-                ['label' => 'uPVC systems', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Which uPVC system we fit commercially'],
-                ['label' => 'Fire rating', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Fire ratings we can actually claim on commercial glazing, and to which standard'],
-                ['label' => 'Security', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Our PAS 24 / Secured by Design position on commercial work'],
-                ['label' => 'Steel doorsets', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Whether steel doorsets get their own page, and the rating they carry'],
+                ['label' => 'Aluminium systems', 'value' => 'Technal, Smart and Senior among others, specified to the job.'],
+                ['label' => 'uPVC systems', 'value' => 'Liniar.'],
+                ['label' => 'Fire rating', 'value' => 'Fire-rated glazing supplied to the rating the specification calls for.'],
+                ['label' => 'Security', 'value' => 'PAS 24 and Secured by Design available where the specification calls for them.'],
+                ['label' => 'Steel doorsets', 'value' => 'Supplied within this package, security rated up to SR3.'],
                 ['label' => 'Glass', 'value' => 'Toughened, laminated, low-e, solar control, acoustic and obscure, specified per opening.'],
                 ['label' => 'Finish', 'value' => 'Powder coated to any RAL. Dual colour where the inside and outside differ.'],
                 ['label' => 'Coverage', 'value' => 'Nationwide across England and Wales.'],
@@ -196,14 +206,28 @@ function fenster_commercial_product_pages(): array
                 ['value' => 'Integrated', 'label' => 'doors, vents, panels and louvres'],
                 ['value' => 'Any RAL', 'label' => 'powder coated, dual colour available'],
             ],
+            /* Owner answers, 2026-08-12, and three of these are deliberately NOT
+               filled in.
+
+               The mullion and transom row is GONE rather than pending: the owner's
+               answer was "irrelevant", meaning it varies per job and publishing a
+               size would mislead. A row nobody should ask about is worse than no
+               row.
+
+               U-value and maximum panel stay pending — "dunno" and "no idea" are
+               honest answers and neither becomes a published figure.
+
+               STRUCTURAL VERSUS CAPPED STAYS PENDING BECAUSE THE ANSWER WAS
+               HEDGED: "capped only (i think)". A hedge is not a confirmation, and
+               this project has a written history of confident invented figures
+               reaching test. It needs a straight yes before it goes on a page. */
             'specification' => [
-                ['label' => 'System', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Which curtain walling system(s) we fit'],
-                ['label' => 'Mullion and transom', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Mullion and transom sizes, and the depth range available'],
+                ['label' => 'System', 'value' => 'Specified to the job rather than tied to one system.'],
+                ['label' => 'Wind load', 'value' => 'Wind load calculated for the elevation as part of the design.'],
                 ['label' => 'U-value', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Achievable U-value for the system, and at what glazing specification'],
-                ['label' => 'Wind load', 'value' => FENSTER_SPEC_TBC, 'pending' => 'The wind-load standard we design and test to'],
                 ['label' => 'Maximum panel', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Maximum panel size and glass weight we can handle'],
-                ['label' => 'Structural or capped', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Whether we offer structural glazing or capped only'],
-                ['label' => 'Integrated units', 'value' => 'Doorsets, opening vents, AOV units, insulated panels and ventilation louvres within the grid.'],
+                ['label' => 'Structural or capped', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Structural glazing or capped only? Answered "capped only (i think)" — needs confirming before it is published'],
+                ['label' => 'Integrated units', 'value' => 'Doorsets, opening vents, AOV units, spandrel and insulated panels, and ventilation louvres within the grid.'],
                 ['label' => 'Finish', 'value' => 'Powder coated to any RAL, dual colour available.'],
             ],
             'capabilities_heading' => 'What we take on within a curtain walling package.',
@@ -347,10 +371,14 @@ function fenster_commercial_product_pages(): array
                 ['value' => 'Coordinated', 'label' => 'operator and access control'],
                 ['value' => 'Part M', 'label' => 'thresholds and approach checked'],
             ],
+            /* Owner-confirmed 2026-08-12. The maintenance row states the boundary
+               POSITIVELY, per the 2026-08-02 ruling against writing what is not
+               covered: it names who holds servicing rather than announcing that
+               we decline it. Same shape as the AOV scope row. */
             'specification' => [
-                ['label' => 'Operators', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Which door operators we install (swing and sliding), and whose'],
-                ['label' => 'Service and maintenance', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Whether we service and maintain operators after handover, and on what interval'],
-                ['label' => 'Standards', 'value' => FENSTER_SPEC_TBC, 'pending' => 'The standard we install powered doors to (BS EN 16005 or otherwise)'],
+                ['label' => 'Operators', 'value' => 'Swing and sliding operators supplied and installed to the standard your specification sets.'],
+                ['label' => 'Standards', 'value' => 'Installed to the standards the project requires.'],
+                ['label' => 'Maintenance', 'value' => 'Servicing after handover sits with your facilities or maintenance contractor.'],
                 ['label' => 'Access control', 'value' => 'Frames, locks and cable routes coordinated around your access-control specialist\'s equipment.'],
                 ['label' => 'Glass', 'value' => 'Toughened or laminated throughout, with manifestation to suit the screen.'],
                 ['label' => 'Thresholds', 'value' => 'Level and Part M compliant approaches where the building allows it.'],
@@ -375,14 +403,23 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'The entrance in use',
                     'title' => 'A powered door still has to work when the power is off.',
                     'copy' => 'Every automated entrance needs a manual answer: how it opens in a power cut, how it releases on the fire alarm, and how it locks at night. Those are specification decisions, not commissioning ones, and they belong in the drawing rather than in a conversation on handover day.',
-                    /* MARKED PLACEHOLDER. We have fitted automatic entrances and
-                       photographed none of them. Rather than reuse the screen shot
-                       above or borrow a manual door, the slot says what it is
-                       waiting for — the Marked Placeholders Rule in `AI.md`.
-                       Replace with a real operator photograph and delete the flag. */
-                    'image' => '',
-                    'placeholder' => 'An automatic entrance we have fitted, showing the operator above the door head.',
-                    'alt' => '',
+                    /* PLACEHOLDER RETIRED 2026-08-12. The owner approved this shot
+                       from the scrape archive — "the blurry person auto door pic
+                       can stay in, thats decent" — and it is the right photograph
+                       for the slot: an automatic sliding entrance with the OPERATOR
+                       HOUSING VISIBLE above the door head, which is precisely what
+                       the placeholder was asking for, plus the side screens and a
+                       reader on the jamb.
+
+                       IT IS NOT CAPTIONED AS OUR WORK. The owner said it could
+                       stay, not that it is ours, and supplier or archive imagery is
+                       never claimed as an install — the split this site holds to
+                       everywhere. The alt describes what is in frame and stops.
+
+                       The person is motion-blurred past recognition in the original
+                       frame, so nothing here needed blurring. */
+                    'image' => $asset_base . 'electric-door.jpg',
+                    'alt' => 'An automatic sliding entrance with the operator housing above the door head, glazed screens either side and a figure walking through',
                     'points' => ['Power-off and fail-safe behaviour', 'Fire alarm release', 'Night locking and out-of-hours use'],
                 ],
             ],
@@ -419,7 +456,7 @@ function fenster_commercial_product_pages(): array
                 ['label' => 'Restrictors', 'value' => 'Fitted to the limit your own risk assessment sets, consistent across the site.'],
                 ['label' => 'Safety glass', 'value' => 'Toughened or laminated where the opening needs it, specified per elevation.'],
                 ['label' => 'Safeguarding', 'value' => 'DBS-checked operatives and site induction where the school requires it.'],
-                ['label' => 'Fire rating', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Fire-rated glazing we can supply for school corridors and escape routes'],
+                ['label' => 'Fire rating', 'value' => 'Fire-rated glazing supplied to the rating the specification calls for.'],
                 ['label' => 'Programme', 'value' => 'Phased by block or by holiday, sequenced against your term dates.'],
             ],
             'capabilities_heading' => 'What we take on across a school estate.',
@@ -473,8 +510,8 @@ function fenster_commercial_product_pages(): array
                 ['label' => 'Restricted opening', 'value' => 'Restrictors fitted at height as standard, to the limit your risk assessment sets.'],
                 ['label' => 'Acoustic glass', 'value' => 'Specified where the elevation faces a road, a bar or a delivery yard.'],
                 ['label' => 'Handover', 'value' => 'Sequenced so the building is watertight before the internal trades need it.'],
-                ['label' => 'Acoustic performance', 'value' => FENSTER_SPEC_TBC, 'pending' => 'The dB reduction we can claim on the acoustic units we fit'],
-                ['label' => 'Fire rating', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Fire-rated glazing available for PBSA corridors and escape routes'],
+                ['label' => 'Acoustic performance', 'value' => 'Acoustic glass specified to the level the project requires.'],
+                ['label' => 'Fire rating', 'value' => 'Fire-rated glazing supplied to the rating the specification calls for.'],
             ],
             'capabilities_heading' => 'What we take on across a student scheme.',
             'capabilities' => [
@@ -526,8 +563,10 @@ function fenster_commercial_product_pages(): array
                 ['label' => 'Phasing', 'value' => 'By room, floor or wing, with agreed handback at the end of each working day.'],
                 ['label' => 'Acoustic glass', 'value' => 'Specified where the elevation faces a road, a car park or a delivery yard.'],
                 ['label' => 'Period openings', 'value' => 'Surveyed opening by opening on older buildings rather than taken off a drawing.'],
-                ['label' => 'Acoustic performance', 'value' => FENSTER_SPEC_TBC, 'pending' => 'The dB reduction we can claim on the acoustic units we fit'],
-                ['label' => 'Out of hours', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Whether we work nights for hospitality, and how that is priced'],
+                ['label' => 'Acoustic performance', 'value' => 'Acoustic glass specified to the level the project requires.'],
+                /* Owner-confirmed 2026-08-12: we do work out of hours, and "dont
+                   mention pricing". So the row states the capability and stops. */
+                ['label' => 'Out of hours', 'value' => 'Early starts, evenings and weekends where the building needs it.'],
             ],
             'capabilities_heading' => 'What we take on across a hospitality building.',
             'capabilities' => [
@@ -579,8 +618,8 @@ function fenster_commercial_product_pages(): array
                 ['label' => 'Restrictors', 'value' => 'Fitted to the limit your own risk assessment sets, consistent across the home.'],
                 ['label' => 'Working pattern', 'value' => 'One room opened, glazed, sealed and cleaned within the same day.'],
                 ['label' => 'Safety glass', 'value' => 'Toughened or laminated where the opening needs it, specified per room.'],
-                ['label' => 'Thermal', 'value' => FENSTER_SPEC_TBC, 'pending' => 'U-value we quote on the commercial window systems used in care settings'],
-                ['label' => 'Accreditation', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Any care-sector accreditation or vetting we hold that a home asks for'],
+                ['label' => 'Thermal', 'value' => 'Specified to the performance the project requires; the system is chosen to meet it.'],
+                ['label' => 'Vetting', 'value' => 'DBS-checked operatives, and site induction where the home requires it.'],
             ],
             'capabilities_heading' => 'What we take on inside a care home.',
             'capabilities' => [
@@ -629,11 +668,11 @@ function fenster_commercial_product_pages(): array
                 ['value' => 'Frontages', 'label' => 'entrances and shopfront glazing'],
             ],
             'specification' => [
-                ['label' => 'Working hours', 'value' => 'Early starts, evenings and weekends where trading demands it, priced at quote stage.'],
+                ['label' => 'Working hours', 'value' => 'Early starts, evenings and weekends where trading demands it.'],
                 ['label' => 'Possession', 'value' => 'Floor by floor or unit by unit, with the space usable the next morning.'],
                 ['label' => 'Glass', 'value' => 'Solar control, acoustic and safety glass specified against the elevation and the use.'],
-                ['label' => 'Thermal', 'value' => FENSTER_SPEC_TBC, 'pending' => 'U-value we quote on the commercial window and curtain walling systems'],
-                ['label' => 'Shopfront glass', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Whether we supply toughened and laminated shopfront glass to order, and to what size'],
+                ['label' => 'Thermal', 'value' => 'Specified to the performance the project requires; the system is chosen to meet it.'],
+                ['label' => 'Shopfront glass', 'value' => 'Toughened and laminated supplied to order, any size.'],
             ],
             'capabilities_heading' => 'What we take on across an office or retail building.',
             'capabilities' => [
@@ -662,6 +701,84 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Buildings this work suits.',
             'use_cases' => ['Offices', 'Business parks', 'Converted buildings', 'Retail units', 'Shopfronts', 'Workplaces'],
+        ],
+        /*
+         * INDUSTRIAL AND LOGISTICS, added 2026-08-12 on the owner's instruction —
+         * the seventh sector page and the one `PROGRESS.md` had recorded as
+         * "deliberately not built" since 2026-07-28, because there was no
+         * completed job, no photograph and nothing to write from.
+         *
+         * TWO OF THOSE THREE ARE STILL TRUE, so read this before adding to it.
+         * Nothing on this page claims a job, a portfolio or a named client,
+         * because we have none to name in this sector. What it does instead is
+         * describe the work honestly and say what we would need — which is the
+         * same shape the other sector pages take, minus the proof they can offer.
+         *
+         * IT RENDERS NO PROOF BAND, and that is correct rather than an omission:
+         * no case study claims the route, and the helper has no fallback, so the
+         * page shows nothing rather than borrowing a school or a care home.
+         *
+         * IT HAS NO HERO IMAGE, deliberately. The hero falls back to solid steel
+         * with white type, which is a clean established look on this template.
+         * Putting an office or a retail parade behind an industrial heading would
+         * be the wrong-product fault this whole rebuild removed. One photograph of
+         * a distribution centre frontage changes that in one line.
+         */
+        'industrial-and-logistics-glazing' => [
+            'eyebrow' => 'Industrial and logistics',
+            'title' => 'Industrial and logistics glazing',
+            'subtitle' => 'Office and welfare glazing, personnel doorsets and security rated openings on distribution, warehousing and manufacturing buildings.',
+            'intro_heading' => 'A distribution centre does not really have an out of hours.',
+            'hero_image' => '',
+            'hero_alt' => '',
+            'intro_image' => '',
+            'intro_alt' => '',
+            'summary' => [
+                'Industrial buildings put nearly all their glazing in one place: the office and welfare block at the front. That block is hung off a steel frame and wrapped in cladding rather than built into masonry, so the glazing meets a cladding rail and a liner tray instead of a brick reveal, and the interfaces are the part worth getting right. The rest of the elevation is personnel doors, fire escapes and the occasional rooflight, spread across a footprint measured in acres.',
+                'The awkward part is usually the shift pattern. A warehouse running around the clock has no quiet week to hand anybody, so the work is sequenced around loading bays, yard traffic and whichever elevation is out of use that day. Send us the elevations and the shift pattern together, because we cannot plan the second one out of the first.',
+            ],
+            'stats' => [
+                ['value' => 'Cladding', 'label' => 'interfaces rather than masonry reveals'],
+                ['value' => 'Shift work', 'label' => 'sequenced around a building that runs on'],
+                ['value' => 'Up to SR3', 'label' => 'security rated doorsets where specified'],
+            ],
+            'specification' => [
+                ['label' => 'Aluminium systems', 'value' => 'Technal, Smart and Senior among others, specified to the job.'],
+                ['label' => 'uPVC systems', 'value' => 'Liniar.'],
+                ['label' => 'Security', 'value' => 'Doorsets security rated up to SR3. PAS 24 and Secured by Design available where specified.'],
+                ['label' => 'Fire rating', 'value' => 'Fire-rated glazing supplied to the rating the specification calls for.'],
+                ['label' => 'Working hours', 'value' => 'Early starts, nights and weekends where the operation cannot pause.'],
+                ['label' => 'Coverage', 'value' => 'Nationwide across England and Wales.'],
+            ],
+            'capabilities_heading' => 'What we take on across an industrial site.',
+            'capabilities' => [
+                ['title' => 'Office and welfare glazing', 'copy' => 'The windows, screens and entrance to the block at the front, which is where almost all of the glazing on these buildings lives.'],
+                ['title' => 'Personnel and escape doorsets', 'copy' => 'Doors set into cladded elevations, including the escape doors that have to work on a route nobody uses daily.'],
+                ['title' => 'Curtain walling to the frontage', 'copy' => 'Glazed elevations on the office block, where the building does its presenting.'],
+                ['title' => 'Security rated openings', 'copy' => 'Ground floor and yard-side openings rated up to SR3 where the specification asks for it.'],
+            ],
+            'detail_sections' => [
+                [
+                    'eyebrow' => 'The front of the shed',
+                    'title' => 'The office block is a building within a building.',
+                    'copy' => 'It has the windows, the entrance, the meeting rooms and the only elevation anybody photographs, and it is built to a completely different specification from the eighty metres of cladding beside it. Treating it as its own glazing package rather than as a corner of the shed is what keeps the interfaces and the performance sensible.',
+                    'image' => '',
+                    'placeholder' => 'A distribution or manufacturing building we have glazed, showing the office block frontage.',
+                    'alt' => '',
+                    'points' => ['Glazing into cladding, not masonry', 'Entrance and reception screens', 'Meeting and welfare spaces'],
+                ],
+                [
+                    'eyebrow' => 'Working round the operation',
+                    'title' => 'The yard decides the programme more than the elevation does.',
+                    'copy' => 'Loading bays run to a timetable, yard traffic does not stop for a scaffold, and the elevation you most want access to is usually the one with trailers against it. We agree access windows, exclusion zones and which elevations come out of service when, before anything is booked.',
+                    'image' => '',
+                    'placeholder' => 'Glazing work in progress on a live industrial site, showing the access set-up in a working yard.',
+                    'alt' => '',
+                    'points' => ['Access windows agreed in advance', 'Yard traffic and exclusion zones', 'Elevations released in sequence'],
+                ],
+            ],
+            'use_cases_heading' => 'Sites this work goes into.',
+            'use_cases' => ['Distribution centres', 'Warehousing', 'Manufacturing', 'Logistics parks', 'Trade counters', 'Industrial estates'],
         ],
         /*
          * AOV. The owner confirmed on 2026-07-28 that we supply and install these.
@@ -722,8 +839,8 @@ function fenster_commercial_product_pages(): array
                 ['label' => 'Lead time', 'value' => 'One to two weeks from order, depending on the specification.'],
                 ['label' => 'Access', 'value' => 'Tracked lifter and vacuum head where the unit is too large or too high to carry through the building.'],
                 ['label' => 'Measuring', 'value' => 'Site measured to the frame it is going into, before anything is ordered.'],
-                ['label' => 'Glass', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Whether we supply toughened and laminated shopfront glass to order, and to what size'],
-                ['label' => 'Out of hours', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Whether we work out of hours to keep a building trading, and how that is priced'],
+                ['label' => 'Glass', 'value' => 'Toughened and laminated supplied to order, any size.'],
+                ['label' => 'Out of hours', 'value' => 'Early starts, evenings and weekends where the building needs it.'],
             ],
             'capabilities_heading' => 'What we take on when a unit has failed.',
             'capabilities' => [
@@ -773,27 +890,40 @@ function fenster_commercial_product_pages(): array
             'stats' => [
                 ['value' => 'Supply', 'label' => 'and install, both by us'],
                 ['value' => 'Escape routes', 'label' => 'stairwells, corridors and lobbies'],
-                ['value' => 'Handover', 'label' => 'documentation for what we fit'],
+                ['value' => 'Documented', 'label' => 'paperwork for the units we install'],
             ],
             /* SCOPE STATED POSITIVELY, per the 2026-08-02 owner ruling against
                writing what is not covered. Owner-confirmed 2026-07-28: no specific
                system, fit only, no commissioning. So the row names who does the
                commissioning rather than announcing what we decline — same fact,
                and it reads as a division of trades instead of a disclaimer. */
+            /* Owner-confirmed 2026-08-12: "we dont fit the control panels, no
+               electical works". Stated positively as a division of trades rather
+               than as a list of what we decline, per the 2026-08-02 ruling.
+
+               THE TESTING CLAIM CAME OFF WITH IT. The row used to read "Tested
+               before handover". With no electrical works in our scope we cannot
+               power-test the vent, so that claim could not have been ours to make
+               — it now says the unit is installed and its documentation handed
+               over, which is what we actually do. Flagged to the owner rather than
+               changed silently, because it was approved copy. */
             'specification' => [
-                ['label' => 'Scope', 'value' => 'We supply and install the vent as part of the glazing package. Commissioning and the detection strategy sit with your fire alarm contractor.'],
+                ['label' => 'Scope', 'value' => 'We supply and install the vent within the glazing package. Wiring, control panels and commissioning sit with your fire alarm and electrical contractors.'],
+                ['label' => 'Control panels', 'value' => 'Supplied and wired by your fire alarm or electrical contractor.'],
                 ['label' => 'Standard', 'value' => FENSTER_SPEC_TBC, 'pending' => 'The standard we install AOV units to (EN 12101-2 or otherwise)'],
                 ['label' => 'Aerodynamic free area', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Aerodynamic free area figures for the units we fit'],
-                ['label' => 'Control panels', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Which control panels we work alongside, and who supplies them'],
                 ['label' => 'Position', 'value' => 'Formed within the window or screen line so the elevation still reads as one system.'],
-                ['label' => 'Handover', 'value' => 'Tested before handover, with the documentation for what we installed passed to you.'],
+                ['label' => 'Handover', 'value' => 'Documentation for the units we install is passed to you at handover.'],
             ],
             'capabilities_heading' => 'What we take on within an AOV package.',
             'capabilities' => [
                 ['title' => 'Vents in the elevation', 'copy' => 'Opening vents formed within the window or screen line so the facade still reads as one system.'],
                 ['title' => 'Roof and stairwell vents', 'copy' => 'Vents at the head of a stair or in the roof, where the smoke needs somewhere to go.'],
                 ['title' => 'Fitted with the glazing', 'copy' => 'Installed as part of the window and door package rather than cut in as a separate trade afterwards.'],
-                ['title' => 'Tested on completion', 'copy' => 'The vents we install are tested before handover and the paperwork for them goes to you.'],
+                /* Was "Tested on completion". With no electrical works in our
+                   scope, owner-confirmed 2026-08-12, the powered test is not ours
+                   to claim. The documentation still is. */
+                ['title' => 'Documented at handover', 'copy' => 'The paperwork for the units we install is passed to you, ready for your commissioning contractor.'],
             ],
             'detail_sections' => [
                 [
@@ -840,9 +970,13 @@ function fenster_commercial_product_pages(): array
                 ['label' => 'Safety glass', 'value' => 'Toughened or laminated to the opening, with laminated available as an upgrade throughout.'],
                 ['label' => 'Privacy', 'value' => 'Obscure glass across the full pattern range, specified per room.'],
                 ['label' => 'Restrictors', 'value' => 'Fitted to the limit your own risk assessment sets, consistent across the building.'],
-                ['label' => 'Infection control', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Any infection-control or clinical working accreditation we hold that a healthcare buyer asks for'],
-                ['label' => 'Fire rating', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Fire-rated glazing we can supply for clinical corridors and escape routes'],
-                ['label' => 'Acoustic', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Acoustic performance we can claim where consultation-room privacy is specified'],
+                /* Owner answered the vetting question with "dbs checked". He did
+                   NOT claim an infection-control accreditation, so this states the
+                   vetting we actually hold rather than leaving a row open that
+                   hints at one we do not. */
+                ['label' => 'Vetting', 'value' => 'DBS-checked operatives, and site induction where the practice requires it.'],
+                ['label' => 'Fire rating', 'value' => 'Fire-rated glazing supplied to the rating the specification calls for.'],
+                ['label' => 'Acoustic', 'value' => 'Acoustic glass specified to the level consultation-room privacy requires.'],
             ],
             'capabilities_heading' => 'What we take on in a clinical building.',
             'capabilities' => [
