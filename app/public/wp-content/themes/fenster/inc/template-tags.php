@@ -190,10 +190,21 @@ function fenster_render_mobile_nav_fallback(array $items): void
                 esc_html($label)
             );
             echo '<div class="site-mobile-nav__panel" hidden>';
+            /* The drawer is a second render of the same menu data, so it needs
+               the same treatment as the desktop columns above: the shortened
+               labels lean on the column name for their meaning, and both
+               heritage rows read "Aluminium Heritage". A sequential reader gets
+               that context from the accordion button, but somebody pulling up a
+               list of links does not, so the section is named from its own
+               button. Change one of these two renderers and change the other. */
+            static $mobile_column_id = 0;
             foreach ($item['columns'] as $column) {
-                echo '<section class="site-mobile-nav__item site-mobile-nav__item--child" data-mobile-accordion-item>';
+                $mobile_column_id++;
+                $mobile_heading_id = 'fg-mobile-column-' . $mobile_column_id;
+                printf('<section class="site-mobile-nav__item site-mobile-nav__item--child" data-mobile-accordion-item aria-labelledby="%s">', esc_attr($mobile_heading_id));
                 printf(
-                    '<button class="site-mobile-nav__row" type="button" data-mobile-accordion-toggle aria-expanded="false"><span>%s</span><span aria-hidden="true"></span></button>',
+                    '<button class="site-mobile-nav__row" type="button" data-mobile-accordion-toggle aria-expanded="false"><span id="%s">%s</span><span aria-hidden="true"></span></button>',
+                    esc_attr($mobile_heading_id),
                     esc_html($column['label'] ?? '')
                 );
                 echo '<div class="site-mobile-nav__panel site-mobile-nav__panel--links" hidden>';
