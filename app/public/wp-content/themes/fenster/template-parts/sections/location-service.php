@@ -203,8 +203,8 @@ $services = [
         ],
     ],
     'casement-windows' => [
-        'name' => 'casement windows',
-        'label' => 'Casement windows',
+        'name' => 'uPVC casement windows',
+        'label' => 'uPVC casement windows',
         'thing' => 'made-to-measure casement windows',
         'opening' => 'Choose a practical window style with strong everyday performance.',
         'benefits' => [
@@ -219,8 +219,8 @@ $services = [
         ],
     ],
     'flush-casement-windows' => [
-        'name' => 'flush casement windows',
-        'label' => 'Flush casement windows',
+        'name' => 'uPVC flush sash windows',
+        'label' => 'uPVC flush sash windows',
         'thing' => 'flush casement windows',
         'opening' => 'Get a cleaner, more traditional-looking window with modern performance built in.',
         'benefits' => [
@@ -267,8 +267,8 @@ $services = [
         ],
     ],
     'tilt-turn-windows' => [
-        'name' => 'tilt and turn windows',
-        'label' => 'Tilt and turn windows',
+        'name' => 'uPVC tilt & turn windows',
+        'label' => 'uPVC tilt & turn windows',
         'thing' => 'tilt and turn windows',
         'opening' => 'Add flexible ventilation and easy cleaning with a smart dual-opening window.',
         'benefits' => [
@@ -299,8 +299,8 @@ $services = [
         ],
     ],
     'aluminium-windows' => [
-        'name' => 'aluminium windows',
-        'label' => 'Aluminium windows',
+        'name' => 'aluminium casement windows',
+        'label' => 'Aluminium casement windows',
         'thing' => 'slim aluminium windows',
         'opening' => 'Bring slimmer frames, strong profiles and a crisp modern finish to the home.',
         'benefits' => [
@@ -331,8 +331,8 @@ $services = [
         ],
     ],
     'heritage-windows' => [
-        'name' => 'heritage windows',
-        'label' => 'Heritage windows',
+        'name' => 'aluminium heritage windows',
+        'label' => 'Aluminium heritage windows',
         'thing' => 'heritage-style windows',
         'opening' => 'Choose slimmer, character-led frames for homes that need a more considered finish.',
         'benefits' => [
@@ -363,8 +363,8 @@ $services = [
         ],
     ],
     'slide-fold-doors' => [
-        'name' => 'slide and fold doors',
-        'label' => 'Slide and fold doors',
+        'name' => 'slide & fold doors',
+        'label' => 'Slide & fold doors',
         'thing' => 'slide and fold doors',
         'opening' => 'Create a flexible glazed opening with panels that can move around the space differently to standard bifolds.',
         'benefits' => [
@@ -459,8 +459,8 @@ $services = [
         ],
     ],
     'patio-doors' => [
-        'name' => 'patio doors',
-        'label' => 'Patio doors',
+        'name' => 'uPVC sliding doors',
+        'label' => 'uPVC sliding doors',
         'thing' => 'sliding patio doors',
         'opening' => 'Add a smooth garden opening without needing swing space inside or outside.',
         'benefits' => [
