@@ -9,6 +9,66 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-12 (end of session)
+
+**Live is `0f8e8bf5` and level with `main`. TEST IS LEVEL WITH LIVE.** No
+release branch outstanding from this session, working tree clean.
+
+### What shipped today
+
+1. **The All Hallows, Bedford commercial case study**, and two faults it
+   surfaced in `fenster_case_studies_for_town()` — commercial studies were
+   showing as local proof on residential town pages, and a bare substring made
+   "Bedfordshire" match the town Bedford.
+2. **"Light" came off every window and opener on the site.** 23 uses. The
+   permitted exceptions are `toplight`, `sidelight` and `leaded light`.
+3. **`/upvc-doors/` rebuilt as the tenth bespoke residential middle**, then
+   audited and restructured down from eighteen sections to seventeen with the
+   duplication removed.
+
+### The uPVC doors page, and how much of it was thrown away
+
+The first build had a **door randomiser**: a shuffle button that specified a
+door from real renders. The owner asked for it, then removed it the same day,
+because it was a gimmick standing where the argument should be and it started
+competing with WindowCAD the moment it grew a colour picker. **That is the
+third home-built interactive feature removed from this site**, after the
+casement configurator and the heritage bar planner. The pattern is now
+unmistakable: on a product page, the designer is the interactive feature.
+
+What replaced it is the page saying what a customer actually chooses. Then a
+full audit cut the duplication: colour had been argued **five** times, privacy
+glass three, hardware three, and the shared swatch grid contradicted the page
+by saying sixteen where a door takes thirteen.
+
+### The rules learned today
+
+- **A page built by adding says everything twice.** Nothing on it was wrong;
+  the fault was that five sections all argued colour. An audit is a different
+  activity from a pass, and it needs the whole page read as one thing.
+- **Do not invent a count and then multiply by it.** "Nine ways to split the
+  panel" came from five examples the owner gave, and every figure on that line
+  was false as a result. The count now multiplies only lists that are lists.
+- **A panel is a component, not a style.** The leaf is divided by transoms and
+  mullions and each opening takes glass or a panel. That error survived several
+  passes because the copy sounded plausible.
+- **A supplier's certification is theirs.** PAS 24, Secured by Design and the
+  BSI Kitemark are attributed to Liniar and are not restated as ours, because
+  the standard cylinder here is a one star.
+- **Check the compiled asset when establishing live.** Live was not on `main`
+  and the PHP still looked familiar; only the JS bundle gave it away.
+
+### What needs the owner, and nothing else
+
+- **Maximum sizes** for a single leaf, French doors and a stable door.
+- **What each threshold is best for**, beyond "we aim for the low aluminium".
+- **Whether laminated glass is genuinely offered** on a uPVC door. It is on the
+  page on the strength of the owner raising it in passing; no thickness,
+  standard or rating is published because none is confirmed.
+- Photography: the standing gaps in `PHOTO-CHECKLIST.md` are unchanged.
+- Sixteen stale `release/*` branches on origin, two of them this session's.
+- Two `.DS_Store` files tracked in the theme from an earlier session.
+
 ## START HERE, 2026-08-11 (end of session)
 
 **Live is `5aa5d43`. `main` is `2bc8b17`, one docs-only commit ahead, and no
@@ -223,6 +283,84 @@ payload carries 13 finishes, 8 handles and 21 glasses, generic bands gone, and
 the pulse, wrapper, handle grid and quote embed all still there. Measured at a
 **proved** 390px viewport: `scrollWidth` 390, no page-level overflow, shuffle
 button 366x46. **Nobody has pressed it with a thumb.**
+
+## 2026-08-12 - uPVC doors rebuilt, then audited back down (LIVE, 0f8e8bf5)
+
+Two briefs in one day. The first: uPVC needs a glow up, it is versatile and
+endlessly customisable, show that, no line drawings. The second, once it had
+been built: audit the whole page, restructure it, and be willing to delete.
+
+**The tenth bespoke residential middle**, in
+`template-parts/sections/upvc-doors-v2.php`.
+
+### The randomiser, and why it is gone
+
+The owner asked for a door randomiser and it was built: a shuffle button
+driving thirteen real renders, with the handle and glass shown as their own
+photographs beside the door rather than composited onto it, because we hold one
+door style and no renders of it wearing each handle.
+
+He removed it the same day. It was a gimmick standing where the argument should
+be, and the moment it grew a colour rail it started competing with WindowCAD,
+which configures **and** prices. **Third time this call has been made** — the
+casement canvas configurator went on 2026-08-04 and the heritage bar planner on
+2026-08-11. On a product page the designer is the interactive feature.
+
+### The audit
+
+Eighteen sections, built by adding over a fortnight. Colour was argued **five**
+times: the intro list, a decisions tile, a whole photographic band, the
+specification-choices card and the shared sixteen-swatch grid. Privacy glass
+three times, hardware three. The shared grid was also a contradiction, headed
+"Sixteen colours" on a route that takes thirteen.
+
+**Removed:** the photographic colour band, the specification-choices band, the
+shared swatch grid on this route, every marked placeholder, the intro bullet
+list and the dead randomiser payload.
+
+**Merged:** privacy glass into the shared card that every other route uses;
+colour, handles and glass into one run, which is the rhythm
+`/casement-windows/` has carried since August.
+
+**Final order:** hero, key specifications, one leaf or a pair, whatever shape or
+size, what else you choose, colour, handles, privacy glass, EnergyPlus, the
+threshold and the lock, then the shared tail.
+
+### Owner corrections, each of which was a real error
+
+- **A panel is a component, not a style.** The leaf is divided by transoms and
+  mullions and each opening takes glass or a panel. The page had the panel being
+  sized in fractions of the door.
+- **"Nine ways to split the panel" was invented** from five examples, and the
+  combinations figure was multiplied by it. Every number on that line was false.
+  It now multiplies only the foils, the glasses and the handle finishes.
+- **A stable door is a single leaf adapted**, not a third way of opening, and a
+  shaped head is not a way of opening at all. Both moved into the adaptations
+  section; the openings section is one leaf or a pair.
+- **Negative framing throughout**, including one in `site-data` the first sweep
+  missed.
+- **Thirteen foils on a door, not sixteen.** The theme holds a render of each.
+- **PAS 24 is Liniar's**, attributed, never asserted as ours.
+- **Cat flaps are cut in on site**, and the retrofit half of that sentence
+  belongs on `/cat-and-dog-flaps/`, not on a page selling new doors.
+
+### Photography
+
+Sixteen of the owner's photographs cut to eight, cropped through one shared
+window and graded as a run. A person reflected in the glass of the cat flap
+door is softened. **Five images were already in the theme and unused**,
+including the arched leaded door, which is the best photograph on the route, and
+a Chartwell green stable door that had been mis-filed under a rosewood filename
+since launch and was very nearly deleted for good.
+
+### Three faults only the rendered page showed
+
+The page rendered with **no photographs at all**, because `$product_media` is
+already scoped to the slug and was indexed by it again. The sections had **no
+air between them**, because `.fg-cw section` pads sections *inside* a wrapper
+and these are the wrapper. And the finish strip's names ran to three lines on
+the longest colour and pulled its row out of line. All three passed lint and the
+data harness.
 
 ## 2026-08-12 - A window is not a "light" (LIVE, 9c7b30c)
 

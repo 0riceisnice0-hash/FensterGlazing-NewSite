@@ -1,19 +1,33 @@
 # Fenster Glazing Handover
 
-## Handover state, 2026-08-11
+## Handover state, 2026-08-12
 
-**Live is `5aa5d43`, and `main` is ahead of it by docs commits only — no theme
-file differs between the two, so live is level with `main` in everything that
-renders. Test is level with live.** (Two of those docs commits are another
-session's Google Ads work, landed the same afternoon; they touched no theme
-file either.) No release branch outstanding, working
-tree clean. `LIVECHANGES.md` is the authority on what is live; `PROGRESS.md` is
-a log and some of its older entries are still titled "(test)" long after
-shipping.
+**Live is `0f8e8bf5` and level with `main`. Test is level with live.** No
+release branch outstanding from this session, working tree clean.
+`LIVECHANGES.md` is the authority on what is live; `PROGRESS.md` is a log and
+some of its older entries are still titled "(test)" long after shipping.
 
 **Read in this order:** the START HERE block at the top of `PROGRESS.md`, then
 the Current Truth section of `LIVECHANGES.md`, then the rule for whichever page
 you are touching in `AI.md`.
+
+**ESTABLISH LIVE BY CHECKSUM ON MORE THAN ONE FILE, AND MAKE ONE OF THEM A
+COMPILED ASSET.** On 2026-08-12 live was not on `main` at all — it was another
+session's tracking release, on no branch this session had — and
+`inc/site-data.php` still matched the previous release from this session, so the
+PHP looked familiar. Only `assets/js/main.js` gave it away.
+
+**TWO SESSIONS ARE ACTIVE IN THIS REPO AND BOTH SHIP.** Before any release,
+diff the theme by file between live and what you intend to deploy. On
+2026-08-12 that check turned an alarming forty-three commit range into a
+one-line deploy, because every file of the other session's tracking strand was
+already byte-identical on live. Cherry-pick only when the file diff says you
+have to.
+
+**A REBUILD ALONE MOVES `assets/js/main.js`.** The esbuild on this machine is
+newer than the one that built live's bundle, so `npm run build` rewrites it even
+when no JavaScript source changed. Check `git status` immediately before any
+rsync, and check the artefact back out if the source did not move.
 
 **The TEN residential routes with a bespoke middle** — verified against the
 dispatch in `generated-page.php`, not from memory. These do NOT use the generic
@@ -54,6 +68,13 @@ that way is what gated the strip off `/aluminium-windows/` and
 secondary glazing and uPVC casements, which is worse than showing nothing.
 
 **Open and needing the owner, not code:**
+
+- **uPVC doors, three answers outstanding.** Maximum sizes for a single leaf,
+  French doors and a stable door. What each of the four thresholds is best for,
+  beyond "we aim for the low aluminium". And whether **laminated glass** is
+  genuinely offered on a uPVC door: it is on the page on the strength of the
+  owner raising it in passing, with no thickness, standard or rating published
+  because none is confirmed.
 
 - Roehampton case study, parked on four facts.
 - A typical flush aluminium job with dummy sashes in the fixed lights.
@@ -115,6 +136,15 @@ Use:
   `/heritage-aluminium-doors/` on 2026-08-11, and the energy tile went with it
   to "A rated" because A+ was the triple figure. Legend may offer triple on
   request, naming the contemporary sash, and may not quote a U-value for it.
+- **`/upvc-doors/` was rebuilt and then audited on 2026-08-12 and is live**, as
+  the tenth bespoke residential middle. Read the uPVC Doors Rule in `AI.md`
+  before touching it: nearly all of it is owner correction, including that a
+  panel is a component rather than a style, that the style is not a preset list
+  and must never be counted, that a door takes thirteen foils where the windows
+  take sixteen, and that PAS 24 is Liniar's and attributed. **A door randomiser
+  was built here and removed the same day** — the third home-built interactive
+  feature this site has cut, after the casement configurator and the heritage
+  bar planner.
 - **`/louvre-vents/` was rebuilt on 2026-08-11** around the full louvre range
   and is the only commercial route with a bespoke middle. **Do not name the
   system manufacturer anywhere on it** — model codes are fine, the brand is not,
