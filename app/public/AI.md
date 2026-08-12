@@ -355,6 +355,15 @@ PHP lint example:
 - **One install exists.** Three photographs of a single Cotswold-stone house, and the gallery copy says "one house" rather than implying a portfolio. `.fg-cw-gallery--pair` is a two-cell cut for exactly this; both sources are portrait, so it is two tall columns rather than two wide cells.
 - **The plate is the only bespoke component on the page.** One dark section carrying the photograph of the join beside the drawn section of the same junction. Everything else uses the shared `.fg-cw` grammar on purpose: one plate is a moment, three would be a theme park.
 
+## Supplier Naming Rule
+
+- **THE TEST IS WHETHER A CUSTOMER COULD GO STRAIGHT TO THEM, NOT WHETHER THEY ARE A SUPPLIER.** Owner, 2026-08-12, and it is the rule that explains every naming decision on this site rather than leaving them as a list of exceptions: *"ikon is different as they are a fabricator rather than a known brand (ie someone could just go straight to them) - the others are known brands and its not bad to mention them but defo not the main focus."*
+- **Never name a fabricator.** IKON fabricate the louvres; naming them hands a specifier a direct route past us. Same logic applies to any fabricator we buy through.
+- **Known systems may be named, lightly.** Technal, Smart and Senior on curtain walling and commercial windows and doors. A specifier recognises them and it proves we work across the market rather than being tied to one system. **They are never the focus**: the page is about what we source and specify to the client's requirement, not about whose extrusion it is. A spec row or a clause, not a section and not a logo.
+- **Named deliberately and prominently: Sheerline, Liniar, Roseview, Distinction.** We sell those pages around the system, the customer meets the name anyway, and the manufacturer does not sell direct.
+- **Not named: Renolit, Notan, Mila, VBH, greenteQ, architeQ, Kenrick as a headline.** Component makers whose name adds nothing to a customer decision. Their model codes and published figures are fine and are attributed.
+- **This reframes rather than reverses the louvre ruling.** "Do not name the supplier" there was always about IKON specifically; the reason was disintermediation, and it does not generalise to Technal or Senior. Do not read the Louvre Vents Rule as a site-wide ban on naming a system.
+
 ## Louvre Vents Rule
 
 - **DO NOT NAME THE SUPPLIER ON THE PAGE. MODEL CODES ARE FINE.** Owner instruction, 2026-08-11: "we dont want to state the ikon brand. models are ok." So IKL33, IKCL95 and the rest appear and IKON does not; figures are attributed to "the system manufacturer" and to EN 13030:2002. This is the same position the site already takes on Renolit, Notan, Mila and VBH — a supplier is named only where we deliberately sell the page around them, as with Sheerline, Liniar and Roseview. The name stays in the code comments and the data file so the figures can be re-verified.
