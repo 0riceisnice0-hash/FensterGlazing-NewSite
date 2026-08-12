@@ -9,7 +9,78 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-12 (commercial rebuild — NOT YET ON TEST)
+
+**Live is still `47db7aea`. `main` is `5d910ea8`. The commercial rebuild below is
+in the WORKING TREE ONLY — not committed, not pushed, not on test.** The seven
+commits already on `main` and not live are unchanged and still unshipped.
+
+### The owner ruling that changes a standing rule
+
+**"end client name is fine. just not contractor unless that is themselves!"**
+The Commercial Client Anonymity Rule is now one line: **name the end client,
+never the main contractor, unless the contractor owns the building.**
+
+This makes the "urgent" item the previous handover led on **not a breach at
+all.** `Airbus-Commercial.jpg`, `ROKA-Dental-Post-Fitting-2-1-scaled.jpg`,
+`BFI.jpg` and `Greensand-Country.jpg` are all end clients on their own
+buildings. The rename in `888e98ce` shipped anyway because it was already
+written, verified and approved; **do not treat it as precedent.** `AI.md` is
+corrected, and the ruling also closed the long-standing Green Man open question
+(Simon is the pub's owner, so naming him is right).
+
+### What the rebuild did
+
+1. **A swappable specification layer.** `FENSTER_SPEC_TBC` in
+   `inc/commercial-product-data.php` is the single way to express a figure
+   nobody has confirmed. **31 outstanding figures across 11 routes**, listed by
+   `fenster_commercial_spec_pending()` and printed into
+   `COMMERCIAL-AUDIT-2026-08-12.md` §6b from that function rather than by hand.
+   Filling one in is a one-line swap.
+2. **The third-person sweep.** Zero third-person references survive in
+   commercial copy, and the three headings that were identical across eleven
+   pages are per-route.
+3. **The shared template reworked** around a specifier: specification table,
+   per-route headings, a real proof band and marked placeholders.
+4. **The hub rebuilt** into `commercial-glazing-v2.php`, out of the 3,000-line
+   `generated-page.php`.
+5. **Real photography throughout**, and the flagged wrong-product images gone.
+6. **SEO pass**: two routes had no title or meta at all; the hub was retitled
+   against a directory-dominated SERP; per-route `Service` schema added.
+
+### The fault the audit missed, and it was the bigger one
+
+**The hub linked FIVE of the twelve commercial routes.** The audit found the
+fifth product card looping into a homeowner page, which is real — but
+`/automatic-opening-vents/` and all six sector pages had no route in from the
+hub at all. They were reachable from the main navigation and from nowhere else,
+on the page whose entire job is routing. Two card rows now cover all twelve.
+
+### The lesson worth carrying
+
+**Fixing a shared heading by writing another shared heading is not a fix.** The
+first pass replaced the three identical H2s the audit named with three new ones
+— spec, proof, related — identical across all twelve pages. The render harness
+caught it because it asserts that no two routes share an H2, which is a cheaper
+check than reading twelve pages. The headings derive from the route now.
+
+### Verification state
+
+`render-commercial.php` in the session scratchpad stubs WordPress, renders all
+twelve routes plus the hub and runs assertions on third-person copy, H1 count,
+H1-repeated-as-H2, shared headings, every image resolving on disk, spec row
+counts, placeholder counts, proof bands never rendering without a study, and all
+twelve routes being linked from the hub. **All pass.** It is not in the repo;
+rebuild it if you do substantial work here.
+
+**Not done: nothing is on test.** PHP lints clean and `main.css` is rebuilt;
+`assets/js/main.js` was restored after the build because no JS source changed.
+
 ## START HERE, 2026-08-12 (commercial session — HANDOVER, work in flight)
+
+> **Superseded by the block above.** Live is unchanged at `47db7aea` and the
+> unshipped stack is unchanged, but the "one urgent thing" this block leads on
+> was ruled a non-breach by the owner on 2026-08-12. Read the block above first.
 
 **Live is `47db7aea`, established by checksum on `inc/site-data.php`,
 `inc/generated-pages.php` and `assets/js/main.js`, not read off a doc. `main`

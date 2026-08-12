@@ -16,6 +16,23 @@ and the asset URLs checked directly. Traffic evidence from
 
 ## 0. Read this first: four client names are public in image URLs
 
+> **SUPERSEDED THE SAME DAY BY AN OWNER RULING, AND THE FINDING WAS WRONG.**
+> Owner, 2026-08-12: *"end client name is fine. just not contractor unless that
+> is themselves!"* All four files below name an **end client on their own
+> building** — Airbus, ROKA Dental, BFI, Greensand Country — so not one of them
+> was ever a breach. The rule protects against poaching a **main contractor** who
+> buys glazing repeatedly, and none of these is that.
+>
+> The rename in `888e98ce` shipped anyway, because it was written, verified on
+> test and owner-approved before the ruling arrived, and unpicking an approved
+> commit mid-job is worse than carrying a redundant one. **Do not read that
+> commit as evidence the rule forbids these names.** The corrected rule is in
+> `AI.md` under the Commercial Client Anonymity Rule and it is now one line:
+> name the end client, never the main contractor unless the contractor owns the
+> building.
+>
+> The section below is kept as the record of what was believed at the time.
+
 **This breaches the Commercial Client Anonymity Rule in `AI.md` and it is live
 right now.** All four return `200` on production:
 
@@ -149,79 +166,119 @@ Beyond the client names in §0:
 
 ## 6. What I need from you
 
-Two lists. Nothing below can be invented, and the pages cannot reach the louvre
-standard without it.
+**Updated 2026-08-12, after the rebuild.** Everything that could be built without
+your input has been built. What is left is genuinely blocked on facts only you
+have, and the pages are already carrying the rows — each one renders as
+"Confirming — ask and we will send it" until a real value replaces it.
+
+**Filling one in is a one-line edit.** Every unconfirmed figure is the single
+sentinel `FENSTER_SPEC_TBC` in `inc/commercial-product-data.php`. Replace it with
+the value and the page updates; nothing else moves. The list below is generated
+from that file by `fenster_commercial_spec_pending()`, so it cannot drift out of
+step with what the site is actually showing.
 
 ### 6a. Decisions
 
-1. **The new commercial replacement-glazing URL.** My recommendation is
-   `/commercial-replacement-glazing/` — it is explicit, it matches the existing
-   `commercial-` prefix pattern, and it will not be confused with the
-   residential route. Alternatives: `/commercial-glass-replacement/` or
-   `/commercial-glazing-replacement/`.
-2. **The client-name files in §0 — fix now, separately from this work?**
-3. **Do we take industrial and logistics work?** Long-standing open question in
-   `PROGRESS.md`; that sector page was deliberately never built.
-4. **Blanking panels on the louvre page** — left out when composite panels were
-   excluded and never ruled on.
+1. ~~**The new commercial replacement-glazing URL.**~~ **Done:**
+   `/commercial-replacement-glazing/`, live on test.
+2. ~~**The client-name files — fix now, separately?**~~ **Closed 2026-08-12 by
+   owner ruling:** the end client may be named; only a main contractor may not,
+   unless the contractor owns the building. All four flagged filenames were end
+   clients on their own buildings, so none was a breach. The rename shipped
+   anyway because it was already written and approved.
+3. **Do we take industrial and logistics work?** Still open. That sector page is
+   still deliberately not built.
+4. **Blanking panels on the louvre page** — still open, never ruled on.
+5. **May Constructionline Gold and SSIP be stated as tendering credentials on
+   the commercial service pages**, not just in the site-wide trust strip? The hub
+   links both existing pages; it makes no new claim.
 
-### 6b. Information, per page
+### 6b. The specification figures, per route
 
-**Commercial replacement glazing (new page)**
-- What we actually do commercially: failed units only, or full reglazing?
-- Do we do emergency board-up and make-safe? Response time if so?
-- Maximum unit size and weight we can handle, and do we have access equipment?
-- Do we do shopfront glass, toughened and laminated to order?
-- Lead time on a commercial made-to-order unit versus the domestic one to two weeks.
-- Do we work out of hours to keep a building trading?
+**Commercial windows and doors** (`/commercial-windows-and-doors/`)
 
-**Curtain walling**
-- **Which system do we fit?** Nothing on the site names one. Sheerline? Smart? Something else?
-- Mullion and transom sizes, and the depth range.
-- U-value achievable, and the wind-load standard we work to.
-- Maximum panel size and glass weight.
-- Do we do structural glazing or capped only?
+- Which aluminium systems we fit commercially (Technal, Smart, Senior or other)
+- Which uPVC system we fit commercially
+- Fire ratings we can actually claim on commercial glazing, and to which standard
+- Our PAS 24 / Secured by Design position on commercial work
+- Whether steel doorsets get their own page, and the rating they carry
 
-**Commercial windows and doors**
-- Which systems, commercial-side, for aluminium and for uPVC.
-- Do we do steel? Do we do fire-rated glazing and to what rating?
-- PAS 24 / Secured by Design position on commercial work.
-- Do we do curtain-wall-integrated doors, or is that curtain walling's page?
+**Curtain walling** (`/curtain-walling/`)
 
-**Automatic opening vents / commercial automation**
-- Which AOV system and which control panels.
-- The standard we certify to — EN 12101-2? Aerodynamic free area figures?
-- Do we commission and hand over the fire strategy paperwork, or fit only?
-- Automation: which operators, and do we service and maintain them?
+- Which curtain walling system(s) we fit
+- Mullion and transom sizes, and the depth range available
+- Achievable U-value for the system, and at what glazing specification
+- The wind-load standard we design and test to
+- Maximum panel size and glass weight we can handle
+- Whether we offer structural glazing or capped only
 
-**All five sector pages** (healthcare, education, student, hospitality, care homes, offices and retail)
-- One real named job each, or the scope of one, even without photographs.
-- Any sector-specific accreditation or compliance we hold that a buyer asks for.
-- Restrictor and safety-glass positions per sector, since these differ.
+**Automatic doors and entrance automation** (`/commercial-automation/`)
 
-**Across all of them**
-- Largest commercial job we have done, by value or scope, that we may describe.
-- Do we hold Constructionline Gold and SSIP for commercial tendering — and may
-  those be stated on the service pages, not just the trust strip?
+- Which door operators we install (swing and sliding), and whose
+- Whether we service and maintain operators after handover, and on what interval
+- The standard we install powered doors to (BS EN 16005 or otherwise)
+
+**School and education glazing** (`/school-and-education-glazing/`)
+
+- Fire-rated glazing we can supply for school corridors and escape routes
+
+**Student accommodation glazing** (`/student-accommodation-glazing/`)
+
+- The dB reduction we can claim on the acoustic units we fit
+- Fire-rated glazing available for PBSA corridors and escape routes
+
+**Hotel and hospitality glazing** (`/hotel-and-hospitality-glazing/`)
+
+- The dB reduction we can claim on the acoustic units we fit
+- Whether we work nights for hospitality, and how that is priced
+
+**Care home glazing** (`/care-home-glazing/`)
+
+- U-value we quote on the commercial window systems used in care settings
+- Any care-sector accreditation or vetting we hold that a home asks for
+
+**Office and retail glazing** (`/office-and-retail-glazing/`)
+
+- U-value we quote on the commercial window and curtain walling systems
+- Whether we supply toughened and laminated shopfront glass to order, and to what size
+
+**Commercial replacement glazing** (`/commercial-replacement-glazing/`)
+
+- Whether we supply toughened and laminated shopfront glass to order, and to what size
+- Whether we work out of hours to keep a building trading, and how that is priced
+
+**Automatic opening vents** (`/automatic-opening-vents/`)
+
+- The standard we install AOV units to (EN 12101-2 or otherwise)
+- Aerodynamic free area figures for the units we fit
+- Which control panels we work alongside, and who supplies them
+
+**Healthcare and clinical glazing** (`/healthcare-construction/`)
+
+- Any infection-control or clinical working accreditation we hold that a healthcare buyer asks for
+- Fire-rated glazing we can supply for clinical corridors and escape routes
+- Acoustic performance we can claim where consultation-room privacy is specified
 
 ### 6c. Photographs I do not have
 
-Every commercial page is currently running on scrape imagery. In rough priority:
+Two routes ship a marked placeholder rather than a borrowed photograph, and both
+say on the page what they are waiting for:
 
-1. **A wide shot of a commercial elevation we have glazed.** There is no honest
-   hero for the hub. This is the single most valuable one.
-2. **Curtain walling, ours.** We have three scrape images and no evidence any is
-   our work.
-3. **A commercial window and door installation in progress** — access equipment,
-   a live site, hoardings. Nothing on the site shows us working commercially.
-4. **An AOV**, installed, and ideally its control panel.
-5. **An automatic entrance door** we have fitted.
-6. **Commercial replacement glazing**: a failed unit in a shopfront or an office
-   elevation, and the same opening reglazed.
-7. **One building per sector** — a school, a care home, a hotel, a student block,
+1. **An automatic entrance we have fitted**, showing the operator above the door
+   head. `/commercial-automation/` has no photograph of a powered door at all.
+2. **A clinical or care interior we have worked in**, showing screening and a
+   room handed back clean. `/healthcare-construction/` runs on one frontage shot.
+
+Beyond those, in rough priority:
+
+3. **A wide commercial elevation we have glazed**, for the hub hero.
+4. **Curtain walling, ours.** The Bletchley depot now carries this route, but one
+   job is thin for the highest-demand commercial product.
+5. **An AOV and its control panel.** All Hallows now proves the route, but no
+   photograph shows the vent open or the panel.
+6. **One building per sector** — a school, a care home, a hotel, a student block,
    an office or retail frontage. Exterior is enough.
-8. **The Heal's louvres**, still unphotographed, still noted in
-   `PHOTO-CHECKLIST.md`.
+7. **The Heal's louvres**, still unphotographed.
 
 Same rules as the residential checklist: square on, daylight, no vans in shot,
 and on a scaffolded job five full-resolution shots from the lift on the last day
@@ -231,16 +288,31 @@ is worth more than anything taken later.
 
 ## 7. Suggested order of work
 
-1. **The client-name files.** Contained, and a live rule breach.
-2. **The hub split.** Structural, does not need new information, and it stops a
-   commercial buyer completing a loop into a homeowner page.
-3. **The third-person sweep and the template headings.** One data file and one
-   template, fixes eleven pages at once.
-4. **Curtain walling and commercial windows and doors**, once §6b lands. These
-   two carry the most search demand and the least substance.
-5. **AOV and automation.**
-6. **The five sector pages.** Their openings are already good; they need the
-   middles replaced and one real job each.
+**Status as of 2026-08-12, end of the rebuild session.**
 
-Photography gates 4, 5 and 6 reaching the louvre standard fully, but the copy,
-figures and structure can all land first.
+1. ~~**The client-name files.**~~ **Shipped to test** in `888e98ce`, and then
+   ruled unnecessary by the owner the same day. See the banner on §0.
+2. ~~**The hub split.**~~ **Done.** `/commercial-glazing/` is a hub only and
+   `/commercial-replacement-glazing/` exists. The rebuild also found a second
+   structural fault the audit missed: **the hub linked five of the twelve
+   commercial routes.** AOV and all six sector pages had no way in from it. Two
+   card rows now cover all twelve, asserted by the render harness.
+3. ~~**The third-person sweep and the template headings.**~~ **Done.** Zero
+   third-person references survive in commercial copy. The three shared headings
+   are per-route, and the harness fails if any two routes share an H2 — which it
+   did catch, because the first pass replaced three identical headings with
+   three new identical ones.
+4. ~~**Curtain walling and commercial windows and doors.**~~ **Rebuilt**, with
+   specification tables carrying marked pending rows for the figures in §6b.
+   Curtain walling now has real proof: the Bletchley depot study claims it.
+5. ~~**AOV and automation.**~~ **Rebuilt.** AOV runs on the All Hallows
+   photography, which was sitting unused in the case-study library while the
+   route ran on a scrape-era facade shot. Automation ships a marked placeholder,
+   because we own no photograph of a powered entrance.
+6. ~~**The five sector pages.**~~ **Done**, and lighter than expected: their
+   copy was already good, so they took specification tables, per-route headings
+   and their case-study proof rather than new middles.
+
+**What is left is §6b and §6c** — figures and photographs. Both are owner-held,
+both are one-line swaps when they arrive, and every page already renders the row
+or the placeholder that is waiting for them.

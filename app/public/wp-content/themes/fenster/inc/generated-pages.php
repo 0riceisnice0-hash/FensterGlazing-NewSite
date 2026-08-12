@@ -413,17 +413,40 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Bifold Doors Northampton | Aluminium Bifold Installation',
             'meta_description' => 'Aluminium bifold doors in Northampton with slim sightlines, smooth folding panels, secure hardware and measured installation.',
         ],
+        /* COMMERCIAL SNIPPET PASS, 2026-08-12.
+           `SEO-AUDIT-AUG-2026.md` §4.3: the commercial cluster (installation /
+           installers / contractors / replacement) sits at positions 4-10 on
+           roughly 9,800 impressions and returns about FOUR clicks. Ranking is not
+           the problem. The SERP is directories and national firms, and against
+           those the snippet has to answer "who actually turns up".
+
+           So every description below leads on the one thing a directory listing
+           and a national sales operation cannot say: we survey, supply and
+           install it ourselves. The HEAD PHRASE OF EACH TITLE IS UNCHANGED —
+           `Commercial Glazing Contractors`, `Commercial Window Installers`,
+           `Curtain Walling Installers` are the phrases these routes rank for,
+           and the Product Naming Rule in `AI.md` is explicit that a ranking
+           phrase is never displaced for internal vocabulary. Only the tail
+           moves. */
         'commercial-glazing' => [
-            'title_tag' => 'Commercial Glazing Contractors | Windows, Doors & Facades',
-            'meta_description' => 'Commercial glazing from Fenster for offices, schools, healthcare and retail sites, including windows, doors and curtain walling.',
+            'title_tag' => 'Commercial Glazing Contractors | Our Own Fitters',
+            'meta_description' => 'We survey, supply and install commercial glazing ourselves: windows, doors, curtain walling, louvres and AOV. Occupied buildings phased around how you trade.',
         ],
         'commercial-windows-and-doors' => [
-            'title_tag' => 'Commercial Window Installers | Windows, Doors & Glass',
-            'meta_description' => 'Commercial window and door installation for offices, schools, healthcare and retail sites, with survey and phased fitting.',
+            'title_tag' => 'Commercial Window Installers | Doors, Screens & Glass',
+            'meta_description' => 'Aluminium and uPVC windows, doorsets and entrance screens for commercial buildings, surveyed and installed as one package by our own fitters.',
         ],
         'curtain-walling' => [
-            'title_tag' => 'Curtain Walling Installers | Commercial Glazed Facades',
-            'meta_description' => 'Curtain walling for commercial facades, entrances and screens, with survey and specification support from Fenster.',
+            'title_tag' => 'Curtain Walling Installers | Glazed Commercial Facades',
+            'meta_description' => 'Aluminium curtain walling surveyed, set out and installed on replacement facades and new openings, with doors, vents and louvres inside the grid.',
+        ],
+        'commercial-automation' => [
+            'title_tag' => 'Automatic Door Installers | Commercial Entrances',
+            'meta_description' => 'Glazed commercial entrance packages set out around the door operator, the access control and the escape route, then installed as one assembly.',
+        ],
+        'healthcare-construction' => [
+            'title_tag' => 'Healthcare & Clinical Glazing | Windows and Doors',
+            'meta_description' => 'Windows, doorsets and screens for dental practices, clinics and healthcare buildings, sequenced against the treatment list and handed back daily.',
         ],
         /* Retitled 2026-08-11 with the page rebuild. The searches here are
            "aluminium louvre", "ventilation louvre" and free-area questions, so
@@ -2394,6 +2417,60 @@ function fenster_render_site_schema(): void
     $slug = (string) ($page['slug'] ?? '');
     if ($slug === 'home') {
         return;
+    }
+
+    /* ---- Per-route Service schema for the commercial cluster ----------------
+       Added 2026-08-12 with the commercial rework. Until now the only Service
+       markup on the site came out of the LocalBusiness `hasOfferCatalog`, which
+       is site-wide and says nothing about the page it is on.
+
+       THE areaServed IS DELIBERATELY DIFFERENT FROM THE BUSINESS BLOCK ABOVE.
+       That one names Milton Keynes and its suburbs, which is the residential
+       working radius. Commercial coverage is nationwide across England and
+       Wales — owner-confirmed, and already what Legend is briefed to say — so a
+       commercial route claiming only the MK ring would be understating the
+       thing these pages exist to sell. Do not "fix" one to match the other.
+
+       No aggregateRating, no Review: the standing rule in `AI.md` is that
+       self-serving review markup earns risk without producing stars. */
+    if (function_exists('fenster_commercial_product_page')) {
+        $service_page = fenster_commercial_product_page($slug);
+
+        if (is_array($service_page) || $slug === 'commercial-glazing') {
+            $service_name = is_array($service_page)
+                ? (string) ($service_page['title'] ?? $slug)
+                : 'Commercial glazing';
+            $service_description = is_array($service_page)
+                ? (string) ($service_page['subtitle'] ?? '')
+                : 'Commercial glazing surveyed, supplied and installed in occupied and live commercial buildings: windows, doors, curtain walling, louvres, AOV and replacement glazing.';
+
+            $service_schema = [
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                'name' => $service_name,
+                'serviceType' => $service_name,
+                'url' => home_url('/' . $slug . '/'),
+                'provider' => [
+                    '@type' => 'HomeAndConstructionBusiness',
+                    'name' => 'Fenster Glazing',
+                    'url' => home_url('/'),
+                    'telephone' => '01908 429200',
+                ],
+                'areaServed' => [
+                    ['@type' => 'Country', 'name' => 'England'],
+                    ['@type' => 'Country', 'name' => 'Wales'],
+                ],
+            ];
+
+            if ($service_description !== '') {
+                $service_schema['description'] = $service_description;
+            }
+
+            printf(
+                "<script type=\"application/ld+json\">%s</script>\n",
+                wp_json_encode($service_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            );
+        }
     }
 
     $breadcrumb_items = [

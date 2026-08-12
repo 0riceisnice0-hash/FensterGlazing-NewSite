@@ -1,5 +1,37 @@
 # Fenster Glazing Handover
 
+## Commercial rebuild, 2026-08-12 — in the working tree, not on test
+
+**Read the newest START HERE block in `PROGRESS.md` first.** Live is unchanged at
+`47db7aea`; this work is uncommitted.
+
+**An owner ruling changed a standing rule.** *"end client name is fine. just not
+contractor unless that is themselves!"* The Commercial Client Anonymity Rule is
+now: **name the end client, never the main contractor unless the contractor owns
+the building.** The four client-name files the previous handover called urgent
+were **never a breach** — all four are end clients on their own buildings. The
+rename shipped anyway because it was already approved; it is not precedent.
+
+What changed, in one list:
+
+- **`FENSTER_SPEC_TBC`** is the single way to express an unconfirmed commercial
+  figure. **31 outstanding across 11 routes**, listed by
+  `fenster_commercial_spec_pending()`. One-line swap to fill one in. See the
+  Commercial Specification Rule in `AI.md`.
+- **The commercial hub is its own template**, `commercial-glazing-v2.php`, and
+  now links **all twelve** commercial routes. It linked five. AOV and the six
+  sector pages had no way in from it. See the Commercial Hub Rule in `AI.md`.
+- **Third person is gone** from commercial copy, and no two commercial routes
+  share an H2.
+- **Real photography throughout.** All Hallows, Bletchley, Headrow and Heal's
+  were sitting unused in the case-study library while these pages ran on scrape
+  imagery. Two routes ship marked placeholders because nothing honest exists.
+- `fenster_case_studies_for_product_group()` **takes a `$type` now**, defaulting
+  to residential. Commercial routes use it precisely because it has **no
+  fallback** — the single-product helper returns every study when nothing
+  matches, which is the documented fault that put secondary glazing on the tilt
+  and turn page.
+
 ## Handover state, 2026-08-12
 
 **Live is `47db7aea`, established by checksum. `main` is `b1d8aed7` and SIX
