@@ -55,7 +55,7 @@ $services = [
         'label' => 'Replacement glass',
         'copy' => sprintf('Measured replacement units and phased glass upgrades for occupied buildings in %s.', $county_name),
         'detail' => 'Plan failed-unit replacement or wider glass upgrades around live building access.',
-        'url' => home_url('/double-glazing-replacement/'),
+        'url' => home_url('/commercial-replacement-glazing/'),
         'image' => $service_images[2],
     ],
     [

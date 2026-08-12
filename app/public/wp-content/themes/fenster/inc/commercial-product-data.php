@@ -465,6 +465,72 @@ function fenster_commercial_product_pages(): array
          * owner confirms them; this is life safety and a wrong claim is worse than
          * a missing one.
          */
+        /* COMMERCIAL REPLACEMENT GLAZING, split off the hub on 2026-08-12.
+           Until then the hub's fifth service card sent commercial buyers to
+           /double-glazing-replacement/, a homeowner page headed "Misted and
+           Blown Double Glazing" which sent them straight back. This route is
+           the page that card always needed.
+
+           EVERY FACT HERE IS OWNER-CONFIRMED OR VISIBLE IN OUR OWN
+           PHOTOGRAPHS, and there is deliberately nothing else. No glass
+           specification, no standards, no response time, no U-value: none of
+           that has been confirmed for commercial work and the louvre standard
+           is real figures or none. Owner-confirmed 2026-08-12: no maximum unit
+           size, one to two weeks from order depending on specification.
+
+           MAKE-SAFE IS DELIBERATELY NOT ON THE PAGE. Owner: we occasionally do
+           it, but do not push it, because there is no out-of-hours cover. A
+           page that advertises make-safe invites the 6pm phone call we cannot
+           answer, so it is left for the conversation. Do not add it as a
+           feature without the out-of-hours position changing first.
+
+           ALL THREE PHOTOGRAPHS ARE OURS, from one job, and they are the only
+           images on any commercial route that show us working. Each sits
+           against the copy it proves, which is the louvre rule. */
+        'commercial-replacement-glazing' => [
+            'eyebrow' => 'Commercial replacement glazing',
+            'title' => 'Commercial replacement glazing',
+            'subtitle' => 'Failed, blown and broken units replaced in offices, schools, shopfronts and public buildings, with the building still in use.',
+            'intro_heading' => 'One pane has gone and the building still has to open.',
+            'hero_image' => '/wp-content/themes/fenster/assets/images/commercial/comm-failed-unit-office-1200w.jpg',
+            'hero_alt' => 'A crazed glass unit in an office elevation, with two Fenster fitters working from inside the room',
+            'intro_image' => '/wp-content/themes/fenster/assets/images/commercial/comm-occupied-office-lift-in-1600w.jpg',
+            'intro_alt' => 'A replacement unit lifted into an office elevation on a vacuum lifter, seen from the breakout space inside',
+            'summary' => [
+                'A commercial unit fails the same way a domestic one does and matters more: a crazed pane in an office elevation, a blown unit in a stairwell, a shopfront that has been put through. The difference is that the building has to keep trading around it, the glass is usually too big and too high to carry in by hand, and the opening it came out of was never designed to be reglazed from a ladder.',
+                'We measure the failed unit, order it to the frame it is going into, and fit it with the floor still in use. There is no maximum size. From order it is normally one to two weeks, depending on the specification.',
+            ],
+            'stats' => [
+                ['value' => 'No maximum', 'label' => 'unit size we will quote'],
+                ['value' => '1-2 weeks', 'label' => 'from order, specification depending'],
+                ['value' => 'Occupied', 'label' => 'buildings, floor still in use'],
+            ],
+            'capabilities' => [
+                ['title' => 'Failed and blown units', 'copy' => 'Sealed units that have misted, crazed or lost their seal, measured to the frame they are going back into.'],
+                ['title' => 'Broken and impacted glass', 'copy' => 'Shopfronts, entrance screens and elevations that have been put through, measured and reordered to the original opening.'],
+                ['title' => 'Glass at height', 'copy' => 'Upper-floor and full-height units reached with a tracked lifter and vacuum head rather than taken out through the room.'],
+                ['title' => 'Frames we did not fit', 'copy' => 'The unit is measured to whatever is already there, so the existing frames, beads and gaskets stay where they are.'],
+            ],
+            'detail_sections' => [
+                [
+                    'eyebrow' => 'Access',
+                    'title' => 'The glass goes in from outside, so the floor keeps working.',
+                    'copy' => 'A full-height commercial unit is too heavy and too awkward to bring through a working office, and taking it through means clearing the route it travels. We reach the opening from outside instead, on a tracked lifter with a vacuum head, and the room loses one bay rather than a floor. The lift equipment is hired in for the job and sized to the unit.',
+                    'image' => '/wp-content/themes/fenster/assets/images/commercial/comm-access-spider-crane-1200w.jpg',
+                    'alt' => 'A tracked spider crane and mobile tower set up outside a glazed commercial elevation, lifting a unit to first floor level',
+                    'points' => ['Tracked lifter and vacuum head', 'Upper floors reached from outside', 'One bay closed, not a floor'],
+                ],
+                [
+                    'eyebrow' => 'Measuring and ordering',
+                    'title' => 'Measured to the frame it is going into, not to the drawing.',
+                    'copy' => 'A commercial opening is rarely the size the drawing says, and a replacement unit that is close is a unit that comes back. We measure the frame on site before anything is ordered. From order it is normally one to two weeks depending on the specification, and there is no maximum size we will not quote.',
+                    'image' => '/wp-content/themes/fenster/assets/images/commercial/comm-failed-unit-office-1200w.jpg',
+                    'alt' => 'A crazed full-height glass unit being prepared for removal from inside an office',
+                    'points' => ['Site measured before order', 'One to two weeks from order', 'No maximum unit size'],
+                ],
+            ],
+            'use_cases' => ['Offices', 'Shopfronts', 'Schools', 'Stairwells and lobbies', 'Public buildings', 'Occupied refurbishments'],
+        ],
         'automatic-opening-vents' => [
             'eyebrow' => 'AOV smoke ventilation',
             'title' => 'Automatic opening vents',

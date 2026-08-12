@@ -286,6 +286,7 @@ $is_commercial_county = isset($commercial_county_pages[$slug]);
 $is_commercial_areas = $slug === 'commercial-areas';
 $commercial_route_slugs = [
     'commercial-glazing',
+    'commercial-replacement-glazing',
     'commercial-windows-and-doors',
     'curtain-walling',
     'louvre-vents',
@@ -1897,6 +1898,7 @@ $other_service_routes = [
 ];
 $commercial_routes = [
     'commercial-glazing',
+    'commercial-replacement-glazing',
     'commercial-windows-and-doors',
     'curtain-walling',
     'louvre-vents',
@@ -3149,10 +3151,18 @@ if ($is_commercial_hub) {
             'image' => $asset_base . 'commercial-4.jpg',
         ],
         [
+            /* THIS CARD POINTED AT THE RESIDENTIAL PAGE UNTIL 2026-08-12 AND
+               IT WAS THE HUB'S ONE STRUCTURAL FAULT. Four of the five cards went
+               to commercial routes; this one left the commercial section
+               entirely and landed on "Misted and Blown Double Glazing", a page
+               built around a homeowner's failed unit, which then said "larger
+               and commercial work is handled through commercial glazing" and
+               sent the visitor back here. A commercial buyer clicking the most
+               relevant card on the hub completed a loop and landed nowhere. */
             'title' => 'Replacement glazing',
-            'copy' => 'Measured replacement glass, failed-unit replacement and phased upgrade work for live commercial buildings.',
-            'url' => home_url('/double-glazing-replacement/'),
-            'image' => $asset_base . 'replacement-glazing-milton-keynes-scaled.jpg',
+            'copy' => 'Failed and broken units replaced in live commercial buildings, at height and at size, with the building still in use.',
+            'url' => home_url('/commercial-replacement-glazing/'),
+            'image' => '/wp-content/themes/fenster/assets/images/commercial/comm-failed-unit-office-1200w.jpg',
         ],
         [
             'title' => 'Project support',

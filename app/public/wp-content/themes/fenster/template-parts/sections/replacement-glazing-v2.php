@@ -38,7 +38,10 @@
  *   - Windows and doors both. Velux takes a sealed unit swap.
  *   - Single glazing goes back like for like where that is what the frame holds.
  *   - Leaded, Georgian bar and decorative can be matched.
- *   - Commercial is done and belongs to /commercial-glazing/, linked from here.
+ *   - Commercial is done and belongs to /commercial-replacement-glazing/,
+ *     linked from here. It used to point at the commercial HUB, which closed a
+ *     loop: the hub's replacement card pointed back at this page. Split on
+ *     2026-08-12.
  *   - Existing beads and gaskets are almost always reused.
  *   - We survey and measure before anything is ordered, and the survey is free.
  *   - No minimum. One unit is a job.
@@ -72,7 +75,7 @@ $blinds = '/wp-content/themes/fenster/assets/images/products/integral-blinds/';
 $quote_url = (string) ($args['quote_url'] ?? '');
 
 $repairs = esc_url(home_url('/window-and-door-repairs/'));
-$commercial = esc_url(home_url('/commercial-glazing/'));
+$commercial = esc_url(home_url('/commercial-replacement-glazing/'));
 $obscure = esc_url(home_url('/obscure-glass/'));
 $pet_flaps = esc_url(home_url('/cat-and-dog-flaps/'));
 $integral = esc_url(home_url('/integral-blinds/'));
@@ -206,7 +209,7 @@ $takes_glass = [
                         /* translators: 1: link to the repairs page, 2: link to the commercial glazing page */
                         esc_html__('That is the whole difference between this and a %1$s, which is what we call it when the fix happens on the visit and nothing has to be ordered. Plenty of jobs turn out to need both. Larger and commercial work is handled through %2$s.', 'fenster'),
                         '<a class="fg-cw-link" href="' . $repairs . '">' . esc_html__('repair', 'fenster') . '</a>',
-                        '<a class="fg-cw-link" href="' . $commercial . '">' . esc_html__('commercial glazing', 'fenster') . '</a>'
+                        '<a class="fg-cw-link" href="' . $commercial . '">' . esc_html__('commercial replacement glazing', 'fenster') . '</a>'
                     );
                     ?>
                 </p>

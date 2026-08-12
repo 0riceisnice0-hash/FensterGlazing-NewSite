@@ -973,6 +973,16 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'title_tag' => 'Office & Retail Glazing | Windows, Screens, Facades',
             'meta_description' => 'Windows, entrance screens and curtain walling for offices, shops and workplaces, worked around your trading hours and phased floor by floor.',
         ],
+        /* The commercial half of replacement glazing, split off the hub on
+           2026-08-12. The head phrase is the query rather than the product
+           name: "commercial glazing replacement" and "commercial window
+           replacement" sit inside the ~9,800 impression commercial cluster the
+           hub already ranks in, and this is where that intent should land
+           instead of on a homeowner's misted-unit page. */
+        'commercial-replacement-glazing' => [
+            'title_tag' => 'Commercial Replacement Glazing | Failed Units Replaced',
+            'meta_description' => 'Failed and broken glass replaced in commercial buildings across Milton Keynes and nearby. Units at height and at size, fitted with the building still in use.',
+        ],
         'automatic-opening-vents' => [
             'title_tag' => 'AOV Smoke Ventilation | Automatic Opening Vents',
             'meta_description' => 'Automatic opening vents supplied and installed with your commercial glazing, for stairwells, corridors and lobbies that need smoke cleared from an escape route.',
@@ -2031,7 +2041,7 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     $live_blog_post_slugs = function_exists('fenster_live_blog_posts') ? array_keys(fenster_live_blog_posts()) : [];
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
