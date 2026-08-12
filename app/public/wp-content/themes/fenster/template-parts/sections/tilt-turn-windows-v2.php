@@ -166,10 +166,24 @@ $suits = [
     </section>
 
     <?php /* ---------- How it holds shut ---------------------------------------
-             A pair rather than a split, because the two renders are halves of
-             one idea: the cam on the sash and the keep it pulls into on the
-             frame. `.fg-cw-gallery--pair` is the two-cell cut already built for
-             exactly this on the aluminium flush route.
+             BOTH RENDERS ARE KEEPS AND THE SECOND ONE WAS CAPTIONED AS A CAM.
+             Owner correction, 2026-08-12, on the live page: "'the cam' pic is
+             just another keep on the side of the sash, not a cam." He is right,
+             and Liniar named both files `keep` — the identification was
+             overridden from the render, which is the same "do not name a part
+             from imagination" trap the repairs schematic already paid for three
+             rounds on. It is a screw-fixed steel keep with a lead-in ramp; a cam
+             is machined onto the gearing and is not screwed on like that.
+
+             The section is better for it. Two keeps in two positions prove
+             something the page can actually stand behind — that it locks at
+             intervals all the way round rather than at the handle — where
+             before it claimed a mechanism no picture here showed. **The word
+             "cam" is off this route deliberately. Nobody has confirmed what
+             engages these keeps, so the copy does not say.**
+
+             `.fg-cw-gallery--pair` is the two-cell cut already built for exactly
+             this on the aluminium flush route.
 
              PAS 24 AND SECURED BY DESIGN ARE LINIAR'S AND ARE ATTRIBUTED, never
              asserted as ours. The standard belongs to a tested complete window,
@@ -184,21 +198,24 @@ $suits = [
                     <p class="eyebrow"><?php esc_html_e('Security', 'fenster'); ?></p>
                     <h2 id="fg-tt-secure-title"><?php esc_html_e('It locks by pulling itself into the frame.', 'fenster'); ?></h2>
                 </div>
-                <p><?php esc_html_e('Turning the handle to shut runs a steel gear down the edge of the sash and rolls a line of mushroom-headed cams into keeps set in the frame. Because the sash closes inwards, every cam draws it tighter against its seals instead of holding it up against them. That is the same movement that makes it weathertight, and it is why there is nothing on the outside to get a bar behind.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Turning the handle to shut drives the gearing right around the sash, and it locks into steel keeps set at intervals the whole way round the window rather than at the handle alone. Because the sash closes inwards, locking pulls it tighter against its seals instead of holding it up against them. That is the same movement that makes it weathertight, and it is why there is nothing on the outside to get a bar behind.', 'fenster'); ?></p>
             </div>
 
             <div class="fg-cw-gallery__mosaic" aria-label="<?php esc_attr_e('Tilt and turn locking hardware', 'fenster'); ?>">
                 <?php
+                /* ORDER MATTERS NOW: frame first, then the sash side, so the
+                   second caption can say "another" and the pair reads as the
+                   point the copy is making — they are all the way round. */
                 $locking = [
                     [
-                        'src' => $imported . 'Tilt-turn-keep-2.jpeg',
-                        'alt' => 'A mushroom-headed cam on the edge of a tilt and turn sash, the part that rolls into the keep as the handle turns',
-                        'caption' => __('The cam, on the edge of the sash', 'fenster'),
+                        'src' => $imported . 'Tilt-turn-keep-1.jpeg',
+                        'alt' => 'A steel keep set into the frame of a tilt and turn window',
+                        'caption' => __('A keep, set into the frame', 'fenster'),
                     ],
                     [
-                        'src' => $imported . 'Tilt-turn-keep-1.jpeg',
-                        'alt' => 'The steel keep set into a tilt and turn window frame, which the sash cam draws into',
-                        'caption' => __('The keep, set into the frame', 'fenster'),
+                        'src' => $imported . 'Tilt-turn-keep-2.jpeg',
+                        'alt' => 'A second steel keep, screw-fixed on the sash side of a tilt and turn window',
+                        'caption' => __('Another, on the side of the sash', 'fenster'),
                     ],
                 ];
                 ?>
@@ -220,7 +237,7 @@ $suits = [
                      second plate is clipped at 82%, which is the affordance
                      `STYLE.md` asks for. The hint is belt and braces on top of
                      it, the same one the heritage door configurations carry. */ ?>
-            <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to see the keep', 'fenster'); ?> <span>&rarr;</span></p>
+            <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to see the second keep', 'fenster'); ?> <span>&rarr;</span></p>
 
             <p class="fg-tt-secure__note">
                 <?php esc_html_e('Liniar test the 70mm system to PAS 24 and to Part Q, and it is a Secured by Design product to BS EN 12608-1. Those are their figures for the profile rather than a certificate for one particular window, so ask us what a specific opening is being built to and we will tell you.', 'fenster'); ?>

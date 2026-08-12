@@ -1391,8 +1391,8 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt__Turn_14.jpg', 'alt' => 'Two tall uPVC windows in an apartment living room with roman blinds'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-1.jpeg', 'alt' => 'Tilt and turn window tilted inwards at the top, with the stay arm and sash gearing visible'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-2.jpeg', 'alt' => 'The stay at the top corner of a tilt and turn sash, holding it in the tilt position'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-1.jpeg', 'alt' => 'Steel keep fixed into the frame of a tilt and turn window, where the sash locks into it'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-2.jpeg', 'alt' => 'Mushroom-headed cam on the edge of a tilt and turn sash, which draws into the keep as the handle turns'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-1.jpeg', 'alt' => 'A steel keep set into the frame of a tilt and turn window'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-2.jpeg', 'alt' => 'A second steel keep, screw-fixed on the sash side of a tilt and turn window'],
             ],
             'bow_bay_windows' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/bay-window.jpg', 'alt' => 'White uPVC bay window with leaded glazing on a red brick house'],
