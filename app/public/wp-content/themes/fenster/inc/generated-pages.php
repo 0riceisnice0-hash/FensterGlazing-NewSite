@@ -82,23 +82,23 @@ function fenster_location_matrix_products(): array
 {
     return [
         'double-glazing' => 'Double Glazing',
-        'casement-windows' => 'Casement Windows',
-        'flush-casement-windows' => 'Flush Casement Windows',
+        'casement-windows' => 'uPVC Casement Windows',
+        'flush-casement-windows' => 'uPVC Flush Sash Windows',
         'sliding-sash-windows' => 'Sliding Sash Windows',
         'french-casement-windows' => 'French Casement Windows',
-        'tilt-turn-windows' => 'Tilt and Turn Windows',
+        'tilt-turn-windows' => 'uPVC Tilt & Turn Windows',
         'bow-bay-windows' => 'Bow and Bay Windows',
-        'aluminium-windows' => 'Aluminium Windows',
+        'aluminium-windows' => 'Aluminium Casement Windows',
         'aluminium-flush-windows' => 'Aluminium Flush Windows',
-        'heritage-windows' => 'Heritage Windows',
+        'heritage-windows' => 'Aluminium Heritage Windows',
         'aluminium-bifold-doors' => 'Aluminium Bifold Doors',
-        'slide-fold-doors' => 'Slide and Fold Doors',
+        'slide-fold-doors' => 'Slide & Fold Doors',
         'aluminium-sliding-doors' => 'Aluminium Sliding Doors',
         'aluminium-doors' => 'Aluminium Doors',
         'heritage-aluminium-doors' => 'Heritage Aluminium Doors',
         'composite-doors' => 'Composite Doors',
         'upvc-doors' => 'uPVC Doors',
-        'patio-doors' => 'Patio Doors',
+        'patio-doors' => 'uPVC Sliding Doors',
         'french-doors' => 'French Doors',
         'integral-blinds' => 'Integral Blinds',
         'roof-lanterns' => 'Roof Lanterns',
@@ -290,7 +290,7 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'uPVC front, back and side doors in Milton Keynes with multi-point locking, 14 colour options and a 10-year guarantee. Get an instant online price.',
         ],
         'casement-windows' => [
-            'title_tag' => 'Casement Windows Milton Keynes | uPVC Casement Installers',
+            'title_tag' => 'uPVC Casement Windows Milton Keynes | Fitted Locally',
             'meta_description' => 'uPVC casement windows in Milton Keynes with A+ rated efficiency options, 16 colour choices and PAS 24 security, fitted by our local team.',
         ],
         'aluminium-bifold-doors' => [
@@ -333,7 +333,7 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Steel-look heritage windows in Milton Keynes. Sheerline Classic aluminium with slim 60.5mm frames, Georgian or 1930s bar layouts and a warm thermal break.',
         ],
         'patio-doors' => [
-            'title_tag' => 'Patio Doors Milton Keynes | Sliding Garden Doors',
+            'title_tag' => 'Patio Doors Milton Keynes | uPVC Sliding Doors',
             'meta_description' => 'Patio doors in Milton Keynes with smooth sliding operation, secure locking, colour options and survey-led installation from Fenster Glazing.',
         ],
         'roofline' => [
