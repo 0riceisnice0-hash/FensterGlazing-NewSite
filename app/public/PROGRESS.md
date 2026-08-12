@@ -62,9 +62,11 @@ by saying sixteen where a door takes thirteen.
 
 - **Maximum sizes** for a single leaf, French doors and a stable door.
 - **What each threshold is best for**, beyond "we aim for the low aluminium".
-- **Whether laminated glass is genuinely offered** on a uPVC door. It is on the
-  page on the strength of the owner raising it in passing; no thickness,
-  standard or rating is published because none is confirmed.
+- ~~Whether laminated glass is genuinely offered on a uPVC door.~~ **Closed
+  2026-08-12: it is an upgrade on every main product**, not just this one. No
+  figure is published anywhere because none is confirmed. The comment in
+  `upvc-doors-v2.php` still describes it as raised in passing and should be
+  corrected the next time that file is touched.
 - Photography: the standing gaps in `PHOTO-CHECKLIST.md` are unchanged.
 - **Fifteen stale `release/*` branches on origin**, down from seventeen: this
   session's two were deleted after proving nothing on them was absent from

@@ -69,12 +69,12 @@ secondary glazing and uPVC casements, which is worse than showing nothing.
 
 **Open and needing the owner, not code:**
 
-- **uPVC doors, three answers outstanding.** Maximum sizes for a single leaf,
-  French doors and a stable door. What each of the four thresholds is best for,
-  beyond "we aim for the low aluminium". And whether **laminated glass** is
-  genuinely offered on a uPVC door: it is on the page on the strength of the
-  owner raising it in passing, with no thickness, standard or rating published
-  because none is confirmed.
+- **uPVC doors, two answers outstanding.** Maximum sizes for a single leaf,
+  French doors and a stable door, and what each of the four thresholds is best
+  for beyond "we aim for the low aluminium". **Laminated glass is settled**:
+  owner-confirmed 2026-08-12 as an upgrade on every main product, with no figure
+  published anywhere because none is confirmed. See the Owner-Confirmed Business
+  Facts in `AI.md`.
 
 - Roehampton case study, parked on four facts.
 - A typical flush aluminium job with dummy sashes in the fixed lights.
