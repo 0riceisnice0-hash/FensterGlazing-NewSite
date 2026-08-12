@@ -21,18 +21,35 @@ if (! defined('ABSPATH')) {
 $upvc_colours = fenster_data('colour_options.materials.upvc.colours', []);
 $upvc_colours = is_array($upvc_colours) ? $upvc_colours : [];
 
+/* A ROUTE MAY CARRY A SUBSET, and it has to be able to say so in the heading.
+   The doors take thirteen of these foils where the windows take sixteen, and
+   before this the component hardcoded "Sixteen colours outside", which is why
+   `/upvc-doors/` had to be taken off it entirely and given a chart of its own.
+   Pass `names` to filter and `heading` to match, and the source of truth stays
+   this one list either way. Order follows `colour_options`, not the order the
+   names arrive in, so every route lays the range out the same way. */
+$colour_names = is_array($args['names'] ?? null) ? array_map('strval', $args['names']) : [];
+if (! empty($colour_names)) {
+    $upvc_colours = array_values(array_filter(
+        $upvc_colours,
+        static fn (array $colour): bool => in_array((string) ($colour['name'] ?? ''), $colour_names, true)
+    ));
+}
+
 if (empty($upvc_colours)) {
     return;
 }
 
 $product_noun = (string) ($args['product_noun'] ?? 'window');
+$colour_heading = (string) ($args['heading'] ?? __('Sixteen colours outside, matched or white inside.', 'fenster'));
+$colour_intro = (string) ($args['intro'] ?? __('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the external face, with the same colour or smooth white on the inside.', 'fenster'));
 ?>
 <section id="upvc-colours" class="fg-upvc-colours" aria-labelledby="fg-upvc-colours-title">
     <div class="container">
         <div class="fg-upvc-colours__heading">
             <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
-            <h2 id="fg-upvc-colours-title"><?php esc_html_e('Sixteen colours outside, matched or white inside.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the external face, with the same colour or smooth white on the inside.', 'fenster'); ?></p>
+            <h2 id="fg-upvc-colours-title"><?php echo esc_html($colour_heading); ?></h2>
+            <p><?php echo esc_html($colour_intro); ?></p>
         </div>
         <ul class="fg-upvc-colours__grid">
             <?php foreach ($upvc_colours as $colour) : ?>

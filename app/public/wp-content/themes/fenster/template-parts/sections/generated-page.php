@@ -4755,6 +4755,10 @@ if ($is_commercial_hub) {
                         'src' => fenster_generated_url($upvc_curated . 'upvc-door-white-arched-leaded.webp'),
                         'alt' => __('White uPVC door with a curved head and leaded glass in an arched brick opening', 'fenster'),
                     ],
+                    'stable' => [
+                        'src' => fenster_generated_url($upvc_curated . 'upvc-door-white-stable.webp'),
+                        'alt' => __('White uPVC stable door with both halves glazed, in a brick opening', 'fenster'),
+                    ],
                 ],
             ]);
             ?>

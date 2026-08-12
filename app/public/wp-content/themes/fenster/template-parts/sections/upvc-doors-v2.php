@@ -47,11 +47,14 @@
  * OWNER-CONFIRMED, and none of it may be softened or widened:
  *
  *  - **We do not advertise the full infill panel**, the moulded 2000s front
- *    door slab. What we sell is half glazed over a flat panel, over shiplap, or
- *    glass top to bottom.
- *  - **WHERE THE PANEL STOPS IS NOT A LIST.** Owner, 2026-08-12: a quarter, a
- *    half, three quarters and full are examples, not a range, and it is drawn
- *    on the door. Do not enumerate it and do not multiply by it.
+ *    door slab. The panels we fit are flat or shiplap.
+ *  - **A PANEL IS A COMPONENT, NOT A STYLE, and the style is not a list.**
+ *    Owner, 2026-08-12, correcting a draft that had the panel being sized in
+ *    fractions of the door. The leaf is divided by transoms and mullions, and
+ *    each opening that makes is filled with glass or with a panel. The designer
+ *    carries preset styles and they are a starting point, not the range. Do not
+ *    enumerate styles, do not describe a panel as a proportion of the door, and
+ *    never multiply a combinations figure by either.
  *  - **Thirteen foils on a door**, not the windows' sixteen, and the theme holds
  *    a render of every one. The colour is the outside face, white or the same
  *    colour inside, and the inside foil costs more.
@@ -115,19 +118,21 @@ $photo = static function (string $key) use ($photos): array {
          the first real question a homeowner has and it is answered entirely in
          our own photographs.
 
-         A SHAPED HEAD IS NOT A WAY OF OPENING and it is not on this page as a
-         picture at all. It was a fourth card here and the owner pulled it,
-         2026-08-12: an arched door is still a single leaf, so it said nothing
-         about opening. It was then promoted to the opening photograph, and he
-         pulled it again — shaped heads are **super niche**, so leading the page
-         on one misrepresents what we sell. It gets one clause in the intro copy
-         and no photograph. Do not promote it again. */ ?>
+         TWO, NOT THREE OR FOUR. A shaped head went first: an arched door is
+         still a single leaf, so it said nothing about opening. The stable door
+         went next, 2026-08-12, for the same reason — the owner's read is that it
+         is a single door adapted, not a third way of opening, and presenting a
+         niche variant as an equal third choice overstates it. Both now live in
+         the adaptations section below, where being unusual is the point.
+
+         So the honest answer to "how does it open" is one leaf or a pair, and
+         two cards carry bigger photographs than three did. */ ?>
 <section class="fg-cw fg-upd fg-upd-config" aria-labelledby="fg-upd-config-title">
     <div class="container">
         <div class="fg-upd-config__head">
             <p class="eyebrow"><?php esc_html_e('How it opens', 'fenster'); ?></p>
-            <h2 id="fg-upd-config-title"><?php esc_html_e('Three ways the same system opens.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Decided by the opening and how the room gets used.', 'fenster'); ?></p>
+            <h2 id="fg-upd-config-title"><?php esc_html_e('One leaf, or a pair.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('That is the choice underneath everything else, and it is decided by the opening and how the room gets used.', 'fenster'); ?></p>
         </div>
         <div class="fg-upd-config__grid">
             <?php
@@ -148,14 +153,6 @@ $photo = static function (string $key) use ($photos): array {
                     'link' => home_url('/french-doors/'),
                     'link_label' => __('More on French doors', 'fenster'),
                 ],
-                [
-                    'title' => __('A stable door', 'fenster'),
-                    'copy' => __('Split across the middle so the top half opens on its own: air in, the dog and the toddler still in.', 'fenster'),
-                    'image' => 'upvc-door-white-stable.webp',
-                    'alt' => __('White uPVC stable door with both halves glazed, in a brick opening', 'fenster'),
-                    'link' => '',
-                    'link_label' => '',
-                ],
             ];
             foreach ($configs as $config) :
                 ?>
@@ -174,13 +171,15 @@ $photo = static function (string $key) use ($photos): array {
     </div>
 </section>
 
-<?php /* 2b. WHATEVER SHAPE OR SIZE. This sat at the top of the middle until
-         2026-08-12, when the owner moved it below the three ways of opening: the
-         standard three first, and then the point that a door is made to whatever
-         opening you actually have. The arched door is the proof of that
-         sentence, which is why it is back after two removals — it earns its
-         place here, where it illustrates a claim, rather than at the top where
-         it led the page on a niche product. */ ?>
+<?php /* 2b. THE ADAPTATIONS. The two ways of opening first, then this: the
+         door is made to whatever opening you have, and the leaf can be split if
+         you want it split. The arched door is the proof of the first half and is
+         deliberately the larger picture — the owner calls it the wow near the top
+         of the page. The stable door is the second half, and it sits here rather
+         than in the openings above because it is a single door adapted.
+
+         Both are niche and both are illustrated once. Do not promote either into
+         a section of its own. */ ?>
 <section class="fg-cw fg-upd fg-upd-open" aria-labelledby="fg-upd-open-title">
     <div class="container">
         <div class="fg-cw-split">
@@ -188,7 +187,13 @@ $photo = static function (string $key) use ($photos): array {
                 <p class="eyebrow"><?php esc_html_e('Made to the opening', 'fenster'); ?></p>
                 <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into, whatever shape or size that is.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most, and it is made the same way as the arched one here: to the hole in your wall, whatever shape that hole is in.', 'fenster'); ?></p>
-                <p><?php esc_html_e('Everything from here is what you get to choose.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The leaf can be split across the middle too, so the top half opens on its own and the bottom stays shut. That is a stable door, and it is the same door underneath.', 'fenster'); ?></p>
+                <?php if (! empty($photo('stable')['src'])) : ?>
+                    <figure class="fg-upd-open__inset">
+                        <img src="<?php echo esc_url($photo('stable')['src']); ?>" alt="<?php echo esc_attr($photo('stable')['alt'] ?? ''); ?>" width="1280" height="1600" loading="lazy" decoding="async">
+                        <figcaption><?php esc_html_e('The same leaf, split across the middle.', 'fenster'); ?></figcaption>
+                    </figure>
+                <?php endif; ?>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
@@ -200,35 +205,34 @@ $photo = static function (string $key) use ($photos): array {
     </div>
 </section>
 
-<?php /* 3. THE FINISH. This replaces five separate goes at colour, and it is the
-         one section on the page that could not exist anywhere else: the same
-         door drawn in every finish we offer. The renders sat unused in the theme
-         for a month.
+<?php /* 3. THE FINISH. This was thirteen door renders laid out as a strip, and
+         the owner's verdict was that the graphic is not as good as the colour
+         section the window routes carry. He is right, and the reason is
+         material: a render shows the colour and nothing of the foil, while the
+         shared grid is photographs of the actual Renolit swatches, cropped so
+         the grain reads at swatch size. The copy claims a woodgrain you can
+         feel, and the swatches are the only thing on the site that shows it.
 
-         THIRTEEN IS THE WHOLE RANGE for a door, so the chart is complete rather
-         than a sample, and nothing here says "and more besides". */ ?>
-<?php if (! empty($renders)) : ?>
-    <section class="fg-cw fg-upd fg-upd-finish" aria-labelledby="fg-upd-finish-title">
-        <div class="container">
-            <div class="fg-upd-finish__head">
-                <p class="eyebrow"><?php esc_html_e('The finish', 'fenster'); ?></p>
-                <h2 id="fg-upd-finish-title"><?php esc_html_e('Thirteen finishes. This is all of them.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Bonded to the profile at the factory rather than painted on, so the colour lasts as long as the door does. Most carry a woodgrain you can feel; a few are smooth. Inside is white as standard, or the same colour on both faces if you would rather see it from the sofa.', 'fenster'); ?></p>
-            </div>
-
-            <ul class="fg-upd-chart">
-                <?php foreach ($renders as $render) : ?>
-                    <?php if (empty($render['file']) || empty($render['colour'])) { continue; } ?>
-                    <li class="fg-upd-chart__item">
-                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/renders/' . $render['file'])); ?>" alt="<?php printf(esc_attr__('uPVC residential door in %s', 'fenster'), esc_attr((string) $render['colour'])); ?>" width="640" height="1600" loading="lazy" decoding="async">
-                        <span class="fg-upd-chart__name"><?php echo esc_html((string) $render['colour']); ?></span>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-        </div>
-    </section>
-<?php endif; ?>
+         So this route now calls the same component every uPVC window route
+         calls, filtered to the thirteen foils a door takes and headed for
+         thirteen rather than sixteen. The door renders stay in the theme,
+         cropped and registered, for whatever wants them next. */ ?>
+<?php
+$door_colour_names = [];
+foreach ($renders as $render) {
+    if (! empty($render['colour'])) {
+        $door_colour_names[] = (string) $render['colour'];
+    }
+}
+if (! empty($door_colour_names)) {
+    get_template_part('template-parts/components/upvc-colour-grid', null, [
+        'product_noun' => 'door',
+        'names' => $door_colour_names,
+        'heading' => __('Thirteen foils, bonded on rather than painted on.', 'fenster'),
+        'intro' => __('The foil is bonded to the profile at the factory rather than painted on afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the outside face, with the same colour or smooth white inside.', 'fenster'),
+    ]);
+}
+?>
 
 <?php /* 4. THE REST OF THE DECISIONS. Three now, not six: colour has its own
          section above, and privacy glass belongs with the survey detail below
@@ -244,10 +248,10 @@ $photo = static function (string $key) use ($photos): array {
             <?php
             $ways = [
                 [
-                    'label' => __('The panel', 'fenster'),
-                    'copy' => __('Two faces, flat or shiplap, and you say how much of the door they cover. A quarter, a half, three quarters, all of it like the one above, or glass top to bottom. You say where it stops and it is drawn to that.', 'fenster'),
+                    'label' => __('The style', 'fenster'),
+                    'copy' => __('The leaf gets divided by transoms and mullions, the horizontals and the verticals, and every opening they make is filled with glass or with a panel. Panels come in two faces, flat or shiplap. The designer starts you on a set of styles and none of them is fixed: move the transom, add a mullion, turn a glazed opening into a panel or the other way round.', 'fenster'),
                     'image' => 'upvc-door-anthracite-solid-shiplap.webp',
-                    'alt' => __('Anthracite uPVC door with a full shiplap panel and no glazing, on yellow brick', 'fenster'),
+                    'alt' => __('Anthracite uPVC door panelled top to bottom in shiplap, with no glazed opening', 'fenster'),
                 ],
                 [
                     'label' => __('Bars and lead', 'fenster'),

@@ -41900,3 +41900,45 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* The two configurations sit larger now there are two of them, and the media
+   goes to 4:3 so a pair of wide cards does not become two very tall ones. */
+.fg-upd-config__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fg-upd-config__card figure {
+  aspect-ratio: 4 / 3;
+}
+
+/* The stable door inside the adaptations copy: a small inset under the words it
+   illustrates, so the arch stays the larger picture in that section. */
+.fg-upd-open__inset {
+  margin: 1.2rem 0 0;
+  max-width: 260px;
+}
+
+.fg-upd-open__inset img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.fg-upd .fg-upd-open__inset figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--color-muted, #5b6a6a);
+}
+
+@media (max-width: 560px) {
+  .fg-upd-config__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-upd-open__inset {
+    max-width: none;
+  }
+}
