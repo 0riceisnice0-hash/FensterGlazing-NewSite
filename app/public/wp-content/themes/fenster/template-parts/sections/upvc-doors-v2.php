@@ -199,53 +199,11 @@ $photo = static function (string $key) use ($photos): array {
     </div>
 </section>
 
-<?php /* 3. THE FINISH. This was thirteen door renders laid out as a strip, and
-         the owner's verdict was that the graphic is not as good as the colour
-         section the window routes carry. He is right, and the reason is
-         material: a render shows the colour and nothing of the foil, while the
-         shared grid is photographs of the actual Renolit swatches, cropped so
-         the grain reads at swatch size. The copy claims a woodgrain you can
-         feel, and the swatches are the only thing on the site that shows it.
-
-         So this route now calls the same component every uPVC window route
-         calls, filtered to the thirteen foils a door takes and headed for
-         thirteen rather than sixteen. The door renders stay in the theme,
-         cropped and registered, for whatever wants them next. */ ?>
-<?php
-$door_colour_names = [];
-foreach ($renders as $render) {
-    if (! empty($render['colour'])) {
-        $door_colour_names[] = (string) $render['colour'];
-    }
-}
-if (! empty($door_colour_names)) {
-    get_template_part('template-parts/components/upvc-colour-grid', null, [
-        'product_noun' => 'door',
-        'names' => $door_colour_names,
-        'modifier' => 'fg-upvc-colours--thirteen',
-        'heading' => __('Thirteen foils, bonded on rather than painted on.', 'fenster'),
-        'intro' => __('The foil is bonded to the profile at the factory rather than painted on afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the outside face, with the same colour or smooth white inside.', 'fenster'),
-    ]);
-}
-
-/* THE THREE CHOICES RUN TOGETHER, which is the rhythm /casement-windows/ has
-   carried since August: colour, then handles, then glass, each a component with
-   its own heading and none of them needing a band above it. The handle grid is
-   released from its usual slot in `generated-page.php` to get here, and the
-   privacy glass card replaces a bespoke one written into the survey section,
-   which the owner rightly called bolted on — this component is better, it shows
-   the real patterns, and it is what every other route uses. */
-get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args());
-get_template_part('template-parts/components/privacy-glass-card', null, [
-    'eyebrow' => __('Specification choices', 'fenster'),
-    'heading' => __('Privacy where the door needs it.', 'fenster'),
-    'copy' => __('A front door onto a street, a side entrance, anything overlooked. Privacy glass goes into the same sealed unit, graded one to five for how much it hides.', 'fenster'),
-]);
-?>
-
-<?php /* 4. THE REST OF THE DECISIONS. Three now, not six: colour has its own
-         section above, and privacy glass belongs with the survey detail below
-         where the decision actually gets made. */ ?>
+<?php /* 4. WHAT YOU CHOOSE ABOUT THE DOOR ITSELF, and it opens the run of
+         choosing rather than closing it. Style, bars and fittings first, then
+         colour, handles and glass as their own components underneath. It sat
+         after all three of those for one deploy and read as a summary of things
+         the reader had already decided. */ ?>
 <section class="fg-cw fg-upd fg-upd-ways" aria-labelledby="fg-upd-ways-title">
     <div class="container">
         <div class="fg-upd-ways__head">
@@ -323,6 +281,50 @@ get_template_part('template-parts/components/privacy-glass-card', null, [
         </div>
     </div>
 </section>
+
+<?php /* 3. THE FINISH. This was thirteen door renders laid out as a strip, and
+         the owner's verdict was that the graphic is not as good as the colour
+         section the window routes carry. He is right, and the reason is
+         material: a render shows the colour and nothing of the foil, while the
+         shared grid is photographs of the actual Renolit swatches, cropped so
+         the grain reads at swatch size. The copy claims a woodgrain you can
+         feel, and the swatches are the only thing on the site that shows it.
+
+         So this route now calls the same component every uPVC window route
+         calls, filtered to the thirteen foils a door takes and headed for
+         thirteen rather than sixteen. The door renders stay in the theme,
+         cropped and registered, for whatever wants them next. */ ?>
+<?php
+$door_colour_names = [];
+foreach ($renders as $render) {
+    if (! empty($render['colour'])) {
+        $door_colour_names[] = (string) $render['colour'];
+    }
+}
+if (! empty($door_colour_names)) {
+    get_template_part('template-parts/components/upvc-colour-grid', null, [
+        'product_noun' => 'door',
+        'names' => $door_colour_names,
+        'modifier' => 'fg-upvc-colours--thirteen',
+        'heading' => __('Thirteen foils, bonded on rather than painted on.', 'fenster'),
+        'intro' => __('The foil is bonded to the profile at the factory rather than painted on afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the outside face, with the same colour or smooth white inside.', 'fenster'),
+    ]);
+}
+
+/* THE THREE CHOICES RUN TOGETHER, which is the rhythm /casement-windows/ has
+   carried since August: colour, then handles, then glass, each a component with
+   its own heading and none of them needing a band above it. The handle grid is
+   released from its usual slot in `generated-page.php` to get here, and the
+   privacy glass card replaces a bespoke one written into the survey section,
+   which the owner rightly called bolted on — this component is better, it shows
+   the real patterns, and it is what every other route uses. */
+get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args());
+get_template_part('template-parts/components/privacy-glass-card', null, [
+    'eyebrow' => __('Specification choices', 'fenster'),
+    'heading' => __('Privacy where the door needs it.', 'fenster'),
+    'copy' => __('A front door onto a street, a side entrance, anything overlooked. Privacy glass goes into the same sealed unit, graded one to five for how much it hides.', 'fenster'),
+]);
+?>
 
 <?php /* 5. WHAT IT IS MADE OF. The deferred tech banner: chambers, both
          U-values and the lead-free formulation, landing after the choosing
