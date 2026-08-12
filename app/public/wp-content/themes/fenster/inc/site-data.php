@@ -165,7 +165,7 @@ function fenster_site_data(): array
                             ['label' => 'Slide & Fold', 'url' => home_url('/slide-fold-doors/')],
                             ['label' => 'Aluminium Sliding', 'url' => home_url('/aluminium-sliding-doors/')],
                             ['label' => 'Aluminium Doors', 'url' => home_url('/aluminium-doors/')],
-                            ['label' => 'Heritage Aluminium', 'url' => home_url('/heritage-aluminium-doors/')],
+                            ['label' => 'Aluminium Heritage', 'url' => home_url('/heritage-aluminium-doors/')],
                             ['label' => 'Composite Doors', 'url' => home_url('/composite-doors/')],
                             ['label' => 'uPVC Doors', 'url' => home_url('/upvc-doors/')],
                             ['label' => 'uPVC Sliding Patio', 'url' => home_url('/patio-doors/')],

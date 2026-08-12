@@ -86,10 +86,27 @@ function fenster_render_nav_fallback(): void
             /* The grid was hardcoded to three tracks, so a two-column menu left an
                empty third and read as a missing column. Driven by the real count now. */
             printf('<div class="site-nav__mega-columns" style="--fg-mega-columns: %d;">', count($item['columns']));
+            /* EACH COLUMN IS NAMED BY ITS OWN HEADING, and that is load-bearing
+               rather than tidiness. The menu labels were shortened on 2026-08-12
+               so a row no longer repeats the column it sits in, and the owner
+               then set BOTH heritage rows to read "Aluminium Heritage" — the
+               window under Windows and the door under Doors. Two links with
+               identical text pointing at different routes are only unambiguous
+               if something tells you which section you are in, and a bare
+               <section> tells a screen reader nothing. Naming it from the
+               heading is what makes the short labels safe.
+
+               A counter rather than the label, because two menus could
+               reasonably use the same column name and duplicate ids are worse
+               than ugly ones. */
+            static $mega_column_id = 0;
             foreach ($item['columns'] as $column) {
-                echo '<section class="site-nav__mega-column">';
+                $mega_column_id++;
+                $column_heading_id = 'fg-mega-column-' . $mega_column_id;
+                printf('<section class="site-nav__mega-column" aria-labelledby="%s">', esc_attr($column_heading_id));
                 printf(
-                    '<a class="site-nav__mega-heading" href="%s" data-mobile-menu-column>%s</a>',
+                    '<a class="site-nav__mega-heading" id="%s" href="%s" data-mobile-menu-column>%s</a>',
+                    esc_attr($column_heading_id),
                     esc_url($column['url'] ?? $item['url']),
                     esc_html($column['label'] ?? '')
                 );

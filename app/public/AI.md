@@ -577,7 +577,7 @@ reference photographs over three rounds. Treat them as measured drawings.
 | Slide & Fold | Slide & Fold Doors |
 | Aluminium Sliding | Aluminium Sliding Doors |
 | **Aluminium Doors** | Aluminium Doors |
-| Heritage Aluminium | Heritage Aluminium Doors |
+| Aluminium Heritage | Heritage Aluminium Doors |
 | **Composite Doors** | Composite Doors |
 | **uPVC Doors** | uPVC Doors |
 | uPVC Sliding Patio | uPVC Sliding Doors |
@@ -585,7 +585,8 @@ reference photographs over three rounds. Treat them as measured drawings.
 
 - **`uPVC Sliding Patio` is the owner's own wording and is deliberately not `uPVC Sliding`.** "Sliding" alone does not say sliding what, and Patio is the word WindowCAD uses for that collection. It is the one menu label that is not simply the page name with the noun removed.
 - **Nothing under Other Services changed**, because no label there ends in Windows or Doors.
-- **Two menu rows are near-anagrams and that is not a mistake:** `Aluminium Heritage` is the window and `Heritage Aluminium` is the door. They sit in different columns under different headings, and both names are the owner's. Do not "fix" one into the other.
+- **BOTH HERITAGE ROWS READ `Aluminium Heritage`, the window and the door.** Owner instruction, 2026-08-12, replacing the near-anagram pair `Aluminium Heritage` / `Heritage Aluminium` that the first pass produced. Identical is clearer than nearly-identical: the column heading is what separates them, and a reader scanning two columns is not made to spot a word order. **The page names are unaffected** and remain Aluminium Heritage Windows and Heritage Aluminium Doors.
+- **That is why every mega-menu column carries `aria-labelledby` pointing at its own heading.** Two links with identical text going to different routes are only unambiguous if something says which section you are in, and a bare `<section>` says nothing to a screen reader. Added in `fenster_render_nav_fallback()` at the same time and for this reason. **Do not remove it while duplicate labels exist**, and note that the shortened labels generally depend on the column heading for their meaning, so the naming has to be programmatic and not merely visual.
 - **This costs a little internal anchor text and it was a deliberate trade.** The sitewide menu is one of several internal link sources into these routes, and dropping the noun removes "Windows"/"Doors" from that anchor. The hub tiles, related links, footer and body copy all still carry the full names, so the anchor profile is not left bare.
 - **A PRODUCT NAME LIVES IN SEVEN REGISTRIES AND NONE OF THEM CHECKS ANOTHER.** This is the single most useful thing on this page. All seven had to be edited for one rename, and the last two were found by rendering pages rather than by grepping:
   1. `primary_nav_fallback` in `inc/site-data.php` — desktop dropdown and mobile drawer, short form.
