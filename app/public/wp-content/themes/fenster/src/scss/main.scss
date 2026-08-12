@@ -13658,6 +13658,24 @@ a.fg-cs-card__pill:focus-visible {
   line-height: 1.08;
 }
 
+/* A route with no intro photograph gets one column at a readable measure rather
+   than a half-width column with a hole beside it. Added 2026-08-12 with the
+   industrial and logistics route, which ships without photography.
+
+   THE MEASURE IS ON THE COPY, NOT ON THE GRID, and that is the fix rather than
+   the first attempt. `max-width` on the grid itself inherits `.container`'s auto
+   side margins, so the whole band centred and stopped lining up with every other
+   section on the page. Constraining the child keeps the grid full width and the
+   text on the left edge where the rest of the template puts it. Same family of
+   trap as the `.container` margin-shorthand note in the architecture rules. */
+.fg-commercial-product-intro__grid--solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.fg-commercial-product-intro__grid--solo .fg-commercial-product-intro__copy {
+  max-width: 72ch;
+}
+
 .fg-commercial-product-intro__media {
   margin: 0;
   overflow: hidden;
@@ -13943,6 +13961,62 @@ a.fg-cs-card__pill:focus-visible {
   --fg-lv-ratio: 3 / 2;
 
   min-height: 430px;
+}
+
+/* ---------------------------------------------------------------------------
+   Commercial credentials, 2026-08-12. Owner: visible on every commercial page.
+   Deliberately quiet — it sits between the proof and the enquiry, and its job is
+   to answer a PQQ question, not to compete with the work above it.
+   --------------------------------------------------------------------------- */
+.fg-cm-creds {
+  padding: clamp(2rem, 3.5vw, 3rem) 0;
+  border-top: 1px solid var(--color-line);
+  background: #ffffff;
+}
+
+.fg-cm-creds__title {
+  margin: 0 0 clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--color-steel);
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  line-height: 1.15;
+}
+
+.fg-cm-creds__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-cm-creds__list li {
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--color-accent);
+}
+
+.fg-cm-creds__list strong {
+  color: var(--color-steel);
+  font-size: 1rem;
+}
+
+.fg-cm-creds__list a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.fg-cm-creds__list a:hover strong,
+.fg-cm-creds__list a:focus-visible strong {
+  text-decoration: underline;
+}
+
+.fg-cm-creds__list span {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 /* Tags used to be fully round, weight 800 and flooded with accent colour, which
@@ -28748,8 +28822,15 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: 1fr;
   }
 
-  .fg-cm-proof__grid {
-    grid-template-columns: 1fr;
+  /* `minmax(0, 1fr)`, NOT a bare `1fr`. A bare `1fr` carries an implicit auto
+     minimum, so the column sizes to its content rather than to the viewport:
+     measured at 390px the proof card resolved to 532px inside a 366px container
+     and was clipped by `body { overflow-x: clip }`, which meant the page
+     reported no horizontal scroll while a third of every card was invisible.
+     The same trap is already recorded against the colour rail in `AI.md`. */
+  .fg-cm-proof__grid,
+  .fg-cm-creds__list {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .fg-cm-placeholder {

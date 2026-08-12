@@ -140,8 +140,15 @@ $is_louvre = $slug === 'louvre-vents';
         </div>
     </section>
 
+    <?php /* THE GRID COLLAPSES WHEN THERE IS NO INTRO IMAGE. Without this the
+             copy sits in a half-width column with the media column left empty
+             beside it — the "narrow leftover column" defect `STYLE.md` names, and
+             it appeared the moment the industrial route shipped with no
+             photography. Caught by looking at the rendered page, not by the
+             harness, which is the third time on this project that a fault passed
+             every check and was obvious in one screenshot. */ ?>
     <section class="fg-commercial-product-intro">
-        <div class="container fg-commercial-product-intro__grid">
+        <div class="container fg-commercial-product-intro__grid<?php echo $intro_image === '' ? ' fg-commercial-product-intro__grid--solo' : ''; ?>">
             <?php if ($intro_image !== '') : ?>
                 <figure class="fg-commercial-product-intro__media">
                     <img src="<?php echo esc_url(fenster_generated_url($intro_image)); ?>" alt="<?php echo esc_attr($intro_alt); ?>" loading="lazy">
@@ -358,6 +365,12 @@ $is_louvre = $slug === 'louvre-vents';
             </div>
         </section>
     <?php endif; ?>
+
+    <?php /* Credentials sit immediately above the enquiry, per `STYLE.md`:
+             reassurance next to the action should be compact and specific. Owner
+             instruction 2026-08-12 is that they are visible on every commercial
+             page, so this renders on all twelve. */ ?>
+    <?php get_template_part('template-parts/components/commercial-credentials'); ?>
 
     <section class="fg-commercial-enquiry" id="commercial-product-enquiry">
         <div class="container fg-commercial-enquiry__grid">

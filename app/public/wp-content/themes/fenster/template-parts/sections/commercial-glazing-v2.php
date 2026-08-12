@@ -70,7 +70,13 @@ $commercial_products = [
     ],
     [
         'title' => 'Curtain walling',
-        'copy' => 'Glazed facades and entrance screens, set out from the grid and detailed at the interfaces.',
+        /* Spandrel panels named here on the owner's instruction, 2026-08-12: they
+           may be mentioned on the commercial glazing page. They are the opaque
+           infill at slab level and are part of the curtain wall rather than a
+           separate product, so they belong in this card rather than in a row of
+           their own. Not to be confused with the louvre blanking panels, which
+           are excluded — see the Louvre Vents Rule. */
+        'copy' => 'Glazed facades and entrance screens, with spandrel and insulated panels set into the same grid.',
         'url' => home_url('/curtain-walling/'),
         'image' => $commercial_img . 'comm-curtain-walling-parade-1600w.jpg',
         'alt' => 'A glazed aluminium curtain walling elevation across a commercial parade',
@@ -153,6 +159,19 @@ $commercial_sectors = [
         'url' => home_url('/healthcare-construction/'),
         'image' => '/wp-content/themes/fenster/assets/images/imported/dental-practice-glazing.jpg',
         'alt' => 'A dental practice frontage after its glazing was replaced',
+    ],
+    [
+        /* Seventh sector, added 2026-08-12 on the owner's instruction. It has no
+           photograph of its own — see the note on the route in
+           `inc/commercial-product-data.php` — so the card carries the access shot
+           from our own commercial work, which is honest about what it shows:
+           reaching a large elevation with plant. Swap it for a distribution
+           centre frontage the moment one exists. */
+        'title' => 'Industrial and logistics',
+        'copy' => 'Office and welfare glazing on buildings that run shifts, sequenced around the yard.',
+        'url' => home_url('/industrial-and-logistics-glazing/'),
+        'image' => $commercial_img . 'comm-access-spider-crane-1200w.jpg',
+        'alt' => 'A tracked lifter set up outside a large glazed commercial elevation',
     ],
 ];
 
@@ -308,15 +327,6 @@ foreach ($commercial_studies as $short => $study) {
                 <p class="eyebrow"><?php esc_html_e('How an enquiry moves', 'fenster'); ?></p>
                 <h2><?php esc_html_e('From brief to installed, without the guesswork in the middle.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The aim is to read the scope properly at the start, while everything is still cheap to change. Most of what decides a glazing package is visible on day one.', 'fenster'); ?></p>
-                <?php /* Constructionline Gold and SSIP are existing site-wide claims
-                         with their own pages; this links them rather than making a
-                         new claim. Whether they may be stated as tendering
-                         credentials on the service pages themselves is still an
-                         open question for the owner. */ ?>
-                <div class="fg-contact-list">
-                    <a href="<?php echo esc_url(home_url('/constructionline-gold/')); ?>"><?php esc_html_e('Constructionline Gold', 'fenster'); ?></a>
-                    <a href="<?php echo esc_url(home_url('/ssip-health-and-safety/')); ?>"><?php esc_html_e('SSIP health and safety', 'fenster'); ?></a>
-                </div>
             </div>
             <div class="fg-commercial-flow__steps">
                 <?php foreach ($commercial_process as $step) : ?>
@@ -331,6 +341,8 @@ foreach ($commercial_studies as $short => $study) {
             </div>
         </div>
     </section>
+
+    <?php get_template_part('template-parts/components/commercial-credentials'); ?>
 
     <section id="commercial-enquiry" class="fg-commercial-enquiry">
         <div class="container fg-commercial-enquiry__grid">
