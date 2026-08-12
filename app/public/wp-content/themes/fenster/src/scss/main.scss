@@ -13458,12 +13458,28 @@ a.fg-cs-card__pill:focus-visible {
   font-weight: 700;
 }
 
+/* `.fg-commercial-sectors-row` is the second card row on the rebuilt hub, added
+   2026-08-12. It shares `.fg-commercial-products__grid` on purpose so the two
+   rows stay one component: restyle the product cards and the sector cards move
+   with them, which is what stops the hub drifting into two visual languages.
+
+   `.fg-commercial-sectors` above it is the OLD "Best-fit commercial enquiries"
+   band, which the rebuild dropped. Its rules are left in place deliberately —
+   pruning CSS on this project has form for taking media-query wrappers with it,
+   and an unused block costs a few bytes where a broken one costs a release. */
 .fg-commercial-products,
+.fg-commercial-sectors-row,
 .fg-commercial-flow,
 .fg-commercial-projects-preview,
 .fg-commercial-sectors,
 .fg-commercial-enquiry {
   padding: clamp(2.6rem, 5vw, 4.35rem) 0;
+}
+
+/* The two rows alternate ground so the hub reads as two questions rather than
+   twelve cards: what do you install, and what kind of building is it. */
+.fg-commercial-sectors-row {
+  background: var(--color-soft);
 }
 
 .fg-commercial-section-head {
@@ -13782,6 +13798,151 @@ a.fg-cs-card__pill:focus-visible {
   margin: 0;
   color: var(--color-muted);
   font-size: 1.05rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Commercial specification table, 2026-08-12.
+
+   The audit's first finding was that ten of eleven commercial pages carried no
+   specification figure at all. This is the band that fixes it, and it is
+   deliberately drawn as a schedule rather than as cards: an estimator reads it
+   the way they read a window schedule, label left, value right, one row per
+   line, and a card grid would break that scan.
+
+   A PENDING ROW IS VISIBLE, NOT HIDDEN. It is muted and italic so it cannot be
+   mistaken for a published figure, and it still occupies its row so the reader
+   sees the question exists. A missing row reads as "we do not do that".
+   --------------------------------------------------------------------------- */
+.fg-cm-spec {
+  padding: clamp(2.8rem, 5.5vw, 5rem) 0;
+  background: var(--color-soft);
+}
+
+.fg-cm-spec__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(1.5rem, 4vw, 3.5rem);
+  margin: 0;
+}
+
+.fg-cm-spec__row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-cm-spec__row dt {
+  color: var(--color-steel);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.fg-cm-spec__row dd {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+/* Muted and italic, with a leading marker in the line colour rather than the
+   accent: the accent is reserved for action and proof (STYLE.md), and an
+   unconfirmed figure is neither. */
+.fg-cm-spec__pending {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.fg-cm-spec__pending::before {
+  color: var(--color-line);
+  content: "\2014";
+  font-style: normal;
+}
+
+.fg-cm-spec__note {
+  max-width: 70ch;
+  margin: clamp(1.4rem, 3vw, 2rem) 0 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+/* ---------------------------------------------------------------------------
+   Commercial project proof, 2026-08-12.
+
+   Real jobs claiming the route, drawn from the same case-study library the
+   residential pages use. Renders nothing when nothing claims the route, which
+   is enforced in the template by the no-fallback helper rather than here.
+   --------------------------------------------------------------------------- */
+.fg-cm-proof {
+  padding: clamp(2.8rem, 5.5vw, 5rem) 0;
+  background: #ffffff;
+}
+
+.fg-cm-proof__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 1.6rem);
+}
+
+.fg-cm-proof__card {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  padding: 0 0 1.2rem;
+  border-bottom: 2px solid var(--color-line);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.fg-cm-proof__card:hover,
+.fg-cm-proof__card:focus-visible {
+  border-bottom-color: var(--color-accent);
+}
+
+.fg-cm-proof__card img {
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  margin-bottom: 0.35rem;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.fg-cm-proof__meta {
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fg-cm-proof__card strong {
+  color: var(--color-steel);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.fg-cm-proof__card small {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* The marked placeholder standing in a detail section's figure slot. It borrows
+   .fg-lv-placeholder wholesale and only sets the ratio, because the detail
+   figures on this template are taller than the louvre page's 4:3. */
+.fg-cm-placeholder {
+  --fg-lv-ratio: 3 / 2;
+
+  min-height: 430px;
 }
 
 /* Tags used to be fully round, weight 800 and flooded with accent colour, which
@@ -28578,9 +28739,33 @@ html.fg-blinds-reveal-locked {
   .fg-commercial-product-detail > div {
     min-height: 0;
   }
+
+  /* Spec table and proof band, added with the 2026-08-12 commercial rework.
+     The spec grid drops to one column of rows; the ROW itself keeps its two
+     columns down to 560px, because label-left / value-right is what makes it
+     scan like a schedule and stacking it doubles the height for nothing. */
+  .fg-cm-spec__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-cm-proof__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-cm-placeholder {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 560px) {
+  /* Below this the value column gets too narrow to read a sentence in, so the
+     row stacks. Checked at 390px: the longest value is the AOV scope line and
+     it wraps rather than overflowing. */
+  .fg-cm-spec__row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
   .fg-commercial-product-hero__actions,
   .fg-commercial-product-hero__actions .button,
   .fg-commercial-product-hero__phone {

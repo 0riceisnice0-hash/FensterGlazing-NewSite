@@ -1,6 +1,46 @@
 <?php
 /**
  * Commercial product route template.
+ * ---------------------------------------------------------------------------
+ * Reworked 2026-08-12 against `COMMERCIAL-AUDIT-2026-08-12.md`, which found four
+ * things wrong with the twelve routes that share this file. Each one is answered
+ * here rather than page by page, because the whole point of a shared template is
+ * that one fix lands twelve times.
+ *
+ * 1. TEN OF ELEVEN PAGES CARRIED NO SPECIFICATION FIGURE AT ALL, on pages
+ *    written for people who price work. There is a specification table now,
+ *    driven by `specification` in `inc/commercial-product-data.php`. Figures
+ *    nobody has confirmed render as a visible "confirming on request" row rather
+ *    than being silently omitted: a specifier reading a table with a row missing
+ *    concludes we do not do it, which loses the enquiry the row would have won.
+ *
+ * 2. THREE HEADINGS WERE IDENTICAL ACROSS ALL ELEVEN, and in the third person,
+ *    in H2s a visitor reads first. "What Fenster can check, supply and install",
+ *    "Buildings Fenster can look at for this type of work", "Send Fenster your X
+ *    brief". They now come from the route's own data with a we/our fallback.
+ *    `STYLE.md` and `TONEOFVOICE.md` both require the first person; the
+ *    commercial set was simply never swept when the residential one was.
+ *
+ * 3. THE PROOF BAND IS NEW AND IT USES THE NO-FALLBACK HELPER ON PURPOSE.
+ *    `fenster_case_studies_for_product()` returns EVERY study when nothing
+ *    matches — the documented fault that put Winslow secondary glazing under
+ *    "Real installs" on the tilt and turn page. On a commercial route that would
+ *    put a care home under a curtain walling heading. So this calls
+ *    `fenster_case_studies_for_product_group([$slug], 3, 'commercial')`, which
+ *    has no fallback, and a route nothing claims renders no strip at all.
+ *
+ * 4. THE REGISTER IS THE SPECIFIER'S, per `STYLE.md` Commercial Pages: "Write
+ *    for the person pricing it, not the person living in it." Lead with the
+ *    fact, let it carry the sentence, cut the softening. Still Fenster — plain
+ *    words, the awkward thing said out loud — just without the warm-up.
+ *
+ * MARKED PLACEHOLDERS. A detail section may carry `placeholder` and an empty
+ * `image`, which renders the dashed panel from the Marked Placeholders Rule in
+ * `AI.md` saying what photograph belongs there. Two routes use it today:
+ * automation has no photograph of an automatic entrance we have fitted, and
+ * healthcare has none of us working inside a live clinical setting. That is
+ * better than borrowing a neighbouring product's picture, which is how a
+ * residential composite-looking door ended up on the automation page.
  *
  * @package Fenster
  */
@@ -22,6 +62,7 @@ $subtitle = (string) ($product['subtitle'] ?? '');
 $intro_heading = (string) ($product['intro_heading'] ?? ($title . ' for commercial buildings.'));
 $summary = is_array($product['summary'] ?? null) ? array_values($product['summary']) : [];
 $stats = is_array($product['stats'] ?? null) ? array_values($product['stats']) : [];
+$specification = is_array($product['specification'] ?? null) ? array_values($product['specification']) : [];
 $capabilities = is_array($product['capabilities'] ?? null) ? array_values($product['capabilities']) : [];
 $detail_sections = is_array($product['detail_sections'] ?? null) ? array_values($product['detail_sections']) : [];
 $use_cases = is_array($product['use_cases'] ?? null) ? array_values($product['use_cases']) : [];
@@ -32,6 +73,36 @@ $hero_image = (string) ($product['hero_image'] ?? '');
 $hero_alt = (string) ($product['hero_alt'] ?? $title);
 $intro_image = (string) ($product['intro_image'] ?? $hero_image);
 $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
+
+/* Per-route headings. The fallbacks are first person so a route that never gets
+   its own heading still cannot reintroduce the third-person copy this rework
+   removed. */
+$capabilities_heading = (string) ($product['capabilities_heading'] ?? 'What we take on within this package.');
+$use_cases_heading = (string) ($product['use_cases_heading'] ?? 'Where this work usually happens.');
+$enquiry_heading = (string) ($product['enquiry_heading'] ?? ('Send us the ' . strtolower($title) . ' brief.'));
+
+/* THE BAND HEADINGS ARE DERIVED FROM THE ROUTE, NOT HARDCODED, and the render
+   harness fails the build if any two routes end up sharing an H2. The first
+   version of this rework fixed the three headings the audit named and then
+   introduced three more identical ones — spec, proof and related — across all
+   twelve pages, which is the same fault wearing a different label. Twelve pages
+   sharing an H2 is a weaker page for a reader and a weaker one in search.
+
+   `$title_lc` keeps "uPVC" and other internal capitals intact where a title has
+   them, because `strtolower()` on a product name is how "uPVC" becomes "upvc" in
+   customer-facing copy — a fault already recorded against the gallery copy on
+   the residential template. */
+$title_lc = preg_match('/[a-z][A-Z]/', $title) ? $title : strtolower($title);
+$spec_heading = (string) ($product['spec_heading'] ?? ($title . ', in figures.'));
+$proof_heading = (string) ($product['proof_heading'] ?? ('Recent ' . $title_lc . ' projects.'));
+$related_heading = (string) ($product['related_heading'] ?? ('Work that usually comes with ' . $title_lc . '.'));
+
+/* Real jobs claiming this route. No fallback: see the header note. */
+$proof = function_exists('fenster_case_studies_for_product_group')
+    ? fenster_case_studies_for_product_group([$slug], 3, 'commercial')
+    : [];
+
+$is_louvre = $slug === 'louvre-vents';
 ?>
 
 <article class="fg-commercial-product">
@@ -92,6 +163,51 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
         </div>
     </section>
 
+    <?php /* ---------- Specification -------------------------------------------
+             The audit's first finding, answered. `STYLE.md`: "Give them the
+             number they have to put in a schedule."
+
+             A pending row is RENDERED, not hidden. An estimator scanning for a
+             wind-load standard and finding no row concludes we do not design to
+             one; finding a row that says we are confirming it makes them ask.
+             The sentinel and the owner's checklist both live in
+             `fenster_commercial_spec_pending()`. */ ?>
+    <?php if (! empty($specification)) : ?>
+        <section class="fg-cm-spec" aria-labelledby="fg-cm-spec-title">
+            <div class="container">
+                <div class="fg-commercial-product-section-head">
+                    <p class="eyebrow"><?php esc_html_e('Specification', 'fenster'); ?></p>
+                    <h2 id="fg-cm-spec-title"><?php echo esc_html($spec_heading); ?></h2>
+                </div>
+                <dl class="fg-cm-spec__grid">
+                    <?php foreach ($specification as $row) :
+                        $label = (string) ($row['label'] ?? '');
+                        $value = $row['value'] ?? null;
+                        $pending = function_exists('fenster_spec_is_pending') && fenster_spec_is_pending($value);
+
+                        if ($label === '') {
+                            continue;
+                        }
+                        ?>
+                        <div class="fg-cm-spec__row<?php echo $pending ? ' is-pending' : ''; ?>">
+                            <dt><?php echo esc_html($label); ?></dt>
+                            <dd>
+                                <?php if ($pending) : ?>
+                                    <span class="fg-cm-spec__pending"><?php esc_html_e('Confirming — ask and we will send it', 'fenster'); ?></span>
+                                <?php else : ?>
+                                    <?php echo esc_html((string) $value); ?>
+                                <?php endif; ?>
+                            </dd>
+                        </div>
+                    <?php endforeach; ?>
+                </dl>
+                <p class="fg-cm-spec__note">
+                    <?php esc_html_e('Where a figure is not published here it is because it has not been confirmed for this system, not because the answer is no. Ask and we will send it in writing.', 'fenster'); ?>
+                </p>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <?php /* Louvre vents replaces the two generic middle bands with a bespoke
              section, 2026-08-11, the same shape the residential routes use: the
              hero, the intro, the settings strip, the related band and the
@@ -100,18 +216,22 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
              this route they described a service in the abstract while the page
              was about a product with published numbers.
 
+             It renders no specification table either: its bespoke middle already
+             carries the full range as a table, and a second one above it would
+             state the same figures twice.
+
              Gated on the slug rather than on the presence of data, so the data
-             the other four commercial routes rely on is untouched. */ ?>
-    <?php if ($slug === 'louvre-vents') : ?>
+             the other routes rely on is untouched. */ ?>
+    <?php if ($is_louvre) : ?>
         <?php get_template_part('template-parts/sections/louvre-vents-v2'); ?>
     <?php endif; ?>
 
-    <?php if ($slug !== 'louvre-vents' && ! empty($capabilities)) : ?>
+    <?php if (! $is_louvre && ! empty($capabilities)) : ?>
         <section class="fg-commercial-product-checks">
             <div class="container">
                 <div class="fg-commercial-product-section-head">
-                    <p class="eyebrow"><?php esc_html_e('Commercial capability', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('What Fenster can check, supply and install.', 'fenster'); ?></h2>
+                    <p class="eyebrow"><?php esc_html_e('Scope', 'fenster'); ?></p>
+                    <h2><?php echo esc_html($capabilities_heading); ?></h2>
                 </div>
                 <div class="fg-commercial-product-checks__grid">
                     <?php foreach ($capabilities as $index => $capability) : ?>
@@ -126,14 +246,28 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
         </section>
     <?php endif; ?>
 
-    <?php if ($slug !== 'louvre-vents' && ! empty($detail_sections)) : ?>
+    <?php if (! $is_louvre && ! empty($detail_sections)) : ?>
         <section class="fg-commercial-product-details">
             <div class="container">
-                <?php foreach ($detail_sections as $index => $detail) : ?>
+                <?php foreach ($detail_sections as $index => $detail) :
+                    $detail_image = (string) ($detail['image'] ?? '');
+                    $detail_placeholder = (string) ($detail['placeholder'] ?? '');
+                    ?>
                     <article class="fg-commercial-product-detail <?php echo $index % 2 === 1 ? 'fg-commercial-product-detail--flip' : ''; ?>">
-                        <figure>
-                            <img src="<?php echo esc_url(fenster_generated_url((string) ($detail['image'] ?? ''))); ?>" alt="<?php echo esc_attr((string) ($detail['alt'] ?? $title)); ?>" loading="lazy">
-                        </figure>
+                        <?php if ($detail_image !== '') : ?>
+                            <figure>
+                                <img src="<?php echo esc_url(fenster_generated_url($detail_image)); ?>" alt="<?php echo esc_attr((string) ($detail['alt'] ?? $title)); ?>" loading="lazy">
+                            </figure>
+                        <?php elseif ($detail_placeholder !== '') : ?>
+                            <?php /* Marked placeholder. To a visitor a missing image and
+                                     an image that failed to load are the same thing, and
+                                     only one of them is honest. It also tells the next
+                                     person what to shoot. See AI.md. */ ?>
+                            <figure class="fg-lv-placeholder fg-cm-placeholder" aria-hidden="true">
+                                <span><?php esc_html_e('Photograph to follow', 'fenster'); ?></span>
+                                <small><?php echo esc_html($detail_placeholder); ?></small>
+                            </figure>
+                        <?php endif; ?>
                         <div>
                             <p class="eyebrow"><?php echo esc_html((string) ($detail['eyebrow'] ?? 'Commercial glazing')); ?></p>
                             <h2><?php echo esc_html((string) ($detail['title'] ?? '')); ?></h2>
@@ -152,12 +286,48 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
         </section>
     <?php endif; ?>
 
+    <?php /* ---------- Proof ------------------------------------------------------
+             Real jobs that claim this route, and nothing where none do. The
+             no-fallback helper is the whole safety mechanism here; see the
+             header note before changing it to the single-product one. */ ?>
+    <?php if (! empty($proof)) : ?>
+        <section class="fg-cm-proof" aria-labelledby="fg-cm-proof-title">
+            <div class="container">
+                <div class="fg-commercial-product-section-head">
+                    <p class="eyebrow"><?php esc_html_e('Project proof', 'fenster'); ?></p>
+                    <h2 id="fg-cm-proof-title"><?php echo esc_html($proof_heading); ?></h2>
+                </div>
+                <div class="fg-cm-proof__grid">
+                    <?php foreach ($proof as $card) :
+                        /* `image` is the study's card_image or its first image, and
+                           it is an ARRAY of src/caption, not a string. Casting it
+                           straight to string emitted an empty src and a PHP notice
+                           on ten of the twelve routes; the harness caught it. */
+                        $card_image = is_array($card['image'] ?? null) ? (string) ($card['image']['src'] ?? '') : '';
+                        $card_alt = is_array($card['image'] ?? null) ? (string) ($card['image']['caption'] ?? '') : '';
+                        ?>
+                        <a class="fg-cm-proof__card" href="<?php echo esc_url((string) ($card['url'] ?? '#')); ?>">
+                            <?php if ($card_image !== '') : ?>
+                                <img src="<?php echo esc_url(fenster_generated_url($card_image)); ?>" alt="<?php echo esc_attr($card_alt !== '' ? $card_alt : (string) ($card['title'] ?? '')); ?>" loading="lazy">
+                            <?php endif; ?>
+                            <span class="fg-cm-proof__meta"><?php echo esc_html((string) ($card['location'] ?? 'Commercial project')); ?></span>
+                            <strong><?php echo esc_html((string) ($card['title'] ?? '')); ?></strong>
+                            <?php if (! empty($card['summary'])) : ?>
+                                <small><?php echo esc_html((string) $card['summary']); ?></small>
+                            <?php endif; ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+
     <section class="fg-commercial-product-fit">
         <div class="container fg-commercial-product-fit__grid">
             <div>
                 <p class="eyebrow"><?php esc_html_e('Common settings', 'fenster'); ?></p>
-                <h2><?php esc_html_e('Buildings Fenster can look at for this type of work.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The final route depends on survey, access and the existing building, but these are typical places where this service applies.', 'fenster'); ?></p>
+                <h2><?php echo esc_html($use_cases_heading); ?></h2>
+                <p><?php esc_html_e('Survey, access and the existing building decide the final route. These are the settings this work usually goes into.', 'fenster'); ?></p>
             </div>
             <?php if (! empty($use_cases)) : ?>
                 <div class="fg-commercial-product-fit__tags">
@@ -174,7 +344,7 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
             <div class="container">
                 <div class="fg-commercial-product-section-head">
                     <p class="eyebrow"><?php esc_html_e('Related commercial services', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Other commercial glazing work Fenster can look at.', 'fenster'); ?></h2>
+                    <h2><?php echo esc_html($related_heading); ?></h2>
                 </div>
                 <div class="fg-commercial-product-related__grid">
                     <?php foreach ($related_products as $related_slug => $related) : ?>
@@ -193,11 +363,11 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
         <div class="container fg-commercial-enquiry__grid">
             <div class="fg-commercial-enquiry__copy">
                 <p class="eyebrow"><?php esc_html_e('Commercial enquiry', 'fenster'); ?></p>
-                <h2><?php echo esc_html('Send Fenster your ' . strtolower($title) . ' brief.'); ?></h2>
-                <p><?php esc_html_e('Attach drawings, schedules, site photographs or performance notes if you have them. A postcode and a short description is enough to start the conversation.', 'fenster'); ?></p>
+                <h2><?php echo esc_html($enquiry_heading); ?></h2>
+                <p><?php esc_html_e('Drawings, a window schedule, elevations or site photographs are all useful, and none of them is required. A postcode and a description of the building is enough to get a sensible answer back.', 'fenster'); ?></p>
                 <ul class="fg-commercial-enquiry__notes">
                     <li><?php esc_html_e('Phone lines are open 24/7.', 'fenster'); ?></li>
-                    <li><?php esc_html_e('The showroom and office team handle follow-up during working hours.', 'fenster'); ?></li>
+                    <li><?php esc_html_e('The office team picks up drawings and schedules during working hours.', 'fenster'); ?></li>
                     <li><a href="mailto:<?php echo esc_attr($brand_email); ?>"><?php echo esc_html($brand_email); ?></a></li>
                 </ul>
             </div>
@@ -212,8 +382,9 @@ $intro_alt = (string) ($product['intro_alt'] ?? $hero_alt);
                     'Commercial windows and doors',
                     'Curtain walling',
                     'Louvres or ventilation',
-                    'Commercial automation',
-                    'Replacement glazing',
+                    'Automatic doors and entrances',
+                    'AOV smoke ventilation',
+                    'Commercial replacement glazing',
                 ],
                 'show_company' => true,
                 'lock_project_type' => true,
