@@ -432,8 +432,22 @@ if (! function_exists('fenster_commercial_case_image')) {
                 $imported . 'fe2513f8-d557-4972-bb3f-bc0cc6a9d5f3.jpg',
                 'Herts and Essex Community Hospital after its aluminium window replacement',
             ],
+            /* THE BROKEN HALF OF THIS WAS THE FILENAME, NOT THE NAME. It
+               pointed at `ROKA-Dental-Post-Fitting-2-scaled.jpg`, which 404s
+               because only the `-1` variant was ever deployed, so the entry
+               rendered nothing. Repointed at the file we actually have.
+
+               **Roka Dental stays named**, and that is deliberate rather than an
+               oversight. They are a published case study on this site — titled
+               "Entrance doors, Roka Dental, Woburn Sands" — and they are the
+               carve-out the Commercial Client Anonymity Rule spells out: a
+               practice commissioning work on its own premises is the client and
+               the building at once, which is the council-on-its-own-estate case
+               and not the repeat-buying contractor the rule protects against.
+               Anonymising here would have left the alt text disagreeing with the
+               case study it illustrates. */
             'case-studies/dental-practice-door-replacement' => [
-                $imported . 'ROKA-Dental-Post-Fitting-2-scaled.jpg',
+                $imported . 'dental-practice-glazing.jpg',
                 'Roka Dental Clinic, Woburn Sands, after fitting',
             ],
         ];
@@ -688,7 +702,7 @@ $back_url = strtolower($tone) === 'residential' ? home_url('/case-studies/') : h
 $back_label = strtolower($tone) === 'residential' ? 'Residential case studies' : 'Commercial projects';
 $commercial_step_images = [
     (string) ($case_image['src'] ?? $fallback_image),
-    $asset_base . 'Airbus-Commercial.jpg',
+    $asset_base . 'commercial-glazed-elevation.jpg',
     $asset_base . 'commercial-1.jpg',
     $asset_base . 'aluminium-windows.jpg',
 ];

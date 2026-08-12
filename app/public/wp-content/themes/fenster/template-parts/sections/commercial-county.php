@@ -29,9 +29,9 @@ $town_summary = implode(', ', array_slice($towns, 0, 4));
 
 $service_images = [
     $asset_base . 'c02c21c7-23d6-4a83-a739-3932c9eeaffd.png',
-    $asset_base . 'BFI.jpg',
+    $asset_base . 'curtain-walling.jpg',
     $asset_base . 'replacement-glazing-milton-keynes-scaled.jpg',
-    $asset_base . 'Greensand-Country.jpg',
+    '/wp-content/themes/fenster/assets/images/products/louvre/louvre-plant-doorset-1300w.jpg',
 ];
 $services = [
     [
@@ -111,7 +111,7 @@ $faqs = [
 
 <article class="fg-commercial-hub fg-commercial-county">
     <section class="fg-county-hero">
-        <img class="fg-county-hero__image" src="<?php echo esc_url(fenster_generated_url($asset_base . 'Airbus-Commercial.jpg')); ?>" alt="<?php echo esc_attr('Commercial glazing in ' . $county_name); ?>" loading="eager">
+        <img class="fg-county-hero__image" src="<?php echo esc_url(fenster_generated_url($asset_base . 'commercial-glazed-elevation.jpg')); ?>" alt="<?php echo esc_attr('Commercial glazing in ' . $county_name); ?>" loading="eager">
         <div class="fg-county-hero__shade"></div>
         <div class="container fg-county-hero__inner">
             <div class="fg-county-hero__copy">

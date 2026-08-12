@@ -944,8 +944,8 @@ $hero_overrides = [
     'aluminium-sliding-doors' => $asset_base . 'steel-look-patio-hero.webp',
     'windows-milton-keynes' => $asset_base . 'Aluminium-windows.jpg',
     'doors-milton-keynes' => $asset_base . 'new-front-door-in-Milton-Keynes.jpeg',
-    'commercial-glazing' => $asset_base . 'Airbus-Commercial.jpg',
-    'commercial-glazing-buckinghamshire' => $asset_base . 'Airbus-Commercial.jpg',
+    'commercial-glazing' => $asset_base . 'commercial-glazed-elevation.jpg',
+    'commercial-glazing-buckinghamshire' => $asset_base . 'commercial-glazed-elevation.jpg',
     'roof-lanterns' => $asset_base . 'S1-Lantern-Kitchen-A-min-scaled.jpg',
     'integral-blinds' => $asset_base . 'HiTech-Blinds-Integral-Blinds-Black-Doors.jpg',
     'cat-and-dog-flaps' => $asset_base . 'SureFlap_Microchip_Cat_Flap_Glass.webp',
@@ -1030,7 +1030,7 @@ $home_categories = [
     ['label' => 'Windows', 'url' => home_url('/windows-milton-keynes/'), 'image' => $asset_base . 'Aluminium-windows.jpg', 'copy' => 'uPVC, aluminium, flush, sash and heritage-style windows for warmer, quieter homes.'],
     ['label' => 'Doors', 'url' => home_url('/doors-milton-keynes/'), 'image' => $asset_base . 'new-front-door-in-Milton-Keynes.jpeg', 'copy' => 'Composite, aluminium, French, patio and uPVC doors built around security and style.'],
     ['label' => 'Bifold Doors', 'url' => home_url('/aluminium-bifold-doors/'), 'image' => $asset_base . 'Bifold-550-GardenView-v1.webp', 'copy' => 'Slim aluminium bifolds that open up kitchens, extensions and garden rooms.'],
-    ['label' => 'Commercial Glazing', 'url' => home_url('/commercial-glazing/'), 'image' => $asset_base . 'Airbus-Commercial.jpg', 'copy' => 'Specification-led glazing, doors and facade support for commercial projects.'],
+    ['label' => 'Commercial Glazing', 'url' => home_url('/commercial-glazing/'), 'image' => $asset_base . 'commercial-glazed-elevation.jpg', 'copy' => 'Specification-led glazing, doors and facade support for commercial projects.'],
     ['label' => 'Roof Lanterns', 'url' => home_url('/roof-lanterns/'), 'image' => $asset_base . 'S1-Lantern-Kitchen-A-min-scaled.jpg', 'copy' => 'Aluminium roof lanterns that bring clean daylight into living spaces.'],
     ['label' => 'Integral Blinds', 'url' => home_url('/integral-blinds/'), 'image' => $asset_base . 'HiTech-Blinds-Integral-Blinds-Black-Doors.jpg', 'copy' => 'Sealed blinds between glass panes for neat privacy and low-maintenance control.'],
     ['label' => 'Replacement Glazing', 'url' => home_url('/double-glazing-replacement/'), 'image' => $asset_base . 'replacement-glazing-milton-keynes-scaled.jpg', 'copy' => 'Replace failed, misted or damaged glass without replacing the whole frame.'],
@@ -1038,7 +1038,7 @@ $home_categories = [
 ];
 $home_showcase = [
     ['label' => 'Residential aluminium', 'image' => $asset_base . 'Aluminium-Windows-16.jpg', 'copy' => 'Slim frames, clean glass lines and practical performance for modern extensions and whole-home upgrades.'],
-    ['label' => 'Commercial delivery', 'image' => $asset_base . 'Airbus-Commercial.jpg', 'copy' => 'Specification-led glazing packages for offices, education, healthcare and large commercial sites.'],
+    ['label' => 'Commercial delivery', 'image' => $asset_base . 'commercial-glazed-elevation.jpg', 'copy' => 'Specification-led glazing packages for offices, education, healthcare and large commercial sites.'],
     ['label' => 'Bifold living spaces', 'image' => $asset_base . 'Bifold-OpenSplit-v1.webp', 'copy' => 'Open-plan spaces with controlled thresholds, hardware and colour options.'],
 ];
 $home_process = [
@@ -3125,7 +3125,7 @@ if ($is_commercial_hub) {
             'title' => 'Commercial windows and doors',
             'copy' => 'Aluminium and uPVC window and door packages for offices, schools, care settings and managed buildings.',
             'url' => home_url('/commercial-windows-and-doors/'),
-            'image' => $asset_base . 'Airbus-Commercial.jpg',
+            'image' => $asset_base . 'commercial-glazed-elevation.jpg',
         ],
         [
             'title' => 'Curtain walling',

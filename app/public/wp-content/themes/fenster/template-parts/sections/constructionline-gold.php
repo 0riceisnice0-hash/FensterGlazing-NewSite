@@ -46,7 +46,7 @@ $asset = static function (string $path): string {
             <div class="container">
                 <div class="fg-fensa-story">
                     <figure>
-                        <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/Airbus-Commercial.jpg', ['alt' => 'Commercial glazing installation by Fenster Glazing', 'loading' => 'lazy']); ?>>
+                        <img <?php echo fenster_image_attr_string('/wp-content/themes/fenster/assets/images/imported/commercial-glazed-elevation.jpg', ['alt' => 'Commercial glazing installation by Fenster Glazing', 'loading' => 'lazy']); ?>>
                     </figure>
                     <div class="fg-fensa-story__copy">
                         <p class="eyebrow"><?php esc_html_e('How it works with Fenster', 'fenster'); ?></p>

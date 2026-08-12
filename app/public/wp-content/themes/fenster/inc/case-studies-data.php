@@ -632,7 +632,7 @@ function fenster_case_studies(): array
                 'Completed to the practice opening date',
             ],
             'images' => [
-                ['src' => $team_img . 'ROKA-Dental-Post-Fitting-2-1-scaled.jpg', 'caption' => 'Roka Dental, Woburn Sands, after the doors were fitted.'],
+                ['src' => $team_img . 'dental-practice-glazing.jpg', 'caption' => 'Roka Dental, Woburn Sands, after the doors were fitted.'],
             ],
             'seo' => [
                 'title_tag' => 'Roka Dental, Woburn Sands: Commercial Door Replacement',
