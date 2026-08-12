@@ -111,7 +111,7 @@ function fenster_commercial_product_pages(): array
             'eyebrow' => 'Commercial windows and doors',
             'title' => 'Commercial windows and doors',
             'subtitle' => 'Aluminium and uPVC windows, doorsets and entrance screens for commercial buildings, supplied and installed as one package.',
-            'intro_heading' => 'One package, one contractor, one set of interfaces to argue about.',
+            'intro_heading' => 'One package, one contractor, one set of interfaces.',
             /* Was `commercial-1.jpg` and `commercial-4.jpg`, both scrape. This is
                the Bletchley rail depot: curtain walling, windows and doors on one
                building, all ours, and the single best photograph on the site of
@@ -121,7 +121,7 @@ function fenster_commercial_product_pages(): array
             'intro_image' => $cs_base . 'cs-all-hallows-bedford-terrace-run.webp',
             'intro_alt' => 'A run of new aluminium windows and screens across a terrace elevation at All Hallows, Bedford',
             'summary' => [
-                'We survey, supply and install the whole opening: aluminium and uPVC windows, glazed doorsets, entrance screens, the glass in them and the ironmongery on them. Taking it as one package is the point, because most of what goes wrong on a glazing package goes wrong at the joints between two suppliers.',
+                'We survey, supply and install the whole opening: aluminium and uPVC windows, glazed doorsets, entrance screens, the glass in them and the ironmongery on them. Taking it as one package is the point, because one contractor then owns the joints between the frame, the glass and the hardware, and they get settled once.',
                 'We work from your drawings and schedules where you have them, and from a site survey where you do not. On occupied buildings the sequence is agreed before we start: which elevations, in what order, during which hours, and what is handed back at the end of each day.',
             ],
             'stats' => [
@@ -155,7 +155,7 @@ function fenster_commercial_product_pages(): array
                 [
                     'eyebrow' => 'One package',
                     'title' => 'Frames, glass and ironmongery specified together.',
-                    'copy' => 'Split a glazing package across suppliers and the gaps appear at the interfaces: a restrictor that fouls the opening, a closer that will not hold a door in wind, a threshold that fails Part M by four millimetres. We check opening sizes, glass type, restrictors, ventilation, finish, locks, closers, handles and thresholds as one specification before anything is ordered.',
+                    'copy' => 'Taking the whole opening as one specification is what keeps the interfaces right: a restrictor sized to the opening, a closer sized to the door and its exposure, a threshold that meets Part M. We set opening sizes, glass type, restrictors, ventilation, finish, locks, closers, handles and thresholds together before anything is ordered.',
                     'image' => $cs_base . 'cs-all-hallows-bedford-screen.webp',
                     'alt' => 'A new aluminium glazed screen and doorset in a brick elevation at All Hallows, Bedford',
                     'points' => ['Opening sizes surveyed, not assumed', 'Glass specified per opening', 'Ironmongery scheduled with the frames'],
@@ -188,7 +188,7 @@ function fenster_commercial_product_pages(): array
             'intro_image' => $cs_base . 'cs-bletchley-rail-depot-elevation.webp',
             'intro_alt' => 'Curtain walling, windows and entrance doors on a refurbished rail depot elevation',
             'summary' => [
-                'Curtain walling is a non-structural envelope hung off the building frame. It carries its own dead load, the wind load on the elevation and whatever the structure does underneath it, and it drains itself. That last part is what separates a curtain wall from a big window, and it is where a badly detailed one fails.',
+                'Curtain walling is a non-structural envelope hung off the building frame. It carries its own dead load, the wind load on the elevation and whatever the structure does underneath it, and it drains itself. That last part is what separates a curtain wall from a big window, and it is what the interface detailing exists to get right.',
                 'We survey, supply and install it on replacement facades, refurbishments and new openings, with doors, opening vents, insulated panels and louvres worked into the grid rather than added to it. Our most recent scheme of this type was the <a href="' . esc_url(home_url('/commercial-projects/bletchley-rail-depot-refurbishment/')) . '">Bletchley rail depot refurbishment</a>.',
             ],
             'stats' => [
@@ -224,8 +224,8 @@ function fenster_commercial_product_pages(): array
                 ],
                 [
                     'eyebrow' => 'Interfaces',
-                    'title' => 'Head, cill, jamb and drainage decide whether it leaks.',
-                    'copy' => 'A curtain wall drains internally and discharges at the cill, so the details where it meets the structure matter more than the ones you can see. We check fixing points, movement allowance, cill and jamb interfaces, drainage paths and the condition of the existing structure before anything is fixed to it.',
+                    'title' => 'Head, cill, jamb and drainage are where a facade is made watertight.',
+                    'copy' => 'A curtain wall drains internally and discharges at the cill, so the details where it meets the structure do more work than the ones you can see. We set out fixing points, movement allowance, cill and jamb interfaces and drainage paths against the existing structure before anything is fixed to it.',
                     'image' => $cs_base . 'cs-bletchley-rail-depot-head-detail.webp',
                     'alt' => 'Head detail where new curtain walling meets the existing structure above it',
                     'points' => ['Fixing points and movement', 'Drainage and weathering', 'Existing structure surveyed first'],
@@ -339,7 +339,7 @@ function fenster_commercial_product_pages(): array
             'intro_image' => $cs_base . 'cs-all-hallows-bedford-steel-doorset.webp',
             'intro_alt' => 'A steel entrance doorset with a glazed screen above and beside it',
             'summary' => [
-                'An automated entrance is where four trades meet: the glazed screen, the doorset, the operator and the access control. Each is straightforward on its own, and the failures are almost always at the joins — an operator with nothing solid to fix to, a threshold that fails Part M, a sensor zone that overlaps a swing path, a maglock nobody left a cable route for.',
+                'An automated entrance is where four trades meet: the glazed screen, the doorset, the operator and the access control. Each is straightforward on its own, and the work is in the joins between them — structure for the operator to fix to, a threshold that meets Part M, a sensor zone that suits the swing path, and a cable route left ready for the maglock.',
                 'We supply and install the glazed entrance package and coordinate the automation and access-control specialists into it, so the screen, the door, the operator and the reader are set out together before anything is made.',
             ],
             'stats' => [
@@ -366,7 +366,7 @@ function fenster_commercial_product_pages(): array
                 [
                     'eyebrow' => 'Set-out',
                     'title' => 'Footfall and the escape route decide the door before the finish does.',
-                    'copy' => 'Clear opening width, traffic direction, the escape route through the entrance and the space the operator needs above the head are the four things that fix the design. Get them right and the rest is finish. Get them wrong and the entrance is rebuilt.',
+                    'copy' => 'Clear opening width, traffic direction, the escape route through the entrance and the space the operator needs above the head are the four things that fix the design. Settle those four and everything after them is finish.',
                     'image' => $cs_base . 'cs-bletchley-rail-depot-entrance.webp',
                     'alt' => 'A commercial glazed entrance with double doors, viewed square on',
                     'points' => ['Clear opening width and traffic flow', 'Escape route and emergency release', 'Head space for the operator'],

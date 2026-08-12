@@ -202,7 +202,7 @@ $is_louvre = $slug === 'louvre-vents';
                     <?php endforeach; ?>
                 </dl>
                 <p class="fg-cm-spec__note">
-                    <?php esc_html_e('Where a figure is not published here it is because it has not been confirmed for this system, not because the answer is no. Ask and we will send it in writing.', 'fenster'); ?>
+                    <?php esc_html_e('Every figure published here is one we can stand behind. Where a row is still being confirmed for this system, ask and we will send it to you in writing.', 'fenster'); ?>
                 </p>
             </div>
         </section>

@@ -307,7 +307,7 @@ foreach ($commercial_studies as $short => $study) {
             <div class="fg-commercial-flow__copy">
                 <p class="eyebrow"><?php esc_html_e('How an enquiry moves', 'fenster'); ?></p>
                 <h2><?php esc_html_e('From brief to installed, without the guesswork in the middle.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The aim is to find the gaps in a scope early, while they are still cheap. Most of what goes wrong on a glazing package was visible on day one and nobody looked.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The aim is to read the scope properly at the start, while everything is still cheap to change. Most of what decides a glazing package is visible on day one.', 'fenster'); ?></p>
                 <?php /* Constructionline Gold and SSIP are existing site-wide claims
                          with their own pages; this links them rather than making a
                          new claim. Whether they may be stated as tendering
@@ -337,7 +337,7 @@ foreach ($commercial_studies as $short => $study) {
             <div class="fg-commercial-enquiry__copy">
                 <p class="eyebrow"><?php esc_html_e('Commercial enquiry', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Send the drawings and we will come back with questions, not a brochure.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Attach elevations, a window schedule, site photographs or performance notes. If the scope has gaps in it we would rather find them now than price around them.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Attach elevations, a window schedule, site photographs or performance notes. Anything still open in the scope, we would rather settle now than price around.', 'fenster'); ?></p>
                 <ul class="fg-commercial-enquiry__notes">
                     <li><?php esc_html_e('Drawings, schedules or elevations', 'fenster'); ?></li>
                     <li><?php esc_html_e('Access, programme and occupied hours', 'fenster'); ?></li>

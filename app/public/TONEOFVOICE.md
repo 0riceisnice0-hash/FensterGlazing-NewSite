@@ -42,6 +42,10 @@ The pattern is: state the suspicion a sensible customer already has, then answer
 
 **Still live and unchanged: the `/about/` page states the guarantee exclusions at length**, and the product hub FAQs carry a guarantee-limits answer. Both predate this instruction and are owner-approved copy on the page the owner rates most. They have deliberately not been rewritten off the back of a note about one FAQ; raise it with the owner before touching them.
 
+**And a second boundary, owner correction 2026-08-12, given for at least the third time: DO NOT SELL BY DESCRIBING WHAT GOES WRONG.** This is a different failure from the exclusions rule above and it is the one that keeps coming back. Writing about leaks, failures, things being rebuilt, callbacks or units coming back is fear-framing, not candour, and on a commercial page it is also faintly insulting to a reader who prices this work for a living. Caught and removed on the commercial rebuild: *"Head, cill, jamb and drainage decide whether it leaks"*, *"where a badly detailed one fails"*, *"a closer that will not hold a door in wind"*, *"get them wrong and the entrance is rebuilt"*, *"most of what goes wrong was visible on day one and nobody looked"*.
+
+**The test that separates the two.** Principle 2 is about a caveat *the customer will meet in dealing with us* — a lead time, a limit, something awkward about our own service. It is not licence to describe the ways a building can fail. **State what the detail achieves, not what its absence causes.** "Head, cill, jamb and drainage are where a facade is made watertight" carries exactly the same specification and sells the care instead of the catastrophe.
+
 ### 3. Respect the reader's way of doing things
 
 Routes and choices are presented as genuine equals, framed around how the customer prefers to operate, never mocking the alternative.
