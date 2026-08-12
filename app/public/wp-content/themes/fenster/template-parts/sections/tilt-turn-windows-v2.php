@@ -209,6 +209,12 @@ $suits = [
                 <?php endforeach; ?>
             </div>
 
+            <?php /* The mosaic becomes a scroll-snap rail at 860px and the
+                     second plate is clipped at 82%, which is the affordance
+                     `STYLE.md` asks for. The hint is belt and braces on top of
+                     it, the same one the heritage door configurations carry. */ ?>
+            <p class="fg-cw-gallery__hint" aria-hidden="true"><?php esc_html_e('Swipe to see the keep', 'fenster'); ?> <span>&rarr;</span></p>
+
             <p class="fg-tt-secure__note">
                 <?php esc_html_e('Liniar test the 70mm system to PAS 24 and to Part Q, and it is a Secured by Design product to BS EN 12608-1. Those are their figures for the profile rather than a certificate for one particular window, so ask us what a specific opening is being built to and we will tell you.', 'fenster'); ?>
             </p>
