@@ -2,7 +2,7 @@
 
 ## Handover state, 2026-08-12
 
-**Live is `831bfa44` and level with `main`. Test is level with live.** No
+**Live is `e3ea19e9` and level with `main`. Test is level with live.** No
 release branch outstanding from this session, working tree clean.
 `LIVECHANGES.md` is the authority on what is live; `PROGRESS.md` is a log and
 some of its older entries are still titled "(test)" long after shipping.
@@ -69,7 +69,7 @@ that way is what gated the strip off `/aluminium-windows/` and
 secondary glazing and uPVC casements, which is worse than showing nothing.
 
 **PRODUCT NAMES WERE ALIGNED WITH THE SHOWROOM AND WINDOWCAD ON 2026-08-12 AND
-ARE ON TEST, NOT LIVE.** Seven renamed, no URL moved. Read the Product Naming
+ARE LIVE (`e3ea19e9`).** Seven renamed, no URL moved. Read the Product Naming
 Rule in `AI.md` before touching any product label, because the one thing worth
 knowing is that **a product name lives in seven registries and none of them
 checks another** — the last two were found by rendering pages, not by grepping,

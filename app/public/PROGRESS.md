@@ -11,9 +11,9 @@ what is live; when the two disagree, `LIVECHANGES.md` is right.
 
 ## START HERE, 2026-08-12 (product naming session)
 
-**Live is `831bfa44`. `main` is ahead by the product-name alignment, which is ON
-TEST AND NOT APPROVED FOR LIVE.** Test is deliberately ahead. Working tree
-clean, no release branch outstanding.
+**Live is `e3ea19e9` and level with `main`. TEST IS LEVEL WITH LIVE.** Owner
+approved and shipped the same day. Working tree clean, no release branch
+outstanding.
 
 ### What this session did
 
@@ -71,14 +71,14 @@ session running.
 
 ### What needs the owner
 
-- **Approval to ship.** It is on test and verified there; live is untouched.
 - A photograph of a tilt and turn tilting or turning, whenever a job comes up.
+  Nothing else is outstanding on either of today's strands.
 
 ## START HERE, 2026-08-12 (tilt and turn session)
 
-> **Superseded by the block above.** Live is still `831bfa44`, but test is no
-> longer level with it: the product-name alignment sits on test awaiting
-> approval. Everything else in this block still stands.
+> **Superseded by the block above**, which carries the current live SHA. The
+> naming work shipped, so test and live are level again and everything in this
+> block still stands.
 
 **Live is `831bfa44` and level with `main`. TEST IS LEVEL WITH LIVE.** Owner
 approved and shipped the same day, plus one caption correction after he spotted
