@@ -247,6 +247,7 @@ function fenster_site_data(): array
                             ['label' => 'Hospitality', 'url' => home_url('/hotel-and-hospitality-glazing/')],
                             ['label' => 'Care Homes', 'url' => home_url('/care-home-glazing/')],
                             ['label' => 'Offices and Retail', 'url' => home_url('/office-and-retail-glazing/')],
+                            ['label' => 'Industrial and Logistics', 'url' => home_url('/industrial-and-logistics-glazing/')],
                         ],
                     ],
                 ],

@@ -1010,6 +1010,10 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'title_tag' => 'AOV Smoke Ventilation | Automatic Opening Vents',
             'meta_description' => 'Automatic opening vents supplied and installed with your commercial glazing, for stairwells, corridors and lobbies that need smoke cleared from an escape route.',
         ],
+        'industrial-and-logistics-glazing' => [
+            'title_tag' => 'Industrial & Logistics Glazing | Warehouse Offices',
+            'meta_description' => 'Office and welfare glazing, personnel doorsets and SR3 rated openings on distribution, warehousing and manufacturing buildings, sequenced around the shift pattern.',
+        ],
         'book-a-consultation' => [
             'title_tag' => 'Free Expert Window & Door Consultation | Milton Keynes',
             'meta_description' => 'Book a free window and door consultation with a Fenster Glazing expert. We go through the options and price the job at your home in Milton Keynes.',
@@ -2064,7 +2068,7 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     $live_blog_post_slugs = function_exists('fenster_live_blog_posts') ? array_keys(fenster_live_blog_posts()) : [];
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'student-accommodation-glazing'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
