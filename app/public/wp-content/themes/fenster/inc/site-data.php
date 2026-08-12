@@ -898,9 +898,28 @@ function fenster_site_data(): array
                 'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-windows-black-house-1600w.webp', 'alt' => 'Black aluminium windows across the front of a modern brick and render house'],
                 'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-windows-card-1000w.webp', 'alt' => 'Black aluminium windows in a rendered and brick gable'],
                 'gallery' => [
-                    /* The only photograph of a Fenster aluminium install in the
-                       image bank. PHOTO-CHECKLIST listed 'aluminium windows on a
-                       local home' as a standing gap; this closes it. */
+                    /* Owner-supplied 2026-08-12, "a sheerline casement for use in
+                       resi". Anthracite aluminium casements across three storeys
+                       of a brick block, and the SECOND photograph of our own
+                       aluminium work in the bank.
+
+                       IT LIVES HERE RATHER THAN IN `product_gallery_pools`, and
+                       the distinction is worth knowing because the first attempt
+                       put it in the pool and it rendered nowhere.
+                       `product_media[slug].gallery` is what the product page and
+                       the town matrix routes actually draw from. The pool is
+                       merged AFTER the `pages.json` images and the visuals band
+                       then takes only items five to eight of what is left, so a
+                       pool entry on a route with a full scraped image set never
+                       surfaces. Check the rendered page, not the array.
+
+                       The alt names no town: this entry reaches around twenty
+                       `/aluminium-windows-<town>/` routes and a location claim
+                       would be false on nineteen of them. GPS stripped. */
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/alu-casement-brick-block-1600w.jpg', 'alt' => 'Anthracite aluminium casement windows across three storeys of a red brick building'],
+                    /* The only other photograph of a Fenster aluminium install in
+                       the image bank. PHOTO-CHECKLIST listed 'aluminium windows on
+                       a local home' as a standing gap; this closes it. */
                     ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/aluminium-window-grey-stone.webp', 'alt' => 'Grey aluminium window in a stone elevation, fitted on a local home'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Slim aluminium windows installed on a coastal property'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium window frame profile detail'],
@@ -1416,19 +1435,13 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/ultimate-rose-window-external.png', 'alt' => 'Ultimate Rose sash window viewed externally'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/heritage-rose-window.png', 'alt' => 'Heritage Rose sash window viewed externally'],
             ],
+            /* The owner's 2026-08-12 casement photograph is deliberately NOT in
+               this pool. It went here first and rendered on nothing: this pool is
+               merged after the `pages.json` images and the visuals band then takes
+               only items five to eight of the remainder. It lives in
+               `product_media['aluminium-windows'].gallery` instead, which is what
+               the product page and the town routes actually draw from. */
             'aluminium_windows' => [
-                /* OURS, and it leads because every other entry in this pool is
-                   supplier or curated imagery. Owner-supplied 2026-08-12: "a
-                   sheerline casement for use in resi". Anthracite aluminium
-                   casements across three storeys of a brick block.
-
-                   THE ALT NAMES NO TOWN. This pool feeds around twenty
-                   `/aluminium-windows-<town>/` matrix routes, and an alt claiming
-                   a location would be false on nineteen of them — the exact
-                   dishonest-alt fault the 2026-07-16 image audit rewrote. GPS was
-                   stripped before it entered the theme, as it is on anything shot
-                   on site. */
-                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/alu-casement-brick-block-1600w.jpg', 'alt' => 'Anthracite aluminium casement windows across three storeys of a red brick building'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Aluminium windows installed on a coastal property'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium window profile detail'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage aluminium windows on a period property'],
