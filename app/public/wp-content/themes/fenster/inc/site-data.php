@@ -1214,7 +1214,7 @@ function fenster_site_data(): array
                     ['slug' => 'aluminium-sliding-doors', 'name' => 'Aluminium Sliding Doors', 'fit' => 'The largest panes', 'copy' => 'Sheerline lift and slide, with interlocks as slim as 52mm, so the frame gets out of the way of the view.'],
                     ['slug' => 'aluminium-bifold-doors', 'name' => 'Aluminium Bifold Doors', 'fit' => 'Folds right back', 'copy' => 'Panels stack to one or both sides, so in summer the opening is almost entirely clear.'],
                     ['slug' => 'french-doors', 'name' => 'French Doors', 'fit' => 'A pair, opening from the centre', 'copy' => 'Two doors opening together, with the option of fixed side panels. Built in uPVC, aluminium or heritage.'],
-                    ['slug' => 'slide-fold-doors', 'name' => 'Slide and Fold Doors', 'fit' => 'Fold one, or fold them all', 'copy' => 'Each panel slides and opens on its own, so a wide opening stops being an all-or-nothing choice. Ten point locking.'],
+                    ['slug' => 'slide-fold-doors', 'name' => 'Slide & Fold Doors', 'fit' => 'Fold one, or fold them all', 'copy' => 'Each panel slides and opens on its own, so a wide opening stops being an all-or-nothing choice. Ten point locking.'],
                 ],
             ],
             'other-services' => [
