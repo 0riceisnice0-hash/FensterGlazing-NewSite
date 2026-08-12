@@ -559,7 +559,34 @@ reference photographs over three rounds. Treat them as measured drawings.
 | `/upvc-doors/` | uPVC Doors |
 | `/patio-doors/` | uPVC Sliding Doors |
 
-- **SHORT IN THE MENU, FULL EVERYWHERE ELSE.** Owner ruling. The dropdown sits under a "Windows" or "Doors" heading, so it carries `uPVC Tilt & Turn`, `uPVC Flush Sash` and `Aluminium Heritage`. The H1, the hub tile and the town pages carry the complete name, because `STYLE.md` requires the H1 to be the product name and "Aluminium Heritage" on its own is not a thing anybody can buy.
+- **SHORT IN THE MENU, FULL EVERYWHERE ELSE.** Owner ruling. The H1, the hub tile and the town pages carry the complete name, because `STYLE.md` requires the H1 to be the product name and "Aluminium Heritage" on its own is not a thing anybody can buy.
+- **THE MENU RULE IS EXACT: drop the trailing "Windows" or "Doors" once the rest of the label is two or more words.** Owner instruction, 2026-08-12. The column heading above each list already says Windows or Doors, so the noun was being read twice on nearly every row. A **two-word** label keeps its noun, because "uPVC" or "Composite" alone names nothing.
+
+| Menu | Page name |
+|---|---|
+| uPVC Casement | uPVC Casement Windows |
+| uPVC Flush Sash | uPVC Flush Sash Windows |
+| Sliding Sash | Sliding Sash Windows |
+| uPVC Tilt & Turn | uPVC Tilt & Turn Windows |
+| Aluminium Casement | Aluminium Casement Windows |
+| Aluminium Flush | Aluminium Flush Windows |
+| Aluminium Heritage | Aluminium Heritage Windows |
+| French Casement | French Casement Windows |
+| Bow and Bay | Bow and Bay Windows |
+| Aluminium Bifold | Aluminium Bifold Doors |
+| Slide & Fold | Slide & Fold Doors |
+| Aluminium Sliding | Aluminium Sliding Doors |
+| **Aluminium Doors** | Aluminium Doors |
+| Heritage Aluminium | Heritage Aluminium Doors |
+| **Composite Doors** | Composite Doors |
+| **uPVC Doors** | uPVC Doors |
+| uPVC Sliding Patio | uPVC Sliding Doors |
+| **French Doors** | French Doors |
+
+- **`uPVC Sliding Patio` is the owner's own wording and is deliberately not `uPVC Sliding`.** "Sliding" alone does not say sliding what, and Patio is the word WindowCAD uses for that collection. It is the one menu label that is not simply the page name with the noun removed.
+- **Nothing under Other Services changed**, because no label there ends in Windows or Doors.
+- **Two menu rows are near-anagrams and that is not a mistake:** `Aluminium Heritage` is the window and `Heritage Aluminium` is the door. They sit in different columns under different headings, and both names are the owner's. Do not "fix" one into the other.
+- **This costs a little internal anchor text and it was a deliberate trade.** The sitewide menu is one of several internal link sources into these routes, and dropping the noun removes "Windows"/"Doors" from that anchor. The hub tiles, related links, footer and body copy all still carry the full names, so the anchor profile is not left bare.
 - **A PRODUCT NAME LIVES IN SEVEN REGISTRIES AND NONE OF THEM CHECKS ANOTHER.** This is the single most useful thing on this page. All seven had to be edited for one rename, and the last two were found by rendering pages rather than by grepping:
   1. `primary_nav_fallback` in `inc/site-data.php` — desktop dropdown and mobile drawer, short form.
   2. `product_hub_groups[...]['products'][n]['name']` in `inc/site-data.php` — the hub tiles, full form.
