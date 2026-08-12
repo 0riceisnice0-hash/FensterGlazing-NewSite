@@ -68,17 +68,23 @@ said it belongs since 2026-07-29.
   moment for free and the closing band could stay light. It was built dark
   first and put two dark sections back to back.
 
-### What needs the owner
+### Three of the four questions were answered the same day
 
-- **A photograph of a tilt and turn tilting or turning.** We own none. Now the
-  largest single gap on any window route in `PHOTO-CHECKLIST.md`.
-- **Colours: sixteen or Liniar's nine?** The strip says sixteen, the window foil
-  range. Liniar publish nine standard for this product. Same question that
-  landed on thirteen for the door.
-- **Chamfered as well as sculptured?** Liniar publish both for this system, the
-  casement is sculptured only, and nobody has ruled on this one. The page says
-  nothing either way.
+- **Sculptured only.** Owner, 2026-08-12, matching the casement. On the page as
+  a positive statement; the page never says we do not do chamfered. Checking it
+  turned up dormant scraped "sculptured or chamfered" copy in `data/pages.json`
+  across a lot of casement and town records — **verified as not rendering** on
+  four routes, so it is a trap rather than a live claim. Flagged, not fixed.
+- **Colours stay at sixteen.** Owner instruction: leave it. Liniar publish nine
+  for this product; the discrepancy is recorded in `AI.md` so nobody re-raises
+  it as a bug. Left, not ruled wrong.
+- **No photographs yet.** The gap stands and is the largest on any window route
+  in `PHOTO-CHECKLIST.md`.
+
+### Still needs the owner
+
 - **Approval to ship.** It is on test and verified there; live is untouched.
+- **A photograph of one tilting or turning**, whenever a job comes up.
 
 ## START HERE, 2026-08-12 (end of session)
 

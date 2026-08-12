@@ -103,7 +103,7 @@ function fenster_product_hub_data(string $slug): array
             'copy' => 'Tilt and turn windows are a practical choice for upper floors, flats and bedrooms, because the sash comes into the room: it tilts at the top for ventilation, or swings right in so the outside of the glass can be cleaned from indoors.',
             'specs' => [
                 ['label' => 'Operation', 'value' => 'Inward opening, two positions off one handle: tilt at the top, or the full swing'],
-                ['label' => 'Profile system', 'value' => 'Liniar 70mm EnergyPlus, four chambers through the frame'],
+                ['label' => 'Profile system', 'value' => 'Liniar 70mm EnergyPlus, sculptured profile, four chambers through the frame'],
                 ['label' => 'Performance', 'value' => '28mm double glazed at 1.3 W/m²K, or 36mm triple at 0.93, A++ rated'],
                 ['label' => 'Security', 'value' => 'Key-locking handle with a tilt-only setting, and mushroom cams around the sash'],
             ],

@@ -87,16 +87,18 @@ anything else:
 
 **Open and needing the owner, not code:**
 
-- **Tilt and turn: nothing we own photographs one tilting or turning.** The
-  page runs on four Liniar studio renders of the mechanism because they are the
-  only assets that show the product working. One phone shot of a sash in tilt
-  from inside would change that page more than any other single thing.
-- **Tilt and turn colours: sixteen or Liniar's nine?** The strip says sixteen,
-  which is the window foil range. Liniar publish nine standard for this
-  specific product. Same question that landed on thirteen for the uPVC door.
-- **Is the tilt and turn a chamfered option as well as sculptured?** Liniar
-  publish both for this system; the casement is sculptured only and nobody has
-  ruled on this one, so the page says nothing either way.
+- **Tilt and turn: nothing we own photographs one tilting or turning.** Still
+  open, owner confirmed 2026-08-12 that there are no photographs yet. The page
+  runs on four Liniar studio renders of the mechanism because they are the only
+  assets that show the product working. One phone shot of a sash in tilt from
+  inside would change that page more than any other single thing.
+- ~~Tilt and turn colours: sixteen or Liniar's nine?~~ **Left at sixteen, owner
+  instruction 2026-08-12.** Not ruled wrong, left. The discrepancy against
+  Liniar's nine is recorded in `AI.md` so it is not re-raised as a bug.
+- ~~Is the tilt and turn chamfered as well as sculptured?~~ **Closed 2026-08-12:
+  sculptured only**, the same answer as the casement. On the page and in
+  `AI.md`. Note `data/pages.json` still carries dormant scraped "sculptured or
+  chamfered" copy that does not currently render.
 
 - **uPVC doors, two answers outstanding.** Maximum sizes for a single leaf,
   French doors and a stable door, and what each of the four thresholds is best

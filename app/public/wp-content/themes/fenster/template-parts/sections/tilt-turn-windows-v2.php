@@ -113,7 +113,14 @@ $suits = [
                 <p><?php esc_html_e('Every other window we fit either swings out or slides. This one comes in. Tip the top inwards a few inches for air, or swing the whole sash into the room like a door, and both come off the same handle.', 'fenster'); ?></p>
                 <p><?php esc_html_e('Two things follow from that, and between them they are the reason anybody buys one. You can reach the outside face of the glass from where you are standing, however far up the building you are. And nothing ever swings out over whatever happens to be on the other side of the wall.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
-                    <li><?php esc_html_e('Liniar 70mm EnergyPlus, four chambers through the frame', 'fenster'); ?></li>
+                    <?php /* SCULPTURED, and the word is load-bearing. Liniar
+                             publish this system as "sculptured or chamfered";
+                             the owner confirmed on 2026-08-12 that we fit the
+                             sculptured profile only, which is the same answer
+                             already recorded for the casement. Stated positively
+                             — the page never says we do not do the other one,
+                             per the 2026-08-02 ruling against exclusions. */ ?>
+                    <li><?php esc_html_e('Liniar 70mm EnergyPlus, sculptured, four chambers through the frame', 'fenster'); ?></li>
                     <li><?php esc_html_e('28mm double glazed as standard, or a 36mm triple', 'fenster'); ?></li>
                     <li><?php esc_html_e('Sixteen colours outside, matched or smooth white inside', 'fenster'); ?></li>
                 </ul>
