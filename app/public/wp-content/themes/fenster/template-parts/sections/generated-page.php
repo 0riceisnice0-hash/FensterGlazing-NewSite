@@ -226,6 +226,21 @@ $is_heritage_bespoke = $slug === 'heritage-windows';
    Doors collection prices this exact product, so the randomiser can hand over
    to something that gives a real number. */
 $is_upvc_doors_bespoke = $slug === 'upvc-doors';
+/* Tilt and turn, 2026-08-12. Bespoke middle, generic bands off, and the same
+   two things KEPT as on flush aluminium, heritage and uPVC doors: the
+   key-specification pulse, because this product has real published figures, and
+   the specification-choices wrapper, because the uPVC colour grid and the
+   greenteQ tilt and turn handle grid inside it are both genuine decisions here.
+   The quote embed stays — the uPVC Windows collection prices this window — and
+   so does the order rail, because it is an ordinary installation.
+
+   THE CASE-STUDY STRIP IS THE ONE THING GATED OFF, and it was live and wrong
+   until this build. Nothing claims this route, so
+   `fenster_case_studies_for_product()` fell through to its documented
+   all-studies fallback and put secondary glazing, uPVC casements and aluminium
+   bifolds under a heading promising real installs of this product. Same fault,
+   same fix as `/aluminium-windows/`. See `$no_case_study_routes` below. */
+$is_tilt_turn_bespoke = $slug === 'tilt-turn-windows';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase
    of a product:
@@ -4238,7 +4253,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4402,7 +4417,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4572,7 +4587,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4760,6 +4775,24 @@ if ($is_commercial_hub) {
                         'alt' => __('White uPVC stable door with both halves glazed, in a brick opening', 'fenster'),
                     ],
                 ],
+            ]);
+            ?>
+        <?php endif; ?>
+
+        <?php /* OUTSIDE the wrapper below, same as every bespoke middle above
+                 it, and for the reason spelled out against the secondary
+                 glazing dispatch: that wrapper is gated on a condition about
+                 colour swatches, so a bespoke middle placed inside it silently
+                 renders nothing. This route DOES still render the wrapper
+                 itself, because the uPVC colour grid and the greenteQ tilt and
+                 turn handle grid inside it are both real decisions on this
+                 window. */ ?>
+        <?php if ($is_tilt_turn_bespoke) : ?>
+            <?php
+            get_template_part('template-parts/sections/tilt-turn-windows-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+                'quote_url' => $product_quote_embed_url,
             ]);
             ?>
         <?php endif; ?>
@@ -5475,7 +5508,15 @@ if ($is_commercial_hub) {
        the wrong material entirely. That would be a regression caused by the
        filter rather than something the filter merely revealed, so the strip is
        off here until a residential aluminium window study exists. */
-    $no_case_study_routes = ['aluminium-windows'];
+    /* `/tilt-turn-windows/` joins them, 2026-08-12, and unlike the two above it
+       this one was never caused by a filter — it has simply been wrong since the
+       route existed. Nothing has ever claimed it, so the fallback was rendering
+       Winslow secondary glazing, Leighton Buzzard casements and Whitehouse
+       bifolds under "Real installs, photographed on the day" on a tilt and turn
+       page. Not one of the three is this product and one is not even a window.
+       It comes off when a tilt and turn study exists; the route is a real gap in
+       `PHOTO-CHECKLIST.md` and not merely an un-photographed one. */
+    $no_case_study_routes = ['aluminium-windows', 'tilt-turn-windows'];
     $shows_case_study_strip = $use_product_journey
         && ! $is_repairs
         && ! $is_replacement_bespoke

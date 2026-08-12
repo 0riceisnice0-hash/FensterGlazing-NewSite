@@ -424,11 +424,26 @@ function fenster_site_data(): array
                 ['label' => 'Design', 'value' => 'Space-saving'],
                 ['label' => 'Configuration', 'value' => 'Up to 4 panes'],
             ],
+            /* THE FIGURES ON THIS ROUTE ARE LINIAR'S OWN FOR THE 70mm TILT AND
+               TURN, not the 0.95/1.2 the rest of the Liniar range carries.
+               Owner ruling 2026-08-12, reversing the 2026-08-03 "one figure for
+               all Liniar" decision for this route only. See the note against
+               `glazing_u_values` below for why, and do not "correct" it back.
+
+               "Opening style: Highly versatile" was the fourth tile until
+               2026-08-12. It was an adjective sitting in a strip whose whole
+               effect is that the numbers count up, and it is the same fault
+               that put "Design: Fully customisable" on the door and "Style:
+               Traditional" on the flush casement. Liniar publish 37 (-2;-5) for
+               this window, which is their best acoustic uPVC figure and beats
+               the 35 the flush casement already prints, so the slot carries a
+               measurement that also happens to be the one number where this
+               window wins. */
             'tilt-turn-windows' => [
-                ['label' => 'U-value*', 'value' => '0.95 W/m²K'],
+                ['label' => 'U-value*', 'value' => '0.93 W/m²K'],
                 ['label' => 'Colour choice', 'value' => '16 options'],
                 ['label' => 'Energy rating', 'value' => 'A++ rated'],
-                ['label' => 'Opening style', 'value' => 'Highly versatile'],
+                ['label' => 'Sound reduction', 'value' => '37 dB'],
             ],
             'sliding-sash-windows' => [
                 ['label' => 'Energy rating', 'value' => 'A rated'],
@@ -551,8 +566,12 @@ function fenster_site_data(): array
            Sources: Sheerline publish 1.4 double and 1.0 triple across Prestige
            (1.1 on stepped sashes) and 1.4 / 1.1 on Classic, triple in certain
            styles only. Owner-confirmed 2026-08-03 that 0.95 is the figure for
-           all Liniar triple and 1.2 the double. Liniar publish 1.3 double on
-           tilt and turn; ours is the tighter claim and is deliberate.
+           all Liniar triple and 1.2 the double. ~~Liniar publish 1.3 double on
+           tilt and turn; ours is the tighter claim and is deliberate.~~
+           SUPERSEDED FOR TILT AND TURN, 2026-08-12: that route now carries
+           Liniar's own 1.3 / 0.93 pair on the owner's ruling, and it is the
+           only Liniar route off the shared figures. The reason is written
+           against the entry itself so it cannot be tidied away as drift.
 
            Not listed, and each for a reason. uPVC doors and patio doors are
            awaiting fabricator figures; uPVC doors currently shows a starred 1.0
@@ -576,7 +595,25 @@ function fenster_site_data(): array
         'glazing_u_values' => [
             // Liniar EnergyPlus 70mm
             'casement-windows'        => ['double' => '1.2 W/m²K', 'triple' => '0.95 W/m²K'],
-            'tilt-turn-windows'       => ['double' => '1.2 W/m²K', 'triple' => '0.95 W/m²K'],
+            /* TILT AND TURN IS THE ONE LINIAR ROUTE OFF THE 0.95/1.2 RULE, and
+               that is deliberate as of 2026-08-12 rather than a value that has
+               drifted. The 2026-08-03 ruling above set one pair across the whole
+               Liniar range and knowingly published the tighter number here; the
+               owner reversed it for this route on 2026-08-12 and asked for
+               Liniar's own published pair for the 70mm tilt and turn, 1.3 double
+               and 0.93 triple.
+
+               It is the safer figure as well as the truer one. Liniar's spec
+               table also carries 0.85 W/m²K whole window, which is almost
+               certainly their 40mm IGU — and 40mm is not offered on any uPVC we
+               fit, so that number describes a window we do not sell. 0.93 is the
+               body-copy figure for triple glazing and matches the 36mm unit that
+               is our actual ceiling. The A++ on the key-specification strip comes
+               from the same Liniar page as this pair and is attributed to them on
+               the page, not restated as ours. Do not reconcile this back to
+               casement's 0.95/A+ without asking: same system, different sash and
+               different gasket compression, and the owner has ruled on it. */
+            'tilt-turn-windows'       => ['double' => '1.3 W/m²K', 'triple' => '0.93 W/m²K'],
             // 28mm IGU only, so no triple. Liniar's own specification confirms it.
             'flush-casement-windows'  => ['double' => '1.2 W/m²K'],
             /* uPVC DOORS. The triple figure is Liniar's own published 0.99
@@ -819,12 +856,32 @@ function fenster_site_data(): array
                     ['src' => '/wp-content/themes/fenster/assets/images/imported/French-casement-mullion.jpeg', 'alt' => 'Mullion detail on a French casement window frame'],
                 ],
             ],
+            /* THE OLD HERO WAS NOT A TILT AND TURN. `tilt-turn-brick-1600w.webp`
+               (Liniar's own `Tilt__Turn_02.jpg`) shows two barrel hinges mounted
+               on the jamb and the sash standing proud of the frame: it is a
+               side-hung casement opening OUTWARD. A tilt and turn opens inwards
+               and carries no exposed jamb hinge. Its alt text also claimed the
+               sash was "tilted open at the top", so the page was asserting the
+               product's one distinguishing feature over a photograph of a
+               different window. Removed 2026-08-12. The file is left on disk
+               unreferenced rather than deleted, because a deletion has to be
+               asserted by name through the deploy guard and nothing needs it.
+
+               What replaced it is the interior shot, cropped to the hero band.
+               It is the only real photograph we own that does not contradict the
+               product, and the context is right: an upper-floor flat with a city
+               view is exactly who buys these. It is Liniar's, so it is
+               unattributed in the hero, per the split this site holds to —
+               supplier imagery unattributed, our own work always captioned as
+               ours. The `card` is a 4:3 cut of the same photograph, because the
+               hub tile falls back to `hero` and a 3.2:1 band centre-cropped into
+               a 4:3 cell would show a wall and a lampshade. */
             'tilt-turn-windows' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/tilt-turn/tilt-turn-brick-1600w.webp', 'alt' => 'Grey tilt and turn windows on a red brick elevation, one tilted open at the top'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/tilt-turn/tilt-turn-room-hero-1920w.webp', 'alt' => 'Two tall uPVC windows in a top-floor apartment living room, looking out over the street'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/tilt-turn/tilt-turn-room-card-1200w.webp', 'alt' => 'A tall white uPVC window in an apartment living room, the handle set on the side of the sash'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt__Turn_14.jpg', 'alt' => 'Tilt and turn windows in a living room with roman blinds'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-1.jpeg', 'alt' => 'Tilt and turn window tilted inwards at the top for background ventilation'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-2.jpeg', 'alt' => 'Tilt and turn hardware shown holding the sash in the tilt position'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-1.jpeg', 'alt' => 'Tilt and turn window tilted inwards at the top, with the stay arm and sash gearing visible'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-2.jpeg', 'alt' => 'The stay at the top corner of a tilt and turn sash, holding it in the tilt position'],
                 ],
             ],
             'bow-bay-windows' => [
@@ -1315,14 +1372,27 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/French-Casement-Windows-Aylesbury.jpg', 'alt' => 'French casement window with Georgian bars fitted in Aylesbury'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Aylesbury-French-Casement-Windows.jpg', 'alt' => 'French casement window opened from a bedroom over a garden'],
             ],
+            /* TWO CAME OUT ON 2026-08-12 AND NEITHER SHOULD COME BACK.
+               `tilt-turn-brick-1600w.webp` is a side-hung casement opening
+               outward, not a tilt and turn — see the note against the hero in
+               `product_media` for the evidence. And `tilt-turn-apartments` is a
+               CGI render, which is the first thing the eye lands on in a row of
+               photographs; it came off the doors hub tile for the same reason on
+               2026-07-29.
+
+               This pool also feeds every `/tilt-turn-windows-<town>/` matrix
+               page, so a wrong image here is wrong on about twenty pages, which
+               is why both were removed from the pool and not only from the
+               route. What is left is one real interior and four of Liniar's
+               studio renders of the mechanism. That is a thin pool and it is
+               honestly thin: nobody has photographed a tilt and turn of ours
+               tilting or turning. See `PHOTO-CHECKLIST.md`. */
             'tilt_turn_windows' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/tilt-turn/tilt-turn-brick-1600w.webp', 'alt' => 'Grey tilt and turn windows on a red brick elevation, one tilted open at the top'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt__Turn_14.jpg', 'alt' => 'Tilt and turn windows in a living room with roman blinds'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/tilt-turn/tilt-turn-apartments-1400w.webp', 'alt' => 'Tilt and turn windows on an apartment block, one sash tilted inwards'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-1.jpeg', 'alt' => 'Tilt and turn window tilted inwards at the top for background ventilation'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-2.jpeg', 'alt' => 'Tilt and turn hardware shown holding the sash in the tilt position'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-1.jpeg', 'alt' => 'Locking keep on the frame of a tilt and turn window'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-2.jpeg', 'alt' => 'Security keep detail on a tilt and turn window frame'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt__Turn_14.jpg', 'alt' => 'Two tall uPVC windows in an apartment living room with roman blinds'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-1.jpeg', 'alt' => 'Tilt and turn window tilted inwards at the top, with the stay arm and sash gearing visible'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-ventilation-2.jpeg', 'alt' => 'The stay at the top corner of a tilt and turn sash, holding it in the tilt position'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-1.jpeg', 'alt' => 'Steel keep fixed into the frame of a tilt and turn window, where the sash locks into it'],
+                ['src' => '/wp-content/themes/fenster/assets/images/imported/Tilt-turn-keep-2.jpeg', 'alt' => 'Mushroom-headed cam on the edge of a tilt and turn sash, which draws into the keep as the handle turns'],
             ],
             'bow_bay_windows' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/bay-window.jpg', 'alt' => 'White uPVC bay window with leaded glazing on a red brick house'],
@@ -1811,21 +1881,34 @@ function fenster_site_data(): array
                     ['question' => 'Will Fenster advise on restrictors?', 'answer' => 'Yes. Fenster will consider room use, height, safety requirements and ventilation needs when specifying openings and restrictors.'],
                 ],
             ],
+            /* REWRITTEN 2026-08-12 with the bespoke middle. The old copy failed
+               three ways at once and each is a documented site-wide fault:
+               "Fenster specifies them for..." is the third-person voice
+               `STYLE.md` bans, "shown in the key specification strip" is the UI
+               self-talk `COPY-AUDIT.md` §2 catalogued, and the five benefit
+               cards argued the same two-way-opening point four times, which is
+               the "a page built by adding says everything twice" fault the uPVC
+               doors audit closed a day earlier.
+
+               The benefits array does not render on this route any more — the
+               bespoke middle stands in for `fg-product-why` — but it is kept
+               accurate, on the same reasoning as the repairs entry: a stale
+               array is invisible to everyone until something ungates it. The
+               FAQs DO still render. */
             'tilt-turn-windows' => [
-                'intro' => 'Tilt and turn windows give two opening modes in one frame: secure top ventilation and a wider inward opening for cleaning or access. Fenster specifies them for modern homes, upper floors and practical rooms where flexibility matters.',
+                'intro' => 'A tilt and turn is the only window we fit that opens into the room. Tip the top in for air without unlocking anything, or swing the whole sash inwards to reach the outside of the glass from where you are standing. It is why they end up in flats, in upper-floor bedrooms and anywhere a sash swinging outwards would be in the way.',
                 'benefits' => [
-                    ['title' => 'Two-way opening', 'copy' => 'Tilt the sash inward at the top for ventilation, or turn it fully inward for cleaning, access and stronger airflow.'],
-                    ['title' => 'Strong efficiency data', 'copy' => 'Tilt and turn windows can offer strong energy performance, with supplied U-value information shown in the key specification strip.'],
-                    ['title' => 'Easy internal cleaning', 'copy' => 'The inward turn mode allows the outside face of the glass to be reached from inside, useful on upper floors or awkward elevations.'],
-                    ['title' => 'Secure ventilation', 'copy' => 'The tilt position allows controlled airflow without opening the full sash in the same way as a conventional side-hung window.'],
-                    ['title' => 'Modern, practical look', 'copy' => 'Tilt and turn windows suit contemporary homes, apartments and rooms where the clean internal operation is more useful than a traditional outward opening.'],
+                    ['title' => 'One lever, two positions', 'copy' => 'A quarter turn tilts the top inwards for air. Carry on turning and the whole sash swings in. There is no second handle and nothing to prop.'],
+                    ['title' => 'The outside of the glass, from inside', 'copy' => 'With the sash turned in you can reach the outer face standing in the room. On a third-floor flat that is the difference between cleaning your own windows and paying someone with a pole.'],
+                    ['title' => 'It can be locked to tilt only', 'copy' => 'Leave the key a quarter turn and the handle still reaches tilt but will not go round to the full opening. The room airs and the window cannot be swung open.'],
+                    ['title' => 'Nothing swings outwards', 'copy' => 'No sash over a balcony, a walkway, a path or a neighbour\'s boundary, which is what rules an outward-opening casement out of a lot of flats.'],
                 ],
                 'faqs' => [
-                    ['question' => 'How does a tilt and turn window open?', 'answer' => 'The handle controls two modes: a top tilt for ventilation and an inward turn for cleaning, access and a wider opening.'],
-                    ['question' => 'Are tilt and turn windows good for upper floors?', 'answer' => 'Yes. The inward opening can make cleaning easier from inside, subject to room layout and safety considerations.'],
-                    ['question' => 'Do tilt and turn windows suit older homes?', 'answer' => 'They can, but they usually feel more modern. Fenster will help compare them with casement, flush or sash styles if appearance is important.'],
-                    ['question' => 'Are they energy efficient?', 'answer' => 'Yes. Tilt and turn windows can offer strong energy performance, with supplied U-value information shown on the page.'],
-                    ['question' => 'Can they provide secure ventilation?', 'answer' => 'Yes. The tilt position allows controlled airflow while keeping the sash partly retained within the frame.'],
+                    ['question' => 'How does a tilt and turn window open?', 'answer' => 'One handle does both. Turn it a quarter and the top of the sash tips inwards a few inches for ventilation. Keep turning and the whole sash swings into the room on its side hinges, like a door.'],
+                    ['question' => 'Can you stop it opening fully?', 'answer' => 'Yes, and it is the setting most people want upstairs. The handle locks with a key, and the middle key position lets the handle reach tilt but not the full opening, so the room airs without the sash being able to swing in.'],
+                    ['question' => 'Are they good for upper floors and flats?', 'answer' => 'It is the main reason people choose them. The sash turns into the room so you can clean the outside of the glass from inside, and nothing swings out over a balcony or a walkway.'],
+                    ['question' => 'What glazing do they take?', 'answer' => 'A 28mm double glazed unit as standard, or a 36mm triple. Liniar publish 1.3 W/m²K for the double glazed window and 0.93 for the triple, and rate the system A++.'],
+                    ['question' => 'Do they suit an older house?', 'answer' => 'They can, but they read as modern, and on a period elevation a casement, a flush sash or a sliding sash usually looks more at home. Tell us the property and we will say so honestly.'],
                 ],
             ],
             'bow-bay-windows' => [

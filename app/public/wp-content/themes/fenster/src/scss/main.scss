@@ -39397,7 +39397,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-band,
 .fg-rg-band,
 .fg-afw-band,
-.fg-hw-band {
+.fg-hw-band,
+.fg-tt-suits {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
 }
 
@@ -39429,7 +39430,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-band__head,
 .fg-rg-band__head,
 .fg-afw-band__head,
-.fg-hw-band__head {
+.fg-hw-band__head,
+.fg-tt-suits__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2.5rem);
@@ -39442,7 +39444,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-band__head h2,
 .fg-rg-band__head h2,
 .fg-afw-band__head h2,
-.fg-hw-band__head h2 {
+.fg-hw-band__head h2,
+.fg-tt-suits__head h2 {
   max-width: 17ch;
   margin: 0.3rem 0 0;
 }
@@ -39452,7 +39455,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-band__head > p,
 .fg-rg-band__head > p,
 .fg-afw-band__head > p,
-.fg-hw-band__head > p {
+.fg-hw-band__head > p,
+.fg-tt-suits__head > p {
   max-width: 46ch;
   margin: 0;
   color: var(--color-muted);
@@ -39471,7 +39475,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-list,
 .fg-rg-list,
 .fg-afw-list,
-.fg-hw-list {
+.fg-hw-list,
+.fg-tt-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: clamp(0.9rem, 1.8vw, 1.4rem);
@@ -39483,7 +39488,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-list > div,
 .fg-rg-list > div,
 .fg-afw-list > div,
-.fg-hw-list > div {
+.fg-hw-list > div,
+.fg-tt-list > div {
   display: grid;
   align-content: start;
   gap: 0.45rem;
@@ -39498,7 +39504,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-list dt,
 .fg-rg-list dt,
 .fg-afw-list dt,
-.fg-hw-list dt {
+.fg-hw-list dt,
+.fg-tt-list dt {
   font-weight: 850;
   font-size: 1.02rem;
   line-height: 1.2;
@@ -39509,7 +39516,8 @@ html.fg-blinds-reveal-locked {
 .fg-sg-list dd,
 .fg-rg-list dd,
 .fg-afw-list dd,
-.fg-hw-list dd {
+.fg-hw-list dd,
+.fg-tt-list dd {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.95rem;
@@ -39825,6 +39833,111 @@ html.fg-blinds-reveal-locked {
    above it with no space at all. */
 .fg-heritage-door-windows {
   padding: clamp(2.75rem, 5vw, 4.5rem) 0;
+}
+
+/* ==========================================================================
+   Tilt and turn — /tilt-turn-windows/
+   Rebuilt 2026-08-12 as the eleventh bespoke residential middle, on the same
+   `.fg-cw` grammar as the routes above. The splits, the facts list, the card
+   band, the band heads and the pair mosaic are all joined by adding `.fg-tt-*`
+   to those shared selector lists rather than copying them, so restyling one
+   restyles all of them. Only two things genuinely differ and both are below.
+   ========================================================================== */
+
+/* THE FIRST DIFFERENCE: THIS ROUTE'S PICTURES ARE PLATES, NOT PHOTOGRAPHS.
+   Every asset that shows the mechanism is a Liniar studio render on a white
+   ground. `.fg-cw-media` is a 16/10 box with `object-fit: cover` and a steel
+   backing, which is right for a photograph of a house and wrong twice over
+   here: cover crops the stay arm and the sash gearing out of frame, and those
+   are the only reason the render is on the page at all. A white-ground subject
+   on a pale page also needs an edge or it reads as an empty box, which is what
+   the smooth white swatch and every handle tile already carry a hairline for.
+
+   So: contain rather than cover, a soft panel behind it, a hairline round it,
+   and padding so the subject is not jammed against the edge. Do not "fix" this
+   back to cover. */
+.fg-cw-media--plate {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-line);
+  background: #f5f7f7;
+}
+
+.fg-cw-media--plate img {
+  padding: clamp(0.6rem, 1.6vw, 1.25rem);
+  object-fit: contain;
+}
+
+/* The pair mosaic sets its own dark cell background and cover crop, so the two
+   locking renders need the same treatment restated inside it.
+   `.fg-cw-gallery__mosaic figure` is (0,2,1); a bare `.fg-tt-plate` is (0,1,0)
+   and loses, so these are qualified by the mosaic rather than left to source
+   order. Count before rewriting — the same specificity trap is already recorded
+   against `.fg-cw p` and `.fg-lv p`. */
+.fg-cw-gallery__mosaic .fg-tt-plate {
+  border: 1px solid var(--color-line);
+  background: #f5f7f7;
+}
+
+.fg-cw-gallery__mosaic .fg-tt-plate img {
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  object-fit: contain;
+}
+
+/* The photo captions are a translucent white chip, which vanishes on a light
+   plate. Solid steel with white on it instead. */
+.fg-cw-gallery__mosaic .fg-tt-plate figcaption {
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+.fg-cw .fg-tt-secure__note {
+  max-width: 78ch;
+  margin: clamp(1.1rem, 2.4vw, 1.6rem) 0 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+}
+
+/* THE SECOND DIFFERENCE, AND IT IS THAT THERE IS NO DARK PLATE HERE.
+   Every other bespoke route on this grammar darkens one section so the page
+   changes shape once in the middle. This one already does: `.fg-cw-gallery`
+   paints itself `--color-steel`, and the locking section above is a gallery, so
+   the dark moment arrives on its own with the two light hardware plates sitting
+   on it. That is the casement treatment — white studio product on dark reads as
+   lit — and it costs nothing here.
+
+   So the closing band stays LIGHT. It was built dark first and that put two dark
+   sections back to back, which reads as one slab rather than two ideas. If a
+   future pass wants to darken it, lighten the gallery in the same commit. */
+.fg-tt-suits__foot {
+  display: grid;
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.fg-cw .fg-tt-suits__foot > p {
+  max-width: 74ch;
+  margin: 0;
+}
+
+.fg-tt-suits__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .fg-tt-suits__head,
+  .fg-tt-secure__head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .fg-tt-suits__actions .button {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 /* ==========================================================================
