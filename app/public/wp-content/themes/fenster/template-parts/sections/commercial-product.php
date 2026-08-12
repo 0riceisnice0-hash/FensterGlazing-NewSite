@@ -56,6 +56,9 @@ if ($slug === '' || empty($product)) {
 
 $brand_phone = (string) ($brand['phone'] ?? '01908 429200');
 $brand_email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
+/* One place to swap when a commercial address exists. Falls back to the office
+   recipient rather than to an invented `commercial@`, which would bounce. */
+$commercial_email = (string) ($brand['commercial_email'] ?? $brand_email);
 $phone_href = preg_replace('/\s+/', '', $brand_phone);
 $title = (string) ($product['title'] ?? ($page['title'] ?? 'Commercial glazing'));
 $subtitle = (string) ($product['subtitle'] ?? '');
@@ -93,7 +96,12 @@ $enquiry_heading = (string) ($product['enquiry_heading'] ?? ('Send us the ' . st
    customer-facing copy — a fault already recorded against the gallery copy on
    the residential template. */
 $title_lc = preg_match('/[a-z][A-Z]/', $title) ? $title : strtolower($title);
-$spec_heading = (string) ($product['spec_heading'] ?? ($title . ', in figures.'));
+/* Was "X, in figures." and the owner was right that it did not fit: most rows in
+   this table are not figures at all, they are what the thing is specified to —
+   "Liniar", "to the rating the specification calls for", "specified to the job".
+   A heading promising numbers over a table of specifications reads as a page that
+   has not got any. This says what the table is. */
+$spec_heading = (string) ($product['spec_heading'] ?? ($title . ', to your specification.'));
 $proof_heading = (string) ($product['proof_heading'] ?? ('Recent ' . $title_lc . ' projects.'));
 $related_heading = (string) ($product['related_heading'] ?? ('Work that usually comes with ' . $title_lc . '.'));
 
@@ -118,11 +126,30 @@ $is_louvre = $slug === 'louvre-vents';
                 <?php if ($subtitle !== '') : ?>
                     <p><?php echo esc_html($subtitle); ?></p>
                 <?php endif; ?>
+                <?php /* THE ACTION ROW WAS UNEVEN and the owner called it, 2026-08-12:
+                         a single-line button sitting beside a two-line phone card,
+                         so the two never lined up at any width. All three items are
+                         one component now, stretched to a shared height, and the
+                         email sits with the phone where a specifier expects to find
+                         it — most of them would rather send drawings than call.
+
+                         THE EMAIL IS `info@`, WHICH MAY NOT BE THE RIGHT ONE. There
+                         is no commercial-specific address anywhere in this theme,
+                         and inventing one would bounce real enquiries into nothing.
+                         `info@fensterglazing.com` is the owner-confirmed office
+                         recipient (2026-08-10), so it is the only defensible choice
+                         until a commercial address is supplied. One swap in
+                         `brand.email` or a new `brand.commercial_email` changes it
+                         everywhere. */ ?>
                 <div class="fg-commercial-product-hero__actions">
                     <a class="button button--light" href="#commercial-product-enquiry"><?php esc_html_e('Send project details', 'fenster'); ?></a>
                     <a class="fg-commercial-product-hero__phone" href="tel:<?php echo esc_attr($phone_href); ?>">
-                        <span><?php esc_html_e('Commercial enquiries', 'fenster'); ?></span>
+                        <span><?php esc_html_e('Call', 'fenster'); ?></span>
                         <strong><?php echo esc_html($brand_phone); ?></strong>
+                    </a>
+                    <a class="fg-commercial-product-hero__phone" href="mailto:<?php echo esc_attr($commercial_email); ?>">
+                        <span><?php esc_html_e('Email', 'fenster'); ?></span>
+                        <strong><?php echo esc_html($commercial_email); ?></strong>
                     </a>
                 </div>
             </div>

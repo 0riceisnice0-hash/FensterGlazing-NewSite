@@ -227,8 +227,17 @@ function fenster_site_data(): array
                     [
                         'label' => 'Services',
                         'url' => home_url('/commercial-glazing/'),
+                        /* "Commercial Glazing" came out of this list on 2026-08-12,
+                           on the owner's instruction and to match what the hub
+                           actually is. The column heading above is already an
+                           anchor to `/commercial-glazing/` — see
+                           `fenster_render_nav_fallback()` — so the hub was listed
+                           twice in the same column, once as the heading and once
+                           as the first row beneath it. The heading is the way in.
+
+                           Do not add it back as an item: the hub is the parent of
+                           this list, not a sibling of the services on it. */
                         'items' => [
-                            ['label' => 'Commercial Glazing', 'url' => home_url('/commercial-glazing/')],
                             ['label' => 'Commercial Windows and Doors', 'url' => home_url('/commercial-windows-and-doors/')],
                             ['label' => 'Curtain Walling', 'url' => home_url('/curtain-walling/')],
                             ['label' => 'Louvre Vents', 'url' => home_url('/louvre-vents/')],

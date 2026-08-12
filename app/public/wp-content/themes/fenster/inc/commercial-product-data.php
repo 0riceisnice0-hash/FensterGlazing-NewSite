@@ -1035,12 +1035,18 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'Working in a live clinic',
                     'title' => 'Where the dust goes matters more than where the skip goes.',
                     'copy' => 'Infection control decides the route, the screening and the sequence, so we agree them with your practice manager before day one rather than on it. Rooms are handed back clean and usable at the end of each day, which is slower and is the only way a clinic can absorb the work.',
-                    /* MARKED PLACEHOLDER. The Roka frontage is the only healthcare
-                       photograph we own and it is already used twice above. Nothing
-                       shows us working inside a live clinical setting. */
-                    'image' => '',
-                    'placeholder' => 'A clinical or care interior we have worked in, showing screening and a room handed back clean.',
-                    'alt' => '',
+                    /* Best current fit, 2026-08-12, replacing the last marked
+                       placeholder on the commercial set. It is an interior: a new
+                       window seen from inside a finished room at All Hallows, which
+                       is what "handed back clean" looks like even though the
+                       building is not a clinic.
+
+                       THE ALT MAKES NO CLINICAL CLAIM, because it is not a clinical
+                       room. That is the compromise in using it here, and it is the
+                       reason a real clinical interior is still top of the
+                       photography list for this route. */
+                    'image' => $cs_base . 'cs-all-hallows-bedford-window-inside.webp',
+                    'alt' => 'A new aluminium window seen from inside a finished room, the space cleaned and back in use',
                     'points' => ['Route and screening agreed first', 'Same-day handback per room', 'Sequenced against clinic hours'],
                 ],
             ],

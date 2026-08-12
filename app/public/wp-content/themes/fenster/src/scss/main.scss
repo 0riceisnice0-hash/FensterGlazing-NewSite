@@ -13571,17 +13571,31 @@ a.fg-cs-card__pill:focus-visible {
   font-size: clamp(1.08rem, 1.55vw, 1.35rem);
 }
 
+/* THREE ACTIONS ON ONE LINE, ALL THE SAME HEIGHT. Owner, 2026-08-12: the row was
+   uneven. It was — `align-items: center` against a single-line button and a
+   two-line card meant the two floated at different heights and never agreed at
+   any width. `stretch` makes the row set one height and every item fill it, so
+   the button grows to the cards rather than the cards shrinking to the button. */
 .fg-commercial-product-hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  align-items: center;
+  align-items: stretch;
   margin-top: 1.6rem;
+}
+
+/* Scoped to this row, not to `.button` globally: the shared button class is used
+   in about forty places and none of the others is in a stretched flex row. */
+.fg-commercial-product-hero__actions .button {
+  display: grid;
+  place-content: center;
+  min-height: 100%;
 }
 
 .fg-commercial-product-hero__phone {
   display: grid;
   gap: 0.15rem;
+  align-content: center;
   padding: 0.72rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 8px;
@@ -13589,6 +13603,19 @@ a.fg-cs-card__pill:focus-visible {
   text-decoration: none;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(14px);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.fg-commercial-product-hero__phone:hover,
+.fg-commercial-product-hero__phone:focus-visible {
+  border-color: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* The email address is the longest string in the row and would otherwise set the
+   row width on a laptop. It wraps rather than pushing the hero copy sideways. */
+.fg-commercial-product-hero__phone strong {
+  overflow-wrap: anywhere;
 }
 
 .fg-commercial-product-hero__phone span {
