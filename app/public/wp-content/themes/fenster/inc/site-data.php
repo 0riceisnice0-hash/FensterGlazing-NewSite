@@ -1417,6 +1417,18 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/sash-roseview/heritage-rose-window.png', 'alt' => 'Heritage Rose sash window viewed externally'],
             ],
             'aluminium_windows' => [
+                /* OURS, and it leads because every other entry in this pool is
+                   supplier or curated imagery. Owner-supplied 2026-08-12: "a
+                   sheerline casement for use in resi". Anthracite aluminium
+                   casements across three storeys of a brick block.
+
+                   THE ALT NAMES NO TOWN. This pool feeds around twenty
+                   `/aluminium-windows-<town>/` matrix routes, and an alt claiming
+                   a location would be false on nineteen of them — the exact
+                   dishonest-alt fault the 2026-07-16 image audit rewrote. GPS was
+                   stripped before it entered the theme, as it is on anything shot
+                   on site. */
+                ['src' => '/wp-content/themes/fenster/assets/images/products/aluminium-windows/alu-casement-brick-block-1600w.jpg', 'alt' => 'Anthracite aluminium casement windows across three storeys of a red brick building'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Aluminium windows installed on a coastal property'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png', 'alt' => 'Aluminium window profile detail'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-windows.jpg', 'alt' => 'Heritage aluminium windows on a period property'],

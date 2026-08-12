@@ -195,8 +195,13 @@ function fenster_commercial_product_pages(): array
             'intro_heading' => 'A facade that carries its own weight, the weather and the building\'s movement.',
             'hero_image' => $commercial_base . 'comm-curtain-walling-parade-1600w.jpg',
             'hero_alt' => 'A glazed aluminium curtain walling elevation across a commercial parade',
-            'intro_image' => $cs_base . 'cs-bletchley-rail-depot-elevation.webp',
-            'intro_alt' => 'Curtain walling, windows and entrance doors on a refurbished rail depot elevation',
+            /* Owner, 2026-08-12: this shot can be used on curtain walling too. It
+               earns the slot — the ground floor is a glazed screen with infill
+               panels set in a framed grid, which is the thing this page sells —
+               and it breaks up a route that was otherwise carrying the Bletchley
+               depot three times over. */
+            'intro_image' => $commercial_base . 'comm-industrial-unit-install-1600w.jpg',
+            'intro_alt' => 'A glazed ground-floor screen with infill panels set into a framed grid on a commercial unit, with new aluminium windows above',
             'summary' => [
                 'Curtain walling is a non-structural envelope hung off the building frame. It carries its own dead load, the wind load on the elevation and whatever the structure does underneath it, and it drains itself. That last part is what separates a curtain wall from a big window, and it is what the interface detailing exists to get right.',
                 'We survey, supply and install it on replacement facades, refurbishments and new openings, with doors, opening vents, insulated panels and louvres worked into the grid rather than added to it. Our most recent scheme of this type was the <a href="' . esc_url(home_url('/commercial-projects/bletchley-rail-depot-refurbishment/')) . '">Bletchley rail depot refurbishment</a>.',
@@ -358,8 +363,14 @@ function fenster_commercial_product_pages(): array
             'title' => 'Automatic doors and entrance automation',
             'subtitle' => 'Glazed entrance packages built around automatic operation, access control and the ironmongery that has to work with both.',
             'intro_heading' => 'The entrance is one assembly, however many trades touch it.',
+            /* OURS, and it can say so. Owner pointed at it 2026-08-12: the Bletchley
+               depot entrance is an automatic doorset we installed — anthracite
+               leaves, operator housing across the head, "Automatic Door" signage,
+               side screens and a level threshold. It replaces an unattributed
+               archive shot as the hero, because a photograph we can claim beats
+               one we cannot. */
             'hero_image' => $cs_base . 'cs-bletchley-rail-depot-entrance.webp',
-            'hero_alt' => 'A glazed commercial entrance screen with double doors set into a curtain walling grid',
+            'hero_alt' => 'An anthracite automatic doorset we installed, with the operator housing across the head, side screens and a level threshold',
             'intro_image' => $cs_base . 'cs-all-hallows-bedford-steel-doorset.webp',
             'intro_alt' => 'A steel entrance doorset with a glazed screen above and beside it',
             'summary' => [
@@ -395,31 +406,32 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'Set-out',
                     'title' => 'Footfall and the escape route decide the door before the finish does.',
                     'copy' => 'Clear opening width, traffic direction, the escape route through the entrance and the space the operator needs above the head are the four things that fix the design. Settle those four and everything after them is finish.',
-                    'image' => $cs_base . 'cs-bletchley-rail-depot-entrance.webp',
-                    'alt' => 'A commercial glazed entrance with double doors, viewed square on',
+                    /* Was the hero repeated. `HANDOVER.md` is explicit that product
+                       body imagery must not repeat the hero, and the residential
+                       template keeps a whole image queue to prevent exactly this.
+                       Caught 2026-08-12. The archive shot belongs here anyway: it
+                       shows the operator working with somebody walking through,
+                       which is what "traffic flow" means. */
+                    'image' => $asset_base . 'electric-door.jpg',
+                    'alt' => 'An automatic sliding entrance with the operator housing above the door head and a figure walking through',
                     'points' => ['Clear opening width and traffic flow', 'Escape route and emergency release', 'Head space for the operator'],
                 ],
                 [
                     'eyebrow' => 'The entrance in use',
                     'title' => 'A powered door still has to work when the power is off.',
                     'copy' => 'Every automated entrance needs a manual answer: how it opens in a power cut, how it releases on the fire alarm, and how it locks at night. Those are specification decisions, not commissioning ones, and they belong in the drawing rather than in a conversation on handover day.',
-                    /* PLACEHOLDER RETIRED 2026-08-12. The owner approved this shot
-                       from the scrape archive — "the blurry person auto door pic
-                       can stay in, thats decent" — and it is the right photograph
-                       for the slot: an automatic sliding entrance with the OPERATOR
-                       HOUSING VISIBLE above the door head, which is precisely what
-                       the placeholder was asking for, plus the side screens and a
-                       reader on the jamb.
+                    /* A manual entrance on purpose: this section is about what a
+                       powered door does when the power is off, and a doorset that
+                       opens by hand is the honest illustration of the fallback.
+                       Ours, from Heal's.
 
-                       IT IS NOT CAPTIONED AS OUR WORK. The owner said it could
-                       stay, not that it is ours, and supplier or archive imagery is
-                       never claimed as an install — the split this site holds to
-                       everywhere. The alt describes what is in frame and stops.
-
-                       The person is motion-blurred past recognition in the original
-                       frame, so nothing here needed blurring. */
-                    'image' => $asset_base . 'electric-door.jpg',
-                    'alt' => 'An automatic sliding entrance with the operator housing above the door head, glazed screens either side and a figure walking through',
+                       NOTE ON THE ARCHIVE SHOT ABOVE. It is unattributed and stays
+                       that way — the owner said it could stay, not that it is ours,
+                       and archive imagery is never claimed as an install. The
+                       Bletchley hero is ours and is captioned accordingly. That
+                       split is the rule this site holds everywhere. */
+                    'image' => $cs_base . 'cs-heals-tottenham-court-door.webp',
+                    'alt' => 'A glazed entrance doorset in a city centre elevation, opened by hand',
                     'points' => ['Power-off and fail-safe behaviour', 'Fire alarm release', 'Night locking and out-of-hours use'],
                 ],
             ],
@@ -762,18 +774,38 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'The front of the shed',
                     'title' => 'The office block is a building within a building.',
                     'copy' => 'It has the windows, the entrance, the meeting rooms and the only elevation anybody photographs, and it is built to a completely different specification from the eighty metres of cladding beside it. Treating it as its own glazing package rather than as a corner of the shed is what keeps the interfaces and the performance sensible.',
-                    'image' => '',
-                    'placeholder' => 'A distribution or manufacturing building we have glazed, showing the office block frontage.',
-                    'alt' => '',
+                    /* PLACEHOLDER RETIRED 2026-08-12, owner-supplied. Our own job:
+                       two Fenster vans in the yard, a run of new grey aluminium
+                       windows across the first floor and a glazed ground-floor
+                       screen, with the work still in progress. It is exactly what
+                       the placeholder asked for.
+
+                       THREE THINGS WERE TREATED BEFORE PUBLISHING. A fitter's face
+                       visible through the glass is blurred; a third-party security
+                       contractor's sign and phone number on the brick pier is
+                       blurred, the same call already made on the louvre blade
+                       close-up; and a partly legible plate on a car reflected in
+                       the screen is blurred. GPS stripped — the original carried
+                       coordinates, as every photograph taken on site does. Our own
+                       van plate is left alone: it is our vehicle and our phone
+                       number is on the side of it. */
+                    'image' => $commercial_base . 'comm-industrial-unit-install-1600w.jpg',
+                    'alt' => 'A two-storey business unit with a run of new grey aluminium windows and a glazed ground-floor screen, with two Fenster vans in the yard during the fit',
                     'points' => ['Glazing into cladding, not masonry', 'Entrance and reception screens', 'Meeting and welfare spaces'],
                 ],
                 [
                     'eyebrow' => 'Working round the operation',
                     'title' => 'The yard decides the programme more than the elevation does.',
                     'copy' => 'Loading bays run to a timetable, yard traffic does not stop for a scaffold, and the elevation you most want access to is usually the one with trailers against it. We agree access windows, exclusion zones and which elevations come out of service when, before anything is booked.',
-                    'image' => '',
-                    'placeholder' => 'Glazing work in progress on a live industrial site, showing the access set-up in a working yard.',
-                    'alt' => '',
+                    /* Owner-identified as industrial, 2026-08-12: the silver louvre
+                       screen with the yellow pipe. It shows the back-of-house
+                       reality this section is about — a service yard with plant, a
+                       refrigeration unit and a boiler alarm, which is where the
+                       glazing on an industrial site actually sits. Also used on
+                       `/louvre-vents/`; cross-page reuse is normal here, and it is
+                       not the hero on either. */
+                    'image' => '/wp-content/themes/fenster/assets/images/products/louvre/louvre-screen-boiler-1400w.webp',
+                    'alt' => 'A large silver louvre screen in a service yard, beside a boiler alarm and a refrigeration unit',
                     'points' => ['Access windows agreed in advance', 'Yard traffic and exclusion zones', 'Elevations released in sequence'],
                 ],
             ],
@@ -953,10 +985,15 @@ function fenster_commercial_product_pages(): array
             'title' => 'Healthcare and clinical glazing',
             'subtitle' => 'Windows, doors and glazed screens for dental practices, clinics and healthcare buildings, fitted around a treatment list that does not stop.',
             'intro_heading' => 'A clinic cannot close for a fortnight and neither can its list.',
+            /* THE SAME PHOTOGRAPH WAS HERE THREE TIMES on the first pass — hero,
+               intro and the first detail section — which is the fault the
+               residential template keeps an image queue to prevent. The intro is
+               deliberately imageless now, so the copy runs at a single readable
+               measure rather than repeating the frontage a second time. */
             'hero_image' => $asset_base . 'dental-practice-glazing.jpg',
             'hero_alt' => 'A dental practice frontage after its glazing was replaced',
-            'intro_image' => $asset_base . 'dental-practice-glazing.jpg',
-            'intro_alt' => 'New glazing on a dental practice, seen from the street',
+            'intro_image' => '',
+            'intro_alt' => '',
             'summary' => [
                 'Healthcare buildings are the strictest kind of occupied site. A treatment room out of use is a list that slips, infection control decides where dust may travel, and the rooms you most want to reglaze are the ones that can least afford to close. The specification is rarely the hard part.',
                 'We survey and install replacement windows, doorsets, glazed screens and sealed units in live clinical settings, agreeing the room-by-room sequence before we start. Our most recent work of this type was the entrance glazing at <a href="' . esc_url(home_url('/commercial-projects/roka-dental-woburn-sands/')) . '">Roka Dental in Woburn Sands</a>.',
@@ -990,8 +1027,8 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'Specification',
                     'title' => 'Safety, privacy and noise are decided per room, not per building.',
                     'copy' => 'A waiting room, a consulting room and a treatment room want three different answers from the same window. We go through them opening by opening before anything is made: toughened or laminated, clear or obscure, how far it opens and whether anyone can hear through it.',
-                    'image' => $asset_base . 'dental-practice-glazing.jpg',
-                    'alt' => 'Glazed frontage of a dental practice after replacement',
+                    'image' => $asset_base . '668a13f5-3500-420d-8e15-47834268084b.jpg',
+                    'alt' => 'A care building elevation with replacement windows, the openings restricted for safe use',
                     'points' => ['Safety glass per opening', 'Obscure glass where overlooked', 'Restrictors to your assessment'],
                 ],
                 [
