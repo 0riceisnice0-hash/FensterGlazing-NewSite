@@ -9,6 +9,116 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-12 (commercial session — HANDOVER, work in flight)
+
+**Live is `47db7aea`, established by checksum on `inc/site-data.php`,
+`inc/generated-pages.php` and `assets/js/main.js`, not read off a doc. `main`
+is `b1d8aed7`. SIX COMMITS ARE ON TEST AND NOT LIVE.** Test is deliberately
+ahead. Working tree clean, no release branch outstanding.
+
+### THE ONE URGENT THING
+
+**Four client names are still public in image URLs on PRODUCTION.** The fix is
+written and verified on test but has not shipped, so `Airbus-Commercial.jpg`,
+`ROKA-Dental-Post-Fitting-2-1-scaled.jpg`, `BFI.jpg` and
+`Greensand-Country.jpg` all still return `200` on live. This breaches the
+Commercial Client Anonymity Rule. Owner approved the fix on 2026-08-12; it is
+sitting in the unshipped stack below. **Ship it.**
+
+**THE LIVE DEPLOY OF THAT STACK NEEDS A DELETION ASSERTION OF EXACTLY FOUR, BY
+NAME — NOT EMPTY.** Two renames and two deletions. Every other release this
+month asserted zero deletions, so the usual copied-forward guard will abort:
+
+```
+BFI.jpg                              deleted
+Greensand-Country.jpg                deleted
+Airbus-Commercial.jpg                renamed -> commercial-glazed-elevation.jpg
+ROKA-Dental-Post-Fitting-2-1-scaled.jpg  renamed -> dental-practice-glazing.jpg
+```
+
+Remember `git diff --name-status` reports a rename as `R100` and **rsync sees a
+deletion**, so set the assertion from what rsync will do, not from what git
+prints. That is already written down and it bit this project once.
+
+### What is on test and not live, oldest first
+
+| Commit | What |
+|---|---|
+| `2107661f` | Menu labels drop the repeated "Windows"/"Doors" |
+| `fe1fc325` | Both heritage rows read "Aluminium Heritage"; mega-menu columns get `aria-labelledby` |
+| `08710c49` | Mobile drawer columns named too |
+| `888e98ce` | **Client names out of image URLs** (the urgent one) |
+| `63e44990` | Four real commercial photographs + the Supplier Naming Rule |
+| `b1d8aed7` | **Commercial replacement glazing route; the hub loop closed** |
+
+All six are owner-approved in principle. Only the live deploy is outstanding.
+
+### What this session did
+
+1. **Product names aligned with the showroom and WindowCAD** — shipped live
+   earlier in the session. See the block below.
+2. **Menu labels shortened** on the owner's rule: drop the trailing noun once
+   the label is two or more words. Both heritage rows now read "Aluminium
+   Heritage", which is why the menu columns needed accessible names.
+3. **A full commercial audit**, written up as `COMMERCIAL-AUDIT-2026-08-12.md`.
+   Read that before touching any commercial page.
+4. **The hub split actioned.** `/commercial-glazing/` is the hub only;
+   `/commercial-replacement-glazing/` is new and carries all three of the
+   owner's photographs.
+
+### The commercial audit's findings, in one paragraph
+
+Ten of eleven commercial pages carry **no specification figure at all**, on
+pages written for people who price work. Eleven share three identical headings
+and say **"Fenster can" fifteen times in the third person, in H2s**. The
+imagery is scrape-era and includes a residential composite-looking door and a
+CGI render the docs already had removed elsewhere. `/louvre-vents/` is the only
+route meeting the standard and is the benchmark.
+
+### NEXT JOB, and it needs nothing from the owner
+
+**The third-person sweep.** One data file (`inc/commercial-product-data.php`)
+and one template (`commercial-product.php`) fix all twelve commercial pages at
+once: "What Fenster can check, supply and install", "Buildings Fenster can look
+at for this type of work", "Send Fenster your X brief". The brand-new
+replacement glazing page inherits all three, which is why it is next.
+
+### Then, blocked on the owner
+
+- **Curtain walling**: mullion and transom sizes, a U-value, the wind-load
+  standard, max panel size, structural versus capped.
+- **Commercial windows and doors**: the fire ratings we can actually claim, and
+  our PAS 24 position on commercial work.
+- **AOV**: the standard we install to. Owner already confirmed **no specific
+  system, fit only, no commissioning** — that scope boundary needs stating
+  positively, not as an exclusion.
+- **Steel doors**: owner asked whether it wants its own page. Recommendation
+  given and accepted in principle — **own page once there is a rating and one
+  photograph; a section on commercial windows and doors until then.**
+- **Photographs still missing**: an AOV and its control panel, an automatic
+  entrance we have fitted, one building per sector, and the Heal's louvres.
+
+### Owner rulings captured this session
+
+- **Supplier naming is about disintermediation, not suppliers.** Never name a
+  fabricator (IKON); name a known system lightly and never as the focus
+  (Technal, Smart, Senior). Full rule in `AI.md`.
+- **Sculptured only** on tilt and turn, matching the casement.
+- **Colours stay at sixteen** on tilt and turn. Left, not ruled wrong.
+- **`glass-lifting.com` stays** on the crane in the access photograph: we hire
+  the lift in and the picture is honest about it.
+- Make-safe is **not** promoted on the commercial replacement page, because
+  there is no out-of-hours cover.
+
+### The lesson this session kept re-teaching, five times
+
+**A verification failure is not evidence until the probe is checked.** A
+stale-name sweep reported 14, then 37, then 3, and every one was the probe.
+`/sitemap.xml` is only the index — the real list is `page-sitemap.xml`, and
+checking the wrong one reported a new route as missing when it was there. And
+`d41d8cd9…` turned up again on a served stylesheet because a grep matched
+nothing and `curl` was handed a blank argument.
+
 ## START HERE, 2026-08-12 (product naming session)
 
 **Live is `e3ea19e9` and level with `main`. TEST IS LEVEL WITH LIVE.** Owner

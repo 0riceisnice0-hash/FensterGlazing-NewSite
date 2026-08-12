@@ -2,8 +2,21 @@
 
 ## Handover state, 2026-08-12
 
-**Live is `e3ea19e9` and level with `main`. Test is level with live.** No
-release branch outstanding from this session, working tree clean.
+**Live is `47db7aea`, established by checksum. `main` is `b1d8aed7` and SIX
+COMMITS ARE ON TEST AND NOT LIVE.** Test is deliberately ahead. No release
+branch outstanding, working tree clean.
+
+**URGENT AND UNSHIPPED: four client names are still public in image URLs on
+production.** The fix is written, owner-approved and verified on test; it has
+not been deployed. `Airbus-Commercial.jpg`, `ROKA-Dental-Post-Fitting-2-1-scaled.jpg`,
+`BFI.jpg` and `Greensand-Country.jpg` all still return 200 on live, which
+breaches the Commercial Client Anonymity Rule.
+
+**That deploy needs a deletion assertion of EXACTLY FOUR, BY NAME — not empty.**
+Two renames and two deletions, and rsync counts a rename as a deletion even
+though `git diff --name-status` prints `R100`. Every other release this month
+asserted zero, so a copied-forward guard will abort. The full START HERE block
+in `PROGRESS.md` lists the four.
 `LIVECHANGES.md` is the authority on what is live; `PROGRESS.md` is a log and
 some of its older entries are still titled "(test)" long after shipping.
 
