@@ -3758,8 +3758,13 @@ if ($is_commercial_hub) {
                smell rather than a fault of this route, and it is flagged rather
                than fixed everywhere here. Aluminium flush is overridden because a
                duplicate H1 sitting directly above a bespoke middle looks like
-               nobody read the page. */
-            'title' => $is_alu_flush_bespoke ? 'Sheerline Prestige, in four figures.' : $title,
+               nobody read the page. Tilt and turn joined it on 2026-08-12 for
+               the same reason and in the same shape; both name the system rather
+               than repeating the product. Two of twenty-three is not the fix,
+               and the site-wide one is still open. */
+            'title' => $is_alu_flush_bespoke
+                ? 'Sheerline Prestige, in four figures.'
+                : ($is_tilt_turn_bespoke ? 'Liniar EnergyPlus, in four figures.' : $title),
         ]); ?>
     <?php elseif (! $use_product_journey) : ?>
         <section class="fg-intent-band">
