@@ -188,12 +188,6 @@ $photo = static function (string $key) use ($photos): array {
                 <h2 id="fg-upd-open-title"><?php esc_html_e('Made for the opening it goes into, whatever shape or size that is.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The leaf, the frame, the threshold and the glass are all specified for your house. A plain white back door is the one we fit most, and it is made the same way as the arched one here: to the hole in your wall, whatever shape that hole is in.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The leaf can be split across the middle too, so the top half opens on its own and the bottom stays shut. That is a stable door, and it is the same door underneath.', 'fenster'); ?></p>
-                <?php if (! empty($photo('stable')['src'])) : ?>
-                    <figure class="fg-upd-open__inset">
-                        <img src="<?php echo esc_url($photo('stable')['src']); ?>" alt="<?php echo esc_attr($photo('stable')['alt'] ?? ''); ?>" width="1280" height="1600" loading="lazy" decoding="async">
-                        <figcaption><?php esc_html_e('The same leaf, split across the middle.', 'fenster'); ?></figcaption>
-                    </figure>
-                <?php endif; ?>
             </div>
             <?php if (! empty($photo('opening')['src'])) : ?>
                 <figure class="fg-cw-media fg-upd-media--4x3">
@@ -228,10 +222,25 @@ if (! empty($door_colour_names)) {
     get_template_part('template-parts/components/upvc-colour-grid', null, [
         'product_noun' => 'door',
         'names' => $door_colour_names,
+        'modifier' => 'fg-upvc-colours--thirteen',
         'heading' => __('Thirteen foils, bonded on rather than painted on.', 'fenster'),
         'intro' => __('The foil is bonded to the profile at the factory rather than painted on afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the outside face, with the same colour or smooth white inside.', 'fenster'),
     ]);
 }
+
+/* THE THREE CHOICES RUN TOGETHER, which is the rhythm /casement-windows/ has
+   carried since August: colour, then handles, then glass, each a component with
+   its own heading and none of them needing a band above it. The handle grid is
+   released from its usual slot in `generated-page.php` to get here, and the
+   privacy glass card replaces a bespoke one written into the survey section,
+   which the owner rightly called bolted on — this component is better, it shows
+   the real patterns, and it is what every other route uses. */
+get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args());
+get_template_part('template-parts/components/privacy-glass-card', null, [
+    'eyebrow' => __('Specification choices', 'fenster'),
+    'heading' => __('Privacy where the door needs it.', 'fenster'),
+    'copy' => __('A front door onto a street, a side entrance, anything overlooked. Privacy glass goes into the same sealed unit, graded one to five for how much it hides.', 'fenster'),
+]);
 ?>
 
 <?php /* 4. THE REST OF THE DECISIONS. Three now, not six: colour has its own
@@ -249,7 +258,7 @@ if (! empty($door_colour_names)) {
             $ways = [
                 [
                     'label' => __('The style', 'fenster'),
-                    'copy' => __('The leaf gets divided by transoms and mullions, the horizontals and the verticals, and every opening they make is filled with glass or with a panel. Panels come in two faces, flat or shiplap. The designer starts you on a set of styles and none of them is fixed: move the transom, add a mullion, turn a glazed opening into a panel or the other way round.', 'fenster'),
+                    'copy' => __('Transoms and mullions divide the leaf, and every opening they make takes glass or a panel, flat or shiplap. The designer opens on a set of styles and none of them is fixed.', 'fenster'),
                     'image' => 'upvc-door-anthracite-solid-shiplap.webp',
                     'alt' => __('Anthracite uPVC door panelled top to bottom in shiplap, with no glazed opening', 'fenster'),
                 ],
@@ -322,62 +331,56 @@ if (! empty($door_colour_names)) {
     <?php get_template_part('template-parts/components/tech-banner', null, $tech_banner); ?>
 <?php endif; ?>
 
-<?php /* 6. WHAT GETS SETTLED AT SURVEY. The three practical decisions, with
-         privacy glass merged in from the old decisions grid so it is stated
-         once, in the place where somebody is deciding it. */ ?>
+<?php /* 6. THE PARTS THAT DO THE WORK. Two things, both of them the sort of
+         detail a customer only meets after the door is in: the strip they step
+         over and the lock they turn twice a day.
+
+         RESTRUCTURED 2026-08-12. It was three cards and a band of four drawings
+         underneath, and the owner's read was that the drawings sat apart, the
+         lock and the glass felt bolted on and the heading was doing nothing. The
+         glass has gone to the privacy card above, where it belongs with the
+         other choices; the drawings are small and in line beside the threshold
+         copy rather than a feature of their own; and the two remaining parts sit
+         side by side because they are the same kind of thing. */ ?>
 <section class="fg-cw fg-upd fg-upd-detail" aria-labelledby="fg-upd-detail-title">
     <div class="container">
         <div class="fg-upd-detail__head">
-            <p class="eyebrow"><?php esc_html_e('Settled at survey', 'fenster'); ?></p>
-            <h2 id="fg-upd-detail-title"><?php esc_html_e('The parts nobody thinks about until they live with them.', 'fenster'); ?></h2>
-        </div>
-        <?php /* THE DRAWINGS BELONG TO THE CARD THAT DESCRIBES THEM. They sat
-                 in a strip under all three cards and read as an orphan, which is
-                 what the owner called out. The threshold now takes a row of its
-                 own with its four sections beside the copy, and the two
-                 text-only decisions sit under it as a pair. It also gives the
-                 section a shape rather than three columns and a loose band. */ ?>
-        <div class="fg-upd-threshold-row">
-            <div class="fg-upd-threshold-row__text">
-                <h3><?php esc_html_e('The threshold you step over.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. Which one you get turns on your floor levels inside and out, so it is settled at survey, and we aim for the low aluminium wherever those levels allow it.', 'fenster'); ?></p>
-                <p><?php esc_html_e('The seal itself is Liniar\'s patented bubble gasket, which is the part you feel in January rather than read on a data sheet: it squashes to the shape of the gap rather than relying on the door shutting in exactly the same place every time.', 'fenster'); ?></p>
-            </div>
-            <div class="fg-upd-thresholds">
-                <?php
-                $threshold_options = [
-                    ['name' => __('Large uPVC', 'fenster'), 'file' => 'upvc-threshold-large-upvc.webp', 'note' => __('The full upstand', 'fenster')],
-                    ['name' => __('Low uPVC', 'fenster'), 'file' => 'upvc-threshold-low-upvc.webp', 'note' => __('A slimmer section', 'fenster')],
-                    ['name' => __('Low aluminium', 'fenster'), 'file' => 'upvc-threshold-low-aluminium.webp', 'note' => __('What we aim for', 'fenster')],
-                    ['name' => __('Part M low', 'fenster'), 'file' => 'upvc-threshold-part-m-low.webp', 'note' => __('For wheelchair access', 'fenster')],
-                ];
-                foreach ($threshold_options as $threshold) :
-                    ?>
-                    <figure class="fg-upd-threshold">
-                        <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/thresholds/' . $threshold['file'])); ?>" alt="<?php printf(esc_attr__('Cutaway section of the %s door threshold', 'fenster'), esc_attr(strtolower((string) $threshold['name']))); ?>" width="960" height="900" loading="lazy" decoding="async">
-                        <figcaption>
-                            <strong><?php echo esc_html($threshold['name']); ?></strong>
-                            <span><?php echo esc_html($threshold['note']); ?></span>
-                        </figcaption>
-                    </figure>
-                <?php endforeach; ?>
-            </div>
+            <p class="eyebrow"><?php esc_html_e('The working parts', 'fenster'); ?></p>
+            <h2 id="fg-upd-detail-title"><?php esc_html_e('The threshold and the lock.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('Two things you meet every day and choose once. Both are settled before the door is made.', 'fenster'); ?></p>
         </div>
 
         <div class="fg-upd-detail__grid fg-upd-detail__grid--pair">
+            <article class="fg-upd-detail__card">
+                <h3><?php esc_html_e('The threshold you step over.', 'fenster'); ?></h3>
+                <p><?php esc_html_e('The strip under the door decides whether you trip on it, whether a wheelchair or a pushchair gets through, and how much weather sits against it. Which one you get turns on your floor levels inside and out, so it is settled at survey, and we aim for the low aluminium wherever those levels allow it.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The seal is Liniar\'s patented bubble gasket, which is the part you feel in January rather than read on a data sheet: it squashes to the shape of the gap rather than relying on the door shutting in exactly the same place every time.', 'fenster'); ?></p>
+
+                <div class="fg-upd-thresholds">
+                    <?php
+                    $threshold_options = [
+                        ['name' => __('Large uPVC', 'fenster'), 'file' => 'upvc-threshold-large-upvc.webp'],
+                        ['name' => __('Low uPVC', 'fenster'), 'file' => 'upvc-threshold-low-upvc.webp'],
+                        ['name' => __('Low aluminium', 'fenster'), 'file' => 'upvc-threshold-low-aluminium.webp'],
+                        ['name' => __('Part M low', 'fenster'), 'file' => 'upvc-threshold-part-m-low.webp'],
+                    ];
+                    foreach ($threshold_options as $threshold) :
+                        ?>
+                        <figure class="fg-upd-threshold">
+                            <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/images/products/upvc-doors/thresholds/' . $threshold['file'])); ?>" alt="<?php printf(esc_attr__('Cutaway section of the %s door threshold', 'fenster'), esc_attr(strtolower((string) $threshold['name']))); ?>" width="960" height="900" loading="lazy" decoding="async">
+                            <figcaption><?php echo esc_html($threshold['name']); ?></figcaption>
+                        </figure>
+                    <?php endforeach; ?>
+                </div>
+                <p class="fg-upd-thresholds__note"><?php esc_html_e('Sections drawn by Liniar, whose profile this is.', 'fenster'); ?></p>
+            </article>
+
             <article class="fg-upd-detail__card">
                 <h3><?php esc_html_e('The lock, and what comes as standard.', 'fenster'); ?></h3>
                 <p><?php esc_html_e('A multi-point mechanism throws hooks or bolts into the frame at several points up the leaf, rather than one latch in the middle. That is standard on every door we fit.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The cylinder that comes with it is a one star. A three star cylinder is an upgrade and it is worth asking for: it is the part that resists snapping, and it is the cheapest thing on the whole door to improve.', 'fenster'); ?></p>
                 <p class="fg-upd-detail__note"><?php esc_html_e('Liniar test the system to PAS 24, it is a Secured by Design product, and the profile carries a BSI Kitemark to BS EN 12608-1. Those are their figures for the profile, not a certificate for a particular door, so ask us what a specific doorset is built to.', 'fenster'); ?></p>
             </article>
-            <article class="fg-upd-detail__card">
-                <h3><?php esc_html_e('The glass, which is a privacy decision.', 'fenster'); ?></h3>
-                <p><?php esc_html_e('Every style of privacy glass we fit can go in a door, graded one to five for how much it hides. A bathroom or a front door onto a street usually wants a five; a back door onto your own garden usually does not.', 'fenster'); ?></p>
-                <p><a href="<?php echo esc_url(home_url('/obscured-glass/')); ?>"><?php esc_html_e('Compare the privacy glass', 'fenster'); ?></a></p>
-            </article>
         </div>
-
-        <p class="fg-upd-thresholds__note"><?php esc_html_e('Sections drawn by Liniar, whose profile this is.', 'fenster'); ?></p>
     </div>
 </section>

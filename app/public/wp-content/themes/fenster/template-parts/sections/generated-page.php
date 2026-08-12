@@ -4996,7 +4996,11 @@ if ($is_commercial_hub) {
             ]); ?>
         <?php endif; ?>
 
-        <?php if ($show_door_handles) : ?>
+        <?php /* uPVC doors render this themselves, immediately after the colour
+                 grid, so the three choices a customer actually makes — colour,
+                 handle, glass — run together the way they do on
+                 /casement-windows/. Left here for every other door route. */ ?>
+        <?php if ($show_door_handles && ! $is_upvc_doors_bespoke) : ?>
             <?php get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args()); ?>
         <?php endif; ?>
 

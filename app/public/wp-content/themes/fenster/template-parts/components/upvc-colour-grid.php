@@ -42,9 +42,13 @@ if (empty($upvc_colours)) {
 
 $product_noun = (string) ($args['product_noun'] ?? 'window');
 $colour_heading = (string) ($args['heading'] ?? __('Sixteen colours outside, matched or white inside.', 'fenster'));
+/* A subset rarely divides the way sixteen does. Thirteen in the six-column grid
+   left one swatch alone on a third row, so a route carrying a subset can pass a
+   modifier and set its own column count. */
+$colour_modifier = (string) ($args['modifier'] ?? '');
 $colour_intro = (string) ($args['intro'] ?? __('A uPVC colour is a foil bonded to the profile at the factory rather than paint applied afterwards, which is why the woodgrains have a grain you can feel and why none of them need repainting. The colour you choose is the external face, with the same colour or smooth white on the inside.', 'fenster'));
 ?>
-<section id="upvc-colours" class="fg-upvc-colours" aria-labelledby="fg-upvc-colours-title">
+<section id="upvc-colours" class="fg-upvc-colours <?php echo esc_attr($colour_modifier); ?>" aria-labelledby="fg-upvc-colours-title">
     <div class="container">
         <div class="fg-upvc-colours__heading">
             <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
