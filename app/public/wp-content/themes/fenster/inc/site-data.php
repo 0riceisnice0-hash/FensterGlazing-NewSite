@@ -1839,7 +1839,7 @@ function fenster_site_data(): array
                     ['question' => 'Why replace old timber fascias?', 'answer' => 'Old timber can rot, move and need regular repainting. uPVC roofline products provide a lower-maintenance alternative.'],
                     ['question' => 'Can roofline colours match my windows and doors?', 'answer' => 'In many cases, yes. Fenster can help choose roofline finishes that coordinate with the wider exterior.'],
                     ['question' => 'Will ventilation be considered?', 'answer' => 'Yes. Soffit ventilation and roof-edge condition should be checked as part of the replacement conversation.'],
-                    ['question' => 'Is roofline work surveyed first?', 'answer' => 'Yes. Fenster checks the existing roof edge, boards, access and drainage details before confirming the specification.'],
+                    ['question' => 'Is roofline work surveyed first?', 'answer' => 'Yes. We check the existing roof edge, boards, access and drainage details before confirming the specification.'],
                 ],
             ],
             /* Rewritten 2026-08-10 with the page. Two things changed beyond the
