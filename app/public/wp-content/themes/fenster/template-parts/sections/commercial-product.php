@@ -259,7 +259,15 @@ $is_louvre = $slug === 'louvre-vents';
                     <?php if ($spec_note !== '') : ?>
                         <?php echo esc_html($spec_note); ?>
                     <?php else : ?>
-                        <?php esc_html_e('Every figure published here is one we can stand behind. Where a row is still being confirmed for this system, ask and we will send it to you in writing.', 'fenster'); ?>
+                        <?php /* The second sentence used to read "Where a row is
+                                 still being confirmed for this system, ask and we
+                                 will send it to you in writing", which pointed at
+                                 the pending rows. Those stopped rendering on the
+                                 owner's ruling of 2026-08-13, leaving the clause
+                                 referring to something no reader can see. The
+                                 invitation is worth keeping, so it now covers
+                                 anything the table does not answer. */
+                              esc_html_e('Every figure published here is one we can stand behind. Ask us for anything the table does not cover and we will send it to you in writing.', 'fenster'); ?>
                     <?php endif; ?>
                 </p>
             </div>
