@@ -489,7 +489,7 @@ function fenster_enquiry_customer_email(array $data): string
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:28px 12px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border-radius:16px;overflow:hidden;">
 <tr><td style="padding:22px 28px;background:#ffffff;border-bottom:1px solid #dce7e5;"><img src="' . esc_url($logo) . '" width="170" alt="Fenster Glazing" style="display:block;max-width:170px;height:auto;"></td></tr>
-<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of the Fenster team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have extra photos, drawings or schedules, send them to info@fensterglazing.com.</p>' . $message_panel . '</td></tr>
+<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of our team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have extra photos, drawings or schedules, send them to info@fensterglazing.com.</p>' . $message_panel . '</td></tr>
 <tr><td style="padding:20px 28px;background:#f3f8f7;color:#60727a;font-size:13px;line-height:1.6;"><strong style="color:#06212a;">Fenster Glazing</strong><br>01908 429200 · info@fensterglazing.com</td></tr>
 </table></td></tr></table></body></html>';
 }
@@ -697,7 +697,7 @@ function fenster_process_enquiry(): array|WP_Error
     ], true);
 
     if (is_wp_error($enquiry_id)) {
-        return fenster_enquiry_error('error', 'We could not save your enquiry. Please call or email the team.');
+        return fenster_enquiry_error('error', 'We could not save your enquiry. Please call or email us.');
     }
 
     $meta = [
@@ -802,7 +802,7 @@ function fenster_process_enquiry(): array|WP_Error
     return [
         'status' => 'success',
         'message' => 'Thanks — your enquiry has been received.',
-        'copy' => 'Your project details are safely with the Fenster team.',
+        'copy' => 'Your project details are safely with our team.',
         'enquiry_id' => (int) $enquiry_id,
         'office_email_sent' => $office_sent,
         'confirmation_sent' => $confirmation_sent,

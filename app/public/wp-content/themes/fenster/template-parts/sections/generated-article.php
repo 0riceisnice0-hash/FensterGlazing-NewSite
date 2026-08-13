@@ -72,7 +72,7 @@ $article_next_steps_map = [
     'what-is-a-door-lintel' => [
         'eyebrow' => 'Planning door work?',
         'title' => 'Need a doorway checked before new doors or glazing?',
-        'copy' => 'If a door opening, lintel or frame condition affects the project, Fenster can check the practical details before replacement doors or glazing are ordered.',
+        'copy' => 'If a door opening, lintel or frame condition affects the project, we can check the practical details before replacement doors or glazing are ordered.',
         'links' => [
             ['label' => 'View doors', 'url' => home_url('/doors-milton-keynes/'), 'meta' => 'Front, patio, French and bifold options'],
             ['label' => 'Composite doors', 'url' => home_url('/composite-doors/'), 'meta' => 'Secure entrance door replacements'],
@@ -82,7 +82,7 @@ $article_next_steps_map = [
     'different-types-of-window-frame-materials' => [
         'eyebrow' => 'Choosing frames?',
         'title' => 'Compare window materials around your home, not just the brochure.',
-        'copy' => 'Frame material affects sightlines, colour, maintenance, insulation and cost. Start with the main window ranges, then Fenster can help narrow the specification.',
+        'copy' => 'Frame material affects sightlines, colour, maintenance, insulation and cost. Start with the main window ranges, then we can help narrow the specification.',
         'links' => [
             ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Compare uPVC, aluminium and heritage styles'],
             ['label' => 'Aluminium windows', 'url' => home_url('/aluminium-windows/'), 'meta' => 'Slim frames and modern finishes'],
@@ -92,7 +92,7 @@ $article_next_steps_map = [
     'what-is-double-glazing-and-how-does-it-work' => [
         'eyebrow' => 'Ready to compare options?',
         'title' => 'Turn double glazing research into a practical quote.',
-        'copy' => 'Fenster can help compare windows, doors, replacement glass and frame choices around the rooms you want to improve.',
+        'copy' => 'We can help compare windows, doors, replacement glass and frame choices around the rooms you want to improve.',
         'links' => [
             ['label' => 'Double glazing Milton Keynes', 'url' => home_url('/double-glazing-milton-keynes/'), 'meta' => 'Windows, doors and replacement glass'],
             ['label' => 'Windows in Milton Keynes', 'url' => home_url('/windows-milton-keynes/'), 'meta' => 'Browse the main window styles'],
@@ -192,8 +192,8 @@ $inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inl
             <div class="container fg-article-next-steps__inner">
                 <div class="fg-article-next-steps__copy">
                     <p class="eyebrow"><?php echo esc_html((string) ($article_next_steps['eyebrow'] ?? 'Next step')); ?></p>
-                    <h2><?php echo esc_html((string) ($article_next_steps['title'] ?? 'Plan the next step with Fenster.')); ?></h2>
-                    <p><?php echo esc_html((string) ($article_next_steps['copy'] ?? 'Explore the most relevant Fenster products and services for this guide.')); ?></p>
+                    <h2><?php echo esc_html((string) ($article_next_steps['title'] ?? 'Plan the next step with us.')); ?></h2>
+                    <p><?php echo esc_html((string) ($article_next_steps['copy'] ?? 'Explore our most relevant products and services for this guide.')); ?></p>
                 </div>
                 <div class="fg-article-next-steps__links">
                     <?php foreach (array_slice((array) ($article_next_steps['links'] ?? []), 0, 4) as $link) : ?>
@@ -242,7 +242,7 @@ $inline_image_gap = max(2, (int) ceil(count($article_blocks) / max(1, count($inl
             <div>
                 <p class="eyebrow"><?php esc_html_e('Talk to Fenster', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Thinking about your own windows or doors?', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The Fenster team can help with product advice, survey-led specification and clear pricing for your home or project.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Our team can help with product advice, survey-led specification and clear pricing for your home or project.', 'fenster'); ?></p>
                 <div class="fg-contact-list">
                     <a href="tel:<?php echo esc_attr($phone_href); ?>"><?php echo esc_html($phone); ?></a>
                     <a class="text-link" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>

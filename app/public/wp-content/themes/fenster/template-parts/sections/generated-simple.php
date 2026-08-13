@@ -199,7 +199,7 @@ endif;
         <div class="container fg-simple-contact__inner">
             <div>
                 <p class="eyebrow"><?php esc_html_e('Need help?', 'fenster'); ?></p>
-                <h2><?php echo esc_html($is_utility ? 'Speak to Fenster if you need anything clarified.' : 'Talk to Fenster about your project.'); ?></h2>
+                <h2><?php echo esc_html($is_utility ? 'Speak to us if you need anything clarified.' : 'Talk to us about your project.'); ?></h2>
                 <p><?php esc_html_e('The team can help with windows, doors, glazing repairs, commercial enquiries and showroom visits.', 'fenster'); ?></p>
             </div>
             <div class="fg-contact-list">

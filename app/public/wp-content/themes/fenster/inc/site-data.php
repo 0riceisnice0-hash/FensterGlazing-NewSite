@@ -1730,7 +1730,7 @@ function fenster_site_data(): array
                     ['title' => 'Compliance settled at specification', 'copy' => 'Part L, safety glazing and any acoustic requirement belong in the specification, not in a variation after contract. We would rather have that conversation early than reprice the job later.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Do you actually work in Leeds, or just cover it?', 'answer' => 'We work there. Fenster is based in Milton Keynes and travels for commercial projects. The Leeds job we can point you at is Headrow Court, where we fitted the aluminium windows on a conversion of four former office buildings into 108 student studios, completed in October 2025.'],
+                    ['question' => 'Do you actually work in Leeds, or just cover it?', 'answer' => 'We work there. We are based in Milton Keynes and travel for commercial projects. The Leeds job we can point you at is Headrow Court, where we fitted the aluminium windows on a conversion of four former office buildings into 108 student studios, completed in October 2025.'],
                     ['question' => 'What kind of commercial buildings do you glaze?', 'answer' => 'Offices, retail units, hotels, care homes, schools, healthcare buildings and student accommodation. The building type matters less than the openings, the access and the programme.'],
                     ['question' => 'Can the work happen while the building is occupied?', 'answer' => 'Usually yes, and most commercial jobs are. It is planned in phases around access, working hours and the parts of the building that have to keep running. The sequence is agreed before work starts rather than settled on site.'],
                     ['question' => 'Do we have to replace every window?', 'answer' => 'No. A survey may find that some openings need new frames, others need new sealed units, and others need nothing. Phased replacement across more than one budget year is a normal way to run this.'],
@@ -1738,54 +1738,54 @@ function fenster_site_data(): array
                 ],
             ],
             'aluminium-bifold-doors' => [
-                'intro' => 'Aluminium bifold doors open up kitchens, extensions and living spaces with slim frames, flexible pane layouts and strong weather protection. Fenster specifies the configuration, traffic door, threshold, colour and glazing around how the room will be used.',
+                'intro' => 'Aluminium bifold doors open up kitchens, extensions and living spaces with slim frames, flexible pane layouts and strong weather protection. We specify the configuration, traffic door, threshold, colour and glazing around how the room will be used.',
                 'benefits' => [
                     ['title' => 'Open-plan living', 'copy' => 'Aluminium bifold doors create a wide, flexible opening between your home and garden while keeping strong weather protection when closed.'],
                     ['title' => 'Slim aluminium sightlines', 'copy' => 'Narrow frames help maximise glass area, daylight and views without compromising everyday durability.'],
-                    ['title' => 'Configured around the opening', 'copy' => 'Fenster helps plan pane count, traffic doors, thresholds, colours, glazing and hardware around the way the space will be used.'],
+                    ['title' => 'Configured around the opening', 'copy' => 'We help plan pane count, traffic doors, thresholds, colours, glazing and hardware around the way the space will be used.'],
                     ['title' => 'Thermally broken frames', 'copy' => 'High-performance aluminium frames and modern glazing help retain warmth, reduce draughts and keep the room comfortable when the doors are closed.'],
                     ['title' => 'Installed with care', 'copy' => 'The opening, levels, drainage and threshold details are checked before manufacture so the doors fold, seal and lock correctly after installation.'],
                 ],
                 'faqs' => [
-                    ['question' => 'How many panes can aluminium bifold doors have?', 'answer' => 'Fenster can specify bifold configurations up to seven panes, depending on the opening size, layout and access requirements.'],
+                    ['question' => 'How many panes can aluminium bifold doors have?', 'answer' => 'We can specify bifold configurations up to seven panes, depending on the opening size, layout and access requirements.'],
                     ['question' => 'Can bifold doors include a traffic door?', 'answer' => 'Yes. A traffic door can be included in many configurations so you can use one everyday entrance without opening the full set.'],
                     ['question' => 'Are bifold doors thermally efficient?', 'answer' => 'Yes. The aluminium bifold systems are specified with thermally broken frames and high-performance glazing to support comfort through the year.'],
-                    ['question' => 'Can I choose the colour and hardware?', 'answer' => 'Yes. Fenster can help you choose RAL frame colours, handle finishes, threshold details and glazing options for the property.'],
+                    ['question' => 'Can I choose the colour and hardware?', 'answer' => 'Yes. We can help you choose RAL frame colours, handle finishes, threshold details and glazing options for the property.'],
                     ['question' => 'Will the doors be surveyed before manufacture?', 'answer' => 'Yes. The opening, threshold, access and installation details are checked before manufacture so the finished doors fit correctly.'],
                 ],
             ],
             'aluminium-flush-windows' => [
-                'intro' => 'Aluminium flush windows give modern performance a cleaner, flatter external finish. Fenster helps you compare sightlines, colour, opening style, glazing and hardware so the final specification suits the property rather than simply reusing a standard aluminium-window package.',
+                'intro' => 'Aluminium flush windows give modern performance a cleaner, flatter external finish. We help you compare sightlines, colour, opening style, glazing and hardware so the final specification suits the property rather than simply reusing a standard aluminium-window package.',
                 'benefits' => [
                     ['title' => 'Flush external finish', 'copy' => 'The sash sits neatly in the frame for a crisp, minimal look that works well on both contemporary and carefully updated homes.'],
                     ['title' => 'Strong thermal performance', 'copy' => 'Thermally broken aluminium and high-performance glazing help improve comfort while keeping the frame profile slim.'],
-                    ['title' => 'Made-to-measure colour choice', 'copy' => 'Fenster can specify RAL colours, hardware and glazing details around the building style and the rest of the project.'],
+                    ['title' => 'Made-to-measure colour choice', 'copy' => 'We can specify RAL colours, hardware and glazing details around the building style and the rest of the project.'],
                     ['title' => 'Secure everyday use', 'copy' => 'Multipoint locking, robust aluminium frames and suitable glazing options help give each opening a reassuring secure finish.'],
-                    ['title' => 'Surveyed before manufacture', 'copy' => 'Fenster checks sizes, opening styles, frame details and installation conditions before the windows are ordered.'],
+                    ['title' => 'Surveyed before manufacture', 'copy' => 'We check sizes, opening styles, frame details and installation conditions before the windows are ordered.'],
                 ],
                 'faqs' => [
                     ['question' => 'What makes aluminium flush windows different?', 'answer' => 'The flush sash sits flatter within the outer frame, giving a cleaner external line than a standard projecting casement.'],
-                    ['question' => 'Are aluminium flush windows suitable for older homes?', 'answer' => 'They can be. Fenster will help compare proportions, colours and sightlines so the window suits the age and style of the property.'],
+                    ['question' => 'Are aluminium flush windows suitable for older homes?', 'answer' => 'They can be. We will help compare proportions, colours and sightlines so the window suits the age and style of the property.'],
                     ['question' => 'Can I choose any RAL colour?', 'answer' => 'Yes. Aluminium flush windows can be specified in a wide range of RAL colours, subject to the chosen system and finish.'],
                     ['question' => 'Do they still offer good energy performance?', 'answer' => 'Yes. The system uses thermally broken aluminium frames and modern glazing to support strong thermal performance.'],
-                    ['question' => 'Will Fenster survey before ordering?', 'answer' => 'Yes. Measurements, opening styles, frame details and installation constraints are checked before manufacture.'],
+                    ['question' => 'Will you survey before ordering?', 'answer' => 'Yes. We check measurements, opening styles, frame details and installation constraints before manufacture.'],
                 ],
             ],
             'aluminium-sliding-doors' => [
-                'intro' => 'Aluminium sliding doors are designed for wide glass areas, slim sightlines and smooth access to the garden. Fenster specifies the track layout, pane size, colour, locking and threshold details around the opening, so the doors suit the room and the way you use the garden.',
+                'intro' => 'Aluminium sliding doors are designed for wide glass areas, slim sightlines and smooth access to the garden. We specify the track layout, pane size, colour, locking and threshold details around the opening, so the doors suit the room and the way you use the garden.',
                 'benefits' => [
                     ['title' => 'Large glass openings', 'copy' => 'Sliding doors suit wide openings where you want more daylight, uninterrupted views and a clean connection to the outside.'],
-                    ['title' => 'Dual or triple-track layouts', 'copy' => 'Fenster can help decide whether a dual or triple-track configuration is the right fit for the available space and daily use.'],
+                    ['title' => 'Dual or triple-track layouts', 'copy' => 'We can help decide whether a dual or triple-track configuration is the right fit for the available space and daily use.'],
                     ['title' => 'Secure aluminium system', 'copy' => 'Flush hook-locks, robust frames and modern glazing keep the design practical as well as minimal.'],
                     ['title' => 'Smooth access to outside', 'copy' => 'Large sliding panels keep the opening easy to use without needing the swing space of hinged doors.'],
                     ['title' => 'Specified around thresholds', 'copy' => 'Survey checks cover drainage, floor levels and access requirements so the finished doors work cleanly with the room and patio.'],
                 ],
                 'faqs' => [
                     ['question' => 'Are aluminium sliding doors different from standard uPVC sliders?', 'answer' => 'Yes. Aluminium sliding doors use slimmer, stronger aluminium profiles that can support larger glass areas and cleaner sightlines.'],
-                    ['question' => 'Can I choose a dual or triple-track design?', 'answer' => 'Yes. Fenster can specify dual or triple tracks depending on opening width, pane layout and how much clear opening you want.'],
+                    ['question' => 'Can I choose a dual or triple-track design?', 'answer' => 'Yes. We can specify dual or triple tracks depending on opening width, pane layout and how much clear opening you want.'],
                     ['question' => 'Are aluminium sliding doors secure?', 'answer' => 'Yes. The systems are specified with secure locking, strong frames and glazing options suitable for residential installations.'],
                     ['question' => 'Can the doors match my window colours?', 'answer' => 'In most projects, yes. Aluminium frames can be powder coated in a wide range of RAL colours to coordinate with other products.'],
-                    ['question' => 'Will the threshold be checked?', 'answer' => 'Yes. Fenster checks threshold height, drainage, access and floor finishes during survey before the final specification is ordered.'],
+                    ['question' => 'Will the threshold be checked?', 'answer' => 'Yes. We check threshold height, drainage, access and floor finishes during survey before the final specification is ordered.'],
                 ],
             ],
             /* Rewritten 2026-08-02 from the owner's own account of the job.
@@ -1830,14 +1830,14 @@ function fenster_site_data(): array
                 'benefits' => [
                     ['title' => 'Protects the roof edge', 'copy' => 'Fascias, soffits and guttering help protect the roofline from water ingress, weathering and long-term timber damage.'],
                     ['title' => 'Low-maintenance uPVC', 'copy' => 'Modern uPVC roofline products reduce repainting and routine upkeep compared with older timber boards.'],
-                    ['title' => 'Ventilation and drainage', 'copy' => 'Fenster can help review soffit ventilation and gutter performance so the roof edge works as well as it looks.'],
+                    ['title' => 'Ventilation and drainage', 'copy' => 'We can help review soffit ventilation and gutter performance so the roof edge works as well as it looks.'],
                     ['title' => 'Colour-matched finishing', 'copy' => 'Roofline trims, boards and guttering can be chosen to suit the windows, doors and exterior style of the property.'],
                     ['title' => 'Measured replacement', 'copy' => 'Existing boards, fixing points and drainage runs are checked before replacement so the new roofline is specified properly.'],
                 ],
                 'faqs' => [
-                    ['question' => 'What roofline products can Fenster replace?', 'answer' => 'Fenster can help with roofline items such as fascias, soffits and guttering, depending on the property and project scope.'],
+                    ['question' => 'What roofline products can you replace?', 'answer' => 'We can help with roofline items such as fascias, soffits and guttering, depending on the property and project scope.'],
                     ['question' => 'Why replace old timber fascias?', 'answer' => 'Old timber can rot, move and need regular repainting. uPVC roofline products provide a lower-maintenance alternative.'],
-                    ['question' => 'Can roofline colours match my windows and doors?', 'answer' => 'In many cases, yes. Fenster can help choose roofline finishes that coordinate with the wider exterior.'],
+                    ['question' => 'Can roofline colours match my windows and doors?', 'answer' => 'In many cases, yes. We can help choose roofline finishes that coordinate with the wider exterior.'],
                     ['question' => 'Will ventilation be considered?', 'answer' => 'Yes. Soffit ventilation and roof-edge condition should be checked as part of the replacement conversation.'],
                     ['question' => 'Is roofline work surveyed first?', 'answer' => 'Yes. We check the existing roof edge, boards, access and drainage details before confirming the specification.'],
                 ],
@@ -1855,7 +1855,7 @@ function fenster_site_data(): array
                these are the five questions that actually arrive, in order. Adding
                a sixth here renders nothing; raise the limit as well. */
             'double-glazing-replacement' => [
-                'intro' => 'Replacement glazing is a new sealed unit, made to fit the frame you already have. When the seal around a unit fails, damp air gets into the gap between the panes and mists the glass from a side no cloth will ever reach. Fenster measures the opening, checks what the position needs and fits a new unit into the existing frame.',
+                'intro' => 'Replacement glazing is a new sealed unit, made to fit the frame you already have. When the seal around a unit fails, damp air gets into the gap between the panes and mists the glass from a side no cloth will ever reach. We measure the opening, check what the position needs and fit a new unit into the existing frame.',
                 'benefits' => [
                     ['title' => 'The frame stays put', 'copy' => 'The beads come off, the failed unit lifts out and a new one goes in. Frame, hinges, handles and locks are left exactly as they are, and the beads and gaskets already on the window are almost always the ones that go back on it.'],
                     ['title' => 'Every frame, and doors too', 'copy' => 'uPVC, aluminium and timber, beaded or putty glazed, windows and doors alike. Leaded and Georgian bar patterns are matched into the new unit so a period window comes back looking like itself.'],
@@ -1872,24 +1872,24 @@ function fenster_site_data(): array
                 ],
             ],
             'double-glazing' => [
-                'intro' => 'Double glazing improves comfort, security and day-to-day energy performance across the home. Fenster helps you choose the right window or door system, glass, colour and hardware around the property rather than treating double glazing as one generic upgrade.',
+                'intro' => 'Double glazing improves comfort, security and day-to-day energy performance across the home. We help you choose the right window or door system, glass, colour and hardware around the property rather than treating double glazing as one generic upgrade.',
                 'benefits' => [
                     ['title' => 'Warmer, quieter rooms', 'copy' => 'Modern double glazing helps reduce heat loss and soften outside noise, especially when older single glazing or tired sealed units are being replaced.'],
                     ['title' => 'Window and door options', 'copy' => 'Choose from uPVC, aluminium, flush, sash, heritage, French, patio and entrance door styles with advice on what suits each opening.'],
                     ['title' => 'Security-led specification', 'copy' => 'Frame strength, glazing choice, locking and hardware are considered together so the finished installation feels secure as well as warmer.'],
                     ['title' => 'Made-to-measure survey', 'copy' => 'Every opening is measured and checked before manufacture, including frame condition, thresholds, drainage, access and finishing details.'],
-                    ['title' => 'Coordinated finishes', 'copy' => 'Fenster can help coordinate frame colours, handles, obscured glass and door hardware so the full project looks deliberate.'],
+                    ['title' => 'Coordinated finishes', 'copy' => 'We can help coordinate frame colours, handles, obscured glass and door hardware so the full project looks deliberate.'],
                 ],
                 'faqs' => [
                     ['question' => 'What does double glazing help with?', 'answer' => 'It can improve thermal comfort, reduce draughts, soften outside noise and improve security when specified with suitable frames, glass and locking.'],
-                    ['question' => 'Can I replace only some windows?', 'answer' => 'Yes. Fenster can quote individual windows, doors or a staged whole-home upgrade depending on budget, priorities and the condition of the existing frames.'],
-                    ['question' => 'Which frame material should I choose?', 'answer' => 'uPVC is a strong value choice for everyday efficiency, while aluminium gives slimmer sightlines and a more contemporary finish. Fenster will help compare both.'],
+                    ['question' => 'Can I replace only some windows?', 'answer' => 'Yes. We can quote individual windows, doors or a staged whole-home upgrade depending on budget, priorities and the condition of the existing frames.'],
+                    ['question' => 'Which frame material should I choose?', 'answer' => 'uPVC is a strong value choice for everyday efficiency, while aluminium gives slimmer sightlines and a more contemporary finish. We will help compare both.'],
                     ['question' => 'Do I need a survey before ordering?', 'answer' => 'Yes. Made-to-measure glazing should be surveyed so sizes, openings, thresholds, safety glass and installation details are confirmed before manufacture.'],
                     ['question' => 'Can double glazing be matched to my home style?', 'answer' => 'Yes. Colour, profile shape, sash style, handles and glass options can all be chosen to suit traditional, period and modern properties.'],
                 ],
             ],
             'casement-windows' => [
-                'intro' => 'Casement windows are the practical all-rounder for warmer, brighter homes. Fenster specifies Liniar uPVC profiles, opening layouts, colour, handles and glazing around each room so the finished windows feel simple to use and properly suited to the property.',
+                'intro' => 'Casement windows are the practical all-rounder for warmer, brighter homes. We specify Liniar uPVC profiles, opening layouts, colour, handles and glazing around each room so the finished windows feel simple to use and properly suited to the property.',
                 'benefits' => [
                     ['title' => 'Everyday versatile design', 'copy' => 'Side-hung, top-hung and fixed casement layouts can be combined to suit bedrooms, living spaces, kitchens and hard-working family rooms.'],
                     ['title' => 'Efficient uPVC profile', 'copy' => 'Liniar multi-chambered uPVC profiles and modern double glazing support strong thermal performance without making the window feel bulky.'],
@@ -1900,30 +1900,30 @@ function fenster_site_data(): array
                 'faqs' => [
                     ['question' => 'Are casement windows suitable for most homes?', 'answer' => 'Yes. Casement windows are one of the most flexible window styles and can be configured for most common residential openings.'],
                     ['question' => 'What energy rating can casement windows achieve?', 'answer' => 'Casement windows can achieve A+ rated performance, with supplied U-value information shown near the top of the page.'],
-                    ['question' => 'Can I choose different opening layouts?', 'answer' => 'Yes. Fenster will help plan side-hung, top-hung, fixed and mixed layouts around ventilation, access, safety and the look of the elevation.'],
+                    ['question' => 'Can I choose different opening layouts?', 'answer' => 'Yes. We will help plan side-hung, top-hung, fixed and mixed layouts around ventilation, access, safety and the look of the elevation.'],
                     ['question' => 'Are uPVC casement windows secure?', 'answer' => 'Yes. The specification can include multi-point locking, secure handles and appropriate glazing, with PAS 24 options available where specified.'],
                     ['question' => 'Can the frames be coloured?', 'answer' => 'Yes. Casement windows can be specified in a range of uPVC finishes, including white, woodgrain-style foils and selected contemporary colours.'],
                 ],
             ],
             'flush-casement-windows' => [
-                'intro' => 'Flush casement windows bring a traditional timber-inspired look to modern uPVC performance. Fenster helps you compare the frame detail, colour, handles and glazing so the windows suit older properties, newer homes and carefully updated facades.',
+                'intro' => 'Flush casement windows bring a traditional timber-inspired look to modern uPVC performance. We help you compare the frame detail, colour, handles and glazing so the windows suit older properties, newer homes and carefully updated facades.',
                 'benefits' => [
                     ['title' => 'Timber-style flush sash', 'copy' => 'The sash sits level within the outer frame, giving a flatter external line than a standard projecting casement window.'],
                     ['title' => 'Liniar weather performance', 'copy' => 'Liniar flush sash systems use modern uPVC profile design and weather sealing to help protect against draughts and rain.'],
                     ['title' => 'A+ rated comfort', 'copy' => 'Flush casement windows can support warmer rooms and improved efficiency with A+ rated performance options.'],
                     ['title' => 'Period or contemporary finish', 'copy' => 'Choose traditional woodgrain-style foils, smooth contemporary colours, hardware finishes and glazing bars where the design calls for them.'],
-                    ['title' => 'Surveyed for the detail', 'copy' => 'Fenster checks frame sizes, sightlines, opening styles and installation conditions so the flush detail works cleanly on the property.'],
+                    ['title' => 'Surveyed for the detail', 'copy' => 'We check frame sizes, sightlines, opening styles and installation conditions so the flush detail works cleanly on the property.'],
                 ],
                 'faqs' => [
                     ['question' => 'What is a flush casement window?', 'answer' => 'It is a casement window where the opening sash sits neatly within the frame, creating a flatter, more timber-like external appearance.'],
                     ['question' => 'Are flush casement windows good for period homes?', 'answer' => 'Often, yes. Their timber-style proportions, foiled finishes and optional heritage details can suit older homes while reducing maintenance.'],
                     ['question' => 'Do flush casement windows need repainting?', 'answer' => 'No. uPVC flush casements are low maintenance and only need normal cleaning and occasional hardware care.'],
                     ['question' => 'Can they be used in bays or larger layouts?', 'answer' => 'Yes. Flush casement styles can often be used in bay and bow arrangements, subject to survey and structural suitability.'],
-                    ['question' => 'Can I choose handles and colours?', 'answer' => 'Yes. Fenster can help coordinate frame colour, handle finish, obscured glass and any heritage-style detailing.'],
+                    ['question' => 'Can I choose handles and colours?', 'answer' => 'Yes. We can help coordinate frame colour, handle finish, obscured glass and any heritage-style detailing.'],
                 ],
             ],
             'sliding-sash-windows' => [
-                'intro' => 'Sliding sash windows give period character with modern uPVC performance. Fenster specifies Roseview sash windows around proportions, colour, horns, glazing bars, hardware and survey details so the finished window looks authentic and works smoothly.',
+                'intro' => 'Sliding sash windows give period character with modern uPVC performance. We specify Roseview sash windows around proportions, colour, horns, glazing bars, hardware and survey details so the finished window looks authentic and works smoothly.',
                 'benefits' => [
                     ['title' => 'Classic vertical sliding style', 'copy' => 'Sash windows retain the familiar up-and-down opening associated with Georgian, Victorian and Edwardian homes.'],
                     ['title' => 'Modern Roseview system', 'copy' => 'Roseview gives a sash-focused profile system rather than a generic casement window adapted to look traditional.'],
@@ -1936,7 +1936,7 @@ function fenster_site_data(): array
                     ['question' => 'Are sliding sash windows suitable for period properties?', 'answer' => 'Yes. They are often chosen for older homes because the vertical sliding format, horns and glazing bars can respect original window proportions.'],
                     ['question' => 'Can sash windows reduce outside noise?', 'answer' => 'Modern double glazing and well-sealed frames can help soften outside noise compared with older, loose or single-glazed sash windows.'],
                     ['question' => 'What colours are available?', 'answer' => 'A full RAL colour range can be discussed, with final colour and finish confirmed against the chosen sash system.'],
-                    ['question' => 'Will the windows be measured before manufacture?', 'answer' => 'Yes. Fenster surveys sash openings carefully because proportions, frame depth, reveal detail and installation condition all affect the final result.'],
+                    ['question' => 'Will the windows be measured before manufacture?', 'answer' => 'Yes. We survey sash openings carefully because proportions, frame depth, reveal detail and installation condition all affect the final result.'],
                 ],
             ],
             'french-casement-windows' => [
@@ -1946,14 +1946,14 @@ function fenster_site_data(): array
                     ['title' => 'Useful upper-floor option', 'copy' => 'The wide opening can suit rooms where fire escape, cleaning access or strong purge ventilation needs to be considered.'],
                     ['title' => 'Modern uPVC performance', 'copy' => 'Liniar uPVC profiles support weather protection, low maintenance and energy efficiency in a familiar casement-style format.'],
                     ['title' => 'Coordinated appearance', 'copy' => 'French casements can be matched with other casement, flush or tilt and turn windows across a broader project.'],
-                    ['title' => 'Designed around safety', 'copy' => 'Fenster checks opening sizes, restrictors, handles, safety glass and room use before confirming the final specification.'],
+                    ['title' => 'Designed around safety', 'copy' => 'We check opening sizes, restrictors, handles, safety glass and room use before confirming the final specification.'],
                 ],
                 'faqs' => [
                     ['question' => 'What is a French casement window?', 'answer' => 'It is a pair of casement sashes that open from the centre, creating a wider clear opening than many standard casement layouts.'],
                     ['question' => 'Where do French casement windows work best?', 'answer' => 'They work well where you want a wider opening for ventilation, views, cleaning access or an upper-floor escape-style arrangement.'],
                     ['question' => 'Can they match other uPVC windows?', 'answer' => 'Yes. They can be specified with matching colours, profile styling and handles so they coordinate with other window types.'],
                     ['question' => 'Are French casement windows secure?', 'answer' => 'Yes. They can include modern locking, suitable hardware and glazing options, with the final details confirmed during specification.'],
-                    ['question' => 'Will Fenster advise on restrictors?', 'answer' => 'Yes. Fenster will consider room use, height, safety requirements and ventilation needs when specifying openings and restrictors.'],
+                    ['question' => 'Will you advise on restrictors?', 'answer' => 'Yes. We will consider room use, height, safety requirements and ventilation needs when specifying openings and restrictors.'],
                 ],
             ],
             /* REWRITTEN 2026-08-12 with the bespoke middle. The old copy failed
@@ -1987,24 +1987,24 @@ function fenster_site_data(): array
                 ],
             ],
             'bow-bay-windows' => [
-                'intro' => 'Bow and bay windows add light, shape and usable depth to the front of a home. Fenster helps plan the window style, angles, support, colour and glazing so the feature improves the room rather than simply replacing like-for-like frames.',
+                'intro' => 'Bow and bay windows add light, shape and usable depth to the front of a home. We help plan the window style, angles, support, colour and glazing so the feature improves the room rather than simply replacing like-for-like frames.',
                 'benefits' => [
                     ['title' => 'More light and outlook', 'copy' => 'Projecting window layouts bring more glass area into the room and can make living spaces feel brighter and more open.'],
                     ['title' => 'Bow or bay configuration', 'copy' => 'Bow windows usually create a softer curve, while bay windows form a more angular projection with a stronger architectural shape.'],
                     ['title' => 'Choice of window styles', 'copy' => 'A bay is a shape rather than a system, so we can build it from any of our window styles, in uPVC or aluminium, mixing fixed panes and openers to suit the room.'],
-                    ['title' => 'Survey-led structure check', 'copy' => 'Fenster checks existing supports, angles, cills, roof details and installation conditions before specifying replacement bow or bay windows.'],
+                    ['title' => 'Survey-led structure check', 'copy' => 'We check existing supports, angles, cills, roof details and installation conditions before specifying replacement bow or bay windows.'],
                     ['title' => 'Coordinated colours and handles', 'copy' => 'Frame finish, handle colour, obscured glass and trickle ventilation can be coordinated with the rest of the home.'],
                 ],
                 'faqs' => [
                     ['question' => 'What is the difference between bow and bay windows?', 'answer' => 'A bow usually uses several windows to create a curved appearance, while a bay projects more angularly from the property.'],
                     ['question' => 'Can bow and bay windows improve room space?', 'answer' => 'They can add usable depth to the window area and bring in more daylight, making the room feel larger and brighter.'],
                     ['question' => 'Do bow and bay windows need structural checks?', 'answer' => 'Yes. The existing opening, supports, cill, roof or canopy details should be checked before replacement is confirmed.'],
-                    ['question' => 'Can I choose opening windows within the bay?', 'answer' => 'Yes. Fenster can combine fixed panes and opening sashes to balance ventilation, views, cleaning and security.'],
+                    ['question' => 'Can I choose opening windows within the bay?', 'answer' => 'Yes. We can combine fixed panes and opening sashes to balance ventilation, views, cleaning and security.'],
                     ['question' => 'Can they match the other windows?', 'answer' => 'Yes. Colours, profile style and handle finishes can be coordinated with other uPVC or aluminium windows on the property.'],
                 ],
             ],
             'aluminium-windows' => [
-                'intro' => 'Aluminium windows are chosen for slim sightlines, strength and a clean architectural finish. Fenster specifies Sheerline aluminium systems around frame style, colour, glazing, security and installation detail so the finished windows suit the building and the view.',
+                'intro' => 'Aluminium windows are chosen for slim sightlines, strength and a clean architectural finish. We specify Sheerline aluminium systems around frame style, colour, glazing, security and installation detail so the finished windows suit the building and the view.',
                 'benefits' => [
                     ['title' => 'Slim modern frames', 'copy' => 'Aluminium strength allows narrower-looking frames and larger glass areas, helping bring more daylight into the room.'],
                     ['title' => 'Thermlock technology', 'copy' => 'Sheerline aluminium systems use Thermlock multi-chamber thermal technology to improve insulation compared with older aluminium approaches.'],
@@ -2016,8 +2016,8 @@ function fenster_site_data(): array
                     ['question' => 'Why choose aluminium windows?', 'answer' => 'Aluminium is strong, slim and durable, making it a good choice where clean sightlines and larger glass areas are important.'],
                     ['question' => 'Are aluminium windows energy efficient?', 'answer' => 'Yes. Modern thermally broken aluminium systems improve comfort significantly compared with old aluminium frames.'],
                     ['question' => 'Can aluminium windows be coloured?', 'answer' => 'Yes. Aluminium can be powder coated in many RAL colours, with dual-colour options available on some systems.'],
-                    ['question' => 'Do aluminium windows suit traditional homes?', 'answer' => 'They can, especially where slim frames or heritage styling is wanted. Fenster will compare standard, flush and heritage options.'],
-                    ['question' => 'Will the sightlines be checked before ordering?', 'answer' => 'Yes. Fenster reviews frame sizes, mullions, opening positions and glass areas during specification and survey.'],
+                    ['question' => 'Do aluminium windows suit traditional homes?', 'answer' => 'They can, especially where slim frames or heritage styling is wanted. We will compare standard, flush and heritage options.'],
+                    ['question' => 'Will the sightlines be checked before ordering?', 'answer' => 'Yes. We review frame sizes, mullions, opening positions and glass areas during specification and survey.'],
                 ],
             ],
             /* Rewritten 2026-08-11 with the page. The old copy was written about
@@ -2063,16 +2063,16 @@ function fenster_site_data(): array
                     ['question' => 'Can I use one panel as a normal door?', 'answer' => 'Yes. The system can include a main traffic door for everyday access without opening the full set.'],
                     ['question' => 'Are slide and fold doors secure?', 'answer' => 'Yes. The closed panels interlock through the system, with security hardware specified around the chosen configuration.'],
                     ['question' => 'Do the panels take up room when opening?', 'answer' => 'They are designed to slide before stacking, reducing the clearance needed compared with many traditional hinged or folding layouts.'],
-                    ['question' => 'Will Fenster survey the opening first?', 'answer' => 'Yes. Track, threshold, drainage, width, floor levels and access all need to be checked before manufacture.'],
+                    ['question' => 'Will you survey the opening first?', 'answer' => 'Yes. We check track, threshold, drainage, width, floor levels and access before manufacture.'],
                 ],
             ],
             'aluminium-doors' => [
-                'intro' => 'Aluminium doors create strong, slim and highly configurable entrances for modern homes and extensions. Fenster specifies the door style, threshold, colour, glazing and locking around the opening so the result feels secure, refined and practical.',
+                'intro' => 'Aluminium doors create strong, slim and highly configurable entrances for modern homes and extensions. We specify the door style, threshold, colour, glazing and locking around the opening so the result feels secure, refined and practical.',
                 'benefits' => [
                     ['title' => 'Strong aluminium construction', 'copy' => 'Aluminium gives entrance and rear doors a robust frame with clean sightlines and a durable powder-coated finish.'],
                     ['title' => 'Modern design choice', 'copy' => 'Choose single doors, glazed doors, side panels, contemporary panels and colour options to suit the architecture.'],
                     ['title' => 'Thermally broken frames', 'copy' => 'Modern aluminium door systems use thermal breaks and appropriate glazing to support comfort through the year.'],
-                    ['title' => 'Threshold planning', 'copy' => 'Fenster checks access, drainage, floor levels and threshold requirements before the final door is ordered.'],
+                    ['title' => 'Threshold planning', 'copy' => 'We check access, drainage, floor levels and threshold requirements before the final door is ordered.'],
                     ['title' => 'Secure entrance hardware', 'copy' => 'Locks, cylinders, handles and glazing are specified together so the finished door feels reassuring in daily use.'],
                 ],
                 /* Rewritten 2026-08-07 with the page rebuild. The five they
@@ -2094,7 +2094,7 @@ function fenster_site_data(): array
                 ],
             ],
             'heritage-aluminium-doors' => [
-                'intro' => 'Heritage aluminium doors bring steel-look styling to modern external doors. Fenster specifies the stepped frame detail, glazing-bar layout, colour, threshold and hardware so the finished doors look sharp without losing everyday comfort and security.',
+                'intro' => 'Heritage aluminium doors bring steel-look styling to modern external doors. We specify the stepped frame detail, glazing-bar layout, colour, threshold and hardware so the finished doors look sharp without losing everyday comfort and security.',
                 'benefits' => [
                     ['title' => 'Steel-look door styling', 'copy' => 'Slim aluminium profiles and heritage glazing details create the look of traditional steel doors without the same maintenance demands.'],
                     ['title' => 'Thermlock performance', 'copy' => 'Sheerline heritage-style aluminium systems use modern thermal technology to support comfort behind the period-inspired appearance.'],
@@ -2106,7 +2106,7 @@ function fenster_site_data(): array
                     ['question' => 'What are heritage aluminium doors?', 'answer' => 'They are aluminium doors designed with slim, steel-inspired sightlines and glazing-bar layouts, but with modern thermal and security features.'],
                     ['question' => 'Can heritage doors be used as French doors?', 'answer' => 'Yes. Depending on the system and opening, they can often be specified as single or French-style door sets.'],
                     ['question' => 'Do heritage aluminium doors need much maintenance?', 'answer' => 'No. Powder-coated aluminium is designed for low maintenance compared with traditional steel or timber alternatives.'],
-                    ['question' => 'Can I choose the glazing bar pattern?', 'answer' => 'Yes. Fenster will help plan the bar layout, pane sizes and opening arrangement so the design looks balanced.'],
+                    ['question' => 'Can I choose the glazing bar pattern?', 'answer' => 'Yes. We will help plan the bar layout, pane sizes and opening arrangement so the design looks balanced.'],
                     ['question' => 'Are heritage doors secure?', 'answer' => 'Yes. They can include secure locking, strong aluminium frames and suitable glazing, with final details confirmed during specification.'],
                 ],
             ],
@@ -2125,20 +2125,20 @@ function fenster_site_data(): array
                     ['question' => 'How secure are uPVC doors?', 'answer' => 'Every door we fit has a multi-point mechanism as standard, throwing hooks or bolts into the frame at several points up the leaf. The cylinder that comes with it is a one star, and a three star cylinder is an upgrade worth asking for, because it is the part that resists snapping.'],
                     ['question' => 'Can uPVC doors be coloured?', 'answer' => 'Thirteen foils, bonded to the profile at the factory rather than painted on. Most carry a woodgrain you can feel and a few are smooth. The colour is the outside face and inside is white as standard, or the same colour on both faces if you prefer.'],
                     ['question' => 'Can I include side panels or glass?', 'answer' => 'Yes. Glazing, sidelights and privacy glass can be included where the opening and design allow.'],
-                    ['question' => 'Will a uPVC door be made to measure?', 'answer' => 'Yes. Fenster checks the opening, threshold, frame, hardware and access requirements before manufacture.'],
+                    ['question' => 'Will a uPVC door be made to measure?', 'answer' => 'Yes. We check the opening, threshold, frame, hardware and access requirements before manufacture.'],
                 ],
             ],
             'patio-doors' => [
-                'intro' => 'Patio doors create a smooth, space-saving connection to the garden. Fenster specifies uPVC sliding patio doors around pane layout, track, colour, glazing, security and threshold details so the doors suit both the room and the outside level.',
+                'intro' => 'Patio doors create a smooth, space-saving connection to the garden. We specify uPVC sliding patio doors around pane layout, track, colour, glazing, security and threshold details so the doors suit both the room and the outside level.',
                 'benefits' => [
                     ['title' => 'Space-saving sliding access', 'copy' => 'Sliding panels do not swing into the room or patio, making them useful where space is tight or furniture sits near the opening.'],
                     ['title' => 'Up to four panes', 'copy' => 'Configurations up to four panes can be considered, depending on opening width and survey conditions.'],
                     ['title' => 'Efficient uPVC frame', 'copy' => 'Liniar-style multi-chambered uPVC frames and modern glazing support year-round comfort in a large glazed opening.'],
                     ['title' => 'Secure sliding hardware', 'copy' => 'Locking, keeps, handles and glazing are specified together to make the patio door practical and reassuring.'],
-                    ['title' => 'Threshold and drainage check', 'copy' => 'Fenster reviews track position, drainage, floor levels and access before the doors are ordered.'],
+                    ['title' => 'Threshold and drainage check', 'copy' => 'We review track position, drainage, floor levels and access before the doors are ordered.'],
                 ],
                 'faqs' => [
-                    ['question' => 'Are patio doors different from aluminium sliding doors?', 'answer' => 'Fenster patio doors are uPVC sliding doors, while aluminium sliding doors use slimmer aluminium frames for larger glass areas.'],
+                    ['question' => 'Are patio doors different from aluminium sliding doors?', 'answer' => 'Our patio doors are uPVC sliding doors, while aluminium sliding doors use slimmer aluminium frames for larger glass areas.'],
                     ['question' => 'How many panes can patio doors have?', 'answer' => 'Configurations up to four panes can be considered, subject to opening size and survey.'],
                     ['question' => 'Are patio doors energy efficient?', 'answer' => 'Yes. Modern glazing and supplied U-value information help show how the doors support comfort.'],
                     ['question' => 'Can patio doors be secure?', 'answer' => 'Yes. Secure locking, suitable glazing and correct installation are all part of the final specification.'],
@@ -2146,7 +2146,7 @@ function fenster_site_data(): array
                 ],
             ],
             'french-doors' => [
-                'intro' => 'French doors give a classic double-door opening for gardens, patios and side entrances. Fenster specifies Liniar uPVC French doors around security, threshold, glazing, colour and hardware so the doors feel traditional, practical and well sealed.',
+                'intro' => 'French doors give a classic double-door opening for gardens, patios and side entrances. We specify Liniar uPVC French doors around security, threshold, glazing, colour and hardware so the doors feel traditional, practical and well sealed.',
                 'benefits' => [
                     ['title' => 'Classic double opening', 'copy' => 'French doors open from the centre to create a generous garden or patio access point without the complexity of a multi-panel door.'],
                     ['title' => 'Liniar profile system', 'copy' => 'A coordinated Liniar uPVC door system supports efficient profile design and consistent finishing.'],
@@ -2157,26 +2157,26 @@ function fenster_site_data(): array
                 'faqs' => [
                     ['question' => 'Where do French doors work best?', 'answer' => 'They work well for patios, gardens, side entrances and rooms where a classic double-door opening suits the property.'],
                     ['question' => 'Are French doors secure?', 'answer' => 'Yes. Multi-point locking, final hardware and glazing are confirmed during specification.'],
-                    ['question' => 'Can French doors have a low threshold?', 'answer' => 'Often, yes. Fenster will check access needs, floor levels and drainage before confirming the threshold detail.'],
+                    ['question' => 'Can French doors have a low threshold?', 'answer' => 'Often, yes. We will check access needs, floor levels and drainage before confirming the threshold detail.'],
                     ['question' => 'Can French doors be coloured?', 'answer' => 'Yes. uPVC French doors can be specified in a range of finishes depending on the chosen profile system.'],
                     ['question' => 'Are French doors energy efficient?', 'answer' => 'Yes. Modern glazing and the right uPVC door system can support improved comfort.'],
                 ],
             ],
             'integral-blinds' => [
-                'intro' => 'Integral blinds sit sealed between panes of glass, giving clean privacy and light control without loose cords, dusty slats or exposed fabric. Fenster offers magnetic or electric control options for suitable windows, doors and glazed units.',
+                'intro' => 'Integral blinds sit sealed between panes of glass, giving clean privacy and light control without loose cords, dusty slats or exposed fabric. We offer magnetic or electric control options for suitable windows, doors and glazed units.',
                 'benefits' => [
                     ['title' => 'Sealed between glass', 'copy' => 'The blind is protected inside the glazed unit, keeping the slats away from dust, fingerprints, moisture and everyday damage.'],
                     ['title' => 'Magnetic or electric control', 'copy' => 'Magnetic or electric controls can be chosen so the operation matches the room and budget.'],
                     ['title' => 'Low-maintenance privacy', 'copy' => 'Integral blinds give adjustable privacy and shade without separate curtains, cords or traditional internal blinds.'],
                     ['title' => 'Good for doors and busy rooms', 'copy' => 'They are especially useful in sliding doors, bifolds, kitchens, bathrooms and garden-facing glazing where exposed blinds can get in the way.'],
-                    ['title' => 'Colour and glazing choices', 'copy' => 'Fenster can help match blind colour, glass type and frame finish so the unit works visually as well as practically.'],
+                    ['title' => 'Colour and glazing choices', 'copy' => 'We can help match blind colour, glass type and frame finish so the unit works visually as well as practically.'],
                 ],
                 'faqs' => [
                     ['question' => 'What are integral blinds?', 'answer' => 'They are blinds sealed inside a double or triple glazed unit, rather than fitted to the room side of the glass.'],
                     ['question' => 'Are integral blinds easy to clean?', 'answer' => 'Yes. Because the blind is sealed between panes, the slats are protected from normal dust and moisture. You clean the glass, not the blind.'],
-                    ['question' => 'Can I choose magnetic or electric blinds?', 'answer' => 'Yes. Fenster describes the available control options as magnetic or electric, with suitability confirmed around the unit and project.'],
+                    ['question' => 'Can I choose magnetic or electric blinds?', 'answer' => 'Yes. We can specify magnetic or electric control options, with suitability confirmed around the unit and project.'],
                     ['question' => 'Are integral blinds safe for children and pets?', 'answer' => 'They avoid dangling cords and exposed slats, making them a neat option for family rooms and busy doors.'],
-                    ['question' => 'Can integral blinds be added to existing glass?', 'answer' => 'Usually they require a new glazed unit made with the blind sealed inside, so Fenster will check sizes and suitability first.'],
+                    ['question' => 'Can integral blinds be added to existing glass?', 'answer' => 'Usually they require a new glazed unit made with the blind sealed inside, so we will check sizes and suitability first.'],
                 ],
             ],
             'secondary-glazing' => [
@@ -2186,7 +2186,7 @@ function fenster_site_data(): array
                     ['title' => 'Acoustic improvement', 'copy' => 'The extra internal pane and air gap can noticeably reduce outside noise when specified and fitted correctly.'],
                     ['title' => 'Better thermal comfort', 'copy' => 'Adding a secondary glazed layer helps reduce heat loss through older single-glazed or poorly performing windows.'],
                     ['title' => 'Slim aluminium frames', 'copy' => 'Slim aluminium frames and RAL colour choice help keep the internal finish discreet.'],
-                    ['title' => 'Made around the opening', 'copy' => 'Fenster checks reveal depth, handles, shutters, existing frame condition and access before confirming the secondary glazing style.'],
+                    ['title' => 'Made around the opening', 'copy' => 'We check reveal depth, handles, shutters, existing frame condition and access before confirming the secondary glazing style.'],
                 ],
                 /* Rewritten 2026-08-07 with the page rebuild. The five they
                    replace were the generated set, answered in the third person
@@ -2222,17 +2222,17 @@ function fenster_site_data(): array
                 ],
             ],
             'roof-lanterns' => [
-                'intro' => 'Roof lanterns bring controlled daylight into kitchens, extensions and open-plan living spaces. Fenster specifies the Sheerline S1 lantern around size, style, glazing, colour, ventilation and security so the roof opening feels bright without becoming an afterthought.',
+                'intro' => 'Roof lanterns bring controlled daylight into kitchens, extensions and open-plan living spaces. We specify the Sheerline S1 lantern around size, style, glazing, colour, ventilation and security so the roof opening feels bright without becoming an afterthought.',
                 'benefits' => [
-                    ['title' => 'Sheerline S1 system', 'copy' => 'Fenster specifies the Sheerline S1 roof lantern, an aluminium lantern system designed around slim sightlines, strength and thermal performance.'],
+                    ['title' => 'Sheerline S1 system', 'copy' => 'We specify the Sheerline S1 roof lantern, an aluminium lantern system designed around slim sightlines, strength and thermal performance.'],
                     ['title' => 'Clean daylight from above', 'copy' => 'A roof lantern can make flat-roof extensions, kitchens and dining spaces feel taller, brighter and more connected to the sky.'],
                     ['title' => 'Thermlock technology', 'copy' => 'The S1 lantern uses Sheerline Thermlock multi-chamber technology with modern glazing to support year-round comfort.'],
                     ['title' => 'Style and size choice', 'copy' => 'Square, two-way and three-way lantern styles can be considered, with colour and glazing choices confirmed around the project.'],
-                    ['title' => 'Security and ventilation options', 'copy' => 'Fenster can discuss security upgrades, roof ventilation, solar-control glass and installation details before manufacture.'],
+                    ['title' => 'Security and ventilation options', 'copy' => 'We can discuss security upgrades, roof ventilation, solar-control glass and installation details before manufacture.'],
                 ],
                 'faqs' => [
                     ['question' => 'Where do roof lanterns work best?', 'answer' => 'They are often used over flat-roof extensions, kitchens, dining areas and open-plan spaces where extra overhead daylight will improve the room.'],
-                    ['question' => 'Which roof lantern system does Fenster use?', 'answer' => 'Fenster can specify the Sheerline S1 roof lantern system. Final size, style and glass are confirmed during specification.'],
+                    ['question' => 'Which roof lantern system do you use?', 'answer' => 'We can specify the Sheerline S1 roof lantern system. Final size, style and glass are confirmed during specification.'],
                     ['question' => 'Can roof lanterns help with thermal comfort?', 'answer' => 'Yes. The S1 system uses aluminium profiles with Thermlock technology and modern glazing to help retain warmth compared with older roof glazing.'],
                     ['question' => 'Can I choose the lantern colour?', 'answer' => 'Yes. Standard and project-specific colour options can be discussed, including colours that coordinate with aluminium windows or doors.'],
                     ['question' => 'Does a roof lantern need a survey?', 'answer' => 'Yes. The opening size, upstand, roof condition, drainage, access and glass requirements should be checked before the lantern is ordered.'],
@@ -2290,7 +2290,7 @@ function fenster_site_data(): array
                 'intro' => 'We fit Distinction composite doors, the door on one in four UK front entrances: Signature for traditional homes, Contemporary for clean lines. Price yours online in about ten minutes, or come and slam one in the showroom.',
                 'benefits' => [
                     ['title' => 'Strong entrance door construction', 'copy' => 'Composite doors combine a reinforced core, durable skins and secure hardware for a robust front-door upgrade.'],
-                    ['title' => 'Wide design choice', 'copy' => 'Fenster can help compare door styles, glass designs, colours and hardware so the entrance suits the property.'],
+                    ['title' => 'Wide design choice', 'copy' => 'We can help compare door styles, glass designs, colours and hardware so the entrance suits the property.'],
                     ['title' => 'Secure by design options', 'copy' => 'Security-focused locks, cylinders and hardware options help create a reassuring entrance specification.'],
                     ['title' => 'Weather-resistant finish', 'copy' => 'Composite door skins are designed to handle everyday weather while keeping a smart, low-maintenance appearance.'],
                     ['title' => 'Surveyed and fitted carefully', 'copy' => 'The frame, threshold, opening and hardware details are checked before ordering so the final door fits properly.'],
@@ -2305,7 +2305,7 @@ function fenster_site_data(): array
                 ],
                 'glass_styles' => [
                     'intro' => 'Distinction decorative glass gives a composite entrance more character without turning the choice into guesswork. Most decorative units are triple glazed and laminated as standard; availability still depends on the chosen door style, aperture size and final doorset specification.',
-                    'note' => 'Sierra, Trieste, Bloom, Matrix and Eclipse are shown by Distinction as stock-limited or being phased, so Fenster will confirm current availability before ordering.',
+                    'note' => 'Sierra, Trieste, Bloom, Matrix and Eclipse are shown by Distinction as stock-limited or being phased, so we will confirm current availability before ordering.',
                     'items' => [
                         ['name' => 'Lunna', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-glass/lunna.jpg', 'copy' => 'A soft decorative pattern for traditional and modern door styles.'],
                         ['name' => 'Aspen', 'image' => '/wp-content/themes/fenster/assets/images/products/composite-glass/aspen.jpg', 'copy' => 'A classic decorative style often used where the glass should feel detailed but not fussy.'],
@@ -2402,7 +2402,7 @@ function fenster_site_data(): array
                 'casement-windows',
                 'flush-casement-windows',
             ],
-            'intro' => 'Fenster window specifications can include the S2 Signature cranked handle range, chosen for a sculpted low-profile shape, lockable operation as standard and a choice of finishes. The handle is available in left-hand and right-hand variants so the operation can be matched to the window layout.',
+            'intro' => 'Our window specifications can include the S2 Signature cranked handle range, chosen for a sculpted low-profile shape, lockable operation as standard and a choice of finishes. The handle is available in left-hand and right-hand variants so the operation can be matched to the window layout.',
             'features' => [
                 ['title' => 'Push-to-release', 'copy' => 'Flush-fitting release button with a clean, sculptured handle shape.'],
                 ['title' => 'Lockable as standard', 'copy' => 'The range uses the same lockable handle model across the core finish options.'],

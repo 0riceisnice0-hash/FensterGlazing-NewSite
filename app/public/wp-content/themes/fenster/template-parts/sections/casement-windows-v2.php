@@ -121,7 +121,7 @@ $details = [
        horns: the curved projections on the bottom corners of the open sashes.
        It is 600x600 and the trio crops to 4/3, which keeps both of them. */
     ['name' => 'Mock sash horns', 'copy' => 'Turned on the bottom corners of the sash, the way a period sash window was always finished.', 'image' => $base . 'casement-mockhorn-detail-600w.webp', 'w' => 600, 'h' => 600, 'alt' => 'Mock sash horns turned on the bottom corners of open white uPVC casement sashes'],
-    ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares, then sealed into the unit against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by Fenster in Rushden'],
+    ['name' => 'Leaded glass', 'copy' => 'Lead laid over the pane in diamonds or squares, then sealed into the unit against the weather.', 'image' => $base . 'casement-diamond-lead-900w.webp', 'w' => 900, 'h' => 660, 'alt' => 'Diamond leaded glass in a white uPVC casement window, fitted by us in Rushden'],
 ];
 $energy_stats = [
     ['figure' => '0.95', 'unit' => 'W/m²K', 'note' => 'Whole window, with the 36mm triple glazed unit'],
@@ -166,11 +166,11 @@ $security_points = [
    downstairs window because the upstairs windows on that terrace are not ours.
    Every tag below is read off its own photograph. */
 $gallery = [
-    ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'tags' => ['Anthracite grey', 'Two-storey bay', 'Top opening sashes'], 'alt' => 'Anthracite Liniar casement windows stacked over two floors on a corner elevation in Bolbeck Park, fitted by Fenster'],
-    ['file' => 'casement-anthracite-bay', 'width' => 1600, 'focus' => '50% 45%', 'caption' => 'Anthracite grey bay', 'tags' => ['Anthracite grey', 'Splayed bay', 'Obscure glass'], 'alt' => 'Anthracite grey uPVC casement bay window with obscured lower panes, fitted by Fenster'],
-    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'tags' => ['White', 'Diamond lead', 'Side hung openers'], 'alt' => 'White uPVC casement windows with diamond leaded glazing on a red brick house in Rushden, fitted by Fenster'],
-    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'tags' => ['White', 'Splayed bay', 'Top opening sashes'], 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by Fenster'],
-    ['file' => 'casement-leighton-downstairs', 'width' => 490, 'focus' => '50% 50%', 'caption' => 'Leighton Buzzard', 'tags' => ['White', 'Fixed pane and opener', 'Tile-hung elevation'], 'alt' => 'White Liniar casement window with a wide fixed pane and a side hung opener on a tile hung terrace in Leighton Buzzard, fitted by Fenster'],
+    ['file' => 'casement-bolbeck-park', 'width' => 1000, 'focus' => '50% 40%', 'caption' => 'Bolbeck Park, Milton Keynes', 'tags' => ['Anthracite grey', 'Two-storey bay', 'Top opening sashes'], 'alt' => 'Anthracite Liniar casement windows stacked over two floors on a corner elevation in Bolbeck Park, fitted by us'],
+    ['file' => 'casement-anthracite-bay', 'width' => 1600, 'focus' => '50% 45%', 'caption' => 'Anthracite grey bay', 'tags' => ['Anthracite grey', 'Splayed bay', 'Obscure glass'], 'alt' => 'Anthracite grey uPVC casement bay window with obscured lower panes, fitted by us'],
+    ['file' => 'casement-rushden-leaded', 'width' => 1400, 'focus' => '45% 45%', 'caption' => 'Rushden', 'tags' => ['White', 'Diamond lead', 'Side hung openers'], 'alt' => 'White uPVC casement windows with diamond leaded glazing on a red brick house in Rushden, fitted by us'],
+    ['file' => 'casement-stony-stratford', 'width' => 1400, 'focus' => '30% 50%', 'caption' => 'Stony Stratford', 'tags' => ['White', 'Splayed bay', 'Top opening sashes'], 'alt' => 'White uPVC casement windows in a bay on a red brick Victorian terrace in Stony Stratford, fitted by us'],
+    ['file' => 'casement-leighton-downstairs', 'width' => 490, 'focus' => '50% 50%', 'caption' => 'Leighton Buzzard', 'tags' => ['White', 'Fixed pane and opener', 'Tile-hung elevation'], 'alt' => 'White Liniar casement window with a wide fixed pane and a side hung opener on a tile hung terrace in Leighton Buzzard, fitted by us'],
 ];
 $faqs = [
     ['question' => 'What is a casement window?', 'answer' => 'A window with sashes hinged at the side or the top, opening outwards. Opening sashes and fixed panes are made into one frame, so a single window can do more than one job.'],
@@ -587,8 +587,8 @@ $faq_schema = [
                     <h2 id="fg-cas-proof-title" class="fg-cas-display"><?php esc_html_e('Casements, fitted by us.', 'fenster'); ?></h2>
                 </div>
                 <p>
-                    <span class="fg-cas-proof__desktop"><?php esc_html_e('Every photograph here is a Fenster installation, taken on the day we finished. Click any of them for a closer look.', 'fenster'); ?></span>
-                    <span class="fg-cas-proof__mobile"><?php esc_html_e('Every photograph is a Fenster installation. Tap any for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cas-proof__desktop"><?php esc_html_e('Every photograph here is one of our installations, taken on the day we finished. Click any of them for a closer look.', 'fenster'); ?></span>
+                    <span class="fg-cas-proof__mobile"><?php esc_html_e('Every photograph is one of our installations. Tap any for a closer look.', 'fenster'); ?></span>
                 </p>
             </div>
             <div class="fg-cas-mosaic">

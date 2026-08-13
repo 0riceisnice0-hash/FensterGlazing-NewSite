@@ -1597,7 +1597,7 @@ if ($slug === 'areas-we-cover') {
     $coverage_highlights = [
         [
             'title' => __('Local advice from Milton Keynes', 'fenster'),
-            'copy' => __('Fenster is based in Milton Keynes and works across nearby towns for homeowners planning windows, doors, roof lanterns, glass replacement and larger glazing projects.', 'fenster'),
+            'copy' => __('We are based in Milton Keynes and work across nearby towns for homeowners planning windows, doors, roof lanterns, glass replacement and larger glazing projects.', 'fenster'),
         ],
         [
             'title' => __('Survey-led installation', 'fenster'),
@@ -1748,8 +1748,8 @@ if ($slug === 'areas-we-cover') {
             <div class="container fg-areas-page__hero-grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Local glazing coverage', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Find Fenster glazing services near you.', 'fenster'); ?></h1>
-                    <p><?php esc_html_e('Fenster supplies and installs double glazing, windows, doors, roof lanterns and replacement glass from Milton Keynes across nearby towns in Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire.', 'fenster'); ?></p>
+                    <h1><?php esc_html_e('Find our glazing services near you.', 'fenster'); ?></h1>
+                    <p><?php esc_html_e('We supply and install double glazing, windows, doors, roof lanterns and replacement glass from Milton Keynes across nearby towns in Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire.', 'fenster'); ?></p>
                     <div class="button-row">
                         <a class="button button--light" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                         <a class="button" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Ask about your postcode', 'fenster'); ?></a>
@@ -1758,7 +1758,7 @@ if ($slug === 'areas-we-cover') {
                 <aside class="fg-areas-page__summary" aria-label="<?php esc_attr_e('Fenster service area summary', 'fenster'); ?>">
                     <strong><?php esc_html_e('Start with your nearest town.', 'fenster'); ?></strong>
                     <span><?php echo esc_html(sprintf(__('%d towns and %d local service links', 'fenster'), count($area_groups), $area_link_count)); ?></span>
-                    <p><?php esc_html_e('You do not need to choose the perfect page. If your property is nearby, send the postcode and Fenster can point you in the right direction.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('You do not need to choose the perfect page. If your property is nearby, send the postcode and we can point you in the right direction.', 'fenster'); ?></p>
                 </aside>
             </div>
         </section>
@@ -1854,7 +1854,7 @@ if ($slug === 'areas-we-cover') {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Not sure where to start?', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Send the postcode and a few project details.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Fenster can confirm whether the property is covered and whether an instant quote, showroom visit or survey is the best next step.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('We can confirm whether the property is covered and whether an instant quote, showroom visit or survey is the best next step.', 'fenster'); ?></p>
                 </div>
                 <a class="button" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Fenster', 'fenster'); ?></a>
             </div>
@@ -2900,7 +2900,7 @@ if ($is_colour_options) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Bring samples together', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Match frame colour, glass and hardware before ordering.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Fenster can help narrow the material, colour, glass and handle choices around the property rather than treating each decision separately.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('We can help narrow the material, colour, glass and handle choices around the property rather than treating each decision separately.', 'fenster'); ?></p>
                 </div>
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [
@@ -3151,8 +3151,8 @@ if ($is_obscure_glass) {
             <div class="container fg-obscure-enquiry__grid">
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Glass specification', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('Ask Fenster which obscured glass works with your product.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('Tell the team whether the glass is for a bathroom, entrance door, side panel, replacement unit or another product and they will help narrow the options.', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Ask us which obscured glass works with your product.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Tell us whether the glass is for a bathroom, entrance door, side panel, replacement unit or another product and we will help narrow the options.', 'fenster'); ?></p>
                 </div>
                 <?php
                 get_template_part('template-parts/components/enquiry-form', null, [
@@ -3703,7 +3703,7 @@ if ($is_commercial_hub) {
                         <p><?php esc_html_e('We install the Signature and Contemporary ranges. Rustic Renown is a popular cottage-style design within Signature, so it is shown separately to make that choice easier to see.', 'fenster'); ?></p>
                     </div>
                     <aside>
-                        <strong><?php esc_html_e('What Fenster checks', 'fenster'); ?></strong>
+                        <strong><?php esc_html_e('What we check', 'fenster'); ?></strong>
                         <p><?php esc_html_e('Opening size, frame, threshold, handing, glass, colour, hardware and the final doorset performance are confirmed after survey.', 'fenster'); ?></p>
                     </aside>
                 </div>
@@ -5172,7 +5172,7 @@ if ($is_commercial_hub) {
                                 <p><?php echo esc_html($paragraph); ?></p>
                             <?php endforeach; ?>
                             <?php if ($index === 1 || $index === 4) : ?>
-                                <a class="text-link" href="#fenster-enquiry"><?php esc_html_e('Talk to Fenster about this', 'fenster'); ?></a>
+                                <a class="text-link" href="#fenster-enquiry"><?php esc_html_e('Talk to us about this', 'fenster'); ?></a>
                             <?php endif; ?>
                         </div>
 

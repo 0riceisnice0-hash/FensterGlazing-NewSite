@@ -82,7 +82,7 @@ if (! function_exists('fenster_case_excerpt')) {
             }
         }
 
-        return 'A Fenster Glazing project shaped around performance, practical installation and a cleaner finished result.';
+        return 'One of our projects shaped around performance, practical installation and a cleaner finished result.';
     }
 }
 
@@ -154,10 +154,10 @@ if (! function_exists('fenster_case_project_details')) {
         $details = [
             'sector' => $fallback_type,
             'location' => $fallback_location,
-            'installed' => ['Surveyed glazing package', 'Fenster installation team', 'Aftercare support'],
+            'installed' => ['Surveyed glazing package', 'Our installation team', 'Aftercare support'],
             'brief' => $fallback_intro,
             'challenge' => 'The project needed the right balance of product choice, measured detail and clean installation.',
-            'approach' => 'Fenster shaped the specification around the property, surveyed the details and planned the installation around the site conditions.',
+            'approach' => 'We shaped the specification around the property, surveyed the details and planned the installation around the site conditions.',
             'result' => 'The finished work improved comfort, performance and the overall appearance of the building.',
             'outcome_label' => 'Improved performance',
             'timeline' => 'Survey to install',
@@ -165,7 +165,7 @@ if (! function_exists('fenster_case_project_details')) {
             'scope' => 'Survey, supply and installation of replacement glazing.',
             'systems' => ['Glazing systems selected to suit the site'],
             'access' => 'Standard site access',
-            'features' => ['Measured survey', 'Fenster installation team', 'Aftercare support'],
+            'features' => ['Measured survey', 'Our installation team', 'Aftercare support'],
         ];
 
         $project_details = [
@@ -178,7 +178,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'systems' => ['Aluminium window systems', 'Commercial entrance doors', 'Double glazed units'],
                 'access' => 'Crane-assisted lifts to first-floor openings while the building was still at shell stage.',
                 'features' => ['37 windows installed', 'Upper-floor crane lifts', 'Shell-stage coordination', 'Hospitality refurbishment'],
-                'brief' => 'Fenster was appointed to deliver the window and entrance-door package for a major hotel refurbishment while the building was still stripped back to shell condition.',
+                'brief' => 'We were appointed to deliver the window and entrance-door package for a major hotel refurbishment while the building was still stripped back to shell condition.',
                 'challenge' => 'The hotel had no internal staircases installed when glazing began, so large aluminium units had to be lifted safely to upper floors and sequenced around the wider construction programme.',
                 'approach' => 'The team coordinated access, lifting strategy and installation sequencing before work began, then installed durable aluminium systems selected for hospitality use, slim sightlines and thermal performance.',
                 'result' => 'The completed package gives the refurbished hotel a cleaner contemporary facade, better insulation for guest and communal spaces, and a more efficient building envelope.',
@@ -197,7 +197,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'features' => ['19 bespoke windows', 'Timber-alternative appearance', 'Commercial office setting', 'Heritage detailing'],
                 'brief' => 'Water End Barn needed heritage-sensitive windows for a converted commercial building, preserving countryside character while supporting modern office use.',
                 'challenge' => 'The installation had to respect the age and appearance of the barn while meeting the practical expectations of a commercial workspace.',
-                'approach' => 'Fenster specified bespoke Residence 9 frames in Clotted Cream, balancing heritage detailing, commercial compliance, thermal comfort and a tidy installation programme.',
+                'approach' => 'We specified bespoke Residence 9 frames in Clotted Cream, balancing heritage detailing, commercial compliance, thermal comfort and a tidy installation programme.',
                 'result' => 'The barn keeps its traditional character while gaining better warmth, light and usability for the businesses working inside.',
                 'outcome_label' => '19 bespoke windows',
                 'timeline' => 'Heritage-led survey',
@@ -214,7 +214,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'features' => ['Live healthcare environment', 'Resident safety controls', 'Phased installation', 'Improved thermal performance'],
                 'brief' => 'Sunrise Care Home needed a full window and door replacement package as part of a refurbishment focused on safety, comfort and energy efficiency.',
                 'challenge' => 'The building remained a live dementia-specific care environment, so disruption, safety, access control and resident wellbeing had to be managed throughout.',
-                'approach' => 'Fenster phased the installation, used suitable high-performance uPVC systems and kept tools, access and working areas controlled around day-to-day care operations.',
+                'approach' => 'We phased the installation, used suitable high-performance uPVC systems and kept tools, access and working areas controlled around day-to-day care operations.',
                 'result' => 'The care home now has improved thermal performance, better security and a calmer internal environment for residents and staff.',
                 'outcome_label' => 'Live care setting',
                 'timeline' => 'Phased installation',
@@ -231,7 +231,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'features' => ['Healthcare entrance', 'New clinic fit-out', 'Brand-aligned finish', 'Commercial daily-use doors'],
                 'brief' => 'Roka Dental needed external doors for a new clinic launch, with the entrance expected to feel professional, durable and aligned with the practice brand.',
                 'challenge' => 'The doors needed to support daily clinical use while making the right first impression for a new local healthcare business.',
-                'approach' => 'Fenster selected aluminium and uPVC door systems around proportion, finish, security and long-term performance, then installed them through an efficient in-house programme.',
+                'approach' => 'We selected aluminium and uPVC door systems around proportion, finish, security and long-term performance, then installed them through an efficient in-house programme.',
                 'result' => 'The clinic gained a clean, brand-aligned entrance that improves appearance, reliability and commercial durability.',
                 'outcome_label' => 'Clinic-ready entrance',
                 'timeline' => 'Launch programme',
@@ -243,7 +243,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'installed' => ['Liniar casement windows', 'Leaded diamond glass', 'Three-part white uPVC bay window'],
                 'brief' => 'A Rushden homeowner wanted to replace failing windows, improve comfort and keep the traditional character of a cosy bungalow intact.',
                 'challenge' => 'The existing bay window had blown panes, draughts and cold rooms, but the replacement still needed to suit the original frontage.',
-                'approach' => 'Fenster installed a three-part white uPVC bay with modern double glazed units and leaded diamond casements to keep the property character while improving performance.',
+                'approach' => 'We installed a three-part white uPVC bay with modern double glazed units and leaded diamond casements to keep the property character while improving performance.',
                 'result' => 'The home is warmer, quieter and more comfortable, with reduced heat loss and a bay window that looks naturally suited to the property.',
                 'outcome_label' => 'Warmer bungalow',
                 'timeline' => 'Residential upgrade',
@@ -260,7 +260,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'features' => ['6 Residence 9 windows', '1 three-part bay window', '5 C70 flush casements', 'Repeat client'],
                 'brief' => 'The Green Man needed pub windows that could improve insulation and reliability while preserving a traditional village hospitality feel.',
                 'challenge' => 'The building needed commercial-grade performance without losing the look of timber joinery or disrupting the day-to-day running of the pub.',
-                'approach' => 'Fenster combined Residence 9, C70 flush casements, mechanical joints, astragal bars and black monkey tail handles for a heritage-led commercial double glazing package.',
+                'approach' => 'We combined Residence 9, C70 flush casements, mechanical joints, astragal bars and black monkey tail handles for a heritage-led commercial double glazing package.',
                 'result' => 'The pub gained warmer, lower-maintenance windows that protect its character while improving comfort for guests and staff.',
                 'outcome_label' => 'Heritage pub finish',
                 'timeline' => 'Repeat client',
@@ -277,7 +277,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'features' => ['Live clinical environment', 'Colour-matched aluminium', 'Approved RAMS', 'Estate consistency'],
                 'brief' => 'Herts and Essex Community Hospital needed replacement aluminium windows and doors for the Kitwood Unit as part of wider healthcare construction works.',
                 'challenge' => 'The package had to integrate with existing hospital buildings, preserve visual consistency and be installed safely in a live clinical environment.',
-                'approach' => 'Fenster supplied colour-matched aluminium systems and installed them through healthcare-aware site protocols, approved RAMS and careful phasing.',
+                'approach' => 'We supplied colour-matched aluminium systems and installed them through healthcare-aware site protocols, approved RAMS and careful phasing.',
                 'result' => 'The new glazing improves durability, performance and estate consistency while supporting essential healthcare infrastructure.',
                 'outcome_label' => 'Clinical environment',
                 'timeline' => 'Phased healthcare work',
@@ -294,7 +294,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'features' => ['Live clinical environment', 'Colour-matched aluminium', 'Approved RAMS', 'Estate consistency'],
                 'brief' => 'Herts and Essex Community Hospital needed replacement aluminium windows and doors for the Kitwood Unit as part of wider healthcare construction works.',
                 'challenge' => 'The package had to integrate with existing hospital buildings, preserve visual consistency and be installed safely in a live clinical environment.',
-                'approach' => 'Fenster supplied colour-matched aluminium systems and installed them through healthcare-aware site protocols, approved RAMS and careful phasing.',
+                'approach' => 'We supplied colour-matched aluminium systems and installed them through healthcare-aware site protocols, approved RAMS and careful phasing.',
                 'result' => 'The new glazing improves durability, performance and estate consistency while supporting essential healthcare infrastructure.',
                 'outcome_label' => 'Clinical environment',
                 'timeline' => '3 weeks',
@@ -306,7 +306,7 @@ if (! function_exists('fenster_case_project_details')) {
                 'installed' => ['Flush sash windows', 'White woodgrain finish', 'Georgian bar detailing'],
                 'brief' => 'A 300-year-old Water Stratford property needed new windows that would respect its age, architecture and village setting.',
                 'challenge' => 'The project needed modern performance and a clean finish without making the 17th-century cottage feel over-modernised.',
-                'approach' => 'Fenster specified eye-catching flush sash windows from Liniar with white woodgrain and Georgian bars to echo traditional detailing.',
+                'approach' => 'We specified eye-catching flush sash windows from Liniar with white woodgrain and Georgian bars to echo traditional detailing.',
                 'result' => 'The property keeps its period character while gaining cleaner, better-performing windows chosen around the architecture.',
                 'outcome_label' => '300-year-old home',
                 'timeline' => 'Heritage upgrade',
@@ -577,7 +577,7 @@ if ($is_archive) :
     $archive_heading = $is_commercial_archive ? 'Commercial project records.' : 'Residential transformations with real project detail.';
     $archive_intro = $is_commercial_archive
         ? 'Completed commercial glazing work. Scope, location, systems and site requirements.'
-        : 'Explore home glazing projects where Fenster balanced comfort, character, product choice and careful installation.';
+        : 'Explore home glazing projects where we balanced comfort, character, product choice and careful installation.';
     $archive_secondary_url = $is_commercial_archive ? '' : home_url('/commercial-projects/');
     $archive_secondary_label = $is_commercial_archive ? '' : 'View commercial projects';
     ?>
@@ -671,7 +671,7 @@ if ($is_archive) :
                 <div>
                     <p class="eyebrow"><?php echo esc_html($is_commercial_archive ? 'Commercial enquiry' : 'Start yours'); ?></p>
                     <h2><?php echo esc_html($is_commercial_archive ? 'Send drawings, schedule or site requirements.' : 'Have a project that needs the same level of care?'); ?></h2>
-                    <p><?php echo esc_html($is_commercial_archive ? 'Fenster can support survey, product specification, supply and installation planning for commercial glazing packages.' : 'Bring Fenster in early for product advice, survey detail, installation planning and a clearer path from idea to finished glazing.'); ?></p>
+                    <p><?php echo esc_html($is_commercial_archive ? 'We can support survey, product specification, supply and installation planning for commercial glazing packages.' : 'Bring us in early for product advice, survey detail, installation planning and a clearer path from idea to finished glazing.'); ?></p>
                 </div>
                 <div class="button-row">
                     <a class="button" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Talk to Fenster', 'fenster'); ?></a>
@@ -747,7 +747,7 @@ $project_blocks = $is_commercial_single
         ],
         [
             'label' => 'Approach',
-            'title' => 'How Fenster handled it',
+            'title' => 'How we handled it',
             'copy' => (string) ($project_details['approach'] ?? ''),
         ],
         [
@@ -834,7 +834,7 @@ $project_blocks = $is_commercial_single
                 <div class="fg-case-mini-facts">
                     <span><small><?php esc_html_e('Where', 'fenster'); ?></small><strong><?php echo esc_html($location); ?></strong></span>
                     <span><small><?php esc_html_e('Project type', 'fenster'); ?></small><strong><?php echo esc_html($type); ?></strong></span>
-                    <span><small><?php esc_html_e('Fenster role', 'fenster'); ?></small><strong><?php esc_html_e('Survey, supply and install', 'fenster'); ?></strong></span>
+                    <span><small><?php esc_html_e('Our role', 'fenster'); ?></small><strong><?php esc_html_e('Survey, supply and install', 'fenster'); ?></strong></span>
                 </div>
             </div>
         </section>
@@ -925,7 +925,7 @@ $project_blocks = $is_commercial_single
             <div class="container">
                 <div class="fg-case-section-head">
                     <p class="eyebrow"><?php echo esc_html($is_commercial_single ? 'More projects' : 'More case studies'); ?></p>
-                    <h2><?php echo esc_html($is_commercial_single ? 'More commercial projects.' : 'Keep exploring Fenster project work.'); ?></h2>
+                    <h2><?php echo esc_html($is_commercial_single ? 'More commercial projects.' : 'Keep exploring our project work.'); ?></h2>
                 </div>
                 <div class="fg-case-index__grid">
                     <?php foreach ($related_cards as $card) : ?>
@@ -955,7 +955,7 @@ $project_blocks = $is_commercial_single
         <div class="container fg-case-cta__inner">
             <div>
                 <p class="eyebrow"><?php echo esc_html($is_commercial_single ? 'Project enquiry' : 'Next project'); ?></p>
-                <h2><?php echo esc_html($is_commercial_single ? 'Send project requirements.' : 'Want Fenster to look at your property or commercial site?'); ?></h2>
+                <h2><?php echo esc_html($is_commercial_single ? 'Send project requirements.' : 'Want us to look at your property or commercial site?'); ?></h2>
                 <p><?php echo esc_html($is_commercial_single ? 'Call ' . $phone . ' or email ' . $email . ' with drawings, schedules, site details or access requirements.' : 'Call ' . $phone . ' or email ' . $email . ' to start a proper conversation about survey, specification and installation.'); ?></p>
             </div>
             <div class="button-row">

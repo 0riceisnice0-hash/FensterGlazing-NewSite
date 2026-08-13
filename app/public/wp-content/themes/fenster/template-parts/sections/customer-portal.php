@@ -32,7 +32,7 @@ $portal_url = 'https://orderupdates.abinitiosoftware.co.uk/login/7014422';
             <div class="fg-customer-portal-lookup__heading">
                 <p class="eyebrow"><?php esc_html_e('Order lookup', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Enter your order details below.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('The secure lookup opens inside this page. Your details are handled by the order system that manages Fenster updates.', 'fenster'); ?></p>
+                <p><?php esc_html_e('The secure lookup opens inside this page. Your details are handled by the order system that manages our updates.', 'fenster'); ?></p>
             </div>
 
             <div class="fg-customer-portal-embed" data-lenis-prevent>

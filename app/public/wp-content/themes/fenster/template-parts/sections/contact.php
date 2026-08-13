@@ -77,7 +77,7 @@ $hub_routes = [
 $quick_routes = [
     ['label' => 'Home projects', 'title' => 'Windows, doors and glazing', 'copy' => 'For replacements, new openings, roof lanterns, integral blinds, glass units and repairs.', 'url' => home_url('/windows-milton-keynes/')],
     ['label' => 'Commercial work', 'title' => 'Sites, schools and businesses', 'copy' => 'For shopfronts, commercial glazing, doors, windows, louvres, AOV and project support.', 'url' => home_url('/commercial-glazing/')],
-    ['label' => 'Price first', 'title' => 'Instant quote tool', 'copy' => 'Use online pricing for a quick product and price starting point before a final Fenster check.', 'url' => home_url('/online-quote/')],
+    ['label' => 'Price first', 'title' => 'Instant quote tool', 'copy' => 'Use online pricing for a quick product and price starting point before we check the final details.', 'url' => home_url('/online-quote/')],
 ];
 
 /* These described the consultation booking flow, which is no longer the form on

@@ -36,7 +36,7 @@ function fenster_product_hub_data(string $slug): array
             'systems' => [$systems['liniar']],
             'badges' => [$energyplus_badge, 'A+ rated', 'PAS 24 option'],
             'heading' => 'More information on casement windows.',
-            'copy' => 'Casement windows are usually the best value option for replacing older uPVC or timber windows. Fenster specifies the 70mm Liniar EnergyPlus system, with the final layout, glass and hardware confirmed after survey.',
+            'copy' => 'Casement windows are usually the best value option for replacing older uPVC or timber windows. We specify the 70mm Liniar EnergyPlus system, with the final layout, glass and hardware confirmed after survey.',
             'specs' => [
                 ['label' => 'Profile system', 'value' => '70mm Liniar EnergyPlus uPVC profile'],
                 ['label' => 'Weather seal', 'value' => 'Co-extruded bubble gasket for continuous draught and rain protection'],
@@ -380,7 +380,7 @@ function fenster_product_hub_data(string $slug): array
 
     $spec_copy = [
         'casement-windows' => [
-            'Profile system' => 'EnergyPlus is the 70mm uPVC profile system used for Fenster casement windows, with layout and glazing chosen around each room.',
+            'Profile system' => 'EnergyPlus is the 70mm uPVC profile system used for our casement windows, with layout and glazing chosen around each room.',
             'Weather seal' => 'The continuous gasket helps keep draughts and driving rain out, which is especially noticeable on exposed elevations.',
             'Security' => 'Locks, hinges, handles and glass are specified together so the finished window matches the security level needed for the room.',
             'Best for' => 'Casements are flexible enough for most homes because fixed panes, top openers and side openers can be combined in one frame.',
