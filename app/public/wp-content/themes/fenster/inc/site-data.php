@@ -1821,7 +1821,12 @@ function fenster_site_data(): array
                 ],
             ],
             'roofline' => [
-                'intro' => 'Roofline replacement protects the exposed edge of the roof with low-maintenance fascias, soffits and guttering. Fenster checks the existing boards, ventilation, drainage and access so the finished roofline looks neat and performs properly.',
+                /* "Fenster checks" was third person, which TONEOFVOICE.md bans
+                   outright. Corrected 2026-08-13. The opening sentence is also
+                   doing more work than usual here, because roofline is a trade
+                   word: on the compact hero this intro is hidden by CSS and the
+                   eyebrow carries "Fascias, soffits and guttering" instead. */
+                'intro' => 'Roofline replacement protects the exposed edge of the roof with low-maintenance fascias, soffits and guttering. We check the existing boards, ventilation, drainage and access so the finished roofline looks neat and performs properly.',
                 'benefits' => [
                     ['title' => 'Protects the roof edge', 'copy' => 'Fascias, soffits and guttering help protect the roofline from water ingress, weathering and long-term timber damage.'],
                     ['title' => 'Low-maintenance uPVC', 'copy' => 'Modern uPVC roofline products reduce repainting and routine upkeep compared with older timber boards.'],

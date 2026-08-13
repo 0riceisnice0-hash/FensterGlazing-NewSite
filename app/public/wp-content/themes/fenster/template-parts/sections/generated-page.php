@@ -907,6 +907,22 @@ if ($is_commercial) {
     $hero_eyebrow = 'Distinction composite doors';
 } elseif ($is_heritage_bespoke) {
     $hero_eyebrow = 'Sheerline Classic';
+} elseif ($slug === 'roofline') {
+    /* Owner instruction, 2026-08-13: the page has to say fascias, soffits and
+       guttering, or explain what roofline is, high up.
+
+       The explanation already exists in `product_content['roofline']['intro']`
+       and it is GOOD, but it never reaches this hero: `.fg-hero--compact` sets
+       `.fg-hero__intro { display: none }` (src/scss/main.scss:3510), so on every
+       compact-hero route the H1 is the only thing naming the product. That is
+       fine for "Casement Windows" and useless for "Roofline", which is a trade
+       word a homeowner may not know.
+
+       The eyebrow is the right slot rather than lengthening the H1: STYLE.md
+       requires the H1 to be the product name, and this eyebrow already carries a
+       qualifier on three other routes. It renders directly above the H1, so the
+       plain-English words are the first thing read. */
+    $hero_eyebrow = 'Fascias, soffits and guttering';
 }
 $instant_quote_url = 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing';
 $instant_quote_preview = FENSTER_THEME_URI . '/assets/quote/instant-quote-screenshot.png';
