@@ -37,6 +37,7 @@ $fenster_required_files = [
     'inc/adminbase.php',
     'inc/google-ads-conversions.php',
     'inc/generated-pages.php',
+    'inc/scan-links.php',
 ];
 
 foreach ($fenster_required_files as $fenster_file) {
