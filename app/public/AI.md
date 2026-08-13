@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-08-11
+Last updated: 2026-08-13
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 

@@ -1,36 +1,46 @@
 # Fenster Glazing Handover
 
-## Commercial rebuild, 2026-08-12 — in the working tree, not on test
+## Commercial rebuild, 2026-08-13 — on test, awaiting approval
 
-**Read the newest START HERE block in `PROGRESS.md` first.** Live is unchanged at
-`47db7aea`; this work is uncommitted.
+**Read the newest START HERE block in `PROGRESS.md` first.** Live is `47db7aea`
+as recorded and was **not** re-established by checksum this session; do that
+before any deploy. `main` and test are `6d7d956b`. **Twenty-two commits are on
+test and not live**, fourteen of them this rebuild.
 
-**An owner ruling changed a standing rule.** *"end client name is fine. just not
-contractor unless that is themselves!"* The Commercial Client Anonymity Rule is
-now: **name the end client, never the main contractor unless the contractor owns
-the building.** The four client-name files the previous handover called urgent
-were **never a breach** — all four are end clients on their own buildings. The
-rename shipped anyway because it was already approved; it is not precedent.
+**AN OWNER RULING CHANGED A STANDING RULE.** *"end client name is fine. just not
+contractor unless that is themselves!"* Name the end client; never the main
+contractor unless the contractor owns the building. The four client-name files
+the previous handover called urgent were **never a breach** — all four are end
+clients on their own buildings. The rename shipped anyway because it was already
+approved; **it is not precedent.**
 
-What changed, in one list:
+What changed, and what to read before touching any of it:
 
-- **`FENSTER_SPEC_TBC`** is the single way to express an unconfirmed commercial
-  figure. **31 outstanding across 11 routes**, listed by
-  `fenster_commercial_spec_pending()`. One-line swap to fill one in. See the
-  Commercial Specification Rule in `AI.md`.
-- **The commercial hub is its own template**, `commercial-glazing-v2.php`, and
-  now links **all twelve** commercial routes. It linked five. AOV and the six
-  sector pages had no way in from it. See the Commercial Hub Rule in `AI.md`.
-- **Third person is gone** from commercial copy, and no two commercial routes
-  share an H2.
-- **Real photography throughout.** All Hallows, Bletchley, Headrow and Heal's
-  were sitting unused in the case-study library while these pages ran on scrape
-  imagery. Two routes ship marked placeholders because nothing honest exists.
-- `fenster_case_studies_for_product_group()` **takes a `$type` now**, defaulting
-  to residential. Commercial routes use it precisely because it has **no
-  fallback** — the single-product helper returns every study when nothing
-  matches, which is the documented fault that put secondary glazing on the tilt
-  and turn page.
+- **`FENSTER_SPEC_TBC`** is the only way to express an unconfirmed commercial
+  figure. **Five outstanding**, down from 31, listed by
+  `fenster_commercial_spec_pending()` and printed into the audit doc from it. See
+  the Commercial Specification Rule in `AI.md`.
+- **The hub is its own template**, `commercial-glazing-v2.php`, and links **all
+  thirteen** commercial routes. It linked five: AOV and every sector page had no
+  way in. **Adding a commercial route means adding it to a card row here too** —
+  see the Commercial Hub Rule in `AI.md`.
+- **A commercial route lives in six registries.** The data, the SEO overrides,
+  the sitemap virtual list, `$commercial_route_slugs`, the navigation, and the
+  hub's card rows. `/industrial-and-logistics-glazing/` is the worked example.
+- **Commercial pages show `commercial@fensterglazing.com`** via
+  `brand.commercial_email`. The enquiry **form still delivers to `info@`** on
+  every route, deliberately; see the note on that data key.
+- **`fenster_case_studies_for_product_group()` takes a `$type`**, defaulting to
+  residential. Commercial routes use it precisely because it has **no fallback**.
+- **No marked placeholders remain** on the commercial set. Eleven photography
+  gaps are listed in `PHOTO-CHECKLIST.md`, written to be forwarded.
+- **Three copy rules were added to `TONEOFVOICE.md`** after three owner
+  corrections: do not sell by describing what goes wrong; abstraction is not
+  expertise; a page built by adding says everything twice.
+
+**Still needing the owner:** the five figures, whether commercial form leads
+should follow the commercial address, the AOV testing claim removed when no
+electrical works was confirmed, and a ruling on three pre-existing negative lines.
 
 ## Handover state, 2026-08-12
 
@@ -198,7 +208,7 @@ key-specification strip repeat their own H1 as an H2 inside it.
 `/aluminium-flush-windows/` overrides it; the rest do not.
 
 
-Last updated: 2026-08-11
+Last updated: 2026-08-13
 
 This file gives a new AI agent the current context needed to work on the whole site.
 

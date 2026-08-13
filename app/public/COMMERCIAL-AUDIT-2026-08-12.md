@@ -193,100 +193,49 @@ step with what the site is actually showing.
    the commercial service pages**, not just in the site-wide trust strip? The hub
    links both existing pages; it makes no new claim.
 
-### 6b. The specification figures, per route
+### 6b. The specification figures still outstanding
 
-**Commercial windows and doors** (`/commercial-windows-and-doors/`)
-
-- Which aluminium systems we fit commercially (Technal, Smart, Senior or other)
-- Which uPVC system we fit commercially
-- Fire ratings we can actually claim on commercial glazing, and to which standard
-- Our PAS 24 / Secured by Design position on commercial work
-- Whether steel doorsets get their own page, and the rating they carry
+**Five, down from thirty-one.** The owner answered on 2026-08-12 and everything
+confirmed is on the pages. What is left is genuinely unknown or hedged, and the
+rows render as "Confirming — ask and we will send it" until a value replaces the
+`FENSTER_SPEC_TBC` sentinel. One-line swap each.
 
 **Curtain walling** (`/curtain-walling/`)
 
-- Which curtain walling system(s) we fit
-- Mullion and transom sizes, and the depth range available
 - Achievable U-value for the system, and at what glazing specification
-- The wind-load standard we design and test to
 - Maximum panel size and glass weight we can handle
-- Whether we offer structural glazing or capped only
-
-**Automatic doors and entrance automation** (`/commercial-automation/`)
-
-- Which door operators we install (swing and sliding), and whose
-- Whether we service and maintain operators after handover, and on what interval
-- The standard we install powered doors to (BS EN 16005 or otherwise)
-
-**School and education glazing** (`/school-and-education-glazing/`)
-
-- Fire-rated glazing we can supply for school corridors and escape routes
-
-**Student accommodation glazing** (`/student-accommodation-glazing/`)
-
-- The dB reduction we can claim on the acoustic units we fit
-- Fire-rated glazing available for PBSA corridors and escape routes
-
-**Hotel and hospitality glazing** (`/hotel-and-hospitality-glazing/`)
-
-- The dB reduction we can claim on the acoustic units we fit
-- Whether we work nights for hospitality, and how that is priced
-
-**Care home glazing** (`/care-home-glazing/`)
-
-- U-value we quote on the commercial window systems used in care settings
-- Any care-sector accreditation or vetting we hold that a home asks for
-
-**Office and retail glazing** (`/office-and-retail-glazing/`)
-
-- U-value we quote on the commercial window and curtain walling systems
-- Whether we supply toughened and laminated shopfront glass to order, and to what size
-
-**Commercial replacement glazing** (`/commercial-replacement-glazing/`)
-
-- Whether we supply toughened and laminated shopfront glass to order, and to what size
-- Whether we work out of hours to keep a building trading, and how that is priced
+- Structural glazing or capped only? Answered "capped only (i think)" — needs confirming before it is published
 
 **Automatic opening vents** (`/automatic-opening-vents/`)
 
 - The standard we install AOV units to (EN 12101-2 or otherwise)
 - Aerodynamic free area figures for the units we fit
-- Which control panels we work alongside, and who supplies them
 
-**Healthcare and clinical glazing** (`/healthcare-construction/`)
+**Two answers deliberately did not become published figures.** Mullion and
+transom sizes were answered "irrelevant", so that row was removed rather than
+left pending: a row nobody should ask about is worse than no row. And structural
+versus capped was answered "capped only (i think)" — a hedge is not a
+confirmation, and this repository has a written history of confident invented
+figures reaching test.
 
-- Any infection-control or clinical working accreditation we hold that a healthcare buyer asks for
-- Fire-rated glazing we can supply for clinical corridors and escape routes
-- Acoustic performance we can claim where consultation-room privacy is specified
+### 6c. Photographs
 
-### 6c. Photographs I do not have
+**No route ships a marked placeholder any more.** The owner supplied four images
+on 2026-08-12 and every slot is filled. The remaining gaps are quality rather
+than absence, and the full list — written to be forwarded to the commercial team
+— is in `PHOTO-CHECKLIST.md`. In priority order the top five are:
 
-Two routes ship a marked placeholder rather than a borrowed photograph, and both
-say on the page what they are waiting for:
-
-1. **An automatic entrance we have fitted**, showing the operator above the door
-   head. `/commercial-automation/` has no photograph of a powered door at all.
-2. **A clinical or care interior we have worked in**, showing screening and a
-   room handed back clean. `/healthcare-construction/` runs on one frontage shot.
-
-Beyond those, in rough priority:
-
-3. **A wide commercial elevation we have glazed**, for the hub hero.
-4. **Curtain walling, ours.** The Bletchley depot now carries this route, but one
-   job is thin for the highest-demand commercial product.
-5. **An AOV and its control panel.** All Hallows now proves the route, but no
-   photograph shows the vent open or the panel.
-6. **One building per sector** — a school, a care home, a hotel, a student block,
-   an office or retail frontage. Exterior is enough.
-7. **The Heal's louvres**, still unphotographed.
-
-Same rules as the residential checklist: square on, daylight, no vans in shot,
-and on a scaffolded job five full-resolution shots from the lift on the last day
-is worth more than anything taken later.
+1. A wide commercial elevation for the hub hero.
+2. Curtain walling, a second job. One exists and it is the most searched
+   commercial product we sell.
+3. An automatic entrance showing the operator, on a job of ours.
+4. Inside a live clinical or care setting.
+5. A distribution or manufacturing building.
 
 ---
 
 ## 7. Suggested order of work
+
 
 **Status as of 2026-08-12, end of the rebuild session.**
 

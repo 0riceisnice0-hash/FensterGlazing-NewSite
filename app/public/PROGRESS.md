@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-11
+Last updated: 2026-08-13
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -9,76 +9,123 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-12 (commercial rebuild — NOT YET ON TEST)
+## START HERE, 2026-08-13 (commercial rebuild — ON TEST, awaiting approval)
 
-**Live is still `47db7aea`. `main` is `5d910ea8`. The commercial rebuild below is
-in the WORKING TREE ONLY — not committed, not pushed, not on test.** The seven
-commits already on `main` and not live are unchanged and still unshipped.
+**Live is `47db7aea` as recorded, and NOT re-established by checksum this
+session — do that before any live deploy rather than trusting this line.
+`main` and test are both `6d7d956b`. TWENTY-TWO COMMITS ARE ON TEST AND NOT
+LIVE.** Working tree clean, no release branch outstanding.
 
-### The owner ruling that changes a standing rule
+Fourteen of those twenty-two are this session's commercial rebuild. The other
+eight were already unshipped when it started.
+
+### THE LIVE DEPLOY STILL NEEDS A DELETION ASSERTION OF EXACTLY FOUR, BY NAME
+
+Unchanged from the previous handover, and it is still the thing that will abort a
+copied-forward guard, because every other release this month asserted zero:
+
+```
+BFI.jpg                                  deleted
+Greensand-Country.jpg                    deleted
+Airbus-Commercial.jpg                    renamed -> commercial-glazed-elevation.jpg
+ROKA-Dental-Post-Fitting-2-1-scaled.jpg  renamed -> dental-practice-glazing.jpg
+```
+
+`git diff --name-status` prints the renames as `R100`; **rsync sees four
+deletions**. Set the assertion from what rsync will do. The theme diff over live
+is 8 added, 14 modified, 2 deleted, 2 renamed.
+
+### The owner ruling that changed a standing rule
 
 **"end client name is fine. just not contractor unless that is themselves!"**
 The Commercial Client Anonymity Rule is now one line: **name the end client,
 never the main contractor, unless the contractor owns the building.**
 
-This makes the "urgent" item the previous handover led on **not a breach at
-all.** `Airbus-Commercial.jpg`, `ROKA-Dental-Post-Fitting-2-1-scaled.jpg`,
-`BFI.jpg` and `Greensand-Country.jpg` are all end clients on their own
-buildings. The rename in `888e98ce` shipped anyway because it was already
-written, verified and approved; **do not treat it as precedent.** `AI.md` is
-corrected, and the ruling also closed the long-standing Green Man open question
-(Simon is the pub's owner, so naming him is right).
+That makes the "urgent" item the previous handover led on **not a breach at
+all** — Airbus, ROKA, BFI and Greensand are all end clients on their own
+buildings. The rename shipped anyway because it was already approved; **it is not
+precedent.** The ruling also closed the long-open Green Man question: Simon is
+the pub's owner, so naming him was always right.
 
 ### What the rebuild did
 
-1. **A swappable specification layer.** `FENSTER_SPEC_TBC` in
-   `inc/commercial-product-data.php` is the single way to express a figure
-   nobody has confirmed. **31 outstanding figures across 11 routes**, listed by
-   `fenster_commercial_spec_pending()` and printed into
-   `COMMERCIAL-AUDIT-2026-08-12.md` §6b from that function rather than by hand.
-   Filling one in is a one-line swap.
-2. **The third-person sweep.** Zero third-person references survive in
-   commercial copy, and the three headings that were identical across eleven
-   pages are per-route.
-3. **The shared template reworked** around a specifier: specification table,
-   per-route headings, a real proof band and marked placeholders.
-4. **The hub rebuilt** into `commercial-glazing-v2.php`, out of the 3,000-line
-   `generated-page.php`.
-5. **Real photography throughout**, and the flagged wrong-product images gone.
-6. **SEO pass**: two routes had no title or meta at all; the hub was retitled
-   against a directory-dominated SERP; per-route `Service` schema added.
+1. **A swappable specification layer.** `FENSTER_SPEC_TBC` is the only way to
+   express an unconfirmed figure. **31 outstanding became 5** once the owner
+   answered. `fenster_commercial_spec_pending()` generates the checklist and
+   `COMMERCIAL-AUDIT-2026-08-12.md` §6b is printed from it, so the list cannot
+   drift from what the pages show.
+2. **The third-person sweep.** Zero third-person references in commercial copy,
+   and no two commercial routes share an H2.
+3. **The shared template reworked** for a specifier: specification table drawn as
+   a schedule, per-route headings, a real proof band, credentials on every page.
+4. **The hub rebuilt** into `commercial-glazing-v2.php`, out of `generated-page.php`.
+5. **A seventh sector route**, `/industrial-and-logistics-glazing/`, owner-approved.
+6. **Real photography throughout**, and no marked placeholders left anywhere.
+7. **SEO**: two routes had no title or meta at all; the hub retitled against a
+   directory-dominated SERP; per-route `Service` schema with England and Wales.
 
-### The fault the audit missed, and it was the bigger one
+### The two structural faults, one of which the audit missed
 
-**The hub linked FIVE of the twelve commercial routes.** The audit found the
-fifth product card looping into a homeowner page, which is real — but
-`/automatic-opening-vents/` and all six sector pages had no route in from the
-hub at all. They were reachable from the main navigation and from nowhere else,
-on the page whose entire job is routing. Two card rows now cover all twelve.
+The audit found the hub's fifth card looping into a homeowner page. It missed
+that **the hub linked five of the twelve commercial routes** — AOV and all six
+sector pages had no way in from the page whose only job is routing. Two card rows
+cover all thirteen now, and the render harness asserts it.
 
-### The lesson worth carrying
+### Three copy corrections, and all three are now rules
 
-**Fixing a shared heading by writing another shared heading is not a fix.** The
-first pass replaced the three identical H2s the audit named with three new ones
-— spec, proof, related — identical across all twelve pages. The render harness
-caught it because it asserts that no two routes share an H2, which is a cheaper
-check than reading twelve pages. The headings derive from the route now.
+The owner corrected the same class of fault three times, so each is written into
+`TONEOFVOICE.md` rather than just fixed:
 
-### Verification state
+- **Do not sell by describing what goes wrong.** "Head, cill, jamb and drainage
+  decide whether it leaks" became "…are where a facade is made watertight". Same
+  specification, sells the care instead of the catastrophe.
+- **Abstraction is not expertise.** "One contractor then owns the joints between
+  the frame, the glass and the hardware" — frames, glass and hardware have no
+  joints between them. The tell was the word "interfaces": four uses, one of them
+  naming a real junction.
+- **A page built by adding says everything twice.** That route said "as one
+  package" four times in different words before anyone noticed none said how.
 
-`render-commercial.php` in the session scratchpad stubs WordPress, renders all
-twelve routes plus the hub and runs assertions on third-person copy, H1 count,
-H1-repeated-as-H2, shared headings, every image resolving on disk, spec row
-counts, placeholder counts, proof bands never rendering without a study, and all
-twelve routes being linked from the hub. **All pass.** It is not in the repo;
-rebuild it if you do substantial work here.
+### What needs the owner
 
-**Not done: nothing is on test.** PHP lints clean and `main.css` is rebuilt;
-`assets/js/main.js` was restored after the build because no JS source changed.
+- **Five figures**: curtain wall U-value, maximum panel size and weight,
+  confirming capped-only (answered "capped only (i think)", which is a hedge),
+  and the AOV standard and aerodynamic free area.
+- **Does the commercial enquiry form follow the commercial address?** Commercial
+  pages now show `commercial@fensterglazing.com`; the form still delivers to
+  `info@` on every route. Deliberate — changing where leads land is an
+  email-delivery change, not a copy one — but it wants a decision.
+- **The AOV "tested before handover" claim was removed** when the owner confirmed
+  no electrical works, because we cannot power-test a vent we do not wire. That
+  was approved copy.
+- **Three pre-existing negative lines** left alone pending a ruling: student
+  accommodation's "not late, it is empty for a year", and two on commercial
+  replacement glazing where the failed unit is literally the product.
+- **Photographs**: eleven gaps listed in `PHOTO-CHECKLIST.md`, written to be
+  forwarded to the commercial team.
+
+### Verification
+
+`render-commercial.php` in the session scratchpad stubs WordPress and renders all
+thirteen routes plus the hub, asserting on third-person copy, H1 count, H1
+repeated as H2, shared headings, every image resolving on disk, spec row counts,
+placeholder counts, proof bands never rendering without a study, credentials
+dispatch, and all thirteen routes being linked from the hub. **It is not in the
+repo; rebuild it if you do substantial work here.** All routes verified on test:
+`200`, one H1, zero PHP notices, no horizontal overflow at a proved 390px,
+nothing over the 3.6rem ceiling.
+
+**Four probe faults were caught during verification and none was a real failure.**
+A grep for the residential replacement page matched the site footer, not a
+product card. A stylesheet check returned nothing because the `href` is
+single-quoted. A "credentials missing" failure was the harness stub not including
+template parts. And a zero-result regex "found nothing" on a file that
+demonstrably had eight instances. **A verification result is not evidence until
+the probe is checked** — in both directions.
 
 ## START HERE, 2026-08-12 (commercial session — HANDOVER, work in flight)
 
-> **Superseded by the block above.** Live is unchanged at `47db7aea` and the
+> **Superseded by the 2026-08-13 block above.** Live is unchanged at `47db7aea` and the
 > unshipped stack is unchanged, but the "one urgent thing" this block leads on
 > was ruled a non-breach by the owner on 2026-08-12. Read the block above first.
 

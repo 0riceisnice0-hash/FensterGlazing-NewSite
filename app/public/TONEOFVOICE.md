@@ -1,6 +1,6 @@
 # Fenster Tone Of Voice
 
-Last updated: 2026-07-21
+Last updated: 2026-08-13
 
 This is the copy voice reference for every customer-facing page. It was reverse-engineered from the About page (`template-parts\sections\about.php`), which the owner named as the best copy on the site. When writing or rewriting any page copy, match this voice. `STYLE.md` still owns the mechanical copy rules (we/you voice, no em dashes, plain CTA labels); this document explains how the good copy actually sounds and how to reproduce it.
 
