@@ -449,19 +449,6 @@ function fenster_handle_windowcad_submission(WP_REST_Request $request): WP_REST_
             (string) get_post_time('c', true, (int) $enquiry_id)
         );
     }
-    /*
-     * Attach the completed quote to the ad click behind it. Runs whether or not
-     * a consented FG2 journey exists, because the FGA reference is derived from
-     * the landing URL rather than from anything stored on the visitor — so a
-     * paid quote from somebody who refused cookies still reports its campaign
-     * and its value. The quote price is the value: it is what the office would
-     * bill if the job lands, and it is what makes cost per lead comparable
-     * between campaigns.
-     */
-    if ($existing_enquiry_id === 0 && ! is_wp_error($enquiry_id) && $marketing_ref !== '') {
-        fenster_relay_ad_click_outcome($marketing_ref, 'quote_completed', $quote_price);
-    }
-
     if ($existing_enquiry_id === 0 && ! is_wp_error($enquiry_id)) {
         fenster_meta_track_enquiry(
             (int) $enquiry_id,
