@@ -222,16 +222,30 @@ $is_louvre = $slug === 'louvre-vents';
                         if ($label === '') {
                             continue;
                         }
+
+                        /* A PENDING ROW IS NO LONGER RENDERED. Owner ruling,
+                           2026-08-13: "drop the figure place until we have them."
+                           This reverses the 2026-08-12 decision recorded in the
+                           Commercial Specification Rule in `AI.md`, which had the
+                           row render as "Confirming, ask and we will send it" on
+                           the reasoning that an absent row reads as "we do not do
+                           this". The owner's call is that a visible placeholder
+                           on a page written for people who price work looks worse
+                           than a shorter table.
+
+                           THE ROW STAYS IN THE DATA ON PURPOSE. It is skipped
+                           here, not deleted there, so `fenster_commercial_spec_
+                           pending()` still generates the owner's outstanding
+                           checklist and §6b of COMMERCIAL-AUDIT-2026-08-12.md
+                           cannot drift from what the pages actually show. Fill
+                           the sentinel in and the row reappears by itself. */
+                        if ($pending) {
+                            continue;
+                        }
                         ?>
-                        <div class="fg-cm-spec__row<?php echo $pending ? ' is-pending' : ''; ?>">
+                        <div class="fg-cm-spec__row">
                             <dt><?php echo esc_html($label); ?></dt>
-                            <dd>
-                                <?php if ($pending) : ?>
-                                    <span class="fg-cm-spec__pending"><?php esc_html_e('Confirming — ask and we will send it', 'fenster'); ?></span>
-                                <?php else : ?>
-                                    <?php echo esc_html((string) $value); ?>
-                                <?php endif; ?>
-                            </dd>
+                            <dd><?php echo esc_html((string) $value); ?></dd>
                         </div>
                     <?php endforeach; ?>
                 </dl>
