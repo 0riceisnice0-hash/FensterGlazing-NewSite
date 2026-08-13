@@ -46,6 +46,34 @@ The pattern is: state the suspicion a sensible customer already has, then answer
 
 **The test that separates the two.** Principle 2 is about a caveat *the customer will meet in dealing with us* — a lead time, a limit, something awkward about our own service. It is not licence to describe the ways a building can fail. **State what the detail achieves, not what its absence causes.** "Head, cill, jamb and drainage are where a facade is made watertight" carries exactly the same specification and sells the care instead of the catastrophe.
 
+### 2b. Abstraction is not expertise, and a trade word does not make it one
+
+**Owner correction, 2026-08-12, on a sentence he called AI nonsense:** *"Taking it
+as one package is the point, because one contractor then owns the joints between
+the frame, the glass and the hardware, and they get settled once."* Frames, glass
+and hardware have no joints between them. The sentence was shaped like a technical
+benefit and contained nothing a reader could check, picture or act on.
+
+**The tell is a word you reach for when you have not got a concrete thing to say.**
+On that pass it was "interfaces": four uses across the commercial set and only one
+of them naming an actual junction detail. The other three were doing the work a
+real fact should have done — *"the interfaces are the part worth getting right"*,
+*"keeps the interfaces and the performance sensible"*, *"one set of interfaces"*.
+Watch for the same shape around **package, solution, coordination, alignment,
+seamless, holistic, end to end, sensible, properly, robust**.
+
+**The test, and it is the same one principle 1 gives:** can the reader check it,
+picture it, or do something with it? "One survey, one order, one team on site" and
+"the people who measure it are the people who fit it" pass. "One set of interfaces"
+does not. If a sentence would survive on a competitor's site unchanged, it is
+generic; if it would survive on a competitor's site *and nobody could tell what it
+meant*, it is worse than generic.
+
+**Where this comes from is worth knowing.** It is the same fault as writing the
+page by adding to it: on that route the idea "we do it all as one package" was
+stated four times in different words before anyone noticed none of them said how.
+Say the concrete thing once.
+
 ### 3. Respect the reader's way of doing things
 
 Routes and choices are presented as genuine equals, framed around how the customer prefers to operate, never mocking the alternative.

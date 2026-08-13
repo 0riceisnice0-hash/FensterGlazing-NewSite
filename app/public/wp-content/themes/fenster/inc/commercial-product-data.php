@@ -111,7 +111,11 @@ function fenster_commercial_product_pages(): array
             'eyebrow' => 'Commercial windows and doors',
             'title' => 'Commercial windows and doors',
             'subtitle' => 'Aluminium and uPVC windows, doorsets and entrance screens for commercial buildings, supplied and installed as one package.',
-            'intro_heading' => 'One package, one contractor, one set of interfaces.',
+            /* Was "One package, one contractor, one set of interfaces." — jargon
+               shaped like a benefit. "A set of interfaces" is not something anybody
+               buys or asks for. This is the concrete triad the voice actually
+               uses. */
+            'intro_heading' => 'One survey, one order, one team on site.',
             /* Was `commercial-1.jpg` and `commercial-4.jpg`, both scrape. This is
                the Bletchley rail depot: curtain walling, windows and doors on one
                building, all ours, and the single best photograph on the site of
@@ -121,7 +125,17 @@ function fenster_commercial_product_pages(): array
             'intro_image' => $cs_base . 'cs-all-hallows-bedford-terrace-run.webp',
             'intro_alt' => 'A run of new aluminium windows and screens across a terrace elevation at All Hallows, Bedford',
             'summary' => [
-                'We survey, supply and install the whole opening: aluminium and uPVC windows, glazed doorsets, entrance screens, the glass in them and the ironmongery on them. Taking it as one package is the point, because one contractor then owns the joints between the frame, the glass and the hardware, and they get settled once.',
+                /* THE SECOND SENTENCE WAS NONSENSE and the owner called it: "one
+                   contractor then owns the joints between the frame, the glass and
+                   the hardware, and they get settled once". Frames, glass and
+                   hardware have no joints between them. It was abstract filler
+                   wearing technical clothes, and it was also the fourth time this
+                   page said "as one package" in different words.
+
+                   What replaces it is the thing a contractor actually cares about
+                   and can check: the same firm measures it and fits it, so there is
+                   one number to ring. */
+                'We survey, supply and install the whole opening: aluminium and uPVC windows, glazed doorsets, entrance screens, the glass in them and the ironmongery on them. The people who measure it are the people who fit it, and there is one firm to ring if anything needs putting right.',
                 'We work from your drawings and schedules where you have them, and from a site survey where you do not. On occupied buildings the sequence is agreed before we start: which elevations, in what order, during which hours, and what is handed back at the end of each day.',
             ],
             'stats' => [
@@ -165,7 +179,7 @@ function fenster_commercial_product_pages(): array
                 [
                     'eyebrow' => 'One package',
                     'title' => 'Frames, glass and ironmongery specified together.',
-                    'copy' => 'Taking the whole opening as one specification is what keeps the interfaces right: a restrictor sized to the opening, a closer sized to the door and its exposure, a threshold that meets Part M. We set opening sizes, glass type, restrictors, ventilation, finish, locks, closers, handles and thresholds together before anything is ordered.',
+                    'copy' => 'Specifying the whole opening at once is how the details end up matching: a restrictor sized to the opening, a closer sized to the door and its exposure, a threshold that meets Part M. We set opening sizes, glass type, restrictors, ventilation, finish, locks, closers, handles and thresholds together before anything is ordered.',
                     'image' => $cs_base . 'cs-all-hallows-bedford-screen.webp',
                     'alt' => 'A new aluminium glazed screen and doorset in a brick elevation at All Hallows, Bedford',
                     'points' => ['Opening sizes surveyed, not assumed', 'Glass specified per opening', 'Ironmongery scheduled with the frames'],
@@ -203,7 +217,7 @@ function fenster_commercial_product_pages(): array
             'intro_image' => $commercial_base . 'comm-industrial-unit-install-1600w.jpg',
             'intro_alt' => 'A glazed ground-floor screen with infill panels set into a framed grid on a commercial unit, with new aluminium windows above',
             'summary' => [
-                'Curtain walling is a non-structural envelope hung off the building frame. It carries its own dead load, the wind load on the elevation and whatever the structure does underneath it, and it drains itself. That last part is what separates a curtain wall from a big window, and it is what the interface detailing exists to get right.',
+                'Curtain walling is a non-structural envelope hung off the building frame. It carries its own dead load, the wind load on the elevation and whatever the structure does underneath it, and it drains itself. That last part is what separates a curtain wall from a big window: water that gets past the outer seal is meant to, and the system takes it back out at the cill.',
                 'We survey, supply and install it on replacement facades, refurbishments and new openings, with doors, opening vents, insulated panels and louvres worked into the grid rather than added to it. Our most recent scheme of this type was the <a href="' . esc_url(home_url('/commercial-projects/bletchley-rail-depot-refurbishment/')) . '">Bletchley rail depot refurbishment</a>.',
             ],
             'stats' => [
@@ -399,7 +413,7 @@ function fenster_commercial_product_pages(): array
                 ['title' => 'Entrance screens', 'copy' => 'The glazed screen the entrance sits in: side screens, toplights and the framing that carries the operator.'],
                 ['title' => 'Doorsets', 'copy' => 'Commercial doorsets specified for the traffic they take, with the closers, locks and hinges to match.'],
                 ['title' => 'Operator coordination', 'copy' => 'Set-out agreed with the automation specialist so the operator has structure to fix to and a swing path that clears.'],
-                ['title' => 'Access control interfaces', 'copy' => 'Cable routes, maglock positions and reader locations designed into the frame rather than drilled into it later.'],
+                ['title' => 'Frames ready for the access control', 'copy' => 'Cable routes, maglock positions and reader locations designed into the frame rather than drilled into it later.'],
             ],
             'detail_sections' => [
                 [
@@ -746,11 +760,11 @@ function fenster_commercial_product_pages(): array
             'intro_image' => '',
             'intro_alt' => '',
             'summary' => [
-                'Industrial buildings put nearly all their glazing in one place: the office and welfare block at the front. That block is hung off a steel frame and wrapped in cladding rather than built into masonry, so the glazing meets a cladding rail and a liner tray instead of a brick reveal, and the interfaces are the part worth getting right. The rest of the elevation is personnel doors, fire escapes and the occasional rooflight, spread across a footprint measured in acres.',
+                'Industrial buildings put nearly all their glazing in one place: the office and welfare block at the front. That block is hung off a steel frame and wrapped in cladding rather than built into masonry, so the glazing meets a cladding rail and a liner tray instead of a brick reveal. The rest of the elevation is personnel doors, fire escapes and the occasional rooflight, spread across a footprint measured in acres.',
                 'The awkward part is usually the shift pattern. A warehouse running around the clock has no quiet week to hand anybody, so the work is sequenced around loading bays, yard traffic and whichever elevation is out of use that day. Send us the elevations and the shift pattern together, because we cannot plan the second one out of the first.',
             ],
             'stats' => [
-                ['value' => 'Cladding', 'label' => 'interfaces rather than masonry reveals'],
+                ['value' => 'Cladding', 'label' => 'rails and liner trays, not brick reveals'],
                 ['value' => 'Shift work', 'label' => 'sequenced around a building that runs on'],
                 ['value' => 'Up to SR3', 'label' => 'security rated doorsets where specified'],
             ],
@@ -773,7 +787,7 @@ function fenster_commercial_product_pages(): array
                 [
                     'eyebrow' => 'The front of the shed',
                     'title' => 'The office block is a building within a building.',
-                    'copy' => 'It has the windows, the entrance, the meeting rooms and the only elevation anybody photographs, and it is built to a completely different specification from the eighty metres of cladding beside it. Treating it as its own glazing package rather than as a corner of the shed is what keeps the interfaces and the performance sensible.',
+                    'copy' => 'It has the windows, the entrance, the meeting rooms and the only elevation anybody photographs, and it is built to a completely different specification from the eighty metres of cladding beside it. So it gets surveyed and specified as its own glazing package rather than as a corner of the shed.',
                     /* PLACEHOLDER RETIRED 2026-08-12, owner-supplied. Our own job:
                        two Fenster vans in the yard, a run of new grey aluminium
                        windows across the first floor and a glazed ground-floor
