@@ -494,19 +494,30 @@ $door_colours = [
         ?>
 
         <?php if (function_exists('fenster_case_studies_for_product')) : ?>
-            <?php $heritage_case_cards = fenster_case_studies_for_product('heritage-aluminium-doors', 3); ?>
+            <?php
+            /* The helper falls back to every study when nothing claims this
+               route, so the heading follows what it actually handed back. */
+            $heritage_case_is_fallback = false;
+            $heritage_case_cards = fenster_case_studies_for_product('heritage-aluminium-doors', 3, 'residential', $heritage_case_is_fallback);
+            ?>
             <?php if ($heritage_case_cards !== []) : ?>
                 <section class="fg-cs-strip">
                     <div class="container">
                         <div class="fg-cs-strip__head">
-                            <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
-                            <?php
-                            /* No count in this heading. Casement says "three
-                               jobs" because it has three; one study names these
-                               doors today, and a number would go stale the
-                               moment another is written. */
-                            ?>
-                            <h2><?php esc_html_e('Heritage doors, photographed on the day.', 'fenster'); ?></h2>
+                            <?php if ($heritage_case_is_fallback) : ?>
+                                <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
+                                <h2><?php esc_html_e('Recent work across the range.', 'fenster'); ?></h2>
+                                <p><?php esc_html_e('Jobs we have finished recently, fitted by our own installers and photographed the day we finished. They cover the range rather than this product.', 'fenster'); ?></p>
+                            <?php else : ?>
+                                <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                                <?php
+                                /* No count in this heading. Casement says "three
+                                   jobs" because it has three; one study names these
+                                   doors today, and a number would go stale the
+                                   moment another is written. */
+                                ?>
+                                <h2><?php esc_html_e('Heritage doors, photographed on the day.', 'fenster'); ?></h2>
+                            <?php endif; ?>
                         </div>
                         <div class="fg-cs-strip__grid">
                             <?php foreach ($heritage_case_cards as $heritage_case_card) : ?>

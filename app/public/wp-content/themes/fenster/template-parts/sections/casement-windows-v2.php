@@ -684,13 +684,28 @@ $faq_schema = [
     </section>
 
     <?php if (function_exists('fenster_case_studies_for_product')) : ?>
-        <?php $cas_studies = fenster_case_studies_for_product('casement-windows', 3); ?>
+        <?php
+        /* THE HEADING FOLLOWS THE MATCH, 2026-08-13. `fenster_case_studies_for_
+           product()` falls back to every study when nothing claims this route,
+           and "Three casement jobs" is a promise those three are casement work.
+           The helper now reports which case it handed back, so the honest
+           heading is chosen rather than the strip being gated off. Same wording
+           as the shared strip in generated-page.php. */
+        $cas_case_is_fallback = false;
+        $cas_studies = fenster_case_studies_for_product('casement-windows', 3, 'residential', $cas_case_is_fallback);
+        ?>
         <?php if ($cas_studies !== []) : ?>
             <section class="fg-cs-strip">
                 <div class="container">
                     <div class="fg-cs-strip__head">
-                        <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Three casement jobs, start to finish.', 'fenster'); ?></h2>
+                        <?php if ($cas_case_is_fallback) : ?>
+                            <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
+                            <h2><?php esc_html_e('Recent work across the range.', 'fenster'); ?></h2>
+                            <p><?php esc_html_e('Jobs we have finished recently, fitted by our own installers and photographed the day we finished. They cover the range rather than this product.', 'fenster'); ?></p>
+                        <?php else : ?>
+                            <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                            <h2><?php esc_html_e('Three casement jobs, start to finish.', 'fenster'); ?></h2>
+                        <?php endif; ?>
                     </div>
                     <div class="fg-cs-strip__grid">
                         <?php foreach ($cas_studies as $card) : ?>

@@ -1679,9 +1679,30 @@ function fenster_case_studies_for_town(string $town_slug, int $limit = 2, string
  * This was leaking before the instruction, not only after it: `/aluminium-
  * windows/` was showing three commercial studies and `/flush-casement-windows/`
  * was leading with one.
+ *
+ * THE FALLBACK NOW TELLS THE CALLER IT HAPPENED, added 2026-08-13 on the owner's
+ * ruling: "show all case studies where we dont have any applicable". The cards
+ * stay, because a page with no proof at all is worse than a page showing our
+ * other work. What was wrong was the CLAIM above them — "Real installs,
+ * photographed on the day" over three jobs that are not this product. A caller
+ * could not tell the two cases apart, which is why every fix so far has been a
+ * hard-coded route exclusion in the caller instead.
+ *
+ * `$is_fallback` is a by-reference out-parameter with a default, so every
+ * existing two-argument and three-argument call keeps working untouched and
+ * simply does not ask. Pass a variable and it comes back `true` when the cards
+ * are the all-studies fallback rather than a real product match, and the caller
+ * can change its heading accordingly.
+ *
+ * `fenster_case_studies_for_product_group()` below deliberately has no fallback,
+ * so it has nothing to signal and is unchanged.
+ *
+ * @param bool|null $is_fallback Set to true when the cards are the all-studies
+ *                               fallback rather than studies claiming this route.
  */
-function fenster_case_studies_for_product(string $slug, int $limit = 3, string $type = 'residential'): array
+function fenster_case_studies_for_product(string $slug, int $limit = 3, string $type = 'residential', ?bool &$is_fallback = null): array
 {
+    $is_fallback = false;
     $studies = function_exists('fenster_case_studies_of_type')
         ? fenster_case_studies_of_type($type)
         : fenster_case_studies();
@@ -1700,6 +1721,7 @@ function fenster_case_studies_for_product(string $slug, int $limit = 3, string $
 
     if ($matched === []) {
         $matched = $studies;
+        $is_fallback = true;
     }
 
     $cards = [];

@@ -34,8 +34,10 @@
  * first section and the first card rather than a bullet somewhere in the middle.
  *
  * Owner-confirmed facts, 2026-08-07:
- *   - Styles offered: fixed (and lift-out), horizontal sliders, vertical
- *     sliders, hinged. Four, and the page names all four.
+ *   - Styles offered: horizontal sliders, vertical sliders, hinged, fixed, and
+ *     lift-out. FIVE on the owner's ruling of 2026-08-13, which split fixed
+ *     and lift-out into separate products and superseded the four-style list
+ *     confirmed here on 2026-08-07. See the note above `$styles` below.
  *   - A laminated glass upgrade is offered.
  *   - Colours: white, brown, or any RAL. This is NOT the twelve powder-coated
  *     finishes on the aluminium window and door routes, which is why
@@ -87,13 +89,29 @@ $reasons = [
     ],
 ];
 
-/* The four styles the owner confirmed we offer. Fixed and lift-out are one
-   entry because a lift-out IS the fixed one: it does not open, it comes out. */
+/* FIVE styles, on the owner's ruling of 2026-08-13: horizontal slider,
+   vertical slider, hinged, fixed, and lift-out.
+
+   SUPERSEDES the four-entry list that stood here from 2026-08-07, which folded
+   the two together on the reasoning that a lift-out IS the fixed one because
+   neither of them opens. That is true and it is not what decides it: a fixed
+   pane is sealed into its frame and stays where we fit it, and a lift-out is
+   made to come away in your hands, which is a real difference to somebody
+   choosing between the two. Both readings were recorded as owner-confirmed, so
+   the older one is struck rather than deleted in AI.md:289-290. Do not fold
+   them back into one entry.
+
+   LAYOUT CHECKED BEFORE ADDING THE FIFTH. These render as `<li>` in the
+   `.fg-cw-facts` list further down, which in main.css is a one-column
+   `display: grid` with a gap and no `grid-template-columns`, no column count
+   and no `nth-child` rule anywhere against it. A fifth entry adds a row and
+   nothing else, and no card grid is involved. */
 $styles = [
     ['name' => __('Horizontal slider', 'fenster'), 'copy' => __('Panes run sideways past each other on a track. Nothing swings into the room and nothing needs clear space in front of it, which is why it suits a window behind a deep sill or a radiator.', 'fenster')],
     ['name' => __('Vertical slider', 'fenster'), 'copy' => __('Panes move up and down instead of across. It is the one for a sash window, and for a tall narrow opening where a sideways track would have nowhere to go.', 'fenster')],
     ['name' => __('Hinged', 'fenster'), 'copy' => __('Opens towards you like a casement, so the whole original window is in front of you at once. The choice where you need proper access rather than a gap to reach through.', 'fenster')],
-    ['name' => __('Fixed, and lift-out', 'fenster'), 'copy' => __('For an opening that is never opened. A fixed pane is sealed in; a lift-out is the same pane held so it comes away in your hands when you want the original window back.', 'fenster')],
+    ['name' => __('Fixed', 'fenster'), 'copy' => __('A single pane sealed into its frame, which is where it stays. The one for an opening nobody uses, where nothing behind it needs reaching and there is no reason for it to move.', 'fenster')],
+    ['name' => __('Lift-out', 'fenster'), 'copy' => __('Does not open either, but it is made to come out. The pane lifts away in your hands and goes back afterwards, so the original window is still reachable when you want it without the glazing being a fixture.', 'fenster')],
 ];
 ?>
 
@@ -170,8 +188,8 @@ $styles = [
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('How it opens', 'fenster'); ?></p>
                 <h2 id="fg-sg-open-title"><?php esc_html_e('You can still open the window behind it.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('This is the question we get asked first, and the answer is yes on everything except the fixed panels. You open the secondary glazing, reach the original catch, open the window itself, and close both again. The photograph is one of ours with the original casement wide open behind the glazing.', 'fenster'); ?></p>
-                <p><?php esc_html_e('Which of the four suits an opening depends on the window behind it and on what is in front of it in the room. We work that out at survey rather than asking you to.', 'fenster'); ?></p>
+                <p><?php esc_html_e('This is the question we get asked first, and the answer is yes on everything except the fixed and lift-out panels. You open the secondary glazing, reach the original catch, open the window itself, and close both again. The photograph is one of ours with the original casement wide open behind the glazing.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Which of the five suits an opening depends on the window behind it and on what is in front of it in the room. We work that out at survey rather than asking you to.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
                     <?php /* No separator between the name and the copy. The name
                              is `display: block` in the stylesheet, so a ". "

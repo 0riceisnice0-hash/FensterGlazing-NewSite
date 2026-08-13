@@ -56,7 +56,10 @@ $notices = [
        voice STYLE.md rules out. Same fault as the consultation copy above and
        fixed in the same pass. */
     'success' => ['title' => 'Thanks - your enquiry has been received.', 'copy' => 'We have your details and will come back to you as soon as we can.'],
-    'missing' => ['title' => 'Please check the highlighted details.', 'copy' => 'Name, email, phone, postcode, project type, project details and privacy confirmation are required.'],
+    /* Project details came off this list when the message box became optional
+       (owner approved 2026-08-13). The server gate no longer checks it, so
+       naming it here would send people back to a field they can leave empty. */
+    'missing' => ['title' => 'Please check the highlighted details.', 'copy' => 'Name, email, phone, postcode, project type and privacy confirmation are required.'],
     'bad_email' => ['title' => 'Please check your email address.', 'copy' => 'Enter a valid email address so the team can reply.'],
     'bad_phone' => ['title' => 'Please check your phone number.', 'copy' => 'Enter a valid UK phone number, such as 01908 429200 or 07123 456789.'],
     'bad_postcode' => ['title' => 'Please check your postcode.', 'copy' => 'Enter a valid UK postcode.'],
@@ -130,7 +133,7 @@ $notices = [
                     <label><span><?php esc_html_e('Email address', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="email" name="email" autocomplete="email" required></label>
                     <label><span><?php esc_html_e('Postcode', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><input type="text" name="location" autocomplete="postal-code" inputmode="text" pattern="<?php echo esc_attr($postcode_pattern); ?>" title="<?php esc_attr_e('Enter a valid UK postcode.', 'fenster'); ?>" required></label>
                 </div>
-                <label class="fg-enquiry-form__message"><span><?php esc_html_e('What would you like to discuss?', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span><textarea name="message" rows="4" required placeholder="<?php esc_attr_e('Tell us about your windows, doors, glazing, repairs or showroom visit.', 'fenster'); ?>"></textarea></label>
+                <label class="fg-enquiry-form__message"><span><?php esc_html_e('What would you like to discuss?', 'fenster'); ?> <em><?php esc_html_e('Optional', 'fenster'); ?></em></span><textarea name="message" rows="4" placeholder="<?php esc_attr_e('Tell us about your windows, doors, glazing, repairs or showroom visit.', 'fenster'); ?>"></textarea></label>
                 <label class="fg-enquiry-form__consent"><input type="checkbox" name="privacy" value="1" required><span><?php printf(wp_kses(__('I agree that Fenster can use these details to respond to my enquiry. See the <a href="%s">privacy policy</a>.', 'fenster'), ['a' => ['href' => []]]), esc_url(home_url('/privacy-policy/'))); ?></span></label>
                 <div class="fg-enquiry-form__footer"><button class="button" type="submit"><span><?php echo esc_html((string) $args['button_label']); ?></span><i aria-hidden="true">&rarr;</i></button><small><?php esc_html_e('Your preferred time is a request. We will confirm your appointment directly.', 'fenster'); ?></small></div>
             </div>
@@ -156,8 +159,8 @@ $notices = [
                 <input type="text" name="location" autocomplete="postal-code" inputmode="text" pattern="<?php echo esc_attr($postcode_pattern); ?>" title="<?php esc_attr_e('Enter a valid UK postcode.', 'fenster'); ?>" required>
             </label>
             <label class="fg-enquiry-form__message fg-enquiry-form__compact-wide">
-                <span><?php esc_html_e('Project details', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span>
-                <textarea name="message" rows="4" required placeholder="<?php esc_attr_e('What would you like to change? Approximate sizes, number of items, access notes or anything else useful.', 'fenster'); ?>"></textarea>
+                <span><?php esc_html_e('Project details', 'fenster'); ?> <em><?php esc_html_e('Optional', 'fenster'); ?></em></span>
+                <textarea name="message" rows="4" placeholder="<?php esc_attr_e('What would you like to change? Approximate sizes, number of items, access notes or anything else useful.', 'fenster'); ?>"></textarea>
             </label>
             <label class="fg-enquiry-form__compact-wide">
                 <span><?php esc_html_e('Photos or files', 'fenster'); ?></span>
@@ -275,8 +278,8 @@ $notices = [
     <fieldset class="fg-enquiry-form__step">
         <legend><?php esc_html_e('A few project details', 'fenster'); ?></legend>
         <label class="fg-enquiry-form__message">
-            <span><?php esc_html_e('Tell us about your project', 'fenster'); ?> <em><?php esc_html_e('Required', 'fenster'); ?></em></span>
-            <textarea name="message" rows="5" required placeholder="<?php esc_attr_e('What would you like to change? Approximate sizes, number of items, access notes or anything else useful.', 'fenster'); ?>"></textarea>
+            <span><?php esc_html_e('Tell us about your project', 'fenster'); ?> <em><?php esc_html_e('Optional', 'fenster'); ?></em></span>
+            <textarea name="message" rows="5" placeholder="<?php esc_attr_e('What would you like to change? Approximate sizes, number of items, access notes or anything else useful.', 'fenster'); ?>"></textarea>
             <small><?php esc_html_e('Add photos, drawings or schedules below if they help explain the project.', 'fenster'); ?></small>
         </label>
 

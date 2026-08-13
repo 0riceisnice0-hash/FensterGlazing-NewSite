@@ -2900,6 +2900,54 @@ if (navToggle && siteHeader) {
     });
   };
 
+  /* The open drawer is an opaque full-screen overlay, so the page behind it has to
+     leave the tab order too. `inert` is the cheapest way to do that in current
+     browsers. We record the exact nodes we marked, and clear that same list on
+     close, so a node that was already inert for another reason is left alone and
+     nothing can be stranded inert if the DOM changes between open and close.
+     Every close path below calls clearNavInert(): the toggle, a link click inside
+     the drawer, Escape (which routes through the toggle) and the resize handler. */
+  const navInertSelectors = ['#main-content', '.site-footer', '[data-legend-assistant]'];
+  let navInertNodes = [];
+
+  const clearNavInert = () => {
+    navInertNodes.forEach((node) => {
+      node.removeAttribute('inert');
+    });
+    navInertNodes = [];
+  };
+
+  const applyNavInert = () => {
+    clearNavInert();
+    navInertNodes = navInertSelectors
+      .map((selector) => document.querySelector(selector))
+      .filter((node) => (
+        node
+        && !node.hasAttribute('inert')
+        && !node.contains(siteHeader)
+        && !siteHeader.contains(node)
+      ));
+    navInertNodes.forEach((node) => {
+      node.setAttribute('inert', '');
+    });
+  };
+
+  const focusFirstInMobileNav = () => {
+    if (!mobileNav) return;
+    const focusable = [...mobileNav.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )].find((node) => node.getClientRects().length > 0);
+    focusable?.focus();
+  };
+
+  const restoreNavToggleFocus = () => {
+    /* Only pull focus back if it is still inside the header, so closing the drawer
+       never yanks focus away from wherever the user has since put it. */
+    const active = document.activeElement;
+    if (!active || !siteHeader.contains(active)) return;
+    navToggle.focus();
+  };
+
   navToggle.addEventListener('click', () => {
     const isOpen = siteHeader.classList.toggle('is-nav-open');
     document.documentElement.classList.toggle('is-mobile-nav-open', isOpen);
@@ -2912,8 +2960,13 @@ if (navToggle && siteHeader) {
       toggleText.textContent = isOpen ? 'Close' : 'Menu';
     }
 
-    if (!isOpen) {
+    if (isOpen) {
+      applyNavInert();
+      focusFirstInMobileNav();
+    } else {
       closeMobileAccordion();
+      clearNavInert();
+      restoreNavToggleFocus();
     }
   });
 
@@ -2926,6 +2979,10 @@ if (navToggle && siteHeader) {
       const toggleText = navToggle.querySelector('span');
       if (toggleText) toggleText.textContent = 'Menu';
       closeMobileAccordion();
+      /* Focus is deliberately left on the link the user just activated rather than
+         sent back to the toggle: these include same-page anchors, and pulling focus
+         to the header would scroll them straight back off their target. */
+      clearNavInert();
     });
   });
 
@@ -2944,6 +3001,8 @@ if (navToggle && siteHeader) {
     const toggleText = navToggle.querySelector('span');
     if (toggleText) toggleText.textContent = 'Menu';
     closeMobileAccordion();
+    clearNavInert();
+    restoreNavToggleFocus();
   });
 
   mobileAccordionItems.forEach((item) => {

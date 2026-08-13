@@ -444,7 +444,18 @@ function fenster_site_data(): array
             ],
             'patio-doors' => [
                 ['label' => 'U-value', 'value' => '1.2 W/m²K'],
-                ['label' => 'Colour choice', 'value' => '14 options'],
+                /* SIXTEEN, not the fourteen this tile carried until 2026-08-13.
+                   `nick.md:196` records that uPVC doors and patio doors share
+                   the window foil range, and `nick.md:193` records that range
+                   as sixteen colours, so this door takes all sixteen.
+                   The route is on `$upvc_foil_routes` in `generated-page.php`
+                   and the grid is included with no `names` subset and no
+                   `heading` override, so the page already lays the whole range
+                   out under the shared heading "Sixteen colours outside" while
+                   this tile said fourteen. NOT to be confused with
+                   `/upvc-doors/`, which genuinely takes thirteen of these foils
+                   and carries its own ruling above. */
+                ['label' => 'Colour choice', 'value' => '16 options'],
                 ['label' => 'Design', 'value' => 'Space-saving'],
                 ['label' => 'Configuration', 'value' => 'Up to 4 panes'],
             ],
@@ -1282,7 +1293,17 @@ function fenster_site_data(): array
                         'title' => 'The room is cold or loud',
                         'meta' => 'Where the window has to stay',
                         'points' => [
-                            ['label' => 'U-value from', 'value' => '1.8 W/m²K'],
+                            /* "U-value from 1.8 W/m²K" was removed from this row
+                               on 2026-08-13. It is the same withdrawn figure
+                               already recorded against `secondary-glazing` in
+                               `product_usps` above: a secondary glazed figure
+                               depends entirely on the host window it is fitted
+                               inside, so no single number is true of the job.
+                               Replaced rather than deleted because every column
+                               in this panel carries exactly three rows. Do not
+                               put a figure back without one confirmed for this
+                               product. */
+                            ['label' => 'Existing window', 'value' => 'Stays'],
                             ['label' => 'Frames', 'value' => 'Slim aluminium'],
                             ['label' => 'Colours', 'value' => 'Full RAL range'],
                         ],
@@ -2175,7 +2196,14 @@ function fenster_site_data(): array
                    neither, and a secondary glazed figure depends entirely on the
                    window it is fitted inside. */
                 'faqs' => [
-                    ['question' => 'Will it stop me opening my window?', 'answer' => 'No, unless you choose a fixed panel. Horizontal sliders, vertical sliders and hinged units all open, so you reach through, work the original catch and open the window behind exactly as you did before. Fixed panels are for openings nobody uses, and even those can be specified as lift-out so the pane comes away in your hands.'],
+                    /* FIXED AND LIFT-OUT ARE TWO STYLES, not one. Owner ruling
+                       2026-08-13, recorded in AI.md:289-290, which superseded
+                       the earlier owner-confirmed reading that a lift-out is
+                       the fixed one. This answer folded them together until
+                       then. Five styles on this route, and the same split is
+                       made against `$styles` in
+                       `template-parts/sections/secondary-glazing-v2.php`. */
+                    ['question' => 'Will it stop me opening my window?', 'answer' => 'No, unless you choose one of the two styles that do not open. Horizontal sliders, vertical sliders and hinged units all open, so you reach through, work the original catch and open the window behind exactly as you did before. A fixed panel is sealed into its frame and stays there, for an opening nobody uses. A lift-out does not open either, but the pane comes away in your hands and goes back afterwards, so the window behind it is still reachable.'],
                     ['question' => 'Can I have it on a listed building?', 'answer' => 'It is one of the main reasons people have it. Nothing is removed and nothing is cut, the original window stays exactly as it is, and the outside of the building does not change. Your local authority sets the rules for your property, so check with them before you order, and we will work to whatever they tell you.'],
                     /* Even-handed on purpose. An earlier draft answered "is it
                        better than replacing the windows for noise" with "often

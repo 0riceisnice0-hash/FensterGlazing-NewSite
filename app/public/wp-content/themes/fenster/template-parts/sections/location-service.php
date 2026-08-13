@@ -933,7 +933,7 @@ if ($is_mk_double_glazing_page) {
     $local_points = [
         [
             'title' => 'Online prices before the appointment',
-            'copy' => 'Fenster can price many standard windows and doors through WindowCAD before a home visit. That gives you a sensible guide price early, not a vague promise to quote later.',
+            'copy' => 'We can price many standard windows and doors before a home visit. That gives you a sensible guide price early, not a vague promise to quote later.',
         ],
         [
             'title' => 'Survey confirms the exact specification',
@@ -1030,19 +1030,19 @@ $mk_price_examples = [
     [
         'spec' => '1200 x 1200 uPVC casement window',
         'price' => '600 estimate',
-        'details' => 'Rounded from a checked WindowCAD example for a Liniar EnergyPlus casement with white finish, cill, toughened clear glass, trickle vent and white handle.',
+        'details' => 'Rounded from a checked example in the pricing software we quote from, for a Liniar EnergyPlus casement with white finish, cill, toughened clear glass, trickle vent and white handle.',
         'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-casement-1200x1200.png',
     ],
     [
         'spec' => '900 x 2100 composite entrance door',
         'price' => '2,000 estimate',
-        'details' => 'Rounded from a checked WindowCAD example for a Distinction composite entrance door with anthracite grey outside, white inside, low threshold, cill, clear glass and chrome handle.',
+        'details' => 'Rounded from a checked example in the pricing software we quote from, for a Distinction composite entrance door with anthracite grey outside, white inside, low threshold, cill, clear glass and chrome handle.',
         'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-composite-door-900x2100.png',
     ],
     [
         'spec' => '3000 x 2100 aluminium bifold door',
         'price' => '3,500 estimate',
-        'details' => 'Rounded from a checked WindowCAD example for a Prestige three-pane aluminium bifold with anthracite grey finish, cill, clear glass, black handles and trickle vent.',
+        'details' => 'Rounded from a checked example in the pricing software we quote from, for a Prestige three-pane aluminium bifold with anthracite grey finish, cill, clear glass, black handles and trickle vent.',
         'image' => FENSTER_THEME_URI . '/assets/images/price-guides/windowcad-bifold-product-3000x2100.png',
     ],
 ];
@@ -1068,6 +1068,51 @@ $product_links = [
     ['text' => 'Integral Blinds', 'url' => home_url('/integral-blinds/')],
     ['text' => 'Replacement Glazing', 'url' => home_url('/double-glazing-replacement/')],
 ];
+
+/* THE MATCHING PRICE GUIDE, BUILT HERE BECAUSE THE ROUTER DELIVERS THE WRONG ONE.
+
+   `generated-page.php` only ever offers the town-level hub, `window-door-prices-
+   milton-keynes`, and until 2026-08-13 not even that: its `$route_exists()`
+   tested `fenster_generated_pages_index()` and `$virtual_page_titles`, and no
+   price-guide slug was in either. The guide slugs are now in
+   `$virtual_page_titles`, so the hub link does arrive in `$related_links`, and
+   the `price|prices|cost` filter on the Milton Keynes band below is what stops
+   it appearing twice once the pinned link is prepended. What the router still
+   cannot say is WHICH guide prices THIS route's product, which is what is built
+   here.
+
+   The link is therefore derived from the guide registry itself rather than
+   restated, so a renamed guide or a changed title follows automatically. The
+   Milton Keynes page takes the town-level pricing hub, which HANDOVER.md:297
+   records as the agreed pricing hub; every other route takes the guide that
+   names this route's own product, matched on the registry's own
+   `product_slug`. A route whose product has no guide gets no link rather than
+   a near-miss one. */
+$price_guide_link = null;
+if (
+    function_exists('fenster_price_guide_pages')
+    && function_exists('fenster_price_guides_enabled')
+    && fenster_price_guides_enabled()
+) {
+    foreach (fenster_price_guide_pages() as $price_guide_slug => $price_guide) {
+        $price_guide_matches = $is_mk_double_glazing_page
+            ? $price_guide_slug === 'window-door-prices-milton-keynes'
+            : (string) ($price_guide['product_slug'] ?? '') === $service_slug;
+
+        if (! $price_guide_matches) {
+            continue;
+        }
+
+        $price_guide_title = trim((string) ($price_guide['title'] ?? ''));
+        if ($price_guide_title !== '') {
+            $price_guide_link = [
+                'text' => $price_guide_title,
+                'url' => home_url('/' . $price_guide_slug . '/'),
+            ];
+        }
+        break;
+    }
+}
 ?>
 
 <?php if ($is_mk_double_glazing_page) : ?>
@@ -1195,7 +1240,7 @@ $product_links = [
                     <p class="eyebrow"><?php esc_html_e('Price guidance', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Use these examples as a benchmark, then build your own instant price below.', 'fenster'); ?></h2>
                 </div>
-                <p><?php echo esc_html('Checked ' . $mk_price_checked . '. These are rounded WindowCAD examples for specific configurations, including VAT. They show the likely scale of common projects. For your own sizes, colours and choices, use the instant price tool below.'); ?></p>
+                <p><?php echo esc_html('Checked ' . $mk_price_checked . '. These are rounded examples for specific configurations, priced in the software we quote from and including VAT. They show the likely scale of common projects. For your own sizes, colours and choices, use the instant price tool below.'); ?></p>
             </div>
             <div class="fg-mk-price-guide__grid">
                 <?php foreach ($mk_price_examples as $index => $example) : ?>
@@ -1438,8 +1483,16 @@ $product_links = [
                 $url = (string) ($link['url'] ?? '');
                 return ! preg_match('/(?:price|prices|cost)/i', $url);
             }));
+            /* Pinned after the filter but BEFORE the slice: the guide URL
+               contains "prices", so the exclusion above would drop it, and
+               prepending is what keeps it on a full band. Appending after the
+               slice, as this did until 2026-08-13, took the band to 25 cards. */
+            if ($price_guide_link !== null) {
+                $mk_footer_links = array_merge([$price_guide_link], $mk_footer_links);
+            }
+            $mk_footer_links = array_slice($mk_footer_links, 0, 24);
             get_template_part('template-parts/components/link-cards', null, [
-                'links' => array_slice($mk_footer_links, 0, 24),
+                'links' => $mk_footer_links,
             ]);
             ?>
         </div>
@@ -1695,13 +1748,37 @@ $product_links = [
     $town_case_studies = function_exists('fenster_case_studies_for_town')
         ? fenster_case_studies_for_town($location_slug, 2)
         : [];
+
+    /* THE HEADING ONLY CLAIMS THE TOWN WHEN EVERY CARD IS THE TOWN.
+
+       `fenster_case_studies_for_town()` collects exact-town matches first and
+       then, for the twelve Milton Keynes suburbs, wider MK work as area proof.
+       Both come back as identical cards, so the caller could not tell them
+       apart and a suburb route printed "Jobs we have finished in Furzton" over
+       jobs finished elsewhere in MK. The eyebrow and the body copy underneath
+       already say "nearby" and "close to you" and were always right; it was
+       only the H2 that overclaimed.
+
+       This repeats the helper's own word-boundary test on the card's location
+       purely to choose the wording. The matching itself is untouched, and it is
+       deliberately a word-boundary test rather than `str_contains()` for the
+       reason recorded at inc/case-studies-data.php:1634 — "bedford" sits inside
+       "Bedfordshire". */
+    $town_cases_are_local = $town_case_studies !== [];
+    foreach ($town_case_studies as $case_card) {
+        $case_location = strtolower((string) ($case_card['location'] ?? ''));
+        if (preg_match('/\b' . preg_quote(str_replace('-', ' ', $location_slug), '/') . '\b/', $case_location) !== 1) {
+            $town_cases_are_local = false;
+            break;
+        }
+    }
     ?>
     <?php if ($town_case_studies !== []) : ?>
-        <section class="fg-location-cases" aria-label="<?php echo esc_attr(sprintf(__('Recent work in %s', 'fenster'), $location_name)); ?>">
+        <section class="fg-location-cases" aria-label="<?php echo esc_attr($town_cases_are_local ? sprintf(__('Recent work in %s', 'fenster'), $location_name) : sprintf(__('Recent work close to %s', 'fenster'), $location_name)); ?>">
             <div class="container">
                 <div class="fg-location-cases__head">
                     <p class="eyebrow"><?php esc_html_e('Recent work nearby', 'fenster'); ?></p>
-                    <h2><?php echo esc_html(sprintf(__('Jobs we have finished in %s', 'fenster'), $location_name)); ?></h2>
+                    <h2><?php echo esc_html($town_cases_are_local ? sprintf(__('Jobs we have finished in %s.', 'fenster'), $location_name) : sprintf(__('Jobs we have finished close to %s.', 'fenster'), $location_name)); ?></h2>
                     <p><?php esc_html_e('Real installations with our own photographs, the products fitted and the finish chosen. Have a look at what we have already done close to you.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-location-cases__grid">
@@ -1754,8 +1831,17 @@ $product_links = [
                 <h2><?php esc_html_e('Products, services and nearby areas', 'fenster'); ?></h2>
             </div>
             <?php
+            $location_footer_links = array_values(array_merge($product_links, $related_links));
+            /* Prepended BEFORE the 24-link slice so the guide for this route's
+               own product survives on a full band without taking the band to 25
+               cards, which is what appending after the slice did until
+               2026-08-13. */
+            if ($price_guide_link !== null) {
+                $location_footer_links = array_merge([$price_guide_link], $location_footer_links);
+            }
+            $location_footer_links = array_slice($location_footer_links, 0, 24);
             get_template_part('template-parts/components/link-cards', null, [
-                'links' => array_slice(array_values(array_merge($product_links, $related_links)), 0, 24),
+                'links' => $location_footer_links,
             ]);
             ?>
         </div>

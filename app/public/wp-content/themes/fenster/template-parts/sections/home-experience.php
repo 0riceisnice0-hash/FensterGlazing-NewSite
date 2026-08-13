@@ -50,7 +50,7 @@ $product_routes = [
     ['label' => 'Doors', 'url' => home_url('/doors-milton-keynes/'), 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/home-theatre-composite-door.jpg', 'copy' => 'Explore entrance, French, patio, sliding and bifold doors in one place, from secure front doors to wide garden openings.', 'best_for' => 'Entrances and garden access', 'benefit' => 'Security, light and kerb appeal'],
     ['label' => 'Roof Lanterns', 'url' => home_url('/roof-lanterns/'), 'image' => $asset_base . 'S1-Lantern-Kitchen-A-min-scaled.jpg', 'copy' => 'Bring more natural light into an extension or open-plan room with a slim aluminium roof lantern made around your space.', 'best_for' => 'Extensions and open-plan rooms', 'benefit' => 'More overhead daylight'],
     ['label' => 'Integral Blinds', 'url' => home_url('/integral-blinds/'), 'image' => FENSTER_THEME_URI . '/assets/images/products/curated/notan-integral-blinds.jpg', 'copy' => 'Blinds sealed safely between the glass give you clean, low-maintenance control of light and privacy.', 'best_for' => 'Doors and glazed rooms', 'benefit' => 'Protected, easy privacy'],
-    ['label' => 'Other Services', 'url' => home_url('/other-services/'), 'image' => $asset_base . 'replacement-glazing-milton-keynes-scaled.jpg', 'copy' => 'Find replacement glass, glazing repairs, cat and dog flaps, porches and the smaller upgrades that complete your home.', 'best_for' => 'Repairs and finishing touches', 'benefit' => 'Practical glazing solutions'],
+    ['label' => 'Other Services', 'url' => home_url('/other-services/'), 'image' => $asset_base . 'replacement-glazing-milton-keynes-scaled.jpg', 'copy' => 'Find replacement glass, glazing repairs, cat and dog flaps and the smaller upgrades that complete your home.', 'best_for' => 'Repairs and finishing touches', 'benefit' => 'Fixed without new frames'],
 ];
 
 $case_cards = [
@@ -78,7 +78,7 @@ $case_cards = [
     [
         'label' => 'Local homes',
         'title' => 'Milton Keynes installs with proper aftercare.',
-        'copy' => 'From warm window upgrades to statement entrance doors, the work is surveyed, fitted and supported by the Fenster team.',
+        'copy' => 'From warm window upgrades to statement entrance doors, the work is surveyed, fitted and supported by our own team.',
         'image' => $asset_base . 'new-front-door-in-Milton-Keynes.jpeg',
         'url' => home_url('/commercial-projects/'),
     ],
@@ -268,12 +268,19 @@ $location_links = [
             <div>
                 <p class="eyebrow"><?php esc_html_e('Ready to see a price?', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Get an instant quote for your windows and doors.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Choose your product, style, colour and approximate size online. You will see an immediate guide price, then Fenster can confirm the final details after survey.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Choose your product, style, colour and approximate size online. You will see an immediate guide price, then we confirm the final details after survey.', 'fenster'); ?></p>
                 <ul class="fg-home-quote-station__points">
                     <li><?php esc_html_e('Available straight away', 'fenster'); ?></li>
                     <li><?php esc_html_e('No callback needed to begin', 'fenster'); ?></li>
-                    <li><?php esc_html_e('Final specification checked by Fenster', 'fenster'); ?></li>
+                    <li><?php esc_html_e('Final specification checked by us', 'fenster'); ?></li>
                 </ul>
+                <p><?php
+                    printf(
+                        /* translators: %s: link reading "book a free consultation", pointing at /book-a-consultation/. */
+                        esc_html__('If you like doing things yourself, price the job here, and if you would rather talk it through, %s and we build the same quote with you.', 'fenster'),
+                        '<a href="' . esc_url(home_url('/book-a-consultation/')) . '">' . esc_html__('book a free consultation', 'fenster') . '</a>'
+                    );
+                ?></p>
                 <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant quote', 'fenster'); ?></a>
                 <a class="button button--light" href="<?php echo esc_url($instant_quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Open in new tab', 'fenster'); ?></a>
             </div>
@@ -325,7 +332,7 @@ $location_links = [
         'class' => 'fg-review-showcase--home',
         'eyebrow' => 'Customer proof',
         'title' => 'Reviewed, accredited and backed by proven product systems.',
-        'copy' => 'Fenster combines local installation experience with recognised accreditations and trusted glazing system partners.',
+        'copy' => 'We combine local installation experience with recognised accreditations and trusted glazing system partners.',
         'trust_items' => $trust_items,
         'limit' => 7,
     ]);
@@ -336,7 +343,7 @@ $location_links = [
             <div>
                 <p class="eyebrow"><?php esc_html_e('Request a quote', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Tell us what you would like to change.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Share the product, property location and a few project details. The Fenster team will come back to you to discuss options and arrange the next step.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Share the product, property location and a few project details. We will come back to you to discuss options and arrange the next step.', 'fenster'); ?></p>
                 <div class="fg-home-showroom__links">
                     <a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html($phone); ?></a>
                     <a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a>
@@ -357,7 +364,7 @@ $location_links = [
             <div class="fg-home-section-head">
                 <p class="eyebrow"><?php esc_html_e('Local installations', 'fenster'); ?></p>
                 <h2><?php esc_html_e('Double glazing across Milton Keynes and nearby towns.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('A few of our main local service areas. Contact Fenster if your town is not listed.', 'fenster'); ?></p>
+                <p><?php esc_html_e('A few of our main local service areas. Contact us if your town is not listed.', 'fenster'); ?></p>
             </div>
             <div class="fg-home-seo-mesh__links">
                 <?php foreach (array_slice($location_links, 0, 10) as $link) : ?>

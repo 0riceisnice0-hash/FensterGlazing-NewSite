@@ -884,7 +884,16 @@ $stats = $is_commercial
    wrong one for somebody with a misted pane who wants it gone: there is nothing
    to design. The owner's actual route in is that rough sizes and a photograph
    are enough to get a price without a visit, so the button says that. */
-$cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : ($is_repairs ? 'Request a repair' : ($is_replacement_bespoke ? 'Send us the sizes' : 'Start your design consultation')));
+/* "Start your design consultation" went, 2026-08-13. This button has never
+   opened a consultation: every render site sends it to `#fenster-enquiry`,
+   which is the enquiry form at the foot of the page. On the routes with no
+   instant price the button next to it is the real consultation link, going to
+   `/book-a-consultation/`, so the two sat side by side with the wrong one
+   promising the consultation. The label now names what the button does, and it
+   is the wording composite doors already used for the same destination, so
+   `#fenster-enquiry` has one label across the routes this covers. The short
+   mobile label further down has to match it; see the comment there. */
+$cta_label = $is_commercial ? 'Discuss a commercial project' : ($is_composite_doors ? 'Send an enquiry' : ($is_repairs ? 'Request a repair' : ($is_replacement_bespoke ? 'Send us the sizes' : 'Send an enquiry')));
 /* The hero eyebrow names the system on a route that is sold around one, which
    is what composite doors has done since it was rebuilt. Heritage windows joins
    it on 2026-08-11. The H1 deliberately stays "Heritage Windows": that is the
@@ -1500,12 +1509,42 @@ $pet_flap_cards = $is_pet_flap_page
     : [];
 $related_links = [];
 $generated_pages = fenster_generated_pages_index();
+/* A ROUTE THAT IS NOT IN `pages.json` STILL HAS TO BE NAMED HERE, OR EVERY LINK
+   TO IT IS SILENTLY DROPPED, 2026-08-13.
+
+   `$route_exists()` below tests `fenster_generated_pages_index()` (which is
+   `data/pages.json` and nothing else) and this map. `areas-we-cover` and
+   `flat-rooflights` are virtual routes built in `inc/generated-pages.php` and
+   were in neither, so `$add_related_route('areas-we-cover', 'Areas We Cover')`
+   at three separate call sites in this file was a no-op on every route on the
+   site, and the link never rendered anywhere. The same held for
+   `$add_related_route('window-door-prices-milton-keynes', ...)`.
+
+   The price guides are added from their own registry rather than restated, so a
+   renamed guide or a changed title follows automatically, and they are added
+   only when `fenster_price_guides_enabled()` is true because that is the same
+   gate `fenster_get_generated_page()` uses to serve them. Linking them on a host
+   where they do not resolve would trade a missing link for a 404. */
 $virtual_page_titles = [
     'aluminium-flush-windows' => 'Aluminium Flush Windows',
     'aluminium-sliding-doors' => 'Aluminium Sliding Doors',
+    'areas-we-cover' => 'Areas We Cover',
     'commercial-areas' => 'Commercial Areas',
     'commercial-projects' => 'Commercial Projects',
+    'flat-rooflights' => 'Flat Rooflights',
 ];
+if (
+    function_exists('fenster_price_guide_pages')
+    && function_exists('fenster_price_guides_enabled')
+    && fenster_price_guides_enabled()
+) {
+    foreach (fenster_price_guide_pages() as $price_guide_slug => $price_guide_page) {
+        $price_guide_title = trim((string) ($price_guide_page['title'] ?? ''));
+        if ($price_guide_title !== '') {
+            $virtual_page_titles[$price_guide_slug] = $price_guide_title;
+        }
+    }
+}
 foreach ($commercial_county_pages as $commercial_county_slug => $commercial_county_page) {
     $virtual_page_titles[$commercial_county_slug] = (string) ($commercial_county_page['title'] ?? ucwords(str_replace('-', ' ', $commercial_county_slug)));
 }
@@ -2014,6 +2053,47 @@ if ($is_product && ! $is_commercial && ! $is_commercial_county) {
     $add_related_route('double-glazing-milton-keynes', 'Double Glazing Milton Keynes');
     $add_related_route('window-door-prices-milton-keynes', 'Window and Door Prices Milton Keynes');
     $add_related_route('areas-we-cover', 'Areas We Cover');
+
+    /* THE GUIDE THAT PRICES THIS PRODUCT, 2026-08-13. Five of the six product
+       price guides were unreachable from the product they price: only composite
+       doors linked its own, from the quote embed near the foot of this file.
+       The map is keyed on the base route deliberately, so a town matrix route
+       such as `composite-doors-northampton` is untouched.
+
+       WHY THIS DOES NOT GO THROUGH `$add_related_route()`. It could now: the
+       guide slugs were added to `$virtual_page_titles` above later the same day,
+       so `$route_exists()` answers true for them and the
+       `window-door-prices-milton-keynes` call three lines above finally renders.
+       This map is kept because it says something `$add_related_route()` cannot,
+       which is WHICH guide prices THIS product. The hub guide and the product
+       guide are different links and both belong here.
+
+       Titles are copied from `fenster_price_guide_pages()` rather than invented:
+       inc/generated-pages.php lines 703, 718, 733, 763 and 778.
+
+       `composite-doors` and `sliding-sash-windows` are in the map for
+       completeness, but neither renders this band (see the gate on the links
+       band at the foot of this file), so both also carry the link in the quote
+       embed section. */
+    $product_price_guides = [
+        'composite-doors' => ['composite-door-prices', 'Composite Door Prices'],
+        'sliding-sash-windows' => ['sash-window-prices', 'Sash Window Prices'],
+        'aluminium-bifold-doors' => ['bifold-door-cost', 'Bifold Door Cost'],
+        'aluminium-windows' => ['aluminium-window-prices', 'Aluminium Window Prices'],
+        'patio-doors' => ['patio-french-door-prices', 'Patio and French Door Prices'],
+        'french-doors' => ['patio-french-door-prices', 'Patio and French Door Prices'],
+    ];
+    if (
+        isset($product_price_guides[$slug])
+        && function_exists('fenster_price_guides_enabled')
+        && fenster_price_guides_enabled()
+    ) {
+        [$product_price_guide_slug, $product_price_guide_label] = $product_price_guides[$slug];
+        $related_links[$product_price_guide_slug] = [
+            'text' => $product_price_guide_label,
+            'url' => home_url('/' . $product_price_guide_slug . '/'),
+        ];
+    }
 }
 
 $matched_family = null;
@@ -3264,7 +3344,7 @@ if ($is_commercial_hub) {
                                  sizes" on desktop and "Design consultation" on
                                  mobile until 2026-08-10, and only a mobile
                                  screenshot showed it. */ ?>
-                        <span class="fg-hero-cta__short"><?php echo esc_html($is_repairs ? __('Request a repair', 'fenster') : ($is_replacement_bespoke ? __('Send us the sizes', 'fenster') : __('Design consultation', 'fenster'))); ?></span>
+                        <span class="fg-hero-cta__short"><?php echo esc_html($is_repairs ? __('Request a repair', 'fenster') : ($is_replacement_bespoke ? __('Send us the sizes', 'fenster') : __('Send an enquiry', 'fenster'))); ?></span>
                     </a>
                     <?php if ($offers_instant_price) : ?>
                         <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
@@ -3386,7 +3466,7 @@ if ($is_commercial_hub) {
                 <div>
                     <p class="eyebrow"><?php esc_html_e('Instant quote lab', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Use the visualiser when the site is on the live Fenster domain.', 'fenster'); ?></h2>
-                    <p><?php esc_html_e('The preview shows the product selector journey. On the live domain, this opens the WindowCAD retail designer for product selection and instant pricing.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('The preview shows the product selector. On the live domain, this opens the online quote tool for product selection and instant pricing.', 'fenster'); ?></p>
                     <div class="button-row">
                         <a class="button" href="<?php echo esc_url($instant_quote_url); ?>" target="_blank" rel="noopener"><?php esc_html_e('Launch instant quote', 'fenster'); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('View quote page', 'fenster'); ?></a>
@@ -5168,12 +5248,56 @@ if ($is_commercial_hub) {
                         <h2><?php echo esc_html('Design and price your ' . $product_quote_embed_label . ' online.'); ?></h2>
                         <p><?php esc_html_e('Use the Fenster quote tool to choose a style, sizes, colours and options. Final pricing and specification are confirmed after survey.', 'fenster'); ?></p>
                     <?php endif; ?>
+                    <?php /* B7, 2026-08-13: the free consultation is how most of
+                             this work actually closes and it appeared nowhere in
+                             product-page content bar the sash gallery. One
+                             sentence, the two-routes construction TONEOFVOICE.md
+                             asks for at :84, and a text link rather than a
+                             button, so the quote tool stays the primary action
+                             here. The claim that a consultation builds the same
+                             quote is the order process rail's own wording, at
+                             inc/site-data.php:2465; "free" is stated there, in
+                             the mega-menu card at inc/site-data.php:211 and in
+                             Legend's briefing at inc/legend-assistant.php:375.
+
+                             It sits above the buttons, not below them: it frames
+                             the two ways in, so it has to be read before the
+                             action rather than after it. It also no longer says
+                             the tool gives a figure in minutes. The tool asks
+                             for name, address, phone and email before it shows
+                             one, so that phrasing promised a number the visitor
+                             does not reach in minutes. The same wording is still
+                             live at casement-windows-v2.php:643,
+                             heritage-aluminium-doors.php:552 and
+                             about.php:103 and needs the same look. */ ?>
+                    <p class="fg-product-quote-embed__aside">
+                        <?php
+                        printf(
+                            /* translators: %s: link to the consultation booking page */
+                            esc_html__('If you like doing things yourself, build the job on the quote tool. If you would rather talk it through, %s and we build the same quote with you.', 'fenster'),
+                            '<a href="' . esc_url(home_url('/book-a-consultation/')) . '">' . esc_html__('book a free consultation', 'fenster') . '</a>'
+                        );
+                        ?>
+                    </p>
                     <?php if ($slug === 'sliding-sash-windows' || $is_composite_doors) : ?>
                         <a class="button fg-product-quote-embed__sash-mobile-action" href="<?php echo esc_url($product_quote_embed_url); ?>"><?php echo esc_html($is_composite_doors ? 'Price my composite door' : 'Design and price your sash windows'); ?></a>
                     <?php endif; ?>
                     <?php if ($is_composite_doors) : ?>
                         <p class="fg-product-quote-embed__aside"><?php esc_html_e('Would rather see a figure before opening a tool? One we fitted recently came to £2,000, and the guide breaks down what moves that.', 'fenster'); ?></p>
                         <a class="button button--steel" href="<?php echo esc_url(home_url('/composite-door-prices/')); ?>"><?php esc_html_e('See example prices', 'fenster'); ?></a>
+                    <?php elseif ($slug === 'sliding-sash-windows') : ?>
+                        <?php /* Sash links its price guide here rather than in the
+                                 related-links band, because the band is gated off
+                                 for this route and composite doors at the foot of
+                                 this file. Same pattern as composite doors above.
+                                 The wording deliberately does not promise example
+                                 prices: `sash-window-prices` currently holds no
+                                 confirmed £ example, so `price-guide.php` filters
+                                 its three rows out and the page leads on what
+                                 moves the number. Change this line when a checked
+                                 sash price lands in that guide. */ ?>
+                        <p class="fg-product-quote-embed__aside"><?php esc_html_e('Would rather understand the number before opening a tool? The sash price guide sets out what moves it, from the model and colour to horns, bars and furniture.', 'fenster'); ?></p>
+                        <a class="button button--steel" href="<?php echo esc_url(home_url('/sash-window-prices/')); ?>"><?php esc_html_e('See what moves the price', 'fenster'); ?></a>
                     <?php endif; ?>
                 </div>
                 <article class="fg-product-quote-embed__card" data-quote-card>
@@ -5300,13 +5424,30 @@ if ($is_commercial_hub) {
         && function_exists('fenster_case_studies_for_product');
     ?>
     <?php if ($shows_case_study_strip) : ?>
-        <?php $product_case_cards = fenster_case_studies_for_product($slug, 3); ?>
+        <?php
+        /* THE HEADING FOLLOWS THE MATCH, 2026-08-13. The owner's ruling is that
+           the fallback stays — "show all case studies where we dont have any
+           applicable" — so the cards are unchanged. What could not stay is the
+           claim over them: "Real installs, photographed on the day" is a promise
+           that these three jobs are THIS product, and on a fallback they are
+           not. `fenster_case_studies_for_product()` now says which case it
+           handed back, so the honest heading is chosen rather than the route
+           being gated off. The exact-match wording is untouched. */
+        $product_case_is_fallback = false;
+        $product_case_cards = fenster_case_studies_for_product($slug, 3, 'residential', $product_case_is_fallback);
+        ?>
         <?php if ($product_case_cards !== []) : ?>
             <section class="fg-cs-strip">
                 <div class="container">
                     <div class="fg-cs-strip__head">
-                        <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Real installs, photographed on the day.', 'fenster'); ?></h2>
+                        <?php if ($product_case_is_fallback) : ?>
+                            <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
+                            <h2><?php esc_html_e('Recent work across the range.', 'fenster'); ?></h2>
+                            <p><?php esc_html_e('Jobs we have finished recently, fitted by our own installers and photographed the day we finished. They cover the range rather than this product.', 'fenster'); ?></p>
+                        <?php else : ?>
+                            <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                            <h2><?php esc_html_e('Real installs, photographed on the day.', 'fenster'); ?></h2>
+                        <?php endif; ?>
                     </div>
                     <div class="fg-cs-strip__grid">
                         <?php foreach ($product_case_cards as $product_case_card) : ?>

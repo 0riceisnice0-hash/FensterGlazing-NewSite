@@ -203,16 +203,21 @@ function fenster_smtp_is_configured(): bool
 
 function fenster_enquiry_office_subject(array $data): string
 {
+    // Set by the honeypot check in fenster_process_enquiry(). The enquiry is saved
+    // and sent exactly like any other, so the prefix is the only thing telling the
+    // office to read this one before acting on it.
+    $prefix = ! empty($data['spam_suspected']) ? '[Possible spam] ' : '';
+
     if (! empty($data['appointment_date']) && ! empty($data['appointment_time'])) {
-        return sprintf('New Consultation Request from %s', $data['name']);
+        return $prefix . sprintf('New Consultation Request from %s', $data['name']);
     }
 
     $project = strtolower((string) ($data['project_type'] ?? ''));
     if (str_contains($project, 'commercial')) {
-        return sprintf('New Commercial Enquiry from %s', $data['name']);
+        return $prefix . sprintf('New Commercial Enquiry from %s', $data['name']);
     }
 
-    return sprintf('New Residential Enquiry from %s', $data['name']);
+    return $prefix . sprintf('New Residential Enquiry from %s', $data['name']);
 }
 
 /**
@@ -424,6 +429,14 @@ function fenster_enquiry_attachment_summary(array $attachments): string
     return $count === 1 ? '1 attachment' : $count . ' attachments';
 }
 
+// Same reasoning as the attachment summary above: the free text box is optional
+// on every form variant, so the office panel states that nothing was written
+// rather than arriving as an empty green box.
+function fenster_enquiry_message_summary(string $message): string
+{
+    return trim($message) !== '' ? $message : 'No project details added';
+}
+
 // This goes to office sales staff, who have no WordPress logins, so it must not
 // link into wp-admin. Everything needed to act on the lead is in the email.
 function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attachments = []): string
@@ -451,7 +464,7 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
 <tr><td style="padding:22px 28px;background:#ffffff;border-bottom:1px solid #dce7e5;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td><img src="' . esc_url($logo) . '" width="170" alt="Fenster Glazing" style="display:block;max-width:170px;height:auto;"></td><td align="right" style="color:#087943;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">' . (! empty($data['appointment_display']) ? 'Consultation request' : 'New website enquiry') . '</td></tr></table></td></tr>
 <tr><td style="padding:30px 28px 12px;"><div style="display:inline-block;padding:7px 10px;border-radius:999px;background:#e6f6ed;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">' . esc_html($data['project_type']) . '</div><h1 style="margin:16px 0 8px;color:#06212a;font-size:28px;line-height:1.12;">' . esc_html($data['name']) . (! empty($data['appointment_display']) ? ' has requested a consultation.' : ' has started a project.') . '</h1><p style="margin:0;color:#60727a;font-size:15px;line-height:1.6;">Reply directly to this email to contact the customer, or use the details below.</p></td></tr>
 <tr><td style="padding:10px 28px 4px;"><table role="presentation" width="100%" cellspacing="0" cellpadding="0">' . $rows . '</table></td></tr>
-<tr><td style="padding:24px 28px;"><div style="padding:22px;border-radius:12px;background:#f3f8f7;border-left:4px solid #2eac66;"><div style="margin-bottom:8px;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Project details</div><div style="color:#06212a;font-size:16px;line-height:1.65;">' . nl2br(esc_html($data['message'])) . '</div></div></td></tr>
+<tr><td style="padding:24px 28px;"><div style="padding:22px;border-radius:12px;background:#f3f8f7;border-left:4px solid #2eac66;"><div style="margin-bottom:8px;color:#087943;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Project details</div><div style="color:#06212a;font-size:16px;line-height:1.65;">' . nl2br(esc_html(fenster_enquiry_message_summary($data['message']))) . '</div></div></td></tr>
 <tr><td style="padding:0 28px 30px;"><table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="border-radius:8px;background:#2eac66;"><a href="mailto:' . esc_attr($data['email']) . '" style="display:inline-block;padding:14px 20px;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Reply to ' . esc_html($data['name']) . '</a></td></tr></table></td></tr>
 <tr><td style="padding:18px 28px;background:#f3f8f7;color:#60727a;font-size:12px;line-height:1.5;">Submitted from <a href="' . esc_url($data['page_url']) . '" style="color:#087943;">' . esc_html($data['page_url']) . '</a><br>The enquiry was saved privately in WordPress before this email was sent.</td></tr>
 </table></td></tr></table></body></html>';
@@ -460,6 +473,15 @@ function fenster_enquiry_office_email(array $data, int $enquiry_id, array $attac
 function fenster_enquiry_customer_email(array $data): string
 {
     $logo = FENSTER_THEME_URI . '/assets/brand/18931%20Fenster%20Glazing%20Logo%20-%20White%20Background.png';
+    /*
+     * This panel quotes the customer's own words back to them, so unlike the
+     * office one it is dropped when there are none. Telling the office that
+     * nothing was written is useful; telling the customer what they already
+     * know is not. The message box is optional on every form variant.
+     */
+    $message_panel = trim($data['message']) !== ''
+        ? '<div style="padding:18px;border-radius:10px;background:#f3f8f7;color:#06212a;font-size:15px;line-height:1.6;">' . nl2br(esc_html($data['message'])) . '</div>'
+        : '';
 
     return '<!doctype html>
 <html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"></head>
@@ -467,7 +489,7 @@ function fenster_enquiry_customer_email(array $data): string
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center" style="padding:28px 12px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border-radius:16px;overflow:hidden;">
 <tr><td style="padding:22px 28px;background:#ffffff;border-bottom:1px solid #dce7e5;"><img src="' . esc_url($logo) . '" width="170" alt="Fenster Glazing" style="display:block;max-width:170px;height:auto;"></td></tr>
-<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of the Fenster team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have extra photos, drawings or schedules, send them to info@fensterglazing.com.</p><div style="padding:18px;border-radius:10px;background:#f3f8f7;color:#06212a;font-size:15px;line-height:1.6;">' . nl2br(esc_html($data['message'])) . '</div></td></tr>
+<tr><td style="padding:32px 28px;"><div style="color:#2eac66;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Enquiry received</div><h1 style="margin:12px 0;color:#06212a;font-size:28px;line-height:1.15;">Thanks, ' . esc_html($data['name']) . '.</h1><p style="margin:0 0 16px;color:#60727a;font-size:16px;line-height:1.65;">We have received your enquiry about <strong style="color:#06212a;">' . esc_html($data['project_type']) . '</strong>. A member of the Fenster team will come back to you as soon as possible.</p><p style="margin:0 0 22px;color:#60727a;font-size:16px;line-height:1.65;">If you have extra photos, drawings or schedules, send them to info@fensterglazing.com.</p>' . $message_panel . '</td></tr>
 <tr><td style="padding:20px 28px;background:#f3f8f7;color:#60727a;font-size:13px;line-height:1.6;"><strong style="color:#06212a;">Fenster Glazing</strong><br>01908 429200 · info@fensterglazing.com</td></tr>
 </table></td></tr></table></body></html>';
 }
@@ -588,9 +610,28 @@ function fenster_process_enquiry(): array|WP_Error
         : '';
     $privacy = ! empty($_POST['privacy']);
 
-    if ($data['name'] === '' || $data['email'] === '' || $data['phone'] === '' || $data['location'] === '' || $data['project_type'] === '' || $data['message'] === '' || ! $privacy) {
+    // `message` is deliberately absent from this gate: the free-text box was made
+    // optional on every variant of the form (owner approved 2026-08-13). An empty
+    // message reaches the record and both emails, which is why the summary and the
+    // office panel below state that none was given rather than rendering blank.
+    if ($data['name'] === '' || $data['email'] === '' || $data['phone'] === '' || $data['location'] === '' || $data['project_type'] === '' || ! $privacy) {
         return fenster_enquiry_error('missing', 'Please complete the required fields and confirm the privacy notice.');
     }
+
+    /*
+     * Honeypot. `company_website` is rendered inside an aria-hidden wrapper with
+     * tabindex="-1" (template-parts/components/enquiry-form.php:318-323), so no
+     * visitor can reach it, including one using a screen reader; something
+     * automated filling the form is what puts a value there.
+     *
+     * A hit is flagged, never discarded. A real lead must not be lost, and a
+     * browser autofill mistake would otherwise bin a genuine enquiry in silence.
+     * The submission is saved, relayed and emailed as normal, with the office
+     * subject prefixed and `_fenster_spam_suspected` recorded so the office can
+     * judge it themselves. The response returned below is the same either way,
+     * so a bot learns nothing from being caught.
+     */
+    $data['spam_suspected'] = sanitize_text_field(wp_unslash($_POST['company_website'] ?? '')) !== '';
 
     if (! is_email($data['email'])) {
         return fenster_enquiry_error('bad_email', 'Please enter a valid email address.');
@@ -645,7 +686,7 @@ function fenster_process_enquiry(): array|WP_Error
         $data['page_url'] !== '' ? 'Page: ' . $data['page_url'] : '',
         '',
         'Project details:',
-        $data['message'],
+        fenster_enquiry_message_summary($data['message']),
     ]));
 
     $enquiry_id = wp_insert_post([
@@ -680,6 +721,7 @@ function fenster_process_enquiry(): array|WP_Error
         '_fenster_appointment_date' => $data['appointment_date'],
         '_fenster_appointment_time' => $data['appointment_time'],
         '_fenster_appointment_display' => $data['appointment_display'],
+        '_fenster_spam_suspected' => $data['spam_suspected'] ? '1' : '0',
     ];
     foreach ($meta as $key => $value) {
         update_post_meta($enquiry_id, $key, $value);

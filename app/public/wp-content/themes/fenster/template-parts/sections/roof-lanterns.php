@@ -276,13 +276,25 @@ $roof_styles = [
            their products[] url. */
         ?>
         <?php if (function_exists('fenster_case_studies_for_product')) : ?>
-            <?php $rl_case_cards = fenster_case_studies_for_product('roof-lanterns', 3); ?>
+            <?php
+            /* The comment above checked the match by hand. The helper now
+               reports it, so the heading follows the answer instead of the
+               check going stale when a study is rewritten. */
+            $rl_case_is_fallback = false;
+            $rl_case_cards = fenster_case_studies_for_product('roof-lanterns', 3, 'residential', $rl_case_is_fallback);
+            ?>
             <?php if ($rl_case_cards !== []) : ?>
                 <section class="fg-cs-strip">
                     <div class="container">
                         <div class="fg-cs-strip__head">
-                            <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
-                            <h2><?php esc_html_e('Lanterns we have fitted, photographed on the day.', 'fenster'); ?></h2>
+                            <?php if ($rl_case_is_fallback) : ?>
+                                <p class="eyebrow"><?php esc_html_e('Our work', 'fenster'); ?></p>
+                                <h2><?php esc_html_e('Recent work across the range.', 'fenster'); ?></h2>
+                                <p><?php esc_html_e('Jobs we have finished recently, fitted by our own installers and photographed the day we finished. They cover the range rather than this product.', 'fenster'); ?></p>
+                            <?php else : ?>
+                                <p class="eyebrow"><?php esc_html_e('From our case studies', 'fenster'); ?></p>
+                                <h2><?php esc_html_e('Lanterns we have fitted, photographed on the day.', 'fenster'); ?></h2>
+                            <?php endif; ?>
                         </div>
                         <div class="fg-cs-strip__grid">
                             <?php foreach ($rl_case_cards as $rl_case_card) : ?>
