@@ -195,28 +195,46 @@ step with what the site is actually showing.
 
 ### 6b. The specification figures still outstanding
 
-**Five, down from thirty-one.** The owner answered on 2026-08-12 and everything
-confirmed is on the pages. What is left is genuinely unknown or hedged, and the
-rows render as "Confirming — ask and we will send it" until a value replaces the
+**Two, down from thirty-one.** The owner answered the curtain walling rows on
+2026-08-13 and everything confirmed is on the pages. What is left renders as
+"Confirming — ask and we will send it" until a value replaces the
 `FENSTER_SPEC_TBC` sentinel. One-line swap each.
-
-**Curtain walling** (`/curtain-walling/`)
-
-- Achievable U-value for the system, and at what glazing specification
-- Maximum panel size and glass weight we can handle
-- Structural glazing or capped only? Answered "capped only (i think)" — needs confirming before it is published
 
 **Automatic opening vents** (`/automatic-opening-vents/`)
 
 - The standard we install AOV units to (EN 12101-2 or otherwise)
 - Aerodynamic free area figures for the units we fit
 
-**Two answers deliberately did not become published figures.** Mullion and
-transom sizes were answered "irrelevant", so that row was removed rather than
-left pending: a row nobody should ask about is worse than no row. And structural
-versus capped was answered "capped only (i think)" — a hedge is not a
+### Curtain walling: closed 2026-08-13, and the framing is the durable part
+
+**COMMERCIAL FIGURES ARE A GUIDE, NOT A DATASHEET, AND THE PAGE NOW SAYS SO.**
+Owner, 2026-08-13: *"none of these are exact but as we dont use just one supplier
+its more of a guide than a source of truth with commercial."* Commercial work is
+specified per client across several systems, so a figure describes what the
+systems reach rather than a fixed product. `/curtain-walling/` carries a
+route-specific `spec_note` saying exactly that and inviting the specifier to send
+the elevation for written confirmation. **This reasoning applies to every
+commercial route, not just this one** — if a future figure is confirmed for
+another route, consider whether it needs the same note.
+
+- **U-value: "as low as 0.9 W/m²K, depending on the system and the glazing
+  specified."** Deliberately hedged on the owner's instruction. Written as a
+  floor with the reason attached so nobody puts 0.9 into a schedule unchecked.
+- **Capped, and stated positively.** Owner: *"we only offer capped but dont leave
+  that as a negative."* The row is labelled `Glazing method` and names what we
+  use. **Do not add "not structural"** — that is the 2026-08-02 standing ruling
+  against writing what is not offered.
+- **Maximum panel size is GONE, not pending.** Owner: *"dont know max panel size,
+  leave out max size as unsure again due to various products."* Same treatment
+  the mullion and transom row got, for the same reason.
+
+**Three answers deliberately did not become published figures.** Mullion and
+transom sizes and maximum panel size were both removed rather than left pending:
+a row nobody should ask about is worse than no row. And structural versus capped
+was answered "capped only (i think)" on 2026-08-12 — a hedge is not a
 confirmation, and this repository has a written history of confident invented
-figures reaching test.
+figures reaching test. It was left pending until the owner confirmed it plainly
+on 2026-08-13.
 
 ### 6c. Photographs
 

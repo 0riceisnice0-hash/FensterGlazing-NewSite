@@ -225,30 +225,52 @@ function fenster_commercial_product_pages(): array
                 ['value' => 'Integrated', 'label' => 'doors, vents, panels and louvres'],
                 ['value' => 'Any RAL', 'label' => 'powder coated, dual colour available'],
             ],
-            /* Owner answers, 2026-08-12, and three of these are deliberately NOT
-               filled in.
+            /* Owner answers, 2026-08-13, closing all three of the pending rows
+               this route carried since 2026-08-12.
 
-               The mullion and transom row is GONE rather than pending: the owner's
-               answer was "irrelevant", meaning it varies per job and publishing a
-               size would mislead. A row nobody should ask about is worse than no
-               row.
+               THE FRAMING MATTERS MORE THAN ANY SINGLE FIGURE, and it is the
+               owner's own: "as we dont use just one supplier its more of a guide
+               than a source of truth with commercial". Commercial work is
+               specified per client and per job across several systems, so a
+               figure here describes what the systems reach, not a fixed product
+               specification. That is what `spec_note` below says out loud, and it
+               is why the U-value is deliberately hedged rather than exact.
 
-               U-value and maximum panel stay pending — "dunno" and "no idea" are
-               honest answers and neither becomes a published figure.
+               U-VALUE: "as low as 0.9", left vague on the owner's instruction
+               because the system varies by client request. Written as a floor
+               with the reason attached, not as a headline figure, so nobody puts
+               0.9 into a schedule without asking us against their elevation.
 
-               STRUCTURAL VERSUS CAPPED STAYS PENDING BECAUSE THE ANSWER WAS
-               HEDGED: "capped only (i think)". A hedge is not a confirmation, and
-               this project has a written history of confident invented figures
-               reaching test. It needs a straight yes before it goes on a page. */
+               CAPPED: confirmed, and the hedge of 2026-08-12 ("capped only (i
+               think)") is now a straight answer. STATED POSITIVELY. The owner's
+               instruction was "we only offer capped but dont leave that as a
+               negative", which is also the 2026-08-02 standing ruling that this
+               site does not write copy about what is not offered. So the row
+               names the method we use and stops. Do not add "not structural".
+
+               MAXIMUM PANEL: the row is GONE rather than pending, on the owner's
+               instruction — "dont know max panel size, leave out max size as
+               unsure again due to various products". Same treatment the mullion
+               and transom row got for the same reason: a row nobody can answer
+               is worse than no row.
+
+               The mullion and transom row remains gone from 2026-08-12: the
+               owner's answer was "irrelevant", meaning it varies per job and
+               publishing a size would mislead. */
             'specification' => [
                 ['label' => 'System', 'value' => 'Specified to the job rather than tied to one system.'],
                 ['label' => 'Wind load', 'value' => 'Wind load calculated for the elevation as part of the design.'],
-                ['label' => 'U-value', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Achievable U-value for the system, and at what glazing specification'],
-                ['label' => 'Maximum panel', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Maximum panel size and glass weight we can handle'],
-                ['label' => 'Structural or capped', 'value' => FENSTER_SPEC_TBC, 'pending' => 'Structural glazing or capped only? Answered "capped only (i think)" — needs confirming before it is published'],
+                ['label' => 'U-value', 'value' => 'As low as 0.9 W/m²K, depending on the system and the glazing specified.'],
+                ['label' => 'Glazing method', 'value' => 'Capped systems, with the cap profile specified to the elevation.'],
                 ['label' => 'Integrated units', 'value' => 'Doorsets, opening vents, AOV units, spandrel and insulated panels, and ventilation louvres within the grid.'],
                 ['label' => 'Finish', 'value' => 'Powder coated to any RAL, dual colour available.'],
             ],
+            /* Route-specific replacement for the shared specification note. See
+               the framing paragraph above: on commercial work we specify across
+               several systems, so these figures are a guide rather than a product
+               datasheet, and a specifier is better served being told that than
+               discovering it at tender. */
+            'spec_note' => 'We specify curtain walling across more than one system, chosen for the job rather than for a supplier relationship, so treat these figures as a guide to what the systems reach. Send us the elevation and we will confirm the numbers in writing against your drawings before they go into a schedule.',
             'capabilities_heading' => 'What we take on within a curtain walling package.',
             'capabilities' => [
                 ['title' => 'Screens and elevations', 'copy' => 'Mullion and transom grids across full elevations, atria, stairwells and entrance bays.'],

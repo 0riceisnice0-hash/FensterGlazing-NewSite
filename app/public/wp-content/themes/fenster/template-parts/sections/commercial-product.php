@@ -235,8 +235,18 @@ $is_louvre = $slug === 'louvre-vents';
                         </div>
                     <?php endforeach; ?>
                 </dl>
+                <?php /* A route may override this note. Curtain walling does,
+                         because it is specified across several systems and the
+                         owner's instruction (2026-08-13) is that its figures are
+                         "more of a guide than a source of truth". Saying so is
+                         better than letting a specifier find out at tender. */
+                       $spec_note = (string) ($product['spec_note'] ?? ''); ?>
                 <p class="fg-cm-spec__note">
-                    <?php esc_html_e('Every figure published here is one we can stand behind. Where a row is still being confirmed for this system, ask and we will send it to you in writing.', 'fenster'); ?>
+                    <?php if ($spec_note !== '') : ?>
+                        <?php echo esc_html($spec_note); ?>
+                    <?php else : ?>
+                        <?php esc_html_e('Every figure published here is one we can stand behind. Where a row is still being confirmed for this system, ask and we will send it to you in writing.', 'fenster'); ?>
+                    <?php endif; ?>
                 </p>
             </div>
         </section>
