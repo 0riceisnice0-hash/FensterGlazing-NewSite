@@ -167,6 +167,16 @@ function fenster_render_cookie_consent(): void
         var metaLoaded = false;
         var bannerShownRecorded = false;
 
+        /*
+         * Decided server-side in `inc/traffic-classification.php`, because only
+         * the server sees the real user agent. False for crawlers and for
+         * logged-in staff. Blanking the dashboard endpoints already stops our
+         * own measurement; this is what stops Clarity, GTM and Meta being fed
+         * as well, so crawler sessions no longer appear in replay or in Google
+         * and Meta reporting.
+         */
+        var trackingAllowed = <?php echo fenster_request_may_be_tracked() ? 'true' : 'false'; ?>;
+
         function recordConsentMetric(choice) {
             var endpoint = window.fensterWebsiteTracking && window.fensterWebsiteTracking.consentEndpoint;
             if (! endpoint) {
@@ -185,6 +195,20 @@ function fenster_render_cookie_consent(): void
             }).catch(function () {});
         }
 
+        /*
+         * `chosen` is RECORDED but deliberately NOT REQUIRED here.
+         *
+         * It is written only by `setPreferences`, where every caller is a
+         * button, so a stored record carrying it is one the visitor actually
+         * chose. That distinction is worth keeping — it is the only way to tell
+         * a real answer from an assumed one.
+         *
+         * It is not required for validity because optional cookies are granted
+         * by default: requiring it would invalidate every existing record and
+         * re-prompt the whole audience for no gain, since they are being
+         * tracked either way. If the default is ever flipped back to off, add
+         * `record.chosen === true` here and in `src/js/main.js` together.
+         */
         function validPreferences(record) {
             return Boolean(
                 record &&
@@ -211,10 +235,18 @@ function fenster_render_cookie_consent(): void
         }
 
         /*
-         * The state a visitor is in before they say anything. `chosen` is false
-         * so nothing downstream can mistake it for an answered banner; it is
-         * never written to storage, because a default is not a choice and the
-         * banner has to keep appearing until they make one.
+         * Optional cookies are GRANTED by default and stay on until refused
+         * (owner instruction, 2026-08-09, restored 2026-08-12). It is never
+         * written to storage, because a default is not a choice and the banner
+         * has to keep appearing until they make one.
+         *
+         * The known cost of this model is that identifiers are issued before
+         * the banner is answered, so somebody who then refuses has already been
+         * recorded. That is what the withdrawal call in `saveChoice` exists to
+         * clean up — under this default it is doing more work, not less.
+         *
+         * This is weaker than the ICO's position that consent must precede
+         * non-essential storage. It was raised and it is the owner's decision.
          */
         function defaultPreferences() {
             return {
@@ -252,6 +284,11 @@ function fenster_render_cookie_consent(): void
                 version: consentVersion,
                 analytics: Boolean(analytics),
                 marketing: Boolean(marketing),
+                // Written here and ONLY here, because reaching this function is
+                // the definition of a real choice: every caller is a button.
+                // Its absence was the bug that made assumed consent and given
+                // consent indistinguishable.
+                chosen: true,
                 updated_at: new Date().toISOString(),
                 expires_at: Date.now() + consentLifetime
             };
@@ -363,6 +400,55 @@ function fenster_render_cookie_consent(): void
             });
         }
 
+        /*
+         * Ask the dashboard to erase what it already holds for this browser.
+         *
+         * Until now a refusal cleared local storage and reloaded, and that was
+         * the whole of it: the visitor row, the journey and every page view
+         * already relayed stayed in the dashboard with nothing to remove them.
+         * Under the granted-by-default model those rows were created before the
+         * banner had even rendered, so somebody who pressed "Use necessary only"
+         * remained on record as a consented visitor. Consent-first makes that
+         * rare, but it does not make it impossible — anyone who accepts and
+         * later changes their mind from footer Cookie settings is exactly this
+         * case, and they are the ones most entitled to be forgotten.
+         *
+         * Must run BEFORE `clearAnalyticsStorage`, which is what removes the two
+         * identifiers this needs to name.
+         */
+        function withdrawTrackedData() {
+            var endpoint = window.fensterWebsiteTracking && window.fensterWebsiteTracking.withdrawEndpoint;
+            if (! endpoint || ! window.fetch) {
+                return;
+            }
+
+            var stored = function (key) {
+                try {
+                    var record = JSON.parse(window.localStorage.getItem(key) || 'null');
+                    return record && typeof record.value === 'string' ? record.value : '';
+                } catch (error) {
+                    return '';
+                }
+            };
+
+            var journeyId = stored('fenster_quote_journey_ref');
+            var visitorId = stored('fenster_website_visitor_id');
+            if (! journeyId && ! visitorId) {
+                return;
+            }
+
+            // `keepalive`, because the page reloads immediately afterwards and
+            // an ordinary fetch would be cancelled in flight — which would look
+            // exactly like a working withdrawal and delete nothing.
+            window.fetch(endpoint, {
+                method: 'POST',
+                mode: 'cors',
+                keepalive: true,
+                headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+                body: JSON.stringify({ journey_id: journeyId, visitor_id: visitorId })
+            }).catch(function () {});
+        }
+
         function clearAnalyticsStorage() {
             [
                 'fenster_quote_journey_ref',
@@ -469,7 +555,15 @@ function fenster_render_cookie_consent(): void
         }
 
         function applyPreferences(preferences) {
+            // The consent signal is still sent when tracking is not allowed, so
+            // anything that loads later cannot inherit a granted default. Only
+            // the tag loading below is skipped.
             configureGoogleConsent(preferences, 'update');
+
+            if (! trackingAllowed) {
+                return;
+            }
+
             loadGtm(preferences);
             loadClarity(preferences);
             loadMeta(preferences);
@@ -513,7 +607,7 @@ function fenster_render_cookie_consent(): void
 
         function showCustom() {
             // Reflects the effective state, so the switches show what is
-            // actually running. Under granted-by-default they start on, and
+            // actually running. Under granted-by-default they start ON, and
             // saving without touching them keeps them on rather than silently
             // refusing tools the visitor can see are already loaded.
             var preferences = getPreferences() || defaultPreferences();
@@ -583,12 +677,11 @@ function fenster_render_cookie_consent(): void
             /*
              * Measured against the *effective* previous state, not the stored
              * one. Optional cookies are granted by default, so a first-time
-             * visitor pressing "Use necessary only" has no stored record to
-             * compare against — and treating that as "nothing withdrawn" would
-             * leave the tools they just refused already loaded, with their
-             * `FGV`/`FG2` identifiers already issued, until they happened to
-             * navigate. A rejection is a withdrawal whether or not they had
-             * chosen before.
+             * visitor pressing "Use necessary only" HAS withdrawn something:
+             * their identifiers were issued on the first paint and their page
+             * view is already recorded. Comparing against the stored record
+             * would read that as "nothing withdrawn" and leave both in place,
+             * which is precisely the fault this catches.
              */
             var previous = getPreferences() || defaultPreferences();
             var preferences = setPreferences(analytics, marketing);
@@ -607,6 +700,17 @@ function fenster_render_cookie_consent(): void
             recordConsentMetric(consentChoice);
             closeDialog();
             showSettingsButton();
+
+            /*
+             * Order matters here and is the whole point. The erase request has
+             * to name the identifiers, and `revokeTrackingConsent` is what
+             * deletes them from storage — so asking afterwards would send two
+             * empty strings and quietly erase nothing.
+             */
+            if (consentWithdrawn && ! preferences.analytics) {
+                withdrawTrackedData();
+            }
+
             revokeTrackingConsent(preferences);
 
             if (consentWithdrawn) {
@@ -645,7 +749,14 @@ function fenster_render_cookie_consent(): void
         applyPreferences(preferences);
         showSettingsButton();
 
-        if (! storedPreferences) {
+        /*
+         * Not shown to a crawler. It recorded a `banner_shown` impression every
+         * time, which is most of why that figure ran at 1,120 against 152 real
+         * choices and could never be used as a denominator. Keeping the modal
+         * out of a rendered crawl also removes any question of an intrusive
+         * interstitial. The footer Cookie settings control is unaffected.
+         */
+        if (! storedPreferences && trackingAllowed) {
             openDialog(false, true);
         }
 

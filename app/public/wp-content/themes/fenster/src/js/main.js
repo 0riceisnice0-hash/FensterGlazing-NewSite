@@ -1578,6 +1578,10 @@ const firstTouchStorageKey = 'fenster_website_first_touch';
 const trackingStorageLifetime = 90 * 24 * 60 * 60 * 1000;
 const journeySessionTimeout = Math.max(5, Number(websiteTracking.sessionTimeoutMinutes) || 30) * 60 * 1000;
 
+/* `chosen` is required, matching `inc/consent.php`. A record without it was
+   written under the granted-by-default model and cannot tell us whether the
+   visitor ever pressed a button, so it is not consent and the banner asks
+   again. */
 const validCookieConsentRecord = (record) => Boolean(
   record
   && record.version === 2
@@ -1603,12 +1607,13 @@ const storedCookieConsent = () => {
   return validCookieConsentRecord(window.fensterCookieConsent) ? window.fensterCookieConsent : null;
 };
 
-/* Owner instruction, 2026-08-09: optional cookies are granted until refused.
+/* Optional cookies are GRANTED by default and stay on until refused.
    This file runs before `inc/consent.php`'s inline script, so it cannot wait to
    be told the default — it has to carry the same one, and the two must not be
-   allowed to drift. Only an explicit refusal is ever stored as `analytics:
-   false`, and refusing reloads the page, so nothing here can hand a rejected
-   visitor an identifier. */
+   allowed to drift. Change one and change the other.
+
+   Identifiers are therefore issued before the banner is answered, which is why
+   a refusal has to erase as well as stop. See `withdrawTrackedData`. */
 const defaultCookieConsent = () => ({
   version: 2,
   analytics: true,
@@ -1629,13 +1634,12 @@ const marketingConsentAccepted = () => {
   return Boolean(preferences && preferences.marketing);
 };
 
-/* "We hold a consent state we can act on", which under granted-by-default is
-   true from the first paint — so the quote embed no longer waits for anything.
-   The callers keep their guards rather than having them deleted as dead code:
-   they cost nothing, they are correct under either model, and they are what
-   stops the embed loading before a decision if the default is ever flipped
-   back. Deleting them would make that flip silently unsafe. */
-const cookieConsentChoiceMade = () => Boolean(cookieConsentPreferences());
+/* Whether a real choice is stored. Under granted-by-default the first branch of
+   the WindowCAD value answers for everyone who has not refused, so this decides
+   between `rejected-cookies` for somebody who said no and
+   `cookie-consent-not-accepted`, which is effectively unreachable while the
+   default is on and survives so flipping the default back restores it. */
+const cookieConsentChoiceMade = () => Boolean(storedCookieConsent());
 
 const createJourneyReference = () => {
   const random = window.crypto?.randomUUID?.().replace(/-/g, '').slice(0, 18)
@@ -1770,7 +1774,29 @@ const visitorReference = () => {
   return created;
 };
 
+/* The ad reference is consent-free, and that is the whole reason paid search
+   stays measurable whatever the visitor chooses.
+
+   It is derived SERVER-SIDE from the click id in the landing URL and handed
+   back by `/wp-json/fenster/v1/ad-click`. Reading the address of a page
+   somebody just requested stores nothing on their device, so it needs no
+   permission — unlike everything below it, which persists and therefore does.
+
+   It is fetched rather than rendered into the page because the landing page is
+   proxy-cached by path: a reference printed into the HTML would be served to
+   every later visitor of that page, and would never reach the visitor it
+   belonged to. See the note on the REST route.
+
+   Prefer it, so a visitor who refuses cookies or never answers the banner still
+   has their click joined to the quote or form they go on to send. The stored
+   branch underneath is kept for consenting visitors, where it survives
+   navigation that the URL-derived value cannot. */
+let serverAdReference = '';
+
 const marketingAttributionReference = () => {
+  const supplied = serverAdReference.trim();
+  if (validTrackingReference(supplied, 'FGA')) return supplied;
+
   if (!marketingConsentAccepted()) return '';
   const existing = readStoredTrackingValue(
     marketingAttributionStorageKey,
@@ -1789,12 +1815,21 @@ const marketingAttributionReference = () => {
 const adTrackerStorageKey = 'fenster_ads_tracker';
 const validAdTrackerValue = (value) => /^[A-Za-z0-9 _.-]{1,80}$/.test(value || '');
 const adTrackerReference = () => {
-  if (!marketingConsentAccepted()) return '';
+  /* Read from the URL without consent, for the same reason as the reference
+     above: this value is in the address bar, not in storage. `storeMarketingValue`
+     keeps its own consent guard, so nothing is persisted without permission —
+     only the reading of what the visitor's own request already contained is
+     freed. Without this the office loses the ad-group tracker on every
+     WindowCAD quote from a visitor who has not answered the banner, which is
+     most of them. */
   const current = (new URLSearchParams(window.location.search).get('ads') || '').trim();
   if (validAdTrackerValue(current)) {
     storeMarketingValue(adTrackerStorageKey, current);
     return current;
   }
+
+  // The stored fallback survives navigation, and storage needs consent.
+  if (!marketingConsentAccepted()) return '';
   return readStoredTrackingValue(adTrackerStorageKey, validAdTrackerValue);
 };
 
@@ -2036,11 +2071,13 @@ const windowCadUrlWithReference = (value) => {
 
   try {
     const url = new URL(value, window.location.href);
-    /* Under granted-by-default the first branch answers for everyone who has
-       not refused, so `rejected-cookies` now means a real refusal and
-       `cookie-consent-not-accepted` is unreachable. The branch stays because
-       flipping the default back has to restore the no-choice value with it;
-       leads carrying the old value are still in WindowCAD either way. */
+    /* Four outcomes, in order of
+       preference: a consented journey; failing that the URL-derived ad
+       reference, which needs no consent and is what keeps a paid lead
+       attributable; then `rejected-cookies` for somebody who was asked and said
+       no; then `cookie-consent-not-accepted` for somebody who has not answered
+       yet. The last two are different facts and the office should be able to
+       tell them apart. */
     const trackingValue = journeyReference()
       || marketingAttributionReference()
       || (cookieConsentChoiceMade() ? 'rejected-cookies' : 'cookie-consent-not-accepted');
@@ -2085,6 +2122,12 @@ const populateTrackingFields = (scope = document) => {
   });
   scope.querySelectorAll('[data-fg-marketing-consent]').forEach((field) => {
     field.value = marketingConsentAccepted() ? '1' : '0';
+  });
+  /* Deliberately outside the consent flags above. This reference is derived
+     from the visitor's own landing URL and stored on nothing, so withholding it
+     would lose the campaign behind a lead without protecting anybody. */
+  scope.querySelectorAll('[data-fg-marketing-ref]').forEach((field) => {
+    field.value = marketingAttributionReference();
   });
 };
 
@@ -2151,6 +2194,52 @@ const syncAdAttribution = () => {
 };
 
 syncAdAttribution();
+
+/* Report the ad click from the browser, because the landing page is cached.
+
+   SiteGround's proxy serves these pages by path and ignores the query string,
+   so a paid arrival never reaches PHP and the server cannot see its own gclid.
+   The browser can: it is running on the cached page with the real URL in the
+   address bar. It forwards the query string to a REST route, which is not
+   cached, and gets back the one-way reference.
+
+   Everything sensitive stays on the server — the hashing, the salt, the stored
+   context and the dashboard relay. This sends only the query string the visitor
+   was already given, and stores nothing on their device, so it stays outside
+   consent for the same reason the rest of layer 1 does.
+
+   The re-stamp afterwards matters: forms and the WindowCAD URL were already
+   populated with whatever was available at load, and the reference arrives a
+   moment later. Without it the very lead this exists to attribute goes out
+   unstamped. */
+const reportAdClick = () => {
+  const endpoint = websiteTracking.adClickEndpoint;
+  const search = window.location.search;
+  if (!endpoint || !window.fetch) return;
+  if (!/[?&](gclid|gbraid|wbraid)=[^&]/.test(search)) return;
+
+  window.fetch(endpoint, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ search, path: window.location.pathname }),
+  })
+    .then((response) => (response.ok ? response.json() : null))
+    .then((data) => {
+      const reference = (data && data.reference) || '';
+      if (!validTrackingReference(reference, 'FGA')) return;
+      serverAdReference = reference;
+      populateTrackingFields();
+      populateAdClickFields();
+      refreshWindowCadLinks();
+      syncAdAttribution();
+      // Only re-points an untouched frame; a part-built quote is left alone.
+      document.querySelectorAll('[data-quote-frame-wrap]').forEach(restampQuoteFrame);
+    })
+    .catch(() => {});
+};
+
+reportAdClick();
 
 // A visitor arriving from an ad meets the cookie banner before they reach a
 // form, and accepting is what allows the id to be stored at all. Without this
@@ -5236,14 +5325,25 @@ const quoteFrameTrackedUrl = (frameWrap) => windowCadUrlWithReference(
     || '',
 );
 
+/* THE QUOTE EMBED IS NOT GATED ON CONSENT, and that is a deliberate exception
+   to the consent model rather than an oversight.
+
+   Three reasons, and the third is the one that decides it. The tool is the
+   service the page exists to provide, so loading it is what the visitor came
+   for. Its URL carries no identifier without consent — `windowCadUrlWithReference`
+   stamps `cookie-consent-not-accepted` or the URL-derived ad reference, neither
+   of which is stored on the device. And there is no placeholder UI for a waiting
+   state: gating it would leave an unexplained empty panel on every product page,
+   while building a load button back would breach the standing rule in `AI.md`
+   against exactly that.
+
+   What IS gated is the measurement. `trackWebsiteEvent` below still records
+   nothing until consent, so an ungated embed produces an aggregate total and no
+   journey. If the owner later wants the frame held back until a choice, the gate
+   goes here and it needs a designed placeholder first. */
 const loadQuoteFrame = (frameWrap) => {
   const quoteIframe = frameWrap?.querySelector('iframe[data-quote-iframe-src]');
   const quoteSrc = quoteIframe?.getAttribute('data-quote-iframe-src');
-
-  if (!cookieConsentChoiceMade()) {
-    if (frameWrap) frameWrap.dataset.quoteWaitingForConsent = 'true';
-    return;
-  }
 
   if (!quoteIframe || !quoteSrc || quoteIframe.getAttribute('src')) {
     return;
@@ -5288,11 +5388,7 @@ const restampQuoteFrame = (frameWrap) => {
 
 const scheduleQuoteFrameLoad = (frameWrap, delay = 0) => {
   if (!frameWrap || frameWrap.dataset.quoteLoadScheduled === 'true') return;
-  if (!cookieConsentChoiceMade()) {
-    frameWrap.dataset.quoteWaitingForConsent = 'true';
-    return;
-  }
-
+  // Ungated for the reasons on `loadQuoteFrame` above.
   frameWrap.dataset.quoteLoadScheduled = 'true';
   const load = () => loadQuoteFrame(frameWrap);
 

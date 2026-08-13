@@ -24,11 +24,15 @@ $fenster_required_files = [
     'inc/blog-posts.php',
     'inc/setup.php',
     'inc/security.php',
+    // Must load before consent and tracking: both ask it whether this request
+    // is a visitor worth measuring, and they have to get the same answer.
+    'inc/traffic-classification.php',
     'inc/consent.php',
     'inc/legend-assistant.php',
     'inc/assets.php',
     'inc/template-tags.php',
     'inc/website-tracking.php',
+    'inc/ad-attribution.php',
     'inc/enquiries.php',
     'inc/adminbase.php',
     'inc/google-ads-conversions.php',
