@@ -1,6 +1,58 @@
 # Fenster Glazing Handover
 
-## Commercial rebuild, 2026-08-13 — on test, awaiting approval
+## Current state, 2026-08-13 (end of the forensic audit session)
+
+**Live is `1ccc8bd8` and it is the tip of `main` again.** Established by
+checksum, not read off a doc. **Three commits are on test and not live**, all
+commercial specification work; test is `068ccefe`. Working tree clean, no release
+branch outstanding.
+
+**Read in this order:** the newest START HERE block in `PROGRESS.md`, then the
+Current Truth section of `LIVECHANGES.md`, then the rule in `AI.md` for whichever
+page you are touching. If you are about to propose site-wide work, read
+**`FULL-SITE-AUDIT-2026-08-13.md`** first — it holds 220 verified findings
+including the ones the owner rejected, and it will stop you rediscovering them.
+
+**The commercial rebuild is LIVE.** It shipped inside a thirty-four commit
+release on 2026-08-13 after the owner confirmed he had reviewed the pages. The
+deletion assertion of exactly four by name, which this repository had been
+warning about for two days, fired on that deploy and passed.
+
+### The five owner rulings from that session, all 2026-08-13
+
+1. **Secondary glazing has FIVE styles.** A lift-out and a fixed panel are
+   different products. Supersedes the 2026-08-07 four-style line.
+2. **Show case studies when nothing claims a route, but do not claim they are
+   that product.** The fallback stays; the heading changes.
+3. **A pending specification row renders nowhere** until the figure exists.
+   Reverses the 2026-08-12 "confirming" row. Skipped at render, kept in the data
+   so the tracking checklist still works.
+4. **Commercial figures are a guide, not a datasheet**, because the work is
+   specified across several systems per client.
+5. **The internal-linking work is rejected.** The town matrix, the guides and
+   `/3d-visualiser/` are landing pages. Do not re-raise it.
+
+### Four traps this session paid for, worth knowing before you repeat them
+
+- **An owner decision can look exactly like a deploy failure.** Optional cookies
+  are granted by default on live because the owner reverted consent-first, not
+  because a deploy went wrong. Read the log before diagnosing drift.
+- **`data/pages.json` records can render nowhere.** Four FAQ blocks duplicated
+  across ~122 pages were edited before anyone checked; product routes override
+  them with `product_content` and they reach no customer. **Fetch the page.**
+- **A copy sweep must never touch the privacy, cookie or terms text.** One did,
+  including the processor clause, and had to be reverted.
+- **Widening an approved fix is scope creep even when the wider fix is correct.**
+  A casing sweep across indexed titles was reverted for this reason.
+
+### What needs the owner
+
+Two AOV figures; five specification tiles that still carry an adjective because
+no confirmed figure exists anywhere in the repository; three price guides that
+show no prices; the homepage hero lead, which still opens with a banned word; and
+a decision on mobile page length, where eleven product pages exceed 15,000px.
+
+## Commercial rebuild, 2026-08-13 — SHIPPED, see the block above
 
 **Read the newest START HERE block in `PROGRESS.md` first.** Live is `47db7aea`
 as recorded and was **not** re-established by checksum this session; do that

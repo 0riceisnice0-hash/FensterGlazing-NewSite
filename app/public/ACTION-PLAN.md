@@ -168,6 +168,22 @@ Also fix on this page:
 ### Weeks 2–3 — shared copy + image audit
 
 10. ✅ Done 2026-07-16 — shared template strings rewritten in we/you voice across `generated-page.php`, `quote-tool.php`, `windows-hub.php`, `home-experience.php`, `about.php`, `contact.php`, `price-guide.php`, `consultation-booking.php` and the enquiry form; self-describing gallery bullets removed; "Move from the product..." and door-handle headings replaced with customer-truth headings. Brand-named "Fenster" deliberately kept where it earns its place: the trust page, About-page process/eyebrows, the accreditation trust strip, commercial county intros and "the Fenster quote tool".
+
+**Second pass, 2026-08-13.** The 2026-07-16 sweep covered the shared template strings; third-person "Fenster" was still on 657 of 712 pages, 4,411 raw mentions. Those collapse to far less work than the count suggests: four FAQ boilerplate blocks duplicated across ~122 imported pages account for most of it. Converted this time: product and location FAQ answers **and their questions**, the shared next-steps copy under every guide, the case-study narrative layer, the closing CTA on every utility page, the CPA page, the `/areas-we-cover/` hero, product-hub body copy, button and card labels, and the **customer confirmation email and success panel**, which no previous sweep had touched and which is the first thing a customer reads after enquiring.
+
+**The keeps list above is unchanged and was re-verified. Four more were added:**
+
+- **Customer review quotes.** A genuine third party. Never convert.
+- **Article and blog titles.** Changing a title moves link labels across the site.
+- **Schema, JSON-LD, OpenGraph and meta `name` fields, and page `title` / `title_tag`.** That is the business's legal name, not prose.
+- **One `aria-label`**, `location-service.php:1182`. A landmark name is announced out of page order, where "we" has no antecedent, so it keeps the brand name.
+- **The enquiry consent line**, "I agree that Fenster can use these details". Naming the data controller in a consent statement is correct and clearer than a pronoun.
+
+**Never touched, and this is a hard rule now**: the privacy policy, cookie policy and terms. A sweep in this session edited three privacy strings including the processor clause as a side effect and had to be reverted. Legal text is not a tone-of-voice target.
+
+**Also untouched: the twelve commercial pages.** The commercial overhaul claims that sweep as its own workstream, and colliding with it would have been worse than leaving it.
+
+**THE TRAP THAT COST THE MOST TIME.** Much of the `data/pages.json` half of this sweep was applied to records that **never render**. Four FAQ boilerplate blocks were reported as reaching customers; fourteen routes were fetched afterwards, including the exact slugs holding the records, and both the old and the converted wording return zero. Product routes override those FAQs with `product_content`. **Surviving `$is_bad_scrape_section` is not the same as rendering. Fetch a page and prove the string appears before editing `pages.json`.** Roughly 1,100 third-person mentions remain in that file and most are probably dead in the same way.
 11. ✅ Done 2026-07-16 — all 98 unique pool images audited (individually viewed). Removed: a duplicate sash photo, two US stock interiors from the aluminium windows pool, three duplicate CGI courtyard renders and a duplicate CGI kitchen in the door pools, a wrong-product steel-look render from the sliding pool, a garden shot posing as a casement window, and a French window from the French doors pool. Promoted real install photos to the bifold and casement heroes, moved the Liniar 7016 patio shot to the uPVC patio pool, and rewrote every dishonest alt (no more false "installed in [town]" claims). Known remaining gaps are listed in `PHOTO-CHECKLIST.md`.
 12. ✅ Done 2026-07-16 — fitter photo checklist created (`PHOTO-CHECKLIST.md`) with a 5-shot per-job routine and a wishlist covering the gaps the audit could not fill from honest assets (real uPVC door installs, aluminium windows, secondary glazing).
 

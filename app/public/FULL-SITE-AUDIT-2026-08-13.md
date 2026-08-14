@@ -17,7 +17,32 @@ through an adversarial verification pass against the real files and the real pag
 
 ---
 
-## READ THIS FIRST
+## READ THIS FIRST — AND NOTE THIS SECTION WAS WRONG
+
+> **CORRECTED 2026-08-13, later the same day.** The block below diagnosed a
+> deploy failure. It was an **owner decision**, already recorded in
+> `LIVECHANGES.md`: commit `31da4d09`, "Tracking: cookies on by default, but bots
+> excluded and ad clicks logged", owner instruction 2026-08-12. Optional cookies
+> are granted before a choice on production **because the owner reverted
+> consent-first**, not because anything failed to ship.
+>
+> The *measurement* stands and is reproducible: on a clean profile with no
+> consent record and no interaction, production fires 22 third-party requests,
+> including Clarity collecting, Google Analytics sending a hit and the Meta Pixel
+> configuring. With a necessary-only record seeded, zero fire. The consent layer
+> works once a choice exists and does not before one. That is weaker than ICO
+> guidance, it was raised with the owner, and it is his call.
+>
+> **The lesson is the reusable part: when live and the repository disagree, read
+> the log before concluding the deploy failed.** This session assumed the repo
+> was newer than production. On this project a deliberate revert is at least as
+> likely, and `LIVECHANGES.md` already said so.
+>
+> Findings A1 and A2 in the batches below inherit this error. A1's measurement is
+> real; its stated cause is not. A2 is not a defect at all.
+>
+> Live is now `1ccc8bd8` and back on the tip of `main`. The rest of this document
+> was unaffected and stands.
 
 **Production is not running the repository.** Live `assets/js/main.js` hashes to
 `f01a2147…` at 139,296 bytes; the committed bundle hashes to `20948f42…` at 139,580 bytes.

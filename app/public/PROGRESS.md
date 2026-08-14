@@ -9,7 +9,121 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-13 (commercial rebuild — ON TEST, awaiting approval)
+## START HERE, 2026-08-13 (forensic audit — 34 COMMITS SHIPPED, LIVE IS BACK ON `main`)
+
+**Live is `1ccc8bd8`, established by checksum, and it is the tip of `main` again.
+THREE COMMITS ARE ON TEST AND NOT LIVE**, all commercial specification work; test
+is `068ccefe`. Working tree clean, no release branch outstanding. The divergence
+that has run since 2026-08-12 is closed in both directions.
+
+**The commercial rebuild shipped inside this release.** It had been on test since
+2026-08-12 awaiting approval; the owner confirmed on 2026-08-13 that he had
+reviewed the pages, and it went live as part of a thirty-four commit release.
+
+### What this session was
+
+A full forensic audit of the site: fifteen specialist audits over the theme, forty
+pages of live HTML and rendered measurement at real 1440 / 768 / 390 viewports
+through the DevTools Protocol. 295 findings, each put through adversarial
+verification, of which **220 survived**. The whole thing, including the findings
+the owner rejected, is in **`FULL-SITE-AUDIT-2026-08-13.md`** so nobody
+rediscovers them. Read that before proposing site-wide work.
+
+The owner approved roughly 25 findings. Those shipped. Everything else is
+recorded and NOT actioned.
+
+### THE FOUR MISTAKES THIS SESSION MADE, because they are the reusable part
+
+1. **An owner decision was diagnosed as a deploy failure, at 99% confidence.**
+   The audit measured 22 third-party requests firing on a clean session with no
+   consent stored and reported the cause as the consent-first fix never having
+   shipped. It never shipped because **the owner reverted it** in `31da4d09`,
+   "cookies on by default", which `LIVECHANGES.md` already recorded. The
+   measurement was right and the diagnosis was wrong. **When live and the repo
+   disagree, read the log before concluding the deploy failed.**
+2. **A brief widened a one-page fix into a site-wide sweep.** An approved copy
+   correction became a `UPVC` → `uPVC` casing pass over ~190 lines including
+   indexed `<title>` values and JSON-LD headlines. Reverted. The scope creep was
+   in the instruction, not the agent.
+3. **A copy sweep edited the privacy policy.** Three strings including the
+   processor clause. Reverted, and the rule is now explicit in every brief:
+   legal documents are not a tone-of-voice target.
+4. **A large part of the voice sweep was spent on `data/pages.json` records that
+   never render.** Four FAQ boilerplate blocks duplicated across ~122 imported
+   pages were reported as rendering; fourteen routes were fetched afterwards,
+   including the exact slugs holding them, and both old and new wording return
+   zero. Product routes override those FAQs with `product_content`. **Surviving
+   `$is_bad_scrape_section` is not the same as reaching a customer. Fetch the
+   page before editing the record.**
+
+### Owner rulings captured, all 2026-08-13
+
+- **Secondary glazing has FIVE styles.** A lift-out and a fixed panel are
+  different products. This supersedes the 2026-08-07 four-style line, which is
+  struck rather than deleted in `AI.md`. Applied to the product page, the FAQ and
+  the noise guide.
+- **Show case studies when nothing claims a route, but do not claim they are that
+  product.** The audit proposed deleting the all-studies fallback; the owner kept
+  it. `fenster_case_studies_for_product()` now signals a fallback through a
+  by-reference out-param and the heading changes with it.
+- **Drop a pending specification row until the figure exists.** This REVERSES the
+  2026-08-12 decision that a pending row should render as "confirming". The row
+  is skipped at render, not deleted from the data, so
+  `fenster_commercial_spec_pending()` still generates the checklist.
+- **Commercial figures are a guide, not a datasheet**, because the work is
+  specified across several systems per client. `/curtain-walling/` carries a
+  route-specific `spec_note` saying so. Its U-value is published as a hedged
+  floor, "as low as 0.9 W/m²K", for the same reason.
+- **Where only one method is offered, name it positively.** Capped is a
+  `Glazing method` row, not a "structural or capped" choice. Do not add "not
+  structural".
+- **The internal-linking work was rejected.** The owner's position is that the
+  town matrix, the guides and `/3d-visualiser/` are landing pages and do not need
+  inbound links. The audit oversold that finding; the matrix produces 115 clicks
+  a quarter at position 32.8 and better linking would not change that. **Do not
+  re-raise it.** The related-links gate is still technically broken at
+  `generated-page.php:1946` and that remains a latent bug rather than a project.
+
+### What shipped, in one list
+
+Factual corrections: the uPVC-versus-aluminium insulation error and "metal is a
+natural insulator" off a live guide; dollar prices off the noise guide;
+`/patio-doors/` reading 14 and 16 colours on one page; the withdrawn 1.8 W/m²K
+figure off `/other-services/`; a PAS 24 claim for a component off the APECS page;
+the scrape-era `/roofline/` H1 and its ~56 link labels; porches off the homepage;
+WindowCAD out of customer copy. Conversion: hero CTA labels matching their
+destination, the message box made optional, the honeypot finally read and
+flagging rather than discarding, price guides linked from the products they
+price. Accessibility and design: mobile nav focus containment, 44px tap targets,
+hero eyebrow contrast at desktop, and a malformed global `h2` clamp that had been
+shipping a flat 48px on 26 desktop and 25 mobile routes. Plus the third-person
+voice sweep, on the surfaces that actually render.
+
+### What needs the owner, and nothing else
+
+- **Two AOV figures**: the standard the units are installed to, and aerodynamic
+  free area. Tracked by `fenster_commercial_spec_pending()` even though the rows
+  no longer render.
+- **Five specification tiles still carry an adjective** — `aluminium-bifold-doors`
+  Sightlines, `aluminium-doors` Performance, `patio-doors` Design,
+  `slide-fold-doors` Design, `integral-blinds` Maintenance. **No confirmed figure
+  exists for any of them anywhere in the repository or the docs**, and nothing was
+  invented. Each needs one real number.
+- **Three price guides show no prices at all**: `/sash-window-prices/`,
+  `/aluminium-window-prices/` and `/patio-french-door-prices/` hold only
+  "To confirm" rows, which the template filters out.
+- **The homepage hero lead still opens "High-quality windows…"**, a word
+  `TONEOFVOICE.md` bans by name. It was not on the approved list and the first
+  sentence on the site is a brand decision.
+- **Mobile page length**: eleven product pages exceed 15,000px, and
+  `/double-glazing-milton-keynes/` is 37 phone screens. Deferred deliberately;
+  it is a restructure, not a sweep.
+
+## START HERE, 2026-08-13 (commercial rebuild — SHIPPED, see the block above)
+
+> **Superseded. The rebuild described below went live on 2026-08-13 inside
+> `1ccc8bd8`.** Everything about how it was built still stands; only its status
+> has changed.
 
 **Live is `47db7aea` as recorded, and NOT re-established by checksum this
 session — do that before any live deploy rather than trusting this line.
