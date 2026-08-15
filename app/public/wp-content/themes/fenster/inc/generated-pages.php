@@ -1967,6 +1967,145 @@ function fenster_maybe_render_generated_page(): void
     exit;
 }
 
+/* /llms.txt — a plain-text index for language models.
+   ---------------------------------------------------------------------------
+   Added 2026-08-15. `/sitemap.xml` lists 712 URLs with no indication of which
+   matter or what any of them is; this is the short version, and it is the file
+   the emerging convention has an assistant look for.
+
+   IT IS GENERATED FROM THE SAME TWO REGISTRIES THE SITE ALREADY RENDERS FROM —
+   `primary_nav_fallback` for products and `fenster_commercial_product_pages()`
+   for commercial — because a hand-kept list of routes is exactly the thing this
+   repository has watched drift over and over. Add a route to the menu and it
+   appears here on its own; add one to neither and it is missing from both,
+   which is the failure you want, because it is visible.
+
+   It is served through the same virtual-route mechanism as the sitemap rather
+   than written to the Bedrock web root, and that is deliberate: the theme rsync
+   is the only thing this project deploys, so a real file in the document root
+   would sit outside version control and outside every deploy. Note the live
+   `robots.txt` is a static file in that root and is NOT theme-generated, which
+   is why this cannot simply be advertised from there. */
+add_action('parse_request', 'fenster_maybe_render_llms_txt', 0);
+add_action('template_redirect', 'fenster_maybe_render_llms_txt', -1);
+function fenster_maybe_render_llms_txt(): void
+{
+    $path = trim((string) wp_parse_url(add_query_arg([]), PHP_URL_PATH), '/');
+
+    if ($path !== 'llms.txt') {
+        return;
+    }
+
+    status_header(200);
+    header('Content-Type: text/plain; charset=' . get_bloginfo('charset'));
+    fenster_send_public_cache_headers(3600, 21600);
+
+    $brand = fenster_data('brand', []);
+    $phone = (string) ($brand['phone'] ?? '01908 429200');
+    $email = (string) ($brand['email'] ?? 'info@fensterglazing.com');
+
+    $lines = [];
+    $lines[] = '# Fenster Glazing';
+    $lines[] = '';
+    $lines[] = '> Windows, doors and glazing, supplied and installed by our own teams. '
+        . 'Residential work across Milton Keynes, Buckinghamshire, Bedfordshire and '
+        . 'Northamptonshire; commercial glazing nationwide across England and Wales.';
+    $lines[] = '';
+    $lines[] = 'Trading name: Fenster Glazing';
+    $lines[] = 'Registered name: Fenster Glazing & Locks Ltd';
+    $lines[] = 'Company number: 11579136';
+    $lines[] = 'VAT number: GB305818213';
+    $lines[] = 'Founded: 2018';
+    $lines[] = 'Showroom: 98 Alston Drive, Bradwell Abbey, Milton Keynes, MK13 9HF';
+    $lines[] = 'Phone: ' . $phone;
+    $lines[] = 'Email: ' . $email;
+    $lines[] = 'Commercial enquiries: ' . (string) ($brand['commercial_email'] ?? 'commercial@fensterglazing.com');
+    $lines[] = 'Accreditations: Constructionline Gold, SSIP, FENSA';
+    $lines[] = '';
+
+    /* Products, taken straight off the navigation. The labels are the menu's
+       short form, so they are kept under their own column heading exactly as
+       the menu presents them — "Aluminium Heritage" names two different routes
+       and only the heading separates them. See the Product Naming Rule. */
+    $nav = fenster_data('primary_nav_fallback', []);
+    foreach ((is_array($nav) ? $nav : []) as $top) {
+        $columns = is_array($top['columns'] ?? null) ? $top['columns'] : [];
+        if (empty($columns)) {
+            continue;
+        }
+
+        foreach ($columns as $column) {
+            $items = is_array($column['items'] ?? null) ? $column['items'] : [];
+            if (empty($items)) {
+                continue;
+            }
+
+            $lines[] = '## ' . (string) ($column['label'] ?? 'Products');
+            $lines[] = '';
+            foreach ($items as $item) {
+                $label = (string) ($item['label'] ?? '');
+                $url = (string) ($item['url'] ?? '');
+                if ($label === '' || $url === '') {
+                    continue;
+                }
+                $lines[] = '- [' . $label . '](' . $url . ')';
+            }
+            $lines[] = '';
+        }
+    }
+
+    if (function_exists('fenster_commercial_product_pages')) {
+        $commercial = fenster_commercial_product_pages();
+        if (is_array($commercial) && ! empty($commercial)) {
+            $lines[] = '## Commercial glazing';
+            $lines[] = '';
+            $lines[] = '- [Commercial glazing](' . home_url('/commercial-glazing/') . '): the hub for everything below.';
+            foreach ($commercial as $commercial_slug => $commercial_page) {
+                if (! is_array($commercial_page)) {
+                    continue;
+                }
+                $commercial_title = (string) ($commercial_page['title'] ?? '');
+                if ($commercial_title === '') {
+                    continue;
+                }
+                $entry = '- [' . $commercial_title . '](' . home_url('/' . $commercial_slug . '/') . ')';
+                $commercial_subtitle = wp_strip_all_tags((string) ($commercial_page['subtitle'] ?? ''));
+                if ($commercial_subtitle !== '') {
+                    $entry .= ': ' . $commercial_subtitle;
+                }
+                $lines[] = $entry;
+            }
+            $lines[] = '';
+        }
+    }
+
+    $lines[] = '## Company and proof';
+    $lines[] = '';
+    $lines[] = '- [About Fenster](' . home_url('/about/') . '): who runs it, and the team.';
+    $lines[] = '- [Case studies](' . home_url('/case-studies/') . '): completed residential jobs, photographed on the day.';
+    $lines[] = '- [Commercial projects](' . home_url('/commercial-projects/') . '): completed commercial schemes.';
+    $lines[] = '- [Why trust Fenster](' . home_url('/why-trust-fenster/') . '): accreditations and what each one covers.';
+    $lines[] = '- [Constructionline Gold](' . home_url('/constructionline-gold/') . ')';
+    $lines[] = '- [SSIP health and safety](' . home_url('/ssip-health-and-safety/') . ')';
+    $lines[] = '- [FENSA approved installers](' . home_url('/fensa-approved-installers/') . ')';
+    $lines[] = '- [Areas we cover](' . home_url('/areas-we-cover/') . ')';
+    $lines[] = '- [Contact](' . home_url('/contact/') . ')';
+    $lines[] = '';
+    $lines[] = '## Pricing and tools';
+    $lines[] = '';
+    $lines[] = '- [Instant online quote](' . home_url('/online-quote/') . '): configure and price a job, no appointment needed.';
+    $lines[] = '- [Book a consultation](' . home_url('/book-a-consultation/') . '): a free home visit, priced on the day.';
+    $lines[] = '- [Window and door prices](' . home_url('/window-door-prices-milton-keynes/') . ')';
+    $lines[] = '';
+    $lines[] = '## Full index';
+    $lines[] = '';
+    $lines[] = '- [Sitemap](' . home_url('/sitemap.xml') . '): every canonical URL on the site.';
+    $lines[] = '';
+
+    echo implode("\n", $lines);
+    exit;
+}
+
 add_action('parse_request', 'fenster_maybe_render_generated_sitemap', 0);
 add_action('template_redirect', 'fenster_maybe_render_generated_sitemap', -1);
 function fenster_maybe_render_generated_sitemap(): void
@@ -2331,6 +2470,12 @@ function fenster_render_site_schema(): void
         '@type' => 'HomeAndConstructionBusiness',
         '@id' => home_url('/#business'),
         'name' => (string) ($brand['name'] ?? 'Fenster Glazing'),
+        // The registered name, which is NOT the trading name and is not used
+        // anywhere customer-facing. It is here because a knowledge graph joins
+        // an entity to Companies House and to a VAT record on the legal name,
+        // and "Fenster Glazing" alone matches several unrelated firms. Taken
+        // from the site's own terms page, which already states it.
+        'legalName' => 'Fenster Glazing & Locks Ltd',
         'description' => 'Windows, doors, bifolds and glazing systems supplied and installed across Milton Keynes, Buckinghamshire, Bedfordshire and Northamptonshire.',
         'url' => home_url('/'),
         'telephone' => '+44' . ltrim(preg_replace('/\D+/', '', (string) ($brand['phone'] ?? '01908 429200')), '0'),
@@ -2339,12 +2484,25 @@ function fenster_render_site_schema(): void
         'logo' => FENSTER_THEME_URI . '/assets/brand/favicon-512.png',
         'priceRange' => '££',
         'hasMap' => 'https://www.google.com/maps/place/Fenster+Glazing/@52.0465566,-0.7938287,15z',
+        /* `sameAs` MUST BE A URL THAT IDENTIFIES US, NOT ONE WE ARE ASSOCIATED
+           WITH. `https://www.fensa.org.uk/` was in this list and was wrong on
+           that test: it is the accreditor's homepage, it identifies FENSA
+           rather than Fenster, and mixing an association into an identity
+           property dilutes every other entry in it. FENSA moved to
+           `hasCredential` below, which is the property that actually means
+           "this organisation holds this accreditation".
+
+           The Companies House record replaces it and is the strongest entry
+           here, because it is the one URL that resolves this business to a
+           single registered legal entity rather than to a name several firms
+           share. Keep the maps URL FIRST: the Places lookup further down
+           rewrites index 0 by position. */
         'sameAs' => [
             'https://www.google.com/maps/place/Fenster+Glazing/@52.0465566,-0.7938287,15z',
             'https://uk.trustpilot.com/review/fensterglazing.com',
             'https://www.facebook.com/fensterg/',
             'https://uk.linkedin.com/company/fenster-glazing',
-            'https://www.fensa.org.uk/',
+            'https://find-and-update.company-information.service.gov.uk/company/11579136',
         ],
         'address' => [
             '@type' => 'PostalAddress',
@@ -2388,6 +2546,59 @@ function fenster_render_site_schema(): void
         ],
         'foundingDate' => '2018-08',
         'currenciesAccepted' => 'GBP',
+        // Company number 11579136 and VAT 305818213, owner-supplied. These are
+        // the two values that disambiguate this business from every other firm
+        // trading on a similar name, which is the whole job of an identifier.
+        // `vatID` carries the GB prefix because that is the registered form.
+        'vatID' => 'GB305818213',
+        'identifier' => [
+            [
+                '@type' => 'PropertyValue',
+                'name' => 'Company number',
+                'value' => '11579136',
+            ],
+            [
+                '@type' => 'PropertyValue',
+                'name' => 'VAT number',
+                'value' => 'GB305818213',
+            ],
+        ],
+        /* THE ACCREDITATIONS WERE IN NO STRUCTURED DATA AT ALL until 2026-08-15,
+           which is why they are here. Constructionline Gold and SSIP are the two
+           a commercial buyer's pre-qualification questionnaire actually asks
+           for, they each have a page on this site, and neither was machine
+           readable anywhere.
+
+           All four sit on the BUSINESS entity because the company genuinely
+           holds them. That is not in tension with the note in
+           `commercial-credentials.php` saying FENSA and the CPA guarantee are
+           kept off commercial PAGES: that rule is about what a contractor is
+           shown, and this is about what the company is. Do not "align" them by
+           deleting FENSA from here.
+
+           No `aggregateRating` and no `Review` anywhere near this block, per the
+           standing rule in `AI.md`: self-serving review markup earns risk
+           without producing stars. */
+        'hasCredential' => [
+            [
+                '@type' => 'EducationalOccupationalCredential',
+                'name' => 'Constructionline Gold',
+                'credentialCategory' => 'Supply chain accreditation',
+                'url' => home_url('/constructionline-gold/'),
+            ],
+            [
+                '@type' => 'EducationalOccupationalCredential',
+                'name' => 'SSIP accredited',
+                'credentialCategory' => 'Health and safety accreditation',
+                'url' => home_url('/ssip-health-and-safety/'),
+            ],
+            [
+                '@type' => 'EducationalOccupationalCredential',
+                'name' => 'FENSA registered installer',
+                'credentialCategory' => 'Competent person scheme',
+                'url' => home_url('/fensa-approved-installers/'),
+            ],
+        ],
         // The real product range, so Google can match product queries to the
         // business rather than inferring it from page copy alone. Mirrors the
         // Products list on the Google Business Profile.
@@ -2475,18 +2686,33 @@ function fenster_render_site_schema(): void
                 ? (string) ($service_page['subtitle'] ?? '')
                 : 'Commercial glazing surveyed, supplied and installed in occupied and live commercial buildings: windows, doors, curtain walling, louvres, AOV and replacement glazing.';
 
+            /* THE PROVIDER IS A REFERENCE, NOT A SECOND COPY OF THE BUSINESS.
+               Until 2026-08-15 this block re-declared an inline
+               `HomeAndConstructionBusiness` carrying a name, a url and a phone
+               number. A parser reading it had no way to know that node was the
+               same organisation as the `#business` node in the block above, so
+               thirteen commercial pages were each describing a nameless-address,
+               no-credential company that merely shared our name — and none of
+               the authority on those pages accrued to the real entity.
+
+               `{'@id' => home_url('/#business')}` is the whole fix: it points at
+               the node already on the page, so the address, geo, opening hours,
+               identifiers and accreditations all attach to the service. Do not
+               "helpfully" re-add name/url/telephone alongside the @id; a node
+               reference with extra properties is a partial redefinition and
+               invites exactly the ambiguity this removes. */
             $service_schema = [
                 '@context' => 'https://schema.org',
                 '@type' => 'Service',
+                '@id' => home_url('/' . $slug . '/#service'),
                 'name' => $service_name,
                 'serviceType' => $service_name,
                 'url' => home_url('/' . $slug . '/'),
                 'provider' => [
-                    '@type' => 'HomeAndConstructionBusiness',
-                    'name' => 'Fenster Glazing',
-                    'url' => home_url('/'),
-                    'telephone' => '01908 429200',
+                    '@id' => home_url('/#business'),
                 ],
+                /* THE areaServed IS DELIBERATELY DIFFERENT FROM THE BUSINESS
+                   BLOCK ABOVE — see the note at the top of this section. */
                 'areaServed' => [
                     ['@type' => 'Country', 'name' => 'England'],
                     ['@type' => 'Country', 'name' => 'Wales'],
@@ -2495,6 +2721,91 @@ function fenster_render_site_schema(): void
 
             if ($service_description !== '') {
                 $service_schema['description'] = $service_description;
+            }
+
+            if (is_array($service_page)) {
+                $hero_image = (string) ($service_page['hero_image'] ?? '');
+                if ($hero_image !== '') {
+                    // Already absolute: the helper resolves a theme path to
+                    // FENSTER_THEME_URI, so do not wrap it in home_url().
+                    $service_schema['image'] = fenster_generated_url($hero_image);
+                }
+
+                /* The capabilities row is already an offer catalogue written in
+                   HTML — four headed cards saying what this service covers — and
+                   it was readable by a human and by nothing else. Mirroring it
+                   here costs nothing and is the part an answer engine can quote
+                   back when somebody asks what a package includes. */
+                $capabilities = is_array($service_page['capabilities'] ?? null)
+                    ? array_values($service_page['capabilities'])
+                    : [];
+
+                $offers = [];
+                foreach ($capabilities as $capability) {
+                    $capability_title = (string) ($capability['title'] ?? '');
+                    if ($capability_title === '') {
+                        continue;
+                    }
+
+                    $offer = [
+                        '@type' => 'Offer',
+                        'itemOffered' => [
+                            '@type' => 'Service',
+                            'name' => $capability_title,
+                        ],
+                    ];
+
+                    $capability_copy = (string) ($capability['copy'] ?? '');
+                    if ($capability_copy !== '') {
+                        $offer['itemOffered']['description'] = $capability_copy;
+                    }
+
+                    $offers[] = $offer;
+                }
+
+                if (! empty($offers)) {
+                    $service_schema['hasOfferCatalog'] = [
+                        '@type' => 'OfferCatalog',
+                        'name' => $service_name,
+                        'itemListElement' => $offers,
+                    ];
+                }
+
+                /* The specification schedule as machine-readable properties.
+                   These are the figures a specifier came for and the ones an
+                   answer engine has to be able to attribute, and in HTML they
+                   are a description list that states nothing about what any
+                   value MEANS.
+
+                   PENDING ROWS ARE SKIPPED, using the same helper the template
+                   filters on, so this cannot disagree with the page. Publishing
+                   "U-value: confirming" as structured data would be worse than
+                   publishing nothing: the render rule of 2026-08-13 exists
+                   precisely so a placeholder never reaches a reader, and a
+                   parser is a reader. */
+                $specification = is_array($service_page['specification'] ?? null)
+                    ? array_values($service_page['specification'])
+                    : [];
+
+                $properties = [];
+                foreach ($specification as $row) {
+                    $row_label = (string) ($row['label'] ?? '');
+                    $row_value = $row['value'] ?? '';
+
+                    if ($row_label === '' || fenster_spec_is_pending($row_value)) {
+                        continue;
+                    }
+
+                    $properties[] = [
+                        '@type' => 'PropertyValue',
+                        'name' => $row_label,
+                        'value' => wp_strip_all_tags((string) $row_value),
+                    ];
+                }
+
+                if (! empty($properties)) {
+                    $service_schema['additionalProperty'] = $properties;
+                }
             }
 
             printf(
