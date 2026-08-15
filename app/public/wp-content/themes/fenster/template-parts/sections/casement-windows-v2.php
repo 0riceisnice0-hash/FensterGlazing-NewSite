@@ -176,27 +176,26 @@ $faqs = [
     ['question' => 'What is a casement window?', 'answer' => 'A window with sashes hinged at the side or the top, opening outwards. Opening sashes and fixed panes are made into one frame, so a single window can do more than one job.'],
     ['question' => 'What is the difference between casement and flush casement windows?', 'answer' => 'The sash. On a standard casement it stands slightly proud of the frame, and fixed panes are glazed straight into the frame so they hold more glass. On a flush casement the sash closes level with the frame for a traditional joinery look, with fixed panes matched to the openers so every pane reads the same. Standard takes 28mm double or 36mm triple glazing and reaches 0.95 W/m²K; flush takes 28mm double and reaches 1.2 W/m²K. Both are A+ rated.'],
     ['question' => 'Which Liniar system do you fit?', 'answer' => 'The 70mm Liniar EnergyPlus system in the sculptured profile, a six-chamber uPVC platform used for both replacement and new-build work. Glass, reinforcement and hardware are confirmed for your individual job.'],
-    /* WHY THIS SYSTEM AND NOT ANOTHER, added 2026-08-15 on the owner's ruling
-       that a SYSTEM may be named for clarity where a competitor FIRM may not.
-       That scopes the "do not name a competitor system" line in `AI.md` rather
-       than deleting it: the Ideal 70 is named because a customer comparing two
-       quotations meets both names and deserves to know what separates them. No
-       installer, retailer or local firm is named here or anywhere near it.
+    /* WHY THIS SYSTEM, and deliberately NOT a comparison. Owner decision,
+       2026-08-15: drop competitor copy where it does not flatter us. The right
+       way to act on that is to drop the comparison whole rather than keep the
+       half we win, because a comparison that only shows our side is selective
+       rather than persuasive, and it is the version that gets challenged.
 
-       BOTH FIGURES ARE THE SYSTEMS' OWN PUBLISHED ONES. Six against five
-       chambers is each manufacturer's own count for a 70mm frame. The 1.2
-       W/m²K is aluplast's published figure for the Ideal 70, read off the
-       Formula One technical brochure (2025 edition) on 2026-08-15. Do not
-       restate either as a measurement of ours, and re-check them before
-       repeating the claim: a comparison that goes stale is worse than none.
+       So the named-system version of this answer is gone. It ran six chambers
+       against the aluplast Ideal 70's five and 0.95 W/m²K against their
+       published 1.2, and it carried the balancing admission that their range is
+       rated A++ where ours is A+ because A++ needs a 40mm unit we do not fit.
+       All of it was accurate and sourced from their 2025 technical brochure.
+       **If a comparison is ever wanted here again, it comes back with that
+       admission attached or it does not come back.**
 
-       THE A++ ADMISSION IS LOAD-BEARING AND MUST NOT BE TRIMMED. Their range
-       publishes a higher energy BAND than ours, and the only reason is a 40mm
-       sealed unit we do not fit on any uPVC. Leaving that out would make the
-       answer true in every sentence and dishonest overall, and it is exactly
-       the "say the awkward thing first" principle in `TONEOFVOICE.md`. It is
-       also what makes the U-value point believable. */
-    ['question' => 'Why do you fit Liniar rather than another uPVC system?', 'answer' => 'Two numbers, and both are published by the systems themselves. The 70mm Liniar EnergyPlus frame carries six chambers against five on the aluplast Ideal 70, and our triple glazed casement reaches 0.95 W/m²K where the Ideal 70 publishes as low as 1.2. Worth saying plainly: their range is rated A++ and ours A+, because A++ needs a 40mm sealed unit we do not fit. The band is not the figure.'],
+       It also removed a second problem: the versus table further up this page
+       already prints 1.2 W/m²K for the Liniar flush sash, so the page carried
+       two unrelated 1.2s and a reader could reasonably conflate them.
+
+       Every figure below is already stated elsewhere on this route. */
+    ['question' => 'Why do you fit Liniar?', 'answer' => 'The 70mm EnergyPlus frame carries six chambers, sculptured rather than chamfered, and welded at the corners rather than screwed. Triple glazed it reaches 0.95 W/m²K, and the profile is lead-free. Liniar guarantee the frame for ten years and we guarantee the installation for ten, which are two different things and both worth having.'],
     ['question' => 'What U-value can an EnergyPlus casement reach?', 'answer' => '0.95 W/m²K, with the 36mm triple glazed unit, which makes it an A+ window. Size, layout, glass and reinforcement all move the complete-window figure, so the number we agree follows your final specification rather than a brochure.'],
     ['question' => 'Are casement windows secure?', 'answer' => 'They can be specified with reinforced frames, multi-point locking and PAS 24 or Secured by Design options. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we will specify to it. Those approvals belong to a tested complete window rather than to the profile name, so we confirm what applies to your configuration.'],
     ['question' => 'Can I have triple glazing?', 'answer' => 'Yes. The 70mm frame takes a 28mm double glazed unit or a 36mm triple. Whether triple is worth it depends on the sash size, the weight and what you are actually trying to improve, so we will compare it with you rather than treating it as an automatic upgrade.'],

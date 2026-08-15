@@ -2297,7 +2297,19 @@ function fenster_site_data(): array
                 ],
                 'faqs' => [
                     ['question' => 'How much does a composite door cost fitted?', 'answer' => 'One we fitted recently came to £2,000 including VAT: a 900 x 2100 Distinction Esteem, anthracite grey outside and white inside, with a low aluminium threshold, clear glass and a chrome lever handle. Yours will differ with size, style, glass and hardware, so the honest answer is to price your exact door on our quote tool, which takes about ten minutes. Our composite door prices page shows the checked example and what moves the figure.'],
-                    ['question' => 'What is a composite door made from?', 'answer' => 'A 44.5mm slab built in layers: a GRP skin with a woodgrain taken from real oak, water-resistant polymer edges, engineered wood stiles, a reinforced central board and a foam-filled insulating core. A typical uPVC door panel is 28mm, which is why a composite door feels so different the first time you close one.'],
+                    /* THE QUESTION WAS RETITLED 2026-08-15, not rewritten. It asked "What is a
+                       composite door made from?", which is a category question this
+                       page already answers at length in the slab section, and it meant
+                       nobody arriving with the question they actually have — why this
+                       door and not another — found it phrased that way anywhere.
+
+                       The answer is the approved copy untouched, with one sentence
+                       added. That sentence is a judgment and says so: the owner's real
+                       reason for choosing this door is that it is the best made one he
+                       has handled, which is not a specification and must not be dressed
+                       up as one. The showroom line is what turns it into something the
+                       reader can check for themselves. */
+                    ['question' => 'Why do you fit Distinction composite doors?', 'answer' => 'A 44.5mm slab built in layers: a GRP skin with a woodgrain taken from real oak, water-resistant polymer edges, engineered wood stiles, a reinforced central board and a foam-filled insulating core. A typical uPVC door panel is 28mm, which is why a composite door feels so different the first time you close one. It is the best-made door we have handled, and the showroom is the place to test that.'],
                     ['question' => 'Are composite doors more secure than uPVC doors?', 'answer' => 'The slab is thicker and stiffer than a uPVC panel, most decorative glass designs are laminated, and every doorset we fit has multi-point locking. Distinction door slabs are accredited by Secured by Design, the police security initiative, and our composite doors carry a £5,000 security guarantee.'],
                     ['question' => 'Can I choose the colour and glass design?', 'answer' => 'Yes, and you can have one colour outside and a different one inside. Colour, glass and hardware are chosen against your door style, and the combination is confirmed before anything is ordered. Colour swatches come out to a consultation; the doors themselves are at the showroom.'],
                     ['question' => 'Do composite doors need repainting?', 'answer' => 'No, and you should not paint one; it voids the surface warranty. Warm water and a soft cloth is the whole maintenance routine. Skip abrasive cleaners, pressure washers and solvents.'],
