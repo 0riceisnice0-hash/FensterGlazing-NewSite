@@ -814,11 +814,6 @@ $roofline_story_panels = [
         'copy' => 'It closes the gap between the fascia and the wall. Solid, hollow, or vented where the roof space needs to breathe.',
     ],
     [
-        'eyebrow' => 'Ventilation',
-        'heading' => 'Air has to reach the roof space.',
-        'copy' => 'Moving air through the roof keeps the timbers up there dry. Over-fascia vents sit above the board and are the usual answer, with vented soffits and circular vents where the detail suits them better.',
-    ],
-    [
         'eyebrow' => 'Gutter and downpipe',
         'heading' => 'Where the water actually goes.',
         'copy' => 'Half round, square, ogee or high capacity, sized to the roof above it and set to fall towards the outlet. The downpipe takes it from there to the drain.',
@@ -3327,9 +3322,9 @@ if ($is_commercial_hub) {
                 <span class="fg-rl-zone fg-rl-zone--fascia"></span>
                 <span class="fg-rl-zone fg-rl-zone--soffit"></span>
                 <span class="fg-rl-zone fg-rl-zone--gutter"></span>
-                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 36%; --y: 26%;"><i></i><b>Fascia</b></span>
-                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 44%; --y: 72%;"><i></i><b>Soffit</b></span>
-                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 66%; --y: 33%;"><i></i><b>Guttering</b></span>
+                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 76%; --y: 38%;"><i></i><b>Fascia</b></span>
+                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 32%; --y: 62%;"><i></i><b>Soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 76%; --y: 26%;"><i></i><b>Guttering</b></span>
             </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
             <div class="container fg-aw-story__content">

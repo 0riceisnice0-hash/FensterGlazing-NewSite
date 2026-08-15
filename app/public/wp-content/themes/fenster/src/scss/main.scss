@@ -42702,31 +42702,30 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% 34%, 82% 8%, 86% 19%, 0% 46%); }
-.fg-rl-zone--soffit { clip-path: polygon(5% 54%, 88% 66%, 88% 100%, 5% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(46% 10%, 100% 37%, 100% 56%, 47% 22%); }
+.fg-rl-zone--fascia { clip-path: polygon(50% 15%, 100% 46%, 100% 57%, 50% 25%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 31%, 69% 54%, 69% 91%, 0% 81%); }
+.fg-rl-zone--gutter { clip-path: polygon(50% 5%, 100% 35%, 100% 46%, 50% 14%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-parts__scrim,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-parts__scrim {
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-parts__scrim {
   opacity: 1;
 }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-pin--fascia,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-pin--soffit,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-pin--soffit,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-pin--gutter {
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-pin--gutter {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
 
-/* Panel 4 is ventilation, which has no part of its own in this photograph, so it
-   lights the soffit: a vented soffit is where that air comes through. */
+/* Three parts, three panels. Ventilation was dropped as a point entirely on the
+   owner's instruction: this photograph shows no vent, and a marker pointing at
+   where one would go is the kind of near-miss that reads as a mistake. */
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-zone--fascia,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-zone--soffit,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-zone--soffit,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-zone--gutter {
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-zone--gutter {
   opacity: 1;
 }
 
