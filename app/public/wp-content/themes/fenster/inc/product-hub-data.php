@@ -296,12 +296,12 @@ function fenster_product_hub_data(string $slug): array
         'roofline' => [
             'systems' => [$systems['liniar']],
             'badges' => ['5m boards', 'Low maintenance', 'Ventilation details'],
-            'heading' => 'Liniar roofline details for fascias, soffits and guttering.',
-            'copy' => 'Roofline work protects the roof edge through suitable board thickness, lengths, trims, ventilation, gutter runs, corners, finials and colour matching to the wider exterior.',
+            'heading' => 'Fascias, soffits, guttering and the vents between them.',
+            'copy' => 'The fascia carries the gutter, the soffit closes the gap to the wall, and the vents between them keep air moving through the roof space. Colour is chosen to sit with the windows and doors below.',
             'specs' => [
                 ['label' => 'Products', 'value' => 'Fascias, soffits, trims, ventilators, corners, finials and guttering details'],
-                ['label' => 'Board details', 'value' => 'Long board lengths and robust fascia thickness options depending on installation'],
-                ['label' => 'Ventilation', 'value' => 'Soffit and over-fascia ventilation considered where the roof requires it'],
+                ['label' => 'Fascia profiles', 'value' => 'Square, ogee or bullnose, with square available across the full colour range'],
+                ['label' => 'Ventilation', 'value' => 'Over-fascia vents, vented soffits or circular vents, chosen with the boards'],
                 ['label' => 'Finish', 'value' => 'White and foiled colour choices to coordinate with windows and doors'],
             ],
             'choices' => ['Full replacement or targeted roofline work', 'Ventilated or non-ventilated soffits', 'Gutter profile and colour', 'Colour-matched trims'],

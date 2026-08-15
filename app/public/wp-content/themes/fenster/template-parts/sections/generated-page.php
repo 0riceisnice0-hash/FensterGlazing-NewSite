@@ -1384,6 +1384,14 @@ if ($is_pet_flap_page) {
     $journey_intro_copy = 'A sealed unit cannot be cut once it has been made, so glass means a new unit. A panel we cut ourselves.';
     $journey_why_eyebrow = 'Pet flap fitting';
     $journey_why_heading = 'Glass or panel decides the rest of the job.';
+
+/* Roofline was rendering "Product information / Roofline" as an H2 directly
+   under an H1 reading Roofline. Twenty-three routes still repeat their own H1
+   as an H2 site-wide; this is the third to stop, after tilt and turn and
+   aluminium flush. */
+if ($slug === 'roofline') {
+    $journey_why_heading = 'What a roofline job actually covers.';
+}
     $journey_why_button = 'Ask about a pet flap';
     $journey_gallery_eyebrow = 'Fitting choices';
     $journey_gallery_heading = 'Where the flap goes, and what that means.';
@@ -4793,8 +4801,8 @@ if ($is_commercial_hub) {
                        belongs to whichever window or door the unit goes into,
                        and there is no hardware on the room side at all. */
                     ?>
-                    <h2><?php echo esc_html($is_integral_blinds ? 'Choose the glass around the blind.' : ($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.')); ?></h2>
-                    <p><?php echo esc_html($is_integral_blinds ? 'The slat colours are further down this page. The other choice on a blind unit is the glass itself: clear, or obscured where the room needs privacy even with the blind open.' : ($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.')); ?></p>
+                    <h2><?php echo esc_html($slug === 'roofline' ? 'Roofline colours, chosen to match what is below.' : ($is_integral_blinds ? 'Choose the glass around the blind.' : ($slug === 'sliding-sash-windows' ? 'Choose your glass and hardware.' : 'Finish the design with your colours, glass and hardware.'))); ?></h2>
+                    <p><?php echo esc_html($slug === 'roofline' ? 'Roofline is chosen to sit with the windows and doors below it, so the colour is the decision worth making early.' : ($is_integral_blinds ? 'The slat colours are further down this page. The other choice on a blind unit is the glass itself: clear, or obscured where the room needs privacy even with the blind open.' : ($slug === 'sliding-sash-windows' ? 'Compare privacy glass here, then choose the Roseview furniture style and finish below.' : 'Choose your colours, privacy glass and hardware; each guide helps narrow the detail before survey.'))); ?></p>
                 </div>
                 <?php
                 /* Built as a list before rendering so the count is known. The
