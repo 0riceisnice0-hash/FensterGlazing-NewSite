@@ -42710,28 +42710,29 @@ html.fg-blinds-reveal-locked {
    drawing them separately guarantees slivers of dark between them and a soffit
    that leans differently from the board above it.
 
-   THE BOUNDARIES COME FROM THE OWNER'S OWN DRAWN LINES, 2026-08-15, after eight
-   failed passes of me reading angles off renders. He marked all three straight on
-   a screenshot in yellow; their endpoints are what these polygons are, converted
-   THE PHOTO HAD TO BE REGISTERED, NOT JUST READ. His marks are on a photograph
-   of a laptop screen taken slightly off axis, so the screen is keystoned; reading
-   pixel positions straight off it and then applying a stage-to-box conversion
-   stacked two lossy steps and is why the first attempt with his lines still
-   missed. The endpoints are now mapped through two landmarks visible in both the
-   photo and the real page — the "Roofline" H1 and the button row — which fixes
-   scale and offset in both axes before any conversion happens.
+   THE BOUNDARIES ARE DETECTED, NOT DRAWN OR READ. Nine passes of me estimating
+   angles off renders and off the owner's marked-up photo all missed, and the
+   reason the marked-up photo could not rescue it is that it is a phone picture
+   of a laptop screen: the screen is keystoned, so a straight line drawn on the
+   glass is not straight in page coordinates, and the error grows toward the
+   edges where these very boundaries sit.
 
-   THEY ARE NOT PARALLEL, AND THAT IS THE WHOLE POINT. Lines running away from
-   the camera converge on a vanishing point, so each boundary has its own slope:
-   roughly 1.03 along the top of the gutter, 1.16 under it where the clips are,
-   and 0.81 at the fascia-to-soffit divide. Every earlier attempt forced one
-   slope across all of them and could never fit, however carefully the number was
-   tuned. **Do not "tidy" these into a common angle.**
+   So the lines come from the photograph itself. A Hough-style sweep over slope
+   and intercept scores every candidate line by the mean bright-above/dark-below
+   luminance step along its whole length, and returns the two dominant edges:
+   the top of the gutter at (0%, -34%) to (100%, 43%), and the fascia-to-soffit
+   divide at (0%, 24%) to (100%, 76%). The gutter's underside sits parallel below
+   its top edge. **Re-run that detection if the photograph is ever replaced;
+   do not adjust these by eye.**
 
-   The fascia-to-soffit line is the dark/light divide, which is the cleanest
-   landmark in the frame: lit fascia above it, shadowed shiplap soffit below. The
-   gutter's lower edge is the one boundary that is not straight, because the
-   support clips step below the channel; the owner drew that step in.
+   THEY ARE NOT PARALLEL, and the detection proves it rather than assuming it:
+   0.767 along the roof edge against 0.519 at the soffit divide. The two converge
+   to the right, so the fascia reads deeper at the left of the frame. Forcing a
+   common angle across them, which every earlier attempt did, cannot fit.
+
+   Image percentages ARE clip-path percentages here, because the overlay box is
+   given the photograph's own aspect ratio. No conversion, which is one fewer
+   place to go wrong.
 
    Three lines taken off a 10% grid laid over the source photograph
    (which shares this box's aspect ratio, so readings need no conversion): the
@@ -42765,9 +42766,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% -4%, 100% 74%, 100% 87%, 0% 33%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 33%, 100% 87%, 100% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(0% -24%, 100% 54%, 100% 74%, 0% -4%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% -18%, 100% 60%, 100% 76%, 0% 24%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 43%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
