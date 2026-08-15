@@ -42880,12 +42880,26 @@ html.fg-blinds-reveal-locked {
    Extended straight to both edges because the owner's description is that it is
    straight, and the residuals say so too.
 
+   THEN MOVED UP 1.2pp, ANGLE UNTOUCHED. Owner: the angle is right, it is
+   catching the head of the door. Published values are 61.7% and 97.0%; the
+   detected joint is 62.9% and 98.2%, and the difference is deliberate clearance
+   rather than a correction to the fit.
+
+   The measurements say there is no slack at all here: the last groove sits 5.5px
+   above the detected line, so that line is on the JOINT between the last board
+   and the head, not on a board face. Anything above it eats shiplap and anything
+   below it is head. So this is not a better fit, it is a decision about which
+   error to take, and on a lit zone a sliver of head reads as a mistake where a
+   sliver of missing soffit does not. **Do not "correct" this back onto the
+   detected line** — it was there, and it was reported as catching the head.
+   Slope stays 0.2354; only the intercept moved.
+
    NOT PARALLEL to the edge above it, and that is the geometry rather than an
    error: the divide falls 0.52 across the frame and this falls 0.205, because
    the soffit recedes and its apparent depth shrinks from 43 percentage points
    at the left to 12 at the right. Re-run the detection if the photograph
    changes; do not nudge these by hand. */
-.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 98.2%, 0% 62.9%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 97%, 0% 61.7%); }
 .fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 43%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
