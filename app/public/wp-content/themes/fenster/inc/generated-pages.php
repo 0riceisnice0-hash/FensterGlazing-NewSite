@@ -2967,14 +2967,27 @@ function fenster_render_site_schema(): void
                 $residential_service['image'] = fenster_generated_url($hero_src);
             }
 
-            /* THE STAR ON A U-VALUE MEANS "LOWEST ACHIEVABLE" AND IT CANNOT
-               TRAVEL AS A STAR. On the page it is a symbol with a footnote
-               under the strip; in JSON-LD there is no footnote, so a bare
-               `U-value: 0.95 W/m²K` would read as the figure for every window
-               we fit rather than the best one. The star is therefore expanded
-               into the value itself. `AI.md` requires the "lowest achievable"
-               wording to survive any trim; this is that rule applied to a
-               surface it did not previously reach. */
+            /* THE "LOWEST ACHIEVABLE" QUALIFIER HAS TO BE DERIVED THE SAME WAY
+               THE PAGE DERIVES IT, and a first pass got this wrong in a way
+               worth recording. It tested for a trailing `*` on the label, which
+               never fires: the star is not stored in `product_usps` at all.
+               `product-pulse.php` earns it at render from `glazing_u_values`,
+               and only where BOTH a double and a triple figure exist, because
+               the star means "this is the lower of two" and a route with one
+               glazing unit has no lower figure to qualify (owner, 2026-08-05).
+
+               So the same test is applied here. Without it a page whose own
+               strip prints "0.95 W/m²K *" over "* Lowest achievable" was
+               publishing a flat `U-value: 0.95 W/m²K` to every parser reading
+               it — the best case restated as the standard one, which is exactly
+               the overclaim the footnote exists to prevent. `AI.md` requires
+               that wording to survive any trim; JSON-LD has no footnote to put
+               it in, so it goes inside the value. */
+            $glazing_u_values = fenster_data('glazing_u_values', []);
+            $route_glazing = is_array($glazing_u_values[$slug] ?? null) ? $glazing_u_values[$slug] : [];
+            $u_value_is_lowest = trim((string) ($route_glazing['double'] ?? '')) !== ''
+                && trim((string) ($route_glazing['triple'] ?? '')) !== '';
+
             $properties = [];
             foreach ($route_usps as $usp) {
                 $usp_label = trim((string) ($usp['label'] ?? ''));
@@ -2984,8 +2997,13 @@ function fenster_render_site_schema(): void
                     continue;
                 }
 
-                if (str_ends_with($usp_label, '*')) {
+                // Labels carry a literal star on a couple of routes as well.
+                $labelled_lowest = str_ends_with($usp_label, '*');
+                if ($labelled_lowest) {
                     $usp_label = rtrim(rtrim($usp_label, '*'));
+                }
+
+                if (($labelled_lowest || $u_value_is_lowest) && stripos($usp_label, 'u-value') !== false) {
                     $usp_value .= ' (lowest achievable)';
                 }
 
