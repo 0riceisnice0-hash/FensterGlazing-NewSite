@@ -42710,23 +42710,16 @@ html.fg-blinds-reveal-locked {
    drawing them separately guarantees slivers of dark between them and a soffit
    that leans differently from the board above it.
 
-   THE FASCIA-TO-SOFFIT BOUNDARY IS NOT PARALLEL TO THE ROOF EDGE, and assuming
-   it was is what kept the soffit eating into the fascia. Owner, 2026-08-15: the
-   soffit is shiplap and its grooves run in a different direction, so where that
-   texture starts IS the cut-off. Measured along it, that line falls about 0.21
-   per unit rather than the roof edge's 0.63, because it is the near edge of a
-   plane receding away from the camera rather than a line running along the roof.
+   THE FASCIA-TO-SOFFIT BOUNDARY IS THE STRONG DIAGONAL that runs almost corner
+   to corner across the photograph, and it is roughly PARALLEL to the roof edge.
+   Owner, 2026-08-15. Two earlier readings of it were wrong: 0.21, which came
+   from misreading the shiplap as a much shallower line and produced a soffit
+   that climbed into the fascia, and then a wedge built on that same bad number.
+   All three boundaries share one slope of about 0.78, so the three bands are
+   parallel and of even depth, which is what the picture actually shows.
 
-   The consequence is that the fascia is a WEDGE, not a band, AND IT OPENS TO THE
-   RIGHT: the eave recedes to the LEFT, so the board is narrow at the left of the
-   frame and deepest at the right where it is nearest the camera. The first
-   attempt had that mirrored. A constant-width band can never sit on it whichever
-   way it leans.
-
-   THE GUTTER BAND INCLUDES ITS BRACKETS. Owner, 2026-08-15: the brackets extend
-   the boundary of the guttering, and the band's edges are the gutter's own
-   straight parallel lines. So it is deeper than the visible channel and its two
-   edges share the roof slope exactly.
+   The shiplap is still the cue for WHERE that boundary sits, exactly as the
+   owner said. It was the ANGLE that was misread, not the landmark.
 
    Three lines taken off a 10% grid laid over the source photograph
    (which shares this box's aspect ratio, so readings need no conversion): the
@@ -42760,9 +42753,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% -11%, 100% 52%, 100% 75%, 0% -5%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% -5%, 100% 75%, 100% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(0% -30%, 100% 33%, 100% 52%, 0% -11%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% -18%, 100% 60%, 100% 78%, 0% 0%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 0%, 100% 78%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 44%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
