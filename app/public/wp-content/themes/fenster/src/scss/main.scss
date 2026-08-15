@@ -42710,7 +42710,19 @@ html.fg-blinds-reveal-locked {
    drawing them separately guarantees slivers of dark between them and a soffit
    that leans differently from the board above it.
 
-   Three lines, one slope, taken off a 10% grid laid over the source photograph
+   THE FASCIA-TO-SOFFIT BOUNDARY IS NOT PARALLEL TO THE ROOF EDGE, and assuming
+   it was is what kept the soffit eating into the fascia. Owner, 2026-08-15: the
+   soffit is shiplap and its grooves run in a different direction, so where that
+   texture starts IS the cut-off. Measured along it, that line falls about 0.21
+   per unit rather than the roof edge's 0.63, because it is the near edge of a
+   plane receding away from the camera rather than a line running along the roof.
+
+   The consequence is that the fascia is a WEDGE, not a band: deep at the left of
+   the frame where the eave is closest to the camera, narrowing to the right as
+   it recedes. That is perspective doing its job, and a constant-width band can
+   never sit on it.
+
+   Three lines taken off a 10% grid laid over the source photograph
    (which shares this box's aspect ratio, so readings need no conversion): the
    roofline falls 0.63 vertically per unit horizontally, measured along the
    gutter run rather than guessed. Line A is the top of the
@@ -42742,8 +42754,8 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% -11%, 100% 52%, 100% 64%, 0% 1%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 1%, 100% 64%, 100% 100%, 0% 100%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% -11%, 100% 52%, 100% 61%, 0% 40%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 40%, 100% 61%, 100% 100%, 0% 100%); }
 .fg-rl-zone--gutter { clip-path: polygon(0% -21%, 100% 42%, 100% 52%, 0% -11%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
