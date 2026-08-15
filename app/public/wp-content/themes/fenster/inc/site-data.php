@@ -1781,9 +1781,30 @@ function fenster_site_data(): array
                THIS IS THE HONEST CEILING: two roofline photographs is what we
                own. Do not pad it back out with windows. `PHOTO-CHECKLIST.md` is
                where a request for a wide shot of a roofline run belongs. */
+            /* THE WHOLE-HOUSE SHOT IS BACK, owner instruction 2026-08-15:
+               "better than nothing else". This reverses the line above about not
+               padding the pool back out with windows, and it reverses it
+               NARROWLY. What that rule was written against was six images of
+               casements, a bay and an aluminium window carrying alt text bending
+               each of them towards a roof edge they were not in. This one is
+               different in the way that matters: the fascia, soffit and gutter
+               genuinely run across the eaves of both roofs in the frame, so the
+               alt text below describes what is actually there and claims
+               nothing. It is supplier photography, so it is unattributed and is
+               never captioned as our work.
+
+               It also fills the second slot in `fg-product-why__media-stack`,
+               which reserves two rows whether or not there is a second picture.
+               With one body image that second row stretched empty, which is the
+               gap the owner reported under the first picture. The stylesheet now
+               collapses the row as well, so the gap cannot come back if this
+               pool changes again — the image and the CSS fix are independent.
+
+               The five other pre-rebuild images stay out. */
             'roofline' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg', 'alt' => 'Fascia, soffit, guttering and downpipe at the corner of a tiled roof'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Vented soffit and black guttering under a tiled roof edge'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-exterior.jpg', 'alt' => 'A brick house from the garden with white fascia, soffit and guttering along both roof edges'],
             ],
         ],
         'product_content' => [

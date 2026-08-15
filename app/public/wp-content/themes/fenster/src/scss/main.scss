@@ -6886,6 +6886,17 @@ h3 {
   min-height: 160px;
 }
 
+/* A LONE PICTURE SPANS BOTH ROWS. The stack declares two rows and stretches to
+   the copy beside it, so a route with only one body image left the second row
+   drawn empty and full height — a large hole under the first picture, which is
+   what the owner reported on `/roofline/`. That route now has a second image
+   again, but the hole was the grid's fault rather than the pool's and it would
+   return the moment any route drops to one. Changes nothing where there are two.
+   Same `:only-child` pattern the grid above already uses. */
+.fg-product-why__media-stack > .fg-product-why__media:only-child {
+  grid-row: 1 / -1;
+}
+
 /* The media column stretches to match the copy beside it, and on the pet flap
    route that copy runs to five benefit cards, so the photographs were being
    drawn over a thousand pixels tall and taking the section to nearly 2,000.
