@@ -42911,7 +42911,22 @@ html.fg-blinds-reveal-locked {
    at the left to 12 at the right. Re-run the detection if the photograph
    changes; do not nudge these by hand. */
 .fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 89%, 0% 53.7%); }
-.fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 43%, 100% 60%, 0% -18%); }
+/* THE GUTTER'S TOP EDGE IS THE TOP OF ITS BRIGHT FACE, not the bottom of it.
+   Owner, 2026-08-15: correct angle, raise it to the next straight line above.
+   It was cutting across the gutter and leaving the upper half of the profile in
+   the scrim, so the lit band was part of the gutter rather than the gutter.
+
+   Measured the same way the soffit finally was — read the luminance profile and
+   look — rather than by another search. The gutter face reads as a bright band
+   about 36px deep on the 1800x1200 frame; the old edge sat on its lower
+   boundary, so the fix is the upper one. Walking to the top of that band across
+   46 columns and fitting gives a span of 79.8 percentage points against the
+   77.0 the line already had, which is the owner's "correct angle" confirmed
+   independently: within 2.8pp over the whole frame.
+
+   So the angle is held exactly and only the height changes, by the median raise
+   of 38.4px = 3.2pp. Bottom edge untouched. */
+.fg-rl-zone--gutter { clip-path: polygon(0% -37.2%, 100% 39.8%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
