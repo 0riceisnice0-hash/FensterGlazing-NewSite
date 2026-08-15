@@ -52,25 +52,14 @@ $faqs = [
         'answer' => 'Size, colour, glass, vents, handles, thresholds and access all change the fitted price. The quote tool lets you test each choice and watch the number move before anyone visits your home.',
     ],
 ];
-$faq_schema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(
-        static fn (array $faq): array => [
-            '@type' => 'Question',
-            'name' => $faq['question'],
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => $faq['answer'],
-            ],
-        ],
-        $faqs
-    ),
-];
+// FAQPage markup comes from the shared emitter in `inc/generated-pages.php`.
+// Seven separate copies of this block existed across the theme until
+// 2026-08-15, which is seven places for the shape to drift and five that
+// had already been missed when the schema itself needed changing.
 ?>
 
 <article class="fg-price-guide">
-    <script type="application/ld+json"><?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
+    <?php fenster_render_faq_page_schema($faqs); ?>
 
     <section class="fg-price-guide__hero">
         <div class="container fg-price-guide__hero-grid">

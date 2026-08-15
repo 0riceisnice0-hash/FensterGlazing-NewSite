@@ -148,6 +148,113 @@ $review = is_array($study['review'] ?? null) ? $study['review'] : null;
 $award = is_array($study['award'] ?? null) ? $study['award'] : null;
 $video = is_array($study['video'] ?? null) ? $study['video'] : null;
 $is_wide_video = $video && ($video['orientation'] ?? '') === 'landscape';
+
+/* Article schema for a case study, added 2026-08-15.
+   ---------------------------------------------------------------------------
+   Fourteen studies were the strongest proof on the site and carried no markup
+   at all beyond the site-wide business node, so the one thing that demonstrates
+   the work was invisible to anything reading structurally.
+
+   THIS IS THE ONE PLACE ON THE SITE WITH AN HONEST DATE. Everywhere else a
+   `dateModified` would have to be invented from a file timestamp, which would
+   claim every page changed on every deploy — which is why it has deliberately
+   not been added anywhere else. Here the office recorded a real completion date
+   AND recorded whether it is sure of it, so `datePublished` is gated on exactly
+   the same `$date_confirmed` flag the visible date is gated on. An unsure date
+   prints nothing and publishes nothing, and the two can never disagree.
+
+   The named installers become `contributor`, because they are the people who
+   did the work and the page already names them. `about` points at the products,
+   which is what the study is evidence FOR. No `review` or `aggregateRating`
+   even where a study carries a customer quote: the standing rule in `AI.md` is
+   that self-serving review markup earns risk without producing stars, and a
+   case study is exactly where it would be tempting. */
+$case_schema = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Article',
+    '@id' => home_url('/case-studies/' . $short_slug . '/#article'),
+    'headline' => $title,
+    'url' => home_url('/case-studies/' . $short_slug . '/'),
+    'publisher' => ['@id' => home_url('/#business')],
+    'author' => ['@id' => home_url('/#business')],
+    'isPartOf' => ['@id' => home_url('/#website')],
+];
+
+if ($lead !== '') {
+    $case_schema['description'] = wp_strip_all_tags($lead);
+}
+
+if ($date_iso !== '' && $date_confirmed) {
+    $case_schema['datePublished'] = gmdate('Y-m-d', (int) strtotime($date_iso));
+}
+
+if ($location !== '') {
+    $case_schema['contentLocation'] = ['@type' => 'Place', 'name' => $location];
+}
+
+// images[0] IS the hero on this data shape, so there is no separate hero key to
+// read. An earlier draft reached for `$study['image']`, which does not exist and
+// would have thrown on a string offset if it ever did.
+$case_images = [];
+foreach ($images as $case_image) {
+    $case_image_src = (string) (is_array($case_image) ? ($case_image['src'] ?? '') : $case_image);
+    if ($case_image_src !== '') {
+        $case_images[] = fenster_generated_url($case_image_src);
+    }
+}
+$case_images = array_values(array_unique(array_filter($case_images)));
+if (! empty($case_images)) {
+    $case_schema['image'] = $case_images;
+}
+
+/* The installers already carry a role and a link to their own anchor on
+   /meet-the-team/, so a contributor here resolves to the same Person the team
+   page publishes rather than to a loose name. That join is the point: it is
+   what turns "some fitters" into named people who work for a named company. */
+$case_contributors = [];
+foreach ($installers as $installer) {
+    if (! is_array($installer)) {
+        continue;
+    }
+
+    $installer_name = trim((string) ($installer['name'] ?? ''));
+    if ($installer_name === '') {
+        continue;
+    }
+
+    $contributor = ['@type' => 'Person', 'name' => $installer_name];
+
+    $installer_role = trim((string) ($installer['role'] ?? ''));
+    if ($installer_role !== '') {
+        $contributor['jobTitle'] = $installer_role;
+    }
+
+    $installer_url = trim((string) ($installer['url'] ?? ''));
+    if ($installer_url !== '') {
+        $contributor['url'] = $installer_url;
+    }
+
+    $case_contributors[] = $contributor;
+}
+if (! empty($case_contributors)) {
+    $case_schema['contributor'] = $case_contributors;
+}
+
+$case_about = [];
+foreach ($products as $case_product) {
+    $case_product_name = trim((string) (is_array($case_product) ? ($case_product['label'] ?? $case_product['name'] ?? '') : $case_product));
+    if ($case_product_name !== '') {
+        $case_about[] = ['@type' => 'Service', 'name' => $case_product_name];
+    }
+}
+if (! empty($case_about)) {
+    $case_schema['about'] = $case_about;
+}
+
+printf(
+    "<script type=\"application/ld+json\">%s</script>\n",
+    wp_json_encode($case_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+);
 if ($video && ! $is_wide_video) {
     // A square/portrait video fills the hero slot, so every still goes to the gallery.
     $hero_image = null;

@@ -97,6 +97,60 @@ $members[] = [
 
 $bosses = array_slice($members, 0, 2);
 $team_members = array_slice($members, 2);
+
+/* Person schema for the named team, added 2026-08-15.
+   ---------------------------------------------------------------------------
+   Fifteen real people with real roles were rendering as HTML and nothing else.
+   Named staff tied to the organisation are among the strongest entity signals
+   a small company has, and this page had already done the hard part: the names,
+   the roles and the photographs are written, owner-approved and public.
+   Publishing them as `Person` nodes adds no new disclosure, it just makes what
+   is already on the page legible.
+
+   NAME, ROLE AND PHOTOGRAPH ONLY. No email, no phone, no anything that could
+   turn a staff list into a contact list — the office number belongs to the
+   business node, not to individuals.
+
+   `worksFor` is a reference to `#business` rather than a copy of it, the same
+   rule the Service blocks follow, so the whole team attaches to one entity.
+
+   LEGEND IS DELIBERATELY EXCLUDED. He is the office cat, and a `Person` node
+   for a cat is exactly the sort of thing that makes the rest of the graph look
+   unserious. He stays on the page, where the joke lands and does no harm. */
+$team_schema_people = [];
+foreach ($members as $member) {
+    $member_name = trim((string) ($member['name'] ?? ''));
+    $member_role = trim((string) ($member['role'] ?? ''));
+
+    if ($member_name === '' || $member_role === '' || strtolower($member_name) === 'legend') {
+        continue;
+    }
+
+    $person = [
+        '@type' => 'Person',
+        'name' => $member_name,
+        'jobTitle' => $member_role,
+        'url' => home_url('/meet-the-team/#' . sanitize_title($member_name)),
+        'worksFor' => ['@id' => home_url('/#business')],
+    ];
+
+    $member_image = (string) ($member['image'] ?? '');
+    if ($member_image !== '') {
+        $person['image'] = fenster_generated_url($member_image);
+    }
+
+    $team_schema_people[] = $person;
+}
+
+if (! empty($team_schema_people)) {
+    printf(
+        "<script type=\"application/ld+json\">%s</script>\n",
+        wp_json_encode(
+            ['@context' => 'https://schema.org', '@graph' => $team_schema_people],
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+        )
+    );
+}
 ?>
 
 <article class="fg-team-page">

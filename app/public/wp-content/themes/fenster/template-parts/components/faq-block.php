@@ -56,24 +56,11 @@ $faq_heading = (string) ($args['heading'] ?? '');
 $faq_eyebrow = (string) ($args['eyebrow'] ?? '');
 $faq_id = (string) ($args['id'] ?? 'fg-cm-faq-title');
 
-$faq_schema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(
-        static fn (array $faq): array => [
-            '@type' => 'Question',
-            'name' => (string) $faq['question'],
-            'acceptedAnswer' => [
-                '@type' => 'Answer',
-                'text' => (string) $faq['answer'],
-            ],
-        ],
-        $faqs
-    ),
-];
+// The schema comes from the shared emitter in `inc/generated-pages.php`, which
+// every FAQ surface on the site now uses. This component owns the markup; it
+// deliberately does not own a second copy of the JSON-LD.
+fenster_render_faq_page_schema($faqs);
 ?>
-
-<script type="application/ld+json"><?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
 
 <section class="fg-cm-faq" aria-labelledby="<?php echo esc_attr($faq_id); ?>">
     <div class="container fg-cm-faq__grid">

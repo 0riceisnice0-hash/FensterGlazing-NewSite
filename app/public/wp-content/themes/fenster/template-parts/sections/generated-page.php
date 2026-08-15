@@ -5106,23 +5106,12 @@ if ($is_commercial_hub) {
                question past the limit, raise the route here in the same commit
                or it renders nowhere and you will not be told. */
             $product_faq_limit = $is_repairs ? 7 : (($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows') ? 6 : 5);
-            $faq_schema = [
-                '@context' => 'https://schema.org',
-                '@type' => 'FAQPage',
-                'mainEntity' => array_map(
-                    static fn (array $faq): array => [
-                        '@type' => 'Question',
-                        'name' => (string) $faq['question'],
-                        'acceptedAnswer' => [
-                            '@type' => 'Answer',
-                            'text' => (string) $faq['answer'],
-                        ],
-                    ],
-                    array_slice($product_faqs, 0, $product_faq_limit)
-                ),
-            ];
+            /* The schema is the shared emitter now, passed the same limit the
+               render below slices to, so the markup can never describe a
+               question the page does not show. Only the JSON-LD moved; the
+               markup underneath is untouched. */
             ?>
-            <script type="application/ld+json"><?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
+            <?php fenster_render_faq_page_schema($product_faqs, $product_faq_limit); ?>
             <section class="fg-product-faq">
                 <div class="container fg-product-faq__grid">
                     <div>

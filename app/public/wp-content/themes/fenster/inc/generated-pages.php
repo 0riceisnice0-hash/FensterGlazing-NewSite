@@ -2460,6 +2460,88 @@ function fenster_render_generated_seo(): void
 }
 
 add_action('wp_head', 'fenster_render_site_schema', 2);
+/**
+ * FAQPage JSON-LD, from any of this theme's three FAQ array shapes.
+ * ---------------------------------------------------------------------------
+ * Added 2026-08-15. Before this there were three separate emitters and two
+ * whole page families with none at all: the product journey built its own, the
+ * commercial component built its own, and **the three hubs, the head-term page
+ * and every one of the ~270 town matrix routes rendered visible questions with
+ * no markup behind them.** That is the largest structured-data gap the site had
+ * by page count, and the copy was already written on every one of them.
+ *
+ * IT ACCEPTS BOTH KEY SHAPES ON PURPOSE. `product_hub_groups` uses `q`/`a`
+ * while everything else uses `question`/`answer`. Normalising here is the
+ * cheaper half of the choice; renaming the keys in `inc/site-data.php` would
+ * touch owner-approved data for no visible gain and is exactly the kind of
+ * sweep this repository keeps regretting.
+ *
+ * `$limit` mirrors the product template's per-route cap so the markup can never
+ * describe more questions than the page shows. Pass 0 for no cap. Note the cap
+ * has silently sliced correct answers off three routes historically: it is
+ * honoured here so schema matches render, NOT endorsed.
+ *
+ * @param array<int, array<string, string>> $faqs
+ */
+function fenster_faq_page_schema(array $faqs, int $limit = 0): ?array
+{
+    $entries = [];
+
+    foreach (array_values($faqs) as $faq) {
+        if (! is_array($faq)) {
+            continue;
+        }
+
+        $question = trim((string) ($faq['question'] ?? $faq['q'] ?? ''));
+        $answer = trim((string) ($faq['answer'] ?? $faq['a'] ?? ''));
+
+        if ($question === '' || $answer === '') {
+            continue;
+        }
+
+        $entries[] = [
+            '@type' => 'Question',
+            'name' => wp_strip_all_tags($question),
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                // Answers may carry a link in a couple of places. Schema.org
+                // allows HTML in an answer, but the plain sentence is what an
+                // answer engine quotes, so it is stripped for consistency with
+                // the other two emitters this replaces.
+                'text' => wp_strip_all_tags($answer),
+            ],
+        ];
+    }
+
+    if ($limit > 0) {
+        $entries = array_slice($entries, 0, $limit);
+    }
+
+    if (empty($entries)) {
+        return null;
+    }
+
+    return [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => $entries,
+    ];
+}
+
+function fenster_render_faq_page_schema(array $faqs, int $limit = 0): void
+{
+    $schema = fenster_faq_page_schema($faqs, $limit);
+
+    if ($schema === null) {
+        return;
+    }
+
+    printf(
+        "<script type=\"application/ld+json\">%s</script>\n",
+        wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    );
+}
+
 function fenster_render_site_schema(): void
 {
     $brand = fenster_data('brand', []);
@@ -2652,6 +2734,32 @@ function fenster_render_site_schema(): void
         wp_json_encode($business_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
     );
 
+    /* The WebSite node, added 2026-08-15. Until now the homepage carried the
+       business node and nothing else, which left the single page most likely to
+       be cited for "who is Fenster Glazing" saying nothing about the site
+       itself. `publisher` is a reference to the business rather than a second
+       copy of it, the same rule the commercial Service block follows.
+
+       DELIBERATELY NO `potentialAction`/`SearchAction`. That property claims the
+       site has a search endpoint a machine can query, and this one has no site
+       search at all — there is no `name="s"` form anywhere. Publishing it would
+       be a claim about a feature we do not have, which is the same class of
+       error as an invented specification figure. */
+    $website_schema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'WebSite',
+        '@id' => home_url('/#website'),
+        'name' => (string) ($brand['name'] ?? 'Fenster Glazing'),
+        'url' => home_url('/'),
+        'inLanguage' => 'en-GB',
+        'publisher' => ['@id' => home_url('/#business')],
+    ];
+
+    printf(
+        "<script type=\"application/ld+json\">%s</script>\n",
+        wp_json_encode($website_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+    );
+
     if (! is_array($page)) {
         return;
     }
@@ -2811,6 +2919,90 @@ function fenster_render_site_schema(): void
             printf(
                 "<script type=\"application/ld+json\">%s</script>\n",
                 wp_json_encode($service_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            );
+        }
+    }
+
+    /* ---- Per-route Service schema for the RESIDENTIAL product routes --------
+       Added 2026-08-15, and it is the commercial block's counterpart. Until now
+       a residential product page said nothing at all about what it sells: the
+       commercial set stated its service and its figures while `/casement-windows/`
+       published a U-value that no machine could attribute to anything.
+
+       THE areaServed IS THE RESIDENTIAL RING, NOT ENGLAND AND WALES. It reuses
+       the business block's own list rather than restating it, so the two cannot
+       drift. Commercial coverage is nationwide and residential is not; that
+       distinction is owner-confirmed and deliberate. Do not "align" them.
+
+       `product_usps` IS THE SIGNAL FOR WHAT COUNTS AS A PRODUCT ROUTE. It is
+       already the canonical specification source, it is kept accurate even
+       where it does not render because Legend reads it, and using it means a
+       new product route gets this markup by having its facts filled in rather
+       than by being added to yet another registry. A commercial slug can never
+       reach here because the branch above returns its own Service first. */
+    if (! function_exists('fenster_commercial_product_page') || fenster_commercial_product_page($slug) === null) {
+        $product_usps = fenster_data('product_usps', []);
+        $route_usps = is_array($product_usps[$slug] ?? null) ? array_values($product_usps[$slug]) : [];
+
+        if (! empty($route_usps) && $slug !== 'commercial-glazing') {
+            $matrix_products = function_exists('fenster_location_matrix_products')
+                ? fenster_location_matrix_products()
+                : [];
+            $product_name = (string) ($matrix_products[$slug] ?? ($page['title'] ?? $slug));
+
+            $residential_service = [
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                '@id' => home_url('/' . $slug . '/#service'),
+                'name' => $product_name,
+                'serviceType' => $product_name,
+                'url' => home_url('/' . $slug . '/'),
+                'provider' => ['@id' => home_url('/#business')],
+                'areaServed' => $business_schema['areaServed'],
+            ];
+
+            $product_media = fenster_data('product_media', []);
+            $hero_src = (string) ($product_media[$slug]['hero']['src'] ?? '');
+            if ($hero_src !== '') {
+                $residential_service['image'] = fenster_generated_url($hero_src);
+            }
+
+            /* THE STAR ON A U-VALUE MEANS "LOWEST ACHIEVABLE" AND IT CANNOT
+               TRAVEL AS A STAR. On the page it is a symbol with a footnote
+               under the strip; in JSON-LD there is no footnote, so a bare
+               `U-value: 0.95 W/m²K` would read as the figure for every window
+               we fit rather than the best one. The star is therefore expanded
+               into the value itself. `AI.md` requires the "lowest achievable"
+               wording to survive any trim; this is that rule applied to a
+               surface it did not previously reach. */
+            $properties = [];
+            foreach ($route_usps as $usp) {
+                $usp_label = trim((string) ($usp['label'] ?? ''));
+                $usp_value = trim((string) ($usp['value'] ?? ''));
+
+                if ($usp_label === '' || $usp_value === '') {
+                    continue;
+                }
+
+                if (str_ends_with($usp_label, '*')) {
+                    $usp_label = rtrim(rtrim($usp_label, '*'));
+                    $usp_value .= ' (lowest achievable)';
+                }
+
+                $properties[] = [
+                    '@type' => 'PropertyValue',
+                    'name' => $usp_label,
+                    'value' => $usp_value,
+                ];
+            }
+
+            if (! empty($properties)) {
+                $residential_service['additionalProperty'] = $properties;
+            }
+
+            printf(
+                "<script type=\"application/ld+json\">%s</script>\n",
+                wp_json_encode($residential_service, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
             );
         }
     }

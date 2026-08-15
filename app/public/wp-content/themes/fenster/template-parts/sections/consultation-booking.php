@@ -31,15 +31,10 @@ $faqs = [
     ['question' => 'Is my chosen time confirmed immediately?', 'answer' => 'No. Your selected date and time are a preferred appointment request. We check availability and confirm the appointment with you by phone or email.'],
     ['question' => 'Which areas do you cover?', 'answer' => 'We visit homes across Milton Keynes, Buckinghamshire, Bedfordshire, Northamptonshire and Hertfordshire. Our showroom is in Milton Keynes, but the consultation happens at your property.'],
 ];
-$faq_schema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(static fn (array $faq): array => [
-        '@type' => 'Question',
-        'name' => $faq['question'],
-        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
-    ], $faqs),
-];
+// FAQPage markup comes from the shared emitter in `inc/generated-pages.php`.
+// Seven separate copies of this block existed across the theme until
+// 2026-08-15, which is seven places for the shape to drift and five that
+// had already been missed when the schema itself needed changing.
 ?>
 
 <article class="fg-consultation-page">
@@ -134,4 +129,4 @@ $faq_schema = [
     <?php get_template_part('template-parts/components/review-showcase', null, ['class' => 'fg-review-showcase--consultation', 'trust_items' => $trust_items, 'limit' => 7]); ?>
 </article>
 
-<script type="application/ld+json"><?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
+<?php fenster_render_faq_page_schema($faqs); ?>

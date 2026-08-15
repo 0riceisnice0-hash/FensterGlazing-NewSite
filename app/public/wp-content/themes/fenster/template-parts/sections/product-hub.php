@@ -185,6 +185,13 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
     <?php endif; ?>
 
     <?php if ($faqs !== []) : ?>
+        <?php /* The hub questions were rendering with no markup behind them.
+                 The copy is unchanged and deliberately so: these four are the
+                 best FAQ copy on the site, genuinely conversational and already
+                 answering what a homeowner asks. Only the schema was missing.
+                 Note this array uses `q`/`a` rather than `question`/`answer`;
+                 the helper normalises both. */ ?>
+        <?php fenster_render_faq_page_schema($faqs); ?>
         <section class="fg-ph-faq">
             <div class="container fg-ph-faq__grid">
                 <div>

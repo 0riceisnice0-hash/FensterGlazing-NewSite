@@ -187,18 +187,10 @@ $faqs = [
     ['question' => 'Are the frames recyclable?', 'answer' => 'Liniar describe their uPVC profiles as lead-free and recyclable at the end of their useful life. The profiles are designed, extruded and tested in Derbyshire, and independent fabricators make the finished windows.'],
 ];
 
-$faq_schema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(
-        static fn (array $faq): array => [
-            '@type' => 'Question',
-            'name' => $faq['question'],
-            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']],
-        ],
-        $faqs
-    ),
-];
+// FAQPage markup comes from the shared emitter in `inc/generated-pages.php`.
+// Seven separate copies of this block existed across the theme until
+// 2026-08-15, which is seven places for the shape to drift and five that
+// had already been missed when the schema itself needed changing.
 ?>
 
 <div class="fg-cas">
@@ -664,7 +656,7 @@ $faq_schema = [
         </section>
     <?php endif; ?>
 
-    <script type="application/ld+json"><?php echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
+    <?php fenster_render_faq_page_schema($faqs); ?>
     <section class="fg-product-faq" aria-labelledby="fg-cas-faq-title">
         <div class="container fg-product-faq__grid">
             <div>
