@@ -14162,6 +14162,44 @@ a.fg-cs-card__pill:focus-visible {
   line-height: 1.5;
 }
 
+/* Commercial FAQ block.
+   ---------------------------------------------------------------------------
+   The accordion MECHANICS are the product template's — `.fg-product-faq__items`
+   and `.fg-product-faq__answer` are reused as-is, because that behaviour is
+   already solved and a second copy would be a second thing to fix. What is NOT
+   reused is `.fg-product-faq` itself: it sets 5rem padding and an H2 up to
+   3.1rem, which is the residential product scale and would land a heading half
+   again as large as every other heading on a commercial page.
+
+   So this wrapper takes the commercial section rhythm instead: the same
+   padding as `.fg-cm-spec` and the same heading size as `.fg-cm-creds__title`.
+   That is the whole reason this block exists, and it is why a future tidy-up
+   must not "simplify" it by swapping the class back to `.fg-product-faq`. */
+.fg-cm-faq {
+  padding: clamp(2.8rem, 5.5vw, 5rem) 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.fg-cm-faq__grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.44fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.fg-cm-faq__title {
+  margin: 0;
+  color: var(--color-steel);
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  line-height: 1.15;
+}
+
+@media (max-width: 860px) {
+  .fg-cm-faq__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* Tags used to be fully round, weight 800 and flooded with accent colour, which
    read as a toy label rather than a spec. The shape now sits in the same 8px
    radius family as cards (STYLE.md), the border is a hairline, the weight drops

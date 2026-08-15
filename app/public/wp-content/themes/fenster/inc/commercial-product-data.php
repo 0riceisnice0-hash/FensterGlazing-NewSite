@@ -195,6 +195,41 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Buildings this package usually goes into.',
             'use_cases' => ['Offices', 'Schools and academies', 'Retail units', 'Healthcare buildings', 'Care settings', 'Hospitality premises', 'Public buildings', 'Industrial offices'],
+            /* FAQS, ADDED 2026-08-15 ACROSS ALL THIRTEEN COMMERCIAL ROUTES.
+               ------------------------------------------------------------
+               EVERY ANSWER RESTATES SOMETHING THIS ROUTE ALREADY PUBLISHES —
+               a specification row, a capability, a summary paragraph or a
+               named job. Not one introduces a new claim, and that is the rule
+               to hold any future addition to. If an answer needs a fact the
+               page does not carry, the fact goes to the owner first and the
+               page gets it before the FAQ does.
+
+               They are also written in the commercial register: the answer
+               opens on the fact rather than warming up to it. No selling by
+               describing what goes wrong, and nothing phrased as what we do
+               not offer, per the standing rulings in `TONEOFVOICE.md`. */
+            'faqs' => [
+                [
+                    'question' => 'Which window and door systems do you work with?',
+                    'answer' => 'Aluminium from Technal, Smart and Senior among others, specified to the job rather than to one supplier relationship, and uPVC from Liniar. We work from your drawings and schedules where you have them, and from a site survey where you do not.',
+                ],
+                [
+                    'question' => 'Can you supply fire-rated and security-rated openings?',
+                    'answer' => 'Fire-rated glazing is supplied to the rating the specification calls for. PAS 24 and Secured by Design are available where the specification calls for them, and steel doorsets are supplied within the same package, security rated up to SR3.',
+                ],
+                [
+                    'question' => 'Can you work on a building that stays open?',
+                    'answer' => 'Yes. Phasing, access routes, out-of-hours working and daily handback are agreed at quote stage rather than discovered in week two, and openings are measured one by one rather than off the drawing, because a refurbished building rarely matches it.',
+                ],
+                [
+                    'question' => 'What glass can you specify?',
+                    'answer' => 'Toughened, laminated, low-e, solar control, acoustic and obscure, chosen per opening against what that opening has to do. Frames are powder coated to any RAL, with dual colour where the inside and outside differ.',
+                ],
+                [
+                    'question' => 'Where do you work?',
+                    'answer' => 'Nationwide across England and Wales.',
+                ],
+            ],
         ],
         /* CURTAIN WALLING is the route the audit rated worst against the standard:
            the most search demand and the least substance. It named no system, no
@@ -298,6 +333,33 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Where curtain walling usually goes.',
             'use_cases' => ['Office elevations', 'Glazed entrances', 'Stairwells and atria', 'Retail frontages', 'Reception screens', 'Replacement facades', 'Education blocks', 'Industrial offices'],
+            /* THE U-VALUE ANSWER CARRIES ITS OWN HEDGE AND MUST KEEP IT. The
+               figure is published as a floor because we specify across several
+               systems; an answer engine quoting "0.9" without the condition is
+               exactly what the owner's 2026-08-13 framing exists to prevent, so
+               the condition is inside the same sentence rather than after it. */
+            'faqs' => [
+                [
+                    'question' => 'What U-value does your curtain walling achieve?',
+                    'answer' => 'As low as 0.9 W/m²K, depending on the system and the glazing specified. We specify curtain walling across more than one system, so treat that as a guide to what the systems reach rather than a fixed figure, and send us the elevation so we can confirm it in writing against your drawings.',
+                ],
+                [
+                    'question' => 'Which glazing method do you use?',
+                    'answer' => 'Capped systems, with the cap profile specified to the elevation.',
+                ],
+                [
+                    'question' => 'What can be built into the curtain walling grid?',
+                    'answer' => 'Doorsets, opening vents, AOV units, spandrel and insulated panels, and ventilation louvres, all carried in the same framing rather than added to it.',
+                ],
+                [
+                    'question' => 'Can you replace a facade on a building that stays in use?',
+                    'answer' => 'Yes. Stripping and replacing a failed or tired facade with the building occupied behind it is one of the four things this package covers, alongside screens and elevations, doors inside the grid, and panels, vents and louvres.',
+                ],
+                [
+                    'question' => 'How is wind load handled?',
+                    'answer' => 'Wind load is calculated for the elevation as part of the design, and the grid is set out from your drawings or from a survey of the opening and confirmed before manufacture.',
+                ],
+            ],
         ],
         'louvre-vents' => [
             'eyebrow' => 'Louvre vents',
@@ -383,6 +445,31 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Openings a louvre usually closes.',
             'use_cases' => ['Plant rooms', 'Substations', 'Bin stores', 'Risers and ducts', 'Car parks', 'Screened facades', 'Back-of-house', 'Office refurbishments'],
+            /* NO SUPPLIER NAME IN ANY ANSWER. Model codes are fine and the
+               brand is not, per the Louvre Vents Rule and the Supplier Naming
+               Rule: they are a fabricator, so naming them hands a specifier a
+               route straight past us. The IKL33 answer keeps the page's own
+               admission that it is the lowest free area of the four, because a
+               page that leads with its commonest product and hides that
+               product's weakest number is what a consultant notices. */
+            'faqs' => [
+                [
+                    'question' => 'How is a louvre sized?',
+                    'answer' => 'On free area, and there are two kinds of it. Visual free area is what you can see through. Physical free area is what air actually passes through, tested to EN 13030:2002, and it is the lower number and the one a mechanical schedule means. We size from the physical figure.',
+                ],
+                [
+                    'question' => 'Which louvre do you fit most often?',
+                    'answer' => 'The IKL33, at 34mm blade centres. It has the lowest physical free area of the four at 43.5%, against 50%, 50% and 57%, so where a schedule needs more we specify up from it.',
+                ],
+                [
+                    'question' => 'Are louvres fitted with the rest of the glazing?',
+                    'answer' => 'Yes. We supply and fit the range as part of the aluminium package, so the louvre is drawn, coloured and fixed alongside the windows and doors either side of it rather than ordered separately and made to fit afterwards.',
+                ],
+                [
+                    'question' => 'Where do louvres usually go?',
+                    'answer' => 'Plant rooms, substations, bin stores, risers and ducts, car parks, back-of-house areas and screened facade runs. Colour and frame details are coordinated with the surrounding glazing where the package allows.',
+                ],
+            ],
         ],
         /* COMMERCIAL AUTOMATION carried two of the three wrong-product images the
            audit found: `Residential_Door_08.jpg`, a cottage-style slab already
@@ -473,6 +560,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Where automated entrances usually go.',
             'use_cases' => ['Retail entrances', 'Office receptions', 'Healthcare buildings', 'Education estates', 'Public access routes', 'High-traffic doors'],
+            'faqs' => [
+                [
+                    'question' => 'Do you supply the door operators as well as the glazing?',
+                    'answer' => 'Swing and sliding operators are supplied and installed to the standard your specification sets, as part of the glazed entrance package rather than as a separate order.',
+                ],
+                [
+                    'question' => 'How does the access control get coordinated?',
+                    'answer' => 'Cable routes, maglock positions and reader locations are designed into the frame rather than drilled into it later. The screen, the door, the operator and the reader are set out together with your specialists before anything is made.',
+                ],
+                [
+                    'question' => 'Who services the entrance after handover?',
+                    'answer' => 'Servicing after handover sits with your facilities or maintenance contractor.',
+                ],
+                [
+                    'question' => 'Can you achieve a level threshold?',
+                    'answer' => 'Level and Part M compliant approaches where the building allows it. Glass is toughened or laminated throughout, with manifestation to suit the screen.',
+                ],
+            ],
         ],
         /*
          * Sector pages, added 2026-07-28. Each is written around the constraint that
@@ -534,6 +639,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Education settings we work in.',
             'use_cases' => ['Primary schools', 'Secondary schools', 'Academies', 'Sixth form and colleges', 'SEN settings', 'Teaching blocks'],
+            'faqs' => [
+                [
+                    'question' => 'Can the work be done in the school holidays?',
+                    'answer' => 'Programmes are phased by block or by holiday and sequenced against your term dates. Send us the elevations and the term dates together, because we cannot price the second one out of the first.',
+                ],
+                [
+                    'question' => 'Are your operatives DBS checked?',
+                    'answer' => 'Yes. DBS-checked operatives, and site induction where the school requires it.',
+                ],
+                [
+                    'question' => 'What restrictors do you fit to classroom windows?',
+                    'answer' => 'Restrictors fitted to the limit your own risk assessment sets, kept consistent across the site, with toughened or laminated safety glass specified per elevation where the opening needs it.',
+                ],
+                [
+                    'question' => 'Have you worked on school sites before?',
+                    'answer' => 'Yes, including Shaftesbury School, Witchford Village College, Merchant Taylor and Leagrave SEN.',
+                ],
+            ],
         ],
         'student-accommodation-glazing' => [
             'eyebrow' => 'Student accommodation',
@@ -588,6 +711,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Schemes this work suits.',
             'use_cases' => ['Purpose built student accommodation', 'Office to PBSA conversions', 'City centre schemes', 'Studio blocks', 'Amenity spaces', 'Operator refurbishments'],
+            'faqs' => [
+                [
+                    'question' => 'Can you work to a fixed handover date?',
+                    'answer' => 'Yes. The academic year fixes the date before the drawings are finished, so the glazing is sequenced so the building is watertight before the internal trades need it, working to the main contractor\'s programme.',
+                ],
+                [
+                    'question' => 'Do you fit restrictors at height?',
+                    'answer' => 'Restrictors are fitted at height as standard, to the limit your risk assessment sets.',
+                ],
+                [
+                    'question' => 'What do you specify on a city centre elevation?',
+                    'answer' => 'Acoustic glass to the level the project requires, specified where the elevation faces a road, a bar or a delivery yard, with fire-rated glazing supplied to the rating the specification calls for.',
+                ],
+                [
+                    'question' => 'Have you delivered a scheme like this?',
+                    'answer' => 'Yes. Our most recent scheme of this type was Headrow Court in Leeds.',
+                ],
+            ],
         ],
         'hotel-and-hospitality-glazing' => [
             'eyebrow' => 'Hospitality',
@@ -643,6 +784,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Hospitality buildings we work in.',
             'use_cases' => ['Hotels', 'Pubs', 'Restaurants', 'Period inns', 'Function venues', 'Guest houses'],
+            'faqs' => [
+                [
+                    'question' => 'How is the work phased around bookings?',
+                    'answer' => 'By room, floor or wing, with agreed handback at the end of each working day. Tell us what you can afford to close and when, and we will build the phasing around that.',
+                ],
+                [
+                    'question' => 'Can you work outside trading hours?',
+                    'answer' => 'Early starts, evenings and weekends where the building needs it.',
+                ],
+                [
+                    'question' => 'How do you handle a period building?',
+                    'answer' => 'Period openings are surveyed opening by opening rather than taken off a drawing.',
+                ],
+                [
+                    'question' => 'Which hospitality buildings have you worked on?',
+                    'answer' => 'The Barn Hotel in Coventry, the Holiday Inn at Newport Pagnell and The Green Man at Eversholt.',
+                ],
+            ],
         ],
         'care-home-glazing' => [
             'eyebrow' => 'Care',
@@ -696,6 +855,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Care settings we work in.',
             'use_cases' => ['Care homes', 'Nursing homes', 'Supported living', 'Sheltered housing', 'Extra care schemes', 'Residential settings'],
+            'faqs' => [
+                [
+                    'question' => 'How do you work around residents?',
+                    'answer' => 'One room is opened, glazed, sealed and cleaned within the same day, and made good before we leave it, so a resident is not left with a room they cannot sit in.',
+                ],
+                [
+                    'question' => 'Are your operatives DBS checked?',
+                    'answer' => 'Yes. DBS-checked operatives, and site induction where the home requires it.',
+                ],
+                [
+                    'question' => 'What restrictors do you fit?',
+                    'answer' => 'Restrictors fitted to the limit your own risk assessment sets, kept consistent across the home, with controlled opening where a resident could otherwise open a window fully.',
+                ],
+                [
+                    'question' => 'Have you worked in a care home before?',
+                    'answer' => 'Yes. We replaced the windows at Sunrise Care Home, where the specification questions were restrictors, safe opening, and keeping rooms warm while the frame is out.',
+                ],
+            ],
         ],
         'office-and-retail-glazing' => [
             'eyebrow' => 'Offices and retail',
@@ -749,6 +926,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Buildings this work suits.',
             'use_cases' => ['Offices', 'Business parks', 'Converted buildings', 'Retail units', 'Shopfronts', 'Workplaces'],
+            'faqs' => [
+                [
+                    'question' => 'Can you work outside office or trading hours?',
+                    'answer' => 'Early starts, evenings and weekends where trading demands it. Tell us the hours the building has to work and we will price around them.',
+                ],
+                [
+                    'question' => 'How much of the building comes out of use?',
+                    'answer' => 'Possession is taken floor by floor or unit by unit, with the space usable the next morning. On offices that means desks moved back and the floor working again; on retail it means the unit trading around the work where it can.',
+                ],
+                [
+                    'question' => 'What glass do you specify for an office elevation?',
+                    'answer' => 'Solar control, acoustic and safety glass specified against the elevation and the use, with thermal performance specified to what the project requires and the system chosen to meet it.',
+                ],
+                [
+                    'question' => 'Can you supply shopfront glass?',
+                    'answer' => 'Toughened and laminated supplied to order, any size.',
+                ],
+            ],
         ],
         /*
          * INDUSTRIAL AND LOGISTICS, added 2026-08-12 on the owner's instruction —
@@ -847,6 +1042,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Sites this work goes into.',
             'use_cases' => ['Distribution centres', 'Warehousing', 'Manufacturing', 'Logistics parks', 'Trade counters', 'Industrial estates'],
+            'faqs' => [
+                [
+                    'question' => 'Which part of an industrial building do you glaze?',
+                    'answer' => 'The office and welfare block at the front, which is where almost all the glazing on these buildings lives: the windows and screens, the entrance, the personnel and escape doorsets, and curtain walling to the frontage.',
+                ],
+                [
+                    'question' => 'Can you supply security rated doorsets?',
+                    'answer' => 'Doorsets are security rated up to SR3, with PAS 24 and Secured by Design available where specified. Ground floor and yard-side openings are rated to what the specification asks for.',
+                ],
+                [
+                    'question' => 'Can you work around a 24 hour operation?',
+                    'answer' => 'Early starts, nights and weekends where the operation cannot pause, sequenced around loading bays, yard traffic and whichever elevation is out of use that day.',
+                ],
+                [
+                    'question' => 'Where do you work?',
+                    'answer' => 'Nationwide across England and Wales.',
+                ],
+            ],
         ],
         /*
          * AOV. The owner confirmed on 2026-07-28 that we supply and install these.
@@ -937,6 +1150,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Buildings we reglaze most often.',
             'use_cases' => ['Offices', 'Shopfronts', 'Schools', 'Stairwells and lobbies', 'Public buildings', 'Occupied refurbishments'],
+            'faqs' => [
+                [
+                    'question' => 'Is there a maximum unit size?',
+                    'answer' => 'No. We will quote whatever the opening takes, and toughened and laminated glass is supplied to order at any size.',
+                ],
+                [
+                    'question' => 'How long does a replacement unit take?',
+                    'answer' => 'Normally one to two weeks from order, depending on the specification. The unit is site measured to the frame it is going into before anything is ordered.',
+                ],
+                [
+                    'question' => 'Can you replace glass at height?',
+                    'answer' => 'Yes, using a tracked lifter and vacuum head where the unit is too large or too high to carry through the building.',
+                ],
+                [
+                    'question' => 'Will you work on frames you did not fit?',
+                    'answer' => 'Yes. The unit is measured to whatever is already there, so the existing frames, beads and gaskets stay where they are.',
+                ],
+            ],
         ],
         'automatic-opening-vents' => [
             'eyebrow' => 'AOV smoke ventilation',
@@ -1015,6 +1246,29 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Where AOV units usually go.',
             'use_cases' => ['Stairwells', 'Corridors and lobbies', 'Apartment blocks', 'Offices', 'Schools', 'Care settings'],
+            /* THE SCOPE ANSWER IS THE IMPORTANT ONE ON THIS ROUTE, because the
+               question a specifier actually has is where our scope stops and
+               their electrical contractor's begins. It states what we do and
+               what the other trade does, which is a division of work rather
+               than a list of exclusions. */
+            'faqs' => [
+                [
+                    'question' => 'What is an automatic opening vent?',
+                    'answer' => 'A window or roof vent built into the building that opens on its own when smoke or heat is detected, so the escape route stays usable: the smoke goes out and the stairwell or corridor stays clear.',
+                ],
+                [
+                    'question' => 'What is included in your AOV scope?',
+                    'answer' => 'We supply and install the vent within the glazing package. Control panels are supplied and wired by your fire alarm or electrical contractor, and commissioning sits with them.',
+                ],
+                [
+                    'question' => 'Where does the vent sit in the elevation?',
+                    'answer' => 'Formed within the window or screen line so the elevation still reads as one system, and installed as part of the window and door package rather than cut into a finished elevation afterwards.',
+                ],
+                [
+                    'question' => 'What documentation do we get at handover?',
+                    'answer' => 'Documentation for the units we install is passed to you at handover, ready for your commissioning contractor.',
+                ],
+            ],
         ],
         'healthcare-construction' => [
             'eyebrow' => 'Healthcare glazing',
@@ -1088,6 +1342,24 @@ function fenster_commercial_product_pages(): array
             ],
             'use_cases_heading' => 'Where this work usually happens.',
             'use_cases' => ['Dental practices', 'GP surgeries', 'Clinics', 'Treatment rooms', 'Care settings', 'Public-sector health buildings'],
+            'faqs' => [
+                [
+                    'question' => 'Can you work in a live clinical setting?',
+                    'answer' => 'Yes. One room is opened, glazed, sealed and cleaned within the day so the room is back on the list tomorrow, with the room-by-room sequence agreed against clinic hours before we start.',
+                ],
+                [
+                    'question' => 'Are your operatives DBS checked?',
+                    'answer' => 'Yes. DBS-checked operatives, and site induction where the practice requires it.',
+                ],
+                [
+                    'question' => 'How is privacy handled in a consulting room?',
+                    'answer' => 'Obscure glass across the full pattern range, specified per room, with acoustic glass specified to the level consultation-room privacy requires.',
+                ],
+                [
+                    'question' => 'Have you worked in a healthcare building?',
+                    'answer' => 'Yes. Our most recent work of this type was the entrance glazing at Roka Dental in Woburn Sands.',
+                ],
+            ],
         ],
     ];
 }
@@ -1162,4 +1434,48 @@ function fenster_commercial_product_page(string $slug): ?array
     $pages = fenster_commercial_product_pages();
 
     return $pages[$slug] ?? null;
+}
+
+/**
+ * FAQs for the commercial hub.
+ * ---------------------------------------------------------------------------
+ * The hub sells nothing itself, so its questions are the ones a contractor,
+ * architect, QS or estimator asks BEFORE they know which route they want:
+ * coverage, credentials, working in an occupied building, and how to get a
+ * price. The product-specific questions live on the routes.
+ *
+ * The credentials answer names the same three as
+ * `template-parts/components/commercial-credentials.php` and must stay in step
+ * with it. FENSA and the CPA guarantee stay out of it for the reason recorded
+ * there: both are residential schemes, and putting either in front of somebody
+ * pricing a school is padding at best.
+ *
+ * @return array<int, array{question: string, answer: string}>
+ */
+function fenster_commercial_hub_faqs(): array
+{
+    $brand = fenster_data('brand', []);
+
+    return [
+        [
+            'question' => 'Where do you carry out commercial glazing?',
+            'answer' => 'Nationwide across England and Wales. Our residential work is concentrated around Milton Keynes, but commercial schemes are not limited to that radius.',
+        ],
+        [
+            'question' => 'What can you put on a pre-qualification questionnaire?',
+            'answer' => 'Constructionline Gold, SSIP accreditation for health and safety, and DBS-checked operatives for schools, care settings and any site where the check is a condition of access.',
+        ],
+        [
+            'question' => 'Can you work in a building that stays in use?',
+            'answer' => 'Yes, and most of this work is. Phasing, access routes, out-of-hours working and daily handback are agreed at quote stage rather than discovered in week two.',
+        ],
+        [
+            'question' => 'Do you work to our drawings or survey it yourselves?',
+            'answer' => 'Either. We work from your drawings and schedules where you have them, and from a site survey where you do not. On refurbishments openings are measured one by one, because a refurbished building rarely matches the drawing.',
+        ],
+        [
+            'question' => 'How do we get a price?',
+            'answer' => 'Send the drawings, elevations or schedule to ' . (string) ($brand['commercial_email'] ?? 'commercial@fensterglazing.com') . ' and we will price against them. There is an enquiry form on every commercial page that takes attachments if that is easier.',
+        ],
+    ];
 }

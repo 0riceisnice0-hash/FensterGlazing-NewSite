@@ -346,6 +346,22 @@ foreach ($commercial_studies as $short => $study) {
         </div>
     </section>
 
+    <?php /* The hub's questions are the ones asked BEFORE a route is chosen:
+             coverage, credentials, occupied buildings, drawings, and how to get
+             a price. Product-specific questions belong on the product routes.
+             The heading is unique to this page, per the standing rule that no
+             two commercial routes share an H2. */ ?>
+    <?php
+    if (function_exists('fenster_commercial_hub_faqs')) {
+        get_template_part('template-parts/components/faq-block', null, [
+            'faqs' => fenster_commercial_hub_faqs(),
+            'eyebrow' => __('Before you enquire', 'fenster'),
+            'heading' => __('What contractors ask us first.', 'fenster'),
+            'id' => 'fg-cm-hub-faq-title',
+        ]);
+    }
+    ?>
+
     <?php get_template_part('template-parts/components/commercial-credentials'); ?>
 
     <section id="commercial-enquiry" class="fg-commercial-enquiry">

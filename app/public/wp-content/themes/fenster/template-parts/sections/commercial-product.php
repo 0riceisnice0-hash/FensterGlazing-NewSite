@@ -425,6 +425,32 @@ $is_louvre = $slug === 'louvre-vents';
         </section>
     <?php endif; ?>
 
+    <?php /* FAQs sit between the related band and the credentials, so the last
+             thing before the enquiry is still the proof. They are the answers a
+             specifier would otherwise have to ask for, and every one of them
+             restates something already published further up this page — see the
+             note on `faqs` in `inc/commercial-product-data.php`.
+
+             This is also the only FAQPage markup on the commercial set: until
+             2026-08-15 thirteen routes carried none, while every residential
+             product page had it. A route with no `faqs` key renders nothing at
+             all, because the component returns early on an empty list. */ ?>
+    <?php
+    $commercial_faqs = is_array($product['faqs'] ?? null) ? $product['faqs'] : [];
+    if (! empty($commercial_faqs)) {
+        get_template_part('template-parts/components/faq-block', null, [
+            'faqs' => $commercial_faqs,
+            'eyebrow' => __('Common questions', 'fenster'),
+            'heading' => sprintf(
+                /* translators: %s: commercial product name, e.g. "Curtain walling". */
+                __('%s, asked and answered.', 'fenster'),
+                $title
+            ),
+            'id' => 'fg-cm-faq-title',
+        ]);
+    }
+    ?>
+
     <?php /* Credentials sit immediately above the enquiry, per `STYLE.md`:
              reassurance next to the action should be compact and specific. Owner
              instruction 2026-08-12 is that they are visible on every commercial
