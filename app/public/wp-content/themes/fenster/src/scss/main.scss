@@ -42691,9 +42691,12 @@ html.fg-blinds-reveal-locked {
    passes of me estimating them failed. He painted out everything except one
    component on each of two screenshots, which settled exactly where each part
    begins and ends; those boundaries were converted from stage space into this
-   box's space, where a stage percentage maps as 7.3 + s * 0.854 because the box
-   is 960 tall against an 820 stage and centred. **If the stage height or the
-   source photograph changes, re-derive rather than nudge.** They are
+   box's space. THE FIRST CONVERSION CAME OUT MIRRORED: every zone ascended left
+   to right while every component in the photograph descends left to right, which
+   is why four rounds of nudging never converged — the shapes were right and the
+   sign was wrong. Check the slope direction against the picture before adjusting
+   any number here. **If the stage height or the source photograph changes,
+   re-derive rather than nudge.** They are
    generous rather than tight: a soft, slightly-larger region reads as "this
    area" and survives a few pixels of error, where a tight outline that misses
    by the same margin reads as broken. */
@@ -42707,9 +42710,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% 54%, 95% 12%, 100% 24%, 0% 76%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 66%, 96% 20%, 100% 32%, 100% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(30% 32%, 96% 0%, 100% 10%, 34% 46%); }
+.fg-rl-zone--fascia { clip-path: polygon(52% 15%, 100% 40%, 100% 54%, 54% 29%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 40%, 96% 76%, 96% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(55% 0%, 100% 20%, 100% 34%, 57% 11%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
