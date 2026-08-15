@@ -176,6 +176,27 @@ $faqs = [
     ['question' => 'What is a casement window?', 'answer' => 'A window with sashes hinged at the side or the top, opening outwards. Opening sashes and fixed panes are made into one frame, so a single window can do more than one job.'],
     ['question' => 'What is the difference between casement and flush casement windows?', 'answer' => 'The sash. On a standard casement it stands slightly proud of the frame, and fixed panes are glazed straight into the frame so they hold more glass. On a flush casement the sash closes level with the frame for a traditional joinery look, with fixed panes matched to the openers so every pane reads the same. Standard takes 28mm double or 36mm triple glazing and reaches 0.95 W/m²K; flush takes 28mm double and reaches 1.2 W/m²K. Both are A+ rated.'],
     ['question' => 'Which Liniar system do you fit?', 'answer' => 'The 70mm Liniar EnergyPlus system in the sculptured profile, a six-chamber uPVC platform used for both replacement and new-build work. Glass, reinforcement and hardware are confirmed for your individual job.'],
+    /* WHY THIS SYSTEM AND NOT ANOTHER, added 2026-08-15 on the owner's ruling
+       that a SYSTEM may be named for clarity where a competitor FIRM may not.
+       That scopes the "do not name a competitor system" line in `AI.md` rather
+       than deleting it: the Ideal 70 is named because a customer comparing two
+       quotations meets both names and deserves to know what separates them. No
+       installer, retailer or local firm is named here or anywhere near it.
+
+       BOTH FIGURES ARE THE SYSTEMS' OWN PUBLISHED ONES. Six against five
+       chambers is each manufacturer's own count for a 70mm frame. The 1.2
+       W/m²K is aluplast's published figure for the Ideal 70, read off the
+       Formula One technical brochure (2025 edition) on 2026-08-15. Do not
+       restate either as a measurement of ours, and re-check them before
+       repeating the claim: a comparison that goes stale is worse than none.
+
+       THE A++ ADMISSION IS LOAD-BEARING AND MUST NOT BE TRIMMED. Their range
+       publishes a higher energy BAND than ours, and the only reason is a 40mm
+       sealed unit we do not fit on any uPVC. Leaving that out would make the
+       answer true in every sentence and dishonest overall, and it is exactly
+       the "say the awkward thing first" principle in `TONEOFVOICE.md`. It is
+       also what makes the U-value point believable. */
+    ['question' => 'Why do you fit Liniar rather than another uPVC system?', 'answer' => 'Two numbers, and both are published by the systems themselves. The 70mm Liniar EnergyPlus frame carries six chambers. The aluplast Ideal 70, another 70mm sculptured system you may see quoted, carries five. Our triple glazed casement reaches 0.95 W/m²K, where the Ideal 70 publishes u-values as low as 1.2. Past that the two have plenty in common: the same frame depth, both sculptured, both welded at the corners rather than screwed, which is why the millimetres on a quotation tell you very little on their own. One thing worth saying plainly: the Ideal 70 is published at an A++ window energy rating and ours is A+. A++ needs a 40mm sealed unit and we do not fit 40mm on any uPVC. The rating is a band; the U-value is the heat actually leaving the room, and 0.95 is lower than 1.2.'],
     ['question' => 'What U-value can an EnergyPlus casement reach?', 'answer' => '0.95 W/m²K, with the 36mm triple glazed unit, which makes it an A+ window. Size, layout, glass and reinforcement all move the complete-window figure, so the number we agree follows your final specification rather than a brochure.'],
     ['question' => 'Are casement windows secure?', 'answer' => 'They can be specified with reinforced frames, multi-point locking and PAS 24 or Secured by Design options. PAS 24 is the standard Part Q calls for on new dwellings and some extensions, so if your build is covered by it, say so early and we will specify to it. Those approvals belong to a tested complete window rather than to the profile name, so we confirm what applies to your configuration.'],
     ['question' => 'Can I have triple glazing?', 'answer' => 'Yes. The 70mm frame takes a 28mm double glazed unit or a 36mm triple. Whether triple is worth it depends on the sash size, the weight and what you are actually trying to improve, so we will compare it with you rather than treating it as an automatic upgrade.'],

@@ -2302,6 +2302,32 @@ function fenster_site_data(): array
                     ['question' => 'Can I choose the colour and glass design?', 'answer' => 'Yes, and you can have one colour outside and a different one inside. Colour, glass and hardware are chosen against your door style, and the combination is confirmed before anything is ordered. Colour swatches come out to a consultation; the doors themselves are at the showroom.'],
                     ['question' => 'Do composite doors need repainting?', 'answer' => 'No, and you should not paint one; it voids the surface warranty. Warm water and a soft cloth is the whole maintenance routine. Skip abrasive cleaners, pressure washers and solvents.'],
                     ['question' => 'Why is there no U-value shown for composite doors?', 'answer' => 'A real U-value belongs to the complete doorset: slab, frame, glass and threshold together. We will not print an invented number before your door is specified. The tested figure worth knowing is Distinction\'s: up to 50% more thermally efficient than a 48mm solid-timber-core composite door in independent testing at the University of Salford\'s Energy House.'],
+                    /* WHY THIS DOOR AND NOT ANOTHER, added 2026-08-15 on the
+                       owner's ruling that a SYSTEM or construction type may be
+                       named where a competitor FIRM may not.
+
+                       IT NAMES A CONSTRUCTION, NOT A BRAND, and that is the
+                       safer as well as the more honest framing: "a 48mm
+                       solid-timber-core door" describes several products
+                       rather than singling one out, and it is the wording the
+                       U-value answer above already uses.
+
+                       THE COMPARISON RESTS ENTIRELY ON DISTINCTION'S OWN
+                       INDEPENDENT TESTING and is attributed to them in the
+                       sentence. Do not restate the 50% as a Fenster
+                       measurement, and do not extend it: it is a thermal
+                       figure and says nothing about security, longevity or
+                       impact resistance, where a solid timber core may well
+                       have its own case.
+
+                       THE LAST TWO SENTENCES ARE DELIBERATE. The owner's real
+                       reason for choosing this door is that it looks and feels
+                       better in the hand, which is a judgment and not a
+                       specification. Saying so, and inviting the customer to
+                       come and test it, is honest. Dressing it up as a
+                       measurable advantage would not be. Do not "strengthen"
+                       them into a claim. */
+                    ['question' => 'Why do you fit Distinction rather than another composite door?', 'answer' => 'The thermal figure is the one that surprises people. A Distinction slab is 44.5mm of insulated core under a GRP skin, which sounds slighter than a 48mm solid-timber-core door until you look at the testing: Distinction measure theirs at up to 50% more thermally efficient than one, independently at the University of Salford Energy House. After that it is the range and what comes fitted. Six collections and over 300 styles, with the same names on the site, in the quote tool and on the showroom board, so nothing changes between choosing and ordering. AI Secure locking, an APECS three star cylinder and an ILH Duplex multipoint lock as standard, with cover up to £5,000 if either fails in a break-in, terms applying. The rest is a judgment rather than a specification and we will not dress it up as one: it is the best-made composite door we have handled. Come to the showroom and open one.'],
                 ],
                 'glass_styles' => [
                     'intro' => 'Distinction decorative glass gives a composite entrance more character without turning the choice into guesswork. Most decorative units are triple glazed and laminated as standard; availability still depends on the chosen door style, aperture size and final doorset specification.',
