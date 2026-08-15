@@ -780,6 +780,51 @@ if ($is_composite_doors) {
 $aluminium_windows_story_poster = $is_aluminium_windows ? fenster_aluminium_windows_story_asset_url('website-header-specifiers-poster.jpg') : '';
 $aluminium_windows_story_desktop_frames = $is_aluminium_windows ? fenster_aluminium_windows_story_asset_url('frames-desktop/frame-001.webp') : '';
 $aluminium_windows_story_mobile_frames = $is_aluminium_windows ? fenster_aluminium_windows_story_asset_url('frames-mobile/frame-001.webp') : '';
+/* ROOFLINE USES THE SAME SCROLL-SCRUBBED CANVAS AS ALUMINIUM WINDOWS, and it is
+   the same markup, the same controller and the same stylesheet block. Nothing
+   new was written for the motion: `data-fg-aw-story` already scrubs a frame
+   sequence against scroll and activates a copy panel per stage, so reusing it
+   costs no JavaScript, no CSS and no build.
+
+   WHAT THE SEQUENCE IS, because it decides whether this page is honest. Thirty
+   frames crossfading one real photograph of a roof edge into an edge-trace OF
+   THAT SAME PHOTOGRAPH, generated with ImageMagick's Canny detector. The line
+   work is derived from the pixels rather than drawn, so it cannot be out of
+   perspective or wrong about what a gutter union looks like — a hand-drawn
+   trace over a photograph is exactly what the repairs schematics needed three
+   rounds of owner correction to get right, and this sidesteps it entirely.
+
+   The panels name the parts the drawing reveals, in the order the eye travels
+   down the detail: fascia, soffit, guttering, downpipe. Every one of them is
+   visible in the photograph. Do not add a panel for a part the picture does
+   not show. */
+$is_roofline = $slug === 'roofline';
+$roofline_story_desktop_frames = $is_roofline ? fenster_story_asset_url('roofline-story', 'frames-desktop/frame-001.webp') : '';
+$roofline_story_mobile_frames = $is_roofline ? fenster_story_asset_url('roofline-story', 'frames-mobile/frame-001.webp') : '';
+$roofline_story_poster = $is_roofline ? fenster_generated_url('/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg') : '';
+$roofline_story_panels = [
+    [
+        'eyebrow' => 'The fascia',
+        'heading' => 'The board the gutter hangs on.',
+        'copy' => 'It runs along the roof edge, caps the rafter ends and carries the weight of a full gutter. Square, ogee or bullnose, and the square profile is the one available in every colour.',
+    ],
+    [
+        'eyebrow' => 'The soffit',
+        'heading' => 'The underside you see from the garden.',
+        'copy' => 'It closes the gap between the fascia and the wall. Solid, hollow, or vented where the roof space needs to breathe.',
+    ],
+    [
+        'eyebrow' => 'Ventilation',
+        'heading' => 'Air has to reach the roof space.',
+        'copy' => 'Moving air through the roof keeps the timbers up there dry. Over-fascia vents sit above the board and are the usual answer, with vented soffits and circular vents where the detail suits them better.',
+    ],
+    [
+        'eyebrow' => 'Gutter and downpipe',
+        'heading' => 'Where the water actually goes.',
+        'copy' => 'Half round, square, ogee or high capacity, sized to the roof above it and set to fall towards the outlet. The downpipe takes it from there to the drain.',
+    ],
+];
+
 $aluminium_windows_story_panels = [
     [
         'eyebrow' => 'Slim aluminium frames',
@@ -3232,7 +3277,48 @@ if ($is_commercial_hub) {
 }
 ?>
 <article class="generated-page generated-page--<?php echo esc_attr($is_commercial ? 'commercial' : 'residential'); ?> <?php echo esc_attr($use_product_journey ? 'generated-page--product-journey' : ''); ?> <?php echo esc_attr($is_aluminium_windows ? 'generated-page--aluminium-windows-story' : ''); ?> <?php echo esc_attr($is_integral_blinds ? 'generated-page--integral-blinds-reveal' : ''); ?> <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'generated-page--sliding-sash' : ''); ?> <?php echo esc_attr($is_composite_doors ? 'generated-page--composite-doors' : ''); ?>">
-    <?php if ($is_aluminium_windows && $aluminium_windows_story_desktop_frames) : ?>
+    <?php if ($is_roofline && $roofline_story_desktop_frames) : ?>
+    <?php /* Same component as aluminium windows, different sequence. The panel
+             count is +1 because the first panel is the H1 rather than a part. */ ?>
+    <section class="fg-aw-story fg-aw-story--roofline" data-fg-aw-story style="--fg-aw-panel-count: <?php echo esc_attr((string) (count($roofline_story_panels) + 1)); ?>;">
+        <div class="fg-aw-story__stage">
+            <canvas
+                class="fg-aw-story__canvas"
+                data-fg-aw-story-canvas
+                data-desktop-frame="<?php echo esc_url($roofline_story_desktop_frames); ?>"
+                data-mobile-frame="<?php echo esc_url($roofline_story_mobile_frames); ?>"
+                data-frame-count="30"
+                aria-hidden="true"
+            ></canvas>
+            <noscript><img class="fg-aw-story__fallback" src="<?php echo esc_url($roofline_story_poster); ?>" alt="Fascia, soffit, guttering and downpipe at the corner of a tiled roof"></noscript>
+            <div class="fg-aw-story__shade"></div>
+            <div class="fg-aw-story__grain" aria-hidden="true"></div>
+            <div class="container fg-aw-story__content">
+                <div class="fg-aw-story__panel is-active" data-fg-aw-story-panel>
+                    <p class="eyebrow"><?php esc_html_e('Fascias, soffits and guttering', 'fenster'); ?></p>
+                    <h1><?php echo esc_html($title); ?></h1>
+                    <p><?php esc_html_e('The boards and gutters along the edge of your roof. Scroll to take one apart.', 'fenster'); ?></p>
+                    <div class="button-row">
+                        <a class="button" href="#fenster-enquiry"><?php echo esc_html($cta_label); ?></a>
+                        <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
+                    </div>
+                </div>
+                <?php foreach ($roofline_story_panels as $index => $story_panel) : ?>
+                    <div class="fg-aw-story__panel" data-fg-aw-story-panel aria-hidden="true">
+                        <p class="eyebrow"><?php echo esc_html($story_panel['eyebrow']); ?></p>
+                        <span class="fg-aw-story__number"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
+                        <h2><?php echo esc_html($story_panel['heading']); ?></h2>
+                        <p><?php echo esc_html($story_panel['copy']); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="fg-aw-story__progress" aria-hidden="true">
+                <span data-fg-aw-story-progress></span>
+            </div>
+            <p class="fg-aw-story__scroll-cue"><?php esc_html_e('Scroll to explore', 'fenster'); ?></p>
+        </div>
+    </section>
+    <?php elseif ($is_aluminium_windows && $aluminium_windows_story_desktop_frames) : ?>
     <section class="fg-aw-story" data-fg-aw-story style="--fg-aw-panel-count: <?php echo esc_attr((string) (count($aluminium_windows_story_panels) + 1)); ?>;">
         <div class="fg-aw-story__stage">
             <canvas
@@ -4728,7 +4814,24 @@ if ($is_commercial_hub) {
                    further down the page, with their own link to the hub. A card
                    pointing at the hub as well is the duplicate the uPVC foil
                    routes already suppress. */
-                if ($is_integral_blinds) {
+                /* ROOFLINE GETS ITS OWN COLOUR CARD, not the frame one. Owner
+                   instruction, 2026-08-15: the colour information was showing
+                   the uPVC window foil range, and roofline is a different range
+                   bought through a different route. It wants to be generic. So
+                   the card names what a roofline actually comes in and points
+                   at the hub for the window and door finishes it is usually
+                   being matched TO, which is the real customer question here:
+                   people choose roofline to sit with the windows below it. No
+                   count is published, because none is confirmed. */
+                if ($slug === 'roofline') {
+                    $option_cards[] = [
+                        'modifier' => 'colour',
+                        'url' => home_url('/colour-options/'),
+                        'title' => __('Roofline colours', 'fenster'),
+                        'copy' => __('White, or a foiled woodgrain or colour finish. Grey comes smooth to sit with aluminium, or grained to read like painted timber beside uPVC windows.', 'fenster'),
+                        'cta' => __('See window and door colours', 'fenster'),
+                    ];
+                } elseif ($is_integral_blinds) {
                     // No colour card.
                 } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {
                     /* The six dots on this card were six hexes invented in the
@@ -4767,13 +4870,22 @@ if ($is_commercial_hub) {
                     ];
                 }
 
-                $option_cards[] = [
-                    'modifier' => 'glass',
-                    'url' => home_url('/obscured-glass/'),
-                    'title' => __('Privacy glass', 'fenster'),
-                    'copy' => __('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'),
-                    'cta' => __('Compare glass patterns', 'fenster'),
-                ];
+                /* NO PRIVACY GLASS ON ROOFLINE. Owner instruction, 2026-08-15:
+                   "dont mention privacy glass because it doesnt make sense",
+                   and it does not — fascias, soffits and guttering contain no
+                   glass at all, so the card was inviting a homeowner to choose
+                   an obscure pattern for a product that has no pane in it. The
+                   frame-colour card is excluded on the same route just above
+                   for the same class of reason: there is no frame. */
+                if ($slug !== 'roofline') {
+                    $option_cards[] = [
+                        'modifier' => 'glass',
+                        'url' => home_url('/obscured-glass/'),
+                        'title' => __('Privacy glass', 'fenster'),
+                        'copy' => __('Preview obscured glass patterns and privacy levels using the dedicated visualiser page.', 'fenster'),
+                        'cta' => __('Compare glass patterns', 'fenster'),
+                    ];
+                }
 
                 if ($show_window_handle_card && ! $shows_handle_grid) {
                     $option_cards[] = [

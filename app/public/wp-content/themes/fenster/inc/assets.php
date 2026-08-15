@@ -314,6 +314,35 @@ function fenster_product_scroll_video_for_slug(string $slug): string
     return (string) ($sources[0]['src'] ?? '');
 }
 
+/**
+ * Scroll-scrubbed story frames for any route that has a sequence.
+ * ---------------------------------------------------------------------------
+ * Added 2026-08-15 with `/roofline/`, which is the second route to use the
+ * `data-fg-aw-story` canvas. The aluminium windows helper below now defers to
+ * this one rather than a third copy of the same six lines existing.
+ *
+ * The `ver` query is filemtime, so a regenerated sequence busts its own cache.
+ * That matters more here than usual: theme images carry no version string, and
+ * a frame replaced in place would otherwise keep serving the old one, which is
+ * the trap recorded twice in `AI.md` under the Asset And Cache Rules.
+ */
+function fenster_story_asset_url(string $story, string $file): string
+{
+    if ($story === '' || $file === '') {
+        return '';
+    }
+
+    $relative_path = '/assets/videos/' . $story . '/' . $file;
+    $absolute_path = FENSTER_THEME_DIR . $relative_path;
+    $asset_url = FENSTER_THEME_URI . $relative_path;
+
+    if (file_exists($absolute_path)) {
+        $asset_url = add_query_arg('ver', (string) filemtime($absolute_path), $asset_url);
+    }
+
+    return $asset_url;
+}
+
 function fenster_aluminium_windows_story_asset_url(string $file): string
 {
     if ($file === '') {

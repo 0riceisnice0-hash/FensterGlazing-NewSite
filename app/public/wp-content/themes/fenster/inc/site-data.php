@@ -1723,15 +1723,23 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/S1-Lantern-exterior-min-scaled.jpg', 'alt' => 'Aluminium roof lantern on a flat roof extension'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Lantern-looking-up-04405-min-scaled.jpg', 'alt' => 'Interior view looking up through a roof lantern'],
             ],
+            /* SIX OF THE EIGHT IMAGES IN THIS POOL WERE NOT ROOFLINE. Removed
+               2026-08-15. It held two genuine roofline photographs and then a
+               casement exterior, a bay window, a flush window, another flush,
+               an aluminium window and a casement close-up, each with alt text
+               bending it towards the roof edge: "Bay window below roofline
+               detail", "Window detail near external trim". That is the same
+               wrong-product contamination already recorded against the
+               secondary glazing and aluminium door pools, and it reached every
+               `/roofline-<town>/` matrix page as well as this route.
+
+               Two honest photographs is the true position, so two is what is
+               here. **Do not pad this back out with windows.** If the pool
+               looks thin, the answer is a photograph of a roofline job, and
+               `PHOTO-CHECKLIST.md` is where that request belongs. */
             'roofline' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg', 'alt' => 'White fascia and soffit on a tiled roofline'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Close-up of soffit and fascia detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-exterior.jpg', 'alt' => 'Windows and roofline on a modern home'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-bay-window.jpg', 'alt' => 'Bay window below roofline detail'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Flush-Casement-Windows-Flitwick-9.jpg', 'alt' => 'Flush window near roofline cladding'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-flush-window.jpg', 'alt' => 'Flush windows and stone elevation'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window.jpg', 'alt' => 'Window and roofline on a home exterior'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg', 'alt' => 'Window detail near external trim'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg', 'alt' => 'Fascia, soffit, guttering and downpipe at the corner of a tiled roof'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Vented soffit and black half-round guttering under a tiled roof edge'],
             ],
         ],
         'product_content' => [
@@ -1844,25 +1852,47 @@ function fenster_site_data(): array
                 ],
             ],
             'roofline' => [
-                /* "Fenster checks" was third person, which TONEOFVOICE.md bans
-                   outright. Corrected 2026-08-13. The opening sentence is also
-                   doing more work than usual here, because roofline is a trade
-                   word: on the compact hero this intro is hidden by CSS and the
-                   eyebrow carries "Fascias, soffits and guttering" instead. */
-                'intro' => 'Roofline replacement protects the exposed edge of the roof with low-maintenance fascias, soffits and guttering. We check the existing boards, ventilation, drainage and access so the finished roofline looks neat and performs properly.',
+                /* Rewritten 2026-08-15. Three things were wrong with the copy
+                   this replaces, and all three are rules this site already has.
+
+                   IT SOLD BY DESCRIBING WHAT GOES WRONG. "Old timber can rot,
+                   move and need regular repainting" is fear-framing, which
+                   `TONEOFVOICE.md` bans by name and which the owner asked to
+                   come off this page: "sharpen the whole page up without being
+                   negative". State what the detail achieves, not what its
+                   absence causes.
+
+                   IT HEDGED EVERY SENTENCE. "We can help with", "In many
+                   cases, yes", "can often", "should be checked". The same
+                   hedging was stripped out of replacement glazing on
+                   2026-08-10 for doing exactly this much damage: a page that
+                   will not commit to anything reads as a company that does not
+                   do the work.
+
+                   AND IT NAMED A SYSTEM WE MAY NOT USE. Roofline comes through
+                   a trade distributor and the owner does not know the range, so
+                   nothing here names one, and no figure is published that is
+                   not the manufacturer's own. **The guarantee is theirs, on the
+                   boards. It is NOT the ten year insurance-backed cover and
+                   there is no FENSA certificate on this work** — owner
+                   confirmed 2026-08-15, and the order-process rail already
+                   renders the variant for the four routes outside both. Per the
+                   2026-08-02 ruling the copy states what you DO get rather than
+                   listing what you do not. */
+                'intro' => 'Roofline is the run of boards and gutters along the edge of your roof: the fascia the gutter hangs on, the soffit underneath it, and the guttering and downpipes that carry the water away. In uPVC it holds its colour and needs washing rather than painting.',
                 'benefits' => [
-                    ['title' => 'Protects the roof edge', 'copy' => 'Fascias, soffits and guttering help protect the roofline from water ingress, weathering and long-term timber damage.'],
-                    ['title' => 'Low-maintenance uPVC', 'copy' => 'Modern uPVC roofline products reduce repainting and routine upkeep compared with older timber boards.'],
-                    ['title' => 'Ventilation and drainage', 'copy' => 'We can help review soffit ventilation and gutter performance so the roof edge works as well as it looks.'],
-                    ['title' => 'Colour-matched finishing', 'copy' => 'Roofline trims, boards and guttering can be chosen to suit the windows, doors and exterior style of the property.'],
-                    ['title' => 'Measured replacement', 'copy' => 'Existing boards, fixing points and drainage runs are checked before replacement so the new roofline is specified properly.'],
+                    ['title' => 'The board carries the gutter', 'copy' => 'The fascia caps the rafter ends and takes the weight of a full gutter in a downpour, so it is the piece the rest of the roof edge hangs off.'],
+                    ['title' => 'Air reaches the roof space', 'copy' => 'Moving air keeps the timbers in your loft dry. Over-fascia vents sit above the board and are the usual answer, with vented soffits and circular vents where the detail suits them better.'],
+                    ['title' => 'Water goes where you want it', 'copy' => 'Gutters come in half round, square, ogee and high capacity, sized to the roof above and set to fall towards the outlet so the downpipe does the rest.'],
+                    ['title' => 'It matches what is below it', 'copy' => 'White, or a foiled woodgrain or colour. Grey comes smooth to sit with aluminium bifolds, or grained to read like painted timber next to uPVC windows.'],
+                    ['title' => 'Washing, not painting', 'copy' => 'The manufacturer guarantees white profiles for twenty five years and foiled finishes for ten, against discolouration, cracking and warping from the day it is installed.'],
                 ],
                 'faqs' => [
-                    ['question' => 'What roofline products can you replace?', 'answer' => 'We can help with roofline items such as fascias, soffits and guttering, depending on the property and project scope.'],
-                    ['question' => 'Why replace old timber fascias?', 'answer' => 'Old timber can rot, move and need regular repainting. uPVC roofline products provide a lower-maintenance alternative.'],
-                    ['question' => 'Can roofline colours match my windows and doors?', 'answer' => 'In many cases, yes. We can help choose roofline finishes that coordinate with the wider exterior.'],
-                    ['question' => 'Will ventilation be considered?', 'answer' => 'Yes. Soffit ventilation and roof-edge condition should be checked as part of the replacement conversation.'],
-                    ['question' => 'Is roofline work surveyed first?', 'answer' => 'Yes. We check the existing roof edge, boards, access and drainage details before confirming the specification.'],
+                    ['question' => 'What counts as roofline?', 'answer' => 'The fascia along the roof edge, the soffit that closes the gap between it and the wall, the bargeboards up a gable, and the guttering and downpipes. Cladding sits in the same family where a gable or a porch calls for it.'],
+                    ['question' => 'Why do people replace timber with uPVC?', 'answer' => 'It holds its colour and needs washing rather than painting. The manufacturer guarantees white for twenty five years and foiled finishes for ten, against discolouration, cracking and warping.'],
+                    ['question' => 'Can the colour match my windows and doors?', 'answer' => 'Usually. White, foiled woodgrains and colours are all available, and grey comes in a smooth finish that suits aluminium or a grained one that reads like painted timber beside uPVC. Coloured fascias are mostly the square profile, because that is the one made in every colour.'],
+                    ['question' => 'Do I get a FENSA certificate and the ten year guarantee?', 'answer' => 'Not on roofline. FENSA covers replacement windows and doors, and the ten year insurance-backed cover travels with it. What you get here is the manufacturer\'s guarantee on the boards and gutters, and us on the phone afterwards rather than a call centre.'],
+                    ['question' => 'Is it worth doing while the scaffolding is up?', 'answer' => 'That is usually why people ask. If windows or a roof are already being worked on, the access is paid for and the roof edge is the cheapest thing to reach at that moment.'],
                 ],
             ],
             /* Rewritten 2026-08-10 with the page. Two things changed beyond the
