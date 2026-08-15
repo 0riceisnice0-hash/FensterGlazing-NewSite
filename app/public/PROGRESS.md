@@ -9,6 +9,81 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-15 (roofline rebuild — ON TEST, NOT LIVE)
+
+**LIVE IS STILL `34e902d6`. NOTHING IN THIS SESSION HAS SHIPPED TO PRODUCTION**
+except one small fix noted below. `main` is `d5581c56` and **thirty-one commits
+sit above live**, thirty of them the roofline rebuild. Working tree clean, no
+release branch.
+
+**TEST IS `80905485`, ONE COMMIT BEHIND `main`.** The colour photography commit
+was pushed and never deployed. Deploy test before reviewing anything.
+
+### The one thing that IS live
+
+`afd9e161`, deployed inside the earlier residential release: `product_usps['roofline']`
+was telling Legend that roofline carries a ten year guarantee, which contradicts
+the windows hub FAQ in approved live copy. It was a live falsehood in the
+assistant's verified-facts layer, invisible on every page, and it is the second
+time that array has done exactly this.
+
+### What the roofline rebuild is
+
+`/roofline/` now runs the shared `data-fg-aw-story` scroll canvas — the same
+component `/aluminium-windows/` uses, no new JavaScript — carrying ONE photograph.
+Three components (guttering, fascia, soffit) light out of a dark scrim in turn,
+each with a marker naming it, driven by `:has()` off the class the story
+controller already sets.
+
+Content beside that: privacy glass and frame colours gone (a roof edge has
+neither), the Liniar logo and badge gone, no supplier named anywhere, the gallery
+pool cut from eight images to the two that are genuinely roofline, hedging and
+fear-framing stripped, the H1 no longer repeated as an H2, and the guarantee
+stated positively as the manufacturer's twenty five years on white and ten on
+foiled, with no FENSA or insurance-backed claim.
+
+### WHAT IS NOT FINISHED, and be honest about it
+
+1. **The colour rail is not built.** Twenty-three roofline colour photographs are
+   downloaded, normalised through one crop window and committed
+   (`assets/images/products/colours/roofline/`), but nothing renders them. The
+   owner asked for a swipeable rail like the colour hub's, on this route only and
+   **not** added to `/colour-options/`.
+2. **One of the two roofline photographs is not surfacing** in the gallery even
+   though both are back in the pool. Unexplained.
+3. **Nobody has scrolled the page in a real browser.** Headless throttles the
+   animation frame, so every state and all the wiring is verified and the feel of
+   the scrub is not.
+4. **A full page audit was launched and never completed.** Five lenses over
+   journey, empty content, copy, facts and technical, with adversarial
+   verification. It was stopped before returning, so **there are no findings from
+   it and none should be assumed.** Relaunch with
+   `Workflow({scriptPath, resumeFromRunId: "wf_430f26a9-029"})`.
+
+### THE LESSON FROM THIS SESSION, and it cost eleven passes
+
+The three highlight zones were placed by eye, over and over, and missed every
+time. What finally worked was **detecting the boundaries from the photograph**
+with a Hough-style sweep for the strongest luminance edges. Full rules in the
+Roofline Highlight Geometry Rule in `AI.md`, but the three reusable parts:
+
+- **Lines receding from a camera are NOT parallel.** Forcing one slope across all
+  of them cannot fit, whatever the number.
+- **A phone photograph of a screen cannot be used as a measurement.** The owner
+  marked the boundaries on one and it still could not be transcribed, because the
+  screen is keystoned. Ask for a screenshot.
+- **When nudging is not converging, look for a sign or index error.** The zones
+  were mirrored once, and one band too high another time. Both looked like small
+  miscalibrations and neither was.
+
+### Two regressions the owner caught, not me
+
+Removing things without checking what they left behind: the gallery pool was cut
+to two images and then one was pulled as the hero, leaving a single picture
+repeating; and the roofline colour card was deleted, which left the
+specification-choices band rendering a heading over nothing. **Both were my
+changes and both were spotted by the owner.** Check what a removal leaves.
+
 ## START HERE, 2026-08-15 (AI discoverability on the residential side — SHIPPED, LIVE IS `34e902d6`)
 
 **Live is `34e902d6`, established by checksum, level with `main`, and test is

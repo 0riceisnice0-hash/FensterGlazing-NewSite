@@ -1,5 +1,46 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-15 (roofline rebuild, ON TEST)
+
+**Live is `34e902d6`. `main` is `d5581c56` and thirty-one commits sit above live,
+all deliberately unshipped. Test is `80905485`, one behind `main` — deploy test
+before reviewing.** Working tree clean, no release branch. Theme diff over live is
+32 files with **zero deletions**, and `assets/js/main.js` is untouched across the
+whole range.
+
+**Read in this order:** the newest START HERE block in `PROGRESS.md`, then the
+Current Truth section of `LIVECHANGES.md`, then the **Roofline Rule** and the
+**Roofline Highlight Geometry Rule** in `AI.md` before touching that page.
+
+### What changed
+
+`/roofline/` was rebuilt around the shared `data-fg-aw-story` scroll canvas, the
+same component `/aluminium-windows/` uses. It carries one photograph rather than
+a frame sequence, and three components light in turn out of a dark scrim with a
+marker naming each. No JavaScript was written: `:has()` reads the class the story
+controller already sets.
+
+Everything else on the route was corrected with it — no supplier named, no Liniar
+logo, no privacy glass or frame colours, a clean gallery pool, positive copy, and
+the guarantee stated as the manufacturer's rather than implying FENSA or the ten
+year insurance-backed cover, which roofline does not carry.
+
+### Unfinished, and named plainly
+
+- **The colour rail is not built.** 23 roofline colour photographs are committed
+  and ready; nothing renders them. Owner wants a swipeable rail like the colour
+  hub's, on this route only, and explicitly NOT added to `/colour-options/`.
+- **One of the two roofline photographs is not surfacing** in the gallery.
+- **Nobody has scrolled the page in a real browser.**
+- **A five-lens page audit was launched and never returned.** No findings exist;
+  resume with `Workflow({scriptPath, resumeFromRunId: "wf_430f26a9-029"})`.
+
+### The asset gap that blocks the rest
+
+**A wide photograph of a roofline run is the biggest single asset gap on the
+site.** We own two roofline pictures and both are tight detail shots. It is in
+`PHOTO-CHECKLIST.md` at the top of the wishlist with the brief written out.
+
 ## Current state, 2026-08-13 (end of the forensic audit session)
 
 **Live is `1ccc8bd8` and it is the tip of `main` again.** Established by

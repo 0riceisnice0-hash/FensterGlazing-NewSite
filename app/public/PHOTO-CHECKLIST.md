@@ -77,6 +77,16 @@ section, but the image bank has nothing showing it retro-fitted.
 `Marketing/Image Bank/Legacy Marketing`, which nobody had mined. Check there before
 adding anything to this list.
 
+- **A WIDE SHOT OF A ROOFLINE RUN. This is the biggest single asset gap on the
+  site and it blocks real work.** We own exactly two roofline photographs and
+  both are tight detail shots: one corner with a downpipe, one soffit close-up.
+  `/roofline/` is built around the second because it is the better picture, but
+  the hero is a fragment rather than a run, the gallery has almost nothing to
+  show, and the component highlights are squeezed into a crop where the parts
+  overlap. **What is needed: stand well back, landscape, whole run of gutter and
+  fascia visible, ideally turning a corner and with a downpipe in frame, sunny
+  if possible.** One photograph fixes the hero, the gallery and the highlight
+  geometry at once.
 - ~~uPVC panel doors (front and back doors)~~ — **closed.** Seven real installs pulled in.
 - ~~Aluminium windows on a local home~~ — **closed**, though only one photograph exists. More would help.
 - ~~Secondary glazing~~ — **closed 2026-08-07.** Every photograph on the route is now a Fenster installation: two from the owner and four from the Winslow job, which is also a case study. More would still help; there is one property.
