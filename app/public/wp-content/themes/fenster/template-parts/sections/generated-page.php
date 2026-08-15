@@ -3302,6 +3302,33 @@ if ($is_commercial_hub) {
             ></canvas>
             <noscript><img class="fg-aw-story__fallback" src="<?php echo esc_url($roofline_story_poster); ?>" alt="Fascia, soffit, guttering and downpipe at the corner of a tiled roof"></noscript>
             <div class="fg-aw-story__shade"></div>
+            <?php /* THE HIGHLIGHT IS THE POINT, not the line drawing. Owner,
+                     2026-08-15: it "wants to highlight individual components of
+                     the roofline and explain/sell as you scroll", not turn into
+                     a drawing for its own sake. So the trace exists to make the
+                     isolation readable and nothing more.
+
+                     The regions were read off a coordinate grid laid over the
+                     photograph rather than guessed, and they are percentages of
+                     the frame so they track the canvas at any width. Each one
+                     sits on a part that is genuinely visible: the fascia along
+                     the left roof edge, the soffit under the boxed corner, the
+                     gutter run with its union, and the downpipe with its swan
+                     neck.
+
+                     NO JAVASCRIPT. The story controller already puts `is-active`
+                     on the panel it has scrolled to, so `:has()` drives which
+                     region lights from that alone. Where `:has()` is not
+                     supported nothing highlights and the page is exactly what it
+                     was, which is the right way round for progressive
+                     enhancement. */ ?>
+            <div class="fg-rl-parts" aria-hidden="true">
+                <span class="fg-rl-parts__scrim"></span>
+                <span class="fg-rl-part fg-rl-part--fascia"></span>
+                <span class="fg-rl-part fg-rl-part--soffit"></span>
+                <span class="fg-rl-part fg-rl-part--vent"></span>
+                <span class="fg-rl-part fg-rl-part--gutter"></span>
+            </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
             <div class="container fg-aw-story__content">
                 <div class="fg-aw-story__panel is-active" data-fg-aw-story-panel>

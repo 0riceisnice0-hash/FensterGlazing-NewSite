@@ -42584,3 +42584,64 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Roofline part highlighting.
+   ---------------------------------------------------------------------------
+   Regions read off a coordinate grid laid over the photograph, expressed as
+   percentages of the frame so they hold at any canvas width. The scrim darkens
+   everything and the active region is punched back to full brightness with an
+   accent tint, so the eye goes to the part the panel is talking about.
+
+   `:has()` reads the `is-active` class the story controller already sets, so
+   this needs no JavaScript. Panel 1 is the H1, so parts start at panel 2. */
+.fg-rl-parts {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.fg-rl-parts__scrim,
+.fg-rl-part {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 480ms ease;
+}
+
+.fg-rl-parts__scrim {
+  background: rgba(8, 26, 22, 0.55);
+}
+
+.fg-rl-part {
+  background: rgba(46, 163, 90, 0.18);
+  backdrop-filter: brightness(1.32) saturate(1.15);
+  -webkit-backdrop-filter: brightness(1.32) saturate(1.15);
+}
+
+.fg-rl-part--fascia  { clip-path: polygon(0% 27%, 38% 41%, 38% 52%, 0% 38%); }
+.fg-rl-part--soffit  { clip-path: polygon(26% 55%, 64% 66%, 64% 74%, 26% 70%); }
+.fg-rl-part--vent    { clip-path: polygon(0% 24%, 38% 38%, 38% 44%, 0% 30%); }
+.fg-rl-part--gutter  { clip-path: polygon(25% 43%, 74% 59%, 74% 69%, 25% 54%); }
+
+/* Panel 2 is the first part, so nth-child is offset by one. */
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-parts__scrim,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-parts__scrim {
+  opacity: 1;
+}
+
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-part--fascia,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-part--soffit,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-part--vent,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-part--gutter {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-rl-parts__scrim,
+  .fg-rl-part {
+    transition: none;
+  }
+}
