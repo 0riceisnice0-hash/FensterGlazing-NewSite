@@ -4280,6 +4280,19 @@ if ($is_commercial_hub) {
         <?php endif; ?>
     <?php endif; ?>
 
+    <?php /* ROOFLINE COLOURS SIT ABOVE THE PRODUCT GUIDE, not down with the
+             other routes' colour grids. Owner instruction, 2026-08-15, and it
+             agrees with what this section's own intro already says: roofline is
+             chosen to sit with the windows and doors below it, so the colour is
+             the decision worth making early. Straight off the back of the story
+             canvas, before "What a roofline job actually covers".
+
+             This is the one route where the colour block is not in the tail. The
+             uPVC, aluminium and blind grids further down are unaffected. */ ?>
+    <?php if ($is_roofline) : ?>
+        <?php get_template_part('template-parts/components/roofline-colour-rail'); ?>
+    <?php endif; ?>
+
     <?php if ($use_product_journey) : ?>
         <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
@@ -5074,15 +5087,6 @@ if ($is_commercial_hub) {
             </div>
         </section>
         <?php endif; ?>
-        <?php endif; ?>
-
-        <?php /* Roofline finishes inline, the same way the uPVC, aluminium and
-                 blind routes lay their colours out rather than pointing at a hub.
-                 It reads its own `roofline_colours` array: the roofline range is
-                 NOT in `colour_options` and must not be added to it, per the
-                 owner's instruction of 2026-08-15. */ ?>
-        <?php if ($is_roofline) : ?>
-            <?php get_template_part('template-parts/components/roofline-colour-rail'); ?>
         <?php endif; ?>
 
         <?php if (isset($upvc_foil_routes[$slug])) : ?>
