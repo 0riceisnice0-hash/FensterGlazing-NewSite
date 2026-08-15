@@ -42713,8 +42713,13 @@ html.fg-blinds-reveal-locked {
    THE BOUNDARIES COME FROM THE OWNER'S OWN DRAWN LINES, 2026-08-15, after eight
    failed passes of me reading angles off renders. He marked all three straight on
    a screenshot in yellow; their endpoints are what these polygons are, converted
-   from stage space into this box's space (box 960 tall against an 820 stage,
-   centred, so a stage percentage maps as 7.3 + s * 0.854).
+   THE PHOTO HAD TO BE REGISTERED, NOT JUST READ. His marks are on a photograph
+   of a laptop screen taken slightly off axis, so the screen is keystoned; reading
+   pixel positions straight off it and then applying a stage-to-box conversion
+   stacked two lossy steps and is why the first attempt with his lines still
+   missed. The endpoints are now mapped through two landmarks visible in both the
+   photo and the real page — the "Roofline" H1 and the button row — which fixes
+   scale and offset in both axes before any conversion happens.
 
    THEY ARE NOT PARALLEL, AND THAT IS THE WHOLE POINT. Lines running away from
    the camera converge on a vanishing point, so each boundary has its own slope:
@@ -42760,9 +42765,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% -24%, 100% 76%, 100% 91%, 0% 22%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 22%, 100% 91%, 100% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(0% -51%, 100% 37%, 100% 76%, 0% -24%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% -4%, 100% 74%, 100% 87%, 0% 33%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 33%, 100% 87%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(0% -24%, 100% 54%, 100% 74%, 0% -4%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
