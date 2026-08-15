@@ -42849,36 +42849,43 @@ html.fg-blinds-reveal-locked {
    which was survivable while the lift was a subtle 1.9x and is not now the zone
    paints the source pixels.
 
-   Detected by segmenting the boarding rather than by another luminance sweep.
-   The sweep was run first and picked a line through the GLAZING REFLECTION at
-   y=61%..98%, scoring 33.3 against 9.2 for the runner up — a real, strong,
-   consistent edge that is not the one wanted. Same failure as the whole-image
-   SIFT fit in the replacement-glazing work, which locked onto the view through
-   the glass instead of the frame. **A high score is not evidence you measured
-   the right thing.**
+   THE EDGE IS WHERE THE SHIPLAP ENDS AND THE DOOR HEAD BEGINS. Owner, and it is
+   the description that finally located it: the boards butt into the head at a
+   right angle, so the end is a straight line.
 
-   What worked: sample the soffit's own colour under the divide, mask to it, take
-   the lower envelope column by column, and fit with outlier rejection. 101
-   inliers over the full width, checked against the mask by eye.
-   Fitted y = 0.1367x + 810 on the 1800x1200 frame, so 67.5% at x=0 and 88.0% at
-   x=100%, and those are the published values. A first pass trimmed half a point
-   off them as a safety margin and the owner asked for the fit itself; the margin
-   was never measured, it was invented, so it went.
+   IT TOOK THREE WRONG ANSWERS AND THE FAULT WAS THE SAME EACH TIME — the thing
+   being measured, never the measuring.
 
-   CONFIRMED BY A SECOND, INDEPENDENT METHOD. The door head is the same paint as
-   the soffit, so a colour mask cannot tell them apart and the fit could have been
-   sitting on the head rather than the board. Re-measured by walking a contiguous
-   run down from the divide and stopping at the first real break, which ignores
-   colour matches that are not joined to the soffit: 68.1% to 88.3%, within seven
-   pixels of the colour fit across the whole width. Two methods that fail in
-   different ways agreeing to 7px is the evidence this boundary is right.
+   1. A luminance sweep scoring bright-above/dark-below returned the GLAZING
+      REFLECTION at 61%..98%, scoring 33.3 against 9.2. Real edge, wrong one.
+   2. A colour mask of the soffit gave 67.5%..88.0%. But the door head is the
+      SAME PAINT, so the mask ran straight through it.
+   3. A contiguous-run check was added specifically to catch that, and agreed to
+      within 7px — because there is no colour break between soffit and head for
+      it to stop at either. **Two methods agreeing is worth nothing when they
+      share a blind spot.** That agreement was reported as evidence. It was not.
+
+   WHAT WAS ACTUALLY WRONG: polarity. The soffit is DARKER than the pale head bar
+   beneath it, and every sweep was scoring bright-above/dark-below, so the edge
+   was invisible to the search by construction. No amount of re-running finds an
+   edge the scoring function is built to ignore. Flip it and the same sweep
+   returns it at 98.3 against 23.4 for the runner up.
+
+   Fitted on x=120..980, where the frame is sharp and the head is unobstructed,
+   then checked column by column across the full width: **median residual 1.7px**
+   over x=150..1140, eleven columns inside 2px. The two outliers are the door
+   mullion at x=600 and the wagon wheel from x=1230, where edge strength halves.
+   y = 0.2354x + 754.7 on the 1800x1200 frame: 62.9% at x=0, 98.2% at x=100%.
+
+   Extended straight to both edges because the owner's description is that it is
+   straight, and the residuals say so too.
 
    NOT PARALLEL to the edge above it, and that is the geometry rather than an
    error: the divide falls 0.52 across the frame and this falls 0.205, because
    the soffit recedes and its apparent depth shrinks from 43 percentage points
    at the left to 12 at the right. Re-run the detection if the photograph
    changes; do not nudge these by hand. */
-.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 88%, 0% 67.5%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 98.2%, 0% 62.9%); }
 .fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 43%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
