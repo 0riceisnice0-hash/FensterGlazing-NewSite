@@ -42595,7 +42595,7 @@ html.fg-blinds-reveal-locked {
 
    THE BOX REPRODUCES THE CANVAS COVER TRANSFORM so a percentage means what it
    meant on the coordinate grid laid over the source photograph, which is
-   1500x1012. Replace that photograph and this aspect ratio changes with it or
+   1920x1280. Replace that photograph and this aspect ratio changes with it or
    every marker slides.
 
    `:has()` reads the `is-active` class the story controller already sets, so
@@ -42605,7 +42605,7 @@ html.fg-blinds-reveal-locked {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  aspect-ratio: 1500 / 1012;
+  aspect-ratio: 1920 / 1280;
   min-width: 100%;
   min-height: 100%;
   z-index: 0;

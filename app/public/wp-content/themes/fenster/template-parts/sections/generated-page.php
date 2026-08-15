@@ -801,7 +801,7 @@ $aluminium_windows_story_mobile_frames = $is_aluminium_windows ? fenster_alumini
 $is_roofline = $slug === 'roofline';
 $roofline_story_desktop_frames = $is_roofline ? fenster_story_asset_url('roofline-story', 'frames-desktop/frame-001.webp') : '';
 $roofline_story_mobile_frames = $is_roofline ? fenster_story_asset_url('roofline-story', 'frames-mobile/frame-001.webp') : '';
-$roofline_story_poster = $is_roofline ? fenster_generated_url('/wp-content/themes/fenster/assets/images/products/curated/roofline-exploded-1500w.jpg') : '';
+$roofline_story_poster = $is_roofline ? fenster_generated_url('/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg') : '';
 $roofline_story_panels = [
     [
         'eyebrow' => 'The fascia',
@@ -3297,10 +3297,10 @@ if ($is_commercial_hub) {
                 data-fg-aw-story-canvas
                 data-desktop-frame="<?php echo esc_url($roofline_story_desktop_frames); ?>"
                 data-mobile-frame="<?php echo esc_url($roofline_story_mobile_frames); ?>"
-                data-frame-count="30"
+                data-frame-count="1"
                 aria-hidden="true"
             ></canvas>
-            <noscript><img class="fg-aw-story__fallback" src="<?php echo esc_url($roofline_story_poster); ?>" alt="Fascia, soffit, guttering and the roof timbers behind them, drawn apart to show how a roof edge is built up"></noscript>
+            <noscript><img class="fg-aw-story__fallback" src="<?php echo esc_url($roofline_story_poster); ?>" alt="White fascia, black guttering and a vented soffit with downlights above a set of bifold doors"></noscript>
             <div class="fg-aw-story__shade"></div>
             <?php /* THE HIGHLIGHT IS THE POINT, not the line drawing. Owner,
                      2026-08-15: it "wants to highlight individual components of
@@ -3324,17 +3324,17 @@ if ($is_commercial_hub) {
                      enhancement. */ ?>
             <div class="fg-rl-parts" aria-hidden="true">
                 <span class="fg-rl-parts__scrim"></span>
-                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 41%; --y: 38%;"><i></i><b>Fascia</b></span>
-                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 47%; --y: 79%;"><i></i><b>Soffit</b></span>
-                <span class="fg-rl-pin fg-rl-pin--vent" style="--x: 87%; --y: 30%;"><i></i><b>Over-fascia vent</b></span>
-                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 10%; --y: 63%;"><i></i><b>Gutter</b></span>
+                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 38%; --y: 21%;"><i></i><b>Fascia</b></span>
+                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 46%; --y: 64%;"><i></i><b>Soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--vent" style="--x: 30%; --y: 55%;"><i></i><b>Vented soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 69%; --y: 27%;"><i></i><b>Guttering</b></span>
             </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
             <div class="container fg-aw-story__content">
                 <div class="fg-aw-story__panel is-active" data-fg-aw-story-panel>
                     <p class="eyebrow"><?php esc_html_e('Fascias, soffits and guttering', 'fenster'); ?></p>
                     <h1><?php echo esc_html($title); ?></h1>
-                    <p><?php esc_html_e('The boards and gutters along the edge of your roof. Scroll to take one apart.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('The boards and gutters along the edge of your roof. Scroll to see what each one does.', 'fenster'); ?></p>
                     <div class="button-row">
                         <a class="button" href="#fenster-enquiry"><?php echo esc_html($cta_label); ?></a>
                         <a class="button button--light" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a consultation', 'fenster'); ?></a>
