@@ -1848,6 +1848,18 @@ if (
         </section>
     <?php endif; ?>
 
+    <?php /* THIS TEMPLATE HAS TWO FAQ RENDER BLOCKS AND THE FIRST PASS ONLY
+             HOOKED ONE. The other is inside the `$is_mk_double_glazing_page`
+             branch and serves the single head-term page; THIS one serves all
+             ~270 town matrix routes, which is to say almost everything this
+             change was for. It shipped to test emitting nothing and was caught
+             by checking the rendered page rather than the diff.
+
+             It is the lesson `AI.md` already records against the case-study
+             helpers, arriving again: when a rule is enforced at a render site,
+             grep for the OTHER render site that answers the same question. */ ?>
+    <?php fenster_render_faq_page_schema($faqs); ?>
+
     <section class="fg-location-faq">
         <div class="container fg-location-faq__grid">
             <div>
