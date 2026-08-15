@@ -47,7 +47,14 @@ $roofline_intro = (string) ($args['intro'] ?? __('Roofline is chosen to sit with
 ?>
 <section id="roofline-colours" class="fg-roofline-colours" aria-labelledby="fg-roofline-colours-title">
     <div class="container">
-        <div class="fg-upvc-colours__heading">
+        <?php /* Its own heading class rather than borrowing `.fg-upvc-colours__heading`,
+                 which is what this used first. It shares every desktop rule with
+                 that one through the selector lists in `main.scss`, and the reason
+                 it needed a name of its own is the mobile stack: the uPVC,
+                 aluminium and blind headings are missing from it and stay
+                 two-column at 390px. Joining the stack without joining their fault
+                 needs a separate class. */ ?>
+        <div class="fg-roofline-colours__heading">
             <p class="eyebrow"><?php esc_html_e('Specification choices', 'fenster'); ?></p>
             <h2 id="fg-roofline-colours-title"><?php echo esc_html($roofline_heading); ?></h2>
             <p><?php echo esc_html($roofline_intro); ?></p>

@@ -36601,6 +36601,7 @@ html.fg-blinds-reveal-locked {
 .fg-upvc-colours__heading,
 .fg-blind-colours__heading,
 .fg-alu-colours__heading,
+.fg-roofline-colours__heading,
 .fg-handle-finishes__heading,
 .fg-heritage-door-use__heading {
   display: grid;
@@ -36615,6 +36616,7 @@ html.fg-blinds-reveal-locked {
 .fg-alu-colours__heading .eyebrow,
 .fg-upvc-colours__heading .eyebrow,
 .fg-blind-colours__heading .eyebrow,
+.fg-roofline-colours__heading .eyebrow,
 .fg-handle-finishes__heading .eyebrow,
 .fg-heritage-door-use__heading .eyebrow {
   grid-column: 1 / -1;
@@ -36625,6 +36627,7 @@ html.fg-blinds-reveal-locked {
 .fg-alu-colours__heading h2,
 .fg-upvc-colours__heading h2,
 .fg-blind-colours__heading h2,
+.fg-roofline-colours__heading h2,
 .fg-handle-finishes__heading h2,
 .fg-heritage-door-use__heading h2,
 .fg-heritage-door-detail__copy h2,
@@ -36643,6 +36646,7 @@ html.fg-blinds-reveal-locked {
 .fg-alu-colours__heading p:not(.eyebrow),
 .fg-upvc-colours__heading p:not(.eyebrow),
 .fg-blind-colours__heading p:not(.eyebrow),
+.fg-roofline-colours__heading p:not(.eyebrow),
 .fg-handle-finishes__heading p:not(.eyebrow) {
   max-width: 56ch;
   margin-bottom: 0.2rem;
@@ -37211,8 +37215,17 @@ html.fg-blinds-reveal-locked {
     border-bottom: 1px solid rgba(15, 49, 54, 0.12);
   }
 
+  /* `.fg-roofline-colours__heading` is a class of its own purely so it can
+     join this list. It shares every desktop rule with the uPVC, aluminium and
+     blind colour headings, but those three are NOT in this stack and so stay
+     two-column at 390px, where a five-line h2 sits in a 168px column beside its
+     intro. That is a real pre-existing defect on the uPVC foil routes,
+     `/casement-windows/`, the aluminium routes and `/integral-blinds/`, and
+     fixing it here would change several owner-approved live pages off the back
+     of a request to build a roofline rail. Flagged to the owner instead. */
   .fg-heritage-door-configurations__heading,
   .fg-heritage-door-colours__heading,
+  .fg-roofline-colours__heading,
   .fg-heritage-door-use__heading {
     grid-template-columns: 1fr;
     gap: 0.9rem;
@@ -39362,6 +39375,17 @@ html.fg-blinds-reveal-locked {
    ratio in the same commit or every tile silently letterboxes. */
 .fg-colour-rail--roofline .fg-colour-rail__media {
   aspect-ratio: 460 / 272;
+}
+
+/* Pack the tile's rows to the top. The slide is a grid with auto rows, so the
+   default `align-content: stretch` shares the leftover height between them, and
+   a tile with no sub-label drops its name 9px lower than one with. Every colour
+   on the hub carries a finish string so the fault cannot show there; here only
+   White and Foiled White do, so thirteen of fifteen names sat out of line.
+   Measured at 390px, not judged by eye: name offsets read 140 and 149 before
+   this and a single 140 after. */
+.fg-colour-rail--roofline .fg-colour-rail__slide {
+  align-content: start;
 }
 
 /* The group label above each rail. It is an eyebrow rather than a heading
