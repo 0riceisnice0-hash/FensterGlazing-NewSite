@@ -5105,14 +5105,16 @@ if ($is_commercial_hub) {
                sliced a correctly written FAQ off three routes; if you add a
                question past the limit, raise the route here in the same commit
                or it renders nowhere and you will not be told. */
-            /* COMPOSITE DOORS MOVED FROM 6 TO 7 ON 2026-08-15, in the same
-               commit as the "why do you fit Distinction" answer that made it
-               the seventh. That is the rule this cap already has written above
-               it, honoured rather than rediscovered: the route was full, and a
-               seventh FAQ added without raising the limit renders nowhere and
-               tells nobody. It has now silently sliced a correctly written
-               answer off three routes; this is the first time it did not. */
-            $product_faq_limit = ($is_repairs || $is_composite_doors) ? 7 : (($slug === 'sliding-sash-windows' || $slug === 'flush-casement-windows') ? 6 : 5);
+            /* Composite doors was briefly raised to 7 on 2026-08-15 and put
+               back the same day. Raising the cap to fit a new answer is the
+               documented move and it was not the problem; the answer was. It
+               restated the construction from "What is a composite door made
+               from?" and the Salford figure from "Why is there no U-value
+               shown", so the route was being given a third telling of what it
+               already said twice. **Check what the route already answers before
+               raising this number.** A cap that forces that question is doing
+               something useful. */
+            $product_faq_limit = $is_repairs ? 7 : (($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows') ? 6 : 5);
             /* The schema is the shared emitter now, passed the same limit the
                render below slices to, so the markup can never describe a
                question the page does not show. Only the JSON-LD moved; the
