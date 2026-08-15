@@ -42695,7 +42695,14 @@ html.fg-blinds-reveal-locked {
    to right while every component in the photograph descends left to right, which
    is why four rounds of nudging never converged — the shapes were right and the
    sign was wrong. Check the slope direction against the picture before adjusting
-   any number here. **If the stage height or the source photograph changes,
+   any number here.
+
+   ORDER MATTERS AND IT IS THE THING THAT WAS WRONG: gutter sits highest, the
+   fascia is the board DIRECTLY BETWEEN the gutter and the soffit, and the soffit
+   is the plane below it. Every zone was one band too high, so what was labelled
+   fascia was lighting the gutter. Owner correction, 2026-08-15. The soffit's top
+   edge is a straight line along the underside of the fascia rather than a slope
+   that cuts up through it. **If the stage height or the source photograph changes,
    re-derive rather than nudge.** They are
    generous rather than tight: a soft, slightly-larger region reads as "this
    area" and survives a few pixels of error, where a tight outline that misses
@@ -42710,9 +42717,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(52% 15%, 100% 40%, 100% 54%, 54% 29%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 40%, 96% 76%, 96% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(55% 0%, 100% 20%, 100% 34%, 57% 11%); }
+.fg-rl-zone--fascia { clip-path: polygon(50% 28%, 100% 53%, 100% 65%, 52% 40%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 30%, 100% 65%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(52% 15%, 100% 40%, 100% 54%, 54% 29%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
