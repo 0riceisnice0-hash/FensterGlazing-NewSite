@@ -4862,14 +4862,15 @@ if ($is_commercial_hub) {
                    being matched TO, which is the real customer question here:
                    people choose roofline to sit with the windows below it. No
                    count is published, because none is confirmed. */
+                /* NO COLOUR CARD ON ROOFLINE, and no link to the colour hub.
+                   Owner instruction, 2026-08-15: that hub is the window and door
+                   foil and powder-coat range, which is not what a roofline is
+                   made from and not where it is bought, so pointing at it was
+                   inaccurate as well as irrelevant. The real range is named on
+                   the page itself instead, in the benefits, where a customer
+                   reads it rather than being sent somewhere else to guess. */
                 if ($slug === 'roofline') {
-                    $option_cards[] = [
-                        'modifier' => 'colour',
-                        'url' => home_url('/colour-options/'),
-                        'title' => __('Roofline colours', 'fenster'),
-                        'copy' => __('White, or a foiled woodgrain or colour finish. Grey comes smooth to sit with aluminium, or grained to read like painted timber beside uPVC windows.', 'fenster'),
-                        'cta' => __('See window and door colours', 'fenster'),
-                    ];
+                    // No colour card.
                 } elseif ($is_integral_blinds) {
                     // No colour card.
                 } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {

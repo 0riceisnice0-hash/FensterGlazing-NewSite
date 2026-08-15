@@ -1884,7 +1884,7 @@ function fenster_site_data(): array
                     ['title' => 'The board carries the gutter', 'copy' => 'The fascia caps the rafter ends and takes the weight of a full gutter in a downpour, so it is the piece the rest of the roof edge hangs off.'],
                     ['title' => 'Air reaches the roof space', 'copy' => 'Moving air keeps the timbers in your loft dry. Over-fascia vents sit above the board and are the usual answer, with vented soffits and circular vents where the detail suits them better.'],
                     ['title' => 'Water goes where you want it', 'copy' => 'Gutters come in half round, square, ogee and high capacity, sized to the roof above and set to fall towards the outlet so the downpipe does the rest.'],
-                    ['title' => 'It matches what is below it', 'copy' => 'White, or a foiled woodgrain or colour. Grey comes smooth to sit with aluminium bifolds, or grained to read like painted timber next to uPVC windows.'],
+                    ['title' => 'Fifteen finishes to match the house', 'copy' => 'White, Foiled White and Cream. Black, Dark Grey, Slate Grey, Anthracite Grey, Agate Grey and Chartwell Green. Rosewood, Light Oak, Irish Oak, Wine Red, Royal Blue and Rustic Green. Grey comes smooth to sit with aluminium bifolds, or grained to read like painted timber next to uPVC windows, and the coloured boards are mostly the square profile because that is the one made in every finish.'],
                     ['title' => 'Washing, not painting', 'copy' => 'The manufacturer guarantees white profiles for twenty five years and foiled finishes for ten, against discolouration, cracking and warping from the day it is installed.'],
                 ],
                 'faqs' => [
