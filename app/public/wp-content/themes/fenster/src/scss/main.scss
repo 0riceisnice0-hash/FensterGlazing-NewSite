@@ -42861,15 +42861,24 @@ html.fg-blinds-reveal-locked {
    the lower envelope column by column, and fit with outlier rejection. 101
    inliers over the full width, checked against the mask by eye.
    Fitted y = 0.1367x + 810 on the 1800x1200 frame, so 67.5% at x=0 and 88.0% at
-   x=100%. Published 0.5pp inside that: at full brightness a hairline of unlit
-   soffit is invisible where a lit strip of door head is not.
+   x=100%, and those are the published values. A first pass trimmed half a point
+   off them as a safety margin and the owner asked for the fit itself; the margin
+   was never measured, it was invented, so it went.
+
+   CONFIRMED BY A SECOND, INDEPENDENT METHOD. The door head is the same paint as
+   the soffit, so a colour mask cannot tell them apart and the fit could have been
+   sitting on the head rather than the board. Re-measured by walking a contiguous
+   run down from the divide and stopping at the first real break, which ignores
+   colour matches that are not joined to the soffit: 68.1% to 88.3%, within seven
+   pixels of the colour fit across the whole width. Two methods that fail in
+   different ways agreeing to 7px is the evidence this boundary is right.
 
    NOT PARALLEL to the edge above it, and that is the geometry rather than an
    error: the divide falls 0.52 across the frame and this falls 0.205, because
    the soffit recedes and its apparent depth shrinks from 43 percentage points
    at the left to 12 at the right. Re-run the detection if the photograph
    changes; do not nudge these by hand. */
-.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 87.5%, 0% 67%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 88%, 0% 67.5%); }
 .fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 43%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
