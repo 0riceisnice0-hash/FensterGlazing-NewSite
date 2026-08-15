@@ -1739,7 +1739,6 @@ function fenster_site_data(): array
                `PHOTO-CHECKLIST.md` is where that request belongs. */
             'roofline' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg', 'alt' => 'Fascia, soffit, guttering and downpipe at the corner of a tiled roof'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Vented soffit and black half-round guttering under a tiled roof edge'],
             ],
         ],
         'product_content' => [

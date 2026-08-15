@@ -294,8 +294,16 @@ function fenster_product_hub_data(string $slug): array
             'choices' => ['Two-way, three-way, square and rectangular lantern styles', 'RAL colours inside and outside', 'Solar-control glass for south-facing roofs', 'Security glazing and anti-tamper details'],
         ],
         'roofline' => [
-            'systems' => [$systems['liniar']],
-            'badges' => ['5m boards', 'Low maintenance', 'Ventilation details'],
+            /* NO SYSTEM BADGE ON ROOFLINE. It carried the Liniar mark, which put that
+               logo and the alt text "Liniar" on a page for a product we do not buy
+               from them: roofline comes through a trade distributor and the owner
+               has confirmed he does not know the range. A logo names a supplier as
+               surely as a sentence does, which is the rule that took a maker's badge
+               off the louvre render. No badge is the honest answer, and the Product
+               Hub Rule already allows it: routes with no system mapped get none
+               rather than an invented one. */
+            'systems' => [],
+            'badges' => ['Fascias and soffits', 'Guttering', 'Low maintenance'],
             'heading' => 'Fascias, soffits, guttering and the vents between them.',
             'copy' => 'The fascia carries the gutter, the soffit closes the gap to the wall, and the vents between them keep air moving through the roof space. Colour is chosen to sit with the windows and doors below.',
             'specs' => [
