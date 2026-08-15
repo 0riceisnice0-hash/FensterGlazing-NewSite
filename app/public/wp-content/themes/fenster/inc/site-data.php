@@ -3315,6 +3315,92 @@ function fenster_site_data(): array
             ['name' => 'Warwick', 'privacy' => 1, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Warwick-privacy-0.webp', 'copy' => 'A handmade-style texture with character and the lightest level of privacy.'],
             ],
         ],
+        /* ROOFLINE COLOURS ARE THEIR OWN RANGE AND DELIBERATELY NOT IN
+           `colour_options`. Owner instruction, 2026-08-15: that hub is the window
+           and door foil and powder-coat range, which is neither what a roofline is
+           made from nor where it is bought, and the roofline finishes must NOT be
+           added to it. Two separate arrays, no cross-reference, on purpose — the
+           whole point is that they are different ranges from different suppliers.
+
+           THE BOARD LIST IS THE FIFTEEN ALREADY PUBLISHED ON THE ROUTE, in
+           `product_content['roofline']` and in the specification-choices card, and
+           the names and the order here match both. This site has already shipped a
+           colour count that disagreed with itself twice — the uPVC door strip said
+           14 and 16 on its way to 13 — so the rule is one list, and anything that
+           states a number reads it from here.
+
+           SEVENTEEN FASCIA PHOTOGRAPHS WERE COMMITTED AND FIFTEEN ARE USED.
+           `fascia-black-smooth.jpg` and `fascia-grey-smooth.jpg` are held back for
+           two reasons, both of which need the owner rather than a decision here.
+           They are letterboxed onto white instead of filling the 460x272 window
+           the other fifteen share, so they visibly jump in a rail of full-bleed
+           photographs. And smooth is a SURFACE rather than a colour — the benefit
+           copy on the route already says grey comes smooth or grained — so adding
+           them as tiles would either invent two colour names nobody has confirmed
+           or leave two greys on the rail that a customer cannot tell apart. Ask
+           which grey the smooth one is, and whether smooth should show separately.
+
+           NO HEX VALUES, deliberately. Every entry has a photograph, so the flat
+           swatch fallback never renders, and a roofline corner shot is mostly sky
+           and brick — any hex sampled from one would be a colour nobody can order.
+           That is the Swatch Provenance Rule arriving at "do not invent one"
+           rather than at "sample it".
+
+           The photographs are the distributor's, supplied and cleared by the owner
+           on 2026-08-15 and checked for supplier branding before committing, so no
+           maker is named here or on the page. */
+        'roofline_colours' => [
+            'groups' => [
+                'boards' => [
+                    'label' => 'Fascia, soffit and bargeboard',
+                    'colours' => [
+                        /* White and Foiled White are the only pair on this rail a
+                           customer cannot separate by eye, which is exactly what a
+                           sub-label is for. Every other board is foiled, which these
+                           two tiles make obvious without a note on all fifteen. The
+                           twenty five and ten year guarantee split stays in the FAQ,
+                           stated once, rather than being repeated down the rail. */
+                        ['name' => 'White', 'finish' => 'Unfoiled', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-white.jpg'],
+                        ['name' => 'Foiled White', 'finish' => 'Foiled', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-white-foiled.jpg'],
+                        ['name' => 'Cream', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-cream.jpg'],
+                        ['name' => 'Black', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-black.jpg'],
+                        ['name' => 'Dark Grey', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-dark-grey.jpg'],
+                        ['name' => 'Slate Grey', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-slate-grey.jpg'],
+                        ['name' => 'Anthracite Grey', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-anthracite-grey.jpg'],
+                        ['name' => 'Agate Grey', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-agate-grey.jpg'],
+                        ['name' => 'Chartwell Green', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-chartwell-green.jpg'],
+                        ['name' => 'Rosewood', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-rosewood.jpg'],
+                        ['name' => 'Light Oak', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-light-oak.jpg'],
+                        ['name' => 'Irish Oak', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-irish-oak.jpg'],
+                        ['name' => 'Wine Red', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-red.jpg'],
+                        ['name' => 'Royal Blue', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-blue.jpg'],
+                        ['name' => 'Rustic Green', 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/fascia-green.jpg'],
+                    ],
+                ],
+                /* GUTTERING IS A SECOND DECISION AND A SECOND RAIL, not six more
+                   tiles on the first one. The board photographs are roofline
+                   corners on brick against sky; these are isolated fittings on
+                   white. Mixing the two treatments in one rail is the fault already
+                   recorded against the CGI render in a row of photographs on the
+                   doors hub — the odd one out is the first thing the eye lands on.
+
+                   `pale` puts the hairline on the media, because a white gutter
+                   photographed on white reads as an empty tile without it. The same
+                   reason smooth white carries one on the colour hub. It is set here
+                   rather than derived, since these have no hex to derive it from. */
+                'guttering' => [
+                    'label' => 'Guttering and downpipes',
+                    'colours' => [
+                        ['name' => 'White', 'pale' => true, 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/gutter-white.jpg'],
+                        ['name' => 'Black', 'pale' => true, 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/gutter-black.jpg'],
+                        ['name' => 'Grey', 'pale' => true, 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/gutter-grey.jpg'],
+                        ['name' => 'Anthracite Grey', 'pale' => true, 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/gutter-anthracite-grey.jpg'],
+                        ['name' => 'Brown', 'pale' => true, 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/gutter-brown.jpg'],
+                        ['name' => 'Cast Iron', 'pale' => true, 'image' => '/wp-content/themes/fenster/assets/images/products/colours/roofline/gutter-cast-iron.jpg'],
+                    ],
+                ],
+            ],
+        ],
         'colour_options' => [
             'intro' => 'Frame colour changes how a window or door sits against brick, render, roofline and hardware. The two materials get their colour in completely different ways, which is worth knowing before you choose: uPVC is finished with a foil bonded to the profile, aluminium is powder coated. Both can be a different colour inside and out.',
             'materials' => [

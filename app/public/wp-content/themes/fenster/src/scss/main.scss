@@ -36409,6 +36409,7 @@ html.fg-blinds-reveal-locked {
 .fg-upvc-colours,
 .fg-alu-colours,
 .fg-blind-colours,
+.fg-roofline-colours,
 .fg-handle-finishes,
 .fg-heritage-door-enquiry {
   padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
@@ -39349,6 +39350,29 @@ html.fg-blinds-reveal-locked {
 
 [data-fg-colour-material="upvc"] .fg-colour-rail__media img {
   object-position: center top;
+}
+
+/* The roofline photographs are 460x272 corners rather than square swatches, so
+   the tile takes the shape of the source. Crop the box to the picture, never the
+   picture to the box: the square default cuts the gutter and the downpipe off a
+   subject that runs across the frame, which is the whole thing being shown.
+
+   Both groups share it, because the gutter fittings were cropped through the
+   same window as the boards. If the photography is ever re-cut, change this
+   ratio in the same commit or every tile silently letterboxes. */
+.fg-colour-rail--roofline .fg-colour-rail__media {
+  aspect-ratio: 460 / 272;
+}
+
+/* The group label above each rail. It is an eyebrow rather than a heading
+   because `.fg-colour-rail__slide h3` is already the colour name, so a real h3
+   here would restyle every tile on the rail. */
+.fg-roofline-colours__group {
+  margin: clamp(1.4rem, 2.6vw, 2.1rem) 0 0;
+}
+
+.fg-roofline-colours__group:first-of-type {
+  margin-top: clamp(0.5rem, 1vw, 0.85rem);
 }
 
 /* Smooth white is the unfoiled profile and has no swatch photograph, so it

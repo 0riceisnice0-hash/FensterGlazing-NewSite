@@ -4815,7 +4815,20 @@ if ($is_commercial_hub) {
                  finish chart, the privacy glass card and the full handle grid are
                  all on the page already, so the cards were a table of contents for
                  things three sections away. */ ?>
-        <?php if (! $is_upvc_doors_bespoke) : ?>
+        <?php /* AND GATED OFF FOR ROOFLINE, 2026-08-15, once the colour rail was
+                 built. On that route this band had exactly one card left — privacy
+                 glass makes no sense on a product with no glass in it, and roofline
+                 takes no handle — and that one card was fifteen colour names in
+                 prose immediately above a rail showing the same fifteen as
+                 photographs. Same call as uPVC doors: the card was a table of
+                 contents for the thing directly under it.
+
+                 CHECK WHAT A REMOVAL LEAVES. Gating this band is only safe because
+                 `roofline-colour-rail.php` renders below and carries this band's
+                 heading and intro with it. Deleting the card on its own is what
+                 left a heading over nothing earlier in this rebuild, and the owner
+                 caught it rather than I did. */ ?>
+        <?php if (! $is_upvc_doors_bespoke && ! $is_roofline) : ?>
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">
@@ -5024,6 +5037,15 @@ if ($is_commercial_hub) {
             </div>
         </section>
         <?php endif; ?>
+        <?php endif; ?>
+
+        <?php /* Roofline finishes inline, the same way the uPVC, aluminium and
+                 blind routes lay their colours out rather than pointing at a hub.
+                 It reads its own `roofline_colours` array: the roofline range is
+                 NOT in `colour_options` and must not be added to it, per the
+                 owner's instruction of 2026-08-15. */ ?>
+        <?php if ($is_roofline) : ?>
+            <?php get_template_part('template-parts/components/roofline-colour-rail'); ?>
         <?php endif; ?>
 
         <?php if (isset($upvc_foil_routes[$slug])) : ?>
