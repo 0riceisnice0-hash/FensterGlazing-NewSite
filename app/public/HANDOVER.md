@@ -1,5 +1,48 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-15 (roofline rebuild SHIPPED)
+
+**Live is `e945c600`, level with `main`, and test is level with it.** Forty-four
+commits over `34e902d6`, forty-three of them the `/roofline/` rebuild. Working
+tree clean, no release branch. **One commit is on test and not live:** `a3e7050e`,
+the roofline FAQ rewrite, verified and awaiting the owner.
+
+**Read in this order:** the newest START HERE block in `PROGRESS.md`, then the
+Current Truth section of `LIVECHANGES.md`, then the **Roofline Rule** and the
+**Roofline Highlight Geometry Rule** in `AI.md` before touching that page.
+
+### The release
+
+27 files added, 6 modified, **zero deleted, zero renamed**, so the deletion list
+was asserted EMPTY. **`assets/js/main.js` is provably unchanged across all
+forty-four commits** — it is not in the diff, and a rebuild reproduced it to
+live's own hash. Guard passed on fifteen files, eight of them expected-unchanged
+(the whole tracking strand plus both compiled assets), and all fifteen re-hashed
+after. Backup proven by extraction. Socket purge `msg:OK`.
+
+### Three template traps this route exposed, all still live in shared code
+
+- **`product_media[slug]['hero']` drives the body-image queue**
+  (`generated-page.php:1081`), which excludes whatever that key names. On a route
+  whose visible hero is a canvas rather than that image, the key must still name
+  what the canvas shows, or one photograph repeats and another never renders.
+- **`fg-product-why__media-stack` declares two rows and stretches**, so a route
+  with one body image drew the second row empty at full height. Now fixed with an
+  `:only-child` rule; the fix is independent of any route's image count.
+- **`$product_faq_limit` is 5 on most routes** and the same slice feeds the
+  FAQPage schema. A sixth FAQ renders nowhere and appears in no markup.
+
+### What needs the owner
+
+Two smooth board photographs held back; the six gutter photographs mixing
+half-round and square profiles; the mobile heading stack on the uPVC, aluminium
+and blind colour sections (pre-existing, deliberately not widened); nobody has
+scrolled the story in a real browser; and the wide roofline photograph, still the
+biggest asset gap on the site. Six roofline questions customers genuinely ask
+remain unanswerable from anything in this repository — cost, timescale, capping
+over versus full replacement, scaffolding, waste removal, and guttering on its
+own. They are listed in the FAQ data comment.
+
 ## Current state, 2026-08-15 (roofline rebuild, ON TEST)
 
 **Live is `34e902d6`. `main` is `d5581c56` and thirty-one commits sit above live,

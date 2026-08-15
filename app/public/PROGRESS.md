@@ -9,6 +9,89 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-15 (roofline rebuild — SHIPPED, LIVE IS `e945c600`)
+
+**Live is `e945c600`, level with `main`, and test is level with it.** Forty-four
+commits over `34e902d6`, forty-three of them the `/roofline/` rebuild — the
+largest single-route release this project has done. Working tree clean, no
+release branch. **`LIVECHANGES.md` carries the full release evidence; this is the
+narrative.**
+
+**ONE COMMIT IS ON TEST AND NOT LIVE:** `a3e7050e`, the roofline FAQ rewrite. It
+is verified on test and awaiting the owner's word.
+
+### What shipped
+
+The rebuild itself (thirty commits from the previous session) plus this session's
+work: the colour rails, the parts lighting properly, the boundary geometry, the
+photograph fixes and the section order.
+
+1. **The colour rails**, closing the largest of the three loose ends. 15 board
+   colours and 6 gutter colours in **two** rails, reusing the colour hub's
+   `.fg-colour-rail` markup so the existing controller adopts them and **no new
+   JavaScript was written**. They sit directly under the hero, above the guide.
+2. **The specification-choices band is gated off** for the route, because its one
+   remaining card was fifteen colour names in prose above a rail showing the same
+   fifteen as photographs. The band's heading moved onto the rail with the content.
+3. **A CMYK JPEG was caught before it ever rendered.** `fascia-white.jpg` carried
+   a U.S. Web Coated profile where the other twenty two are sRGB: orange sky, teal
+   soffit, 592KB against ~20KB. Converted in place, which is the one case the
+   cache rules allow, because no page had ever requested it.
+4. **The hero stopped repeating and the missing photograph was explained.**
+5. **The FAQ rewrite** is the one commit still on test.
+
+### THE THREE THINGS THIS SESSION GOT WRONG, because they are the reusable part
+
+1. **`product_media['roofline']['hero']` still named the fascia while the canvas
+   drew the soffit.** The body-image queue excludes whatever that key names, so it
+   protected a photograph that rendered nowhere and handed the body slot the one
+   already on screen. That is why one picture repeated and the other survived only
+   inside the Service schema. **Change that key in the same commit as any
+   story-frame change.**
+2. **`fg-product-why__media-stack` reserves two grid rows whether or not there is
+   a second picture**, and stretches to the copy beside it, so a route with one
+   body image draws the second row empty at full height. That was the gap under
+   the first picture. Fixed with an `:only-child` rule as well as by restoring an
+   image, because the hole was the grid's fault rather than the pool's.
+3. **The soffit boundary took SIX detectors and all six were wrong**, each
+   differently. Written up in full in the Roofline Highlight Geometry Rule; the
+   short version is the next section.
+
+### THE LESSON, and it cost more passes than the eleven the geometry already cost
+
+**Between the shiplap and the door head there is a smooth pale trim band, and it
+is neither.** Every automated attempt landed on it or below it, because that is
+where the strong luminance edges are.
+
+- A bright-above sweep found the **glazing reflection**, scoring 33.3 against 9.2.
+- A colour mask ran **through the head**, which is the same paint.
+- A contiguity check added specifically to catch that **shared the blind spot and
+  agreed within 7px**. That agreement was reported to the owner as corroboration.
+  **Two methods agreeing is worth nothing when they share a blind spot.**
+- A polarity-flipped sweep found the **trim's lower edge**. Polarity was a real
+  bug — the soffit is darker than the head, so the edge was invisible to every
+  earlier search by construction.
+- Groove-energy segmentation returned a **horizontal line**; groove-run fitting
+  found nine columns and **extrapolated off the frame**.
+
+**What settled it was drawing candidate lines at fixed offsets over the
+photograph and looking at them together.** The shiplap's end is unmistakable once
+the alternatives are beside it, and no score had pointed at it. That should have
+been reached for three attempts earlier, after the second time the owner said it
+was wrong. **If a boundary needs re-deriving here, draw the options and look.**
+
+### What still needs the owner
+
+The two smooth board photographs held back (`fascia-black-smooth`,
+`fascia-grey-smooth`): they are letterboxed rather than filling the shared crop,
+and smooth is a surface rather than a colour, so adding them would invent two
+names. **The six gutter photographs mix half-round and square profiles**, which
+implies the profile changes with the colour. **The mobile heading stack** in
+`main.scss` omits the uPVC, aluminium and blind colour headings, so those stay
+two-column at 390px on live pages — deliberately not fixed, because widening an
+approved fix is scope creep. **Nobody has scrolled the story in a real browser.**
+And the **wide roofline photograph** is still the biggest asset gap on the site.
+
 ## START HERE, 2026-08-15 (roofline rebuild — ON TEST, NOT LIVE)
 
 **LIVE IS STILL `34e902d6`. NOTHING IN THIS SESSION HAS SHIPPED TO PRODUCTION**
