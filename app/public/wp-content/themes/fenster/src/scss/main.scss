@@ -42804,14 +42804,40 @@ html.fg-blinds-reveal-locked {
    generous rather than tight: a soft, slightly-larger region reads as "this
    area" and survives a few pixels of error, where a tight outline that misses
    by the same margin reads as broken. */
+/* THE ZONE REPAINTS THE SOURCE PHOTOGRAPH RATHER THAN BRIGHTENING THE SCRIM.
+   Owner, 2026-08-15: the lit part should be at full brightness as in the
+   original, and it was reading dull.
+
+   It was `backdrop-filter: brightness(1.9)`, which cannot work over a scrim of
+   `rgba(2,10,9,0.88)`: the backdrop is already at 12% of the original, so 1.9x
+   only reaches 23%. Getting back to the source needs about 8.3x, and that blows
+   the highlights and drains the colour instead of restoring it. **A filter
+   cannot undo a scrim** — repaint the pixels.
+
+   `--fg-rl-frame` is set on `.fg-rl-parts` in the template and is the same URL
+   the canvas draws, so the browser has it cached and this costs no request.
+   `background-size: 100% 100%` against a box that is `inset: 0` of that
+   container puts it in the same coordinate space as the clip-path percentages
+   by construction, with no conversion step to get wrong. Both frames and the
+   container are 3:2, so nothing stretches. */
 .fg-rl-zone {
   position: absolute;
   inset: 0;
   opacity: 0;
   transition: opacity 620ms ease;
-  background: transparent;
-  backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
-  -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
+  background-image: var(--fg-rl-frame);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* The canvas swaps to the smaller frame here, so the zone follows it rather
+   than pulling the desktop one down a phone connection for a cached hit that
+   would then miss. */
+@media (max-width: 860px) {
+  .fg-rl-zone {
+    background-image: var(--fg-rl-frame-mobile, var(--fg-rl-frame));
+  }
 }
 
 .fg-rl-zone--fascia { clip-path: polygon(0% -18%, 100% 60%, 100% 76%, 0% 24%); }

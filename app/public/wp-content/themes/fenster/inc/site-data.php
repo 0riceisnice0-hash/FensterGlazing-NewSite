@@ -842,8 +842,40 @@ function fenster_site_data(): array
                     ['src' => '/wp-content/themes/fenster/assets/images/products/pet-flaps/pet-flap-round-glass-closeup.webp', 'alt' => 'Clear round pet flap in a glazed door, seen close up from outside'],
                 ],
             ],
+            /* THE HERO IS THE SOFFIT PHOTOGRAPH BECAUSE THAT IS WHAT THE PAGE
+               ACTUALLY LEADS ON, and getting this wrong is what made one of the
+               two roofline photographs disappear. `PROGRESS.md` recorded it as
+               unexplained; this is the explanation.
+
+               The rebuild replaced the hero image with the scroll canvas, which
+               draws `frame-001.webp` from the `roofline-story` frame folders —
+               the soffit shot. This key was left pointing at the fascia. Note
+               the folder name is deliberately not written with a wildcard here:
+               a `*` followed by a slash closes a PHP block comment, which is
+               exactly how this edit first failed its lint.
+
+               The body image queue at
+               `generated-page.php:1081` builds its list by excluding whatever
+               this key names, so it was protecting the fascia, which no longer
+               rendered anywhere, and handing the soffit to `fg-product-why`,
+               which is the picture the canvas was already showing. Hence one
+               photograph repeating and the other visible only inside the Service
+               schema's `image` property.
+
+               Pointing this at the soffit makes the queue exclude the right
+               image and hand the fascia to the body slot, which is the owner's
+               instruction of 2026-08-15: use the picture that is the hero on
+               live as the second picture here rather than repeating the hero.
+
+               It also puts the hub tile and the schema image back in step with
+               the page, which the Product Hub Rule requires: a hub card and the
+               product page it links to must never show different photographs of
+               the same product.
+
+               If the story frame is ever changed, change this in the same
+               commit or the same fault returns. */
             'roofline' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg', 'alt' => 'White fascia and soffit boards on a tiled roofline'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Soffit and fascia detail beneath a roof overhang'],
                 'gallery' => [
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg', 'alt' => 'White fascia and soffit boards on a tiled roofline'],
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Soffit and fascia detail beneath a roof overhang'],

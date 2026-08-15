@@ -3317,13 +3317,50 @@ if ($is_commercial_hub) {
                      supported nothing highlights and the page is exactly what it
                      was, which is the right way round for progressive
                      enhancement. */ ?>
-            <div class="fg-rl-parts" aria-hidden="true">
+            <?php /* THE ZONE SHOWS THE ORIGINAL PIXELS, IT DOES NOT BRIGHTEN THE
+                     SCRIMMED ONES. Owner, 2026-08-15: the highlighted part should
+                     be at full brightness as in the source photograph, and it was
+                     reading dull against the darkened rest.
+
+                     It was `backdrop-filter: brightness(1.9)` over a scrim of
+                     `rgba(2,10,9,0.88)`, and that arithmetic cannot win: the
+                     backdrop is already down at 12% of the original, so 1.9x
+                     reaches 23%. Recovering the source would need about 8.3x,
+                     which blows the highlights and drains the colour rather than
+                     restoring it. A filter cannot undo a scrim.
+
+                     So the frame is handed to the stylesheet as a custom property
+                     and the zone paints it directly, clipped to the same polygon.
+                     It is the same URL the canvas is already drawing, so it costs
+                     no extra request, and `background-size: 100% 100%` on a box
+                     that is `inset: 0` of this container lines it up with the clip
+                     percentages by construction rather than by conversion — which
+                     is the coordinate-conversion bug class the Roofline Highlight
+                     Geometry Rule exists to avoid.
+
+                     Both frames are 3:2 (1800x1200 and 900x600) and this
+                     container is `aspect-ratio: 1920/1280`, also 3:2, so one
+                     background rule serves both and neither distorts. */ ?>
+            <div
+                class="fg-rl-parts"
+                aria-hidden="true"
+                style="--fg-rl-frame: url('<?php echo esc_url($roofline_story_desktop_frames); ?>'); --fg-rl-frame-mobile: url('<?php echo esc_url($roofline_story_mobile_frames); ?>');"
+            >
                 <span class="fg-rl-parts__scrim"></span>
                 <span class="fg-rl-zone fg-rl-zone--fascia"></span>
                 <span class="fg-rl-zone fg-rl-zone--soffit"></span>
                 <span class="fg-rl-zone fg-rl-zone--gutter"></span>
+                <?php /* All three markers sit on the right, clear of the copy.
+                         The soffit one was at x=30% and landed behind the H1;
+                         owner instruction, 2026-08-15, to bring it across with
+                         the others. It is still on the soffit: that band runs
+                         from the fascia's lower edge down to the bottom of the
+                         frame, so at x=79% it spans roughly y=65% to y=100% and
+                         74% sits inside it. The three now read down the right
+                         edge in the order the parts stack on the building —
+                         gutter, fascia, soffit. */ ?>
                 <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 80%; --y: 60%;"><i></i><b>Fascia</b></span>
-                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 30%; --y: 55%;"><i></i><b>Soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 79%; --y: 74%;"><i></i><b>Soffit</b></span>
                 <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 78%; --y: 43%;"><i></i><b>Guttering</b></span>
             </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
