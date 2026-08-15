@@ -3322,9 +3322,9 @@ if ($is_commercial_hub) {
                 <span class="fg-rl-zone fg-rl-zone--fascia"></span>
                 <span class="fg-rl-zone fg-rl-zone--soffit"></span>
                 <span class="fg-rl-zone fg-rl-zone--gutter"></span>
-                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 80%; --y: 40%;"><i></i><b>Fascia</b></span>
-                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 46%; --y: 52%;"><i></i><b>Soffit</b></span>
-                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 80%; --y: 28%;"><i></i><b>Guttering</b></span>
+                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 82%; --y: 45%;"><i></i><b>Fascia</b></span>
+                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 48%; --y: 55%;"><i></i><b>Soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 82%; --y: 33%;"><i></i><b>Guttering</b></span>
             </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
             <div class="container fg-aw-story__content">

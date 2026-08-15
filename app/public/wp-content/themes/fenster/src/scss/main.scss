@@ -42712,7 +42712,8 @@ html.fg-blinds-reveal-locked {
 
    Three lines, one slope, taken off a 10% grid laid over the source photograph
    (which shares this box's aspect ratio, so readings need no conversion): the
-   roofline falls 0.53 vertically per unit horizontally. Line A is the top of the
+   roofline falls 0.63 vertically per unit horizontally, measured along the
+   gutter run rather than guessed. Line A is the top of the
    gutter, B the gutter-to-fascia junction, C the fascia-to-soffit junction. The
    gutter is A to B, the fascia is B to C, the soffit is C to the bottom of the
    frame. Change one boundary and the band on each side of it follows, which is
@@ -42741,9 +42742,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% -7%, 100% 46%, 100% 58%, 0% 5%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 5%, 100% 58%, 100% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(0% -18%, 100% 36%, 100% 46%, 0% -7%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% -11%, 100% 52%, 100% 64%, 0% 1%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 1%, 100% 64%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(0% -21%, 100% 42%, 100% 52%, 0% -11%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
