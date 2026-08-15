@@ -1346,6 +1346,16 @@ $journey_intro_copy = $is_about
         : 'The essentials are brought forward: style, performance, security, images, guarantees and a clear way to request a quote or consultation.');
 $journey_why_eyebrow = $is_about ? 'Why Fenster?' : ($is_commercial ? 'Why Fenster commercially?' : 'Product information');
 $journey_why_heading = $is_about ? 'Why choose Fenster Glazing?' : ($is_commercial ? 'Why choose Fenster for commercial glazing?' : $title);
+
+/* Roofline rendered "Product information / Roofline" as an H2 directly under an
+   H1 reading Roofline. Set AFTER the default above and outside every route
+   branch, because a first pass put it inside the pet-flap block, where it was
+   syntactically fine, linted clean and never ran. Twenty-odd routes still
+   repeat their own H1 as an H2 site-wide; this is the third to stop. */
+if ($slug === 'roofline') {
+    $journey_why_eyebrow = 'What we replace';
+    $journey_why_heading = 'What a roofline job actually covers.';
+}
 $journey_why_button = $is_about ? 'Talk to the team' : ($is_commercial ? 'Start a commercial enquiry' : 'Start a product enquiry');
 $journey_gallery_eyebrow = $is_about ? 'People and proof' : ($is_commercial ? 'Projects and systems' : 'Gallery and choices');
 $journey_gallery_heading = $is_about ? 'See the team, work and details behind the company.' : ($is_commercial ? 'See the commercial work, systems and details before you enquire.' : 'See the styles, finishes and details before you enquire.');
@@ -1384,14 +1394,6 @@ if ($is_pet_flap_page) {
     $journey_intro_copy = 'A sealed unit cannot be cut once it has been made, so glass means a new unit. A panel we cut ourselves.';
     $journey_why_eyebrow = 'Pet flap fitting';
     $journey_why_heading = 'Glass or panel decides the rest of the job.';
-
-/* Roofline was rendering "Product information / Roofline" as an H2 directly
-   under an H1 reading Roofline. Twenty-three routes still repeat their own H1
-   as an H2 site-wide; this is the third to stop, after tilt and turn and
-   aluminium flush. */
-if ($slug === 'roofline') {
-    $journey_why_heading = 'What a roofline job actually covers.';
-}
     $journey_why_button = 'Ask about a pet flap';
     $journey_gallery_eyebrow = 'Fitting choices';
     $journey_gallery_heading = 'Where the flap goes, and what that means.';
