@@ -929,8 +929,15 @@ $local_decision_cards = [
    before changing any of it. No figure is quoted, because none is confirmed
    for a route this template renders 270 ways. */
 $faqs = [
+    /* "How much DOES uPVC casement windows cost" is what the first pass shipped
+       to test, on every plural product, which is most of the twenty-one. The
+       names are a mix: "uPVC Casement Windows" and "Composite Doors" are plural,
+       "Double Glazing" is a mass noun. A trailing "s" separates them cleanly
+       across the whole list, and the question is the first thing an answer
+       engine reads off this page, so the grammar is load-bearing rather than
+       cosmetic. */
     [
-        'question' => 'How much does ' . lcfirst($service_name) . ' cost in ' . $location_name . '?',
+        'question' => 'How much ' . (str_ends_with(strtolower(trim($service_name)), 's') ? 'do' : 'does') . ' ' . lcfirst($service_name) . ' cost in ' . $location_name . '?',
         'answer' => 'We price most windows and doors online, so you can have a real figure in minutes rather than waiting for someone to call you back. What moves it is the size, the frame material, the colour, the glass specification and how it opens. A free consultation prices the job on the same software and the same price list, which is why the two figures agree, and the price we give you is the price.',
     ],
     [
