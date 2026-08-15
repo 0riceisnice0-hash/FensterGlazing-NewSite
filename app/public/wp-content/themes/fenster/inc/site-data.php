@@ -1953,11 +1953,34 @@ function fenster_site_data(): array
                     ['title' => 'Washing, not painting', 'copy' => 'The manufacturer guarantees white profiles for twenty five years and foiled finishes for ten, against discolouration, cracking and warping from the day it is installed.'],
                 ],
                 'faqs' => [
-                    ['question' => 'What counts as roofline?', 'answer' => 'The fascia along the roof edge, the soffit that closes the gap between it and the wall, the bargeboards up a gable, and the guttering and downpipes. Cladding sits in the same family where a gable or a porch calls for it.'],
-                    ['question' => 'Why do people replace timber with uPVC?', 'answer' => 'It holds its colour and needs washing rather than painting. The manufacturer guarantees white for twenty five years and foiled finishes for ten, against discolouration, cracking and warping.'],
-                    ['question' => 'Can the colour match my windows and doors?', 'answer' => 'Usually. White, foiled woodgrains and colours are all available, and grey comes in a smooth finish that suits aluminium or a grained one that reads like painted timber beside uPVC. Coloured fascias are mostly the square profile, because that is the one made in every colour.'],
-                                        ['question' => 'What guarantee comes with roofline?', 'answer' => 'The manufacturer guarantees the boards: twenty five years on white and ten on foiled finishes, against discolouration, cracking and warping from the day they go up. The installation is ours, and afterwards you ring us rather than a call centre.'],
-                    ['question' => 'Is it worth doing while the scaffolding is up?', 'answer' => 'That is usually why people ask. If windows or a roof are already being worked on, the access is paid for and the roof edge is the cheapest thing to reach at that moment.'],
+                    /* REWRITTEN 2026-08-15 into the questions customers actually
+                       ask. The old set opened with "What counts as roofline?",
+                       which the hero and the guide cards already answer, and
+                       carried "Why do people replace timber with uPVC?" — a trade
+                       framing, in the third person, of a question a homeowner asks
+                       about their own house.
+
+                       Only FIVE render (`$product_faq_limit`) and the same five
+                       feed the FAQPage schema, so a sixth added here renders
+                       nowhere and appears in no markup. Raise the limit too, or
+                       do not add one.
+
+                       Ordered the way the conversation goes: what am I buying,
+                       what does it cost me to keep, will it look right, what am I
+                       covered for, when should I do it.
+
+                       DELIBERATELY NOT ANSWERED HERE, because nobody has confirmed
+                       any of it and this route publishes no figure it cannot stand
+                       behind: what it costs, how long it takes, whether the old
+                       boards come off or are capped over, whether scaffolding is
+                       needed, whether the old material is taken away, and whether
+                       the guttering can be done on its own. Those are real
+                       questions customers ask and they are with the owner. */
+                    ['question' => 'Does it include the guttering, or just the boards?', 'answer' => 'Both, and the downpipes with them. Most people say fascias and mean the whole roof edge, so that is how we quote it: the fascia, the soffit under it, the bargeboards up a gable, and the guttering and downpipes that carry the water away.'],
+                    ['question' => 'Will I have to paint them?', 'answer' => 'No. uPVC holds its colour, so the boards get washed down rather than repainted, and that is the main reason people move off timber.'],
+                    ['question' => 'Can you match the colour to my windows and doors?', 'answer' => 'Usually. There are fifteen board finishes and six for the guttering, and they are all on this page to look at. Grey comes smooth to sit with aluminium bifolds, or grained to read like painted timber next to uPVC windows.'],
+                    ['question' => 'What guarantee do I get?', 'answer' => 'The manufacturer guarantees the boards for twenty five years in white and ten in a foiled finish, against discolouration, cracking and warping from the day they go up. The installation is ours, so afterwards you ring us rather than a call centre.'],
+                    ['question' => 'We are having other work done. Is it worth doing the roofline at the same time?', 'answer' => 'That is usually how it comes up, and yes. If scaffolding or a tower is already up for the windows or the roof, the access is paid for and the roof edge is the cheapest thing to reach while somebody is up there.'],
                 ],
             ],
             /* Rewritten 2026-08-10 with the page. Two things changed beyond the
