@@ -910,22 +910,48 @@ $local_decision_cards = [
         'copy' => 'Use the instant quote tool if you know the rough product and size, or send photos first if you need help choosing before survey.',
     ],
 ];
+/* THE MATRIX QUESTIONS ARE WHAT A HOMEOWNER ASKS, NOT WHAT A SALESPERSON
+   ANSWERS. Rewritten 2026-08-15, and the previous set is the reason why: it ran
+   "Can you quote for X in Y?", "Will the X be surveyed before manufacture?",
+   "Can the style be matched?", "Do you handle related products?" — four
+   objection-handlers, three of which opened with the word "Yes". Nobody asks a
+   question in that shape. They ask what it costs, whether you come out this
+   far, when somebody measures, and whether they can see the colour first.
+
+   These now carry FAQPage markup across roughly 270 routes, so the wording is
+   read by answer engines as well as people, and the cost question in
+   particular is the one that gets asked most and was not answered at all.
+
+   EVERY ANSWER IS A PUBLISHED OR OWNER-CONFIRMED FACT: the online tool and the
+   consultation run the same software and the same price list, the price does
+   not move, we do NOT measure at the consultation, swatches travel and full
+   samples are showroom-only. See the Owner-Confirmed Business Facts in `AI.md`
+   before changing any of it. No figure is quoted, because none is confirmed
+   for a route this template renders 270 ways. */
 $faqs = [
     [
-        'question' => 'Can you quote for ' . $service_name . ' in ' . $location_name . '?',
-        'answer' => 'Yes. Send the basics through the form and we can discuss ' . $product_profile['choices'] . ', likely survey requirements and installation timing for your ' . $location_name . ' property.',
+        'question' => 'How much does ' . lcfirst($service_name) . ' cost in ' . $location_name . '?',
+        'answer' => 'We price most windows and doors online, so you can have a real figure in minutes rather than waiting for someone to call you back. What moves it is the size, the frame material, the colour, the glass specification and how it opens. A free consultation prices the job on the same software and the same price list, which is why the two figures agree, and the price we give you is the price.',
     ],
     [
-        'question' => 'Will the ' . $service_name . ' be surveyed before manufacture?',
-        'answer' => 'Yes. ' . $town_profile['survey'],
+        'question' => 'Do you cover ' . $location_name . '?',
+        'answer' => 'Yes. We work across ' . $location_name . ' and the surrounding area from our showroom in Milton Keynes, and everyone who surveys and fits works for us.',
     ],
     [
-        'question' => 'Can the style be matched to the rest of the home?',
-        'answer' => 'Yes. ' . ucfirst($product_profile['style']) . '.',
+        'question' => 'When do you actually measure up?',
+        'answer' => 'Not at the consultation. Any sizes taken then are rough, and they are only there so the price is right. The proper measurements are a full technical survey, which happens once you have decided to go ahead and before anything is made. ' . $town_profile['survey'],
     ],
     [
-        'question' => 'Do you handle related windows, doors or glass at the same time?',
-        'answer' => 'Yes. ' . $product_profile['package'],
+        'question' => 'Can I see the colours and finishes before I decide?',
+        'answer' => 'Colour swatches come out to the consultation. The full product samples are at the Milton Keynes showroom, where you can open a bifold, feel the weight of a handle and compare a foil against a powder coat.',
+    ],
+    [
+        'question' => 'Can you match it to the rest of the house?',
+        'answer' => ucfirst($product_profile['style']) . '.',
+    ],
+    [
+        'question' => 'Can you do other windows or doors at the same time?',
+        'answer' => $product_profile['package'],
     ],
 ];
 
@@ -964,6 +990,26 @@ if ($is_mk_double_glazing_page) {
         [
             'question' => 'Can you quote several products together?',
             'answer' => 'Yes. Windows, doors, bifolds, sliders, roof lanterns and replacement glass can be reviewed together so the specification, colour and installation plan make sense across the property.',
+        ],
+        /* Two added 2026-08-15, both very commonly asked and neither answered
+           anywhere on this route. The measuring one corrects a real
+           misconception — people assume the consultation is the survey — and it
+           is the owner's correction of 2026-08-02.
+
+           THE FENSA ANSWER IS SAFE ON THIS ROUTE AND WOULD NOT BE ON THE
+           MATRIX. This page is double glazing, so it is new windows and doors,
+           which is exactly what the certificate and the CPA guarantee cover.
+           The matrix template renders twenty-one products including integral
+           blinds, which sit outside both, so the same answer must never be
+           added to the shared set above. FENSA eligibility and CPA cover are
+           linked; see the Order Process Rule in `AI.md`. */
+        [
+            'question' => 'When do you actually measure up?',
+            'answer' => 'Not at the consultation. Any sizes taken then are rough, and they are only there so the price is right. The proper measurements are a full technical survey, which happens once you have decided to go ahead and before anything is made.',
+        ],
+        [
+            'question' => 'Do I get a FENSA certificate and a guarantee?',
+            'answer' => 'Yes on new windows and doors: a ten year insurance-backed guarantee through the CPA, and your FENSA certificate sent to you direct. Anything afterwards, you ring us rather than a call centre, and you are talking to the same people who fitted it.',
         ],
     ];
 }
@@ -1443,6 +1489,12 @@ if (
             </div>
         </div>
     </section>
+
+    <?php /* One line, and it is the largest single structured-data change this
+             site has had: this template renders the ~270 town matrix routes AND
+             the head-term page, every one of which was showing questions with
+             nothing behind them. */ ?>
+    <?php fenster_render_faq_page_schema($faqs); ?>
 
     <section class="fg-location-faq fg-mk-faq">
         <div class="container fg-location-faq__grid">
