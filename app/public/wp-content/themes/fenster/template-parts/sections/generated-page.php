@@ -3324,10 +3324,11 @@ if ($is_commercial_hub) {
                      enhancement. */ ?>
             <div class="fg-rl-parts" aria-hidden="true">
                 <span class="fg-rl-parts__scrim"></span>
-                <span class="fg-rl-part fg-rl-part--fascia"></span>
-                <span class="fg-rl-part fg-rl-part--soffit"></span>
-                <span class="fg-rl-part fg-rl-part--vent"></span>
-                <span class="fg-rl-part fg-rl-part--gutter"></span>
+                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 16%; --y: 32%;"><i></i><b>Fascia</b></span>
+                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 43%; --y: 64%;"><i></i><b>Soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--vent" style="--x: 21%; --y: 27%;"><i></i><b>Over-fascia vent</b></span>
+                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 50%; --y: 51%;"><i></i><b>Gutter</b></span>
+                <span class="fg-rl-pin fg-rl-pin--downpipe" style="--x: 53%; --y: 83%;"><i></i><b>Downpipe</b></span>
             </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
             <div class="container fg-aw-story__content">

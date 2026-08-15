@@ -42585,23 +42585,21 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* Roofline part highlighting.
+/* Roofline part callouts.
    ---------------------------------------------------------------------------
-   THE REGIONS LIVE IN THE IMAGE'S SPACE, NOT THE STAGE'S, and the first pass
-   got that wrong in a way worth recording. The percentages were read off a
-   coordinate grid laid over the source photograph, which is 1529x1021. The
-   canvas is full-viewport and draws that photograph with COVER scaling, so it
-   is cropped top and bottom and those percentages mapped to nothing: the
-   fascia highlight landed on bare brickwork.
+   Tinted polygons were the wrong instinct: they read as highlighter pen and a
+   few pixels of placement error is glaring on a shape. A marker needs ONE
+   coordinate, a ring plus a hairline plus a small label, and the same error is
+   invisible. It is also the register this page was asked for — the part is
+   pointed AT rather than painted over.
 
-   This box reproduces the cover transform in CSS — source aspect ratio, at
-   least as large as the stage on both axes, centred — so a percentage inside
-   it means the same thing it meant on the grid. If the source photograph is
-   ever replaced, change the aspect ratio here in the same commit or every
-   region silently slides.
+   THE BOX REPRODUCES THE CANVAS COVER TRANSFORM so a percentage means what it
+   meant on the coordinate grid laid over the source photograph, which is
+   1529x1021. Replace that photograph and this aspect ratio changes with it or
+   every marker slides.
 
    `:has()` reads the `is-active` class the story controller already sets, so
-   none of this needs JavaScript. Panel 1 is the H1, so parts start at panel 2. */
+   none of this needs JavaScript. Panel 1 is the H1, parts start at panel 2. */
 .fg-rl-parts {
   position: absolute;
   top: 50%;
@@ -42612,39 +42610,77 @@ html.fg-blinds-reveal-locked {
   min-height: 100%;
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
 }
 
-/* The copy has to sit above the highlight, or the tint washes over the text. */
 .fg-aw-story--roofline .fg-aw-story__content {
   position: relative;
   z-index: 2;
 }
 
-.fg-rl-parts__scrim,
-.fg-rl-part {
+.fg-rl-parts__scrim {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 480ms ease;
+  background: rgba(6, 22, 19, 0.62);
+  transition: opacity 600ms ease;
 }
 
-.fg-rl-parts__scrim {
-  background: rgba(8, 26, 22, 0.5);
+.fg-rl-pin {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.96);
+  transition: opacity 520ms ease, transform 520ms ease;
 }
 
-/* Lighter than the first pass: the job is to lift the part out of the scrim,
-   not to paint it green. */
-.fg-rl-part {
-  background: rgba(46, 163, 90, 0.1);
-  backdrop-filter: brightness(1.45) saturate(1.1);
-  -webkit-backdrop-filter: brightness(1.45) saturate(1.1);
+/* The ring: a hairline circle with a lit core, drawn at a size that reads as an
+   instrument marker rather than a map pin. */
+.fg-rl-pin i {
+  position: relative;
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.07), 0 2px 14px rgba(0, 0, 0, 0.45);
 }
 
-.fg-rl-part--fascia { clip-path: polygon(0% 27%, 38% 41%, 38% 52%, 0% 38%); }
-.fg-rl-part--soffit { clip-path: polygon(26% 55%, 64% 66%, 64% 74%, 26% 70%); }
-.fg-rl-part--vent   { clip-path: polygon(0% 21%, 38% 35%, 38% 42%, 0% 28%); }
-.fg-rl-part--gutter { clip-path: polygon(25% 43%, 74% 59%, 74% 69%, 25% 54%); }
+.fg-rl-pin i::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* The label sits on a hairline that leaves the ring, so it reads as a callout
+   rather than a floating caption. */
+.fg-rl-pin b {
+  position: relative;
+  padding-left: 2.6rem;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+}
+
+.fg-rl-pin b::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 2.1rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.75);
+}
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
@@ -42653,16 +42689,22 @@ html.fg-blinds-reveal-locked {
   opacity: 1;
 }
 
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-part--fascia,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-part--soffit,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-part--vent,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-part--gutter {
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-pin--fascia,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-pin--soffit,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-pin--vent,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-pin--gutter,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-pin--downpipe {
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Below the phone breakpoint the copy fills the stage, so the labels would sit
+   under it. The rings stay, the words go. */
+@media (max-width: 860px) {
+  .fg-rl-pin b { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .fg-rl-parts__scrim,
-  .fg-rl-part {
-    transition: none;
-  }
+  .fg-rl-pin { transition: none; }
 }
