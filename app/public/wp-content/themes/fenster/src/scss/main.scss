@@ -42841,7 +42841,35 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-rl-zone--fascia { clip-path: polygon(0% -18%, 100% 60%, 100% 76%, 0% 24%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 100%, 0% 100%); }
+/* THE SOFFIT'S LOWER EDGE IS DETECTED, NOT THE BOTTOM OF THE FRAME. Owner,
+   2026-08-15: the zone was too big. It ran from the fascia divide straight down
+   to 100%, so it lit the bifold doors, the glazing, the brick pier and the
+   wagon wheel as well as the soffit. That edge had never been measured — the
+   other three came off the Hough sweep and this one was left at the frame edge,
+   which was survivable while the lift was a subtle 1.9x and is not now the zone
+   paints the source pixels.
+
+   Detected by segmenting the boarding rather than by another luminance sweep.
+   The sweep was run first and picked a line through the GLAZING REFLECTION at
+   y=61%..98%, scoring 33.3 against 9.2 for the runner up — a real, strong,
+   consistent edge that is not the one wanted. Same failure as the whole-image
+   SIFT fit in the replacement-glazing work, which locked onto the view through
+   the glass instead of the frame. **A high score is not evidence you measured
+   the right thing.**
+
+   What worked: sample the soffit's own colour under the divide, mask to it, take
+   the lower envelope column by column, and fit with outlier rejection. 101
+   inliers over the full width, checked against the mask by eye.
+   Fitted y = 0.1367x + 810 on the 1800x1200 frame, so 67.5% at x=0 and 88.0% at
+   x=100%. Published 0.5pp inside that: at full brightness a hairline of unlit
+   soffit is invisible where a lit strip of door head is not.
+
+   NOT PARALLEL to the edge above it, and that is the geometry rather than an
+   error: the divide falls 0.52 across the frame and this falls 0.205, because
+   the soffit recedes and its apparent depth shrinks from 43 percentage points
+   at the left to 12 at the right. Re-run the detection if the photograph
+   changes; do not nudge these by hand. */
+.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 87.5%, 0% 67%); }
 .fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 43%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
