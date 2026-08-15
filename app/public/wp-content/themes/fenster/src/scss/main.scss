@@ -42687,8 +42687,13 @@ html.fg-blinds-reveal-locked {
    image goes darker apart from the part being talked about. The marker names it,
    the zone proves it, and the two arrive together.
 
-   Zones are polygons over the photograph in the same percentage space as the
-   markers, so both move together if the source image is ever replaced. They are
+   ZONES COME FROM THE OWNER'S OWN MARKED-UP SCREENS, 2026-08-15, after four
+   passes of me estimating them failed. He painted out everything except one
+   component on each of two screenshots, which settled exactly where each part
+   begins and ends; those boundaries were converted from stage space into this
+   box's space, where a stage percentage maps as 7.3 + s * 0.854 because the box
+   is 960 tall against an 820 stage and centred. **If the stage height or the
+   source photograph changes, re-derive rather than nudge.** They are
    generous rather than tight: a soft, slightly-larger region reads as "this
    area" and survives a few pixels of error, where a tight outline that misses
    by the same margin reads as broken. */
@@ -42702,9 +42707,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(50% 15%, 100% 46%, 100% 57%, 50% 25%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 31%, 69% 54%, 69% 91%, 0% 81%); }
-.fg-rl-zone--gutter { clip-path: polygon(50% 5%, 100% 35%, 100% 46%, 50% 14%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% 54%, 95% 12%, 100% 24%, 0% 76%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 66%, 96% 20%, 100% 32%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(30% 32%, 96% 0%, 100% 10%, 34% 46%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
