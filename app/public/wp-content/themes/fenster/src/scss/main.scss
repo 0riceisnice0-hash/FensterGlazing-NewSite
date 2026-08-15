@@ -42621,7 +42621,7 @@ html.fg-blinds-reveal-locked {
   position: absolute;
   inset: 0;
   opacity: 0;
-  background: rgba(6, 22, 19, 0.62);
+  background: rgba(4, 16, 14, 0.74);
   transition: opacity 600ms ease;
 }
 
@@ -42682,6 +42682,30 @@ html.fg-blinds-reveal-locked {
   background: rgba(255, 255, 255, 0.75);
 }
 
+
+/* THE COMPONENT ITSELF LIGHTS, NOT JUST THE MARKER. Owner, 2026-08-15: the whole
+   image goes darker apart from the part being talked about. The marker names it,
+   the zone proves it, and the two arrive together.
+
+   Zones are polygons over the photograph in the same percentage space as the
+   markers, so both move together if the source image is ever replaced. They are
+   generous rather than tight: a soft, slightly-larger region reads as "this
+   area" and survives a few pixels of error, where a tight outline that misses
+   by the same margin reads as broken. */
+.fg-rl-zone {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 620ms ease;
+  background: transparent;
+  backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
+  -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
+}
+
+.fg-rl-zone--fascia { clip-path: polygon(0% 34%, 82% 8%, 86% 19%, 0% 46%); }
+.fg-rl-zone--soffit { clip-path: polygon(5% 54%, 88% 66%, 88% 100%, 5% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(46% 10%, 100% 37%, 100% 56%, 47% 22%); }
+
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-parts__scrim,
@@ -42691,10 +42715,19 @@ html.fg-blinds-reveal-locked {
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-pin--fascia,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-pin--soffit,
-.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-pin--vent,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-pin--soffit,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-pin--gutter {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+}
+
+/* Panel 4 is ventilation, which has no part of its own in this photograph, so it
+   lights the soffit: a vented soffit is where that air comes through. */
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-zone--fascia,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-zone--soffit,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-zone--soffit,
+.fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(5).is-active) .fg-rl-zone--gutter {
+  opacity: 1;
 }
 
 /* Below the phone breakpoint the copy fills the stage, so the labels would sit
@@ -42705,5 +42738,6 @@ html.fg-blinds-reveal-locked {
 
 @media (prefers-reduced-motion: reduce) {
   .fg-rl-parts__scrim,
-  .fg-rl-pin { transition: none; }
+  .fg-rl-pin,
+  .fg-rl-zone { transition: none; }
 }

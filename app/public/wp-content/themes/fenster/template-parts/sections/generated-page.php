@@ -3324,10 +3324,12 @@ if ($is_commercial_hub) {
                      enhancement. */ ?>
             <div class="fg-rl-parts" aria-hidden="true">
                 <span class="fg-rl-parts__scrim"></span>
-                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 38%; --y: 21%;"><i></i><b>Fascia</b></span>
-                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 46%; --y: 64%;"><i></i><b>Soffit</b></span>
-                <span class="fg-rl-pin fg-rl-pin--vent" style="--x: 30%; --y: 55%;"><i></i><b>Vented soffit</b></span>
-                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 69%; --y: 27%;"><i></i><b>Guttering</b></span>
+                <span class="fg-rl-zone fg-rl-zone--fascia"></span>
+                <span class="fg-rl-zone fg-rl-zone--soffit"></span>
+                <span class="fg-rl-zone fg-rl-zone--gutter"></span>
+                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 36%; --y: 26%;"><i></i><b>Fascia</b></span>
+                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 44%; --y: 72%;"><i></i><b>Soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 66%; --y: 33%;"><i></i><b>Guttering</b></span>
             </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
             <div class="container fg-aw-story__content">
