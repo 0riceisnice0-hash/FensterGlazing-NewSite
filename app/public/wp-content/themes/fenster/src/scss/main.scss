@@ -42880,26 +42880,37 @@ html.fg-blinds-reveal-locked {
    Extended straight to both edges because the owner's description is that it is
    straight, and the residuals say so too.
 
-   THEN MOVED UP 1.2pp, ANGLE UNTOUCHED. Owner: the angle is right, it is
-   catching the head of the door. Published values are 61.7% and 97.0%; the
-   detected joint is 62.9% and 98.2%, and the difference is deliberate clearance
-   rather than a correction to the fit.
+   AND THEN UP 8.0pp MORE, TO 53.7% AND 89.0%, WHICH IS THE PUBLISHED VALUE.
+   Slope is untouched throughout: 35.3 percentage points across the frame in every
+   version of this line.
 
-   The measurements say there is no slack at all here: the last groove sits 5.5px
-   above the detected line, so that line is on the JOINT between the last board
-   and the head, not on a board face. Anything above it eats shiplap and anything
-   below it is head. So this is not a better fit, it is a decision about which
-   error to take, and on a lit zone a sliver of head reads as a mistake where a
-   sliver of missing soffit does not. **Do not "correct" this back onto the
-   detected line** — it was there, and it was reported as catching the head.
-   Slope stays 0.2354; only the intercept moved.
+   THE EDGE FITTED ABOVE WAS THE WRONG FEATURE. Between the shiplap and the door
+   head there is a SMOOTH PALE TRIM BAND, roughly 100px deep on the 1800x1200
+   frame, and it is neither. Every automated attempt landed on the bottom of that
+   band or on the dark reveal beneath it, because those are where the strong
+   luminance edges are. The band has no grooves, so it is not soffit, and lighting
+   it is what "catching the head" meant.
+
+   SIX DETECTORS WERE RUN AND ALL SIX MISSED IT. Bright-above sweep found the
+   glazing. Colour mask ran through the head, being the same paint. Contiguity
+   check shared that blind spot and "confirmed" it. Polarity-flipped sweep found
+   the trim's lower edge. Groove-energy segmentation returned a horizontal line.
+   Groove-run fitting found nine columns and extrapolated off the frame. What
+   settled it was drawing candidate lines at fixed offsets over the photograph and
+   looking: the shiplap's end is unmistakable once the alternatives are beside it.
+   **If this needs re-deriving, draw the options and look. Do not trust a score.**
+
+   Checked against the luminance profiles afterwards: at x=450 the line lands at
+   y=750, immediately past the last groove at 718 and on the bright trim edge at
+   754. At x=750 and x=1050 it sits a board or two inside the boarding, which is
+   the safe direction — missing soffit is invisible, lit trim is not.
 
    NOT PARALLEL to the edge above it, and that is the geometry rather than an
    error: the divide falls 0.52 across the frame and this falls 0.205, because
    the soffit recedes and its apparent depth shrinks from 43 percentage points
    at the left to 12 at the right. Re-run the detection if the photograph
    changes; do not nudge these by hand. */
-.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 97%, 0% 61.7%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 24%, 100% 76%, 100% 89%, 0% 53.7%); }
 .fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 43%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
