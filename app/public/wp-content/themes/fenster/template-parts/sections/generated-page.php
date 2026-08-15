@@ -4864,8 +4864,21 @@ if ($is_commercial_hub) {
                    inaccurate as well as irrelevant. The real range is named on
                    the page itself instead, in the benefits, where a customer
                    reads it rather than being sent somewhere else to guess. */
+                /* THE COLOUR CARD CAME BACK, because removing it left the
+                   specification-choices band rendering a heading over nothing.
+                   The link to /colour-options/ is what was wrong, not the card:
+                   that hub is the window and door foil and powder-coat range,
+                   which is neither what a roofline is made from nor where it is
+                   bought. So the card stays and names the roofline range itself,
+                   and it points at the enquiry rather than at the wrong hub. */
                 if ($slug === 'roofline') {
-                    // No colour card.
+                    $option_cards[] = [
+                        'modifier' => 'colour',
+                        'url' => '#fenster-enquiry',
+                        'title' => __('Roofline colours', 'fenster'),
+                        'copy' => __('Fifteen finishes. White, Foiled White and Cream; Black, Dark Grey, Slate Grey, Anthracite Grey, Agate Grey and Chartwell Green; Rosewood, Light Oak, Irish Oak, Wine Red, Royal Blue and Rustic Green.', 'fenster'),
+                        'cta' => __('Ask about a colour', 'fenster'),
+                    ];
                 } elseif ($is_integral_blinds) {
                     // No colour card.
                 } elseif ($slug !== 'sliding-sash-windows' && ! $shows_upvc_colour_grid && ! isset($aluminium_colour_routes[$slug])) {

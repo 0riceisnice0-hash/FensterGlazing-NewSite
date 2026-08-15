@@ -1737,8 +1737,21 @@ function fenster_site_data(): array
                here. **Do not pad this back out with windows.** If the pool
                looks thin, the answer is a photograph of a roofline job, and
                `PHOTO-CHECKLIST.md` is where that request belongs. */
+            /* THE POOL WAS CUT TOO FAR AND THE GALLERY ENDED UP SHOWING ONE
+               PHOTOGRAPH REPEATED. Six wrong-product images were rightly removed
+               on 2026-08-15 — casements, a bay, flush and aluminium windows, each
+               with alt text bending it towards a roof edge it was not in. Then
+               the soffit shot was pulled as well because it had become the hero,
+               which left exactly one. Restored here to the two real roofline
+               photographs, and the hero is a CROP rather than the same file, so
+               the gallery is not repeating the picture above it.
+
+               THIS IS THE HONEST CEILING: two roofline photographs is what we
+               own. Do not pad it back out with windows. `PHOTO-CHECKLIST.md` is
+               where a request for a wide shot of a roofline run belongs. */
             'roofline' => [
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg', 'alt' => 'Fascia, soffit, guttering and downpipe at the corner of a tiled roof'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-soffit.jpg', 'alt' => 'Vented soffit and black guttering under a tiled roof edge'],
             ],
         ],
         'product_content' => [

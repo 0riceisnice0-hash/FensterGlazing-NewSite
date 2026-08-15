@@ -42710,24 +42710,23 @@ html.fg-blinds-reveal-locked {
    drawing them separately guarantees slivers of dark between them and a soffit
    that leans differently from the board above it.
 
-   THE FASCIA-TO-SOFFIT BOUNDARY IS THE STRONG DIAGONAL that runs almost corner
-   to corner across the photograph, and it is roughly PARALLEL to the roof edge.
-   Owner, 2026-08-15. Two earlier readings of it were wrong: 0.21, which came
-   from misreading the shiplap as a much shallower line and produced a soffit
-   that climbed into the fascia, and then a wedge built on that same bad number.
-   THEY ARE NOT PARALLEL, AND THAT IS PERSPECTIVE. Owner, 2026-08-15, and it is
-   the thing every previous pass got wrong: forcing one slope across all four
-   boundaries cannot fit, because lines running away from the camera converge
-   toward a vanishing point. The gutter reads well at about 0.78 and the top of
-   the fascia with it, but the fascia's BOTTOM edge is steeper, around 0.88, so
-   the band opens toward the right where the eave is nearest.
+   THE BOUNDARIES COME FROM THE OWNER'S OWN DRAWN LINES, 2026-08-15, after eight
+   failed passes of me reading angles off renders. He marked all three straight on
+   a screenshot in yellow; their endpoints are what these polygons are, converted
+   from stage space into this box's space (box 960 tall against an 820 stage,
+   centred, so a stage percentage maps as 7.3 + s * 0.854).
 
-   THAT BOTTOM EDGE IS THE DARK/LIGHT DIVIDE in the photograph, which is the
-   cleanest landmark in the frame: bright fascia above it, shadowed soffit below.
-   Set it against that divide rather than by arithmetic off the other lines.
+   THEY ARE NOT PARALLEL, AND THAT IS THE WHOLE POINT. Lines running away from
+   the camera converge on a vanishing point, so each boundary has its own slope:
+   roughly 1.03 along the top of the gutter, 1.16 under it where the clips are,
+   and 0.81 at the fascia-to-soffit divide. Every earlier attempt forced one
+   slope across all of them and could never fit, however carefully the number was
+   tuned. **Do not "tidy" these into a common angle.**
 
-   The shiplap is still the cue for WHERE that boundary sits, exactly as the
-   owner said. It was the ANGLE that was misread, not the landmark.
+   The fascia-to-soffit line is the dark/light divide, which is the cleanest
+   landmark in the frame: lit fascia above it, shadowed shiplap soffit below. The
+   gutter's lower edge is the one boundary that is not straight, because the
+   support clips step below the channel; the owner drew that step in.
 
    Three lines taken off a 10% grid laid over the source photograph
    (which shares this box's aspect ratio, so readings need no conversion): the
@@ -42761,9 +42760,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% -18%, 100% 60%, 100% 80%, 0% -8%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% -8%, 100% 80%, 100% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 44%, 100% 60%, 0% -18%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% -24%, 100% 76%, 100% 91%, 0% 22%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 22%, 100% 91%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(0% -51%, 100% 37%, 100% 76%, 0% -24%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
