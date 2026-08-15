@@ -801,7 +801,7 @@ $aluminium_windows_story_mobile_frames = $is_aluminium_windows ? fenster_alumini
 $is_roofline = $slug === 'roofline';
 $roofline_story_desktop_frames = $is_roofline ? fenster_story_asset_url('roofline-story', 'frames-desktop/frame-001.webp') : '';
 $roofline_story_mobile_frames = $is_roofline ? fenster_story_asset_url('roofline-story', 'frames-mobile/frame-001.webp') : '';
-$roofline_story_poster = $is_roofline ? fenster_generated_url('/wp-content/themes/fenster/assets/images/products/curated/liniar-roofline-fascia.jpg') : '';
+$roofline_story_poster = $is_roofline ? fenster_generated_url('/wp-content/themes/fenster/assets/images/products/curated/roofline-exploded-1500w.jpg') : '';
 $roofline_story_panels = [
     [
         'eyebrow' => 'The fascia',
@@ -3300,7 +3300,7 @@ if ($is_commercial_hub) {
                 data-frame-count="30"
                 aria-hidden="true"
             ></canvas>
-            <noscript><img class="fg-aw-story__fallback" src="<?php echo esc_url($roofline_story_poster); ?>" alt="Fascia, soffit, guttering and downpipe at the corner of a tiled roof"></noscript>
+            <noscript><img class="fg-aw-story__fallback" src="<?php echo esc_url($roofline_story_poster); ?>" alt="Fascia, soffit, guttering and the roof timbers behind them, drawn apart to show how a roof edge is built up"></noscript>
             <div class="fg-aw-story__shade"></div>
             <?php /* THE HIGHLIGHT IS THE POINT, not the line drawing. Owner,
                      2026-08-15: it "wants to highlight individual components of
@@ -3324,11 +3324,10 @@ if ($is_commercial_hub) {
                      enhancement. */ ?>
             <div class="fg-rl-parts" aria-hidden="true">
                 <span class="fg-rl-parts__scrim"></span>
-                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 16%; --y: 32%;"><i></i><b>Fascia</b></span>
-                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 43%; --y: 64%;"><i></i><b>Soffit</b></span>
-                <span class="fg-rl-pin fg-rl-pin--vent" style="--x: 21%; --y: 27%;"><i></i><b>Over-fascia vent</b></span>
-                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 50%; --y: 51%;"><i></i><b>Gutter</b></span>
-                <span class="fg-rl-pin fg-rl-pin--downpipe" style="--x: 53%; --y: 83%;"><i></i><b>Downpipe</b></span>
+                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 41%; --y: 38%;"><i></i><b>Fascia</b></span>
+                <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 47%; --y: 79%;"><i></i><b>Soffit</b></span>
+                <span class="fg-rl-pin fg-rl-pin--vent" style="--x: 87%; --y: 30%;"><i></i><b>Over-fascia vent</b></span>
+                <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 10%; --y: 63%;"><i></i><b>Gutter</b></span>
             </div>
             <div class="fg-aw-story__grain" aria-hidden="true"></div>
             <div class="container fg-aw-story__content">
