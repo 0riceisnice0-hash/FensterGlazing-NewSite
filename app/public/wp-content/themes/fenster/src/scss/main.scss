@@ -13795,7 +13795,8 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-commercial-product-intro h2,
 .fg-commercial-product-fit h2,
-.fg-commercial-product-section-head h2 {
+.fg-commercial-product-section-head h2,
+.fg-cm-faq__title {
   color: var(--color-steel);
   font-size: clamp(1.55rem, 2.45vw, 2.35rem);
   line-height: 1.08;
@@ -14171,10 +14172,18 @@ a.fg-cs-card__pill:focus-visible {
    3.1rem, which is the residential product scale and would land a heading half
    again as large as every other heading on a commercial page.
 
-   So this wrapper takes the commercial section rhythm instead: the same
-   padding as `.fg-cm-spec` and the same heading size as `.fg-cm-creds__title`.
-   That is the whole reason this block exists, and it is why a future tidy-up
-   must not "simplify" it by swapping the class back to `.fg-product-faq`. */
+   So this wrapper takes the commercial section rhythm instead: the same padding
+   as `.fg-cm-spec`, and the heading JOINS the shared commercial section-head
+   rule further up rather than restating its clamp. That is the whole reason
+   this block exists, and it is why a future tidy-up must not "simplify" it by
+   swapping the class back to `.fg-product-faq`.
+
+   THE HEADING SIZE WAS WRONG ON THE FIRST PASS and rendered measurement caught
+   it. It was matched to `.fg-cm-creds__title` at 25.6px, which looked like the
+   right neighbour and is not: credentials is a compact utility strip, while
+   every real commercial SECTION heading — intro, spec, checks, details, fit —
+   measures 35.28px at 1440. A FAQ block is a section. Do not set a font-size
+   here; the shared rule owns it. */
 .fg-cm-faq {
   padding: clamp(2.8rem, 5.5vw, 5rem) 0;
   border-top: 1px solid var(--color-line);
@@ -14189,9 +14198,6 @@ a.fg-cs-card__pill:focus-visible {
 
 .fg-cm-faq__title {
   margin: 0;
-  color: var(--color-steel);
-  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
-  line-height: 1.15;
 }
 
 @media (max-width: 860px) {
