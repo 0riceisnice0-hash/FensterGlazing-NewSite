@@ -9,7 +9,72 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-15 (AI discoverability on the commercial set — SHIPPED, LIVE IS `753d07af`)
+## START HERE, 2026-08-15 (AI discoverability on the residential side — SHIPPED, LIVE IS `34e902d6`)
+
+**Live is `34e902d6`, established by checksum, level with `main`, and test is
+level with it. Nothing is outstanding in either direction.** Nine commits over
+`753d07af`. Working tree clean, no release branch. **No SCSS or JS changed, so
+neither compiled asset moved and there was no build hazard.**
+
+### What this session was
+
+The same exercise the commercial set had earlier in the day, applied to the
+homepage and the residential product and service pages. Audited read-only first,
+then implemented, then shipped.
+
+### What shipped
+
+1. **One `FAQPage` emitter, and coverage where there was none.** Seven copies of
+   the same block existed across the theme, and the three hubs, the head-term
+   page and every one of the **~270 town matrix routes** rendered visible
+   questions with nothing behind them. That was the largest structured-data gap
+   on the site by page count, with the copy already written on every page.
+2. **Residential `Service` schema**, keyed off `product_usps`, carrying the
+   key-specification figures as `additionalProperty`.
+3. **A `WebSite` node**, so the homepage stops carrying only the business node.
+   No `SearchAction`: there is no site search and claiming one would be a false
+   capability.
+4. **`Person` schema for the sixteen named team members** and **`Article` on
+   case studies**, gated on `date_confirmed` — the one place on this site with
+   an honest date, which is why `dateModified` still exists nowhere else.
+5. **The matrix FAQ copy**, rewritten for the question a homeowner actually
+   asks rather than the one we wanted asked.
+
+### THREE MISTAKES THIS SESSION MADE, because they are the reusable part
+
+1. **The matrix schema went on the wrong one of two render blocks.**
+   `location-service.php` renders FAQs twice; the first pass hooked the
+   head-term branch, so it shipped to test covering one page out of ~270. The
+   diff looked right. **Fetching a matrix route is what found it**, and it is
+   the lesson `AI.md` already records against the case-study helpers.
+2. **The "lowest achievable" qualifier never fired.** It tested for a star on
+   the `product_usps` label; the star is not stored there, it is earned at
+   render from `glazing_u_values` where both a double and a triple figure
+   exist. So `/casement-windows/` was publishing a flat `U-value: 0.95` — the
+   best case restated as the standard one, which is what the on-page footnote
+   exists to prevent.
+3. **A competitor comparison was written, verified and pulled the same day**,
+   and separately **a FAQ cap was raised and put back**. Both are recorded in
+   `LIVECHANGES.md` with the reasoning; the short version is that dropping a
+   comparison by halves is worse than dropping it whole, and that a new FAQ has
+   to say something the route does not already say twice.
+
+### The owner ruling from this session
+
+**A competitor's SYSTEM may be named; a competitor may not.** It scopes the
+"do not name a competitor system" line in the Heritage Windows Rule rather than
+deleting it. **No comparison is currently published**, so the ruling in `AI.md`
+is policy for if one is wanted, with its conditions attached: the other side's
+own published figures, attributed and dated, and state where they win in the
+same answer or publish no comparison at all.
+
+### What still needs the owner
+
+Unchanged: the two AOV figures, five specification tiles carrying an adjective,
+three price guides with no prices, the homepage hero lead which still opens on a
+banned word, and mobile page length.
+
+## START HERE, 2026-08-15 (AI discoverability on the commercial set — SHIPPED, LIVE WAS `753d07af`)
 
 **Live is `753d07af`, established by checksum, level with `main`, and test is
 level with it. Nothing is outstanding in either direction.** Working tree clean,
