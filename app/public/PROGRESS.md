@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-13
+Last updated: 2026-08-15
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -8,6 +8,80 @@ kept in place further down, in date order with the entries they summarise.
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## START HERE, 2026-08-15 (AI discoverability on the commercial set — SHIPPED, LIVE IS `753d07af`)
+
+**Live is `753d07af`, established by checksum, level with `main`, and test is
+level with it. Nothing is outstanding in either direction.** Working tree clean,
+no release branch. Eight commits over `1ccc8bd8`: the three commercial
+specification commits that had been on test since 2026-08-13, two docs commits,
+and three from this session.
+
+### What this session was
+
+An audit of the commercial pages for AI discoverability and entity authority,
+then the fixes. Read-only first, then implemented, then shipped.
+
+### The three findings that mattered
+
+1. **The `Service` schema was fragmenting the business entity.** Every commercial
+   route re-declared its own inline `HomeAndConstructionBusiness` carrying a
+   name, a url and a phone number. Nothing connected it to the `#business` node
+   on the same page, so thirteen routes each described an address-less,
+   credential-less company that merely shared our name, and none of the
+   authority on those pages reached the real entity. It is a `@id` reference
+   now. **This was the highest-value fix on the set and it is two lines.**
+2. **Thirteen commercial routes carried no FAQ content and no `FAQPage` markup**,
+   while every residential product page had both. An extractable question and
+   answer is the format an answer engine quotes, and the commercial audience
+   arrives with exactly the kind of specific question a FAQ answers.
+3. **Constructionline Gold and SSIP appeared in no structured data at all**,
+   despite each having its own page and being the two things a PQQ asks for.
+   They are `hasCredential` now. `https://www.fensa.org.uk/` came out of
+   `sameAs` in the same pass: it identifies FENSA rather than us, and an
+   association in an identity property dilutes every other entry in it.
+
+### What shipped
+
+Company number `11579136` and VAT `GB305818213` as identifiers, the registered
+name from the site's own terms page, the Companies House record in `sameAs`,
+`@id`/image/`OfferCatalog`/`additionalProperty` on every commercial `Service`,
+59 FAQs across 13 routes and the hub through a new shared `faq-block.php`
+component, and `/llms.txt` as a virtual route. Plus the three commercial
+specification commits that were already waiting.
+
+### THE MISTAKE THIS SESSION MADE, because it is the reusable part
+
+**A heading was sized against the wrong neighbour and only rendered measurement
+caught it.** The FAQ block's H2 was matched to `.fg-cm-creds__title` at 25.6px,
+which looked like the right reference and is not: credentials is a compact
+utility strip, while every real commercial *section* heading measures 35.28px.
+The block shipped to test a size and a half small. Nothing in the source said
+so, and reading the CSS again would not have found it — the fix came from
+measuring the rendered page at 1440 and at a true 390 inside an iframe.
+`STYLE.md` has said "if a screenshot looks wrong but computed values look right,
+the screenshot wins" for a month; this is the inverse and the same lesson.
+**Measure a new component against its actual neighbours before believing the
+class you copied was the right one.**
+
+### Two things worth knowing before the next session
+
+- **The live `robots.txt` is not theme-generated.** It is a static file in the
+  Bedrock document root, so a change made in the theme deploys cleanly and does
+  nothing. That is why `/llms.txt` is a route rather than a file. Fixing it
+  needs file access to the web root.
+- **`dateModified` was deliberately NOT added.** Doing it honestly needs a real
+  per-page revision date the theme does not track, and deriving one from file
+  mtime would claim every page changed on every deploy. That is an invented
+  figure, which this project does not publish. It needs a data decision.
+
+### What still needs the owner
+
+Unchanged from 2026-08-13 apart from the specification rows, which shipped: two
+AOV figures (still `FENSTER_SPEC_TBC`, and correctly absent from both the page
+and the new schema); five specification tiles carrying an adjective; three price
+guides showing no prices; the homepage hero lead, which still opens on a word
+`TONEOFVOICE.md` bans; and mobile page length.
 
 ## START HERE, 2026-08-13 (forensic audit — 34 COMMITS SHIPPED, LIVE IS BACK ON `main`)
 
