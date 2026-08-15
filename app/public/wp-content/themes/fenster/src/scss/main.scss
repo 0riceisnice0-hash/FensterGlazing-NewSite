@@ -42704,6 +42704,15 @@ html.fg-blinds-reveal-locked {
    edge is a straight line along the underside of the fascia rather than a slope
    that cuts up through it.
 
+   THE ANGLES ARE MEASURED OFF THE SOURCE PHOTOGRAPH, not estimated. A 10% grid
+   was laid over the image itself, which shares this box's aspect ratio, so what
+   was read off it needs no conversion at all. TWO DIFFERENT SLOPES, and using
+   one for everything is what made these look "slightly off": the gutter and the
+   fascia follow the roof edge at roughly 0.78 vertical per horizontal, while the
+   soffit's top boundary runs at about 0.21 because it is the far edge of a plane
+   receding away from the camera, not a line along the roof. Re-measure the same
+   way if the photograph changes.
+
    THE FASCIA RUNS THE FULL WIDTH OF THE FRAME. It was starting at 50% and
    lighting only the right-hand half of a board that carries on to the left edge,
    rising as it goes because the whole roofline descends left to right. Carried
@@ -42723,9 +42732,9 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% 3%, 100% 53%, 100% 65%, 0% 15%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 30%, 100% 65%, 100% 100%, 0% 100%); }
-.fg-rl-zone--gutter { clip-path: polygon(52% 15%, 100% 40%, 100% 54%, 54% 29%); }
+.fg-rl-zone--fascia { clip-path: polygon(24% 0%, 100% 63%, 100% 74%, 16% 0%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% 42%, 100% 74%, 100% 100%, 0% 100%); }
+.fg-rl-zone--gutter { clip-path: polygon(35% 0%, 100% 49%, 100% 61%, 23% 0%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
