@@ -42715,8 +42715,16 @@ html.fg-blinds-reveal-locked {
    Owner, 2026-08-15. Two earlier readings of it were wrong: 0.21, which came
    from misreading the shiplap as a much shallower line and produced a soffit
    that climbed into the fascia, and then a wedge built on that same bad number.
-   All three boundaries share one slope of about 0.78, so the three bands are
-   parallel and of even depth, which is what the picture actually shows.
+   THEY ARE NOT PARALLEL, AND THAT IS PERSPECTIVE. Owner, 2026-08-15, and it is
+   the thing every previous pass got wrong: forcing one slope across all four
+   boundaries cannot fit, because lines running away from the camera converge
+   toward a vanishing point. The gutter reads well at about 0.78 and the top of
+   the fascia with it, but the fascia's BOTTOM edge is steeper, around 0.88, so
+   the band opens toward the right where the eave is nearest.
+
+   THAT BOTTOM EDGE IS THE DARK/LIGHT DIVIDE in the photograph, which is the
+   cleanest landmark in the frame: bright fascia above it, shadowed soffit below.
+   Set it against that divide rather than by arithmetic off the other lines.
 
    The shiplap is still the cue for WHERE that boundary sits, exactly as the
    owner said. It was the ANGLE that was misread, not the landmark.
@@ -42753,8 +42761,8 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(0% -18%, 100% 60%, 100% 78%, 0% 0%); }
-.fg-rl-zone--soffit { clip-path: polygon(0% 0%, 100% 78%, 100% 100%, 0% 100%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% -18%, 100% 60%, 100% 80%, 0% -8%); }
+.fg-rl-zone--soffit { clip-path: polygon(0% -8%, 100% 80%, 100% 100%, 0% 100%); }
 .fg-rl-zone--gutter { clip-path: polygon(0% -34%, 100% 44%, 100% 60%, 0% -18%); }
 
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
