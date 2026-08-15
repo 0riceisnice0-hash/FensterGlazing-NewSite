@@ -42702,7 +42702,13 @@ html.fg-blinds-reveal-locked {
    is the plane below it. Every zone was one band too high, so what was labelled
    fascia was lighting the gutter. Owner correction, 2026-08-15. The soffit's top
    edge is a straight line along the underside of the fascia rather than a slope
-   that cuts up through it. **If the stage height or the source photograph changes,
+   that cuts up through it.
+
+   THE FASCIA RUNS THE FULL WIDTH OF THE FRAME. It was starting at 50% and
+   lighting only the right-hand half of a board that carries on to the left edge,
+   rising as it goes because the whole roofline descends left to right. Carried
+   out to x=0 on the same slope; anything past the top of the frame simply
+   clips. **If the stage height or the source photograph changes,
    re-derive rather than nudge.** They are
    generous rather than tight: a soft, slightly-larger region reads as "this
    area" and survives a few pixels of error, where a tight outline that misses
@@ -42717,7 +42723,7 @@ html.fg-blinds-reveal-locked {
   -webkit-backdrop-filter: brightness(1.9) saturate(1.12) contrast(1.04);
 }
 
-.fg-rl-zone--fascia { clip-path: polygon(50% 28%, 100% 53%, 100% 65%, 52% 40%); }
+.fg-rl-zone--fascia { clip-path: polygon(0% 3%, 100% 53%, 100% 65%, 0% 15%); }
 .fg-rl-zone--soffit { clip-path: polygon(0% 30%, 100% 65%, 100% 100%, 0% 100%); }
 .fg-rl-zone--gutter { clip-path: polygon(52% 15%, 100% 40%, 100% 54%, 54% 29%); }
 

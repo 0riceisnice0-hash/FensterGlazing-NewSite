@@ -3322,7 +3322,7 @@ if ($is_commercial_hub) {
                 <span class="fg-rl-zone fg-rl-zone--fascia"></span>
                 <span class="fg-rl-zone fg-rl-zone--soffit"></span>
                 <span class="fg-rl-zone fg-rl-zone--gutter"></span>
-                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 76%; --y: 45%;"><i></i><b>Fascia</b></span>
+                <span class="fg-rl-pin fg-rl-pin--fascia" style="--x: 68%; --y: 42%;"><i></i><b>Fascia</b></span>
                 <span class="fg-rl-pin fg-rl-pin--soffit" style="--x: 40%; --y: 68%;"><i></i><b>Soffit</b></span>
                 <span class="fg-rl-pin fg-rl-pin--gutter" style="--x: 78%; --y: 32%;"><i></i><b>Guttering</b></span>
             </div>
