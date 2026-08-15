@@ -498,11 +498,34 @@ function fenster_site_data(): array
                 ['label' => 'Glazing option', 'value' => 'Solar-control glass'],
                 ['label' => 'Guarantee', 'value' => '10 years'],
             ],
+            /* THIS ENTRY WAS TELLING LEGEND THREE THINGS THAT ARE NOT TRUE, and
+               none of them was visible on the site, which is the whole hazard of
+               this array: the strip does not render on this route, so the only
+               reader was the assistant and nobody could catch it from a page.
+               Corrected 2026-08-15. It is the second time this exact fault has
+               been found here; the repairs entry claimed a ten year guarantee
+               until 2026-08-06 for the same reason.
+
+               "Guarantee: 10 years" CONTRADICTED THE SITE'S OWN APPROVED COPY.
+               The windows hub FAQ says "Repairs, replacement glass on its own,
+               roofline, integral blinds and pet flaps sit outside it", and the
+               order-process rail correctly gives this route the variant for the
+               four routes outside FENSA and the CPA cover. So the page was
+               right, the rail was right, and Legend was telling customers the
+               opposite. Removed rather than reworded: a manufacturer's
+               guarantee on the boards is a real and different thing, and it
+               goes back only when the owner confirms which range we buy.
+
+               "Profile system: Liniar" is unverified and probably wrong. Owner,
+               2026-08-15: roofline comes through a trade distributor and he does
+               not know which range. **Do not put a system name back here from a
+               supplier's website.** "Fascia depth: 20mm" went for the same
+               reason: no confirmed figure exists for it anywhere.
+
+               What is left is what can be stood behind. */
             'roofline' => [
                 ['label' => 'Material', 'value' => 'uPVC'],
-                ['label' => 'Profile system', 'value' => 'Liniar'],
-                ['label' => 'Fascia depth', 'value' => '20mm'],
-                ['label' => 'Guarantee', 'value' => '10 years'],
+                ['label' => 'Covers', 'value' => 'Fascias, soffits, bargeboards, guttering and downpipes'],
             ],
             /* The strip itself no longer renders on this route, for the reasons
                in `generated-page.php`, but this array is KEPT and kept accurate
