@@ -42587,18 +42587,38 @@ html.fg-blinds-reveal-locked {
 
 /* Roofline part highlighting.
    ---------------------------------------------------------------------------
-   Regions read off a coordinate grid laid over the photograph, expressed as
-   percentages of the frame so they hold at any canvas width. The scrim darkens
-   everything and the active region is punched back to full brightness with an
-   accent tint, so the eye goes to the part the panel is talking about.
+   THE REGIONS LIVE IN THE IMAGE'S SPACE, NOT THE STAGE'S, and the first pass
+   got that wrong in a way worth recording. The percentages were read off a
+   coordinate grid laid over the source photograph, which is 1529x1021. The
+   canvas is full-viewport and draws that photograph with COVER scaling, so it
+   is cropped top and bottom and those percentages mapped to nothing: the
+   fascia highlight landed on bare brickwork.
+
+   This box reproduces the cover transform in CSS — source aspect ratio, at
+   least as large as the stage on both axes, centred — so a percentage inside
+   it means the same thing it meant on the grid. If the source photograph is
+   ever replaced, change the aspect ratio here in the same commit or every
+   region silently slides.
 
    `:has()` reads the `is-active` class the story controller already sets, so
-   this needs no JavaScript. Panel 1 is the H1, so parts start at panel 2. */
+   none of this needs JavaScript. Panel 1 is the H1, so parts start at panel 2. */
 .fg-rl-parts {
   position: absolute;
-  inset: 0;
-  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1529 / 1021;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+}
+
+/* The copy has to sit above the highlight, or the tint washes over the text. */
+.fg-aw-story--roofline .fg-aw-story__content {
+  position: relative;
+  z-index: 2;
 }
 
 .fg-rl-parts__scrim,
@@ -42610,21 +42630,22 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-rl-parts__scrim {
-  background: rgba(8, 26, 22, 0.55);
+  background: rgba(8, 26, 22, 0.5);
 }
 
+/* Lighter than the first pass: the job is to lift the part out of the scrim,
+   not to paint it green. */
 .fg-rl-part {
-  background: rgba(46, 163, 90, 0.18);
-  backdrop-filter: brightness(1.32) saturate(1.15);
-  -webkit-backdrop-filter: brightness(1.32) saturate(1.15);
+  background: rgba(46, 163, 90, 0.1);
+  backdrop-filter: brightness(1.45) saturate(1.1);
+  -webkit-backdrop-filter: brightness(1.45) saturate(1.1);
 }
 
-.fg-rl-part--fascia  { clip-path: polygon(0% 27%, 38% 41%, 38% 52%, 0% 38%); }
-.fg-rl-part--soffit  { clip-path: polygon(26% 55%, 64% 66%, 64% 74%, 26% 70%); }
-.fg-rl-part--vent    { clip-path: polygon(0% 24%, 38% 38%, 38% 44%, 0% 30%); }
-.fg-rl-part--gutter  { clip-path: polygon(25% 43%, 74% 59%, 74% 69%, 25% 54%); }
+.fg-rl-part--fascia { clip-path: polygon(0% 27%, 38% 41%, 38% 52%, 0% 38%); }
+.fg-rl-part--soffit { clip-path: polygon(26% 55%, 64% 66%, 64% 74%, 26% 70%); }
+.fg-rl-part--vent   { clip-path: polygon(0% 21%, 38% 35%, 38% 42%, 0% 28%); }
+.fg-rl-part--gutter { clip-path: polygon(25% 43%, 74% 59%, 74% 69%, 25% 54%); }
 
-/* Panel 2 is the first part, so nth-child is offset by one. */
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(2).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(3).is-active) .fg-rl-parts__scrim,
 .fg-aw-story--roofline:has(.fg-aw-story__panel:nth-child(4).is-active) .fg-rl-parts__scrim,
