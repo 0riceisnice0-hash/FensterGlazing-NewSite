@@ -1,5 +1,23 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-16 (who-fits-it correction SHIPPED)
+
+**Live is `d042d45a`, level with `main`, and test is level with it.** One theme
+file over `0d116b8a`, both compiled assets identical, deletion list empty.
+
+**The own-installers claim does not cover roofline installation** (owner,
+2026-08-16). Two shared strings asserted it on that route and both were live: the
+canonical order step 03 and the shared outside-FENSA aftercare string. Both are
+now overridden for `/roofline/` only. **The route states nothing about who fits
+it in either direction — do not restore either string and do not write the
+inverse.** The other three outside-FENSA routes keep the shared string. Full rule
+in `AI.md`.
+
+**The reusable half:** step 03 was kept on that route deliberately, on the
+reasoning that it was "true here". It was assumed, never checked, and it shipped
+to live. When a bespoke route takes the canonical rail, every step needs reading
+against that product.
+
 ## Current state, 2026-08-16 (roofline copy follow-up SHIPPED)
 
 **Live is `0d116b8a`, level with `main`, and test is level with it. Nothing is
