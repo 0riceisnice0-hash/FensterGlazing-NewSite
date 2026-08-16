@@ -1538,6 +1538,35 @@ if ($is_commercial) {
            03 and 04 stay. The canonical installation step is true here, and 04
            is already the outside-FENSA string set above. */
         if ($is_roofline) {
+            /* 03 AND 04 ARE OVERRIDDEN TOO, and this is the important part of
+               this block. Owner correction, 2026-08-16: the own-installers claim
+               does not cover roofline installation.
+
+               The canonical 03 says "Fitted by our own installers rather than
+               subcontractors" and the shared outside-FENSA 04 says "you are
+               talking to the same people who fitted it". Both were live on this
+               route and both were wrong on it. A previous pass kept 03
+               deliberately, on the reasoning that it was "true here" — it was
+               assumed, never checked, and that is the whole lesson: a shared
+               string is only true on a route until somebody confirms otherwise.
+
+               THE PAGE NOW SAYS NOTHING ABOUT WHO FITS IT, IN EITHER DIRECTION.
+               Owner instruction: do not state it, and do not state the opposite.
+               So 03 describes the work rather than the workforce, and 04 keeps
+               only the part that is true — that the customer rings us. It drops
+               "we look after our own work rather than passing you on" as well,
+               because that asserts an aftercare arrangement nobody has confirmed
+               for this route, and the inverse of a false claim is not a safe
+               claim, it is just a different unverified one.
+
+               THE OTHER THREE OUTSIDE-FENSA ROUTES KEEP THE SHARED STRING. This
+               is a roofline override, not a change to
+               `order_process.aftercare_outside_fensa_and_cpa`. */
+            if (isset($product_order_steps[2])) {
+                $product_order_steps[2]['copy'] = 'The boards and gutters go up once the access is sorted. It is all worked from outside, so you carry on using the house while it happens.';
+            }
+            $product_order_steps[$last]['copy'] = 'Anything afterwards, you ring us rather than a call centre.';
+
             if (isset($product_order_steps[0])) {
                 $product_order_steps[0]['title'] = 'Your quote';
                 $product_order_steps[0]['copy'] = 'We come and look at it rather than pricing it blind. You get the figure and what the access needs before you decide anything.';
