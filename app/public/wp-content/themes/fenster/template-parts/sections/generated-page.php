@@ -1540,7 +1540,7 @@ if ($is_commercial) {
         if ($is_roofline) {
             if (isset($product_order_steps[0])) {
                 $product_order_steps[0]['title'] = 'Your quote';
-                $product_order_steps[0]['copy'] = 'We come and look, because the height and the access decide as much as the boards do. You get the price and what the access needs before you decide anything.';
+                $product_order_steps[0]['copy'] = 'We come and look at it rather than pricing it blind. You get the figure and what the access needs before you decide anything.';
             }
             if (isset($product_order_steps[1])) {
                 $product_order_steps[1]['title'] = 'Access';
