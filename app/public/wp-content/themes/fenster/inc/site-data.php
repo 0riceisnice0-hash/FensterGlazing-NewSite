@@ -1969,18 +1969,32 @@ function fenster_site_data(): array
                        what does it cost me to keep, will it look right, what am I
                        covered for, when should I do it.
 
-                       DELIBERATELY NOT ANSWERED HERE, because nobody has confirmed
-                       any of it and this route publishes no figure it cannot stand
-                       behind: what it costs, how long it takes, whether the old
-                       boards come off or are capped over, whether scaffolding is
-                       needed, whether the old material is taken away, and whether
-                       the guttering can be done on its own. Those are real
-                       questions customers ask and they are with the owner. */
+                       ACCESS IS ANSWERED, owner-supplied 2026-08-16, and it went
+                       in because it was the most practical of the questions this
+                       page could not answer: it decides cost and disruption, so it
+                       gets asked early. It also replaced the "having other work
+                       done" question rather than being added, because five is the
+                       cap and the two are the same subject — the old point about
+                       scaffolding already being up survives as the closing line.
+
+                       Three of the four things the owner gave are used: that access
+                       is often needed and not on a bungalow, that we quote for it
+                       and say so up front, and that a customer may arrange their own
+                       because it is a third party either way. That last one is the
+                       `TONEOFVOICE.md` principle about respecting how the reader
+                       likes to do things, which is why it earns its sentence.
+
+                       STILL NOT ANSWERED, because nobody has confirmed any of it and
+                       this route publishes no figure it cannot stand behind: what it
+                       costs, how long it takes, whether the old boards come off or
+                       are capped over, whether the old material is taken away, and
+                       whether the guttering can be done on its own. Real questions,
+                       still with the owner. */
                     ['question' => 'Does it include the guttering, or just the boards?', 'answer' => 'Both, and the downpipes with them. Most people say fascias and mean the whole roof edge, so that is how we quote it: the fascia, the soffit under it, the bargeboards up a gable, and the guttering and downpipes that carry the water away.'],
                     ['question' => 'Will I have to paint them?', 'answer' => 'No. uPVC holds its colour, so the boards get washed down rather than repainted, and that is the main reason people move off timber.'],
                     ['question' => 'Can you match the colour to my windows and doors?', 'answer' => 'Usually. There are fifteen board finishes and six for the guttering, and they are all on this page to look at. Grey comes smooth to sit with aluminium bifolds, or grained to read like painted timber next to uPVC windows.'],
                     ['question' => 'What guarantee do I get?', 'answer' => 'The manufacturer guarantees the boards for twenty five years in white and ten in a foiled finish, against discolouration, cracking and warping from the day they go up. The installation is ours, so afterwards you ring us rather than a call centre.'],
-                    ['question' => 'We are having other work done. Is it worth doing the roofline at the same time?', 'answer' => 'That is usually how it comes up, and yes. If scaffolding or a tower is already up for the windows or the roof, the access is paid for and the roof edge is the cheapest thing to reach while somebody is up there.'],
+                    ['question' => 'Will I need scaffolding?', 'answer' => 'Often, yes, though not on a bungalow or anywhere a tower will reach. We look at the access when we quote and tell you what it needs before you decide. The scaffolding is a third party either way, so if you would rather arrange your own that is fine with us. And if it is already up for the windows or the roof, that is the moment to do the roof edge.'],
                 ],
             ],
             /* Rewritten 2026-08-10 with the page. Two things changed beyond the
