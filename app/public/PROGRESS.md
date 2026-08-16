@@ -9,6 +9,54 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-16 (roofline copy follow-up — SHIPPED, LIVE IS `0d116b8a`)
+
+**Live is `0d116b8a`, level with `main`, and test is level with it.** Six commits
+over `e945c600`, all `/roofline/` copy. **Two files modified, nothing added or
+deleted, and both compiled assets byte-identical**, so there was no build hazard.
+Full release evidence in `LIVECHANGES.md`.
+
+### What shipped
+
+**The FAQs are the questions customers actually ask.** The old set opened with
+"What counts as roofline?", which the hero and the four guide cards already
+answer, and carried "Why do people replace timber with uPVC?" — a trade framing
+in the third person of a question about the reader's own house. Five render and
+the same five feed the FAQPage schema, so a sixth renders nowhere at all.
+
+**The process rail was making a promise the route cannot keep.** Step 01 said
+"Price it yourself on the online tool" and the intro said "price it yourself
+online". **Roofline is in neither `$product_quote_embeds` nor any WindowCAD
+collection** and the page renders no quote embed, so it was pointing visitors at
+a tool that does not price a roof edge. Step 02 was a factory survey naming
+"thresholds" on a product that has none and is not made to survey sizes. Both
+replaced; 03 and 04 were already true and are untouched.
+
+**Access is answered**, on owner detail supplied 2026-08-16, and it took the FAQ
+slot rather than adding one. The part worth keeping is that scaffolding is a
+third party either way, so a customer may arrange their own — that is the
+`TONEOFVOICE.md` principle about respecting how the reader likes to do things,
+landing on something operational rather than on a CTA.
+
+### THE TRAP THIS SESSION PAID FOR
+
+**An override placed ABOVE the assignment it overrides is silently discarded.**
+The first pass at the rail put the `$journey_order_*` overrides about twenty
+lines above the unconditional assignment block. The steps changed, the eyebrow
+and intro did not, and the rail kept the exact sentence the commit existed to
+delete. It linted, it deployed, and the diff looked right. **Only fetching the
+page showed it** — the same shape as the matrix FAQ schema going on the wrong
+render block. The roofline overrides now sit in two blocks either side of that
+assignment, with a comment saying the split is deliberate.
+
+### Still with the owner
+
+Cost, timescale, capping over versus full replacement, waste removal and
+guttering on its own — five roofline questions customers genuinely ask that
+nothing in this repository can answer. Plus the two smooth board photographs, the
+gutter photographs mixing half-round and square profiles, the mobile heading
+stack on the other colour sections, and a real browser scroll of the story.
+
 ## START HERE, 2026-08-15 (roofline rebuild — SHIPPED, LIVE IS `e945c600`)
 
 **Live is `e945c600`, level with `main`, and test is level with it.** Forty-four

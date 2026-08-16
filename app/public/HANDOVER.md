@@ -1,5 +1,27 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-16 (roofline copy follow-up SHIPPED)
+
+**Live is `0d116b8a`, level with `main`, and test is level with it. Nothing is
+outstanding in either direction.** Six commits over `e945c600`, all `/roofline/`
+copy: the FAQ rewrite, the access FAQ and three on the process rail. Two files
+modified, nothing added or deleted, both compiled assets byte-identical.
+
+**Read in this order:** the newest START HERE block in `PROGRESS.md`, then the
+Current Truth section of `LIVECHANGES.md`, then the rule in `AI.md` for whichever
+page you are touching.
+
+**Two things worth knowing before touching a shared rail or hub:**
+
+- **`$journey_order_*` is assigned unconditionally**, so a per-route override
+  must sit BELOW that block. One placed above it is silently discarded, and the
+  page is the only place that shows it. Roofline's overrides are deliberately in
+  two blocks either side of the assignment.
+- **`$product_quote_embeds` does not cover every product route.** Roofline has no
+  collection and renders no embed, so any shared copy that promises an online
+  price is false there. Check the map before writing a step or a CTA that assumes
+  one.
+
 ## Current state, 2026-08-15 (roofline rebuild SHIPPED)
 
 **Live is `e945c600`, level with `main`, and test is level with it.** Forty-four
