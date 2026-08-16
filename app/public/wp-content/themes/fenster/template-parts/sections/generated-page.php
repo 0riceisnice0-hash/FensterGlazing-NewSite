@@ -1350,21 +1350,6 @@ $journey_why_heading = $is_about ? 'Why choose Fenster Glazing?' : ($is_commerci
 if ($slug === 'roofline') {
     $journey_why_eyebrow = 'What we replace';
     $journey_why_heading = 'What a roofline job actually covers.';
-    /* THE RAIL'S INTRO PROMISED AN ONLINE PRICE THIS ROUTE DOES NOT HAVE.
-       Owner, 2026-08-16: the process box does not make sense on roofline. The
-       canonical intro opens "The first one has two ways in: price it yourself
-       online, or have us come out", and roofline is in NEITHER
-       `$product_quote_embeds` NOR any WindowCAD collection — it is one of the
-       few product routes with no quote embed at all, so the page rendered a
-       step telling the visitor to price it on a tool that does not price it.
-       That is a false promise rather than a tone problem, which is why this is
-       a correction and not a preference.
-
-       Stated positively, per the 2026-08-02 ruling: it says what the first step
-       IS, not that there is no online price. */
-    $journey_order_eyebrow = 'Roofline process';
-    $journey_order_copy = 'Four steps, and it starts with us coming to look. The height and the access decide as much as the boards do, so that is the part we work out first.';
-    $journey_order_action = 'Ask about your roofline';
 }
 $journey_why_button = $is_about ? 'Talk to the team' : ($is_commercial ? 'Start a commercial enquiry' : 'Start a product enquiry');
 $journey_gallery_eyebrow = $is_about ? 'People and proof' : ($is_commercial ? 'Projects and systems' : 'Gallery and choices');
@@ -1414,6 +1399,29 @@ if ($is_pet_flap_page) {
     $journey_order_action = 'Ask about pet flap fitting';
     $journey_option_eyebrow = 'Pet flap checks';
     $journey_option_heading = 'Choose the fitting method around the existing door or glass.';
+}
+
+/* THE RAIL'S INTRO PROMISED AN ONLINE PRICE THIS ROUTE DOES NOT HAVE. Owner,
+   2026-08-16: the process box does not make sense on roofline. The canonical
+   intro opens "The first one has two ways in: price it yourself online, or have
+   us come out", and roofline is in NEITHER `$product_quote_embeds` NOR any
+   WindowCAD collection — it is one of the few product routes with no quote embed
+   at all, so the page was telling the visitor to price a roof edge on a tool
+   that does not price it. A false promise rather than a tone problem.
+
+   Stated positively, per the 2026-08-02 ruling: it says what the first step IS,
+   not that there is no online price.
+
+   THIS HAS TO SIT BELOW THE CANONICAL ASSIGNMENTS, NOT WITH THE OTHER ROOFLINE
+   OVERRIDES ~20 LINES UP. `$journey_order_*` is assigned unconditionally above,
+   so an override placed before it is silently overwritten — which is exactly
+   what happened on the first pass here: the steps changed and the eyebrow and
+   intro did not, and only fetching the page showed it. The pet flap block above
+   works for the same reason. */
+if ($slug === 'roofline') {
+    $journey_order_eyebrow = 'Roofline process';
+    $journey_order_copy = 'Four steps, and it starts with us coming to look. The height and the access decide as much as the boards do, so that is the part we work out first.';
+    $journey_order_action = 'Ask about your roofline';
 }
 
 if ($is_commercial) {
