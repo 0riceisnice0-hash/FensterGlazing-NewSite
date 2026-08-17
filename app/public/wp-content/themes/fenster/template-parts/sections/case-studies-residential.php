@@ -72,7 +72,7 @@ if ($is_archive) :
 
         <section class="fg-cs-list">
             <div class="container">
-                <div class="fg-cs-grid <?php echo esc_attr($is_commercial ? 'fg-cs-grid--overlay' : ''); ?>" data-fg-case-studies-archive data-fg-case-studies-initial="<?php echo esc_attr($is_commercial ? '6' : '4'); ?>">
+                <div class="fg-cs-grid <?php echo esc_attr($is_commercial ? 'fg-cs-grid--overlay' : ''); ?>" data-fg-case-studies-archive data-fg-case-studies-initial="6">
                     <?php foreach (array_values($cards) as $archive_index => $card) : ?>
                         <?php get_template_part('template-parts/components/case-study-card', null, [
                             'card' => $card,

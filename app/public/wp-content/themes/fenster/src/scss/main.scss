@@ -13011,6 +13011,14 @@ a.fg-cs-card__pill:focus-visible {
   transition: transform 220ms ease, box-shadow 220ms ease;
 }
 
+/* The archive defers its older cards with the hidden attribute, and both card
+   variants set a display of their own, which outranks the browser's own
+   [hidden] rule. Without this every card stayed on screen from the start and
+   Show more case studies looked like a button that did nothing. */
+.fg-cs-card[hidden] {
+  display: none;
+}
+
 .fg-cs-card:hover,
 .fg-cs-card:focus-visible {
   transform: translateY(-3px);
