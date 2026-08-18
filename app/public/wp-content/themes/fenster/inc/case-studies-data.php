@@ -1369,7 +1369,17 @@ function fenster_case_studies(): array
                porch it was reshot to show both fell outside it. A 3:4 window is
                985px and holds the whole door. Nothing else on the site changes,
                and the rows still line up because every image here shares the
-               new shape. See the note on `gallery_shape` in the template. */
+               new shape. See the note on `gallery_shape` in the template.
+
+               The front door file is also re-cut, 739x1600 down to 739x1366.
+               That is NOT a crop to the cell shape, which the guide forbids: at
+               0.541 it is still its own aspect, nowhere near the cell's 0.75.
+               What came off was the out-of-focus rose foliage across the
+               bottom, which was pushing the door far enough down the frame that
+               the 3:4 window still clipped the head of it. With that gone the
+               window holds the doorset whole, head to threshold. The handle
+               shot keeps its full height on purpose: it is a detail of the
+               lever and the two cylinders and the cell frames it already. */
             'gallery_shape' => 'tall',
             'video' => [
                 'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-drayton-parslow-stable-door.mp4',
