@@ -429,7 +429,18 @@ function fenster_link_card_image(string $url): string
             'heritage-aluminium-doors' => $curated . 'sheerline-heritage-door.jpg',
             'aluminium-bifold-doors' => $curated . 'sheerline-bifold-exterior.jpg',
             'aluminium-sliding-doors' => $curated . 'sheerline-sliding-door.jpg',
-            'slide-fold-doors' => $curated . 'neutral-slide-fold-doors.jpg',
+            /* Was `neutral-slide-fold-doors.jpg`, the scrape-era image the route
+               ran on before the 2026-08-18 rebuild. This map is the FOURTH place
+               that product's imagery lived, after `product_media`, the gallery
+               pool and the hub tile, and it was found only by rendering a town
+               matrix page and seeing the old picture come back. The comment on
+               the uPVC doors entry above says a related-link card is a third
+               place an image lives; for this product it was a fourth.
+
+               The open stack rather than the closed run, for the same reason the
+               hub card uses it: this cell is small, and stacked panels read at
+               that size where a closed wall of glass does not. */
+            'slide-fold-doors' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-open-stack-1400w.webp',
             'patio-doors' => $curated . 'liniar-patio-door.jpg',
             'integral-blinds' => $curated . 'notan-integral-blinds.jpg',
             'roof-lanterns' => $curated . 'sheerline-roof-lantern.jpg',
