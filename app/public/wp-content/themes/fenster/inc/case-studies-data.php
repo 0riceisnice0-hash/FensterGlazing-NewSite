@@ -63,6 +63,12 @@ function fenster_case_studies(): array
        finished to match them. Do not "fix" this by inventing a composite slug:
        check `colour_options.materials.composite` in site-data.php first. */
     $colour_agate = $colour_link('upvc', 'agate-grey');
+    /* Colza Yellow is RAL 1021 and it is in the COMPOSITE palette in
+       site-data.php, not the uPVC one, so the material segment matters:
+       the hub renders every material in `colour_options.materials` and the
+       deep-link handler matches `data-fg-colour-material` before it looks
+       for the swatch. */
+    $colour_colza = $colour_link('composite', 'colza-yellow');
 
     // The fitters who worked on each job. Each entry links to that person's
     // anchor on Meet the Team, so clicking a name scrolls to their profile.
@@ -1262,6 +1268,121 @@ function fenster_case_studies(): array
             'seo' => [
                 'title_tag' => 'Flush Casement Windows and Composite Door Case Study, Wolverton | Fenster Glazing',
                 'meta_description' => 'A real Fenster project in Wolverton, Milton Keynes: black brown Liniar flush casement windows, a composite front door and a uPVC back door on a 1930s semi.',
+            ],
+        ],
+
+        /* Drayton Parslow doors, added 2026-08-18 from five photographs and two
+         * videos the owner supplied. Fitters Tom and Johnnie, owner-stated.
+         *
+         * COLZA YELLOW IS RAL 1021, NOT 1012. The owner's folder note said
+         * 1012, which is Lemon Yellow. Colza Yellow is RAL 1021 both in
+         * Distinction's own range and in `colour_options.materials.composite`
+         * in site-data.php, which is what the deep link below resolves against,
+         * and the saturated yellow in the photographs is 1021 rather than the
+         * paler 1012. Do not "correct" this back to the folder name.
+         *
+         * TRAFFIC ORANGE, RAL 2009, IS NOT IN THE STANDARD PALETTE and there is
+         * therefore no swatch to deep link. That is not a gap: the composite
+         * palette copy says any RAL can be matched beyond the standard range,
+         * and this door is what that sentence looks like on a house. The single
+         * `colour` field points at the yellow, which does have a swatch.
+         *
+         * SECURED BY DESIGN IS CLAIMED FOR THE FRONT DOOR ONLY. The composite
+         * doors page is explicit that the accreditation covers the slabs
+         * "though not the stable doors", so the security sentence sits with the
+         * front door and the stable door paragraph makes no accreditation
+         * claim. The £5,000 guarantee is a Fenster-wide claim on every composite
+         * door we hang and is stated once, for both.
+         *
+         * NO U-VALUE ON EITHER DOOR, per the composite doors page, which
+         * refuses to print one before a doorset is specified. Same call as
+         * Little Horwood.
+         *
+         * NO STYLE NAME ON THE FRONT DOOR. Its slab is grooved on the diagonal
+         * and no such design is in the 33-style catalogue the composite page
+         * renders, so it is described rather than named. The stable door does
+         * match `stable-half-glazed` exactly, and "half glazed" is used here as
+         * a description of what is in the photograph, not as a catalogue code.
+         *
+         * THE NUMBER PLATE IS BLURRED in the front-door before shot. It is a
+         * private plate on the customer's own drive and it was legible at full
+         * size; blurred at full resolution before the downscale, the same
+         * treatment as Little Horwood. No source file carried EXIF.
+         *
+         * ONE OF THE TWO VIDEOS IS USED. The stable door clip is the one that
+         * shows the thing being sold, the top leaf opening while the bottom
+         * stays shut, and it is native 392x848 portrait so it goes in the hero
+         * slot and the CSS squares it. The front door clip is 848x478, mostly
+         * extreme close-ups, and its last five seconds look into the customer's
+         * hall, which is the same reason Little Horwood dropped a frame. Note
+         * that the phone's white balance reads the orange redder in the video
+         * than in the stills; the photographs carry the true colour.
+         *
+         * The garage, its doors and the "Dad's Garage" sign are the owners' own
+         * and are not ours, the way Wolverton says the render and the
+         * landscaping were not ours.
+         */
+        'composite-front-door-and-stable-door-drayton-parslow' => [
+            'title' => 'Composite front door and stable door, Drayton Parslow',
+            'location' => 'Drayton Parslow, Buckinghamshire',
+            'type' => 'Residential',
+            // Owner-confirmed 2026-08-18: the folder name "26-07-25" is
+            // day-first, the way "17-02-2025" on the Wolverton sash job was, so
+            // this is 26 July 2025 and not 25 July 2026.
+            'date' => '2025-07-26',
+            // No `priced_by`. Owner-confirmed 2026-08-18 that this job was
+            // priced on the quote tool, which is the archive default, so the
+            // page's claim about this customer is checked rather than assumed.
+            'summary' => 'Two Distinction composite doors on one Drayton Parslow bungalow: a colza yellow front door in the porch and a traffic orange stable door round the side.',
+            'lead' => 'Two doors on the same bungalow, and neither of them is a quiet colour. A colza yellow front door off the drive, and a traffic orange stable door in the passage by the garage.',
+            'products' => [
+                ['label' => 'Composite doors', 'url' => home_url('/composite-doors/')],
+            ],
+            'colour' => ['label' => 'Colza yellow (RAL 1021)', 'url' => $colour_colza],
+            'specs' => [
+                ['label' => 'Products', 'value' => 'Two Distinction composite doors'],
+                ['label' => 'Front door', 'value' => 'Colza yellow (RAL 1021)'],
+                ['label' => 'Stable door', 'value' => 'Traffic orange (RAL 2009)'],
+                ['label' => 'Slab', 'value' => '44.5mm insulated composite'],
+            ],
+            'overview' => [
+                'Two <a href="' . esc_url(home_url('/composite-doors/')) . '">composite doors</a> on one bungalow, in two colours, doing two different jobs. The front door is in a small porch off the block paved drive. The stable door is round the side, in the passage between the house and the garage, up a brick step. Neither opening was new: there was a yellow front door there already, with a leaded rose in the glass, and a painted side door with a blind hanging behind it that had done its years.',
+                'The front door slab is solid, with grooves cut across it on the diagonal, so no light comes through the door itself. It comes through the full height glazed sidelight next to it instead, which is what keeps the hall as bright as it was. A long brushed bar handle runs most of the height of the opening edge, with a black letterplate low down. Every Distinction door we hang carries AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock, and the slab is accredited by Secured by Design, the police-backed standard.',
+                'The side door is a stable door, split across the middle so the top half opens on its own while the bottom stays shut and locked. That is the whole reason to fit one: air and daylight into the back of the house without the opening standing wide, and something still across it at knee height for a dog or a small child. Each half locks on its own, with the lever handle and a cylinder on the top leaf and a second cylinder on the bottom. The top leaf is glazed in a single square pane, both halves carry vertical boards, and a weather bar sits across the joint to throw rain off the split.',
+                'The colours are <a href="' . $colour_colza . '">colza yellow</a>, RAL 1021, on the front and traffic orange, RAL 2009, on the stable door. The house had a yellow front door before this one, so the colour is not the change, the door around it is. The orange is not on the standard chart: Distinction match to any RAL on request, which is worth knowing before you settle for the nearest colour that is on it. Both doors sit in dark grey frames against red brick, and every composite door we fit carries a £5,000 security guarantee, terms applying.',
+                'Both are the same 44.5mm insulated slab, which is a compression moulded glass reinforced polyester skin over a foam filled core, with polymer edges and engineered wood stiles behind it. The colour is in the skin rather than painted onto it, and that matters more on these two than it would on a white door: a bright yellow and a traffic orange are exactly the colours nobody wants to be repainting every few summers.',
+            ],
+            'installed' => [
+                'One Distinction composite front door, colza yellow (RAL 1021)',
+                'Solid slab grooved on the diagonal, with a full height glazed sidelight',
+                'Long brushed bar handle and a letterplate',
+                'One Distinction composite stable door, traffic orange (RAL 2009)',
+                'Split leaves, each locking on its own, with a glazed pane in the top half',
+            ],
+            'installers' => [$fitter_tom, $fitter_johnnie],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-drayton-parslow-stable-door.mp4',
+                'poster' => $img . 'cs-drayton-parslow-stable-door-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Video of the traffic orange stable door, with the top half opening on its own while the bottom stays shut',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-drayton-parslow-front-door-before.jpg', 'caption' => 'Before: the old front door in the porch, yellow already, with a leaded rose in the glass and a sidelight beside it.'],
+                ['src' => $img . 'cs-drayton-parslow-front-door-after.jpg', 'caption' => 'After: the colza yellow slab, grooved on the diagonal, with a long bar handle and the sidelight carrying the light into the hall.'],
+                ['src' => $img . 'cs-drayton-parslow-stable-door-before.jpg', 'caption' => 'Before: the side door in the passage between the house and the garage, painted, with a blind hanging behind the glass.'],
+                ['src' => $img . 'cs-drayton-parslow-stable-door-after.jpg', 'caption' => 'After: the traffic orange stable door closed, with the weather bar across the joint and the glazed pane in the top half.'],
+                ['src' => $img . 'cs-drayton-parslow-stable-door-handle.jpg', 'caption' => 'The hardware. Lever and cylinder on the top leaf, a second cylinder on the bottom, so each half locks on its own.'],
+            ],
+            /* Every photograph on this job is portrait and the archive card is
+               16:10, so a centre crop of the hero would be a band of orange
+               board and no door. This one is cut from the full-resolution
+               stable door original at the split, which keeps the mid rail, the
+               weather bar, both cylinders, the lever and the glazed top leaf. */
+            'card_image' => ['src' => $img . 'cs-drayton-parslow-doors-card.jpg', 'caption' => 'A traffic orange composite stable door on a Drayton Parslow bungalow, split across the middle.'],
+            'seo' => [
+                'title_tag' => 'Composite Front Door and Stable Door, Drayton Parslow | Fenster Glazing',
+                /* 151 characters against a 160 cap. */
+                'meta_description' => 'A real Fenster project in Drayton Parslow: two Distinction composite doors on one bungalow, a colza yellow front door and a traffic orange stable door.',
             ],
         ],
 
