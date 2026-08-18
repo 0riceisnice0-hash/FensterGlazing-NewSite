@@ -1368,7 +1368,7 @@ function fenster_case_studies(): array
             ],
             'images' => [
                 ['src' => $img . 'cs-drayton-parslow-front-door-before.jpg', 'caption' => 'Before: the old front door in the porch, yellow already, with a leaded rose in the glass and a sidelight beside it.'],
-                ['src' => $img . 'cs-drayton-parslow-front-door-after.jpg', 'caption' => 'After: the colza yellow slab, grooved on the diagonal, with a long bar handle and the sidelight carrying the light into the hall.'],
+                ['src' => $img . 'cs-drayton-parslow-front-door-after.jpg', 'caption' => 'After: the colza yellow door in the porch, its slab grooved on the diagonal, with a long bar handle and the glazed sidelight carrying the light into the hall.'],
                 ['src' => $img . 'cs-drayton-parslow-stable-door-before.jpg', 'caption' => 'Before: the side door in the passage between the house and the garage, painted, with a blind hanging behind the glass.'],
                 ['src' => $img . 'cs-drayton-parslow-stable-door-after.jpg', 'caption' => 'After: the traffic orange stable door closed, with the weather bar across the joint and the glazed pane in the top half.'],
                 ['src' => $img . 'cs-drayton-parslow-stable-door-handle.jpg', 'caption' => 'The hardware. Lever and cylinder on the top leaf, a second cylinder on the bottom, so each half locks on its own.'],
