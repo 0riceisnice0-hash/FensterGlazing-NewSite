@@ -372,10 +372,21 @@ function fenster_site_data(): array
                 ['label' => 'Colour choice', 'value' => '12 standard colours'],
                 ['label' => 'Layouts', 'value' => 'Single or French'],
             ],
+            /* "Design: Versatile" was here until 2026-08-18 and it is one of the
+               adjective tiles FULL-SITE-AUDIT-2026-08-13.md names as a defect:
+               the strip is where a figure belongs. It is replaced by the
+               manufacturer's published maximum panel width, which is the figure
+               a customer with a wide opening actually needs, and the one every
+               span on the rebuilt page is derived from.
+
+               1000mm is INCLUSIVE OF THE OUTER FRAME. Do not restate it as a
+               glass width. The height figure is deliberately not here as well:
+               four tiles, and the panel width is the one that decides whether
+               the opening can be covered at all. */
             'slide-fold-doors' => [
                 ['label' => 'U-value', 'value' => '1.4 W/m²K'],
+                ['label' => 'Panel width', 'value' => 'Up to 1000mm'],
                 ['label' => 'Colour choice', 'value' => 'Any RAL colour'],
-                ['label' => 'Design', 'value' => 'Versatile'],
                 ['label' => 'Security', 'value' => '10 point locking'],
             ],
             // Sheerline Prestige Lift & Slide published specification. Colour came off
@@ -1031,12 +1042,26 @@ function fenster_site_data(): array
                     ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-heritage-window-closeup.jpg', 'alt' => 'Slim heritage glazing bar detail'],
                 ],
             ],
+            /* Stills cut from the owner's door film, 2026-08-18, replacing four
+               scrape-era images of which one was the wrong product entirely.
+               They are frames of a real slide and fold door being worked, which
+               is more than any of the images they replace could say.
+
+               `hero` is the closed run, matching the film's poster and first
+               frame so the hub tile and the page agree. `card` is the open stack
+               because the hub cell is small and the stacked panels read at that
+               size where a closed glass wall does not.
+
+               NOT CAPTIONED AS OUR INSTALLATION, anywhere. The film is shot
+               indoors against a display backdrop and nobody has confirmed whose
+               showroom it is. Every alt here describes the door and claims no
+               job. Correct that when the owner answers; do not assume it. */
             'slide-fold-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors.jpg', 'alt' => 'Closed slide and fold doors across a wide opening'],
-                'card' => ['src' => '/wp-content/themes/fenster/assets/images/imported/Slide-Fold.png', 'alt' => 'Anthracite slide and fold doors across the front of a garden room'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-closed-1400w.webp', 'alt' => 'A four panel black aluminium slide and fold door closed across a wide opening'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-open-stack-1400w.webp', 'alt' => 'A slide and fold door fully open with the panels stacked to one side'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors.jpg', 'alt' => 'Closed slide and fold doors across a wide opening'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors-open.jpg', 'alt' => 'Slide and fold doors partly opened to the garden'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-traffic-door-1400w.webp', 'alt' => 'The master door of a slide and fold run swung open on its own'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-part-open-1400w.webp', 'alt' => 'A slide and fold door part open, showing the bottom track across the threshold'],
                 ],
             ],
             'aluminium-doors' => [
@@ -1577,11 +1602,19 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds.jpg', 'alt' => 'Integral blinds inside wide glazed doors'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg', 'alt' => 'Close-up of blinds between glass panes'],
             ],
+            /* Rebuilt 2026-08-18 on stills from the owner's door film.
+               `sheerline-bifold-exterior.jpg` came OUT: it is a bifold, it was in
+               here under the alt text "Wide glazed door opening on a brick home"
+               which quietly avoided naming the product, and this pool feeds every
+               `/slide-fold-doors-<town>/` matrix route as well as the main page.
+               A bifold illustrating a slide and fold door is the same wrong
+               product fault already recorded against the secondary glazing pool
+               and the tilt and turn hero. Do not put it back. */
             'slide_fold_doors' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors.jpg', 'alt' => 'Slide and fold doors across a wide opening'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/neutral-slide-fold-doors-open.jpg', 'alt' => 'Slide and fold doors partly opened'],
-                ['src' => '/wp-content/themes/fenster/assets/images/imported/Slide-Fold.png', 'alt' => 'Anthracite slide and fold doors on a garden room'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-exterior.jpg', 'alt' => 'Wide glazed door opening on a brick home'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-closed-1400w.webp', 'alt' => 'A four panel black aluminium slide and fold door closed across a wide opening'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-traffic-door-1400w.webp', 'alt' => 'The master door of a slide and fold run swung open on its own'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-part-open-1400w.webp', 'alt' => 'A slide and fold door part open, showing the bottom track across the threshold'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-open-stack-1400w.webp', 'alt' => 'A slide and fold door fully open with the panels stacked to one side'],
             ],
             'aluminium_sliding_doors' => [
                 // Order is load-bearing. Body images are this pool minus the
@@ -2204,21 +2237,47 @@ function fenster_site_data(): array
                     ['question' => 'Do they match your heritage doors?', 'answer' => 'Exactly, because they are the same Sheerline Classic system. The stepped face, the bar spacing and the twelve powder-coated colours are shared, so windows and doors specified together look like one job.'],
                 ],
             ],
+            /* Rewritten 2026-08-18 with the page rebuild, against the
+               manufacturer's published specification. The set this replaces was
+               written before anybody had that specification and carried no
+               figure at all across five benefit cards and five answers:
+               "Space-efficient opening", "Smooth, simple operation", "with
+               security hardware specified around the chosen configuration".
+
+               THE OLD SET SOLD AGAINST BIFOLD DOORS AND THAT IS WHY IT HAD TO
+               GO, not only because it was vague. Two of its five benefits and
+               its first FAQ were comparisons in which our own bifold range came
+               off worse: "more useful for daily garden access than many full
+               bifold arrangements", "reducing the clearance needed compared with
+               many traditional hinged or folding layouts". We sell bifold doors.
+               TONEOFVOICE.md forbids it and the owner restated it on 2026-08-18.
+               Nothing here compares the two; the page links to the bifold route
+               instead and lets the reader decide.
+
+               `intro` and `benefits` no longer render: the route took a bespoke
+               middle on 2026-08-18 and `fg-product-why` is gated off for it.
+               They are kept and kept accurate anyway, for the reason the repairs
+               and secondary glazing entries carry the same note: Legend reads
+               this file, and a stale entry becomes a wrong answer in chat that
+               no visitor can see and nobody will catch.
+
+               The FAQs DO render, and the same five feed the FAQPage schema, so
+               the limit for this route is five and a sixth would render nowhere. */
             'slide-fold-doors' => [
-                'intro' => 'Slide and fold doors give a flexible alternative to conventional bifolds. The panels can slide and open individually, giving everyday ventilation, access and wide opening potential without treating the door as only fully open or fully closed.',
+                'intro' => 'A slide and fold door is a run of panels that slide along a track and swing open one at a time. One panel is the master door and works like an ordinary door for everyday use, and the rest follow it round and stack to one side when you want the whole opening clear.',
                 'benefits' => [
-                    ['title' => 'Individual panel control', 'copy' => 'Panels can slide and swing independently, so you can open one section, several sections or the full span depending on the weather and use.'],
-                    ['title' => 'Everyday traffic-door use', 'copy' => 'A main access leaf can work like a normal door, making the system more useful for daily garden access than many full bifold arrangements.'],
-                    ['title' => 'Space-efficient opening', 'copy' => 'The panels slide along the track before stacking, reducing the need to keep large internal or external swing zones clear.'],
-                    ['title' => 'Interlocking security', 'copy' => 'The system uses interlocking panels and concealed operating hardware to create a secure closed wall of doors.'],
-                    ['title' => 'Smooth, simple operation', 'copy' => 'The bottom-running action and independent panels are designed for lighter, more flexible everyday use.'],
+                    ['title' => 'Every panel opens on its own', 'copy' => 'Open a single leaf, part of the run or the full opening. The master door has the handle and opens without moving anything else, and on four panels or more you can have one at each end.'],
+                    ['title' => 'Panels up to 1000mm wide', 'copy' => 'Each panel goes up to 1000mm including the outer frame, and there is no limit on how many panels you can have, so the span is set by the opening rather than by the system.'],
+                    ['title' => 'Interlocking when closed', 'copy' => 'The panels close into each other along their full height and pull up against a double weather seal, which is what gives the closed run its flat continuous line.'],
+                    ['title' => 'Carried on the bottom track', 'copy' => 'The panels run on wheels along the bottom track and that track takes all of their weight, so nothing hangs from the head and the door keeps working as a new structure settles.'],
+                    ['title' => 'Ten point locking', 'copy' => 'A ten point lock across the master door, with the hinges concealed inside the panels so the closed run shows glass, frame and one handle.'],
                 ],
                 'faqs' => [
-                    ['question' => 'How are slide and fold doors different from bifolds?', 'answer' => 'Instead of all panels folding together, slide and fold panels can move independently so you can open as much or as little of the doorway as needed.'],
-                    ['question' => 'Can I use one panel as a normal door?', 'answer' => 'Yes. The system can include a main traffic door for everyday access without opening the full set.'],
-                    ['question' => 'Are slide and fold doors secure?', 'answer' => 'Yes. The closed panels interlock through the system, with security hardware specified around the chosen configuration.'],
-                    ['question' => 'Do the panels take up room when opening?', 'answer' => 'They are designed to slide before stacking, reducing the clearance needed compared with many traditional hinged or folding layouts.'],
-                    ['question' => 'Will you survey the opening first?', 'answer' => 'Yes. We check track, threshold, drainage, width, floor levels and access before manufacture.'],
+                    ['question' => 'What else are slide and fold doors called?', 'answer' => 'You will see them called slide and swing doors, slide and pivot doors, or panoramic doors, and they are all describing the same thing: panels that slide along a track and swing open individually. We call them slide and fold because that is the name on our showroom and on our online designer, so the words match wherever you meet them.'],
+                    ['question' => 'How wide an opening can they cover?', 'answer' => 'Each aluminium panel goes up to 1000mm wide including the outer frame, and there is no limit on the number of panels, so four panels reach 4.0m and six reach 6.0m. Standard height runs to 2400mm in aluminium. Taller is possible, priced on application, and it can pull the maximum panel width back, so tell us the height early.'],
+                    ['question' => 'Can I open just one panel?', 'answer' => 'Yes, and it is the point of the door. One panel is the master door, it carries the handle and it opens on its own without moving the rest, so the run works on an ordinary February morning and not only on the days you want the whole wall open.'],
+                    ['question' => 'Can the threshold be flush with my floor?', 'answer' => 'A level threshold on the inside is achievable. The manufacturer states the outside floor can finish 10mm below the top of the bottom track where the drainage is right, and a cill is not needed if the water is handled another way. Settle the drainage with your builder before the door is made rather than at installation.'],
+                    ['question' => 'Can I try one before I order?', 'answer' => 'Yes, and it is worth doing. There is one standing in our Milton Keynes showroom, so you can slide a panel round, swing it open on its own and close the run back onto its seals. This is a door people decide on by working it rather than by reading about it, which is why we keep one on the floor.'],
                 ],
             ],
             'aluminium-doors' => [

@@ -36540,6 +36540,7 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cd3-hero__media,
+.fg-sf-hero__media,
 .fg-heritage-door-hero__media {
   position: relative;
   width: min(100%, 620px);
@@ -37225,6 +37226,7 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cd3-hero__media,
+  .fg-sf-hero__media,
   .fg-heritage-door-hero__media {
     width: min(100%, 440px);
     aspect-ratio: 4 / 3;
@@ -37396,7 +37398,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-location-cases__head p:not(.eyebrow) {
   margin: 0;
-  color: var(--color-ink-soft, #5b6770);
+  color: var(--color-muted, #5b6770);
   font-size: var(--fg-text-base);
   line-height: 1.5;
 }
@@ -37466,7 +37468,7 @@ html.fg-blinds-reveal-locked {
 
 .fg-location-knowledge__grid p {
   margin: 0;
-  color: var(--color-ink-soft, #5b6770);
+  color: var(--color-muted, #5b6770);
   font-size: 0.97rem;
   line-height: 1.5;
 }
@@ -37480,7 +37482,7 @@ html.fg-blinds-reveal-locked {
 .fg-location-knowledge__foot {
   max-width: 70ch;
   margin: clamp(1rem, 2vw, 1.4rem) 0 0;
-  color: var(--color-ink-soft, #5b6770);
+  color: var(--color-muted, #5b6770);
   font-size: 0.95rem;
   line-height: 1.5;
 }
@@ -42992,4 +42994,124 @@ html.fg-blinds-reveal-locked {
   .fg-rl-parts__scrim,
   .fg-rl-pin,
   .fg-rl-zone { transition: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   Slide and fold doors (/slide-fold-doors/), rebuilt 2026-08-18.
+
+   Almost nothing here is new. The hero is `.fg-cd3-hero`, joined to that
+   component's selector lists above rather than copied, so restyling composite
+   doors restyles this too. The middle is the shared `.fg-cw` split grammar the
+   heritage door, flush casement and aluminium door pages already use. What is
+   left below is the two things this route genuinely owns: a video sitting in a
+   box built for an image, and the span and material blocks.
+   --------------------------------------------------------------------------- */
+
+/* The film is 4:3 and the box is 6/5 on desktop and 4/3 at 860px and below, so
+   `cover` crops about a tenth of the width on desktop and nothing at all on a
+   phone. `cover` rather than `contain` deliberately: the box has a steel
+   background and a contained video would draw two bars of it down the sides. */
+.fg-sf-hero__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--color-steel);
+}
+
+/* The native control bar is the accessibility answer here, since the film plays
+   once and stops rather than looping. It is left visible rather than hidden on
+   purpose. It only paints over the bottom of the frame while the pointer is in
+   the box, and the caption chip sits above it. */
+.fg-sf-hero__media figcaption {
+  bottom: auto;
+  top: 1.1rem;
+}
+
+/* The derived span row. Deliberately not `.fg-cw-tiles`: these are four short
+   number-and-label pairs that should read as one row of figures, not as four
+   cards. Wraps to two columns before it wraps to one. */
+.fg-sf-spans {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--fg-space-4);
+  margin: var(--fg-space-5) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-sf-spans li {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.75rem 0 0.75rem 0.85rem;
+  border-left: 2px solid var(--color-accent);
+}
+
+.fg-sf-spans strong {
+  color: var(--color-ink);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.1;
+}
+
+.fg-sf-spans span {
+  color: var(--color-muted);
+  font-size: var(--fg-text-xs);
+}
+
+/* The closing block's two standard colours. Deliberately NOT swatches: we hold
+   no photographed samples for this product and the Swatch Provenance Rule
+   forbids painting a chip from a hex to fill the gap. Name and RAL reference,
+   side by side, on the shared facts list. */
+.fg-sf-standards li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.5rem;
+  align-items: baseline;
+}
+
+.fg-sf-standards strong {
+  color: var(--color-ink);
+}
+
+.fg-sf-standards span {
+  color: var(--color-muted);
+  font-size: var(--fg-text-xs);
+}
+
+.fg-sf-close__links {
+  margin-top: clamp(1rem, 2vw, 1.4rem);
+}
+
+/* The head sits above the two copy columns rather than beside them, so it keeps
+   the shared measure and the columns below carry the width. */
+.fg-sf-close__head {
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.fg-sf-close__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+/* The standards list is followed by nothing in its own column, but on a phone
+   the two columns stack and the showroom paragraph lands directly under it, so
+   the list needs its own bottom margin or the two run together. */
+.fg-sf-standards {
+  margin-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .fg-sf-close__grid {
+    grid-template-columns: 1fr;
+    gap: var(--fg-space-6);
+  }
+
+  /* Two by two rather than four across. At 390px four columns puts "6.0m" and
+     "6 panels" into 80px cells and the label wraps to three lines, which is the
+     114px-cell fault already recorded against the shared colour label tier. */
+  .fg-sf-spans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

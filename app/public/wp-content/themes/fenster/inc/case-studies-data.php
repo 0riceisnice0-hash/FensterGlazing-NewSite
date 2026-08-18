@@ -1104,27 +1104,27 @@ function fenster_case_studies(): array
             'location' => 'Leighton Buzzard, Bedfordshire',
             'type' => 'Residential',
             'date' => '2025-05-08',
-            'summary' => 'A full package for a Leighton Buzzard home: flush casement windows and a uPVC slide and fold door that opens the room right out.',
-            'lead' => 'We handled the windows and the main garden opening together for this Leighton Buzzard home, pairing flush casement windows with a uPVC slide and fold door.',
+            'summary' => 'A full package for a Leighton Buzzard home: flush casement windows and an aluminium slide and fold door that opens the room right out.',
+            'lead' => 'We handled the windows and the main garden opening together for this Leighton Buzzard home, pairing flush casement windows with an aluminium slide and fold door.',
             'products' => [
                 ['label' => 'Flush casement windows', 'url' => home_url('/flush-casement-windows/')],
                 ['label' => 'Slide and fold doors', 'url' => home_url('/slide-fold-doors/')],
             ],
             'colour' => null,
             'specs' => [
-                ['label' => 'Products', 'value' => 'Flush casement windows and a slide and fold door'],
+                ['label' => 'Products', 'value' => 'Flush casement windows and an aluminium slide and fold door'],
                 ['label' => 'Window system', 'value' => 'Liniar 70mm flush sash uPVC'],
                 ['label' => 'Windows', 'value' => 'A+ rated, timber-style flush line'],
                 ['label' => 'Door security', 'value' => '10-point locking'],
             ],
             'overview' => [
                 'The owners wanted a consistent look across the back of the house, so we surveyed and fitted the windows and the door as one package. The windows are <a href="' . $flush . '">flush casement windows</a> on the Liniar 70mm flush sash system, where the sash sits level with the outer frame for a flatter, timber-style line, with A+ rated performance.',
-                'For the main opening we installed a <a href="' . $slidefold . '">uPVC slide and fold door</a>. Unlike a standard bifold, the panels slide and swing independently, so one section can open for everyday access or the whole run can fold back in good weather. A main traffic-door leaf works like a normal door, and interlocking panels with 10-point locking close it down to a secure wall of glass.',
+                'For the main opening we installed an <a href="' . $slidefold . '">aluminium slide and fold door</a>. The panels slide along the track and swing open individually, so one section opens for everyday access and the whole run stacks back when the weather is worth it. A main traffic-door leaf works like a normal door, and interlocking panels with 10-point locking close it down to a secure wall of glass.',
                 'Handling both products together meant the sightlines, colour and glazing match across the elevation, so the back of the house reads as one considered design rather than separate jobs.',
             ],
             'installed' => [
                 'Liniar flush casement windows',
-                'uPVC slide and fold door with a main traffic leaf',
+                'Aluminium slide and fold door with a main traffic leaf',
                 'Flush, timber-style window sightlines',
                 'Energy efficient double glazing throughout',
             ],
@@ -1139,7 +1139,7 @@ function fenster_case_studies(): array
             ],
             'seo' => [
                 'title_tag' => 'Flush Windows and Slide and Fold Doors Case Study | Fenster Glazing',
-                'meta_description' => 'A real Fenster project in Leighton Buzzard: flush casement windows and a uPVC slide and fold door fitted together as one package.',
+                'meta_description' => 'A real Fenster project in Leighton Buzzard: flush casement windows and an aluminium slide and fold door fitted together as one package.',
             ],
         ],
 

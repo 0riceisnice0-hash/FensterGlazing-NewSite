@@ -340,9 +340,26 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Roofline Services Milton Keynes | Fascias, Soffits & Guttering',
             'meta_description' => 'Roofline services in Milton Keynes, including fascias, soffits, guttering and related exterior details from Fenster Glazing.',
         ],
+        /* Retitled 2026-08-18 on the owner's instruction.
+           The tail was "Bifold Door Options", which chased bifold search from a
+           page that is not a bifold and competed with our own
+           /aluminium-bifold-doors/ route for it.
+
+           THE HEAD PHRASE IS UNTOUCHED. "Slide and Fold Doors Milton Keynes" is
+           what this route ranks for and the Product Naming Rule is explicit that
+           a title changes only where the new wording prefixes rather than
+           displaces the ranking phrase. Everything added here sits in the tail.
+
+           "Aluminium" is there because we fit only that one, and "Panoramic
+           Doors" because it is the main alternative name this product is sold
+           under in the UK and it plausibly carries more search than "slide and
+           fold" does. Used as a descriptor, never as our product name: the H1
+           stays "Slide & Fold Doors". Note Panoramic Doors is a US brand and a
+           UK trade mark check is still outstanding, so do not promote it into
+           the H1 or the menu without doing that check first. */
         'slide-fold-doors' => [
-            'title_tag' => 'Slide and Fold Doors Milton Keynes | Bifold Door Options',
-            'meta_description' => 'Slide and fold doors in Milton Keynes for flexible glazed openings, with panel, threshold, colour and survey details checked before order.',
+            'title_tag' => 'Slide and Fold Doors Milton Keynes | Aluminium Panoramic Doors',
+            'meta_description' => 'Aluminium slide and fold doors in Milton Keynes. Panels up to 1000mm wide slide and swing individually, so you open one leaf or the whole run.',
         ],
         'sliding-sash-windows' => [
             'title_tag' => 'Sliding Sash Windows Milton Keynes | Heritage-Style Sash',

@@ -177,6 +177,26 @@ $is_flush_bespoke = $slug === 'flush-casement-windows';
    banner and the whole tail from the specification choices down are untouched
    and still shared. Not an early return. */
 $is_alu_doors_bespoke = $slug === 'aluminium-doors';
+/* Slide and fold replaces the middle on the same terms, rebuilt 2026-08-18. The
+   route had been running the generic journey on scrape-era copy: five benefit
+   cards with no figure in any of them, and "Design: Versatile" sitting in the
+   key-specification strip, which FULL-SITE-AUDIT-2026-08-13.md flags by name as
+   an adjective where a figure belongs.
+
+   KEPT: the key-specification strip, because this product has real published
+   figures (1.4 W/m²K, a ten point lock, 1000mm panels, 2400mm height); the quote
+   embed, because the route is mapped to a WindowCAD collection; the order rail;
+   and the case-study strip, because the Leighton Buzzard job genuinely claims
+   this route rather than falling through to the all-studies fallback.
+
+   GATED: the three generic middle bands, and the specification-choices band.
+   That last one is the roofline call made again for the same reason. The band's
+   colour card points at /colour-options/, which is the Liniar uPVC foil range
+   and the Sheerline powder-coat range, and this door is neither of those
+   systems. Sending a customer there would show them a range they cannot order
+   for this product. The materials section in the bespoke middle carries the
+   colour answer instead, so gating the band leaves no heading over nothing. */
+$is_slide_fold_bespoke = $slug === 'slide-fold-doors';
 /* Secondary glazing replaces the middle on the same terms, and additionally
    gates off the key-specification strip the way repairs does. Owner, 2026-08-07:
    keep the strip "only if we actually have relevant stats, dont want filler
@@ -3512,6 +3532,95 @@ if ($is_commercial_hub) {
             <p class="fg-aw-story__scroll-cue"><?php esc_html_e('Scroll to explore', 'fenster'); ?></p>
         </div>
     </section>
+    <?php elseif ($is_slide_fold_bespoke) : ?>
+    <?php
+    /* THE VIDEO IS THE HERO. Owner instruction, 2026-08-18.
+       Source: the owner's stop-motion of a door being opened panel by panel,
+       108 photographs each held for two frames, 2880x2160 at 25fps.
+
+       IT USES THE BOXED HERO, NOT THE FULL-BLEED ONE, AND THE REASON IS
+       MEASURED. The source is 4:3 and the shared photo hero is a wide
+       letterbox: cropping 4:3 to roughly 3.2:1 keeps about 42% of the frame
+       height, and the door occupies about 66% of it. The door would be cut
+       across the middle, which is the "forcing tall imagery into a wide box"
+       defect STYLE.md names. The boxed hero is 6/5 on desktop, so a 4:3 source
+       loses about a tenth of its width and nothing of its height, and at 860px
+       and below that same box is ALREADY 4/3, which is the film's native shape
+       exactly. This is also the hero pattern STYLE.md nominates as the product
+       hero, still run by /composite-doors/, so the styling is shared rather than
+       invented: `.fg-sf-hero*` joins the existing `.fg-cd3-hero*` selector lists.
+
+       IT DOES NOT LOOP, AND THAT IS DELIBERATE. The film ends with the panels
+       stacked and the opening clear, which is the state worth holding on.
+       FULL-SITE-AUDIT-2026-08-13.md findings [150] and [156] record that nine
+       pages autoplay looping video with no pause control and that reduced motion
+       is not honoured on the case studies. A film that plays once and stops,
+       with real controls, does not reintroduce either.
+
+       Loading is the shared `data-fg-lazy-video` controller, which already
+       honours prefers-reduced-motion, Save-Data, a slow effective connection and
+       a small viewport, and only calls play() once it has loaded. There is no
+       `autoplay` attribute, so with JavaScript off nothing moves and the poster
+       carries the hero. Known inherited wart: that controller's interaction
+       gate listens on window, so on mobile the first tap anywhere on the page
+       triggers the load. Audit finding [177] records it against the 9.36MB
+       homepage video; here the file is 1.26MB and the trade is acceptable.
+       Do not fix it in this route; fix it in the controller.
+
+       The poster is the first frame, closed, so poster and first frame are the
+       same image and there is no jump when playback starts. The open state is
+       not lost by that choice: it is the second still in the bespoke middle
+       below, at full width. */
+    $slide_fold_video = FENSTER_THEME_URI . '/assets/videos/slide-fold/slide-fold-doors-opening-1280.mp4';
+    $slide_fold_poster = '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-hero-poster-1280w.webp';
+    $slide_fold_phone = (string) ($brand['phone'] ?? '01908 429200');
+    ?>
+    <section class="fg-cd3-hero fg-sf-hero">
+        <div class="container fg-cd3-hero__grid">
+            <div class="fg-cd3-hero__copy">
+                <p class="eyebrow"><?php esc_html_e('Slide and fold doors in Milton Keynes', 'fenster'); ?></p>
+                <h1><?php echo esc_html($title); ?></h1>
+                <?php /* The alternative names are in the lead deliberately. This
+                         door is sold under several and a customer who met it at a
+                         show may remember any of them, so the page answers to all
+                         of them in its first sentence rather than in a footnote.
+                         "Panoramic" is used as a plain descriptor and never as a
+                         product name; see the naming note in the session
+                         handover. */ ?>
+                <p class="fg-cd3-hero__lead"><?php esc_html_e('Sometimes called slide and swing, or panoramic doors. The panels slide along a track and each one swings open on its own, so you can open a single leaf, part of the run or the whole opening.', 'fenster'); ?></p>
+                <div class="fg-cd3-hero__actions">
+                    <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
+                    <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $slide_fold_phone)); ?>"><?php echo esc_html(sprintf(/* translators: %s: phone number */ __('Call %s', 'fenster'), $slide_fold_phone)); ?></a>
+                </div>
+            </div>
+            <figure class="fg-cd3-hero__media fg-sf-hero__media">
+                <video
+                    class="fg-sf-hero__video"
+                    data-fg-lazy-video
+                    data-fg-video-slow-mode="interaction"
+                    poster="<?php echo esc_url(fenster_generated_url($slide_fold_poster)); ?>"
+                    preload="none"
+                    muted
+                    playsinline
+                    controls
+                    controlslist="nodownload"
+                    width="1280"
+                    height="960"
+                    aria-label="<?php esc_attr_e('A slide and fold door being opened one panel at a time', 'fenster'); ?>"
+                >
+                    <source data-src="<?php echo esc_url($slide_fold_video); ?>" type="video/mp4">
+                </video>
+                <?php /* OWNER-CONFIRMED 2026-08-18: this is OUR Milton Keynes
+                         showroom, so the caption names it. It was deliberately
+                         non-committal until he said so, because this project does
+                         not caption a photograph as ours without confirmation.
+                         Saying it is the showroom rather than an installation is
+                         also the accurate claim: it is a display door on a stand,
+                         and the page invites you to come and work it. */ ?>
+                <figcaption><?php esc_html_e('Our Milton Keynes showroom', 'fenster'); ?></figcaption>
+            </figure>
+        </div>
+    </section>
     <?php elseif ($is_composite_doors) : ?>
     <?php
     // Composite doors follows the light, boxed-image hero used by
@@ -4374,7 +4483,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -4538,7 +4647,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -4708,7 +4817,7 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
-        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
+        <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">
                     <div class="fg-product-visuals__mosaic" aria-label="<?php echo esc_attr($title . ' image gallery'); ?>">
@@ -4939,6 +5048,19 @@ if ($is_commercial_hub) {
             ?>
         <?php endif; ?>
 
+        <?php if ($is_slide_fold_bespoke) : ?>
+            <?php
+            /* OUTSIDE the specification-choices wrapper, like every other
+               bespoke dispatch. Putting one inside gates the whole middle on a
+               condition about colour swatches and it silently renders nothing,
+               which has caught two people on this project already. */
+            get_template_part('template-parts/sections/slide-fold-doors-v2', null, [
+                'brand' => $brand,
+                'trust_items' => $trust_items,
+            ]);
+            ?>
+        <?php endif; ?>
+
 
         <?php /* GATED OFF FOR uPVC DOORS, 2026-08-12. This band is three cards
                  pointing at colour, privacy glass and handles. On that route the
@@ -4958,7 +5080,19 @@ if ($is_commercial_hub) {
                  heading and intro with it. Deleting the card on its own is what
                  left a heading over nothing earlier in this rebuild, and the owner
                  caught it rather than I did. */ ?>
-        <?php if (! $is_upvc_doors_bespoke && ! $is_roofline) : ?>
+        <?php /* AND GATED OFF FOR SLIDE AND FOLD, 2026-08-18, for the roofline
+                 reason rather than the uPVC doors one. The colour card points at
+                 /colour-options/, which carries the Liniar uPVC foil range and
+                 the Sheerline powder-coat range. This door is neither of those
+                 systems, so the card would send a customer to a chart of
+                 finishes they cannot order for it. Its own colour answer, any
+                 RAL in aluminium and a woodgrain or smooth finish in uPVC, is in
+                 the materials section of the bespoke middle above.
+
+                 CHECK WHAT A REMOVAL LEAVES, again: the middle carries the
+                 colour answer and the privacy-glass link sits in the closed
+                 section, so gating this band leaves no heading over nothing. */ ?>
+        <?php if (! $is_upvc_doors_bespoke && ! $is_roofline && ! $is_slide_fold_bespoke) : ?>
         <section class="fg-product-gallery-band">
             <div class="container">
                 <div class="section-heading section-heading--wide">
