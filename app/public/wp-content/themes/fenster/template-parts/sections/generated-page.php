@@ -3534,97 +3534,73 @@ if ($is_commercial_hub) {
     </section>
     <?php elseif ($is_slide_fold_bespoke) : ?>
     <?php
-    /* THE VIDEO IS THE HERO. Owner instruction, 2026-08-18.
-       Source: the owner's stop-motion of a door being opened panel by panel,
-       108 photographs each held for two frames, 2880x2160 at 25fps.
+    /* THE VIDEO IS THE HERO, IN THE SITE'S OWN PRODUCT HERO. Owner instruction,
+       2026-08-18, twice: make the film the hero, and match the style of the site.
 
-       IT USES THE BOXED HERO, NOT THE FULL-BLEED ONE, AND THE REASON IS
-       MEASURED. The source is 4:3 and the shared photo hero is a wide
-       letterbox: cropping 4:3 to roughly 3.2:1 keeps about 42% of the frame
-       height, and the door occupies about 66% of it. The door would be cut
-       across the middle, which is the "forcing tall imagery into a wide box"
-       defect STYLE.md names. The boxed hero is 6/5 on desktop, so a 4:3 source
-       loses about a tenth of its width and nothing of its height, and at 860px
-       and below that same box is ALREADY 4/3, which is the film's native shape
-       exactly. This is also the hero pattern STYLE.md nominates as the product
-       hero, still run by /composite-doors/, so the styling is shared rather than
-       invented: `.fg-sf-hero*` joins the existing `.fg-cd3-hero*` selector lists.
+       IT USES `.fg-hero fg-hero--compact`, WHICH IS WHAT THE SITE ACTUALLY USES.
+       An earlier pass put it in the boxed `.fg-cd3-hero` on the strength of
+       STYLE.md naming that as the product hero. Checked against the live pages:
+       `/heritage-aluminium-doors/` and `/roof-lanterns/`, two of the three routes
+       STYLE.md names, both run the full-bleed compact hero, and only
+       `/composite-doors/` runs the boxed one. FULL-SITE-AUDIT-2026-08-13.md
+       finding [41] records exactly that drift. The live pages are the newer
+       thinking, which is what STYLE.md itself says to trust.
 
-       IT LOOPS. Owner instruction, 2026-08-18: it should play, return to the
-       start and run again. An earlier pass had it play once and hold on the
-       open frame; he wants the cycle.
+       THE CROP WAS REJECTED ON ARITHMETIC AND THE ARITHMETIC WAS WRONG. The
+       first pass calculated a 3.2:1 hero from a 900px viewport and concluded a
+       4:3 film would be cut in half. `--compact` is `clamp(390px, 50vh, 540px)`,
+       so on a real desktop it settles at 540px against 1440, which is 2.67:1 and
+       keeps half the frame height. Rendered at three object-positions and looked
+       at: the default centre reads best, showing the glass, the meeting stiles
+       and the garden through the panels. The door as a whole object is carried
+       by the stills further down the page, not by the hero.
 
-       FULL-SITE-AUDIT-2026-08-13.md findings [150] and [156] are about
-       autoplaying looping video with NO pause control and reduced motion not
-       being honoured. Neither applies here and both must stay that way: the
-       player carries real `controls`, so it can be paused, and the shared
-       lazy-video gate below does not autoplay at all for a visitor who has asked
-       for reduced motion, on a small viewport or on a metered connection. If the
-       controls are ever hidden for design reasons, this becomes finding [150].
+       IT PLAYS FORWARD, THEN BACKWARD, THEN REPEATS. Owner instruction: the film
+       should run to the end, reverse to the start, and loop. Browsers cannot play
+       a negative `playbackRate`, so the cycle is encoded into the file, forward
+       frames followed by the same frames reversed with the duplicate seam frame
+       trimmed, and `loop` on the element makes it continuous. 17.12s, 1,432KB.
 
-       Loading is the shared `data-fg-lazy-video` controller, which already
-       honours prefers-reduced-motion, Save-Data, a slow effective connection and
-       a small viewport, and only calls play() once it has loaded. There is no
-       `autoplay` attribute, so with JavaScript off nothing moves and the poster
-       carries the hero. Known inherited wart: that controller's interaction
-       gate listens on window, so on mobile the first tap anywhere on the page
-       triggers the load. Audit finding [177] records it against the 9.36MB
-       homepage video; here the file is 1.26MB and the trade is acceptable.
-       Do not fix it in this route; fix it in the controller.
-
-       The poster is the first frame, closed, so poster and first frame are the
-       same image and there is no jump when playback starts. The open state is
-       not lost by that choice: it is the second still in the bespoke middle
-       below, at full width. */
-    $slide_fold_video = FENSTER_THEME_URI . '/assets/videos/slide-fold/slide-fold-doors-opening-1280.mp4';
+       Findings [150] and [156] are about looping video with NO pause control and
+       reduced motion not honoured. The player keeps real `controls`, and the
+       shared lazy-video gate does not autoplay at all for reduced motion, a small
+       viewport or a metered connection. Keep both. */
+    $slide_fold_video = FENSTER_THEME_URI . '/assets/videos/slide-fold/slide-fold-doors-cycle-1280.mp4';
     $slide_fold_poster = '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-hero-poster-1280w.webp';
-    $slide_fold_phone = (string) ($brand['phone'] ?? '01908 429200');
     ?>
-    <section class="fg-cd3-hero fg-sf-hero">
-        <div class="container fg-cd3-hero__grid">
-            <div class="fg-cd3-hero__copy">
-                <p class="eyebrow"><?php esc_html_e('Slide and fold doors in Milton Keynes', 'fenster'); ?></p>
-                <h1><?php echo esc_html($title); ?></h1>
-                <?php /* The alternative names are in the lead deliberately. This
-                         door is sold under several and a customer who met it at a
-                         show may remember any of them, so the page answers to all
-                         of them in its first sentence rather than in a footnote.
-                         "Panoramic" is used as a plain descriptor and never as a
-                         product name; see the naming note in the session
-                         handover. */ ?>
-                <p class="fg-cd3-hero__lead"><?php esc_html_e('Sometimes called slide and swing, or panoramic doors. The panels slide along a track and each one swings open on its own, so you can open a single leaf, part of the run or the whole opening.', 'fenster'); ?></p>
-                <div class="fg-cd3-hero__actions">
-                    <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $slide_fold_phone)); ?>"><?php echo esc_html(sprintf(/* translators: %s: phone number */ __('Call %s', 'fenster'), $slide_fold_phone)); ?></a>
+    <section class="fg-hero fg-hero--compact fg-sf-hero">
+        <video
+            class="fg-hero__video"
+            data-fg-lazy-video
+            data-fg-video-slow-mode="interaction"
+            poster="<?php echo esc_url(fenster_generated_url($slide_fold_poster)); ?>"
+            preload="none"
+            muted
+            playsinline
+            loop
+            controls
+            controlslist="nodownload"
+            aria-label="<?php esc_attr_e('A slide and fold door in our showroom being opened one panel at a time', 'fenster'); ?>"
+        >
+            <source data-src="<?php echo esc_url($slide_fold_video); ?>" type="video/mp4">
+        </video>
+        <div class="fg-hero__shade"></div>
+        <div class="container fg-hero__inner">
+            <div class="fg-hero__copy">
+                <div class="fg-hero__heading">
+                    <p class="eyebrow"><?php esc_html_e('Slide and fold doors in Milton Keynes', 'fenster'); ?></p>
+                    <h1><?php echo esc_html($title); ?></h1>
+                </div>
+                <?php /* The CTA pair is the shared one every product hero
+                         carries, in the order the rest of the site uses it. */ ?>
+                <div class="button-row">
+                    <a class="button" href="#fenster-enquiry">
+                        <span class="fg-hero-cta__full"><?php echo esc_html($cta_label); ?></span>
+                        <span class="fg-hero-cta__short"><?php esc_html_e('Send an enquiry', 'fenster'); ?></span>
+                    </a>
+                    <a class="button button--light" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Instant pricing', 'fenster'); ?></a>
                 </div>
             </div>
-            <figure class="fg-cd3-hero__media fg-sf-hero__media">
-                <video
-                    class="fg-sf-hero__video"
-                    data-fg-lazy-video
-                    data-fg-video-slow-mode="interaction"
-                    poster="<?php echo esc_url(fenster_generated_url($slide_fold_poster)); ?>"
-                    preload="none"
-                    muted
-                    playsinline
-                    loop
-                    controls
-                    controlslist="nodownload"
-                    width="1280"
-                    height="960"
-                    aria-label="<?php esc_attr_e('A slide and fold door being opened one panel at a time', 'fenster'); ?>"
-                >
-                    <source data-src="<?php echo esc_url($slide_fold_video); ?>" type="video/mp4">
-                </video>
-                <?php /* OWNER-CONFIRMED 2026-08-18: this is OUR Milton Keynes
-                         showroom, so the caption names it. It was deliberately
-                         non-committal until he said so, because this project does
-                         not caption a photograph as ours without confirmation.
-                         Saying it is the showroom rather than an installation is
-                         also the accurate claim: it is a display door on a stand,
-                         and the page invites you to come and work it. */ ?>
-                <figcaption><?php esc_html_e('Our Milton Keynes showroom', 'fenster'); ?></figcaption>
-            </figure>
         </div>
     </section>
     <?php elseif ($is_composite_doors) : ?>

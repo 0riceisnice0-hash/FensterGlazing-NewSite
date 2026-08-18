@@ -181,7 +181,7 @@ $colour_standards = [
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('How it opens', 'fenster'); ?></p>
-                <h2 id="fg-sf-open-title"><?php esc_html_e('Every panel opens on its own.', 'fenster'); ?></h2>
+                <h2 id="fg-sf-open-title"><?php esc_html_e('Open one panel. Or open the lot.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The panels slide along a track, and each one swings open by itself once it reaches the end. That means the opening is not a single decision you make once. You can walk through one leaf on a Tuesday in February, stand two of them back on a warm evening, and put the whole run away when the weather earns it.', 'fenster'); ?></p>
                 <p><?php esc_html_e('One panel is the master door, and it behaves like an ordinary door. It has the handle, it is the one you use for the bins and the washing, and it opens without moving anything else. On four panels or more you can have a master door at each end.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
@@ -228,7 +228,7 @@ $colour_standards = [
         <div class="container fg-sf-span__inner">
             <div class="fg-sf-span__copy">
                 <p class="eyebrow"><?php esc_html_e('The span', 'fenster'); ?></p>
-                <h2 id="fg-sf-span-title"><?php esc_html_e('You add panels until the opening is covered.', 'fenster'); ?></h2>
+                <h2 id="fg-sf-span-title"><?php esc_html_e('Add panels until the opening is covered.', 'fenster'); ?></h2>
                 <p><?php echo esc_html(sprintf(
                     /* translators: %s: maximum panel width in millimetres, e.g. 1000mm */
                     __('Each panel goes up to %s wide, and that figure includes the outer frame, so the sum is straightforward. There is no limit on how many panels you can have, which is why this suits an opening wider than a normal set of doors can reach.', 'fenster'),
@@ -264,7 +264,7 @@ $colour_standards = [
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Closed', 'fenster'); ?></p>
-                <h2 id="fg-sf-closed-title"><?php esc_html_e('Shut, it reads as one face of glass.', 'fenster'); ?></h2>
+                <h2 id="fg-sf-closed-title"><?php esc_html_e('Shut, it is one face of glass.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The panels close into each other rather than past each other, so they interlock along their full height and pull up against a double weather seal. That is what gives the closed run its flat, continuous line, and it is why the door looks like a window wall from the garden rather than a row of leaves.', 'fenster'); ?></p>
                 <p><?php esc_html_e('The hinges are concealed inside the panels and only come into play once the master door is open and a panel has been slid round to it. From outside there is nothing to see but glass, frame and the one handle on the master door.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
@@ -308,7 +308,7 @@ $colour_standards = [
             </figure>
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Track and threshold', 'fenster'); ?></p>
-                <h2 id="fg-sf-track-title"><?php esc_html_e('The floor carries it, not the lintel.', 'fenster'); ?></h2>
+                <h2 id="fg-sf-track-title"><?php esc_html_e('The floor carries it. Nothing hangs from the lintel.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('The panels run on wheels along the bottom track, and that track carries all of their weight. Nothing hangs from the head. The manufacturer gives the reason worth knowing on a new build: a door that is not top hung keeps working when the structure above it settles or the lintel takes up its load, which is a normal part of a building being new.', 'fenster'); ?></p>
                 <p><?php esc_html_e('A level threshold on the inside is achievable, and the manufacturer states the outside floor can finish 10mm below the top of the bottom track where the drainage is right. A cill is not needed if the drainage is handled another way, so the thing to settle with your builder is where the water goes.', 'fenster'); ?></p>
                 <ul class="fg-cw-facts">
@@ -353,7 +353,7 @@ $colour_standards = [
                      the change of shape is what closes the page. */ ?>
             <div class="fg-cw-head fg-sf-close__head">
                 <p class="eyebrow"><?php esc_html_e('Colour, and seeing one', 'fenster'); ?></p>
-                <h2 id="fg-sf-close-title"><?php esc_html_e('Any RAL colour, in one of two finishes.', 'fenster'); ?></h2>
+                <h2 id="fg-sf-close-title"><?php esc_html_e('Any RAL colour. Two finishes.', 'fenster'); ?></h2>
             </div>
             <div class="fg-sf-close__grid">
                 <div class="fg-cw-copy">
@@ -368,7 +368,7 @@ $colour_standards = [
                     </ul>
                 </div>
                 <div class="fg-cw-copy">
-                    <p><?php esc_html_e('There is one standing in our Milton Keynes showroom, and it is the reason to come in rather than read about it. This is a door you judge by working it: sliding a panel round, swinging it open on its own, and feeling the run close back onto its seals. Ten minutes with it tells you more than this page can.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('Come and work one in the Milton Keynes showroom. Slide a panel round, swing it open on its own, and push the run closed until it pulls onto its seals. Ten minutes with it will tell you more than this page can.', 'fenster'); ?></p>
                     <p class="fg-cw-actions fg-sf-close__links">
                         <a class="fg-cw-link" href="<?php echo esc_url($showroom_link); ?>"><?php esc_html_e('Visit the showroom', 'fenster'); ?></a>
                         <a class="fg-cw-link" href="<?php echo esc_url($study_link); ?>"><?php esc_html_e('See the Leighton Buzzard job', 'fenster'); ?></a>

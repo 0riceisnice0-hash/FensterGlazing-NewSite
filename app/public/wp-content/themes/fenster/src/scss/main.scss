@@ -36540,7 +36540,6 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cd3-hero__media,
-.fg-sf-hero__media,
 .fg-heritage-door-hero__media {
   position: relative;
   width: min(100%, 620px);
@@ -37226,7 +37225,6 @@ html.fg-blinds-reveal-locked {
   }
 
   .fg-cd3-hero__media,
-  .fg-sf-hero__media,
   .fg-heritage-door-hero__media {
     width: min(100%, 440px);
     aspect-ratio: 4 / 3;
@@ -43007,25 +43005,17 @@ html.fg-blinds-reveal-locked {
    box built for an image, and the span and material blocks.
    --------------------------------------------------------------------------- */
 
-/* The film is 4:3 and the box is 6/5 on desktop and 4/3 at 860px and below, so
-   `cover` crops about a tenth of the width on desktop and nothing at all on a
-   phone. `cover` rather than `contain` deliberately: the box has a steel
-   background and a contained video would draw two bars of it down the sides. */
-.fg-sf-hero__video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: var(--color-steel);
+/* The film sits in the shared full-bleed product hero, so it inherits
+   `.fg-hero__video`'s cover sizing and needs no geometry of its own. What it
+   does need is the control bar kept clear of the hero copy, which is bottom
+   left in that component. `controls` is the pause affordance the looping film
+   has to keep, so it is nudged rather than hidden. */
+.fg-sf-hero .fg-hero__video::-webkit-media-controls-panel {
+  padding-right: 1rem;
 }
 
-/* The native control bar is the accessibility answer here, since the film plays
-   once and stops rather than looping. It is left visible rather than hidden on
-   purpose. It only paints over the bottom of the frame while the pointer is in
-   the box, and the caption chip sits above it. */
-.fg-sf-hero__media figcaption {
-  bottom: auto;
-  top: 1.1rem;
+.fg-sf-hero .fg-hero__inner {
+  padding-bottom: clamp(3rem, 6vh, 4.5rem);
 }
 
 /* THE SPAN BAND: the page's one change of register.
