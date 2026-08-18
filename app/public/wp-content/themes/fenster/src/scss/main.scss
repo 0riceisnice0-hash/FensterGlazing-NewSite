@@ -12830,6 +12830,18 @@ a.fg-cs-installer:hover {
   background: var(--color-soft);
 }
 
+/* An all-portrait gallery may opt into a 3:4 cell with `gallery_shape =>
+   'tall'`. Square costs a tall photograph a quarter of its height, which is the
+   fair trade only while a gallery mixes orientations. Where every photograph is
+   portrait there is nothing to be fair to, and the crop is pure loss: on the
+   Drayton Parslow front door it cut the head of the door and the porch out of a
+   shot taken to show them. Every image in such a gallery still shares one
+   shape, so the rows line up exactly as the 2026-08-10 rule requires. Do not
+   put this on a gallery containing a landscape image. */
+.fg-cs-gallery__masonry--tall .fg-cs-shot img {
+  aspect-ratio: 3 / 4;
+}
+
 .fg-cs-zoom {
   display: block;
   cursor: zoom-in;

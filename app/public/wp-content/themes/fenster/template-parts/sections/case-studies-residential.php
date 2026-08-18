@@ -503,7 +503,26 @@ $hero_intro_html = ob_get_clean();
         <section class="fg-cs-gallery">
             <div class="container">
                 <h2 class="fg-cs-gallery__title"><?php esc_html_e('The project in pictures', 'fenster'); ?></h2>
-                <div class="fg-cs-gallery__masonry">
+                <?php
+                /* The gallery cell is square by default. `gallery_shape =>
+                   'tall'` swaps it for 3:4 on this study only.
+
+                   THIS DOES NOT REVERSE THE ALIGNMENT RULE, it applies it. The
+                   owner rule of 2026-08-10 is that every image in a gallery
+                   shares ONE shape, so the rows line up and no holes open under
+                   a shorter photograph. A study whose photographs are all
+                   portrait still satisfies that with a portrait cell, and gets
+                   back the quarter of the height a square cell takes off it.
+
+                   ONLY SET IT WHEN EVERY IMAGE IN THE GALLERY IS PORTRAIT.
+                   Measured across the 93 images in the library, a 3:4 cell
+                   keeps 96% of a portrait's height against 72% for a square,
+                   but leaves a landscape showing 53% of its width against 71%.
+                   Mixing one landscape into a tall gallery is the fault this
+                   rule was written to stop. */
+                $gallery_shape = ($study['gallery_shape'] ?? '') === 'tall' ? ' fg-cs-gallery__masonry--tall' : '';
+                ?>
+                <div class="fg-cs-gallery__masonry<?php echo esc_attr($gallery_shape); ?>">
                     <?php foreach ($gallery_images as $image) : ?>
                         <figure class="fg-cs-shot">
                             <a class="fg-cs-zoom" href="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" data-fg-gallery-lightbox aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>">

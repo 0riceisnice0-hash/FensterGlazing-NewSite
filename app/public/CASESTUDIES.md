@@ -268,6 +268,13 @@ through. Commercial studies never print the line.
   Bletchley sets `Surveyed and managed by`. Added 2026-08-10.
 - **`date_confirmed`** (optional, `false`). Use when a completion date is
   approximate rather than guessing one.
+- **`gallery_shape`** (optional, `'tall'`). Renders that study's gallery cells
+  at 3:4 instead of the default square. Added 2026-08-18 for Drayton Parslow.
+  **Only set it when every image in the gallery is portrait.** Across the 93
+  images in the library a 3:4 cell keeps 96% of a portrait's height against 72%
+  for a square, but leaves a landscape showing 53% of its width against 71%, so
+  one landscape in a tall gallery is worse than the square was. See the next
+  section for why this is not a reversal of the alignment rule.
 
 ### Gallery images are squared, and you do not crop the sources
 
@@ -276,6 +283,18 @@ Every gallery image renders `aspect-ratio: 1 / 1` with `object-fit: cover`, on
 residential alike. **Do not pre-crop source files to square** — the crop happens
 at render time, so the originals stay whole and a future change of shape costs
 one line. Publish at the photograph's natural aspect.
+
+**The rule is one shape per gallery, not square everywhere**, which is why
+`gallery_shape => 'tall'` exists and does not break it. An all-portrait gallery
+on a 3:4 cell still lines up perfectly; it simply stops paying a crop that only
+buys fairness when a landscape is in the row with it.
+
+**Know what `object-fit: cover` actually crops before you argue with a crop.**
+The visible window is exactly as wide as the source file, so a 739px wide
+photograph gets a 739px tall window in a square cell no matter how tall the file
+is. Trimming the source's height does not zoom out, it only slides the window;
+the only levers are a wider photograph or a taller cell. This is what made the
+Drayton Parslow front door read as a close-up after the owner reshot it wide.
 
 ### Commercial studies: name the building, not the firm that hired you
 

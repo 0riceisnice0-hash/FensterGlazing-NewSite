@@ -1360,6 +1360,17 @@ function fenster_case_studies(): array
                 'Split leaves, each locking on its own, with a glazed pane in the top half',
             ],
             'installers' => [$fitter_tom, $fitter_johnnie],
+            /* All five photographs are portrait, so the gallery takes the 3:4
+               cell rather than the square one. Owner call, 2026-08-18: the
+               square crop was "way too zoomed in" on the front door, and it
+               was. `object-fit: cover` makes the visible window exactly as wide
+               as the source file, so at 739px wide the square window is 739px
+               tall and the door is 960px, and the head of the door and the
+               porch it was reshot to show both fell outside it. A 3:4 window is
+               985px and holds the whole door. Nothing else on the site changes,
+               and the rows still line up because every image here shares the
+               new shape. See the note on `gallery_shape` in the template. */
+            'gallery_shape' => 'tall',
             'video' => [
                 'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-drayton-parslow-stable-door.mp4',
                 'poster' => $img . 'cs-drayton-parslow-stable-door-poster.jpg',
