@@ -797,6 +797,40 @@ function fenster_site_data(): array
            renderer assumes the standard integral-blind 12.5mm slat for
            geometry only and no figure is printed on the page. If Notan confirm
            a width it can be added and shown; until then it must not be. */
+        /* Slide and fold frame finishes.
+           ---------------------------------------------------------------
+           The manufacturer publishes seven named finishes for this system and
+           any RAL beyond them. Six are here; the seventh, a textured antique
+           grey carrying their own code rather than a RAL number, is left out
+           because nobody has a defined value for it and this project does not
+           draw a swatch it cannot source. That is the same call
+           aluminium-colour-grid.php makes when it filters out entries with no
+           photograph, and the same one /colour-options/ makes for the four
+           composite colours with no painted tile.
+
+           NO PHOTOGRAPHED SWATCH EXISTS FOR THIS RANGE, so the chip is drawn
+           from the RAL value. That is allowed here and it is not the thing the
+           Swatch Provenance Rule forbids: the rule is against a colour invented
+           in the stylesheet that matches nothing orderable, and these are
+           published RAL standards a customer can hold a fan deck against. The
+           values live here rather than in main.scss for exactly that reason, and
+           the RAL code is printed beside every chip so the customer can check
+           it. AI.md already sets the precedent under the Notan rule: where a
+           colour carries a RAL code, prefer the code over the swatch.
+
+           Replace `hex` with `image` the moment we have real powder-coated
+           samples photographed; the section is written to prefer a photograph.
+
+           `standard` marks the two the manufacturer holds as stock. */
+        'slide_fold_colours' => [
+            ['name' => 'Anthracite Grey', 'ref' => 'RAL 7016', 'hex' => '#383E42', 'standard' => true],
+            ['name' => 'Signal White', 'ref' => 'RAL 9003', 'hex' => '#F4F4F4', 'standard' => true],
+            ['name' => 'Jet Black', 'ref' => 'RAL 9005', 'hex' => '#0A0A0A'],
+            ['name' => 'Slate Grey', 'ref' => 'RAL 7015', 'hex' => '#51565C'],
+            ['name' => 'Agate Grey', 'ref' => 'RAL 7038', 'hex' => '#B5B8B1'],
+            ['name' => 'Silk Grey', 'ref' => 'RAL 7044', 'hex' => '#CAC4B0'],
+        ],
+
         'notan_blind_colours' => [
             ['key' => 'white',            'name' => 'White',            'code' => 'BY001',   'hex' => '#EDEFEF'],
             ['key' => 'cream',            'name' => 'Cream',            'code' => 'BY010',   'hex' => '#B3AD96'],

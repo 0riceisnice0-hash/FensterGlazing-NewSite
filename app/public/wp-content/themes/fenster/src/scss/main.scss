@@ -43130,24 +43130,42 @@ html.fg-blinds-reveal-locked {
   position: relative;
 }
 
-/* The closing block's two standard colours. Deliberately NOT swatches: we hold
-   no photographed samples for this product and the Swatch Provenance Rule
-   forbids painting a chip from a hex to fill the gap. Name and RAL reference,
-   side by side, on the shared facts list. */
-.fg-sf-standards li {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.15rem 0.5rem;
-  align-items: baseline;
+/* The colour chip.
+
+   The section reuses `.fg-alu-colours` wholesale, so the card, the grid and the
+   name/reference typography all come from there and nothing is redeclared. The
+   only thing this route owns is the chip that stands in for a photographed
+   swatch, sized to the same box the corner renders occupy so the two treatments
+   can be swapped without the grid moving.
+
+   THE HAIRLINE IS ON EVERY CHIP, NOT JUST THE PALE ONES. Signal White on a white
+   card reads as an empty slot without it, which is the reason the smooth white
+   uPVC swatch already carries one, and putting the border on only the light
+   chips would single them out as a different kind of thing. */
+.fg-sf-colours__chip {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(15, 49, 54, 0.18);
+  border-radius: 6px;
+  background: var(--chip, var(--color-muted));
 }
 
-.fg-sf-standards strong {
-  color: var(--color-ink);
-}
-
-.fg-sf-standards span {
-  color: var(--color-muted);
-  font-size: var(--fg-text-xs);
+/* The two stock colours are marked rather than reordered, so the row still
+   reads in the manufacturer's own order. */
+.fg-sf-colours__grid .is-standard::after {
+  content: 'Standard';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  background: rgba(6, 33, 42, 0.82);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .fg-sf-close__links {

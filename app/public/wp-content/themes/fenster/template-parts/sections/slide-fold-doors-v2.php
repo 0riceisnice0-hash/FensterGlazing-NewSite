@@ -146,24 +146,15 @@ foreach ([3, 4, 5, 6] as $panels) {
    photograph on that study settles it independently: slim frames and slim
    meeting stiles, which is not a uPVC section.
 
-   So there are no uPVC figures anywhere on this route, and nothing here needs
-   to say which material we do not do. Per the 2026-08-02 ruling the page states
-   what is offered and stops.
+   So there are no uPVC figures anywhere on this route, and nothing here needs to
+   say which material we do not do. Per the 2026-08-02 ruling the page states
+   what is offered and stops. */
 
-   THE TWO STANDARD COLOURS ARE THE MANUFACTURER'S OWN STANDARDS and they are
-   named because a customer choosing between "any RAL" and a stock colour needs
-   to know there is a stock colour. Their published standards are Anthracite
-   Grey RAL 7016 and Signal White RAL 9003.
-
-   NO SWATCHES ARE DRAWN FOR THIS. We hold no photographed colour samples for
-   this product, and the Swatch Provenance Rule in AI.md forbids painting a chip
-   from a hex to fill the gap, which is the same call the composite colour hub
-   made for the four colours it has no tile for. The colours are named in words
-   until real samples exist. */
-$colour_standards = [
-    ['name' => __('Anthracite Grey', 'fenster'), 'ref' => __('RAL 7016', 'fenster')],
-    ['name' => __('Signal White', 'fenster'), 'ref' => __('RAL 9003', 'fenster')],
-];
+/* The finishes come from `slide_fold_colours` in inc/site-data.php, where the
+   provenance of every value is written out. Six named RAL finishes, two of them
+   the stock colours, and any RAL beyond them. */
+$slide_fold_colours = fenster_data('slide_fold_colours', []);
+$slide_fold_colours = is_array($slide_fold_colours) ? $slide_fold_colours : [];
 ?>
 
 <div class="fg-cw fg-sf">
@@ -320,63 +311,93 @@ $colour_standards = [
         </div>
     </section>
 
-    <?php /* ---------- 5. Colour, and the showroom ---------------------------
-             The closing section, and it carries two jobs.
+    <?php /* ---------- 5. Colour ------------------------------------------
+             A COLOUR SECTION HAS TO SHOW COLOUR. The first pass named two
+             finishes in a bulleted `.fg-cw-facts` list, which renders
+             identically to the fact lists in the four sections above it, so the
+             one section on this page about how the door looks looked like
+             another list of specifications. The owner called it on 2026-08-18.
 
-             The colour answer HAS to be here. The shared specification-choices
-             band is gated off for this route because its colour card points at
-             /colour-options/, which is the Liniar foil range and the Sheerline
-             powder-coat range, and this door is neither of those systems. Gating
-             a band is only safe if something else carries what it said, which is
-             the lesson the roofline rebuild paid for when a heading was left
-             over nothing. This is that something else. If this section is ever
-             removed, un-gate the band in the same commit.
+             It now uses the grid the rest of the site uses for a colour range,
+             `.fg-alu-colours__grid`, so this route reads like
+             /aluminium-windows/ and /heritage-aluminium-doors/ rather than like
+             something invented for one page.
 
-             And the showroom, which is now worth saying: the owner confirmed on
-             2026-08-18 that the film is OUR showroom. That changes what this
-             page can claim. A door whose whole argument is how it feels to work
-             is a door worth sending somebody to touch, and we have one standing
-             on the floor in Milton Keynes.
+             THE CHIP IS DRAWN FROM THE RAL VALUE BECAUSE NO PHOTOGRAPHED SWATCH
+             EXISTS FOR THIS RANGE, and the full reasoning is in the data file.
+             In short: the Swatch Provenance Rule forbids a colour invented in
+             the stylesheet that matches nothing orderable, and a published RAL
+             standard is the opposite of that. The values live in site-data.php,
+             the RAL code prints beside every chip so a customer can check it
+             against a fan deck, and the markup prefers an `image` the moment
+             real samples are photographed.
 
-             The bifold and slider links live here, framed as three ways of
-             answering the same opening rather than as a ranking. This is the
-             only place any of the three is named beside the others. */ ?>
+             This band also carries what the gated specification-choices card
+             would have said. Gating that band is only safe while this exists. */ ?>
+    <section class="fg-alu-colours fg-sf-colours" aria-labelledby="fg-sf-colour-title">
+        <div class="container">
+            <div class="fg-alu-colours__heading">
+                <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
+                <h2 id="fg-sf-colour-title"><?php esc_html_e('Six finishes held, and any RAL beyond them.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('Powder coating is baked onto the aluminium rather than painted over it, so it does not flake and it never wants redoing. Anthracite Grey and Signal White are the two held as standards, and between them they cover most of what goes out.', 'fenster'); ?></p>
+            </div>
+            <ul class="fg-alu-colours__grid fg-sf-colours__grid">
+                <?php foreach ($slide_fold_colours as $colour) : ?>
+                    <?php
+                    $sf_name = (string) ($colour['name'] ?? '');
+                    $sf_ref = (string) ($colour['ref'] ?? '');
+                    $sf_hex = (string) ($colour['hex'] ?? '');
+                    $sf_img = (string) ($colour['image'] ?? '');
+                    if ($sf_name === '' || ($sf_hex === '' && $sf_img === '')) {
+                        continue;
+                    }
+                    $sf_label = $sf_ref !== '' ? $sf_name . ', ' . $sf_ref : $sf_name;
+                    ?>
+                    <li<?php echo ! empty($colour['standard']) ? ' class="is-standard"' : ''; ?>>
+                        <?php if ($sf_img !== '') : ?>
+                            <img src="<?php echo esc_url(fenster_generated_url($sf_img)); ?>" alt="<?php echo esc_attr(sprintf(__('Powder-coated aluminium in %s', 'fenster'), $sf_name)); ?>" loading="lazy">
+                        <?php else : ?>
+                            <?php /* A chip rather than a photograph. It carries a
+                                     hairline, because Signal White on a white card
+                                     reads as an empty slot otherwise, which is the
+                                     same reason the smooth white uPVC swatch has
+                                     one. */ ?>
+                            <span class="fg-sf-colours__chip" style="--chip: <?php echo esc_attr($sf_hex); ?>" role="img" aria-label="<?php echo esc_attr($sf_label); ?>"></span>
+                        <?php endif; ?>
+                        <strong><?php echo esc_html($sf_name); ?></strong>
+                        <?php if ($sf_ref !== '') : ?>
+                            <span><?php echo esc_html($sf_ref); ?></span>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <p class="fg-alu-colours__note"><?php esc_html_e('You can have a different colour inside and out, and beyond these we can match any RAL colour, confirmed against a sample before the doors are ordered. The frame is finished matt, or in a textured brushed-sand look that catches the light differently. If you have a shade in mind, ask and we will tell you what is possible.', 'fenster'); ?></p>
+        </div>
+    </section>
+
+    <?php /* ---------- 6. Come and work one -----------------------------------
+             Its own section now. It was sharing one with the colour range and
+             they are not the same idea, which is half of why that band read
+             badly.
+
+             This is the page's closing action and it earns the space: the film
+             at the top is our showroom, owner-confirmed on 2026-08-18, so we can
+             send somebody to the actual door rather than to a photograph of one.
+             Handling verbs throughout, per TONEOFVOICE 6, which is the register
+             /about/ uses for the showroom. */ ?>
     <section class="fg-cw-intro fg-sf-close" aria-labelledby="fg-sf-close-title">
         <div class="container">
-            <?php /* TWO COLUMNS OF COPY RATHER THAN ONE, and it is a layout fix
-                     as much as an editorial one. As a single constrained column
-                     this section left the right half of the row empty under four
-                     alternating splits, which reads as a page that has run out
-                     rather than one that has finished. Two columns also separate
-                     the two ideas properly: what you choose, and where to go and
-                     work one. There is no fifth photograph and none is needed;
-                     the change of shape is what closes the page. */ ?>
-            <div class="fg-cw-head fg-sf-close__head">
-                <p class="eyebrow"><?php esc_html_e('Colour, and seeing one', 'fenster'); ?></p>
-                <h2 id="fg-sf-close-title"><?php esc_html_e('Any RAL colour. Two finishes.', 'fenster'); ?></h2>
+            <div class="fg-cw-head">
+                <p class="eyebrow"><?php esc_html_e('Come and see it', 'fenster'); ?></p>
+                <h2 id="fg-sf-close-title"><?php esc_html_e('Ten minutes with one beats ten minutes reading.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('There is one standing in our Milton Keynes showroom, and it is the door in the film at the top of this page. Slide a panel round, swing it open on its own, and push the run closed until it pulls onto its seals. That is the part no page can do for you.', 'fenster'); ?></p>
             </div>
-            <div class="fg-sf-close__grid">
-                <div class="fg-cw-copy">
-                    <p><?php esc_html_e('The frame is powder coated in any RAL colour, in a matt finish or in a textured brushed-sand look that catches the light differently. Two are held as standards and cover most of what goes out.', 'fenster'); ?></p>
-                    <ul class="fg-cw-facts fg-sf-standards">
-                        <?php foreach ($colour_standards as $colour) : ?>
-                            <li>
-                                <strong><?php echo esc_html($colour['name']); ?></strong>
-                                <span><?php echo esc_html($colour['ref']); ?></span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-                <div class="fg-cw-copy">
-                    <p><?php esc_html_e('Come and work one in the Milton Keynes showroom. Slide a panel round, swing it open on its own, and push the run closed until it pulls onto its seals. Ten minutes with it will tell you more than this page can.', 'fenster'); ?></p>
-                    <p class="fg-cw-actions fg-sf-close__links">
-                        <a class="fg-cw-link" href="<?php echo esc_url($showroom_link); ?>"><?php esc_html_e('Visit the showroom', 'fenster'); ?></a>
-                        <a class="fg-cw-link" href="<?php echo esc_url($study_link); ?>"><?php esc_html_e('See the Leighton Buzzard job', 'fenster'); ?></a>
-                        <a class="fg-cw-link" href="<?php echo esc_url($bifold_link); ?>"><?php esc_html_e('Bifold doors', 'fenster'); ?></a>
-                        <a class="fg-cw-link" href="<?php echo esc_url($sliding_link); ?>"><?php esc_html_e('Sliding doors', 'fenster'); ?></a>
-                    </p>
-                </div>
-            </div>
+            <p class="fg-cw-actions fg-sf-close__links">
+                <a class="fg-cw-link" href="<?php echo esc_url($showroom_link); ?>"><?php esc_html_e('Visit the showroom', 'fenster'); ?></a>
+                <a class="fg-cw-link" href="<?php echo esc_url($study_link); ?>"><?php esc_html_e('See the Leighton Buzzard job', 'fenster'); ?></a>
+                <a class="fg-cw-link" href="<?php echo esc_url($bifold_link); ?>"><?php esc_html_e('Bifold doors', 'fenster'); ?></a>
+                <a class="fg-cw-link" href="<?php echo esc_url($sliding_link); ?>"><?php esc_html_e('Sliding doors', 'fenster'); ?></a>
+            </p>
         </div>
     </section>
 
