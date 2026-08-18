@@ -43028,6 +43028,67 @@ html.fg-blinds-reveal-locked {
   top: 1.1rem;
 }
 
+/* THE SPAN BAND: the page's one change of register.
+
+   Four alternating light splits read as competent and flat, which is what the
+   owner called out on 2026-08-18. The routes that work change shape once in the
+   middle, and this is where: scale is the thing a full-bleed photograph can say
+   and a boxed one cannot.
+
+   Full-bleed, so it deliberately escapes the page rhythm. The photograph is
+   landscape and a different property from the rest of the page. */
+.fg-sf-span {
+  position: relative;
+  isolation: isolate;
+  margin: clamp(2.5rem, 5vw, 4rem) 0;
+  padding: clamp(3rem, 7vw, 6rem) 0;
+  overflow: hidden;
+  background: var(--color-steel);
+}
+
+.fg-sf-span__bg {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+
+/* The scrim is what makes white type legible over a photograph, and it is a
+   gradient rather than a flat wash so the right-hand side of the run stays
+   readable as a picture. STYLE.md allows white text only inside a dark panel or
+   over an image with a TESTED overlay; this one was measured at 1440 and 390. */
+.fg-sf-span__shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(6, 33, 42, 0.94) 0%, rgba(6, 33, 42, 0.86) 42%, rgba(6, 33, 42, 0.55) 100%);
+}
+
+.fg-sf-span__inner {
+  display: grid;
+  gap: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+.fg-sf-span__copy {
+  max-width: 46ch;
+}
+
+.fg-sf-span .eyebrow {
+  color: #7fd4a3;
+}
+
+.fg-sf-span h2,
+.fg-sf-span__copy p {
+  color: #fff;
+}
+
+.fg-sf-span__copy p {
+  margin-top: 0.9rem;
+}
+
 /* The derived span row. Deliberately not `.fg-cw-tiles`: these are four short
    number-and-label pairs that should read as one row of figures, not as four
    cards. Wraps to two columns before it wraps to one. */
@@ -43035,7 +43096,7 @@ html.fg-blinds-reveal-locked {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--fg-space-4);
-  margin: var(--fg-space-5) 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -43048,14 +43109,35 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-sf-spans strong {
-  color: var(--color-ink);
-  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  color: #fff;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
   line-height: 1.1;
 }
 
 .fg-sf-spans span {
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.72);
   font-size: var(--fg-text-xs);
+}
+
+/* The install shots are portrait 3:4 from a phone. `.fg-cw-media--4x5` is the
+   closest box the shared grammar offers, so the crop is small. The caption chip
+   names the job, because these are ours and the film in the hero is not an
+   installation. */
+.fg-sf-shot figcaption {
+  position: absolute;
+  z-index: 1;
+  bottom: 1rem;
+  left: 1rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  font-size: var(--fg-text-xs);
+  font-weight: 700;
+}
+
+.fg-sf-shot {
+  position: relative;
 }
 
 /* The closing block's two standard colours. Deliberately NOT swatches: we hold
@@ -43113,5 +43195,11 @@ html.fg-blinds-reveal-locked {
      114px-cell fault already recorded against the shared colour label tier. */
   .fg-sf-spans {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* The gradient runs left to right on desktop, which leaves the bottom of a
+     tall phone viewport unscrimmed. Vertical on mobile instead. */
+  .fg-sf-span__shade {
+    background: linear-gradient(180deg, rgba(6, 33, 42, 0.92) 0%, rgba(6, 33, 42, 0.88) 60%, rgba(6, 33, 42, 0.8) 100%);
   }
 }

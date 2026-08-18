@@ -1057,11 +1057,11 @@ function fenster_site_data(): array
                showroom it is. Every alt here describes the door and claims no
                job. Correct that when the owner answers; do not assume it. */
             'slide-fold-doors' => [
-                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-closed-1400w.webp', 'alt' => 'A four panel black aluminium slide and fold door closed across a wide opening'],
-                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-open-stack-1400w.webp', 'alt' => 'A slide and fold door fully open with the panels stacked to one side'],
+                'hero' => ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-lb-closed-1200w.webp', 'alt' => 'An anthracite slide and fold door closed across the back of a Leighton Buzzard extension'],
+                'card' => ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-lb-open-1200w.webp', 'alt' => 'An anthracite slide and fold door standing fully open, the panels stacked to one side'],
                 'gallery' => [
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-traffic-door-1400w.webp', 'alt' => 'The master door of a slide and fold run swung open on its own'],
-                    ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-part-open-1400w.webp', 'alt' => 'A slide and fold door part open, showing the bottom track across the threshold'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-lb-side-1200w.webp', 'alt' => 'An anthracite slide and fold door seen along the elevation of a Leighton Buzzard extension'],
+                    ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-wide-run-1420w.webp', 'alt' => 'A wide anthracite slide and fold door open across the back of a clad extension'],
                 ],
             ],
             'aluminium-doors' => [
@@ -1610,11 +1610,21 @@ function fenster_site_data(): array
                A bifold illustrating a slide and fold door is the same wrong
                product fault already recorded against the secondary glazing pool
                and the tilt and turn hero. Do not put it back. */
+            /* REAL INSTALLS LEAD, film stills support. Owner instruction,
+               2026-08-18: use pictures other than just frames from the video.
+               The first four are two genuine jobs, the Leighton Buzzard
+               extension and a wider run on a clad one; the last two are
+               showroom frames kept because they are the only close views of the
+               run closed and of the track. This pool feeds every
+               `/slide-fold-doors-<town>/` matrix route as well as the main page,
+               so the mix matters on about twenty five pages, not one. */
             'slide_fold_doors' => [
-                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-closed-1400w.webp', 'alt' => 'A four panel black aluminium slide and fold door closed across a wide opening'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-traffic-door-1400w.webp', 'alt' => 'The master door of a slide and fold run swung open on its own'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-lb-open-1200w.webp', 'alt' => 'An anthracite slide and fold door standing fully open on a Leighton Buzzard extension, the panels stacked to one side'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-wide-run-1420w.webp', 'alt' => 'A wide anthracite slide and fold door open across the back of a clad extension'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-lb-master-door-1200w.webp', 'alt' => 'The master door of a slide and fold run swung open with the rest of the run still closed'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-lb-side-1200w.webp', 'alt' => 'An anthracite slide and fold door seen along the elevation of a Leighton Buzzard extension'],
+                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-closed-1400w.webp', 'alt' => 'A four panel aluminium slide and fold door closed, the panels meeting in a continuous face'],
                 ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-part-open-1400w.webp', 'alt' => 'A slide and fold door part open, showing the bottom track across the threshold'],
-                ['src' => '/wp-content/themes/fenster/assets/images/products/slide-fold/sf-open-stack-1400w.webp', 'alt' => 'A slide and fold door fully open with the panels stacked to one side'],
             ],
             'aluminium_sliding_doors' => [
                 // Order is load-bearing. Body images are this pool minus the

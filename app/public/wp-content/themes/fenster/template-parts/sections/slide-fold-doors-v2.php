@@ -190,54 +190,64 @@ $colour_standards = [
                     <li><?php esc_html_e('Panels stack together to one side when the run is fully open', 'fenster'); ?></li>
                 </ul>
             </div>
-            <figure class="fg-cw-media fg-cw-media--4x3">
-                <img <?php echo fenster_image_attr_string($base . 'sf-traffic-door-1400w.webp', [
-                    'alt' => 'A black aluminium slide and fold door with the master door swung open and the remaining panels still closed',
+            <figure class="fg-cw-media fg-cw-media--4x5 fg-sf-shot">
+                <img <?php echo fenster_image_attr_string($base . 'sf-lb-master-door-1200w.webp', [
+                    'alt' => 'An anthracite slide and fold door on a Leighton Buzzard extension with the master door swung open and the rest of the run still closed',
                     'loading' => 'lazy',
                 ]); ?>>
+                <figcaption><?php esc_html_e('Leighton Buzzard', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </section>
 
-    <?php /* ---------- 2. How wide it goes ----------------------------------
-             The question the office is actually asked about a wide opening, and
-             the one the generic copy never answered. The row is generated from
-             $max_panel_mm rather than typed, so the arithmetic cannot drift.
+    <?php /* ---------- 2. How wide it goes -------------------------------
+             THE ONE CHANGE OF REGISTER ON THE PAGE, and it is deliberate rather
+             than decorative. Four alternating light splits reads as competent
+             and flat, which is what the owner called out on 2026-08-18: not the
+             standard the newer routes set. The pages that work change shape once
+             in the middle. Casement does it with dark technical chapters,
+             aluminium doors with a section that drops its photograph entirely.
+             This route does it here, because the span is the one part of the
+             argument that is about scale, and scale is the thing a full-bleed
+             photograph can say and a boxed one cannot.
 
-             "Inclusive of the outer frame" is load-bearing and stays in the
-             sentence. A customer measuring a structural opening and a customer
-             measuring a panel are measuring different things, and this is the
-             page where that gets settled. */ ?>
-    <section class="fg-cw-intro" aria-labelledby="fg-sf-span-title">
-        <div class="container fg-cw-split fg-cw-split--media-first">
-            <figure class="fg-cw-media fg-cw-media--4x3">
-                <img <?php echo fenster_image_attr_string($base . 'sf-open-stack-1400w.webp', [
-                    'alt' => 'A slide and fold door fully open with all panels stacked to one side, leaving the opening clear',
-                    'loading' => 'lazy',
-                ]); ?>>
-            </figure>
-            <div class="fg-cw-copy">
+             The photograph is a different property from every other shot on the
+             page: a wider run on a clad extension, five panels rather than four,
+             which is the point being made underneath it. It is landscape, so it
+             takes a full-bleed band without the crop fight the portrait install
+             shots would put up.
+
+             The figures sit ON the band rather than beside it. They are derived
+             from $max_panel_mm, so the arithmetic still cannot drift. */ ?>
+    <section class="fg-sf-span" aria-labelledby="fg-sf-span-title">
+        <img class="fg-sf-span__bg" <?php echo fenster_image_attr_string($base . 'sf-wide-run-1420w.webp', [
+            'alt' => 'A wide anthracite slide and fold door running across the back of a clad extension, open onto a deck',
+            'loading' => 'lazy',
+        ]); ?>>
+        <div class="fg-sf-span__shade" aria-hidden="true"></div>
+        <div class="container fg-sf-span__inner">
+            <div class="fg-sf-span__copy">
                 <p class="eyebrow"><?php esc_html_e('The span', 'fenster'); ?></p>
                 <h2 id="fg-sf-span-title"><?php esc_html_e('You add panels until the opening is covered.', 'fenster'); ?></h2>
                 <p><?php echo esc_html(sprintf(
                     /* translators: %s: maximum panel width in millimetres, e.g. 1000mm */
-                    __('Each aluminium panel goes up to %s wide, and that figure includes the outer frame, so the sum is straightforward. There is no limit on how many panels you can have, which is why this suits an opening that is wider than a normal set of doors can reach.', 'fenster'),
+                    __('Each panel goes up to %s wide, and that figure includes the outer frame, so the sum is straightforward. There is no limit on how many panels you can have, which is why this suits an opening wider than a normal set of doors can reach.', 'fenster'),
                     $max_panel_mm . 'mm'
                 )); ?></p>
-                <ul class="fg-cw-list fg-sf-spans">
-                    <?php foreach ($spans as $span) : ?>
-                        <li>
-                            <strong><?php echo esc_html($span['span']); ?></strong>
-                            <span><?php echo esc_html(sprintf(
-                                /* translators: %d: number of door panels */
-                                _n('%d panel', '%d panels', $span['panels'], 'fenster'),
-                                $span['panels']
-                            )); ?></span>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-                <p><?php esc_html_e('Standard height runs to 2400mm in aluminium. Taller than that can be done and is priced on application, and it can pull the maximum panel width back, so tell us the height you are working to early rather than at survey.', 'fenster'); ?></p>
+                <p><?php esc_html_e('Standard height runs to 2400mm. Taller can be done and is priced on application, and it can pull the maximum panel width back, so tell us the height you are working to early rather than at survey.', 'fenster'); ?></p>
             </div>
+            <ul class="fg-sf-spans">
+                <?php foreach ($spans as $span) : ?>
+                    <li>
+                        <strong><?php echo esc_html($span['span']); ?></strong>
+                        <span><?php echo esc_html(sprintf(
+                            /* translators: %d: number of door panels */
+                            _n('%d panel', '%d panels', $span['panels'], 'fenster'),
+                            $span['panels']
+                        )); ?></span>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </section>
 
@@ -285,11 +295,16 @@ $colour_standards = [
              is not offered. */ ?>
     <section class="fg-cw-intro" aria-labelledby="fg-sf-track-title">
         <div class="container fg-cw-split fg-cw-split--media-first">
-            <figure class="fg-cw-media fg-cw-media--4x3">
-                <img <?php echo fenster_image_attr_string($base . 'sf-part-open-1400w.webp', [
-                    'alt' => 'A slide and fold door part open, showing the bottom track running across the threshold',
+            <?php /* The real install rather than the showroom, because the point
+                     of this section is the threshold and a showroom stand does
+                     not have a patio running up to it. Here the paving finishes
+                     level with the track, which is the thing the copy claims. */ ?>
+            <figure class="fg-cw-media fg-cw-media--4x5 fg-sf-shot">
+                <img <?php echo fenster_image_attr_string($base . 'sf-lb-open-1200w.webp', [
+                    'alt' => 'The Leighton Buzzard slide and fold door standing fully open, the panels stacked to one side and the paving running up level with the track',
                     'loading' => 'lazy',
                 ]); ?>>
+                <figcaption><?php esc_html_e('Leighton Buzzard, fully open', 'fenster'); ?></figcaption>
             </figure>
             <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Track and threshold', 'fenster'); ?></p>

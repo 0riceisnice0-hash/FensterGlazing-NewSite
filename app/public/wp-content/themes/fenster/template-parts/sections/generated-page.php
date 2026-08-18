@@ -3550,12 +3550,17 @@ if ($is_commercial_hub) {
        hero, still run by /composite-doors/, so the styling is shared rather than
        invented: `.fg-sf-hero*` joins the existing `.fg-cd3-hero*` selector lists.
 
-       IT DOES NOT LOOP, AND THAT IS DELIBERATE. The film ends with the panels
-       stacked and the opening clear, which is the state worth holding on.
-       FULL-SITE-AUDIT-2026-08-13.md findings [150] and [156] record that nine
-       pages autoplay looping video with no pause control and that reduced motion
-       is not honoured on the case studies. A film that plays once and stops,
-       with real controls, does not reintroduce either.
+       IT LOOPS. Owner instruction, 2026-08-18: it should play, return to the
+       start and run again. An earlier pass had it play once and hold on the
+       open frame; he wants the cycle.
+
+       FULL-SITE-AUDIT-2026-08-13.md findings [150] and [156] are about
+       autoplaying looping video with NO pause control and reduced motion not
+       being honoured. Neither applies here and both must stay that way: the
+       player carries real `controls`, so it can be paused, and the shared
+       lazy-video gate below does not autoplay at all for a visitor who has asked
+       for reduced motion, on a small viewport or on a metered connection. If the
+       controls are ever hidden for design reasons, this becomes finding [150].
 
        Loading is the shared `data-fg-lazy-video` controller, which already
        honours prefers-reduced-motion, Save-Data, a slow effective connection and
@@ -3602,6 +3607,7 @@ if ($is_commercial_hub) {
                     preload="none"
                     muted
                     playsinline
+                    loop
                     controls
                     controlslist="nodownload"
                     width="1280"
