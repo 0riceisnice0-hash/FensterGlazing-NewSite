@@ -1365,6 +1365,17 @@ function fenster_case_studies(): array
          * and neither is in it. That the slab is composite is owner-stated; a
          * drone frame cannot prove a material.
          *
+         * ITS SHAPE IS SET BY THE CELL, AND IT IS THE ONE IMAGE HERE THAT HAD
+         * TO BE. Cut at 470x700 first, which is 0.671, and the square cell then
+         * showed 67% of its height: the doorset lost its head and its threshold
+         * and the tile read as a band of handles, the same fault the owner
+         * caught on the Drayton Parslow front door. Recut to 515x545, 0.945, so
+         * the cell holds nearly all of it. It cannot hold all: the door is
+         * about 600px tall in the frame and only about 515px of width is clear
+         * of the watermark, and a square cell can never show more height than
+         * the source has width. That is the whole arithmetic of `object-fit:
+         * cover` and it is why widening, not trimming, is the lever.
+         *
          * SQUARE GALLERY, NOT THE 3:4 CELL. Five photographs are portrait, the
          * gable shot is landscape and the door still is neither, so this
          * gallery mixes orientations and `gallery_shape` must stay off. See the
