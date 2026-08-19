@@ -43217,14 +43217,21 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
-/* The two colour paragraphs sit in the heading's right column, and the shared
-   component's `align-items: end` is KEPT rather than overridden. It was flipped
-   to `start` first, which left a band of dead space under the H2 because the
-   right column is the taller of the two. Aligning the bottoms puts the heading
-   on the same line as the end of the prose and takes the grid straight after it. */
+/* The colour prose sits in the heading's right column, and this alignment was
+   got wrong twice before it was got right, so both attempts are recorded.
 
-.fg-sf-colours__copy p + p {
-  margin-top: 0.8rem;
+   The shared component uses `align-items: end`, which suits it: one paragraph
+   against a heading of similar height, bottoms aligned. Here the right column is
+   the taller, and `end` sinks the H2 to the foot of the prose while the eyebrow
+   stays pinned to the top of the grid, leaving a hole between the eyebrow and
+   its own heading. `start` puts that space UNDER the heading, where it reads as
+   deliberate.
+
+   The other half of the fix was editorial: the prose is ONE paragraph rather
+   than two, so the two columns are close enough in height that the gap barely
+   shows. If it ever grows back to two, this override stops earning its keep. */
+.fg-sf-colours__heading {
+  align-items: start;
 }
 
 /* Six swatches, not twelve, so the grid is one row. The shared six-column rule
@@ -43237,11 +43244,6 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 860px) {
-  .fg-sf-close__grid {
-    grid-template-columns: 1fr;
-    gap: var(--fg-space-6);
-  }
-
   /* Two by two rather than four across. At 390px four columns puts "6.0m" and
      "6 panels" into 80px cells and the label wraps to three lines, which is the
      114px-cell fault already recorded against the shared colour label tier. */
