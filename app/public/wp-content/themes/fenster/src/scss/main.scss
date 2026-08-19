@@ -43325,14 +43325,12 @@ html.fg-blinds-reveal-locked {
   margin-top: 1.35rem;
 }
 
-.fg-care-hero__call {
-  color: var(--color-steel);
-  font-weight: 800;
-  text-decoration: none;
-  border-bottom: 2px solid rgba(46, 172, 102, 0.55);
+/* Green primary, steel secondary: the site's CTA pairing from the header. */
+.fg-care-hero__hours {
+  margin: 0.7rem 0 0;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
 }
-
-.fg-care-hero__call:hover { border-bottom-color: var(--color-accent); }
 
 /* The four universal habits, numbered because they are genuinely ordered by how
    often each one turns out to be the answer. */
@@ -43822,6 +43820,12 @@ html.fg-blinds-reveal-locked {
   line-height: 1.6;
 }
 
+.fg-care-callus__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
 .fg-care-callus .button { white-space: nowrap; }
 
 /* --- Closing bands --------------------------------------------------- */
@@ -43857,14 +43861,16 @@ html.fg-blinds-reveal-locked {
   align-content: start;
 }
 
-.fg-care-promise__contact a {
+.fg-care-promise__contact .button { justify-self: start; }
+
+.fg-care-promise__email {
   color: var(--color-steel);
   font-size: var(--fg-text-lg);
   font-weight: 800;
   text-decoration: none;
 }
 
-.fg-care-promise__contact a:hover { color: var(--color-accent-dark); }
+.fg-care-promise__email:hover { color: var(--color-accent-dark); }
 
 .fg-care-promise__contact p {
   margin-top: 0.35rem;
@@ -43953,7 +43959,11 @@ html.fg-blinds-reveal-locked {
 
   .fg-care-hero__actions { display: grid; align-items: stretch; }
   .fg-care-hero__actions .button { width: 100%; text-align: center; }
-  .fg-care-hero__call { justify-self: start; }
+
+  /* Both actions full width on the dark band too, since a phone number is the
+     thing somebody standing at a stuck door actually wants. */
+  .fg-care-callus__actions { display: grid; }
+  .fg-care-callus__actions .button { width: 100%; text-align: center; }
 
   .fg-care-routine { grid-template-columns: minmax(0, 1fr); }
 

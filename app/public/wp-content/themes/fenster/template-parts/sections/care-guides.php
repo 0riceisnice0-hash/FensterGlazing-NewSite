@@ -35,8 +35,9 @@ $first_slug = (string) array_key_first($guides);
                     <p class="fg-care-hero__lead"><?php esc_html_e('Have a go at the steps first. If they do not sort it, tell us and we will come and look.', 'fenster'); ?></p>
                     <div class="fg-care-hero__actions">
                         <a class="button" href="#fenster-care-selector"><?php esc_html_e('Choose your product', 'fenster'); ?></a>
-                        <a class="fg-care-hero__call" href="tel:01908429200"><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+                        <a class="button button--steel" href="tel:01908429200" data-fg-care-call><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
                     </div>
+                    <p class="fg-care-hero__hours"><?php esc_html_e('Phone lines are open 24/7, and a real person picks up.', 'fenster'); ?></p>
                 </div>
                 <aside class="fg-care-hero__rules" aria-labelledby="fg-care-rules-title">
                     <p class="eyebrow"><?php esc_html_e('True of everything we fit', 'fenster'); ?></p>
@@ -184,7 +185,10 @@ $first_slug = (string) array_key_first($guides);
                                         <h4><?php esc_html_e('When to give us a shout.', 'fenster'); ?></h4>
                                         <p><?php echo esc_html((string) $guide['call_us']); ?></p>
                                     </div>
-                                    <a class="button" href="#fenster-care-enquiry"><?php esc_html_e('Tell us what it is doing', 'fenster'); ?></a>
+                                    <div class="fg-care-callus__actions">
+                                        <a class="button" href="tel:01908429200" data-fg-care-call><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+                                        <a class="button button--light" href="#fenster-care-enquiry"><?php esc_html_e('Send us the details', 'fenster'); ?></a>
+                                    </div>
                                 </aside>
                             <?php endif; ?>
                         </section>
@@ -202,8 +206,8 @@ $first_slug = (string) array_key_first($guides);
                     <p><?php esc_html_e('A photo or a short video saves a visit surprisingly often, because it usually tells us which part is involved before we set off.', 'fenster'); ?></p>
                 </div>
                 <div class="fg-care-promise__contact">
-                    <a href="tel:01908429200"><?php esc_html_e('01908 429200', 'fenster'); ?></a>
-                    <a href="mailto:info@fensterglazing.com"><?php esc_html_e('info@fensterglazing.com', 'fenster'); ?></a>
+                    <a class="button" href="tel:01908429200" data-fg-care-call><?php esc_html_e('Call 01908 429200', 'fenster'); ?></a>
+                    <a class="fg-care-promise__email" href="mailto:info@fensterglazing.com"><?php esc_html_e('info@fensterglazing.com', 'fenster'); ?></a>
                     <p><?php esc_html_e('Showroom open Monday to Friday, 8.30am to 5pm. Phone lines open 24/7.', 'fenster'); ?></p>
                 </div>
             </div>
