@@ -4861,6 +4861,45 @@ document.querySelectorAll('video[data-fg-lazy-video]').forEach((video) => {
     video.play?.().catch(() => {});
   };
 
+  /* An optional play/pause button for this video, addressed by id.
+     A looping hero film needs a pause control or it is audit finding [150], and
+     the native `controls` bar is the wrong answer on a hero: it paints a black
+     chrome strip over the poster from the moment the page loads, which is what
+     the owner reported on 2026-08-18. This gives the same capability in the
+     site's own language.
+
+     It lives inside this loop deliberately, so it can reach `loadVideo` and
+     start a film whose source has not been attached yet. A visitor on reduced
+     motion or a metered connection gets the poster and this button, which is
+     exactly the behaviour that finding asks for. */
+  const toggle = video.id ? document.querySelector(`[data-fg-video-toggle="${video.id}"]`) : null;
+
+  if (toggle) {
+    const syncToggle = () => {
+      const playing = !video.paused && !video.ended;
+      toggle.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      toggle.setAttribute('aria-label', playing
+        ? toggle.dataset.labelPause || 'Pause the film'
+        : toggle.dataset.labelPlay || 'Play the film');
+      toggle.classList.toggle('is-playing', playing);
+    };
+
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      if (video.dataset.loaded !== 'true') {
+        loadVideo();
+        return;
+      }
+      if (video.paused) {
+        video.play?.().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+    ['play', 'pause', 'ended', 'loadeddata'].forEach((e) => video.addEventListener(e, syncToggle));
+    syncToggle();
+  }
+
   if (interactionOnly) {
     const loadOnInteraction = () => loadVideo();
     ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {

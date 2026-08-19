@@ -3570,6 +3570,7 @@ if ($is_commercial_hub) {
     ?>
     <section class="fg-hero fg-hero--compact fg-sf-hero">
         <video
+            id="fg-sf-hero-film"
             class="fg-hero__video"
             data-fg-lazy-video
             data-fg-video-slow-mode="interaction"
@@ -3578,12 +3579,32 @@ if ($is_commercial_hub) {
             muted
             playsinline
             loop
-            controls
-            controlslist="nodownload"
             aria-label="<?php esc_attr_e('A slide and fold door in our showroom being opened one panel at a time', 'fenster'); ?>"
         >
             <source data-src="<?php echo esc_url($slide_fold_video); ?>" type="video/mp4">
         </video>
+        <?php /* NO NATIVE `controls`. It painted a black player bar across the
+                 poster from the moment the page loaded, which the owner reported
+                 on 2026-08-18, and a hero is the one place that chrome cannot go.
+                 But a looping film still needs a pause, or this becomes audit
+                 finding [150], so the capability moves to this button instead.
+
+                 It ships `hidden` and the controller in main.js reveals it, so a
+                 visitor with no JavaScript is never shown a control that cannot
+                 work. Its label and pressed state are kept in step with the
+                 video's real state rather than assumed from clicks. */ ?>
+        <button
+            class="fg-sf-hero__toggle"
+            type="button"
+            data-fg-video-toggle="fg-sf-hero-film"
+            data-label-play="<?php esc_attr_e('Play the film', 'fenster'); ?>"
+            data-label-pause="<?php esc_attr_e('Pause the film', 'fenster'); ?>"
+            aria-label="<?php esc_attr_e('Play the film', 'fenster'); ?>"
+            aria-pressed="false"
+            hidden
+        >
+            <span class="fg-sf-hero__toggle-icon" aria-hidden="true"></span>
+        </button>
         <div class="fg-hero__shade"></div>
         <div class="container fg-hero__inner">
             <div class="fg-hero__copy">

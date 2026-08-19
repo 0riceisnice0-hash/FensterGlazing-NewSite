@@ -43006,16 +43006,65 @@ html.fg-blinds-reveal-locked {
    --------------------------------------------------------------------------- */
 
 /* The film sits in the shared full-bleed product hero, so it inherits
-   `.fg-hero__video`'s cover sizing and needs no geometry of its own. What it
-   does need is the control bar kept clear of the hero copy, which is bottom
-   left in that component. `controls` is the pause affordance the looping film
-   has to keep, so it is nudged rather than hidden. */
-.fg-sf-hero .fg-hero__video::-webkit-media-controls-panel {
-  padding-right: 1rem;
+   `.fg-hero__video`'s cover sizing and needs no geometry of its own.
+
+   What it owns is the pause control. The native `controls` bar was tried and
+   pulled: it paints black player chrome across the poster from first paint,
+   which is unacceptable on a hero. A looping film still needs a pause, so this
+   is that, in the site's own language. Bottom right, diagonally opposite the
+   hero copy, which sits bottom left. */
+.fg-sf-hero__toggle {
+  position: absolute;
+  z-index: 2;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  background: rgba(6, 33, 42, 0.55);
+  color: #fff;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
 }
 
-.fg-sf-hero .fg-hero__inner {
-  padding-bottom: clamp(3rem, 6vh, 4.5rem);
+/* 44px is the tap-target floor and the button is exactly on it, so it does not
+   need a hit-area pad the way the footer consent buttons did. */
+.fg-sf-hero__toggle:hover,
+.fg-sf-hero__toggle:focus-visible {
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(6, 33, 42, 0.78);
+}
+
+/* A CSS triangle for play, two bars for pause, so there is no icon font and no
+   SVG to ship. The state comes from `is-playing`, which the controller sets off
+   the video's real play/pause events rather than off the click. */
+.fg-sf-hero__toggle-icon {
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid currentColor;
+}
+
+.fg-sf-hero__toggle.is-playing .fg-sf-hero__toggle-icon {
+  width: 11px;
+  height: 13px;
+  margin-left: 0;
+  border: 0;
+  border-left: 4px solid currentColor;
+  border-right: 4px solid currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-sf-hero__toggle {
+    transition: none;
+  }
 }
 
 /* THE SPAN BAND: the page's one change of register.
