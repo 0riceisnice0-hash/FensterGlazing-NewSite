@@ -289,6 +289,7 @@ $is_about = in_array($slug, ['about', 'meet-the-team'], true);
 $is_contact = $slug === 'contact';
 $is_consultation_page = $slug === 'book-a-consultation';
 $is_fensa_page = $slug === 'fensa-approved-installers';
+$is_care_guides_page = $slug === 'downloads';
 $is_cpa_page = $slug === 'consumer-protection-association';
 $is_ggf_page = $slug === 'glass-and-glazing-federation-ggf-standards';
 $is_constructionline_page = $slug === 'constructionline-gold';
@@ -328,7 +329,7 @@ $price_guide_pages = function_exists('fenster_price_guide_pages') ? fenster_pric
 $is_price_guide = isset($price_guide_pages[$slug]) || ! empty($page['is_price_guide']);
 $is_quote_tool = in_array($slug, ['online-quote', '3d-visualiser', 'instant-pricing', 'instant-pricing-meta-ads', 'pricing-gads', 'design-your-windows-and-doors', 'door-designer'], true);
 $is_archive_page = $slug === 'blog' || str_starts_with($slug, 'blog/page/') || str_starts_with($slug, 'category/') || str_starts_with($slug, 'tag/') || str_starts_with($slug, 'author/');
-$is_utility_page = in_array($slug, ['privacy-policy', 'cookie-policy', 'terms-conditions', 'why-trust-fenster', 'brochures', 'downloads', 'gallery', 'customer-portal', 'careers', 'refer-a-friend', 'fenster-partners', 'videos', 'apecs-terms-conditions'], true);
+$is_utility_page = in_array($slug, ['privacy-policy', 'cookie-policy', 'terms-conditions', 'why-trust-fenster', 'brochures', 'gallery', 'customer-portal', 'careers', 'refer-a-friend', 'fenster-partners', 'videos', 'apecs-terms-conditions'], true);
 $location_matrix_towns = function_exists('fenster_location_matrix_towns') ? fenster_location_matrix_towns() : [];
 $location_matrix_products = function_exists('fenster_location_matrix_products') ? fenster_location_matrix_products() : [];
 // '/double-glazing-milton-keynes/' is no longer a matrix route (Milton Keynes
@@ -2460,6 +2461,13 @@ if ($is_consultation_page) {
 
 if ($is_fensa_page) {
     get_template_part('template-parts/sections/fensa-approved', null, [
+        'page' => $page,
+    ]);
+    return;
+}
+
+if ($is_care_guides_page) {
+    get_template_part('template-parts/sections/care-maintenance-guides', null, [
         'page' => $page,
     ]);
     return;
