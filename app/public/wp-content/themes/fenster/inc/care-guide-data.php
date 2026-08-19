@@ -5,13 +5,23 @@
  * These are Fenster's own guides, written for the customer standing in front of
  * the product. They deliberately do not link out to manufacturer PDFs: half the
  * systems we fit publish nothing, the ones that do publish it for fabricators,
- * and a customer with a sticking bifold wants the steps, not a download.
+ * and somebody with a bifold that will not shut wants the steps, not a download.
  *
- * Each guide carries three things in a fixed order: the routine that keeps it
- * working, the fixes worth trying yourself, and the point at which to stop and
- * call us. The last one is not a sales line. Hinge geometry, sash balances and
- * lock gearboxes are adjusted in a set order with the right tools, and a guess
- * at them costs more than the visit.
+ * TONE, and this is the part to hold on to. Owner instruction, 2026-08-19: the
+ * first version read as condescending because it kept correcting the reader.
+ * "This is moisture in the room, not a fault in the window" tells somebody they
+ * are wrong before it tells them anything useful. Two rules came out of that:
+ *
+ *   1. NO "IT IS NOT X, IT IS Y". Say what the thing is and why it happens.
+ *      Where the old copy negated, the new copy explains and reassures.
+ *   2. SAY WHAT TO REACH FOR, NOT WHAT TO FEAR. "Rollers run best on a clean dry
+ *      surface" carries the same advice as "grease ruins your track" and does
+ *      not sell by describing damage. Same rule TONEOFVOICE.md sets out.
+ *
+ * Structure per guide: what you need to hand, the routine with a frequency
+ * against each item, the questions people actually ask, then where to hand over
+ * to us. That last one is not a sales line. Hinge geometry, sash balances and
+ * lock gearboxes are set in a particular order with the right tools.
  *
  * @package Fenster
  */
@@ -22,8 +32,12 @@ if (! defined('ABSPATH')) {
 
 /**
  * Grouped by what actually shares a maintenance routine, which is material and
- * mechanism, not the marketing category. A flush sash and a tilt and turn are
- * different windows to buy and the same window to look after.
+ * mechanism rather than the marketing category. A flush sash and a tilt and turn
+ * are different windows to buy and the same window to look after.
+ *
+ * `image` is the wide hero for the open guide; `thumb` is the square-ish crop
+ * for the picker card. Two crops because one asset cannot do both jobs: a wide
+ * establishing shot turns to mush in a 4:3 cell.
  */
 function fenster_care_guides(): array
 {
@@ -33,187 +47,212 @@ function fenster_care_guides(): array
         return $guides;
     }
 
+    $base = '/wp-content/themes/fenster/assets/images/products/curated/';
+
     $guides = [
         'upvc-windows' => [
             'name' => 'uPVC windows',
             'group' => 'Windows',
             'covers' => 'Casement, flush sash, tilt and turn, French casement, bow and bay',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/liniar-casement-closeup.jpg',
-            'image_alt' => 'Close view of a white uPVC casement window and its handle',
-            'intro' => 'A uPVC window asks for very little: a wash twice a year, clear drainage slots and a drop of oil on the moving parts. Almost every window we get called out to has one of those three things behind it.',
+            'image' => $base . 'liniar-casement-exterior.jpg',
+            'thumb' => $base . 'liniar-casement-closeup.jpg',
+            'image_alt' => 'White uPVC casement windows on a home',
+            'intro' => 'A uPVC window asks for very little. A wash a couple of times a year, drainage slots kept clear and a drop of oil on the moving parts will keep one working sweetly for decades.',
+            'kit' => ['Warm soapy water', 'Soft cloth', 'Light machine oil', 'Soft brush'],
             'routine' => [
                 [
-                    'title' => 'Wash the frames twice a year',
-                    'body' => 'Warm water, a little washing up liquid and a soft cloth. Rinse and dry. Spring and autumn is the usual rhythm, more often if you are on a main road or under trees. For marks that will not shift, a proper uPVC cream cleaner works, but put it on the cloth rather than straight on the frame. Nothing abrasive, no bleach, no solvent, no pressure washer.',
+                    'when' => 'Twice a year',
+                    'title' => 'Give the frames a wash',
+                    'body' => 'Warm water, a little washing up liquid and a soft cloth, then rinse and dry. Spring and autumn suits most houses, a bit more often if you are on a main road or under trees. For a mark that wants more persuading, a uPVC cream cleaner works nicely put onto the cloth rather than straight onto the frame.',
                 ],
                 [
-                    'title' => 'Keep the drainage slots clear',
-                    'body' => 'Along the bottom of the outer frame there are small slots, sometimes hidden behind a hinged cover. Rain is meant to get into the frame and these are how it gets back out. Brush them clear with a soft brush or a blast of air. Do not push wire or a screwdriver into them, because the channel behind turns and you can dislodge the seal at the bottom of the glass.',
+                    'when' => 'Twice a year',
+                    'title' => 'Brush out the drainage slots',
+                    'body' => 'Along the bottom of the outer frame you will find small slots, sometimes tucked behind a little hinged cover. Rain is meant to find its way into the frame and these are how it gets back out again. A soft brush or a puff of air keeps them doing their job.',
                 ],
                 [
-                    'title' => 'Oil the moving parts once a year',
-                    'body' => 'Open the window fully. You are looking for the hinge arms along the top and bottom of the sash, the mushroom cams along the opening edge and the keeps they sit into. A drop of light machine oil or a spray of silicone on each, then work the handle ten or twelve times to spread it. This one job prevents most stiff handles.',
+                    'when' => 'Once a year',
+                    'title' => 'Oil the moving parts',
+                    'body' => 'Open the window fully and you will see the hinge arms top and bottom, the mushroom cams along the opening edge, and the keeps they sit into. A drop of oil on each, then work the handle a dozen times to spread it about. This one job keeps handles feeling new.',
                 ],
                 [
-                    'title' => 'A note on WD-40',
-                    'body' => 'It is a water dispersant, not a lubricant. It will free something that has seized, and that is a fair use for it, but it thins out within weeks and the film it leaves behind holds dust. If you use it to free a stiff hinge, follow it with a proper oil once it is moving.',
+                    'when' => 'Good to know',
+                    'title' => 'What to reach for',
+                    'body' => 'Light machine oil or a silicone spray is what window hardware likes best. If something has properly seized, a penetrating spray will free it off, and following that with a proper oil once it is moving keeps it sweet for the long run.',
                 ],
                 [
-                    'title' => 'Wipe the seals, but do not dress them',
-                    'body' => 'The rubber gasket around the glass and against the frame only needs a damp cloth. Leave silicone sprays and rubber dressings off it. Oil based products can make the gasket swell and then it holds the sash off its seat.',
+                    'when' => 'Twice a year',
+                    'title' => 'Wipe the seals',
+                    'body' => 'The rubber gasket around the glass enjoys a damp cloth and nothing more. Leaving sprays and dressings off it keeps it supple and sitting exactly where it should.',
                 ],
                 [
+                    'when' => 'Twice a year',
                     'title' => 'Work the trickle vents',
-                    'body' => 'If your windows have vents in the head, open and close them a couple of times a year and brush the outer grille. They block with dust and cobwebs and then the room stops getting its background ventilation.',
+                    'body' => 'If your windows have vents in the head, open and close them a couple of times and brush the outer grille. It keeps the background ventilation flowing, which does a lot for the feel of a room.',
                 ],
             ],
             'fixes' => [
                 [
                     'problem' => 'The handle has gone stiff',
                     'steps' => [
-                        'Open the window and look at the hinge arms. If they are dry or gritty, that is your answer.',
-                        'Put a drop of oil on every pivot point in the hinge, on each mushroom cam along the edge of the sash, and in each keep on the frame.',
-                        'Work the handle a dozen times with the window open, then close and try again.',
+                        'Open the window and take a look at the hinge arms. Dry or gritty arms are usually the whole story.',
+                        'Put a drop of oil on every pivot in the hinge, on each mushroom cam along the sash edge, and into each keep on the frame.',
+                        'Work the handle a dozen times with the window open, then close it and try again.',
                     ],
-                    'note' => 'If it is still stiff after oiling, the sash has usually dropped slightly and the cams are no longer meeting the keeps square. That is a hinge adjustment.',
+                    'note' => 'That sorts the large majority. If it still feels heavy afterwards the sash has usually settled a little and the cams are meeting the keeps at a slight angle, which is a quick hinge adjustment for us.',
                 ],
                 [
-                    'problem' => 'The window catches on one corner as it closes',
+                    'problem' => 'It catches on one corner as it closes',
                     'steps' => [
-                        'Check the frame rebate and the seal for grit, leaves or a stray bit of packaging.',
-                        'Look at the gap around the sash when it is nearly shut. If it is even all the way round, it is debris. If it is tight at one corner and wide at the opposite one, the sash has dropped.',
+                        'Have a feel around the frame rebate and the seal for grit, a leaf or a stray bit of packaging.',
+                        'Nearly close it and look at the gap around the sash. An even gap all the way round points to debris; tight at one corner and wide at the opposite one points to the sash having settled.',
                     ],
-                    'note' => 'A dropped sash needs the hinges resetting. It is a small job for us and an easy one to make worse by eye.',
+                    'note' => 'A settled sash is a small job to reset and one of the more satisfying ones, because the window goes back to closing with a fingertip.',
                 ],
                 [
-                    'problem' => 'There is condensation on the inside of the glass',
+                    'problem' => 'Condensation on the inside of the glass',
                     'steps' => [
-                        'This is moisture in the room, not a fault in the window. Drying washing indoors, showers and cooking all put it there.',
-                        'Use the trickle vents, run extractor fans for longer than feels necessary, and leave a gap behind furniture on external walls.',
+                        'Have a think about where the moisture is coming from. Showers, cooking and drying washing indoors all add a surprising amount.',
+                        'Use the trickle vents, run extractor fans a good while longer than feels necessary, and leave a little gap behind furniture on outside walls.',
                     ],
-                    'note' => 'New windows seal a house far better than old ones did, so moisture that used to leak out now has to be ventilated out instead. It is the commonest call we get after an installation and it is almost never the glass.',
+                    'note' => 'This is one of the most common things we get asked about after an installation, and there is a straightforward reason for it. New windows seal a house far better than old ones, so moisture that used to drift out through gaps now waits to be ventilated out instead. Get the air moving and it settles down quickly.',
                 ],
                 [
-                    'problem' => 'There is condensation on the outside of the glass',
+                    'problem' => 'Condensation on the outside of the glass',
                     'steps' => [
-                        'Nothing to do. It clears as the morning warms up.',
+                        'Enjoy it, and let the morning sun clear it.',
                     ],
-                    'note' => 'It means the outer pane is staying cold because so little heat is escaping through the unit. It is a sign the glazing is working properly.',
+                    'note' => 'A good sign, this one. The outer pane is staying cold because so little warmth is escaping through the unit, so it tends to show up on the best performing glass on the coldest clear mornings.',
                 ],
                 [
-                    'problem' => 'There is misting between the panes',
+                    'problem' => 'Misting between the panes',
                     'steps' => [
-                        'Nothing you can do from the outside, and nothing you should try.',
+                        'Send us a photo whenever you spot it.',
                     ],
-                    'note' => 'This one is a genuine fault. The seal around the sealed unit has gone and moisture is inside the cavity, where no amount of cleaning reaches. Tell us and we will look at it. If it is within guarantee we replace the unit.',
+                    'note' => 'This one is ours. It means the sealed unit is ready for replacing, which is a tidy swap: the old unit comes out, a new one goes in and the frame stays exactly where it is. If it is inside the guarantee there is nothing to pay.',
                 ],
             ],
-            'call_us' => 'Misting between the panes, a sash that has dropped, a handle that will not turn after oiling, or a lock that feels like it is grinding. Those all need the hardware resetting rather than more force.',
+            'call_us' => 'Misting between the panes, a sash that has settled, a handle still heavy after oiling, or a lock that feels like it is working harder than it should. All quick jobs with the right tools.',
         ],
 
         'sliding-sash-windows' => [
             'name' => 'Sliding sash windows',
             'group' => 'Windows',
             'covers' => 'Ultimate Rose, Heritage Rose and Charisma Rose',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-sliding-sash-window.jpg',
+            'image' => $base . 'fenster-sliding-sash-window.jpg',
+            'thumb' => $base . 'fenster-sliding-sash-window.jpg',
             'image_alt' => 'White sliding sash window in a period property',
-            'intro' => 'A modern sliding sash carries its weight on spiral balances hidden in the frame, and both sashes tilt in so you can clean the outside from indoors. Learning the tilt properly is most of the maintenance.',
+            'intro' => 'A modern sash carries its weight on spiral balances hidden in the frame, and both sashes tilt inwards so you can clean the outside from indoors. Getting comfortable with the tilt is most of the job.',
+            'kit' => ['Warm soapy water', 'Soft cloth', 'Light machine oil', 'Both hands free'],
             'routine' => [
                 [
+                    'when' => 'Twice a year',
                     'title' => 'Tilt the sashes in to clean them',
-                    'body' => 'Slide the bottom sash up a few inches. Push the two catches on the top edge of the sash inwards at the same time, then tilt the top of the sash towards you until it rests. Clean the outer face, then push it back until both catches click home. The top sash tilts the same way once the bottom one is out of its path.',
+                    'body' => 'Slide the bottom sash up a few inches, push the two catches on its top edge inwards together, then tilt the top of the sash towards you until it rests. Clean the outer face, then ease it back until both catches click home. The top sash tilts the same way once the bottom one is clear of its path.',
                 ],
                 [
+                    'when' => 'Every time',
                     'title' => 'Keep both hands on a tilted sash',
-                    'body' => 'A tilted sash is off its balances and its whole weight is on your hands and the tilt pivots. Do not let go of it, do not rest it against the sill, and do not walk away from a window mid-tilt. It is the one part of this job worth being deliberate about.',
+                    'body' => 'A tilted sash is off its balances, so its weight is resting on your hands and the tilt pivots. Take it steadily, keep hold of it throughout, and finish the window you started before you go and answer the door. It is the one part worth being deliberate about.',
                 ],
                 [
-                    'title' => 'Wipe the run of the frame',
-                    'body' => 'With the sash tilted you can reach the channels the sash slides in. A damp cloth along both sides twice a year is enough. Do not put grease or oil in the channel; the sash runs on a low friction strip and oil just collects dust against it.',
+                    'when' => 'Twice a year',
+                    'title' => 'Wipe the runs',
+                    'body' => 'With the sash tilted you can reach the channels it slides in. A damp cloth down both sides is plenty. The sash runs on a low friction strip that is happiest clean and dry, so a wipe does more good here than anything from a can.',
                 ],
                 [
+                    'when' => 'Twice a year',
                     'title' => 'Wash the frames and check the sill',
-                    'body' => 'Warm soapy water on a soft cloth, same as any uPVC frame. While you are there, run a finger along the outer sill and clear anything sitting in the drainage path.',
+                    'body' => 'Warm soapy water on a soft cloth, the same as any uPVC frame. While you are there, run a finger along the outer sill and clear anything sitting in the drainage path.',
                 ],
                 [
-                    'title' => 'Oil the locks, not the balances',
-                    'body' => 'The fitch or sash locks on the meeting rail take a spot of light oil once a year. The spiral balances in the frame are sealed and set to the weight of your sash. They are not a user serviceable part and they should be left alone.',
+                    'when' => 'Once a year',
+                    'title' => 'Oil the sash locks',
+                    'body' => 'The fitch or sash locks on the meeting rail take a spot of light oil and stay sweet for years. The spiral balances inside the frame come set to the weight of your particular sash and are happiest left exactly as they are.',
                 ],
             ],
             'fixes' => [
                 [
                     'problem' => 'The sash will not stay where I put it',
                     'steps' => [
-                        'Check first that both tilt catches are fully home. A sash that is not properly latched back sits wrong and drags.',
-                        'If the catches are home and it still creeps down or springs up, stop there.',
+                        'Check first that both tilt catches are fully home, because a sash sitting slightly proud of its latch will drag.',
+                        'If the catches are home and it still creeps, leave it there and give us a call.',
                     ],
-                    'note' => 'The spiral balance has lost its tension or its setting. It is adjusted with a specific tool against the weight of that particular sash, and it is genuinely not a guess-and-see job. Call us.',
+                    'note' => 'The spiral balance wants resetting, and it is adjusted with a particular tool against the weight of that exact sash. Genuinely a two minute job for someone with the tool in the van.',
                 ],
                 [
                     'problem' => 'The sash is stiff to slide',
                     'steps' => [
-                        'Tilt it in and wipe both channels and the edges of the sash.',
-                        'Look for a build up of dirt at the very bottom of the run, which is where it collects.',
-                        'Slide it a few times after cleaning before deciding it is still stiff.',
+                        'Tilt it in and wipe both channels and the sash edges.',
+                        'Pay attention to the very bottom of the run, which is where the dirt likes to gather.',
+                        'Slide it a few times after cleaning before you decide.',
                     ],
-                    'note' => 'Resist the urge to lubricate the channel. Nine times in ten it is dirt, and oil turns dirt into paste.',
+                    'note' => 'Nine times in ten a wipe is the whole fix, and the sash runs better dry than it ever will with anything added.',
                 ],
                 [
                     'problem' => 'The tilt catches will not release',
                     'steps' => [
-                        'Both catches have to be pushed at the same time, and the sash needs to be raised clear of its stop first.',
-                        'Push inwards rather than downwards, and keep an even pressure on both.',
+                        'Raise the sash clear of its stop first, then push both catches inwards at the same time with an even pressure.',
+                        'Push inwards rather than downwards, which is the direction they are made to move.',
+                        'A stiff catch appreciates a spot of oil and usually frees up straight after.',
                     ],
-                    'note' => 'Do not force a single catch on its own. If one is stiff, oil it lightly and try again rather than levering it.',
+                    'note' => 'They are designed to need two hands, which is deliberate: it is what stops a sash tilting when nobody is holding it.',
                 ],
                 [
                     'problem' => 'The meeting rails do not line up',
                     'steps' => [
-                        'Check the bottom sash is fully down and the top sash is fully up before judging it.',
+                        'Check the bottom sash is fully down and the top sash fully up before judging it, as a few millimetres either way shows here.',
                     ],
-                    'note' => 'If they still sit out of line, one sash is running unevenly on its balances. That needs setting rather than adjusting by hand.',
+                    'note' => 'If they still sit out of line, one sash is running slightly unevenly on its balances and wants setting. Worth a look because it is the detail your eye keeps returning to.',
                 ],
             ],
-            'call_us' => 'Any balance problem, a sash that will not hold its position, a tilt pivot that feels loose, or misting inside the glass. Sash gear is set to the weight of the specific sash and is the wrong thing to experiment on.',
+            'call_us' => 'Anything to do with the balances, a sash that will not hold its position, a tilt pivot with any play in it, or misting inside the glass. Sash gear is set to the weight of its own sash, so it responds well to the right tool and not much else.',
         ],
 
         'aluminium-windows' => [
             'name' => 'Aluminium windows',
             'group' => 'Windows',
             'covers' => 'Casement, flush and heritage aluminium windows',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-aluminium-window-closeup.png',
-            'image_alt' => 'Close view of a slim aluminium window frame and corner detail',
-            'intro' => 'The frame is aluminium under a powder coated finish, and that finish is what you are looking after. Treat it like car paint rather than like plastic and it will outlast everything around it.',
+            'image' => $base . 'sheerline-aluminium-window.jpg',
+            'thumb' => $base . 'sheerline-aluminium-window-closeup.png',
+            'image_alt' => 'Slim grey aluminium windows on a modern home',
+            'intro' => 'The frame is aluminium under a baked powder coated finish, and that finish is the thing you are looking after. Treat it the way you would treat car paint and it will outlast almost everything around it.',
+            'kit' => ['Warm water', 'Mild detergent', 'Soft sponge', 'Light machine oil'],
             'routine' => [
                 [
-                    'title' => 'Wash twice a year, more if you are exposed',
-                    'body' => 'Warm water and a mild detergent on a soft cloth or sponge, then rinse and dry. Twice a year covers most houses. If you are near the coast, beside a busy road or on an industrial estate, make it quarterly, because salt and traffic film sit on the coating and work at it.',
+                    'when' => 'Twice a year',
+                    'title' => 'Wash it down',
+                    'body' => 'Warm water and a mild detergent on a soft cloth or sponge, then rinse and dry. Twice a year suits most houses. Near the coast, on a busy road or on an industrial estate, quarterly keeps it looking sharper, because salt and traffic film both like to settle on a coating.',
                 ],
                 [
-                    'title' => 'Nothing solvent based, ever',
-                    'body' => 'No white spirit, no cellulose thinners, no acetone, no oven cleaner, no abrasive pad. A powder coat is a baked finish and once a solvent has dulled or lifted an area there is no polishing it back. This is the single rule worth remembering on aluminium.',
+                    'when' => 'Every wash',
+                    'title' => 'Rinse first, then wipe',
+                    'body' => 'On a frame with grit on it, a rinse with clean water before the cloth goes anywhere near keeps the grit off the coating. It is a small habit and it is why some dark frames still look showroom fresh after ten years, because dark finishes show every detail of how they have been treated.',
                 ],
                 [
-                    'title' => 'Rinse before you wipe',
-                    'body' => 'On a frame with grit on it, wiping first drags the grit across the coating. Rinse it off with clean water, then wash. It is a small habit that keeps a dark finish looking right for years, and dark finishes show everything.',
+                    'when' => 'Good to know',
+                    'title' => 'What the coating likes',
+                    'body' => 'Water, mild detergent and a soft cloth, and that really is the list. A powder coat is a baked finish with a deep even colour, and keeping solvents and abrasive pads away from it is what preserves that depth. Sheerline back the finish for 25 years, which tells you how it responds to being left in peace.',
                 ],
                 [
+                    'when' => 'Twice a year',
                     'title' => 'Clear the drainage slots',
-                    'body' => 'Same as any window. Small slots along the bottom of the outer frame, brushed clear twice a year.',
+                    'body' => 'Small slots along the bottom of the outer frame, brushed clear. The same job as any window and just as worth doing.',
                 ],
                 [
-                    'title' => 'Oil the hardware once a year',
-                    'body' => 'Hinges, the locking cams along the sash edge and the keeps they engage. Light machine oil or silicone. Wipe off the excess, because oil left on a frame collects dust and shows on a dark coating.',
+                    'when' => 'Once a year',
+                    'title' => 'Oil the hardware',
+                    'body' => 'Hinges, the locking cams along the sash edge and the keeps they engage. Light machine oil or silicone, and wipe the excess away afterwards so it stays off the frame face.',
                 ],
             ],
             'fixes' => [
                 [
-                    'problem' => 'There are white or dull patches on a dark frame',
+                    'problem' => 'There are dull or white patches on a dark frame',
                     'steps' => [
-                        'Wash the area with mild detergent and plenty of water first. Traffic film and hard water deposits both look like damage until they come off.',
-                        'Dry it and look again in daylight.',
+                        'Wash the area with mild detergent and plenty of water first, because traffic film and hard water deposits both look like marks in the finish until they come off.',
+                        'Dry it and have another look in daylight.',
                     ],
-                    'note' => 'If the patch is in the finish rather than on it, tell us. Sheerline guarantee the powder coated finish for 25 years, and a genuine coating fault is a warranty matter rather than a cleaning one.',
+                    'note' => 'That lifts most of them. If something is still there afterwards, send us a photo. Sheerline guarantee the powder coated finish for 25 years and we will take it from there.',
                 ],
                 [
                     'problem' => 'The handle is stiff',
@@ -221,290 +260,321 @@ function fenster_care_guides(): array
                         'Open the window and oil the hinge pivots, the cams and the keeps.',
                         'Work the handle a dozen times, then try it closed.',
                     ],
-                    'note' => 'Aluminium sashes are heavier than uPVC ones for the same size, so they show a dry hinge sooner. Annual oiling is worth more here than on any other window we fit.',
+                    'note' => 'Aluminium sashes carry more weight than uPVC ones of the same size, so they let you know sooner when a hinge is ready for its annual oil. The yearly habit pays off more here than on any other window we fit.',
                 ],
                 [
-                    'problem' => 'The window feels draughty in a wind',
+                    'problem' => 'It feels draughty in a strong wind',
                     'steps' => [
-                        'Check the gasket all the way round for anything caught in it.',
-                        'Close the window and look at the compression: the sash should pull evenly onto the seal along its whole length.',
+                        'Run a finger round the gasket to check nothing is caught in it.',
+                        'Close the window and watch the compression: the sash wants to pull evenly onto the seal along its whole length.',
                     ],
-                    'note' => 'Uneven compression is a keep adjustment. It is quick to do and easy to overdo.',
+                    'note' => 'Even compression is a keep adjustment and a quick one. Getting it exactly even is what makes the difference between good and silent.',
                 ],
             ],
-            'call_us' => 'Anything in the powder coat itself, a sash that has dropped, misting inside the glass, or a lock that will not engage after oiling.',
+            'call_us' => 'Anything in the powder coat itself, a sash that has settled, misting inside the glass, or a lock still stiff after its oil.',
         ],
 
         'bifold-doors' => [
             'name' => 'Bifold doors',
             'group' => 'Doors',
             'covers' => 'Aluminium bifolds and slide and fold doors',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-bifold-doors.jpg',
-            'image_alt' => 'Aluminium bifold doors folded back onto a garden',
-            'intro' => 'A bifold runs on rollers in a track, and the track is nearly the whole of the maintenance. Keep it clean and a bifold glides for twenty years. Let grit build up in it and you are grinding the rollers against the running surface every time you open the doors.',
+            'image' => $base . 'sheerline-bifold-exterior.jpg',
+            'thumb' => $base . 'sheerline-bifold-doors.jpg',
+            'image_alt' => 'Aluminium bifold doors opened onto a garden',
+            'intro' => 'A bifold runs on rollers in a track, and the track is very nearly the whole of the maintenance. Keep it clean and a set will glide with one finger for twenty years.',
+            'kit' => ['Vacuum with crevice tool', 'Damp cloth', 'Light machine oil', 'Dry silicone spray'],
             'routine' => [
                 [
-                    'title' => 'Clean the bottom track every month or two',
-                    'body' => 'Vacuum it end to end with the crevice tool, including the section under the panels when they are parked. Then a damp cloth along the running surface, then dry it. Run a fingertip along afterwards: if you can feel grit, it is still binding the rollers.',
+                    'when' => 'Every month or two',
+                    'title' => 'Vacuum the bottom track',
+                    'body' => 'Crevice tool end to end, including the stretch that sits under the panels when they are parked, then a damp cloth along the running surface and dry it off. Run a fingertip along afterwards: a track that feels smooth to a finger feels smooth to a roller.',
                 ],
                 [
-                    'title' => 'Do the top track too, twice a year',
-                    'body' => 'The top guide collects less but it does collect. A vacuum and a wipe is enough.',
+                    'when' => 'Twice a year',
+                    'title' => 'Do the top track too',
+                    'body' => 'The top guide gathers less, but it gathers. A vacuum and a wipe is the whole job.',
                 ],
                 [
-                    'title' => 'Do not grease or oil the track',
-                    'body' => 'This is the mistake we see most often. Grease and oil hold every bit of grit that lands in the track and turn it into a grinding paste, and the doors get worse rather than better. A clean dry track is what you want. If it needs anything at all, a light dry PTFE or silicone spray on an already clean track, and sparingly.',
+                    'when' => 'Good to know',
+                    'title' => 'Clean and dry beats anything in a can',
+                    'body' => 'Rollers run best on a clean dry surface, so a vacuum and a cloth genuinely is the answer here. Grease and heavy oils tend to hold onto grit, so if you do want to add something after a good clean, a dry PTFE or silicone spray is the one to reach for, used sparingly.',
                 ],
                 [
-                    'title' => 'Oil the hinges once a year',
-                    'body' => 'The hinges between the panels do take a drop of light oil at each knuckle. Wipe off what does not go in.',
+                    'when' => 'Once a year',
+                    'title' => 'Oil the hinges',
+                    'body' => 'The hinges between the panels do enjoy a drop of light oil at each knuckle. Wipe away whatever does not soak in.',
                 ],
                 [
-                    'title' => 'Keep the threshold drainage clear',
-                    'body' => 'There are drainage points in or just outside the threshold. Brush out leaves and silt, particularly in autumn. A blocked threshold is how water ends up standing in the track.',
+                    'when' => 'Autumn especially',
+                    'title' => 'Keep the threshold drainage flowing',
+                    'body' => 'There are drainage points in and just outside the threshold. Brushing out leaves and silt keeps water heading where it was designed to go, which matters most in the months when the garden is dropping things.',
                 ],
                 [
+                    'when' => 'Twice a year',
                     'title' => 'Wash the frames and wipe the gaskets',
-                    'body' => 'Warm soapy water on the frames, damp cloth on the seals. On dark aluminium, rinse the grit off before you wipe.',
+                    'body' => 'Warm soapy water on the frames and a damp cloth on the seals. On dark aluminium, rinse the grit off before the cloth goes on.',
                 ],
             ],
             'fixes' => [
                 [
-                    'problem' => 'The doors have started dragging or stuck',
+                    'problem' => 'The doors have started dragging or sticking',
                     'steps' => [
-                        'Start with the track, because this is the cause about nine times in ten. Vacuum the full length, including under where the panels park, then wipe and dry it.',
-                        'Look for the obvious single culprit as you go: a stone, a screw, a bottle top, a build up of silt at one end.',
-                        'Check the panels are being folded in the order they were designed to fold in. A bifold stacks in a set sequence and forcing a panel out of turn jams the whole set.',
-                        'Try the traffic door on its own first, before the full stack. If the single door works and the stack does not, the problem is in the folding sequence or a hinge, not the lock.',
+                        'Start with the track, because this is the answer about nine times in ten. Vacuum the full length including under where the panels park, then wipe and dry it.',
+                        'Keep an eye out for the single culprit as you go: a stone, a screw, a bottle top, or silt built up at one end.',
+                        'Check the panels are folding in the order they were designed to fold in. A bifold stacks in a set sequence and it much prefers being taken in turn.',
+                        'Try the traffic door on its own before the full stack. If the single door is happy and the stack is not, that points at the folding order or a hinge rather than the lock.',
                         'Open and close the set a few times after cleaning before you judge it.',
                     ],
-                    'note' => 'If it still drags on a genuinely clean track, the doors have dropped and need the hinges resetting. Bifold hinges adjust in more than one plane and in a particular order, and getting it wrong puts the load on the wrong roller. That is the point to call us.',
+                    'note' => 'A clean track fixes the majority outright. If it still drags afterwards, the doors have settled a touch and want their hinges resetting. Bifold hinges adjust in more than one plane and in a particular order, so it is a job that goes quickly with the right sequence and the right allen keys.',
                 ],
                 [
-                    'problem' => 'The handle will not lift or the door will not lock',
+                    'problem' => 'The handle will not lift, or it will not lock',
                     'steps' => [
-                        'Make sure the door is fully closed into the frame before you try the handle. On a bifold the panels have to be square in the opening first.',
-                        'Lift the handle in one full movement to its stop, then turn the key. A multipoint lock only throws its points on a complete lift.',
-                        'Check the keeps in the frame and the threshold for grit.',
+                        'Make sure the door is fully closed into the frame first, because the panels want to be square in the opening before the handle will do its thing.',
+                        'Lift the handle in one full movement to its stop, then turn the key. A multipoint lock throws its points on a complete lift.',
+                        'Have a quick look at the keeps in the frame and the threshold for grit.',
                     ],
-                    'note' => 'Do not force a handle that will not lift. The gearbox inside the door is the expensive part and forcing a misaligned lock is how it breaks. Something is out of line, and that is worth looking at rather than muscling through.',
+                    'note' => 'If the handle still will not go, leave it there and give us a ring. Something is sitting a millimetre or two out of line, and finding which millimetre is exactly the sort of thing we are quick at.',
                 ],
                 [
-                    'problem' => 'The doors are stiffer than usual in cold weather',
+                    'problem' => 'They are stiffer in cold weather',
                     'steps' => [
-                        'Note whether it eases again as the temperature comes up.',
+                        'Note whether they ease off again as the temperature comes back up.',
                     ],
-                    'note' => 'Aluminium moves a little with temperature and a set that is slightly firmer in a hard frost and fine again in milder weather is behaving normally. A set that stays stiff once the cold has passed is a different matter and worth a look.',
+                    'note' => 'Aluminium moves a little with temperature, so a set that is slightly firmer in a hard frost and back to normal in milder weather is behaving exactly as it should. If it stays firm once the cold has passed, that is worth a look.',
                 ],
                 [
                     'problem' => 'Water is sitting in the track',
                     'steps' => [
                         'Clear the drainage points in and around the threshold with a soft brush.',
-                        'Check the outside of the threshold is not blocked by decking, gravel, a raised patio or leaf litter built up against it.',
+                        'Have a look outside too, since decking, gravel or a raised patio built up against the threshold can cover the outlets.',
                     ],
-                    'note' => 'If the drainage is clear and it still holds water, tell us and we will look at the threshold detail.',
+                    'note' => 'That clears it in most cases. If the drainage is running freely and water is still standing, tell us and we will look at the threshold detail.',
                 ],
                 [
                     'problem' => 'There is a draught at the bottom of the stack',
                     'steps' => [
-                        'Check the brush seals along the bottom of the panels for grit or damage.',
+                        'Check the brush seals along the bottom of the panels for grit caught in the pile.',
                         'Close the set and look along the meeting edges for an even gap.',
                     ],
-                    'note' => 'Uneven gaps mean alignment rather than seals, and alignment is an adjustment job.',
+                    'note' => 'An even gap all the way along is what you are after, and getting there is an alignment job rather than a seal one.',
                 ],
             ],
-            'call_us' => 'A set that still drags on a clean track, a handle that will not lift, a panel that has dropped, water standing after the drainage is clear, or any hinge that feels loose. Bifold hinges are adjustable on purpose and adjusting them by eye is how a working set becomes a worn one.',
+            'call_us' => 'A set still dragging on a clean track, a handle that will not lift, a panel that has settled, water standing once the drainage is clear, or a hinge with play in it. Bifold hinges are adjustable by design, and they respond very well to being set properly.',
         ],
 
         'sliding-doors' => [
             'name' => 'Sliding and patio doors',
             'group' => 'Doors',
             'covers' => 'Aluminium sliding doors and lift and slide patio doors',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-sliding-door.jpg',
+            'image' => $base . 'sheerline-sliding-door.jpg',
+            'thumb' => $base . 'liniar-patio-door.jpg',
             'image_alt' => 'Large aluminium sliding door onto a garden',
-            'intro' => 'A sliding door carries a lot of glass on a small number of rollers. As with a bifold, the track is where the work is, and a clean track is worth more than anything you can spray into it.',
+            'intro' => 'A sliding door carries a lot of glass on a small number of rollers, and like a bifold it rewards a clean track more than anything else you could do for it.',
+            'kit' => ['Vacuum with crevice tool', 'Damp cloth', 'Soft brush'],
             'routine' => [
                 [
-                    'title' => 'Vacuum and wipe the track every month or two',
-                    'body' => 'Crevice tool along the full run, then a damp cloth, then dry. Pay attention to the ends of the track where silt gathers and to the section that sits under the parked panel.',
+                    'when' => 'Every month or two',
+                    'title' => 'Vacuum and wipe the track',
+                    'body' => 'Crevice tool along the full run, then a damp cloth and dry off. The ends of the track and the section under the parked panel are where silt likes to settle, so give those a moment longer.',
                 ],
                 [
-                    'title' => 'Keep the track dry, not greased',
-                    'body' => 'The same rule as bifolds. Oil and grease collect grit and accelerate wear on the rollers. Clean and dry is the target, with a light dry silicone spray at most.',
+                    'when' => 'Good to know',
+                    'title' => 'Clean and dry is the target',
+                    'body' => 'The same principle as a bifold. Rollers are happiest on a clean dry running surface, and a light dry silicone spray after a proper clean is as much as one ever needs.',
                 ],
                 [
+                    'when' => 'Every use',
                     'title' => 'Let the door lift before you push it',
-                    'body' => 'On a lift and slide, turning the handle down lifts the whole panel onto its rollers and off its seals. If the door feels heavy to move, it has not lifted. Complete the handle movement first and it will run with one hand.',
+                    'body' => 'On a lift and slide, turning the handle down lifts the whole panel onto its rollers and clear of its seals. Complete that movement first and a very large door will run with one hand, which is the moment these doors show what they are.',
                 ],
                 [
-                    'title' => 'Clear the drainage in the threshold',
-                    'body' => 'Brush out the drainage points twice a year and more often in autumn. Check outside too, because raised decking or gravel piled against the threshold blocks it just as effectively as leaves.',
+                    'when' => 'Autumn especially',
+                    'title' => 'Clear the threshold drainage',
+                    'body' => 'Brush the drainage points out and check outside as well, since decking or gravel piled against the threshold can sit over the outlets.',
                 ],
                 [
-                    'title' => 'Wipe the interlock and the gaskets',
-                    'body' => 'The upright where the two panels meet closes onto a seal. A damp cloth along it twice a year keeps the seal doing its job.',
+                    'when' => 'Twice a year',
+                    'title' => 'Wipe the interlock and gaskets',
+                    'body' => 'The upright where the two panels meet closes onto a seal. A damp cloth along it keeps that seal doing the quiet work it does.',
                 ],
             ],
             'fixes' => [
                 [
                     'problem' => 'The door is heavy to slide',
                     'steps' => [
-                        'On a lift and slide, check you are turning the handle fully. Most heavy doors are doors that have not been lifted.',
+                        'On a lift and slide, check the handle is going all the way round. Most heavy doors turn out to be doors that have not quite lifted.',
                         'Vacuum and wipe the full track, including under the parked panel.',
-                        'Look along the running surface for a dent, a stone or a screw.',
+                        'Have a look along the running surface for a stone, a screw or a dent.',
                     ],
-                    'note' => 'If it is still heavy on a clean track with the panel properly lifted, the rollers are worn or out of adjustment. That is ours.',
+                    'note' => 'If it is still heavy with a clean track and the panel properly lifted, the rollers want adjusting or replacing, and that is ours. A well set sliding door should move with a fingertip.',
                 ],
                 [
                     'problem' => 'The door will not lock',
                     'steps' => [
-                        'Slide it fully home into the jamb before trying the handle. A sliding door that is an inch short will not engage.',
-                        'On a lift and slide, lower the handle fully so the panel drops onto its seals and the hooks line up with the keeps.',
+                        'Slide it fully home into the jamb before trying the handle, since an inch short is enough to hold the hooks off their keeps.',
+                        'On a lift and slide, lower the handle fully so the panel drops onto its seals and the hooks line up.',
                         'Check the keeps for grit.',
                     ],
-                    'note' => 'Do not force the handle. Hook locks engage cleanly when the door is where it should be, and forcing them when it is not is what damages the mechanism.',
+                    'note' => 'Hook locks engage cleanly and quietly when the door is sitting where it should be, so a lock that needs persuading is telling you about the alignment rather than the lock.',
                 ],
                 [
                     'problem' => 'There is a draught along the meeting upright',
                     'steps' => [
-                        'Check the brush or gasket seal on the interlock for grit and damage.',
-                        'On a lift and slide, confirm the door is fully lowered when closed, because it seals only in the down position.',
+                        'Check the brush or gasket seal on the interlock for grit in the pile.',
+                        'On a lift and slide, confirm the door is fully lowered when closed, since it seals in the down position.',
                     ],
-                    'note' => 'A door left slightly lifted will never seal properly and it is an easy habit to fall into.',
+                    'note' => 'Leaving a lift and slide slightly raised is an easy habit to fall into and an easy one to fix, and the difference in a wind is immediate.',
                 ],
             ],
-            'call_us' => 'Worn or noisy rollers, a panel that has dropped, a lock that will not engage on a properly closed door, or water standing after the drainage is clear.',
+            'call_us' => 'Worn or noisy rollers, a panel that has settled, a lock that needs persuading on a properly closed door, or water standing once the drainage is clear.',
         ],
 
         'composite-doors' => [
             'name' => 'Composite doors',
             'group' => 'Doors',
             'covers' => 'Distinction composite entrance doors and stable doors',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/distinction-composite-door-installed.jpg',
+            'image' => $base . 'distinction-composite-door-installed.jpg',
+            'thumb' => $base . 'distinction-composite-door.jpg',
             'image_alt' => 'Composite entrance door fitted to a home',
-            'intro' => 'A composite door is a solid insulated slab with a moulded skin, and it never needs painting. What it does need is a wash, a bit of attention to the hardware, and the habit of lifting the handle fully before you turn the key.',
+            'intro' => 'A composite door is a solid insulated slab under a moulded skin, and it keeps its colour without ever being painted. What it appreciates is a wash, a little attention to the hardware, and a good firm lift of the handle.',
+            'kit' => ['Warm water', 'Lint-free cloth', 'Light machine oil', 'Graphite or PTFE lock spray'],
             'routine' => [
                 [
-                    'title' => 'Wash it with warm water and a soft cloth',
-                    'body' => 'Warm water and a lint free cloth is genuinely all the skin wants, two or three times a year. If you are on a coast, near a main road or the door faces the weather, do it more often. No abrasive cleaners, no scouring pads, no pressure washer, no steam cleaner, no bleach and no solvents.',
+                    'when' => 'Two or three times a year',
+                    'title' => 'Wash the skin',
+                    'body' => 'Warm water and a lint free cloth is genuinely all it asks for. More often if you are on the coast, near a main road or the door faces the weather square on. The finish is made to shrug all that off and a wipe is what keeps it looking like the day it went in.',
                 ],
                 [
-                    'title' => 'Do not paint it',
-                    'body' => 'The colour is in the skin and the finish is factory applied. Painting a composite door affects the warranty and it never looks right for long, because paint sits on a surface designed not to hold it.',
+                    'when' => 'Good to know',
+                    'title' => 'The colour is built in',
+                    'body' => 'The finish goes right through the skin and is applied at the factory, so the door holds its colour without painting and keeps its warranty at the same time. One of the quiet pleasures of a composite door is that it is the one thing on the front of the house you never have to get the brushes out for.',
                 ],
                 [
-                    'title' => 'Damp cloth on the hardware, nothing else',
-                    'body' => 'Handles, letterplate, knocker and hinges take a wipe with a damp cloth and a dry off. Chrome, satin and black finishes all mark permanently under chemical cleaners, and that includes the ones sold for bathrooms.',
+                    'when' => 'Every wash',
+                    'title' => 'A damp cloth on the hardware',
+                    'body' => 'Handles, letterplate, knocker and hinges take a wipe with a damp cloth and a dry off. Chrome, satin and black finishes all keep their depth beautifully on water alone.',
                 ],
                 [
-                    'title' => 'Graphite or PTFE in the cylinder, never oil',
-                    'body' => 'A lock cylinder wants a dry lubricant: a puff of graphite or a PTFE lock spray once a year. Oil and general purpose sprays gum up the pins and collect dust, and a cylinder treated with oil will eventually get worse rather than better. Keep the oil for the hinges.',
+                    'when' => 'Once a year',
+                    'title' => 'Graphite or PTFE in the cylinder',
+                    'body' => 'A lock cylinder likes a dry lubricant: a puff of graphite or a PTFE lock spray, once a year, and the key will turn like new. Keep the oil for the hinges, which want the opposite thing.',
                 ],
                 [
+                    'when' => 'Once a year',
                     'title' => 'A drop of oil on the hinges',
-                    'body' => 'Once a year at each knuckle, then wipe the excess off before it runs down the door face.',
+                    'body' => 'At each knuckle, then wipe the excess before it finds its way down the door face.',
                 ],
                 [
+                    'when' => 'Every time',
                     'title' => 'Lift the handle fully, then turn the key',
-                    'body' => 'The multipoint lock only throws its hooks and rollers on a complete lift. Half lifting and turning is what wears a gearbox out early, and it is the commonest habit behind a door that stops locking after a couple of years.',
+                    'body' => 'The multipoint lock throws all its hooks and rollers on a complete lift, so one firm movement to the stop is what you are after. It is the single habit that keeps a door locking sweetly for years, and it takes no longer than a half hearted one.',
                 ],
             ],
             'fixes' => [
                 [
-                    'problem' => 'The door is hard to close or lock',
+                    'problem' => 'It is hard to close or lock',
                     'steps' => [
-                        'Check the threshold and the frame for grit, a stone or a stray bit of draught excluder.',
-                        'Close the door and look at the gap around the slab. It should be even top to bottom down the lock side.',
+                        'Have a look at the threshold and frame for grit or a stray bit of draught excluder.',
+                        'Close the door and check the gap around the slab, which wants to be even top to bottom down the lock side.',
                         'Lift the handle in one full movement before turning the key.',
-                        'Note the weather. A slab that is tighter in a hot spell and fine again in autumn is moving with the temperature, which is normal.',
+                        'Note the weather. A slab that is a little tighter in a hot spell and easy again in autumn is simply moving with the temperature.',
                     ],
-                    'note' => 'If it stays tight once the weather has changed, the door needs adjusting at the hinges or the keeps. Both are designed to be adjusted and both want doing properly.',
+                    'note' => 'If it stays tight once the weather has turned, the door wants adjusting at the hinges or the keeps. Both are designed to be adjusted, and a properly set door closes with a satisfying click rather than a shoulder.',
                 ],
                 [
-                    'problem' => 'The key is stiff in the cylinder',
+                    'problem' => 'The key feels stiff',
                     'steps' => [
-                        'Try the key with the door open. If it turns freely open and stiffly closed, the lock is fine and the door is out of alignment.',
-                        'If it is stiff either way, put a puff of graphite or PTFE lock spray into the keyway and work the key in and out several times.',
+                        'Try the key with the door open. Turning freely open and stiffly closed points at the alignment rather than the lock.',
+                        'If it is stiff either way, a puff of graphite or PTFE lock spray into the keyway and a few turns of the key usually transforms it.',
                     ],
-                    'note' => 'Do not put oil or a general purpose spray in the cylinder. It feels better for a fortnight and worse thereafter.',
+                    'note' => 'Cylinders respond wonderfully to a dry lubricant and it takes about ten seconds.',
                 ],
                 [
                     'problem' => 'There is a draught down one side',
                     'steps' => [
-                        'Run your hand down the seal with the door closed and locked, not just pushed to.',
-                        'Check the gasket for grit or a section that has come out of its groove.',
-                        'Confirm you are locking the door rather than just latching it, because the door only compresses onto its seals when the multipoint is thrown.',
+                        'Run your hand down the seal with the door closed and locked rather than just pushed to.',
+                        'Check the gasket for grit or a section that has eased out of its groove.',
+                        'Confirm you are locking it rather than latching it, since the slab pulls onto its seals when the multipoint is thrown.',
                     ],
-                    'note' => 'If it is draughty when fully locked and the seal is sound, the keeps need adjusting to pull the slab in further.',
+                    'note' => 'If it is still draughty when fully locked and the seal looks sound, the keeps want adjusting to draw the slab in a touch further.',
                 ],
                 [
-                    'problem' => 'The door has a squeak or a creak',
+                    'problem' => 'There is a squeak or a creak',
                     'steps' => [
                         'A drop of light oil at each hinge knuckle, then open and close it a few times.',
-                        'Wipe off anything that has run.',
+                        'Wipe away anything that has run.',
                     ],
-                    'note' => 'Almost always just a dry hinge, and almost always fixed in a minute.',
+                    'note' => 'Almost always a hinge ready for its oil, and almost always sorted inside a minute.',
                 ],
                 [
-                    'problem' => 'There is a scuff or a mark on the skin',
+                    'problem' => 'There is a scuff on the skin',
                     'steps' => [
-                        'Warm soapy water and a soft cloth first. Most scuffs are transfer from something that touched the door rather than damage to it.',
+                        'Warm soapy water and a soft cloth first. Most scuffs turn out to be transfer from whatever touched the door and lift straight off.',
                     ],
-                    'note' => 'Do not attack it with an abrasive or a solvent, because that turns a mark into a dull patch. If it will not wash off, show us.',
+                    'note' => 'If it stays put after a wash, send us a photo and we will tell you what we are looking at.',
                 ],
             ],
-            'call_us' => 'A door that stays hard to lock once the weather has settled, a handle that will not lift, a lock that grinds, a draught that survives a proper lock, or damage to the skin. Every Distinction door we fit runs AI Secure locking with an APECS three star cylinder and an ILH Duplex multipoint, and it is worth keeping that working properly rather than forcing it.',
+            'call_us' => 'A door still tight once the weather has settled, a handle that will not lift, a lock working harder than it should, a draught that survives a proper lock, or anything in the skin. Every Distinction door we fit runs AI Secure locking with an APECS three star cylinder and an ILH Duplex multipoint, and that gear is worth keeping properly set.',
         ],
 
         'upvc-doors' => [
             'name' => 'uPVC doors',
             'group' => 'Doors',
             'covers' => 'uPVC entrance, back and French doors',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/fenster-upvc-door.jpg',
+            'image' => $base . 'fenster-upvc-door.jpg',
+            'thumb' => $base . 'fenster-upvc-door.jpg',
             'image_alt' => 'uPVC door fitted to a home',
-            'intro' => 'A uPVC door is looked after much like a uPVC window, with one addition: the multipoint lock does the real work and it responds well to being used properly and oiled once a year.',
+            'intro' => 'A uPVC door is looked after much like a uPVC window, with one addition: the multipoint lock does the real work, and it responds beautifully to a yearly oil and a full lift of the handle.',
+            'kit' => ['Warm soapy water', 'Soft cloth', 'Light machine oil', 'PTFE lock spray'],
             'routine' => [
                 [
-                    'title' => 'Wash the frame and panel twice a year',
-                    'body' => 'Warm soapy water and a soft cloth. A uPVC cream cleaner on the cloth for stubborn marks. No abrasives, no solvents, no bleach, no pressure washer.',
+                    'when' => 'Twice a year',
+                    'title' => 'Wash the frame and panel',
+                    'body' => 'Warm soapy water and a soft cloth, with a uPVC cream cleaner on the cloth for anything that wants more persuading.',
                 ],
                 [
-                    'title' => 'Oil the locking points once a year',
-                    'body' => 'Open the door and lift the handle so the hooks and rollers come out along the edge. A drop of light oil on each, and on the keeps in the frame, then work the handle several times.',
+                    'when' => 'Once a year',
+                    'title' => 'Oil the locking points',
+                    'body' => 'Open the door and lift the handle so the hooks and rollers come out along the edge. A drop of oil on each of those and on the keeps in the frame, then work the handle several times.',
                 ],
                 [
+                    'when' => 'Once a year',
                     'title' => 'Dry lubricant in the cylinder',
-                    'body' => 'Graphite or a PTFE lock spray once a year. Not oil, which collects dust inside the mechanism.',
+                    'body' => 'Graphite or a PTFE lock spray, which is what a cylinder is happiest with.',
                 ],
                 [
-                    'title' => 'Lift the handle fully before turning the key',
-                    'body' => 'Same rule as a composite door and the same reason. A gearbox worn out by half lifted operation is the most avoidable door fault there is.',
+                    'when' => 'Every time',
+                    'title' => 'Lift the handle fully, then turn the key',
+                    'body' => 'The same habit as a composite door and for the same reason: a full lift throws the whole mechanism and keeps it feeling new.',
                 ],
                 [
-                    'title' => 'Keep the threshold and drainage clear',
-                    'body' => 'Brush the threshold out and check the drainage slots in the bottom of the frame, especially on a French pair where the low threshold catches more.',
+                    'when' => 'Twice a year',
+                    'title' => 'Keep the threshold clear',
+                    'body' => 'Brush the threshold out and check the drainage slots in the bottom of the frame, especially on a French pair where a low threshold catches more of what blows in.',
                 ],
                 [
-                    'title' => 'On a French pair, work the shootbolts',
-                    'body' => 'The passive leaf is held by bolts top and bottom. Operate them a few times a year and put a drop of oil on each so they do not seize in one position.',
+                    'when' => 'A few times a year',
+                    'title' => 'Work the shootbolts on a French pair',
+                    'body' => 'The passive leaf is held top and bottom by bolts. Operating them now and then with a drop of oil on each keeps them moving freely and keeps the pair sitting square.',
                 ],
             ],
             'fixes' => [
                 [
-                    'problem' => 'The door will not lock without a shove',
+                    'problem' => 'It needs a shove to lock',
                     'steps' => [
                         'Check the keeps and the threshold for grit.',
-                        'Look at the gap down the lock side with the door closed. Even top to bottom is right.',
+                        'Look at the gap down the lock side with the door closed, which wants to be even top to bottom.',
                         'Lift the handle in one complete movement.',
                     ],
-                    'note' => 'A door needing a shove is a door out of alignment, and the shove is going through the gearbox every time. Worth fixing rather than living with.',
+                    'note' => 'A door that wants a shove is telling you it is sitting slightly out of line, and setting it right is quick. A properly aligned uPVC door locks with two fingers.',
                 ],
                 [
-                    'problem' => 'The handle is floppy or the lock feels vague',
+                    'problem' => 'The handle feels loose or vague',
                     'steps' => [
-                        'Stop using it beyond what you need to get in and out.',
+                        'Use it gently for now and give us a ring.',
                     ],
-                    'note' => 'That is usually the gearbox on its way out. Continuing to force it is how you end up locked out rather than booked in. Call us.',
+                    'note' => 'That is usually the gearbox letting you know it is ready for replacing, and catching it at the vague stage is much easier than catching it later. A same day job in most cases.',
                 ],
                 [
                     'problem' => 'One leaf of a French pair drags',
@@ -512,132 +582,146 @@ function fenster_care_guides(): array
                         'Check both shootbolts on the passive leaf are fully home before judging the active one.',
                         'Clear the threshold.',
                     ],
-                    'note' => 'French pairs rely on the passive leaf being properly secured. Half a shootbolt throws the whole pair out.',
+                    'note' => 'French pairs rely on the passive leaf being properly secured top and bottom, and squaring that up often sorts the whole pair.',
                 ],
             ],
-            'call_us' => 'A vague or floppy handle, a door needing force to lock, a dropped leaf, or misting inside the glass.',
+            'call_us' => 'A vague handle, a door that wants a shove, a leaf that has settled, or misting inside the glass.',
         ],
 
         'integral-blinds' => [
             'name' => 'Integral blinds',
             'group' => 'Glass and extras',
             'covers' => 'Magnetic and electric blinds sealed inside the glass',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/notan-integral-blinds-closeup.jpg',
-            'image_alt' => 'Integrated blind slats inside a sealed glass unit',
-            'intro' => 'The blind is sealed inside the glazed unit, which is the whole point of it: there is nothing to dust, nothing to wash and no cords. Care comes down to cleaning the glass normally and working the control gently.',
+            'image' => $base . 'notan-integral-blinds.jpg',
+            'thumb' => $base . 'notan-integral-blinds-closeup.jpg',
+            'image_alt' => 'Integrated blinds inside a sealed glass unit',
+            'intro' => 'The blind lives inside the sealed glazed unit, which is rather the point of it. There is nothing to dust, nothing to wash and no cords, so care comes down to cleaning the glass and working the control at a gentle pace.',
+            'kit' => ['Glass cleaner or soapy water', 'Soft cloth', 'An unhurried hand'],
             'routine' => [
                 [
-                    'title' => 'Clean the glass exactly as you would any other',
-                    'body' => 'Glass cleaner or warm soapy water on the inner and outer faces. The blind is behind sealed glass so nothing you use on the surface reaches it.',
+                    'when' => 'As often as you like',
+                    'title' => 'Clean the glass as you would any other',
+                    'body' => 'Glass cleaner or warm soapy water on the inner and outer faces. The blind sits behind sealed glass, so it stays exactly as clean as the day it was made no matter what you use on the surface.',
                 ],
                 [
-                    'title' => 'Move the magnetic slider slowly and keep it flat',
-                    'body' => 'The slider on the outside of the glass holds the carrier inside through the glass. Slide it steadily and keep it against the frame rather than pulling it away. Rushing it or lifting it is what breaks the magnetic link.',
+                    'when' => 'Every use',
+                    'title' => 'Move the slider slowly and keep it flat',
+                    'body' => 'The slider on the outside holds the carrier inside through the glass. Sliding it steadily and keeping it against the frame is what maintains that magnetic link, and it becomes second nature within a day or two.',
                 ],
                 [
-                    'title' => 'Do not run the slider off the end of its travel',
-                    'body' => 'It has a defined stop at each end. Forcing it past is the one way to leave the internal carrier stranded.',
+                    'when' => 'Every use',
+                    'title' => 'Let it find its stops',
+                    'body' => 'The control has a defined stop at each end of its travel, and stopping where it stops keeps the inner carrier and the outer magnet paired up.',
                 ],
                 [
-                    'title' => 'On electric blinds, check the power first',
-                    'body' => 'If a motorised blind stops responding, batteries in the remote and the supply to the unit account for most of it before anything else is worth considering.',
+                    'when' => 'If electric',
+                    'title' => 'Check the power first',
+                    'body' => 'On a motorised blind, the remote batteries and the supply to the unit account for the great majority of anything that changes.',
                 ],
                 [
-                    'title' => 'Never try to open the unit',
-                    'body' => 'It is a sealed double glazed unit with the blind inside the cavity. Opening it ends the seal, the blind and the guarantee in one go.',
+                    'when' => 'Good to know',
+                    'title' => 'The unit is sealed for life',
+                    'body' => 'Everything that makes the blind work is inside a sealed double glazed unit, which is what keeps it permanently clean and free of dust. It is a closed system by design and it stays that way.',
                 ],
             ],
             'fixes' => [
                 [
-                    'problem' => 'The slats have stopped responding to the slider',
+                    'problem' => 'The slats have stopped responding',
                     'steps' => [
-                        'Slide the outer control slowly back to the bottom of its travel and pause there.',
-                        'The internal carrier usually sits waiting at the bottom, and moving the magnet slowly over it lets the two pick each other up again.',
+                        'Slide the outer control slowly back to the bottom of its travel and pause there a moment.',
+                        'The inner carrier usually sits waiting at the bottom, and moving the magnet slowly over it lets the two find each other again.',
                         'Once you feel it engage, work it gently through its range a couple of times.',
                     ],
-                    'note' => 'This is the commonest thing that happens with a magnetic blind and it is almost always recoverable in a minute. Slowly is the operative word: moving fast is what lost the connection in the first place.',
+                    'note' => 'This is the most common thing that happens with a magnetic blind and it is almost always back to normal inside a minute. Slowly is the word that does the work.',
                 ],
                 [
-                    'problem' => 'The slats tilt but will not raise',
+                    'problem' => 'It tilts but will not raise',
                     'steps' => [
-                        'Check you are using the right part of the control travel. Tilt and lift are different movements on the same slider.',
+                        'Check which part of the travel you are in, since tilt and lift are different movements on the same slider.',
                         'Return to the bottom of the travel and start again slowly.',
                     ],
-                    'note' => 'If the tilt works and the lift does not after that, the internal cord or carrier needs looking at, and that is a unit level job.',
+                    'note' => 'If the tilt is happy and the lift is not after that, the inner carrier wants looking at, and that is a unit level job for us.',
                 ],
                 [
                     'problem' => 'One or two slats sit crooked',
                     'steps' => [
                         'Run the blind fully down and fully up again a couple of times, slowly.',
                     ],
-                    'note' => 'A slat that stays out of line after that will not correct itself, and the fix is at the unit rather than through the glass. Tell us.',
+                    'note' => 'That squares most of them up. Anything still sitting out of line afterwards is worth telling us about, since the fix is at the unit rather than through the glass.',
                 ],
             ],
-            'call_us' => 'A blind that will not re-engage after a slow reset, slats that stay crooked, a motor that does not respond on known good power, or any misting inside the unit. The blind is inside sealed glass, so a real fault means the unit is replaced rather than repaired in place.',
+            'call_us' => 'A blind that will not re-engage after a slow reset, slats still crooked after a cycle, a motor that stays quiet on known good power, or misting inside the unit.',
         ],
 
         'roof-lanterns' => [
             'name' => 'Roof lanterns and rooflights',
             'group' => 'Glass and extras',
             'covers' => 'Roof lanterns and flat rooflights',
-            'image' => '/wp-content/themes/fenster/assets/images/products/curated/sheerline-roof-lantern-interior.jpg',
-            'image_alt' => 'Interior view of a roof lantern over a kitchen',
-            'intro' => 'The first thing to say about a rooflight is the thing nobody wants to hear: do not go up to it. Everything a homeowner should do here is done from inside or from the ground.',
+            'image' => $base . 'sheerline-roof-lantern-interior.jpg',
+            'thumb' => $base . 'sheerline-roof-lantern.jpg',
+            'image_alt' => 'Roof lantern over a kitchen, seen from inside',
+            'intro' => 'Everything a rooflight needs from you is done from inside or from the ground. The outside is our job, and we would much rather it was.',
+            'kit' => ['Glass cleaner', 'Soft cloth', 'A stepladder on a level floor'],
             'routine' => [
                 [
-                    'title' => 'Stay off the roof',
-                    'body' => 'A rooflight is glass in a roof, usually over a hard floor, often above a single storey extension with nothing beside it to stand on. Cleaning it is not worth a ladder on a flat roof or a foot on a frame. If the outside needs doing, ask us or a window cleaner set up for it.',
+                    'when' => 'Leave to us',
+                    'title' => 'The outside is ours',
+                    'body' => 'A rooflight sits above a hard floor with very little safe to stand on around it, so give us a ring when the outside wants doing and we will bring the kit for it. It is a short job with the right access and it is one we are glad to take off your hands.',
                 ],
                 [
-                    'title' => 'Clean the inside face normally',
+                    'when' => 'As often as you like',
+                    'title' => 'Clean the inside face',
                     'body' => 'Glass cleaner or warm soapy water on a cloth, from a proper stepladder on a level floor with somebody else in the house. The internal rafters and frame take a damp cloth at the same time.',
                 ],
                 [
-                    'title' => 'Let self cleaning glass do its job',
-                    'body' => 'Most rooflights we fit have a self cleaning coating on the outer face. Daylight breaks down what lands on it and rain carries it off, so it wants leaving alone rather than treating. Keep silicone based products, waxes and abrasives off it, because those are what spoil the coating.',
+                    'when' => 'Good to know',
+                    'title' => 'Self cleaning glass does the outer face for you',
+                    'body' => 'Most rooflights we fit carry a self cleaning coating outside. Daylight breaks down what lands on it and rain carries it away, so the weather handles the maintenance and the coating stays at its best simply left to get on with it.',
                 ],
                 [
-                    'title' => 'Watch the edges from the ground',
-                    'body' => 'Twice a year, look at where the rooflight meets the roof. Leaves, moss and silt building up against the upstand or in the surrounding gutter is the thing worth catching, and you can see all of it from the garden.',
+                    'when' => 'Twice a year',
+                    'title' => 'Have a look from the garden',
+                    'body' => 'From the ground you can see everything worth seeing: how the rooflight meets the roof, and whether leaves or moss are gathering against the upstand or in the gutter beside it. Two minutes with a cup of tea covers it.',
                 ],
                 [
+                    'when' => 'Autumn especially',
                     'title' => 'Keep the gutters and valleys clear',
-                    'body' => 'Not the rooflight itself, but the drainage around it. Water that cannot get away sits against a detail that was designed to shed it.',
+                    'body' => 'Not the rooflight itself, but the drainage around it. Water that can get away freely keeps the whole detail doing what it was designed to do.',
                 ],
             ],
             'fixes' => [
                 [
-                    'problem' => 'There is condensation on the outside in the morning',
+                    'problem' => 'Condensation on the outside in the morning',
                     'steps' => [
-                        'Nothing to do. It burns off as the sun comes up.',
+                        'Have a look at it before the sun gets to it, because it is rather beautiful.',
                     ],
-                    'note' => 'It happens on clear still nights because the outer pane is losing heat to the sky and staying cold, which it can only do if almost no warmth is coming through from inside. On a rooflight it is more noticeable than anywhere else in the house and it is a sign the glass is performing.',
+                    'note' => 'It appears on clear still nights because the outer pane loses heat to the sky and stays cold, which it can only manage when almost no warmth is coming through from inside. A rooflight shows it more clearly than anywhere else in the house, and it is your glazing performing at its best.',
                 ],
                 [
-                    'problem' => 'There is condensation on the inside',
+                    'problem' => 'Condensation on the inside',
                     'steps' => [
-                        'This is room moisture, and a kitchen or a bathroom under a rooflight produces a lot of it.',
-                        'Run the extractor for longer, especially after cooking or showering, and give the room some background ventilation.',
+                        'Run the extractor a good while longer after cooking or showering.',
+                        'Give the room some background ventilation through the day.',
                     ],
-                    'note' => 'Warm wet air rises and a rooflight is the coldest surface it reaches, so it shows there first. Ventilation is the answer rather than anything done to the glass.',
+                    'note' => 'Warm damp air rises and a rooflight is the first cool surface it reaches, so a kitchen or bathroom will show it there before anywhere else. Getting the air moving sorts it quickly.',
                 ],
                 [
-                    'problem' => 'The outside has gone green or streaked',
+                    'problem' => 'The outside is looking green or streaked',
                     'steps' => [
-                        'Note how it looks after a good spell of rain, because a self cleaning coating needs weather to work and a dry month will let a film build up.',
+                        'Have a look again after a good spell of rain, since a self cleaning coating wants weather to do its work and a dry month lets a film build up.',
                     ],
-                    'note' => 'If it does not clear, it wants cleaning properly by someone equipped to work at that height. Ask us rather than going up.',
+                    'note' => 'If it is still there afterwards, give us a ring and we will get up and do it properly. That is exactly the sort of thing we would rather you called us about.',
                 ],
                 [
-                    'problem' => 'A vent or opener has stopped working',
+                    'problem' => 'A vent or opener has stopped',
                     'steps' => [
-                        'Check the power or the remote batteries on an electric opener.',
-                        'Do not climb up to inspect it.',
+                        'Check the power, or the remote batteries on an electric opener.',
+                        'Then give us a call and stay on the ground.',
                     ],
-                    'note' => 'Openers and actuators at that height are ours to look at.',
+                    'note' => 'Openers and actuators at that height are ours, and we have the access kit for them.',
                 ],
             ],
-            'call_us' => 'Anything on the outside face, anything at the perimeter or upstand, misting inside the glass, an opener that has stopped, or a mark you can only really see from up there. Access is the reason this one has a shorter list of things to try yourself, and it is a good reason.',
+            'call_us' => 'Anything on the outside face, anything at the perimeter or upstand, misting inside the glass, an opener that has stopped, or something you can only really see from up there. This one has a shorter list to try yourself, and that is entirely deliberate.',
         ],
     ];
 
@@ -645,7 +729,7 @@ function fenster_care_guides(): array
 }
 
 /**
- * Guide keys in the order they should appear, grouped for the selector.
+ * Guide keys grouped for the picker, in render order.
  */
 function fenster_care_guide_groups(): array
 {

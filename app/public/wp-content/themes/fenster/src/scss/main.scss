@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
   font-family: "Gibson";
   src:
     url("../fonts/Gibson-Light.woff2") format("woff2"),
@@ -81,7 +81,7 @@
      DESIGN SCALE. Added 2026-08-13. This stylesheet had no scale at all: 351
      distinct font-size values across 1,174 declarations, 202 distinct box-shadow
      values across 324, and 175 distinct gap values across 979. Sizes that were
-     meant to be the same drifted apart one section at a time — 0.86rem, 0.88rem
+     meant to be the same drifted apart one section at a time â€” 0.86rem, 0.88rem
      and 0.9rem all exist and none of them means anything different.
 
      EVERY STEP BELOW IS A VALUE ALREADY IN USE IN THIS FILE, picked from the
@@ -92,7 +92,7 @@
      HOW TO MIGRATE THE REST, SAFELY, A BIT AT A TIME:
      1. Only ever swap a literal for a token when the two are byte-identical.
         `font-size: 0.92rem` -> `var(--fg-text-md)` is free. `0.9rem` is NOT
-        `--fg-text-md` and must not be nudged onto it just to tidy the file —
+        `--fg-text-md` and must not be nudged onto it just to tidy the file â€”
         0.32px on a run of body copy is a visible change on a live site and is
         exactly the kind of edit this project has had to roll back before.
      2. When you are in a section for another reason and it uses a near value,
@@ -106,7 +106,7 @@
      every `clamp()` (the fluid type is its own system, see `--fg-font-size-max`)
      and the 190-odd one-off shadows. */
 
-  /* Spacing — 4px base. Uses today: 20 / 36 / 69 / 123 / 8 / 12 / 23 gaps. */
+  /* Spacing â€” 4px base. Uses today: 20 / 36 / 69 / 123 / 8 / 12 / 23 gaps. */
   --fg-space-1: 0.25rem;
   --fg-space-2: 0.5rem;
   --fg-space-3: 0.75rem;
@@ -117,7 +117,7 @@
   --fg-space-10: 2.5rem;
   --fg-space-12: 3rem;
 
-  /* Type — fixed sizes only. Fluid headings keep their own clamp; the H1/H2
+  /* Type â€” fixed sizes only. Fluid headings keep their own clamp; the H1/H2
      shapes are recorded at STYLE.md:231, not here. */
   --fg-text-2xs: 0.72rem;
   --fg-text-xs: 0.78rem;
@@ -128,7 +128,7 @@
   --fg-text-xl: 1.25rem;
   --fg-text-2xl: 1.35rem;
 
-  /* Shadow — four steps at the same 0 x / positive y / navy tint the file
+  /* Shadow â€” four steps at the same 0 x / positive y / navy tint the file
      already uses. `--shadow-soft` and `--shadow-strong` above are the two
      heavier card shadows and stay where they are; they predate this scale. */
   --fg-shadow-sm: 0 10px 28px rgba(0, 45, 58, 0.08);
@@ -1009,7 +1009,7 @@ a {
 }
 
 .fg-consultation-page__notes li::before {
-  content: "✓";
+  content: "âœ“";
   display: grid;
   width: 1.2rem;
   height: 1.2rem;
@@ -1372,7 +1372,7 @@ a {
 }
 
 .fg-consultation-page__story-copy li::before {
-  content: "✓";
+  content: "âœ“";
   color: var(--color-accent-dark);
 }
 
@@ -1540,7 +1540,7 @@ h1 {
 
 /* THE MIDDLE ARGUMENT OF A CLAMP IS THE PREFERRED VALUE AND HAS TO BE VIEWPORT
    RELATIVE. This read `clamp(2rem, 3rem, 3.4rem)`, whose middle argument was a
-   constant, so the whole thing collapsed to a flat 3rem (48px) at every width —
+   constant, so the whole thing collapsed to a flat 3rem (48px) at every width â€”
    the minifier proved it, shipping `h2{font-size:3rem}`. Every h2 not caught by
    a namespaced override rendered at 48px on a 390px phone. The value below is
    the house H2 shape recorded at STYLE.md:231 and AI.md:125. */
@@ -3242,7 +3242,7 @@ h3 {
 /* THE PHOTO HERO SCRIM IS WEIGHTED TO THE TEXT COLUMN, NOT SPREAD FLAT OVER THE
    WHOLE FRAME. The shared shade above never falls below 0.1 horizontally and
    carries a full-width bottom wash, so on /patio-doors/, /upvc-doors/ and
-   /sliding-sash-windows/ — the three darkest hero photographs on the site — the
+   /sliding-sash-windows/ â€” the three darkest hero photographs on the site â€” the
    product itself sits under a permanent veil and stops reading.
 
    The stops below were chosen so the density where the copy actually sits is
@@ -3250,15 +3250,15 @@ h3 {
    container, so on a 1440px viewport the eyebrow, H1 and intro occupy roughly
    x=9%..57%, and `.fg-hero--compact` centres them vertically. Compounding the
    two layers, the old effective alpha at the eyebrow band was 0.579 and the new
-   one is 0.581; at the tail of the intro it moves 0.425 -> 0.466. Past 74% —
-   where no hero text can reach — it falls from about 0.29 to 0.14 and then to
+   one is 0.581; at the tail of the intro it moves 0.425 -> 0.466. Past 74% â€”
+   where no hero text can reach â€” it falls from about 0.29 to 0.14 and then to
    nothing, and the bottom wash is shortened from 54% of the height to 32%, so
    the photograph is uncovered exactly where the product is.
 
    Scoped to `.fg-hero--compact` rather than to `.fg-hero__shade` globally,
    following `.fg-roof-lantern-page .fg-hero__shade` further down this file: the
    home and commercial heroes are composed differently and are not part of this.
-   The ≤860px override further down still wins on phones and is untouched. */
+   The â‰¤860px override further down still wins on phones and is untouched. */
 .fg-hero--compact .fg-hero__shade {
   background:
     linear-gradient(90deg, rgba(0, 45, 58, 0.6) 0%, rgba(0, 45, 58, 0.48) 56%, rgba(0, 45, 58, 0.14) 80%, rgba(0, 45, 58, 0) 95%),
@@ -4081,7 +4081,7 @@ h3 {
   display: none;
 }
 
-/* 42px was below the 44px minimum tap target. Only the floor moved — the
+/* 42px was below the 44px minimum tap target. Only the floor moved â€” the
    padding and type below are untouched, so the row looks the same. */
 .fg-product-quote-embed__actions .button {
   min-height: 44px;
@@ -6888,7 +6888,7 @@ h3 {
 
 /* A LONE PICTURE SPANS BOTH ROWS. The stack declares two rows and stretches to
    the copy beside it, so a route with only one body image left the second row
-   drawn empty and full height — a large hole under the first picture, which is
+   drawn empty and full height â€” a large hole under the first picture, which is
    what the owner reported on `/roofline/`. That route now has a second image
    again, but the hole was the grid's fault rather than the pool's and it would
    return the moment any route drops to one. Changes nothing where there are two.
@@ -9400,7 +9400,7 @@ html.fg-gallery-lightbox-open body {
    sits about 47% across the original frame, so the file is cut from the left edge
    to put the lever at roughly 72%, out in the clear part of the veil. The
    blown-out window that occupies the left of that crop is not a problem, it is
-   the reason it works — it is already white where the veil is white, so there is
+   the reason it works â€” it is already white where the veil is white, so there is
    no seam between the solid end of the fade and the photograph under it. */
 .fg-window-handle-hero--photo {
   position: relative;
@@ -10117,7 +10117,7 @@ html.fg-gallery-lightbox-open body {
 
 /* Veil as its own element, sibling to the wall, exactly as the colour hub has it.
    It was a ::after on the hero, which was full width while the wall was trapped
-   inside `.container` — so the fade and the thing it was supposed to be fading
+   inside `.container` â€” so the fade and the thing it was supposed to be fading
    never covered the same area. */
 .fg-obscure-hero__veil {
   position: absolute;
@@ -10136,7 +10136,7 @@ html.fg-gallery-lightbox-open body {
 
 /* One column, the way the colour hub collapses its own hero grid once the wall is
    behind it. This kept `minmax(0, 0.78fr) minmax(320px, 0.62fr)` from the days
-   when the second column held a panel of floating panes — so the layout went on
+   when the second column held a panel of floating panes â€” so the layout went on
    reserving an empty 320px slot on the right and squeezing the copy into the
    left fraction, while the wall it was supposed to sit over ran full bleed
    underneath. That is what made it read as a block in the corner rather than a
@@ -10185,7 +10185,7 @@ html.fg-gallery-lightbox-open body {
   font-size: clamp(1rem, 1.35vw, 1.16rem);
 }
 
-/* Full bleed on the section, not inside `.container` — the wall is a direct child
+/* Full bleed on the section, not inside `.container` â€” the wall is a direct child
    of the hero now, which is what makes `inset: 0` mean the whole band rather than
    the centred column it used to mean.
 
@@ -10240,7 +10240,7 @@ html.fg-gallery-lightbox-open body {
 }
 
 @media (max-width: 900px) {
-  /* Band above the copy, veil turned vertical — the colour hub's move at this
+  /* Band above the copy, veil turned vertical â€” the colour hub's move at this
      width. Three columns so a tile is still big enough to show its pattern. */
   .fg-obscure-hero__preview {
     position: relative;
@@ -10778,7 +10778,7 @@ html.fg-gallery-lightbox-open body {
    stretched across the stage only drags on iOS when the touch lands on its thumb,
    and everywhere else on the track it jumps once and stops. The gesture is
    handled in main.js now and writes back to this input, so the value, the keyboard
-   arrows and the announced position all still work — it just no longer swallows
+   arrows and the announced position all still work â€” it just no longer swallows
    the touch that should be a drag. */
 .fg-obscure-stage__range {
   position: absolute;
@@ -10846,7 +10846,7 @@ html.fg-gallery-lightbox-open body {
   /* Per layer: the scene is one image and must not tile, the texture is a pattern
      and must. It was `no-repeat` for the whole stack, so the glass was painted
      once in the middle of the pane at its pinned width and the rest of the pane
-     showed bare scene — which is only visible now the texture has a fixed size
+     showed bare scene â€” which is only visible now the texture has a fixed size
      rather than being stretched to cover. */
   background-repeat: no-repeat, repeat;
   background-size: cover, var(--active-texture-size, 100% 100%);
@@ -10909,7 +10909,7 @@ html.fg-gallery-lightbox-open body {
   min-height: 0;
 }
 
-/* The space under this heading is grid free space, not a margin — which is why
+/* The space under this heading is grid free space, not a margin â€” which is why
    zeroing the last child's margin-bottom did nothing at all.
 
    `.fg-obscure-picker` stretches its columns, so this one grows to whatever
@@ -13626,7 +13626,7 @@ a.fg-cs-card__pill:focus-visible {
    with them, which is what stops the hub drifting into two visual languages.
 
    `.fg-commercial-sectors` above it is the OLD "Best-fit commercial enquiries"
-   band, which the rebuild dropped. Its rules are left in place deliberately —
+   band, which the rebuild dropped. Its rules are left in place deliberately â€”
    pruning CSS on this project has form for taking media-query wrappers with it,
    and an unused block costs a few bytes where a broken one costs a release. */
 .fg-commercial-products,
@@ -13734,7 +13734,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 /* THREE ACTIONS ON ONE LINE, ALL THE SAME HEIGHT. Owner, 2026-08-12: the row was
-   uneven. It was — `align-items: center` against a single-line button and a
+   uneven. It was â€” `align-items: center` against a single-line button and a
    two-line card meant the two floated at different heights and never agreed at
    any width. `stretch` makes the row set one height and every item fill it, so
    the button grows to the cards rather than the cards shrinking to the button. */
@@ -13751,8 +13751,8 @@ a.fg-cs-card__pill:focus-visible {
 /* `min-height: 100%` replaced the 46px floor on the base `.button`, so the tap
    target here was whatever the flex row happened to measure. The `max()` keeps
    the stretch behaviour the comment above describes and only adds a 44px floor
-   under it: in a row taller than 44px — which it is, the phone card beside it is
-   two lines over 0.72rem padding — this resolves to the same 100% it did
+   under it: in a row taller than 44px â€” which it is, the phone card beside it is
+   two lines over 0.72rem padding â€” this resolves to the same 100% it did
    before, so nothing moves. */
 .fg-commercial-product-hero__actions .button {
   display: grid;
@@ -14161,7 +14161,7 @@ a.fg-cs-card__pill:focus-visible {
 
 /* ---------------------------------------------------------------------------
    Commercial credentials, 2026-08-12. Owner: visible on every commercial page.
-   Deliberately quiet — it sits between the proof and the enquiry, and its job is
+   Deliberately quiet â€” it sits between the proof and the enquiry, and its job is
    to answer a PQQ question, not to compete with the work above it.
    --------------------------------------------------------------------------- */
 .fg-cm-creds {
@@ -14217,7 +14217,7 @@ a.fg-cs-card__pill:focus-visible {
 
 /* Commercial FAQ block.
    ---------------------------------------------------------------------------
-   The accordion MECHANICS are the product template's — `.fg-product-faq__items`
+   The accordion MECHANICS are the product template's â€” `.fg-product-faq__items`
    and `.fg-product-faq__answer` are reused as-is, because that behaviour is
    already solved and a second copy would be a second thing to fix. What is NOT
    reused is `.fg-product-faq` itself: it sets 5rem padding and an H2 up to
@@ -14233,7 +14233,7 @@ a.fg-cs-card__pill:focus-visible {
    THE HEADING SIZE WAS WRONG ON THE FIRST PASS and rendered measurement caught
    it. It was matched to `.fg-cm-creds__title` at 25.6px, which looked like the
    right neighbour and is not: credentials is a compact utility strip, while
-   every real commercial SECTION heading — intro, spec, checks, details, fit —
+   every real commercial SECTION heading â€” intro, spec, checks, details, fit â€”
    measures 35.28px at 1440. A FAQ block is a section. Do not set a font-size
    here; the shared rule owns it. */
 .fg-cm-faq {
@@ -15710,7 +15710,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-county-selector__content a::after {
-  content: " →";
+  content: " â†’";
 }
 
 .fg-county-operations {
@@ -16079,7 +16079,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-county-details__links a::after {
-  content: " →";
+  content: " â†’";
   color: var(--color-accent);
 }
 
@@ -18528,7 +18528,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-enquiry-form__audience-options button::after {
-  content: "→";
+  content: "â†’";
   position: absolute;
   right: 0.9rem;
   top: 0.9rem;
@@ -20248,7 +20248,7 @@ a.fg-cs-card__pill:focus-visible {
 }
 
 .fg-home-product-step small::after {
-  content: "→";
+  content: "â†’";
   position: absolute;
   right: 0;
   color: var(--color-accent);
@@ -21735,7 +21735,7 @@ a.fg-cs-card__pill:focus-visible {
   justify-content: flex-end;
 }
 
-/* 42px was below the 44px minimum tap target. Only the floor moved — the
+/* 42px was below the 44px minimum tap target. Only the floor moved â€” the
    padding and type below are untouched, so the row looks the same. */
 .fg-quote-hero__embed-actions .button {
   min-height: 44px;
@@ -23494,7 +23494,7 @@ a.fg-cs-card__pill:focus-visible {
     padding: 1rem 0 1.15rem;
   }
 
-  /* The colour moved out to an unscoped rule beside `.fg-hero__shade` — it was
+  /* The colour moved out to an unscoped rule beside `.fg-hero__shade` â€” it was
      needed at every width, not only here. Only the margin is mobile layout. */
   .fg-hero--compact .fg-hero__heading .eyebrow {
     margin: 0;
@@ -31714,7 +31714,7 @@ html.fg-blinds-reveal-locked {
   }
 
   /* No pill to squeeze into any more, so the labels stay readable rather than
-     being ellipsised down to "Insta…". */
+     being ellipsised down to "Instaâ€¦". */
   .site-footer__socials {
     display: flex;
     flex-wrap: wrap;
@@ -33712,7 +33712,7 @@ html.fg-blinds-reveal-locked {
   line-height: 1.35;
 }
 
-/* The £5,000 security guarantee, given the weight of a full band. */
+/* The Â£5,000 security guarantee, given the weight of a full band. */
 .fg-cd3-security {
   position: relative;
   padding: clamp(2.25rem, 3.5vw, 3rem) 0;
@@ -37813,7 +37813,7 @@ html.fg-blinds-reveal-locked {
    padding either side of a head-only section, and there are no head-only
    sections left on this page: every remaining head is carried inside the section
    that holds its content, which is the arrangement that never needed the fix.
-   Restore both halves together if a head-only section ever returns — cancelling
+   Restore both halves together if a head-only section ever returns â€” cancelling
    one side alone just moves the gap rather than closing it. */
 
 /* One display size across the page. Chapter titles, section titles and the
@@ -38710,7 +38710,7 @@ html.fg-blinds-reveal-locked {
 
    The darkest stop of the section's own gradient, so it is invisible: the section
    fills the panel exactly (1239px against 1239px when measured) and paints over
-   this completely. Solid rather than the gradient because nothing ever sees it —
+   this completely. Solid rather than the gradient because nothing ever sees it â€”
    it exists to give the layer an opaque backing, not to be looked at. */
 .fg-cas-stack__panel--security {
   background-color: #061d24;
@@ -38747,7 +38747,7 @@ html.fg-blinds-reveal-locked {
 
    Getting this wrong is visible rather than subtle: the JS writes `0` to the
    last panel's `--fg-stack-dim` because nothing follows it, so a stale exception
-   leaves a real overlay sitting at zero opacity — harmless until any rounding or
+   leaves a real overlay sitting at zero opacity â€” harmless until any rounding or
    a mid-scroll re-measure puts a value in it, at which point the final plate
    darkens with nothing above it to explain why. */
 .fg-cas-stack.is-stacked .fg-cas-stack__panel--security::after { content: none; }
@@ -39957,7 +39957,7 @@ html.fg-blinds-reveal-locked {
    Built on `.fg-cw`, the split grammar the heritage door page already uses, so
    the two-column sections need nothing here. What follows is only the pieces the
    flush page adds: the information bands, the comparison and the proof mosaic.
-   Deliberately no stacked chapters — that device stays unique to casement. */
+   Deliberately no stacked chapters â€” that device stays unique to casement. */
 /* `.fg-alu-door-band`, `.fg-sg-band` and `.fg-rg-band` are added to these
    selector lists rather than given a copy of the component, which is the same
    call already made for the composite hero against the heritage one. Four pages
@@ -39982,7 +39982,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* `.fg-cw h2` sets `--color-ink` at (0,1,1), which beats the section's own white
-   at (0,1,0) — so the security heading rendered dark on dark and was unreadable.
+   at (0,1,0) â€” so the security heading rendered dark on dark and was unreadable.
    Every one of these carries enough specificity to win rather than relying on
    source order, because this stylesheet is long and the `.fg-cw` block is not
    next to this one. */
@@ -40037,7 +40037,7 @@ html.fg-blinds-reveal-locked {
 /* Cards rather than loose text. As four bare blocks these read as ragged: the
    copy is never the same length twice, so the terms sat at different heights and
    the section looked unfinished however the words were trimmed. Giving each one
-   the same box makes the grid do the levelling instead of the copy — the cards
+   the same box makes the grid do the levelling instead of the copy â€” the cards
    stretch to a common height, and only the text inside them varies.
 
    `align-content: start` inside the card keeps the term hard against the top, so
@@ -40134,7 +40134,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ==========================================================================
-   Aluminium flush windows — /aluminium-flush-windows/
+   Aluminium flush windows â€” /aluminium-flush-windows/
    ========================================================================== */
 
 /* THE PLATE. The owner asked for this page to look and feel cool while staying
@@ -40143,7 +40143,7 @@ html.fg-blinds-reveal-locked {
    takes a dark ground, and the drawing only reads in white line on dark.
 
    Everything else on the page uses the shared `.fg-cw` grammar, so this is the
-   only bespoke component here. That is deliberate — one plate is a moment, three
+   only bespoke component here. That is deliberate â€” one plate is a moment, three
    would be a theme park. */
 .fg-afw-plate {
   padding: clamp(3rem, 6vw, 5.5rem) 0;
@@ -40176,7 +40176,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* Two elements: our own photograph and Sheerline's comparison. Even columns,
-   because neither is the subordinate one — ours is the real window in a real
+   because neither is the subordinate one â€” ours is the real window in a real
    wall and theirs is the one that isolates the difference. */
 .fg-afw-plate__grid {
   display: grid;
@@ -40239,7 +40239,7 @@ html.fg-blinds-reveal-locked {
 
    THE RATIO GOES ON THE FIGURE, not the image. `.fg-cw-media` sets
    `aspect-ratio: 16 / 10` on the figure and the image inside it is
-   `height: 100%`, so a ratio set on the image computes and then does nothing —
+   `height: 100%`, so a ratio set on the image computes and then does nothing â€”
    the box still governs. Written on the image first and it rendered a 576x360
    letterbox that cropped the head off the window. `--turntable` above is the
    existing example of doing this correctly. */
@@ -40258,7 +40258,7 @@ html.fg-blinds-reveal-locked {
 
 /* ---- Heritage windows page -------------------------------------------------
    Built on `.fg-cw` like the four routes above it, so the split sections, the
-   facts list, the gallery mosaic and the card band all come for free —
+   facts list, the gallery mosaic and the card band all come for free â€”
    `.fg-hw-band` and `.fg-hw-list` are added to those shared selector lists
    rather than given a copy. What follows is only the dark "look" plate.
 
@@ -40408,7 +40408,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ==========================================================================
-   Tilt and turn — /tilt-turn-windows/
+   Tilt and turn â€” /tilt-turn-windows/
    Rebuilt 2026-08-12 as the eleventh bespoke residential middle, on the same
    `.fg-cw` grammar as the routes above. The splits, the facts list, the card
    band, the band heads and the pair mosaic are all joined by adding `.fg-tt-*`
@@ -40443,7 +40443,7 @@ html.fg-blinds-reveal-locked {
    locking renders need the same treatment restated inside it.
    `.fg-cw-gallery__mosaic figure` is (0,2,1); a bare `.fg-tt-plate` is (0,1,0)
    and loses, so these are qualified by the mosaic rather than left to source
-   order. Count before rewriting — the same specificity trap is already recorded
+   order. Count before rewriting â€” the same specificity trap is already recorded
    against `.fg-cw p` and `.fg-lv p`. */
 .fg-cw-gallery__mosaic .fg-tt-plate {
   border: 1px solid var(--color-line);
@@ -40466,7 +40466,7 @@ html.fg-blinds-reveal-locked {
    `--color-muted`. It did on the first build and rendered charcoal on steel:
    legible only if you already knew it was there, on the one paragraph that
    carries the PAS 24 attribution. Third time this exact trap has been recorded
-   in this stylesheet — check the ground before setting a text colour. */
+   in this stylesheet â€” check the ground before setting a text colour. */
 .fg-cw .fg-tt-secure__note {
   max-width: 78ch;
   margin: clamp(1.1rem, 2.4vw, 1.6rem) 0 0;
@@ -40479,8 +40479,8 @@ html.fg-blinds-reveal-locked {
    changes shape once in the middle. This one already does: `.fg-cw-gallery`
    paints itself `--color-steel`, and the locking section above is a gallery, so
    the dark moment arrives on its own with the two light hardware plates sitting
-   on it. That is the casement treatment — white studio product on dark reads as
-   lit — and it costs nothing here.
+   on it. That is the casement treatment â€” white studio product on dark reads as
+   lit â€” and it costs nothing here.
 
    So the closing band stays LIGHT. It was built dark first and that put two dark
    sections back to back, which reads as one slab rather than two ideas. If a
@@ -40518,7 +40518,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ==========================================================================
-   Aluminium doors — /aluminium-doors/
+   Aluminium doors â€” /aluminium-doors/
    Rebuilt 2026-08-07 as a bespoke middle on the `.fg-cw` split grammar. Almost
    all of it is shared: the splits, the facts lists, the media panels and the
    card band above are the same components the flush casement and heritage door
@@ -40528,7 +40528,7 @@ html.fg-blinds-reveal-locked {
 /* `.fg-cw-media` is a 16/10 box with `object-fit: cover`, which is right for a
    wide installation photograph and wrong for every image on this route. The
    usable aluminium door photography is 4:3 at 600x450, and the InvisiHinge
-   composite carries its two callout circles hard against the top edge — cover
+   composite carries its two callout circles hard against the top edge â€” cover
    into 16/10 crops roughly a tenth off the top and clipped the upper circle
    clean off. Matching the box to the source is what stops that, and it is the
    same lesson already recorded for the portrait door renders on composite:
@@ -40575,7 +40575,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* `.fg-cw h2`, `.fg-cw p` and `.fg-cw .eyebrow` are all (0,1,1) and beat a bare
-   class, so white text on this section cannot be set by the section alone — it
+   class, so white text on this section cannot be set by the section alone â€” it
    rendered ink on dark until these were qualified. Exactly the trap already
    recorded against `.fg-flush-band--dark`; this is the second consumer of it,
    which is why the comment is repeated rather than cross-referenced. */
@@ -40608,7 +40608,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* ==========================================================================
-   Window and door repairs — /window-and-door-repairs/
+   Window and door repairs â€” /window-and-door-repairs/
    Third rebuild, 2026-08-06. The first two were card grids and the owner read
    both as a page of text with no pictures. The register here is a marque's
    servicing pages: dark technical plates, full-bleed photography, real
@@ -40764,7 +40764,7 @@ html.fg-blinds-reveal-locked {
   background: var(--color-steel);
 }
 
-/* Column 1 — symptoms */
+/* Column 1 â€” symptoms */
 
 .fg-rp-diag__symptoms {
   display: flex;
@@ -40821,7 +40821,7 @@ html.fg-blinds-reveal-locked {
   text-decoration: none;
 }
 
-/* Column 2 — the drawing */
+/* Column 2 â€” the drawing */
 
 .fg-rp-diag__plate {
   display: flex;
@@ -40935,7 +40935,7 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
-/* Column 3 — the part */
+/* Column 3 â€” the part */
 
 .fg-rp-diag__part {
   display: flex;
@@ -40960,7 +40960,7 @@ html.fg-blinds-reveal-locked {
 }
 
 /* A cut-out is contained and given air; a photograph covers. Both dimensions
-   are set in CSS on purpose — these images carry width/height attributes, and
+   are set in CSS on purpose â€” these images carry width/height attributes, and
    a percentage with no definite containing block silently falls back to the
    intrinsic size, which is how a portrait part came to overflow its box. */
 .fg-rp-diag__media.is-cutout {
@@ -42148,7 +42148,7 @@ html.fg-blinds-reveal-locked {
   }
 }
 
-/* Secondary glazing — /secondary-glazing/
+/* Secondary glazing â€” /secondary-glazing/
    The four opening styles render as a `.fg-cw-facts` list where each item leads
    with a bold style name, so the name needs separating from the sentence that
    follows it. Everything else on this route is the shared `.fg-cw` grammar and
@@ -42690,7 +42690,7 @@ html.fg-blinds-reveal-locked {
    Tinted polygons were the wrong instinct: they read as highlighter pen and a
    few pixels of placement error is glaring on a shape. A marker needs ONE
    coordinate, a ring plus a hairline plus a small label, and the same error is
-   invisible. It is also the register this page was asked for — the part is
+   invisible. It is also the register this page was asked for â€” the part is
    pointed AT rather than painted over.
 
    THE BOX REPRODUCES THE CANVAS COVER TRANSFORM so a percentage means what it
@@ -42793,7 +42793,7 @@ html.fg-blinds-reveal-locked {
    begins and ends; those boundaries were converted from stage space into this
    box's space. THE FIRST CONVERSION CAME OUT MIRRORED: every zone ascended left
    to right while every component in the photograph descends left to right, which
-   is why four rounds of nudging never converged — the shapes were right and the
+   is why four rounds of nudging never converged â€” the shapes were right and the
    sign was wrong. Check the slope direction against the picture before adjusting
    any number here.
 
@@ -42864,7 +42864,7 @@ html.fg-blinds-reveal-locked {
    `rgba(2,10,9,0.88)`: the backdrop is already at 12% of the original, so 1.9x
    only reaches 23%. Getting back to the source needs about 8.3x, and that blows
    the highlights and drains the colour instead of restoring it. **A filter
-   cannot undo a scrim** — repaint the pixels.
+   cannot undo a scrim** â€” repaint the pixels.
 
    `--fg-rl-frame` is set on `.fg-rl-parts` in the template and is the same URL
    the canvas draws, so the browser has it cached and this costs no request.
@@ -42896,7 +42896,7 @@ html.fg-blinds-reveal-locked {
 /* THE SOFFIT'S LOWER EDGE IS DETECTED, NOT THE BOTTOM OF THE FRAME. Owner,
    2026-08-15: the zone was too big. It ran from the fascia divide straight down
    to 100%, so it lit the bifold doors, the glazing, the brick pier and the
-   wagon wheel as well as the soffit. That edge had never been measured — the
+   wagon wheel as well as the soffit. That edge had never been measured â€” the
    other three came off the Hough sweep and this one was left at the frame edge,
    which was survivable while the lift was a subtle 1.9x and is not now the zone
    paints the source pixels.
@@ -42905,7 +42905,7 @@ html.fg-blinds-reveal-locked {
    the description that finally located it: the boards butt into the head at a
    right angle, so the end is a straight line.
 
-   IT TOOK THREE WRONG ANSWERS AND THE FAULT WAS THE SAME EACH TIME — the thing
+   IT TOOK THREE WRONG ANSWERS AND THE FAULT WAS THE SAME EACH TIME â€” the thing
    being measured, never the measuring.
 
    1. A luminance sweep scoring bright-above/dark-below returned the GLAZING
@@ -42913,7 +42913,7 @@ html.fg-blinds-reveal-locked {
    2. A colour mask of the soffit gave 67.5%..88.0%. But the door head is the
       SAME PAINT, so the mask ran straight through it.
    3. A contiguous-run check was added specifically to catch that, and agreed to
-      within 7px — because there is no colour break between soffit and head for
+      within 7px â€” because there is no colour break between soffit and head for
       it to stop at either. **Two methods agreeing is worth nothing when they
       share a blind spot.** That agreement was reported as evidence. It was not.
 
@@ -42955,7 +42955,7 @@ html.fg-blinds-reveal-locked {
    Checked against the luminance profiles afterwards: at x=450 the line lands at
    y=750, immediately past the last groove at 718 and on the bright trim edge at
    754. At x=750 and x=1050 it sits a board or two inside the boarding, which is
-   the safe direction — missing soffit is invisible, lit trim is not.
+   the safe direction â€” missing soffit is invisible, lit trim is not.
 
    NOT PARALLEL to the edge above it, and that is the geometry rather than an
    error: the divide falls 0.52 across the frame and this falls 0.205, because
@@ -42968,8 +42968,8 @@ html.fg-blinds-reveal-locked {
    It was cutting across the gutter and leaving the upper half of the profile in
    the scrim, so the lit band was part of the gutter rather than the gutter.
 
-   Measured the same way the soffit finally was — read the luminance profile and
-   look — rather than by another search. The gutter face reads as a bright band
+   Measured the same way the soffit finally was â€” read the luminance profile and
+   look â€” rather than by another search. The gutter face reads as a bright band
    about 36px deep on the 1800x1200 frame; the old edge sat on its lower
    boundary, so the fix is the upper one. Walking to the top of that band across
    46 columns and fitting gives a span of 79.8 percentage points against the
@@ -43278,20 +43278,18 @@ html.fg-blinds-reveal-locked {
     background: linear-gradient(180deg, rgba(6, 33, 42, 0.92) 0%, rgba(6, 33, 42, 0.88) 60%, rgba(6, 33, 42, 0.8) 100%);
   }
 }
-
 /* ---------------------------------------------------------------------------
    CARE AND MAINTENANCE GUIDES  (/care-and-maintenance/)
 
-   A picker across the top, one guide panel beneath it. Every panel is in the
-   DOM and JavaScript hides the unselected ones, so the no-JS fallback is the
-   whole document rather than an empty box.
+   Image-led picker, then one guide at a time. Every panel is in the DOM and the
+   JavaScript hides the unselected ones, so the no-JS fallback is the whole
+   document rather than an empty box.
 
-   NOTE ON THE PAGE CANVAS: this wrapper deliberately does NOT set
-   `background: var(--fg-page-gradient)`. `body` already paints it with
-   `background-attachment: fixed`, and repainting it here would stack a second
-   scrolling copy over the fixed one and band the section joins. That defect is
-   recorded in STYLE.md against .fg-fensa-page and friends; this page does not
-   repeat it.
+   THE PAGE CANVAS IS NOT REPAINTED HERE. `body` already paints
+   `--fg-page-gradient` with `background-attachment: fixed`; a second copy on a
+   route wrapper stacks a scrolling gradient over the fixed one and bands the
+   section joins. STYLE.md records that defect against .fg-fensa-page and
+   friends and this page deliberately does not repeat it.
    ------------------------------------------------------------------------- */
 
 .fg-care-hero {
@@ -43336,8 +43334,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-care-hero__call:hover { border-bottom-color: var(--color-accent); }
 
-/* The four universal habits. A numbered list because they are genuinely
-   ordered by how often each one turns out to be the answer. */
+/* The four universal habits, numbered because they are genuinely ordered by how
+   often each one turns out to be the answer. */
 .fg-care-hero__rules {
   padding: clamp(1.15rem, 2vw, 1.6rem);
   border: 1px solid rgba(0, 45, 58, 0.12);
@@ -43393,15 +43391,13 @@ html.fg-blinds-reveal-locked {
   line-height: 1.45;
 }
 
-/* --- Selector -------------------------------------------------------- */
+/* --- Picker ---------------------------------------------------------- */
 
 .fg-care-selector {
   padding: clamp(1.5rem, 2.5vw, 2.25rem) 0 clamp(2rem, 3.5vw, 3rem);
 }
 
-.fg-care-selector__head {
-  margin-bottom: clamp(1.15rem, 2vw, 1.6rem);
-}
+.fg-care-selector__head { margin-bottom: clamp(1.15rem, 2vw, 1.6rem); }
 
 .fg-care-selector__head h2 {
   margin: 0.3rem 0 0;
@@ -43411,18 +43407,20 @@ html.fg-blinds-reveal-locked {
 .fg-care-picker {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(0.9rem, 1.6vw, 1.35rem);
-  margin-bottom: clamp(1.35rem, 2.4vw, 2rem);
+  gap: clamp(1.1rem, 2vw, 1.75rem);
+  margin-bottom: clamp(1.5rem, 2.6vw, 2.25rem);
 }
 
 .fg-care-picker__group {
   display: grid;
   align-content: start;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .fg-care-picker__group-title {
-  margin: 0 0 0.15rem;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-line);
   color: var(--color-steel);
   font-size: var(--fg-text-2xs);
   font-weight: 850;
@@ -43430,38 +43428,71 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
-.fg-care-picker__button {
+.fg-care-picker__cards {
   display: grid;
-  gap: 0.15rem;
-  width: 100%;
-  padding: 0.7rem 0.85rem;
+  gap: 0.6rem;
+}
+
+/* Photo-led cards. The picker is where somebody works out which of nine things
+   they are holding, and a photograph answers that faster than a label does. */
+.fg-care-card {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.5rem;
   border: 1px solid var(--color-line);
-  border-radius: 8px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.86);
   color: var(--color-steel);
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
-.fg-care-picker__button:hover {
-  border-color: rgba(46, 172, 102, 0.55);
+.fg-care-card:hover {
+  border-color: rgba(46, 172, 102, 0.5);
   background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: var(--fg-shadow-sm);
 }
 
-.fg-care-picker__button[aria-selected='true'] {
+.fg-care-card[aria-selected='true'] {
   border-color: var(--color-accent);
   background: #ffffff;
-  box-shadow: 0 0 0 1px var(--color-accent) inset, var(--fg-shadow-sm);
+  box-shadow: 0 0 0 1px var(--color-accent) inset, var(--fg-shadow-md);
 }
 
-.fg-care-picker__name {
+.fg-care-card__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 7px;
+  background: var(--color-soft);
+}
+
+.fg-care-card__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  /* Zoomed in a touch. These crops are wide product shots and a 1:1 cell of the
+     full frame reads as a distant house rather than as the product. */
+  transform: scale(1.12);
+  transition: transform 0.35s ease;
+}
+
+.fg-care-card:hover .fg-care-card__media img,
+.fg-care-card[aria-selected='true'] .fg-care-card__media img { transform: scale(1.2); }
+
+.fg-care-card__label { display: grid; gap: 0.15rem; min-width: 0; }
+
+.fg-care-card__name {
   font-size: var(--fg-text-base);
   font-weight: 800;
   line-height: 1.25;
 }
 
-.fg-care-picker__covers {
+.fg-care-card__covers {
   color: var(--color-muted);
   font-size: var(--fg-text-xs);
   line-height: 1.35;
@@ -43470,9 +43501,9 @@ html.fg-blinds-reveal-locked {
 /* --- One guide ------------------------------------------------------- */
 
 .fg-care-guide {
-  padding: clamp(1.25rem, 2.2vw, 1.85rem);
+  overflow: hidden;
   border: 1px solid var(--color-line);
-  border-radius: 8px;
+  border-radius: 12px;
   background: #ffffff;
   box-shadow: var(--fg-shadow-md);
 }
@@ -43482,112 +43513,182 @@ html.fg-blinds-reveal-locked {
   outline-offset: 3px;
 }
 
-/* No-JS fallback: panels stack with air between them and each keeps its own
-   heading, so the page still reads as a set of separate guides. */
-.fg-care-guide + .fg-care-guide { margin-top: clamp(1.25rem, 2.2vw, 1.85rem); }
+/* No-JS fallback: panels stack with air between them, each keeping its own
+   hero, so the page still reads as nine separate guides. */
+.fg-care-guide + .fg-care-guide { margin-top: clamp(1.5rem, 2.6vw, 2.5rem); }
 
-/* `align-items: stretch`, not `center`. A fixed 4:3 photo beside three lines of
-   intro left roughly 300px of dead space up the left of every guide. The photo
-   now takes its height from the text instead of dictating the row. */
-.fg-care-guide__head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
-  gap: clamp(1.15rem, 2.2vw, 2rem);
-  align-items: stretch;
-  padding-bottom: clamp(1.15rem, 2vw, 1.6rem);
-  border-bottom: 1px solid var(--color-line);
+/* A proper banner rather than a thumbnail beside a paragraph. The scrim is a
+   two-stop gradient because a flat overlay greys the whole photograph out. */
+.fg-care-guide__hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 210px;
+  padding: clamp(1.15rem, 2.4vw, 2rem);
 }
 
-.fg-care-guide__intro { align-self: center; }
-
-.fg-care-guide__head h3 {
-  margin: 0;
-  font-size: clamp(1.35rem, 2vw, 1.75rem);
-  line-height: 1.15;
-}
-
-.fg-care-guide__covers {
-  margin: 0.3rem 0 0.75rem;
-  color: var(--color-muted);
-  font-size: var(--fg-text-sm);
-  font-weight: 700;
-}
-
-.fg-care-guide__lead {
-  max-width: 60ch;
-  margin: 0;
-  color: var(--color-steel-90);
-  font-size: var(--fg-text-lg);
-  line-height: 1.55;
-}
-
-.fg-care-guide__media {
-  min-height: 220px;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-/* Height comes from the row, so the photo is a band as tall as the intro rather
-   than a portrait that sets the height for everything beside it. */
-.fg-care-guide__media img {
-  display: block;
+.fg-care-guide__hero img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.fg-care-guide__body {
+.fg-care-guide__hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(2, 27, 34, 0.12) 0%, rgba(2, 27, 34, 0.62) 58%, rgba(2, 27, 34, 0.88) 100%);
+}
+
+.fg-care-guide__hero-copy { color: #ffffff; }
+
+.fg-care-guide__hero h3 {
+  margin: 0.15rem 0 0;
+  color: #ffffff;
+  font-size: clamp(1.6rem, 2.6vw, 2.35rem);
+  line-height: 1.1;
+}
+
+.fg-care-guide__covers {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: var(--fg-text-sm);
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+
+/* Opening: the lead sentence, and the kit you want to hand. */
+.fg-care-guide__opening {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.35rem, 2.6vw, 2.25rem);
-  padding-top: clamp(1.15rem, 2vw, 1.6rem);
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  gap: clamp(1.25rem, 2.4vw, 2.25rem);
+  align-items: start;
+  padding: clamp(1.25rem, 2.4vw, 2rem);
+  border-bottom: 1px solid var(--color-line);
+  background: linear-gradient(180deg, #f7fbfa 0%, #ffffff 100%);
 }
 
-.fg-care-block h4 {
-  margin: 0 0 0.9rem;
-  font-size: var(--fg-text-xl);
-  line-height: 1.25;
+.fg-care-guide__lead {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--color-steel-90);
+  font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+  line-height: 1.6;
 }
 
-/* Routine: a definition list, because that is genuinely what it is. */
+.fg-care-kit__title {
+  margin: 0 0 0.55rem;
+  color: var(--color-steel);
+  font-size: var(--fg-text-2xs);
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.fg-care-kit ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-care-kit li {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid rgba(46, 172, 102, 0.35);
+  border-radius: 999px;
+  background: rgba(46, 172, 102, 0.08);
+  color: var(--color-steel);
+  font-size: var(--fg-text-xs);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.fg-care-section {
+  padding: clamp(1.25rem, 2.4vw, 2rem);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-care-section__head { margin-bottom: clamp(0.9rem, 1.6vw, 1.25rem); }
+
+.fg-care-section__head h4 {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.3rem, 1.9vw, 1.6rem);
+  line-height: 1.2;
+}
+
+/* Routine: a card each, with the frequency doing the visual work. Three across
+   on desktop turns a long list into something you can take in at a glance. */
 .fg-care-routine {
   display: grid;
-  gap: 0.85rem;
-  margin: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
 }
 
-.fg-care-routine__item {
-  padding-left: 0.9rem;
-  border-left: 2px solid rgba(46, 172, 102, 0.35);
+.fg-care-step {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  padding: 1rem 1.05rem 1.1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-soft);
 }
 
-.fg-care-routine dt {
+.fg-care-step__when {
+  justify-self: start;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--color-steel);
+  color: #ffffff;
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-care-step h5 {
+  margin: 0.25rem 0 0;
   color: var(--color-steel);
-  font-size: var(--fg-text-base);
+  font-size: var(--fg-text-lg);
   font-weight: 800;
   line-height: 1.3;
 }
 
-.fg-care-routine dd {
-  margin: 0.2rem 0 0;
+.fg-care-step p {
+  margin: 0;
   color: var(--color-muted);
   font-size: var(--fg-text-md);
   line-height: 1.55;
 }
 
-/* Fixes: a problem, then numbered steps, then the honest caveat. */
-.fg-care-fix {
-  padding: 0.95rem 1.05rem;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: var(--color-soft);
+/* Fixes: a question, the steps, then the reassuring bit. Two across so a long
+   guide does not become a single column of scrolling. */
+.fg-care-fixes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
 }
 
-.fg-care-fix + .fg-care-fix { margin-top: 0.75rem; }
+.fg-care-fix {
+  display: grid;
+  align-content: start;
+  padding: 1.05rem 1.15rem 1.15rem;
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: var(--fg-shadow-sm);
+}
 
 .fg-care-fix h5 {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.6rem;
   color: var(--color-steel);
   font-size: var(--fg-text-lg);
   font-weight: 800;
@@ -43596,33 +43697,55 @@ html.fg-blinds-reveal-locked {
 
 .fg-care-fix ol {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.45rem;
   margin: 0;
-  padding-left: 1.15rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: fg-care-fix-step;
 }
 
 .fg-care-fix li {
+  position: relative;
+  padding-left: 1.85rem;
   color: var(--color-steel-90);
   font-size: var(--fg-text-md);
   line-height: 1.5;
+  counter-increment: fg-care-fix-step;
+}
+
+.fg-care-fix li::before {
+  content: counter(fg-care-fix-step);
+  position: absolute;
+  top: 0.05rem;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: rgba(46, 172, 102, 0.16);
+  color: var(--color-accent-dark);
+  font-size: 0.7rem;
+  font-weight: 850;
 }
 
 .fg-care-fix__note {
-  margin: 0.7rem 0 0;
-  padding-top: 0.6rem;
-  border-top: 1px dashed rgba(0, 45, 58, 0.18);
+  margin: 0.85rem 0 0;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+  background: var(--color-soft);
   color: var(--color-muted);
   font-size: var(--fg-text-md);
-  font-style: italic;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-/* The stop-here panel closes every guide, in steel so it reads as the
-   different kind of statement it is. */
+/* Closing band, in steel so it reads as the different kind of statement it is. */
 .fg-care-callus {
-  grid-column: 1 / -1;
-  padding: clamp(1.05rem, 1.8vw, 1.5rem);
-  border-radius: 8px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1rem, 2vw, 2rem);
+  align-items: center;
+  padding: clamp(1.25rem, 2.4vw, 2rem);
   background: var(--color-steel);
   color: #ffffff;
 }
@@ -43630,9 +43753,9 @@ html.fg-blinds-reveal-locked {
 .fg-care-callus .eyebrow { color: rgba(255, 255, 255, 0.72); }
 
 .fg-care-callus h4 {
-  margin: 0.25rem 0 0.6rem;
+  margin: 0.2rem 0 0.55rem;
   color: #ffffff;
-  font-size: var(--fg-text-xl);
+  font-size: clamp(1.3rem, 1.9vw, 1.6rem);
 }
 
 .fg-care-callus p {
@@ -43643,18 +43766,11 @@ html.fg-blinds-reveal-locked {
   line-height: 1.6;
 }
 
-.fg-care-callus .text-link {
-  display: inline-block;
-  margin-top: 0.85rem;
-  color: #ffffff;
-  border-bottom-color: rgba(46, 172, 102, 0.85);
-}
+.fg-care-callus .button { white-space: nowrap; }
 
 /* --- Closing bands --------------------------------------------------- */
 
-.fg-care-promise {
-  padding: clamp(1.5rem, 2.5vw, 2.25rem) 0;
-}
+.fg-care-promise { padding: clamp(1.5rem, 2.5vw, 2.25rem) 0; }
 
 .fg-care-promise__inner {
   display: grid;
@@ -43710,12 +43826,30 @@ html.fg-blinds-reveal-locked {
   align-items: start;
 }
 
+.fg-care-enquiry h2 {
+  margin: 0.3rem 0 0.75rem;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+}
+
+.fg-care-enquiry__copy p {
+  max-width: 58ch;
+  margin: 0 0 0.7rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.fg-care-enquiry__reassurance {
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-steel);
+  font-weight: 700;
+}
+
 /* THE FORM MUST SIT ON A DARK PANEL. `.fg-form label` is
-   `rgba(255,255,255,0.82)` site-wide, so the shared enquiry form is only legible
-   against one. Every other route that embeds it supplies its own dark box
-   (.fg-fensa-enquiry__form is #12363b); this one shipped without and the labels
-   and legends were white on the light page canvas, which is precisely the "light
-   text on light background" case in the STYLE.md QA list. */
+   rgba(255,255,255,0.82) site-wide, so the shared enquiry component is only
+   legible against one, and every route that embeds it supplies its own
+   (.fg-fensa-enquiry__form is #12363b). Shipping without it put white labels on
+   the light page canvas and the fields read as blank grey boxes. */
 .fg-care-enquiry__form {
   padding: clamp(1rem, 2vw, 1.5rem);
   border-radius: 8px;
@@ -43741,29 +43875,15 @@ html.fg-blinds-reveal-locked {
   align-items: center;
 }
 
-.fg-care-enquiry h2 {
-  margin: 0.3rem 0 0.75rem;
-  font-size: clamp(1.45rem, 2.2vw, 2rem);
-}
-
-.fg-care-enquiry__copy p {
-  max-width: 58ch;
-  margin: 0 0 0.7rem;
-  color: var(--color-muted);
-  line-height: 1.6;
-}
-
-.fg-care-enquiry__reassurance {
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--color-line);
-  color: var(--color-steel);
-  font-weight: 700;
-}
-
 /* --- Tablet ---------------------------------------------------------- */
 
 @media (max-width: 1080px) {
-  .fg-care-guide__body { grid-template-columns: minmax(0, 1fr); }
+  /* Three picker columns at this width leaves each card about 200px wide, which
+     is not enough for an 84px photo and a two line name beside it. */
+  .fg-care-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fg-care-routine { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fg-care-fixes { grid-template-columns: minmax(0, 1fr); }
+  .fg-care-guide__opening { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* --- Mobile ---------------------------------------------------------- */
@@ -43781,25 +43901,21 @@ html.fg-blinds-reveal-locked {
   .fg-care-hero__actions .button { width: 100%; text-align: center; }
   .fg-care-hero__call { justify-self: start; }
 
-  /* One column of full-width targets. Three narrow columns at 390px broke the
-     "covers" line onto four cracked lines and made the tap target smaller than
-     it should be for something you may be using with cold hands. */
-  .fg-care-picker { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
-  .fg-care-picker__button { padding: 0.8rem 0.9rem; }
-
-  /* The photo leads on mobile: it confirms you picked the right guide before
-     you commit to reading it. */
-  .fg-care-guide__head {
+  .fg-care-picker,
+  .fg-care-routine {
     grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
   }
-  .fg-care-guide__media { order: -1; min-height: 0; }
-  /* Single column, so there is no row height to inherit. Back to a fixed ratio. */
-  .fg-care-guide__media img { height: auto; aspect-ratio: 16 / 10; }
 
-  .fg-care-guide { padding: 1.1rem; }
-  .fg-care-fix { padding: 0.85rem 0.9rem; }
-  .fg-care-fix ol { padding-left: 1.05rem; }
+  /* A full width card with a bigger photo. At 390px the picker is the whole
+     job, so it gets the room to be tapped comfortably. */
+  .fg-care-card { grid-template-columns: 96px minmax(0, 1fr); padding: 0.55rem; }
+
+  .fg-care-guide__hero { min-height: 180px; }
+  .fg-care-guide { border-radius: 10px; }
+
+  /* Button under the copy rather than stranded beside it. */
+  .fg-care-callus { grid-template-columns: minmax(0, 1fr); }
+  .fg-care-callus .button { justify-self: start; }
 
   .fg-care-enquiry__form .fg-enquiry-form__compact-grid { grid-template-columns: 1fr; }
   .fg-care-enquiry__form .fg-enquiry-form__compact-wide { grid-column: auto; }
