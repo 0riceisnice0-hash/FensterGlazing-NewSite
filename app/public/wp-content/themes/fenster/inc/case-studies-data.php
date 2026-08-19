@@ -1322,6 +1322,127 @@ function fenster_case_studies(): array
          * and are not ours, the way Wolverton says the render and the
          * landscaping were not ours.
          */
+        /* Hanslope barn conversion, added 2026-08-19 from five photographs and
+         * the owner's film. Fitters Shane and Tom, owner-stated.
+         *
+         * THIS IS THE STUDY THAT UNGATES `/tilt-turn-windows/`. That route was
+         * in `$no_case_study_routes` in generated-page.php with
+         * `/aluminium-windows/`, rendering no proof at all rather than falling
+         * through to unrelated jobs. CASE-STUDY-PRIORITIES-2026-08-17.md lists
+         * it as Tier 2 and says to add the study first and remove the gate
+         * second, which is what this commit does. Aluminium windows stay gated:
+         * nothing here claims that route.
+         *
+         * THE TILT AND TURN IS VERIFIED AS FAR AS A PHOTOGRAPH CAN. The site
+         * has already published a "tilt and turn" that was not one: the note in
+         * site-data.php records `tilt-turn-brick-1600w.webp` showing two barrel
+         * hinges on the OUTER FRAME, which is a side-hung casement opening
+         * outward. So the jamb here was checked at full resolution before this
+         * was written, and the outer frame is clean: no barrel hinges, hardware
+         * concealed, one large sash in a deep frame. That plus the owner's own
+         * label is the basis for the claim.
+         *
+         * 1.3 W/m²K, NOT 0.95 OR 1.2. Owner-confirmed 2026-08-19 that the tilt
+         * and turn is double glazed, and this route is the one Liniar line off
+         * the 0.95/1.2 pair: `glazing_u_values` carries 1.3 double and 0.93
+         * triple for it, on an owner ruling of 2026-08-12 that its own note
+         * says not to reconcile back to casement's figures. The flush casement
+         * keeps 1.2 and A+, which is determinate because that system is 28mm
+         * double only and has no triple option.
+         *
+         * THERE IS NO STABLE DOOR AND THE COPY DOES NOT CLAIM ONE. The folder
+         * note listed "upvc stable door", but the only door on that elevation
+         * in any photograph or any frame of the film is a single fully glazed
+         * uPVC door, one leaf, unbroken from head to threshold. Owner confirmed
+         * on 2026-08-19 that the note was loose and there is no stable door on
+         * this job. Do not add one back from the folder name.
+         *
+         * THE COMPOSITE DOUBLE DOOR EXISTS ONLY IN THE FILM. Its gallery image
+         * is a still cut from 12.6s at native resolution and NOT upscaled to
+         * 1600, because there is no more detail in the source to enlarge. It is
+         * framed deliberately: the `@FENSTERGLAZING` watermark sits to the left
+         * of this crop and the slate sign naming the house sits left of that,
+         * and neither is in it. That the slab is composite is owner-stated; a
+         * drone frame cannot prove a material.
+         *
+         * SQUARE GALLERY, NOT THE 3:4 CELL. Five photographs are portrait, the
+         * gable shot is landscape and the door still is neither, so this
+         * gallery mixes orientations and `gallery_shape` must stay off. See the
+         * note on it in the template: the tall cell is only for a gallery whose
+         * every image is portrait.
+         *
+         * THE FILM IS THE OWNER'S SOCIAL REEL and goes on whole, on his
+         * instruction of 2026-08-19 after being asked. It carries an
+         * `@FENSTERGLAZING` watermark on every frame, the van in shot and an
+         * Instagram end card, none of which any other film in this archive has.
+         * Re-encoded at native 720x1280 with `-an`, crf 27, 6.89MB from 13.8MB.
+         * No crop: the CSS squares a portrait hero, so cropping here would crop
+         * it twice.
+         */
+        'flush-casement-tilt-turn-and-doors-hanslope' => [
+            'title' => 'Flush casements, tilt and turn windows and doors, Hanslope',
+            /* Hanslope sits in the Milton Keynes borough but is its own village,
+               and "Milton Keynes" in this field would put the study on twelve
+               suburb routes at once. CASE-STUDY-PRIORITIES-2026-08-17.md is
+               explicit that a thirteenth MK study adds nothing to town coverage,
+               so the honest narrower field is the right one. */
+            'location' => 'Hanslope, Buckinghamshire',
+            'type' => 'Residential',
+            // Folder "24-7-24", day first, as "17-02-2025" was on the Wolverton
+            // sash job and "26-07-25" on Drayton Parslow.
+            'date' => '2024-07-24',
+            'summary' => 'Anthracite grey Liniar windows and two doors across a stone barn conversion in Hanslope, with flush casements on the elevations and a tilt and turn that opens two ways.',
+            'lead' => 'A stone barn conversion in Hanslope, done in one colour throughout. Flush casements across the walls, a tilt and turn that opens two ways, a composite double door on the courtyard and a fully glazed uPVC door onto the decking.',
+            'products' => [
+                ['label' => 'Flush casement windows', 'url' => $flush],
+                ['label' => 'Tilt and turn windows', 'url' => home_url('/tilt-turn-windows/')],
+                ['label' => 'Composite doors', 'url' => home_url('/composite-doors/')],
+                ['label' => 'uPVC doors', 'url' => home_url('/upvc-doors/')],
+            ],
+            'colour' => ['label' => 'Anthracite grey (RAL 7016)', 'url' => $colour_anthracite_upvc],
+            'specs' => [
+                ['label' => 'Products', 'value' => 'Flush casement and tilt and turn windows, two doors'],
+                ['label' => 'System', 'value' => 'Liniar 70mm uPVC'],
+                ['label' => 'Colour', 'value' => 'Anthracite grey (RAL 7016)'],
+                ['label' => 'Glazing', 'value' => 'Double glazed'],
+            ],
+            'overview' => [
+                'The building is a stone barn conversion, rubble limestone walls a couple of feet thick, stone cills and deep reveals, with a brick cill under one opening where the wall was made good. That kind of wall decides the job before anyone picks a product: the openings are irregular, the reveals are deep, and anything that stands proud of the stone announces itself from the yard. Everything we fitted here is <a href="' . $colour_anthracite_upvc . '">anthracite grey</a>, RAL 7016, so the glazing reads as one decision against the limestone rather than as several orders.',
+                'Most of the elevations take <a href="' . $flush . '">flush casement windows</a> on the Liniar 70mm flush sash system, where the sash closes level with the outer frame instead of sitting on top of it. On a stone building that flat face is most of the point, because it is how a timber window sat in the same opening. The system is A+ rated and reaches 1.2 W/m²K with a 28mm double glazed unit, and there are trickle vents in the frame heads, so a room can be aired with the window shut.',
+                'One opening takes a <a href="' . esc_url(home_url('/tilt-turn-windows/')) . '">tilt and turn</a> instead, and it is worth knowing why. It opens two ways from one handle: tilt the top of the sash inwards for ventilation, or swing the whole sash inwards like a door to clean the outside face from indoors. On a first floor above a border, where an outward opening sash has to clear the planting and the outside of the glass is otherwise a ladder job, that is the difference between a window you can maintain and one you cannot. It is the same Liniar 70mm frame and it is double glazed here, which Liniar publish at 1.3 W/m²K for this window. The hardware is concealed in the frame, so from outside there is nothing on the face of it but the sash line.',
+                'Two doors. The courtyard side has a <a href="' . esc_url(home_url('/composite-doors/')) . '">composite double door</a>, two leaves on a woodgrain slab, with ten small diamond panes of decorative glass set in a fan across the pair and a long bar handle on each leaf. We fit Distinction doors, whose slabs are accredited by Secured by Design, and every composite door we fit carries a £5,000 security guarantee, terms applying. The garden side has a <a href="' . esc_url(home_url('/upvc-doors/')) . '">uPVC door</a> onto the decking, glazed in a single pane from head to threshold with a trickle vent above it and a lever handle, so the room behind keeps the view out over the fields.',
+                'The timber lintel and surround around that garden door are the building\'s own and were kept. So were the stone cills. We did the windows and the doors.',
+            ],
+            'installed' => [
+                'Liniar 70mm flush casement windows, with trickle vents in the heads',
+                'Liniar 70mm tilt and turn, opening two ways from one handle',
+                'Anthracite grey (RAL 7016), double glazed',
+                'A composite double door with decorative diamond glazing',
+                'A fully glazed uPVC door onto the decking',
+            ],
+            'installers' => [$fitter_shane, $fitter_tom],
+            'video' => [
+                'src' => FENSTER_THEME_URI . '/assets/videos/case-studies/cs-hanslope-barn.mp4',
+                'poster' => $img . 'cs-hanslope-barn-poster.jpg',
+                'orientation' => 'portrait',
+                'label' => 'Film of the finished anthracite grey windows and doors around the Hanslope barn conversion',
+            ],
+            'images' => [
+                ['src' => $img . 'cs-hanslope-flush-casement-wide.jpg', 'caption' => 'A two pane flush casement in a stone opening, with trickle vents in the head and a brick cill under it.'],
+                ['src' => $img . 'cs-hanslope-flush-casement-angle.jpg', 'caption' => 'The same detail from the side, where the sash closes level with the outer frame rather than standing proud of it.'],
+                ['src' => $img . 'cs-hanslope-flush-casement-pair.jpg', 'caption' => 'A flush casement on a stone cill, the two sashes meeting on a central mullion.'],
+                ['src' => $img . 'cs-hanslope-tilt-turn.jpg', 'caption' => 'The tilt and turn in its reveal. There are no hinges on the outer frame because the hardware sits inside it.'],
+                ['src' => $img . 'cs-hanslope-gable-tilt-turn-and-door.jpg', 'caption' => 'The garden elevation, with the tilt and turn on the left and the fully glazed uPVC door onto the decking on the right.'],
+                ['src' => $img . 'cs-hanslope-composite-double-door.jpg', 'caption' => 'The composite double door on the courtyard, its diamond panes set in a fan across both leaves.'],
+            ],
+            'card_image' => ['src' => $img . 'cs-hanslope-card.jpg', 'caption' => 'Anthracite grey windows and doors on a stone barn conversion in Hanslope.'],
+            'seo' => [
+                'title_tag' => 'Flush Casement and Tilt and Turn Windows, Hanslope | Fenster Glazing',
+                /* 156 characters against a 160 cap. */
+                'meta_description' => 'A real Fenster project in Hanslope: anthracite grey Liniar flush casement and tilt and turn windows, a composite double door and a uPVC door on a stone barn.',
+            ],
+        ],
+
         'composite-front-door-and-stable-door-drayton-parslow' => [
             'title' => 'Composite front door and stable door, Drayton Parslow',
             'location' => 'Drayton Parslow, Buckinghamshire',

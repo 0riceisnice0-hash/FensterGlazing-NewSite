@@ -5861,15 +5861,21 @@ if ($is_commercial_hub) {
        the wrong material entirely. That would be a regression caused by the
        filter rather than something the filter merely revealed, so the strip is
        off here until a residential aluminium window study exists. */
-    /* `/tilt-turn-windows/` joins them, 2026-08-12, and unlike the two above it
-       this one was never caused by a filter — it has simply been wrong since the
-       route existed. Nothing has ever claimed it, so the fallback was rendering
-       Winslow secondary glazing, Leighton Buzzard casements and Whitehouse
-       bifolds under "Real installs, photographed on the day" on a tilt and turn
-       page. Not one of the three is this product and one is not even a window.
-       It comes off when a tilt and turn study exists; the route is a real gap in
-       `PHOTO-CHECKLIST.md` and not merely an un-photographed one. */
-    $no_case_study_routes = ['aluminium-windows', 'tilt-turn-windows'];
+    /* `/tilt-turn-windows/` WAS GATED HERE FROM 2026-08-12 AND CAME OFF ON
+       2026-08-19, on the condition the original note set: "it comes off when a
+       tilt and turn study exists". One does now. The Hanslope barn conversion
+       claims the route in `inc/case-studies-data.php`, so the strip renders an
+       exact match instead of the fallback that used to put Winslow secondary
+       glazing, Leighton Buzzard casements and Whitehouse bifolds under "Real
+       installs, photographed on the day" on a tilt and turn page.
+
+       Two things to know before touching this again. The gate was the only
+       thing holding the strip off: `$is_tilt_turn_bespoke` swaps the middles
+       out but never referenced `$shows_case_study_strip`, so removing the slug
+       is genuinely what turns proof on rather than a no-op. And if the Hanslope
+       study is ever retired, put the slug BACK before the study goes, because
+       the fallback is what waits underneath. */
+    $no_case_study_routes = ['aluminium-windows'];
     $shows_case_study_strip = $use_product_journey
         && ! $is_repairs
         && ! $is_replacement_bespoke
