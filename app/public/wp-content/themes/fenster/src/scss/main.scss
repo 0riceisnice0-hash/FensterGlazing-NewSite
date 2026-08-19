@@ -43486,14 +43486,19 @@ html.fg-blinds-reveal-locked {
    heading, so the page still reads as a set of separate guides. */
 .fg-care-guide + .fg-care-guide { margin-top: clamp(1.25rem, 2.2vw, 1.85rem); }
 
+/* `align-items: stretch`, not `center`. A fixed 4:3 photo beside three lines of
+   intro left roughly 300px of dead space up the left of every guide. The photo
+   now takes its height from the text instead of dictating the row. */
 .fg-care-guide__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
   gap: clamp(1.15rem, 2.2vw, 2rem);
-  align-items: center;
+  align-items: stretch;
   padding-bottom: clamp(1.15rem, 2vw, 1.6rem);
   border-bottom: 1px solid var(--color-line);
 }
+
+.fg-care-guide__intro { align-self: center; }
 
 .fg-care-guide__head h3 {
   margin: 0;
@@ -43517,15 +43522,18 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-care-guide__media {
+  min-height: 220px;
   margin: 0;
   overflow: hidden;
   border-radius: 8px;
 }
 
+/* Height comes from the row, so the photo is a band as tall as the intro rather
+   than a portrait that sets the height for everything beside it. */
 .fg-care-guide__media img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -43697,9 +43705,40 @@ html.fg-blinds-reveal-locked {
 
 .fg-care-enquiry__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: clamp(1.35rem, 2.6vw, 2.5rem);
   align-items: start;
+}
+
+/* THE FORM MUST SIT ON A DARK PANEL. `.fg-form label` is
+   `rgba(255,255,255,0.82)` site-wide, so the shared enquiry form is only legible
+   against one. Every other route that embeds it supplies its own dark box
+   (.fg-fensa-enquiry__form is #12363b); this one shipped without and the labels
+   and legends were white on the light page canvas, which is precisely the "light
+   text on light background" case in the STYLE.md QA list. */
+.fg-care-enquiry__form {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border-radius: 8px;
+  background: #12363b;
+}
+
+.fg-care-enquiry__form .fg-form {
+  padding: 0;
+  background: transparent;
+}
+
+.fg-care-enquiry__form .fg-enquiry-form__compact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.fg-care-enquiry__form .fg-enquiry-form__compact-wide { grid-column: 1 / -1; }
+.fg-care-enquiry__form .fg-form input { min-height: 48px; }
+.fg-care-enquiry__form .fg-form textarea { min-height: 106px; }
+.fg-care-enquiry__form .fg-enquiry-form__footer {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
 }
 
 .fg-care-enquiry h2 {
@@ -43754,11 +43793,16 @@ html.fg-blinds-reveal-locked {
     grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
   }
-  .fg-care-guide__media { order: -1; }
-  .fg-care-guide__media img { aspect-ratio: 16 / 10; }
+  .fg-care-guide__media { order: -1; min-height: 0; }
+  /* Single column, so there is no row height to inherit. Back to a fixed ratio. */
+  .fg-care-guide__media img { height: auto; aspect-ratio: 16 / 10; }
 
   .fg-care-guide { padding: 1.1rem; }
   .fg-care-fix { padding: 0.85rem 0.9rem; }
   .fg-care-fix ol { padding-left: 1.05rem; }
+
+  .fg-care-enquiry__form .fg-enquiry-form__compact-grid { grid-template-columns: 1fr; }
+  .fg-care-enquiry__form .fg-enquiry-form__compact-wide { grid-column: auto; }
+  .fg-care-enquiry__form .fg-enquiry-form__footer { grid-template-columns: 1fr; }
 }
 
