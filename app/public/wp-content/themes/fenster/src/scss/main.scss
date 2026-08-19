@@ -43404,17 +43404,19 @@ html.fg-blinds-reveal-locked {
   font-size: clamp(1.45rem, 2.2vw, 2rem);
 }
 
+/* Groups stack down the page and each one spreads its tiles across the full
+   width. Three columns of stacked square tiles would have made each group a
+   1000px tower. */
 .fg-care-picker {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.1rem, 2vw, 1.75rem);
+  gap: clamp(1.35rem, 2.4vw, 2rem);
   margin-bottom: clamp(1.5rem, 2.6vw, 2.25rem);
 }
 
 .fg-care-picker__group {
   display: grid;
   align-content: start;
-  gap: 0.6rem;
+  gap: 0.75rem;
 }
 
 .fg-care-picker__group-title {
@@ -43430,72 +43432,126 @@ html.fg-blinds-reveal-locked {
 
 .fg-care-picker__cards {
   display: grid;
-  gap: 0.6rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.3vw, 1rem);
 }
 
-/* Photo-led cards. The picker is where somebody works out which of nine things
-   they are holding, and a photograph answers that faster than a label does. */
+/* SQUARE PHOTO TILE, NAME OVER THE IMAGE.
+ *
+ * EVERY CHILD IS ABSOLUTELY POSITIONED, AND THAT IS DELIBERATE. The first
+ * version laid this out as `display: grid` with two columns on the <button>
+ * itself, and the compiled CSS was correct while the rendering was not: the
+ * photo sat above the label at full width instead of beside it. A <button>
+ * wraps its children in an anonymous box, so `grid-template-columns` never sees
+ * two children to place. The guide banner further down worked from the first
+ * attempt because it positions its image absolutely, which is what this now
+ * does too. If you ever need a multi-column button, take the layout off the
+ * button and put it on a span inside it.
+ */
 .fg-care-card {
-  display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
-  gap: 0.85rem;
-  align-items: center;
-  padding: 0.5rem;
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
   border: 1px solid var(--color-line);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.86);
-  color: var(--color-steel);
+  border-radius: 12px;
+  background: var(--color-soft);
+  color: #ffffff;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition: box-shadow 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
 }
 
 .fg-care-card:hover {
-  border-color: rgba(46, 172, 102, 0.5);
-  background: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: var(--fg-shadow-sm);
+  transform: translateY(-2px);
+  border-color: rgba(46, 172, 102, 0.6);
+  box-shadow: var(--shadow-soft);
 }
 
 .fg-care-card[aria-selected='true'] {
   border-color: var(--color-accent);
-  background: #ffffff;
-  box-shadow: 0 0 0 1px var(--color-accent) inset, var(--fg-shadow-md);
+  box-shadow: 0 0 0 3px rgba(46, 172, 102, 0.85), var(--fg-shadow-md);
+}
+
+.fg-care-card:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 .fg-care-card__media {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  display: block;
   overflow: hidden;
-  border-radius: 7px;
-  background: var(--color-soft);
 }
 
 .fg-care-card__media img {
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: cover;
-  /* Zoomed in a touch. These crops are wide product shots and a 1:1 cell of the
-     full frame reads as a distant house rather than as the product. */
-  transform: scale(1.12);
-  transition: transform 0.35s ease;
+  /* Held slightly in, so the product fills the square rather than sitting in the
+     middle of an establishing shot of somebody's house. */
+  transform: scale(1.06);
+  transition: transform 0.45s ease;
 }
 
 .fg-care-card:hover .fg-care-card__media img,
-.fg-care-card[aria-selected='true'] .fg-care-card__media img { transform: scale(1.2); }
+.fg-care-card[aria-selected='true'] .fg-care-card__media img { transform: scale(1.13); }
 
-.fg-care-card__label { display: grid; gap: 0.15rem; min-width: 0; }
+/* Two stops rather than a flat wash, so the top of the photograph keeps its
+   colour and only the part carrying text is darkened. */
+.fg-care-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2, 27, 34, 0) 34%, rgba(2, 27, 34, 0.58) 64%, rgba(2, 27, 34, 0.92) 100%);
+  transition: opacity 0.22s ease;
+}
+
+.fg-care-card__label {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0.9rem 0.9rem;
+}
 
 .fg-care-card__name {
-  font-size: var(--fg-text-base);
-  font-weight: 800;
-  line-height: 1.25;
+  color: #ffffff;
+  font-size: var(--fg-text-lg);
+  font-weight: 850;
+  line-height: 1.2;
+  text-shadow: 0 1px 12px rgba(2, 27, 34, 0.5);
 }
 
 .fg-care-card__covers {
-  color: var(--color-muted);
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.85);
   font-size: var(--fg-text-xs);
   line-height: 1.35;
+  text-shadow: 0 1px 10px rgba(2, 27, 34, 0.55);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* A green flag in the corner of the open one, so the selection reads at a
+   glance across a grid of nine photographs. */
+.fg-care-card[aria-selected='true'] .fg-care-card__label::before {
+  content: '';
+  position: absolute;
+  top: -1.9rem;
+  left: 0.9rem;
+  width: 1.5rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  background: var(--color-accent);
 }
 
 /* --- One guide ------------------------------------------------------- */
@@ -43878,9 +43934,7 @@ html.fg-blinds-reveal-locked {
 /* --- Tablet ---------------------------------------------------------- */
 
 @media (max-width: 1080px) {
-  /* Three picker columns at this width leaves each card about 200px wide, which
-     is not enough for an 84px photo and a two line name beside it. */
-  .fg-care-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fg-care-picker__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .fg-care-routine { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fg-care-fixes { grid-template-columns: minmax(0, 1fr); }
   .fg-care-guide__opening { grid-template-columns: minmax(0, 1fr); }
@@ -43901,14 +43955,15 @@ html.fg-blinds-reveal-locked {
   .fg-care-hero__actions .button { width: 100%; text-align: center; }
   .fg-care-hero__call { justify-self: start; }
 
-  .fg-care-picker,
-  .fg-care-routine {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  .fg-care-routine { grid-template-columns: minmax(0, 1fr); }
 
-  /* A full width card with a bigger photo. At 390px the picker is the whole
-     job, so it gets the room to be tapped comfortably. */
-  .fg-care-card { grid-template-columns: 96px minmax(0, 1fr); padding: 0.55rem; }
+  /* Two square tiles across at 390px gives roughly 165px each, which is enough
+     for the photo to read and a comfortable tap target. One across would make
+     the picker alone a four screen scroll before the guide even starts. */
+  .fg-care-picker__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fg-care-card__label { padding: 0.6rem 0.65rem 0.65rem; }
+  .fg-care-card__name { font-size: var(--fg-text-base); }
+  .fg-care-card__covers { -webkit-line-clamp: 2; font-size: 0.7rem; }
 
   .fg-care-guide__hero { min-height: 180px; }
   .fg-care-guide { border-radius: 10px; }
