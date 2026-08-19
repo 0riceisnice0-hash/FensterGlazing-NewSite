@@ -55,12 +55,13 @@ $guides = [
         'link_label' => "See Notan's brochures",
     ],
     [
-        'name' => 'New Wave',
+        'name' => 'Slide & Fold Doors',
         'logo' => '',
-        'role' => 'Sliding doors',
-        'body' => "New Wave's own FAQ page covers cleaning and care for their sliding doors. We could not get past the security check on their site to quote it directly here, so go straight to the source.",
-        'link_url' => 'https://newwavedoors.co.uk/faqs/',
-        'link_label' => "Visit New Wave's FAQ page",
+        'role' => 'Track-mounted doors',
+        'body' => 'Slide and fold doors run on a track rather than a hinge, so the track is what needs attention. Keep it clear of grit and leaves so the rollers do not bind, wipe the frame down with mild soapy water, and give the track a light silicone spray once a year to keep everything moving freely.',
+        'link_url' => home_url('/slide-fold-doors/'),
+        'link_label' => 'See our slide and fold doors',
+        'external' => false,
     ],
 ];
 ?>
@@ -97,10 +98,10 @@ $guides = [
                 <div class="fg-simple-section-head">
                     <p class="eyebrow"><?php esc_html_e('By manufacturer', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Find the guide for your system', 'fenster'); ?></h2>
-                    <p><?php esc_html_e("New Wave is included below too. It is not one of the five systems we currently install, but some homes we visit already have it fitted from a previous installer, so it is worth knowing where their guide sits.", 'fenster'); ?></p>
                 </div>
                 <div class="fg-simple-grid">
                     <?php foreach ($guides as $guide) : ?>
+                        <?php $is_external = (bool) ($guide['external'] ?? true); ?>
                         <article class="fg-simple-card">
                             <div>
                                 <?php if ($guide['logo'] !== '') : ?>
@@ -114,7 +115,7 @@ $guides = [
                                 <h3><?php echo esc_html((string) $guide['name']); ?></h3>
                                 <p class="fg-product-hub__systems-role"><?php echo esc_html((string) $guide['role']); ?></p>
                                 <p><?php echo esc_html((string) $guide['body']); ?></p>
-                                <a class="text-link" href="<?php echo esc_url((string) $guide['link_url']); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html((string) $guide['link_label']); ?></a>
+                                <a class="text-link" href="<?php echo esc_url((string) $guide['link_url']); ?>"<?php echo $is_external ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html((string) $guide['link_label']); ?></a>
                             </div>
                         </article>
                     <?php endforeach; ?>
