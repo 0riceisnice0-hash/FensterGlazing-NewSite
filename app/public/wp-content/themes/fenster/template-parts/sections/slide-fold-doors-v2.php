@@ -31,10 +31,11 @@
  * the weaker choice on specification, in those words and the softer ones.
  *
  * So every section here states what this door DOES, and never what another one
- * does not. Bifolds appear once, in the closing section, as one of three routes
- * named beside each other with no ranking between them. If you are editing this
- * file and find yourself writing a sentence whose point is that a bifold is
- * worse, the sentence is wrong even when it is true.
+ * does not. Bifold doors are not mentioned in the body of this page at all: the
+ * related-products band at the foot of every product page already links them and
+ * the sliders, so the page needs no comparison of its own and makes none. If you
+ * are editing this file and find yourself writing a sentence whose point is that
+ * a bifold is worse, the sentence is wrong even when it is true.
  * ---------------------------------------------------------------------------
  *
  * THE SUPPLIER IS NOT NAMED, ANYWHERE. Owner instruction, 2026-08-18. Their
@@ -118,8 +119,6 @@ if (! defined('ABSPATH')) {
 
 $brand = is_array($args['brand'] ?? null) ? $args['brand'] : [];
 $base = '/wp-content/themes/fenster/assets/images/products/slide-fold/';
-$bifold_link = home_url('/aluminium-bifold-doors/');
-$sliding_link = home_url('/aluminium-sliding-doors/');
 $blinds_link = home_url('/integral-blinds/');
 $study_link = home_url('/case-studies/flush-casement-and-slide-fold-doors-leighton-buzzard/');
 $showroom_link = home_url('/contact/');
@@ -336,10 +335,24 @@ $slide_fold_colours = is_array($slide_fold_colours) ? $slide_fold_colours : [];
              would have said. Gating that band is only safe while this exists. */ ?>
     <section class="fg-alu-colours fg-sf-colours" aria-labelledby="fg-sf-colour-title">
         <div class="container">
-            <div class="fg-alu-colours__heading">
+            <?php /* BOTH PARAGRAPHS LIVE IN THE HEADING'S RIGHT COLUMN.
+                     The shared `__heading` is a two column grid, and the first
+                     pass used it as intended but then put the any-RAL note in a
+                     third place, under the grid at a 68ch measure. On
+                     /aluminium-windows/ that reads fine because twelve swatches
+                     make two dense rows; here six make one short row, so the
+                     note was left stranded with the whole right half of the row
+                     empty beneath it. The owner called it on 2026-08-18.
+
+                     Keeping the prose together gives the section two blocks with
+                     one shared edge instead of three with none. */ ?>
+            <div class="fg-alu-colours__heading fg-sf-colours__heading">
                 <p class="eyebrow"><?php esc_html_e('Colour', 'fenster'); ?></p>
                 <h2 id="fg-sf-colour-title"><?php esc_html_e('Six finishes held, and any RAL beyond them.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('Powder coating is baked onto the aluminium rather than painted over it, so it does not flake and it never wants redoing. Anthracite Grey and Signal White are the two held as standards, and between them they cover most of what goes out.', 'fenster'); ?></p>
+                <div class="fg-sf-colours__copy">
+                    <p><?php esc_html_e('Powder coating is baked onto the aluminium rather than painted over it, so it does not flake and it never wants redoing. Anthracite Grey and Signal White are the two held as standards, and between them they cover most of what goes out.', 'fenster'); ?></p>
+                    <p><?php esc_html_e('You can have a different colour inside and out, and any RAL beyond these six, confirmed against a sample before the doors are ordered. The frame is finished matt, or in a textured brushed-sand look that catches the light differently.', 'fenster'); ?></p>
+                </div>
             </div>
             <ul class="fg-alu-colours__grid fg-sf-colours__grid">
                 <?php foreach ($slide_fold_colours as $colour) : ?>
@@ -371,7 +384,6 @@ $slide_fold_colours = is_array($slide_fold_colours) ? $slide_fold_colours : [];
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <p class="fg-alu-colours__note"><?php esc_html_e('You can have a different colour inside and out, and beyond these we can match any RAL colour, confirmed against a sample before the doors are ordered. The frame is finished matt, or in a textured brushed-sand look that catches the light differently. If you have a shade in mind, ask and we will tell you what is possible.', 'fenster'); ?></p>
         </div>
     </section>
 
@@ -386,18 +398,36 @@ $slide_fold_colours = is_array($slide_fold_colours) ? $slide_fold_colours : [];
              Handling verbs throughout, per TONEOFVOICE 6, which is the register
              /about/ uses for the showroom. */ ?>
     <section class="fg-cw-intro fg-sf-close" aria-labelledby="fg-sf-close-title">
-        <div class="container">
-            <div class="fg-cw-head">
+        <div class="container fg-cw-split">
+            <div class="fg-cw-copy">
                 <p class="eyebrow"><?php esc_html_e('Come and see it', 'fenster'); ?></p>
                 <h2 id="fg-sf-close-title"><?php esc_html_e('Ten minutes with one beats ten minutes reading.', 'fenster'); ?></h2>
                 <p><?php esc_html_e('There is one standing in our Milton Keynes showroom, and it is the door in the film at the top of this page. Slide a panel round, swing it open on its own, and push the run closed until it pulls onto its seals. That is the part no page can do for you.', 'fenster'); ?></p>
+                <ul class="fg-cw-facts">
+                    <li><?php esc_html_e('Open Monday to Friday, 8.30am to 5pm', 'fenster'); ?></li>
+                    <li><?php esc_html_e('98 Alston Drive, Bradwell Abbey, MK13 9HF', 'fenster'); ?></li>
+                </ul>
+                <?php /* TWO LINKS, NOT FOUR. It carried links to bifold and
+                         sliding doors as well, which wrapped into a second row
+                         and read as a broken button strip. The related products
+                         band at the foot of every product page already links both
+                         siblings, so those two were saying the same thing twice
+                         and costing the layout to do it. */ ?>
+                <p class="fg-cw-actions">
+                    <a class="fg-cw-link" href="<?php echo esc_url($showroom_link); ?>"><?php esc_html_e('Find the showroom', 'fenster'); ?></a>
+                    <a class="fg-cw-link" href="<?php echo esc_url($study_link); ?>"><?php esc_html_e('See the Leighton Buzzard job', 'fenster'); ?></a>
+                </p>
             </div>
-            <p class="fg-cw-actions fg-sf-close__links">
-                <a class="fg-cw-link" href="<?php echo esc_url($showroom_link); ?>"><?php esc_html_e('Visit the showroom', 'fenster'); ?></a>
-                <a class="fg-cw-link" href="<?php echo esc_url($study_link); ?>"><?php esc_html_e('See the Leighton Buzzard job', 'fenster'); ?></a>
-                <a class="fg-cw-link" href="<?php echo esc_url($bifold_link); ?>"><?php esc_html_e('Bifold doors', 'fenster'); ?></a>
-                <a class="fg-cw-link" href="<?php echo esc_url($sliding_link); ?>"><?php esc_html_e('Sliding doors', 'fenster'); ?></a>
-            </p>
+            <?php /* The showroom door itself, which is the thing being offered.
+                     It is the one remaining unused frame from the film and it is
+                     the right one here: the closed run on its stand, which is
+                     what somebody walking in actually meets. */ ?>
+            <figure class="fg-cw-media fg-cw-media--4x3">
+                <img <?php echo fenster_image_attr_string($base . 'sf-closed-1400w.webp', [
+                    'alt' => 'A four panel aluminium slide and fold door standing closed in the Fenster showroom',
+                    'loading' => 'lazy',
+                ]); ?>>
+            </figure>
         </div>
     </section>
 
