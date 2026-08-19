@@ -43278,3 +43278,487 @@ html.fg-blinds-reveal-locked {
     background: linear-gradient(180deg, rgba(6, 33, 42, 0.92) 0%, rgba(6, 33, 42, 0.88) 60%, rgba(6, 33, 42, 0.8) 100%);
   }
 }
+
+/* ---------------------------------------------------------------------------
+   CARE AND MAINTENANCE GUIDES  (/care-and-maintenance/)
+
+   A picker across the top, one guide panel beneath it. Every panel is in the
+   DOM and JavaScript hides the unselected ones, so the no-JS fallback is the
+   whole document rather than an empty box.
+
+   NOTE ON THE PAGE CANVAS: this wrapper deliberately does NOT set
+   `background: var(--fg-page-gradient)`. `body` already paints it with
+   `background-attachment: fixed`, and repainting it here would stack a second
+   scrolling copy over the fixed one and band the section joins. That defect is
+   recorded in STYLE.md against .fg-fensa-page and friends; this page does not
+   repeat it.
+   ------------------------------------------------------------------------- */
+
+.fg-care-hero {
+  padding: clamp(2.25rem, 4vw, 3.5rem) 0 clamp(1.5rem, 2.5vw, 2.25rem);
+}
+
+.fg-care-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+}
+
+.fg-care-hero h1 {
+  margin: 0.35rem 0 0.9rem;
+  font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max));
+  line-height: 1.05;
+}
+
+.fg-care-hero__lead {
+  max-width: 56ch;
+  margin: 0 0 0.85rem;
+  color: var(--color-steel-90);
+  font-size: var(--fg-text-lg);
+  line-height: 1.55;
+}
+
+.fg-care-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fg-space-4);
+  align-items: center;
+  margin-top: 1.35rem;
+}
+
+.fg-care-hero__call {
+  color: var(--color-steel);
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(46, 172, 102, 0.55);
+}
+
+.fg-care-hero__call:hover { border-bottom-color: var(--color-accent); }
+
+/* The four universal habits. A numbered list because they are genuinely
+   ordered by how often each one turns out to be the answer. */
+.fg-care-hero__rules {
+  padding: clamp(1.15rem, 2vw, 1.6rem);
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--fg-shadow-md);
+}
+
+.fg-care-hero__rules h2 {
+  margin: 0.3rem 0 1rem;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  line-height: 1.2;
+}
+
+.fg-care-hero__rules ol {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: fg-care-rule;
+}
+
+.fg-care-hero__rules li {
+  position: relative;
+  padding-left: 2.35rem;
+  counter-increment: fg-care-rule;
+}
+
+.fg-care-hero__rules li::before {
+  content: counter(fg-care-rule, decimal-leading-zero);
+  position: absolute;
+  top: 0.05rem;
+  left: 0;
+  color: var(--color-accent);
+  font-size: var(--fg-text-sm);
+  font-weight: 850;
+  letter-spacing: 0.04em;
+}
+
+.fg-care-hero__rules strong {
+  display: block;
+  color: var(--color-steel);
+  font-size: var(--fg-text-base);
+  line-height: 1.35;
+}
+
+.fg-care-hero__rules span {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--color-muted);
+  font-size: var(--fg-text-md);
+  line-height: 1.45;
+}
+
+/* --- Selector -------------------------------------------------------- */
+
+.fg-care-selector {
+  padding: clamp(1.5rem, 2.5vw, 2.25rem) 0 clamp(2rem, 3.5vw, 3rem);
+}
+
+.fg-care-selector__head {
+  margin-bottom: clamp(1.15rem, 2vw, 1.6rem);
+}
+
+.fg-care-selector__head h2 {
+  margin: 0.3rem 0 0;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+}
+
+.fg-care-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.6vw, 1.35rem);
+  margin-bottom: clamp(1.35rem, 2.4vw, 2rem);
+}
+
+.fg-care-picker__group {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+}
+
+.fg-care-picker__group-title {
+  margin: 0 0 0.15rem;
+  color: var(--color-steel);
+  font-size: var(--fg-text-2xs);
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.fg-care-picker__button {
+  display: grid;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--color-steel);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.fg-care-picker__button:hover {
+  border-color: rgba(46, 172, 102, 0.55);
+  background: #ffffff;
+}
+
+.fg-care-picker__button[aria-selected='true'] {
+  border-color: var(--color-accent);
+  background: #ffffff;
+  box-shadow: 0 0 0 1px var(--color-accent) inset, var(--fg-shadow-sm);
+}
+
+.fg-care-picker__name {
+  font-size: var(--fg-text-base);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.fg-care-picker__covers {
+  color: var(--color-muted);
+  font-size: var(--fg-text-xs);
+  line-height: 1.35;
+}
+
+/* --- One guide ------------------------------------------------------- */
+
+.fg-care-guide {
+  padding: clamp(1.25rem, 2.2vw, 1.85rem);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--fg-shadow-md);
+}
+
+.fg-care-guide:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* No-JS fallback: panels stack with air between them and each keeps its own
+   heading, so the page still reads as a set of separate guides. */
+.fg-care-guide + .fg-care-guide { margin-top: clamp(1.25rem, 2.2vw, 1.85rem); }
+
+.fg-care-guide__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  gap: clamp(1.15rem, 2.2vw, 2rem);
+  align-items: center;
+  padding-bottom: clamp(1.15rem, 2vw, 1.6rem);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-care-guide__head h3 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1.15;
+}
+
+.fg-care-guide__covers {
+  margin: 0.3rem 0 0.75rem;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  font-weight: 700;
+}
+
+.fg-care-guide__lead {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--color-steel-90);
+  font-size: var(--fg-text-lg);
+  line-height: 1.55;
+}
+
+.fg-care-guide__media {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.fg-care-guide__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.fg-care-guide__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.35rem, 2.6vw, 2.25rem);
+  padding-top: clamp(1.15rem, 2vw, 1.6rem);
+}
+
+.fg-care-block h4 {
+  margin: 0 0 0.9rem;
+  font-size: var(--fg-text-xl);
+  line-height: 1.25;
+}
+
+/* Routine: a definition list, because that is genuinely what it is. */
+.fg-care-routine {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.fg-care-routine__item {
+  padding-left: 0.9rem;
+  border-left: 2px solid rgba(46, 172, 102, 0.35);
+}
+
+.fg-care-routine dt {
+  color: var(--color-steel);
+  font-size: var(--fg-text-base);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.fg-care-routine dd {
+  margin: 0.2rem 0 0;
+  color: var(--color-muted);
+  font-size: var(--fg-text-md);
+  line-height: 1.55;
+}
+
+/* Fixes: a problem, then numbered steps, then the honest caveat. */
+.fg-care-fix {
+  padding: 0.95rem 1.05rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-soft);
+}
+
+.fg-care-fix + .fg-care-fix { margin-top: 0.75rem; }
+
+.fg-care-fix h5 {
+  margin: 0 0 0.55rem;
+  color: var(--color-steel);
+  font-size: var(--fg-text-lg);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.fg-care-fix ol {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.fg-care-fix li {
+  color: var(--color-steel-90);
+  font-size: var(--fg-text-md);
+  line-height: 1.5;
+}
+
+.fg-care-fix__note {
+  margin: 0.7rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(0, 45, 58, 0.18);
+  color: var(--color-muted);
+  font-size: var(--fg-text-md);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* The stop-here panel closes every guide, in steel so it reads as the
+   different kind of statement it is. */
+.fg-care-callus {
+  grid-column: 1 / -1;
+  padding: clamp(1.05rem, 1.8vw, 1.5rem);
+  border-radius: 8px;
+  background: var(--color-steel);
+  color: #ffffff;
+}
+
+.fg-care-callus .eyebrow { color: rgba(255, 255, 255, 0.72); }
+
+.fg-care-callus h4 {
+  margin: 0.25rem 0 0.6rem;
+  color: #ffffff;
+  font-size: var(--fg-text-xl);
+}
+
+.fg-care-callus p {
+  max-width: 74ch;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: var(--fg-text-md);
+  line-height: 1.6;
+}
+
+.fg-care-callus .text-link {
+  display: inline-block;
+  margin-top: 0.85rem;
+  color: #ffffff;
+  border-bottom-color: rgba(46, 172, 102, 0.85);
+}
+
+/* --- Closing bands --------------------------------------------------- */
+
+.fg-care-promise {
+  padding: clamp(1.5rem, 2.5vw, 2.25rem) 0;
+}
+
+.fg-care-promise__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  gap: clamp(1.35rem, 2.6vw, 2.5rem);
+  align-items: start;
+  padding: clamp(1.35rem, 2.4vw, 2rem);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.fg-care-promise h2 {
+  margin: 0.3rem 0 0.75rem;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+}
+
+.fg-care-promise p {
+  max-width: 66ch;
+  margin: 0 0 0.7rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.fg-care-promise__contact {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+}
+
+.fg-care-promise__contact a {
+  color: var(--color-steel);
+  font-size: var(--fg-text-lg);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.fg-care-promise__contact a:hover { color: var(--color-accent-dark); }
+
+.fg-care-promise__contact p {
+  margin-top: 0.35rem;
+  font-size: var(--fg-text-sm);
+}
+
+.fg-care-enquiry {
+  padding: clamp(1.5rem, 2.5vw, 2.25rem) 0 clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.fg-care-enquiry__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.35rem, 2.6vw, 2.5rem);
+  align-items: start;
+}
+
+.fg-care-enquiry h2 {
+  margin: 0.3rem 0 0.75rem;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+}
+
+.fg-care-enquiry__copy p {
+  max-width: 58ch;
+  margin: 0 0 0.7rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.fg-care-enquiry__reassurance {
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-steel);
+  font-weight: 700;
+}
+
+/* --- Tablet ---------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .fg-care-guide__body { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- Mobile ---------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .fg-care-hero__grid,
+  .fg-care-promise__inner,
+  .fg-care-enquiry__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-care-hero h1 { font-size: clamp(2.1rem, 9vw, 2.7rem); }
+
+  .fg-care-hero__actions { display: grid; align-items: stretch; }
+  .fg-care-hero__actions .button { width: 100%; text-align: center; }
+  .fg-care-hero__call { justify-self: start; }
+
+  /* One column of full-width targets. Three narrow columns at 390px broke the
+     "covers" line onto four cracked lines and made the tap target smaller than
+     it should be for something you may be using with cold hands. */
+  .fg-care-picker { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+  .fg-care-picker__button { padding: 0.8rem 0.9rem; }
+
+  /* The photo leads on mobile: it confirms you picked the right guide before
+     you commit to reading it. */
+  .fg-care-guide__head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .fg-care-guide__media { order: -1; }
+  .fg-care-guide__media img { aspect-ratio: 16 / 10; }
+
+  .fg-care-guide { padding: 1.1rem; }
+  .fg-care-fix { padding: 0.85rem 0.9rem; }
+  .fg-care-fix ol { padding-left: 1.05rem; }
+}
+

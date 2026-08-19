@@ -1664,6 +1664,25 @@ function fenster_get_generated_page(?string $slug = null): ?array
         return $page_cache[$slug] = $page;
     }
 
+    /* Virtual route: there is no imported record for this one, so the override
+       is what creates the page. Content comes from inc/care-guide-data.php. */
+    if ($slug === 'care-and-maintenance') {
+        return $page_cache[$slug] = [
+            'slug' => 'care-and-maintenance',
+            'title' => 'Window and door care guides',
+            'url' => home_url('/care-and-maintenance/'),
+            'seo' => [
+                'title_tag' => 'Window & Door Care and Maintenance Guides | Fenster Glazing',
+                'meta_description' => 'Care guides for uPVC, aluminium and composite windows and doors. How to clean a bifold track, free a stiff handle, unstick a sliding door and when to call us.',
+                'canonical' => 'https://fensterglazing.com/care-and-maintenance/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+    }
+
     return $page_cache[$slug] = ($index[$slug] ?? null);
 }
 
@@ -2106,6 +2125,7 @@ function fenster_maybe_render_llms_txt(): void
     $lines[] = '- [SSIP health and safety](' . home_url('/ssip-health-and-safety/') . ')';
     $lines[] = '- [FENSA approved installers](' . home_url('/fensa-approved-installers/') . ')';
     $lines[] = '- [Areas we cover](' . home_url('/areas-we-cover/') . ')';
+    $lines[] = '- [Care and maintenance guides](' . home_url('/care-and-maintenance/') . '): how to look after each product, common fixes to try, and when to call us.';
     $lines[] = '- [Contact](' . home_url('/contact/') . ')';
     $lines[] = '';
     $lines[] = '## Pricing and tools';
@@ -2251,7 +2271,7 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     $live_blog_post_slugs = function_exists('fenster_live_blog_posts') ? array_keys(fenster_live_blog_posts()) : [];
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }

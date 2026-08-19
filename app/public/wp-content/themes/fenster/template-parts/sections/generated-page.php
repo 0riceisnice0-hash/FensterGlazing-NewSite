@@ -289,6 +289,7 @@ $is_about = in_array($slug, ['about', 'meet-the-team'], true);
 $is_contact = $slug === 'contact';
 $is_consultation_page = $slug === 'book-a-consultation';
 $is_fensa_page = $slug === 'fensa-approved-installers';
+$is_care_guides_page = $slug === 'care-and-maintenance';
 $is_cpa_page = $slug === 'consumer-protection-association';
 $is_ggf_page = $slug === 'glass-and-glazing-federation-ggf-standards';
 $is_constructionline_page = $slug === 'constructionline-gold';
@@ -2460,6 +2461,13 @@ if ($is_consultation_page) {
 
 if ($is_fensa_page) {
     get_template_part('template-parts/sections/fensa-approved', null, [
+        'page' => $page,
+    ]);
+    return;
+}
+
+if ($is_care_guides_page) {
+    get_template_part('template-parts/sections/care-guides', null, [
         'page' => $page,
     ]);
     return;

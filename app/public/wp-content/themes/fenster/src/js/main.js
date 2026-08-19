@@ -1189,6 +1189,57 @@ document.querySelectorAll('[data-fg-anatomy]').forEach((explorer) => {
   });
 });
 
+/*
+ * Care guide selector.
+ *
+ * Every panel is in the markup, so with JavaScript off the page is one long
+ * readable document rather than an empty shell. This only narrows it to the
+ * chosen product. The URL hash is kept in step so a guide can be linked to
+ * directly, which matters when we send somebody a link to the bifold steps.
+ */
+document.querySelectorAll('[data-fg-care-guides]').forEach((widget) => {
+  const tabs = [...widget.querySelectorAll('[data-fg-care-tab]')];
+  const panels = [...widget.querySelectorAll('[data-fg-care-panel]')];
+  if (!tabs.length || !panels.length) return;
+
+  const activate = (target, { focus = false, setHash = false } = {}) => {
+    const known = panels.some((panel) => panel.dataset.fgCarePanel === target);
+    if (!known) return;
+
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.fgCareTab === target;
+      tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      tab.tabIndex = selected ? 0 : -1;
+      if (selected && focus) tab.focus();
+    });
+
+    panels.forEach((panel) => { panel.hidden = panel.dataset.fgCarePanel !== target; });
+
+    if (setHash && window.history.replaceState) {
+      window.history.replaceState(null, '', `#guide-${target}`);
+    }
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activate(tab.dataset.fgCareTab, { setHash: true }));
+
+    // Roving focus, so the picker behaves like a tablist rather than a wall of
+    // buttons a keyboard user has to walk through one at a time.
+    tab.addEventListener('keydown', (event) => {
+      const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+      const step = keys[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const index = tabs.indexOf(tab);
+      const next = tabs[(index + step + tabs.length) % tabs.length];
+      if (next) activate(next.dataset.fgCareTab, { focus: true, setHash: true });
+    });
+  });
+
+  const fromHash = (window.location.hash || '').replace(/^#guide-/, '');
+  activate(fromHash || tabs[0].dataset.fgCareTab);
+});
+
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');
