@@ -1357,24 +1357,32 @@ function fenster_case_studies(): array
          * on 2026-08-19 that the note was loose and there is no stable door on
          * this job. Do not add one back from the folder name.
          *
-         * THE COMPOSITE DOUBLE DOOR EXISTS ONLY IN THE FILM. Its gallery image
-         * is a still cut from 12.6s at native resolution and NOT upscaled to
-         * 1600, because there is no more detail in the source to enlarge. It is
-         * framed deliberately: the `@FENSTERGLAZING` watermark sits to the left
-         * of this crop and the slate sign naming the house sits left of that,
-         * and neither is in it. That the slab is composite is owner-stated; a
-         * drone frame cannot prove a material.
+         * THE COMPOSITE DOUBLE DOOR EXISTS ONLY IN THE FILM, AND ITS IMAGE
+         * IS THE WHOLE FRAME, UNCROPPED. Owner instruction, 2026-08-19: "dont
+         * crop, watermark is fine." It is the 12.6s frame at its native
+         * 720x1280, saved as it came out of the film.
          *
-         * ITS SHAPE IS SET BY THE CELL, AND IT IS THE ONE IMAGE HERE THAT HAD
-         * TO BE. Cut at 470x700 first, which is 0.671, and the square cell then
-         * showed 67% of its height: the doorset lost its head and its threshold
-         * and the tile read as a band of handles, the same fault the owner
-         * caught on the Drayton Parslow front door. Recut to 515x545, 0.945, so
-         * the cell holds nearly all of it. It cannot hold all: the door is
-         * about 600px tall in the frame and only about 515px of width is clear
-         * of the watermark, and a square cell can never show more height than
-         * the source has width. That is the whole arithmetic of `object-fit:
-         * cover` and it is why widening, not trimming, is the lever.
+         * That is not a compromise, it is the best of the three versions tried,
+         * and the reason is worth keeping. The square cell shows a window as
+         * wide as the source and centred, so on a 720x1280 frame it lands on y
+         * 280 to 1000 and the doorset sits at roughly y 330 to 990. The cell
+         * frames the whole door by itself, with the stone lintel above it and
+         * the threshold below.
+         *
+         * The two cropped versions were both worse. 470x700 was cut to dodge
+         * the `@FENSTERGLAZING` watermark and the slate sign naming the house,
+         * and at 0.671 the cell then showed 67% of its height and took the head
+         * and threshold off the door, the same fault the owner caught on the
+         * Drayton Parslow front door. Recutting to 515x545 recovered most of it
+         * but could never recover all, because the door is about 600px tall and
+         * only about 515px of width was clear of the watermark, and a square
+         * cell can never show more height than its source has width. Dodging
+         * the watermark was the whole constraint, and the owner lifted it.
+         *
+         * So the watermark and the house sign are both in this image
+         * deliberately. The film carries both anyway, on the same instruction.
+         * That the slab is composite is owner-stated; a drone frame cannot
+         * prove a material.
          *
          * SQUARE GALLERY, NOT THE 3:4 CELL. Five photographs are portrait, the
          * gable shot is landscape and the door still is neither, so this

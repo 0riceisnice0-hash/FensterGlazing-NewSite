@@ -43217,28 +43217,23 @@ html.fg-blinds-reveal-locked {
   text-transform: uppercase;
 }
 
-.fg-sf-close__links {
-  margin-top: clamp(1rem, 2vw, 1.4rem);
+/* The two colour paragraphs sit in the heading's right column, and the shared
+   component's `align-items: end` is KEPT rather than overridden. It was flipped
+   to `start` first, which left a band of dead space under the H2 because the
+   right column is the taller of the two. Aligning the bottoms puts the heading
+   on the same line as the end of the prose and takes the grid straight after it. */
+
+.fg-sf-colours__copy p + p {
+  margin-top: 0.8rem;
 }
 
-/* The head sits above the two copy columns rather than beside them, so it keeps
-   the shared measure and the columns below carry the width. */
-.fg-sf-close__head {
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
-}
-
-.fg-sf-close__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: start;
-}
-
-/* The standards list is followed by nothing in its own column, but on a phone
-   the two columns stack and the showroom paragraph lands directly under it, so
-   the list needs its own bottom margin or the two run together. */
-.fg-sf-standards {
-  margin-bottom: 0;
+/* Six swatches, not twelve, so the grid is one row. The shared six-column rule
+   would leave it correct on desktop and cramped between 861px and 1080px, where
+   six cells share a narrower container. Four then two reads better there. */
+@media (max-width: 1080px) and (min-width: 861px) {
+  .fg-sf-colours__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 860px) {
