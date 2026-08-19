@@ -524,7 +524,14 @@ $hero_intro_html = ob_get_clean();
                 ?>
                 <div class="fg-cs-gallery__masonry<?php echo esc_attr($gallery_shape); ?>">
                     <?php foreach ($gallery_images as $image) : ?>
-                        <figure class="fg-cs-shot">
+                        <?php
+                        /* `wide` gives one photograph a row of its own at its
+                           natural shape, for a shot whose subject spans the
+                           frame and which the square cell therefore cannot
+                           hold. See the note in main.scss before using it. */
+                        $shot_class = ! empty($image['wide']) ? ' fg-cs-shot--wide' : '';
+                        ?>
+                        <figure class="fg-cs-shot<?php echo esc_attr($shot_class); ?>">
                             <a class="fg-cs-zoom" href="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" data-fg-gallery-lightbox aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>">
                                 <img src="<?php echo esc_url((string) ($image['src'] ?? '')); ?>" alt="<?php echo esc_attr((string) ($image['caption'] ?? $title)); ?>" loading="lazy">
                             </a>

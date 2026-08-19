@@ -12842,6 +12842,27 @@ a.fg-cs-installer:hover {
   aspect-ratio: 3 / 4;
 }
 
+/* ONE PHOTOGRAPH PER GALLERY MAY TAKE A ROW OF ITS OWN AND KEEP ITS OWN SHAPE.
+   `'wide' => true` on an image. For the shot that only works whole: on the
+   Hanslope barn the tilt and turn is at one end of a stone gable and the door
+   at the other, about 1280px apart in a 1600x1200 photograph, and a square cell
+   can only ever show as many pixels of width as the image has height. At 1200
+   it clipped the window's frame at one edge and the door's at the other, and no
+   recrop could fix it: the arithmetic runs out 80px short.
+
+   This is not the alignment rule bending. That rule exists so rows line up and
+   no hole opens under a shorter neighbour, and a full-width row has no
+   neighbour to line up with and leaves no hole. Use it for a photograph whose
+   subject spans the frame, not to escape a crop you simply dislike, and not
+   more than once or twice in a gallery or the grid stops reading as a grid. */
+.fg-cs-shot--wide {
+  grid-column: 1 / -1;
+}
+
+.fg-cs-shot--wide img {
+  aspect-ratio: auto;
+}
+
 .fg-cs-zoom {
   display: block;
   cursor: zoom-in;

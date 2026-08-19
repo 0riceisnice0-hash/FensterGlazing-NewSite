@@ -1451,7 +1451,14 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-hanslope-flush-casement-angle.jpg', 'caption' => 'The same detail from the side, where the sash closes level with the outer frame rather than standing proud of it.'],
                 ['src' => $img . 'cs-hanslope-flush-casement-pair.jpg', 'caption' => 'A flush casement on a stone cill, the two sashes meeting on a central mullion.'],
                 ['src' => $img . 'cs-hanslope-tilt-turn.jpg', 'caption' => 'The tilt and turn in its reveal. There are no hinges on the outer frame because the hardware sits inside it.'],
-                ['src' => $img . 'cs-hanslope-gable-tilt-turn-and-door.jpg', 'caption' => 'The garden elevation, with the tilt and turn on the left and the fully glazed uPVC door onto the decking on the right.'],
+                /* A row of its own, uncropped. Owner instruction, 2026-08-19: "the window
+                   and door in same shot need to not be cropped". The window sits at
+                   about x 140 and the door ends at about x 1420 of a 1600x1200 frame,
+                   and a square cell shows only as many pixels of width as the image
+                   has height, so at 1200 it clipped the window's frame at one edge and
+                   the door's at the other. Recropping cannot fix it; the span is about
+                   80px wider than the arithmetic allows. */
+                ['src' => $img . 'cs-hanslope-gable-tilt-turn-and-door.jpg', 'wide' => true, 'caption' => 'The garden elevation, with the tilt and turn on the left and the fully glazed uPVC door onto the decking on the right.'],
                 ['src' => $img . 'cs-hanslope-composite-double-door.jpg', 'caption' => 'The composite double door on the courtyard, its diamond panes set in a fan across both leaves.'],
             ],
             'card_image' => ['src' => $img . 'cs-hanslope-card.jpg', 'caption' => 'Anthracite grey windows and doors on a stone barn conversion in Hanslope.'],
