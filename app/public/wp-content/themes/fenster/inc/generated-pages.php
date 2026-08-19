@@ -1664,23 +1664,6 @@ function fenster_get_generated_page(?string $slug = null): ?array
         return $page_cache[$slug] = $page;
     }
 
-    if ($slug === 'downloads') {
-        return $page_cache[$slug] = [
-            'slug' => 'downloads',
-            'title' => 'Care and Maintenance Guides',
-            'url' => home_url('/downloads/'),
-            'seo' => [
-                'title_tag' => 'Window & Door Care and Maintenance Guides | Fenster Glazing',
-                'meta_description' => 'Official care and maintenance guides for the window and door systems Fenster installs: Sheerline, Liniar, Roseview, Distinction and Notan.',
-                'canonical' => 'https://fensterglazing.com/downloads/',
-                'robots' => 'max-image-preview:large',
-            ],
-            'sections' => [],
-            'images' => [],
-            'links' => [],
-        ];
-    }
-
     return $page_cache[$slug] = ($index[$slug] ?? null);
 }
 
@@ -1817,6 +1800,7 @@ function fenster_slug_is_noindex(string $slug): bool
         'apecs-terms-conditions' => true,
         'brochures' => true,
         'customer-portal' => true,
+        'downloads' => true,
         'fenster-partners' => true,
         'gallery' => true,
         'instant-pricing-meta-ads' => true,
