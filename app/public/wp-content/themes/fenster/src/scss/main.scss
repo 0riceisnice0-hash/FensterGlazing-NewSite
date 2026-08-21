@@ -44119,10 +44119,14 @@ html.fg-blinds-reveal-locked {
   gap: var(--fg-bfc-gap);
   overflow-x: auto;
   overflow-y: hidden;
-  /* Proximity, not mandatory. Mandatory forces a snap on every scroll so a
-     swipe can never coast and a small nudge is yanked to a boundary, which is
-     the grabby feel the owner reported on the colour rail. */
-  scroll-snap-type: x proximity;
+  /* NO SCROLL SNAP, AND THAT IS THE OTHER HALF OF THE OWNER'S "not smooth
+     scrolling" REPORT. Measured: with `proximity` a 200px wheel nudge on a
+     523px card sits inside the snap zone of the card it started on, so the
+     rail scrolled and then sprang straight back to 0. Every small push
+     bounced. The colour rail gets away with proximity because its swatches
+     are small enough that a nudge clears a boundary; these cards are not.
+     Free scrolling here, and the jump buttons are what aligns a card when
+     alignment is actually wanted. */
   /* NO `scroll-behavior: smooth` HERE, and its absence is the fix for the
      owner's "not smooth scrolling" report of 2026-08-21. Chrome applies that
      property to USER scrolling as well as scripted scrolling, so every wheel
@@ -44130,7 +44134,6 @@ html.fg-blinds-reveal-locked {
      tracking the input, which reads as lag. The jump buttons pass
      `behavior: 'smooth'` to `scrollTo` themselves, which is the only place the
      animation was ever wanted. */
-  scroll-padding-inline-start: max(1rem, calc((100% - var(--container)) / 2));
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
@@ -44140,18 +44143,14 @@ html.fg-blinds-reveal-locked {
 
 .fg-bfc__rail::-webkit-scrollbar { display: none; }
 
-/* Snap has to be off during a drag, or every pointermove fights a snap
-   animation and the card springs back under the cursor. */
 .fg-bfc__rail.is-dragging {
   cursor: grabbing;
-  scroll-snap-type: none;
   user-select: none;
 }
 
 .fg-bfc__rail.is-dragging img { pointer-events: none; }
 
 .fg-bfc__slide {
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: var(--fg-space-4);
