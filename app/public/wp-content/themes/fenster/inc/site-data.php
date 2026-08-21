@@ -2683,21 +2683,18 @@ function fenster_site_data(): array
             'traffic_door' => 'A traffic door is one leaf that opens on its own, so you can step out without folding the whole run back.',
             'note'         => 'Configurations and maximum widths are Sheerline\'s published figures for the Prestige bi-fold, and every layout is shown folded open. Which one suits your opening is settled at survey.',
             'counts'       => [
-                [
-                    'panes'        => 1,
-                    'label'        => 'Single',
-                    'max_width_mm' => 1300,
-                    'configs'      => [
-                        ['code' => '1/1/0', 'name' => 'Single door', 'copy' => 'One leaf on hinges, the same as any other door.'],
-                    ],
-                ],
+                /* Sheerline also publish a Single Door 1/1/0 and a French Door
+                   2/1/1 on the same system. Both are deliberately absent, owner
+                   instruction 2026-08-21: neither is a bi-fold, and putting a
+                   single door and a French pair in a bi-fold selector muddies
+                   what the page is selling. Do not add them back off Sheerline's
+                   own list. Seventeen genuine folding layouts remain. */
                 [
                     'panes'        => 2,
                     'label'        => '2 panes',
                     'max_width_mm' => 2500,
                     'configs'      => [
                         ['code' => '2/2/0', 'name' => 'Both to one side', 'copy' => 'Both leaves fold together to one side.'],
-                        ['code' => '2/1/1', 'name' => 'French pair', 'copy' => 'One leaf each way, opening from the middle like French doors.'],
                     ],
                 ],
                 [

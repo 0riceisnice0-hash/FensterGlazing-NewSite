@@ -1241,58 +1241,111 @@ document.querySelectorAll('[data-fg-care-guides]').forEach((widget) => {
 });
 
 /*
- * Bi-fold configurations: pick a pane count, see the layouts it comes in.
+ * Bi-fold configurations: one swipe rail, with pane-count buttons that jump
+ * into it.
  *
- * Progressive enhancement in the honest direction. The markup ships every pane
- * count visible under its own heading and the picker `hidden`, so a visitor
- * without JavaScript reads all nineteen layouts rather than meeting a control
- * that cannot move. The controller reveals the picker and then hides all but
- * one panel, which is the only order that cannot leave the section empty if
- * anything here throws.
+ * The rail is the interaction and the buttons are a shortcut into it, so there
+ * is one piece of state (where the rail is scrolled to) rather than two that
+ * can disagree. Scrolling updates the buttons; pressing a button scrolls the
+ * rail. Same model as the colour hub rail the owner approved: native scroll on
+ * touch and trackpad, click-drag added for a mouse, and a position counter
+ * because a rail with no affordance does not say how much more there is.
  *
- * Roving focus, same as the care guides picker above.
+ * Progressive enhancement in the honest direction: the rail is a native
+ * horizontal scroller with every layout in it before any of this runs, and the
+ * controls ship hidden. If anything here throws, the visitor still has all
+ * seventeen layouts and can still scroll them.
  */
-document.querySelectorAll('[data-fg-bifold-picker]').forEach((picker) => {
-  const section = picker.closest('.fg-bfc');
+document.querySelectorAll('[data-fg-bifold-rail]').forEach((rail) => {
+  const section = rail.closest('.fg-bfc');
   if (!section) return;
 
-  const tabs = [...picker.querySelectorAll('[data-fg-bifold-tab]')];
-  const panels = [...section.querySelectorAll('[data-fg-bifold-panel]')];
-  if (!tabs.length || !panels.length) return;
+  const controls = section.querySelector('[data-fg-bifold-controls]');
+  const jumps = [...section.querySelectorAll('[data-fg-bifold-jump]')];
+  const slides = [...rail.querySelectorAll('[data-fg-bifold-slide]')];
+  const position = section.querySelector('[data-fg-bifold-position]');
+  if (!slides.length) return;
 
-  const activate = (target, { focus = false } = {}) => {
-    if (!panels.some((panel) => panel.dataset.fgBifoldPanel === target)) return;
+  const pad = () => parseFloat(getComputedStyle(rail.firstElementChild).paddingLeft) || 0;
 
-    tabs.forEach((tab) => {
-      const selected = tab.dataset.fgBifoldTab === target;
-      tab.setAttribute('aria-selected', selected ? 'true' : 'false');
-      tab.tabIndex = selected ? 0 : -1;
-      if (selected && focus) tab.focus();
+  // Which slide is nearest the rail's left edge, allowing for the track inset.
+  const currentIndex = () => {
+    const x = rail.scrollLeft + pad();
+    let best = 0;
+    let bestGap = Infinity;
+    slides.forEach((slide, i) => {
+      const gap = Math.abs(slide.offsetLeft - x);
+      if (gap < bestGap) { bestGap = gap; best = i; }
     });
-
-    panels.forEach((panel) => { panel.hidden = panel.dataset.fgBifoldPanel !== target; });
+    return best;
   };
 
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => activate(tab.dataset.fgBifoldTab));
+  const sync = () => {
+    const index = currentIndex();
+    if (position) position.textContent = String(index + 1).padStart(2, '0');
+    const panes = slides[index].dataset.panes;
+    jumps.forEach((jump) => {
+      jump.setAttribute('aria-pressed', jump.dataset.fgBifoldJump === panes ? 'true' : 'false');
+    });
+  };
 
-    tab.addEventListener('keydown', (event) => {
-      const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
-      const step = keys[event.key];
-      if (!step) return;
-      event.preventDefault();
-      const index = tabs.indexOf(tab);
-      const next = tabs[(index + step + tabs.length) % tabs.length];
-      if (next) activate(next.dataset.fgBifoldTab, { focus: true });
+  let frame = 0;
+  rail.addEventListener('scroll', () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => { frame = 0; sync(); });
+  }, { passive: true });
+
+  jumps.forEach((jump) => {
+    jump.addEventListener('click', () => {
+      const target = rail.querySelector(`[data-first-of-count="${jump.dataset.fgBifoldJump}"]`);
+      if (!target) return;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      rail.scrollTo({ left: target.offsetLeft - pad(), behavior: reduced ? 'auto' : 'smooth' });
     });
   });
 
-  // Reveal first, then collapse: if `activate` fails the visitor still has the
-  // full list rather than a picker sitting over nothing.
-  picker.hidden = false;
+  // Click-drag for a mouse. Touch and trackpad already scroll natively, so this
+  // only binds the mouse: binding pointer events wholesale would fight the
+  // browser's own touch scrolling.
+  let dragging = false;
+  let startX = 0;
+  let startScroll = 0;
+  let moved = 0;
 
-  const initial = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0];
-  activate(initial.dataset.fgBifoldTab);
+  rail.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    dragging = true;
+    moved = 0;
+    startX = event.clientX;
+    startScroll = rail.scrollLeft;
+    rail.classList.add('is-dragging');
+  });
+
+  rail.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    const delta = event.clientX - startX;
+    moved = Math.max(moved, Math.abs(delta));
+    rail.scrollLeft = startScroll - delta;
+  });
+
+  const endDrag = () => {
+    if (!dragging) return;
+    dragging = false;
+    rail.classList.remove('is-dragging');
+  };
+
+  rail.addEventListener('pointerup', endDrag);
+  rail.addEventListener('pointercancel', endDrag);
+  rail.addEventListener('pointerleave', endDrag);
+
+  // A drag that crossed a card would otherwise fire the click on whatever it
+  // finished over.
+  rail.addEventListener('click', (event) => {
+    if (moved > 6) { event.preventDefault(); event.stopPropagation(); }
+  }, true);
+
+  if (controls) controls.hidden = false;
+  sync();
 });
 
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {

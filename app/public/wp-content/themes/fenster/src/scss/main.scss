@@ -43991,176 +43991,214 @@ html.fg-blinds-reveal-locked {
 /* ==========================================================================
    Bi-fold configurations (/aluminium-bifold-doors/)
    --------------------------------------------------------------------------
-   Pick a pane count, see the layouts Sheerline publish for it. NOT a
-   configurator: it draws nothing, prices nothing, and hands over to the quote
-   embed. See the component header in
+   One swipe rail of Sheerline's seventeen published layouts, with pane-count
+   buttons that jump into it. NOT a configurator: it draws nothing, prices
+   nothing, and hands over to the quote embed. See the component header in
    template-parts/components/bifold-configurations.php.
 
-   The section is transparent and the cards carry the local contrast, per the
-   continuous-canvas rule. Do not repaint the page gradient here.
+   A DARK BAND, deliberately. The renders are pale grey studio product and the
+   page canvas is pale, so on a light surface they read as floating in empty
+   plates, which is exactly what the first build did. On dark they read as lit,
+   the same call the casement technical chapters and the tilt and turn hardware
+   plates make. This is the one place the route changes shape; if a future pass
+   darkens a neighbouring section, lighten one of them in the same commit or the
+   page gets two dark slabs back to back.
    ========================================================================== */
 .fg-bfc {
-  padding: clamp(3rem, 5vw, 4.75rem) 0;
+  position: relative;
+  padding: clamp(3rem, 5vw, 4.75rem) 0 clamp(2.5rem, 4vw, 3.75rem);
+  background: var(--color-steel);
+  color: #fff;
+  overflow: hidden;
 }
 
 .fg-bfc__head {
-  max-width: 62ch;
+  max-width: 60ch;
   margin-bottom: var(--fg-space-8);
 }
 
+.fg-bfc__head .eyebrow { color: rgba(255, 255, 255, 0.62); }
+
 .fg-bfc__head h2 {
   font-size: clamp(1.45rem, 2.2vw, 2rem);
+  color: #fff;
   margin: var(--fg-space-2) 0 var(--fg-space-4);
 }
 
 .fg-bfc__head p {
-  color: var(--color-steel-90);
+  color: rgba(255, 255, 255, 0.78);
   margin: 0 0 var(--fg-space-3);
 }
 
-/* The picker is its own scroller so seven tabs can never push the page
-   sideways at 390px. The clipped next tab is the affordance. */
-.fg-bfc__picker {
-  display: flex;
-  gap: var(--fg-space-2);
-  margin-bottom: var(--fg-space-6);
-  padding-bottom: var(--fg-space-2);
-  overflow-x: auto;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
+.fg-bfc__aside {
+  font-size: var(--fg-text-md);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 /* `[hidden]` from the UA stylesheet loses to any class rule that sets
-   `display`, and this component sets `display` on both the picker and the
-   panels. Without these guards the picker renders while JavaScript is still
-   loading and every panel shows at once. This has shipped broken twice on this
-   site (the case-study Show more button and the repairs schematics); keep both
-   guards. */
-.fg-bfc__picker[hidden],
-.fg-bfc__panel[hidden] {
-  display: none !important;
+   `display`, and this row is a flex container. Without the guard the controls
+   render before the controller has wired them. This has shipped broken twice on
+   this site (the case-study Show more button and the repairs schematics). */
+.fg-bfc__controls[hidden] { display: none !important; }
+
+.fg-bfc__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fg-space-4);
+  margin-bottom: var(--fg-space-5);
 }
 
-.fg-bfc__tab {
-  flex: 0 0 auto;
-  min-width: 4.25rem;
-  min-height: 44px;
+.fg-bfc__jumps {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.1rem;
-  padding: var(--fg-space-2) var(--fg-space-3);
-  border: 1px solid var(--color-line);
+  gap: var(--fg-space-2);
+}
+
+.fg-bfc__jump {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--fg-space-2);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 8px;
-  background: #fff;
-  color: var(--color-steel);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: var(--fg-text-lg);
+  font-weight: 600;
+  line-height: 1;
   cursor: pointer;
   transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
 
-.fg-bfc__tab-count {
-  font-size: var(--fg-text-xl);
-  font-weight: 600;
-  line-height: 1;
-}
+.fg-bfc__jump:hover { border-color: rgba(255, 255, 255, 0.5); color: #fff; }
 
-.fg-bfc__tab-label {
-  font-size: var(--fg-text-2xs);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  opacity: 0.72;
-}
-
-.fg-bfc__tab:hover {
+.fg-bfc__jump[aria-pressed='true'] {
+  background: var(--color-accent);
   border-color: var(--color-accent);
-}
-
-.fg-bfc__tab[aria-selected='true'] {
-  background: var(--color-steel);
-  border-color: var(--color-steel);
   color: #fff;
 }
 
-.fg-bfc__tab:focus-visible {
+.fg-bfc__jump:focus-visible,
+.fg-bfc__rail:focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-.fg-bfc__panel:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
+.fg-bfc__jumps-label {
+  margin-left: var(--fg-space-1);
+  font-size: var(--fg-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.fg-bfc__panel-title {
-  font-size: var(--fg-text-lg);
-  color: var(--color-steel);
-  margin: 0 0 var(--fg-space-5);
+.fg-bfc__counter {
+  margin: 0;
+  font-size: var(--fg-text-sm);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.62);
+  font-variant-numeric: tabular-nums;
 }
 
-.fg-bfc__grid {
+.fg-bfc__counter-sep { opacity: 0.45; margin: 0 0.15rem; }
+
+/* The rail breaks the container so a card bleeds off the right edge. That cut
+   card is the affordance: a rail with a clean edge does not say it scrolls.
+   The left inset matches the container so the first card lines up with the
+   heading above it. */
+.fg-bfc__rail {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  /* The drag handler sets this to `grabbing`; leave the default alone so a
+     trackpad user is not told the only way in is to drag. */
+  cursor: default;
+}
+
+.fg-bfc__rail::-webkit-scrollbar { display: none; }
+
+.fg-bfc__rail.is-dragging { cursor: grabbing; user-select: none; }
+.fg-bfc__rail.is-dragging img { pointer-events: none; }
+
+.fg-bfc__track {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 max(1rem, calc((100% - var(--container)) / 2));
   display: grid;
+  grid-auto-flow: column;
+  /* Sized from the scroll container, never a percentage flex basis: a
+     percentage inside an overflowing row resolves against the track's scroll
+     width and the slides balloon. Recorded against the colour rail already. */
+  grid-auto-columns: minmax(0, 34rem);
   gap: var(--fg-space-6);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* A lone card in a two-column grid leaves half a row empty, which is the hole
-   the roofline media stack drew for the same reason. One card gets one column,
-   capped so it does not stretch a small door across the container. */
-.fg-bfc__grid[data-count='1'] {
-  grid-template-columns: minmax(0, 34rem);
-}
-
-.fg-bfc__card {
+.fg-bfc__slide {
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: var(--fg-space-2);
+  gap: var(--fg-space-4);
 }
 
-/* The renders carry Sheerline's own #f2f2f2 ground edge to edge, so the plate
-   matches it and adds the hairline. A pale subject on a pale page reads as an
-   empty box without an edge, the same reason the smooth white swatch and every
-   handle tile carry one. The image fills the plate rather than being contained
-   inside padding, because the shared crop window already built the margin in. */
-.fg-bfc__plate {
+/* The stage is a defined surface rather than a tint, so a small door sits in a
+   box that clearly belongs to it instead of floating on the band. Its fixed
+   aspect ratio is the shared crop window's, which is what keeps the doors at
+   truthful relative scale from card to card. */
+.fg-bfc__stage {
   margin: 0;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: #f2f2f2;
+  aspect-ratio: 1024 / 392;
+  display: flex;
+  align-items: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background:
+    radial-gradient(120% 90% at 50% 100%, rgba(46, 172, 102, 0.14) 0%, rgba(46, 172, 102, 0) 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
   overflow: hidden;
 }
 
 /* `display: block` is load-bearing: an image is inline by default, sits on the
-   text baseline, and the descender adds ~8px of dead space under every plate. */
-.fg-bfc__plate img {
+   text baseline, and the descender adds ~8px of dead space under every stage. */
+.fg-bfc__stage img {
   display: block;
   width: 100%;
   height: auto;
 }
 
+.fg-bfc__meta { display: flex; flex-direction: column; gap: 0.35rem; }
+
 .fg-bfc__code {
-  font-size: var(--fg-text-xl);
+  margin: 0;
+  font-size: var(--fg-text-2xl);
   font-weight: 600;
-  color: var(--color-steel);
-  margin: var(--fg-space-2) 0 0;
-  letter-spacing: 0.01em;
+  color: #fff;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .fg-bfc__name {
-  font-size: var(--fg-text-sm);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--color-accent-dark);
   margin: 0;
+  font-size: var(--fg-text-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
 }
 
 .fg-bfc__copy {
   margin: 0;
-  color: var(--color-steel-90);
   font-size: var(--fg-text-md);
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.fg-bfc__width {
+  margin: 0.15rem 0 0;
+  font-size: var(--fg-text-sm);
+  color: rgba(255, 255, 255, 0.55);
+  font-variant-numeric: tabular-nums;
 }
 
 .fg-bfc__foot {
@@ -44171,28 +44209,34 @@ html.fg-blinds-reveal-locked {
   gap: var(--fg-space-5);
   margin-top: var(--fg-space-8);
   padding-top: var(--fg-space-6);
-  border-top: 1px solid var(--color-line);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .fg-bfc__note {
-  flex: 1 1 34rem;
+  flex: 1 1 32rem;
   margin: 0;
   font-size: var(--fg-text-sm);
-  color: var(--color-steel-90);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 1180px) {
+  .fg-bfc__track { grid-auto-columns: minmax(0, 30rem); }
 }
 
 @media (max-width: 860px) {
-  .fg-bfc__grid,
-  .fg-bfc__grid[data-count='1'] {
-    grid-template-columns: minmax(0, 1fr);
+  .fg-bfc__track {
+    /* About one and a quarter cards, so the next one is visibly cut. */
+    grid-auto-columns: minmax(0, 78vw);
+    gap: var(--fg-space-5);
   }
 
-  .fg-bfc__head {
-    margin-bottom: var(--fg-space-6);
-  }
+  .fg-bfc__head { margin-bottom: var(--fg-space-6); }
 
-  .fg-bfc__foot .button {
-    width: 100%;
-    justify-content: center;
-  }
+  .fg-bfc__controls { gap: var(--fg-space-3); }
+
+  .fg-bfc__foot .button { width: 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-bfc__rail { scroll-behavior: auto; }
 }
