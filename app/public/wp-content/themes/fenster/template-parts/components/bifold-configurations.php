@@ -147,8 +147,7 @@ $bifold_total = count($bifold_slides);
     /* The rail breaks out of the container so a card can bleed off the right
        edge of the viewport. That cut card is the swipe affordance. */
     ?>
-    <div class="fg-bfc__rail" data-fg-bifold-rail tabindex="0" role="group" aria-label="<?php esc_attr_e('Bi-fold configurations', 'fenster'); ?>">
-        <ul class="fg-bfc__track">
+    <ul class="fg-bfc__rail" data-fg-bifold-rail tabindex="0" role="group" aria-label="<?php esc_attr_e('Bi-fold configurations', 'fenster'); ?>">
             <?php foreach ($bifold_slides as $index => $slide) : ?>
                 <?php
                 $file = 'bifold-' . str_replace('/', '-', $slide['code']) . '.webp';
@@ -196,8 +195,7 @@ $bifold_total = count($bifold_slides);
                     </div>
                 </li>
             <?php endforeach; ?>
-        </ul>
-    </div>
+    </ul>
 
     <div class="container fg-bfc__inner">
         <div class="fg-bfc__foot">

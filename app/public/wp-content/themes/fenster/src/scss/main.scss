@@ -44083,6 +44083,7 @@ html.fg-blinds-reveal-locked {
 .fg-bfc__rail:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
+  border-radius: 12px;
 }
 
 .fg-bfc__jumps-label {
@@ -44103,38 +44104,44 @@ html.fg-blinds-reveal-locked {
 
 .fg-bfc__counter-sep { opacity: 0.45; margin: 0 0.15rem; }
 
-/* The rail breaks the container so a card bleeds off the right edge. That cut
-   card is the affordance: a rail with a clean edge does not say it scrolls.
-   The left inset matches the container so the first card lines up with the
-   heading above it. */
+/* THE RAIL IS THE SCROLLER AND THE GRID, on one element. Nesting a grid inside
+   a separate overflow container makes the columns resolve against the parent's
+   width and collapse to fit instead of overflowing: seventeen slides came out
+   47px wide on desktop and 2px on a phone. `grid-auto-columns` on the scroller
+   itself resolves against the VISIBLE width, which is the fix the colour rail
+   and the obscured-glass picker already carry. Do not split these again.
+
+   It sits outside `.container` so a card bleeds off the right edge of the
+   viewport. That cut card is the affordance: a rail with a clean edge does not
+   say it scrolls. The inline padding puts the first card back on the container
+   line so it aligns with the heading above it. */
 .fg-bfc__rail {
+  --fg-bfc-gap: clamp(1rem, 1.8vw, 1.5rem);
+  --fg-bfc-per-view: 2.2;
+  list-style: none;
+  margin: 0;
+  padding: 0 max(1rem, calc((100% - var(--container)) / 2)) 0.75rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--fg-bfc-gap) * (var(--fg-bfc-per-view) - 1))) / var(--fg-bfc-per-view));
+  gap: var(--fg-bfc-gap);
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  /* Proximity, not mandatory. Mandatory forces a snap on every scroll so a
+     swipe can never coast and a small nudge is yanked to a boundary, which is
+     the grabby feel the owner reported on the colour rail. */
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  /* The drag handler sets this to `grabbing`; leave the default alone so a
-     trackpad user is not told the only way in is to drag. */
-  cursor: default;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .fg-bfc__rail::-webkit-scrollbar { display: none; }
 
-.fg-bfc__rail.is-dragging { cursor: grabbing; user-select: none; }
+.fg-bfc__rail.is-dragging { cursor: grabbing; scroll-behavior: auto; user-select: none; }
 .fg-bfc__rail.is-dragging img { pointer-events: none; }
-
-.fg-bfc__track {
-  list-style: none;
-  margin: 0;
-  padding: 0 max(1rem, calc((100% - var(--container)) / 2));
-  display: grid;
-  grid-auto-flow: column;
-  /* Sized from the scroll container, never a percentage flex basis: a
-     percentage inside an overflowing row resolves against the track's scroll
-     width and the slides balloon. Recorded against the colour rail already. */
-  grid-auto-columns: minmax(0, 34rem);
-  gap: var(--fg-space-6);
-}
 
 .fg-bfc__slide {
   scroll-snap-align: start;
@@ -44220,15 +44227,12 @@ html.fg-blinds-reveal-locked {
 }
 
 @media (max-width: 1180px) {
-  .fg-bfc__track { grid-auto-columns: minmax(0, 30rem); }
+  .fg-bfc__rail { --fg-bfc-per-view: 1.7; }
 }
 
 @media (max-width: 860px) {
-  .fg-bfc__track {
-    /* About one and a quarter cards, so the next one is visibly cut. */
-    grid-auto-columns: minmax(0, 78vw);
-    gap: var(--fg-space-5);
-  }
+  /* About one and a sixth cards, so the next one is visibly cut. */
+  .fg-bfc__rail { --fg-bfc-per-view: 1.15; }
 
   .fg-bfc__head { margin-bottom: var(--fg-space-6); }
 

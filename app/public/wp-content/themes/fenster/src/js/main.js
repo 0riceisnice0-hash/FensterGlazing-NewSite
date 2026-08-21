@@ -1266,7 +1266,7 @@ document.querySelectorAll('[data-fg-bifold-rail]').forEach((rail) => {
   const position = section.querySelector('[data-fg-bifold-position]');
   if (!slides.length) return;
 
-  const pad = () => parseFloat(getComputedStyle(rail.firstElementChild).paddingLeft) || 0;
+  const pad = () => parseFloat(getComputedStyle(rail).paddingLeft) || 0;
 
   // Which slide is nearest the rail's left edge, allowing for the track inset.
   const currentIndex = () => {
