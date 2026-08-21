@@ -44095,7 +44095,10 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-bfc__counter {
-  margin: 0;
+  /* No-op while the row fits on one line; when the counter wraps below the
+     buttons on a phone this keeps it against the right edge instead of
+     stranding it under them. */
+  margin: 0 0 0 auto;
   font-size: var(--fg-text-sm);
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.62);
