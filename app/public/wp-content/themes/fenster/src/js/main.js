@@ -1300,23 +1300,39 @@ document.querySelectorAll('[data-fg-bifold-rail]').forEach((rail) => {
       const target = rail.querySelector(`[data-first-of-count="${jump.dataset.fgBifoldJump}"]`);
       if (!target) return;
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      stopGlide();
       rail.scrollTo({ left: target.offsetLeft - pad(), behavior: reduced ? 'auto' : 'smooth' });
     });
   });
 
-  // Click-drag for a mouse. Touch and trackpad already scroll natively, so this
-  // only binds the mouse: binding pointer events wholesale would fight the
-  // browser's own touch scrolling.
+  // Click-drag for a mouse, with a flick that carries. Touch and trackpad
+  // already scroll natively and are deliberately not bound: binding pointer
+  // events wholesale would fight the browser's own touch scrolling.
+  //
+  // The momentum matters. A drag that stops dead the instant the button comes
+  // up is what "not smooth" feels like on a mouse, because every other rail
+  // the visitor has ever used coasts. Velocity is sampled over the last two
+  // moves rather than the whole drag, so a slow reposition ending in a flick
+  // still flicks, and a fast drag ending in a stop still stops.
   let dragging = false;
   let startX = 0;
   let startScroll = 0;
   let moved = 0;
+  let lastX = 0;
+  let lastT = 0;
+  let velocity = 0;
+  let glide = 0;
+
+  const stopGlide = () => { if (glide) { cancelAnimationFrame(glide); glide = 0; } };
 
   rail.addEventListener('pointerdown', (event) => {
     if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    stopGlide();
     dragging = true;
     moved = 0;
-    startX = event.clientX;
+    velocity = 0;
+    startX = lastX = event.clientX;
+    lastT = event.timeStamp;
     startScroll = rail.scrollLeft;
     rail.classList.add('is-dragging');
   });
@@ -1326,17 +1342,37 @@ document.querySelectorAll('[data-fg-bifold-rail]').forEach((rail) => {
     const delta = event.clientX - startX;
     moved = Math.max(moved, Math.abs(delta));
     rail.scrollLeft = startScroll - delta;
+
+    const dt = event.timeStamp - lastT;
+    if (dt > 0) velocity = (event.clientX - lastX) / dt;
+    lastX = event.clientX;
+    lastT = event.timeStamp;
   });
 
   const endDrag = () => {
     if (!dragging) return;
     dragging = false;
     rail.classList.remove('is-dragging');
+
+    // Below this the visitor was positioning, not flicking, and coasting would
+    // feel like the rail slipping out from under them.
+    if (Math.abs(velocity) < 0.12) return;
+
+    let v = velocity * 16;
+    const step = () => {
+      v *= 0.94;
+      rail.scrollLeft -= v;
+      glide = Math.abs(v) > 0.4 ? requestAnimationFrame(step) : 0;
+    };
+    glide = requestAnimationFrame(step);
   };
 
   rail.addEventListener('pointerup', endDrag);
   rail.addEventListener('pointercancel', endDrag);
   rail.addEventListener('pointerleave', endDrag);
+  // A new scroll from any other source should win over a dying glide.
+  rail.addEventListener('wheel', stopGlide, { passive: true });
+  rail.addEventListener('touchstart', stopGlide, { passive: true });
 
   // A drag that crossed a card would otherwise fire the click on whatever it
   // finished over.

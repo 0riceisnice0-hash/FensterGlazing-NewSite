@@ -43987,7 +43987,6 @@ html.fg-blinds-reveal-locked {
   .fg-care-enquiry__form .fg-enquiry-form__footer { grid-template-columns: 1fr; }
 }
 
-
 /* ==========================================================================
    Bi-fold configurations (/aluminium-bifold-doors/)
    --------------------------------------------------------------------------
@@ -43996,20 +43995,17 @@ html.fg-blinds-reveal-locked {
    nothing, and hands over to the quote embed. See the component header in
    template-parts/components/bifold-configurations.php.
 
-   A DARK BAND, deliberately. The renders are pale grey studio product and the
-   page canvas is pale, so on a light surface they read as floating in empty
-   plates, which is exactly what the first build did. On dark they read as lit,
-   the same call the casement technical chapters and the tilt and turn hardware
-   plates make. This is the one place the route changes shape; if a future pass
-   darkens a neighbouring section, lighten one of them in the same commit or the
-   page gets two dark slabs back to back.
+   IT SITS ON THE PAGE CANVAS, NOT A BAND. A dark band was tried on 2026-08-21
+   and the owner pulled it: "on a dark background for no reason". It had been
+   introduced to stop the doors floating, which was the wrong fix for the right
+   problem. The floating was the renders carrying Sheerline's own #f2f2f2
+   canvas baked in, within a few percent of our page gradient. Once that grey
+   is keyed to transparency the doors read perfectly well on a light panel,
+   checked against white, #f5f7f7, #eef2f3 and #e4ebed before choosing. Do not
+   reach for a dark band here again.
    ========================================================================== */
 .fg-bfc {
-  position: relative;
   padding: clamp(3rem, 5vw, 4.75rem) 0 clamp(2.5rem, 4vw, 3.75rem);
-  background: var(--color-steel);
-  color: #fff;
-  overflow: hidden;
 }
 
 .fg-bfc__head {
@@ -44017,28 +44013,25 @@ html.fg-blinds-reveal-locked {
   margin-bottom: var(--fg-space-8);
 }
 
-.fg-bfc__head .eyebrow { color: rgba(255, 255, 255, 0.62); }
-
 .fg-bfc__head h2 {
   font-size: clamp(1.45rem, 2.2vw, 2rem);
-  color: #fff;
   margin: var(--fg-space-2) 0 var(--fg-space-4);
 }
 
 .fg-bfc__head p {
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--color-steel-90);
   margin: 0 0 var(--fg-space-3);
 }
 
 .fg-bfc__aside {
   font-size: var(--fg-text-md);
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--color-muted);
 }
 
 /* `[hidden]` from the UA stylesheet loses to any class rule that sets
    `display`, and this row is a flex container. Without the guard the controls
-   render before the controller has wired them. This has shipped broken twice on
-   this site (the case-study Show more button and the repairs schematics). */
+   render before the controller has wired them. This has shipped broken twice
+   on this site (the case-study Show more button and the repairs schematics). */
 .fg-bfc__controls[hidden] { display: none !important; }
 
 .fg-bfc__controls {
@@ -44050,20 +44043,16 @@ html.fg-blinds-reveal-locked {
   margin-bottom: var(--fg-space-5);
 }
 
-.fg-bfc__jumps {
-  display: flex;
-  align-items: center;
-  gap: var(--fg-space-2);
-}
+.fg-bfc__jumps { display: flex; align-items: center; gap: var(--fg-space-2); }
 
 .fg-bfc__jump {
   min-width: 44px;
   min-height: 44px;
   padding: 0 var(--fg-space-2);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid var(--color-line);
   border-radius: 8px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.82);
+  background: #fff;
+  color: var(--color-steel);
   font-size: var(--fg-text-lg);
   font-weight: 600;
   line-height: 1;
@@ -44071,11 +44060,11 @@ html.fg-blinds-reveal-locked {
   transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
 
-.fg-bfc__jump:hover { border-color: rgba(255, 255, 255, 0.5); color: #fff; }
+.fg-bfc__jump:hover { border-color: var(--color-accent); }
 
 .fg-bfc__jump[aria-pressed='true'] {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+  background: var(--color-steel);
+  border-color: var(--color-steel);
   color: #fff;
 }
 
@@ -44091,7 +44080,7 @@ html.fg-blinds-reveal-locked {
   font-size: var(--fg-text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-muted);
 }
 
 .fg-bfc__counter {
@@ -44101,7 +44090,7 @@ html.fg-blinds-reveal-locked {
   margin: 0 0 0 auto;
   font-size: var(--fg-text-sm);
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--color-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -44109,10 +44098,10 @@ html.fg-blinds-reveal-locked {
 
 /* THE RAIL IS THE SCROLLER AND THE GRID, on one element. Nesting a grid inside
    a separate overflow container makes the columns resolve against the parent's
-   width and collapse to fit instead of overflowing: seventeen slides came out
-   47px wide on desktop and 2px on a phone. `grid-auto-columns` on the scroller
-   itself resolves against the VISIBLE width, which is the fix the colour rail
-   and the obscured-glass picker already carry. Do not split these again.
+   width and collapse to fit: seventeen slides came out 47px wide on desktop
+   and 2px on a phone. `grid-auto-columns` on the scroller itself resolves
+   against the VISIBLE width, which is the fix the colour rail and the
+   obscured-glass picker already carry. Do not split these again.
 
    It sits outside `.container` so a card bleeds off the right edge of the
    viewport. That cut card is the affordance: a rail with a clean edge does not
@@ -44123,7 +44112,7 @@ html.fg-blinds-reveal-locked {
   --fg-bfc-per-view: 2.2;
   list-style: none;
   margin: 0;
-  padding: 0 max(1rem, calc((100% - var(--container)) / 2)) 0.75rem;
+  padding: 0.25rem max(1rem, calc((100% - var(--container)) / 2)) 0.75rem;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: calc((100% - (var(--fg-bfc-gap) * (var(--fg-bfc-per-view) - 1))) / var(--fg-bfc-per-view));
@@ -44134,20 +44123,31 @@ html.fg-blinds-reveal-locked {
      swipe can never coast and a small nudge is yanked to a boundary, which is
      the grabby feel the owner reported on the colour rail. */
   scroll-snap-type: x proximity;
-  /* Without this the browser snaps the first card flush to the scroll port's
-     edge, ignoring the inline padding, so it stops lining up with the heading
-     above it. Must stay equal to the padding. */
+  /* NO `scroll-behavior: smooth` HERE, and its absence is the fix for the
+     owner's "not smooth scrolling" report of 2026-08-21. Chrome applies that
+     property to USER scrolling as well as scripted scrolling, so every wheel
+     notch and every drag frame was animated towards its target instead of
+     tracking the input, which reads as lag. The jump buttons pass
+     `behavior: 'smooth'` to `scrollTo` themselves, which is the only place the
+     animation was ever wanted. */
   scroll-padding-inline-start: max(1rem, calc((100% - var(--container)) / 2));
-  scroll-behavior: smooth;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   min-width: 0;
   max-width: 100%;
 }
 
 .fg-bfc__rail::-webkit-scrollbar { display: none; }
 
-.fg-bfc__rail.is-dragging { cursor: grabbing; scroll-behavior: auto; user-select: none; }
+/* Snap has to be off during a drag, or every pointermove fights a snap
+   animation and the card springs back under the cursor. */
+.fg-bfc__rail.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
 .fg-bfc__rail.is-dragging img { pointer-events: none; }
 
 .fg-bfc__slide {
@@ -44155,41 +44155,37 @@ html.fg-blinds-reveal-locked {
   display: flex;
   flex-direction: column;
   gap: var(--fg-space-4);
+  min-width: 0;
 }
 
-/* The stage is a defined surface rather than a tint, so a small door sits in a
-   box that clearly belongs to it instead of floating on the band. Its fixed
-   aspect ratio is the shared crop window's, which is what keeps the doors at
-   truthful relative scale from card to card. */
+/* A soft cool panel rather than white: the glass in these renders is very
+   pale, so it needs something to be brighter than. Checked against four
+   candidates before choosing. The hairline is there for the same reason the
+   smooth white swatch and every handle tile carry one. */
 .fg-bfc__stage {
   position: relative;
   margin: 0;
   aspect-ratio: 1024 / 392;
-  display: flex;
-  align-items: flex-end;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--color-line);
   border-radius: 12px;
-  background:
-    radial-gradient(120% 90% at 50% 100%, rgba(46, 172, 102, 0.14) 0%, rgba(46, 172, 102, 0) 62%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%);
+  background: linear-gradient(180deg, #f2f6f7 0%, #e6edef 100%);
   overflow: hidden;
 }
 
 /* Every door stands on the same line. Without it a two pane door is a small
-   object adrift in a wide box, which is precisely the floating the first build
-   was pulled for; with it the box reads as a plinth and the width difference
-   between two panes and seven becomes the thing you notice instead.
+   object adrift in a wide box; with it the box reads as a plinth and the width
+   difference between two panes and seven becomes the thing you notice.
 
    88.8% is where the threshold sits in the shared crop window (baseline 348 of
    392). If the canvas ever changes, change this in the same commit. */
 .fg-bfc__stage::after {
   content: '';
   position: absolute;
-  left: 8%;
-  right: 8%;
+  left: 7%;
+  right: 7%;
   top: 88.8%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.22) 18%, rgba(255, 255, 255, 0.22) 82%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(90deg, rgba(0, 45, 58, 0) 0%, rgba(0, 45, 58, 0.16) 16%, rgba(0, 45, 58, 0.16) 84%, rgba(0, 45, 58, 0) 100%);
 }
 
 /* `display: block` is load-bearing: an image is inline by default, sits on the
@@ -44207,7 +44203,7 @@ html.fg-blinds-reveal-locked {
   margin: 0;
   font-size: var(--fg-text-2xl);
   font-weight: 600;
-  color: #fff;
+  color: var(--color-steel);
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
 }
@@ -44218,19 +44214,19 @@ html.fg-blinds-reveal-locked {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 .fg-bfc__copy {
   margin: 0;
   font-size: var(--fg-text-md);
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--color-steel-90);
 }
 
 .fg-bfc__width {
   margin: 0.15rem 0 0;
   font-size: var(--fg-text-sm);
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -44242,14 +44238,14 @@ html.fg-blinds-reveal-locked {
   gap: var(--fg-space-5);
   margin-top: var(--fg-space-8);
   padding-top: var(--fg-space-6);
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid var(--color-line);
 }
 
 .fg-bfc__note {
   flex: 1 1 32rem;
   margin: 0;
   font-size: var(--fg-text-sm);
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-muted);
 }
 
 @media (max-width: 1180px) {
@@ -44261,12 +44257,6 @@ html.fg-blinds-reveal-locked {
   .fg-bfc__rail { --fg-bfc-per-view: 1.15; }
 
   .fg-bfc__head { margin-bottom: var(--fg-space-6); }
-
   .fg-bfc__controls { gap: var(--fg-space-3); }
-
   .fg-bfc__foot .button { width: 100%; justify-content: center; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fg-bfc__rail { scroll-behavior: auto; }
 }
