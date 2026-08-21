@@ -117,17 +117,20 @@ $bifold_slug = static function (string $code): string {
                     continue;
                 }
 
+                /* No thousands separator on the millimetre figures. A width is
+                   written 6500mm by everyone who prices work, and it is how
+                   Sheerline publish it; "6,500mm" reads as a typo. */
                 $panel_title = $panes === 1
                     ? sprintf(
-                        /* translators: %s: maximum width in millimetres. */
-                        __('A single door, up to %smm wide.', 'fenster'),
-                        number_format_i18n($max_width)
+                        /* translators: %d: maximum width in millimetres. */
+                        __('A single door, up to %dmm wide.', 'fenster'),
+                        $max_width
                     )
                     : sprintf(
                         /* translators: 1: number of panes. 2: maximum width in millimetres. */
-                        __('%1$s panes, up to %2$smm wide.', 'fenster'),
-                        number_format_i18n($panes),
-                        number_format_i18n($max_width)
+                        __('%1$d panes, up to %2$dmm wide.', 'fenster'),
+                        $panes,
+                        $max_width
                     );
                 ?>
                 <div
