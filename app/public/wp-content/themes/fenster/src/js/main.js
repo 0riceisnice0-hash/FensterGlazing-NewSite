@@ -1240,6 +1240,61 @@ document.querySelectorAll('[data-fg-care-guides]').forEach((widget) => {
   activate(fromHash || tabs[0].dataset.fgCareTab);
 });
 
+/*
+ * Bi-fold configurations: pick a pane count, see the layouts it comes in.
+ *
+ * Progressive enhancement in the honest direction. The markup ships every pane
+ * count visible under its own heading and the picker `hidden`, so a visitor
+ * without JavaScript reads all nineteen layouts rather than meeting a control
+ * that cannot move. The controller reveals the picker and then hides all but
+ * one panel, which is the only order that cannot leave the section empty if
+ * anything here throws.
+ *
+ * Roving focus, same as the care guides picker above.
+ */
+document.querySelectorAll('[data-fg-bifold-picker]').forEach((picker) => {
+  const section = picker.closest('.fg-bfc');
+  if (!section) return;
+
+  const tabs = [...picker.querySelectorAll('[data-fg-bifold-tab]')];
+  const panels = [...section.querySelectorAll('[data-fg-bifold-panel]')];
+  if (!tabs.length || !panels.length) return;
+
+  const activate = (target, { focus = false } = {}) => {
+    if (!panels.some((panel) => panel.dataset.fgBifoldPanel === target)) return;
+
+    tabs.forEach((tab) => {
+      const selected = tab.dataset.fgBifoldTab === target;
+      tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      tab.tabIndex = selected ? 0 : -1;
+      if (selected && focus) tab.focus();
+    });
+
+    panels.forEach((panel) => { panel.hidden = panel.dataset.fgBifoldPanel !== target; });
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activate(tab.dataset.fgBifoldTab));
+
+    tab.addEventListener('keydown', (event) => {
+      const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+      const step = keys[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const index = tabs.indexOf(tab);
+      const next = tabs[(index + step + tabs.length) % tabs.length];
+      if (next) activate(next.dataset.fgBifoldTab, { focus: true });
+    });
+  });
+
+  // Reveal first, then collapse: if `activate` fails the visitor still has the
+  // full list rather than a picker sitting over nothing.
+  picker.hidden = false;
+
+  const initial = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0];
+  activate(initial.dataset.fgBifoldTab);
+});
+
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');

@@ -4828,6 +4828,19 @@ if ($is_commercial_hub) {
             <?php get_template_part('template-parts/components/lift-slide-detail'); ?>
         <?php endif; ?>
 
+        <?php if ($slug === 'aluminium-bifold-doors') : ?>
+            <?php
+            /* Sheerline's nineteen published configurations, grouped by pane
+               count. It sits here, after the hub band that already claims "up
+               to seven panes" in text and before the specification choices,
+               because that is the order the decision is made in: how many
+               panes and which way they fold, then colours and glass, then a
+               price. Not a configurator; it hands over to the quote embed
+               below rather than pricing anything. See the component header. */
+            get_template_part('template-parts/components/bifold-configurations');
+            ?>
+        <?php endif; ?>
+
         <?php if (! $is_pet_flap_page && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && count($product_visual_gallery_remainder) >= 4) : ?>
             <section class="fg-product-visuals">
                 <div class="container fg-product-visuals__grid">

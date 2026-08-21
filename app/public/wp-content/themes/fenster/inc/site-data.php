@@ -2664,6 +2664,95 @@ function fenster_site_data(): array
                 ['key' => 'horizontal', 'label' => 'Horizontal', 'copy' => 'Bars across only, wider apart. The 1920s and 1930s pattern, and the one that suits a bay or a long low opening.'],
             ],
         ],
+        /* Sheerline's nineteen published Prestige bi-fold configurations, read
+           off sheerline.com/product/bi-fold/ on 2026-08-21. The notation is
+           theirs and it is total panes / panes folding one way / panes folding
+           the other, verified against the renders rather than assumed: in every
+           layout ending in 1 that last leaf carries its own lever and swings on
+           its own, which is the traffic door.
+
+           MAXIMUM WIDTH IS A PROPERTY OF THE PANE COUNT, NOT THE LAYOUT. All
+           four seven-pane layouts stop at 6500mm, all three five-pane ones at
+           6100mm, and so on. That is why the selector is by pane count: picking
+           a number answers "will it fit my opening" in one move.
+
+           Every figure here is Sheerline's for the system and none of it may be
+           restated as a Fenster performance figure, the same rule the Kenrick
+           and Liniar numbers are held to. */
+        'bifold_configurations' => [
+            'traffic_door' => 'A traffic door is one leaf that opens on its own, so you can step out without folding the whole run back.',
+            'note'         => 'Configurations and maximum widths are Sheerline\'s published figures for the Prestige bi-fold, and every layout is shown folded open. Which one suits your opening is settled at survey.',
+            'counts'       => [
+                [
+                    'panes'        => 1,
+                    'label'        => 'Single',
+                    'max_width_mm' => 1300,
+                    'configs'      => [
+                        ['code' => '1/1/0', 'name' => 'Single door', 'copy' => 'One leaf on hinges, the same as any other door.'],
+                    ],
+                ],
+                [
+                    'panes'        => 2,
+                    'label'        => '2 panes',
+                    'max_width_mm' => 2500,
+                    'configs'      => [
+                        ['code' => '2/2/0', 'name' => 'Both to one side', 'copy' => 'Both leaves fold together to one side.'],
+                        ['code' => '2/1/1', 'name' => 'French pair', 'copy' => 'One leaf each way, opening from the middle like French doors.'],
+                    ],
+                ],
+                [
+                    'panes'        => 3,
+                    'label'        => '3 panes',
+                    'max_width_mm' => 3700,
+                    'configs'      => [
+                        ['code' => '3/3/0', 'name' => 'All to one side', 'copy' => 'All three fold to one side.'],
+                        ['code' => '3/2/1', 'name' => 'With a traffic door', 'copy' => 'Two fold to one side. The third is a traffic door you can use on its own.'],
+                    ],
+                ],
+                [
+                    'panes'        => 4,
+                    'label'        => '4 panes',
+                    'max_width_mm' => 4900,
+                    'configs'      => [
+                        ['code' => '4/4/0', 'name' => 'All to one side', 'copy' => 'All four fold to one side.'],
+                        ['code' => '4/3/1', 'name' => 'With a traffic door', 'copy' => 'Three fold to one side. The fourth is a traffic door you can use on its own.'],
+                        ['code' => '4/2/2', 'name' => 'Split in the middle', 'copy' => 'Two each way, opening from the middle.'],
+                    ],
+                ],
+                [
+                    'panes'        => 5,
+                    'label'        => '5 panes',
+                    'max_width_mm' => 6100,
+                    'configs'      => [
+                        ['code' => '5/5/0', 'name' => 'All to one side', 'copy' => 'All five fold to one side.'],
+                        ['code' => '5/4/1', 'name' => 'With a traffic door', 'copy' => 'Four fold to one side, with a traffic door on the other.'],
+                        ['code' => '5/3/2', 'name' => 'Split three and two', 'copy' => 'Three one way, two the other.'],
+                    ],
+                ],
+                [
+                    'panes'        => 6,
+                    'label'        => '6 panes',
+                    'max_width_mm' => 6500,
+                    'configs'      => [
+                        ['code' => '6/6/0', 'name' => 'All to one side', 'copy' => 'All six fold to one side.'],
+                        ['code' => '6/5/1', 'name' => 'With a traffic door', 'copy' => 'Five fold to one side, with a traffic door on the other.'],
+                        ['code' => '6/4/2', 'name' => 'Split four and two', 'copy' => 'Four one way, two the other.'],
+                        ['code' => '6/3/3', 'name' => 'Split in the middle', 'copy' => 'Three each way, opening from the middle.'],
+                    ],
+                ],
+                [
+                    'panes'        => 7,
+                    'label'        => '7 panes',
+                    'max_width_mm' => 6500,
+                    'configs'      => [
+                        ['code' => '7/7/0', 'name' => 'All to one side', 'copy' => 'All seven fold to one side.'],
+                        ['code' => '7/6/1', 'name' => 'With a traffic door', 'copy' => 'Six fold to one side, with a traffic door on the other.'],
+                        ['code' => '7/5/2', 'name' => 'Split five and two', 'copy' => 'Five one way, two the other.'],
+                        ['code' => '7/4/3', 'name' => 'Split four and three', 'copy' => 'Four one way, three the other.'],
+                    ],
+                ],
+            ],
+        ],
         'window_handles' => [
             'slugs' => [
                 'aluminium-windows',
