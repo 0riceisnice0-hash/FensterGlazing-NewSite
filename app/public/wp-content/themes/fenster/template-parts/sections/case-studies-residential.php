@@ -430,17 +430,7 @@ $hero_intro_html = ob_get_clean();
                     </p>
                 <?php endif; ?>
 
-                <?php
-                /* A study with an install story moves its review to the end of
-                   that story instead of printing it here. The review is the
-                   customer's verdict on the day, and it only carries its weight
-                   once you have been walked through the day: printed above the
-                   rail it is read before the thing it is about, and the reader
-                   reaches the end of the sequence to find their closing words
-                   already behind them. Every study without a story keeps the
-                   review exactly where it has always been. */
-                ?>
-                <?php if ($review && ! empty($review['quote']) && empty($story_steps)) : ?>
+                <?php if ($review && ! empty($review['quote'])) : ?>
                     <figure class="fg-cs-review">
                         <blockquote><?php echo wp_kses((string) $review['quote'], $allowed_overview_html); ?></blockquote>
                         <?php if (! empty($review['author'])) : ?>
@@ -610,18 +600,6 @@ $hero_intro_html = ob_get_clean();
                     </li>
                 <?php endforeach; ?>
             </ol>
-
-            <?php /* Their verdict, at the end of their sequence where it lands. */ ?>
-            <?php if ($review && ! empty($review['quote'])) : ?>
-                <div class="container">
-                    <figure class="fg-cs-review fg-cs-review--story">
-                        <blockquote><?php echo wp_kses((string) $review['quote'], $allowed_overview_html); ?></blockquote>
-                        <?php if (! empty($review['author'])) : ?>
-                            <figcaption><?php echo esc_html((string) $review['author']); ?></figcaption>
-                        <?php endif; ?>
-                    </figure>
-                </div>
-            <?php endif; ?>
 
             <?php if ($story_source && ! empty($story_source['label'])) : ?>
                 <div class="container">

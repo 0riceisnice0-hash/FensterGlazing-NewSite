@@ -12964,19 +12964,6 @@ a.fg-cs-installer:hover {
   line-height: 1.45;
 }
 
-/* The review when it closes a story rather than sitting in the overview
-   column. It is the same panel, given a little more room and a little more
-   air above it, because here it is the last thing on the sequence rather than
-   a note beside the copy. */
-.fg-cs-review--story {
-  max-width: 72ch;
-  margin-top: clamp(1.5rem, 3vw, 2.4rem);
-}
-
-.fg-cs-review--story blockquote {
-  font-size: clamp(1.12rem, 1.7vw, 1.32rem);
-}
-
 .fg-cs-story__credit {
   margin: clamp(0.75rem, 1.5vw, 1.1rem) 0 0;
   color: var(--color-muted);

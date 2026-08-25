@@ -797,23 +797,20 @@ function fenster_case_studies(): array
                     ],
                     [
                         'src' => $img . 'cs-mk-composite-door-open-outside.jpg',
+                        'quote' => 'Anthracite grey on the outside. Looks smart!',
                         'caption' => 'From the front step with the door open, looking down the hallway to the stairs. That is the corridor the sidelight was widened for.',
                     ],
                     [
                         'src' => $img . 'cs-mk-composite-door-open-inside.jpg',
-                        'quote' => 'Anthracite grey on the outside. Looks smart!',
+                        'quote' => 'Loving the look of it!',
                         'caption' => 'The anthracite face of the leaf from inside, hung on its hinges with the frame being trimmed in around it.',
                     ],
                     [
                         'src' => $img . 'cs-mk-composite-door-finished.jpg',
-                        'quote' => 'Loving the look of it!',
+                        'quote' => 'Picking up the keys to my big renovation project house right before being abroad for a month was not great timing. But Fenster did a cracking job today and I can\'t wait to get home to see it in the flesh. So smart! Thank you mum xxx',
                         'caption' => 'The finished doorset closed, anthracite grey against yellow brick, with the sidelight beside it and the diamond light in the slab.',
                     ],
                 ],
-            ],
-            'review' => [
-                'quote' => 'Picking up the keys to my big renovation project house right before being abroad for a month was not great timing. But Fenster did a cracking job today and I can\'t wait to get home to see it in the flesh. So smart!',
-                'author' => 'The Renovation Files, on Instagram',
             ],
             /* One image only, so the masonry does not render. The story rail
                already carries all eleven photographs in the order the customer

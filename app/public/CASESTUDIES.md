@@ -291,15 +291,24 @@ Milton Keynes study `@fensterglazing` also reads as "Fenster", because this is
 Fenster's own site. Everything else in a quote is theirs, and rewording it to
 sound more like the rest of the page would make it a testimonial we wrote.
 
-**A study with a `story` moves its `review` to the end of the rail.** The review
-is the customer's verdict on the day and it only carries its weight once the
-reader has been walked through the day; in the overview column it printed
-several hundred pixels above the rail that earns it, so you reached the last
-card to find their closing words already behind you. The owner found that by
-scrolling to the end and looking for them. The template handles it: `review`
-renders in the overview column when there is no story, and under the rail,
-above the credit, when there is. **Studies without a story are untouched** and
-the Whitehouse bifolds are the regression check for that.
+**COUNT THE CAPTION BLOCKS AGAINST THE SLIDES BEFORE YOU MAP ANYTHING.** An
+Instagram caption is one block of text under the whole carousel, and the
+convention is one paragraph per slide, in order. The Milton Keynes post had
+eleven paragraphs for eleven photographs and the first pass read the last one
+as a sign-off for the whole post rather than as photograph eleven's line. That
+single misread shifted steps nine, ten and eleven each one card along, and
+lifted the customer's closing words out of the rail into a `review` panel
+entirely. The owner caught it by comparing the last card against the post:
+"photo 11 has a big bio, but on the site it just has loving the look".
+
+**So do not lift a sign-off out of the sequence into `review`.** If the
+customer wrote it under a photograph, it belongs under that photograph. The
+last card carrying a longer quote than the others is correct, not a layout
+fault: it is the payoff, and it is what the post looks like. This study
+therefore has **no `review` field at all** and does not need one, because its
+review is step eleven. Only add `review` alongside a `story` if the words come
+from somewhere the story does not, such as a Google review, and then check
+where it prints relative to the rail.
 
 **Give the study one image and let the rail carry the rest.** The story already
 shows every photograph in the order it was told, so `images` holds the hero
@@ -335,8 +344,8 @@ from someone else's post without the owner confirming that permission exists.
 - **`date_confirmed`** (optional, `false`). Use when a completion date is
   approximate rather than guessing one.
 - **`story`** (optional, array). The customer's own sequence as a rail of steps.
-  Full rules in the section above; it also moves `review` to the end of the
-  rail and normally leaves `images` holding the hero alone. Added 2026-08-25.
+  Full rules in the section above; a study with one normally has no `review`
+  and leaves `images` holding the hero alone. Added 2026-08-25.
 - **`gallery_shape`** (optional, `'tall'`). Renders that study's gallery cells
   at 3:4 instead of the default square. Added 2026-08-18 for Drayton Parslow.
   **Only set it when every image in the gallery is portrait.** Across the 93
