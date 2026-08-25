@@ -135,16 +135,34 @@ npm.cmd run build            # only if you touched SCSS or JS
 & '<php>' -l template-parts/sections/case-studies-residential.php
 ```
 
-Quick data sanity check (stub harness) to confirm every image path exists and
-there are no em dashes:
+Then run the data harness. It is a committed script now rather than something
+you paste together, it needs no WordPress and no running site, and it exits
+non-zero so it can gate a deploy:
 
-```php
-define('ABSPATH','/tmp/'); define('FENSTER_THEME_URI','https://x/wp-content/themes/fenster');
-function home_url($p=''){return 'https://fensterglazing.com'.$p;}
-function esc_url($u){return $u;} function sanitize_title($s){return strtolower(preg_replace('/[^a-z0-9]+/i','-',trim($s)));}
-require 'inc/case-studies-data.php';
-foreach (fenster_case_studies() as $slug=>$cs) { /* check $cs['images'] files exist, etc. */ }
+```powershell
+& '<php>' scripts/check-case-studies.php
 ```
+
+It checks, across every study: required fields present, the date ISO, **both
+SEO fields present and the meta description within 160 characters**, every
+referenced image, card image, video and poster actually on disk, every image
+carrying a caption (which is its alt text), a `story` carrying its credit and
+every step captioned, installers carrying a name and role, and no em or en
+dash anywhere in the data.
+
+**It was written on 2026-08-25 because three faults had been sitting in the
+data unseen.** One study, the Wolverton heritage doors, carried no `seo` block
+at all and had been falling back to its title and its card summary; two
+commercial meta descriptions were over the 160 cap this guide has specified all
+along. None of them broke a page, which is exactly why nobody saw them. If you
+add a rule to this file, add it to the harness in the same pass or expect it to
+drift.
+
+**When you extend the harness, prove the new check fails before you trust it
+passing.** Injecting the five faults it was written for found that its em dash
+branch called `mb_substr()`, which Local's CLI PHP does not have, so it would
+have thrown the first time it ever fired. A check whose failure path has never
+run is not a check.
 
 ### Step 4 — Deploy to test and verify
 

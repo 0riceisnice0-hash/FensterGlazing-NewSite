@@ -333,7 +333,7 @@ function fenster_case_studies(): array
             ],
             'seo' => [
                 'title_tag' => 'Heal\'s, Tottenham Court Road: Commercial Aluminium Glazing',
-                'meta_description' => 'A Fenster commercial project: Sheerline Prestige windows and a door, two heritage windows and six bespoke louvres for the refurbishment of the Heal\'s building, Tottenham Court Road.',
+                'meta_description' => 'A Fenster commercial project: Sheerline Prestige and heritage windows and six bespoke louvres, fitted to the Heal\'s building on Tottenham Court Road.',
             ],
         ],
         'bletchley-rail-depot-refurbishment' => [
@@ -401,7 +401,7 @@ function fenster_case_studies(): array
             ],
             'seo' => [
                 'title_tag' => 'Bletchley Rail Depot: Commercial Windows, Doors and Curtain Walling',
-                'meta_description' => 'A Fenster commercial project: 65 aluminium windows, 6 doors and a curtain wall screen for the refurbishment of a working rail depot at Bletchley, completed September 2025.',
+                'meta_description' => 'A Fenster commercial project: 65 aluminium windows, 6 doors and a curtain wall screen for the refurbishment of a working rail depot at Bletchley.',
             ],
         ],
         'headrow-court-student-accommodation-leeds' => [
@@ -1835,6 +1835,15 @@ function fenster_case_studies(): array
                 ['src' => $img . 'cs-wolverton-heritage-doors-single.webp', 'caption' => 'After: the side path as one wide single leaf.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-before-single.webp', 'caption' => 'Before: the side path as narrow timber French doors.'],
                 ['src' => $img . 'cs-wolverton-heritage-doors-interior.webp', 'caption' => 'The patio doors from inside, with the toplight above the head.'],
+            ],
+            /* This study shipped with no `seo` block at all, so it fell back to
+               its title plus "| Fenster Glazing" and used the card summary as its
+               meta description. Neither was wrong, but it was the only residential
+               study not carrying written search copy, and the fallback title did
+               not read like its siblings. Added 2026-08-25. */
+            'seo' => [
+                'title_tag' => 'Heritage Aluminium Doors Case Study, Wolverton | Fenster Glazing',
+                'meta_description' => 'A real Fenster project in Wolverton: jet black Sheerline Classic heritage aluminium doors, replacing painted timber on a Victorian terrace.',
             ],
         ],
         'white-charisma-rose-sash-windows-wolverton' => [
