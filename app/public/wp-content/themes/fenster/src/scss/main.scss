@@ -12809,12 +12809,16 @@ a.fg-cs-installer:hover {
   gap: 0.5rem;
 }
 
+/* 44px, which is the site's floor for anything you tap: the bi-fold rail's
+   jump buttons and the lightbox arrows both set it, and this control sits a
+   few hundred pixels from one of them. 2.5rem looked right on a desktop mouse
+   and was 40px on a phone. */
 .fg-cs-story__nav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   border: 1px solid var(--color-line);
   border-radius: 50%;
