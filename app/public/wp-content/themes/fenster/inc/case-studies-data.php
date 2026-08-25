@@ -695,6 +695,146 @@ function fenster_case_studies(): array
                 'meta_description' => 'A Fenster commercial project: colour-matched aluminium windows and doors for the Kitwood Unit, fitted around live clinical services.',
             ],
         ],
+        /* The first study on the site whose photographs and words are the
+           customer's own. They documented the whole install themselves and
+           posted it, and gave us permission to republish it here (owner
+           confirmed, 2026-08-25). That is what the `story` field renders: their
+           sequence, their line under each photograph, credited and linked back.
+
+           Do NOT quietly reword the `story` quotes. They are somebody else's
+           writing, tidied only for emoji and the site's no-em-dash rule, and
+           "@fensterglazing" reads as "Fenster" because this is Fenster's own
+           site. Everything else in them is theirs.
+
+           The style is the Distinction Rustic Renown shape, boarded inside a
+           plain border with a diamond light, matched against the catalogue in
+           generated-page.php rather than guessed. The RR03 product code is
+           deliberately not printed: the slab geometry is certain from the
+           photographs, the code is not. */
+        'composite-front-door-milton-keynes' => [
+            'title' => 'Composite front door and sidelight, Milton Keynes',
+            'location' => 'Milton Keynes',
+            'type' => 'Residential',
+            'date' => '2026-08-20',
+            'summary' => 'An anthracite grey composite front door and a full height sidelight, replacing a white uPVC door and a side panel boarded across its bottom half.',
+            'lead' => 'The widest door leaf we do, and a sidelight glazed the full height of the opening. Both decisions were about the same thing: getting daylight down the hallway.',
+            'products' => [
+                ['label' => 'Composite doors', 'url' => home_url('/composite-doors/')],
+            ],
+            'colour' => ['label' => 'Anthracite grey', 'url' => $colour_link('composite', 'anthracite-grey')],
+            'specs' => [
+                ['label' => 'Product', 'value' => 'One composite front door with a sidelight'],
+                ['label' => 'Slab', 'value' => 'Distinction Rustic Renown, 44.5mm insulated'],
+                ['label' => 'Colour', 'value' => 'Anthracite grey outside, white inside'],
+                ['label' => 'Glass', 'value' => 'Diamond light in the slab, obscured sidelight'],
+            ],
+            'overview' => [
+                'The door that came out was white uPVC: four panels under a sunburst arch, a brass letterplate, a brass lever, and a narrow side panel that was glazed at the top and boarded across the bottom half. It had done its years. What went in is a <a href="' . esc_url(home_url('/composite-doors/')) . '">composite door</a> on the Distinction Rustic Renown shape, tongue and groove boards framed by a plain border, with a diamond light set into the upper half of the slab.',
+                'Beside it is a sidelight glazed from head to threshold rather than half of one. That, and the widest leaf we do, are the two things the customer asked for, and both were for the same reason: this is a narrow hallway with a corridor running off the back of it, and the old side panel was giving up its lower half to a solid board. The new one does not, so the daylight reaches the floor.',
+                'The slab is 44.5mm and insulated, where a typical uPVC door panel is 28mm. It is a compression moulded glass reinforced polyester skin over a foam filled core, with water resistant polymer edges and engineered wood stiles behind it, so it cannot drink rainwater and bow the way a solid timber core can. On Distinction\'s independent testing at the University of Salford\'s Energy House it came out 50% more thermally efficient than a solid timber core door.',
+                'Every Distinction door we hang carries AI Secure locking, an APECS 3-star cylinder and an ILH Duplex multipoint lock, and the slabs are accredited by Secured by Design, the police backed standard. Behind that sits a £5,000 security guarantee, terms applying, and we go through them before you order rather than after.',
+                'The colour is <a href="' . $colour_link('composite', 'anthracite-grey') . '">anthracite grey</a> outside and white inside, which is why it reads as two different doors depending on which side of it you are standing. Outside it is dark against yellow brick, with a black lever, a black letterplate and black hinges. Inside it is white, because a dark slab in a hallway this narrow would take back the light the sidelight was widened to let in.',
+            ],
+            'installed' => [
+                'One Distinction composite front door, Rustic Renown shape',
+                'Full height glazed sidelight beside it',
+                'Diamond light in the slab, obscured glass in the sidelight',
+                'Anthracite grey outside, white inside, with black hardware',
+                'New cill, with the old door and frame taken out to brick',
+            ],
+            'installers' => [$fitter_shane, $fitter_andy],
+            'story' => [
+                'title' => 'The customer photographed the whole day.',
+                'intro' => 'They picked up the keys to the house and went abroad for a month, so they were not there to watch it happen. This is their record of it, in the order they posted it.',
+                'source' => [
+                    'label' => 'The Renovation Files',
+                    'url' => 'https://www.instagram.com/p/DcQ_VsNoCYA/',
+                ],
+                'steps' => [
+                    /* No quote on this one and none invented: it is cut from the
+                       before half of their own before-and-after card, which
+                       carried no line of its own. Our words, and they read as
+                       ours because the caption renders a note rather than a
+                       quote when `quote` is absent. */
+                    [
+                        'src' => $img . 'cs-mk-composite-door-before.jpg',
+                        'caption' => 'Before: the white uPVC door, four panels under a sunburst arch, with a brass letterplate and a side panel boarded across its bottom half.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-delivered.jpg',
+                        'quote' => 'The door I designed with Fenster. Design, order and fit was a smooth process and only a few weeks from start to finish!',
+                        'caption' => 'The new door off the van, anthracite grey face out, with the diamond light and the black letterplate already in it.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-inside-face.jpg',
+                        'quote' => 'The inside of the door, keeping it nice and bright inside the hallway.',
+                        'caption' => 'The other face of the same leaf, white, still wrapped, carried between the two fitters.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-old-frame-out.jpg',
+                        'quote' => 'Old door and framework being removed.',
+                        'caption' => 'The old frame coming out, seen from the hallway with dust sheets down over the floor.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-opening.jpg',
+                        'quote' => 'Big hole in the front of my house!',
+                        'caption' => 'The opening stripped back to brick and lintel, with the van on the drive through it.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-cill.jpg',
+                        'quote' => 'New sill going in. The front doorstep and porch will be going, but only when I\'ve saved up some money!',
+                        'caption' => 'The new cill set down across the quarry tiled step, levelled before anything went on top of it.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-hung.jpg',
+                        'quote' => 'New door going in. Great fit!',
+                        'caption' => 'The white face of the door hung in the opening, with the lever and cylinder going on.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-sidelight.jpg',
+                        'quote' => 'I went for the widest door they did, and a full height side panel to maximise light coming into the hallway and down the corridor.',
+                        'caption' => 'Door and sidelight together from inside, the sidelight glazed the full height of the opening in obscured glass.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-open-outside.jpg',
+                        'caption' => 'From the front step with the door open, looking down the hallway to the stairs. That is the corridor the sidelight was widened for.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-open-inside.jpg',
+                        'quote' => 'Anthracite grey on the outside. Looks smart!',
+                        'caption' => 'The anthracite face of the leaf from inside, hung on its hinges with the frame being trimmed in around it.',
+                    ],
+                    [
+                        'src' => $img . 'cs-mk-composite-door-finished.jpg',
+                        'quote' => 'Loving the look of it!',
+                        'caption' => 'The finished doorset closed, anthracite grey against yellow brick, with the sidelight beside it and the diamond light in the slab.',
+                    ],
+                ],
+            ],
+            'review' => [
+                'quote' => 'Picking up the keys to my big renovation project house right before being abroad for a month was not great timing. But Fenster did a cracking job today and I can\'t wait to get home to see it in the flesh. So smart!',
+                'author' => 'The Renovation Files, on Instagram',
+            ],
+            /* One image only, so the masonry does not render. The story rail
+               already carries all eleven photographs in the order the customer
+               told it, and repeating them underneath with captions we wrote
+               would be the same job done twice and worse the second time. */
+            'images' => [
+                ['src' => $img . 'cs-mk-composite-door-finished.jpg', 'caption' => 'The finished composite front door and sidelight, anthracite grey against yellow brick.'],
+            ],
+            /* Every photograph on this job is portrait 4:5 and the archive card
+               is 16:10, so a centre crop of the hero would be a band of boarded
+               slab and no doorset. This is cut from the full resolution original
+               and keeps the diamond light, the lever, the letterplate and the
+               sidelight beside them. */
+            'card_image' => ['src' => $img . 'cs-mk-composite-door-card.jpg', 'caption' => 'An anthracite grey composite front door with a diamond light and a full height sidelight, in Milton Keynes.'],
+            'seo' => [
+                'title_tag' => 'Composite Front Door Case Study, Milton Keynes | Fenster Glazing',
+                /* 154 characters against a 160 cap. */
+                'meta_description' => 'A real Fenster project in Milton Keynes: an anthracite grey composite front door and a full height sidelight, photographed through the day by the customer.',
+            ],
+        ],
+
         'aluminium-bifold-doors-whitehouse-milton-keynes' => [
             'title' => 'Aluminium bifold doors, Whitehouse',
             'location' => 'Whitehouse, Milton Keynes',

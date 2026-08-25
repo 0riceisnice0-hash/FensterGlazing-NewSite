@@ -12765,6 +12765,238 @@ a.fg-cs-installer:hover {
   text-transform: uppercase;
 }
 
+/* The install story: the customer's own sequence, as a rail of steps.
+   ---------------------------------------------------------------------------
+   One step is one photograph they took and one line they wrote under it, so
+   the rail reads as their telling of the day rather than as a second gallery.
+   The whole section is optional and only renders on a study that carries a
+   `story` field.
+
+   The photograph is squared, the same as a gallery cell, so the steps line up
+   however the source files were shot. That is the owner rule of 2026-08-10 and
+   it matters more here than in the masonry: these cards sit in a row, and one
+   taller cell would drag the quote under it out of line with its neighbours. */
+.fg-cs-story {
+  padding: clamp(1.5rem, 3.5vw, 2.75rem) 0 clamp(1rem, 2vw, 1.75rem);
+}
+
+.fg-cs-story__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem clamp(1rem, 3vw, 2.5rem);
+  margin-bottom: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+
+.fg-cs-story__head h2 {
+  margin: 0;
+  color: var(--color-steel);
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+}
+
+.fg-cs-story__intro {
+  max-width: 60ch;
+  margin: 0.7rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.fg-cs-story__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fg-cs-story__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-steel);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.fg-cs-story__nav:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.fg-cs-story__nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.fg-cs-story__counter {
+  margin: 0 0 0 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.fg-cs-story__counter-sep {
+  margin: 0 0.15rem;
+  opacity: 0.5;
+}
+
+/* The rail runs full bleed and pads itself back to the container line, so the
+   first step aligns with the heading above it and the last one can run off the
+   right edge rather than stopping dead at the gutter. That off-edge card is
+   what says the row scrolls. */
+.fg-cs-story__rail {
+  --fg-cs-story-gap: clamp(0.85rem, 1.6vw, 1.35rem);
+  --fg-cs-story-per-view: 3.2;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem max(1rem, calc((100% - var(--container)) / 2)) 0.75rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--fg-cs-story-gap) * (var(--fg-cs-story-per-view) - 1))) / var(--fg-cs-story-per-view));
+  gap: var(--fg-cs-story-gap);
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* NO SCROLL SNAP AND NO `scroll-behavior: smooth`, both for the reasons the
+     bi-fold rail records at .fg-bfc__rail. Snap: a card this wide swallows a
+     small wheel nudge inside its own snap zone, so the rail scrolls and springs
+     straight back and every small push bounces. Smooth: Chrome applies it to
+     user scrolling as well as to scripted scrolling, so every wheel notch and
+     drag frame animates towards a target instead of tracking the input, which
+     reads as lag. The nav buttons pass `behavior: 'smooth'` to `scrollTo`
+     themselves, which is the only place the animation was ever wanted. */
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.fg-cs-story__rail::-webkit-scrollbar { display: none; }
+
+.fg-cs-story__rail:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.fg-cs-story__rail.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.fg-cs-story__rail.is-dragging img { pointer-events: none; }
+
+.fg-cs-story__step {
+  min-width: 0;
+}
+
+.fg-cs-story__figure {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  height: 100%;
+}
+
+.fg-cs-story__zoom {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-line);
+}
+
+.fg-cs-story__zoom img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.fg-cs-story__zoom:hover img {
+  transform: scale(1.03);
+}
+
+.fg-cs-story__caption {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0.6rem;
+}
+
+.fg-cs-story__num {
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+
+/* Their words, set as a quote rather than as a caption, because they are one.
+   The rule down the left is the same device the review panel uses, at the
+   weight a caption can carry. */
+.fg-cs-story__quote {
+  margin: 0;
+  padding-left: 0.75rem;
+  border-left: 2px solid rgba(46, 172, 102, 0.35);
+  color: var(--color-steel);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.fg-cs-story__note {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.fg-cs-story__credit {
+  margin: clamp(0.75rem, 1.5vw, 1.1rem) 0 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.fg-cs-story__credit a {
+  color: var(--color-accent);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(46, 172, 102, 0.4);
+}
+
+@media (max-width: 900px) {
+  .fg-cs-story__rail {
+    --fg-cs-story-per-view: 2.15;
+  }
+}
+
+@media (max-width: 600px) {
+  .fg-cs-story__rail {
+    --fg-cs-story-per-view: 1.25;
+  }
+
+  .fg-cs-story__head {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cs-story__zoom img,
+  .fg-cs-story__zoom:hover img {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* Gallery: whole photos, no crop, masonry that embraces aspect ratios */
 .fg-cs-gallery {
   padding: clamp(1rem, 3vw, 2rem) 0 clamp(2.5rem, 5vw, 4rem);

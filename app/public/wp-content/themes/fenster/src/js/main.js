@@ -1384,6 +1384,154 @@ document.querySelectorAll('[data-fg-bifold-rail]').forEach((rail) => {
   sync();
 });
 
+/**
+ * The case study install story rail.
+ *
+ * One step is one photograph the customer took and one line they wrote under
+ * it. The rail is a native horizontal scroller first: the controls ship hidden
+ * in the markup and are revealed here, so with no JavaScript every step is
+ * still present, scrollable and indexable.
+ *
+ * The two rules this shares with the bi-fold rail are enforced in main.scss,
+ * not here: no scroll snap and no `scroll-behavior: smooth` on the rail. The
+ * prev/next buttons pass `behavior: 'smooth'` to `scrollTo` themselves, which
+ * is the only place that animation belongs.
+ *
+ * The drag handling is deliberately the same shape as the bi-fold rail's,
+ * including the flick that carries, because that is the version the owner
+ * signed off as tracking properly. Touch and trackpad already scroll natively
+ * and are not bound.
+ */
+document.querySelectorAll('[data-fg-story-rail]').forEach((rail) => {
+  const section = rail.closest('.fg-cs-story');
+  if (!section) return;
+
+  const controls = section.querySelector('[data-fg-story-controls]');
+  const prevButton = section.querySelector('[data-fg-story-prev]');
+  const nextButton = section.querySelector('[data-fg-story-next]');
+  const position = section.querySelector('[data-fg-story-position]');
+  const steps = [...rail.querySelectorAll('[data-fg-story-step]')];
+  if (!steps.length) return;
+
+  const pad = () => parseFloat(getComputedStyle(rail).paddingLeft) || 0;
+  // A rail scrolled to its end rarely lands on a whole pixel, so the end test
+  // needs slack or the next button never disables on the last step.
+  const maxScroll = () => rail.scrollWidth - rail.clientWidth;
+
+  const currentIndex = () => {
+    const x = rail.scrollLeft + pad();
+    let best = 0;
+    let bestGap = Infinity;
+    steps.forEach((step, i) => {
+      const gap = Math.abs(step.offsetLeft - x);
+      if (gap < bestGap) { bestGap = gap; best = i; }
+    });
+    return best;
+  };
+
+  const sync = () => {
+    const index = currentIndex();
+    if (position) position.textContent = String(index + 1).padStart(2, '0');
+    if (prevButton) prevButton.disabled = rail.scrollLeft <= 1;
+    if (nextButton) nextButton.disabled = rail.scrollLeft >= maxScroll() - 1;
+  };
+
+  let frame = 0;
+  rail.addEventListener('scroll', () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => { frame = 0; sync(); });
+  }, { passive: true });
+
+  let glide = 0;
+  const stopGlide = () => { if (glide) { cancelAnimationFrame(glide); glide = 0; } };
+
+  const goTo = (index) => {
+    const target = steps[Math.max(0, Math.min(steps.length - 1, index))];
+    if (!target) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    stopGlide();
+    rail.scrollTo({ left: target.offsetLeft - pad(), behavior: reduced ? 'auto' : 'smooth' });
+  };
+
+  prevButton?.addEventListener('click', () => goTo(currentIndex() - 1));
+  nextButton?.addEventListener('click', () => goTo(currentIndex() + 1));
+
+  // Arrow keys once the rail itself has focus. It is `tabindex="0"` in the
+  // markup because a scrollable region needs to be reachable without a mouse.
+  rail.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    goTo(currentIndex() + (event.key === 'ArrowRight' ? 1 : -1));
+  });
+
+  let dragging = false;
+  let startX = 0;
+  let startScroll = 0;
+  let moved = 0;
+  let lastX = 0;
+  let lastT = 0;
+  let velocity = 0;
+
+  rail.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    stopGlide();
+    dragging = true;
+    moved = 0;
+    velocity = 0;
+    startX = lastX = event.clientX;
+    lastT = event.timeStamp;
+    startScroll = rail.scrollLeft;
+    rail.classList.add('is-dragging');
+  });
+
+  rail.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    const delta = event.clientX - startX;
+    moved = Math.max(moved, Math.abs(delta));
+    rail.scrollLeft = startScroll - delta;
+
+    const dt = event.timeStamp - lastT;
+    if (dt > 0) velocity = (event.clientX - lastX) / dt;
+    lastX = event.clientX;
+    lastT = event.timeStamp;
+  });
+
+  const endDrag = () => {
+    if (!dragging) return;
+    dragging = false;
+    rail.classList.remove('is-dragging');
+
+    // Below this the visitor was positioning, not flicking.
+    if (Math.abs(velocity) < 0.12) return;
+
+    let v = velocity * 16;
+    const step = () => {
+      v *= 0.94;
+      rail.scrollLeft -= v;
+      glide = Math.abs(v) > 0.4 ? requestAnimationFrame(step) : 0;
+    };
+    glide = requestAnimationFrame(step);
+  };
+
+  rail.addEventListener('pointerup', endDrag);
+  rail.addEventListener('pointercancel', endDrag);
+  rail.addEventListener('pointerleave', endDrag);
+  rail.addEventListener('wheel', stopGlide, { passive: true });
+  rail.addEventListener('touchstart', stopGlide, { passive: true });
+
+  // A drag that crossed a photograph would otherwise open the lightbox on
+  // whatever it finished over.
+  rail.addEventListener('click', (event) => {
+    if (moved > 6) { event.preventDefault(); event.stopPropagation(); }
+  }, true);
+
+  if (controls) controls.hidden = false;
+  sync();
+  // The rail's scrollWidth is only right once the step images have laid out,
+  // and they are lazy, so the end test above can start life wrong.
+  window.addEventListener('load', sync);
+});
+
 document.querySelectorAll('[data-fg-door-selector]').forEach((selector) => {
   const preview = selector.querySelector('[data-fg-choice-image]');
   const name = selector.querySelector('[data-fg-choice-name]');

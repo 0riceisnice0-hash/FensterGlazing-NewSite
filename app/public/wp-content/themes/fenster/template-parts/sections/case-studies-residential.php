@@ -146,6 +146,13 @@ $images = is_array($study['images'] ?? null) ? $study['images'] : [];
 $installers = is_array($study['installers'] ?? null) ? $study['installers'] : [];
 $review = is_array($study['review'] ?? null) ? $study['review'] : null;
 $award = is_array($study['award'] ?? null) ? $study['award'] : null;
+/* The install story, added 2026-08-25. A study whose customer documented the
+   day themselves gets their sequence rendered as a rail of steps, each one
+   their photograph and their own words about it. It is optional and no other
+   study has one, so nothing changes anywhere it is absent. See the block that
+   renders it below for what the fields do. */
+$story = is_array($study['story'] ?? null) ? $study['story'] : null;
+$story_steps = ($story && is_array($story['steps'] ?? null)) ? array_values($story['steps']) : [];
 $video = is_array($study['video'] ?? null) ? $study['video'] : null;
 $is_wide_video = $video && ($video['orientation'] ?? '') === 'landscape';
 
@@ -498,6 +505,122 @@ $hero_intro_html = ob_get_clean();
             </aside>
         </div>
     </section>
+
+    <?php if (! empty($story_steps)) : ?>
+        <?php
+        /* THE INSTALL STORY. A rail of steps, each one a photograph the
+           customer took and the words they wrote under it. It exists because a
+           customer occasionally documents the whole day themselves, and that
+           sequence is worth more than the same photographs dropped into the
+           masonry with captions we wrote: it is the only place on the site
+           where somebody outside the company narrates a Fenster install.
+
+           Two rules carried over from the bi-fold rail, both of which were paid
+           for there and are repeated in main.scss where they are enforced:
+           NO scroll snap, and NO `scroll-behavior: smooth` on the rail. Cards
+           this wide sit inside their own snap zone on a small wheel nudge, so
+           snapping springs every small push back to where it started, and
+           Chrome applies smooth scrolling to user input as well as to
+           `scrollTo`, which reads as lag rather than polish.
+
+           The controls ship hidden and the controller reveals them, so with no
+           JavaScript the rail is still a native horizontal scroller with every
+           step in it, readable and indexable. Each photograph is a lightbox
+           link on the same global wiring as the gallery. */
+        $story_source = is_array($story['source'] ?? null) ? $story['source'] : null;
+        $story_total = count($story_steps);
+        ?>
+        <section class="fg-cs-story" aria-labelledby="fg-cs-story-title">
+            <div class="container fg-cs-story__head">
+                <div>
+                    <p class="eyebrow"><?php esc_html_e('The install, in their words', 'fenster'); ?></p>
+                    <h2 id="fg-cs-story-title"><?php echo esc_html((string) ($story['title'] ?? __('The customer photographed the whole day.', 'fenster'))); ?></h2>
+                    <?php if (! empty($story['intro'])) : ?>
+                        <p class="fg-cs-story__intro"><?php echo esc_html((string) $story['intro']); ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="fg-cs-story__controls" data-fg-story-controls hidden>
+                    <button
+                        type="button"
+                        class="fg-cs-story__nav"
+                        data-fg-story-prev
+                        aria-label="<?php esc_attr_e('Previous step', 'fenster'); ?>"
+                    >&lsaquo;</button>
+                    <button
+                        type="button"
+                        class="fg-cs-story__nav"
+                        data-fg-story-next
+                        aria-label="<?php esc_attr_e('Next step', 'fenster'); ?>"
+                    >&rsaquo;</button>
+                    <p class="fg-cs-story__counter" aria-live="polite">
+                        <span data-fg-story-position>01</span>
+                        <span class="fg-cs-story__counter-sep">/</span>
+                        <span><?php echo esc_html(sprintf('%02d', $story_total)); ?></span>
+                    </p>
+                </div>
+            </div>
+
+            <ol
+                class="fg-cs-story__rail"
+                data-fg-story-rail
+                tabindex="0"
+                role="group"
+                aria-label="<?php esc_attr_e('The installation, step by step', 'fenster'); ?>"
+            >
+                <?php foreach ($story_steps as $step_index => $step) : ?>
+                    <?php
+                    $step_src = (string) ($step['src'] ?? '');
+                    $step_caption = (string) ($step['caption'] ?? '');
+                    $step_quote = (string) ($step['quote'] ?? '');
+
+                    if ($step_src === '') {
+                        continue;
+                    }
+                    ?>
+                    <li class="fg-cs-story__step" data-fg-story-step="<?php echo esc_attr((string) $step_index); ?>">
+                        <figure class="fg-cs-story__figure">
+                            <a
+                                class="fg-cs-zoom fg-cs-story__zoom"
+                                href="<?php echo esc_url($step_src); ?>"
+                                data-fg-gallery-lightbox
+                                aria-label="<?php esc_attr_e('View full image', 'fenster'); ?>"
+                            >
+                                <img src="<?php echo esc_url($step_src); ?>" alt="<?php echo esc_attr($step_caption !== '' ? $step_caption : $title); ?>" loading="lazy">
+                            </a>
+                            <figcaption class="fg-cs-story__caption">
+                                <span class="fg-cs-story__num" aria-hidden="true"><?php echo esc_html(sprintf('%02d', $step_index + 1)); ?></span>
+                                <?php if ($step_quote !== '') : ?>
+                                    <blockquote class="fg-cs-story__quote"><?php echo esc_html($step_quote); ?></blockquote>
+                                <?php else : ?>
+                                    <p class="fg-cs-story__note"><?php echo esc_html($step_caption); ?></p>
+                                <?php endif; ?>
+                            </figcaption>
+                        </figure>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+
+            <?php if ($story_source && ! empty($story_source['label'])) : ?>
+                <div class="container">
+                    <p class="fg-cs-story__credit">
+                        <?php
+                        $source_label = esc_html((string) $story_source['label']);
+                        $source_url = (string) ($story_source['url'] ?? '');
+                        $source_name = $source_url !== ''
+                            ? '<a href="' . esc_url($source_url) . '" rel="noopener nofollow" target="_blank">' . $source_label . '</a>'
+                            : $source_label;
+                        printf(
+                            /* translators: %s: the customer or account the photographs and words came from. */
+                            esc_html__('Photographs and words by %s, shared with their permission.', 'fenster'),
+                            $source_name
+                        );
+                        ?>
+                    </p>
+                </div>
+            <?php endif; ?>
+        </section>
+    <?php endif; ?>
 
     <?php if (! empty($gallery_images)) : ?>
         <section class="fg-cs-gallery">
