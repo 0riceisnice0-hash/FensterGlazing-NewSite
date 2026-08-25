@@ -260,6 +260,72 @@ through. Commercial studies never print the line.
 
 ---
 
+### `story`: when the customer documented the install themselves
+
+Added 2026-08-25 for the Milton Keynes composite front door, which is the first
+study on the site whose photographs and words are not ours. The customer posted
+the whole day as a carousel with a line under each shot, and gave permission to
+republish it. `story` renders that sequence as a rail of steps under the
+overview.
+
+```php
+'story' => [
+    'title'  => 'The customer photographed the whole day.',   // the section H2
+    'intro'  => 'One or two sentences setting up whose telling this is.',
+    'source' => ['label' => 'The Renovation Files', 'url' => 'https://...'],
+    'steps'  => [
+        ['src' => $img . 'cs-...jpg', 'quote' => 'Their words.', 'caption' => 'Alt text, ours.'],
+        ['src' => $img . 'cs-...jpg', 'caption' => 'A step with no line of theirs.'],
+    ],
+],
+```
+
+**A step with a `quote` prints their words; a step without one prints the
+`caption` as a note instead.** That difference is the point and it is visible:
+the quote is italic behind an accent rule, the note is plain muted text. Never
+put our words in a `quote`, and never invent a line for a photograph they did
+not caption. `caption` is always ours and is always the image `alt`.
+
+**Their words are tidied only for emoji and the site's no-em-dash rule.** On the
+Milton Keynes study `@fensterglazing` also reads as "Fenster", because this is
+Fenster's own site. Everything else in a quote is theirs, and rewording it to
+sound more like the rest of the page would make it a testimonial we wrote.
+
+**A study with a `story` moves its `review` to the end of the rail.** The review
+is the customer's verdict on the day and it only carries its weight once the
+reader has been walked through the day; in the overview column it printed
+several hundred pixels above the rail that earns it, so you reached the last
+card to find their closing words already behind you. The owner found that by
+scrolling to the end and looking for them. The template handles it: `review`
+renders in the overview column when there is no story, and under the rail,
+above the credit, when there is. **Studies without a story are untouched** and
+the Whitehouse bifolds are the regression check for that.
+
+**Give the study one image and let the rail carry the rest.** The story already
+shows every photograph in the order it was told, so `images` holds the hero
+alone and `gallery_images` comes out empty, which means the masonry does not
+render. A gallery repeating the same shots under the rail is the same job done
+twice and worse the second time.
+
+**Two rules the rail inherits from the bi-fold rail, both enforced in
+`main.scss` at the point they matter: no scroll snap, and no
+`scroll-behavior: smooth`.** A card this wide swallows a small wheel nudge
+inside its own snap zone, so snapping springs every small push back to where it
+started; and Chrome applies `scroll-behavior: smooth` to user scrolling as well
+as to `scrollTo`, so every wheel notch animates towards a target instead of
+tracking the input, which reads as lag. The nav buttons pass
+`behavior: 'smooth'` to `scrollTo` themselves. Controls ship `hidden` and the
+controller reveals them, so with no JavaScript the rail is still a native
+scroller with every step in it.
+
+The counter reports the step at the rail's left edge, so at the far right it
+reads `09 / 11` rather than `11 / 11` with three cards on screen. That is the
+same behaviour as the bi-fold rail and is not a bug.
+
+**Credit and permission are not optional.** `source` prints "Photographs and
+words by X, shared with their permission." and links back. Do not add a `story`
+from someone else's post without the owner confirming that permission exists.
+
 ### Fields added since this guide was written
 
 - **`team_label`** (optional, string). The heading over the named people in the
@@ -268,6 +334,9 @@ through. Commercial studies never print the line.
   Bletchley sets `Surveyed and managed by`. Added 2026-08-10.
 - **`date_confirmed`** (optional, `false`). Use when a completion date is
   approximate rather than guessing one.
+- **`story`** (optional, array). The customer's own sequence as a rail of steps.
+  Full rules in the section above; it also moves `review` to the end of the
+  rail and normally leaves `images` holding the hero alone. Added 2026-08-25.
 - **`gallery_shape`** (optional, `'tall'`). Renders that study's gallery cells
   at 3:4 instead of the default square. Added 2026-08-18 for Drayton Parslow.
   **Only set it when every image in the gallery is portrait.** Across the 93
