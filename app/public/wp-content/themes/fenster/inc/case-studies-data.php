@@ -745,7 +745,6 @@ function fenster_case_studies(): array
             'installers' => [$fitter_shane, $fitter_andy],
             'story' => [
                 'title' => 'The customer photographed the whole day.',
-                'intro' => 'They picked up the keys to the house and went abroad for a month, so they were not there to watch it happen. This is their record of it, in the order they posted it.',
                 'source' => [
                     'label' => 'The Renovation Files',
                     'url' => 'https://www.instagram.com/p/DcQ_VsNoCYA/',
