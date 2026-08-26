@@ -44703,3 +44703,293 @@ html.fg-blinds-reveal-locked {
   padding-left: 16px;
   border-left: 2px solid var(--color-accent, #2eac66);
 }
+
+/* ------------------------------------------------------------------ *
+ * Composite door quiz — `.fg-cdq`
+ *
+ * Result is a two-up: the recommendation on the left, the quote tool on that
+ * door beside it. Stacks on mobile with the verdict first, because the door is
+ * the answer and the tool is what you do next.
+ * ------------------------------------------------------------------ */
+
+.fg-cdq { padding-block: clamp(48px, 6vw, 80px); }
+
+.fg-cdq__panel {
+  margin-top: 28px;
+  &[hidden] { display: none !important; }
+}
+
+.fg-cdq__form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(20px, 3vw, 34px);
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(0, 45, 58, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.fg-cdq__q { min-width: 0; margin: 0; padding: 0; border: 0; }
+
+.fg-cdq__legend {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-steel, #1d2a2f);
+}
+
+.fg-cdq__num {
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent, #2eac66);
+  padding-top: 3px;
+}
+
+.fg-cdq__answers { display: grid; gap: 8px; }
+
+/* The radio is the control; the label is the target. Kept in the accessibility
+   tree and focusable rather than `display: none`, so it can still be reached
+   and operated with a keyboard. */
+.fg-cdq__radio {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fg-cdq__answer {
+  display: block;
+  min-height: 44px;
+  padding: 11px 14px;
+  border: 1px solid rgba(29, 42, 47, 0.18);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.94rem;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+
+  &:hover { border-color: rgba(29, 42, 47, 0.4); }
+}
+
+.fg-cdq__radio:checked + .fg-cdq__answer {
+  border-color: var(--color-accent, #2eac66);
+  background: rgba(46, 172, 102, 0.09);
+  font-weight: 600;
+}
+
+.fg-cdq__radio:focus-visible + .fg-cdq__answer {
+  outline: 2px solid var(--color-accent, #2eac66);
+  outline-offset: 2px;
+}
+
+.fg-cdq__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+
+  [hidden] { display: none !important; }
+}
+
+.fg-cdq__hint {
+  grid-column: 1 / -1;
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 0.9rem;
+  color: rgba(29, 42, 47, 0.7);
+}
+
+.fg-cdq__result {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: 28px;
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--fg-shadow-lg);
+
+  &[hidden] { display: none !important; }
+}
+
+.fg-cdq__door-name { margin: 4px 0 2px; font-size: clamp(1.45rem, 2.2vw, 2rem); }
+
+.fg-cdq__collection {
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+  color: rgba(29, 42, 47, 0.66);
+}
+
+.fg-cdq__art {
+  margin: 0 0 14px;
+  padding: 14px;
+  border: 1px solid rgba(29, 42, 47, 0.12);
+  border-radius: 6px;
+  background: #fff;
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 190px;
+    height: auto;
+    margin-inline: auto;
+    color: rgba(29, 42, 47, 0.85);
+  }
+}
+
+.fg-cdq__why { margin: 0 0 16px; font-size: 1rem; line-height: 1.55; }
+
+.fg-cdq__result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+
+.fg-cdq__caveat {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(29, 42, 47, 0.66);
+}
+
+.fg-cdq__frame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  min-height: 420px;
+  overflow: hidden;
+  border: 1px solid rgba(29, 42, 47, 0.14);
+  border-radius: 6px;
+  background: #f5f7f7;
+
+  iframe { display: block; width: 100%; height: 100%; border: 0; }
+}
+
+.fg-cdq__frame-note {
+  margin: 10px 0 0;
+  font-size: 0.86rem;
+  color: rgba(29, 42, 47, 0.66);
+}
+
+@media (max-width: 860px) {
+  .fg-cdq__result { grid-template-columns: minmax(0, 1fr); }
+  .fg-cdq__frame { aspect-ratio: 4 / 5; min-height: 460px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cdq__answer { transition: none; }
+}
+
+/* ------------------------------------------------------------------ *
+ * `/why-distinction/` — `.fg-wd-*`
+ * A support page for the composite range: reading, not browsing, so it is one
+ * column with a comfortable measure rather than a grid of tiles.
+ * ------------------------------------------------------------------ */
+
+.fg-wd-page section { padding-block: clamp(44px, 5.5vw, 76px); }
+
+.fg-wd-hero {
+  h1 { margin: 6px 0 14px; font-size: clamp(2.1rem, 3.6vw, var(--fg-font-size-max, 3.6rem)); }
+}
+
+.fg-wd-lead { max-width: 62ch; font-size: clamp(1.05rem, 1.4vw, 1.18rem); line-height: 1.6; }
+
+.fg-wd-hero__actions,
+.fg-wd-judgement__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+.fg-wd-layers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(16px, 2.4vw, 26px);
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.fg-wd-layer {
+  padding: 20px;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+
+  h3 { margin: 8px 0 8px; font-size: 1.15rem; }
+  p  { margin: 0; font-size: 0.97rem; line-height: 1.55; color: rgba(29, 42, 47, 0.8); }
+}
+
+.fg-wd-layer__num {
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent, #2eac66);
+}
+
+.fg-wd-figure {
+  p { max-width: 66ch; line-height: 1.6; }
+}
+
+.fg-wd-stat {
+  margin: 18px 0 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  span {
+    display: block;
+    font-size: clamp(2.6rem, 5vw, var(--fg-font-size-max, 3.6rem));
+    line-height: 1;
+    color: var(--color-accent, #2eac66);
+  }
+}
+
+.fg-wd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: clamp(16px, 2.4vw, 26px);
+  margin-top: 26px;
+}
+
+.fg-wd-card {
+  padding: 20px;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: #fff;
+
+  h3 { margin: 0 0 8px; font-size: 1.1rem; }
+  p  { margin: 0; font-size: 0.95rem; line-height: 1.55; color: rgba(29, 42, 47, 0.8); }
+}
+
+.fg-wd-judgement p { max-width: 66ch; line-height: 1.6; }
+
+/* The through-link to `/why-distinction/` on the composite page. A band, not a
+   section: it is a signpost, and the page it points at carries the detail. */
+.fg-wd-cta { padding-block: clamp(36px, 4vw, 56px); }
+
+.fg-wd-cta__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(18px, 3vw, 36px);
+  align-items: center;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+
+  h2 { margin: 6px 0 10px; font-size: clamp(1.45rem, 2.2vw, 2rem); }
+  p  { margin: 0; max-width: 62ch; line-height: 1.55; color: rgba(29, 42, 47, 0.8); }
+}
+
+.fg-wd-cta__action { margin: 0; }
+
+@media (max-width: 860px) {
+  .fg-wd-cta__inner { grid-template-columns: minmax(0, 1fr); }
+}

@@ -91,6 +91,14 @@ get_template_part('template-parts/components/composite-door-styles');
 ?>
 
 <?php
+/* THE QUIZ SITS DIRECTLY UNDER THE RANGE ON PURPOSE. Its opening line is that
+   142 doors is too many to choose from, which only lands if the reader has just
+   scrolled past 142 doors. It narrows to one and hands over to the quote tool
+   on that door; it never draws or prices anything itself. */
+get_template_part('template-parts/components/composite-door-quiz');
+?>
+
+<?php
 /*
  * The "Real homes" supplier mosaic was removed on 2026-07-22. The door wall
  * above now teaches style, glass and colour using cleaner catalogue renders,
@@ -236,6 +244,28 @@ get_template_part('template-parts/components/composite-door-styles');
     };
     $cw_first_preview = $cw_preview($cw_first);
     ?>
+<?php
+/* THROUGH TO `/why-distinction/`. The construction and security sections above
+   make the case in brief; that page makes it at length, with every figure
+   attributed to Distinction and the owner's own reason stated as the judgement
+   it is. One CTA rather than more detail here — loading this page with
+   construction detail is what buries the range and the quote tool. */
+?>
+<section class="fg-wd-cta">
+    <div class="container">
+        <div class="fg-wd-cta__inner">
+            <div>
+                <p class="eyebrow"><?php esc_html_e('The long version', 'fenster'); ?></p>
+                <h2><?php esc_html_e('Why we fit Distinction and not something else.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('The slab layer by layer, where the thermal figure comes from and what it does not cover, the accreditation, the warranty, and the part that is a judgement rather than a measurement.', 'fenster'); ?></p>
+            </div>
+            <p class="fg-wd-cta__action">
+                <a class="button" href="<?php echo esc_url(home_url('/why-distinction/')); ?>"><?php esc_html_e('Read why we fit them', 'fenster'); ?></a>
+            </p>
+        </div>
+    </div>
+</section>
+
 <?php
 /*
  * GLASS, IMMEDIATELY BEFORE COLOUR, BECAUSE THEY ARE THE SAME DECISION.

@@ -8699,3 +8699,171 @@ document.querySelectorAll('.fg-cds').forEach((root) => {
   root.classList.add('is-enhanced');
   show(0);
 });
+
+/* ------------------------------------------------------------------ *
+ * Composite door quiz — four questions, one door, the tool beside it.
+ *
+ * Scoring runs against traits computed from the real cassette geometry (see
+ * `inc/composite-door-data.php`), so "as much daylight as possible" genuinely
+ * lands on a different door from "keep it solid" rather than following a
+ * hand-written mapping.
+ *
+ * Ties break on data order, never randomly: the same answers must always give
+ * the same door or a shared link means nothing.
+ * ------------------------------------------------------------------ */
+document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
+  let doors;
+  try {
+    doors = JSON.parse(root.dataset.fgQuizDoors || '[]');
+  } catch (e) {
+    return;
+  }
+  if (!doors.length) return;
+
+  const panel = root.querySelector('[data-fg-quiz-panel]');
+  const form = root.querySelector('[data-fg-quiz-form]');
+  const result = root.querySelector('[data-fg-quiz-result]');
+  const frame = root.querySelector('[data-fg-quiz-frame]');
+  const hint = root.querySelector('[data-fg-quiz-hint]');
+  const resetBtn = root.querySelector('[data-fg-quiz-reset]');
+  if (!panel || !form || !result || !frame) return;
+
+  const artBase = root.dataset.fgQuizArt || '';
+  const artVer = root.dataset.fgQuizVer || '';
+  const quoteTpl = root.dataset.fgQuizQuote || '';
+  const quoteFor = (key) => quoteTpl.replace('__KEY__', encodeURIComponent(key));
+
+  /* Weights say what each answer is worth. Glass is the strongest signal
+     because it is the one a visitor can actually picture, and an exact match
+     scores more than a near one rather than all-or-nothing — otherwise a single
+     unanswerable question throws the whole result. */
+  const score = (door, prefs) => {
+    let s = 0;
+    if (prefs.m !== null) s += door.m === prefs.m ? 3 : 0;
+    if (prefs.g !== null) s += Math.max(0, 4 - Math.abs(door.g - prefs.g) * 2);
+    if (prefs.d !== null) s += Math.max(0, 3 - Math.abs(door.d - prefs.d) * 2);
+    if (prefs.v !== null) s += door.v === prefs.v ? 2 : 0;
+    return s;
+  };
+
+  const pick = (prefs) => {
+    let best = null, bestScore = -1;
+    doors.forEach((d) => {
+      const s = score(d, prefs);
+      if (s > bestScore) { bestScore = s; best = d; }
+    });
+    return best;
+  };
+
+  /* Say why, in the reader's own terms, from what they actually asked for. */
+  const reasonFor = (door, prefs) => {
+    const bits = [];
+    if (prefs.g === 3 || door.g === 3) bits.push('it puts as much glass in the door as the style allows');
+    else if (door.g === 0) bits.push('it is a solid door with no glazing at all');
+    else if (door.g === 1) bits.push('it lets a little light through without opening the hall up');
+    else bits.push('it gives a decent amount of light without turning the door into a window');
+    if (door.v) bits.push('and it carries a curve rather than being all straight lines');
+    else if (prefs.d === 2 || door.d === 2) bits.push('and there is real detail in it');
+    else if (door.d === 0) bits.push('and the face is kept plain');
+    return 'Because ' + bits.join(', ') + '.';
+  };
+
+  const show = (door, prefs) => {
+    root.querySelector('[data-fg-quiz-name]').textContent = door.n;
+    root.querySelector('[data-fg-quiz-collection]').textContent = door.c + ' collection';
+    const img = root.querySelector('[data-fg-quiz-art-img]');
+    img.src = artBase + encodeURIComponent(door.k) + '.svg' + (artVer ? '?v=' + artVer : '');
+    img.alt = door.n + ', ' + door.c + ' collection';
+    root.querySelector('[data-fg-quiz-why]').textContent = prefs ? reasonFor(door, prefs) : '';
+    root.querySelector('[data-fg-quiz-open]').href = quoteFor(door.k);
+
+    /* Built here rather than shipped in the markup so a visitor who never uses
+       the quiz never loads the tool. Replaced wholesale on a re-run, which also
+       disposes the previous frame. */
+    frame.innerHTML = '';
+    const iframe = document.createElement('iframe');
+    iframe.src = quoteFor(door.k);
+    iframe.title = 'Design and price the ' + door.n + ' online';
+    iframe.loading = 'lazy';
+    iframe.setAttribute('allow', 'clipboard-write');
+    frame.appendChild(iframe);
+
+    result.hidden = false;
+    if (resetBtn) resetBtn.hidden = false;
+    if (hint) hint.textContent = 'Showing the ' + door.n + '.';
+  };
+
+  const readPrefs = () => {
+    const data = new FormData(form);
+    const out = {};
+    let answered = 0;
+    ['m', 'g', 'd', 'v'].forEach((id) => {
+      const raw = data.get(id);
+      if (raw === null) { out[id] = null; return; }
+      answered += 1;
+      out[id] = raw === '' ? null : Number(raw);
+    });
+    return { prefs: out, answered };
+  };
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const { prefs, answered } = readPrefs();
+    if (answered < 2) {
+      if (hint) hint.textContent = 'Answer at least two of them and we can point at something sensible.';
+      return;
+    }
+    const door = pick(prefs);
+    if (!door) return;
+    show(door, prefs);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('door', door.k);
+      window.history.replaceState({}, '', url);
+    } catch (e) { /* a URL we cannot rewrite is not a reason to lose the result */ }
+    result.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      form.reset();
+      result.hidden = true;
+      frame.innerHTML = '';
+      resetBtn.hidden = true;
+      if (hint) hint.textContent = '';
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('door');
+        window.history.replaceState({}, '', url);
+      } catch (e) { /* nothing to undo */ }
+    });
+  }
+
+  const shareBtn = root.querySelector('[data-fg-quiz-share]');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      const url = window.location.href;
+      try {
+        if (navigator.share) { await navigator.share({ url }); return; }
+        await navigator.clipboard.writeText(url);
+        shareBtn.textContent = 'Link copied';
+        window.setTimeout(() => { shareBtn.textContent = 'Copy a link to this'; }, 2400);
+      } catch (e) {
+        /* Refused clipboard or a cancelled share sheet is not an error worth
+           shouting about; the address bar already holds the link. */
+        if (hint) hint.textContent = 'The link is in the address bar.';
+      }
+    });
+  }
+
+  panel.hidden = false;
+
+  /* A shared link opens straight on its door. */
+  try {
+    const shared = new URL(window.location.href).searchParams.get('door');
+    if (shared) {
+      const door = doors.find((d) => d.k === shared);
+      if (door) show(door, null);
+    }
+  } catch (e) { /* no shared result to restore */ }
+});

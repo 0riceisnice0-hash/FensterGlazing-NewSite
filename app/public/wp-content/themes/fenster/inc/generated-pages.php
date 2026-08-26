@@ -1666,6 +1666,28 @@ function fenster_get_generated_page(?string $slug = null): ?array
 
     /* Virtual route: there is no imported record for this one, so the override
        is what creates the page. Content comes from inc/care-guide-data.php. */
+    /* WHY DISTINCTION. A support page for `/composite-doors/`, in the same shape
+       as the windows hub's own reasoning: the composite page sells the door and
+       this one answers why it is that door and not another. Kept off the menu
+       and the product hubs deliberately — it is reached from the composite page
+       and from the footer, the same way `/care-and-maintenance/` is. */
+    if ($slug === 'why-distinction') {
+        return $page_cache[$slug] = [
+            'slug' => 'why-distinction',
+            'title' => 'Why we fit Distinction composite doors',
+            'url' => home_url('/why-distinction/'),
+            'seo' => [
+                'title_tag' => 'Why We Fit Distinction Composite Doors | Fenster Glazing',
+                'meta_description' => 'What is inside a Distinction composite door, layer by layer, and the honest reason we fit them. Construction, security, glass, warranty and where the figures come from.',
+                'canonical' => 'https://fensterglazing.com/why-distinction/',
+                'robots' => 'max-image-preview:large',
+            ],
+            'sections' => [],
+            'images' => [],
+            'links' => [],
+        ];
+    }
+
     if ($slug === 'care-and-maintenance') {
         return $page_cache[$slug] = [
             'slug' => 'care-and-maintenance',
@@ -2271,7 +2293,7 @@ function fenster_maybe_render_generated_sitemap(): void
     }
 
     $live_blog_post_slugs = function_exists('fenster_live_blog_posts') ? array_keys(fenster_live_blog_posts()) : [];
-    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
+    foreach (array_merge(['areas-we-cover', 'terms-conditions', 'why-trust-fenster', 'obscured-glass', 'handle-options', 'colour-options', 'upvc-colours', 'aluminium-colours', 'commercial-projects', 'case-studies', 'aluminium-flush-windows', 'aluminium-sliding-doors', 'book-a-consultation', 'consumer-protection-association', 'constructionline-gold', 'ssip-health-and-safety', 'flat-rooflights', 'commercial-replacement-glazing', 'automatic-opening-vents', 'school-and-education-glazing', 'hotel-and-hospitality-glazing', 'care-home-glazing', 'office-and-retail-glazing', 'industrial-and-logistics-glazing', 'student-accommodation-glazing', 'care-and-maintenance', 'why-distinction'], $case_study_slugs, $live_blog_post_slugs) as $virtual_slug) {
         if (isset(fenster_gone_slugs()[$virtual_slug]) || fenster_redirect_target($virtual_slug) !== '' || fenster_slug_is_noindex($virtual_slug)) {
             continue;
         }
@@ -2285,6 +2307,25 @@ function fenster_maybe_render_generated_sitemap(): void
             echo "    <changefreq>monthly</changefreq>\n";
             echo "  </url>\n";
         }
+    }
+
+    /* Routes that are not generated pages but are still real, indexable URLs —
+       the showrooms register themselves through this. Without a hook they exist,
+       rank on their own merits, and are invisible to the sitemap. */
+    foreach (apply_filters('fenster_extra_sitemap_urls', []) as $extra) {
+        $loc = fenster_generated_url((string) ($extra['loc'] ?? ''));
+        if (! $loc || isset($seen[$loc])) {
+            continue;
+        }
+        $seen[$loc] = true;
+        echo "  <url>
+";
+        echo '    <loc>' . esc_xml($loc) . "</loc>
+";
+        echo '    <changefreq>' . esc_xml((string) ($extra['changefreq'] ?? 'monthly')) . "</changefreq>
+";
+        echo "  </url>
+";
     }
 
     echo "</urlset>\n";
