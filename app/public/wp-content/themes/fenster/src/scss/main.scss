@@ -44707,17 +44707,20 @@ html.fg-blinds-reveal-locked {
 /* ------------------------------------------------------------------ *
  * Composite door quiz — `.fg-cdq`
  *
- * THIS IS THE ONE SECTION ON THE PAGE BUILT TO BE SHARED, and it is styled to
- * earn that rather than to match its neighbours. A dark full-bleed stage, one
- * question at a time at display size, and answers that are real door drawings
- * big enough to choose from across a room.
+ * A WHITE PANEL WITH AN EDGE, SITTING ON THE PAGE CANVAS. It was built on a
+ * dark full-bleed stage first and that was the wrong call: the page around it
+ * is a continuous pale gradient, and dropping a black band through the middle
+ * of it cut the page in half rather than reading as a feature. `STYLE.md` is
+ * explicit that the canvas is continuous and a solid band needs a clear reason;
+ * this did not have one.
  *
- * IT IS DARK ON PURPOSE AND THAT IS A DELIBERATE BREAK. `STYLE.md` allows a
- * full-width solid band where it has a clear design purpose, and this is one:
- * the page around it is a pale continuous canvas, so the quiz reads as a thing
- * you step into rather than another section you scroll past. The line drawings
- * are stroked in `currentColor`, so they invert to white here for free — which
- * is the reason this works at all and would not if they were flat images.
+ * The card is the reason instead — one bordered white surface that holds the
+ * whole quiz, so it reads as a self-contained thing you step into without
+ * repainting the page underneath it.
+ *
+ * It is still built to be shared: one question at a time at display size, and
+ * the answers are real door drawings rather than icons, so nobody has to
+ * imagine what "a decent amount of glass" means.
  *
  * The `[hidden]` guards are not optional. This component sets `display` on the
  * steps and the result, and an author rule outranks the UA sheet's
@@ -44725,39 +44728,33 @@ html.fg-blinds-reveal-locked {
  * archives, the repairs drawings and the bi-fold rail controls.
  * ------------------------------------------------------------------ */
 
-.fg-cdq {
-  position: relative;
-  margin-block: clamp(48px, 6vw, 88px);
-  padding-block: clamp(44px, 6vw, 84px);
-  overflow: hidden;
-  color: #fff;
-  background:
-    radial-gradient(120% 90% at 15% 0%, rgba(46, 172, 102, 0.28), transparent 60%),
-    linear-gradient(165deg, #16232a 0%, #0f1a1f 60%, #16232a 100%);
+.fg-cdq { padding-block: clamp(44px, 6vw, 80px); }
 
-  /* Full bleed out of the page container without a horizontal scrollbar. */
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
+/* The card. Scoped to this section so the shared `.container` is untouched
+   everywhere else. */
+.fg-cdq > .container {
+  padding: clamp(24px, 3.6vw, 52px);
+  border: 1px solid rgba(0, 45, 58, 0.14);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: var(--fg-shadow-lg);
 }
 
 .fg-cdq__head {
   max-width: 60ch;
-  margin-bottom: clamp(26px, 4vw, 44px);
-
-  .eyebrow { color: var(--color-accent, #2eac66); }
+  margin-bottom: clamp(24px, 3.4vw, 40px);
 
   h2 {
     margin: 8px 0 12px;
-    font-size: clamp(1.9rem, 4vw, 3rem);
-    line-height: 1.08;
-    color: #fff;
+    font-size: clamp(1.8rem, 3.6vw, 2.7rem);
+    line-height: 1.1;
   }
 
   p {
     margin: 0;
-    font-size: clamp(1rem, 1.3vw, 1.12rem);
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.74);
+    color: rgba(29, 42, 47, 0.76);
   }
 }
 
@@ -44769,14 +44766,14 @@ html.fg-blinds-reveal-locked {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: clamp(20px, 3vw, 32px);
+  margin-bottom: clamp(20px, 3vw, 30px);
 }
 
 .fg-cdq__pip {
   width: 34px;
   height: 4px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(29, 42, 47, 0.14);
   transition: background-color 0.3s ease;
 
   &.is-done { background: var(--color-accent, #2eac66); }
@@ -44784,28 +44781,28 @@ html.fg-blinds-reveal-locked {
 
 .fg-cdq__count {
   margin-left: 8px;
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(29, 42, 47, 0.55);
 }
 
 /* ---------------------------------------------------------- questions */
 
 .fg-cdq__q {
-  animation: fg-cdq-in 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: fg-cdq-in 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 
   &[hidden] { display: none !important; }
 }
 
 @keyframes fg-cdq-in {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
 
 .fg-cdq__kicker {
   margin: 0 0 6px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -44813,12 +44810,11 @@ html.fg-blinds-reveal-locked {
 }
 
 .fg-cdq__title {
-  margin: 0 0 clamp(20px, 3vw, 34px);
+  margin: 0 0 clamp(20px, 3vw, 32px);
   max-width: 24ch;
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  line-height: 1.1;
   text-wrap: balance;
-  font-size: clamp(1.7rem, 3.6vw, 2.9rem);
-  line-height: 1.06;
-  color: #fff;
 }
 
 .fg-cdq__answers {
@@ -44827,8 +44823,7 @@ html.fg-blinds-reveal-locked {
   gap: clamp(12px, 1.6vw, 20px);
 }
 
-/* Four answers should not become four skinny columns on a wide screen. */
-.fg-cdq__answers--4 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.fg-cdq__answers--4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 .fg-cdq__answers--2 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); max-width: 720px; }
 
 .fg-cdq__answer {
@@ -44836,20 +44831,21 @@ html.fg-blinds-reveal-locked {
   flex-direction: column;
   gap: 14px;
   min-height: 44px;
-  padding: clamp(14px, 1.8vw, 22px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #fff;
+  padding: clamp(12px, 1.6vw, 18px);
+  border: 1px solid rgba(29, 42, 47, 0.16);
+  border-radius: 10px;
+  background: #fff;
+  color: inherit;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 
   &:hover,
   &:focus-visible {
     border-color: var(--color-accent, #2eac66);
-    background: rgba(46, 172, 102, 0.12);
+    background: rgba(46, 172, 102, 0.06);
     transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(0, 45, 58, 0.09);
   }
 
   &:focus-visible { outline: 2px solid var(--color-accent, #2eac66); outline-offset: 3px; }
@@ -44859,19 +44855,14 @@ html.fg-blinds-reveal-locked {
    height of one and sit as a tall empty box beside the illustrated pair. */
 .fg-cdq__answer--plain { justify-content: flex-end; }
 
-/* WHITE PANEL, DARK DRAWING, ON THE DARK STAGE.
-   The drawings are black on transparent, and an SVG loaded through `<img src>`
+/* The drawing sits on white with its own edge. An SVG loaded through `<img src>`
    is an isolated document — it inherits nothing from this page, so
-   `currentColor` inside it resolves to its own black default and setting
-   `color` here does nothing at all. The first pass did exactly that and shipped
-   black drawings onto a black stage, which read as empty boxes.
-   Giving each one a white card with an edge is the better answer than inverting
-   the artwork: the door reads the same way it does everywhere else on the site,
-   and a white card on a dark stage is what makes the answers pop. */
+   `currentColor` inside resolves to its own black and no amount of `color` here
+   changes it. Black on white is what these are drawn for. */
 .fg-cdq__answer-art {
   display: block;
   padding: 10px;
-  border: 1px solid rgba(29, 42, 47, 0.16);
+  border: 1px solid rgba(29, 42, 47, 0.12);
   border-radius: 8px;
   background: #fff;
 
@@ -44887,8 +44878,8 @@ html.fg-blinds-reveal-locked {
 .fg-cdq__answer-text {
   display: block;
 
-  strong { display: block; font-size: 1.05rem; line-height: 1.25; }
-  small  { display: block; margin-top: 3px; font-size: 0.85rem; line-height: 1.35; color: rgba(255, 255, 255, 0.62); }
+  strong { display: block; font-size: 1.02rem; line-height: 1.25; }
+  small  { display: block; margin-top: 3px; font-size: 0.84rem; line-height: 1.35; color: rgba(29, 42, 47, 0.62); }
 }
 
 .fg-cdq__back {
@@ -44896,13 +44887,13 @@ html.fg-blinds-reveal-locked {
   padding: 8px 4px;
   border: 0;
   background: none;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(29, 42, 47, 0.62);
   font-size: 0.88rem;
   text-decoration: underline;
   cursor: pointer;
 
   &[hidden] { display: none !important; }
-  &:hover { color: #fff; }
+  &:hover { color: var(--color-steel, #1d2a2f); }
 }
 
 /* ---------------------------------------------------------- the reveal */
@@ -44910,21 +44901,21 @@ html.fg-blinds-reveal-locked {
 .fg-cdq__result {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(22px, 3.4vw, 46px);
+  gap: clamp(22px, 3.4vw, 44px);
   align-items: start;
-  animation: fg-cdq-reveal 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: fg-cdq-reveal 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 
   &[hidden] { display: none !important; }
 }
 
 @keyframes fg-cdq-reveal {
-  from { opacity: 0; transform: scale(0.97) translateY(16px); }
+  from { opacity: 0; transform: scale(0.98) translateY(14px); }
   to   { opacity: 1; transform: none; }
 }
 
 .fg-cdq__reveal-kicker {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -44933,22 +44924,21 @@ html.fg-blinds-reveal-locked {
 
 .fg-cdq__door-name {
   margin: 6px 0 4px;
-  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
-  line-height: 1.02;
-  color: #fff;
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  line-height: 1.04;
 }
 
 .fg-cdq__collection {
   margin: 0 0 20px;
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.94rem;
+  color: rgba(29, 42, 47, 0.6);
 }
 
 .fg-cdq__art {
   margin: 0 0 18px;
   padding: 22px;
-  border: 1px solid rgba(29, 42, 47, 0.16);
-  border-radius: 12px;
+  border: 1px solid rgba(29, 42, 47, 0.14);
+  border-radius: 10px;
   background: #fff;
 
   img {
@@ -44962,9 +44952,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-cdq__why {
   margin: 0 0 14px;
-  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.86);
 }
 
 .fg-cdq__poa {
@@ -44973,7 +44962,7 @@ html.fg-blinds-reveal-locked {
   border-left: 2px solid var(--color-accent, #2eac66);
   font-size: 0.92rem;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(29, 42, 47, 0.72);
 
   &[hidden] { display: none !important; }
 }
@@ -44989,7 +44978,7 @@ html.fg-blinds-reveal-locked {
   margin: 0;
   font-size: 0.86rem;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(29, 42, 47, 0.6);
 }
 
 .fg-cdq__frame {
@@ -44997,8 +44986,8 @@ html.fg-blinds-reveal-locked {
   aspect-ratio: 3 / 4;
   min-height: 460px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 12px;
+  border: 1px solid rgba(29, 42, 47, 0.16);
+  border-radius: 10px;
   background: #f5f7f7;
 
   iframe { display: block; width: 100%; height: 100%; border: 0; }
@@ -45007,7 +44996,7 @@ html.fg-blinds-reveal-locked {
 .fg-cdq__frame-note {
   margin: 10px 0 0;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(29, 42, 47, 0.6);
 }
 
 /* ---------------------------------------------------------- responsive */
