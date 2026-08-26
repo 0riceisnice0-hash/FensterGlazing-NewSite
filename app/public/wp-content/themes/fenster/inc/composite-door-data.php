@@ -231,10 +231,27 @@ function fenster_composite_door_collections(): array
 
 /**
  * The line drawing for one style, as a URL, or '' where none exists.
+ *
+ * VERSIONED ON `filemtime`, WHICH THE REST OF THE THEME'S IMAGES ARE NOT.
+ * `AI.md` records what that costs: theme image URLs carry no version string, so
+ * replacing one in place leaves every cached browser and the proxy serving the
+ * old artwork while the deploy verifies perfectly. It cost a review round on
+ * the pet flap crops, and it cost one here — three screenshots of this section
+ * showed the previous drawings minutes after the corrected ones were live, and
+ * the served files had to be hashed to prove the deploy was fine.
+ *
+ * These 151 files are generated and will be regenerated, so they are precisely
+ * the case that needs it. The general fix — versioning inside the shared image
+ * helper — would change every image URL on the site and needs its own pass.
  */
 function fenster_composite_door_line_art(string $style_key): string
 {
     $rel = '/assets/images/products/composite-distinction/styles-line/' . $style_key . '.svg';
+    $abs = FENSTER_THEME_DIR . $rel;
 
-    return is_readable(FENSTER_THEME_DIR . $rel) ? FENSTER_THEME_URI . $rel : '';
+    if (! is_readable($abs)) {
+        return '';
+    }
+
+    return FENSTER_THEME_URI . $rel . '?v=' . filemtime($abs);
 }
