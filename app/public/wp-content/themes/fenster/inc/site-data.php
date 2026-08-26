@@ -3531,12 +3531,35 @@ function fenster_site_data(): array
             ['name' => 'Satin', 'privacy' => 5, 'texture' => 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%), linear-gradient(135deg, #f7fbfb 0%, #eef6f7 46%, #e4f0f1 100%)', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
                 ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
                 ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
-                /* Brightness matters as much as contrast here, because the stage multiplies the
-               texture over the scene. The first correction fixed the invisibility and
-               created the opposite fault: lifting contrast dropped the mean to 106 against
-               a set that runs 121 to 178, and a dark texture under `multiply` turns the
-               whole pane to mud. Rebalanced to mean 158, stddev 46 — pattern still reads,
-               brightness back inside the set.
+                /* THE FAULT HERE WAS SPATIAL, NOT TONAL, AND MEAN-AND-STDDEV CANNOT SEE IT.
+               Owner report, 2026-08-26: the pane was "way too dark", with parts of it
+               reading almost transparent and parts near black. rev2 measured mean 158,
+               stddev 46 — both inside the set, both signed off on that basis — and it was
+               still wrong, because this is a photograph of a 150mm sample lit from one
+               side. Its illumination ran 105 at the top to 192 in the middle, and 198 on
+               the left to 113 on the right: a low-frequency spread of 143 levels against a
+               set median of 49, the worst in the set. The bright dome read as clear glass
+               and the vignetted edges read as black, and because it tiles at 500px the
+               dark edge landed as a band down the pane. On the swatch it was worse: the
+               swatch is deliberately `cover` so it shows the WHOLE pattern, which meant it
+               showed the whole vignette, and Cassini was the one near-black square in a
+               column of pale ones.
+
+               THE CHECK THAT CATCHES IT is the low-frequency spread — blur the texture
+               hard and measure max minus min. rev2 was 143, rev3 is 10, the set median is
+               49. Measure that as well as mean and stddev before accepting any photographed
+               texture.
+
+               Corrected by flat-field division: divide by a Gaussian estimate of the
+               illumination (sigma 50 on 900px), then set the mean and re-apply contrast at
+               gain 0.55. Mean 200, stddev 18. That mean is deliberately ABOVE the 120-180
+               the set otherwise runs, and the reason is that the rendered surfaces are what
+               matter, not the file: the stage paints this texture twice and multiplies an
+               overlay on top, so a wide histogram darkens the pane far more than its mean
+               suggests. Verified on the real page against the other privacy-5 textures —
+               stage panel 110.9 against a peer band of 107.7 to 114.2, swatch 199.3 against
+               a peer mean of 204.2. Judge a replacement the same way rather than on the
+               file's own numbers.
 
                The filename carries a suffix because the CONTENT changed. Texture images are
                emitted without a version string, unlike the stylesheet, so replacing a
@@ -3549,7 +3572,7 @@ function fenster_site_data(): array
                top of cover, so a photographed pattern is enlarged twice over and
                reads as coarse blobs instead of glass. Pinning the width fixes the
                pattern's scale wherever it is painted — swatch, wall or stage. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev3.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
