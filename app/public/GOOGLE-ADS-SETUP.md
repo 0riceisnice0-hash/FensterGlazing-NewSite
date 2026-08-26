@@ -491,6 +491,80 @@ Use GTM Preview only as a diagnostic:
 
 Strict consent is intentional: no Google or Meta marketing storage, identifiers or conversion calls are used before marketing consent.
 
+### 6c-2. GA4 lead events — the container change, specified (2026-08-26, NOT YET BUILT)
+
+**The problem this fixes.** The Google tag `G-YGS6GYKBEW` is in the container and firing — a `/g/collect` request to `region1.analytics.google.com` was captured on 2026-08-26. **It never receives a lead event.** The site pushes `fenster_form_submitted` on every successful enquiry and the container listens only for `contact` and `cad_finish_click`, which the site does not push. So GA4 records the traffic and none of the leads, and **Google Site Kit cannot show them either**, because Site Kit reports what GA4 and Search Console hold rather than receiving anything itself.
+
+**This is separate from Google Ads and cannot double-count with it.** Different product, different destination. The Ads conversion shipped in `b2420743` is untouched by any of this.
+
+#### The exact payload, read off `src/js/main.js` rather than assumed
+
+Two different shapes go into the dataLayer and **the lead one is the smaller**:
+
+| Push | Keys |
+|---|---|
+| `fenster_form_submitted` / `fenster_consultation_booked` | `event`, `event_id`, `form_context`, `page_path` |
+| everything from `trackWebsiteEvent()` (`fenster_page_view`, `fenster_phone_click`, `fenster_quote_opened`, …) | `event_id`, `journey_id`, `visitor_id`, `environment`, `page_path`, `landing_path`, `source`, `medium`, `campaign`, `content`, `term`, `referrer_host` |
+
+**`environment` is NOT on the lead push.** It is only on the `trackWebsiteEvent` ones, so **test traffic must be excluded on Page Hostname, not on `environment`** — which is the trap in this spec.
+
+#### 1. Variables — Variables → User-Defined → New → Data Layer Variable
+
+| Name | Data Layer Variable Name |
+|---|---|
+| `DLV - form_context` | `form_context` |
+| `DLV - event_id` | `event_id` |
+| `DLV - page_path` | `page_path` |
+
+Leave Version 2 and set Default Value to empty.
+
+#### 2. Triggers — Triggers → New → Custom Event
+
+Two, identical but for the event name. On each, choose **Some Custom Events** and add the condition **Page Hostname equals `fensterglazing.com`** so the test site never reports into GA4.
+
+- `CE - fenster_form_submitted` → Event name `fenster_form_submitted`
+- `CE - fenster_consultation_booked` → Event name `fenster_consultation_booked`
+
+#### 3. Tags — Tags → New → Google Analytics: GA4 Event
+
+Two tags. Measurement ID `G-YGS6GYKBEW` on both, or select the existing Google tag.
+
+**`GA4 - generate_lead (enquiry)`** on `CE - fenster_form_submitted`
+**`GA4 - generate_lead (consultation)`** on `CE - fenster_consultation_booked`
+
+Event Name on both: **`generate_lead`**. It is Google's own recommended event for a lead form, so GA4 reports it without custom work. Parameters:
+
+| Parameter | Value |
+|---|---|
+| `lead_type` | `enquiry` — or `consultation` on the second tag |
+| `form_context` | `{{DLV - form_context}}` |
+| `event_id` | `{{DLV - event_id}}` |
+| `page_path` | `{{DLV - page_path}}` |
+
+Two tags rather than one with a lookup table on purpose: it is one fewer moving part, and each can be paused independently.
+
+#### 4. Consent settings — leave them alone
+
+Set **No additional consent required** on both tags. The Google tag already respects the Consent Mode signal this site sends, so under `analytics_storage: denied` GA4 falls back to a cookieless ping exactly as the page views already do. **Adding a consent requirement here would make the lead event behave differently from the page views in the same property**, which is worse than either behaviour on its own. If the owner wants GA4 fully silent without analytics consent, that is a decision about the Google tag as a whole, not about this event.
+
+#### 5. Mark it a key event in GA4
+
+**Admin → Data display → Key events → New key event**, name `generate_lead`. Do this in GA4, not GTM. Site Kit surfaces key events, which is what makes the lead visible there.
+
+#### 6. Test without creating a lead or emailing the office
+
+Do **not** submit the real form to test this — it saves a `fenster_enquiry` and emails `info@fensterglazing.com`. In GTM **Preview** against `https://fensterglazing.com/casement-windows/`, open the console and push the event by hand:
+
+```js
+dataLayer.push({event:'fenster_form_submitted', event_id:'gtm-preview-test', form_context:'GTM preview', page_path:'/casement-windows/'});
+```
+
+The tag should fire once, and GA4 **Realtime** should show `generate_lead` within a minute or two.
+
+#### 7. While you are in there: five dead tags
+
+The container holds **five Universal Analytics tags** (`__ua`) plus a UA settings variable (`__gas`). Universal Analytics stopped processing data in July 2023, so all six are inert. They are not urgent and they are not harmful; they are most of why the container is hard to read. Removing them is the owner's call.
+
 ### 6d. Verify end to end
 
 - Use a fresh test-site journey with a fake click ID to verify the hidden form and WindowCAD URL populate only after marketing consent.
