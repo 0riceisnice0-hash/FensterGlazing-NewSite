@@ -4777,49 +4777,24 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if (! $is_composite_doors && ! empty($product_glass_styles)) : ?>
-            <section class="fg-composite-glass">
-                <div class="container">
-                    <div class="fg-composite-glass__head">
-                        <div>
-                            <p class="eyebrow"><?php esc_html_e('Composite door glass styles', 'fenster'); ?></p>
-                            <h2><?php esc_html_e('Decorative glass, shown before you commit.', 'fenster'); ?></h2>
-                        </div>
-                        <p><?php echo esc_html((string) ($product_content['glass_styles']['intro'] ?? 'Choose from decorative and privacy glass options for your composite door.')); ?></p>
-                    </div>
+        <?php
+        /* GLASS. The markup moved to `template-parts/components/composite-glass.php`
+           on 2026-08-26. It used to sit inline here behind this same gate, and
+           `composite-doors` is the only route in `product_content` carrying a
+           `glass_styles` array — so the one page with the data was the one page
+           excluded, and the section rendered on no route at all. The composite
+           template now calls the component directly and places it deliberately.
 
-                    <div class="fg-composite-glass__grid" aria-label="<?php esc_attr_e('Composite door decorative glass style options', 'fenster'); ?>">
-                        <?php foreach ($product_glass_styles as $index => $style) : ?>
-                            <?php
-                            $glass_name = trim((string) ($style['name'] ?? 'Glass style'));
-                            $glass_image = trim((string) ($style['image'] ?? ''));
-                            $glass_copy = trim((string) ($style['copy'] ?? ''));
-                            ?>
-                            <?php if ($glass_name !== '') : ?>
-                                <article class="fg-composite-glass-card">
-                                    <span class="fg-composite-glass-card__number"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
-                                    <?php if ($glass_image !== '') : ?>
-                                        <figure>
-                                            <img src="<?php echo esc_url(fenster_generated_url($glass_image)); ?>" alt="<?php echo esc_attr($glass_name . ' decorative glass for composite doors'); ?>" loading="lazy">
-                                        </figure>
-                                    <?php endif; ?>
-                                    <div>
-                                        <h3><?php echo esc_html($glass_name); ?></h3>
-                                        <?php if ($glass_copy !== '') : ?>
-                                            <p><?php echo esc_html($glass_copy); ?></p>
-                                        <?php endif; ?>
-                                    </div>
-                                </article>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </div>
-
-                    <?php if (! empty($product_content['glass_styles']['note'])) : ?>
-                        <p class="fg-composite-glass__note"><?php echo esc_html((string) $product_content['glass_styles']['note']); ?></p>
-                    <?php endif; ?>
-                </div>
-            </section>
-        <?php endif; ?>
+           The gate stays so composite cannot render it twice. Give another route
+           a `glass_styles` array and it renders here without further work. */
+        if (! $is_composite_doors && ! empty($product_glass_styles)) {
+            get_template_part('template-parts/components/composite-glass', null, [
+                'items' => $product_glass_styles,
+                'intro' => (string) ($product_content['glass_styles']['intro'] ?? ''),
+                'note'  => (string) ($product_content['glass_styles']['note'] ?? ''),
+            ]);
+        }
+        ?>
 
         <?php if ($slug === 'aluminium-sliding-doors') : ?>
             <?php

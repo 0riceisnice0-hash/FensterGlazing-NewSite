@@ -236,6 +236,32 @@ get_template_part('template-parts/components/composite-door-styles');
     };
     $cw_first_preview = $cw_preview($cw_first);
     ?>
+<?php
+/*
+ * GLASS, IMMEDIATELY BEFORE COLOUR, BECAUSE THEY ARE THE SAME DECISION.
+ *
+ * The markup used to sit inline in the shared product tail in
+ * `generated-page.php`, behind `if (! $is_composite_doors && ...)`. Composite
+ * doors is the ONLY route in `product_content` carrying a `glass_styles` array,
+ * so the one page with the data was the one page excluded from rendering it and
+ * the section reached no route at all. That is why the page has been shipping
+ * with no glass on it. It is a component now and the tail still calls the same
+ * one for any future route that gains the data.
+ *
+ * Placed here rather than after the style range so glass and colour read as the
+ * pair of finish decisions they are, and the approved middle of the page —
+ * anatomy and security — is left where the owner signed it off.
+ */
+$fg_glass = fenster_data('product_content.composite-doors.glass_styles', []);
+if (! empty($fg_glass['items'])) {
+    get_template_part('template-parts/components/composite-glass', null, [
+        'items' => $fg_glass['items'],
+        'intro' => (string) ($fg_glass['intro'] ?? ''),
+        'note'  => (string) ($fg_glass['note'] ?? ''),
+    ]);
+}
+?>
+
     <section class="fg-cd3-colour" aria-labelledby="fg-cd3-colour-title">
         <div class="container">
             <header class="fg-cd3-head fg-cd3-head--wide">

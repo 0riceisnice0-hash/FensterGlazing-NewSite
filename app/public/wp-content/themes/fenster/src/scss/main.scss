@@ -44680,3 +44680,21 @@ html.fg-blinds-reveal-locked {
 
   .fg-cds-door__link:hover .fg-cds-door__art { transform: none; }
 }
+
+/* The two lines a swatch cannot carry, added with the glass section on
+   2026-08-26. `.fg-composite-glass` and its cards were already styled; these
+   are the range statement and the aperture caveat that sit under the grid. */
+.fg-composite-glass__aperture,
+.fg-composite-glass__range {
+  max-width: 68ch;
+  margin: 20px 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(29, 42, 47, 0.78);
+}
+
+.fg-composite-glass__aperture {
+  margin-top: 32px;
+  padding-left: 16px;
+  border-left: 2px solid var(--color-accent, #2eac66);
+}
