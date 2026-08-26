@@ -442,7 +442,10 @@ Then:
 
 ### 6a. What the website now records
 
-1. Consent-gated Google Ads conversions are sent directly by the website for enquiry success, consultation success and phone-link clicks. The live conversion ID and labels are in `inc/google-ads-conversions.php`.
+1. Consent-gated Google Ads conversions are sent directly by the website for enquiry success, consultation success and phone-link clicks. The conversion ID is `FENSTER_GOOGLE_ADS_ID` in `inc/consent.php`, which loads the tag; `inc/website-tracking.php` reads that same constant and publishes it to the browser with the labels. **`inc/google-ads-conversions.php` is the offline CSV feed and has never held the ID or the labels** — this line said it did until 2026-08-26.
+   - **THIS SENTENCE WAS FALSE FROM THE DAY IT WAS WRITTEN UNTIL 2026-08-26, AND 6c BELOW IS THE REASON NOBODY CAUGHT IT.** The website called `gtag('event', 'conversion', ...)` with the correct ID and label on every enquiry, consultation, phone click and quote open, and **no Google tag was loaded anywhere in the theme**. `configureGoogleConsent()` defines `window.gtag` as a dataLayer shim so the consent signal can be queued before any tag exists, and that shim satisfies the `typeof window.gtag !== 'function'` guard in `sendGoogleAdsConversion()`. So every call pushed into the dataLayer and returned as though it had worked, for months, with nothing listening.
+   - **The fix is `loadGoogleAds()` in `inc/consent.php`**, which is `loadMeta()` with the ids changed: same marketing gate, same loaded-once flag, called from the same place in `applyPreferences()`. Verified on test 2026-08-26 — with marketing granted the tag loads and `AW-808336148` is registered as a gtag destination, which is what makes `send_to` resolve; with marketing refused the loader does not run at all.
+   - **The shim is not a bug and must not be "replaced" with a second `window.gtag`.** It is byte-for-byte the standard gtag queue function, so the consent default and update already queued through it are read in order the moment the tag arrives. Consent before tag is the required Consent Mode order and this file already had it right.
 2. The browser still pushes the matching `fenster_*` data-layer events for diagnostics and future tag-manager use. Do **not** add duplicate GTM conversion tags for the three direct conversions.
 3. Ad click IDs and the WindowCAD `ads` value are accepted only after marketing consent. They stay in WordPress and the protected Google feed; they are never sent to the Marketing Dashboard.
 4. Analytics consent creates an opaque 90-day visitor ID and a journey that rotates after 30 minutes of inactivity. Marketing-only visitors receive a separate `FGA-...` attribution reference, so WindowCAD attribution does not silently enable analytics tracking.
@@ -468,6 +471,16 @@ Left menu **Goals → Conversions → Summary**:
 ### 6c. Google Tag Manager (`GTM-K89BCS9`)
 
 The public GTM container is legacy support, not the source of truth for the known website conversions. The website now calls the known Google Ads destinations directly after marketing consent, so publishing duplicate GTM conversion tags would double-count them.
+
+**WHAT IS ACTUALLY IN THE CONTAINER, read off the published `gtm.js` on 2026-08-26.** This had never been written down, and not knowing it is half of why the fault above survived — the instruction not to build GTM tags was followed, so nothing existed to catch the site sending nothing.
+
+- **`G-YGS6GYKBEW`** — a GA4 property, loaded through the container.
+- **An Ads call-conversion tag (`__awcc`)** on account `808336148`, label `zmtkCLqTlKQBEJT2uIED`, number `01908 429200`. This is the number-swap tag and it is what pulls Google Ads infrastructure onto the page. It is why `gtag/js` appears in the DOM even for a visitor who refused marketing; under `ad_storage: denied` it runs cookieless, which is consent-mode correct and is pre-existing behaviour, not something the theme does.
+- **One Ads conversion tag** on the same account, label `oDNQCM3S18oaEJT2uIED`, hardcoded value `10` GBP.
+- **Its triggers are `contact` and `cad_finish_click`.** The theme pushes neither. It pushes `fenster_form_submitted`, `fenster_consultation_booked`, `fenster_phone_click` and `fenster_quote_opened`, and **not one of those four appears anywhere in the container.**
+- **None of the three theme conversion labels appears in the container either.** Checked by name: zero matches for each.
+
+**So there is currently no double-count**, and that is a measured fact rather than an assumption — the container and the theme fire different labels off different events. **Re-check this before adding any tag to the container**, and note that the `contact` / `cad_finish_click` triggers look like old-site events that may no longer fire at all, which would mean that conversion action has been dead as well.
 
 Use GTM Preview only as a diagnostic:
 
