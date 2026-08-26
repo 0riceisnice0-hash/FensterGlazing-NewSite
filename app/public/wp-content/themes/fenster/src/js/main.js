@@ -1921,10 +1921,19 @@ const firstTouchStorageKey = 'fenster_website_first_touch';
 const trackingStorageLifetime = 90 * 24 * 60 * 60 * 1000;
 const journeySessionTimeout = Math.max(5, Number(websiteTracking.sessionTimeoutMinutes) || 30) * 60 * 1000;
 
-/* `chosen` is required, matching `inc/consent.php`. A record without it was
-   written under the granted-by-default model and cannot tell us whether the
-   visitor ever pressed a button, so it is not consent and the banner asks
-   again. */
+/* `chosen` is RECORDED but deliberately NOT REQUIRED here, matching
+   `validPreferences()` in `inc/consent.php`. Optional cookies are granted by
+   default, so requiring it would invalidate every existing record and re-prompt
+   the whole audience for no gain — they are being tracked either way. Written
+   only by the banner's own save path, so a record carrying it is one the visitor
+   actually chose, which is the only way to tell a real answer from an assumed
+   one. If the default is ever flipped back to off, add `record.chosen === true`
+   here and in `inc/consent.php` together.
+
+   Corrected 2026-08-26. This comment claimed the opposite for fourteen days,
+   left behind by the consent-first flip of 2026-08-11 that the owner reverted on
+   the 12th. The code below was never wrong; the comment describing it was, on
+   the one function pair `AI.md` says must be kept in step by hand. */
 const validCookieConsentRecord = (record) => Boolean(
   record
   && record.version === 2

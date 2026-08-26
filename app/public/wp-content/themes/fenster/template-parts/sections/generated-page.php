@@ -254,12 +254,17 @@ $is_upvc_doors_bespoke = $slug === 'upvc-doors';
    The quote embed stays — the uPVC Windows collection prices this window — and
    so does the order rail, because it is an ordinary installation.
 
-   THE CASE-STUDY STRIP IS THE ONE THING GATED OFF, and it was live and wrong
-   until this build. Nothing claims this route, so
-   `fenster_case_studies_for_product()` fell through to its documented
-   all-studies fallback and put secondary glazing, uPVC casements and aluminium
-   bifolds under a heading promising real installs of this product. Same fault,
-   same fix as `/aluminium-windows/`. See `$no_case_study_routes` below. */
+   THE CASE-STUDY STRIP WAS GATED OFF AT THIS BUILD AND IS NOT GATED NOW.
+   Nothing claimed this route, so `fenster_case_studies_for_product()` fell
+   through to its documented all-studies fallback and put secondary glazing,
+   uPVC casements and aluminium bifolds under a heading promising real installs
+   of this product. The gate came off on 2026-08-19 when the Hanslope barn study
+   claimed the route, which is exactly the condition it was added under, so
+   `$no_case_study_routes` below is down to `/aluminium-windows/` alone.
+
+   Comment corrected 2026-08-26: it still described the gate five days after the
+   gate was removed. A rebuild comment outlives the condition it was written
+   under, so re-read it when the condition is met. */
 $is_tilt_turn_bespoke = $slug === 'tilt-turn-windows';
 /* Repairs replaces the middle the same way flush does, and additionally takes
    more of the tail out than flush needs to, because a repair is not a purchase

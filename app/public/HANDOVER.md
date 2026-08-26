@@ -1,5 +1,95 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-26 (docs catch-up — FIVE RELEASES THIS FILE NEVER RECORDED)
+
+**Live is `3285863b`, level with `main`, and test is level with it. Nothing is
+outstanding in either direction.** `origin/main` is `e87d9a64`, one docs-only
+commit above live whose theme tree is byte-identical, which is the documented
+ambiguity rather than undeployed work. Verified by diffing the theme folder
+across the range, not read off a line.
+
+**THIS BLOCK IS A CATCH-UP, NOT A RELEASE NOTE.** Between 2026-08-17 and
+2026-08-25 five releases shipped and none of them reached this file, which stood
+at 2026-08-16 for ten days while `LIVECHANGES.md` was corrected on the day of
+every one. **`LIVECHANGES.md` is the authority and it was right throughout**;
+what was lost is the architecture and trap record that belongs here. Five
+retroactive "current state" blocks would be fiction, so this is one block.
+
+**Read in this order:** the Current Truth section of `LIVECHANGES.md`, then the
+rule in `AI.md` for whichever page you are touching, then `CASESTUDIES.md` if it
+is a case study.
+
+### What shipped, oldest first
+
+- **`575eae99`, 17 Aug — the case-studies Show more button had never worked.**
+  Every card was visible and the button did nothing. Both archives now open on
+  six cards, read from `data-fg-case-studies-initial`.
+- **`dbc9cc75`, 18 Aug — the Drayton Parslow study**, two Distinction composite
+  doors, plus a `--tall` gallery modifier so an all-portrait study can opt into
+  a 3:4 cell instead of the shared square.
+- **`f1fbbc94`, 19 Aug — the largest release of the month, twenty-one commits.**
+  `/slide-fold-doors/` rebuilt as the twelfth bespoke residential middle, the
+  Hanslope barn study, and a new indexable route at `/care-and-maintenance/`.
+  **`/tilt-turn-windows/` was ungated in this release** because Hanslope claims
+  it, so `$no_case_study_routes` is down to `['aluminium-windows']` alone.
+- **`ebc1a157`, 21 Aug — the bi-fold configuration rail** on
+  `/aluminium-bifold-doors/`: seventeen Sheerline Prestige layouts, two to seven
+  panes, in a swipe rail with pane-count jump buttons.
+- **`3285863b`, 25 Aug — the first study on the site whose photographs and words
+  are not ours.** A Milton Keynes composite front door, documented by the
+  customer and republished with permission through a new `story` rail. Shipped
+  with three case-study SEO faults fixed and `scripts/check-case-studies.php`,
+  a harness that asserts every rule `CASESTUDIES.md` states.
+
+### `/care-and-maintenance/` is the one genuinely new thing here
+
+Nine guides in `inc/care-guide-data.php`, rendered by
+`template-parts/sections/care-guides.php`, dispatched on `$is_care_guides_page`.
+**Its way in is the footer, not the menu or a hub, and that is deliberate** — it
+is a support page, so the three-registry rule for products does not apply to it.
+It had a rule in no document at all until 2026-08-26; it now has one in `AI.md`,
+including the two owner tone rules that shaped the copy. **`/downloads/` was
+rebuilt into this and the rebuild was reverted** — three commits in the range
+cancel out and that route shipped unchanged.
+
+### Five traps, all of which fail silently and all still live in shared code
+
+- **`element.hidden = true` is inert on anything the stylesheet gives a
+  `display`.** An author rule outranks the UA sheet's `[hidden] { display:
+  none }`, so `.fg-cs-card` at `display: grid` was never hidden and the click
+  handler unhid already-visible cards. Add a `[hidden]` override whenever a new
+  component both sets `display` and gets hidden from script. This has now caught
+  the case-study archives, the repairs drawings and the bi-fold rail controls.
+- **`<button>` wraps its children in an anonymous box, so
+  `grid-template-columns` on a button does nothing.** The compiled CSS was
+  byte-for-byte what was written and the render was still wrong. Nothing catches
+  this short of looking at the page, and it survived a deploy.
+- **`scroll-behavior: smooth` applies to USER scrolling in Chrome, not only to
+  scripted scrolls**, and `scroll-snap-type: proximity` springs every small push
+  back on a wide card. Both are absent from the bi-fold and story rails
+  deliberately; the colour rail gets away with snap only because its swatches are
+  small enough that a real nudge clears a boundary.
+- **`assets/css/main.css` alone is not a discriminator when re-establishing live
+  by checksum.** It is constant across long stretches, so it narrows a range
+  rather than naming a commit and returned a false 4/6 positive on 19 August.
+  Key on `assets/js/main.js`, which is rebuilt whenever any asset changes.
+- **A deletion inside a range is not a deletion against live.** A directory was
+  added and removed inside the 21 August range and nets to nothing. Check the net
+  diff, not the commit log.
+
+### What needs the owner
+
+- **The Legend spritesheet is still 2MB and still eager on every page**, named
+  the single highest-value technical item in `SEO-PERFORMANCE-AUDIT-2026-08-17.md`
+  and untouched since 15 July. See the correction in `LIVECHAT.md`.
+- **A wide photograph of a roofline run** remains the biggest asset gap on the
+  site, and **no photograph of a tilt and turn opening** is the largest on any
+  window route. Both are in `PHOTO-CHECKLIST.md` with the briefs written out.
+- Three of the seven price guides still carry no price while telling the reader
+  their prices are real, and the 47 national commercial county pages are still
+  a keep-or-redirect decision. Both are in the 17 August SEO audit.
+- The ICO position on the cookie default is **open, not closed** — see `AI.md`.
+
 ## Current state, 2026-08-16 (who-fits-it correction SHIPPED)
 
 **Live is `d042d45a`, level with `main`, and test is level with it.** One theme
@@ -384,7 +474,7 @@ key-specification strip repeat their own H1 as an H2 inside it.
 `/aluminium-flush-windows/` overrides it; the rest do not.
 
 
-Last updated: 2026-08-13
+Last updated: 2026-08-26
 
 This file gives a new AI agent the current context needed to work on the whole site.
 
@@ -477,7 +567,7 @@ repo has been bitten by exactly that twice.
 - The shared form's reusable `consultation_booking` mode has a dedicated indexable `/book-a-consultation/` page, and **that is the only place it renders** as of 2026-08-02. The Contact page carries the general enquiry form instead: `931c7ef` had converted that page's enquiry form into a second booker in place, leaving `/contact/` with no way to send a plain message, so the site repeated one journey and offered the other nowhere. The Contact hub card links here. Its accepted journey is deliberately short: a booking-first hero with the calendar as the dominant action and concise Trustpilot/FENSA reassurance directly beneath it; one large, art-directed bifold-door image paired with consultation advice and icon-led phone/email contact; concise visible FAQs/FAQPage schema; then the real review showcase. Do not restore process cards, a detached homepage proof wall, generic image-card grids or related-link filler. Its date stage is a compact six-week calendar card sized to the interaction, with a concise availability strip: Monday-Friday, 9am-4pm, excluding England-and-Wales bank holidays. The final details stage is a dedicated light-surface form with an appointment summary, legible bordered fields and a clearly contained consent/submit area rather than the shared dark-form styling. The official GOV.UK holiday feed is cached and enforced in both the picker and submission validation. Its background is one continuous `--fg-page-gradient` canvas, per `STYLE.md`. The desktop header, Products menu CTA and Contact consultation card lead to this canonical route. It saves and emails the selected date/time as a consultation request. It is a request flow, not live availability; the office must confirm the appointment.
 - WindowCAD/AdminBase lead relay is theme-owned again through `inc\adminbase.php`. The old `wraith` REST endpoint `/wp-json/fenster/v1/windowcad` is restored, normal saved enquiries also relay through `fenster_enquiry_created`, and credentials must stay in server config/options rather than committed code.
 - The live Marketing Dashboard Website Tracker is the consented, no-PII attribution surface. Its source code, API implementation and tracker README are hosted at `https://github.com/0riceisnice0-hash/Marketing-Dashboard`. It stores opaque `FGV-…` visitors and `FG2-…` journeys for 90 days in the same consenting browser, first-touch attribution, pages/time, meaningful link/quote/form/phone/email events, completed WindowCAD quotes and a clickable journey timeline. It is not a CRM: personal lead data stays in WordPress/AdminBase.
-- WindowCAD must keep its office **Reference** field untouched. The website URL parameter maps only to WindowCAD’s separate **Tracking** field. Accepted visitors receive `FG2-…`; a visitor who arrived from an ad receives the consent-free `FGA-…` whatever they chose; rejected-cookie quotes write `rejected-cookies`, and no-choice quotes write `cookie-consent-not-accepted`. The latter two still create office leads but are intentionally excluded from dashboard journey joins. **All four are reachable under consent-first** — the no-choice value was unreachable during the 2026-08-09 to 2026-08-11 granted-by-default period and is live again.
+- WindowCAD must keep its office **Reference** field untouched. The website URL parameter maps only to WindowCAD’s separate **Tracking** field. Accepted visitors receive `FG2-…`; a visitor who arrived from an ad receives the consent-free `FGA-…` whatever they chose; rejected-cookie quotes write `rejected-cookies`, and no-choice quotes write `cookie-consent-not-accepted`. The latter two still create office leads but are intentionally excluded from dashboard journey joins. ~~**All four are reachable under consent-first** — the no-choice value was unreachable during the 2026-08-09 to 2026-08-11 granted-by-default period and is live again.~~ **CORRECTED 2026-08-26: granted-by-default was restored on 2026-08-12, so `cookie-consent-not-accepted` should be unreachable again.** An unanswered visitor has `analytics: true`, so `journeyReference()` hands back a real `FG2` and the fallback is never reached. Read from the code rather than measured against production, so **check WindowCAD before relying on it either way** — and if the default is ever flipped back to off, all four go live together.
 - 2026-07-21 tracking audit outcome (corrected): WindowCAD's tracking capture is invisible and URL-driven and was never broken. The app reads the `tracking=` URL parameter and includes it in the submission's Tracking info property independent of the visible form field list; verified end-to-end the same day via intercepted submissions plus a live owner test (`FG2-ZACLIVETEST0721` reached WindowCAD, WordPress, AdminBase and the dashboard). Leads without a tracking value are sessions that did not start from a site URL (office-entered projects, direct or re-opened WindowCAD links). The genuine 2026-07-21 outage was AdminBase's renewed TLS certificate (Sectigo R46 root missing from WordPress' bundled CA file): relays failed with cURL error 60, leaving leads in WordPress but not AdminBase; fixed by `fenster_adminbase_http_ssl_args()` using the host system trust store, the two stranded leads were re-relayed, and the WindowCAD handler now sends the dashboard `quote_completed` before attempting AdminBase. Customer retail submissions were genuinely quiet 2026-07-16 to 2026-07-21; volume is now observable through the dashboard's consented and aggregate quote-completion counts.
 - Google Ads quote attribution is completion-led. Campaign suffixes carry `ads={adgroupid}` into the Fenster landing URL; the theme preserves that tracker and copies it into every WindowCAD URL alongside the existing `tracking=FG2-...` value. Accepted ad clicks also store `gclid`/`gbraid`/`wbraid` in WordPress against the FG2 journey through `/wp-json/fenster/v1/ad-attribution`. When WindowCAD posts a completed quote back, the private `fenster_enquiry` receives the ads tracker and click ID needed for offline conversion import. The click ID never goes to the Marketing Dashboard or AdminBase. `quote_opened` and `quote_iframe_loaded` remain diagnostic funnel events only.
 - Consent health is aggregate-only and granular: `necessary_only`, `analytics_only`, `marketing_only` and `all`, per day and per environment. Rejected visitors must never get a visitor/journey ID or browsing event. **Banner impressions are counted again** (`shown` from the mandatory modal into `banner_shown`), on the owner's 2026-08-02 instruction; they are a health check only and must never be used as a denominator, because they structurally undercount against choices. See the consent rules in `AI.md` before touching either. Future Focus Group call integration should send actual call outcomes into the dashboard only after an API/webhook or scheduled export is available; phone taps alone remain intent, not confirmed calls.
@@ -494,7 +584,7 @@ repo has been bitten by exactly that twice.
 - Legend remains focused on Fenster, but normal social interaction is deliberately allowed. Greetings, thanks, goodbyes, meows, purrs, harmless cat jokes and questions about Legend should receive a friendly in-character answer rather than the unrelated-request redirect. The verified context identifies the real Legend as Fenster's black office cat and Chief Meow Officer and Nick Baker, Sales Director, as his dad. Substantive unrelated tasks such as programming and homework are still declined, while server-side conversation and response filtering redacts common profanity before it can reach or be repeated by the model.
 - Legend's composer is protected by an explicit acknowledgement covering AI processing, possible inaccuracies, non-binding replies, sensitive-data caution and 24-hour same-browser history, with a direct Privacy Policy link. After acknowledgement, `fenster_legend_chat_v1` stores up to 16 recent messages and synchronises them across Fenster pages and tabs; Clear chat removes the history. This is deliberately separate from analytics/marketing-cookie consent: using the chat never changes `fenster_cookie_consent`, and a rejected choice must remain rejected.
 - Legend's launcher prompt is a valid sibling-control component: it stays invisible until 240px of page scroll, with window, document, touch and `visualViewport` listeners covering iOS scrolling. Its copy opens chat and its integrated close button dismisses it for the browser session. The transparent positioning wrapper must remain non-interactive; only the visible launcher and prompt receive pointer input. `legend-sleep-strip.webp` is a separate eight-frame transparent strip generated from the approved Legend pet. The drawer X returns him home in idle, waits 10 seconds and then plays the sleep sequence; 20 seconds without Legend interaction also sleeps him; interaction reverses the strip and wakes him. Keep the sleep asset separate from the validated 8x11 app atlas.
-- Cookie settings is deliberately a footer control, not a persistent viewport button. It reopens the consent modal. **Analytics and marketing are separate and off until the visitor chooses** (consent-first, 2026-08-11), remembered for 180 days and removable again from the same footer control — and turning analytics off now erases what was already collected rather than only stopping future collection. The modal appears on a first visit but does not block, and is not shown to crawlers at all. Use necessary only remains inside Customise. Do not reintroduce the floating `.fg-cookie-settings` control, and do not let Legend hide, close or alter the modal.
+- Cookie settings is deliberately a footer control, not a persistent viewport button. It reopens the consent modal. **Analytics and marketing are separate and are ON from the first paint until the visitor refuses** (granted-by-default, restored by the owner on 2026-08-12 after one day of consent-first; this line said the opposite until 2026-08-26), remembered for 180 days once a real choice is made and removable again from the same footer control — and turning analytics off now erases what was already collected rather than only stopping future collection. The modal appears on a first visit but does not block, and is not shown to crawlers at all. Use necessary only remains inside Customise. Do not reintroduce the floating `.fg-cookie-settings` control, and do not let Legend hide, close or alter the modal.
 - Legend persists whether the drawer is open and whether the visitor has sent a message in `fenster_legend_chat_v1`. Same-site links therefore restore the drawer immediately without replaying the entrance animation, while an explicit close stores the closed state. The full pre-use disclosure hides after the first sent message, but the compact accuracy, QA-retention, sensitive-data and Privacy Policy notice remains. The panel carries `data-lenis-prevent`; the transcript uses native contained wheel/touch scrolling and always returns to the newest message when opened or restored.
 - The drawer header is intentionally one continuous deep-teal surface. `.legend-assistant__stage` adds only a soft mint floor glow and line, not a separate background block. Preserve the `224px` desktop and `190px` mobile stage widths plus their current roam distances so standing, running and curled sleep frames remain contained.
 - Residential case studies are LIVE (2026-07-17). `/case-studies/` is a curated, data-driven system: add a study in `inc/case-studies-data.php` and it generates its archive card, detail page, routing, SEO and sitemap entry. See `CASESTUDIES.md` for the full guide. The retired scrape-era residential routes (`double-glazing-rushden`, `water-stratford`, `bespoke-windows-woburn-water-end-barn`, `test`, `template-new`) still return 410. Commercial project records under `/commercial-projects/` remain on the separate legacy pages.json system.

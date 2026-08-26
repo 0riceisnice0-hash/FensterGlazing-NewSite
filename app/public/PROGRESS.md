@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-15
+Last updated: 2026-08-26
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -8,6 +8,61 @@ kept in place further down, in date order with the entries they summarise.
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## START HERE, 2026-08-26 (docs catch-up — LIVE IS `3285863b`, NOTHING OUTSTANDING)
+
+**Live is `3285863b`, level with `main`, and test is level with it.**
+`origin/main` is `e87d9a64`, one docs-only commit above live with a byte-identical
+theme tree. No code shipped in this session: it is a documentation pass.
+
+**This log ran ten days behind and the gap is the entry.** The block below is
+dated 2026-08-16 and **five releases shipped after it** — `575eae99`,
+`dbc9cc75`, `f1fbbc94`, `ebc1a157` and `3285863b`. Every one was recorded in
+`LIVECHANGES.md` on the day, which is why nothing was lost operationally, and
+none reached this file or `HANDOVER.md`. **Writing five retroactive START HERE
+blocks would be inventing sessions that were never logged**, so the release
+detail lives in `LIVECHANGES.md` where it was actually written, and the
+architecture and trap record has been added to `HANDOVER.md` as one catch-up
+block. Read that block, not a reconstruction here.
+
+### What this pass corrected, and why each one mattered
+
+- **`AI.md` documented a consent model the code abandoned on 12 August.** It
+  said consent-first, that `chosen` was required for validity, and that the ICO
+  objection was closed. The owner reverted all of that the next day; the code and
+  `LIVECHANGES.md` moved with him and the rulebook did not. **The rulebook is
+  what a new agent reads first**, so for fourteen days the first thing anyone
+  read about consent was wrong in the direction of thinking the site was more
+  compliant than it is. The ICO item is open again.
+- **Two code comments described contracts that no longer held.**
+  `src/js/main.js` claimed `chosen` was required "matching `inc/consent.php`",
+  and neither half was true. `generated-page.php` claimed the tilt and turn
+  case-study strip was gated off, five days after Hanslope ungated it. Both sit
+  on things this repo says must be kept in step by hand.
+- **`/care-and-maintenance/` had been live for a week with no rule in any
+  document.** Nine guides, a picker, two owner tone rules that existed only in a
+  PHP docblock. It now has a rule in `AI.md`.
+- **Both root pointers carried a live SHA twenty days stale**, plus the claim
+  that live was deliberately not the tip of `main`, which had been false through
+  five consecutive releases. `AI.md` has forbidden a second live pointer since
+  4 August; the root files were the case it was written about and were never
+  swept.
+- **`LIVECHAT.md` said there was no outstanding Legend work.** The 2MB
+  spritesheet is still requested eagerly on all 715 pages.
+
+### The reusable half
+
+**A doc goes stale in the direction of flattering the last decision.** Every one
+of these said the site was in a better state than it was: consent-first rather
+than default-on, a gate that had come off, a page with a rule, a live pointer
+that matched. Nothing said the site was worse than it is. **When auditing docs,
+check the claims that would be embarrassing if false first** — they are the ones
+nobody revisits.
+
+**And check the date line against `git log` rather than trusting it.** Four docs
+carried a "Last updated" older than their own last commit, so the line was
+understating how current they were at the same time as the content was
+overstating it.
 
 ## START HERE, 2026-08-16 (roofline copy follow-up — SHIPPED, LIVE IS `0d116b8a`)
 

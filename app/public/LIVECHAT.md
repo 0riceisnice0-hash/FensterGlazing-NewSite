@@ -1,12 +1,21 @@
 # Fenster Glazing Legend Live Chat
 
-Last updated: 2026-08-11
+Last updated: 2026-08-26
 
 This document explains the Legend AI assistant deployed on the Fenster website. It covers the customer experience, frontend animation, WordPress and OpenAI integration, privacy and consent rules, deployment status, main files and implementation commits.
 
 ## Current Status
 
-**Legend is complete, live and fully verified. There is no outstanding Legend work and nothing awaiting testing or approval.** Treat this section as settled unless a new Legend feature is deliberately started.
+**Legend's FEATURE work is complete, live and fully verified. Nothing is awaiting testing or approval.** Treat the experience, the backend, the privacy position and the animation system as settled unless a new Legend feature is deliberately started.
+
+**ONE THING IS OUTSTANDING AND IT IS NOT A FEATURE.** Corrected 2026-08-26; this section said "there is no outstanding Legend work" for nine days after the audit that found it.
+
+- **`legend-spritesheet.webp` is 2,043,360 bytes and it is requested eagerly on every page of the site.** `template-parts/components/legend-assistant.php` renders it in two `<img src>` tags with no `loading` attribute, so it is fetched whether or not anyone opens the chat. `SEO-PERFORMANCE-AUDIT-2026-08-17.md` §9 names this the single highest-value technical item on the site, "worth more than every other technical item on this list combined", because it lands on all 715 pages and on the 52% of clicks that are mobile.
+- **The fix is a component change, not a Legend redesign.** Ship a launcher-sized image and fetch the full atlas when the launcher is first interacted with, or lazy-load the sheet. The animation rows, the timings and the handoff do not change.
+- **The asset has not been touched since 2026-07-15.** It is the original atlas; nothing in the releases since has altered it, so any measurement in the July or August audits still stands.
+- **Check this before believing the "settled" line above.** A component that is finished behaves differently from a component that is finished *and* free, and this one costs two megabytes on the homepage of a business whose own audit says two thirds of the mobile homepage is a picture of a cat.
+
+### Deployment state
 
 - Legend is deployed on both `https://test.fensterglazing.com/` and `https://fensterglazing.com/`.
 - The complete approved Legend follow-up is deployed on test and production through source commit `cd5b430` (latest theme-code commit `d9b9ffc`). This includes the 10-second post-close sleep delay, iOS prompt handling, footer-only Cookie settings, restricted launcher hit area, chat continuity, team-profile context, deterministic Zac answer, unified header redesign and reliable product links.

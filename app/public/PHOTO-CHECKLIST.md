@@ -73,9 +73,16 @@ section, but the image bank has nothing showing it retro-fitted.
 
 ## Current wishlist (fills known gaps)
 
-**Updated 2026-07-29.** Much of this was already sitting in OneDrive at
+**Updated 2026-08-26.** Much of this was already sitting in OneDrive at
 `Marketing/Image Bank/Legacy Marketing`, which nobody had mined. Check there before
 adding anything to this list.
+
+**Three case studies landed between 17 and 25 August and none of them closes a
+line below.** Drayton Parslow and the Milton Keynes front door are both composite
+doors, which was already closed; Hanslope is the first real photograph of a tilt
+and turn on the site but the sash is shut in every frame, so that gap stands
+exactly as scoped. **The two biggest gaps are unchanged: a wide roofline run, and
+a tilt and turn actually opening.**
 
 - **A WIDE SHOT OF A ROOFLINE RUN. This is the biggest single asset gap on the
   site and it blocks real work.** We own exactly two roofline photographs and
@@ -130,6 +137,11 @@ adding anything to this list.
   Liniar studio renders of the mechanism because they are the only assets that
   show the product doing its job. The one photograph the route had of a window
   "tilted open" turned out to be a side-hung casement opening outward.
+  **Updated 2026-08-19: the Hanslope barn study gives the route its first
+  verified real tilt and turn**, checked at full resolution for barrel hinges on
+  the outer frame before anything was claimed about it. **It is shut in every
+  frame**, so it ungates the case-study strip and closes none of the three shots
+  below.
   - **A sash in the tilt position, shot from inside the room.** This is the
     single most valuable photograph on this list after the steel before-and-
     after. It is the product's whole argument and one phone shot answers it.

@@ -1,6 +1,6 @@
 # Fenster Case Studies — How To Add And Maintain Them
 
-Last updated: 2026-08-11
+Last updated: 2026-08-25
 
 This is the complete guide to the residential case studies system at
 `/case-studies/`. It is written so a future agent (or developer) can add a new
