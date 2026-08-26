@@ -44814,7 +44814,8 @@ html.fg-blinds-reveal-locked {
 
 .fg-cdq__title {
   margin: 0 0 clamp(20px, 3vw, 34px);
-  max-width: 18ch;
+  max-width: 24ch;
+  text-wrap: balance;
   font-size: clamp(1.7rem, 3.6vw, 2.9rem);
   line-height: 1.06;
   color: #fff;
@@ -44858,21 +44859,28 @@ html.fg-blinds-reveal-locked {
    height of one and sit as a tall empty box beside the illustrated pair. */
 .fg-cdq__answer--plain { justify-content: flex-end; }
 
+/* WHITE PANEL, DARK DRAWING, ON THE DARK STAGE.
+   The drawings are black on transparent, and an SVG loaded through `<img src>`
+   is an isolated document — it inherits nothing from this page, so
+   `currentColor` inside it resolves to its own black default and setting
+   `color` here does nothing at all. The first pass did exactly that and shipped
+   black drawings onto a black stage, which read as empty boxes.
+   Giving each one a white card with an edge is the better answer than inverting
+   the artwork: the door reads the same way it does everywhere else on the site,
+   and a white card on a dark stage is what makes the answers pop. */
 .fg-cdq__answer-art {
   display: block;
   padding: 10px;
+  border: 1px solid rgba(29, 42, 47, 0.16);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #fff;
 
   img {
     display: block;
     width: 100%;
-    max-width: 104px;
+    max-width: 92px;
     height: auto;
     margin-inline: auto;
-    /* The drawings stroke in `currentColor`, which is why they invert to white
-       on this stage without a second set of assets. */
-    color: rgba(255, 255, 255, 0.92);
   }
 }
 
@@ -44938,10 +44946,10 @@ html.fg-blinds-reveal-locked {
 
 .fg-cdq__art {
   margin: 0 0 18px;
-  padding: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 22px;
+  border: 1px solid rgba(29, 42, 47, 0.16);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #fff;
 
   img {
     display: block;
@@ -44949,7 +44957,6 @@ html.fg-blinds-reveal-locked {
     max-width: 175px;
     height: auto;
     margin-inline: auto;
-    color: #fff;
   }
 }
 
