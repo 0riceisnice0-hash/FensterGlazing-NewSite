@@ -8701,169 +8701,166 @@ document.querySelectorAll('.fg-cds').forEach((root) => {
 });
 
 /* ------------------------------------------------------------------ *
- * Composite door quiz — four questions, one door, the tool beside it.
+ * Composite door quiz — one question at a time, then a reveal.
  *
- * Scoring runs against traits computed from the real cassette geometry (see
- * `inc/composite-door-data.php`), so "as much daylight as possible" genuinely
- * lands on a different door from "keep it solid" rather than following a
- * hand-written mapping.
+ * Answers advance on click rather than waiting for a submit. The format only
+ * works with momentum; a submit button under four questions is a form, not a
+ * quiz, and nobody shares a form.
  *
- * Ties break on data order, never randomly: the same answers must always give
- * the same door or a shared link means nothing.
+ * Scoring runs on traits computed from real cassette geometry (see
+ * `inc/composite-door-data.php`), and ties break on data order and never
+ * randomly — the result is shared as `?door=<key>`, and a link that showed the
+ * recipient a different door than the sender saw would be worse than no sharing.
  * ------------------------------------------------------------------ */
 document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
   let doors;
-  try {
-    doors = JSON.parse(root.dataset.fgQuizDoors || '[]');
-  } catch (e) {
-    return;
-  }
+  try { doors = JSON.parse(root.dataset.fgQuizDoors || '[]'); } catch (e) { return; }
   if (!doors.length) return;
 
   const panel = root.querySelector('[data-fg-quiz-panel]');
-  const form = root.querySelector('[data-fg-quiz-form]');
+  const steps = Array.from(root.querySelectorAll('[data-fg-quiz-step]'));
   const result = root.querySelector('[data-fg-quiz-result]');
   const frame = root.querySelector('[data-fg-quiz-frame]');
-  const hint = root.querySelector('[data-fg-quiz-hint]');
-  const resetBtn = root.querySelector('[data-fg-quiz-reset]');
-  if (!panel || !form || !result || !frame) return;
+  const pips = Array.from(root.querySelectorAll('[data-fg-quiz-pip]'));
+  const count = root.querySelector('[data-fg-quiz-count]');
+  if (!panel || !result || !frame || !steps.length) return;
 
   const artBase = root.dataset.fgQuizArt || '';
   const artVer = root.dataset.fgQuizVer || '';
   const quoteTpl = root.dataset.fgQuizQuote || '';
   const quoteFor = (key) => quoteTpl.replace('__KEY__', encodeURIComponent(key));
 
-  /* Weights say what each answer is worth. Glass is the strongest signal
-     because it is the one a visitor can actually picture, and an exact match
-     scores more than a near one rather than all-or-nothing — otherwise a single
-     unanswerable question throws the whole result. */
-  const score = (door, prefs) => {
+  const prefs = {};
+  let at = 0;
+
+  /* An exact match scores most, a near one still scores. All-or-nothing on four
+     questions leaves most of the range tied on zero, and the answer then falls
+     to whatever happens to sit first in the data. */
+  const score = (d) => {
     let s = 0;
-    if (prefs.m !== null) s += door.m === prefs.m ? 3 : 0;
-    if (prefs.g !== null) s += Math.max(0, 4 - Math.abs(door.g - prefs.g) * 2);
-    if (prefs.d !== null) s += Math.max(0, 3 - Math.abs(door.d - prefs.d) * 2);
-    if (prefs.v !== null) s += door.v === prefs.v ? 2 : 0;
+    if (prefs.m != null) s += d.m === prefs.m ? 3 : 0;
+    if (prefs.g != null) s += Math.max(0, 4 - Math.abs(d.g - prefs.g) * 2);
+    if (prefs.d != null) s += Math.max(0, 3 - Math.abs(d.d - prefs.d) * 2);
+    if (prefs.v != null) s += d.v === prefs.v ? 2 : 0;
     return s;
   };
 
-  const pick = (prefs) => {
-    let best = null, bestScore = -1;
-    doors.forEach((d) => {
-      const s = score(d, prefs);
-      if (s > bestScore) { bestScore = s; best = d; }
-    });
-    return best;
-  };
-
-  /* Say why, in the reader's own terms, from what they actually asked for. */
-  const reasonFor = (door, prefs) => {
+  const reasonFor = (d) => {
     const bits = [];
-    if (prefs.g === 3 || door.g === 3) bits.push('it puts as much glass in the door as the style allows');
-    else if (door.g === 0) bits.push('it is a solid door with no glazing at all');
-    else if (door.g === 1) bits.push('it lets a little light through without opening the hall up');
+    if (d.g === 3) bits.push('it puts about as much glass in the door as the style allows');
+    else if (d.g === 0) bits.push('it is solid, with no glazing in it at all');
+    else if (d.g === 1) bits.push('it lets a little light through without opening the hall up');
     else bits.push('it gives a decent amount of light without turning the door into a window');
-    if (door.v) bits.push('and it carries a curve rather than being all straight lines');
-    else if (prefs.d === 2 || door.d === 2) bits.push('and there is real detail in it');
-    else if (door.d === 0) bits.push('and the face is kept plain');
+    if (d.v) bits.push('and there is a curve in it rather than all straight lines');
+    else if (d.d === 2) bits.push('and there is real detail in the face');
+    else if (d.d === 0) bits.push('and the face is kept plain');
     return 'Because ' + bits.join(', ') + '.';
   };
 
-  const show = (door, prefs) => {
+  const paint = () => {
+    steps.forEach((s, i) => {
+      if (i === at) s.removeAttribute('hidden'); else s.setAttribute('hidden', '');
+      const back = s.querySelector('[data-fg-quiz-back]');
+      if (back) { if (i > 0) back.removeAttribute('hidden'); else back.setAttribute('hidden', ''); }
+    });
+    pips.forEach((p, i) => p.classList.toggle('is-done', i <= at));
+    if (count) count.textContent = 'Question ' + Math.min(at + 1, steps.length) + ' of ' + steps.length;
+  };
+
+  const reveal = (door, explain) => {
     root.querySelector('[data-fg-quiz-name]').textContent = door.n;
     root.querySelector('[data-fg-quiz-collection]').textContent = door.c + ' collection';
     const img = root.querySelector('[data-fg-quiz-art-img]');
     img.src = artBase + encodeURIComponent(door.k) + '.svg' + (artVer ? '?v=' + artVer : '');
     img.alt = door.n + ', ' + door.c + ' collection';
-    root.querySelector('[data-fg-quiz-why]').textContent = prefs ? reasonFor(door, prefs) : '';
+    root.querySelector('[data-fg-quiz-why]').textContent = explain ? reasonFor(door) : '';
     root.querySelector('[data-fg-quiz-open]').href = quoteFor(door.k);
+    const poa = root.querySelector('[data-fg-quiz-poa]');
+    if (poa) { if (door.p) poa.removeAttribute('hidden'); else poa.setAttribute('hidden', ''); }
 
-    /* Built here rather than shipped in the markup so a visitor who never uses
-       the quiz never loads the tool. Replaced wholesale on a re-run, which also
-       disposes the previous frame. */
     frame.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.src = quoteFor(door.k);
     iframe.title = 'Design and price the ' + door.n + ' online';
     iframe.loading = 'lazy';
-    iframe.setAttribute('allow', 'clipboard-write');
     frame.appendChild(iframe);
 
-    result.hidden = false;
-    if (resetBtn) resetBtn.hidden = false;
-    if (hint) hint.textContent = 'Showing the ' + door.n + '.';
-  };
+    steps.forEach((s) => s.setAttribute('hidden', ''));
+    result.removeAttribute('hidden');
+    root.classList.add('is-revealed');
+    pips.forEach((p) => p.classList.add('is-done'));
+    if (count) count.textContent = 'Your door';
 
-  const readPrefs = () => {
-    const data = new FormData(form);
-    const out = {};
-    let answered = 0;
-    ['m', 'g', 'd', 'v'].forEach((id) => {
-      const raw = data.get(id);
-      if (raw === null) { out[id] = null; return; }
-      answered += 1;
-      out[id] = raw === '' ? null : Number(raw);
-    });
-    return { prefs: out, answered };
-  };
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const { prefs, answered } = readPrefs();
-    if (answered < 2) {
-      if (hint) hint.textContent = 'Answer at least two of them and we can point at something sensible.';
-      return;
-    }
-    const door = pick(prefs);
-    if (!door) return;
-    show(door, prefs);
     try {
-      const url = new URL(window.location.href);
-      url.searchParams.set('door', door.k);
-      window.history.replaceState({}, '', url);
+      /* Built from the path rather than `location.href`. A URL carrying
+         basic-auth credentials — which the test site's do — makes replaceState
+         throw, and losing the share link over that is not worth it. */
+      window.history.replaceState({}, '', window.location.pathname + '?door=' + encodeURIComponent(door.k));
     } catch (e) { /* a URL we cannot rewrite is not a reason to lose the result */ }
-    result.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  };
+
+  const finish = () => {
+    let best = null, top = -1;
+    doors.forEach((d) => { const s = score(d); if (s > top) { top = s; best = d; } });
+    if (best) reveal(best, true);
+  };
+
+  steps.forEach((step, index) => {
+    const id = step.dataset.fgQuizQ;
+    step.querySelectorAll('[data-fg-quiz-answer]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const raw = btn.dataset.fgQuizAnswer;
+        prefs[id] = raw === '' ? null : Number(raw);
+        if (index + 1 < steps.length) { at = index + 1; paint(); }
+        else finish();
+      });
+    });
+    const back = step.querySelector('[data-fg-quiz-back]');
+    if (back) back.addEventListener('click', () => { at = Math.max(0, index - 1); paint(); });
   });
 
+  const resetBtn = root.querySelector('[data-fg-quiz-reset]');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      form.reset();
-      result.hidden = true;
+      ['m', 'g', 'd', 'v'].forEach((k) => { delete prefs[k]; });
+      at = 0;
+      result.setAttribute('hidden', '');
+      root.classList.remove('is-revealed');
       frame.innerHTML = '';
-      resetBtn.hidden = true;
-      if (hint) hint.textContent = '';
-      try {
-        const url = new URL(window.location.href);
-        url.searchParams.delete('door');
-        window.history.replaceState({}, '', url);
-      } catch (e) { /* nothing to undo */ }
+      pips.forEach((p) => p.classList.remove('is-done'));
+      paint();
+      try { window.history.replaceState({}, '', window.location.pathname); } catch (e) { /* nothing to undo */ }
     });
   }
 
   const shareBtn = root.querySelector('[data-fg-quiz-share]');
   if (shareBtn) {
+    const label = shareBtn.textContent;
     shareBtn.addEventListener('click', async () => {
+      const name = (root.querySelector('[data-fg-quiz-name]') || {}).textContent || 'this door';
       const url = window.location.href;
       try {
-        if (navigator.share) { await navigator.share({ url }); return; }
+        if (navigator.share) { await navigator.share({ title: 'I am a ' + name, url }); return; }
         await navigator.clipboard.writeText(url);
         shareBtn.textContent = 'Link copied';
-        window.setTimeout(() => { shareBtn.textContent = 'Copy a link to this'; }, 2400);
+        window.setTimeout(() => { shareBtn.textContent = label; }, 2400);
       } catch (e) {
-        /* Refused clipboard or a cancelled share sheet is not an error worth
-           shouting about; the address bar already holds the link. */
-        if (hint) hint.textContent = 'The link is in the address bar.';
+        /* A cancelled share sheet or a refused clipboard is not worth shouting
+           about; the link is already in the address bar. */
+        shareBtn.textContent = 'It is in the address bar';
+        window.setTimeout(() => { shareBtn.textContent = label; }, 2800);
       }
     });
   }
 
   panel.hidden = false;
+  paint();
 
-  /* A shared link opens straight on its door. */
   try {
     const shared = new URL(window.location.href).searchParams.get('door');
     if (shared) {
       const door = doors.find((d) => d.k === shared);
-      if (door) show(door, null);
+      if (door) reveal(door, false);
     }
   } catch (e) { /* no shared result to restore */ }
 });
