@@ -7933,9 +7933,16 @@ h3 {
   line-height: 1.58;
 }
 
+/* SIZED TO THE ARTWORK, NOT TO THE PAGE. Nine of the eleven glass images are
+   250x250 and the other two 458x464. The previous grid ran six columns with
+   every card spanning two and the first two spanning three, which at 1440
+   stretched a 250px source across ~570px — a 2.3x upscale on a photograph of a
+   fine glass pattern, which is exactly the detail that goes to mush. Cards now
+   sit near their native size and the set reads as a swatch board rather than
+   two hero tiles and a tail. */
 .fg-composite-glass__grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 0.7rem;
   padding: clamp(0.75rem, 1.6vw, 1rem);
   border: 1px solid rgba(0, 45, 58, 0.1);
@@ -7950,9 +7957,8 @@ h3 {
 .fg-composite-glass-card {
   position: relative;
   display: grid;
-  grid-column: span 2;
-  grid-template-rows: minmax(180px, 1fr) auto;
-  min-height: 342px;
+  grid-template-rows: minmax(150px, 1fr) auto;
+  min-height: 250px;
   overflow: hidden;
   border: 1px solid rgba(0, 45, 58, 0.12);
   border-radius: 8px;
@@ -7963,11 +7969,10 @@ h3 {
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
-.fg-composite-glass-card:nth-child(1),
-.fg-composite-glass-card:nth-child(2) {
-  grid-column: span 3;
-  min-height: 390px;
-}
+/* The first-two "featured" treatment is gone deliberately. It span-3'd the two
+   biggest cards, which is where the worst upscaling was, and it implied Lunna
+   and Aspen are the headline designs when the order in `site-data.php` is not a
+   ranking. Eleven equal swatches is the honest presentation. */
 
 .fg-composite-glass-card:hover,
 .fg-composite-glass-card:focus-within {
