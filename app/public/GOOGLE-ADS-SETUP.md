@@ -480,7 +480,26 @@ The public GTM container is legacy support, not the source of truth for the know
 - **Its triggers are `contact` and `cad_finish_click`.** The theme pushes neither. It pushes `fenster_form_submitted`, `fenster_consultation_booked`, `fenster_phone_click` and `fenster_quote_opened`, and **not one of those four appears anywhere in the container.**
 - **None of the three theme conversion labels appears in the container either.** Checked by name: zero matches for each.
 
-**So there is currently no double-count**, and that is a measured fact rather than an assumption — the container and the theme fire different labels off different events. **Re-check this before adding any tag to the container**, and note that the `contact` / `cad_finish_click` triggers look like old-site events that may no longer fire at all, which would mean that conversion action has been dead as well.
+**So there is currently no double-count**, and that is a measured fact rather than an assumption — the container and the theme fire different labels off different events.
+
+#### The full tag inventory, and which of them are dead (read from the container UI and the compiled `gtm.js`, 2026-08-26)
+
+| Tag | Type | Trigger | State |
+|---|---|---|---|
+| `Google Tag G-YGS6GYKBEW` | Google tag (GA4) | Initialization | **LIVE**, verified by a `/g/collect` request |
+| `GAds - Conversion Linker - All Pages` | Conversion Linker | All Pages | **LIVE, AND LOAD-BEARING** — it writes the `_gcl` cookies Ads attribution depends on. Never remove it. |
+| `GAds - Call Extension - All Pages` | Ads call conversion | All Pages | **LIVE** — label `zmtkCLqTlKQBEJT2uIED`. This is what pulls Google Ads infrastructure onto the page even for a visitor who refused marketing. |
+| `Google Ads Conversion Tracking` | Ads conversion | `cad_finish_click` | **DEAD. Nothing on the site pushes that event.** Label `oDNQCM3S18oaEJT2uIED`, hardcoded value 10 GBP. |
+| `CF7 - Event Listener` | Custom HTML | URL contains `contact` | **DEAD.** It listens for `wpcf7submit` and Contact Form 7 is not installed. |
+| `GA - Event - formSubmit` | Universal Analytics | custom event `formSubmit` | **DEAD TWICE OVER** — UA is sunset, and `formSubmit` is only pushed by the CF7 listener above. |
+| `Google Analytics - All Pages` | Universal Analytics | All Pages | Dead — UA sunset July 2023 |
+| `GA - Event - Email Address` | Universal Analytics | mailto click | Dead — UA |
+| `GA - Event - Window & Door Designer` | Universal Analytics | click to `windowsoftware.co.uk` | Dead — UA |
+| `Designer Pop Up - Google Analytics` | Universal Analytics | custom event `ConvertBox` | Dead — UA, and ConvertBox is not on the site |
+
+- **THE ACCOUNT HAD NO WORKING FORM CONVERSION AT ALL, FROM EITHER SIDE.** The theme's call went into a dataLayer shim with no Google tag loaded, and the container's own conversion tag fires on an event nothing pushes. **The only conversion that could ever have recorded is the call extension.** That is worth holding next to the 17 August decision to pause the campaigns on one recorded conversion against £255 of spend: the leads were arriving in WordPress throughout and no path existed to report them.
+- **The five Universal Analytics tags are staged for deletion in workspace 10** as of 2026-08-26, verified at **0 modified, 0 added, 5 deleted**. Not published — publishing a production container is an owner action. They are inert either way; removing them is legibility, not function.
+- **`__fsl` (form submit listener) is already orphaned**: no trigger in the container reads `gtm.formSubmit`. The two `__lcl` link-click listeners feed only the two UA click tags, so they are orphaned once those go. **Leave all three alone anyway** — they cost nothing and proving a listener unused is harder than it looks.
 
 Use GTM Preview only as a diagnostic:
 
