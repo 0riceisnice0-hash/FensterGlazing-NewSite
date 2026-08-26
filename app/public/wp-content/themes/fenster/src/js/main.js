@@ -8643,3 +8643,59 @@ document.querySelectorAll('[data-fg-repair-diag]').forEach((diag) => {
 
   selectProduct('window');
 });
+
+/* ------------------------------------------------------------------ *
+ * Composite door style range — one collection at a time.
+ *
+ * The markup ships every collection visible with its own heading, so a visitor
+ * with no JavaScript gets all 142 doors as six labelled grids and every link
+ * still works. This collapses that to a switcher.
+ *
+ * `hidden` is used rather than a class because the stylesheet carries explicit
+ * `[hidden] { display: none !important }` guards for both the switcher and the
+ * panels. Setting `el.hidden = true` on something the stylesheet gives a
+ * `display` is inert without them — the fault that made the case-study Show
+ * more button do nothing and shipped both repairs drawings at once.
+ * ------------------------------------------------------------------ */
+document.querySelectorAll('.fg-cds').forEach((root) => {
+  const switcher = root.querySelector('[data-fg-cds-switcher]');
+  const panels = Array.from(root.querySelectorAll('[data-fg-cds-panel]'));
+  if (!switcher || panels.length < 2) return;
+
+  const tabs = Array.from(switcher.querySelectorAll('[role="tab"]'));
+  if (tabs.length !== panels.length) return;
+
+  const show = (index, { focus = false } = {}) => {
+    tabs.forEach((tab, i) => {
+      const on = i === index;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+      if (on && focus) tab.focus();
+    });
+    panels.forEach((panel, i) => {
+      if (i === index) {
+        panel.removeAttribute('hidden');
+      } else {
+        panel.setAttribute('hidden', '');
+      }
+    });
+  };
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => show(i));
+    tab.addEventListener('keydown', (event) => {
+      /* Arrow keys move between tabs, which is what a tablist is expected to do
+         and is the only way a keyboard user reaches collection six without
+         tabbing through 19 door links first. */
+      const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+      if (step === 0) return;
+      event.preventDefault();
+      show((i + step + tabs.length) % tabs.length, { focus: true });
+    });
+  });
+
+  /* Enhance last, so a throw above leaves the honest six-grid version intact. */
+  switcher.removeAttribute('hidden');
+  root.classList.add('is-enhanced');
+  show(0);
+});

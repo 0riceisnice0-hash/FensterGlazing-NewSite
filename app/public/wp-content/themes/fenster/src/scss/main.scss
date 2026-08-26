@@ -44495,3 +44495,188 @@ html.fg-blinds-reveal-locked {
   .fg-bfc__controls { gap: var(--fg-space-3); }
   .fg-bfc__foot .button { width: 100%; justify-content: center; }
 }
+
+/* Hub -> showroom handover. The hub answers which product; the showroom
+   answers what it actually looks like. Without this link the showroom is a
+   real, indexable page that nothing on the site points at. */
+.fg-product-hub__showroom-link {
+  margin: 0.9rem 0 0;
+  font-size: 0.92rem;
+
+  a {
+    color: var(--color-accent-dark);
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Composite door style range — `.fg-cds`
+ *
+ * Replaces the drifting `.fg-cd3-wall`. That was a decorative band of 33
+ * photographs under a claim of "over 300 door styles"; this is the 142 doors
+ * the quote tool can actually price, as line art, each one a link that opens
+ * the tool on that door.
+ *
+ * THE `[hidden]` GUARDS ARE NOT OPTIONAL. This component sets `display` on the
+ * switcher and the panels, and an author rule outranks the UA sheet's
+ * `[hidden] { display: none }`. Without these the switcher ships visible before
+ * the controller runs and every panel shows at once. That exact fault has now
+ * caught the case-study archives, the repairs drawings and the bi-fold rail.
+ * ------------------------------------------------------------------ */
+
+.fg-cds {
+  padding-block: clamp(48px, 6vw, 80px);
+}
+
+.fg-cds__switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 28px 24px;
+
+  &[hidden] { display: none !important; }
+}
+
+.fg-cds__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid rgba(29, 42, 47, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-steel, #1d2a2f);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+
+  &:hover { border-color: rgba(29, 42, 47, 0.4); }
+
+  &[aria-selected='true'] {
+    background: var(--color-steel, #1d2a2f);
+    border-color: var(--color-steel, #1d2a2f);
+    color: #fff;
+  }
+}
+
+.fg-cds__tab-count {
+  font-size: 0.78rem;
+  font-weight: 500;
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-cds__panel {
+  &[hidden] { display: none !important; }
+
+  + .fg-cds__panel { margin-top: 40px; }
+}
+
+/* With the switcher live the panel heading is redundant — the selected tab
+   already names the collection — so it is hidden visually but kept for screen
+   readers, which is also what the no-JS version needs. */
+.fg-cds.is-enhanced .fg-cds__panel-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fg-cds__panel-title {
+  margin: 0 0 16px;
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+}
+
+.fg-cds__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-cds-door__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .fg-cds-door__art,
+  &:focus-visible .fg-cds-door__art {
+    border-color: rgba(29, 42, 47, 0.42);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent, #2eac66);
+    outline-offset: 3px;
+  }
+}
+
+.fg-cds-door__art {
+  display: block;
+  padding: 10px;
+  border: 1px solid rgba(29, 42, 47, 0.14);
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* The drawings are stroked in `currentColor`, so the ink follows the page
+       rather than being baked black. */
+    color: rgba(29, 42, 47, 0.82);
+  }
+}
+
+.fg-cds-door__name {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-align: center;
+  color: rgba(29, 42, 47, 0.72);
+}
+
+.fg-cds__note {
+  margin-top: 32px;
+  max-width: 62ch;
+  font-size: 0.95rem;
+  color: rgba(29, 42, 47, 0.72);
+}
+
+@media (max-width: 860px) {
+  .fg-cds__grid {
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  }
+
+  .fg-cds__switcher {
+    /* A row of six pills wraps to three lines on a phone and eats the section.
+       Scrolled sideways it stays one line and the clipped pill says so. */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: calc(var(--fg-gutter, 20px) * -1);
+    padding-inline: var(--fg-gutter, 20px);
+
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .fg-cds__tab { flex: 0 0 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-cds-door__art,
+  .fg-cds__tab { transition: none; }
+
+  .fg-cds-door__link:hover .fg-cds-door__art { transform: none; }
+}

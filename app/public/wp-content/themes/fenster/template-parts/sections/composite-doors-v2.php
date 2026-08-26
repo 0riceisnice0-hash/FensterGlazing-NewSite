@@ -71,48 +71,24 @@ if (empty($collections)) {
     </div>
 </section>
 
-<?php if (! empty($door_styles)) : ?>
-    <?php
-    // The wall drifts on desktop, so the list is rendered twice to make the
-    // loop seamless. The clone is hidden from assistive tech and from mobile,
-    // where the viewport becomes a normal scroll-snap rail instead.
-    $wall_passes = [false, true];
-    ?>
-    <section class="fg-cd3-wall" aria-labelledby="fg-cd3-wall-title">
-        <div class="container">
-            <header class="fg-cd3-head">
-                <p class="eyebrow"><?php esc_html_e('The style range', 'fenster'); ?></p>
-                <h2 id="fg-cd3-wall-title"><?php esc_html_e('The range runs to over 300 door styles.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('These are real Distinction door faces, not illustrations. Every one is made to order in your colour, with your glass and your handles. If one catches your eye, send us the name and we will price that exact door.', 'fenster'); ?></p>
-                <p class="fg-cd3-wall__action">
-                    <a class="button" href="#fenster-product-quote"><?php esc_html_e('Price one yourself', 'fenster'); ?></a>
-                    <a class="button button--steel" href="#fenster-enquiry"><?php esc_html_e('Send us a style name', 'fenster'); ?></a>
-                </p>
-            </header>
-        </div>
-        <div class="fg-cd3-wall__viewport" data-fg-door-wall tabindex="0" role="region" aria-label="<?php esc_attr_e('Composite door styles. Drag or scroll sideways to explore.', 'fenster'); ?>">
-            <ul class="fg-cd3-wall__track">
-                <?php foreach ($wall_passes as $is_clone) : ?>
-                    <?php foreach ($door_styles as $style) : ?>
-                        <?php $stem = $styles_base . (string) $style['slug']; ?>
-                        <li class="fg-cd3-door<?php echo $is_clone ? ' is-clone' : ''; ?>"<?php echo $is_clone ? ' aria-hidden="true"' : ''; ?>>
-                            <img
-                                src="<?php echo esc_url(fenster_generated_url($stem . '-300w.webp')); ?>"
-                                srcset="<?php echo esc_attr(fenster_generated_url($stem . '-300w.webp') . ' 300w, ' . fenster_generated_url($stem . '-600w.webp') . ' 600w'); ?>"
-                                sizes="180px"
-                                alt="<?php echo esc_attr(sprintf(__('Distinction %1$s composite door, %2$s collection', 'fenster'), (string) $style['name'], (string) $style['collection'])); ?>"
-                                loading="lazy" width="300" height="734">
-                            <span class="fg-cd3-door__label">
-                                <strong><?php echo esc_html((string) $style['name']); ?></strong>
-                                <small><?php echo esc_html((string) $style['collection']); ?></small>
-                            </span>
-                        </li>
-                    <?php endforeach; ?>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    </section>
-<?php endif; ?>
+<?php
+/*
+ * THE STYLE RANGE. This was a drifting wall of 33 photographed door faces under
+ * the heading "The range runs to over 300 door styles." Replaced 2026-08-26.
+ *
+ * Both halves of that were wrong for the job. The 300 described Distinction's
+ * catalogue rather than what our own quoting system can price, so a visitor
+ * could fall for a door we cannot put a number on. And the wall offered no way
+ * to act on a door beyond "send us the name", which asks a customer to describe
+ * a door to us in an email rather than just clicking it.
+ *
+ * The replacement renders the 142 doors WindowCAD can price, as line art, each
+ * one opening the quote tool on that exact door. `$door_styles` and the
+ * photographs under `styles/` are untouched and still in git history if the
+ * owner wants the wall back.
+ */
+get_template_part('template-parts/components/composite-door-styles');
+?>
 
 <?php
 /*
