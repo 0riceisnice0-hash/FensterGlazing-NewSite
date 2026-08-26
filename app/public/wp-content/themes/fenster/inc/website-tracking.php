@@ -595,7 +595,9 @@ function fenster_enqueue_website_tracking_config(): void
         'environment' => fenster_website_tracking_environment(),
         'sessionTimeoutMinutes' => 30,
         'googleAds' => [
-            'conversionId' => 'AW-808336148',
+            // From `inc/consent.php`, which loads the tag this id belongs to.
+            // One copy, so the published id and the loaded tag cannot disagree.
+            'conversionId' => FENSTER_GOOGLE_ADS_ID,
             'enquiryLabel' => 'r6edCOm2ztgcEJT2uIED',
             'consultationLabel' => 'Zi3tCLLU1tgcEJT2uIED',
             'phoneLabel' => 'S9iCCJr3ztgcEJT2uIED',

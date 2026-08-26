@@ -13,6 +13,13 @@ const FENSTER_GTM_ID = 'GTM-K89BCS9';
 const FENSTER_CLARITY_ID = 'xi7rk1pic8';
 const FENSTER_META_PIXEL_ID = '4315058575189194';
 
+/*
+ * The Google Ads destination. `inc/website-tracking.php` publishes this same id
+ * to the browser alongside the conversion labels, and reads it from here so
+ * there is one copy of it rather than two that can drift.
+ */
+const FENSTER_GOOGLE_ADS_ID = 'AW-808336148';
+
 add_filter('option_ihaf_insert_header', 'fenster_empty_public_tracking_option', PHP_INT_MAX);
 add_filter('option_ihaf_insert_body', 'fenster_empty_public_tracking_option', PHP_INT_MAX);
 add_filter('option_ihaf_insert_footer', 'fenster_empty_public_tracking_option', PHP_INT_MAX);
@@ -165,6 +172,7 @@ function fenster_render_cookie_consent(): void
         var gtmLoaded = false;
         var clarityLoaded = false;
         var metaLoaded = false;
+        var googleAdsLoaded = false;
         var bannerShownRecorded = false;
 
         /*
@@ -509,6 +517,50 @@ function fenster_render_cookie_consent(): void
             loadScript('https://www.googletagmanager.com/gtm.js?id=<?php echo esc_js(FENSTER_GTM_ID); ?>');
         }
 
+        /*
+         * The Google Ads tag, gated exactly as `loadMeta` is and for the same
+         * reason: a conversion is marketing, not analytics. That also matches
+         * the gate `sendGoogleAdsConversion()` already applies in
+         * `src/js/main.js`, so the tag exists on precisely the visits that are
+         * allowed to send one, and `GOOGLE-ADS-SETUP.md` 6c, which requires the
+         * Google tag and Conversion Linker to load only after marketing
+         * consent. Deliberately NOT loaded alongside GTM, which loads on
+         * analytics OR marketing.
+         *
+         * WHY THIS WAS MISSING FOR MONTHS AND NOTHING REPORTED IT.
+         * `configureGoogleConsent()` defines `window.gtag` as a dataLayer shim
+         * on every page so the consent signal can be queued before any tag
+         * exists. That shim satisfies the `typeof window.gtag !== 'function'`
+         * guard in `sendGoogleAdsConversion()`, so every enquiry, consultation,
+         * phone click and quote open called `gtag('event', 'conversion', ...)`,
+         * pushed it into the dataLayer, and returned as though it had worked.
+         * Nothing was listening. The real tag was never loaded anywhere in the
+         * theme, and `GOOGLE-ADS-SETUP.md` 6c had meanwhile told the operator
+         * not to build the equivalent tags in GTM because the site "calls the
+         * known Google Ads destinations directly" — so the document pointed at
+         * the code, the code pointed at a shim, and the one thing that would
+         * have caught it was deliberately never created.
+         *
+         * The shim is not a workaround to be replaced here. It IS the standard
+         * gtag queue function, byte for byte what Google's own snippet
+         * declares, so the consent default and update already queued through it
+         * are read in order the moment the tag arrives. Consent before tag is
+         * the required order for Consent Mode, and this file already had it.
+         * Do not add a second `window.gtag` definition; it would shadow the
+         * queue that carries the consent state.
+         */
+        function loadGoogleAds(preferences) {
+            if (! preferences.marketing || googleAdsLoaded) {
+                return;
+            }
+
+            googleAdsLoaded = true;
+            window.dataLayer = window.dataLayer || [];
+            loadScript('https://www.googletagmanager.com/gtag/js?id=<?php echo esc_js(FENSTER_GOOGLE_ADS_ID); ?>');
+            window.gtag('js', new Date());
+            window.gtag('config', '<?php echo esc_js(FENSTER_GOOGLE_ADS_ID); ?>');
+        }
+
         function loadClarity(preferences) {
             if (! preferences.analytics) {
                 setClarityConsent(preferences.marketing ? 'granted' : 'denied', 'denied');
@@ -565,6 +617,7 @@ function fenster_render_cookie_consent(): void
             }
 
             loadGtm(preferences);
+            loadGoogleAds(preferences);
             loadClarity(preferences);
             loadMeta(preferences);
         }
