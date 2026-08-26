@@ -130,8 +130,15 @@ $fg_cds_total = array_sum(array_map(static fn ($c) => count($c['styles']), $fg_c
             <?php endforeach; ?>
         </div>
 
+        <?php
+        /* NO SIDE PANEL LINE HERE. The collections section above already says
+           side panels go either side of any door, in almost these words, and
+           two sections making the same point is the fault `TONEOFVOICE.md`
+           names as a page built by adding. This note earns its place only by
+           saying what happens next. */
+        ?>
         <p class="fg-cds__note">
-            <?php esc_html_e('Side panels can go either side of any of them, which is how we widen a narrow opening and get more daylight into a dark hallway. Glass and colour come next in the tool.', 'fenster'); ?>
+            <?php esc_html_e('Colour, glass and handles are all chosen in the tool once you have picked a shape, and the price moves as you change them.', 'fenster'); ?>
         </p>
     </div>
 </section>
