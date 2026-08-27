@@ -1119,7 +1119,7 @@ $trust_items = [
 $partner_items = [
     ['src' => FENSTER_THEME_URI . '/assets/partners/sheerline.png', 'alt' => 'Sheerline'],
     ['label' => 'Liniar', 'alt' => 'Liniar'],
-    ['src' => FENSTER_THEME_URI . '/assets/partners/distinction-doors-white.png', 'alt' => 'Distinction Doors'],
+    ['src' => FENSTER_THEME_URI . '/assets/partners/distinction-doors.png', 'alt' => 'Distinction Doors'],
 ];
 $product_hub = function_exists('fenster_product_hub_data') ? fenster_product_hub_data($slug) : [];
 $product_hub_systems = is_array($product_hub['systems'] ?? null) ? array_values($product_hub['systems']) : [];
@@ -3668,7 +3668,7 @@ if ($is_commercial_hub) {
                     <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
                 </div>
                 <p class="fg-cd3-hero__credential">
-                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
+                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors-white.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
                     <span><?php esc_html_e('Approved installer. One in four front doors fitted in Britain is a Distinction, and we survey, supply and hang yours ourselves.', 'fenster'); ?></span>
                 </p>
             </div>
