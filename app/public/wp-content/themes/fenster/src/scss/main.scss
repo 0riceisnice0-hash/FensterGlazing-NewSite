@@ -10790,29 +10790,6 @@ html.fg-gallery-lightbox-open body {
   background-size: contain;
 }
 
-/* The optical render. JS composites the glass ONCE per texture/background pick
-   on this canvas -- the texture drives refraction and diffusion of the scene
-   rather than being multiplied over it -- and the CSS layers above become the
-   no-JS / failed-render fallback. The canvas sits inside the glass layer, so
-   the split divider's clip-path costs nothing extra. */
-.fg-obscure-stage__optics {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  display: none;
-  width: 100%;
-  height: 100%;
-}
-
-.fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__optics {
-  display: block;
-}
-
-.fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__glass::before,
-.fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__glass::after {
-  display: none;
-}
-
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
   filter: blur(12px) brightness(108%) saturate(0.72) contrast(0.92);
   transform: scale(1.055);
