@@ -1237,93 +1237,57 @@ A change is not complete until the relevant checks pass:
 
 ## Obscured glass textures
 
+- **THE STAGE PAINTS ONE BAKED IMAGE, and it is not computed in the browser
+  because it cannot be.** `scripts/build-obscure-glass-bakes.py` composites every
+  pattern over every scene offline; the stage sets `--active-glass-bake` and the
+  divider clips that layer exactly as before. **Four rounds of live compositing
+  were spent before this was accepted — do not restart them.**
+- **THE REASON IS STRUCTURAL, NOT A SETTING.** In Pilkington's own photograph
+  every facet is a **flat wash** of one tone with a hard edge to the next, because
+  a lens averages what it magnifies down to almost a single colour.
+  `feDisplacementMap` MOVES pixels; it never averages within a region. So a
+  displaced photograph keeps its internal gradients and reads as a smear — below a
+  scale of about 16 the pattern vanishes into plain blur, above it the facets
+  smear, and **nothing sits between**. Averaging per facet is trivial offline and
+  impossible in a CSS filter.
+- **Four hypotheses died getting there. Do not re-test them.** The aspect stretch
+  (rebuilt with `preserveAspectRatio="xMidYMid slice"`, looked *worse*); the
+  displacement scale (seven values rendered); the rim map as a source of shine (it
+  cannot brighten at all — its shade term exceeds its light term everywhere, so it
+  never rises above 128); and the scene being too smooth to bend (measured, and
+  ours carries **more** local contrast at petal scale than the reference's room,
+  21.1 against 16.5).
+- **THE SEGMENTATION NEEDS ITS MODE FILTER.** Quantising straight off the
+  photograph splits it into thousands of speckled fragments and the bake reads as
+  noise rather than glass. The mode filter merges each fragment into its
+  neighbours and leaves coherent facets — and it halved the byte cost as a side
+  effect, 4.24MB to 2.13MB, because the result compresses far better.
+- **Sample with edge padding, never `np.roll`.** Wrapping brings the far side of
+  the photograph round to the near one, so a facet near the top can show the dark
+  pond from the bottom. It shipped to test as a black blotch in the corner.
+- **BUMP `BAKE_REVISION` WHENEVER THE RECIPE CHANGES.** Bakes carry no version
+  string, like every theme image, so rewriting them in place leaves the reviewer's
+  browser serving the old ones and the fix looks like it did nothing. **This was
+  broken once within minutes of the rule being written**, in the commit right
+  after the one that documented it.
+- **THE COST, and it is real: the effect is fixed to the baked scenes.** A third
+  background means re-running the script, not editing a stylesheet. Adding a
+  texture means adding it to `TEXTURES` in the script as well as to `obscure_glass`.
+- **`tile` is for the stage, `image` is for everything else.** Swatches, the hero
+  wall and the glass card each paint one instance of the plain photograph at
+  `cover`; only the bake and the stage care about a seamless repeat. Reeded's
+  mirrored tile in a 58px swatch put its mirror axis dead centre and read as a
+  chevron. `tile` falls back to `image`.
+- **Reeded's display copy is lifted to the set's brightness and its tile is not.**
+  It is the second-darkest source in the set and read as the one near-black square
+  in a pale column. The tile stays as photographed so the pane does not move.
+- **Privacy drives the bake, and it used to drive almost nothing.** It ran the
+  texture's opacity from 0.84 to 0.96 across the whole 1-to-5 range — a 12% change
+  — so privacy 2 and privacy 5 looked all but identical on a page whose entire job
+  is telling them apart. It now sets how completely each facet averages and how
+  much etched frost sits over the pane.
 - **If a texture's pixels change, change its filename.** Theme images are emitted
-  through `fenster_generated_url()`, which adds no version string, so replacing a
-  `.webp` in place leaves browsers and the proxy serving the old one while the
-  deploy verifies perfectly. This has cost review rounds twice.
-- **THE STAGE VARIES FOCUS, NOT BRIGHTNESS, as of 2026-08-27.** It used to paint
-  the texture over a blurred scene with `mix-blend-mode: multiply`, and multiply
-  can only darken: the brightest a "transparent" area could reach was
-  "unchanged", so no texture could ever have a see-through bit and every glass
-  read as a grey wash. The owner's report was that it looked "black/white rather
-  than ... the actual glass with transparent bits". **No texture edit could have
-  fixed that** — the fault was the blend mode. The pane is now three layers of the
-  same photograph: the scene well out of focus, a sharper copy showing through the
-  flat parts of the pattern, and the pattern's edges shaded on top. Every pixel in
-  the first two is scene colour, which is what stopped it reading grey — mean
-  saturation over the Cassini pane went **24.0% to 32.1%**.
-- **EVERY RIM MAP IS SCALED TO THE SAME MEAN ABSOLUTE DEVIATION FROM 128, and one
-  number answered two opposite review notes.** The owner's second review of
-  2026-08-27 was that Chantilly's outlines were "too inky" and Cassini was "not
-  defined enough". Native MAD ran **Cassini 13.6 to Chantilly 29.4**, a 2.2x
-  spread, because MAD measures how much of the pane gets shaded and by how much —
-  a dense floral has edges everywhere and a soft pebble pattern barely any. The
-  target is 21, a little under the set median of 22.5. **Normalising on standard
-  deviation was tried first and barely moved either: spread is not coverage.**
-- **`tile` is for the stage, `image` is for everything else.** Seamlessness is a
-  property of TILING, and the stage is the only surface that repeats — swatches,
-  the hero wall and the glass card each paint one instance at `cover`. Reeded's
-  mirrored tile squeezed into a 58px swatch put its mirror axis dead centre, and
-  the ribs fan slightly, so it read as a bold chevron rather than as glass. `tile`
-  falls back to `image`, so only a texture whose repeat differs from its portrait
-  needs one. **Before giving a texture a seamless treatment, ask which surfaces
-  will show it.**
-- **BUMP `MAPS_REVISION` WHENEVER THE RECIPE CHANGES, not only when a photograph
-  does.** The maps go out through `fenster_generated_url()` like any theme image,
-  so they carry no version string; rewriting one in place leaves the reviewer's
-  browser serving the old bytes and the fix looks like it did nothing. The
-  rename-the-source rule covers changed pixels, this covers a changed formula.
-  They live in `maps/<rev>/`, so one bump moves the whole set.
-- **Renaming the map folder makes rsync see a deletion per file.** `git` reports
-  unchanged maps as `R100` renames; rsync sees delete-plus-add. The r1 to r2 move
-  was **40 deletions** against a `git` view of 20. Set the assertion from what
-  rsync does, and check none of them fall outside the maps folder.
-- **Every texture needs two companion maps and they are DERIVED, never drawn.**
-  `scripts/build-obscure-glass-maps.py` rebuilds every byte from the source
-  photograph, and the maps are named off its stem, so renaming a texture renames
-  its maps. Hand-editing one makes the map and the photograph describe different
-  pieces of glass. A texture with no photograph (Satin is a CSS gradient) has no
-  maps and the stage drops both layers on `data-glass-maps="no"` — **that flag is
-  load-bearing, because an absent mask reads as fully opaque and would render a
-  privacy 5 glass see-through.**
-- **MEAN AND STANDARD DEVIATION ARE NOT ENOUGH, and that is what this cost.**
-  Cassini rev2 measured mean 158 stddev 46, both comfortably inside the set, and
-  was still badly wrong: it is a photograph of a 150mm sample lit from one side,
-  running 105 at the top to 192 in the middle. **Measure the low-frequency spread
-  as well — blur hard, then max minus min.** rev2 was 143 against a set median of
-  49. The lit dome read as clear glass and the vignette read as black.
-- **Two of twenty textures have that fault, so check before assuming anything
-  else.** Reeded is the other: spread 130, left edge 148 against right edge 100.
-  It is why cropping Reeded to a whole number of ribs only moved its seam from 125
-  to 55 — **the rib phase was never the problem, the lighting was.** Flat-field
-  first, then worry about the repeat.
-- **Privacy drives the blur, not the opacity.** It used to run the texture's
-  opacity from 0.84 to 0.96 across the whole 1-to-5 range — a 12% change — so a
-  privacy 2 glass and a privacy 5 glass looked all but identical on a page whose
-  entire job is telling them apart.
-- **A photographed texture needs a `size`; a CSS gradient does not.** `cover`
-  scales to the box rather than to the glass, so the same photo is dense on a
-  58px swatch and enormous on the stage. The `size` applies to the **stage only** —
-  swatches stay on `cover` because they must show the whole pattern.
-- ~~**Pinning a size makes the photo tile,** and these are not seamless, so expect
-  a soft join every few hundred pixels. Checked at stage width it reads as
-  variation in the glass rather than a repeat.~~ **Rejected by the owner,
-  2026-08-27: "i dont like how all of the glass images repeat but not perfectly -
-  looks bad".** A pinned size is the only thing that tiles — the other seventeen
-  are `cover` and paint once — so **only pin one when the scale genuinely
-  matters**, and make it seamless if you do. Cassini, Minster and Stippolyte gave
-  up their pins and went to `cover`, which cannot seam. Reeded kept one because a
-  rib has a real width and renders about five times too fat at `cover`.
-- **Mirroring is right for a linear pattern and wrong for an organic one.** Reeded
-  is flat-fielded then mirrored, seam 48.8 to **0.00**, and the symmetry is
-  invisible because ribs are near-identical to their own reflection. The same trick
-  on Cassini's pebbles goes visibly kaleidoscopic, and a wrap cross-fade ghosts
-  them into double images. **Both were tried and looked at before choosing.**
-- **A mirrored tile is twice as wide, so its pin doubles too**, or every rib
-  renders at half its proper width. Reeded is `360px 100%`, not `180px 100%`.
-- **Two earlier blocks in `main.scss` also target `.fg-obscure-stage__glass::after`
-  and the later one sets `multiply` at half opacity.** Anything a new rule for that
-  pseudo-element does not name is inherited from it. The replacement sheen shipped
-  as a darkening layer until it reset `mix-blend-mode`, `opacity` and `filter`
-  explicitly — the exact fault the change existed to remove. **Caught by grepping
-  the compiled CSS for `multiply` after the build, not by reading the diff.**
+  through `fenster_generated_url()`, which adds no version string. This has cost
+  review rounds three times.
+- **A texture with no photograph bakes as blur plus frost.** Satin is a CSS
+  gradient and a flat acid-etched frost has no facets to average.
