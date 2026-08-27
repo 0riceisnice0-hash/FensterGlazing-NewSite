@@ -3543,7 +3543,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
      is locked there by owner instruction (2026-08-27), and Satin is a
      flat acid frost with no pattern to refract. */
   const GLASS_OPTICS = {
-    reeded: { mode: 'css' },
+    reeded: {
+      type: 'directional', axisX: 1, axisY: 0, cross: 0.02,
+      heightBlur: 2, strength: 30, baseBlur: 1.5, roughBlur: 6, rough: 0.5,
+      relief: 0.3, veil: 0.08, grain: 0.03, spec: 16,
+    },
     satin: { mode: 'css' },
     /* Cassini is TWO materials, and the brochure photography shows both: the
        petal faces are nearly clear glass, the ground between them is a fine
@@ -3551,37 +3555,37 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        line. `mask` switches the two-material path on: the flat-fielded
        texture's brightness separates face from ground. */
     cassini: {
-      heightBlur: 14, strength: 20, baseBlur: 0.8, roughBlur: 14, relief: 0.12,
-      mask: true, maskLow: 0.55, maskHigh: 0.72, petalRough: 0, groundRough: 0.95,
-      groundScatter: 0.32, edgeShade: 0.12, veil: 0.28, spec: 26, scale: 0.8, grain: 0.07,
+      heightBlur: 12, strength: 26, baseBlur: 0.8, roughBlur: 12, relief: 0.22,
+      mask: true, maskLow: 0.45, maskHigh: 0.62, petalRough: 0.05, groundRough: 0.9,
+      groundScatter: 0.22, edgeShade: 0.3, veil: 0.16, spec: 20, scale: 1.24, grain: 0.06,
     },
     /* Every entry below is read off Pilkington's own same-scene photography
        (Texture by Pilkington brochure, January 2026): the fruit bowl, teapot
        and plant shot through each glass. The privacy ladder in that document
        is honoured by DISTORTION, not by opacity: Warwick (1) leaves the
        teapot nearly intact, Everglade (5) scrambles it into its swirls. */
-    arctic: { heightBlur: 3, strength: 22, baseBlur: 1.2, roughBlur: 7, rough: 0.35, relief: 0.3, veil: 0.28, spec: 18, grain: 0.05 },
+    arctic: { heightBlur: 3, strength: 22, baseBlur: 1.2, roughBlur: 7, rough: 0.35, relief: 0.34, veil: 0.26, spec: 18, grain: 0.09 },
     cotswold: {
-      type: 'directional', axisX: 1, axisY: 0,
-      heightBlur: 6, strength: 34, baseBlur: 2.5, roughBlur: 16, rough: 0.85,
-      relief: 0.2, veil: 0.32, grain: 0.05, spec: 12,
+      type: 'directional', axisX: 1, axisY: 0, cross: 0.04,
+      heightBlur: 3, strength: 30, baseBlur: 2.5, roughBlur: 16, rough: 0.85,
+      relief: 0.24, veil: 0.3, grain: 0.05, spec: 12,
     },
-    autumn: { heightBlur: 6, strength: 16, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14, grain: 0.05, spec: 8 },
-    chantilly: { heightBlur: 5, strength: 5, baseBlur: 1.2, roughBlur: 7, rough: 0.5, relief: 0.5, veil: 0.1, grain: 0.05, spec: 8 },
+    autumn: { heightBlur: 7, strength: 10, baseBlur: 1.5, roughBlur: 8, rough: 0.5, relief: 0.45, veil: 0.12, grain: 0.05, spec: 10 },
+    chantilly: { heightBlur: 5, strength: 4, baseBlur: 1.2, roughBlur: 6, rough: 0.45, relief: 0.55, veil: 0.08, grain: 0.05, spec: 8 },
     'charcoal-sticks': {
-      type: 'directional', axisX: 1, axisY: 0,
-      heightBlur: 4, strength: 34, baseBlur: 2, roughBlur: 9, rough: 0.55,
-      relief: 0.35, veil: 0.18, grain: 0.06, spec: 16,
+      type: 'directional', axisX: 1, axisY: 0, cross: 0.05,
+      heightBlur: 3, strength: 34, baseBlur: 2, roughBlur: 9, rough: 0.5,
+      relief: 0.4, veil: 0.14, grain: 0.06, spec: 16,
     },
-    contora: { heightBlur: 3, strength: 20, baseBlur: 1.8, roughBlur: 10, rough: 0.6, relief: 0.2, veil: 0.2, grain: 0.06, spec: 10 },
+    contora: { heightBlur: 2, strength: 16, baseBlur: 1.8, roughBlur: 9, rough: 0.6, relief: 0.25, veil: 0.18, grain: 0.07, spec: 10 },
     digital: {
-      type: 'cellular', cell: 14,
-      heightBlur: 5, strength: 16, baseBlur: 1.5, roughBlur: 6, rough: 0.5,
-      relief: 0.22, veil: 0.14, grain: 0.05, spec: 10,
+      type: 'cellular', cell: 16,
+      heightBlur: 5, strength: 22, baseBlur: 1.2, roughBlur: 5, rough: 0.45,
+      relief: 0.3, veil: 0.1, grain: 0.05, spec: 10,
     },
-    everglade: { heightBlur: 7, strength: 28, baseBlur: 2.2, roughBlur: 12, rough: 0.65, relief: 0.3, veil: 0.28, spec: 16, grain: 0.05 },
-    florielle: { heightBlur: 7, strength: 12, baseBlur: 1.2, roughBlur: 9, rough: 0.5, relief: 0.4, veil: 0.2, grain: 0.06, spec: 10 },
-    mayflower: { heightBlur: 6, strength: 14, baseBlur: 2, roughBlur: 11, rough: 0.55, relief: 0.4, veil: 0.18, grain: 0.06, spec: 10 },
+    everglade: { heightBlur: 9, strength: 30, baseBlur: 2.2, roughBlur: 12, rough: 0.6, relief: 0.4, veil: 0.24, spec: 16, grain: 0.05 },
+    florielle: { heightBlur: 6, strength: 8, baseBlur: 1.2, roughBlur: 9, rough: 0.5, relief: 0.5, veil: 0.14, grain: 0.06, spec: 10 },
+    mayflower: { heightBlur: 5, strength: 10, baseBlur: 2, roughBlur: 10, rough: 0.55, relief: 0.48, veil: 0.14, grain: 0.06, spec: 10 },
     minster: { heightBlur: 12, strength: 14, baseBlur: 1.2, roughBlur: 7, rough: 0.4, relief: 0.18, veil: 0.12, spec: 12, },
     oak: { heightBlur: 8, strength: 9, baseBlur: 1, roughBlur: 6, rough: 0.4, relief: 0.42, veil: 0.08, grain: 0.04, spec: 10 },
     pelerine: {
@@ -3892,6 +3896,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const dirX = axisX;
       const dirY = axisY;
       const cellSize = Math.max(6, Math.round(optics.cell || 24));
+      const crossBleed = optics.cross != null ? optics.cross : 0.12;
 
       for (let y = 0; y < h; y += 1) {
         const yw = y * w;
@@ -3933,11 +3938,12 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           gy /= 1 + Math.abs(gy) * 0.5;
           if (typeCode === 1) {
             /* DIRECTIONAL: the ribs bend light across themselves only. The
-               displacement is projected onto the scatter axis, with a whisper
-               of the other component so the rib edges stay alive. */
+               cross-bleed is per glass: bark meanders a little, a drawn rolled
+               rib barely at all -- too much of it and every directional glass
+               waves like Minster, which is exactly the owner's complaint. */
             const d = gx * dirX + gy * dirY;
-            gx = d * dirX + gx * 0.12;
-            gy = d * dirY + gy * 0.12;
+            gx = d * dirX + gx * crossBleed;
+            gy = d * dirY + gy * crossBleed;
           }
           const sx = Math.min(w - 1.001, Math.max(0, x + gx * optics.strength));
           const sy = Math.min(h - 1.001, Math.max(0, y + gy * optics.strength));
