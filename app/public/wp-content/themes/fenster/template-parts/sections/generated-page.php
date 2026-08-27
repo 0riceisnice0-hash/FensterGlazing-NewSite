@@ -3082,6 +3082,21 @@ if ($is_obscure_glass) {
         $texture_image = trim((string) ($texture['image'] ?? ''));
         return $texture_image !== '' ? 'url("' . fenster_generated_url($texture_image) . '")' : 'none';
     };
+    /* THE STAGE IS THE ONLY SURFACE THAT REPEATS, so it is the only one that wants
+       a seamless tile. Everything else -- the picker swatches, the hero wall, the
+       glass card -- paints one instance at `cover` and wants the plain photograph.
+       Reeded is the worked example: its tile is mirrored so it repeats without a
+       seam, and a mirrored tile squeezed into a 58px swatch shows its mirror axis
+       dead centre as a chevron. Falls back to `image`, so a texture that needs no
+       separate tile carries no `tile` key. */
+    $obscure_glass_tile_value = static function (array $texture) use ($obscure_glass_texture_value): string {
+        $tile = trim((string) ($texture['tile'] ?? ''));
+        if ($tile !== '') {
+            return 'url("' . fenster_generated_url($tile) . '")';
+        }
+
+        return $obscure_glass_texture_value($texture);
+    };
     /* Optional per-pattern scale. Only the photographed textures need it — a CSS
        gradient has no intrinsic size to get wrong — and without it `cover` blows a
        photograph up to whatever box it lands in, which is what made Reeded read as
@@ -3102,7 +3117,7 @@ if ($is_obscure_glass) {
     };
     $active_glass_rim = is_array($obscure_glass_first) ? $obscure_glass_map($obscure_glass_first, 'rim') : 'none';
     $active_glass_clear = is_array($obscure_glass_first) ? $obscure_glass_map($obscure_glass_first, 'clear') : 'none';
-    $active_glass_texture = is_array($obscure_glass_first) ? $obscure_glass_texture_value($obscure_glass_first) : 'none';
+    $active_glass_texture = is_array($obscure_glass_first) ? $obscure_glass_tile_value($obscure_glass_first) : 'none';
     $active_glass_texture_size = is_array($obscure_glass_first) ? $obscure_glass_texture_size($obscure_glass_first) : 'cover';
     $obscure_glass_left = array_slice($obscure_glass_textures, 0, 10, true);
     $obscure_glass_right = array_slice($obscure_glass_textures, 10, null, true);
@@ -3111,8 +3126,15 @@ if ($is_obscure_glass) {
         $texture_name = (string) ($texture['name'] ?? '');
         $privacy = (int) ($texture['privacy'] ?? 0);
         $texture_value = trim((string) ($texture['texture'] ?? ''));
+        $swatch_value = $texture_value;
         if ($texture_value === '') {
-            $texture_value = 'url("' . fenster_generated_url((string) ($texture['image'] ?? '')) . '")';
+            /* data-texture goes to the stage, so it takes the tile; the span is the
+               swatch and takes the plain image. They are the same for every texture
+               but Reeded. */
+            $tile = trim((string) ($texture['tile'] ?? ''));
+            $image = trim((string) ($texture['image'] ?? ''));
+            $texture_value = 'url("' . fenster_generated_url($tile !== '' ? $tile : $image) . '")';
+            $swatch_value = 'url("' . fenster_generated_url($image) . '")';
         }
         ?>
         <button
@@ -3130,7 +3152,7 @@ if ($is_obscure_glass) {
             data-copy="<?php echo esc_attr((string) ($texture['copy'] ?? '')); ?>"
             aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>"
         >
-            <span style="<?php echo esc_attr('--texture:' . $texture_value . '; --texture-size:' . trim((string) ($texture['size'] ?? 'cover')) . ';'); ?>" aria-hidden="true"></span>
+            <span style="<?php echo esc_attr('--texture:' . $swatch_value . ';'); ?>" aria-hidden="true"></span>
             <strong><?php echo esc_html($texture_name); ?></strong>
             <small><?php echo esc_html($privacy === 0 ? 'Decorative' : 'Privacy ' . $privacy); ?></small>
         </button>

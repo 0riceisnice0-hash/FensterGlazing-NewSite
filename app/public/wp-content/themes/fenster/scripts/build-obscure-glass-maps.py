@@ -51,7 +51,15 @@ from PIL import Image, ImageFilter, ImageOps
 from pathlib import Path
 
 GLASS = Path("assets/images/products/obscure-glass")
-MAPS = GLASS / "maps"
+# BUMP THIS WHENEVER THE RECIPE CHANGES, not just when a source texture does.
+# The maps are emitted through `fenster_generated_url()` like any other theme
+# image, so they carry no version string, and rewriting one in place leaves every
+# browser and proxy that has already fetched it serving the old bytes -- the
+# review you are answering then shows no change and you conclude the fix did not
+# work. The source-rename rule covers a changed PHOTOGRAPH; this covers a changed
+# FORMULA, which the r1 -> r2 MAD normalisation was.
+MAPS_REVISION = "r2"
+MAPS = GLASS / "maps" / MAPS_REVISION
 
 # Maps are only ever sampled through `background-size`/`mask-size`, so there is
 # nothing to gain from carrying the source's full resolution. Cotswold alone is a
@@ -95,11 +103,24 @@ RIM_SHADE = 66.5   # how much the edges darken
 RIM_LIGHT = 47.25  # how much the lit side of an edge picks up
 RIM_GAMMA = 0.85   # <1 lifts faint edges so fine patterns still register
 
+# EVERY MAP IS THEN SCALED TO THE SAME MEAN ABSOLUTE DEVIATION FROM 128, and this
+# is the fix for the owner's second review on 2026-08-27: Chantilly's outlines
+# were "too inky" and Cassini was "not defined enough". Both complaints were the
+# same number. Native MAD across the set ran Cassini 13.6 to Chantilly 29.4, a
+# 2.2x spread, because MAD measures how much of the pane gets shaded and by how
+# much -- a dense floral has edges everywhere and a soft pebble pattern barely
+# any. Normalising on standard deviation was tried first and barely moved either,
+# because spread is not coverage. 21 is a little under the set median of 22.5, so
+# Cassini gains ~55% definition, Chantilly loses ~30% of its ink, and the dozen
+# textures already near the median move less than a tenth.
+
 # The clear mask runs between these percentiles of the texture's own luminance,
 # so a flat pattern and a contrasty one both end up with a comparable share of
 # the pane readable. A fixed 0-255 window put Contora at 4% clear and Chantilly
 # at 61%, which is the same fault the Cassini vignette had: absolute numbers on
 # photographs that were not lit the same way.
+RIM_TARGET_MAD = 21.0
+
 CLEAR_LO_PCT = 58.0
 CLEAR_HI_PCT = 80.0
 
@@ -117,7 +138,9 @@ def rim_map(grey: Image.Image) -> Image.Image:
     lit = 0.7 * gxn + 0.7 * gyn
     lit = lit / max(float(np.percentile(np.abs(lit), 99.0)), 1e-6)
     out = 128.0 + RIM_LIGHT * np.clip(lit, -1.0, 1.0) * mag - RIM_SHADE * mag
-    return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
+    native = float(np.abs(out - 128.0).mean())
+    out = 128.0 + (out - 128.0) * (RIM_TARGET_MAD / max(native, 1e-6))
+    return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8)), native
 
 
 def clear_map(grey: Image.Image) -> Image.Image:
@@ -205,6 +228,16 @@ def derive_reeded() -> None:
     flat = flat / flat.mean()
     levelled = Image.fromarray(np.clip(flat * a.mean(), 0, 255).astype(np.uint8))
 
+    # THE MIRROR IS FOR THE STAGE AND ONLY THE STAGE, and that distinction cost a
+    # review round. Seamlessness is a property of TILING, and the stage is the
+    # only surface that tiles -- swatches, the hero wall and the glass card each
+    # paint one instance at `cover`. Handing them the mirrored tile squeezed all
+    # 1800px into a 58px swatch with the mirror axis dead centre, and the ribs
+    # fan slightly, so it read as a bold chevron. The owner's words: "reeded
+    # looks good but the thumbnail for it doesnt". So two assets: the levelled
+    # photograph for anything that displays it, the mirrored one for the tile.
+    levelled.save(GLASS / "Reeded-privacy-2-levelled.webp", "WEBP", quality=90, method=6)
+
     mirrored = Image.new("L", (levelled.width * 2, levelled.height))
     mirrored.paste(levelled, (0, 0))
     mirrored.paste(ImageOps.mirror(levelled), (levelled.width, 0))
@@ -213,6 +246,7 @@ def derive_reeded() -> None:
     m = np.asarray(mirrored, dtype=float)
     before = float(abs(a[:, :8].mean() - a[:, -8:].mean()))
     blurred = np.asarray(mirrored.filter(ImageFilter.GaussianBlur(60)), dtype=float)
+    print(f"  Reeded-privacy-2-levelled.webp: the display copy, {levelled.width}px, not mirrored")
     print(f"  {dst.name}: {im.width} -> {mirrored.width}px, "
           f"seam {before:.1f} -> {abs(m[:, :8].mean() - m[:, -8:].mean()):.2f}, "
           f"low-freq spread {blurred.max() - blurred.min():.0f} (was 130)")
@@ -233,7 +267,8 @@ def main() -> None:
         raise SystemExit("missing source textures: " + ", ".join(missing))
 
     total = 0
-    print(f"{'texture':<34}{'rim sd':>8}{'clear %':>9}{'bytes':>10}")
+    print(f"{'texture':<34}{'native MAD':>10}{'clear %':>9}{'bytes':>10}")
+    print(f"{'':<34}{'(all scaled to ' + str(RIM_TARGET_MAD) + ')':>10}")
     for name in SOURCES:
         grey = Image.open(GLASS / name).convert("L")
         if grey.width > MAP_MAX_WIDTH:
@@ -243,7 +278,7 @@ def main() -> None:
             )
         stem = Path(name).stem
 
-        rim = rim_map(grey)
+        rim, native_mad = rim_map(grey)
         rim_path = MAPS / f"{stem}-rim.webp"
         rim.save(rim_path, "WEBP", quality=MAP_QUALITY, method=6)
 
@@ -254,7 +289,7 @@ def main() -> None:
         size = rim_path.stat().st_size + clear_path.stat().st_size
         total += size
         share = (np.asarray(clear)[..., 3] > 127).mean() * 100
-        print(f"{stem:<34}{np.asarray(rim, dtype=float).std():>8.1f}{share:>8.0f}%{size:>10,}")
+        print(f"{stem:<34}{native_mad:>8.1f}{share:>8.0f}%{size:>10,}")
 
     print(f"\n{len(SOURCES)} textures, {total:,} bytes of maps.")
     print("Only the SELECTED pattern's pair is ever fetched -- they are set as")
