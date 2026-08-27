@@ -47940,3 +47940,29 @@ html.fg-blinds-reveal-locked {
 @media (max-width: 480px) {
   .fg-glass-patterns ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+@media (max-width: 860px) {
+  /* SIX PORTRAIT DOOR CARDS IN TWO COLUMNS IS 4,637px ON A PHONE, and I wrote a
+     rule earlier in this file saying the rail treatment did not apply to these
+     because two-per-row already showed enough. It does not: three rows of
+     portrait renders put the whole finishes chapter back over the page height
+     the overhaul had just taken out. It is a rail, like the swatch grids beside
+     it, with the next card half in frame as the affordance. */
+  .generated-page--composite-doors .fg-glass-doors {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .generated-page--composite-doors .fg-glass-doors::-webkit-scrollbar { display: none; }
+
+  .generated-page--composite-doors .fg-glass-doors > .fg-glass-door {
+    flex: 0 0 68vw;
+    max-width: 68vw;
+    scroll-snap-align: start;
+  }
+}
