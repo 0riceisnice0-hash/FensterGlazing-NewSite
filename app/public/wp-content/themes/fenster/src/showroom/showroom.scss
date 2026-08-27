@@ -1,0 +1,630 @@
+/**
+ * Window and door showroom.
+ *
+ * Inherits the theme's own tokens (--color-ink, --color-accent and the rest)
+ * rather than declaring a second palette, so these pages cannot drift from the
+ * site around them.
+ *
+ * PORTRAIT IS THE BASE CASE, not an override at the bottom of the file. The
+ * audit of the earlier 3D page found its phone layout unusable — annotation
+ * type at 2.9px, products at 12% of viewport height — because the composition
+ * was designed for a 16:9 desktop field and adapted downwards afterwards. This
+ * is written the other way round.
+ */
+
+.fg-sr {
+  --sr-gap: clamp(1.25rem, 4vw, 2.5rem);
+  --sr-radius: 4px;
+  --sr-ground: #eef1f0;
+  --sr-panel: #ffffff;
+
+  position: relative;
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
+
+.fg-sr__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+
+  &::after {
+    content: "";
+    flex: 1;
+    max-width: 6rem;
+    height: 1px;
+    background: var(--color-line);
+  }
+}
+
+/* ------------------------------------------------------------------ hero */
+
+.fg-sr__hero {
+  padding: clamp(2.25rem, 6vw, 4.5rem) var(--sr-gap) clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.fg-sr__hero-inner {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.fg-sr__h1 {
+  margin: 0 0 0.9rem;
+  font-size: clamp(1.9rem, 5.2vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.fg-sr__standfirst {
+  margin: 0 0 1.1rem;
+  max-width: 46ch;
+  font-size: clamp(1rem, 1.4vw, 1.09rem);
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+.fg-sr__hero-links {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--color-muted);
+
+  a { color: var(--color-accent-dark); text-underline-offset: 3px; }
+  span { margin: 0 0.5rem; opacity: 0.5; }
+}
+
+/* ----------------------------------------------------------------- stage */
+
+.fg-sr__stage {
+  display: grid;
+  gap: var(--sr-gap);
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: 0 var(--sr-gap);
+}
+
+.fg-sr__viewer {
+  display: grid;
+  gap: 0.75rem;
+}
+
+/**
+ * The box is reserved by aspect-ratio before anything loads, and the poster,
+ * the canvas and the loading state all occupy the same grid cell. That is the
+ * whole of the CLS story: nothing on this page ever changes size, it only
+ * changes what is drawn inside a box that was already the right shape.
+ */
+.fg-sr__frame {
+  position: relative;
+  display: grid;
+  place-items: stretch;
+  overflow: hidden;
+  border-radius: var(--sr-radius);
+  background: var(--sr-ground);
+  border: 1px solid var(--color-line);
+
+  > * { grid-area: 1 / 1; }
+}
+
+.fg-sr__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+
+  &.is-current { opacity: 1; }
+}
+
+.fg-sr__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  touch-action: pan-y; /* let the page scroll; the viewer takes horizontal drag */
+
+  .fg-sr__frame.is-live & { opacity: 1; }
+}
+
+.fg-sr__frame.is-live .fg-sr__poster { opacity: 0; }
+
+.fg-sr__loading {
+  align-self: end;
+  justify-self: stretch;
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.9rem 1rem;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0));
+  pointer-events: none;
+
+  &[hidden] { display: none; }
+}
+
+.fg-sr__loading-bar {
+  position: relative;
+  display: block;
+  height: 2px;
+  background: var(--color-line);
+  overflow: hidden;
+
+  i {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: var(--color-accent);
+    transition: width 0.2s linear;
+  }
+}
+
+.fg-sr__loading-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.fg-sr__viewer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+}
+
+.fg-sr__enter,
+.fg-sr__tool {
+  appearance: none;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--sr-radius);
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-accent);
+    color: var(--color-accent-dark);
+  }
+
+  &:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  &[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: #04241a; }
+}
+
+.fg-sr__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  &[hidden] { display: none; }
+}
+
+.fg-sr__hint {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* ----------------------------------------------------------------- panel */
+
+.fg-sr__panel {
+  background: var(--sr-panel);
+}
+
+.fg-sr__spec[hidden] { display: none; }
+
+.fg-sr__spec-fit {
+  margin: 0 0 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark);
+}
+
+.fg-sr__spec-name {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  line-height: 1.15;
+}
+
+.fg-sr__spec-copy {
+  margin: 0 0 1.2rem;
+  color: var(--color-muted);
+  line-height: 1.58;
+  max-width: 42ch;
+}
+
+.fg-sr__figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 1.4rem;
+  background: var(--color-line);
+  border: 1px solid var(--color-line);
+  border-radius: var(--sr-radius);
+  overflow: hidden;
+}
+
+.fg-sr__figure {
+  background: var(--color-surface);
+  padding: 0.8rem 0.9rem;
+
+  dt {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.22rem;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.fg-sr__spec-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/**
+ * These work everywhere, at every state of the page.
+ *
+ * The earlier 3D page faded its two calls-to-action to 32% and made them
+ * unclickable at six of its seven stops — deliberately, to keep them out of the
+ * way of the cinema. Measured by hit-testing, not by looking, because a correct
+ * bounding box tells you nothing about whether a control can be pressed.
+ */
+.fg-sr__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.15rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--sr-radius);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover,
+  &:focus-visible { border-color: var(--color-accent); transform: translateY(-1px); }
+  &:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+}
+
+.fg-sr__btn--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #04241a;
+  font-weight: 600;
+
+  &:hover,
+  &:focus-visible { box-shadow: 0 10px 26px rgba(46, 172, 102, 0.28); }
+}
+
+/* ------------------------------------------------------------------ rail */
+
+.fg-sr__rail {
+  max-width: 1180px;
+  margin: clamp(2rem, 5vw, 3.25rem) auto 0;
+  padding: 0 var(--sr-gap);
+}
+
+.fg-sr__rail-heading {
+  margin: 0 0 1rem;
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+}
+
+.fg-sr__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-sr__card-hit {
+  display: grid;
+  gap: 0.2rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 0.5rem 0.75rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--sr-radius);
+  background: var(--color-surface);
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+  img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    background: var(--sr-ground);
+    border-radius: 2px;
+    margin-bottom: 0.35rem;
+  }
+
+  &:hover,
+  &:focus-visible { border-color: var(--color-accent); box-shadow: 0 8px 22px rgba(6, 33, 42, 0.07); }
+  &:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  &[aria-pressed="true"] { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+}
+
+.fg-sr__card-blank {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--sr-ground);
+  border-radius: 2px;
+  margin-bottom: 0.35rem;
+}
+
+.fg-sr__card-name {
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.fg-sr__card-fit {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  line-height: 1.3;
+}
+
+.fg-sr__card-tag {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.16rem 0.34rem;
+  border-radius: 2px;
+  background: var(--color-accent);
+  color: #04241a;
+}
+
+.fg-sr__rail-note {
+  margin: 1rem 0 0;
+  max-width: 60ch;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+/* -------------------------------------------------------------- decision */
+
+.fg-sr__decision,
+.fg-sr__how {
+  max-width: 1180px;
+  margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+  padding: 0 var(--sr-gap);
+}
+
+.fg-sr__decision-head {
+  max-width: 62ch;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p { margin: 0; color: var(--color-muted); line-height: 1.6; }
+}
+
+.fg-sr__decision-cols {
+  display: grid;
+  gap: 1px;
+  background: var(--color-line);
+  border: 1px solid var(--color-line);
+  border-radius: var(--sr-radius);
+  overflow: hidden;
+}
+
+.fg-sr__decision-col {
+  background: var(--color-surface);
+  padding: 1.25rem;
+
+  h3 {
+    margin: 0 0 0.2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  dl {
+    display: grid;
+    gap: 0.4rem;
+    margin: 1rem 0;
+  }
+
+  dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  dt { font-size: 0.8rem; color: var(--color-muted); }
+  dd { margin: 0; font-size: 0.86rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+}
+
+.fg-sr__decision-meta {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.fg-sr__decision-note {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+.fg-sr__how-inner {
+  max-width: 62ch;
+
+  h2 {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p { line-height: 1.62; color: var(--color-muted); }
+}
+
+.fg-sr__how-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.4rem;
+}
+
+.fg-sr__form { margin-top: clamp(2.5rem, 6vw, 4rem); }
+
+/* ------------------------------------------------------------ wider than */
+
+@media (min-width: 760px) {
+  .fg-sr__decision-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fg-sr__figures { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1000px) {
+  .fg-sr__stage {
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    align-items: start;
+  }
+
+  .fg-sr__panel { position: sticky; top: calc(var(--site-header-main-height, 72px) + 1.5rem); }
+  .fg-sr__figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fg-sr__cards { grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-sr__poster,
+  .fg-sr__canvas,
+  .fg-sr__btn,
+  .fg-sr__card-hit,
+  .fg-sr__loading-bar i { transition: none; }
+}
+
+/* --------------------------------------------------------------- finishes */
+
+.fg-sr__finishes {
+  margin-top: 0.9rem;
+
+  &[hidden] { display: none; }
+}
+
+.fg-sr__finishes-label {
+  margin: 0 0 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+
+  span {
+    display: block;
+    margin-top: 0.25rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+}
+
+.fg-sr__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-sr__swatch {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.6rem 0.32rem 0.34rem;
+  min-height: 40px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--sr-radius);
+  background: var(--color-surface);
+  font: inherit;
+  font-size: 0.76rem;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible { border-color: var(--color-accent); }
+  &:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  &[aria-pressed="true"] { border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+}
+
+.fg-sr__chip {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  background: var(--chip, #fff);
+  border: 1px solid rgba(6, 33, 42, 0.18);
+  flex: 0 0 auto;
+}
+
+.fg-sr__swatch-ref {
+  font-size: 0.66rem;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fg-sr__finishes-more {
+  margin: 0.6rem 0 0;
+  font-size: 0.78rem;
+
+  a { color: var(--color-accent-dark); }
+}

@@ -3617,21 +3617,24 @@ if ($is_commercial_hub) {
     <?php elseif ($is_composite_doors) : ?>
     <?php
     /*
-     * CHAPTER ONE. Rebuilt 2026-08-27 as one section that owns the first
-     * viewport, per the overhaul brief. It absorbs two strips that used to
-     * follow it: the four-fact `fg-cd3-brief` box and the
-     * `fg-composite-approved` installer band. Three bordered strips inside the
-     * first 900px was the reason the fold read as stacked bands rather than as
-     * a door, and the approved mark is a credential rather than a section.
+     * CHAPTER ONE, AND IT IS A HERO RATHER THAN A BOXED PHOTOGRAPH.
+     * Rebuilt twice on 2026-08-27. The first pass put a portrait install shot
+     * in the shared 6/5 media box beside the copy, and the owner's verdict was
+     * that it is not a hero: "it shouldn't be in that little box."
      *
-     * THE PHOTOGRAPH IS OURS. It was `gallery/black-lunna-entrance-800w.webp`,
-     * a supplier render capped at 800w in a box wider than that. This is the
-     * Milton Keynes install from our own case study, whole door and sidelight
-     * in frame, portrait, at three widths. The two 1920w files in this folder
-     * are landscape crops that cut the door and are still the wrong subject for
-     * a hero however large they are; do not "upgrade" to them.
+     * IT IS FULL BLEED NOW and the image is a Distinction studio render at
+     * 1920x1066 — the best-lit, highest-resolution composite door in the theme,
+     * and the only one that reads as a photographed room rather than a product
+     * cut-out. The copy sits on a scrim over it. Our own install photography is
+     * excellent and it is used further down, where proof is the job; a hero's
+     * job is the first impression, and a lit studio interior does that better
+     * than a doorway on a grey day.
+     *
+     * THE TWO STRIPS THAT USED TO FOLLOW ARE INSIDE IT: the four-fact box and
+     * the approved-installer band. Three bordered strips inside the first 900px
+     * was why the fold read as stacked bands rather than as a door.
      */
-    $composite_hero_stem = '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/fenster-mk-front-door-';
+    $composite_hero_stem = '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-grandeur-entrance-';
     $composite_phone = (string) ($brand['phone'] ?? '01908 429200');
     $composite_hero_facts = [
         ['44.5mm', __('Insulated GRP slab, against 28mm for a uPVC door panel', 'fenster')],
@@ -3641,46 +3644,49 @@ if ($is_commercial_hub) {
     ];
     ?>
     <section class="fg-cd3-hero">
-        <div class="container fg-cd3-hero__grid">
+        <div class="fg-cd3-hero__media" aria-hidden="true">
+            <img
+                src="<?php echo esc_url(fenster_generated_url($composite_hero_stem . '1920w.webp')); ?>"
+                srcset="<?php echo esc_attr(implode(', ', [
+                    fenster_generated_url($composite_hero_stem . '480w.webp') . ' 480w',
+                    fenster_generated_url($composite_hero_stem . '960w.webp') . ' 960w',
+                    fenster_generated_url($composite_hero_stem . '1920w.webp') . ' 1920w',
+                ])); ?>"
+                sizes="100vw"
+                alt=""
+                loading="eager" fetchpriority="high" width="1920" height="1066">
+            <span class="fg-cd3-hero__scrim"></span>
+        </div>
+
+        <div class="container fg-cd3-hero__inner">
             <div class="fg-cd3-hero__copy">
                 <p class="eyebrow"><?php esc_html_e('Composite doors in Milton Keynes', 'fenster'); ?></p>
                 <h1><?php esc_html_e('Distinction composite doors', 'fenster'); ?></h1>
                 <p class="fg-cd3-hero__lead"><?php esc_html_e('A 44.5mm insulated slab under a tough GRP skin, fitted across Milton Keynes by our own installers. It holds its heat, shrugs off the weather and keeps its colour without a paintbrush.', 'fenster'); ?></p>
                 <div class="fg-cd3-hero__actions">
                     <a class="button" href="<?php echo esc_url($product_quote_link); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
-                    <a class="button button--steel" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
+                    <a class="button button--light" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $composite_phone)); ?>"><?php echo esc_html(sprintf(__('Call %s', 'fenster'), $composite_phone)); ?></a>
                 </div>
                 <p class="fg-cd3-hero__credential">
-                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
+                    <img src="<?php echo esc_url(fenster_generated_url('/wp-content/themes/fenster/assets/partners/distinction-doors-white.png')); ?>" alt="Distinction Doors" loading="eager" width="473" height="107">
                     <span><?php esc_html_e('Approved installer. One in four front doors fitted in Britain is a Distinction, and we survey, supply and hang yours ourselves.', 'fenster'); ?></span>
                 </p>
             </div>
-            <figure class="fg-cd3-hero__media">
-                <img
-                    src="<?php echo esc_url(fenster_generated_url($composite_hero_stem . '960w.webp')); ?>"
-                    srcset="<?php echo esc_attr(implode(', ', [
-                        fenster_generated_url($composite_hero_stem . '640w.webp') . ' 640w',
-                        fenster_generated_url($composite_hero_stem . '960w.webp') . ' 960w',
-                        fenster_generated_url($composite_hero_stem . '1280w.webp') . ' 1280w',
-                    ])); ?>"
-                    sizes="(max-width: 860px) 100vw, 46vw"
-                    alt="An anthracite grey Distinction composite front door and matching glazed sidelight, fitted by Fenster on a Milton Keynes house"
-                    loading="eager" fetchpriority="high" width="1280" height="1600">
-            </figure>
         </div>
-        <?php /* The facts, on the hero rather than in a strip beneath it. `142`
-                 replaced `Six collections`, which was a navigation note in a
-                 slot the other three fill with a number, and it now names the
-                 thing chapter two opens with. */ ?>
-        <div class="container">
-            <dl class="fg-cd3-hero__facts">
-                <?php foreach ($composite_hero_facts as $composite_fact) : ?>
-                    <div>
-                        <dt><?php echo esc_html($composite_fact[0]); ?></dt>
-                        <dd><?php echo esc_html($composite_fact[1]); ?></dd>
-                    </div>
-                <?php endforeach; ?>
-            </dl>
+
+        <?php /* The facts ride on the hero's own foot rather than in a strip
+                 under it, so the fold is one composition. */ ?>
+        <div class="fg-cd3-hero__facts-band">
+            <div class="container">
+                <dl class="fg-cd3-hero__facts">
+                    <?php foreach ($composite_hero_facts as $composite_fact) : ?>
+                        <div>
+                            <dt><?php echo esc_html($composite_fact[0]); ?></dt>
+                            <dd><?php echo esc_html($composite_fact[1]); ?></dd>
+                        </div>
+                    <?php endforeach; ?>
+                </dl>
+            </div>
         </div>
     </section>
     <?php else : ?>

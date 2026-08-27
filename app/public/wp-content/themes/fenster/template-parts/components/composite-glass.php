@@ -89,30 +89,29 @@ $fg_glass_note  = trim((string) ($args['note'] ?? ''));
         </div>
 
         <?php
-        /* THE TWO THINGS A SWATCH CANNOT TELL YOU, said once each.
+        /* ONE NOTE, NOT THREE. This closed with three consecutive blocks in
+           three different treatments: a green-ruled aperture note, a plain
+           range note and a bordered availability box. The owner's verdict on
+           the page was "random boxes of text everywhere", and this was the
+           worst of it. Everything true is still here, in one place, in one
+           voice.
 
-           The first is the range: the tool offers twenty-six decorative designs
-           and we hold usable artwork for eleven, so the grid above is a
-           selection rather than the list. Saying that is better than a grid of
-           name-only tiles, and far better than showing a photograph of a door
-           and letting it stand in for a glass sample.
-
-           The second is the one the brief singles out: a design is cut to the
-           aperture, so the same glass reads completely differently in a full
-           panel and in a diamond. Nobody choosing from square swatches would
-           guess that, and it is the commonest reason a finished door surprises
-           somebody. */
+           The two things a swatch cannot tell you are that a design is cut to
+           the aperture, so the same glass reads completely differently in a
+           full panel and in a diamond, and that eleven pictured is a selection
+           rather than the list. Both are worth more than a fourth paragraph
+           saying so at length. */
         ?>
-        <p class="fg-composite-glass__aperture">
-            <?php esc_html_e('Every design is cut to the shape of the opening, so the same glass reads very differently in a full-length panel, a half panel or a small diamond. That is worth seeing before you settle on one: the tool draws your chosen design into your chosen door style, and the showroom has the real thing.', 'fenster'); ?>
-        </p>
-
-        <p class="fg-composite-glass__range">
-            <?php esc_html_e('Eleven designs are pictured here. The online tool carries twenty-six, including the plain and privacy options, and draws each one into the door style you have picked.', 'fenster'); ?>
-        </p>
-
-        <?php if ($fg_glass_note !== '') : ?>
-            <p class="fg-composite-glass__note"><?php echo esc_html($fg_glass_note); ?></p>
-        <?php endif; ?>
+        <div class="fg-composite-glass__foot">
+            <p>
+                <?php esc_html_e('Every design is cut to the shape of the opening, so the same glass reads very differently in a full-length panel, a half panel or a small diamond. The tool draws your chosen design into your chosen door style, and the showroom has the real thing.', 'fenster'); ?>
+            </p>
+            <p>
+                <?php esc_html_e('Eleven are pictured. The tool carries twenty-six including the plain and privacy options.', 'fenster'); ?>
+                <?php if ($fg_glass_note !== '') : ?>
+                    <span class="fg-composite-glass__avail"><?php echo esc_html($fg_glass_note); ?></span>
+                <?php endif; ?>
+            </p>
+        </div>
     </div>
 </section>

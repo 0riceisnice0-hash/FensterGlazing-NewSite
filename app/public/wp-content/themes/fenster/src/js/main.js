@@ -8794,7 +8794,10 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
       if (back) { if (i > 0) back.removeAttribute('hidden'); else back.setAttribute('hidden', ''); }
     });
     pips.forEach((p, i) => p.classList.toggle('is-done', i <= at));
-    if (count) count.textContent = 'Question ' + Math.min(at + 1, steps.length) + ' of ' + steps.length;
+    /* Big numerals rather than a sentence: the counter is set at display
+       size in the quiz band, and "Question 1 of 5" at that size is a
+       paragraph pretending to be a number. */
+    if (count) count.textContent = String(Math.min(at + 1, steps.length)).padStart(2, '0') + ' / ' + String(steps.length).padStart(2, '0');
   };
 
   const reveal = (door, explain) => {

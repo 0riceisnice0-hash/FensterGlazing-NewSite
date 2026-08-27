@@ -63,10 +63,18 @@ $colour_doors_base = (string) ($args['colour_doors_base'] ?? '');
 <section class="fg-choose">
     <div class="container fg-choose__surface">
         <?php get_template_part('template-parts/components/composite-door-styles', null, ['bare' => true]); ?>
-        <div class="fg-choose__rule" role="presentation"></div>
-        <?php get_template_part('template-parts/components/composite-door-quiz', null, ['bare' => true]); ?>
     </div>
 </section>
+
+<?php
+/* THE QUIZ IS ITS OWN FULL-BLEED DARK BAND, not a second half of the white
+   card above. Owner's verdict on the first pass was that it did not look like
+   a quiz at all, and he is right: a quiz is a change of register, not a
+   subheading. BuzzFeed gets that from an 80px question and a flat saturated
+   block behind every answer. This gets it from the page's second dark moment,
+   a question at the display ceiling and light answer tiles on it. */
+get_template_part('template-parts/components/composite-door-quiz');
+?>
 
 <?php
 /* ==================================================================
@@ -164,11 +172,54 @@ $fg_has_colour = ! empty($colour_wall);
 ?>
 <?php if ($fg_has_glass || $fg_has_colour) : ?>
 <section class="fg-finish" aria-labelledby="fg-finish-title">
+    <?php
+    /* THE CHAPTER HEAD CARRIES THE CHAPTER, rather than announcing it. The
+       first pass was a heading and a sentence with sixty per cent of the row
+       empty beside it, and the owner's verdict was "there's nothing there,
+       like what?" — which is the correct reading of a band that says a
+       chapter is coming and then says nothing. It is an index now: the three
+       decisions, each with the one fact a customer wants before they start,
+       each jumping to its own step. */
+    $fg_finish_index = [
+        [
+            'name'  => __('Glass', 'fenster'),
+            'fact'  => __('Twenty-six decorative designs in the tool, eleven pictured here. Triple glazed and laminated as standard.', 'fenster'),
+            'href'  => '#fg-composite-glass-title',
+            'show'  => $fg_has_glass,
+        ],
+        [
+            'name'  => __('Colour', 'fenster'),
+            'fact'  => __('Standard colours and RAL matches, one shade outside and a different one facing your hallway if you want.', 'fenster'),
+            'href'  => '#fg-cd3-colour-title',
+            'show'  => $fg_has_colour,
+        ],
+        [
+            'name'  => __('Handles', 'fenster'),
+            'fact'  => __('Eight finishes on a long backplate, carried through the letterplate, hinges and threshold.', 'fenster'),
+            'href'  => '#door-handle-finishes',
+            'show'  => function_exists('fenster_door_handle_grid_args'),
+        ],
+    ];
+    ?>
     <div class="container">
-        <header class="fg-chapter-head">
-            <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
-            <h2 id="fg-finish-title"><?php esc_html_e('Then the three things that make it yours.', 'fenster'); ?></h2>
-            <p><?php esc_html_e('Glass, colour and handles, in the order of how much each one changes the door. All three are chosen in the quote tool against the style you picked, and the price moves as you change them.', 'fenster'); ?></p>
+        <header class="fg-chapter-head fg-chapter-head--index">
+            <div>
+                <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
+                <h2 id="fg-finish-title"><?php esc_html_e('Then the three things that make it yours.', 'fenster'); ?></h2>
+                <p><?php esc_html_e('In the order of how much each one changes the door. All three are chosen in the quote tool against the style you picked, and the price moves as you change them.', 'fenster'); ?></p>
+            </div>
+            <ol class="fg-finish__index">
+                <?php foreach ($fg_finish_index as $fg_n => $fg_item) : ?>
+                    <?php if (empty($fg_item['show'])) { continue; } ?>
+                    <li>
+                        <a href="<?php echo esc_attr($fg_item['href']); ?>">
+                            <span class="fg-finish__index-num"><?php echo esc_html(sprintf('%02d', $fg_n + 1)); ?></span>
+                            <strong><?php echo esc_html($fg_item['name']); ?></strong>
+                            <span class="fg-finish__index-fact"><?php echo esc_html($fg_item['fact']); ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
         </header>
     </div>
 

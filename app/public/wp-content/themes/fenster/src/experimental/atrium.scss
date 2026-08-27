@@ -1,0 +1,955 @@
+/**
+ * THE FENSTER ATRIUM — page styling
+ * ===========================================================================
+ * Scoped entirely under `.fx`. This compiles to its own stylesheet and is
+ * enqueued only on /fenster-new-home-page/, so nothing here can reach the
+ * live homepage or any other route. That isolation is deliberate: the
+ * experiment needs a dark, full-bleed canvas and the rest of the site does
+ * not.
+ *
+ * The design language is the brand's own, pushed darker: Gibson, Fenster
+ * green used only where something is happening, hairline rules, and micro
+ * labels set in wide tracking so they read as annotations on a drawing rather
+ * than as UI.
+ */
+
+/**
+ * PAGE CHROME — scoped to `body.fx-page`, which only /fenster-new-home-page/
+ * carries. The shared header is a solid white bar and it cut straight across
+ * the middle of the composition; here it floats over the canvas instead. The
+ * real homepage and every other route are untouched, because none of them has
+ * this class and this stylesheet is enqueued nowhere else.
+ */
+body.fx-page {
+  /* THE LIGHT ROOM PAID FOR ITSELF HERE.
+     This block used to be about eighty lines of inversion: the header
+     background, the nav link colour, the toggle pill, the mobile drawer, the
+     brand lockup filtered to white, and the whole footer repainted. All of it
+     existed because the shared chrome is built for a light page and the scene
+     underneath it was black.
+     The scene is a white gallery now, so nearly all of it is deleted rather
+     than re-tuned. The header, the footer and the logo are simply left alone
+     and they are correct. What remains is the two things that are about this
+     page rather than about the palette. */
+  background: #f2f5f5;
+
+  .site-main { padding-top: 0; }
+
+  /* The header floats over the canvas instead of cutting a solid bar across
+     the middle of the composition. It keeps its own colours. */
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.72);
+    border-bottom: 1px solid rgba(13, 42, 51, 0.08);
+    box-shadow: none;
+    backdrop-filter: blur(18px) saturate(1.2);
+    transition: background 0.6s ease, border-color 0.6s ease;
+  }
+
+  /* Legend belongs on the real site. Over a cinematic composition an animated
+     cat in the corner is the one thing that would break the spell, so he is
+     stood down for this route only. */
+  .legend-assistant,
+  .legend-launcher,
+  [class*="legend-"] {
+    display: none !important;
+  }
+
+  /* Once the visitor reaches the pricing phase the header gains a real
+     surface, because at that point they are using an interface and legibility
+     beats atmosphere. */
+  &:has(.fx.is-pricing) .site-header {
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom-color: rgba(13, 42, 51, 0.14);
+  }
+}
+
+/* A STABLE SCROLLBAR GUTTER.
+   On Windows a classic scrollbar appearing or disappearing changes the
+   viewport width by about 15px, which re-runs camera.aspect, _fovScale and
+   _distScale and visibly re-frames every station. That happens at the handoff
+   and again on re-entry — the two moments the visitor is looking hardest. */
+html { scrollbar-gutter: stable; }
+
+.fx {
+  /* Palette. Brand tokens first, then the room they sit in.
+     `--fx-paper` is the GROUND now and `--fx-ink` is the type; on the dark
+     version those two were the other way round. Everything downstream reads
+     the tokens, so the whole page chrome inverted from these eleven lines. */
+  --fx-accent: #2eac66;
+  --fx-accent-bright: #1d8a5a;
+  --fx-steel: #002d3a;
+  --fx-ink: #0d2a33;
+  --fx-paper: #f4f7f7;
+  --fx-panel: rgba(255, 255, 255, 0.72);
+  --fx-muted: rgba(20, 55, 66, 0.68);
+  --fx-faint: rgba(20, 55, 66, 0.42);
+  --fx-line: rgba(13, 42, 51, 0.14);
+  --fx-line-strong: rgba(13, 42, 51, 0.26);
+
+  --fx-gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --fx-rail: 2px;
+
+  position: relative;
+  background: var(--fx-paper);
+  color: var(--fx-ink);
+  font-family: "Gibson", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+
+  /* The canvas is fixed and the scroller provides the runway, so the whole
+     page must not bounce horizontally while that is happening. */
+  overflow-x: clip;
+}
+
+/* ------------------------------------------------------------------ stage */
+
+.fx__stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Faded out by the scroll handler once the timeline is spent — see the
+     handoff note in atrium.js. Transitioned so the changeover is a dissolve
+     rather than a cut. */
+  transition: opacity 0.45s linear;
+}
+
+.fx__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* Fade the whole render in once the first frame exists, so the handover
+     from the loader is never to an empty black rectangle. */
+  opacity: 0;
+  transition: opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+  .fx.is-live & { opacity: 1; }
+}
+
+/* The DOM layer the pricing terminal is projected into. It sits above the
+   canvas because the WebGL output is opaque after post-processing; the
+   terminal's own bezel is drawn in WebGL underneath it so the object still
+   belongs to the scene. */
+.fx__css-layer {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------------- loader */
+
+.fx__loader {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120% 90% at 50% 45%, #ffffff 0%, #eaefef 62%);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), visibility 1s;
+
+  .fx.is-live & {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.fx__loader-inner {
+  display: grid;
+  justify-items: center;
+  gap: 2.1rem;
+  width: min(30rem, 76vw);
+  text-align: center;
+}
+
+/* The mark assembles as the models arrive: the two strokes draw themselves,
+   then the leaf fills. The loading sequence is the product, per the brief. */
+.fx__loader-mark {
+  width: clamp(88px, 12vw, 128px);
+  height: auto;
+
+  path {
+    stroke: var(--fx-accent-bright);
+    stroke-width: 6;
+    fill: transparent;
+    stroke-dasharray: var(--len, 2400);
+    stroke-dashoffset: calc(var(--len, 2400) * (1 - var(--fx-load, 0)));
+    transition: stroke-dashoffset 0.6s linear, fill 1.2s ease;
+  }
+
+  #steel path { stroke: rgba(180, 220, 232, 0.9); }
+  #leaf path { stroke: var(--fx-accent-bright); }
+
+  .fx.is-live & path {
+    fill: currentColor;
+    stroke-dashoffset: 0;
+  }
+  .fx.is-live & #steel { color: #12333f; }
+  .fx.is-live & #leaf { color: var(--fx-accent); }
+}
+
+.fx__loader-bar {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: var(--fx-line);
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, var(--fx-accent-bright));
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+.fx__loader-meta {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.66rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fx-faint);
+}
+
+.fx__loader-note { color: var(--fx-muted); }
+
+/* ------------------------------------------------------------------- ui */
+
+.fx__ui {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  transition: opacity 0.45s linear;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: var(--fx-gutter) 1fr var(--fx-gutter);
+  grid-template-rows: auto 1fr auto;
+  /* Clears the floating site header, which is 72px on desktop and shorter on
+     mobile. Without this the annotation row sits behind the nav. */
+  padding: calc(var(--site-header-main-height, 72px) + clamp(0.6rem, 2vh, 1.4rem)) 0 clamp(1rem, 3vh, 2.4rem);
+}
+
+/* --- top annotation bar --------------------------------------------------- */
+
+.fx__top {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--fx-faint);
+}
+
+.fx__top-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--fx-muted);
+
+  svg { width: 22px; height: 22px; }
+  b { font-weight: 600; letter-spacing: 0.2em; }
+}
+
+.fx__coords {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.72;
+}
+
+/* --- the lower third -----------------------------------------------------
+
+   PASS TWO REMOVED THE COPY COLUMN ENTIRELY.
+
+   `.fx__phases` / `.fx__phase` used to live here: four stacked panels of
+   eyebrow, headline, lede, spec chips and buttons, pinned to the left third of
+   the viewport and crossfaded by scroll. It worked, and it was the single
+   thing making the page read as a hero banner with a 3D background rather than
+   as a place. All of that information is now geometry in the scene — see
+   `lib/annotations.js`.
+
+   The class names survive because the STATIC document below the canvas still
+   uses them: `.fx__title`, `.fx__eyebrow`, `.fx__lede`, `.fx__specs` and
+   `.fx__btn` are the no-WebGL fallback page, and that page is a real page.
+   What follows only restyles the two links while they are inside the overlay.
+   ------------------------------------------------------------------------- */
+
+.fx__ui .fx__actions {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: start;
+  align-self: end;
+  gap: 0.5rem;
+  transition: opacity 0.5s ease;
+
+  /* A hairline above them rather than a card around them. The overlay is
+     allowed one rule and two words; anything more starts being a box. */
+  position: relative;
+  padding-top: 0.9rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3.4rem;
+    height: 1px;
+    background: var(--fx-accent);
+    opacity: 0.55;
+  }
+
+  /* Quieter than the document's own buttons: this is a persistent affordance
+     sitting over a film, not a call to action at the end of a page. */
+  .fx__btn {
+    min-height: 38px;
+    padding: 0 1rem;
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px) saturate(1.25);
+    border-color: var(--fx-line);
+    color: var(--fx-ink);
+
+    &::after { display: none; }
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--fx-accent);
+      color: var(--fx-accent-bright);
+      background: #ffffff;
+      box-shadow: none;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.fx__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--fx-accent-bright);
+  margin: 0 0 clamp(0.9rem, 2vh, 1.5rem);
+
+  &::before {
+    content: "";
+    width: clamp(24px, 4vw, 54px);
+    height: 1px;
+    background: currentColor;
+    opacity: 0.7;
+  }
+}
+
+.fx__title {
+  font-size: clamp(2.6rem, 7.4vw, 6.4rem);
+  line-height: 0.92;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  margin: 0 0 clamp(1rem, 2.4vh, 1.8rem);
+  text-wrap: balance;
+
+  em {
+    font-style: normal;
+    font-weight: 700;
+    /* The one place the brand green is allowed to be large. */
+    background: linear-gradient(96deg, var(--fx-accent), #17805b 62%, #0f6f6b);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.fx__lede {
+  font-size: clamp(0.95rem, 1.2vw, 1.12rem);
+  line-height: 1.55;
+  color: var(--fx-muted);
+  max-width: 30rem;
+  margin: 0 0 clamp(1.4rem, 3vh, 2.2rem);
+}
+
+/* --- specification chips -------------------------------------------------- */
+
+.fx__specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.6rem;
+  margin: 0 0 clamp(1.4rem, 3vh, 2rem);
+  padding: 0;
+  list-style: none;
+}
+
+.fx__spec {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.42rem 0.8rem;
+  border: 1px solid var(--fx-line);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(1.3);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--fx-muted);
+
+  b {
+    font-weight: 600;
+    color: var(--fx-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  i {
+    font-style: normal;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fx-faint);
+  }
+}
+
+/* --- actions -------------------------------------------------------------- */
+
+.fx__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  pointer-events: auto;
+}
+
+.fx__btn {
+  --fx-btn-bg: var(--fx-accent);
+  --fx-btn-fg: #05271a;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 46px;
+  padding: 0 1.35rem;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: var(--fx-btn-bg);
+  color: var(--fx-btn-fg);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+
+  /* A highlight that travels across the button on hover, matching the light
+     sweeps running over the aluminium in the scene. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(46, 172, 102, 0.3);
+
+    &::after { transform: translateX(120%); }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--fx-accent-bright);
+    outline-offset: 3px;
+  }
+}
+
+.fx__btn--ghost {
+  --fx-btn-bg: rgba(255, 255, 255, 0.78);
+  --fx-btn-fg: var(--fx-ink);
+  border-color: var(--fx-line-strong);
+  backdrop-filter: blur(16px) saturate(1.4);
+
+  &:hover,
+  &:focus-visible { box-shadow: 0 14px 40px rgba(0, 45, 58, 0.5); }
+}
+
+/* --- scroll cue ----------------------------------------------------------- */
+
+.fx__cue {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: center;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  transition: opacity 0.5s ease;
+
+  span {
+    font-size: 0.58rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--fx-faint);
+  }
+}
+
+/* Not a bouncing arrow. A hairline with a light travelling down it, which is
+   the same gesture as the sweeps crossing the aluminium in the scene. */
+.fx__cue-line {
+  position: relative;
+  width: 1px;
+  height: clamp(34px, 6vh, 62px);
+  background: var(--fx-line);
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 42%;
+    background: linear-gradient(180deg, transparent, var(--fx-accent-bright));
+    animation: fx-scan 2.6s cubic-bezier(0.55, 0, 0.45, 1) infinite;
+  }
+}
+
+@keyframes fx-scan {
+  0%   { transform: translateY(-120%); opacity: 0; }
+  22%  { opacity: 1; }
+  78%  { opacity: 1; }
+  100% { transform: translateY(240%); opacity: 0; }
+}
+
+/* --- progress rail -------------------------------------------------------- */
+
+/* The strap names the experiment across the top of the frame. At the pricing
+   stop it paints over the top edge of a white iframe the visitor is about to
+   type into, so it stands down there — the terminal's own chrome bar says what
+   this is anyway. */
+.fx.is-pricing .fx__top { opacity: 0; }
+
+.fx__rail {
+  position: fixed;
+  transition: opacity 0.45s linear;
+  top: 50%;
+  right: clamp(0.9rem, 2.4vw, 2.2rem);
+  translate: 0 -50%;
+  z-index: 21;
+  display: grid;
+  gap: 1.1rem;
+  pointer-events: none;
+}
+
+.fx__rail-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3px;
+  width: 1px;
+  background: var(--fx-line);
+
+  b {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: linear-gradient(180deg, var(--fx-accent-bright), var(--fx-accent));
+    transform-origin: 50% 0;
+    transform: scaleY(0);
+  }
+}
+
+.fx__tick {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-left: 1.1rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--fx-faint);
+  transition: color 0.5s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--fx-line-strong);
+    border-radius: 50%;
+    background: #ffffff;
+    transition: background 0.5s ease, border-color 0.5s ease, scale 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  b {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    white-space: nowrap;
+  }
+
+  &.is-active {
+    color: var(--fx-paper);
+
+    &::before {
+      background: var(--fx-accent-bright);
+      border-color: var(--fx-accent-bright);
+      scale: 1.25;
+    }
+
+    b { opacity: 1; }
+  }
+}
+
+/* --------------------------------------------------------- pricing terminal */
+
+.fx-terminal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #071a21;
+  box-shadow:
+    0 0 0 1px rgba(150, 200, 214, 0.18),
+    0 60px 160px rgba(0, 0, 0, 0.7);
+  transition: opacity 0.45s ease;
+  transform-origin: 50% 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fx-terminal__chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0 1rem;
+  height: 42px;
+  flex: 0 0 42px;
+  background: linear-gradient(180deg, rgba(18, 52, 63, 0.95), rgba(10, 32, 40, 0.95));
+  border-bottom: 1px solid rgba(150, 200, 214, 0.14);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(196, 220, 228, 0.7);
+}
+
+.fx-terminal__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fx-accent-bright);
+  box-shadow: 0 0 12px var(--fx-accent-bright);
+  animation: fx-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes fx-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.fx-terminal__title { color: #eef6f5; font-weight: 600; }
+.fx-terminal__meta { margin-left: auto; opacity: 0.6; }
+
+.fx-terminal__frame {
+  position: relative;
+  flex: 1 1 auto;
+  background: #fff;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+}
+
+/* A raking sheen across the glass of the terminal. It is what stops the
+   iframe reading as a plain white rectangle pasted onto the scene. */
+.fx-terminal__glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(122deg, rgba(255, 255, 255, 0.14) 0%, transparent 26%, transparent 74%, rgba(120, 200, 220, 0.08) 100%);
+  mix-blend-mode: screen;
+}
+
+/* --------------------------------------------------------------- scroller */
+
+/* The runway. Nothing is painted here; it exists so the document has enough
+   height for the timeline, and so the browser's own scrollbar and keyboard
+   scrolling still work normally. */
+.fx__scroller {
+  position: relative;
+  z-index: 1;
+  /* MORE GENEROUS, per the brief: better that the whole thing takes more
+     scrolling and feels unhurried than that it crams. Nine viewports of runway
+     over a sixteen-beat camera track works out at roughly half a viewport of
+     scroll per beat, which is about the rate at which a beat can actually be
+     looked at. */
+  /* DOUBLED. Nine viewports carried four beats; the tour is nine stops now —
+     six hero products with their own stations, the mark, the bifold and the
+     terminal — and cramming those into the old runway would make every one of
+     them a glance. */
+  /* 2800vh, not 1800. The dwell warp in atrium.js spends about three times as
+     much scroll at each of its eight dwell points as it does in the gallery
+     between them; without lengthening the runway that dwell would be paid for
+     by making the travel twice as fast, which is the opposite of the ask. */
+  /* 100vh. There is no runway any more — the timeline is stepped, not
+     scrubbed, so scroll POSITION no longer means anything to it. What is left
+     is a one-screen spacer that gives the section height and lets the document
+     scroll up over the fixed stage once the sequence hands back. */
+  height: 100vh;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------- static fallback */
+
+/**
+ * Everything the page says, as ordinary HTML, underneath the canvas.
+ *
+ * This is not a "no-JS message". It is the real content: headline, the range
+ * with real links, and the CTAs. When WebGL is available it is hidden from
+ * sight but stays in the accessibility tree via the overlay copy; when WebGL
+ * fails, `.is-failed` brings it forward and the page is simply a good dark
+ * landing page. Reduced-motion users get it too, with a still 3D scene behind.
+ */
+.fx__static {
+  position: relative;
+  z-index: 5;
+  padding: clamp(3rem, 10vh, 8rem) var(--fx-gutter);
+  background: linear-gradient(180deg, transparent, #ffffff 22%);
+}
+
+.fx.is-live:not(.is-failed) .fx__static--hero { display: none; }
+
+/* ------------------------------------------------------------ below-fold */
+
+.fx__below {
+  position: relative;
+  z-index: 5;
+  background: #ffffff;
+  border-top: 1px solid var(--fx-line);
+}
+
+.fx__section {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: clamp(3.5rem, 10vh, 7.5rem) var(--fx-gutter);
+}
+
+.fx__section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: clamp(2rem, 5vh, 3.4rem);
+  padding-bottom: 1.3rem;
+  border-bottom: 1px solid var(--fx-line);
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    margin: 0;
+    max-width: 30rem;
+    color: var(--fx-muted);
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+}
+
+/* Product grid, styled as a technical index rather than as cards. */
+.fx__index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+  gap: 1px;
+  background: var(--fx-line);
+  border: 1px solid var(--fx-line);
+}
+
+.fx__index-item {
+  position: relative;
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.5rem 1.4rem 1.7rem;
+  background: #f7f9f9;
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  transition: background 0.5s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--fx-accent), transparent);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: #08202a;
+
+    &::after { transform: scaleX(1); }
+
+    .fx__index-name { color: var(--fx-accent-bright); }
+  }
+
+  &:focus-visible { outline: 2px solid var(--fx-accent-bright); outline-offset: -2px; }
+}
+
+.fx__index-idx {
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  color: var(--fx-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.fx__index-name {
+  font-size: 1.02rem;
+  font-weight: 500;
+  transition: color 0.4s ease;
+}
+
+.fx__index-meta {
+  font-size: 0.72rem;
+  color: var(--fx-muted);
+  line-height: 1.45;
+}
+
+.fx__index-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fx-accent);
+
+  &::before {
+    content: "";
+    width: 5px; height: 5px; border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+/* Note block for the honest provenance statement. */
+.fx__note {
+  margin-top: clamp(2rem, 5vh, 3rem);
+  padding: 1.4rem 1.6rem;
+  border-left: 2px solid var(--fx-accent);
+  background: rgba(46, 172, 102, 0.05);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--fx-muted);
+
+  b { color: var(--fx-paper); font-weight: 600; }
+  a { color: var(--fx-accent-bright); }
+}
+
+.fx__foot {
+  border-top: 1px solid var(--fx-line);
+  padding: 2rem var(--fx-gutter);
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--fx-faint);
+
+  a { color: var(--fx-muted); }
+}
+
+/* ------------------------------------------------------------ responsive */
+
+@media (max-width: 860px) {
+  .fx__scroller { height: 100vh; }
+
+  .fx__ui {
+    grid-template-rows: auto 1fr auto;
+    padding-bottom: 1.2rem;
+  }
+
+  .fx__rail { display: none; }
+
+  .fx__title { font-size: clamp(2.1rem, 11vw, 3.4rem); }
+
+  /* The overlay strip stays compact on a phone; only the document's own
+     buttons below the canvas go full width. */
+  .fx__static .fx__actions { width: 100%; }
+  .fx__static .fx__btn { flex: 1 1 auto; justify-content: center; }
+  .fx__ui .fx__actions .fx__btn { font-size: 0.7rem; padding: 0 0.8rem; }
+
+  .fx__coords { display: none; }
+}
+
+/* ------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  /* PASS TWO INVERTED THIS, AND IT IS WORTH SAYING WHY.
+
+     Pass one kept the overlay copy and suppressed the static hero, because the
+     overlay was the composition the scene had been designed around and showing
+     both stacked two headlines on top of each other.
+
+     There is no overlay copy any more. Everything the page says is either
+     geometry in the scene or the document underneath, and a reader who has
+     asked for reduced motion is not going to scroll a cinematic timeline to
+     read a label that draws itself on. So the static document comes forward
+     and the scene sits behind it as a single still frame — real geometry, real
+     lighting, holding the pose the choreography is parked at.
+
+     One viewport of runway, not zero: the stage and the overlay are both
+     absolute at 100vh, so with no scroller the product index below renders
+     underneath them and the two layers overlap into a mess. There is still
+     nothing to scrub. */
+  .fx__scroller { height: 100vh; }
+  .fx__stage { position: absolute; height: 100vh; }
+  .fx__cue { display: none; }
+  .fx__rail { display: none; }
+
+  /* The overlay keeps only its annotation line and its two links. */
+  .fx__ui {
+    position: absolute;
+    height: 100vh;
+    min-height: 30rem;
+  }
+  .fx__ui .fx__actions { display: none; }
+
+  /* The document comes forward, over the still.
+     The live rule above is `.fx.is-live:not(.is-failed) .fx__static--hero`,
+     so this has to out-specify it rather than merely follow it. */
+  .fx.is-live:not(.is-failed) .fx__static--hero,
+  .fx .fx__static {
+    display: block;
+    position: relative;
+    z-index: 24;
+  }
+
+  .fx__cue-line::after { animation: none; }
+  .fx-terminal__dot { animation: none; }
+  .fx__btn::after { transition: none; }
+}

@@ -100,6 +100,29 @@ $case_studies = function_exists('fenster_case_studies_for_product_group')
                 <?php /* Theme-owned, so the H1 no longer depends on the scraped page record. */ ?>
                 <h1><?php echo esc_html((string) ($group['h1'] ?? $args['title'])); ?></h1>
                 <p class="fg-product-hub__lead-copy"><?php echo esc_html((string) ($group['intro'] ?? '')); ?></p>
+                <?php
+                /* Through to the showroom, where the same range can be turned
+                   round in 3D. Without this the showroom is an orphan: a real
+                   indexable page that nothing on the site links to. The hub
+                   answers WHICH product, the showroom answers what it actually
+                   looks like, so this is the natural handover between them.
+                   Only where a showroom exists — there is no `other-services`
+                   showroom. */
+                $fg_showroom = ['windows' => 'window-showroom', 'doors' => 'door-showroom'][$group_key] ?? '';
+                if ($fg_showroom !== '') :
+                    ?>
+                    <p class="fg-product-hub__showroom-link">
+                        <a href="<?php echo esc_url(home_url('/' . $fg_showroom . '/')); ?>">
+                            <?php
+                            echo esc_html(
+                                $group_key === 'doors'
+                                    ? __('See every door in 3D — turn one round, change the colour, open it', 'fenster')
+                                    : __('See every window in 3D — turn one round, change the colour, open it', 'fenster')
+                            );
+                            ?>
+                        </a>
+                    </p>
+                <?php endif; ?>
                 <p class="fg-product-hub__actions">
                     <a class="button" href="<?php echo esc_url(home_url('/online-quote/')); ?>"><?php esc_html_e('Get an instant price', 'fenster'); ?></a>
                     <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>

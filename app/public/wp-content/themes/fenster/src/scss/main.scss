@@ -46839,3 +46839,851 @@ html.fg-blinds-reveal-locked {
    records against this page, and the reason the colour step lost its band
    earlier in this block. The grid below already supplies local contrast. */
 .generated-page--composite-doors .fg-composite-glass { background: transparent; }
+
+/* ==================================================================
+ * COMPOSITE DOORS, SECOND PASS, 2026-08-27
+ *
+ * The owner reviewed the first pass and rejected four things. Each is
+ * answered here, and each was a real fault:
+ *
+ *   "the hero image is not a hero image, it shouldn't be in that little
+ *    box"                       -> full bleed, and a studio render
+ *   "the style range, they're absolutely massive, that's five different
+ *    viewports"                 -> a contact sheet, not a card wall
+ *   "this doesn't look like a BuzzFeed quiz at all"
+ *                               -> measured one and took its grammar
+ *   "the finishes, there's nothing there" / "random boxes of text
+ *    everywhere"                -> an index that carries content, one note
+ * ================================================================== */
+
+/* ---- Chapter one: a hero that behaves like one --------------------
+ * It was a portrait photograph in the boxed 6/5 media the heritage door
+ * page uses, beside a column of copy. That is a product page pattern,
+ * not a hero. This is full bleed with the copy on a scrim, which is the
+ * one thing the composition was missing: a single dominant object.
+ * ------------------------------------------------------------------ */
+
+.generated-page--composite-doors .fg-cd3-hero {
+  position: relative;
+  display: grid;
+  align-content: end;
+  gap: 0;
+  min-height: min(860px, calc(100svh - 76px));
+  padding-block: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.generated-page--composite-doors .fg-cd3-hero__media {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: auto;
+  aspect-ratio: auto;
+  margin: 0;
+  border-radius: 0;
+  background: var(--color-steel, #002d3a);
+  box-shadow: none;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+    object-fit: cover;
+    /* The door sits right of centre in the render, so the crop holds the
+       right two thirds and the copy takes the wall on the left. */
+    object-position: 62% 50%;
+    box-shadow: none;
+  }
+}
+
+/* Dark enough on the left for white type at AA, clear enough on the
+   right that the door is still the thing you look at. */
+.fg-cd3-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 24, 31, 0.93) 0%, rgba(0, 24, 31, 0.82) 34%, rgba(0, 24, 31, 0.34) 62%, rgba(0, 24, 31, 0.16) 100%),
+    linear-gradient(0deg, rgba(0, 24, 31, 0.6) 0%, rgba(0, 24, 31, 0) 42%);
+}
+
+.fg-cd3-hero__inner {
+  padding-top: clamp(4rem, 12vh, 8rem);
+  padding-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.generated-page--composite-doors .fg-cd3-hero__copy {
+  max-width: 40rem;
+
+  .eyebrow { color: #7fe0aa; }
+
+  h1 {
+    max-width: 13ch;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+}
+
+.generated-page--composite-doors .fg-cd3-hero__lead {
+  max-width: 44ch;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.fg-cd3-hero__credential {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 46ch;
+  margin: 1.6rem 0 0;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+
+  img {
+    flex: 0 0 auto;
+    width: 132px;
+    height: auto;
+  }
+
+  span {
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+}
+
+/* The facts ride on the hero's own foot, so the fold is one composition
+   rather than a hero and then a strip. */
+.fg-cd3-hero__facts-band {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 24, 31, 0.58);
+  backdrop-filter: blur(10px);
+}
+
+.generated-page--composite-doors .fg-cd3-hero__facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  backdrop-filter: none;
+
+  > div {
+    padding: 1.05rem 1.35rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  > div:first-child { padding-left: 0; border-left: 0; }
+
+  dt {
+    margin: 0 0 0.22rem;
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.015em;
+  }
+
+  dd {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.79rem;
+    line-height: 1.4;
+  }
+}
+
+/* ---- Chapter two: the range as a contact sheet -------------------
+ * Nineteen doors in five columns at 230px a drawing was 2,200px, and
+ * Esprit's forty-three ran to five viewports. The drawings are simple
+ * outlines and they read at a tenth of that size, so this is a contact
+ * sheet: dense, scannable, one collection on a screen or two.
+ * ------------------------------------------------------------------ */
+
+.fg-cds__grid {
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+}
+
+.fg-cds-door__link {
+  grid-template-rows: auto auto;
+  gap: 0.3rem;
+  padding: 0.5rem 0.4rem 0.45rem;
+  border-color: rgba(2, 43, 53, 0.08);
+  border-radius: 5px;
+  background: rgba(247, 249, 248, 0.9);
+}
+
+.fg-cds-door__link img {
+  max-height: 124px;
+  opacity: 0.72;
+}
+
+.fg-cds-door__name {
+  min-height: 2.4em;
+  font-size: 0.66rem;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+
+/* At this size the cue is a fifth of the tile, so it becomes the hover
+   state of the whole card instead of a permanent row. */
+.fg-cds-door__cue { display: none; }
+
+.fg-cds-door__link:hover,
+.fg-cds-door__link:focus-visible {
+  border-color: rgba(46, 172, 102, 0.55);
+  background: #ffffff;
+  box-shadow: 0 10px 22px -14px rgba(2, 43, 53, 0.45);
+  transform: translateY(-2px);
+
+  img { opacity: 1; }
+  .fg-cds-door__name { color: var(--fg-green); }
+}
+
+/* ---- Chapter two: the quiz, as a quiz ----------------------------
+ * Measured against a real BuzzFeed quiz: questions at 80px/800 and
+ * centred, every answer a flat block with square corners, picture
+ * first. The grammar transfers; the hot pink does not. The saturation
+ * here is the page's second dark band, and the type does the shouting.
+ * ------------------------------------------------------------------ */
+
+.fg-cdq {
+  padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(3.5rem, 8vw, 5.5rem);
+  background:
+    radial-gradient(120% 80% at 82% 0%, rgba(46, 172, 102, 0.22), transparent 62%),
+    var(--color-steel, #002d3a);
+  color: #ffffff;
+}
+
+.generated-page--composite-doors > .fg-cdq { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(3.5rem, 8vw, 5.5rem); }
+
+.fg-cdq__head {
+  max-width: 46rem;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.fg-cdq__badge {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.34rem 0.85rem;
+  border-radius: 999px;
+  background: var(--fg-green, #2eac66);
+  color: #04231a;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.generated-page--composite-doors .fg-cdq__head h2 {
+  max-width: none;
+  margin: 0 0 0.9rem;
+  color: #ffffff;
+  font-size: clamp(2rem, 5.4vw, var(--fg-font-size-max, 3.6rem));
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.028em;
+}
+
+.fg-cdq__standfirst {
+  max-width: 54ch;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  line-height: 1.55;
+}
+
+.fg-cdq__panel {
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.fg-cdq__panel[hidden] { display: none !important; }
+
+/* ---- progress ---- */
+
+.fg-cdq__progress {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin: 0 0 clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.fg-cdq__count {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.fg-cdq__bar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 5px;
+  flex: 1 1 auto;
+}
+
+.fg-cdq__pip {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.18);
+  transition: background 260ms ease;
+}
+
+.fg-cdq__pip.is-done { background: var(--fg-green, #2eac66); }
+
+/* ---- the question ---- */
+
+.fg-cdq__q { text-align: center; }
+.fg-cdq__q[hidden] { display: none !important; }
+
+.fg-cdq__kicker {
+  margin: 0 0 0.5rem;
+  color: #7fe0aa;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fg-cdq__title {
+  max-width: 20ch;
+  margin: 0 auto clamp(1.5rem, 3vw, 2.25rem);
+  color: #ffffff;
+  font-size: clamp(1.6rem, 4.2vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.026em;
+  text-wrap: balance;
+}
+
+/* ---- the answers ---- */
+
+.fg-cdq__answers {
+  display: grid;
+  gap: clamp(0.7rem, 1.6vw, 1.1rem);
+  margin: 0;
+  text-align: left;
+}
+
+.fg-cdq__answers--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fg-cdq__answers--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.fg-cdq__answers--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.fg-cdq__answers--swatches {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Square corners and a flat block, which is the whole of BuzzFeed's
+   answer treatment and the reason theirs reads as a game and a bordered
+   white box reads as a form. */
+.fg-cdq__answer {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--fg-ink, #022b35);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.fg-cdq__answer-block {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: clamp(0.9rem, 2vw, 1.4rem);
+  background: linear-gradient(170deg, #eef3f0, #dfe9e4);
+
+  img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: clamp(112px, 15vw, 168px);
+    object-fit: contain;
+    opacity: 0.8;
+  }
+}
+
+.fg-cdq__answer-text {
+  display: block;
+  padding: 0.7rem 0.9rem 0.85rem;
+
+  strong {
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 750;
+    line-height: 1.2;
+  }
+
+  small {
+    display: block;
+    margin-top: 0.2rem;
+    color: rgba(2, 43, 53, 0.62);
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+}
+
+.fg-cdq__answer:hover,
+.fg-cdq__answer:focus-visible {
+  box-shadow: 0 0 0 3px var(--fg-green, #2eac66), 0 18px 34px -20px rgba(0, 0, 0, 0.6);
+  transform: translateY(-3px);
+
+  .fg-cdq__answer-block img { opacity: 1; }
+}
+
+/* The colour step. Eight chips: the colour IS the answer, so it fills
+   the block rather than sitting on a door that would compete with it. */
+.fg-cdq__answer--swatch .fg-cdq__answer-block { padding: 0; }
+
+.fg-cdq__chip {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  border: 0;
+  border-radius: 0;
+}
+
+/* ---- controls ---- */
+
+.fg-cdq__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: clamp(1.1rem, 2.4vw, 1.75rem);
+}
+
+.fg-cdq__back,
+.fg-cdq__skip-btn {
+  padding: 0.45rem 0.2rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.66);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.fg-cdq__back[hidden] { display: none !important; }
+
+.fg-cdq__back:hover,
+.fg-cdq__back:focus-visible,
+.fg-cdq__skip-btn:hover,
+.fg-cdq__skip-btn:focus-visible {
+  background: transparent;
+  color: #ffffff;
+}
+
+/* ---- the reveal ---- */
+
+.fg-cdq__result[hidden] { display: none !important; }
+
+.fg-cdq__reveal {
+  display: grid;
+  grid-template-columns: minmax(0, 0.68fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: center;
+}
+
+.fg-cdq__reveal-art {
+  display: grid;
+  place-items: center;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border-radius: 6px;
+  background: linear-gradient(170deg, #f4f8f6, #e2ece7);
+
+  img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: clamp(240px, 34vw, 360px);
+    object-fit: contain;
+    opacity: 0.86;
+  }
+}
+
+.fg-cdq__reveal-kicker {
+  margin: 0 0 0.3rem;
+  color: #7fe0aa;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.fg-cdq__door-name {
+  margin: 0 0 0.35rem;
+  color: #ffffff;
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.fg-cdq__collection {
+  margin: 0 0 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fg-cdq__chosen-colour {
+  margin: 0 0 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.94rem;
+
+  &[hidden] { display: none !important; }
+}
+
+.fg-cdq__why {
+  max-width: 46ch;
+  margin: 0 0 1rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1.02rem, 1.4vw, 1.16rem);
+  line-height: 1.5;
+}
+
+.fg-cdq__poa {
+  max-width: 52ch;
+  margin: 0 0 1rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--fg-green, #2eac66);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  &[hidden] { display: none !important; }
+}
+
+.fg-cdq__result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.fg-cdq__again {
+  padding: 0.5rem 0.2rem;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.66);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.fg-cdq__again:hover { color: #ffffff; }
+
+.fg-cdq__caveat {
+  max-width: 52ch;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.fg-cdq__tool {
+  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.fg-cdq__frame {
+  overflow: hidden;
+  border-radius: 6px;
+  background: #ffffff;
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: clamp(560px, 68vh, 760px);
+    border: 0;
+  }
+}
+
+.fg-cdq__frame-note {
+  margin: 0.7rem 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.84rem;
+}
+
+/* ---- Chapter four: an index that carries the chapter --------------- */
+
+.fg-chapter-head--index {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: start;
+  max-width: none;
+}
+
+.fg-finish__index {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(2, 43, 53, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  list-style: none;
+  counter-reset: none;
+
+  li + li { border-top: 1px solid rgba(2, 43, 53, 0.1); }
+
+  a {
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+    gap: 0.15rem 0.6rem;
+    padding: 0.85rem 1.05rem;
+    color: inherit;
+    text-decoration: none;
+    transition: background 150ms ease;
+  }
+
+  a:hover,
+  a:focus-visible { background: rgba(46, 172, 102, 0.08); }
+
+  strong {
+    grid-column: 2;
+    color: var(--fg-ink, #022b35);
+    font-size: 1rem;
+    font-weight: 750;
+  }
+}
+
+.fg-finish__index-num {
+  grid-row: span 2;
+  color: var(--fg-green);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding-top: 0.28rem;
+}
+
+.fg-finish__index-fact {
+  grid-column: 2;
+  color: rgba(2, 43, 53, 0.68);
+  font-size: 0.87rem;
+  line-height: 1.45;
+}
+
+/* ---- Chapter four: the glass step --------------------------------- */
+
+.generated-page--composite-doors .fg-composite-glass__grid {
+  gap: clamp(0.6rem, 1.3vw, 0.9rem);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.generated-page--composite-doors .fg-composite-glass-card {
+  border-color: rgba(2, 43, 53, 0.1);
+  border-radius: 6px;
+  box-shadow: 0 10px 26px -20px rgba(2, 43, 53, 0.4);
+}
+
+.generated-page--composite-doors .fg-composite-glass-card figure::after { display: none; }
+
+.generated-page--composite-doors .fg-composite-glass-card div {
+  gap: 0.25rem;
+  padding: 0.75rem 0.85rem 0.9rem;
+}
+
+.generated-page--composite-doors .fg-composite-glass-card h3 { font-size: 0.98rem; }
+
+.generated-page--composite-doors .fg-composite-glass-card p {
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+/* ONE NOTE, TWO COLUMNS, NO BOXES. It was three consecutive blocks in
+   three different treatments. */
+.fg-composite-glass__foot {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin-top: clamp(1.1rem, 2.2vw, 1.6rem);
+  padding-top: clamp(1rem, 2vw, 1.4rem);
+  border-top: 1px solid rgba(2, 43, 53, 0.12);
+
+  p {
+    margin: 0;
+    color: rgba(2, 43, 53, 0.68);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+}
+
+.fg-composite-glass__avail {
+  display: block;
+  margin-top: 0.4rem;
+  color: rgba(2, 43, 53, 0.5);
+  font-size: 0.84rem;
+}
+
+/* ---- Chapter four: the colour step -------------------------------- */
+
+/* The preview was a small figure at the far right of a wide row while
+   twenty-seven swatches queued up beside it. The preview is the point of
+   the section, so it leads. */
+.generated-page--composite-doors .fg-cd3-colour__layout {
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.generated-page--composite-doors .fg-cd3-colour__preview {
+  order: -1;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(2, 43, 53, 0.1);
+  border-radius: 10px;
+  background: #f7f9f8;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  figcaption {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.75rem 0.95rem 0.9rem;
+    text-align: left;
+  }
+
+  strong { font-size: 1rem; }
+
+  span {
+    color: rgba(2, 43, 53, 0.6);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+}
+
+.generated-page--composite-doors .fg-cd3-colour__swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.generated-page--composite-doors .fg-cd3-swatch {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+
+  img,
+  i {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 5px;
+    object-fit: cover;
+    box-shadow: inset 0 0 0 1px rgba(2, 43, 53, 0.16);
+    transition: box-shadow 150ms ease;
+  }
+
+  i { background: var(--option-colour, #ccc); }
+
+  span {
+    color: rgba(2, 43, 53, 0.72);
+    font-size: 0.73rem;
+    line-height: 1.2;
+  }
+}
+
+.generated-page--composite-doors .fg-cd3-swatch[aria-pressed='true'] img,
+.generated-page--composite-doors .fg-cd3-swatch[aria-pressed='true'] i {
+  box-shadow: inset 0 0 0 2px var(--fg-green, #2eac66), 0 0 0 2px rgba(46, 172, 102, 0.28);
+}
+
+.generated-page--composite-doors .fg-cd3-swatch[aria-pressed='true'] span {
+  color: var(--fg-ink, #022b35);
+  font-weight: 700;
+}
+
+/* ---- Second pass, mobile ------------------------------------------ */
+
+@media (max-width: 860px) {
+  .generated-page--composite-doors .fg-cd3-hero {
+    min-height: min(720px, calc(100svh - 76px));
+  }
+
+  .generated-page--composite-doors .fg-cd3-hero__media img { object-position: 66% 42%; }
+
+  .fg-cd3-hero__scrim {
+    background:
+      linear-gradient(0deg, rgba(0, 24, 31, 0.95) 26%, rgba(0, 24, 31, 0.68) 58%, rgba(0, 24, 31, 0.34) 100%),
+      linear-gradient(90deg, rgba(0, 24, 31, 0.5), rgba(0, 24, 31, 0.2));
+  }
+
+  .fg-cd3-hero__inner { padding-top: clamp(6rem, 26vh, 12rem); }
+
+  .generated-page--composite-doors .fg-cd3-hero__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    > div { padding: 0.8rem 0.9rem; border-left: 0; }
+    > div:nth-child(2n) { border-left: 1px solid rgba(255, 255, 255, 0.16); }
+    > div:nth-child(n + 3) { border-top: 1px solid rgba(255, 255, 255, 0.16); }
+    dt { font-size: 1.15rem; }
+  }
+
+  .fg-cds__grid { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
+  .fg-cds-door__link img { max-height: 96px; }
+
+  .fg-cdq__answers--3,
+  .fg-cdq__answers--4,
+  .fg-cdq__answers--swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .fg-cdq__answer-block img { height: clamp(96px, 22vw, 128px); }
+
+  .fg-cdq__reveal { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-cdq__reveal-art img { height: clamp(200px, 44vw, 280px); }
+
+  .fg-chapter-head--index { grid-template-columns: minmax(0, 1fr); }
+
+  .fg-composite-glass__foot { grid-template-columns: minmax(0, 1fr); }
+
+  .generated-page--composite-doors .fg-cd3-colour__layout { grid-template-columns: minmax(0, 1fr); }
+
+  .generated-page--composite-doors .fg-cd3-colour__swatches {
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .fg-cdq__answers--2 { grid-template-columns: minmax(0, 1fr); }
+}

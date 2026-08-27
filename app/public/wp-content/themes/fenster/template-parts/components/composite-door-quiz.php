@@ -3,6 +3,15 @@
  * "Which composite door are you?" — a stylised five-question quiz that ends on
  * one door, with the quote tool open on it, in the colour that was picked.
  *
+ * REBUILT 2026-08-27 AFTER THE OWNER'S VERDICT: "this doesn't look like a
+ * BuzzFeed quiz at all". It was a white card with a 28.8px heading and small
+ * bordered answers, which is a form. A real one was measured rather than
+ * guessed at: BuzzFeed sets its questions at 80px/800 centred, gives every
+ * answer a flat saturated colour block with square corners, and leads with the
+ * picture. This takes the grammar and not the palette — the page's second dark
+ * band, the question at the display ceiling, light answer tiles on it, and a
+ * reveal that is the biggest thing on the page after the H1.
+ *
  * THIS IS BUILT TO BE SHARED, which is the whole reason it looks the way it
  * does. It runs one question at a time on a bordered white card, the answers
  * are real door drawings rather than words where a drawing can carry the
@@ -179,69 +188,80 @@ foreach ($fg_colours as $fg_col) {
 $fg_known = array_column($fg_quiz_doors, 'k');
 $fg_total = count($fg_questions);
 
-/* Rendered inside the choosing chapter's own surface, which supplies the
-   container. Standalone is kept working for any route that calls this alone. */
-$fg_quiz_bare = ! empty($args['bare']);
 ?>
-<section class="fg-cdq<?php echo $fg_quiz_bare ? ' fg-cdq--bare' : ''; ?>" aria-labelledby="fg-cdq-title"
+
+<section class="fg-cdq" aria-labelledby="fg-cdq-title"
     data-fg-door-quiz
     data-fg-quiz-doors="<?php echo esc_attr((string) wp_json_encode($fg_quiz_doors)); ?>"
     data-fg-quiz-art="<?php echo esc_attr($fg_art); ?>"
     data-fg-quiz-ver="<?php echo esc_attr((string) $fg_ver); ?>"
     data-fg-quiz-quote="<?php echo esc_attr(fenster_composite_door_quote_url('__KEY__')); ?>">
-    <?php if (! $fg_quiz_bare) : ?><div class="container"><?php endif; ?>
+
+    <div class="container">
 
         <header class="fg-cdq__head">
-            <p class="eyebrow"><?php esc_html_e('Five questions', 'fenster'); ?></p>
+            <p class="fg-cdq__badge"><?php esc_html_e('Quiz', 'fenster'); ?></p>
             <h2 id="fg-cdq-title"><?php esc_html_e('Which composite door are you?', 'fenster'); ?></h2>
-            <p><?php esc_html_e('One hundred and forty two doors is too many to choose from cold. Answer five questions about your house and we will point at one, with the reasoning, and open it in the pricing tool in the colour you picked.', 'fenster'); ?></p>
+            <p class="fg-cdq__standfirst"><?php esc_html_e('One hundred and forty two doors is too many to choose from cold. Five questions about your house, and we will point at one and open it in the pricing tool in the colour you picked.', 'fenster'); ?></p>
         </header>
 
         <?php /* Ships hidden. Without JavaScript the range above is the answer,
                  and a quiz that cannot score is worse than no quiz at all. */ ?>
         <div class="fg-cdq__panel" data-fg-quiz-panel hidden>
 
+            <?php
+            /* THE PROGRESS IS A COUNTER AND A BAR, not five grey pips. A quiz
+               has to tell you how much of it is left, in a size you can read
+               without looking for it. */
+            ?>
             <div class="fg-cdq__progress" data-fg-quiz-progress>
-                <?php for ($fg_i = 0; $fg_i < $fg_total; $fg_i++) : ?>
-                    <span class="fg-cdq__pip" data-fg-quiz-pip="<?php echo esc_attr((string) $fg_i); ?>"></span>
-                <?php endfor; ?>
-                <span class="fg-cdq__count" data-fg-quiz-count aria-live="polite"></span>
+                <p class="fg-cdq__count" data-fg-quiz-count aria-live="polite"></p>
+                <div class="fg-cdq__bar">
+                    <?php for ($fg_i = 0; $fg_i < $fg_total; $fg_i++) : ?>
+                        <span class="fg-cdq__pip" data-fg-quiz-pip="<?php echo esc_attr((string) $fg_i); ?>"></span>
+                    <?php endfor; ?>
+                </div>
             </div>
 
             <div class="fg-cdq__stage">
                 <?php foreach ($fg_questions as $fg_i => $fg_q) : ?>
+                    <?php
+                    /* A SKIP IS NOT AN ANSWER AND MUST NOT LOOK LIKE ONE.
+                       "Honestly, neither" carries no drawing, so inside the
+                       answer grid it rendered as an empty bordered box the
+                       same size as two illustrated doors, which reads as a
+                       missing image rather than as a choice. It is a plain
+                       control under the grid. The controller finds any
+                       `[data-fg-quiz-answer]` inside the step, so moving it
+                       out of the grid changes nothing about the scoring. */
+                    $fg_grid_answers = array_values(array_filter($fg_q['answers'], static fn ($a) => $a['value'] !== null));
+                    $fg_skip_answers = array_values(array_filter($fg_q['answers'], static fn ($a) => $a['value'] === null));
+                    $fg_is_swatch = ! empty($fg_q['swatches']);
+                    ?>
                     <div class="fg-cdq__q" data-fg-quiz-q="<?php echo esc_attr($fg_q['id']); ?>" data-fg-quiz-step="<?php echo esc_attr((string) $fg_i); ?>" hidden>
+
                         <p class="fg-cdq__kicker"><?php echo esc_html($fg_q['kicker']); ?></p>
                         <h3 class="fg-cdq__title"><?php echo esc_html($fg_q['title']); ?></h3>
-                        <?php
-                        /* A SKIP IS NOT AN ANSWER AND MUST NOT LOOK LIKE ONE.
-                           "Honestly, neither" carries no drawing, so inside the
-                           answer grid it rendered as an empty bordered box the
-                           same size as two illustrated doors, which reads as a
-                           missing image rather than as a choice. It is a plain
-                           control under the grid now. The controller finds any
-                           `[data-fg-quiz-answer]` inside the step, so moving it
-                           out of the grid changes nothing about the scoring. */
-                        $fg_grid_answers = array_values(array_filter($fg_q['answers'], static fn ($a) => $a['value'] !== null));
-                        $fg_skip_answers = array_values(array_filter($fg_q['answers'], static fn ($a) => $a['value'] === null));
-                        ?>
-                        <div class="fg-cdq__answers fg-cdq__answers--<?php echo esc_attr((string) count($fg_grid_answers)); ?><?php echo ! empty($fg_q['swatches']) ? ' fg-cdq__answers--swatches' : ''; ?>">
+
+                        <div class="fg-cdq__answers fg-cdq__answers--<?php echo esc_attr((string) count($fg_grid_answers)); ?><?php echo $fg_is_swatch ? ' fg-cdq__answers--swatches' : ''; ?>">
                             <?php foreach ($fg_grid_answers as $fg_a) : ?>
                                 <?php
                                 $fg_key = (string) $fg_a['pic'];
                                 $fg_has = $fg_key !== '' && in_array($fg_key, $fg_known, true);
+                                $fg_hex = (string) ($fg_a['hex'] ?? '');
                                 ?>
-                                <?php $fg_hex = (string) ($fg_a['hex'] ?? ''); ?>
                                 <button type="button"
                                     class="fg-cdq__answer<?php echo ($fg_has || $fg_hex !== '') ? '' : ' fg-cdq__answer--plain'; ?><?php echo $fg_hex !== '' ? ' fg-cdq__answer--swatch' : ''; ?>"
                                     data-fg-quiz-answer="<?php echo esc_attr($fg_a['value'] === null ? '' : (string) $fg_a['value']); ?>">
-                                    <?php if ($fg_hex !== '') : ?>
-                                        <span class="fg-cdq__chip" style="background:<?php echo esc_attr($fg_hex); ?>"></span>
-                                    <?php elseif ($fg_has) : ?>
-                                        <span class="fg-cdq__answer-art">
+                                    <?php /* The block behind the artwork is what makes an answer read
+                                             as a tile rather than as a bordered box. */ ?>
+                                    <span class="fg-cdq__answer-block">
+                                        <?php if ($fg_hex !== '') : ?>
+                                            <span class="fg-cdq__chip" style="background:<?php echo esc_attr($fg_hex); ?>"></span>
+                                        <?php elseif ($fg_has) : ?>
                                             <img src="<?php echo esc_url($fg_pic($fg_key)); ?>" alt="" loading="lazy" decoding="async" width="914" height="2013">
-                                        </span>
-                                    <?php endif; ?>
+                                        <?php endif; ?>
+                                    </span>
                                     <span class="fg-cdq__answer-text">
                                         <strong><?php echo esc_html($fg_a['label']); ?></strong>
                                         <?php if (trim((string) $fg_a['sub']) !== '') : ?>
@@ -251,39 +271,46 @@ $fg_quiz_bare = ! empty($args['bare']);
                                 </button>
                             <?php endforeach; ?>
                         </div>
-                        <?php if (! empty($fg_skip_answers)) : ?>
-                            <p class="fg-cdq__skip">
-                                <?php foreach ($fg_skip_answers as $fg_a) : ?>
-                                    <button type="button" class="fg-cdq__skip-btn" data-fg-quiz-answer="">
-                                        <?php echo esc_html($fg_a['label']); ?>
-                                    </button>
-                                <?php endforeach; ?>
-                            </p>
-                        <?php endif; ?>
-                        <button type="button" class="fg-cdq__back" data-fg-quiz-back hidden aria-label="<?php esc_attr_e('Back to the previous question', 'fenster'); ?>">
-                            <?php esc_html_e('Back', 'fenster'); ?>
-                        </button>
+
+                        <div class="fg-cdq__controls">
+                            <button type="button" class="fg-cdq__back" data-fg-quiz-back hidden>
+                                <?php esc_html_e('Back', 'fenster'); ?>
+                            </button>
+                            <?php foreach ($fg_skip_answers as $fg_a) : ?>
+                                <button type="button" class="fg-cdq__skip-btn" data-fg-quiz-answer="">
+                                    <?php echo esc_html($fg_a['label']); ?>
+                                </button>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
 
             <div class="fg-cdq__result" data-fg-quiz-result hidden tabindex="-1">
+                <?php
+                /* THE REVEAL IS THE POINT OF THE FORMAT. Everything above it is
+                   the setup; this is the payoff, so the door name is the
+                   biggest type on the page after the H1 and the drawing gets a
+                   block of its own. */
+                ?>
                 <div class="fg-cdq__reveal">
-                    <p class="fg-cdq__reveal-kicker"><?php esc_html_e('You are a', 'fenster'); ?></p>
-                    <h3 class="fg-cdq__door-name" data-fg-quiz-name></h3>
-                    <p class="fg-cdq__collection" data-fg-quiz-collection></p>
-                    <p class="fg-cdq__chosen-colour" data-fg-quiz-colour hidden></p>
-                    <figure class="fg-cdq__art">
+                    <div class="fg-cdq__reveal-art">
                         <img data-fg-quiz-art-img src="" alt="" width="914" height="2013" decoding="async">
-                    </figure>
-                    <p class="fg-cdq__why" data-fg-quiz-why></p>
-                    <p class="fg-cdq__poa" data-fg-quiz-poa hidden><?php esc_html_e('This one is priced on application rather than instantly, so the tool will take you as far as the design and we will follow up with the number.', 'fenster'); ?></p>
-                    <p class="fg-cdq__result-actions">
-                        <button type="button" class="button" data-fg-quiz-share><?php esc_html_e('Share your door', 'fenster'); ?></button>
-                        <a class="button button--light" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php esc_html_e('Open full size', 'fenster'); ?></a>
-                        <button type="button" class="button button--light" data-fg-quiz-reset><?php esc_html_e('Try again', 'fenster'); ?></button>
-                    </p>
-                    <p class="fg-cdq__caveat"><?php esc_html_e('Five questions cannot know your house. If it is not right, the range above has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
+                    </div>
+                    <div class="fg-cdq__reveal-words">
+                        <p class="fg-cdq__reveal-kicker"><?php esc_html_e('You are a', 'fenster'); ?></p>
+                        <p class="fg-cdq__door-name" data-fg-quiz-name></p>
+                        <p class="fg-cdq__collection" data-fg-quiz-collection></p>
+                        <p class="fg-cdq__chosen-colour" data-fg-quiz-colour hidden></p>
+                        <p class="fg-cdq__why" data-fg-quiz-why></p>
+                        <p class="fg-cdq__poa" data-fg-quiz-poa hidden><?php esc_html_e('This one is priced on application rather than instantly, so the tool will take you as far as the design and we will follow up with the number.', 'fenster'); ?></p>
+                        <p class="fg-cdq__result-actions">
+                            <button type="button" class="button" data-fg-quiz-share><?php esc_html_e('Share your door', 'fenster'); ?></button>
+                            <a class="button button--light" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php esc_html_e('Open full size', 'fenster'); ?></a>
+                            <button type="button" class="fg-cdq__again" data-fg-quiz-reset><?php esc_html_e('Try again', 'fenster'); ?></button>
+                        </p>
+                        <p class="fg-cdq__caveat"><?php esc_html_e('Five questions cannot know your house. If it is not right, the range above has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
+                    </div>
                 </div>
 
                 <?php /* The tool, on that door. Built on submit rather than
@@ -294,5 +321,5 @@ $fg_quiz_bare = ! empty($args['bare']);
                 </div>
             </div>
         </div>
-    <?php if (! $fg_quiz_bare) : ?></div><?php endif; ?>
+    </div>
 </section>
