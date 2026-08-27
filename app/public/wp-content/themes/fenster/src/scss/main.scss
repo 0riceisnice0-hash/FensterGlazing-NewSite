@@ -47912,3 +47912,14 @@ html.fg-blinds-reveal-locked {
   .generated-page--composite-doors .fg-glass-doors { grid-template-columns: minmax(0, 1fr); }
   .fg-glass-patterns ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* `aspect-ratio` WAS BEING IGNORED, AND THE REASON IS SUBTLE. An `<img>`'s
+   `width`/`height` attributes are presentational hints that map to CSS
+   `width` and `height`. `height="1000"` therefore means the element's height is
+   NOT `auto`, and `aspect-ratio` only sizes a box whose other axis is auto. So
+   the renders drew at their full 1000px natural height inside a 377px column
+   and each card came out 1,103px tall. Every other image rule in this file
+   happens to set a height, which is why nothing else on the site does this.
+   Setting `height: auto` restores the ratio. */
+.fg-glass-door img,
+.fg-glass-patterns img { height: auto; }
