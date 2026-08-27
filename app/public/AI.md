@@ -1252,6 +1252,32 @@ A change is not complete until the relevant checks pass:
   flat parts of the pattern, and the pattern's edges shaded on top. Every pixel in
   the first two is scene colour, which is what stopped it reading grey — mean
   saturation over the Cassini pane went **24.0% to 32.1%**.
+- **EVERY RIM MAP IS SCALED TO THE SAME MEAN ABSOLUTE DEVIATION FROM 128, and one
+  number answered two opposite review notes.** The owner's second review of
+  2026-08-27 was that Chantilly's outlines were "too inky" and Cassini was "not
+  defined enough". Native MAD ran **Cassini 13.6 to Chantilly 29.4**, a 2.2x
+  spread, because MAD measures how much of the pane gets shaded and by how much —
+  a dense floral has edges everywhere and a soft pebble pattern barely any. The
+  target is 21, a little under the set median of 22.5. **Normalising on standard
+  deviation was tried first and barely moved either: spread is not coverage.**
+- **`tile` is for the stage, `image` is for everything else.** Seamlessness is a
+  property of TILING, and the stage is the only surface that repeats — swatches,
+  the hero wall and the glass card each paint one instance at `cover`. Reeded's
+  mirrored tile squeezed into a 58px swatch put its mirror axis dead centre, and
+  the ribs fan slightly, so it read as a bold chevron rather than as glass. `tile`
+  falls back to `image`, so only a texture whose repeat differs from its portrait
+  needs one. **Before giving a texture a seamless treatment, ask which surfaces
+  will show it.**
+- **BUMP `MAPS_REVISION` WHENEVER THE RECIPE CHANGES, not only when a photograph
+  does.** The maps go out through `fenster_generated_url()` like any theme image,
+  so they carry no version string; rewriting one in place leaves the reviewer's
+  browser serving the old bytes and the fix looks like it did nothing. The
+  rename-the-source rule covers changed pixels, this covers a changed formula.
+  They live in `maps/<rev>/`, so one bump moves the whole set.
+- **Renaming the map folder makes rsync see a deletion per file.** `git` reports
+  unchanged maps as `R100` renames; rsync sees delete-plus-add. The r1 to r2 move
+  was **40 deletions** against a `git` view of 20. Set the assertion from what
+  rsync does, and check none of them fall outside the maps folder.
 - **Every texture needs two companion maps and they are DERIVED, never drawn.**
   `scripts/build-obscure-glass-maps.py` rebuilds every byte from the source
   photograph, and the maps are named off its stem, so renaming a texture renames
