@@ -32418,10 +32418,15 @@ html.fg-blinds-reveal-locked {
     linear-gradient(0deg, rgba(0, 31, 40, 0.58), transparent 62%);
 }
 
+/* THIS RULE WAS DEAD AND STILL WON. It set every h2 on the route to
+   `clamp(1.9rem, 2.8vw, 2.8rem) !important`, and a second blanket rule ~1,450
+   lines below set them all again to `clamp(1.55rem, 2vw, 2rem) !important`,
+   which is where the 28.8px every heading on the page resolved to came from.
+   Two `!important` blanket rules fighting each other is why nothing on a
+   13,909px page could be made more important than anything else. Both are
+   neutered 2026-08-27; the surviving one keeps this route's heading weight and
+   tracking and leaves the size to the house rule and the chapter heads. */
 .generated-page--composite-doors h2 {
-  font-size: clamp(1.9rem, 2.8vw, 2.8rem) !important;
-  font-weight: 650 !important;
-  line-height: 1.08 !important;
   letter-spacing: -0.035em;
 }
 
@@ -33869,11 +33874,15 @@ html.fg-blinds-reveal-locked {
 
 /* Composite doors V2: one range studio and one finish configurator.
    The page canvas lives on `body`; see the note above. */
+/* THE SIZE AND THE `!important` ARE GONE, 2026-08-27. This forced every h2 on
+   the route to 28.8px at 1440 and beat any namespaced rule underneath it, which
+   is the mechanism behind "fourteen identical headings" in the audit. Weight and
+   tracking are this route's house style and stay; the size is the shared h2 rule
+   unless a chapter head raises it. */
 .generated-page--composite-doors h2 {
   max-width: 680px;
-  font-size: clamp(1.55rem, 2vw, 2rem) !important;
-  font-weight: 650 !important;
-  line-height: 1.12 !important;
+  font-weight: 650;
+  line-height: 1.12;
   letter-spacing: -0.025em;
 }
 
@@ -46592,5 +46601,66 @@ html.fg-blinds-reveal-locked {
     font-size: 0.92rem;
     font-weight: 700;
     text-underline-offset: 3px;
+  }
+}
+
+/* CHAPTER OPENERS BEAT THE ROUTE'S BLANKET HEADING RULE. That rule is
+   `.generated-page--composite-doors h2` at (0,2,1), so a bare
+   `.fg-chapter-head h2` at (0,1,1) loses to it however far down the file it
+   sits. Scoped to the route here rather than by raising the blanket rule's
+   reach, so `/why-distinction/` keeps using the same class unscoped. */
+.generated-page--composite-doors .fg-chapter-head h2,
+.generated-page--composite-doors .fg-cds__head h2,
+.generated-page--composite-doors .fg-cd3-anatomy__head h2 {
+  max-width: 24ch;
+  font-size: clamp(1.6rem, 2.9vw, 2.35rem);
+  line-height: 1.08;
+  letter-spacing: -0.014em;
+}
+
+/* ---- Corrections after the first render on test ------------------ */
+
+/* THE HERO MEDIA BOX IS SHARED WITH `/heritage-aluminium-doors/` AND IS
+   `aspect-ratio: 6/5`, which is landscape. Dropping a portrait photograph into
+   it cropped a whole door and sidelight down to a letterbox: soffit at the top,
+   threshold gone at the bottom. The box is portrait on this route only, so the
+   heritage hero is untouched. `STYLE.md`: a crop that cuts the product out of
+   frame is a defect, not a detail. */
+.generated-page--composite-doors .fg-cd3-hero__media {
+  width: min(100%, 540px);
+  aspect-ratio: 4 / 5;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: 0 30px 70px -34px rgba(2, 43, 53, 0.55), 0 2px 6px rgba(2, 43, 53, 0.1);
+}
+
+.generated-page--composite-doors .fg-cd3-hero__media img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center 46%;
+  box-shadow: none;
+}
+
+/* The wordmark was rendering at 104px, which is 23px tall and reads as a
+   smudge under a rule. */
+.fg-cd3-hero__credential img { width: 132px; }
+
+/* The drawing was getting under a third of the explorer, so a slab that is
+   0.43 as wide as it is tall came out too small to read the layers in. */
+.fg-cd3-anatomy__explorer {
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+}
+
+@media (max-width: 860px) {
+  .generated-page--composite-doors .fg-cd3-hero__media {
+    width: 100%;
+    aspect-ratio: 5 / 4;
+  }
+
+  .generated-page--composite-doors .fg-cd3-hero__media img {
+    object-position: center 40%;
   }
 }
