@@ -1237,125 +1237,57 @@ A change is not complete until the relevant checks pass:
 
 ## Obscured glass textures
 
-- **THE STAGE RENDERS OPTICS ON A CANVAS AS OF 2026-08-27 (EVENING), AND THE
-  OWNER COMMISSIONED IT** with Pilkington's Texture brochure as the benchmark,
-  after five same-day attempts at improving the CSS compositing were reverted.
-  The brief's principle is the rule: **THE GLASS TEXTURE IS NOT THE FINAL
-  IMAGE** — it drives refraction, diffusion and frost of the scene behind it,
-  and its luminance survives only as micro-grain and gloss. The renderer lives
-  in the obscure-glass controller in `src/js/main.js` (2D canvas, no library,
-  once per pick — the blind-visualiser exception, deliberately extended). The
-  CSS compositing below it is the no-JS and failed-render fallback, and
-  **only Satin stays on it by `mode: 'css'`** — a flat frost with nothing to
-  refract. **Reeded's lock was superseded by the owner's own glass-by-glass QA
-  later the same night** ("too dark, pattern repetition incorrect"): both
-  faults were the multiply compositing it was locked to, which can only
-  darken, so it renders through the directional optics now. Its two derived
-  assets (`tile`/`image` split, levelled portrait) remain in use.
-- **THE OWNER'S GLASS-BY-GLASS QA OF 2026-08-27 (LATE) IS THE CURRENT
-  ACCEPTANCE BASELINE.** Satin, Pelerine, Stippolyte and Sycamore passed and
-  are not to be reworked without instruction. The twelve problem glasses were
-  corrected per glass, in the owner's priority order, and the acceptance test
-  is written into the instruction: **Cassini, Autumn, Cotswold, Reeded and
-  Minster side by side must read as five different optical signatures**, each
-  recognisably closer to its own reference — not "nicer", different. The
-  directional `cross` bleed is per glass because a shared meander constant was
-  itself re-creating the universal wave.
-- **EACH GLASS IS A MATERIAL TYPE, NOT A STRENGTH SETTING. Owner correction,
-  2026-08-27 (night): every glass had converged on the Minster look because one
-  isotropic pipeline was scaled per glass — the model could not say
-  "sideways".** Four sampling physics now: `directional` (ribs bend light
-  across themselves; the diffusion pyramid smears along the scatter axis —
-  Charcoal Sticks, Cotswold, Warwick), `diffusion` (a stipple has no macro
-  relief, so no waves, only granular jitter — Stippolyte, Pelerine, Sycamore),
-  `cellular` (Digital: one rigid shift per pattern cell, hard edges),
-  `lenticular` (the two-material mask — Cassini, Florielle), and `irregular`
-  (rolled cathedral wobble, the one family whose members genuinely are
-  cousins). **Privacy and character are independent axes** — Warwick is
-  directional at privacy 1, Cotswold directional at 5. Do not re-unify these
-  into presets; the audit that chose each type is commented beside its entry.
-- **Per-glass parameters are read off the brochure's same-scene photography**
-  (fruit bowl / teapot / plant through every pattern), and privacy arrives as
-  DISTORTION plus veil, not opacity: Warwick p1 leaves the scene nearly
-  intact, Everglade p5 scrambles it. Do not flatten the table back to one
-  look; "the same optical treatment applied identically to completely
-  different glass patterns" is the failure the brief names.
-- **The optics rules that three rounds of independent panel review paid for**,
-  each unanimous: frost pulls toward the LOCAL scene colour lifted toward
-  white, never flat grey (chalk) and never darker (a stamp); the privacy veil
-  covers the whole pane, clearest window included — the old CSS model's sin
-  was veil INSTEAD of optics, not the veil; the mask that separates a
-  two-material glass reads a smoothed field or every window fringes with
-  stipple dither; the height field needs float smoothing or 8-bit GPU blur
-  steps draw fingerprint rings; the fine residual is normalised per texture
-  or one relief setting paints lace white and leaves stipple blank; and a
-  pinned pattern tiles as DIAGONAL brick with mirroring, because straight
-  boundaries survive in the pattern structure even when its luminance is
-  never displayed.
-- **What it still is not**, recorded honestly: the final panel round still
-  scored Cassini short of "passes as a photograph" — closer than any filter,
-  correct grammar, but the flat-lit 150mm sample photographs limit specular
-  and grain fidelity. A photograph of our own glass with a scene behind it
-  beats any further code. That is a `PHOTO-CHECKLIST.md` item.
-- Superseded: **THE STAGE COMPOSITES AS IT ALWAYS HAS, AND FIVE ATTEMPTS TO
-  IMPROVE IT WERE ALL REVERTED (2026-08-27, afternoon).** The owner
-  re-opened it the same evening with real reference material and an explicit
-  instruction to change the rendering technique if the architecture was the
-  limit. It was; see above.
-- **What was tried and thrown away**, in order: a three-layer focus model with
-  baked rim and clear masks; a mean-absolute-deviation normalisation across those
-  masks; an SVG `feDisplacementMap` driven by a quantised facet map; a shine
-  reduction on top of it; and finally 42 pre-rendered composites, one per pattern
-  per scene. Each was measurably closer to Pilkington's own photograph on some
-  axis and each looked worse on the page. **Measuring closer is not the same as
-  looking better, and that is the lesson worth keeping.**
-- **Four diagnoses died along the way. Do not re-test them.** The aspect stretch
-  (rebuilt with `preserveAspectRatio="xMidYMid slice"`, looked worse); the
-  displacement scale (seven values -- below about 16 the pattern vanishes into
-  plain blur, above it the facets smear, nothing sits between); the rim map as a
-  source of shine (it cannot brighten at all, its shade term exceeds its light
-  term everywhere so it never rises above 128); and the scene being too smooth to
-  bend (measured, and ours carries **more** local contrast at petal scale than the
-  reference's room, 21.1 against 16.5).
-- **The one real limit, if anyone does try again:** every facet in the reference
-  is a flat wash of one tone with a hard edge, because a lens averages what it
-  magnifies. `feDisplacementMap` moves pixels and never averages within a region,
-  so a displaced photograph keeps its gradients and reads as a smear. Averaging
-  per facet needs a pre-render -- which was built, and rejected on sight.
-- **REEDED IS THE ONE KEEPER, and only because its faults were in the ASSET.**
-  Everything else reverted with the compositing; these survived it because they
-  are corrections to a photograph rather than an effect.
-- **Reeded's photograph is lit from one side**: low-frequency spread 130 against a
-  set median of 49, left edge 148 against right edge 100. That, not the rib phase,
-  is what caused its tile seam -- cropping to a whole number of ribs only moved the
-  seam from 125 to 55. Flat-fielded then mirrored takes it to **0.00**.
-- **Mirroring is right for ribs and wrong for almost anything else.** Ribs are
-  near-identical to their own reflection so the symmetry is invisible; the same
-  trick on an organic pattern goes visibly kaleidoscopic. Do not generalise it.
-- **`tile` is for the stage, `image` is for everything else.** The stage is the
-  only surface that repeats; swatches, the hero wall and the glass card each paint
-  one instance at `cover`. Handing them the mirrored tile put its mirror axis dead
-  centre in a 58px swatch and read as a chevron. `tile` falls back to `image`, and
-  Reeded is the only texture that carries one.
-- **A mirrored tile is twice as wide, so its pin doubles too** -- Reeded is
-  `360px 100%`, not `180px 100%`, or every rib renders at half its proper width.
-- **Reeded's display copy is lifted to the set's mean brightness and its tile is
-  not.** It is the second-darkest source in the set and read as the one near-black
-  square in a pale column of swatches; the tile stays as photographed so the pane
-  does not move. Both files come from `scripts/build-reeded-texture.py`.
-- **If a texture's pixels change, change its filename.** Theme images are emitted
-  through `fenster_generated_url()`, which adds no version string, so replacing a
-  `.webp` in place leaves browsers and the proxy serving the old one while the
-  deploy verifies perfectly. This has cost review rounds three times, and it was
-  broken once **in the commit immediately after the one documenting it**.
-- **Judge a texture on mean brightness AND standard deviation** against the rest
-  of the set, then look at it on the stage. That layer is `mix-blend-mode:
-  multiply`, so a dark texture does not add pattern, it turns the pane to mud.
-  The set runs roughly mean 120-180, stddev 25-70. **Add the low-frequency spread
-  to that check** -- blur hard, measure max minus min, set median 49 -- because
-  mean and stddev both passed a Cassini that was badly lit from one side.
-- **A photographed texture needs a `size`; a CSS gradient does not.** `cover`
-  scales to the box rather than to the glass. The `size` applies to the **stage
-  only** -- swatches stay on `cover` because they must show the whole pattern.
-- **Only a pinned size tiles.** Cassini, Minster, Stippolyte and Reeded have one;
-  the other seventeen paint once and cannot seam.
+- **THE STAGE COMPOSITES IN CSS AS LIVE DOES, AND SIX ATTEMPTS TO IMPROVE IT
+  HAVE NOW BEEN REVERTED — five on 2026-08-27 afternoon, and a full canvas
+  optical renderer the same night.** Owner, after the canvas build: *"they're
+  all mostly terrible tbh. the ones that are currently on live are more
+  realistic."* **Read this entire section before proposing a seventh.**
+- **THE REFERENCE THAT SETTLES IT: `pallotglass.com/pilkington-decorative-glass/`
+  carries a `Textured-<pattern>.jpg` per glass — the same red clock photographed
+  through every one.** It is the single most useful reference for this component
+  and it exists. **A text fetch of that page reported "isolated product shots,
+  no contextual scenes" and that was wrong**; believing it instead of opening the
+  images is what sent a whole rebuild off a partial brief. Download and LOOK.
+- **WHAT THOSE PHOTOGRAPHS ACTUALLY SHOW, and it inverts the premise a rebuild
+  is tempted by:** the pattern's own crisp, high-contrast structure IS most of
+  what you see. Reeded slices the clock into strips that repeat the numerals;
+  Digital breaks it into hard rectangles; Mayflower's daisies are bright white
+  and dominant. **"The texture is not the final image" is true of how a glass
+  should DISTORT and false as a licence to discard the texture's structure** —
+  the canvas renderer derived soft physical displacement, threw the structure
+  away, and every glass came out a milky wash.
+- **PROVEN, NOT ASSUMED: rendered three ways — the Pallot reference, live's CSS
+  compositing, and the canvas — live was closer on all four glasses tested**
+  (Reeded, Digital, Mayflower, Cassini). The owner's eye reached that before the
+  comparison existed.
+- **If a seventh attempt is ever commissioned**, the target is the red-clock
+  series, and the thing to add is displacement ON TOP of the visible texture,
+  not instead of it. Every soft-optics variant has now been tried and rejected.
+- **A cell-centre stencil must clamp two pixels inside the frame at BOTH ends.**
+  The cellular mode sampled `ci ± 2` and `ci ± 2w`, so a centre in the last two
+  rows ran off the height field, produced NaN, and painted a dark strip along
+  the bottom. The owner spotted it on Digital.
+- **REEDED'S DERIVED ASSETS SURVIVE ALL OF THIS**, because they are corrections
+  to a photograph rather than to a renderer: its source is lit from one side
+  (low-frequency spread 130 against a set median of 49), which is what caused
+  its tile seam — cropping to whole ribs only moved it 125 to 55, because the
+  rib phase was never the problem. Flat-fielded then mirrored takes it to 0.00.
+  **`tile` is for the stage, `image` for everything that merely displays it**:
+  a mirrored tile in a 58px swatch puts its mirror axis dead centre and reads as
+  a chevron. Reeded is the only texture carrying a `tile`. Its display copy is
+  lifted to the set's mean brightness and its tile is not. Both come from
+  `scripts/build-reeded-texture.py`.
+- **If a texture's pixels change, change its filename.** Theme images go through
+  `fenster_generated_url()` with no version string, so replacing a `.webp` in
+  place leaves browsers and the proxy serving the old one while the deploy
+  verifies perfectly. Three review rounds lost to this, and it was broken once
+  in the commit immediately after the one documenting it.
+- **Judge a texture on mean brightness AND standard deviation** against the set,
+  then look at it on the stage — that layer is `mix-blend-mode: multiply`, so a
+  dark texture turns the pane to mud. Set roughly mean 120-180, stddev 25-70.
+  **Add the low-frequency spread** — blur hard, max minus min, set median 49 —
+  because mean and stddev both passed a Cassini badly lit from one side.
+- **A photographed texture needs a `size`; a CSS gradient does not.** It applies
+  to the **stage only**; swatches stay on `cover` to show the whole pattern.
+  **Only a pinned size tiles** — Cassini, Minster, Stippolyte and Reeded have
+  one; the other seventeen paint once and cannot seam.
