@@ -47696,15 +47696,12 @@ html.fg-blinds-reveal-locked {
    fills, so the progress read as one green dash floating at the left. */
 .fg-cdq__bar .fg-cdq__pip { width: auto; }
 
-/* THE WHITE WORDMARK IS A FILTER, NOT A SECOND FILE. Inverting the PNG's RGB
-   turned its antialiased edge pixels dark, so the mark rendered white with a
-   black slab under it. `brightness(0) invert(1)` forces every opaque pixel to
-   white and leaves alpha alone, which is the only way to recolour a supplied
-   logo without redrawing it. One asset, and it cannot drift from the original. */
-.fg-cd3-hero__credential img {
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
-}
+/* THE SUPPLIED WORDMARK HAS NO ALPHA. It is a palette PNG of black lettering
+   on a light grey plate, which is why it showed a dark slab on the hero and why
+   a `brightness(0) invert(1)` filter turned it into a solid white rectangle: the
+   filter recoloured the plate along with the letters. The white variant beside
+   it is keyed out by luminance, so it is genuinely transparent. */
+.fg-cd3-hero__credential img { opacity: 0.94; }
 
 /* Two rules from the quiz's white-card era were still shaping the dark band.
 
@@ -47732,3 +47729,16 @@ html.fg-blinds-reveal-locked {
 
 /* rgba(255,255,255,.5) on the band is under 4.5:1 at this size. */
 .fg-cdq__caveat { color: rgba(255, 255, 255, 0.62); }
+
+@media (max-width: 860px) {
+  /* The phone scrim was dark enough that the door it sits on stopped being
+     visible, which defeats the point of a photograph. The copy block gets the
+     density it needs and the top two thirds stay open. */
+  .fg-cd3-hero__scrim {
+    background:
+      linear-gradient(0deg, rgba(0, 24, 31, 0.95) 20%, rgba(0, 24, 31, 0.72) 48%, rgba(0, 24, 31, 0.1) 88%),
+      linear-gradient(90deg, rgba(0, 24, 31, 0.28), rgba(0, 24, 31, 0.08));
+  }
+
+  .generated-page--composite-doors .fg-cd3-hero__media img { object-position: 62% 34%; }
+}

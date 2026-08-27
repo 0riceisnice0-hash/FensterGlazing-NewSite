@@ -1119,7 +1119,7 @@ $trust_items = [
 $partner_items = [
     ['src' => FENSTER_THEME_URI . '/assets/partners/sheerline.png', 'alt' => 'Sheerline'],
     ['label' => 'Liniar', 'alt' => 'Liniar'],
-    ['src' => FENSTER_THEME_URI . '/assets/partners/distinction-doors.png', 'alt' => 'Distinction Doors'],
+    ['src' => FENSTER_THEME_URI . '/assets/partners/distinction-doors-white.png', 'alt' => 'Distinction Doors'],
 ];
 $product_hub = function_exists('fenster_product_hub_data') ? fenster_product_hub_data($slug) : [];
 $product_hub_systems = is_array($product_hub['systems'] ?? null) ? array_values($product_hub['systems']) : [];
