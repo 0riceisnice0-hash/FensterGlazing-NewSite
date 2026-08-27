@@ -3551,9 +3551,9 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        line. `mask` switches the two-material path on: the flat-fielded
        texture's brightness separates face from ground. */
     cassini: {
-      heightBlur: 14, strength: 20, baseBlur: 0.8, roughBlur: 14, relief: 0.15,
-      mask: true, maskLow: 0.42, maskHigh: 0.58, petalRough: 0, groundRough: 0.95,
-      groundScatter: 0.35, edgeShade: 0.12, veil: 0.3, spec: 14, scale: 0.8,
+      heightBlur: 14, strength: 20, baseBlur: 0.8, roughBlur: 14, relief: 0.12,
+      mask: true, maskLow: 0.55, maskHigh: 0.72, petalRough: 0, groundRough: 0.95,
+      groundScatter: 0.32, edgeShade: 0.12, veil: 0.28, spec: 26, scale: 0.8, grain: 0.07,
     },
     /* Every entry below is read off Pilkington's own same-scene photography
        (Texture by Pilkington brochure, January 2026): the fruit bowl, teapot
@@ -3630,11 +3630,15 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        symmetry an independent review spotted as a lattice; offsetting each
        alternate row by half a tile breaks the symmetry while the mirroring
        still keeps the height field seamless. */
-    for (let ty = 0, ry = 0; ty < h + th; ty += th, ry += 1) {
-      const shift = ry % 2 ? -(tw >> 1) : 0;
-      for (let tx = shift, rx = 0; tx < w + tw; tx += tw, rx += 1) {
+    /* Diagonal brick: every column drops by a third of a tile, so no tile
+       boundary runs unbroken across the pane. A straight boundary survived
+       in the PATTERN STRUCTURE even with the luminance never displayed --
+       features truncate along it -- and a review caught it as a seam. */
+    for (let cx = 0, rx = 0; cx < w + tw; cx += tw, rx += 1) {
+      const drop = ((rx % 3) - 1) * (th / 3);
+      for (let cy = -th + drop, ry = 0; cy < h + th; cy += th, ry += 1) {
         ctx.save();
-        ctx.translate(rx % 2 ? tx + tw : tx, ry % 2 ? ty + th : ty);
+        ctx.translate(rx % 2 ? cx + tw : cx, ry % 2 ? cy + th : cy);
         ctx.scale(rx % 2 ? -1 : 1, ry % 2 ? -1 : 1);
         ctx.drawImage(img, 0, 0, tw, th);
         ctx.restore();
@@ -3763,8 +3767,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           }
         }
       };
-      smoothField(H, 3);
-      smoothField(H, 3);
+      smoothField(H, 5);
+      smoothField(H, 5);
 
       /* The fine residual, pre-smoothed. Read raw it renders as per-pixel
          dither speckle along every frost edge -- an independent review
@@ -3789,7 +3793,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         /* From a SMOOTHED copy: the raw pattern is stippled, and a per-pixel
            threshold of stipple gave every window a salt-and-pepper fringe. */
         P = new Float32Array(T);
-        smoothField(P, 3);
+        smoothField(P, 1);
         const sample = new Float32Array(4096);
         for (let i = 0; i < 4096; i += 1) sample[i] = P[(2003 * i) % P.length];
         const sortedT = Array.from(sample).sort((a, b) => a - b);
@@ -3828,6 +3832,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const roughAmp = optics.rough;
       const veil = optics.veil || 0;
       const specAmp = optics.spec || 8;
+      const grainAmp = optics.grain != null ? optics.grain : 0.05;
 
       for (let y = 0; y < h; y += 1) {
         const yw = y * w;
@@ -3926,6 +3931,12 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                optics; the old CSS model's mistake was veil INSTEAD of them. */
             v += (local + (255 - local) * 0.62 - v) * veil;
             v += gloss;
+            /* The halftone micro-stipple of the etched surface, applied last
+               so no amount of veil erases it. Signed but tiny: at this
+               amplitude it reads as surface grain, not as a stamp -- the
+               flattened, grain-free frost was called 'matte film' by every
+               reviewer of the smoothed version. */
+            v += (T[i] - H[i]) * grainAmp;
             dst[o + ch] = v;
           }
           dst[o + 3] = 255;
