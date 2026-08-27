@@ -3531,49 +3531,94 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   /* Per glass, from its own red-clock photograph. `kind` is the optics,
      not a strength band -- a rib cannot be expressed as a strong dapple. */
   const GLASS_MATERIALS = {
-    /* rib: periodic cylindrical lenses. `spread` > 1 is what makes each
-       rib show a compressed wide slice, and therefore what makes detail
-       repeat across neighbouring ribs exactly as the clock numerals do. */
-    reeded: { kind: 'rib', period: 30, spread: 3.2, emboss: 0.45, veil: 0.02 },
-    'charcoal-sticks': { kind: 'rib', period: 15, spread: 2.2, jitter: 7, emboss: 0.6, veil: 0.06 },
-    cotswold: { kind: 'rib', period: 11, spread: 2.6, jitter: 5, emboss: 0.5, veil: 0.08 },
-    /* cell: rigid blocks, each sharp, each displaced on its own. */
-    digital: { kind: 'cell', cell: 13, jitter: 16, emboss: 0.5, veil: 0.05 },
-    /* lens: discrete hard-edged elements over a fine screened ground. */
-    /* Cassini is TWO textures at two scales, which is what the clock
-       photograph shows when you zoom into it: a fine directional hatch
-       whose ANGLE changes from patch to patch, with smooth petal lenses
-       laid over the top. Rendering only the petals -- as a `lens` did --
-       misses most of what the glass actually is. `hatch` combs the scene
-       perpendicular to the local line direction at the hatch's own
-       frequency; `hatchEmboss` draws the lines themselves. */
-    cassini: {
+    /* ---- rib: periodic cylindrical lenses -------------------------------
+       `spread` > 1 makes each rib image a swath wider than itself, so
+       neighbours overlap and detail repeats; `flip` inverts inside the rib,
+       which is what makes the reference read "12 | 21 | 2". */
+
+    /* Reeded: machined flutes, ~10mm, dead regular, dead vertical. Sharpest
+       glass in the range -- the clock numerals survive intact inside a flute
+       and are destroyed only by being cut, compressed and reversed. Privacy 2
+       comes entirely from that shredding, so the veil is near zero. */
+    reeded: { texSize: 'cover', kind: 'rib', period: 34, spread: 4.2, flip: true, wander: 1.2, emboss: 0.34, veil: 0.02 },
+
+    /* Charcoal Sticks: drawn vertical sticks of UNEVEN width, not flutes. Its
+       reference shreds horizontal edges into vertical runs, so the per-stick
+       vertical carry is the mechanism and the horizontal lensing is secondary. */
+    'charcoal-sticks': { kind: 'rib', period: 17, spread: 2.0, wander: 3.5, jitter: 26, emboss: 0.55, veil: 0.05 },
+
+    /* Cotswold: fine bark striation, far denser than Charcoal Sticks and with
+       no vertical carry -- that is what separates the two vertical glasses. */
+    cotswold: { kind: 'rib', period: 8, spread: 2.4, flip: true, wander: 2.2, jitter: 5, emboss: 0.42, veil: 0.1 },
+
+    /* ---- cell: rigid rectangles, sharp inside, displaced as blocks ------ */
+    /* Digital: the reference staircases the clock rim outward, so displacement
+       must be of order a whole tile, and every tile is bevelled. */
+    digital: { kind: 'cell', cell: 14, jitter: 30, rim: 0.3, emboss: 0.4, veil: 0.05 },
+
+    /* ---- hatchlens: two textures at two scales -------------------------- */
+    /* Cassini: fine directional hatch, angle varying patch to patch, with
+       smooth petal lenses over it. Faces average what they magnify to nearly
+       one tone; the hatched ground stays sharp and is combed. */
+    cassini: { texSize: 'cover',
       kind: 'hatchlens', heightBlur: 9, strength: 16, emboss: 0.34,
       hatch: 3.4, hatchEmboss: 0.55, petalLift: 0.4, faceBlur: 11, veil: 0.05,
     },
+    /* Florielle: same construction, finer hatch, and the dimples displace
+       harder so window frames dissolve rather than being outlined. */
     florielle: {
-      kind: 'hatchlens', heightBlur: 7, strength: 12, emboss: 0.5,
-      hatch: 2.2, hatchEmboss: 0.55, petalLift: 0.35, faceBlur: 8, veil: 0.06,
+      kind: 'hatchlens', heightBlur: 6, strength: 20, emboss: 0.38,
+      hatch: 2.2, hatchEmboss: 0.5, petalLift: 0.5, faceBlur: 7, veil: 0.07,
     },
-    /* emboss: the pattern is the subject; the scene stays legible between. */
-    mayflower: { kind: 'emboss', heightBlur: 5, strength: 12, emboss: 0.78, veil: 0.05 },
-    chantilly: { kind: 'emboss', heightBlur: 4, strength: 7, emboss: 0.72, veil: 0.03 },
-    oak: { kind: 'emboss', heightBlur: 6, strength: 8, emboss: 0.62, veil: 0.03 },
-    autumn: { kind: 'emboss', heightBlur: 6, strength: 11, emboss: 0.66, veil: 0.04 },
-    tribal: { kind: 'emboss', heightBlur: 5, strength: 13, emboss: 0.72, veil: 0.06 },
-    sycamore: { kind: 'emboss', heightBlur: 4, strength: 8, emboss: 0.6, veil: 0.03 },
-    /* dapple: irregular rolled relief, sharp but strongly wandering. */
-    minster: { kind: 'dapple', heightBlur: 9, strength: 26, emboss: 0.38, veil: 0.06 },
-    arctic: { kind: 'dapple', heightBlur: 4, strength: 22, emboss: 0.55, veil: 0.06 },
-    contora: { kind: 'dapple', heightBlur: 3, strength: 17, emboss: 0.5, veil: 0.06 },
-    everglade: { kind: 'dapple', heightBlur: 8, strength: 30, emboss: 0.55, veil: 0.07 },
-    taffeta: { kind: 'dapple', heightBlur: 11, strength: 26, emboss: 0.45, veil: 0.05 },
-    warwick: { kind: 'dapple', heightBlur: 12, strength: 5, emboss: 0.16, veil: 0.01 },
-    /* frost: the only family that genuinely diffuses. */
-    stippolyte: { kind: 'frost', blur: 7, grain: 22, emboss: 0.4, veil: 0.12 },
-    pelerine: { kind: 'frost', blur: 6, grain: 18, emboss: 0.45, veil: 0.1 },
+
+    /* ---- emboss: the motif is the subject, scene legible between --------
+       Every one of these had its relief cut and its refraction raised: the
+       audit's repeated finding was that the pattern was being PRINTED over a
+       sharp photograph instead of bending it. */
+
+    /* Mayflower: ~40 hairline radial ridges per flower, not a dozen fat lobes.
+       `scale` shrinks the motif so the flower count matches the reference. */
+    mayflower: { kind: 'emboss', heightBlur: 3, strength: 26, emboss: 0.5, scale: 0.42, veil: 0.12 },
+    /* Chantilly: lace over a very fine silvery stipple. It diffuses as well as
+       draws -- occlusion alone left the garden pin-sharp between motifs. */
+    chantilly: { kind: 'emboss', heightBlur: 3, strength: 16, emboss: 0.45, scale: 0.6, softBlur: 3, veil: 0.1 },
+    /* Oak: felt in the shredding, not seen as outlines -- fine anisotropic
+       streak, relief contrast cut hard. */
+    oak: { kind: 'emboss', heightBlur: 3, strength: 18, emboss: 0.26, scale: 0.55, softBlur: 2, veil: 0.06 },
+    /* Autumn: coarser leaf plate than Sycamore, and a real wander. */
+    autumn: { kind: 'emboss', heightBlur: 5, strength: 22, emboss: 0.4, scale: 0.8, veil: 0.08 },
+    /* Sycamore: the fine engraved fan. Half Autumn's scale, gentler carry. */
+    sycamore: { kind: 'emboss', heightBlur: 3, strength: 12, emboss: 0.42, scale: 0.45, veil: 0.05 },
+    /* Tribal: the lattice is the only sharp thing; everything behind it is
+       scattered to colour blobs. */
+    tribal: { kind: 'emboss', heightBlur: 5, strength: 20, emboss: 0.55, softBlur: 5, veil: 0.16 },
+
+    /* ---- dapple: irregular rolled relief, sharp but wandering ----------- */
+    /* Minster and Arctic collided badly, so they are separated at the
+       mechanism: Minster is a broad soft cathedral roll with low relief;
+       Arctic is small hammered facets with hard bright rims. */
+    minster: { texSize: 'cover', kind: 'dapple', heightBlur: 13, strength: 30, emboss: 0.22, veil: 0.08 },
+    arctic: { kind: 'dapple', heightBlur: 2, strength: 16, emboss: 0.6, veil: 0.1 },
+    /* Contora: tight worm field, displaced by about one worm width. */
+    contora: { kind: 'dapple', heightBlur: 3, strength: 20, emboss: 0.38, softBlur: 2, veil: 0.1 },
+    /* Everglade: deep 70s swirl, the largest drag in the dapple family. */
+    everglade: { kind: 'dapple', heightBlur: 8, strength: 34, emboss: 0.45, veil: 0.14 },
+    /* Taffeta: broad silk folds, glossy, gentle. */
+    taffeta: { kind: 'dapple', heightBlur: 12, strength: 24, emboss: 0.34, veil: 0.06 },
+    /* Warwick: privacy 1. The teapot stays fully legible through the real
+       thing; only faint blown streaks disturb it. */
+    warwick: { kind: 'dapple', heightBlur: 14, strength: 6, emboss: 0.14, veil: 0.01 },
+
+    /* ---- frost: the only family that genuinely diffuses ----------------- */
+    /* Stippolyte: dense fine stipple. Granular, not smooth -- the grain is
+       what separates it from Satin. */
+    stippolyte: { texSize: 'cover', kind: 'frost', blur: 8, grain: 26, emboss: 0.42, veil: 0.14 },
+    /* Pelerine: feather filaments over a diffusing ground; ridges resample
+       far enough to take colour from elsewhere. */
+    pelerine: { kind: 'frost', blur: 5, grain: 12, strength: 14, heightBlur: 4, emboss: 0.4, veil: 0.1 },
+
     satin: { kind: 'css' },
-  };
+  };;
 
   let renderToken = 0;
   let glassCanvas = null;
@@ -3600,21 +3645,46 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       img.naturalWidth * s, img.naturalHeight * s);
   };
 
-  const layTexture = (ctx, img, w, h, size) => {
+  const layTexture = (ctx, img, w, h, size, scale) => {
     const pin = /^([0-9.]+)px/.exec(size || '');
     if (!pin) {
+      if (scale && scale !== 1) {
+        /* Motif scale, per glass. Mayflower's flower had to shrink to about a
+           third before its count matched the reference; a cover-laid texture
+           has no other way to change its motif size. Tiled through the same
+           non-periodic path so shrinking cannot introduce a visible repeat. */
+        layTexture(ctx, img, w, h, `${Math.round(w * scale)}px auto`);
+        return;
+      }
       drawCover(ctx, img, w, h, 'cover');
       return;
     }
-    const tw = Math.max(1, Math.round(parseFloat(pin[1])));
-    const th = /100%$/.test(size) ? h : Math.max(1, Math.round(img.naturalHeight * tw / img.naturalWidth));
+    /* NON-PERIODIC TILING. Mirror-bricking kept the sheet seamless but every
+       tile still carried IDENTICAL content, so the eye finds the repeat -- the
+       giveaway that this is a small texture copied across a window rather than
+       one continuous sheet. Each tile now draws a DIFFERENT sub-region of the
+       source photograph at the SAME scale: the crop window is a fixed fraction
+       of the source, so only its offset varies. Pattern character and period
+       survive; no two tiles are the same. Mirroring stays on alternate columns
+       and rows so the joins do not step. */
+    const frac = 0.72;
+    const srcW = img.naturalWidth * frac;
+    const srcH = img.naturalHeight * frac;
+    const tw = Math.max(1, Math.round(parseFloat(pin[1]) * frac));
+    const th = /100%$/.test(size) ? h : Math.max(1, Math.round(srcH * tw / srcW));
+    const roam = (n) => {
+      const v = Math.sin(n * 91.7) * 43758.5453;
+      return v - Math.floor(v);
+    };
     for (let cx = 0, rx = 0; cx < w + tw; cx += tw, rx += 1) {
       const drop = ((rx % 3) - 1) * (th / 3);
       for (let cy = -th + drop, ry = 0; cy < h + th; cy += th, ry += 1) {
+        const sx0 = roam(rx * 7.3 + ry * 3.1) * (img.naturalWidth - srcW);
+        const sy0 = roam(rx * 2.9 + ry * 11.7 + 5) * (img.naturalHeight - srcH);
         ctx.save();
         ctx.translate(rx % 2 ? cx + tw : cx, ry % 2 ? cy + th : cy);
         ctx.scale(rx % 2 ? -1 : 1, ry % 2 ? -1 : 1);
-        ctx.drawImage(img, 0, 0, tw, th);
+        ctx.drawImage(img, sx0, sy0, srcW, srcH, 0, 0, tw, th);
         ctx.restore();
       }
     }
@@ -3704,6 +3774,14 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         flat = flatCtx.getImageData(0, 0, w, h).data;
       }
 
+      let scatter = null;
+      if (mat.softBlur) {
+        const scCtx = make();
+        scCtx.filter = `blur(${mat.softBlur}px)`;
+        scCtx.drawImage(sceneCtx.canvas, 0, 0);
+        scatter = scCtx.getImageData(0, 0, w, h).data;
+      }
+
       let soft = null;
       if (mat.kind === 'frost') {
         const softCtx = make();
@@ -3715,7 +3793,15 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const texCtx = make();
       texCtx.fillStyle = '#808080';
       texCtx.fillRect(0, 0, w, h);
-      layTexture(texCtx, texImg, w, h, button.dataset.size || 'cover');
+      /* `texSize` lets a material override the data's CSS pin. Four textures
+         carry a pin for the CSS stage -- and a pin means tiling, which means
+         tile edges. Measured over a flat field, Cassini's tile boundary showed
+         as a 52.9 row-step against 6-8 for every other glass: a visible seam
+         across the sheet. None of the four needs the pin here, because a
+         material's scale now comes from its own geometry (`period`, `cell`,
+         `scale`) rather than from the texture's CSS size, so they lay at
+         `cover` and tile exactly once. No tiling, no seam, nothing to hide. */
+      layTexture(texCtx, texImg, w, h, mat.texSize || button.dataset.size || 'cover', mat.scale);
       const T = lumaOf(texCtx, w, h);
 
       /* Flat-field: several sources are lit from one side, and any
@@ -3819,6 +3905,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const groundAmp = mat.ground || 0;
       const grainAmp = mat.grain || 0;
 
+      const ribWander = mat.wander || 0;
+      const ribDrift = (x) => (ribWander
+        ? Math.sin(x * 0.0037) * ribWander + Math.sin(x * 0.011 + 1.7) * ribWander * 0.5
+        : 0);
+
       const hash = (a, b) => {
         const n = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
         return n - Math.floor(n);
@@ -3831,16 +3922,30 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           let sy = y;
 
           if (mat.kind === 'rib') {
-            /* Cylindrical lens. Each rib compresses a slice `spread` times
-               its own width, so neighbours overlap and detail repeats --
-               the clock numerals appearing three times across three ribs. */
-            const idx = Math.floor(x / period);
-            const u = x / period - idx;
+            /* Cylindrical lens. Each rib compresses a slice `spread` times its
+               own width, so neighbours overlap and detail repeats -- the clock
+               numerals appearing three times across three ribs.
+
+               AND IT INVERTS. A convex cylinder flips what it images, which is
+               why the reference reads "12 | 21 | 2" rather than three identical
+               copies. `flip` runs the sample backwards inside the rib, and it
+               is the single detail separating a real flute from a stripe.
+
+               `wander` drifts the rib phase slowly across the pane: drawn glass
+               is regular but not machined, and without it every flute lands on
+               an exact multiple and reads as a generated grating. */
+            const xd = x + ribDrift(x);
+            const idx = Math.floor(xd / period);
+            const u = xd / period - idx;
             const centre = (idx + 0.5) * period;
-            sx = centre + (u - 0.5) * period * spread;
+            const t = mat.flip ? (0.5 - u) : (u - 0.5);
+            sx = centre + t * period * spread;
             if (jitter) {
+              /* A drawn stick is not a machined flute: each carries the scene
+                 down its own length by a different amount, which is what
+                 shreds horizontal edges into vertical runs. */
               sy = y + (hash(idx, 0) - 0.5) * jitter;
-              sx += (hash(idx, 7) - 0.5) * period * 0.6;
+              sx += (hash(idx, 7) - 0.5) * period * 0.5;
             }
           } else if (mat.kind === 'cell') {
             const cxi = Math.floor(x / cell);
@@ -3912,11 +4017,27 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             e *= embossAmp;
           }
 
+          /* Digital's tiles are bevelled: a bright specular edge on two sides,
+             a shadow on the others. Without it the mosaic reads as a change of
+             infill rather than as relief cut into the glass. */
+          let rim = 0;
+          if (mat.kind === 'cell' && mat.rim) {
+            const ux = x - Math.floor(x / cell) * cell;
+            const uy = y - Math.floor(y / cell) * cell;
+            if (ux < 1 || uy < 1) rim = mat.rim;
+            else if (ux > cell - 2 || uy > cell - 2) rim = -mat.rim * 0.7;
+          }
+
           const o = i * 4;
           const faceMix = mat.kind === 'hatchlens' ? petal[i] : 0;
           for (let ch = 0; ch < 3; ch += 1) {
             const src = mat.kind === 'frost' ? soft : scene;
             let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
+            if (scatter) {
+              const sc = scatter[p00 + ch] * w00 + scatter[p10 + ch] * w10
+                + scatter[p01 + ch] * w01 + scatter[p11 + ch] * w11;
+              v += (sc - v) * 0.75;
+            }
             if (faceMix) {
               const f = flat[p00 + ch] * w00 + flat[p10 + ch] * w10 + flat[p01 + ch] * w01 + flat[p11 + ch] * w11;
               v += (f - v) * faceMix;
@@ -3933,6 +4054,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                foliage and read as a decal; the negative lobe is therefore
                heavily damped rather than mirrored. */
             v += e > 0 ? (255 - v) * e : v * e * 0.35;
+            if (rim) v += rim > 0 ? (255 - v) * rim : v * rim;
             if (veil) v += (250 - v) * veil;
             dst[o + ch] = v;
           }
