@@ -46717,3 +46717,23 @@ html.fg-blinds-reveal-locked {
 .fg-wd-hero__media img { max-height: 460px; }
 
 .fg-wd-page > section:first-child { padding-bottom: clamp(30px, 3.6vw, 48px); }
+
+/* THE MOBILE CAP HAD TO MOVE, and this is the ordinary trap of appending a
+   corrections block: `.fg-cds-door__link img { max-height: 230px }` was written
+   after the `@media (max-width: 860px)` rule that capped the same image at
+   132px, and at equal specificity the later one wins at every width. A phone
+   was rendering 344px door cards, so nineteen doors ran to 3,528px on their
+   own. Re-declared here, after it. */
+@media (max-width: 860px) {
+  .fg-cds-door__link img { max-height: 128px; }
+
+  .fg-cds-door__link {
+    gap: 0.3rem;
+    padding: 0.55rem 0.5rem 0.45rem;
+  }
+
+  .fg-cds-door__name { font-size: 0.74rem; }
+
+  /* The hover cue is unreachable on touch and only costs height there. */
+  .fg-cds-door__cue { display: none; }
+}
