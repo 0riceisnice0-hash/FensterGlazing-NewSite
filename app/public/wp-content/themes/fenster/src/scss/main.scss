@@ -47755,3 +47755,160 @@ html.fg-blinds-reveal-locked {
 
   .generated-page--composite-doors .fg-cd3-hero__media img { object-position: 57% 38%; }
 }
+
+/* ==================================================================
+ * DECORATIVE GLASS, third pass 2026-08-27
+ *
+ * Six designs we hold a door render for lead, portrait and large.
+ * Five we only hold the pattern for follow as pattern chips, at the
+ * size their 250px source is actually sharp at. The old grid blew
+ * 250px crops up into 270px landscape cards and two of them, being
+ * satin panels with fine clear borders, rendered as blank squares.
+ * ================================================================== */
+
+.fg-glass-doors {
+  display: grid;
+  /* Six in three columns is two full rows and no orphan. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.35rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-glass-door {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border: 1px solid rgba(2, 43, 53, 0.11);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 32px -22px rgba(2, 43, 53, 0.45);
+  transition: box-shadow 180ms ease, transform 180ms ease;
+
+  figure {
+    margin: 0;
+    overflow: hidden;
+    background: #eef2f0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 320ms ease;
+  }
+}
+
+.fg-glass-door:hover,
+.fg-glass-door:focus-within {
+  box-shadow: 0 22px 44px -24px rgba(2, 43, 53, 0.5);
+  transform: translateY(-3px);
+
+  img { transform: scale(1.02); }
+}
+
+.fg-glass-door__body {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  padding: 0.85rem 1rem 1rem;
+
+  h3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.55rem;
+    margin: 0;
+    font-size: 1.02rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(2, 43, 53, 0.68);
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+}
+
+/* The one hard difference between these designs, on the two it applies to. */
+.fg-glass-door__tag {
+  padding: 0.16rem 0.45rem;
+  border-radius: 3px;
+  background: rgba(2, 43, 53, 0.07);
+  color: rgba(2, 43, 53, 0.62);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---- the pattern-only five ---------------------------------------- */
+
+.fg-glass-patterns {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  padding-top: clamp(1.1rem, 2.2vw, 1.6rem);
+  border-top: 1px solid rgba(2, 43, 53, 0.12);
+}
+
+.fg-glass-patterns__intro {
+  max-width: 62ch;
+  margin: 0 0 0.9rem;
+  color: rgba(2, 43, 53, 0.68);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.fg-glass-patterns ul {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1.4vw, 1rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-glass-patterns li {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.fg-glass-patterns img {
+  display: block;
+  width: 100%;
+  /* Its own square, so a 250px source is never asked to fill more. */
+  aspect-ratio: 1;
+  max-width: 150px;
+  border: 1px solid rgba(2, 43, 53, 0.1);
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.fg-glass-patterns span {
+  color: rgba(2, 43, 53, 0.72);
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+@media (max-width: 860px) {
+  /* The rail treatment the finishes chapter uses does not apply to these:
+     they are already two per row and a rail would hide four of six. */
+  .generated-page--composite-doors .fg-glass-doors {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .generated-page--composite-doors .fg-glass-doors > * {
+    flex: initial;
+    max-width: none;
+  }
+
+  .fg-glass-patterns ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .generated-page--composite-doors .fg-glass-doors { grid-template-columns: minmax(0, 1fr); }
+  .fg-glass-patterns ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
