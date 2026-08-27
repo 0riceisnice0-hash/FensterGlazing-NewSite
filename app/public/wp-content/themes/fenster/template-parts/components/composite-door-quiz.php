@@ -84,6 +84,33 @@ $fg_pic = static fn (string $key): string => $fg_art . rawurlencode($key) . '.sv
    what that answer means. Keys are checked against the data below, so a style
    that ever leaves the range fails loudly at build rather than rendering a
    broken image. */
+/**
+ * COLOUR, AND WHY THESE ARE THE SAFE ONES.
+ *
+ * `colour=` takes the PALETTE key, not the colour collection entry key —
+ * `getExternalColours()` returns palette colours. Passing the entry key does
+ * nothing at all and the door renders white, which is exactly what happened on
+ * the first attempt: Anthracite grey is palette 115, not entry 15.
+ *
+ * Every door style points at one of two colour collections, and a key only
+ * works if that colour is in the collection the chosen style uses. Thirty-two
+ * palette entries appear in BOTH, so those are the only ones safe to offer
+ * against a door the quiz picked rather than one the visitor picked. These
+ * eight come from that set.
+ *
+ * The hexes are WindowCAD's own, so the chip matches what the tool renders.
+ */
+$fg_colours = [
+    ['key' => 115, 'name' => __('Anthracite grey', 'fenster'), 'hex' => '#373F43'],
+    ['key' => 114, 'name' => __('Slate grey', 'fenster'),      'hex' => '#51565C'],
+    ['key' => 116, 'name' => __('Black brown', 'fenster'),     'hex' => '#211F20'],
+    ['key' => 120, 'name' => __('Steel blue', 'fenster'),      'hex' => '#232C3F'],
+    ['key' => 123, 'name' => __('Chartwell green', 'fenster'), 'hex' => '#86AD8F'],
+    ['key' => 129, 'name' => __('Ruby red', 'fenster'),        'hex' => '#8D1D2C'],
+    ['key' => 107, 'name' => __('Cream', 'fenster'),           'hex' => '#EFEBDC'],
+    ['key' => 99,  'name' => __('White', 'fenster'),           'hex' => '#F4F8F4'],
+];
+
 $fg_questions = [
     [
         'id'    => 'm',
@@ -125,7 +152,29 @@ $fg_questions = [
             ['label' => __('A curve', 'fenster'),  'sub' => __('An arch somewhere in it', 'fenster'), 'value' => 1, 'pic' => '1'],
         ],
     ],
+    /* Colour is last, and it is the only question that does NOT narrow the
+       range: every door comes in every colour, so scoring on it would invent a
+       constraint that does not exist. It decides how the door is SHOWN — the
+       tool opens in it. Without this every result was a white door, and nobody
+       pictures their own front door white. */
+    [
+        'id'       => 'c',
+        'kicker'   => __('The colour', 'fenster'),
+        'title'    => __('And what colour?', 'fenster'),
+        'swatches' => true,
+        'answers'  => [],
+    ],
 ];
+
+foreach ($fg_colours as $fg_col) {
+    $fg_questions[4]['answers'][] = [
+        'label' => $fg_col['name'],
+        'sub'   => '',
+        'value' => $fg_col['key'],
+        'pic'   => '',
+        'hex'   => $fg_col['hex'],
+    ];
+}
 
 $fg_known = array_column($fg_quiz_doors, 'k');
 $fg_total = count($fg_questions);
@@ -160,23 +209,28 @@ $fg_total = count($fg_questions);
                     <div class="fg-cdq__q" data-fg-quiz-q="<?php echo esc_attr($fg_q['id']); ?>" data-fg-quiz-step="<?php echo esc_attr((string) $fg_i); ?>" hidden>
                         <p class="fg-cdq__kicker"><?php echo esc_html($fg_q['kicker']); ?></p>
                         <h3 class="fg-cdq__title"><?php echo esc_html($fg_q['title']); ?></h3>
-                        <div class="fg-cdq__answers fg-cdq__answers--<?php echo esc_attr((string) count($fg_q['answers'])); ?>">
+                        <div class="fg-cdq__answers fg-cdq__answers--<?php echo esc_attr((string) count($fg_q['answers'])); ?><?php echo ! empty($fg_q['swatches']) ? ' fg-cdq__answers--swatches' : ''; ?>">
                             <?php foreach ($fg_q['answers'] as $fg_a) : ?>
                                 <?php
                                 $fg_key = (string) $fg_a['pic'];
                                 $fg_has = $fg_key !== '' && in_array($fg_key, $fg_known, true);
                                 ?>
+                                <?php $fg_hex = (string) ($fg_a['hex'] ?? ''); ?>
                                 <button type="button"
-                                    class="fg-cdq__answer<?php echo $fg_has ? '' : ' fg-cdq__answer--plain'; ?>"
+                                    class="fg-cdq__answer<?php echo ($fg_has || $fg_hex !== '') ? '' : ' fg-cdq__answer--plain'; ?><?php echo $fg_hex !== '' ? ' fg-cdq__answer--swatch' : ''; ?>"
                                     data-fg-quiz-answer="<?php echo esc_attr($fg_a['value'] === null ? '' : (string) $fg_a['value']); ?>">
-                                    <?php if ($fg_has) : ?>
+                                    <?php if ($fg_hex !== '') : ?>
+                                        <span class="fg-cdq__chip" style="background:<?php echo esc_attr($fg_hex); ?>"></span>
+                                    <?php elseif ($fg_has) : ?>
                                         <span class="fg-cdq__answer-art">
                                             <img src="<?php echo esc_url($fg_pic($fg_key)); ?>" alt="" loading="lazy" decoding="async" width="914" height="2013">
                                         </span>
                                     <?php endif; ?>
                                     <span class="fg-cdq__answer-text">
                                         <strong><?php echo esc_html($fg_a['label']); ?></strong>
-                                        <small><?php echo esc_html($fg_a['sub']); ?></small>
+                                        <?php if (trim((string) $fg_a['sub']) !== '') : ?>
+                                            <small><?php echo esc_html($fg_a['sub']); ?></small>
+                                        <?php endif; ?>
                                     </span>
                                 </button>
                             <?php endforeach; ?>
@@ -193,6 +247,7 @@ $fg_total = count($fg_questions);
                     <p class="fg-cdq__reveal-kicker"><?php esc_html_e('You are a', 'fenster'); ?></p>
                     <h3 class="fg-cdq__door-name" data-fg-quiz-name></h3>
                     <p class="fg-cdq__collection" data-fg-quiz-collection></p>
+                    <p class="fg-cdq__chosen-colour" data-fg-quiz-colour hidden></p>
                     <figure class="fg-cdq__art">
                         <img data-fg-quiz-art-img src="" alt="" width="914" height="2013" decoding="async">
                     </figure>

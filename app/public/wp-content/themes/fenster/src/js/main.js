@@ -8728,7 +8728,13 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
   const artBase = root.dataset.fgQuizArt || '';
   const artVer = root.dataset.fgQuizVer || '';
   const quoteTpl = root.dataset.fgQuizQuote || '';
-  const quoteFor = (key) => quoteTpl.replace('__KEY__', encodeURIComponent(key));
+  /* Colour rides on the URL rather than the scoring. `colour=` takes WindowCAD's
+     PALETTE key — passing the colour collection's own entry key does nothing at
+     all and the door renders white, which is what the first attempt did. */
+  const quoteFor = (key, colour) => {
+    const url = quoteTpl.replace('__KEY__', encodeURIComponent(key));
+    return (colour == null || colour === '') ? url : url + '&colour=' + encodeURIComponent(colour);
+  };
 
   const prefs = {};
   let at = 0;
@@ -8773,13 +8779,19 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
     img.src = artBase + encodeURIComponent(door.k) + '.svg' + (artVer ? '?v=' + artVer : '');
     img.alt = door.n + ', ' + door.c + ' collection';
     root.querySelector('[data-fg-quiz-why]').textContent = explain ? reasonFor(door) : '';
-    root.querySelector('[data-fg-quiz-open]').href = quoteFor(door.k);
+    root.querySelector('[data-fg-quiz-open]').href = quoteFor(door.k, prefs.c);
+    const colourLine = root.querySelector('[data-fg-quiz-colour]');
+    if (colourLine) {
+      const name = colourNames[String(prefs.c)];
+      if (name) { colourLine.textContent = 'Shown in ' + name; colourLine.removeAttribute('hidden'); }
+      else colourLine.setAttribute('hidden', '');
+    }
     const poa = root.querySelector('[data-fg-quiz-poa]');
     if (poa) { if (door.p) poa.removeAttribute('hidden'); else poa.setAttribute('hidden', ''); }
 
     frame.innerHTML = '';
     const iframe = document.createElement('iframe');
-    iframe.src = quoteFor(door.k);
+    iframe.src = quoteFor(door.k, prefs.c);
     iframe.title = 'Design and price the ' + door.n + ' online';
     iframe.loading = 'lazy';
     frame.appendChild(iframe);
@@ -8794,7 +8806,8 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
       /* Built from the path rather than `location.href`. A URL carrying
          basic-auth credentials — which the test site's do — makes replaceState
          throw, and losing the share link over that is not worth it. */
-      window.history.replaceState({}, '', window.location.pathname + '?door=' + encodeURIComponent(door.k));
+      const q = '?door=' + encodeURIComponent(door.k) + (prefs.c != null ? '&colour=' + encodeURIComponent(prefs.c) : '');
+      window.history.replaceState({}, '', window.location.pathname + q);
     } catch (e) { /* a URL we cannot rewrite is not a reason to lose the result */ }
   };
 
@@ -8814,6 +8827,13 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
     if (best) reveal(best, true);
   };
 
+  /* The name for the chip they picked, for the reveal line. */
+  const colourNames = {};
+  root.querySelectorAll('[data-fg-quiz-q="c"] [data-fg-quiz-answer]').forEach((b) => {
+    const strong = b.querySelector('strong');
+    if (strong) colourNames[b.dataset.fgQuizAnswer] = strong.textContent.trim();
+  });
+
   steps.forEach((step, index) => {
     const id = step.dataset.fgQuizQ;
     step.querySelectorAll('[data-fg-quiz-answer]').forEach((btn) => {
@@ -8831,7 +8851,7 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
   const resetBtn = root.querySelector('[data-fg-quiz-reset]');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      ['m', 'g', 'd', 'v'].forEach((k) => { delete prefs[k]; });
+      ['m', 'g', 'd', 'v', 'c'].forEach((k) => { delete prefs[k]; });
       at = 0;
       result.setAttribute('hidden', '');
       root.classList.remove('is-revealed');
@@ -8866,9 +8886,12 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
   paint();
 
   try {
-    const shared = new URL(window.location.href).searchParams.get('door');
+    const params = new URL(window.location.href).searchParams;
+    const shared = params.get('door');
     if (shared) {
       const door = doors.find((d) => d.k === shared);
+      const col = params.get('colour');
+      if (col) prefs.c = col;
       if (door) reveal(door, false);
     }
   } catch (e) { /* no shared result to restore */ }

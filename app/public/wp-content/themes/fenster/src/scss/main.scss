@@ -45179,3 +45179,32 @@ html.fg-blinds-reveal-locked {
    Without this the quiz reads as a separate feature that happens to follow. */
 .generated-page--composite-doors > .fg-cds { padding-bottom: clamp(20px, 2.4vw, 32px); }
 .generated-page--composite-doors > .fg-cdq { padding-top: clamp(20px, 2.4vw, 32px); }
+
+/* The colour step. Eight chips rather than eight door drawings — the question is
+   about the colour, so the colour is the whole answer and a door underneath it
+   would only compete. Chips carry an edge because Cream and White are all but
+   invisible on a white card without one, the same reason the smooth-white swatch
+   on the colour hub has always needed a border. */
+.fg-cdq__answers--swatches {
+  grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+}
+
+.fg-cdq__answer--swatch {
+  gap: 10px;
+  padding: clamp(10px, 1.3vw, 14px);
+}
+
+.fg-cdq__chip {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(29, 42, 47, 0.22);
+  border-radius: 6px;
+}
+
+.fg-cdq__chosen-colour {
+  margin: -14px 0 20px;
+  font-size: 0.94rem;
+  color: rgba(29, 42, 47, 0.6);
+
+  &[hidden] { display: none !important; }
+}
