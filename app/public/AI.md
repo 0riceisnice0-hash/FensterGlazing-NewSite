@@ -1237,11 +1237,45 @@ A change is not complete until the relevant checks pass:
 
 ## Obscured glass textures
 
-- **THE STAGE COMPOSITES AS IT ALWAYS HAS, AND FIVE ATTEMPTS TO IMPROVE IT WERE
-  ALL REVERTED. Owner instruction, 2026-08-27: "theyre all fucked ... the others
-  were all better in their original pilkington source form."** The multiply model
-  and the original Pilkington photographs are what ship. **Read the whole of this
-  section before proposing a sixth.**
+- **THE STAGE RENDERS OPTICS ON A CANVAS AS OF 2026-08-27 (EVENING), AND THE
+  OWNER COMMISSIONED IT** with Pilkington's Texture brochure as the benchmark,
+  after five same-day attempts at improving the CSS compositing were reverted.
+  The brief's principle is the rule: **THE GLASS TEXTURE IS NOT THE FINAL
+  IMAGE** — it drives refraction, diffusion and frost of the scene behind it,
+  and its luminance survives only as micro-grain and gloss. The renderer lives
+  in the obscure-glass controller in `src/js/main.js` (2D canvas, no library,
+  once per pick — the blind-visualiser exception, deliberately extended). The
+  CSS compositing below it is the no-JS and failed-render fallback, and
+  **Reeded and Satin stay on it by per-glass `mode: 'css'`** — Reeded is
+  owner-locked, Satin is a flat frost with nothing to refract.
+- **Per-glass parameters are read off the brochure's same-scene photography**
+  (fruit bowl / teapot / plant through every pattern), and privacy arrives as
+  DISTORTION plus veil, not opacity: Warwick p1 leaves the scene nearly
+  intact, Everglade p5 scrambles it. Do not flatten the table back to one
+  look; "the same optical treatment applied identically to completely
+  different glass patterns" is the failure the brief names.
+- **The optics rules that three rounds of independent panel review paid for**,
+  each unanimous: frost pulls toward the LOCAL scene colour lifted toward
+  white, never flat grey (chalk) and never darker (a stamp); the privacy veil
+  covers the whole pane, clearest window included — the old CSS model's sin
+  was veil INSTEAD of optics, not the veil; the mask that separates a
+  two-material glass reads a smoothed field or every window fringes with
+  stipple dither; the height field needs float smoothing or 8-bit GPU blur
+  steps draw fingerprint rings; the fine residual is normalised per texture
+  or one relief setting paints lace white and leaves stipple blank; and a
+  pinned pattern tiles as DIAGONAL brick with mirroring, because straight
+  boundaries survive in the pattern structure even when its luminance is
+  never displayed.
+- **What it still is not**, recorded honestly: the final panel round still
+  scored Cassini short of "passes as a photograph" — closer than any filter,
+  correct grammar, but the flat-lit 150mm sample photographs limit specular
+  and grain fidelity. A photograph of our own glass with a scene behind it
+  beats any further code. That is a `PHOTO-CHECKLIST.md` item.
+- Superseded: **THE STAGE COMPOSITES AS IT ALWAYS HAS, AND FIVE ATTEMPTS TO
+  IMPROVE IT WERE ALL REVERTED (2026-08-27, afternoon).** The owner
+  re-opened it the same evening with real reference material and an explicit
+  instruction to change the rendering technique if the architecture was the
+  limit. It was; see above.
 - **What was tried and thrown away**, in order: a three-layer focus model with
   baked rim and clear masks; a mean-absolute-deviation normalisation across those
   masks; an SVG `feDisplacementMap` driven by a quantised facet map; a shine
