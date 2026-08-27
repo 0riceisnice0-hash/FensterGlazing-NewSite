@@ -9,6 +9,51 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-27 (composite doors rebuilt — ON TEST, LIVE UNCHANGED)
+
+**Live is `b2420743` and has not moved. Test is eighteen commits ahead and the
+range is unapproved.** Fourteen commits are the composite doors work, one is
+another session's obscure glass fix, three are docs.
+
+### What was built
+
+`/composite-doors/` gains the 142-door style range, the decorative glass section,
+a five-question quiz that ends in the quote tool, and a CTA through to a new
+`/why-distinction/` route. Full rules in `AI.md` under the three composite
+headings; deploy facts in `LIVECHANGES.md`.
+
+### The part worth reading if you read nothing else
+
+**Four separate faults in this session came from trusting a derived value instead
+of looking at the thing itself**, and each survived until something was rendered
+or screenshotted:
+
+1. I decided WindowCAD had no finished door drawings because the account payload
+   held only slabs and cassettes. It renders 142 SVGs into the DOM, keyed by
+   style. I composed 142 of my own and got them visibly wrong twice before the
+   owner asked why I had remade them at all. **Look at the markup before deciding
+   an asset does not exist.**
+2. A hand-rolled bounding box recorded only an arc's endpoint, so semicircular
+   cut-outs measured as zero area and five glazed doors were filed as solid. The
+   owner found it by pressing "no light at all" and getting a door with windows.
+3. `colour=15` looked plausible and rendered white. The right key was the palette
+   one, 115. A colour changes no network request, so nothing but a screenshot
+   would ever have shown it.
+4. Three screenshots showed stale drawings after the corrected ones were live,
+   because theme image URLs carry no version string.
+
+**The scorer now has a sweep test** over all 72 answer combinations asserting
+every result comes back at the glass level asked for. That check exists because
+the fault it catches shipped.
+
+### And one I did to myself
+
+Removing the old quiz styles was implemented as "truncate the file from here",
+which is only the same as "delete this block" when the block is last. It had
+stopped being last, so it destroyed the `/why-distinction/` styles as well. They
+were live unstyled on test for three commits and were only found by auditing the
+page before the visual overhaul rather than by anything failing.
+
 ## START HERE, 2026-08-26 (docs catch-up — LIVE IS `3285863b`, NOTHING OUTSTANDING)
 
 **Live is `3285863b`, level with `main`, and test is level with it.**

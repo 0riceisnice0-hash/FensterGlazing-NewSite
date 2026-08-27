@@ -1,5 +1,67 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-27 (composite doors rebuilt — ON TEST, NOT LIVE)
+
+**Live is still `b2420743`. Test is eighteen commits ahead and none of it is
+approved.** Fourteen are this session's composite doors work, one is another
+session's obscure glass fix, three are docs. Nothing was deployed to live.
+
+**Read in this order:** the Current Truth section of `LIVECHANGES.md`, then the
+three composite rules in `AI.md` — WindowCAD URL Parameter, Composite Door
+Range, Composite Door Quiz.
+
+### What `/composite-doors/` gained
+
+- **The style range**: 142 doors, the ones the quoting system can actually price,
+  grouped into the six collections a customer meets in the tool. Each opens
+  WindowCAD on that exact door. It replaced a drifting wall of 33 photographs
+  under the heading "over 300 door styles" — a number describing Distinction's
+  catalogue rather than ours, over a section that offered no way to act on a door.
+- **The glass section**, which was never missing: it sat in the shared product
+  tail behind `! $is_composite_doors`, and composite doors is the only route with
+  a `glass_styles` array, so it rendered on no route at all.
+- **A five-question quiz** ending on one door with the quote tool open on it, in
+  the colour chosen. Scored on traits computed from real cassette geometry.
+- **`/why-distinction/`**, a new indexable route carrying the technical case at
+  length so the main page does not have to.
+
+### Five traps this paid for, all of which fail silently
+
+- **An SVG loaded through `<img src>` is an isolated document.** It inherits
+  nothing from the page, so `currentColor` inside resolves to its own black and
+  setting `color` on the `<img>` does nothing. Black drawings shipped onto a
+  black stage as empty boxes.
+- **A hand-rolled path parser recorded only an arc's endpoint.** A semicircular
+  cut-out measured as zero height, and five glazed doors were classified as
+  solid — so the quiz answered "no glass at all" with a door that had windows.
+  Use the browser's `getBBox()`.
+- **`colour=` takes WindowCAD's palette key, not the colour collection entry
+  key.** The wrong key renders white, which is indistinguishable from the
+  parameter being ignored. A colour changes no network request, so the only
+  check is a screenshot.
+- **Theme image URLs carry no version string.** Three screenshots showed the
+  previous drawings after the corrected ones were live, and the served files had
+  to be hashed to prove the deploy was fine.
+- **"Delete this block" implemented as "truncate from here" is only the same
+  thing when the block is last.** It was last when the helper was written and had
+  stopped being last two commits later, which silently destroyed the
+  `/why-distinction/` styles for three commits.
+
+### What needs the owner
+
+- **Two asks for WindowSoftware, both proven end to end.** Make the outer frame
+  follow `colour=` (or add `framecolour=`) — there is no frame parameter and the
+  frame renders white against a coloured slab. And carry `tracking=` through the
+  composite designer, which currently loses FG2 and ad attribution on every lead
+  the quiz sends.
+- **The visual overhaul is unfinished and the owner is taking it on.** Section
+  padding was standardised and the "choosing" sections put on a shared surface,
+  but the owner's verdict was that it changed nothing worth having.
+- **Mobile page length is now 21,210px**, against the 15,000px figure
+  `SEO-PERFORMANCE-AUDIT-2026-08-17.md` already flags across eleven product
+  pages. The three new sections are most of the increase. Not shortened
+  unilaterally.
+
 ## Current state, 2026-08-26 (docs catch-up — FIVE RELEASES THIS FILE NEVER RECORDED)
 
 **Live is `3285863b`, level with `main`, and test is level with it. Nothing is
@@ -496,6 +558,199 @@ Use:
 - `https://github.com/0riceisnice0-hash/Marketing-Dashboard/blob/main/WEBSITE-TRACKER.md` for the Website Tracker operating model, consent boundary and how to interpret its data. This is the tracker source of truth; do not infer meaning from a dashboard card label alone.
 
 ## Important Updates
+
+- **A LOCAL-ONLY 3D EXPERIMENT EXISTS AT `/fenster-new-home-page/`, added
+  2026-08-21.** It is a scroll-driven three.js hero built on real WindowCAD
+  geometry, and it is a sandbox beside the homepage rather than a replacement:
+  **the live homepage is untouched and shares no code path with it.** Read
+  `wp-content/themes/fenster/assets/experimental/README.md` before touching
+  anything named `experimental`.
+  - **It cannot reach production.** `fenster_experimental_home_enabled()` is a
+    host allow-list for local development only, so a deploy serves a 404. That
+    is a real gate rather than an absence of approval, per the standing rule
+    this file records against the composite-doors incident.
+  - **Four existing files changed and nothing else**: one `require` line in
+    `functions.php`, `three` plus a separate `build:atrium` script in
+    `package.json`, the lockfile, and this pointer. The atrium builds to its
+    own `assets/experimental/` bundle, so `main.css` and `main.js` do not grow
+    by a byte.
+  - **Pass two, 2026-08-21.** The fixed column of hero copy was removed
+    entirely and that information moved into the scene as geometry — callouts
+    with hairline leaders, type lying on the floor, numbered steps — and the
+    room was rebuilt as a **light** architectural gallery rather than a dark
+    one, at the owner's request. The inversion is the part worth understanding
+    before editing anything visual: nearly everything Fenster sells is
+    specified in anthracite, and a dark frame against a pale wall separates on
+    its own, so the hero finishes are now the real colour rather than the mid
+    grey they had to be lifted to in order to survive a black backdrop.
+  - Every specification the scene states is passed in from PHP and is already
+    published on the route it belongs to. The range counts are **counted** from
+    the same registry the menu is built from, so "09 window systems" cannot
+    drift from the actual range.
+  - **Pass three, 2026-08-21.** The headline is a bug: the seven baked
+    open/close animations had **never run**, in either earlier pass.
+    `setOpen()` scrubbed via `mixer.setTime()`, which zeroes the action's time
+    and then relies on a delta that a *paused* action ignores — so no sash ever
+    opened, the composite door never swung to reveal the terminal, and the
+    bifold "concertina" was a closed slab sliding across frame. The page's
+    central claim, that scroll scrubs real WindowCAD hinge geometry, was not
+    true until one line changed. It was found by measuring the world position
+    of a named animated node; `mixer.time` reported the correct value
+    throughout, which is why two passes missed it.
+  - The README's **"twenty-three traps"** section is the one to read first. All
+    of them fail silently, and every one of them looks like a different bug
+    than it is.
+  - `scripts/sweep.mjs` is new and found most of pass three. It samples the
+    timeline densely, or captures a frame every 200ms under real playback, and
+    measures the **difference between neighbouring frames** — flagging things
+    that pop, stop dead, or move faster than the eye can follow. Motion faults
+    live in the gaps between contact-sheet beats and a twelve-still sheet
+    cannot see them.
+  - **Pass four, 2026-08-21.** The route was rebuilt as a **straight line down
+    the spine of the building at x = 0, forward-only** — measured at 0.000m
+    worst backward step and 0.000 maximum |x| — with the splayed walls bringing
+    both products to the camera instead of the camera swinging between them.
+    The bifold stopped being a thing that flew past the lens and became a
+    glazed screen standing across the route that folds open to let you through,
+    which is the one reason a bifold exists.
+  - Four structural faults in that pass were all **invisible rather than
+    wrong-looking**, and all four are written up in the README:
+    - Two `slab()` calls in `buildVWall` omitted the `y` argument, so
+      `position.set()` wrote NaN and three.js drew nothing. **Sixteen meshes —
+      the inner pier and outer wing of every V wall — had never rendered.**
+    - `buildShell`'s far vista, a 64 × 28m plane, was pinned at z −52 with a
+      comment reading "the camera never reaches it". True when the route ended
+      near −40; after the length was doubled it stood across the middle of the
+      route and the camera flew through it.
+    - `buildGlassHall` placed panes in polar coordinates biased to ±π/2, which
+      the comment described as "away from the route" and which actually put
+      them *on* it. The camera passed 6cm from a sheet of glass.
+    - `buildMaterialBay` and `buildPortal` were imported and never called, and
+      their teardown lines pointed at properties that were never assigned —
+      optional chaining makes a dead `dispose()` a silent no-op.
+  - **Scenery placed by eye can delete a station.** The material bay was briefly
+    put into the gallery and its side bays stood between the camera and all
+    seven of station 4's specification blocks. Each callout reported visible,
+    opaque, valid depth and correctly framed — nothing in a callout's own state
+    can tell you a different object is in front of it. It is not placed; see
+    the README before finding a home for it.
+  - **A clamp that never reports is a bug that never surfaces.** The camera
+    track's monotonic backstop had silently moved station 3's hold 4.5m, putting
+    both doors at ndc ±1.12 — entirely outside the frame at their own hero beat.
+    Found only by auditing authored pose against actual pose at every station;
+    v1, v2 and v4 came back shifted by 0.0 and v3 by −4.5. If a system has a
+    corrective clamp, measure how often it fires.
+  - **Scroll no longer advances the timeline at a constant rate**, at the
+    owner's request that it "slow right down" at each USP section. Eight beats
+    get a dwell; measured, the camera covers 0.5–2.0m per 2.5% of scroll at a
+    product hold against 5–9.9m in the gallery between them. The warp is
+    monotonic and a pure function of scroll position, so reverse scroll and
+    exact seeking both still hold. The runway grew to **3200vh** to pay for it
+    rather than making the travel faster.
+  - Known limit: **portrait is a compromise.** The stations are composed for a
+    16:9 horizontal field and a phone has a quarter of it. The camera is backed
+    off along its view axis so the whole composition is visible, but the
+    products are small and the callouts crop. A phone deserves its own camera
+    track showing one product at a time.
+  - **Pass five, 2026-08-24.** The owner asked for a different navigation model
+    and named five visual faults. Four of the five turned out to share one root
+    cause, which is the entry worth reading:
+    - **Every opening in the building was the same hole.** They were sized from
+      `sample.height * 0.82 + 0.16`, which looks derived and is a constant:
+      `product.height` is the NORMALISATION TARGET, literally 2.35 for all nine
+      models. Six of the eight station products were physically WIDER than the
+      hole they stood in (the casement and flush sash by 524mm, burying 262mm
+      per jamb in solid wall) and the two doors were a metre NARROWER than
+      theirs. "The casement overlaps the frame" and "the door frames are too
+      big" were the same bug seen from two ends. Openings are now measured off
+      each product's own bounding box with a 0.20m reveal.
+    - The bifold had the same fault in a different form: `Math.max(3.2,
+      measuredWidth)` where the measurement is 2.785, so the floor always won
+      and added 415mm nobody asked for.
+    - **The specification labels were running at a 4-to-7px font-size
+      equivalent.** `buildCallout({height})` sized the PLATE, and the canvas
+      grows with line count, so one value produced different type on different
+      blocks — a three-line note was silently 27% smaller than a two-line one.
+      The parameter is `titleCap` now, the world height of a capital, and the
+      plate sizes itself. Wrapping is what paid for it: a 3.8:1 strip becomes a
+      1.8:1 column, which buys the size at constant on-screen width.
+    - The bifold slid 350mm sideways as it folded, under a comment claiming the
+      leaves stack to one side. Measured, they do not — the clip folds
+      symmetrically in Z. The translation drove the frame into the pier and off
+      its own floor track. Deleted.
+    - The bifold never had a title block built, so it was the only product in
+      the building that never said its own name, even though 'BIFOLD /
+      SHEERLINE PRESTIGE ALUMINIUM' had been in the registry and reaching the
+      client all along.
+  - **The timeline is stepped, not scrubbed.** Seven stops — the mark, four
+    stations, the bifold, WindowCAD — and one wheel gesture travels to the next
+    and holds. That replaced a Lenis instance, a dwell warp, a second smoothing
+    pass and a 3200vh runway (now 100vh), all of which existed to make a
+    scrubbed timeline feel paced. Arriving at the last stop hands scrolling
+    back, because **a wheel over a cross-origin iframe never reaches a listener
+    on this document** and WindowCAD covers the middle of the screen.
+  - **The WindowCAD iframe was painted where it could not be clicked**, and had
+    been since it was built. `getBoundingClientRect()` reported it exactly where
+    it appears; `elementFromPoint` at the centre of that rectangle returned the
+    section root. Everything you would check read healthy — pointer-events auto,
+    opacity 1, aria-hidden false, nothing covering it. The perspective is a
+    transform FUNCTION on the camera wrapper, which is what makes the render
+    land pixel-exact, but the wrapper's layout box stays 110x63 in the middle of
+    the screen and hit testing follows the layout box. It never surfaced because
+    nothing had tried to click it; making the last stop somewhere the visitor
+    RESTS is what exposed it. Fixed by swapping to a plain 2D box once the panel
+    is square-on — exact, not approximate, because a plane parallel to the image
+    plane projects to an axis-aligned rectangle. **If something must be
+    clickable, hit-test it with elementFromPoint; a correct bounding rect proves
+    nothing.**
+  - **The camera is rigid**: 0 pitch, 0 roll, 0 yaw, x = 0, one height, one
+    lens, verified across 250 samples. The largest tilt had no name in the
+    source — `camera.lookAt()` pitches whenever the target's y differs from the
+    camera's, so grepping for tilt or roll finds everything except the thing
+    doing most of the tilting. Levelling then moved every composition: the mark
+    was sliced off the top of frame, the door stations dropped 0.26 NDC, and the
+    terminal ended up behind the site header. Budget for that.
+  - The models are **WindowSoftware's IP** (`3d.md` §11) and are local only.
+
+- **TWO SHOWROOM PAGES EXIST AT `/window-showroom/` AND `/door-showroom/`,
+  added 2026-08-24.** They came out of the audit of the 3D experiment: rather
+  than replace the homepage with it, the valuable part — real WindowCAD geometry
+  with real specifications — was moved onto pages where somebody is actually
+  choosing a product. Read
+  `wp-content/themes/fenster/assets/showroom/README.md` before touching
+  anything named `showroom`, and `PRODUCT-VIEWER-BRIEF-2026-08-24.md` for why
+  they are built the way they are.
+  - **The one rule: the 3D viewer is never on the critical path.** The page is
+    complete, indexable and converting as HTML plus a poster image; `three` is
+    imported dynamically only when the visitor presses *View in 3D*. Measured:
+    LCP 828ms on an `<img>`, CLS 0, the page's own assets 139 KB across 10
+    requests, 5,477 crawlable words. The audited 3D page managed 170.
+  - **All nine products' specifications are in the served HTML**, one visible
+    and the rest `hidden`, so a crawler reads the whole range and switching
+    product is a class change rather than a fetch.
+  - **The models were reprocessed, not just compressed.** 9,125 KB to 1,087 KB,
+    draw calls from 2,223 to 51–111, frame time from 57ms to 1.1–2.12ms. The win
+    is the material merge rather than the codec: a WindowCAD export gives every
+    gasket its own material, and merging them leaves exactly one `fenster:frame`
+    material per product — which is what makes the finish switcher one
+    assignment. `npm run models:optimise`, then `npm run models:verify` to
+    confirm every baked animation still moves.
+  - **Eleven of the eighteen range products have a model** (windows 4 of 9,
+    doors 7 of 9). The rest are photography cards in the same grid. Do not close
+    that gap by recolouring one product and relabelling it.
+  - **Two site-wide problems surfaced while measuring, neither caused by this
+    work and neither changed:**
+    - `legend-spritesheet.webp` is **1,996 KB and loads on every page**, 2,118 KB
+      with its companion — about half the homepage's entire payload. Hiding the
+      widget in CSS, which the 3D experiment does, does not stop the download.
+    - `lang="en-US"` in the header on a UK site.
+  - Traps worth knowing before editing: a `renderer.info.memory` leak test must
+    return to the SAME product before comparing, or it reports a phantom leak;
+    `Box3.setFromObject` must not run inside a per-frame camera update; and
+    frame rate must be measured by timing `renderer.render()` directly, because
+    requestAnimationFrame in the headless harness is throttled to 30fps and
+    measures the compositor rather than the scene. All written up in the
+    showroom README.
 
 - **`/heritage-windows/` was rebuilt on 2026-08-11 and is live**, as the ninth
   bespoke residential middle. It is written around the steel window it replaces
