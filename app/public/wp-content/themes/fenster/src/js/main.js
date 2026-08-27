@@ -3502,12 +3502,28 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     viewport.style.setProperty('--split', `${split.toFixed(1)}%`);
   };
 
+  /* The obscured half is a baked image, one per pattern per background, so the
+     stage needs re-pointing when EITHER changes. Both paths call this rather
+     than each setting the variable itself, which is how the background toggle
+     would otherwise have left the previous pattern's bake on screen. */
+  let activeOption = null;
+  let activeBackgroundName = 'house';
+  const applyBake = () => {
+    if (!activeOption) return;
+    const bake = activeBackgroundName === 'cat'
+      ? activeOption.dataset.bakeCat
+      : activeOption.dataset.bakeHouse;
+    if (bake) stage.style.setProperty('--active-glass-bake', `url("${bake}")`);
+  };
+
   const activateBackground = (name) => {
     const image = name === 'house' ? stage.dataset.houseImage : stage.dataset.catImage;
     if (image) {
       stage.style.setProperty('--scene-image', `url("${image}")`);
     }
 
+    activeBackgroundName = name;
+    applyBake();
     stage.dataset.activeBackground = name;
     if (backgroundToggle) {
       backgroundToggle.textContent = name === 'cat' ? 'Show house background' : 'Show Legend background';
@@ -3534,31 +3550,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          switching from Reeded to anything else left the new texture pinned at
          Reeded's 274px. */
       stage.style.setProperty('--active-texture-size', button.dataset.size || 'cover');
-      /* The two companion maps move with the texture or the pane composites one
-         pattern's shading over another's photograph. `none` is a real value here:
-         Satin is a CSS gradient and has no maps, and `data-glass-maps` is what
-         tells the stylesheet to drop both layers rather than render a mask that
-         is not there -- an absent mask reads as fully opaque, which would show
-         the clear layer everywhere and render a privacy 5 glass see-through. */
-      const rim = button.dataset.rim || 'none';
-      const clear = button.dataset.clear || 'none';
-      stage.style.setProperty('--active-texture-rim', rim);
-      stage.style.setProperty('--active-texture-clear', clear);
-      stage.dataset.glassMaps = clear === 'none' ? 'no' : 'yes';
-      /* The facet map drives an SVG feDisplacementMap, which is the only thing
-         here that actually MOVES the scene rather than blurring it. Set on the
-         filter's feImage rather than as a custom property, because a filter
-         primitive reads an attribute and not CSS. Both `href` and the xlink form
-         are written: Safari still wants the latter. */
-      const facet = button.dataset.facet || '';
-      const facetMap = visualiser.querySelector('[data-fg-obscure-facet-map]');
-      if (facetMap) {
-        facetMap.setAttribute('href', facet);
-        facetMap.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', facet);
-      }
-      stage.dataset.glassFacets = facet === '' ? 'no' : 'yes';
     }
 
+    activeOption = button;
+    applyBake();
     stage.style.setProperty('--privacy', privacy);
     stage.dataset.activeGlass = key;
     if (nameTarget) nameTarget.textContent = name;

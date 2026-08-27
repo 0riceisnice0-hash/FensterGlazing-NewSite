@@ -10756,163 +10756,46 @@ html.fg-gallery-lightbox-open body {
   --fg-glass-clear: calc(2px + min(var(--privacy), 5) * 0.6px);
 }
 
-/* THE PANE IS THREE LAYERS OF THE SAME PHOTOGRAPH, NOT A PATTERN PAINTED OVER
-   ONE. The old model multiplied the texture over a blurred scene, and multiply
-   can only darken: the brightest a clear patch could get was "unchanged", so no
-   texture could ever have a see-through bit and every glass read as a grey wash.
-   The owner's report on 2026-08-27 was "way too dark ... some bits of it are
-   almost transparent and defo not black", and no amount of retouching the
-   photograph could have fixed it, because the fault was the blend mode.
+/* THE PANE IS ONE BAKED IMAGE: the pattern already composited over the scene by
+   `scripts/build-obscure-glass-bakes.py`, one per pattern per background.
 
-   Real textured glass does not darken. It bends light where the surface curves
-   and leaves the flat parts alone, so what varies is FOCUS. Hence: the scene
-   thrown well out of focus, a sharper copy of the same scene showing through the
-   flat parts of the pattern, and the pattern's own edges shaded on top. Every
-   pixel in the first two is scene colour, which is what stopped it reading grey
-   -- mean saturation over the Cassini pane went 24.0% to 32.1%.
+   It is not built in the browser because it cannot be. In Pilkington's own
+   photograph every facet is a FLAT WASH of one tone with a hard edge to the
+   next, because a lens averages what it magnifies down to almost a single
+   colour. `feDisplacementMap` moves pixels; it does not average within a region,
+   so a displaced photograph keeps its internal gradients and reads as a smear at
+   every scale -- below about 16 the pattern vanishes into plain blur, above it
+   the facets smear, and nothing sits between. Four rounds of live compositing
+   were spent before that was clear.
 
-   Approved as option F2 on 2026-08-27, chosen against four textures at once. */
+   The obscured half was always a static composite of one texture over one of two
+   fixed scenes, so there was never a reason to compute it per visit. The divider
+   still clips this layer exactly as before.
+
+   THE COST: the effect is fixed to the baked scenes. A third background means
+   re-running the script, not editing this file. */
 .fg-obscure-stage__glass::before {
   content: "";
   position: absolute;
-  inset: -18px;
-  z-index: 1;
-  background: var(--scene-image) no-repeat center center;
-  background-size: cover;
-  filter: blur(var(--fg-glass-obscure)) brightness(102%) saturate(1.26);
-  transform: scale(1.035);
-  transform-origin: center;
-}
-
-.fg-obscure-stage__refract {
-  position: absolute;
-  inset: -10px;
-  z-index: 2;
-  background: var(--scene-image) no-repeat center center;
-  background-size: cover;
-  filter: blur(var(--fg-glass-clear)) brightness(101%) saturate(1.26);
-  /* Scaled a little larger than the layer beneath while the MASK stays put, so
-     what shows through each flat patch is displaced relative to what surrounds
-     it. That is the lens, and it is why the pattern reads as glass rather than
-     as a stencil. */
-  transform: scale(1.09);
-  transform-origin: center;
-  -webkit-mask-image: var(--active-texture-clear, none);
-  mask-image: var(--active-texture-clear, none);
-  /* The map is a downscale of the texture, so it carries the same aspect ratio
-     and the same size keyword frames both identically. Do not give the mask its
-     own size: the pattern and its mask would drift apart. */
-  -webkit-mask-size: var(--active-texture-size, cover);
-  mask-size: var(--active-texture-size, cover);
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
-  -webkit-mask-position: center center;
-  mask-position: center center;
-}
-
-.fg-obscure-stage__relief {
-  position: absolute;
   inset: 0;
-  z-index: 3;
-  background: var(--active-texture-rim, none) repeat center center;
-  background-size: var(--active-texture-size, cover);
-  /* The map is centred on 128 and `soft-light` treats 128 as "leave this pixel
-     alone", so only the pattern's edges do anything and its middles keep their
-     colour. Painting the texture itself here instead is what greyed the pane. */
-  mix-blend-mode: soft-light;
+  z-index: 1;
+  background: var(--active-glass-bake) no-repeat center center;
+  background-size: cover;
+  filter: none;
+  transform: none;
 }
 
-/* A FACETED ROUTE BENDS THE SCENE INSTEAD OF BLURRING IT UNEVENLY. Owner, with
-   Pilkington's own photograph: every petal in real Cassini carries its own
-   displaced sample of the room behind it, hard-edged, so one facet shows the
-   green of the window and the next shows the pink of a cushion. Nothing built out
-   of blur can do that at any setting, because blur does not MOVE anything -- and
-   two review rounds were spent tuning blur before that was obvious.
-
-   So the scene layer runs through an `feDisplacementMap` whose map is quantised
-   into bands on the pattern's own luminance, which puts a hard step exactly on
-   each facet boundary. A smooth gradient of the photograph was tried first and
-   rendered as heat haze.
-
-   Three consequences, all deliberate:
-   - The blur comes right down. The facets do the obscuring now, so the privacy
-     blur would only muddy them.
-   - `__refract` comes off. Its job was carrying colour through the flat parts,
-     and the facets now do that better and with real displacement.
-   - Everything texture-derived is sized `100% 100%`, because `feImage` is
-     stretched to the filter box. Leave the relief on `cover` and the outlines
-     stop landing on the colour patches, which reads as dirt rather than glass. */
-.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__glass::before {
-  filter: blur(7px) brightness(106%) saturate(0.82) url("#fg-obscure-facets");
-}
-
-.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__refract {
-  display: none;
-}
-
-.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__relief {
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-
-/* The pane is high-key on the real thing: mostly pale frost with the scene's
-   colour showing only inside the facets. Without this the render is far more
-   saturated than the photograph it is copying. */
-.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__glass::after {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10)),
-    linear-gradient(115deg, rgba(255, 255, 255, 0.03), transparent 55%, rgba(255, 255, 255, 0.02));
-}
-
-/* TOO SHINY, owner 2026-08-27, and the measurement found it rather than taste.
-   The pane was putting 10.8% of its pixels above 230 and 3.0% above 245 — blown
-   white — where Pilkington's own photograph of the same glass has NONE above 230
-   at all. Three sources, all turned down together: the brightness lift was
-   clipping the sky, a 0.27 white veil sat over everything, and `__shine` paints a
-   hard diagonal white streak that reads as gloss on a pane this pale. Now 0.6%
-   above 230.
-
-   THE RIM MAP IS NOT ONE OF THE SOURCES, though it looks like it should be.
-   `RIM_SHADE` exceeds `RIM_LIGHT` everywhere, so the map never rises above 128
-   and under `soft-light` it can only ever darken. Checked before tuning it.
-
-   And do not read the reference's top end as a target for the pane: that
-   photograph has a dim room behind it and ours has a sunny exterior with white
-   render and open sky, so some genuinely bright glass is correct here. */
-.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__shine {
-  opacity: 0.04;
-}
-
-.fg-obscure-stage__filters {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-/* Satin has no photograph -- it is a CSS gradient, and a flat acid-etched frost
-   has no edges to shade -- so it has no maps and both layers come off. This is
-   NOT cosmetic: an absent mask reads as fully opaque, which would show the
-   refract layer across the whole pane and render a privacy 5 glass see-through.
-   Anything added to `obscure_glass` without an image needs this to hold. */
-.fg-obscure-stage[data-glass-maps="no"] .fg-obscure-stage__refract,
-.fg-obscure-stage[data-glass-maps="no"] .fg-obscure-stage__relief {
-  display: none;
-}
-
-/* The surface sheen. THE RESETS ARE LOAD-BEARING: two earlier blocks in this file
-   also target `.fg-obscure-stage__glass::after` and the last of them sets
-   `mix-blend-mode: multiply` with `opacity: calc(0.28 + privacy * 0.05)`. Same
-   specificity, so anything this rule does not name is inherited from there, and
-   without these four lines the sheen shipped as a half-opacity multiply -- which
-   is the exact fault this whole change exists to remove. Caught by grepping the
-   compiled CSS for `multiply` after the build, not by reading the diff. */
 .fg-obscure-stage__glass::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 4;
-  background-image: linear-gradient(115deg, rgba(255, 255, 255, 0.09), transparent 55%, rgba(255, 255, 255, 0.06));
+  z-index: 2;
+  /* Surface sheen only. THE RESETS ARE LOAD-BEARING: two earlier blocks in this
+     file also target this pseudo-element and the later one sets `multiply` at
+     half opacity, so anything left unnamed here is inherited from it and the
+     sheen ships as a darkening layer. Caught once by grepping the compiled CSS,
+     not by reading the diff. */
+  background-image: linear-gradient(115deg, rgba(255, 255, 255, 0.06), transparent 55%, rgba(255, 255, 255, 0.04));
   background-size: cover;
   background-repeat: no-repeat;
   filter: none;
@@ -10921,27 +10804,13 @@ html.fg-gallery-lightbox-open body {
 }
 
 .fg-obscure-stage__shine {
-  opacity: 0.16;
+  opacity: 0.10;
 }
 
-.fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__main-image,
-.fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__glass::before,
-.fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__refract {
+/* The cat background is letterboxed inside the bake itself, so the stage no
+   longer needs to switch `background-size` for it. The main image still does. */
+.fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__main-image {
   background-size: contain;
-}
-
-.fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
-  filter: blur(12px) brightness(108%) saturate(0.9) contrast(0.92);
-  transform: scale(1.055);
-}
-
-.fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::after {
-  background-image:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(225, 240, 240, 0.36)),
-    var(--active-texture);
-  background-size: cover, var(--active-texture-size, cover);
-  opacity: 0.58;
-  mix-blend-mode: normal;
 }
 
 .fg-obscure-visualiser__grid {
