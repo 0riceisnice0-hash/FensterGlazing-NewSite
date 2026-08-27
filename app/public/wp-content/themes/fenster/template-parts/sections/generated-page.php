@@ -3654,7 +3654,7 @@ if ($is_commercial_hub) {
                 src="<?php echo esc_url(fenster_generated_url($composite_hero_stem . '1400w.webp')); ?>"
                 srcset="<?php echo esc_attr(implode(', ', [
                     fenster_generated_url($composite_hero_stem . '480w.webp') . ' 480w',
-                    fenster_generated_url($composite_hero_stem . '960w.webp') . ' 960w',
+                    fenster_generated_url($composite_hero_stem . '800w.webp') . ' 800w',
                     fenster_generated_url($composite_hero_stem . '1400w.webp') . ' 1400w',
                 ])); ?>"
                 sizes="100vw"
