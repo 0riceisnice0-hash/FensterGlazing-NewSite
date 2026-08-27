@@ -46798,3 +46798,26 @@ html.fg-blinds-reveal-locked {
   display: grid;
   align-content: center;
 }
+
+/* The long page's hero photograph is portrait and was being cropped to a
+   landscape band by a plain `max-height`, which took the top off the door and
+   the fitter holding it. Held at its own proportion, like the composite hero. */
+.fg-wd-hero__media {
+  width: min(100%, 480px);
+  justify-self: end;
+
+  img {
+    max-height: none;
+    aspect-ratio: 4 / 5;
+    object-position: center 42%;
+  }
+}
+
+@media (max-width: 860px) {
+  .fg-wd-hero__media {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .fg-wd-hero__media img { aspect-ratio: 5 / 4; }
+}
