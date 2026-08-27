@@ -48599,3 +48599,24 @@ html.fg-blinds-reveal-locked {
     p { grid-row: 1 / -1; }
   }
 }
+
+/* THE EYEBROW IS A `<p>` AND SO IS THE EXPLANATION. Both rules placing
+   "the paragraph" in the second column and spanning it down the head
+   were catching the eyebrow as well, so the eyebrow spanned both rows
+   and sat centred in a 98px track, 69px above the heading it labels. */
+.generated-page--composite-doors {
+  .fg-finish__body .fg-finish__step-head,
+  .fg-finish__body .fg-handle-finishes__heading {
+    > p.eyebrow {
+      grid-column: 1;
+      grid-row: auto;
+      align-self: start;
+    }
+
+    > p:not(.eyebrow) {
+      grid-column: 2;
+      grid-row: 1 / -1;
+      align-self: start;
+    }
+  }
+}
