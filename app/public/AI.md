@@ -1241,14 +1241,63 @@ A change is not complete until the relevant checks pass:
   through `fenster_generated_url()`, which adds no version string, so replacing a
   `.webp` in place leaves browsers and the proxy serving the old one while the
   deploy verifies perfectly. This has cost review rounds twice.
-- **Judge a texture on mean brightness AND standard deviation** against the rest
-  of the set, then look at it on the stage. That layer is `mix-blend-mode:
-  multiply`, so a dark texture does not add pattern, it turns the pane to mud.
-  The set runs roughly mean 120-180, stddev 25-70.
+- **THE STAGE VARIES FOCUS, NOT BRIGHTNESS, as of 2026-08-27.** It used to paint
+  the texture over a blurred scene with `mix-blend-mode: multiply`, and multiply
+  can only darken: the brightest a "transparent" area could reach was
+  "unchanged", so no texture could ever have a see-through bit and every glass
+  read as a grey wash. The owner's report was that it looked "black/white rather
+  than ... the actual glass with transparent bits". **No texture edit could have
+  fixed that** — the fault was the blend mode. The pane is now three layers of the
+  same photograph: the scene well out of focus, a sharper copy showing through the
+  flat parts of the pattern, and the pattern's edges shaded on top. Every pixel in
+  the first two is scene colour, which is what stopped it reading grey — mean
+  saturation over the Cassini pane went **24.0% to 32.1%**.
+- **Every texture needs two companion maps and they are DERIVED, never drawn.**
+  `scripts/build-obscure-glass-maps.py` rebuilds every byte from the source
+  photograph, and the maps are named off its stem, so renaming a texture renames
+  its maps. Hand-editing one makes the map and the photograph describe different
+  pieces of glass. A texture with no photograph (Satin is a CSS gradient) has no
+  maps and the stage drops both layers on `data-glass-maps="no"` — **that flag is
+  load-bearing, because an absent mask reads as fully opaque and would render a
+  privacy 5 glass see-through.**
+- **MEAN AND STANDARD DEVIATION ARE NOT ENOUGH, and that is what this cost.**
+  Cassini rev2 measured mean 158 stddev 46, both comfortably inside the set, and
+  was still badly wrong: it is a photograph of a 150mm sample lit from one side,
+  running 105 at the top to 192 in the middle. **Measure the low-frequency spread
+  as well — blur hard, then max minus min.** rev2 was 143 against a set median of
+  49. The lit dome read as clear glass and the vignette read as black.
+- **Two of twenty textures have that fault, so check before assuming anything
+  else.** Reeded is the other: spread 130, left edge 148 against right edge 100.
+  It is why cropping Reeded to a whole number of ribs only moved its seam from 125
+  to 55 — **the rib phase was never the problem, the lighting was.** Flat-field
+  first, then worry about the repeat.
+- **Privacy drives the blur, not the opacity.** It used to run the texture's
+  opacity from 0.84 to 0.96 across the whole 1-to-5 range — a 12% change — so a
+  privacy 2 glass and a privacy 5 glass looked all but identical on a page whose
+  entire job is telling them apart.
 - **A photographed texture needs a `size`; a CSS gradient does not.** `cover`
   scales to the box rather than to the glass, so the same photo is dense on a
   58px swatch and enormous on the stage. The `size` applies to the **stage only** —
   swatches stay on `cover` because they must show the whole pattern.
-- **Pinning a size makes the photo tile,** and these are not seamless, so expect a
-  soft join every few hundred pixels. Checked at stage width it reads as variation
-  in the glass rather than a repeat.
+- ~~**Pinning a size makes the photo tile,** and these are not seamless, so expect
+  a soft join every few hundred pixels. Checked at stage width it reads as
+  variation in the glass rather than a repeat.~~ **Rejected by the owner,
+  2026-08-27: "i dont like how all of the glass images repeat but not perfectly -
+  looks bad".** A pinned size is the only thing that tiles — the other seventeen
+  are `cover` and paint once — so **only pin one when the scale genuinely
+  matters**, and make it seamless if you do. Cassini, Minster and Stippolyte gave
+  up their pins and went to `cover`, which cannot seam. Reeded kept one because a
+  rib has a real width and renders about five times too fat at `cover`.
+- **Mirroring is right for a linear pattern and wrong for an organic one.** Reeded
+  is flat-fielded then mirrored, seam 48.8 to **0.00**, and the symmetry is
+  invisible because ribs are near-identical to their own reflection. The same trick
+  on Cassini's pebbles goes visibly kaleidoscopic, and a wrap cross-fade ghosts
+  them into double images. **Both were tried and looked at before choosing.**
+- **A mirrored tile is twice as wide, so its pin doubles too**, or every rib
+  renders at half its proper width. Reeded is `360px 100%`, not `180px 100%`.
+- **Two earlier blocks in `main.scss` also target `.fg-obscure-stage__glass::after`
+  and the later one sets `multiply` at half opacity.** Anything a new rule for that
+  pseudo-element does not name is inherited from it. The replacement sheen shipped
+  as a darkening layer until it reset `mix-blend-mode`, `opacity` and `filter`
+  explicitly — the exact fault the change existed to remove. **Caught by grepping
+  the compiled CSS for `multiply` after the build, not by reading the diff.**
