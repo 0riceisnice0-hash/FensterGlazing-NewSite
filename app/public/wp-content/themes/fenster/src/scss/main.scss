@@ -48659,8 +48659,14 @@ html.fg-blinds-reveal-locked {
 
     .fg-cd3-colour__swatches { grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); }
 
-    .fg-finish__step-head,
-    .fg-handle-finishes__heading {
+    /* MATCHING THE DESKTOP SELECTOR EXACTLY. The desktop rule is
+       `.generated-page--composite-doors .fg-finish__body .fg-finish__step-head`
+       at (0,3,0); this block first wrote it without `.fg-finish__body`, at
+       (0,2,0), and lost. The two-column head therefore survived on a 332px
+       screen, where the heading wrapped to eight lines and its explanation to
+       twelve, and a step head came to 1,344px on its own. */
+    .fg-finish__body .fg-finish__step-head,
+    .fg-finish__body .fg-handle-finishes__heading {
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto;
       grid-auto-rows: auto;
