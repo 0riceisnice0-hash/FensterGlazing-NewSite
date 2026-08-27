@@ -173,67 +173,45 @@ $fg_has_colour = ! empty($colour_wall);
 <?php if ($fg_has_glass || $fg_has_colour) : ?>
 <section class="fg-finish" aria-labelledby="fg-finish-title">
     <?php
-    /* THE CHAPTER HEAD CARRIES THE CHAPTER, rather than announcing it. The
-       first pass was a heading and a sentence with sixty per cent of the row
-       empty beside it, and the owner's verdict was "there's nothing there,
-       like what?" — which is the correct reading of a band that says a
-       chapter is coming and then says nothing. It is an index now: the three
-       decisions, each with the one fact a customer wants before they start,
-       each jumping to its own step. */
-    $fg_finish_index = [
-        [
-            'name'  => __('Glass', 'fenster'),
-            'fact'  => __('Twenty-six decorative designs in the tool, eleven pictured here. Triple glazed and laminated as standard.', 'fenster'),
-            'href'  => '#fg-composite-glass-title',
-            'show'  => $fg_has_glass,
-        ],
-        [
-            'name'  => __('Colour', 'fenster'),
-            'fact'  => __('Standard colours and RAL matches, one shade outside and a different one facing your hallway if you want.', 'fenster'),
-            'href'  => '#fg-cd3-colour-title',
-            'show'  => $fg_has_colour,
-        ],
-        [
-            'name'  => __('Handles', 'fenster'),
-            'fact'  => __('Eight finishes on a long backplate, carried through the letterplate, hinges and threshold.', 'fenster'),
-            'href'  => '#door-handle-finishes',
-            'show'  => function_exists('fenster_door_handle_grid_args'),
-        ],
-    ];
+    /* THE INDEX WENT, AND SO DID THE VIEWPORT IT COST. It listed Glass,
+       Colour and Handles with a fact each, immediately above Glass, Colour
+       and Handles. A table of contents for three things you can already see
+       is duplication wearing a card, and it was 280px of a chapter that was
+       already thirty per cent of the page.
+
+       THE CHAPTER IS ONE SURFACE NOW, not three sections on bare canvas.
+       That was the finding: 3,992px, glass into colour into handles with no
+       change of ground and nothing marking where one decision ended and the
+       next began. The steps sit on a single card with a number in the gutter,
+       so the sequence is the structure rather than something the copy has to
+       assert. */
     ?>
     <div class="container">
-        <header class="fg-chapter-head fg-chapter-head--index">
-            <div>
-                <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
-                <h2 id="fg-finish-title"><?php esc_html_e('Then the three things that make it yours.', 'fenster'); ?></h2>
-                <p><?php esc_html_e('In the order of how much each one changes the door. All three are chosen in the quote tool against the style you picked, and the price moves as you change them.', 'fenster'); ?></p>
-            </div>
-            <ol class="fg-finish__index">
-                <?php foreach ($fg_finish_index as $fg_n => $fg_item) : ?>
-                    <?php if (empty($fg_item['show'])) { continue; } ?>
-                    <li>
-                        <a href="<?php echo esc_attr($fg_item['href']); ?>">
-                            <span class="fg-finish__index-num"><?php echo esc_html(sprintf('%02d', $fg_n + 1)); ?></span>
-                            <strong><?php echo esc_html($fg_item['name']); ?></strong>
-                            <span class="fg-finish__index-fact"><?php echo esc_html($fg_item['fact']); ?></span>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ol>
+        <header class="fg-chapter-head">
+            <p class="eyebrow"><?php esc_html_e('The finishes', 'fenster'); ?></p>
+            <h2 id="fg-finish-title"><?php esc_html_e('Then the three things that make it yours.', 'fenster'); ?></h2>
+            <p><?php esc_html_e('In the order of how much each one changes the door. All three are chosen in the quote tool against the style you picked, and the price moves as you change them.', 'fenster'); ?></p>
         </header>
     </div>
 
-    <?php
-    if ($fg_has_glass) {
-        get_template_part('template-parts/components/composite-glass', null, [
-            'items' => $fg_glass['items'],
-            'intro' => (string) ($fg_glass['intro'] ?? ''),
-            'note'  => (string) ($fg_glass['note'] ?? ''),
-        ]);
-    }
-    ?>
+    <div class="container">
+        <div class="fg-finish__surface">
+            <?php if ($fg_has_glass) : ?>
+                <div class="fg-finish__step">
+                    <p class="fg-finish__num" aria-hidden="true">01</p>
+                    <div class="fg-finish__body">
+                        <?php
+                        get_template_part('template-parts/components/composite-glass', null, [
+                            'items' => $fg_glass['items'],
+                            'intro' => (string) ($fg_glass['intro'] ?? ''),
+                            'note'  => (string) ($fg_glass['note'] ?? ''),
+                        ]);
+                        ?>
+                    </div>
+                </div>
+            <?php endif; ?>
 
-    <?php if ($fg_has_colour) : ?>
+            <?php if ($fg_has_colour) : ?>
         <?php
         $cw_first = $colour_wall[0];
         $cw_preview = static function (array $entry) use ($colours_base, $colour_doors_base, $palette_base): array {
@@ -274,17 +252,23 @@ $fg_has_colour = ! empty($colour_wall);
            this page. It sits on the shared canvas now and the preview panel
            supplies the local contrast. */
         ?>
+        <div class="fg-finish__step">
+            <p class="fg-finish__num" aria-hidden="true">02</p>
+            <div class="fg-finish__body">
         <section class="fg-cd3-colour" aria-labelledby="fg-cd3-colour-title">
             <div class="container">
                 <header class="fg-finish__step-head">
                     <p class="eyebrow"><?php esc_html_e('The paint range', 'fenster'); ?></p>
                     <h3 id="fg-cd3-colour-title"><?php esc_html_e('Pick a colour and see it on a real door.', 'fenster'); ?></h3>
                     <p><?php esc_html_e('Distinction mix their own paint rather than buying it in. Hover or tap any colour and most of them will show you a door in it. The few we have no door for show the paint itself, because we would rather show you the real thing than tint a picture and hope.', 'fenster'); ?></p>
-                    <?php /* Owner-confirmed 2026-07-29: these are a selection of the
-                             standard range, not the whole of it, and any RAL can be
-                             matched beyond it. See the confirmed facts in AI.md
-                             before trimming this back. */ ?>
-                    <p><?php esc_html_e('What is below is a mix of standard colours and RAL matches, not the full list. The standard range runs wider, and past it we can match any RAL colour, so if you have a shade in mind it is worth asking rather than settling for the nearest one here.', 'fenster'); ?></p>
+                    <?php /* THE SECOND PARAGRAPH MOVED TO THE NOTE UNDER THE
+                             SWATCHES, where it belongs: it is a caveat about the
+                             range you have just looked at rather than a preamble
+                             to looking at it. Owner-confirmed 2026-07-29 that
+                             these are a selection and any RAL can be matched
+                             beyond it, and BOTH halves of that survive verbatim
+                             below. See the confirmed facts in AI.md before
+                             trimming it further. */ ?>
                 </header>
 
                 <div class="fg-cd3-colour__layout" data-fg-door-selector data-fg-colour-wall>
@@ -328,18 +312,32 @@ $fg_has_colour = ! empty($colour_wall);
                     </figure>
                 </div>
 
-                <p class="fg-cd3-colour__note"><?php esc_html_e('You can have one colour on the outside and a different one facing your hallway. Woodgrain stains are single sided. Colour swatches come out to a consultation, and the doors themselves are at the showroom, which is the only way to see a finish properly.', 'fenster'); ?></p>
+                <p class="fg-cd3-colour__note">
+                    <?php esc_html_e('One colour outside and a different one facing your hallway is normal, and woodgrain stains are single sided. What is above is a selection of the standard range, not the whole of it: past it we can match any RAL colour, so a shade you have in mind is worth asking about rather than settling for the nearest one here.', 'fenster'); ?>
+                </p>
             </div>
         </section>
+            </div>
+        </div>
     <?php endif; ?>
 
-    <?php
-    /* THE HANDLE GRID, IN THE CHAPTER RATHER THAN IN THE SHARED TAIL. It is
-       gated off for this slug in `generated-page.php`, the same way
-       `/upvc-doors/` gates it so its three finish decisions run together. */
-    if (function_exists('fenster_door_handle_grid_args')) {
-        get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args());
-    }
-    ?>
+            <?php
+            /* THE HANDLE GRID, IN THE CHAPTER RATHER THAN IN THE SHARED TAIL. It
+               is gated off for this slug in `generated-page.php`, the same way
+               `/upvc-doors/` gates it so its three finish decisions run
+               together. It keeps its own `.container`, which the surface
+               neutralises in CSS rather than this route forking a shared
+               component. */
+            if (function_exists('fenster_door_handle_grid_args')) :
+                ?>
+                <div class="fg-finish__step">
+                    <p class="fg-finish__num" aria-hidden="true">03</p>
+                    <div class="fg-finish__body">
+                        <?php get_template_part('template-parts/components/handle-grid', null, fenster_door_handle_grid_args()); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 </section>
 <?php endif; ?>

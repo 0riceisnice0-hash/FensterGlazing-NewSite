@@ -48398,3 +48398,129 @@ html.fg-blinds-reveal-locked {
 
   .generated-page--composite-doors .fg-cd3-hero__media img { object-position: 52% 30%; }
 }
+
+/* ==================================================================
+ * THE FINISHES CHAPTER, REBUILT 2026-08-27
+ *
+ * It was 3,992px — thirty per cent of the page — running glass into
+ * colour into handles on one unbroken pale canvas, with nothing marking
+ * where one decision ended and the next began, and a chapter head whose
+ * whole job was to list the three things directly underneath it.
+ *
+ * It is one surface with three numbered steps now. The number does the
+ * work the index was doing, in a gutter, for nothing.
+ * ================================================================== */
+
+.generated-page--composite-doors {
+
+  .fg-finish {
+    display: block;
+    gap: 0;
+  }
+
+  .fg-finish__surface {
+    padding: clamp(1.25rem, 2.6vw, 2.25rem) clamp(1.25rem, 3vw, 2.5rem);
+    border: 1px solid rgba(2, 43, 53, 0.13);
+    border-radius: var(--fg-r-lg);
+    background: #ffffff;
+    box-shadow: var(--fg-e3);
+  }
+
+  .fg-finish__step {
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    gap: 0 clamp(0.5rem, 1.4vw, 1.25rem);
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  }
+
+  .fg-finish__step + .fg-finish__step { border-top: 1px solid rgba(2, 43, 53, 0.11); }
+  .fg-finish__step:first-child { padding-top: clamp(0.5rem, 1.4vw, 1rem); }
+  .fg-finish__step:last-child { padding-bottom: clamp(0.5rem, 1.4vw, 1rem); }
+
+  /* The number tracks the step it belongs to, which matters when a step
+     is 1,800px long and its heading left the screen a while ago. */
+  .fg-finish__num {
+    position: sticky;
+    top: 104px;
+    align-self: start;
+    margin: 0;
+    color: var(--fg-green);
+    font-size: 0.86rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+  }
+
+  .fg-finish__body { min-width: 0; }
+
+  /* The three components each ship their own section and container. They
+     are neutralised here rather than forked, because `handle-grid.php` is
+     shared with five other routes. */
+  .fg-finish__body > section {
+    padding-block: 0 !important;
+    background: transparent;
+  }
+
+  .fg-finish__body .container {
+    width: 100%;
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  /* One head shape across all three steps, so they read as steps rather
+     than as three sections that happen to be adjacent. */
+  .fg-finish__body .fg-finish__step-head,
+  .fg-finish__body .fg-handle-finishes__heading {
+    max-width: 62ch;
+    margin: 0 0 clamp(1rem, 2vw, 1.4rem);
+  }
+
+  .fg-finish__body .eyebrow { margin-bottom: 0.4rem; }
+}
+
+/* ---- The colour step, on the same grammar ------------------------- */
+
+/* The head was two paragraphs of preamble above a preview and 27
+   swatches; the second is a caveat about the range and now sits under
+   the swatches with the rest of the caveats. */
+.generated-page--composite-doors .fg-cd3-colour__layout {
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 2.6vw, 2rem);
+}
+
+/* The preview tracks the swatch grid rather than stopping after two
+   rows of it. */
+.generated-page--composite-doors .fg-cd3-colour__preview {
+  position: sticky;
+  top: 104px;
+}
+
+.generated-page--composite-doors .fg-cd3-colour__note {
+  max-width: 74ch;
+  margin-top: clamp(1rem, 2vw, 1.4rem);
+  padding-top: clamp(0.9rem, 1.8vw, 1.2rem);
+  border-top: 1px solid rgba(2, 43, 53, 0.11);
+}
+
+@media (max-width: 860px) {
+  .generated-page--composite-doors {
+    .fg-finish__surface {
+      padding: clamp(1rem, 4vw, 1.4rem);
+      border-radius: var(--fg-r-md);
+    }
+
+    /* The gutter costs a fifth of a phone, so the number goes inline
+       above its step instead. */
+    .fg-finish__step {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.4rem;
+    }
+
+    .fg-finish__num {
+      position: static;
+      font-size: 0.76rem;
+    }
+  }
+
+  .generated-page--composite-doors .fg-cd3-colour__preview { position: static; }
+}
