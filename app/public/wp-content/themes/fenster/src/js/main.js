@@ -8739,10 +8739,9 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
   const score = (d) => {
     let s = 0;
     if (prefs.m != null) s += d.m === prefs.m ? 3 : 0;
-    if (prefs.g != null) s += Math.max(0, 4 - Math.abs(d.g - prefs.g) * 2);
     if (prefs.d != null) s += Math.max(0, 3 - Math.abs(d.d - prefs.d) * 2);
     if (prefs.v != null) s += d.v === prefs.v ? 2 : 0;
-    return s;
+    return s;   /* glass is handled by the filter in `finish`, not scored here */
   };
 
   const reasonFor = (d) => {
@@ -8799,9 +8798,19 @@ document.querySelectorAll('[data-fg-door-quiz]').forEach((root) => {
     } catch (e) { /* a URL we cannot rewrite is not a reason to lose the result */ }
   };
 
+  /* GLASS IS A FILTER, NOT A SCORE, AND THAT IS THE FIX FOR THE OBVIOUS BUG.
+     The first version scored it alongside everything else, so answering "keep
+     it solid" could be outvoted by the house, the detail and the curve, and the
+     quiz cheerfully returned a door with windows in it. Somebody who says no
+     glass means no glass; the other three answers are taste, and taste does not
+     get to overrule a requirement. The fallback only fires if a level is empty,
+     which it never is — the sweep in the generator asserts all 72 answer
+     combinations come back at the requested glass level. */
   const finish = () => {
+    let pool = prefs.g == null ? doors : doors.filter((d) => d.g === prefs.g);
+    if (!pool.length) pool = doors;
     let best = null, top = -1;
-    doors.forEach((d) => { const s = score(d); if (s > top) { top = s; best = d; } });
+    pool.forEach((d) => { const s = score(d); if (s > top) { top = s; best = d; } });
     if (best) reveal(best, true);
   };
 

@@ -4,10 +4,10 @@
  * one door, with the quote tool open on it.
  *
  * THIS IS BUILT TO BE SHARED, which is the whole reason it looks the way it
- * does. It runs one question at a time on a dark stage, the answers are real
- * door drawings rather than words where a drawing can carry the question, and
- * the result is a reveal. A visitor who would never read a specification will
- * answer four questions about their own hallway.
+ * does. It runs one question at a time on a bordered white card, the answers
+ * are real door drawings rather than words where a drawing can carry the
+ * question, and the result is a reveal. A visitor who would never read a
+ * specification will answer four questions about their own hallway.
  *
  * THE ANSWERS ARE THE PRODUCT, NOT ICONOGRAPHY. Every illustrated answer is a
  * real door from the range, drawn by WindowCAD, chosen because it is the clearest
@@ -19,9 +19,17 @@
  * one and hands straight over with the tool loaded on that door. It draws no
  * door it invented and it quotes nothing.
  *
- * THE SCORING IS OFF REAL GEOMETRY. Traits in `inc/composite-door-data.php` come
- * from actual cassette cut-out areas and positions, so "as much daylight as
- * possible" lands on a genuinely different door from "keep it solid".
+ * THE SCORING IS OFF REAL GEOMETRY, AND GLASS IS A FILTER RATHER THAN A SCORE.
+ * Traits in `inc/composite-door-data.php` come from actual cassette cut-out
+ * areas, measured with the browser's own `getBBox()` — a hand-rolled path
+ * parser read only an arc's endpoint, so a semicircular Half Moon cut-out
+ * measured as zero height and five glazed doors were filed as solid. Answering
+ * "keep it solid" returned a door with a window in it.
+ *
+ * Glass now filters the pool before anything is scored, because the house, the
+ * detail and the curve are taste and taste does not get to overrule a
+ * requirement. The generator sweeps all 72 answer combinations and asserts every
+ * one comes back at the glass level that was asked for.
  *
  * REPRODUCIBLE, BECAUSE IT IS SHAREABLE. Ties break on data order and never
  * randomly; the result writes `?door=<key>` and landing on that URL opens the
@@ -104,8 +112,8 @@ $fg_questions = [
         'title' => __('Plain, or something going on?', 'fenster'),
         'answers' => [
             ['label' => __('Keep it plain', 'fenster'),  'sub' => __('Let the colour do it', 'fenster'),   'value' => 0, 'pic' => '95'],
-            ['label' => __('A bit of detail', 'fenster'), 'sub' => __('Some shape in the face', 'fenster'), 'value' => 1, 'pic' => '0'],
-            ['label' => __('Make it a feature', 'fenster'), 'sub' => __('People should notice', 'fenster'), 'value' => 2, 'pic' => '5'],
+            ['label' => __('A bit of detail', 'fenster'), 'sub' => __('Some shape in the face', 'fenster'), 'value' => 1, 'pic' => '33'],
+            ['label' => __('Make it a feature', 'fenster'), 'sub' => __('People should notice', 'fenster'), 'value' => 2, 'pic' => '4'],
         ],
     ],
     [
@@ -113,7 +121,7 @@ $fg_questions = [
         'kicker' => __('The shape', 'fenster'),
         'title' => __('Straight lines, or a curve?', 'fenster'),
         'answers' => [
-            ['label' => __('Straight', 'fenster'), 'sub' => __('Square and quiet', 'fenster'),      'value' => 0, 'pic' => '7'],
+            ['label' => __('Straight', 'fenster'), 'sub' => __('Square and quiet', 'fenster'),      'value' => 0, 'pic' => '28'],
             ['label' => __('A curve', 'fenster'),  'sub' => __('An arch somewhere in it', 'fenster'), 'value' => 1, 'pic' => '1'],
         ],
     ],
