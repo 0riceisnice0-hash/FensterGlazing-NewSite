@@ -46737,3 +46737,42 @@ html.fg-blinds-reveal-locked {
   /* The hover cue is unreachable on touch and only costs height there. */
   .fg-cds-door__cue { display: none; }
 }
+
+/* ---- The finishes chapter on a phone -----------------------------
+ * Eleven glass designs in two columns is six rows, and eight handles is
+ * four more: 3,698px of the mobile page spent scrolling past swatches
+ * one pair at a time. `STYLE.md` asks for native horizontal scroll-snap
+ * on mobile rails, with an obvious affordance, and lists "clipped next
+ * item" as one. The cards are 62vw, so the next one is always half in
+ * frame and there is no invented control to learn.
+ *
+ * The desktop grids are untouched: this is a different layout for a
+ * different screen, which is what "mobile is designed, not squeezed"
+ * means.
+ * ------------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  .generated-page--composite-doors .fg-composite-glass__grid,
+  .generated-page--composite-doors .fg-handle-finishes__grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: clamp(0.75rem, 3vw, 1rem);
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .generated-page--composite-doors .fg-composite-glass__grid::-webkit-scrollbar,
+  .generated-page--composite-doors .fg-handle-finishes__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .generated-page--composite-doors .fg-composite-glass__grid > *,
+  .generated-page--composite-doors .fg-handle-finishes__grid > * {
+    flex: 0 0 62vw;
+    max-width: 62vw;
+    scroll-snap-align: start;
+  }
+}
