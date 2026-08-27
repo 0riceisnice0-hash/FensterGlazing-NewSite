@@ -3502,6 +3502,345 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     viewport.style.setProperty('--split', `${split.toFixed(1)}%`);
   };
 
+  /* ------------------------------------------------------------------ *
+   *  OBSCURED GLASS OPTICS
+   *
+   *  Reference: the red-clock series at pallotglass.com, one photograph
+   *  per pattern of the SAME clock through each glass. Read those before
+   *  changing anything here; five earlier rebuilds failed by working from
+   *  the brochure's product shots alone.
+   *
+   *  WHAT THOSE PHOTOGRAPHS ACTUALLY SHOW, and it is the opposite of the
+   *  obvious guess: NOTHING IS BLURRED. Through Reeded the clock numerals
+   *  stay razor sharp -- and repeat, because each rib is a cylindrical
+   *  lens sampling a wide overlapping slice. Through Digital the face
+   *  breaks into hard rectangles, each sharp. Through Cassini each petal
+   *  is a crisp-edged lens holding a smooth tonal gradient. Obscuration
+   *  comes from DISPLACEMENT AND FRAGMENTATION, not from diffusion, and
+   *  the pattern's own relief sits over it bright and high-contrast.
+   *
+   *  So this samples the scene SHARPLY at remapped coordinates and then
+   *  embosses the texture's own structure on top. An earlier version
+   *  derived soft physics and discarded the texture's structure; every
+   *  glass came out a milky wash and the owner was right that the plain
+   *  CSS multiply beat it. Blur belongs only to `frost`, the one family
+   *  that genuinely diffuses.
+   * ------------------------------------------------------------------ */
+  const glassLayer = stage.querySelector('[data-fg-obscure-glass-layer]');
+
+  /* Per glass, from its own red-clock photograph. `kind` is the optics,
+     not a strength band -- a rib cannot be expressed as a strong dapple. */
+  const GLASS_MATERIALS = {
+    /* rib: periodic cylindrical lenses. `spread` > 1 is what makes each
+       rib show a compressed wide slice, and therefore what makes detail
+       repeat across neighbouring ribs exactly as the clock numerals do. */
+    reeded: { kind: 'rib', period: 30, spread: 3.2, emboss: 0.45, veil: 0.02 },
+    'charcoal-sticks': { kind: 'rib', period: 15, spread: 2.2, jitter: 7, emboss: 0.6, veil: 0.06 },
+    cotswold: { kind: 'rib', period: 11, spread: 2.6, jitter: 5, emboss: 0.5, veil: 0.08 },
+    /* cell: rigid blocks, each sharp, each displaced on its own. */
+    digital: { kind: 'cell', cell: 13, jitter: 16, emboss: 0.5, veil: 0.05 },
+    /* lens: discrete hard-edged elements over a fine screened ground. */
+    cassini: { kind: 'lens', heightBlur: 9, strength: 26, emboss: 0.5, ground: 0.35, veil: 0.06 },
+    florielle: { kind: 'lens', heightBlur: 7, strength: 14, emboss: 0.62, ground: 0.3, veil: 0.06 },
+    /* emboss: the pattern is the subject; the scene stays legible between. */
+    mayflower: { kind: 'emboss', heightBlur: 5, strength: 12, emboss: 0.78, veil: 0.05 },
+    chantilly: { kind: 'emboss', heightBlur: 4, strength: 7, emboss: 0.72, veil: 0.03 },
+    oak: { kind: 'emboss', heightBlur: 6, strength: 8, emboss: 0.62, veil: 0.03 },
+    autumn: { kind: 'emboss', heightBlur: 6, strength: 11, emboss: 0.66, veil: 0.04 },
+    tribal: { kind: 'emboss', heightBlur: 5, strength: 13, emboss: 0.72, veil: 0.06 },
+    sycamore: { kind: 'emboss', heightBlur: 4, strength: 8, emboss: 0.6, veil: 0.03 },
+    /* dapple: irregular rolled relief, sharp but strongly wandering. */
+    minster: { kind: 'dapple', heightBlur: 9, strength: 26, emboss: 0.38, veil: 0.06 },
+    arctic: { kind: 'dapple', heightBlur: 4, strength: 22, emboss: 0.55, veil: 0.06 },
+    contora: { kind: 'dapple', heightBlur: 3, strength: 17, emboss: 0.5, veil: 0.06 },
+    everglade: { kind: 'dapple', heightBlur: 8, strength: 30, emboss: 0.55, veil: 0.07 },
+    taffeta: { kind: 'dapple', heightBlur: 11, strength: 26, emboss: 0.45, veil: 0.05 },
+    warwick: { kind: 'dapple', heightBlur: 12, strength: 5, emboss: 0.16, veil: 0.01 },
+    /* frost: the only family that genuinely diffuses. */
+    stippolyte: { kind: 'frost', blur: 7, grain: 22, emboss: 0.4, veil: 0.12 },
+    pelerine: { kind: 'frost', blur: 6, grain: 18, emboss: 0.45, veil: 0.1 },
+    satin: { kind: 'css' },
+  };
+
+  let renderToken = 0;
+  let glassCanvas = null;
+
+  const glassImage = (src) => new Promise((resolve, reject) => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+
+  const drawCover = (ctx, img, w, h, mode) => {
+    if (mode === 'contain') {
+      ctx.fillStyle = '#cddadb';
+      ctx.fillRect(0, 0, w, h);
+      const s = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+      ctx.drawImage(img, (w - img.naturalWidth * s) / 2, (h - img.naturalHeight * s) / 2,
+        img.naturalWidth * s, img.naturalHeight * s);
+      return;
+    }
+    const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+    ctx.drawImage(img, (w - img.naturalWidth * s) / 2, (h - img.naturalHeight * s) / 2,
+      img.naturalWidth * s, img.naturalHeight * s);
+  };
+
+  const layTexture = (ctx, img, w, h, size) => {
+    const pin = /^([0-9.]+)px/.exec(size || '');
+    if (!pin) {
+      drawCover(ctx, img, w, h, 'cover');
+      return;
+    }
+    const tw = Math.max(1, Math.round(parseFloat(pin[1])));
+    const th = /100%$/.test(size) ? h : Math.max(1, Math.round(img.naturalHeight * tw / img.naturalWidth));
+    for (let cx = 0, rx = 0; cx < w + tw; cx += tw, rx += 1) {
+      const drop = ((rx % 3) - 1) * (th / 3);
+      for (let cy = -th + drop, ry = 0; cy < h + th; cy += th, ry += 1) {
+        ctx.save();
+        ctx.translate(rx % 2 ? cx + tw : cx, ry % 2 ? cy + th : cy);
+        ctx.scale(rx % 2 ? -1 : 1, ry % 2 ? -1 : 1);
+        ctx.drawImage(img, 0, 0, tw, th);
+        ctx.restore();
+      }
+    }
+  };
+
+  const lumaOf = (ctx, w, h) => {
+    const src = ctx.getImageData(0, 0, w, h).data;
+    const out = new Float32Array(w * h);
+    for (let i = 0, j = 0; i < out.length; i += 1, j += 4) {
+      out[i] = src[j] * 0.299 + src[j + 1] * 0.587 + src[j + 2] * 0.114;
+    }
+    return out;
+  };
+
+  const boxBlurField = (field, w, h, r) => {
+    const tmp = new Float32Array(field.length);
+    const span = r * 2 + 1;
+    for (let y = 0; y < h; y += 1) {
+      const row = y * w;
+      let acc = 0;
+      for (let k = -r; k <= r; k += 1) acc += field[row + Math.min(w - 1, Math.max(0, k))];
+      for (let x = 0; x < w; x += 1) {
+        tmp[row + x] = acc / span;
+        acc += field[row + Math.min(w - 1, x + r + 1)] - field[row + Math.max(0, x - r)];
+      }
+    }
+    for (let x = 0; x < w; x += 1) {
+      let acc = 0;
+      for (let k = -r; k <= r; k += 1) acc += tmp[Math.min(h - 1, Math.max(0, k)) * w + x];
+      for (let y = 0; y < h; y += 1) {
+        field[y * w + x] = acc / span;
+        acc += tmp[Math.min(h - 1, y + r + 1) * w + x] - tmp[Math.max(0, y - r) * w + x];
+      }
+    }
+  };
+
+  const renderGlass = async () => {
+    if (!glassLayer) return;
+    const button = buttons.find((o) => o.classList.contains('is-active')) || buttons[0];
+    const key = button?.dataset.key || '';
+    const mat = GLASS_MATERIALS[key];
+    const textureUrl = /url\("?([^")]+)"?\)/.exec(button?.dataset.texture || '');
+
+    if (!mat || mat.kind === 'css' || !textureUrl) {
+      stage.dataset.glassRender = 'css';
+      return;
+    }
+
+    const token = renderToken += 1;
+    const background = stage.dataset.activeBackground === 'cat' ? 'cat' : 'house';
+    const sceneUrl = background === 'cat' ? stage.dataset.catImage : stage.dataset.houseImage;
+    if (!sceneUrl) {
+      stage.dataset.glassRender = 'css';
+      return;
+    }
+
+    try {
+      const rect = stage.querySelector('.fg-obscure-stage__viewport')?.getBoundingClientRect();
+      const w = Math.max(320, Math.min(900, Math.round(rect?.width || 900)));
+      const h = Math.max(240, Math.min(675, Math.round(rect?.height || 675)));
+      const [sceneImg, texImg] = await Promise.all([glassImage(sceneUrl), glassImage(textureUrl[1])]);
+      if (token !== renderToken) return;
+
+      const make = () => {
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        return c.getContext('2d', { willReadFrequently: true });
+      };
+
+      const sceneCtx = make();
+      drawCover(sceneCtx, sceneImg, w, h, background === 'cat' ? 'contain' : 'cover');
+      const scene = sceneCtx.getImageData(0, 0, w, h).data;
+
+      /* Only frost gets a diffused copy. Everything else samples sharp. */
+      let soft = null;
+      if (mat.kind === 'frost') {
+        const softCtx = make();
+        softCtx.filter = `blur(${mat.blur}px)`;
+        softCtx.drawImage(sceneCtx.canvas, 0, 0);
+        soft = softCtx.getImageData(0, 0, w, h).data;
+      }
+
+      const texCtx = make();
+      texCtx.fillStyle = '#808080';
+      texCtx.fillRect(0, 0, w, h);
+      layTexture(texCtx, texImg, w, h, button.dataset.size || 'cover');
+      const T = lumaOf(texCtx, w, h);
+
+      /* Flat-field: several sources are lit from one side, and any
+         threshold or gradient on the raw photograph inherits that as a
+         phantom tilt across the pane. */
+      const broad = Float32Array.from(T);
+      boxBlurField(broad, w, h, 26);
+      for (let i = 0; i < T.length; i += 1) T[i] = T[i] - broad[i] + 128;
+
+      /* The relief that steers refraction, smoothed in float so 8-bit
+         steps cannot draw contour rings. */
+      const H = Float32Array.from(T);
+      const hb = Math.max(1, Math.round(mat.heightBlur || 4));
+      boxBlurField(H, w, h, hb);
+      boxBlurField(H, w, h, hb);
+
+      let gNorm = 1;
+      if (mat.strength) {
+        const mags = [];
+        for (let k = 0; k < 4096; k += 1) {
+          const px = (997 * k) % (w * h);
+          const x = px % w;
+          const y = (px - x) / w;
+          if (x < 2 || y < 2 || x >= w - 2 || y >= h - 2) continue;
+          mags.push(Math.hypot(H[px + 2] - H[px - 2], H[px + 2 * w] - H[px - 2 * w]));
+        }
+        mags.sort((a, b) => a - b);
+        gNorm = Math.max(mags[Math.floor(mags.length * 0.99)] || 1, 1e-3);
+      }
+
+      /* The emboss layer: the texture's own high-frequency structure, the
+         thing the CSS multiply got right and the soft renderer lost. */
+      const detail = new Float32Array(T.length);
+      for (let i = 0; i < T.length; i += 1) detail[i] = T[i] - H[i];
+      const dSample = [];
+      for (let k = 0; k < 4096; k += 1) dSample.push(Math.abs(detail[(1499 * k) % detail.length]));
+      dSample.sort((a, b) => a - b);
+      const dNorm = Math.max(dSample[Math.floor(dSample.length * 0.92)] || 1, 1e-3);
+
+      const out = sceneCtx.createImageData(w, h);
+      const dst = out.data;
+      const period = Math.max(4, mat.period || 20);
+      const spread = mat.spread || 1;
+      const cell = Math.max(4, mat.cell || 12);
+      const jitter = mat.jitter || 0;
+      const embossAmp = mat.emboss || 0;
+      const veil = mat.veil || 0;
+      const groundAmp = mat.ground || 0;
+      const grainAmp = mat.grain || 0;
+
+      const hash = (a, b) => {
+        const n = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+        return n - Math.floor(n);
+      };
+
+      for (let y = 0; y < h; y += 1) {
+        for (let x = 0; x < w; x += 1) {
+          const i = y * w + x;
+          let sx = x;
+          let sy = y;
+
+          if (mat.kind === 'rib') {
+            /* Cylindrical lens. Each rib compresses a slice `spread` times
+               its own width, so neighbours overlap and detail repeats --
+               the clock numerals appearing three times across three ribs. */
+            const idx = Math.floor(x / period);
+            const u = x / period - idx;
+            const centre = (idx + 0.5) * period;
+            sx = centre + (u - 0.5) * period * spread;
+            if (jitter) {
+              sy = y + (hash(idx, 0) - 0.5) * jitter;
+              sx += (hash(idx, 7) - 0.5) * period * 0.6;
+            }
+          } else if (mat.kind === 'cell') {
+            const cxi = Math.floor(x / cell);
+            const cyi = Math.floor(y / cell);
+            sx = x + (hash(cxi, cyi) - 0.5) * jitter;
+            sy = y + (hash(cxi + 31, cyi + 17) - 0.5) * jitter;
+          } else if (mat.strength) {
+            const xm = x > 1 ? i - 2 : i;
+            const xp = x < w - 2 ? i + 2 : i;
+            const ym = y > 1 ? i - 2 * w : i;
+            const yp = y < h - 2 ? i + 2 * w : i;
+            let gx = (H[xp] - H[xm]) / gNorm;
+            let gy = (H[yp] - H[ym]) / gNorm;
+            gx /= 1 + Math.abs(gx) * 0.4;
+            gy /= 1 + Math.abs(gy) * 0.4;
+            sx = x + gx * mat.strength;
+            sy = y + gy * mat.strength;
+          }
+
+          if (grainAmp) {
+            sx += (hash(x, y) - 0.5) * grainAmp;
+            sy += (hash(x + 9, y + 3) - 0.5) * grainAmp;
+          }
+
+          sx = Math.min(w - 1.001, Math.max(0, sx));
+          sy = Math.min(h - 1.001, Math.max(0, sy));
+
+          const x0 = sx | 0;
+          const y0 = sy | 0;
+          const fx = sx - x0;
+          const fy = sy - y0;
+          const p00 = (y0 * w + x0) * 4;
+          const p10 = p00 + 4;
+          const p01 = p00 + w * 4;
+          const p11 = p01 + 4;
+          const w00 = (1 - fx) * (1 - fy);
+          const w10 = fx * (1 - fy);
+          const w01 = (1 - fx) * fy;
+          const w11 = fx * fy;
+
+          /* Signed emboss: ridges catch light, grooves shade. Clamped, so
+             the pattern is bold without ever going to paint. */
+          let e = detail[i] / dNorm;
+          if (e > 1) e = 1; else if (e < -1) e = -1;
+          e *= embossAmp;
+
+          const o = i * 4;
+          for (let ch = 0; ch < 3; ch += 1) {
+            const src = mat.kind === 'frost' ? soft : scene;
+            let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
+            if (groundAmp) {
+              /* The fine screened ground between lens elements: colour
+                 passes, detail does not. */
+              const g = (1 - Math.min(1, Math.abs(detail[i]) / dNorm)) * groundAmp;
+              v += (240 - v) * g * 0.35;
+            }
+            v += e > 0 ? (255 - v) * e : v * e;
+            if (veil) v += (250 - v) * veil;
+            dst[o + ch] = v;
+          }
+          dst[o + 3] = 255;
+        }
+      }
+
+      if (token !== renderToken) return;
+      if (!glassCanvas) {
+        glassCanvas = document.createElement('canvas');
+        glassCanvas.className = 'fg-obscure-stage__optics';
+        glassCanvas.setAttribute('aria-hidden', 'true');
+        glassLayer.appendChild(glassCanvas);
+      }
+      glassCanvas.width = w;
+      glassCanvas.height = h;
+      glassCanvas.getContext('2d').putImageData(out, 0, 0);
+      stage.dataset.glassRender = 'canvas';
+    } catch (error) {
+      stage.dataset.glassRender = 'css';
+    }
+  };
+
   const activateBackground = (name) => {
     const image = name === 'house' ? stage.dataset.houseImage : stage.dataset.catImage;
     if (image) {
@@ -3512,6 +3851,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     if (backgroundToggle) {
       backgroundToggle.textContent = name === 'cat' ? 'Show house background' : 'Show Legend background';
     }
+    renderGlass();
   };
 
   const activate = (button) => {
@@ -3538,6 +3878,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
     stage.style.setProperty('--privacy', privacy);
     stage.dataset.activeGlass = key;
+    renderGlass();
     if (nameTarget) nameTarget.textContent = name;
     if (privacyTarget) privacyTarget.textContent = privacy === '0' ? 'Decorative texture' : `Privacy ${privacy}`;
     if (copyTarget) copyTarget.textContent = copy;
@@ -3551,6 +3892,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       activate(button);
     });
   });
+
+  renderGlass();
 
   splitControl?.addEventListener('input', () => {
     setSplit(splitControl.value);
