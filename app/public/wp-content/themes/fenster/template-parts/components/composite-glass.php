@@ -56,6 +56,13 @@ if (empty($fg_glass_items)) {
 $fg_glass_intro = trim((string) ($args['intro'] ?? ''));
 $fg_glass_note  = trim((string) ($args['note'] ?? ''));
 
+/* THEME-RELATIVE, so these are built with `FENSTER_THEME_URI` and NOT with
+   `fenster_generated_url()`. That helper maps `/wp-content/themes/fenster/...`
+   onto the theme URI and returns anything else unchanged, so a theme-relative
+   path comes back untouched and resolves against the site root, where nothing
+   is. Every render 404'd on the first deploy of this section. The line-art
+   helper in `inc/composite-door-data.php` uses `FENSTER_THEME_URI` for the
+   same reason. */
 $fg_door_rel = '/assets/images/products/composite-distinction/glass-doors/';
 
 /**
@@ -120,11 +127,11 @@ if (empty($fg_in_door) && empty($fg_patterns)) {
                     <li class="fg-glass-door">
                         <figure>
                             <img
-                                src="<?php echo esc_url(fenster_generated_url($fg_style['stem'] . '480w.webp')); ?>"
+                                src="<?php echo esc_url(FENSTER_THEME_URI . $fg_style['stem'] . '480w.webp'); ?>"
                                 srcset="<?php echo esc_attr(implode(', ', [
-                                    fenster_generated_url($fg_style['stem'] . '240w.webp') . ' 240w',
-                                    fenster_generated_url($fg_style['stem'] . '480w.webp') . ' 480w',
-                                    fenster_generated_url($fg_style['stem'] . '800w.webp') . ' 800w',
+                                    FENSTER_THEME_URI . $fg_style['stem'] . '240w.webp 240w',
+                                    FENSTER_THEME_URI . $fg_style['stem'] . '480w.webp 480w',
+                                    FENSTER_THEME_URI . $fg_style['stem'] . '800w.webp 800w',
                                 ])); ?>"
                                 sizes="(max-width: 860px) 46vw, 30vw"
                                 alt="<?php echo esc_attr(sprintf(
