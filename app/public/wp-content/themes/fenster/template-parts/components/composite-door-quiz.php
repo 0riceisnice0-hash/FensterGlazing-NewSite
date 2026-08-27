@@ -7,7 +7,7 @@
  * does. It runs one question at a time on a bordered white card, the answers
  * are real door drawings rather than words where a drawing can carry the
  * question, and the result is a reveal. A visitor who would never read a
- * specification will answer four questions about their own hallway.
+ * specification will answer five questions about their own hallway.
  *
  * THE ANSWERS ARE THE PRODUCT, NOT ICONOGRAPHY. Every illustrated answer is a
  * real door from the range, drawn by WindowCAD, chosen because it is the clearest
@@ -188,9 +188,9 @@ $fg_total = count($fg_questions);
     <div class="container">
 
         <header class="fg-cdq__head">
-            <p class="eyebrow"><?php esc_html_e('Four questions', 'fenster'); ?></p>
+            <p class="eyebrow"><?php esc_html_e('Five questions', 'fenster'); ?></p>
             <h2 id="fg-cdq-title"><?php esc_html_e('Which composite door are you?', 'fenster'); ?></h2>
-            <p><?php esc_html_e('One hundred and forty two doors is too many to choose from cold. Answer four questions about your house and we will point at one, with the reasoning, and open it in the pricing tool.', 'fenster'); ?></p>
+            <p><?php esc_html_e('One hundred and forty two doors is too many to choose from cold. Answer five questions about your house and we will point at one, with the reasoning, and open it in the pricing tool in the colour you picked.', 'fenster'); ?></p>
         </header>
 
         <?php /* Ships hidden. Without JavaScript the range above is the answer,
@@ -258,7 +258,7 @@ $fg_total = count($fg_questions);
                         <a class="button button--light" data-fg-quiz-open href="#" target="_blank" rel="noopener"><?php esc_html_e('Open full size', 'fenster'); ?></a>
                         <button type="button" class="button button--light" data-fg-quiz-reset><?php esc_html_e('Try again', 'fenster'); ?></button>
                     </p>
-                    <p class="fg-cdq__caveat"><?php esc_html_e('Four questions cannot know your house. If it is not right, the range above has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
+                    <p class="fg-cdq__caveat"><?php esc_html_e('Five questions cannot know your house. If it is not right, the range above has the other 141 and every one of them opens the same way.', 'fenster'); ?></p>
                 </div>
 
                 <?php /* The tool, on that door. Built on submit rather than
