@@ -119,6 +119,17 @@ $fg_cds_bare = ! empty($args['bare']);
            It ships hidden and the controller reveals it: with no JavaScript the
            grids are complete and every link still works, which is the same
            bargain the collection switcher makes. */
+        /* GLASS ONLY. Shape and Face were built alongside it and cut on the
+           owner's instruction, 2026-08-27. Glass is the filter that answers
+           the question somebody actually arrives with — how much light do I
+           want in the hall — and it is the one the quiz treats as a
+           requirement rather than a taste. Shape and Face are taste, they
+           narrow far less usefully, and three rows of chips over a contact
+           sheet is a control panel.
+
+           **The traits are all still in `fenster_composite_door_collections()`**
+           and the controller reads whatever chips exist, so restoring either
+           is adding a block back to this array and nothing else. */
         $fg_cds_filters = [
             'g' => [
                 'label' => __('Glass', 'fenster'),
@@ -128,23 +139,6 @@ $fg_cds_bare = ! empty($args['bare']);
                     '2' => __('Some', 'fenster'),
                     '1' => __('A little', 'fenster'),
                     '0' => __('None', 'fenster'),
-                ],
-            ],
-            'v' => [
-                'label' => __('Shape', 'fenster'),
-                'opts'  => [
-                    ''  => __('Any', 'fenster'),
-                    '0' => __('Square', 'fenster'),
-                    '1' => __('Arched', 'fenster'),
-                ],
-            ],
-            'd' => [
-                'label' => __('Face', 'fenster'),
-                'opts'  => [
-                    ''  => __('Any', 'fenster'),
-                    '0' => __('Plain', 'fenster'),
-                    '1' => __('Some detail', 'fenster'),
-                    '2' => __('A feature', 'fenster'),
                 ],
             ],
         ];
@@ -207,10 +201,7 @@ $fg_cds_bare = ! empty($args['bare']);
                             );
                             ?>
                             <?php $fg_t = $style['traits'] ?? []; ?>
-                            <li class="fg-cds-door"
-                                data-g="<?php echo esc_attr((string) ($fg_t['glass'] ?? '')); ?>"
-                                data-v="<?php echo esc_attr((string) ($fg_t['curved'] ?? '')); ?>"
-                                data-d="<?php echo esc_attr((string) ($fg_t['detail'] ?? '')); ?>">
+                            <li class="fg-cds-door" data-g="<?php echo esc_attr((string) ($fg_t['glass'] ?? '')); ?>">
                                 <a
                                     class="fg-cds-door__link"
                                     href="<?php echo esc_url(fenster_composite_door_quote_url((string) $style['key'])); ?>"

@@ -8695,14 +8695,23 @@ document.querySelectorAll('.fg-cds').forEach((root) => {
      PHP wrote from the same measured geometry the quiz scores on, so there is
      one source for both. */
   const filterBar = root.querySelector('[data-fg-cds-filters]');
-  const state = { g: '', v: '', d: '' };
   const FIRST_LOOK = 20;
   const expanded = new Set();
 
+  /* The state is built from whatever chips the markup ships, so adding a
+     filter back is a block in `$fg_cds_filters` and nothing here. Shape and
+     Face were cut on the owner's instruction; glass stayed because it is the
+     one somebody arrives with a view on, and the one the quiz treats as a
+     requirement rather than a taste. */
+  const state = {};
+  if (filterBar) {
+    filterBar.querySelectorAll('[data-fg-cds-filter]').forEach((chip) => {
+      state[chip.dataset.fgCdsFilter] = '';
+    });
+  }
+
   const matches = (item) =>
-    (state.g === '' || item.dataset.g === state.g) &&
-    (state.v === '' || item.dataset.v === state.v) &&
-    (state.d === '' || item.dataset.d === state.d);
+    Object.keys(state).every((key) => state[key] === '' || item.dataset[key] === state[key]);
 
   const paint = (panel) => {
     const items = Array.from(panel.querySelectorAll('.fg-cds-door'));
@@ -8726,7 +8735,7 @@ document.querySelectorAll('.fg-cds').forEach((root) => {
     const more = panel.querySelector('[data-fg-cds-more]');
     if (!result || !count || !more) return;
 
-    const filtered = state.g !== '' || state.v !== '' || state.d !== '';
+    const filtered = Object.values(state).some((v) => v !== '');
     result.hidden = false;
 
     if (hits === 0) {
