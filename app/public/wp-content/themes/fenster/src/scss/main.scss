@@ -47923,3 +47923,20 @@ html.fg-blinds-reveal-locked {
    Setting `height: auto` restores the ratio. */
 .fg-glass-door img,
 .fg-glass-patterns img { height: auto; }
+
+/* The swatches were capped at 150px inside 236px columns, so each sat at the
+   left of a wide cell and the row read ragged. The track is the swatch. */
+.fg-glass-patterns ul {
+  grid-template-columns: repeat(5, minmax(0, 150px));
+  justify-content: start;
+}
+
+.fg-glass-patterns img { max-width: none; }
+
+@media (max-width: 860px) {
+  .fg-glass-patterns ul { grid-template-columns: repeat(3, minmax(0, 150px)); }
+}
+
+@media (max-width: 480px) {
+  .fg-glass-patterns ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
