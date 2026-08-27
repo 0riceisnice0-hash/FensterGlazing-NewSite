@@ -46776,3 +46776,15 @@ html.fg-blinds-reveal-locked {
     scroll-snap-align: start;
   }
 }
+
+/* THE GRID MIN-WIDTH TRAP, AND IT COST TWO BLANK PHONE VIEWPORTS.
+   `.fg-finish` is a grid, and a grid track's minimum is `auto`, which
+   resolves to the max-content width of its widest child. The colour
+   wall's 27 swatches are an `auto-fit` grid with a minimum track size,
+   so its max-content is over 1,100px, and that became the width of the
+   whole chapter column: on a 390px phone the colour section laid itself
+   out 1,180px wide and 1,809px tall, entirely off to the right of the
+   screen. It read as two viewports of empty canvas, and it did not trip
+   the horizontal-overflow check because an ancestor clipped it.
+   `minmax(0, 1fr)` lets the track shrink below its content. */
+.fg-finish { grid-template-columns: minmax(0, 1fr); }
