@@ -48620,3 +48620,17 @@ html.fg-blinds-reveal-locked {
     }
   }
 }
+
+/* AND THE SPANNING PARAGRAPH WAS STILL INFLATING THE EYEBROW'S ROW.
+   A grid item spanning two auto rows has its height distributed across
+   them, and with the heading already filling row two the whole surplus
+   landed in row one: a 25px eyebrow sitting in a 98px track. Row one is
+   pinned to `min-content` so the eyebrow sizes it and the explanation's
+   surplus can only go to row two. */
+.generated-page--composite-doors {
+  .fg-finish__body .fg-finish__step-head,
+  .fg-finish__body .fg-handle-finishes__heading {
+    grid-template-rows: min-content auto;
+    grid-auto-rows: auto;
+  }
+}
