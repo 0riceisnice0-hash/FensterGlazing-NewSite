@@ -15,6 +15,13 @@ This is the short operational guide for any Codex agent or developer making chan
 
 ## Current Truth
 
+- **LIVE IS STILL `b2420743`. TEST IS TWENTY-SEVEN COMMITS AHEAD OF IT, 2026-08-27, AND NONE OF IT IS APPROVED.** Nine of those are this session's composite doors and `/why-distinction/` overhaul (`fdee3d6b..03ca2f63`), on top of the eighteen already recorded below. **Twenty theme files: eight added, twelve modified, none deleted**, so a release would still assert the deletion list EMPTY. The additions are six hero WebPs, the new `composite-anatomy.php` component and the overhaul brief.
+  - **Read the range before shipping it**, per the standing rule: `git log --oneline b2420743..<SHA>`. It now contains three sessions' work.
+  - **`main.css` and `main.js` both changed**, so a release carries a build. `main.scss` grew by about 1,500 lines, all appended in one marked block.
+  - Content: `/composite-doors/` is five chapters rather than seventeen sections, with a live slab cutaway built from the supplied design handoff; `/why-distinction/` gained two photographs, lost three em dashes and gained a route back to the range and the quiz; `/why-distinction/` is now linked from the footer and from two composite FAQ answers.
+  - **Verified on test at 1440x900, 768x1024 and 390x844**, both pages, zero console errors, zero failed requests, no horizontal overflow at 390 or 320. `/composite-doors/` 13,909 to 13,683px desktop and **21,513 to 17,818px mobile**; `/why-distinction/` 4,689 to 5,413px desktop, which is the two photographs and a closing chapter it did not have.
+  - **The FAQ component gained optional `link` and `link_label` keys.** Additive and unused on every other route, but it is a shared component, so a regression there would show site-wide.
+
 - **LIVE IS STILL `b2420743` AND TEST IS EIGHTEEN COMMITS AHEAD OF IT, 2026-08-27. NOTHING WAS DEPLOYED TO LIVE THIS SESSION AND THE RANGE HAS NOT BEEN APPROVED.** Fourteen of the eighteen are the composite doors work below, one is another session's obscure glass fix (`31a8b992`) and three are docs. **148 theme files added, 8 modified, none deleted**, so a release would assert the deletion list EMPTY. The additions are almost entirely the 151 door line drawings at ~900 bytes each.
   - **Read the range before shipping it**, per the standing rule: `git log --oneline b2420743..<SHA>`. It contains another session's commit as well as this one's, and re-establish live by checksum first rather than trusting this line.
   - **`/why-distinction/` is a new indexable route** and is in the sitemap list in `inc/generated-pages.php`. A release adds a URL to `page-sitemap.xml`; check the count moves by one.

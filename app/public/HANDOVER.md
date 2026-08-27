@@ -1,5 +1,54 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-27 pm (composite doors overhauled — ON TEST, NOT LIVE)
+
+**Live is still `b2420743`. Test is twenty-seven commits ahead and none of it is
+approved.** Nine commits are this session, `fdee3d6b..03ca2f63`.
+
+**Read in this order:** the Current Truth section of `LIVECHANGES.md`, then
+`COMPOSITE-DOORS-OVERHAUL-BRIEF-2026-08-27.md` (the measured audit and the brief
+it produced), then the two new composite rules in `AI.md`.
+
+### What changed
+
+`/composite-doors/` is **five chapters rather than seventeen sections**: the
+door, choose one, what it is made of, how it will look, proof and price. The
+hero fills the fold and carries the four facts and the Distinction credential
+that used to be two strips below it. The range and the quiz share one surface.
+The construction section is a **live cutaway built from the supplied design
+handoff**, where opening a layer highlights that component, moves a leader dot
+onto it and shows a measurement chip. Glass, colour and handles are one chapter.
+
+`/why-distinction/` has photographs for the first time, no em dashes, both
+six-item grids fixed, the 50% figure anchored against its own caveats, and a
+closing chapter that sends a reader to the range and the quiz by name.
+
+### The two things worth carrying forward
+
+- **The flatness had a cause and it was a stylesheet rule.** Two blanket
+  `.generated-page--composite-doors h2` declarations, 1,450 lines apart, each
+  with `!important`. The later won at 28.8px and beat every namespaced heading
+  rule under it. Fourteen identical headings on a 13,909px page was not a
+  missing design decision, it was a rule forbidding one. **Check for that before
+  redesigning a page that reads flat.**
+- **A grid track's minimum is `auto`, and it cost two blank phone viewports.**
+  Making the finishes chapter a `display: grid` let the colour wall's 27-swatch
+  `auto-fit` grid set the chapter's width to its own max-content, so on a 390px
+  phone that section laid out 1,180px wide entirely off-screen. **It did not
+  trip the horizontal-overflow check**, because an ancestor clipped it.
+
+### What needs the owner
+
+- **Nothing here is approved and nothing was deployed to live.**
+- **The oversized heading rules the blanket `!important` was hiding are
+  site-wide.** The enquiry form's h2 is `--fg-font-size-max` exactly on every
+  route that renders it, against `STYLE.md`'s own rule. Fixed on this page only;
+  the site-wide pass is a separate decision.
+- **Mobile is 17,818px**, down from 21,513px, and still over the 15,000px
+  `SEO-PERFORMANCE-AUDIT-2026-08-17.md` asks for across eleven product pages.
+  It came down by sizing things correctly and by making two swatch grids into
+  rails, not by deleting content.
+
 ## Current state, 2026-08-27 (composite doors rebuilt — ON TEST, NOT LIVE)
 
 **Live is still `b2420743`. Test is eighteen commits ahead and none of it is

@@ -9,6 +9,48 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-27 pm (composite doors OVERHAULED — ON TEST, LIVE UNCHANGED)
+
+**Live is `b2420743` and has not moved. Test is twenty-seven commits ahead.**
+Nine of them are this session, `fdee3d6b..03ca2f63`.
+
+### What was built
+
+A measured audit of `/composite-doors/` and `/why-distinction/` at three
+viewports, written up in `COMPOSITE-DOORS-OVERHAUL-BRIEF-2026-08-27.md`, and
+then the overhaul it specified. `/composite-doors/` went from seventeen sections
+to five chapters and its construction section is now a live cutaway built from
+the owner's supplied design handoff. `/why-distinction/` gained photographs, lost
+its em dashes, and gained named routes back into the range and the quiz.
+
+### The part worth reading if you read nothing else
+
+**The audit measured fourteen identical 28.8px headings and called it a missing
+hierarchy. The cause was a stylesheet rule forbidding one.** Two blanket
+`.generated-page--composite-doors h2` declarations sat 1,450 lines apart in
+`main.scss`, each setting every heading on the route with `!important`. The later
+one won everywhere. No amount of careful section design would have shown up while
+that rule was in the file, and nothing in the rendered page said so: the symptom
+was uniformity, and uniformity looks like an absence of a decision rather than
+the presence of one.
+
+**Removing it exposed what it had been hiding**, which is the second half of the
+lesson: four sections had their own oversized rules, including an enquiry-form
+heading at `--fg-font-size-max` exactly, on a form heading `STYLE.md` explicitly
+says must stay moderate. A blanket override does not fix inconsistency, it
+conceals it, and every page that ever needed one is a page where somebody has
+stopped being able to see the problem.
+
+### And one that a check said was fine
+
+Making the finishes chapter a grid let the colour wall's 27 swatches set the
+chapter's width to their own max-content, so on a 390px phone that section laid
+itself out 1,180px wide and 1,809px tall, entirely off to the right of the
+screen. It photographed as **two consecutive blank viewports**, and the
+horizontal-overflow assertion returned false throughout, because an ancestor was
+clipping it. The screenshot was right and the check was wrong, which is the
+order `STYLE.md` already puts them in.
+
 ## START HERE, 2026-08-27 (composite doors rebuilt — ON TEST, LIVE UNCHANGED)
 
 **Live is `b2420743` and has not moved. Test is eighteen commits ahead and the
