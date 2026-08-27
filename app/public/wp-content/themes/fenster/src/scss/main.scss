@@ -47696,12 +47696,25 @@ html.fg-blinds-reveal-locked {
    fills, so the progress read as one green dash floating at the left. */
 .fg-cdq__bar .fg-cdq__pip { width: auto; }
 
-/* THE SUPPLIED WORDMARK HAS NO ALPHA. It is a palette PNG of black lettering
-   on a light grey plate, which is why it showed a dark slab on the hero and why
-   a `brightness(0) invert(1)` filter turned it into a solid white rectangle: the
-   filter recoloured the plate along with the letters. The white variant beside
-   it is keyed out by luminance, so it is genuinely transparent. */
-.fg-cd3-hero__credential img { opacity: 0.94; }
+/* THE SUPPLIED WORDMARK HAS NO ALPHA AND CANNOT BE GIVEN ANY. It is a palette
+   PNG of black lettering on a light grey plate, so on a dark hero it shows a
+   slab. Two fixes were tried and both failed for the same underlying reason:
+   `brightness(0) invert(1)` recoloured the plate along with the letters, and a
+   luminance-keyed transparent copy came back from the server flattened, because
+   **SiteGround transforms images in transit** — the served bytes hash
+   differently from the identical file on its own disk. That is worth knowing
+   beyond this logo: hashing a served asset proves a CSS or JS deploy, and does
+   not prove an image one.
+
+   So the mark sits on its own light plate, which is how a dark-background
+   partner strip normally carries a black logo, and needs no processing at all.
+   `STYLE.md` warns against a white logo on a white badge; this is the opposite
+   and is the case that rule leaves open. */
+.fg-cd3-hero__credential img {
+  padding: 0.5rem 0.7rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.94);
+}
 
 /* Two rules from the quiz's white-card era were still shaping the dark band.
 
