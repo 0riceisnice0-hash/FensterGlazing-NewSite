@@ -3534,6 +3534,17 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          switching from Reeded to anything else left the new texture pinned at
          Reeded's 274px. */
       stage.style.setProperty('--active-texture-size', button.dataset.size || 'cover');
+      /* The two companion maps move with the texture or the pane composites one
+         pattern's shading over another's photograph. `none` is a real value here:
+         Satin is a CSS gradient and has no maps, and `data-glass-maps` is what
+         tells the stylesheet to drop both layers rather than render a mask that
+         is not there -- an absent mask reads as fully opaque, which would show
+         the clear layer everywhere and render a privacy 5 glass see-through. */
+      const rim = button.dataset.rim || 'none';
+      const clear = button.dataset.clear || 'none';
+      stage.style.setProperty('--active-texture-rim', rim);
+      stage.style.setProperty('--active-texture-clear', clear);
+      stage.dataset.glassMaps = clear === 'none' ? 'no' : 'yes';
     }
 
     stage.style.setProperty('--privacy', privacy);
