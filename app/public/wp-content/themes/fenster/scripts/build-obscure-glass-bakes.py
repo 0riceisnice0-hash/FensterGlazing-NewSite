@@ -171,11 +171,17 @@ def bake(scene, tex, privacy):
     # Offsets walk around a circle in a stride that keeps neighbouring bands far
     # apart, so two facets that touch rarely sample the same place.
     theta = (np.arange(BANDS) * 5 % BANDS) / BANDS * 2 * np.pi
+    pad = OFFSET_RADIUS + 2
     out = np.zeros_like(scene)
     for k in range(BANDS):
         dy = int(round(np.sin(theta[k]) * OFFSET_RADIUS))
         dx = int(round(np.cos(theta[k]) * OFFSET_RADIUS))
-        shifted = np.roll(np.roll(scene, dy, axis=0), dx, axis=1)
+        # Edge-replicated rather than wrapped. `np.roll` brings the far side of
+        # the photograph round to the near one, so a facet near the top could
+        # show the dark pond from the bottom -- it landed as a black blotch in
+        # the corner of several bakes before this.
+        shifted = np.pad(scene, ((pad, pad), (pad, pad), (0, 0)), mode="edge")
+        shifted = shifted[pad - dy:pad - dy + H, pad - dx:pad - dx + W]
         wash = np.asarray(
             Image.fromarray(shifted.astype(np.uint8)).filter(ImageFilter.GaussianBlur(wash_blur)),
             dtype=float)
