@@ -3560,33 +3560,80 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        and plant shot through each glass. The privacy ladder in that document
        is honoured by DISTORTION, not by opacity: Warwick (1) leaves the
        teapot nearly intact, Everglade (5) scrambles it into its swirls. */
-    arctic: { heightBlur: 5, strength: 18, baseBlur: 1.2, roughBlur: 8, rough: 0.35, relief: 0.3, veil: 0.28, spec: 18, },
-    cotswold: { heightBlur: 8, strength: 24, baseBlur: 2, roughBlur: 14, rough: 0.7, relief: 0.2, veil: 0.26, spec: 12, },
+    arctic: { heightBlur: 4, strength: 22, baseBlur: 1.2, roughBlur: 7, rough: 0.35, relief: 0.3, veil: 0.28, spec: 18, grain: 0.05 },
+    cotswold: {
+      type: 'directional', axisX: 1, axisY: 0,
+      heightBlur: 6, strength: 30, baseBlur: 2.5, roughBlur: 12, rough: 0.7,
+      relief: 0.2, veil: 0.26, grain: 0.05, spec: 12,
+    },
     autumn: { heightBlur: 9, strength: 16, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14 },
-    chantilly: { heightBlur: 5, strength: 8, baseBlur: 1.2, roughBlur: 7, rough: 0.5, relief: 0.3, veil: 0.1 },
-    'charcoal-sticks': { heightBlur: 6, strength: 22, baseBlur: 1.8, roughBlur: 12, rough: 0.6, relief: 0.22, veil: 0.2 },
-    contora: { heightBlur: 4, strength: 18, baseBlur: 1.8, roughBlur: 10, rough: 0.6, relief: 0.2, veil: 0.2 },
-    digital: { heightBlur: 4, strength: 17, baseBlur: 1.5, roughBlur: 8, rough: 0.5, relief: 0.25, veil: 0.14 },
-    everglade: { heightBlur: 8, strength: 25, baseBlur: 2.2, roughBlur: 12, rough: 0.65, relief: 0.25, veil: 0.28, spec: 14, },
+    chantilly: { heightBlur: 5, strength: 7, baseBlur: 1.2, roughBlur: 7, rough: 0.5, relief: 0.35, veil: 0.1, grain: 0.05, spec: 8 },
+    'charcoal-sticks': {
+      type: 'directional', axisX: 1, axisY: 0,
+      heightBlur: 4, strength: 34, baseBlur: 2, roughBlur: 9, rough: 0.55,
+      relief: 0.35, veil: 0.18, grain: 0.06, spec: 16,
+    },
+    contora: { heightBlur: 3, strength: 20, baseBlur: 1.8, roughBlur: 10, rough: 0.6, relief: 0.2, veil: 0.2, grain: 0.06, spec: 10 },
+    digital: {
+      type: 'cellular', cell: 14,
+      heightBlur: 5, strength: 16, baseBlur: 1.5, roughBlur: 6, rough: 0.5,
+      relief: 0.22, veil: 0.14, grain: 0.05, spec: 10,
+    },
+    everglade: { heightBlur: 7, strength: 28, baseBlur: 2.2, roughBlur: 12, rough: 0.65, relief: 0.3, veil: 0.28, spec: 16, grain: 0.05 },
     florielle: {
       heightBlur: 8, strength: 15, baseBlur: 1.5, roughBlur: 10, relief: 0.12,
       mask: true, maskLow: 0.35, maskHigh: 0.65, petalRough: 0.2, groundRough: 0.85,
       groundScatter: 0.2, edgeShade: 0.18, veil: 0.22,
     },
-    mayflower: { heightBlur: 7, strength: 18, baseBlur: 2, roughBlur: 11, rough: 0.55, relief: 0.3, veil: 0.18 },
+    mayflower: { heightBlur: 7, strength: 18, baseBlur: 2, roughBlur: 11, rough: 0.55, relief: 0.32, veil: 0.18, grain: 0.06, spec: 10 },
     minster: { heightBlur: 12, strength: 14, baseBlur: 1.2, roughBlur: 7, rough: 0.4, relief: 0.18, veil: 0.12, spec: 12, },
-    oak: { heightBlur: 8, strength: 11, baseBlur: 1, roughBlur: 6, rough: 0.4, relief: 0.3, veil: 0.08 },
-    pelerine: { heightBlur: 4, strength: 11, baseBlur: 2.2, roughBlur: 9, rough: 0.8, relief: 0.2, veil: 0.24 },
-    stippolyte: { heightBlur: 2.5, strength: 6, baseBlur: 2.5, roughBlur: 8, rough: 0.95, relief: 0.2, veil: 0.26 },
-    sycamore: { heightBlur: 5, strength: 10, baseBlur: 1.5, roughBlur: 7, rough: 0.55, relief: 0.25, veil: 0.1 },
-    taffeta: { heightBlur: 7, strength: 14, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.3, veil: 0.14, spec: 14, },
-    tribal: { heightBlur: 6, strength: 22, baseBlur: 2, roughBlur: 11, rough: 0.6, relief: 0.25, veil: 0.26 },
-    warwick: { heightBlur: 9, strength: 8, baseBlur: 0.8, roughBlur: 4, rough: 0.3, relief: 0.12, veil: 0.05, spec: 10, },
+    oak: { heightBlur: 8, strength: 11, baseBlur: 1, roughBlur: 6, rough: 0.4, relief: 0.3, veil: 0.08, grain: 0.04, spec: 10 },
+    pelerine: {
+      type: 'diffusion',
+      heightBlur: 3, strength: 3.5, baseBlur: 2.5, roughBlur: 8, rough: 0.8,
+      relief: 0.16, veil: 0.24, grain: 0.08, spec: 6,
+    },
+    stippolyte: {
+      type: 'diffusion',
+      heightBlur: 3, strength: 4, baseBlur: 3, roughBlur: 9, rough: 0.85,
+      relief: 0.15, veil: 0.24, grain: 0.09, spec: 6,
+    },
+    sycamore: {
+      type: 'diffusion',
+      heightBlur: 4, strength: 3, baseBlur: 1.8, roughBlur: 6, rough: 0.6,
+      relief: 0.28, veil: 0.1, grain: 0.07, spec: 8,
+    },
+    taffeta: { heightBlur: 9, strength: 24, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14, spec: 16, grain: 0.04 },
+    tribal: { heightBlur: 5, strength: 24, baseBlur: 2, roughBlur: 11, rough: 0.6, relief: 0.28, veil: 0.26, grain: 0.06, spec: 10 },
+    warwick: {
+      type: 'directional', axisX: 1, axisY: 0,
+      heightBlur: 8, strength: 10, baseBlur: 1, roughBlur: 3, rough: 0.35,
+      relief: 0.12, veil: 0.05, grain: 0.03, spec: 10,
+    },
     default: { heightBlur: 7, strength: 16, baseBlur: 2, roughBlur: 8, rough: 0.6, relief: 0.2, veil: 0.16 },
   };
 
   let renderToken = 0;
   let glassCanvas = null;
+
+  /* Directional smear: N weighted taps of the scene along one axis. Canvas
+     filter blur is always isotropic, and isotropic diffusion is precisely the
+     thing a ribbed glass does not do -- vertical ribs scramble the image
+     horizontally and leave vertical structure coherent, which is why a fruit
+     bowl behind Cotswold reads as vertical streaks in Pilkington's own
+     photography. */
+  const smearScene = (source, w, h, radius, ax, ay, makeCtx) => {
+    const ctx = makeCtx();
+    const taps = 11;
+    ctx.drawImage(source, 0, 0);
+    for (let k = 1; k < taps; k += 1) {
+      const t = (k / (taps - 1) - 0.5) * 2 * radius;
+      ctx.globalAlpha = 1 / (k + 1);
+      ctx.drawImage(source, ax * t, ay * t);
+    }
+    ctx.globalAlpha = 1;
+    return ctx;
+  };
 
   const glassImage = (src) => new Promise((resolve, reject) => {
     const img = new Image();
@@ -3693,12 +3740,24 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          GPU; the per-pixel pass then just picks between the two. */
       const sceneCtx = make();
       drawScene(sceneCtx, sceneImg, w, h, background === 'cat' ? 'contain' : 'cover');
-      const softCtx = make();
-      softCtx.filter = `blur(${optics.baseBlur}px)`;
-      softCtx.drawImage(sceneCtx.canvas, 0, 0);
-      const roughCtx = make();
-      roughCtx.filter = `blur(${optics.roughBlur}px)`;
-      roughCtx.drawImage(sceneCtx.canvas, 0, 0);
+      /* The diffusion pyramid is built to the MATERIAL, not one recipe: a
+         directional glass smears along its scatter axis and keeps the other
+         axis coherent; everything else diffuses isotropically. */
+      const axisX = optics.axisX != null ? optics.axisX : 1;
+      const axisY = optics.axisY != null ? optics.axisY : 0;
+      let softCtx;
+      let roughCtx;
+      if (optics.type === 'directional') {
+        softCtx = smearScene(sceneCtx.canvas, w, h, optics.baseBlur * 2, axisX, axisY, make);
+        roughCtx = smearScene(sceneCtx.canvas, w, h, optics.roughBlur * 2, axisX, axisY, make);
+      } else {
+        softCtx = make();
+        softCtx.filter = `blur(${optics.baseBlur}px)`;
+        softCtx.drawImage(sceneCtx.canvas, 0, 0);
+        roughCtx = make();
+        roughCtx.filter = `blur(${optics.roughBlur}px)`;
+        roughCtx.drawImage(sceneCtx.canvas, 0, 0);
+      }
       const soft = softCtx.getImageData(0, 0, w, h).data;
       const diffuse = roughCtx.getImageData(0, 0, w, h).data;
       /* Frost is not white paint. An etched surface scatters the light of its
@@ -3833,6 +3892,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const veil = optics.veil || 0;
       const specAmp = optics.spec || 8;
       const grainAmp = optics.grain != null ? optics.grain : 0.05;
+      const typeCode = { directional: 1, diffusion: 2, cellular: 3 }[optics.type] || 0;
+      const dirX = axisX;
+      const dirY = axisY;
+      const cellSize = Math.max(6, Math.round(optics.cell || 24));
 
       for (let y = 0; y < h; y += 1) {
         const yw = y * w;
@@ -3849,10 +3912,37 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           /* Refraction: slope of the rounded relief, soft-saturated so the
              strongest edges fold the image (the lenticular doubling in the
              reference) without tearing. */
-          let gx = (H[xp] - H[xm]) / gNorm;
-          let gy = (H[yp] - H[ym]) / gNorm;
+          let gx;
+          let gy;
+          if (typeCode === 3) {
+            /* CELLULAR: one displacement per pattern cell, read at the cell's
+               centre, so every cell shifts its view as a rigid block with a
+               hard edge to its neighbour -- Digital's pixelated read. */
+            const ccx = Math.min(w - 2, ((x / cellSize) | 0) * cellSize + (cellSize >> 1));
+            const ccy = Math.min(h - 2, ((y / cellSize) | 0) * cellSize + (cellSize >> 1));
+            const ci = ccy * w + ccx;
+            gx = (H[ci + 2] - H[ci - 2]) / gNorm;
+            gy = (H[ci + 2 * w] - H[ci - 2 * w]) / gNorm;
+          } else if (typeCode === 2) {
+            /* DIFFUSION: no macro wobble at all. The fine stipple jitters the
+               sample by a couple of pixels, which reads as granular frost --
+               a stippled glass has no large relief to wave the image. */
+            gx = (T[i] - H[i]) / fNorm;
+            gy = (T[Math.min(T.length - 1, i + w)] - H[Math.min(T.length - 1, i + w)]) / fNorm;
+          } else {
+            gx = (H[xp] - H[xm]) / gNorm;
+            gy = (H[yp] - H[ym]) / gNorm;
+          }
           gx /= 1 + Math.abs(gx) * 0.5;
           gy /= 1 + Math.abs(gy) * 0.5;
+          if (typeCode === 1) {
+            /* DIRECTIONAL: the ribs bend light across themselves only. The
+               displacement is projected onto the scatter axis, with a whisper
+               of the other component so the rib edges stay alive. */
+            const d = gx * dirX + gy * dirY;
+            gx = d * dirX + gx * 0.12;
+            gy = d * dirY + gy * 0.12;
+          }
           const sx = Math.min(w - 1.001, Math.max(0, x + gx * optics.strength));
           const sy = Math.min(h - 1.001, Math.max(0, y + gy * optics.strength));
 
