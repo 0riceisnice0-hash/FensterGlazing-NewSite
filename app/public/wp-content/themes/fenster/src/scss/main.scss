@@ -48634,3 +48634,64 @@ html.fg-blinds-reveal-locked {
     grid-auto-rows: auto;
   }
 }
+
+/* ---- Finishes: the mobile block, re-declared last ------------------
+ * THIS IS THE THIRD TIME THE SAME ORDERING MISTAKE HAS COST HEIGHT ON A
+ * PHONE. A desktop rule appended after its own `@media (max-width: 860px)`
+ * override wins at every width, because they are the same specificity and
+ * the later one is later. Here the colour layout went back to two columns
+ * on a 390px screen, which left the swatch track 175px wide, which made
+ * twenty-seven swatches fourteen rows, which put the chapter at 7,480px.
+ *
+ * Every mobile rule for this chapter lives here, at the end of the file,
+ * so nothing can be appended after it by accident. Add to this block
+ * rather than writing a new media query further up.
+ * ------------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  .generated-page--composite-doors {
+    .fg-cd3-colour__layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.1rem;
+    }
+
+    .fg-cd3-colour__preview { position: static; }
+
+    .fg-cd3-colour__swatches { grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); }
+
+    .fg-finish__step-head,
+    .fg-handle-finishes__heading {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto;
+      grid-auto-rows: auto;
+
+      > p.eyebrow,
+      > p:not(.eyebrow),
+      h2,
+      h3 {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      h2, h3 { margin-bottom: 0.45rem; }
+    }
+
+    /* The five pattern swatches are a rail like everything else in the
+       chapter, rather than three rows of two. */
+    .fg-glass-patterns ul {
+      display: flex;
+      grid-template-columns: none;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .fg-glass-patterns ul::-webkit-scrollbar { display: none; }
+
+    .fg-glass-patterns li {
+      flex: 0 0 38vw;
+      max-width: 38vw;
+      scroll-snap-align: start;
+    }
+  }
+}
