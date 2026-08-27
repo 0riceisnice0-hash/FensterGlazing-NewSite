@@ -1248,6 +1248,19 @@ A change is not complete until the relevant checks pass:
   CSS compositing below it is the no-JS and failed-render fallback, and
   **Reeded and Satin stay on it by per-glass `mode: 'css'`** — Reeded is
   owner-locked, Satin is a flat frost with nothing to refract.
+- **EACH GLASS IS A MATERIAL TYPE, NOT A STRENGTH SETTING. Owner correction,
+  2026-08-27 (night): every glass had converged on the Minster look because one
+  isotropic pipeline was scaled per glass — the model could not say
+  "sideways".** Four sampling physics now: `directional` (ribs bend light
+  across themselves; the diffusion pyramid smears along the scatter axis —
+  Charcoal Sticks, Cotswold, Warwick), `diffusion` (a stipple has no macro
+  relief, so no waves, only granular jitter — Stippolyte, Pelerine, Sycamore),
+  `cellular` (Digital: one rigid shift per pattern cell, hard edges),
+  `lenticular` (the two-material mask — Cassini, Florielle), and `irregular`
+  (rolled cathedral wobble, the one family whose members genuinely are
+  cousins). **Privacy and character are independent axes** — Warwick is
+  directional at privacy 1, Cotswold directional at 5. Do not re-unify these
+  into presets; the audit that chose each type is commented beside its entry.
 - **Per-glass parameters are read off the brochure's same-scene photography**
   (fruit bowl / teapot / plant through every pattern), and privacy arrives as
   DISTORTION plus veil, not opacity: Warwick p1 leaves the scene nearly
