@@ -3540,8 +3540,21 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* cell: rigid blocks, each sharp, each displaced on its own. */
     digital: { kind: 'cell', cell: 13, jitter: 16, emboss: 0.5, veil: 0.05 },
     /* lens: discrete hard-edged elements over a fine screened ground. */
-    cassini: { kind: 'lens', heightBlur: 9, strength: 26, emboss: 0.5, ground: 0.35, veil: 0.06 },
-    florielle: { kind: 'lens', heightBlur: 7, strength: 14, emboss: 0.62, ground: 0.3, veil: 0.06 },
+    /* Cassini is TWO textures at two scales, which is what the clock
+       photograph shows when you zoom into it: a fine directional hatch
+       whose ANGLE changes from patch to patch, with smooth petal lenses
+       laid over the top. Rendering only the petals -- as a `lens` did --
+       misses most of what the glass actually is. `hatch` combs the scene
+       perpendicular to the local line direction at the hatch's own
+       frequency; `hatchEmboss` draws the lines themselves. */
+    cassini: {
+      kind: 'hatchlens', heightBlur: 9, strength: 16, emboss: 0.34,
+      hatch: 3.4, hatchEmboss: 0.55, petalLift: 0.4, faceBlur: 11, veil: 0.05,
+    },
+    florielle: {
+      kind: 'hatchlens', heightBlur: 7, strength: 12, emboss: 0.5,
+      hatch: 2.2, hatchEmboss: 0.55, petalLift: 0.35, faceBlur: 8, veil: 0.06,
+    },
     /* emboss: the pattern is the subject; the scene stays legible between. */
     mayflower: { kind: 'emboss', heightBlur: 5, strength: 12, emboss: 0.78, veil: 0.05 },
     chantilly: { kind: 'emboss', heightBlur: 4, strength: 7, emboss: 0.72, veil: 0.03 },
@@ -3677,6 +3690,20 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const scene = sceneCtx.getImageData(0, 0, w, h).data;
 
       /* Only frost gets a diffused copy. Everything else samples sharp. */
+      /* A locally averaged copy. A lens face averages what it magnifies down
+         to nearly one tone -- in the clock photograph each Cassini petal is a
+         flat wash, not a legible little picture -- and that averaging is what
+         actually obscures. The hatched GROUND between the petals stays sharp
+         and is combed instead. Getting these the wrong way round is what left
+         the scene readable through a privacy 5 glass. */
+      let flat = null;
+      if (mat.kind === 'hatchlens') {
+        const flatCtx = make();
+        flatCtx.filter = `blur(${mat.faceBlur || 9}px)`;
+        flatCtx.drawImage(sceneCtx.canvas, 0, 0);
+        flat = flatCtx.getImageData(0, 0, w, h).data;
+      }
+
       let soft = null;
       if (mat.kind === 'frost') {
         const softCtx = make();
@@ -3728,6 +3755,59 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       dSample.sort((a, b) => a - b);
       const dNorm = Math.max(dSample[Math.floor(dSample.length * 0.92)] || 1, 1e-3);
 
+      /* Local line orientation of the fine texture, via a structure tensor.
+         Cassini's hatch runs at a different angle in every patch, and the
+         source photograph already carries that -- so the angle is measured
+         from the texture rather than invented, and the patchwork comes out
+         for free. Blurred tensor components, so the angle varies slowly
+         across a patch instead of flickering per pixel. */
+      let hatchPX = null;
+      let hatchPY = null;
+      let petal = null;
+      if (mat.kind === 'hatchlens') {
+        const jxx = new Float32Array(T.length);
+        const jyy = new Float32Array(T.length);
+        const jxy = new Float32Array(T.length);
+        for (let y = 1; y < h - 1; y += 1) {
+          for (let x = 1; x < w - 1; x += 1) {
+            const i = y * w + x;
+            const dx = detail[i + 1] - detail[i - 1];
+            const dy = detail[i + w] - detail[i - w];
+            jxx[i] = dx * dx;
+            jyy[i] = dy * dy;
+            jxy[i] = dx * dy;
+          }
+        }
+        boxBlurField(jxx, w, h, 7);
+        boxBlurField(jyy, w, h, 7);
+        boxBlurField(jxy, w, h, 7);
+        hatchPX = new Float32Array(T.length);
+        hatchPY = new Float32Array(T.length);
+        for (let i = 0; i < T.length; i += 1) {
+          /* Dominant gradient direction; the LINES run perpendicular to it,
+             and light combs perpendicular to the lines -- i.e. back along
+             the gradient. */
+          const theta = 0.5 * Math.atan2(2 * jxy[i], jxx[i] - jyy[i] + 1e-6);
+          hatchPX[i] = Math.cos(theta);
+          hatchPY[i] = Math.sin(theta);
+        }
+        /* The petal mask: smooth bright regions are the lens faces, and
+           they carry no hatch. Percentile bounds so exposure cannot move
+           the split. */
+        const sm = Float32Array.from(T);
+        boxBlurField(sm, w, h, 4);
+        const ps = [];
+        for (let k = 0; k < 4096; k += 1) ps.push(sm[(2003 * k) % sm.length]);
+        ps.sort((a, b) => a - b);
+        const lo = ps[Math.floor(ps.length * 0.5)];
+        const hi = ps[Math.floor(ps.length * 0.78)];
+        petal = new Float32Array(T.length);
+        for (let i = 0; i < T.length; i += 1) {
+          let v = (sm[i] - lo) / Math.max(hi - lo, 1e-3);
+          petal[i] = v < 0 ? 0 : v > 1 ? 1 : v;
+        }
+      }
+
       const out = sceneCtx.createImageData(w, h);
       const dst = out.data;
       const period = Math.max(4, mat.period || 20);
@@ -3767,6 +3847,25 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             const cyi = Math.floor(y / cell);
             sx = x + (hash(cxi, cyi) - 0.5) * jitter;
             sy = y + (hash(cxi + 31, cyi + 17) - 0.5) * jitter;
+          } else if (mat.kind === 'hatchlens') {
+            const xm = x > 1 ? i - 2 : i;
+            const xp = x < w - 2 ? i + 2 : i;
+            const ym = y > 1 ? i - 2 * w : i;
+            const yp = y < h - 2 ? i + 2 * w : i;
+            let gx = (H[xp] - H[xm]) / gNorm;
+            let gy = (H[yp] - H[ym]) / gNorm;
+            gx /= 1 + Math.abs(gx) * 0.4;
+            gy /= 1 + Math.abs(gy) * 0.4;
+            /* A petal is a smooth lens: it bends more and combs not at all.
+               The ground is hatched: it barely bends but combs hard, at the
+               hatch's own frequency and along its own local angle. */
+            const f = petal[i];
+            const lens = mat.strength * (0.45 + f * mat.petalLift);
+            sx = x + gx * lens;
+            sy = y + gy * lens;
+            const comb = (detail[i] / dNorm) * mat.hatch * (1 - f * 0.85);
+            sx += hatchPX[i] * comb;
+            sy += hatchPY[i] * comb;
           } else if (mat.strength) {
             const xm = x > 1 ? i - 2 : i;
             const xp = x < w - 2 ? i + 2 : i;
@@ -3805,19 +3904,35 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
              the pattern is bold without ever going to paint. */
           let e = detail[i] / dNorm;
           if (e > 1) e = 1; else if (e < -1) e = -1;
-          e *= embossAmp;
+          if (mat.kind === 'hatchlens') {
+            /* The hatch draws itself on the ground and fades on the petal
+               faces, which is exactly how the two read in the photograph. */
+            e *= embossAmp + (mat.hatchEmboss - embossAmp) * (1 - petal[i]);
+          } else {
+            e *= embossAmp;
+          }
 
           const o = i * 4;
+          const faceMix = mat.kind === 'hatchlens' ? petal[i] : 0;
           for (let ch = 0; ch < 3; ch += 1) {
             const src = mat.kind === 'frost' ? soft : scene;
             let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
+            if (faceMix) {
+              const f = flat[p00 + ch] * w00 + flat[p10 + ch] * w10 + flat[p01 + ch] * w01 + flat[p11 + ch] * w11;
+              v += (f - v) * faceMix;
+            }
             if (groundAmp) {
               /* The fine screened ground between lens elements: colour
                  passes, detail does not. */
               const g = (1 - Math.min(1, Math.abs(detail[i]) / dNorm)) * groundAmp;
               v += (240 - v) * g * 0.35;
             }
-            v += e > 0 ? (255 - v) * e : v * e;
+            /* Moulded relief SCATTERS ambient light, so it always reads
+               lighter than what is behind it -- bright motifs even over a dark
+               object. A symmetric signed emboss printed black strokes over
+               foliage and read as a decal; the negative lobe is therefore
+               heavily damped rather than mirrored. */
+            v += e > 0 ? (255 - v) * e : v * e * 0.35;
             if (veil) v += (250 - v) * veil;
             dst[o + ch] = v;
           }
