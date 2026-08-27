@@ -46788,3 +46788,13 @@ html.fg-blinds-reveal-locked {
    the horizontal-overflow check because an ancestor clipped it.
    `minmax(0, 1fr)` lets the track shrink below its content. */
 .fg-finish { grid-template-columns: minmax(0, 1fr); }
+
+/* The layer list stretches to the drawing's height so the card has no dead
+   corner, but with the drawing given a wider column the rows grew and each
+   one's content stayed pinned to the top of its row, leaving a band of nothing
+   under every heading. Centring the content in the row it was already given
+   spends that space instead of showing it. */
+.fg-cd3-layer {
+  display: grid;
+  align-content: center;
+}
