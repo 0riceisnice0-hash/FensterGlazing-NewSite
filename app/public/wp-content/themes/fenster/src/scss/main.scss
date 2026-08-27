@@ -33886,10 +33886,19 @@ html.fg-blinds-reveal-locked {
   letter-spacing: -0.025em;
 }
 
+/* THE THIRD BLANKET `!important`, AND IT SURVIVED THE FIRST CLEAR-OUT BECAUSE
+   IT IS TWELVE LINES BELOW THE ONE THAT DID NOT. This forced every h3 on the
+   route to 21.6px at 1440 and beat any namespaced rule under it, so all
+   twenty-eight of them — collection names, quiz questions, glass names, case
+   study titles — rendered at exactly one size. The quiz question was the
+   expensive one: the section is built around a large question and the question
+   was smaller than the standfirst above it.
+
+   Weight and line height are this route's house style and stay, without the
+   `!important`. Size comes from the scale below. */
 .generated-page--composite-doors h3 {
-  font-size: clamp(1.25rem, 1.5vw, 1.5rem) !important;
-  font-weight: 650 !important;
-  line-height: 1.15 !important;
+  font-weight: 650;
+  line-height: 1.15;
 }
 
 /* Composite doors V3: collections, real-home gallery and door types */
@@ -47965,4 +47974,197 @@ html.fg-blinds-reveal-locked {
     max-width: 68vw;
     scroll-snap-align: start;
   }
+}
+
+/* ==================================================================
+ * COMPOSITE DOORS: THE PAGE'S DESIGN SYSTEM
+ *
+ * The second design audit found three things and this block is all
+ * three. Measured at 1440x900 before: seven distinct h2 sizes, ONE h3
+ * size forced with `!important` across twenty-eight headings, fourteen
+ * border radii and twenty-nine box-shadows.
+ *
+ * IT IS SCOPED TO THIS ROUTE ON PURPOSE. `STYLE.md` names this page as
+ * a reference page, so it is the right place to prove a scale before
+ * anyone proposes sweeping the site with one. Nothing here reaches
+ * another route.
+ * ================================================================== */
+
+.generated-page--composite-doors {
+
+  /* ---- FIVE HEADING SIZES, AND THE H1 IS BACK ON TOP ---------------
+   * Before: 57.6 / 51.84(h1) / 37.6 / 32 / 31.68 / 28.08 / 28 / 23.2,
+   * plus 21.6 forced on every h3. The quiz heading outranked the H1,
+   * 32 and 31.68 were two sizes doing one job, and a step inside a
+   * chapter was outranked by a tail section.
+   * ---------------------------------------------------------------- */
+
+  /* 01  The page. Nothing on the route goes above it. */
+  --fg-h-page: clamp(2.1rem, 3.6vw, 3.24rem);      /* 51.84 */
+
+  /* 02  A chapter opener, and the quiz question, which is the one
+         interactive display moment on the page. */
+  --fg-h-chapter: clamp(1.6rem, 2.9vw, 2.35rem);   /* 37.60 */
+
+  /* 03  An ordinary section heading. */
+  --fg-h-section: clamp(1.45rem, 2.2vw, 2rem);     /* 32.00 */
+
+  /* 04  A step inside a chapter: glass, colour, handles. */
+  --fg-h-step: clamp(1.2rem, 1.9vw, 1.45rem);      /* 23.20 */
+
+  /* 05  A card title: a collection, a glass design, a case study. */
+  --fg-h-card: clamp(1.02rem, 1.25vw, 1.2rem);     /* 19.20 */
+
+  /* ---- THREE RADII AND THREE SHADOWS ------------------------------
+   * Fourteen radii were in use on one page: 2, 3, 4, 5, 6, 8, 10, 12,
+   * 14, 16, 20, 22, 999 and 50%. In the choosing chapter alone a 5px
+   * tile sat inside an 8px card inside a 16px surface beside a 20px
+   * explorer above a 22px panel. `STYLE.md` asks for 8px or less on
+   * cards and separately records 212 hand-typed shadows against two
+   * tokens site-wide.
+   *
+   * 999px pills and 50% circles stay: those are shapes rather than
+   * steps on a radius scale, and so is the 3px on the slab drawing,
+   * which is a door edge and not a UI corner.
+   * ---------------------------------------------------------------- */
+  --fg-r-sm: 4px;     /* tiles, chips, swatches, tags, small controls */
+  --fg-r-md: 8px;     /* cards */
+  --fg-r-lg: 16px;    /* full-width surfaces and panels */
+
+  --fg-e1: 0 1px 2px rgba(2, 43, 53, 0.04), 0 8px 20px -14px rgba(2, 43, 53, 0.3);
+  --fg-e2: 0 2px 4px rgba(2, 43, 53, 0.05), 0 18px 36px -20px rgba(2, 43, 53, 0.42);
+  --fg-e3: 0 30px 70px -34px rgba(2, 43, 53, 0.5);
+
+  /* ---- the scale, applied ---------------------------------------- */
+
+  h1 { font-size: var(--fg-h-page); }
+
+  /* Chapter openers. */
+  .fg-cds__head h2,
+  .fg-cd3-anatomy__head h2,
+  .fg-chapter-head h2 {
+    max-width: 24ch;
+    font-size: var(--fg-h-chapter);
+    line-height: 1.06;
+    letter-spacing: -0.014em;
+  }
+
+  /* THE QUIZ QUESTION IS THE ONE PLACE A SUB-HEADING OUTRANKS ITS OWN
+     SECTION HEADING, and it is deliberate. By the time you are reading
+     a question the section heading has scrolled away; the question is
+     the thing you are using. Its section head drops to an ordinary
+     section size, which is also what puts the H1 back on top. */
+  .fg-cdq__title {
+    font-size: var(--fg-h-chapter);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  /* Ordinary section headings, on one size rather than four. */
+  .fg-cdq__head h2,
+  .fg-cd3-security h2,
+  .fg-wd-cta h2,
+  .fg-product-faq h2,
+  .fg-product-quote-embed h2,
+  .fg-review-showcase h2,
+  .fg-cs-strip h2,
+  .fg-enquiry h2 {
+    font-size: var(--fg-h-section);
+    line-height: 1.1;
+  }
+
+  /* Steps inside the finishes chapter. */
+  .fg-composite-glass h2,
+  .fg-handle-finishes__heading h2,
+  .fg-finish__step-head h3 {
+    max-width: 26ch;
+    font-size: var(--fg-h-step);
+    line-height: 1.14;
+    letter-spacing: -0.006em;
+  }
+
+  /* Card titles. */
+  .fg-cds__panel-title,
+  .fg-glass-door__body h3,
+  .fg-cs-strip h3,
+  .fg-product-quote-embed h3,
+  .fg-cd3-layer__name,
+  .fg-finish__index strong {
+    font-size: var(--fg-h-card);
+  }
+
+  /* ---- the radii, applied ---------------------------------------- */
+
+  .fg-cds-door__link,
+  .fg-cdq__answer,
+  .fg-cdq__answer-block,
+  .fg-cd3-hero__credential img,
+  .fg-glass-patterns img,
+  .fg-cd3-swatch img,
+  .fg-cd3-swatch i,
+  .fg-glass-door__tag { border-radius: var(--fg-r-sm); }
+
+  .fg-cd3-anatomy__media,
+  .fg-cd3-anatomy__layers,
+  .fg-cd3-anatomy__stats,
+  .fg-wd-cta__inner,
+  .fg-glass-door,
+  .fg-cd3-colour__preview,
+  .fg-finish__index,
+  .fg-cdq__reveal-art,
+  .fg-cdq__frame,
+  .fg-cdq__frame iframe,
+  .fg-wd-next__card { border-radius: var(--fg-r-md); }
+
+  .fg-choose__surface,
+  .fg-cd3-anatomy__explorer,
+  .fg-cd3-security__inner,
+  .fg-cd3-hero__facts { border-radius: var(--fg-r-lg); }
+
+  /* ---- the shadows, applied -------------------------------------- */
+
+  .fg-cds-door__link,
+  .fg-glass-door,
+  .fg-finish__index,
+  .fg-cd3-colour__preview { box-shadow: var(--fg-e1); }
+
+  .fg-cds-door__link:hover,
+  .fg-cds-door__link:focus-visible,
+  .fg-glass-door:hover,
+  .fg-glass-door:focus-within,
+  .fg-wd-next__card:hover,
+  .fg-wd-next__card:focus-visible { box-shadow: var(--fg-e2); }
+
+  .fg-choose__surface,
+  .fg-cd3-anatomy__explorer { box-shadow: var(--fg-e3); }
+}
+
+/* ---- What the scale change means for the sections around it ------- */
+
+/* The quiz head is a label above a game now rather than a display line,
+   so the badge and the standfirst tighten with it. */
+.fg-cdq__head { margin-bottom: clamp(1.6rem, 3vw, 2.4rem); }
+
+.fg-cdq__badge { margin-bottom: 0.8rem; }
+
+/* The question carries the section, so it gets the room the head gave
+   up and sits closer to the answers it belongs to. */
+.fg-cdq__title { margin-bottom: clamp(1.75rem, 3.4vw, 2.5rem); }
+
+.fg-cdq__kicker { margin-bottom: 0.65rem; }
+
+/* ---- Two things the audit listed that are one line each ----------- */
+
+/* ~200px of dead canvas where the handles grid's bottom padding met the
+   FAQ's top padding. One join, not two. */
+.generated-page--composite-doors > .fg-product-faq { padding-top: clamp(36px, 4vw, 56px); }
+
+/* The through-link's 51.84px bottom belonged to a scale nothing else on
+   the page uses. */
+.generated-page--composite-doors > .fg-wd-cta { padding-bottom: clamp(36px, 4vw, 56px); }
+
+@media (max-width: 860px) {
+  /* The question stays the biggest thing in the band on a phone, where
+     the section heading is off screen the moment you start answering. */
+  .generated-page--composite-doors .fg-cdq__title { line-height: 1.08; }
 }
