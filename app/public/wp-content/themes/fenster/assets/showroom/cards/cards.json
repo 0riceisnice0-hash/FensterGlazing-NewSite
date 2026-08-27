@@ -1,0 +1,13 @@
+{
+  "width": 520,
+  "height": 390,
+  "cards": {
+    "tilt-turn-windows": "/assets/showroom/cards/tilt-turn-windows.webp",
+    "aluminium-flush-windows": "/assets/showroom/cards/aluminium-flush-windows.webp",
+    "heritage-windows": "/assets/showroom/cards/heritage-windows.webp",
+    "bow-bay-windows": "/assets/showroom/cards/bow-bay-windows.webp",
+    "french-casement-windows": "/assets/showroom/cards/french-casement-windows.webp",
+    "upvc-doors": "/assets/showroom/cards/upvc-doors.webp",
+    "french-doors": "/assets/showroom/cards/french-doors.webp"
+  }
+}

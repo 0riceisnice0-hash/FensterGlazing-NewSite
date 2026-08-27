@@ -1,0 +1,42 @@
+{
+  "_source": "WindowCAD via scripts/optimise-models.mjs. WindowSoftware IP, local only.",
+  "_codec": "meshopt",
+  "products": [
+    {
+      "id": "casement",
+      "file": "upvc-casement-window.glb",
+      "label": "casement",
+      "phase": "windows",
+      "animated": true,
+      "tris": 9291,
+      "bytes": 93912
+    },
+    {
+      "id": "flush",
+      "file": "flush-sash-window.glb",
+      "label": "flush",
+      "phase": "windows",
+      "animated": true,
+      "tris": 9172,
+      "bytes": 92916
+    },
+    {
+      "id": "sash",
+      "file": "sliding-sash-window.glb",
+      "label": "sash",
+      "phase": "windows",
+      "animated": true,
+      "tris": 28609,
+      "bytes": 188548
+    },
+    {
+      "id": "alu-window",
+      "file": "aluminium-windows.glb",
+      "label": "alu-window",
+      "phase": "windows",
+      "animated": false,
+      "tris": 5957,
+      "bytes": 42604
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "_source": "WindowCAD via scripts/optimise-models.mjs. WindowSoftware IP, local only.",
+  "_codec": "meshopt",
+  "products": [
+    {
+      "id": "composite",
+      "file": "composite-front-door.glb",
+      "label": "composite",
+      "phase": "doors",
+      "animated": true,
+      "tris": 14399,
+      "bytes": 116280
+    },
+    {
+      "id": "heritage-door",
+      "file": "heritage-aluminium-door.glb",
+      "label": "heritage-door",
+      "phase": "doors",
+      "animated": true,
+      "tris": 13276,
+      "bytes": 156676
+    },
+    {
+      "id": "slide-fold",
+      "file": "slide-fold-doors.glb",
+      "label": "slide-fold",
+      "phase": "doors",
+      "animated": false,
+      "tris": 9439,
+      "bytes": 68372
+    },
+    {
+      "id": "bifold",
+      "file": "aluminium-bifold-door.glb",
+      "label": "bifold",
+      "phase": "doors",
+      "animated": true,
+      "tris": 9398,
+      "bytes": 165044
+    },
+    {
+      "id": "upvc-slider",
+      "file": "upvc-sliding-patio-doors.glb",
+      "label": "upvc-slider",
+      "phase": "doors",
+      "animated": false,
+      "tris": 8379,
+      "bytes": 57940
+    },
+    {
+      "id": "alu-door",
+      "file": "aluminium-doors.glb",
+      "label": "alu-door",
+      "phase": "doors",
+      "animated": false,
+      "tris": 7235,
+      "bytes": 53996
+    },
+    {
+      "id": "alu-slider",
+      "file": "aluminium-sliding-patio-door.glb",
+      "label": "alu-slider",
+      "phase": "doors",
+      "animated": true,
+      "tris": 5293,
+      "bytes": 77284
+    }
+  ]
+}

@@ -8690,6 +8690,68 @@ document.querySelectorAll('.fg-cds').forEach((root) => {
   const tabs = Array.from(switcher.querySelectorAll('[role="tab"]'));
   if (tabs.length !== panels.length) return;
 
+  /* NARROWING, NOT BROWSING. A hundred and forty two doors is a catalogue and a
+     catalogue you cannot filter is a wall. The traits come off the markup, which
+     PHP wrote from the same measured geometry the quiz scores on, so there is
+     one source for both. */
+  const filterBar = root.querySelector('[data-fg-cds-filters]');
+  const state = { g: '', v: '', d: '' };
+  const FIRST_LOOK = 20;
+  const expanded = new Set();
+
+  const matches = (item) =>
+    (state.g === '' || item.dataset.g === state.g) &&
+    (state.v === '' || item.dataset.v === state.v) &&
+    (state.d === '' || item.dataset.d === state.d);
+
+  const paint = (panel) => {
+    const items = Array.from(panel.querySelectorAll('.fg-cds-door'));
+    const index = panel.dataset.fgCdsPanel;
+    const open = expanded.has(index);
+    let shown = 0;
+    let hits = 0;
+
+    items.forEach((item) => {
+      const hit = matches(item);
+      if (hit) hits += 1;
+      // The cap applies to what survives the filter, not to the raw list, so
+      // narrowing to nine doors never hides three of them behind a button.
+      const visible = hit && (open || shown < FIRST_LOOK);
+      if (visible) shown += 1;
+      item.hidden = !visible;
+    });
+
+    const result = panel.querySelector('[data-fg-cds-result]');
+    const count = panel.querySelector('[data-fg-cds-count]');
+    const more = panel.querySelector('[data-fg-cds-more]');
+    if (!result || !count || !more) return;
+
+    const filtered = state.g !== '' || state.v !== '' || state.d !== '';
+    result.hidden = false;
+
+    if (hits === 0) {
+      count.textContent = 'No doors match that combination. Clear a filter to see more.';
+      more.hidden = true;
+      return;
+    }
+
+    count.textContent = filtered
+      ? `${hits} of ${items.length} doors match`
+      : `${items.length} doors`;
+
+    if (hits > shown) {
+      more.hidden = false;
+      more.textContent = `Show all ${hits}`;
+    } else if (open && hits > FIRST_LOOK) {
+      more.hidden = false;
+      more.textContent = 'Show fewer';
+    } else {
+      more.hidden = true;
+    }
+  };
+
+  const paintAll = () => panels.forEach(paint);
+
   const show = (index, { focus = false } = {}) => {
     tabs.forEach((tab, i) => {
       const on = i === index;
@@ -8719,9 +8781,36 @@ document.querySelectorAll('.fg-cds').forEach((root) => {
     });
   });
 
+  if (filterBar) {
+    filterBar.querySelectorAll('[data-fg-cds-filter]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const key = chip.dataset.fgCdsFilter;
+        state[key] = chip.dataset.value;
+        filterBar
+          .querySelectorAll(`[data-fg-cds-filter="${key}"]`)
+          .forEach((sibling) => sibling.setAttribute('aria-pressed', sibling === chip ? 'true' : 'false'));
+        // A new filter is a new first look, so an expanded panel folds back.
+        expanded.clear();
+        paintAll();
+      });
+    });
+    filterBar.removeAttribute('hidden');
+  }
+
+  panels.forEach((panel) => {
+    const more = panel.querySelector('[data-fg-cds-more]');
+    if (!more) return;
+    more.addEventListener('click', () => {
+      const index = panel.dataset.fgCdsPanel;
+      if (expanded.has(index)) expanded.delete(index); else expanded.add(index);
+      paint(panel);
+    });
+  });
+
   /* Enhance last, so a throw above leaves the honest six-grid version intact. */
   switcher.removeAttribute('hidden');
   root.classList.add('is-enhanced');
+  paintAll();
   show(0);
 });
 

@@ -1,0 +1,379 @@
+[
+  {
+    "id": "casement",
+    "phase": "windows",
+    "file": "upvc-casement-window.glb",
+    "animated": true,
+    "animatedNodes": [
+      "(unnamed)"
+    ],
+    "before": {
+      "meshes": 60,
+      "prims": 60,
+      "tris": 9291,
+      "materials": 14,
+      "nodes": 60,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 380352
+    },
+    "after": {
+      "meshes": 32,
+      "prims": 32,
+      "tris": 9291,
+      "materials": 6,
+      "nodes": 60,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 93912
+    },
+    "materialsMerged": 1,
+    "roles": {
+      "frame": 1,
+      "hardware": 4,
+      "glass": 1
+    }
+  },
+  {
+    "id": "flush",
+    "phase": "windows",
+    "file": "flush-sash-window.glb",
+    "animated": true,
+    "animatedNodes": [
+      "(unnamed)"
+    ],
+    "before": {
+      "meshes": 68,
+      "prims": 68,
+      "tris": 9172,
+      "materials": 13,
+      "nodes": 68,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 384288
+    },
+    "after": {
+      "meshes": 32,
+      "prims": 32,
+      "tris": 9172,
+      "materials": 6,
+      "nodes": 60,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 92916
+    },
+    "materialsMerged": 1,
+    "roles": {
+      "hardware": 4,
+      "frame": 1,
+      "glass": 1
+    }
+  },
+  {
+    "id": "sash",
+    "phase": "windows",
+    "file": "sliding-sash-window.glb",
+    "animated": true,
+    "animatedNodes": [
+      "(unnamed)"
+    ],
+    "before": {
+      "meshes": 68,
+      "prims": 68,
+      "tris": 28609,
+      "materials": 17,
+      "nodes": 68,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 2342924
+    },
+    "after": {
+      "meshes": 62,
+      "prims": 62,
+      "tris": 28609,
+      "materials": 6,
+      "nodes": 122,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 188548
+    },
+    "materialsMerged": 1,
+    "roles": {
+      "hardware": 4,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "alu-window",
+    "phase": "windows",
+    "file": "aluminium-windows.glb",
+    "animated": false,
+    "animatedNodes": [],
+    "before": {
+      "meshes": 54,
+      "prims": 54,
+      "tris": 5957,
+      "materials": 11,
+      "nodes": 54,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 249216
+    },
+    "after": {
+      "meshes": 5,
+      "prims": 5,
+      "tris": 5957,
+      "materials": 5,
+      "nodes": 5,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 42604
+    },
+    "materialsMerged": 1,
+    "roles": {
+      "hardware": 3,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "composite",
+    "phase": "doors",
+    "file": "composite-front-door.glb",
+    "animated": true,
+    "animatedNodes": [
+      "(unnamed)"
+    ],
+    "before": {
+      "meshes": 53,
+      "prims": 53,
+      "tris": 14399,
+      "materials": 17,
+      "nodes": 53,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 1336468
+    },
+    "after": {
+      "meshes": 45,
+      "prims": 45,
+      "tris": 14399,
+      "materials": 12,
+      "nodes": 87,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 116280
+    },
+    "materialsMerged": 0,
+    "roles": {
+      "hardware": 10,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "heritage-door",
+    "phase": "doors",
+    "file": "heritage-aluminium-door.glb",
+    "animated": true,
+    "animatedNodes": [
+      "(unnamed)"
+    ],
+    "before": {
+      "meshes": 80,
+      "prims": 80,
+      "tris": 13276,
+      "materials": 15,
+      "nodes": 80,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 1273852
+    },
+    "after": {
+      "meshes": 73,
+      "prims": 73,
+      "tris": 13276,
+      "materials": 6,
+      "nodes": 144,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 156676
+    },
+    "materialsMerged": 1,
+    "roles": {
+      "hardware": 4,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "slide-fold",
+    "phase": "doors",
+    "file": "slide-fold-doors.glb",
+    "animated": false,
+    "animatedNodes": [],
+    "before": {
+      "meshes": 102,
+      "prims": 102,
+      "tris": 9439,
+      "materials": 14,
+      "nodes": 102,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 821372
+    },
+    "after": {
+      "meshes": 7,
+      "prims": 7,
+      "tris": 9439,
+      "materials": 7,
+      "nodes": 7,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 68372
+    },
+    "materialsMerged": 0,
+    "roles": {
+      "hardware": 5,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "bifold",
+    "phase": "doors",
+    "file": "aluminium-bifold-door.glb",
+    "animated": true,
+    "animatedNodes": [
+      "(unnamed)"
+    ],
+    "before": {
+      "meshes": 110,
+      "prims": 110,
+      "tris": 9398,
+      "materials": 18,
+      "nodes": 110,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 802136
+    },
+    "after": {
+      "meshes": 103,
+      "prims": 103,
+      "tris": 9398,
+      "materials": 10,
+      "nodes": 202,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 165044
+    },
+    "materialsMerged": 0,
+    "roles": {
+      "hardware": 8,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "upvc-slider",
+    "phase": "doors",
+    "file": "upvc-sliding-patio-doors.glb",
+    "animated": false,
+    "animatedNodes": [],
+    "before": {
+      "meshes": 69,
+      "prims": 69,
+      "tris": 8379,
+      "materials": 11,
+      "nodes": 69,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 749976
+    },
+    "after": {
+      "meshes": 6,
+      "prims": 6,
+      "tris": 8379,
+      "materials": 6,
+      "nodes": 6,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 57940
+    },
+    "materialsMerged": 0,
+    "roles": {
+      "hardware": 4,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "alu-door",
+    "phase": "doors",
+    "file": "aluminium-doors.glb",
+    "animated": false,
+    "animatedNodes": [],
+    "before": {
+      "meshes": 41,
+      "prims": 41,
+      "tris": 7235,
+      "materials": 11,
+      "nodes": 41,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 684340
+    },
+    "after": {
+      "meshes": 7,
+      "prims": 7,
+      "tris": 7235,
+      "materials": 7,
+      "nodes": 7,
+      "animations": 0,
+      "textures": 0,
+      "bytes": 53996
+    },
+    "materialsMerged": 1,
+    "roles": {
+      "hardware": 5,
+      "glass": 1,
+      "frame": 1
+    }
+  },
+  {
+    "id": "alu-slider",
+    "phase": "doors",
+    "file": "aluminium-sliding-patio-door.glb",
+    "animated": true,
+    "animatedNodes": [
+      "(unnamed)"
+    ],
+    "before": {
+      "meshes": 70,
+      "prims": 70,
+      "tris": 5293,
+      "materials": 11,
+      "nodes": 70,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 319364
+    },
+    "after": {
+      "meshes": 40,
+      "prims": 40,
+      "tris": 5293,
+      "materials": 5,
+      "nodes": 76,
+      "animations": 1,
+      "textures": 0,
+      "bytes": 77284
+    },
+    "materialsMerged": 0,
+    "roles": {
+      "hardware": 3,
+      "glass": 1,
+      "frame": 1
+    }
+  }
+]

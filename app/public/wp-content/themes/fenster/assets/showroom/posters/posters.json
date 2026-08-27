@@ -1,0 +1,61 @@
+{
+  "width": 900,
+  "height": 900,
+  "posters": [
+    {
+      "id": "casement",
+      "phase": "windows",
+      "kb": 9.2
+    },
+    {
+      "id": "flush",
+      "phase": "windows",
+      "kb": 10.5
+    },
+    {
+      "id": "sash",
+      "phase": "windows",
+      "kb": 11.4
+    },
+    {
+      "id": "alu-window",
+      "phase": "windows",
+      "kb": 14.6
+    },
+    {
+      "id": "composite",
+      "phase": "doors",
+      "kb": 6.1
+    },
+    {
+      "id": "heritage-door",
+      "phase": "doors",
+      "kb": 7.7
+    },
+    {
+      "id": "slide-fold",
+      "phase": "doors",
+      "kb": 12.7
+    },
+    {
+      "id": "bifold",
+      "phase": "doors",
+      "kb": 10.8
+    },
+    {
+      "id": "upvc-slider",
+      "phase": "doors",
+      "kb": 9.1
+    },
+    {
+      "id": "alu-door",
+      "phase": "doors",
+      "kb": 6.8
+    },
+    {
+      "id": "alu-slider",
+      "phase": "doors",
+      "kb": 10.5
+    }
+  ]
+}

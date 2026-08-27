@@ -109,6 +109,64 @@ $fg_cds_bare = ! empty($args['bare']);
             <?php endforeach; ?>
         </div>
 
+        <?php
+        /* NARROWING, NOT BROWSING. Owner, 2026-08-27: "don't bombard them with
+           all the changes." A hundred and forty two doors is a catalogue, and a
+           catalogue you cannot filter is a wall. Every value below is a trait
+           already in `fenster_composite_door_collections()`, measured off real
+           cassette geometry, so nothing here is a new claim about a door.
+
+           It ships hidden and the controller reveals it: with no JavaScript the
+           grids are complete and every link still works, which is the same
+           bargain the collection switcher makes. */
+        $fg_cds_filters = [
+            'g' => [
+                'label' => __('Glass', 'fenster'),
+                'opts'  => [
+                    ''  => __('Any', 'fenster'),
+                    '3' => __('Lots', 'fenster'),
+                    '2' => __('Some', 'fenster'),
+                    '1' => __('A little', 'fenster'),
+                    '0' => __('None', 'fenster'),
+                ],
+            ],
+            'v' => [
+                'label' => __('Shape', 'fenster'),
+                'opts'  => [
+                    ''  => __('Any', 'fenster'),
+                    '0' => __('Square', 'fenster'),
+                    '1' => __('Arched', 'fenster'),
+                ],
+            ],
+            'd' => [
+                'label' => __('Face', 'fenster'),
+                'opts'  => [
+                    ''  => __('Any', 'fenster'),
+                    '0' => __('Plain', 'fenster'),
+                    '1' => __('Some detail', 'fenster'),
+                    '2' => __('A feature', 'fenster'),
+                ],
+            ],
+        ];
+        ?>
+        <div class="fg-cds__filters" data-fg-cds-filters hidden>
+            <?php foreach ($fg_cds_filters as $fg_key => $fg_filter) : ?>
+                <div class="fg-cds__filter" role="group" aria-label="<?php echo esc_attr($fg_filter['label']); ?>">
+                    <span class="fg-cds__filter-label"><?php echo esc_html($fg_filter['label']); ?></span>
+                    <?php foreach ($fg_filter['opts'] as $fg_val => $fg_text) : ?>
+                        <button
+                            type="button"
+                            class="fg-cds__chip"
+                            data-fg-cds-filter="<?php echo esc_attr($fg_key); ?>"
+                            data-value="<?php echo esc_attr((string) $fg_val); ?>"
+                            aria-pressed="<?php echo $fg_val === '' ? 'true' : 'false'; ?>">
+                            <?php echo esc_html($fg_text); ?>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
         <div class="fg-cds__panels" data-fg-cds-panels>
             <?php foreach ($fg_cds_collections as $i => $collection) : ?>
                 <section
@@ -148,7 +206,11 @@ $fg_cds_bare = ! empty($args['bare']);
                                 (string) $collection['name']
                             );
                             ?>
-                            <li class="fg-cds-door">
+                            <?php $fg_t = $style['traits'] ?? []; ?>
+                            <li class="fg-cds-door"
+                                data-g="<?php echo esc_attr((string) ($fg_t['glass'] ?? '')); ?>"
+                                data-v="<?php echo esc_attr((string) ($fg_t['curved'] ?? '')); ?>"
+                                data-d="<?php echo esc_attr((string) ($fg_t['detail'] ?? '')); ?>">
                                 <a
                                     class="fg-cds-door__link"
                                     href="<?php echo esc_url(fenster_composite_door_quote_url((string) $style['key'])); ?>"
@@ -172,6 +234,13 @@ $fg_cds_bare = ! empty($args['bare']);
                             </li>
                         <?php endforeach; ?>
                     </ul>
+
+                    <?php /* The controller fills the count and reveals the button
+                             only when a collection is longer than the first look. */ ?>
+                    <p class="fg-cds__result" data-fg-cds-result hidden>
+                        <span data-fg-cds-count></span>
+                        <button type="button" class="fg-cds__more" data-fg-cds-more hidden></button>
+                    </p>
                 </section>
             <?php endforeach; ?>
         </div>

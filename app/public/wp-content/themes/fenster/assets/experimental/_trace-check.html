@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>trace check</title>
+<style>
+  body{margin:0;background:#0b1418;color:#8fa3ab;font:13px/1.4 system-ui;display:flex;gap:0;height:100vh}
+  figure{margin:0;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+  figcaption{letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+  img,object{width:340px;height:340px;background:#fff;border-radius:8px}
+  .over{position:relative;width:340px;height:340px}
+  .over img,.over object{position:absolute;inset:0}
+  .over object{mix-blend-mode:difference;background:transparent}
+</style>
+<figure><img src="../brand/favicon-512.png"><figcaption>original png</figcaption></figure>
+<figure><object data="fenster-mark.svg" type="image/svg+xml"></object><figcaption>traced svg</figcaption></figure>
+<figure><div class="over"><img src="../brand/favicon-512.png"><object data="fenster-mark.svg" type="image/svg+xml"></object></div><figcaption>difference</figcaption></figure>

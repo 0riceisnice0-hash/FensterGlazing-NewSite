@@ -3622,19 +3622,24 @@ if ($is_commercial_hub) {
      * in the shared 6/5 media box beside the copy, and the owner's verdict was
      * that it is not a hero: "it shouldn't be in that little box."
      *
-     * IT IS FULL BLEED NOW and the image is a Distinction studio render at
-     * 1920x1066 — the best-lit, highest-resolution composite door in the theme,
-     * and the only one that reads as a photographed room rather than a product
-     * cut-out. The copy sits on a scrim over it. Our own install photography is
-     * excellent and it is used further down, where proof is the job; a hero's
-     * job is the first impression, and a lit studio interior does that better
-     * than a doorway on a grey day.
+     * IT IS FULL BLEED, AND THE IMAGE IS AN EXTERIOR. Two were rejected before
+     * this one: a portrait install shot in the old boxed media, and a studio
+     * interior render. The interior was the wrong subject for a page about a
+     * FRONT door — it showed a hallway, and the thing a customer is buying is
+     * what the street sees. This is `gallery/chatsworth-double-lite`, the only
+     * exterior in the theme at usable resolution: a whole house, the door under
+     * its canopy, bay window, drive and planting, warm light. The copy sits on
+     * a scrim weighted to the foot, because the top two thirds are the house
+     * and that is what somebody should be looking at.
+     *
+     * OUR OWN INSTALL PHOTOGRAPHY IS STILL THE RIGHT CHOICE FURTHER DOWN, where
+     * proof is the job. A hero's job is the first impression.
      *
      * THE TWO STRIPS THAT USED TO FOLLOW ARE INSIDE IT: the four-fact box and
      * the approved-installer band. Three bordered strips inside the first 900px
      * was why the fold read as stacked bands rather than as a door.
      */
-    $composite_hero_stem = '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/distinction-grandeur-entrance-';
+    $composite_hero_stem = '/wp-content/themes/fenster/assets/images/products/composite-distinction/gallery/chatsworth-double-lite-';
     $composite_phone = (string) ($brand['phone'] ?? '01908 429200');
     $composite_hero_facts = [
         ['44.5mm', __('Insulated GRP slab, against 28mm for a uPVC door panel', 'fenster')],
@@ -3646,15 +3651,15 @@ if ($is_commercial_hub) {
     <section class="fg-cd3-hero">
         <div class="fg-cd3-hero__media" aria-hidden="true">
             <img
-                src="<?php echo esc_url(fenster_generated_url($composite_hero_stem . '1920w.webp')); ?>"
+                src="<?php echo esc_url(fenster_generated_url($composite_hero_stem . '1400w.webp')); ?>"
                 srcset="<?php echo esc_attr(implode(', ', [
                     fenster_generated_url($composite_hero_stem . '480w.webp') . ' 480w',
                     fenster_generated_url($composite_hero_stem . '960w.webp') . ' 960w',
-                    fenster_generated_url($composite_hero_stem . '1920w.webp') . ' 1920w',
+                    fenster_generated_url($composite_hero_stem . '1400w.webp') . ' 1400w',
                 ])); ?>"
                 sizes="100vw"
                 alt=""
-                loading="eager" fetchpriority="high" width="1920" height="1066">
+                loading="eager" fetchpriority="high" width="1400" height="1094">
             <span class="fg-cd3-hero__scrim"></span>
         </div>
 
