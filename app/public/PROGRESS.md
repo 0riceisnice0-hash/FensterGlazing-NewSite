@@ -9,6 +9,43 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-27 evening (composite doors, second pass after owner review)
+
+The first overhaul pass was reviewed and four things were rejected. All four
+were right, and three of them are the same mistake: **I fixed the structure and
+left the treatment alone.**
+
+- *"The hero image is not a hero image, it shouldn't be in that little box."*
+  I had improved the photograph inside a component that was never a hero: the
+  boxed 6/5 media the heritage door page uses. Full bleed now, on the
+  Distinction studio render, which was in the theme the whole time.
+- *"The style range, they're absolutely massive, five different viewports."*
+  I had fixed the orphan rows and the colour of the drawings and never asked
+  whether 230px was the right size for a 142-item catalogue. It is a contact
+  sheet now.
+- *"This doesn't look like a BuzzFeed quiz at all."* Correct, and the fix was
+  to go and measure one rather than imagine it: 80px questions at weight 800,
+  centred, flat saturated blocks with square corners, picture first.
+- *"The finishes, there's nothing there."* The chapter head announced a chapter
+  and then said nothing, which is exactly what an empty band reads as.
+
+### The thing worth carrying forward
+
+**A restyled component fights its own old rules, and the old rules usually
+win.** The quiz's previous white-card treatment was still in the stylesheet
+above the new one: it painted a white panel inside the new dark band, so the
+white heading vanished; it pinned the progress pips to a fixed 34px so the new
+bar never filled; and it kept the result as a two-column grid, which squeezed
+the reveal beside an empty iframe. None of it errored. **Read the old block
+before writing the new one.**
+
+### And an operational fact
+
+**SiteGround rewrites images in transit.** A PNG on the server hashed
+identically to the repo and arrived at the browser hashing differently, with its
+alpha flattened. Served-asset hashing proves a CSS or JS deploy and does not
+prove an image one.
+
 ## START HERE, 2026-08-27 pm (composite doors OVERHAULED — ON TEST, LIVE UNCHANGED)
 
 **Live is `b2420743` and has not moved. Test is twenty-seven commits ahead.**
