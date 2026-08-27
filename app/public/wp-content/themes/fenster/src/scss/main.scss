@@ -44739,14 +44739,17 @@ html.fg-blinds-reveal-locked {
 
 .fg-cdq { padding-block: clamp(44px, 6vw, 80px); }
 
-/* The card. Scoped to this section so the shared `.container` is untouched
-   everywhere else. */
+/* THE WHITE CARD IS GONE, 2026-08-27. The quiz is a full-bleed dark band now
+   and a white panel inside it hid the whole thing: the heading is white type,
+   so it vanished, and the answer tiles lost the contrast that makes them read
+   as tiles. Kept as a no-op rather than deleted so the shape of what was here
+   is still legible next to the rules below it, which still apply. */
 .fg-cdq > .container {
-  padding: clamp(24px, 3.6vw, 52px);
-  border: 1px solid rgba(0, 45, 58, 0.14);
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: var(--fg-shadow-lg);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
 
 .fg-cdq__head {
@@ -47686,4 +47689,19 @@ html.fg-blinds-reveal-locked {
 
 @media (max-width: 560px) {
   .fg-cdq__answers--2 { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The pip carried a fixed 34px width from when the progress was five dashes in
+   a row. In the bar's grid that pins every segment to 34px and the track never
+   fills, so the progress read as one green dash floating at the left. */
+.fg-cdq__bar .fg-cdq__pip { width: auto; }
+
+/* THE WHITE WORDMARK IS A FILTER, NOT A SECOND FILE. Inverting the PNG's RGB
+   turned its antialiased edge pixels dark, so the mark rendered white with a
+   black slab under it. `brightness(0) invert(1)` forces every opaque pixel to
+   white and leaves alpha alone, which is the only way to recolour a supplied
+   logo without redrawing it. One asset, and it cannot drift from the original. */
+.fg-cd3-hero__credential img {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
 }
