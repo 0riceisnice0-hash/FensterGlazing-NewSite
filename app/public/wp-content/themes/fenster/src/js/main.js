@@ -3502,6 +3502,454 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     viewport.style.setProperty('--split', `${split.toFixed(1)}%`);
   };
 
+  /* ------------------------------------------------------------------ *
+   *  Optical glass rendering.
+   *
+   *  THE TEXTURE IS NOT THE FINAL IMAGE. Pilkington's own in-context
+   *  photography (Texture by Pilkington brochure, 2026) shows what real
+   *  obscured glass does: the scene behind keeps its colour and contrast,
+   *  the pattern is nearly invisible over flat areas, and the pattern
+   *  manifests by DISPLACING and DIFFUSING whatever sits behind it. The
+   *  CSS compositing (kept below as the no-JS fallback) can only multiply
+   *  the texture's luminance over the scene, which is why it read as a
+   *  black-and-white overlay sitting on top of the photograph.
+   *
+   *  So the texture drives optics instead of colour:
+   *   - its low-frequency relief becomes a height field whose GRADIENT
+   *     refracts the scene (per-pixel displacement, like a lens);
+   *   - its high-frequency residual becomes surface roughness, choosing
+   *     how locally diffused (blurred) the refracted sample is;
+   *   - the luminance itself survives only as a faint signed glint,
+   *     darker in grooves, brighter on ridges, exactly as faint as the
+   *     embossing reads in the brochure's white-background shots.
+   *
+   *  2D canvas, no library, rendered ONCE per texture/background pick --
+   *  the same deliberate exception as the integral blind visualiser. The
+   *  render is ~600k pixels of typed-array work and completes in a few
+   *  hundred ms; the CSS layers stay painted until it lands, so slow
+   *  devices see the fallback rather than a blank pane.
+   * ------------------------------------------------------------------ */
+  const glassLayer = stage.querySelector('[data-fg-obscure-glass-layer]');
+
+  /* Per-glass optics. `strength` is refraction in output px, `heightBlur`
+     rounds the pattern's relief before its gradient is taken (bigger =
+     broader, softer lenses), `baseBlur`/`roughBlur` bound the diffusion
+     range in px, `rough` weights how much of the fine residual picks the
+     upper bound, `relief` is the glint amplitude. Values are tuned per
+     pattern against the brochure's same-scene photography -- a stipple
+     diffuses, a swirl drags, a lens doubles -- so two glasses with the
+     same privacy number no longer render identically.
+     `mode: 'css'` keeps a glass on the approved CSS compositing: Reeded
+     is locked there by owner instruction (2026-08-27), and Satin is a
+     flat acid frost with no pattern to refract. */
+  const GLASS_OPTICS = {
+    reeded: { mode: 'css' },
+    satin: { mode: 'css' },
+    /* Cassini is TWO materials, and the brochure photography shows both: the
+       petal faces are nearly clear glass, the ground between them is a fine
+       frosty stipple, and each boundary is a melted ridge that draws its own
+       line. `mask` switches the two-material path on: the flat-fielded
+       texture's brightness separates face from ground. */
+    cassini: {
+      heightBlur: 14, strength: 20, baseBlur: 0.8, roughBlur: 14, relief: 0.15,
+      mask: true, maskLow: 0.42, maskHigh: 0.58, petalRough: 0, groundRough: 0.95,
+      groundScatter: 0.35, edgeShade: 0.12, veil: 0.3, spec: 14, scale: 0.8,
+    },
+    /* Every entry below is read off Pilkington's own same-scene photography
+       (Texture by Pilkington brochure, January 2026): the fruit bowl, teapot
+       and plant shot through each glass. The privacy ladder in that document
+       is honoured by DISTORTION, not by opacity: Warwick (1) leaves the
+       teapot nearly intact, Everglade (5) scrambles it into its swirls. */
+    arctic: { heightBlur: 5, strength: 18, baseBlur: 1.2, roughBlur: 8, rough: 0.35, relief: 0.3, veil: 0.28, spec: 18, },
+    cotswold: { heightBlur: 8, strength: 24, baseBlur: 2, roughBlur: 14, rough: 0.7, relief: 0.2, veil: 0.26, spec: 12, },
+    autumn: { heightBlur: 9, strength: 16, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14 },
+    chantilly: { heightBlur: 5, strength: 8, baseBlur: 1.2, roughBlur: 7, rough: 0.5, relief: 0.3, veil: 0.1 },
+    'charcoal-sticks': { heightBlur: 6, strength: 22, baseBlur: 1.8, roughBlur: 12, rough: 0.6, relief: 0.22, veil: 0.2 },
+    contora: { heightBlur: 4, strength: 18, baseBlur: 1.8, roughBlur: 10, rough: 0.6, relief: 0.2, veil: 0.2 },
+    digital: { heightBlur: 4, strength: 17, baseBlur: 1.5, roughBlur: 8, rough: 0.5, relief: 0.25, veil: 0.14 },
+    everglade: { heightBlur: 8, strength: 25, baseBlur: 2.2, roughBlur: 12, rough: 0.65, relief: 0.25, veil: 0.28, spec: 14, },
+    florielle: {
+      heightBlur: 8, strength: 15, baseBlur: 1.5, roughBlur: 10, relief: 0.12,
+      mask: true, maskLow: 0.35, maskHigh: 0.65, petalRough: 0.2, groundRough: 0.85,
+      groundScatter: 0.2, edgeShade: 0.18, veil: 0.22,
+    },
+    mayflower: { heightBlur: 7, strength: 18, baseBlur: 2, roughBlur: 11, rough: 0.55, relief: 0.3, veil: 0.18 },
+    minster: { heightBlur: 12, strength: 14, baseBlur: 1.2, roughBlur: 7, rough: 0.4, relief: 0.18, veil: 0.12, spec: 12, },
+    oak: { heightBlur: 8, strength: 11, baseBlur: 1, roughBlur: 6, rough: 0.4, relief: 0.3, veil: 0.08 },
+    pelerine: { heightBlur: 4, strength: 11, baseBlur: 2.2, roughBlur: 9, rough: 0.8, relief: 0.2, veil: 0.24 },
+    stippolyte: { heightBlur: 2.5, strength: 6, baseBlur: 2.5, roughBlur: 8, rough: 0.95, relief: 0.2, veil: 0.26 },
+    sycamore: { heightBlur: 5, strength: 10, baseBlur: 1.5, roughBlur: 7, rough: 0.55, relief: 0.25, veil: 0.1 },
+    taffeta: { heightBlur: 7, strength: 14, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.3, veil: 0.14, spec: 14, },
+    tribal: { heightBlur: 6, strength: 22, baseBlur: 2, roughBlur: 11, rough: 0.6, relief: 0.25, veil: 0.26 },
+    warwick: { heightBlur: 9, strength: 8, baseBlur: 0.8, roughBlur: 4, rough: 0.3, relief: 0.12, veil: 0.05, spec: 10, },
+    default: { heightBlur: 7, strength: 16, baseBlur: 2, roughBlur: 8, rough: 0.6, relief: 0.2, veil: 0.16 },
+  };
+
+  let renderToken = 0;
+  let glassCanvas = null;
+
+  const glassImage = (src) => new Promise((resolve, reject) => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+
+  const drawScene = (ctx, img, w, h, mode) => {
+    if (mode === 'contain') {
+      /* The cat is letterboxed on the viewport's own backdrop, exactly as
+         `background-size: contain` paints it in the fallback. */
+      ctx.fillStyle = '#cddadb';
+      ctx.fillRect(0, 0, w, h);
+      const s = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+      const dw = img.naturalWidth * s;
+      const dh = img.naturalHeight * s;
+      ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+      return;
+    }
+    const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+    const dw = img.naturalWidth * s;
+    const dh = img.naturalHeight * s;
+    ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+  };
+
+  const drawTexture = (ctx, img, w, h, size, scale) => {
+    const pin = /^([0-9.]+)px/.exec(size || '');
+    if (!pin) {
+      const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+      ctx.drawImage(img, (w - img.naturalWidth * s) / 2, (h - img.naturalHeight * s) / 2, img.naturalWidth * s, img.naturalHeight * s);
+      return;
+    }
+    /* Pinned patterns tile. Mirror-tile them: a mirrored HEIGHT FIELD is
+       seamless and, because its luminance is never shown, the symmetry
+       that made a mirrored photograph read as a chevron is invisible. */
+    const tw = Math.max(1, Math.round(parseFloat(pin[1]) * (scale || 1)));
+    const th = /100%$/.test(size) ? h : Math.max(1, Math.round(img.naturalHeight * tw / img.naturalWidth));
+    /* Brick-laid mirror tiling. A plain mirror produced a four-fold quatrefoil
+       symmetry an independent review spotted as a lattice; offsetting each
+       alternate row by half a tile breaks the symmetry while the mirroring
+       still keeps the height field seamless. */
+    for (let ty = 0, ry = 0; ty < h + th; ty += th, ry += 1) {
+      const shift = ry % 2 ? -(tw >> 1) : 0;
+      for (let tx = shift, rx = 0; tx < w + tw; tx += tw, rx += 1) {
+        ctx.save();
+        ctx.translate(rx % 2 ? tx + tw : tx, ry % 2 ? ty + th : ty);
+        ctx.scale(rx % 2 ? -1 : 1, ry % 2 ? -1 : 1);
+        ctx.drawImage(img, 0, 0, tw, th);
+        ctx.restore();
+      }
+    }
+  };
+
+  const luminanceOf = (ctx, w, h) => {
+    const src = ctx.getImageData(0, 0, w, h).data;
+    const out = new Float32Array(w * h);
+    for (let i = 0, j = 0; i < out.length; i += 1, j += 4) {
+      out[i] = src[j] * 0.299 + src[j + 1] * 0.587 + src[j + 2] * 0.114;
+    }
+    return out;
+  };
+
+  const renderGlassOptics = async () => {
+    if (!glassLayer) return;
+    const button = buttons.find((option) => option.classList.contains('is-active')) || buttons[0];
+    const key = button?.dataset.key || '';
+    const optics = GLASS_OPTICS[key] || GLASS_OPTICS.default;
+    const textureUrl = /url\("?([^")]+)"?\)/.exec(button?.dataset.texture || '');
+
+    if (optics.mode === 'css' || !textureUrl) {
+      stage.dataset.glassRender = 'css';
+      return;
+    }
+
+    const token = renderToken += 1;
+    const background = stage.dataset.activeBackground === 'cat' ? 'cat' : 'house';
+    const sceneUrl = background === 'cat' ? stage.dataset.catImage : stage.dataset.houseImage;
+    if (!sceneUrl) {
+      stage.dataset.glassRender = 'css';
+      return;
+    }
+
+    try {
+      const rect = stage.querySelector('.fg-obscure-stage__viewport')?.getBoundingClientRect();
+      const w = Math.max(320, Math.min(900, Math.round(rect?.width || 900)));
+      const h = Math.max(240, Math.min(675, Math.round(rect?.height || 675)));
+      const [sceneImg, textureImg] = await Promise.all([glassImage(sceneUrl), glassImage(textureUrl[1])]);
+      if (token !== renderToken) return;
+
+      const make = () => {
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        return c.getContext('2d', { willReadFrequently: true });
+      };
+
+      /* The scene, and two diffusion levels of it. Canvas blur runs on the
+         GPU; the per-pixel pass then just picks between the two. */
+      const sceneCtx = make();
+      drawScene(sceneCtx, sceneImg, w, h, background === 'cat' ? 'contain' : 'cover');
+      const softCtx = make();
+      softCtx.filter = `blur(${optics.baseBlur}px)`;
+      softCtx.drawImage(sceneCtx.canvas, 0, 0);
+      const roughCtx = make();
+      roughCtx.filter = `blur(${optics.roughBlur}px)`;
+      roughCtx.drawImage(sceneCtx.canvas, 0, 0);
+      const soft = softCtx.getImageData(0, 0, w, h).data;
+      const diffuse = roughCtx.getImageData(0, 0, w, h).data;
+      /* Frost is not white paint. An etched surface scatters the light of its
+         own surroundings, so every frost term below pulls toward the LOCAL
+         scene colour lifted toward white -- greenish milk over foliage, blue
+         milk over sky -- never toward a flat grey. Three independent reviews
+         called the constant-colour version chalk. */
+      const avgCtx = make();
+      avgCtx.filter = 'blur(26px)';
+      avgCtx.drawImage(sceneCtx.canvas, 0, 0);
+      const AVG = avgCtx.getImageData(0, 0, w, h).data;
+
+      /* The pattern, its rounded height field, and the fine residual. */
+      const texCtx = make();
+      texCtx.fillStyle = '#808080';
+      texCtx.fillRect(0, 0, w, h);
+      drawTexture(texCtx, textureImg, w, h, button.dataset.size || 'cover', optics.scale);
+      let T = luminanceOf(texCtx, w, h);
+
+      /* Flat-field the pattern at runtime. Several of the photographs are of
+         small samples lit from one side (Cassini's illumination runs 105 to
+         198 across the frame), and any brightness threshold or gradient taken
+         on the raw photograph inherits that slope as a phantom tilt across
+         the whole pane. Dividing out a heavily blurred copy removes the
+         lighting and keeps the pattern, without touching the asset. */
+      const broadCtx = make();
+      broadCtx.filter = 'blur(44px)';
+      broadCtx.drawImage(texCtx.canvas, 0, 0);
+      const B = luminanceOf(broadCtx, w, h);
+      for (let i = 0; i < T.length; i += 1) T[i] = Math.min(255, Math.max(0, T[i] - B[i] + 128));
+
+      /* Write the flat field back so every derived map (height, edges) is
+         computed from the corrected pattern, with GPU blurs. */
+      const flatImage = texCtx.createImageData(w, h);
+      for (let i = 0, j = 0; i < T.length; i += 1, j += 4) {
+        flatImage.data[j] = flatImage.data[j + 1] = flatImage.data[j + 2] = T[i];
+        flatImage.data[j + 3] = 255;
+      }
+      texCtx.putImageData(flatImage, 0, 0);
+      const heightCtx = make();
+      heightCtx.filter = `blur(${optics.heightBlur}px)`;
+      heightCtx.drawImage(texCtx.canvas, 0, 0);
+      const H = luminanceOf(heightCtx, w, h);
+      /* The GPU blur returns 8-bit, and on the gentle slopes of a broad
+         height field the one-level steps render as fingerprint rings inside
+         every lens. A small separable float box-blur dissolves the steps
+         into a continuum; two passes of it, both cheap. */
+      const smoothField = (field, R) => {
+        const tmp = new Float32Array(field.length);
+        const span = R * 2 + 1;
+        for (let y = 0; y < h; y += 1) {
+          const row = y * w;
+          let acc = 0;
+          for (let k = -R; k <= R; k += 1) acc += field[row + Math.min(w - 1, Math.max(0, k))];
+          for (let x = 0; x < w; x += 1) {
+            tmp[row + x] = acc / span;
+            acc += field[row + Math.min(w - 1, x + R + 1)] - field[row + Math.max(0, x - R)];
+          }
+        }
+        for (let x = 0; x < w; x += 1) {
+          let acc = 0;
+          for (let k = -R; k <= R; k += 1) acc += tmp[Math.min(h - 1, Math.max(0, k)) * w + x];
+          for (let y = 0; y < h; y += 1) {
+            field[y * w + x] = acc / span;
+            acc += tmp[Math.min(h - 1, y + R + 1) * w + x] - tmp[Math.max(0, y - R) * w + x];
+          }
+        }
+      };
+      smoothField(H, 3);
+      smoothField(H, 3);
+
+      /* The fine residual, pre-smoothed. Read raw it renders as per-pixel
+         dither speckle along every frost edge -- an independent review
+         called it compression noise -- smoothed it reads as frost grain. */
+      const FINE = new Float32Array(T.length);
+      for (let i = 0; i < T.length; i += 1) FINE[i] = Math.abs(T[i] - H[i]);
+      smoothField(FINE, 2);
+      /* A sharper relief for the melt-ridge lines the brochure shots show at
+         every petal boundary; the broad H above is for the lensing. */
+      const edgeCtx = make();
+      edgeCtx.filter = 'blur(2.5px)';
+      edgeCtx.drawImage(texCtx.canvas, 0, 0);
+      const HS = luminanceOf(edgeCtx, w, h);
+
+      /* Two-material mask: on a flat-fielded pattern, brightness separates
+         the smooth faces from the frosted ground between them. Percentile
+         bounds, so the split survives exposure differences between assets. */
+      let P = null;
+      let maskLo = 0;
+      let maskSpan = 1;
+      if (optics.mask) {
+        /* From a SMOOTHED copy: the raw pattern is stippled, and a per-pixel
+           threshold of stipple gave every window a salt-and-pepper fringe. */
+        P = new Float32Array(T);
+        smoothField(P, 3);
+        const sample = new Float32Array(4096);
+        for (let i = 0; i < 4096; i += 1) sample[i] = P[(2003 * i) % P.length];
+        const sortedT = Array.from(sample).sort((a, b) => a - b);
+        maskLo = sortedT[Math.floor(sortedT.length * optics.maskLow)];
+        maskSpan = Math.max(1, sortedT[Math.floor(sortedT.length * optics.maskHigh)] - maskLo);
+      }
+
+      /* Normalise the slope response so `strength` is real output pixels
+         at the pattern's strongest edges, whatever the photograph's
+         exposure. p99, not max: one hot pixel must not flatten the rest. */
+      const mags = new Float32Array(4096);
+      for (let i = 0; i < 4096; i += 1) {
+        const px = (997 * i) % (w * h);
+        const x = px % w;
+        const y = (px - x) / w;
+        if (x < 1 || y < 1 || x >= w - 1 || y >= h - 1) continue;
+        const gx = H[px + 1] - H[px - 1];
+        const gy = H[px + w] - H[px - w];
+        mags[i] = Math.hypot(gx, gy);
+      }
+      const sorted = Array.from(mags).sort((a, b) => a - b);
+      const gNorm = Math.max(sorted[Math.floor(sorted.length * 0.99)], 1e-3);
+      /* And the residual likewise -- without this, `relief` meant something
+         wildly different per texture: an embossed lace whose residual runs
+         ten times a stipple's rendered as a solid white stamp at the same
+         setting that left the stipple faint. p90 of a sample, so one number
+         means one look everywhere. */
+      const fSample = new Float32Array(4096);
+      for (let i = 0; i < 4096; i += 1) fSample[i] = FINE[(1499 * i) % FINE.length];
+      const fSorted = Array.from(fSample).sort((a, b) => a - b);
+      const fNorm = Math.max(fSorted[Math.floor(fSorted.length * 0.9)], 1e-3);
+
+      const out = sceneCtx.createImageData(w, h);
+      const dst = out.data;
+      const reliefAmp = optics.relief;
+      const roughAmp = optics.rough;
+      const veil = optics.veil || 0;
+      const specAmp = optics.spec || 8;
+
+      for (let y = 0; y < h; y += 1) {
+        const yw = y * w;
+        for (let x = 0; x < w; x += 1) {
+          const i = yw + x;
+          /* A two-pixel baseline. The height field comes back from the GPU
+             blur as 8-bit, so at gentle slopes it steps one level at a time
+             and a one-pixel gradient draws the steps as topographic rings
+             across every face. The wider baseline averages the steps away. */
+          const xm = x > 1 ? i - 2 : i;
+          const xp = x < w - 2 ? i + 2 : i;
+          const ym = y > 1 ? i - 2 * w : i;
+          const yp = y < h - 2 ? i + 2 * w : i;
+          /* Refraction: slope of the rounded relief, soft-saturated so the
+             strongest edges fold the image (the lenticular doubling in the
+             reference) without tearing. */
+          let gx = (H[xp] - H[xm]) / gNorm;
+          let gy = (H[yp] - H[ym]) / gNorm;
+          gx /= 1 + Math.abs(gx) * 0.5;
+          gy /= 1 + Math.abs(gy) * 0.5;
+          const sx = Math.min(w - 1.001, Math.max(0, x + gx * optics.strength));
+          const sy = Math.min(h - 1.001, Math.max(0, y + gy * optics.strength));
+
+          /* Roughness. Two-material glasses read it off the mask: the frosted
+             ground diffuses hard, the polished faces barely. Single-material
+             glasses read it off the fine residual: a stipple is rough
+             everywhere, a smooth swirl only at its engraved lines. */
+          let rough;
+          let face = 1;
+          if (P) {
+            face = (P[i] - maskLo) / maskSpan;
+            if (face < 0) face = 0; else if (face > 1) face = 1;
+            rough = optics.groundRough + (optics.petalRough - optics.groundRough) * face;
+          } else {
+            rough = Math.abs(T[i] - H[i]) * 0.04 * roughAmp;
+            if (rough > 1) rough = 1;
+          }
+
+          const x0 = sx | 0;
+          const y0 = sy | 0;
+          const fx = sx - x0;
+          const fy = sy - y0;
+          const p00 = (y0 * w + x0) * 4;
+          const p10 = p00 + 4;
+          const p01 = p00 + w * 4;
+          const p11 = p01 + 4;
+          const w00 = (1 - fx) * (1 - fy);
+          const w10 = fx * (1 - fy);
+          const w01 = (1 - fx) * fy;
+          const w11 = fx * fy;
+
+          /* Fine surface frost. Steep micro-facets scatter light toward a
+             frost grey -- paler than dark foliage, greyer than open sky --
+             which is how the pattern reads in the reference photography:
+             never darker-stamped, never pure white. A signed additive term
+             here drew dark rings over greenery and an independent review
+             caught it as a multiply-style overlay. */
+          let fine = FINE[i] / fNorm;
+          if (fine > 1) fine = 1;
+          /* Capped well short of opaque: even the deepest etching still
+             transmits. A full pull rendered the lace glasses as white
+             paint-stamps over the scene. */
+          fine *= reliefAmp;
+
+          /* The melt-ridge at each pattern boundary draws its own line --
+             darker where the surface turns hard. Read off the sharper relief
+             so the line is crisp while the lensing stays broad. */
+          let edge = 0;
+          if (P) {
+            const ex = (HS[xp] - HS[xm]) / gNorm;
+            const ey = (HS[yp] - HS[ym]) / gNorm;
+            edge = Math.min(1, Math.hypot(ex, ey)) * optics.edgeShade;
+          }
+          const scatter = P ? (1 - face) * optics.groundScatter : 0;
+
+          /* Gloss: a fixed light from the upper left catches every slope,
+             bright on the facing side, a shade darker on the far side. It is
+             slope-driven, so it reads as surface rather than as a stamp. */
+          const gloss = -(gx * 0.55 + gy * 0.83) * specAmp;
+
+          const o = i * 4;
+          for (let ch = 0; ch < 3; ch += 1) {
+            const a = soft[p00 + ch] * w00 + soft[p10 + ch] * w10 + soft[p01 + ch] * w01 + soft[p11 + ch] * w11;
+            const b = diffuse[p00 + ch] * w00 + diffuse[p10 + ch] * w10 + diffuse[p01 + ch] * w01 + diffuse[p11 + ch] * w11;
+            const local = AVG[o + ch];
+            const frostT = local + (255 - local) * 0.55;
+            let v = a + (b - a) * rough;
+            v += (frostT - v) * fine;
+            v += (local + (255 - local) * 0.7 - v) * scatter;
+            /* The melt-ridge lightens toward the local frost tone, never
+               toward black and never toward flat grey. */
+            v += (frostT - v) * edge;
+            /* THE PRIVACY VEIL. Every reference lifts the whole pane toward
+               white -- but toward a white carrying the local colour, which
+               is what separates glass from chalk. It sits on top of real
+               optics; the old CSS model's mistake was veil INSTEAD of them. */
+            v += (local + (255 - local) * 0.62 - v) * veil;
+            v += gloss;
+            dst[o + ch] = v;
+          }
+          dst[o + 3] = 255;
+        }
+      }
+
+      if (token !== renderToken) return;
+      if (!glassCanvas) {
+        glassCanvas = document.createElement('canvas');
+        glassCanvas.className = 'fg-obscure-stage__optics';
+        glassCanvas.setAttribute('aria-hidden', 'true');
+        glassLayer.appendChild(glassCanvas);
+      }
+      glassCanvas.width = w;
+      glassCanvas.height = h;
+      glassCanvas.getContext('2d').putImageData(out, 0, 0);
+      stage.dataset.glassRender = 'canvas';
+    } catch (error) {
+      /* Anything at all -- a failed decode, a tainted canvas -- and the CSS
+         compositing stays up. The pane must never go blank. */
+      stage.dataset.glassRender = 'css';
+    }
+  };
+
   const activateBackground = (name) => {
     const image = name === 'house' ? stage.dataset.houseImage : stage.dataset.catImage;
     if (image) {
@@ -3512,6 +3960,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     if (backgroundToggle) {
       backgroundToggle.textContent = name === 'cat' ? 'Show house background' : 'Show Legend background';
     }
+    renderGlassOptics();
   };
 
   const activate = (button) => {
@@ -3538,6 +3987,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
     stage.style.setProperty('--privacy', privacy);
     stage.dataset.activeGlass = key;
+    renderGlassOptics();
     if (nameTarget) nameTarget.textContent = name;
     if (privacyTarget) privacyTarget.textContent = privacy === '0' ? 'Decorative texture' : `Privacy ${privacy}`;
     if (copyTarget) copyTarget.textContent = copy;
@@ -3551,6 +4001,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       activate(button);
     });
   });
+
+  renderGlassOptics();
 
   splitControl?.addEventListener('input', () => {
     setSplit(splitControl.value);
