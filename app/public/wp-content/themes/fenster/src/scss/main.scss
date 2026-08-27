@@ -48212,3 +48212,12 @@ html.fg-blinds-reveal-locked {
      the card size, so the outline reported a size nothing rendered at. */
   .fg-cd3-layer h3 { font-size: var(--fg-h-card); }
 }
+
+/* The two-answer grid carried `max-width: 720px` from the white-card era,
+   so inside the 992px panel the tiles sat left with 270px of empty band
+   beside them. With the question now carrying the section, the answers
+   are the other half of the composition and they fill it. */
+.generated-page--composite-doors .fg-cdq__answers--2 {
+  max-width: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
