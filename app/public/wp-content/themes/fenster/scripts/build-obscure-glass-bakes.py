@@ -44,7 +44,7 @@ GLASS = THEME / "assets/images/products/obscure-glass"
 # Bump when the recipe changes. Bakes are emitted through `fenster_generated_url()`
 # like any theme image, so they carry no version string and rewriting one in place
 # leaves the reviewer's browser serving the old bytes.
-BAKE_REVISION = "b1"
+BAKE_REVISION = "b2"
 OUT = GLASS / "baked" / BAKE_REVISION
 
 # The stage is `aspect-ratio: 4 / 3` capped at 900px wide, so this is its exact
