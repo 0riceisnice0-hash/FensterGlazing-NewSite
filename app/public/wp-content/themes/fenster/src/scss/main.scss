@@ -10822,6 +10822,55 @@ html.fg-gallery-lightbox-open body {
   mix-blend-mode: soft-light;
 }
 
+/* A FACETED ROUTE BENDS THE SCENE INSTEAD OF BLURRING IT UNEVENLY. Owner, with
+   Pilkington's own photograph: every petal in real Cassini carries its own
+   displaced sample of the room behind it, hard-edged, so one facet shows the
+   green of the window and the next shows the pink of a cushion. Nothing built out
+   of blur can do that at any setting, because blur does not MOVE anything -- and
+   two review rounds were spent tuning blur before that was obvious.
+
+   So the scene layer runs through an `feDisplacementMap` whose map is quantised
+   into bands on the pattern's own luminance, which puts a hard step exactly on
+   each facet boundary. A smooth gradient of the photograph was tried first and
+   rendered as heat haze.
+
+   Three consequences, all deliberate:
+   - The blur comes right down. The facets do the obscuring now, so the privacy
+     blur would only muddy them.
+   - `__refract` comes off. Its job was carrying colour through the flat parts,
+     and the facets now do that better and with real displacement.
+   - Everything texture-derived is sized `100% 100%`, because `feImage` is
+     stretched to the filter box. Leave the relief on `cover` and the outlines
+     stop landing on the colour patches, which reads as dirt rather than glass. */
+.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__glass::before {
+  filter: blur(7px) brightness(132%) saturate(0.78) url("#fg-obscure-facets");
+}
+
+.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__refract {
+  display: none;
+}
+
+.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__relief {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* The pane is high-key on the real thing: mostly pale frost with the scene's
+   colour showing only inside the facets. Without this the render is far more
+   saturated than the photograph it is copying. */
+.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__glass::after {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.27), rgba(255, 255, 255, 0.27)),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.09), transparent 55%, rgba(255, 255, 255, 0.06));
+}
+
+.fg-obscure-stage__filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 /* Satin has no photograph -- it is a CSS gradient, and a flat acid-etched frost
    has no edges to shade -- so it has no maps and both layers come off. This is
    NOT cosmetic: an absent mask reads as fully opaque, which would show the

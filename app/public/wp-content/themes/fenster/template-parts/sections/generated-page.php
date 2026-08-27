@@ -3117,6 +3117,10 @@ if ($is_obscure_glass) {
     };
     $active_glass_rim = is_array($obscure_glass_first) ? $obscure_glass_map($obscure_glass_first, 'rim') : 'none';
     $active_glass_clear = is_array($obscure_glass_first) ? $obscure_glass_map($obscure_glass_first, 'clear') : 'none';
+    $active_glass_facet = is_array($obscure_glass_first) ? $obscure_glass_map($obscure_glass_first, 'facet') : 'none';
+    $active_glass_facet_url = is_array($obscure_glass_first) && trim((string) ($obscure_glass_first['facet'] ?? '')) !== ''
+        ? fenster_generated_url((string) $obscure_glass_first['facet'])
+        : '';
     $active_glass_texture = is_array($obscure_glass_first) ? $obscure_glass_tile_value($obscure_glass_first) : 'none';
     $active_glass_texture_size = is_array($obscure_glass_first) ? $obscure_glass_texture_size($obscure_glass_first) : 'cover';
     $obscure_glass_left = array_slice($obscure_glass_textures, 0, 10, true);
@@ -3146,6 +3150,7 @@ if ($is_obscure_glass) {
             data-size="<?php echo esc_attr(trim((string) ($texture['size'] ?? 'cover'))); ?>"
             data-rim="<?php echo esc_attr(trim((string) ($texture['rim'] ?? '')) !== '' ? 'url("' . fenster_generated_url((string) $texture['rim']) . '")' : 'none'); ?>"
             data-clear="<?php echo esc_attr(trim((string) ($texture['clear'] ?? '')) !== '' ? 'url("' . fenster_generated_url((string) $texture['clear']) . '")' : 'none'); ?>"
+            data-facet="<?php echo esc_url(trim((string) ($texture['facet'] ?? '')) !== '' ? fenster_generated_url((string) $texture['facet']) : ''); ?>"
             data-name="<?php echo esc_attr($texture_name); ?>"
             data-key="<?php echo esc_attr(sanitize_title($texture_name)); ?>"
             data-privacy="<?php echo esc_attr((string) $privacy); ?>"
@@ -3220,6 +3225,18 @@ if ($is_obscure_glass) {
                     <?php endforeach; ?>
                 </div>
 
+                <?php /* The displacement filter. `feImage` is stretched to the filter box with
+                         preserveAspectRatio="none", so every texture-derived layer on a
+                         faceted route is sized 100% 100% to match it -- misalign the map
+                         from the pattern and the outlines stop landing on the colour
+                         patches, which reads as dirt rather than glass. JS swaps the href
+                         when the pattern changes. */ ?>
+                <svg class="fg-obscure-stage__filters" width="0" height="0" aria-hidden="true" focusable="false">
+                    <filter id="fg-obscure-facets" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+                        <feImage data-fg-obscure-facet-map preserveAspectRatio="none" x="0" y="0" width="100%" height="100%" result="fgFacetMap" href="<?php echo esc_url($active_glass_facet_url); ?>" />
+                        <feDisplacementMap in="SourceGraphic" in2="fgFacetMap" scale="52" xChannelSelector="R" yChannelSelector="G" />
+                    </filter>
+                </svg>
                 <div
                     class="fg-obscure-stage"
                     <?php /* Painted with the house already in place, because the JS
@@ -3227,6 +3244,7 @@ if ($is_obscure_glass) {
                              scene would visibly swap the moment the script ran. */ ?>
                     style="<?php echo esc_attr('--scene-image:url(' . fenster_generated_url($house_image !== '' ? $house_image : $legend_image) . '); --active-texture:' . $active_glass_texture . '; --active-texture-size:' . $active_glass_texture_size . '; --active-texture-rim:' . $active_glass_rim . '; --active-texture-clear:' . $active_glass_clear . '; --privacy:' . $active_glass_privacy); ?>"
                     data-glass-maps="<?php echo esc_attr($active_glass_clear === 'none' ? 'no' : 'yes'); ?>"
+                    data-glass-facets="<?php echo esc_attr($active_glass_facet === 'none' ? 'no' : 'yes'); ?>"
                     data-cat-image="<?php echo esc_url(fenster_generated_url($legend_image)); ?>"
                     data-house-image="<?php echo esc_url(fenster_generated_url($house_image)); ?>"
                     data-active-background="house"

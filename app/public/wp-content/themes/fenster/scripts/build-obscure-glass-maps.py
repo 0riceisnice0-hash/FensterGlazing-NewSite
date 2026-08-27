@@ -58,7 +58,7 @@ GLASS = Path("assets/images/products/obscure-glass")
 # review you are answering then shows no change and you conclude the fix did not
 # work. The source-rename rule covers a changed PHOTOGRAPH; this covers a changed
 # FORMULA, which the r1 -> r2 MAD normalisation was.
-MAPS_REVISION = "r2"
+MAPS_REVISION = "r3"
 MAPS = GLASS / "maps" / MAPS_REVISION
 
 # Maps are only ever sampled through `background-size`/`mask-size`, so there is
@@ -123,6 +123,43 @@ RIM_TARGET_MAD = 21.0
 
 CLEAR_LO_PCT = 58.0
 CLEAR_HI_PCT = 80.0
+
+
+# Textures that also get a FACET DISPLACEMENT MAP. Opt-in per texture, because it
+# only makes sense where the glass is genuinely made of discrete lenses. Cassini
+# is the worked example: the owner pointed at Pilkington's own photograph, where
+# every petal carries its own displaced sample of the room behind it -- green from
+# the window in one, pink from the cushion in the next -- with hard edges between.
+# Blur variation cannot produce that no matter how it is tuned, because blur does
+# not MOVE anything. Roll it out to another texture by adding its filename here
+# and a `facet` key in `obscure_glass`.
+FACET_SOURCES = {
+    "Cassini-privacy-5-rev4.webp": 8,   # value = how many facet bands
+}
+
+
+def facet_map(grey: Image.Image, bands: int) -> Image.Image:
+    """Per-facet displacement, encoded R = x shift, G = y shift, 128 = no shift.
+
+    QUANTISED ON PURPOSE. A smooth gradient of the photograph was tried first and
+    rendered as heat haze: continuous displacement smears the scene instead of
+    breaking it into lenses. Real Cassini is discrete facets with hard edges, so
+    the map is quantised into bands on the texture's own luminance and each band
+    is pushed a fixed distance in its own direction around a circle. The step
+    between bands lands exactly on the pattern's own boundaries, which is what
+    gives the hard edge, and neighbouring facets then sample genuinely different
+    parts of the scene.
+    """
+    a = np.asarray(grey.filter(ImageFilter.GaussianBlur(2.5)), dtype=float)
+    cuts = np.percentile(a, np.linspace(0, 100, bands + 1))
+    level = np.clip(np.digitize(a, cuts[1:-1]), 0, bands - 1)
+    theta = np.linspace(0, 2 * np.pi, bands, endpoint=False) + 0.6
+    dx = np.cos(theta)[level]
+    dy = np.sin(theta)[level]
+    r = np.clip(128 + dx * 115, 0, 255)
+    g = np.clip(128 + dy * 115, 0, 255)
+    b = np.full_like(r, 128.0)
+    return Image.fromarray(np.dstack([r, g, b]).astype(np.uint8), "RGB")
 
 
 def rim_map(grey: Image.Image) -> Image.Image:
@@ -236,7 +273,18 @@ def derive_reeded() -> None:
     # fan slightly, so it read as a bold chevron. The owner's words: "reeded
     # looks good but the thumbnail for it doesnt". So two assets: the levelled
     # photograph for anything that displays it, the mirrored one for the tile.
-    levelled.save(GLASS / "Reeded-privacy-2-levelled.webp", "WEBP", quality=90, method=6)
+    # LIFTED TOWARDS THE SET, owner instruction 2026-08-27. This copy is only ever
+    # shown as a portrait -- a 58px swatch, a wall tile, a card panel -- next to
+    # nineteen others, and Reeded is the second-darkest source in the set at mean
+    # 118.5 against 148.6. It read as the one near-black square in a pale column.
+    # The TILE is untouched, so the pane the owner approved does not move; that is
+    # the whole reason the two are separate assets.
+    disp = np.asarray(levelled, dtype=float)
+    disp = 148.0 + (disp - disp.mean()) * 0.82
+    Image.fromarray(np.clip(disp, 0, 255).astype(np.uint8)).save(
+        GLASS / "Reeded-privacy-2-levelled.webp", "WEBP", quality=90, method=6)
+    print(f"    display copy lifted to mean {np.clip(disp,0,255).mean():.1f} "
+          f"(set mean 148.6), tile left alone")
 
     mirrored = Image.new("L", (levelled.width * 2, levelled.height))
     mirrored.paste(levelled, (0, 0))
@@ -285,6 +333,10 @@ def main() -> None:
         clear = clear_map(grey)
         clear_path = MAPS / f"{stem}-clear.webp"
         clear.save(clear_path, "WEBP", quality=MAP_QUALITY, method=6, exact=True)
+
+        if name in FACET_SOURCES:
+            facet_map(grey, FACET_SOURCES[name]).save(
+                MAPS / f"{stem}-facet.webp", "WEBP", quality=MAP_QUALITY, method=6)
 
         size = rim_path.stat().st_size + clear_path.stat().st_size
         total += size

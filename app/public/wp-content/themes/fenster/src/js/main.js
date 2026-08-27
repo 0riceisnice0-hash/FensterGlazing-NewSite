@@ -3545,6 +3545,18 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       stage.style.setProperty('--active-texture-rim', rim);
       stage.style.setProperty('--active-texture-clear', clear);
       stage.dataset.glassMaps = clear === 'none' ? 'no' : 'yes';
+      /* The facet map drives an SVG feDisplacementMap, which is the only thing
+         here that actually MOVES the scene rather than blurring it. Set on the
+         filter's feImage rather than as a custom property, because a filter
+         primitive reads an attribute and not CSS. Both `href` and the xlink form
+         are written: Safari still wants the latter. */
+      const facet = button.dataset.facet || '';
+      const facetMap = visualiser.querySelector('[data-fg-obscure-facet-map]');
+      if (facetMap) {
+        facetMap.setAttribute('href', facet);
+        facetMap.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', facet);
+      }
+      stage.dataset.glassFacets = facet === '' ? 'no' : 'yes';
     }
 
     stage.style.setProperty('--privacy', privacy);
