@@ -48524,3 +48524,58 @@ html.fg-blinds-reveal-locked {
 
   .generated-page--composite-doors .fg-cd3-colour__preview { position: static; }
 }
+
+/* ---- Finishes, second look ---------------------------------------- */
+
+.generated-page--composite-doors {
+
+  /* The chapter head was floating in about 150px above and 100px below.
+     It belongs to the surface under it. */
+  > .fg-finish { padding-top: clamp(40px, 4.4vw, 62px); }
+
+  .fg-finish .fg-chapter-head { margin-bottom: clamp(1.1rem, 2.2vw, 1.6rem); }
+
+  /* Twenty-seven swatches in four columns is seven rows, which is what
+     pushed the colour step past the glass step it is meant to sit under.
+     Six columns is five rows and the chips are still comfortably bigger
+     than the 160px source they are drawn from. */
+  .fg-cd3-colour__swatches { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
+
+  .fg-cd3-swatch span { font-size: 0.7rem; }
+
+  /* Still centred, from the narrow figure this used to be. The nesting
+     changed under it and the earlier override lost its scope. */
+  .fg-cd3-colour__preview figcaption {
+    text-align: left;
+    padding: 0.7rem 0.85rem 0.8rem;
+  }
+
+  /* A step head reads better as a title with its explanation beside it
+     than as a 570px column with 700px of nothing to the right. */
+  .fg-finish__body .fg-finish__step-head,
+  .fg-finish__body .fg-handle-finishes__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+    gap: 0.35rem clamp(1.25rem, 2.6vw, 2.25rem);
+    align-items: start;
+    max-width: none;
+
+    .eyebrow { grid-column: 1; }
+    h2, h3 { grid-column: 1; margin-bottom: 0; }
+    p { grid-column: 2; grid-row: 1 / span 2; margin: 0; align-self: center; }
+  }
+}
+
+@media (max-width: 860px) {
+  .generated-page--composite-doors {
+    .fg-finish__body .fg-finish__step-head,
+    .fg-finish__body .fg-handle-finishes__heading {
+      grid-template-columns: minmax(0, 1fr);
+
+      .eyebrow, h2, h3, p { grid-column: 1; grid-row: auto; }
+      h2, h3 { margin-bottom: 0.45rem; }
+    }
+
+    .fg-cd3-colour__swatches { grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); }
+  }
+}
