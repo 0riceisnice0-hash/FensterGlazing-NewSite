@@ -3560,14 +3560,14 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        and plant shot through each glass. The privacy ladder in that document
        is honoured by DISTORTION, not by opacity: Warwick (1) leaves the
        teapot nearly intact, Everglade (5) scrambles it into its swirls. */
-    arctic: { heightBlur: 4, strength: 22, baseBlur: 1.2, roughBlur: 7, rough: 0.35, relief: 0.3, veil: 0.28, spec: 18, grain: 0.05 },
+    arctic: { heightBlur: 3, strength: 22, baseBlur: 1.2, roughBlur: 7, rough: 0.35, relief: 0.3, veil: 0.28, spec: 18, grain: 0.05 },
     cotswold: {
       type: 'directional', axisX: 1, axisY: 0,
-      heightBlur: 6, strength: 30, baseBlur: 2.5, roughBlur: 12, rough: 0.7,
-      relief: 0.2, veil: 0.26, grain: 0.05, spec: 12,
+      heightBlur: 6, strength: 34, baseBlur: 2.5, roughBlur: 16, rough: 0.85,
+      relief: 0.2, veil: 0.32, grain: 0.05, spec: 12,
     },
-    autumn: { heightBlur: 9, strength: 16, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14 },
-    chantilly: { heightBlur: 5, strength: 7, baseBlur: 1.2, roughBlur: 7, rough: 0.5, relief: 0.35, veil: 0.1, grain: 0.05, spec: 8 },
+    autumn: { heightBlur: 6, strength: 16, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14, grain: 0.05, spec: 8 },
+    chantilly: { heightBlur: 5, strength: 5, baseBlur: 1.2, roughBlur: 7, rough: 0.5, relief: 0.5, veil: 0.1, grain: 0.05, spec: 8 },
     'charcoal-sticks': {
       type: 'directional', axisX: 1, axisY: 0,
       heightBlur: 4, strength: 34, baseBlur: 2, roughBlur: 9, rough: 0.55,
@@ -3580,14 +3580,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       relief: 0.22, veil: 0.14, grain: 0.05, spec: 10,
     },
     everglade: { heightBlur: 7, strength: 28, baseBlur: 2.2, roughBlur: 12, rough: 0.65, relief: 0.3, veil: 0.28, spec: 16, grain: 0.05 },
-    florielle: {
-      heightBlur: 8, strength: 15, baseBlur: 1.5, roughBlur: 10, relief: 0.12,
-      mask: true, maskLow: 0.35, maskHigh: 0.65, petalRough: 0.2, groundRough: 0.85,
-      groundScatter: 0.2, edgeShade: 0.18, veil: 0.22,
-    },
-    mayflower: { heightBlur: 7, strength: 18, baseBlur: 2, roughBlur: 11, rough: 0.55, relief: 0.32, veil: 0.18, grain: 0.06, spec: 10 },
+    florielle: { heightBlur: 7, strength: 12, baseBlur: 1.2, roughBlur: 9, rough: 0.5, relief: 0.4, veil: 0.2, grain: 0.06, spec: 10 },
+    mayflower: { heightBlur: 6, strength: 14, baseBlur: 2, roughBlur: 11, rough: 0.55, relief: 0.4, veil: 0.18, grain: 0.06, spec: 10 },
     minster: { heightBlur: 12, strength: 14, baseBlur: 1.2, roughBlur: 7, rough: 0.4, relief: 0.18, veil: 0.12, spec: 12, },
-    oak: { heightBlur: 8, strength: 11, baseBlur: 1, roughBlur: 6, rough: 0.4, relief: 0.3, veil: 0.08, grain: 0.04, spec: 10 },
+    oak: { heightBlur: 8, strength: 9, baseBlur: 1, roughBlur: 6, rough: 0.4, relief: 0.42, veil: 0.08, grain: 0.04, spec: 10 },
     pelerine: {
       type: 'diffusion',
       heightBlur: 3, strength: 3.5, baseBlur: 2.5, roughBlur: 8, rough: 0.8,
@@ -3603,8 +3599,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       heightBlur: 4, strength: 3, baseBlur: 1.8, roughBlur: 6, rough: 0.6,
       relief: 0.28, veil: 0.1, grain: 0.07, spec: 8,
     },
-    taffeta: { heightBlur: 9, strength: 24, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14, spec: 16, grain: 0.04 },
-    tribal: { heightBlur: 5, strength: 24, baseBlur: 2, roughBlur: 11, rough: 0.6, relief: 0.28, veil: 0.26, grain: 0.06, spec: 10 },
+    taffeta: { heightBlur: 13, strength: 26, baseBlur: 1.5, roughBlur: 9, rough: 0.5, relief: 0.25, veil: 0.14, spec: 20, grain: 0.04 },
+    tribal: { heightBlur: 5, strength: 14, baseBlur: 2, roughBlur: 11, rough: 0.6, relief: 0.45, veil: 0.26, grain: 0.06, spec: 10 },
     warwick: {
       type: 'directional', axisX: 1, axisY: 0,
       heightBlur: 8, strength: 10, baseBlur: 1, roughBlur: 3, rough: 0.35,
