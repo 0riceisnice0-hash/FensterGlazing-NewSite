@@ -649,6 +649,22 @@ are the repair proposition.
 - **A NEW FILTER FOLDS AN EXPANDED PANEL BACK.** A filter is a new first look; leaving a panel expanded means somebody who filters to six doors is handed a "show fewer" button that does nothing useful.
 - **THE FILTER BAR SHIPS `hidden` AND THE CONTROLLER REVEALS IT**, the same bargain the collection switcher makes: with no JavaScript all six grids are complete and every link still works.
 
+## Composite Finishes Chapter Rule
+
+- **IT IS ONE SURFACE WITH THREE NUMBERED STEPS, NOT THREE SECTIONS ON BARE CANVAS.** It was 3,992px at 1440 — thirty per cent of the page — running glass into colour into handles with no change of ground and nothing marking where one decision ended and the next began. 3,408px now, and 6,828 to 4,128 on a phone.
+- **THE INDEX IS GONE AND MUST NOT COME BACK.** The chapter head used to list Glass, Colour and Handles with a fact each, directly above Glass, Colour and Handles. **A table of contents for three things already on screen is duplication wearing a card**, and it cost 280px. The step numbers in the gutter do that job for nothing.
+- **THE STEP NUMBER IS STICKY.** A step can be 1,600px; its heading leaves the screen long before its content does.
+- **THE THREE COMPONENTS KEEP THEIR OWN `<section>` AND `.container`, NEUTRALISED IN CSS.** `handle-grid.php` is shared with five other routes and must not be forked for this one.
+- **THE COLOUR STEP'S SECOND HEAD PARAGRAPH MOVED UNDER THE SWATCHES.** It is a caveat about a range rather than a preamble to looking at one. **Both halves of the owner-confirmed 2026-07-29 wording survive verbatim** — a selection rather than the whole range, and any RAL matched beyond it. Check that before trimming it again.
+
+### Three CSS traps this chapter cost, all of which fail silently
+
+- **THE EYEBROW IS A `<p>` AND SO IS THE EXPLANATION.** A rule placing "the paragraph" in the second column caught the eyebrow too, so the eyebrow spanned both rows and sat 69px above the heading it labels. Use `p:not(.eyebrow)`.
+- **A GRID ITEM SPANNING TWO AUTO ROWS DISTRIBUTES ITS HEIGHT ACROSS THEM.** With the heading already filling row two, the whole surplus landed in row one and a 25px eyebrow sat in a 98px track. Pin the row: `grid-template-rows: min-content auto`.
+- **`justify-items: center` BEATS `text-align: left`** on a grid figcaption, because the text is left-aligned inside a shrink-to-fit box that is itself centred. This one wasted two passes.
+
+- **EVERY MOBILE RULE FOR THIS CHAPTER LIVES IN ONE BLOCK AT THE END OF `main.scss`. ADD TO IT RATHER THAN WRITING A NEW MEDIA QUERY FURTHER UP.** A desktop rule appended after its own `@media (max-width: 860px)` override wins at every width — same specificity, later wins — and **that mistake cost height on a phone three separate times in one day**: 344px door cards, a colour wall laid out off-screen, and a two-column step head on a 332px screen whose heading wrapped to eight lines. **The mobile selector must also match the desktop one class for class**; a shorter one loses on specificity and the failure looks identical.
+
 ## Composite Decorative Glass Rule
 
 - **SIX DESIGNS ARE SHOWN IN A DOOR AND FIVE ARE SHOWN AS PATTERNS, AND THE SPLIT IS DERIVED FROM THE FILESYSTEM.** `composite-glass.php` checks for `composite-distinction/glass-doors/{slug}-800w.webp` and promotes any design that has one. **A design moves into the top grid the moment its render lands and nothing needs editing.**
