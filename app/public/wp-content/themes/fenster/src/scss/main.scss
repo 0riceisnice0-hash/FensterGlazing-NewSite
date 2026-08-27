@@ -46821,3 +46821,14 @@ html.fg-blinds-reveal-locked {
 
   .fg-wd-hero__media img { aspect-ratio: 5 / 4; }
 }
+
+/* The glass step's head is a two-column grid aligned to its baseline, which
+   sat its intro paragraph above and to the right of its own heading. Inside the
+   finishes chapter it is one of three steps and has to read like the other two,
+   so it takes the same single-column head. */
+.generated-page--composite-doors .fg-composite-glass__head {
+  display: block;
+  max-width: 60ch;
+}
+
+.generated-page--composite-doors .fg-composite-glass__head > div { margin-bottom: 0.5rem; }
