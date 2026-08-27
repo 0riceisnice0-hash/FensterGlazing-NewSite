@@ -625,6 +625,15 @@ are the repair proposition.
 - **FIVE QUESTIONS, ONE AT A TIME, IS OURS AND STAYS.** BuzzFeed stacks all of them; on a page this long, one at a time is what keeps the section to a screen. The borrowed thing is the register, not the pagination.
 - **THE RANGE IS A CONTACT SHEET.** Owner: *"the style range, they're absolutely massive, that's five different viewports"*. It was 19 doors at 230px a drawing. The line art is simple outlines and reads at a tenth of that, so the tiles are ~96px in an `auto-fill` grid, which puts a collection on a screen or two.
 
+## Composite Doors Design System Rule
+
+- **THE PAGE HAS FIVE HEADING SIZES AND THE H1 IS ON TOP OF THEM.** `51.84 / 37.6 / 31.68 / 23.2 / 18` at 1440, as `--fg-h-page`, `--fg-h-chapter`, `--fg-h-section`, `--fg-h-step`, `--fg-h-card`, declared on `.generated-page--composite-doors`. Before: seven h2 sizes, one h3 size, and the quiz heading outranking the H1.
+- **THE QUIZ QUESTION IS THE ONE PLACE A SUB-HEADING OUTRANKS ITS OWN SECTION HEADING, AND IT IS DELIBERATE.** The question takes `--fg-h-chapter` and the quiz's own h2 drops to `--fg-h-section`. By the time somebody is reading a question the section heading has scrolled off; the question is what they are using. Demoting the section head is also what put the H1 back on top.
+- **THERE WERE THREE BLANKET `!important` HEADING RULES ON THIS ROUTE, NOT TWO.** Two on `h2` and one on `h3`, and **the h3 one survived the first clear-out because it sits twelve lines below the h2 rule that did not.** It forced all twenty-eight h3s to 21.6px. **When you find one blanket rule, read the whole block it lives in before assuming it is alone.**
+- **THREE RADII AND THREE SHADOWS: `--fg-r-sm/md/lg` at 4/8/16px, `--fg-e1/e2/e3`.** Fourteen radii were in use on one page. **999px pills and 50% circles are shapes rather than steps and stay off the scale**, and so does the 3px on `.fg-cd3-slab__body`, which is a door edge in a drawing rather than a UI corner.
+- **SHARED SITE FURNITURE IS DELIBERATELY NOT TOKENISED HERE.** Buttons at 6px and form fields at 10px are the site's language; giving one route its own would swap a page-level inconsistency for a site-level one. The scale is scoped to this route because `STYLE.md` names it a reference page, which makes it the place to prove one before anybody sweeps the site.
+- **DO NOT TOKENISE THE SLAB CUTAWAY'S SHADOWS.** Roughly twenty of the page's twenty-nine distinct box-shadows belong to it: every layer, rail, highlight and material carries its own inset shadow, and those are lighting on a technical illustration, not UI elevation. **A design audit that counts them is counting the wrong thing** — the real number of untokenised UI surfaces was closer to nine.
+
 ## Composite Decorative Glass Rule
 
 - **SIX DESIGNS ARE SHOWN IN A DOOR AND FIVE ARE SHOWN AS PATTERNS, AND THE SPLIT IS DERIVED FROM THE FILESYSTEM.** `composite-glass.php` checks for `composite-distinction/glass-doors/{slug}-800w.webp` and promotes any design that has one. **A design moves into the top grid the moment its render lands and nothing needs editing.**
