@@ -1246,8 +1246,21 @@ A change is not complete until the relevant checks pass:
   in the obscure-glass controller in `src/js/main.js` (2D canvas, no library,
   once per pick — the blind-visualiser exception, deliberately extended). The
   CSS compositing below it is the no-JS and failed-render fallback, and
-  **Reeded and Satin stay on it by per-glass `mode: 'css'`** — Reeded is
-  owner-locked, Satin is a flat frost with nothing to refract.
+  **only Satin stays on it by `mode: 'css'`** — a flat frost with nothing to
+  refract. **Reeded's lock was superseded by the owner's own glass-by-glass QA
+  later the same night** ("too dark, pattern repetition incorrect"): both
+  faults were the multiply compositing it was locked to, which can only
+  darken, so it renders through the directional optics now. Its two derived
+  assets (`tile`/`image` split, levelled portrait) remain in use.
+- **THE OWNER'S GLASS-BY-GLASS QA OF 2026-08-27 (LATE) IS THE CURRENT
+  ACCEPTANCE BASELINE.** Satin, Pelerine, Stippolyte and Sycamore passed and
+  are not to be reworked without instruction. The twelve problem glasses were
+  corrected per glass, in the owner's priority order, and the acceptance test
+  is written into the instruction: **Cassini, Autumn, Cotswold, Reeded and
+  Minster side by side must read as five different optical signatures**, each
+  recognisably closer to its own reference — not "nicer", different. The
+  directional `cross` bleed is per glass because a shared meander constant was
+  itself re-creating the universal wave.
 - **EACH GLASS IS A MATERIAL TYPE, NOT A STRENGTH SETTING. Owner correction,
   2026-08-27 (night): every glass had converged on the Minster look because one
   isotropic pipeline was scaled per glass — the model could not say
