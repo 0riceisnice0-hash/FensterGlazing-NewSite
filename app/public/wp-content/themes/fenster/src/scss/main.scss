@@ -10843,7 +10843,7 @@ html.fg-gallery-lightbox-open body {
      stretched to the filter box. Leave the relief on `cover` and the outlines
      stop landing on the colour patches, which reads as dirt rather than glass. */
 .fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__glass::before {
-  filter: blur(7px) brightness(132%) saturate(0.78) url("#fg-obscure-facets");
+  filter: blur(7px) brightness(106%) saturate(0.82) url("#fg-obscure-facets");
 }
 
 .fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__refract {
@@ -10860,8 +10860,27 @@ html.fg-gallery-lightbox-open body {
    saturated than the photograph it is copying. */
 .fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__glass::after {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.27), rgba(255, 255, 255, 0.27)),
-    linear-gradient(115deg, rgba(255, 255, 255, 0.09), transparent 55%, rgba(255, 255, 255, 0.06));
+    linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10)),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.03), transparent 55%, rgba(255, 255, 255, 0.02));
+}
+
+/* TOO SHINY, owner 2026-08-27, and the measurement found it rather than taste.
+   The pane was putting 10.8% of its pixels above 230 and 3.0% above 245 — blown
+   white — where Pilkington's own photograph of the same glass has NONE above 230
+   at all. Three sources, all turned down together: the brightness lift was
+   clipping the sky, a 0.27 white veil sat over everything, and `__shine` paints a
+   hard diagonal white streak that reads as gloss on a pane this pale. Now 0.6%
+   above 230.
+
+   THE RIM MAP IS NOT ONE OF THE SOURCES, though it looks like it should be.
+   `RIM_SHADE` exceeds `RIM_LIGHT` everywhere, so the map never rises above 128
+   and under `soft-light` it can only ever darken. Checked before tuning it.
+
+   And do not read the reference's top end as a target for the pane: that
+   photograph has a dim room behind it and ours has a sunny exterior with white
+   render and open sky, so some genuinely bright glass is correct here. */
+.fg-obscure-stage[data-glass-facets="yes"] .fg-obscure-stage__shine {
+  opacity: 0.04;
 }
 
 .fg-obscure-stage__filters {
