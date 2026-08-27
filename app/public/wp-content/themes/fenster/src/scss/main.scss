@@ -46832,3 +46832,10 @@ html.fg-blinds-reveal-locked {
 }
 
 .generated-page--composite-doors .fg-composite-glass__head > div { margin-bottom: 0.5rem; }
+
+/* THE LAST SEAM ON THE PAGE. The glass step paints its own gradient panel,
+   which met the shared canvas in a visible horizontal line partway down the
+   finishes chapter: the same banding fault the Site-Wide Background Rule
+   records against this page, and the reason the colour step lost its band
+   earlier in this block. The grid below already supplies local contrast. */
+.generated-page--composite-doors .fg-composite-glass { background: transparent; }
