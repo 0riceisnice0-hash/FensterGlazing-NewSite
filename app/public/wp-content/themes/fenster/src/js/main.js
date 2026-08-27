@@ -1171,22 +1171,47 @@ document.querySelectorAll('[data-fg-collection-carousel]').forEach((carousel) =>
 // grows back into the wall of text it replaced, and the panel keeps a steady
 // height instead of shunting the stats down the page as you read.  The first
 // layer is open in the markup, so this works as a plain list with JS off.
+/*
+ * Slab layer explorer.
+ *
+ * EXACTLY ONE ROW IS OPEN AT ALL TIMES, including on load, and that is a
+ * requirement rather than a preference: since 2026-08-27 the drawing beside the
+ * list highlights whichever layer is open, so collapsing to nothing would leave
+ * a cutaway pointing at a component nobody selected. Clicking the open row is
+ * therefore a no-op rather than a close.
+ *
+ * The only other thing this does is write the open index to the root as
+ * `data-active-layer`. Everything visual hangs off that one attribute in the
+ * stylesheet, including the leader dot's position, so there are no geometry
+ * numbers in here to drift out of step with the ones in the SCSS.
+ */
 document.querySelectorAll('[data-fg-anatomy]').forEach((explorer) => {
   const toggles = [...explorer.querySelectorAll('[data-fg-anatomy-toggle]')];
   if (!toggles.length) return;
 
+  const open = (toggle) => {
+    toggles.forEach((other) => {
+      const body = document.getElementById(other.getAttribute('aria-controls'));
+      const on = other === toggle;
+      other.setAttribute('aria-expanded', on ? 'true' : 'false');
+      if (body) body.hidden = !on;
+    });
+    const index = toggle.dataset.fgAnatomyLayer;
+    if (index != null) explorer.dataset.activeLayer = index;
+  };
+
   toggles.forEach((toggle) => {
     toggle.addEventListener('click', () => {
-      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-
-      toggles.forEach((other) => {
-        const body = document.getElementById(other.getAttribute('aria-controls'));
-        const open = other === toggle && !isOpen;
-        other.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if (body) body.hidden = !open;
-      });
+      // Re-clicking the open row used to collapse it. See above.
+      if (toggle.getAttribute('aria-expanded') === 'true') return;
+      open(toggle);
     });
   });
+
+  // Re-assert from the markup so the attribute and the accordion cannot start
+  // out of step if the open row is ever changed in PHP.
+  const initial = toggles.find((t) => t.getAttribute('aria-expanded') === 'true') || toggles[0];
+  if (initial) open(initial);
 });
 
 /*

@@ -1,7 +1,7 @@
 <?php
 /**
- * "Which composite door are you?" — a stylised four-question quiz that ends on
- * one door, with the quote tool open on it.
+ * "Which composite door are you?" — a stylised five-question quiz that ends on
+ * one door, with the quote tool open on it, in the colour that was picked.
  *
  * THIS IS BUILT TO BE SHARED, which is the whole reason it looks the way it
  * does. It runs one question at a time on a bordered white card, the answers
@@ -53,7 +53,7 @@ if (empty($fg_quiz_collections)) {
 /**
  * WindowCAD carries pricing shorthand in one style name — "ESC08 POA" — and it
  * surfaced as "We think you will like the ESC08 POA", which is jargon shouted at
- * somebody who has just answered four friendly questions. The suffix is stripped
+ * somebody who has just answered five friendly questions. The suffix is stripped
  * for display and kept as a flag, so the result can say plainly that this one is
  * priced on application rather than pretending or hiding it.
  */
@@ -178,14 +178,18 @@ foreach ($fg_colours as $fg_col) {
 
 $fg_known = array_column($fg_quiz_doors, 'k');
 $fg_total = count($fg_questions);
+
+/* Rendered inside the choosing chapter's own surface, which supplies the
+   container. Standalone is kept working for any route that calls this alone. */
+$fg_quiz_bare = ! empty($args['bare']);
 ?>
-<section class="fg-cdq" aria-labelledby="fg-cdq-title"
+<section class="fg-cdq<?php echo $fg_quiz_bare ? ' fg-cdq--bare' : ''; ?>" aria-labelledby="fg-cdq-title"
     data-fg-door-quiz
     data-fg-quiz-doors="<?php echo esc_attr((string) wp_json_encode($fg_quiz_doors)); ?>"
     data-fg-quiz-art="<?php echo esc_attr($fg_art); ?>"
     data-fg-quiz-ver="<?php echo esc_attr((string) $fg_ver); ?>"
     data-fg-quiz-quote="<?php echo esc_attr(fenster_composite_door_quote_url('__KEY__')); ?>">
-    <div class="container">
+    <?php if (! $fg_quiz_bare) : ?><div class="container"><?php endif; ?>
 
         <header class="fg-cdq__head">
             <p class="eyebrow"><?php esc_html_e('Five questions', 'fenster'); ?></p>
@@ -209,8 +213,20 @@ $fg_total = count($fg_questions);
                     <div class="fg-cdq__q" data-fg-quiz-q="<?php echo esc_attr($fg_q['id']); ?>" data-fg-quiz-step="<?php echo esc_attr((string) $fg_i); ?>" hidden>
                         <p class="fg-cdq__kicker"><?php echo esc_html($fg_q['kicker']); ?></p>
                         <h3 class="fg-cdq__title"><?php echo esc_html($fg_q['title']); ?></h3>
-                        <div class="fg-cdq__answers fg-cdq__answers--<?php echo esc_attr((string) count($fg_q['answers'])); ?><?php echo ! empty($fg_q['swatches']) ? ' fg-cdq__answers--swatches' : ''; ?>">
-                            <?php foreach ($fg_q['answers'] as $fg_a) : ?>
+                        <?php
+                        /* A SKIP IS NOT AN ANSWER AND MUST NOT LOOK LIKE ONE.
+                           "Honestly, neither" carries no drawing, so inside the
+                           answer grid it rendered as an empty bordered box the
+                           same size as two illustrated doors, which reads as a
+                           missing image rather than as a choice. It is a plain
+                           control under the grid now. The controller finds any
+                           `[data-fg-quiz-answer]` inside the step, so moving it
+                           out of the grid changes nothing about the scoring. */
+                        $fg_grid_answers = array_values(array_filter($fg_q['answers'], static fn ($a) => $a['value'] !== null));
+                        $fg_skip_answers = array_values(array_filter($fg_q['answers'], static fn ($a) => $a['value'] === null));
+                        ?>
+                        <div class="fg-cdq__answers fg-cdq__answers--<?php echo esc_attr((string) count($fg_grid_answers)); ?><?php echo ! empty($fg_q['swatches']) ? ' fg-cdq__answers--swatches' : ''; ?>">
+                            <?php foreach ($fg_grid_answers as $fg_a) : ?>
                                 <?php
                                 $fg_key = (string) $fg_a['pic'];
                                 $fg_has = $fg_key !== '' && in_array($fg_key, $fg_known, true);
@@ -235,6 +251,15 @@ $fg_total = count($fg_questions);
                                 </button>
                             <?php endforeach; ?>
                         </div>
+                        <?php if (! empty($fg_skip_answers)) : ?>
+                            <p class="fg-cdq__skip">
+                                <?php foreach ($fg_skip_answers as $fg_a) : ?>
+                                    <button type="button" class="fg-cdq__skip-btn" data-fg-quiz-answer="">
+                                        <?php echo esc_html($fg_a['label']); ?>
+                                    </button>
+                                <?php endforeach; ?>
+                            </p>
+                        <?php endif; ?>
                         <button type="button" class="fg-cdq__back" data-fg-quiz-back hidden aria-label="<?php esc_attr_e('Back to the previous question', 'fenster'); ?>">
                             <?php esc_html_e('Back', 'fenster'); ?>
                         </button>
@@ -269,5 +294,5 @@ $fg_total = count($fg_questions);
                 </div>
             </div>
         </div>
-    </div>
+    <?php if (! $fg_quiz_bare) : ?></div><?php endif; ?>
 </section>

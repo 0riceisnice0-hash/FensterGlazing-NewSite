@@ -56,6 +56,8 @@ function fenster_composite_door_collections(): array
     return [
         [
             'name'   => 'Traditional',
+            'slab'   => 'Panelled slab, glass cut into it',
+            'intro'  => 'A moulded slab with raised detail and the glazed section cut into it. Much the biggest group, and where most period and estate frontages end up.',
             'styles' => [
                 ['key' => '247', 'name' => '3 Quarter Lite', 'slab' => '3 Quarter Lite', 'glass_options' => 4, 'traits' => ['glass' => 3, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
                 ['key' => '0', 'name' => 'Elegance', 'slab' => '4 Panel Blank', 'glass_options' => 17, 'traits' => ['glass' => 3, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
@@ -80,6 +82,8 @@ function fenster_composite_door_collections(): array
         ],
         [
             'name'   => 'Esprit',
+            'slab'   => 'One flat woodgrain slab',
+            'intro'  => 'A single flat face with no moulded detail at all, so the glass shape does the work. Clean without feeling cold.',
             'styles' => [
                 ['key' => '105', 'name' => 'ESC06C', 'slab' => 'Flush', 'glass_options' => 15, 'traits' => ['glass' => 2, 'detail' => 0, 'curved' => 0, 'modern' => 1, 'apertures' => 2]],
                 ['key' => '104', 'name' => 'ESC06L', 'slab' => 'Flush', 'glass_options' => 15, 'traits' => ['glass' => 2, 'detail' => 0, 'curved' => 0, 'modern' => 1, 'apertures' => 2]],
@@ -128,6 +132,8 @@ function fenster_composite_door_collections(): array
         ],
         [
             'name'   => 'Rustic Renown',
+            'slab'   => 'Shiplap boards inside a border',
+            'intro'  => 'Tongue and groove boards framed by a plain border. It reads like a cottage door on a cottage and like a design choice on a new build.',
             'styles' => [
                 ['key' => '68', 'name' => 'RR01', 'slab' => 'Retail Cottage', 'glass_options' => 0, 'traits' => ['glass' => 0, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 0]],
                 ['key' => '69', 'name' => 'RR02', 'slab' => 'Retail Cottage', 'glass_options' => 13, 'traits' => ['glass' => 1, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
@@ -160,6 +166,8 @@ function fenster_composite_door_collections(): array
         ],
         [
             'name'   => 'Renown',
+            'slab'   => 'Full shiplap, no border',
+            'intro'  => 'The same boards running edge to edge with nothing framing them. The most flexible door we fit: it suits a Victorian terrace and a new build equally.',
             'styles' => [
                 ['key' => '250', 'name' => 'RE01', 'slab' => 'Cottage', 'glass_options' => 0, 'traits' => ['glass' => 0, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 0]],
                 ['key' => '251', 'name' => 'RE02', 'slab' => 'Cottage', 'glass_options' => 13, 'traits' => ['glass' => 1, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
@@ -190,6 +198,8 @@ function fenster_composite_door_collections(): array
         ],
         [
             'name'   => 'Infinity',
+            'slab'   => 'Long horizontal grooves',
+            'intro'  => 'The most modern end of the range. Wide grooves, bold glass shapes and long bar handles rather than a lever.',
             'styles' => [
                 ['key' => '46', 'name' => 'GD01', 'slab' => 'GD01', 'glass_options' => 0, 'traits' => ['glass' => 0, 'detail' => 0, 'curved' => 0, 'modern' => 1, 'apertures' => 0]],
                 ['key' => '47', 'name' => 'GD02L', 'slab' => 'GD01', 'glass_options' => 5, 'traits' => ['glass' => 2, 'detail' => 0, 'curved' => 0, 'modern' => 1, 'apertures' => 1]],
@@ -218,6 +228,8 @@ function fenster_composite_door_collections(): array
         ],
         [
             'name'   => 'Stable Doors',
+            'slab'   => 'Split across the middle',
+            'intro'  => 'The top half opens on its own while the bottom stays shut and locked. Kitchens, utility rooms and anyone with a dog or small children.',
             'styles' => [
                 ['key' => '38', 'name' => 'RES05', 'slab' => 'Cottage', 'glass_options' => 4, 'traits' => ['glass' => 2, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
                 ['key' => '37', 'name' => 'RES04', 'slab' => 'Cottage', 'glass_options' => 15, 'traits' => ['glass' => 1, 'detail' => 0, 'curved' => 0, 'modern' => 0, 'apertures' => 1]],
