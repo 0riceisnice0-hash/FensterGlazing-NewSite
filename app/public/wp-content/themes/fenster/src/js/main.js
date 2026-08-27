@@ -3502,28 +3502,12 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     viewport.style.setProperty('--split', `${split.toFixed(1)}%`);
   };
 
-  /* The obscured half is a baked image, one per pattern per background, so the
-     stage needs re-pointing when EITHER changes. Both paths call this rather
-     than each setting the variable itself, which is how the background toggle
-     would otherwise have left the previous pattern's bake on screen. */
-  let activeOption = null;
-  let activeBackgroundName = 'house';
-  const applyBake = () => {
-    if (!activeOption) return;
-    const bake = activeBackgroundName === 'cat'
-      ? activeOption.dataset.bakeCat
-      : activeOption.dataset.bakeHouse;
-    if (bake) stage.style.setProperty('--active-glass-bake', `url("${bake}")`);
-  };
-
   const activateBackground = (name) => {
     const image = name === 'house' ? stage.dataset.houseImage : stage.dataset.catImage;
     if (image) {
       stage.style.setProperty('--scene-image', `url("${image}")`);
     }
 
-    activeBackgroundName = name;
-    applyBake();
     stage.dataset.activeBackground = name;
     if (backgroundToggle) {
       backgroundToggle.textContent = name === 'cat' ? 'Show house background' : 'Show Legend background';
@@ -3552,8 +3536,6 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       stage.style.setProperty('--active-texture-size', button.dataset.size || 'cover');
     }
 
-    activeOption = button;
-    applyBake();
     stage.style.setProperty('--privacy', privacy);
     stage.dataset.activeGlass = key;
     if (nameTarget) nameTarget.textContent = name;

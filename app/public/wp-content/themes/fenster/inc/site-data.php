@@ -3518,7 +3518,7 @@ function fenster_site_data(): array
             'legend_image' => '/wp-content/themes/fenster/assets/team/legend-colour.webp',
             'house_image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/birkacre-house.webp',
             'textures' => [
-                ['name' => 'Cotswold', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cotswold-pilkington.png', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/cotswold--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/cotswold--cat.webp', 'copy' => 'Heavy distortion for high privacy while retaining a traditional textured feel.'],
+                ['name' => 'Cotswold', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cotswold-pilkington.png', 'copy' => 'Heavy distortion for high privacy while retaining a traditional textured feel.'],
                 /* Satin is a sandblasted finish, so it is grain rather than lines. This
                    entry used to be a hand-drawn repeating-linear-gradient, which read as
                    pinstripe and contradicted its own description on a customer-facing
@@ -3528,38 +3528,15 @@ function fenster_site_data(): array
                satin does not have. Acid-etched glass is an even, flat frost, so it
                is an even, flat wash now: a soft diagonal for a little depth and a
                faint sheen off one corner, and no grain at all. */
-            ['name' => 'Satin', 'privacy' => 5, 'texture' => 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%), linear-gradient(135deg, #f7fbfb 0%, #eef6f7 46%, #e4f0f1 100%)', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/satin--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/satin--cat.webp', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
-                ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/arctic--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/arctic--cat.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
-                ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/autumn--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/autumn--cat.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
-                /* THE FAULT HERE WAS SPATIAL, NOT TONAL, AND MEAN-AND-STDDEV CANNOT SEE IT.
-               Owner report, 2026-08-26: the pane was "way too dark", with parts of it
-               reading almost transparent and parts near black. rev2 measured mean 158,
-               stddev 46 — both inside the set, both signed off on that basis — and it was
-               still wrong, because this is a photograph of a 150mm sample lit from one
-               side. Its illumination ran 105 at the top to 192 in the middle, and 198 on
-               the left to 113 on the right: a low-frequency spread of 143 levels against a
-               set median of 49, the worst in the set. The bright dome read as clear glass
-               and the vignetted edges read as black, and because it tiles at 500px the
-               dark edge landed as a band down the pane. On the swatch it was worse: the
-               swatch is deliberately `cover` so it shows the WHOLE pattern, which meant it
-               showed the whole vignette, and Cassini was the one near-black square in a
-               column of pale ones.
-
-               THE CHECK THAT CATCHES IT is the low-frequency spread — blur the texture
-               hard and measure max minus min. rev2 was 143, rev3 is 10, the set median is
-               49. Measure that as well as mean and stddev before accepting any photographed
-               texture.
-
-               Corrected by flat-field division: divide by a Gaussian estimate of the
-               illumination (sigma 50 on 900px), then set the mean and re-apply contrast at
-               gain 0.55. Mean 200, stddev 18. That mean is deliberately ABOVE the 120-180
-               the set otherwise runs, and the reason is that the rendered surfaces are what
-               matter, not the file: the stage paints this texture twice and multiplies an
-               overlay on top, so a wide histogram darkens the pane far more than its mean
-               suggests. Verified on the real page against the other privacy-5 textures —
-               stage panel 110.9 against a peer band of 107.7 to 114.2, swatch 199.3 against
-               a peer mean of 204.2. Judge a replacement the same way rather than on the
-               file's own numbers.
+            ['name' => 'Satin', 'privacy' => 5, 'texture' => 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%), linear-gradient(135deg, #f7fbfb 0%, #eef6f7 46%, #e4f0f1 100%)', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
+                ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
+                ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
+                /* Brightness matters as much as contrast here, because the stage multiplies the
+               texture over the scene. The first correction fixed the invisibility and
+               created the opposite fault: lifting contrast dropped the mean to 106 against
+               a set that runs 121 to 178, and a dark texture under `multiply` turns the
+               whole pane to mud. Rebalanced to mean 158, stddev 46 — pattern still reads,
+               brightness back inside the set.
 
                The filename carries a suffix because the CONTENT changed. Texture images are
                emitted without a version string, unlike the stylesheet, so replacing a
@@ -3572,25 +3549,17 @@ function fenster_site_data(): array
                top of cover, so a photographed pattern is enlarged twice over and
                reads as coarse blobs instead of glass. Pinning the width fixes the
                pattern's scale wherever it is painted — swatch, wall or stage. */
-                /* FACETS, and this route is the only one that has them so far. Owner,
-               2026-08-27, pointing at Pilkington's own photograph: every petal in
-               real Cassini carries its own displaced sample of the room behind it,
-               with a hard edge between. Blur variation cannot do that at any
-               setting, because blur does not MOVE anything. The map drives an SVG
-               `feDisplacementMap`, so the scene is genuinely bent per facet. Adding
-               `facet` to another texture switches it on there too; see the Obscured
-               glass rules in `AI.md` before you do. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/cassini--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/cassini--cat.webp', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
-                ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/chantilly--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/chantilly--cat.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
-                ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/charcoal-sticks--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/charcoal-sticks--cat.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
-                ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/contora--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/contora--cat.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
-                ['name' => 'Digital', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Digital-privacy-3.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/digital--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/digital--cat.webp', 'copy' => 'A crisp modern texture with medium privacy and a more architectural look.'],
-                ['name' => 'Everglade', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Everglade-privacy-5.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/everglade--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/everglade--cat.webp', 'copy' => 'Dense texture for stronger privacy in exposed or overlooked glazing.'],
-                ['name' => 'Florielle', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Florielle-privacy-4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/florielle--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/florielle--cat.webp', 'copy' => 'A floral pattern that balances decoration with a useful level of screening.'],
-                ['name' => 'Mayflower', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Mayflower-privacy-4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/mayflower--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/mayflower--cat.webp', 'copy' => 'Traditional patterning for entrance doors, side panels and character properties.'],
-                ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/minster--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/minster--cat.webp', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
-                ['name' => 'Oak', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Oak-privacy-4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/oak--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/oak--cat.webp', 'copy' => 'Leaf-like movement with strong privacy and a warmer decorative feel.'],
-                ['name' => 'Pelerine', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Pelerine-privacy-4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/pelerine--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/pelerine--cat.webp', 'copy' => 'Flowing vertical texture for privacy with a quieter, more elegant pattern.'],
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+                ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
+                ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
+                ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
+                ['name' => 'Digital', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Digital-privacy-3.webp', 'copy' => 'A crisp modern texture with medium privacy and a more architectural look.'],
+                ['name' => 'Everglade', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Everglade-privacy-5.webp', 'copy' => 'Dense texture for stronger privacy in exposed or overlooked glazing.'],
+                ['name' => 'Florielle', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Florielle-privacy-4.webp', 'copy' => 'A floral pattern that balances decoration with a useful level of screening.'],
+                ['name' => 'Mayflower', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Mayflower-privacy-4.webp', 'copy' => 'Traditional patterning for entrance doors, side panels and character properties.'],
+                ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'size' => '450px auto', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
+                ['name' => 'Oak', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Oak-privacy-4.webp', 'copy' => 'Leaf-like movement with strong privacy and a warmer decorative feel.'],
+                ['name' => 'Pelerine', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Pelerine-privacy-4.webp', 'copy' => 'Flowing vertical texture for privacy with a quieter, more elegant pattern.'],
                 /* The real photograph, scaled rather than redrawn. Two attempts at inventing
                this in CSS were rejected — the flat stripes read as wallpaper and the
                shaded gradient was still a guess at what glass does. The picture is
@@ -3611,26 +3580,32 @@ function fenster_site_data(): array
                three box sizes before settling on it.
                Height 100% because the reeds run vertically, so stretching that axis
                costs nothing and avoids a horizontal seam where the tile repeats. */
-                /* TWO ASSETS, AND THE SPLIT IS DELIBERATE. `tile` is the mirrored copy
-               and it is the ONLY thing the stage paints, because the stage is the
-               only surface that repeats; `image` is the plain levelled photograph
-               and it is what the swatches, the hero wall and the glass card show.
-               Handing the mirrored tile to a 58px swatch put its mirror axis dead
-               centre, and the ribs fan slightly, so it read as a bold chevron
-               rather than as reeded glass. Anything that displays a texture rather
-               than tiling it wants `image`. */
-            ['name' => 'Reeded', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2-levelled.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2-seamless.webp', 'size' => '360px 100%', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/reeded--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/reeded--cat.webp', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
-                ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/stippolyte--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/stippolyte--cat.webp', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
-                ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/sycamore--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/sycamore--cat.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
-                ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/taffeta--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/taffeta--cat.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],
-                ['name' => 'Tribal', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Tribal-privacy-5.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/tribal--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/tribal--cat.webp', 'copy' => 'High privacy with a bolder decorative pattern for statement glass.'],
+            /* THE ONE KEEPER FROM THE 2026-08-27 REWRITE. Everything else on this
+               route went back to the original Pilkington photographs and the
+               original compositing on the owner's instruction; Reeded stayed
+               because its two faults were in the ASSET rather than in any effect.
+
+               `tile` is the mirrored copy and only the stage paints it, because
+               the stage is the only surface that repeats and the photograph is lit
+               from one side -- flat-fielded and mirrored, its seam went 48.8 to
+               0.00. `image` is the plain levelled photograph every other surface
+               shows, lifted to the set's mean because it was the one near-black
+               square in a pale column of swatches. Handing the mirrored tile to a
+               58px swatch puts its mirror axis dead centre and reads as a chevron.
+
+               Both are derived by `scripts/build-reeded-texture.py`. */
+            ['name' => 'Reeded', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2-levelled.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2-seamless.webp', 'size' => '360px 100%', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
+                ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'size' => '380px auto', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
+                ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
+                ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],
+                ['name' => 'Tribal', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Tribal-privacy-5.webp', 'copy' => 'High privacy with a bolder decorative pattern for statement glass.'],
                 /* Owner correction, 2026-08-06: Warwick is privacy 1, not 0. Zero is a real
                category on this page — the picker prints "Decorative" instead of a
                number and the copy said outright it was not a privacy choice — so this
                was not a rounding difference, it was the wrong category. The filename
                still says privacy-0; left as is, since renaming the asset is a bigger
                change than the owner asked for and nothing reads the filename itself. */
-            ['name' => 'Warwick', 'privacy' => 1, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Warwick-privacy-0.webp', 'bake_house' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/warwick--house.webp', 'bake_cat' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/baked/b2/warwick--cat.webp', 'copy' => 'A handmade-style texture with character and the lightest level of privacy.'],
+            ['name' => 'Warwick', 'privacy' => 1, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Warwick-privacy-0.webp', 'copy' => 'A handmade-style texture with character and the lightest level of privacy.'],
             ],
         ],
         /* ROOFLINE COLOURS ARE THEIR OWN RANGE AND DELIBERATELY NOT IN

@@ -10746,43 +10746,18 @@ html.fg-gallery-lightbox-open body {
   transform: none;
   opacity: 1;
   mix-blend-mode: normal;
-
-  /* PRIVACY DRIVES THE BLUR, NOT THE OPACITY, and that is a correctness fix as
-     much as a visual one. It used to run the texture's opacity from 0.84 to 0.96
-     across the whole 1-to-5 range -- a 12% change -- so a privacy 2 glass and a
-     privacy 5 glass looked all but identical on a page whose entire job is
-     telling them apart. */
-  --fg-glass-obscure: calc(4px + min(var(--privacy), 5) * 3.6px);
-  --fg-glass-clear: calc(2px + min(var(--privacy), 5) * 0.6px);
 }
 
-/* THE PANE IS ONE BAKED IMAGE: the pattern already composited over the scene by
-   `scripts/build-obscure-glass-bakes.py`, one per pattern per background.
-
-   It is not built in the browser because it cannot be. In Pilkington's own
-   photograph every facet is a FLAT WASH of one tone with a hard edge to the
-   next, because a lens averages what it magnifies down to almost a single
-   colour. `feDisplacementMap` moves pixels; it does not average within a region,
-   so a displaced photograph keeps its internal gradients and reads as a smear at
-   every scale -- below about 16 the pattern vanishes into plain blur, above it
-   the facets smear, and nothing sits between. Four rounds of live compositing
-   were spent before that was clear.
-
-   The obscured half was always a static composite of one texture over one of two
-   fixed scenes, so there was never a reason to compute it per visit. The divider
-   still clips this layer exactly as before.
-
-   THE COST: the effect is fixed to the baked scenes. A third background means
-   re-running the script, not editing this file. */
 .fg-obscure-stage__glass::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -12px;
   z-index: 1;
-  background: var(--active-glass-bake) no-repeat center center;
+  background: var(--scene-image) no-repeat center center;
   background-size: cover;
-  filter: none;
-  transform: none;
+  filter: blur(10px) brightness(120%);
+  transform: scale(1.025);
+  transform-origin: center;
 }
 
 .fg-obscure-stage__glass::after {
@@ -10790,27 +10765,42 @@ html.fg-gallery-lightbox-open body {
   position: absolute;
   inset: 0;
   z-index: 2;
-  /* Surface sheen only. THE RESETS ARE LOAD-BEARING: two earlier blocks in this
-     file also target this pseudo-element and the later one sets `multiply` at
-     half opacity, so anything left unnamed here is inherited from it and the
-     sheen ships as a darkening layer. Caught once by grepping the compiled CSS,
-     not by reading the diff. */
-  background-image: linear-gradient(115deg, rgba(255, 255, 255, 0.06), transparent 55%, rgba(255, 255, 255, 0.04));
-  background-size: cover;
-  background-repeat: no-repeat;
-  filter: none;
-  opacity: 1;
-  mix-blend-mode: normal;
+  background-image:
+    linear-gradient(90deg, rgba(224, 244, 247, 0.22), rgba(255, 255, 255, 0.14)),
+    var(--active-texture);
+  background-position: center center;
+  /* Per layer: the scene is one image and must not tile, the texture is a pattern
+     and must. It was `no-repeat` for the whole stack, so the glass was painted
+     once in the middle of the pane at its pinned width and the rest of the pane
+     showed bare scene â€” which is only visible now the texture has a fixed size
+     rather than being stretched to cover. */
+  background-repeat: no-repeat, repeat;
+  background-size: cover, var(--active-texture-size, 100% 100%);
+  filter: contrast(1.08);
+  opacity: calc(0.84 + min(var(--privacy), 5) * 0.024);
+  mix-blend-mode: multiply;
 }
 
 .fg-obscure-stage__shine {
-  opacity: 0.10;
+  opacity: 0.16;
 }
 
-/* The cat background is letterboxed inside the bake itself, so the stage no
-   longer needs to switch `background-size` for it. The main image still does. */
-.fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__main-image {
+.fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__main-image,
+.fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__glass::before {
   background-size: contain;
+}
+
+.fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
+  filter: blur(12px) brightness(108%) saturate(0.72) contrast(0.92);
+  transform: scale(1.055);
+}
+
+.fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::after {
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(225, 240, 240, 0.36)),
+    var(--active-texture);
+  opacity: 0.58;
+  mix-blend-mode: normal;
 }
 
 .fg-obscure-visualiser__grid {

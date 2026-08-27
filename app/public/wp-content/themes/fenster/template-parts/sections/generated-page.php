@@ -3083,19 +3083,15 @@ if ($is_obscure_glass) {
         return $texture_image !== '' ? 'url("' . fenster_generated_url($texture_image) . '")' : 'none';
     };
     /* THE STAGE IS THE ONLY SURFACE THAT REPEATS, so it is the only one that wants
-       a seamless tile. Everything else -- the picker swatches, the hero wall, the
-       glass card -- paints one instance at `cover` and wants the plain photograph.
-       Reeded is the worked example: its tile is mirrored so it repeats without a
-       seam, and a mirrored tile squeezed into a 58px swatch shows its mirror axis
-       dead centre as a chevron. Falls back to `image`, so a texture that needs no
-       separate tile carries no `tile` key. */
+       a seamless tile. Swatches, the hero wall and the glass card each paint one
+       instance at `cover` and want the plain photograph. Reeded is the only
+       texture that needs the distinction and the only one carrying a `tile`:
+       its tile is mirrored so it repeats without a seam, and a mirrored tile in a
+       58px swatch shows its mirror axis dead centre as a chevron. */
     $obscure_glass_tile_value = static function (array $texture) use ($obscure_glass_texture_value): string {
         $tile = trim((string) ($texture['tile'] ?? ''));
-        if ($tile !== '') {
-            return 'url("' . fenster_generated_url($tile) . '")';
-        }
 
-        return $obscure_glass_texture_value($texture);
+        return $tile !== '' ? 'url("' . fenster_generated_url($tile) . '")' : $obscure_glass_texture_value($texture);
     };
     /* Optional per-pattern scale. Only the photographed textures need it — a CSS
        gradient has no intrinsic size to get wrong — and without it `cover` blows a
@@ -3105,25 +3101,8 @@ if ($is_obscure_glass) {
         $size = trim((string) ($texture['size'] ?? ''));
         return $size !== '' ? $size : 'cover';
     };
-    /* The two companion maps the stage composites from. Built by
-       `scripts/build-obscure-glass-maps.py` and named off the source texture, so
-       renaming a photograph renames its maps with it. `none` is a real answer,
-       not a missing one: Satin is a CSS gradient with no photograph, and a flat
-       acid-etched frost has no edges to shade, so the stage drops both layers
-       for it rather than inventing a pattern. */
-    /* The stage paints ONE image: the pattern already composited over the scene,
-       baked by `scripts/build-obscure-glass-bakes.py`. It is not computed in the
-       browser because it cannot be -- a lens averages what it magnifies down to
-       one tone per facet, and a CSS or SVG filter moves pixels without ever
-       averaging within a region. Four rounds of live compositing were tried; the
-       reasoning is in the script's header and in `AI.md`. */
-    $obscure_glass_map = static function (array $texture, string $key): string {
-        $path = trim((string) ($texture[$key] ?? ''));
-        return $path !== '' ? 'url("' . fenster_generated_url($path) . '")' : 'none';
-    };
     $active_glass_texture = is_array($obscure_glass_first) ? $obscure_glass_tile_value($obscure_glass_first) : 'none';
     $active_glass_texture_size = is_array($obscure_glass_first) ? $obscure_glass_texture_size($obscure_glass_first) : 'cover';
-    $active_glass_bake = is_array($obscure_glass_first) ? $obscure_glass_map($obscure_glass_first, 'bake_house') : 'none';
     $obscure_glass_left = array_slice($obscure_glass_textures, 0, 10, true);
     $obscure_glass_right = array_slice($obscure_glass_textures, 10, null, true);
     $obscure_glass_bottom = [];
@@ -3133,9 +3112,9 @@ if ($is_obscure_glass) {
         $texture_value = trim((string) ($texture['texture'] ?? ''));
         $swatch_value = $texture_value;
         if ($texture_value === '') {
-            /* data-texture goes to the stage, so it takes the tile; the span is the
-               swatch and takes the plain image. They are the same for every texture
-               but Reeded. */
+            /* data-texture drives the STAGE, so it takes the tile; the span is the
+               swatch and takes the plain image. Identical for every texture but
+               Reeded, which is the only one with a `tile`. */
             $tile = trim((string) ($texture['tile'] ?? ''));
             $image = trim((string) ($texture['image'] ?? ''));
             $texture_value = 'url("' . fenster_generated_url($tile !== '' ? $tile : $image) . '")';
@@ -3149,8 +3128,6 @@ if ($is_obscure_glass) {
             data-fg-obscure-option
             data-texture="<?php echo esc_attr($texture_value); ?>"
             data-size="<?php echo esc_attr(trim((string) ($texture['size'] ?? 'cover'))); ?>"
-            data-bake-house="<?php echo esc_url(trim((string) ($texture['bake_house'] ?? '')) !== '' ? fenster_generated_url((string) $texture['bake_house']) : ''); ?>"
-            data-bake-cat="<?php echo esc_url(trim((string) ($texture['bake_cat'] ?? '')) !== '' ? fenster_generated_url((string) $texture['bake_cat']) : ''); ?>"
             data-name="<?php echo esc_attr($texture_name); ?>"
             data-key="<?php echo esc_attr(sanitize_title($texture_name)); ?>"
             data-privacy="<?php echo esc_attr((string) $privacy); ?>"
@@ -3230,7 +3207,7 @@ if ($is_obscure_glass) {
                     <?php /* Painted with the house already in place, because the JS
                              now starts on 'house' too. If this still rendered Legend the
                              scene would visibly swap the moment the script ran. */ ?>
-                    style="<?php echo esc_attr('--scene-image:url(' . fenster_generated_url($house_image !== '' ? $house_image : $legend_image) . '); --active-texture:' . $active_glass_texture . '; --active-texture-size:' . $active_glass_texture_size . '; --active-glass-bake:' . $active_glass_bake . '; --privacy:' . $active_glass_privacy); ?>"
+                    style="<?php echo esc_attr('--scene-image:url(' . fenster_generated_url($house_image !== '' ? $house_image : $legend_image) . '); --active-texture:' . $active_glass_texture . '; --active-texture-size:' . $active_glass_texture_size . '; --privacy:' . $active_glass_privacy); ?>"
                     data-cat-image="<?php echo esc_url(fenster_generated_url($legend_image)); ?>"
                     data-house-image="<?php echo esc_url(fenster_generated_url($house_image)); ?>"
                     data-active-background="house"
