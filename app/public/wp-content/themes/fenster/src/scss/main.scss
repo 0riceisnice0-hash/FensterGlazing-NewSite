@@ -46710,3 +46710,10 @@ html.fg-blinds-reveal-locked {
 /* The handoff is the construction chapter's footer, so it sits under the
    guarantee rather than 106px below it. */
 .generated-page--composite-doors > .fg-cd3-security { padding-bottom: clamp(24px, 3vw, 40px); }
+
+/* The long page's hero: the copy column is shorter than a portrait
+   photograph, so `align-items: center` was leaving a band of canvas under both.
+   Held to the media's own height instead. */
+.fg-wd-hero__media img { max-height: 460px; }
+
+.fg-wd-page > section:first-child { padding-bottom: clamp(30px, 3.6vw, 48px); }

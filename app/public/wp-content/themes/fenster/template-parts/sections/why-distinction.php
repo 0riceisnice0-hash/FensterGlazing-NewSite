@@ -19,8 +19,9 @@
  *
  * IT HAD NO IMAGES AT ALL. Four sections, 4,689px, zero photographs, with about
  * 700px of empty viewport beside every paragraph at 1440. It carries our own
- * work now: the Milton Keynes door open on its own edge in the hero, and the
- * showroom where the closing section invites somebody to come and close one.
+ * work now: the Milton Keynes doorset standing beside our van before it went in,
+ * and the showroom where the closing section invites somebody to come and close
+ * one.
  *
  * THREE EM DASHES WERE LIVE IN CUSTOMER COPY here, at what used to be lines 116
  * and 142. Both `STYLE.md` and `TONEOFVOICE.md` forbid them without exception.
@@ -74,7 +75,7 @@ $fg_cutaway = $fg_composite . '#fg-cd3-anatomy-title';
 $fg_range   = $fg_composite . '#fg-cds-title';
 $fg_quiz    = $fg_composite . '#fg-cdq-title';
 
-$fg_hero_stem = '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/fenster-mk-front-door-open-';
+$fg_hero_stem = '/wp-content/themes/fenster/assets/images/products/composite-distinction/hero/fenster-mk-doorset-';
 
 /* The slab, outside in. Distinction's six layers, in their order, described for
    somebody deciding rather than for a fabricator. This is the WHY for each
@@ -151,9 +152,12 @@ $fg_cards = [
                     <a class="button button--steel" href="<?php echo esc_url(home_url('/book-a-consultation/')); ?>"><?php esc_html_e('Book a free consultation', 'fenster'); ?></a>
                 </p>
             </div>
-            <?php /* The same Milton Keynes door as the composite hero, open, so
-                     the page that argues about the slab opens on the slab's own
-                     edge. Ours, not a supplier render. */ ?>
+            <?php /* THE DOORSET AS AN OBJECT, which is what this page argues
+                     about. The first attempt used the same door standing open,
+                     and the crop looked into a dark hallway with the slab edge
+                     barely in frame: a caption promising an edge over a picture
+                     of a corridor. Ours, off our own van, with our own fitter
+                     in it. */ ?>
             <figure class="fg-wd-hero__media">
                 <img
                     src="<?php echo esc_url(fenster_generated_url($fg_hero_stem . '960w.webp')); ?>"
@@ -163,9 +167,9 @@ $fg_cards = [
                         fenster_generated_url($fg_hero_stem . '1280w.webp') . ' 1280w',
                     ])); ?>"
                     sizes="(max-width: 860px) 100vw, 42vw"
-                    alt="An anthracite grey Distinction composite front door standing open, showing the edge of the slab, on a Milton Keynes house Fenster fitted"
+                    alt="A Fenster fitter standing an anthracite grey Distinction composite doorset beside the van outside a Milton Keynes house, before it went in"
                     loading="eager" fetchpriority="high" width="1152" height="1440">
-                <figcaption><?php esc_html_e('A door we fitted in Milton Keynes, open on its own edge.', 'fenster'); ?></figcaption>
+                <figcaption><?php esc_html_e('The doorset off the van in Milton Keynes, before it went in.', 'fenster'); ?></figcaption>
             </figure>
         </div>
     </section>
