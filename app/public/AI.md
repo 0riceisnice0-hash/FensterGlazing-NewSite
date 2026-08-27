@@ -1237,57 +1237,65 @@ A change is not complete until the relevant checks pass:
 
 ## Obscured glass textures
 
-- **THE STAGE PAINTS ONE BAKED IMAGE, and it is not computed in the browser
-  because it cannot be.** `scripts/build-obscure-glass-bakes.py` composites every
-  pattern over every scene offline; the stage sets `--active-glass-bake` and the
-  divider clips that layer exactly as before. **Four rounds of live compositing
-  were spent before this was accepted — do not restart them.**
-- **THE REASON IS STRUCTURAL, NOT A SETTING.** In Pilkington's own photograph
-  every facet is a **flat wash** of one tone with a hard edge to the next, because
-  a lens averages what it magnifies down to almost a single colour.
-  `feDisplacementMap` MOVES pixels; it never averages within a region. So a
-  displaced photograph keeps its internal gradients and reads as a smear — below a
-  scale of about 16 the pattern vanishes into plain blur, above it the facets
-  smear, and **nothing sits between**. Averaging per facet is trivial offline and
-  impossible in a CSS filter.
-- **Four hypotheses died getting there. Do not re-test them.** The aspect stretch
-  (rebuilt with `preserveAspectRatio="xMidYMid slice"`, looked *worse*); the
-  displacement scale (seven values rendered); the rim map as a source of shine (it
-  cannot brighten at all — its shade term exceeds its light term everywhere, so it
-  never rises above 128); and the scene being too smooth to bend (measured, and
-  ours carries **more** local contrast at petal scale than the reference's room,
-  21.1 against 16.5).
-- **THE SEGMENTATION NEEDS ITS MODE FILTER.** Quantising straight off the
-  photograph splits it into thousands of speckled fragments and the bake reads as
-  noise rather than glass. The mode filter merges each fragment into its
-  neighbours and leaves coherent facets — and it halved the byte cost as a side
-  effect, 4.24MB to 2.13MB, because the result compresses far better.
-- **Sample with edge padding, never `np.roll`.** Wrapping brings the far side of
-  the photograph round to the near one, so a facet near the top can show the dark
-  pond from the bottom. It shipped to test as a black blotch in the corner.
-- **BUMP `BAKE_REVISION` WHENEVER THE RECIPE CHANGES.** Bakes carry no version
-  string, like every theme image, so rewriting them in place leaves the reviewer's
-  browser serving the old ones and the fix looks like it did nothing. **This was
-  broken once within minutes of the rule being written**, in the commit right
-  after the one that documented it.
-- **THE COST, and it is real: the effect is fixed to the baked scenes.** A third
-  background means re-running the script, not editing a stylesheet. Adding a
-  texture means adding it to `TEXTURES` in the script as well as to `obscure_glass`.
-- **`tile` is for the stage, `image` is for everything else.** Swatches, the hero
-  wall and the glass card each paint one instance of the plain photograph at
-  `cover`; only the bake and the stage care about a seamless repeat. Reeded's
-  mirrored tile in a 58px swatch put its mirror axis dead centre and read as a
-  chevron. `tile` falls back to `image`.
-- **Reeded's display copy is lifted to the set's brightness and its tile is not.**
-  It is the second-darkest source in the set and read as the one near-black square
-  in a pale column. The tile stays as photographed so the pane does not move.
-- **Privacy drives the bake, and it used to drive almost nothing.** It ran the
-  texture's opacity from 0.84 to 0.96 across the whole 1-to-5 range — a 12% change
-  — so privacy 2 and privacy 5 looked all but identical on a page whose entire job
-  is telling them apart. It now sets how completely each facet averages and how
-  much etched frost sits over the pane.
+- **THE STAGE COMPOSITES AS IT ALWAYS HAS, AND FIVE ATTEMPTS TO IMPROVE IT WERE
+  ALL REVERTED. Owner instruction, 2026-08-27: "theyre all fucked ... the others
+  were all better in their original pilkington source form."** The multiply model
+  and the original Pilkington photographs are what ship. **Read the whole of this
+  section before proposing a sixth.**
+- **What was tried and thrown away**, in order: a three-layer focus model with
+  baked rim and clear masks; a mean-absolute-deviation normalisation across those
+  masks; an SVG `feDisplacementMap` driven by a quantised facet map; a shine
+  reduction on top of it; and finally 42 pre-rendered composites, one per pattern
+  per scene. Each was measurably closer to Pilkington's own photograph on some
+  axis and each looked worse on the page. **Measuring closer is not the same as
+  looking better, and that is the lesson worth keeping.**
+- **Four diagnoses died along the way. Do not re-test them.** The aspect stretch
+  (rebuilt with `preserveAspectRatio="xMidYMid slice"`, looked worse); the
+  displacement scale (seven values -- below about 16 the pattern vanishes into
+  plain blur, above it the facets smear, nothing sits between); the rim map as a
+  source of shine (it cannot brighten at all, its shade term exceeds its light
+  term everywhere so it never rises above 128); and the scene being too smooth to
+  bend (measured, and ours carries **more** local contrast at petal scale than the
+  reference's room, 21.1 against 16.5).
+- **The one real limit, if anyone does try again:** every facet in the reference
+  is a flat wash of one tone with a hard edge, because a lens averages what it
+  magnifies. `feDisplacementMap` moves pixels and never averages within a region,
+  so a displaced photograph keeps its gradients and reads as a smear. Averaging
+  per facet needs a pre-render -- which was built, and rejected on sight.
+- **REEDED IS THE ONE KEEPER, and only because its faults were in the ASSET.**
+  Everything else reverted with the compositing; these survived it because they
+  are corrections to a photograph rather than an effect.
+- **Reeded's photograph is lit from one side**: low-frequency spread 130 against a
+  set median of 49, left edge 148 against right edge 100. That, not the rib phase,
+  is what caused its tile seam -- cropping to a whole number of ribs only moved the
+  seam from 125 to 55. Flat-fielded then mirrored takes it to **0.00**.
+- **Mirroring is right for ribs and wrong for almost anything else.** Ribs are
+  near-identical to their own reflection so the symmetry is invisible; the same
+  trick on an organic pattern goes visibly kaleidoscopic. Do not generalise it.
+- **`tile` is for the stage, `image` is for everything else.** The stage is the
+  only surface that repeats; swatches, the hero wall and the glass card each paint
+  one instance at `cover`. Handing them the mirrored tile put its mirror axis dead
+  centre in a 58px swatch and read as a chevron. `tile` falls back to `image`, and
+  Reeded is the only texture that carries one.
+- **A mirrored tile is twice as wide, so its pin doubles too** -- Reeded is
+  `360px 100%`, not `180px 100%`, or every rib renders at half its proper width.
+- **Reeded's display copy is lifted to the set's mean brightness and its tile is
+  not.** It is the second-darkest source in the set and read as the one near-black
+  square in a pale column of swatches; the tile stays as photographed so the pane
+  does not move. Both files come from `scripts/build-reeded-texture.py`.
 - **If a texture's pixels change, change its filename.** Theme images are emitted
-  through `fenster_generated_url()`, which adds no version string. This has cost
-  review rounds three times.
-- **A texture with no photograph bakes as blur plus frost.** Satin is a CSS
-  gradient and a flat acid-etched frost has no facets to average.
+  through `fenster_generated_url()`, which adds no version string, so replacing a
+  `.webp` in place leaves browsers and the proxy serving the old one while the
+  deploy verifies perfectly. This has cost review rounds three times, and it was
+  broken once **in the commit immediately after the one documenting it**.
+- **Judge a texture on mean brightness AND standard deviation** against the rest
+  of the set, then look at it on the stage. That layer is `mix-blend-mode:
+  multiply`, so a dark texture does not add pattern, it turns the pane to mud.
+  The set runs roughly mean 120-180, stddev 25-70. **Add the low-frequency spread
+  to that check** -- blur hard, measure max minus min, set median 49 -- because
+  mean and stddev both passed a Cassini that was badly lit from one side.
+- **A photographed texture needs a `size`; a CSS gradient does not.** `cover`
+  scales to the box rather than to the glass. The `size` applies to the **stage
+  only** -- swatches stay on `cover` because they must show the whole pattern.
+- **Only a pinned size tiles.** Cassini, Minster, Stippolyte and Reeded have one;
+  the other seventeen paint once and cannot seam.
