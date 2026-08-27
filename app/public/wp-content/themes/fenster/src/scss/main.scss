@@ -46664,3 +46664,49 @@ html.fg-blinds-reveal-locked {
     object-position: center 40%;
   }
 }
+
+/* WHAT THE BLANKET `!important` WAS HIDING. With every h2 on the route forced
+   to 28.8px, four sections' own oversized rules never showed: the quiz and the
+   FAQ at 43.2px, the glass step at 38.88px, and the enquiry form at 57.6px,
+   which is `--fg-font-size-max` exactly and is a page-hero size on a form
+   heading. `STYLE.md` is explicit that enquiry headings are supporting content,
+   not page heroes. Suppressing them all with one blanket rule is what removed
+   the page's hierarchy in the first place; these are sized deliberately instead.
+
+   NOTE FOR WHOEVER PICKS THIS UP: the oversized rules themselves are SITE-WIDE
+   and still apply on every other route. `FULL-SITE-AUDIT-2026-08-13.md` already
+   carries heading inconsistency as an open finding. This fixes one page, not
+   the system. */
+.generated-page--composite-doors {
+  /* The three steps of the finishes chapter, matching each other and sitting
+     under the chapter opener rather than competing with it. */
+  .fg-composite-glass h2,
+  .fg-handle-finishes__heading h2 {
+    max-width: 60ch;
+    font-size: clamp(1.2rem, 1.9vw, 1.45rem);
+    line-height: 1.15;
+    letter-spacing: -0.006em;
+  }
+
+  /* Everything else on the page at the house h2 size. */
+  .fg-cdq__head h2,
+  .fg-product-faq h2,
+  .fg-enquiry h2 {
+    font-size: clamp(1.45rem, 2.2vw, 2rem);
+    line-height: 1.12;
+  }
+}
+
+/* The door cards were bottom-heavy: the drawing was capped at 190px while the
+   grid row stretched taller, so the surplus fell out as a band of white under
+   the label. The drawing takes it instead. */
+.fg-cds-door__link {
+  gap: 0.4rem;
+  padding-bottom: 0.5rem;
+}
+
+.fg-cds-door__link img { max-height: 230px; }
+
+/* The handoff is the construction chapter's footer, so it sits under the
+   guarantee rather than 106px below it. */
+.generated-page--composite-doors > .fg-cd3-security { padding-bottom: clamp(24px, 3vw, 40px); }
