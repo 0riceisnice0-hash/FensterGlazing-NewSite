@@ -48579,3 +48579,23 @@ html.fg-blinds-reveal-locked {
     .fg-cd3-colour__swatches { grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); }
   }
 }
+
+/* `text-align: left` was applying and losing anyway: the figcaption is a
+   grid, and `justify-items: center` centres each item's box inside its
+   track, so aligning the text inside a shrink-to-fit box that is itself
+   centred changes nothing. */
+.generated-page--composite-doors .fg-cd3-colour__preview figcaption {
+  justify-items: start;
+}
+
+/* The step head's rows were stretching to match the paragraph beside
+   them, so the eyebrow and the heading sat 70px apart for no reason. */
+.generated-page--composite-doors {
+  .fg-finish__body .fg-finish__step-head,
+  .fg-finish__body .fg-handle-finishes__heading {
+    grid-auto-rows: min-content;
+    align-content: start;
+
+    p { grid-row: 1 / -1; }
+  }
+}
