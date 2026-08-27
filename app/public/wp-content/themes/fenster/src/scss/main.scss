@@ -48168,3 +48168,47 @@ html.fg-blinds-reveal-locked {
      the section heading is off screen the moment you start answering. */
   .generated-page--composite-doors .fg-cdq__title { line-height: 1.08; }
 }
+
+/* ---- The token pass, second sweep ---------------------------------
+ * A CORRECTION TO MY OWN AUDIT FIRST. It reported "29 distinct
+ * box-shadows on one page" as a systems failure. About twenty of those
+ * belong to the slab cutaway: every layer, rail, highlight and material
+ * inside it carries its own inset shadow, and those are lighting on a
+ * technical illustration rather than UI elevation. **They must never be
+ * tokenised** and the number was misleading. The real count of UI
+ * surfaces carrying an untokenised shadow was closer to nine.
+ * ------------------------------------------------------------------ */
+
+.generated-page--composite-doors {
+
+  /* The tail's surfaces, on the same three steps as the chapters above
+     them. The slab drawing is deliberately absent from this list. */
+  .fg-product-quote-embed__copy,
+  .fg-product-quote-embed__card,
+  .fg-review-showcase__summary,
+  .fg-review-showcase__card,
+  .fg-cs-card { box-shadow: var(--fg-e1); }
+
+  .fg-review-showcase__card:hover,
+  .fg-review-showcase__card:focus-within,
+  .fg-cs-card:hover,
+  .fg-cs-card:focus-within { box-shadow: var(--fg-e2); }
+
+  .fg-product-quote-embed__copy,
+  .fg-product-quote-embed__card,
+  .fg-review-showcase__summary,
+  .fg-review-showcase__card,
+  .fg-cs-card,
+  .fg-product-faq__items details { border-radius: var(--fg-r-md); }
+
+  /* A grid wrapper carrying a corner it never needed. */
+  .fg-cds-door__art { border-radius: 0; }
+
+  /* The progress segments are a pill, like the badge, rather than a step
+     on the radius scale. */
+  .fg-cdq__pip { border-radius: 999px; }
+
+  /* The layer row's own `h3` sat at 16px while the name inside it sat at
+     the card size, so the outline reported a size nothing rendered at. */
+  .fg-cd3-layer h3 { font-size: var(--fg-h-card); }
+}
