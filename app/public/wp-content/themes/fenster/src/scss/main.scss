@@ -47725,3 +47725,10 @@ html.fg-blinds-reveal-locked {
 @media (prefers-reduced-motion: reduce) {
   .fg-cdq__result { animation: none; }
 }
+
+/* The preview caption was still centred from the old narrow figure, which is
+   the only centred text in the chapter. */
+.generated-page--composite-doors .fg-cd3-colour__preview figcaption { text-align: left; }
+
+/* rgba(255,255,255,.5) on the band is under 4.5:1 at this size. */
+.fg-cdq__caveat { color: rgba(255, 255, 255, 0.62); }
