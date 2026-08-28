@@ -3714,6 +3714,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
       dimple: 0.06,
+      lobe: 6, lobeFace: 0.85,
       ovals: true, ovalsFromPlate: true, ovalSeedLevel: 0.74, ovalEdgeLevel: 0.34,
       ovalFitBlur: 4, ovalFitDensity: 30000, ovalEdgeSoft: 2, ovalFitMin: 8,
       ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
@@ -4522,6 +4523,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const ribJitter = ((mat.ribJitter || 8) * Math.PI) / 180;
       const ribTail = mat.ribTail == null ? 0.3 : mat.ribTail;
       const ribCurve = ((mat.ribCurve || 0) * Math.PI) / 180;
+      const lobeAmt = mat.lobe || 0;
+      const lobeFace = mat.lobeFace == null ? 0.85 : mat.lobeFace;
       const ribVary = mat.ribVary || 0;
       const fluteWander = mat.ribWander || 0;
       const knee = mat.knee || 0;
@@ -4836,6 +4839,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
              has been made in this function. */
           let fluteTone = 0;
           let rimShade = 0;
+          let lobeX = 1;
+          let lobeY = 0;
 
           if (mat.kind === 'rib') {
             /* Cylindrical lens. Each rib compresses a slice `spread` times its
@@ -5061,6 +5066,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                    than as corrugation. */
                 const cr = Math.cos((u - 0.5) * Math.PI);
                 fluteTone = (cr * cr * cr * 1.35 - 0.45) * damp * ribAmp;
+                lobeX = nx2; lobeY = ny2;
 
                 if (kind === 3) {
                   /* The second impression, at a neighbouring bearing rather
@@ -5081,6 +5087,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                   const cr3 = Math.cos((u3 - 0.5) * Math.PI);
                   fluteTone = (fluteTone + (cr3 * cr3 * cr3 * 1.35 - 0.45) * damp * ribAmp)
                     * 0.55;
+                  lobeX = nx2; lobeY = ny2;
                 }
                 if (kind === 2) {
                   /* DIMPLED IS A WAFFLE, NOT NOISE. This was per-pixel white
@@ -5187,6 +5194,22 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           sx = Math.min(w - 1.001, Math.max(0, sx));
           sy = Math.min(h - 1.001, Math.max(0, sy));
 
+          /* AN OUTPUT PIXEL IS AN INTEGRAL, NOT A SAMPLE. Real obscured glass
+             gathers light over a cone whose width and SHAPE vary point to
+             point: a rolled rib scatters widely ACROSS its length and hardly at
+             all along it, while a polished lens face barely scatters at all.
+             Taking one sample and then averaging the result with a round blur
+             gives the wrong kind of softness -- isotropic where the sheet is
+             strongly directional -- and it is why this looked either too sharp
+             or too smeared but never like glass.
+
+             So the samples are spread along the rib NORMAL, the direction the
+             rib actually scatters in, and the spread collapses on the lens
+             faces where the surface is smooth. */
+          let lobeR = 0;
+          if (lobeAmt) {
+            lobeR = lobeAmt * (1 - petal[i] * lobeFace);
+          }
           const x0 = sx | 0;
           const y0 = sy | 0;
           const fx = sx - x0;
@@ -5247,6 +5270,30 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           for (let ch = 0; ch < 3; ch += 1) {
             const src = mat.kind === 'frost' ? soft : scene;
             let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
+            if (lobeR > 0.15) {
+              /* Four extra taps along the scattering axis, weighted so the
+                 centre still dominates: enough to turn a point sample into a
+                 short directional integral without four times the cost. */
+              let acc = v * 2;
+              let wsum = 2;
+              for (let t = -2; t <= 2; t += 1) {
+                if (t === 0) continue;
+                const o = t * lobeR * 0.5;
+                let ax = sx + lobeX * o;
+                let ay = sy + lobeY * o;
+                ax = ax < 0 ? 0 : ax > w - 1.001 ? w - 1.001 : ax;
+                ay = ay < 0 ? 0 : ay > h - 1.001 ? h - 1.001 : ay;
+                const bx = ax | 0;
+                const by = ay | 0;
+                const q00 = (by * w + bx) * 4 + ch;
+                const gx2 = ax - bx;
+                const gy2 = ay - by;
+                acc += src[q00] * (1 - gx2) * (1 - gy2) + src[q00 + 4] * gx2 * (1 - gy2)
+                  + src[q00 + w * 4] * (1 - gx2) * gy2 + src[q00 + w * 4 + 4] * gx2 * gy2;
+                wsum += 1;
+              }
+              v = acc / wsum;
+            }
             if (scatter) {
               const sc = scatter[p00 + ch] * w00 + scatter[p10 + ch] * w10
                 + scatter[p01 + ch] * w01 + scatter[p11 + ch] * w11;
