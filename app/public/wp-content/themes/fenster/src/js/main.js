@@ -3714,6 +3714,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
       dimple: 0.40,
+      sectors: 6, glint: 0.45, glintLen: 2.5, rim2: 7, rimDark: 0.30,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
        harder so window frames dissolve rather than being outlined. */
@@ -4038,6 +4039,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       let hatchSel = null;
       let dome = null;
       let petal = null;
+      let petalGX = null;
+      let petalGY = null;
       /* Hoisted: the per-petal segmentation further down needs these, and they
          were block-scoped to the branch that fills them. Third time a
          declaration in this function has been left below or inside the scope
@@ -4168,6 +4171,41 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           v = v < 0 ? 0 : v > 1 ? 1 : v;
           petal[i] = mat.hatchPitch ? v * v * (3 - 2 * v) : v;
         }
+
+        /* A RIM THAT IS A LENS, NOT A DRAWN OUTLINE. Traced across a petal
+           boundary our profile is a plain monotone ramp; the references carry
+           a local extremum there in every scene -- a dip then a bump, or a
+           bright maximum between two plateaus. But the POLARITY is not fixed:
+           the same blob in the sample reads dark-then-bright entering from
+           above, bright leaving to the right, and shows no extremum at all on
+           a third traverse. That is a slope refracting whatever happens to lie
+           behind it, so a fixed bright/dark pair would print a cartoon outline
+           on every petal -- which is exactly the topographic-map failure an
+           earlier attempt here produced by subtracting on this same gradient.
+
+           So it is stored as a DISPLACEMENT along the mask normal, scaled by
+           the mask's slope. It peaks in the 2-3px transition band and is zero
+           across the flat interior and the flat ground, and the ramp width is
+           left variable because a boundary crossed obliquely genuinely is
+           wider. */
+        petalGX = new Float32Array(T.length);
+        petalGY = new Float32Array(T.length);
+        let gMax = 1e-4;
+        for (let y = 1; y < h - 1; y += 1) {
+          for (let x = 1; x < w - 1; x += 1) {
+            const i = y * w + x;
+            const gx = (petal[i + 1] - petal[i - 1]) * 0.5;
+            const gy = (petal[i + w] - petal[i - w]) * 0.5;
+            petalGX[i] = gx;
+            petalGY[i] = gy;
+            const m = Math.abs(gx) + Math.abs(gy);
+            if (m > gMax) gMax = m;
+          }
+        }
+        for (let i = 0; i < petalGX.length; i += 1) {
+          petalGX[i] /= gMax;
+          petalGY[i] /= gMax;
+        }
       }
 
       /* EACH PEBBLE AVERAGES WHAT IS BEHIND IT INTO ONE FLAT WASH, and this
@@ -4218,6 +4256,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const knee = mat.knee || 0;
       const kCeil = mat.kneeCeil || 251;
       const dimpleAmt = mat.dimple == null ? 1 : mat.dimple;
+      const glintAmt = mat.glint || 0;
+      const glintLen = Math.max(1.2, mat.glintLen || 2.5);
+      const rimAmt = mat.rim2 || 0;
+      const rimDark = mat.rimDark || 0;
 
       let pebbleWash = null;
       let pebbleShiftX = null;
@@ -4347,6 +4389,70 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         }
       }
 
+      /* A SECOND, COARSER TIER THAT CARRIES THE RIB BEARING. The real sheet
+         is TWO populations at two sizes: a lattice of large sectors with
+         dead-straight seams, each carrying thirty or forty ribs, and the
+         smooth ovoid lenses sitting OVER that lattice as a separate, smaller
+         population. This renderer had one population doing both jobs -- the
+         sectors and the petals were the same objects at the same size -- which
+         is why no scale could fix it: enlarging the sectors enlarged the
+         petals with them.
+
+         The lattice is a Voronoi of jittered-grid seeds, because Voronoi cell
+         boundaries are straight and meet at clean vertices, which is exactly
+         what the seams do. Bearings come from the same quantised set, so
+         neighbouring sectors either agree or meet at a herringbone. The petal
+         regions keep their own job: lens wash, texture kind, dome. */
+      let secNX = null;
+      let secNY = null;
+      if (mat.sectors && hatchPX) {
+        secNX = new Float32Array(T.length);
+        secNY = new Float32Array(T.length);
+        const cell = Math.max(24, Math.sqrt((w * h) / Math.max(2, mat.sectors)));
+        const cols = Math.ceil(w / cell) + 1;
+        const rows = Math.ceil(h / cell) + 1;
+        const sxs = new Float32Array(cols * rows);
+        const sys = new Float32Array(cols * rows);
+        const sbx = new Float32Array(cols * rows);
+        const sby = new Float32Array(cols * rows);
+        const nb = Math.max(2, ribBearings || 2);
+        for (let cy = 0; cy < rows; cy += 1) {
+          for (let cx = 0; cx < cols; cx += 1) {
+            const k = cy * cols + cx;
+            sxs[k] = (cx + 0.15 + hash(cx * 3.1, cy * 5.7) * 0.7) * cell;
+            sys[k] = (cy + 0.15 + hash(cx * 7.3 + 11, cy * 2.9 + 4) * 0.7) * cell;
+            const pick = Math.floor(hash(cx * 1.9 + 31, cy * 4.1 + 17) * nb) % nb;
+            const th = (pick / nb) * Math.PI + (mat.sectorTilt || 0);
+            sbx[k] = Math.cos(th);
+            sby[k] = Math.sin(th);
+          }
+        }
+        for (let y = 0; y < h; y += 1) {
+          const gy = Math.min(rows - 1, Math.floor(y / cell));
+          for (let x = 0; x < w; x += 1) {
+            const gx = Math.min(cols - 1, Math.floor(x / cell));
+            let best = 1e20;
+            let bk = gy * cols + gx;
+            for (let oy = -1; oy <= 1; oy += 1) {
+              const ny2 = gy + oy;
+              if (ny2 < 0 || ny2 >= rows) continue;
+              for (let ox = -1; ox <= 1; ox += 1) {
+                const nx2 = gx + ox;
+                if (nx2 < 0 || nx2 >= cols) continue;
+                const k = ny2 * cols + nx2;
+                const dx = x - sxs[k];
+                const dy = y - sys[k];
+                const dd = dx * dx + dy * dy;
+                if (dd < best) { best = dd; bk = k; }
+              }
+            }
+            const i2 = y * w + x;
+            secNX[i2] = sbx[bk];
+            secNY[i2] = sby[bk];
+          }
+        }
+      }
+
       const out = sceneCtx.createImageData(w, h);
       const dst = out.data;
       const period = Math.max(4, mat.period || 20);
@@ -4394,6 +4500,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
              off the silent CSS fallback -- the second time that exact mistake
              has been made in this function. */
           let fluteTone = 0;
+          let rimShade = 0;
 
           if (mat.kind === 'rib') {
             /* Cylindrical lens. Each rib compresses a slice `spread` times its
@@ -4527,8 +4634,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                 if (kind === 0) {
                   /* smooth petal: no surface structure of its own */
                 } else {
-                const nx = regNX ? regNX[i] : (pick > 0.5 ? hnAx : hnBx);
-                const ny = regNX ? regNY[i] : (pick > 0.5 ? hnAy : hnBy);
+                const nx = secNX ? secNX[i] : (regNX ? regNX[i] : (pick > 0.5 ? hnAx : hnBx));
+                const ny = secNX ? secNY[i] : (regNX ? regNY[i] : (pick > 0.5 ? hnAy : hnBy));
                 const fp = flutePeriod * (regPeriod ? regPeriod[i] : 1);
                 /* PER-RIB VARIATION. Measured on the sample, neighbouring rib
                    crests vary in amplitude by up to 5.8x (CV 0.47) and their
@@ -4544,9 +4651,33 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                 const fi = Math.floor(q / fp);
                 const u = q / fp - fi;
                 const centre = (fi + 0.5) * fp;
-                const ribAmp = ribVary
+                let ribAmp = ribVary
                   ? 1 + (hash(fi * 1.7 + seed, 11.3) - 0.5) * 2 * ribVary
                   : 1;
+                if (glintAmt) {
+                  /* ALONG-RIB SCATTER. On the sample, a crest crossing a flat
+                     featureless patch of backdrop is STILL broken into dashes
+                     and glints along its length, and the character does not
+                     change with what is behind it -- so it is a property of
+                     the surface, not of the refracted content. Our crests ran
+                     as constant-amplitude extrusions wherever the backdrop was
+                     smooth.
+
+                     Sampled in the rib's own frame and stretched along it, at
+                     a wavelength of a few rib pitches. NOT a sinusoid near the
+                     rib pitch: that cross-hatches against the rib grid into a
+                     woven moire, and at this pitch would sit on the pixel
+                     grid. Interpolated rather than blocky, and phase-offset
+                     per rib so neighbouring crests break independently. */
+                  const ga = along / (fp * glintLen);
+                  const g0 = Math.floor(ga);
+                  const gf = ga - g0;
+                  const gs = gf * gf * (3 - 2 * gf);
+                  const h1 = hash(g0 + seed, fi * 3.7 + 2.1);
+                  const h2 = hash(g0 + 1 + seed, fi * 3.7 + 2.1);
+                  const glint = (h1 + (h2 - h1) * gs) - 0.5;
+                  ribAmp *= 1 + glint * 2 * glintAmt;
+                }
                 /* Across the rib the scene is compressed towards the crown and
                    inverted, exactly as a half-cylinder does. */
                 const disp = (centre + (u - 0.5) * fp * fluteSpread) - q;
@@ -4645,6 +4776,16 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             sy = y + gy * mat.strength;
           }
 
+          if (rimAmt && petalGX) {
+            const rgx = petalGX[i];
+            const rgy = petalGY[i];
+            sx += rgx * rimAmt;
+            sy += rgy * rimAmt;
+            /* Light spread by that slope arrives thinner: a small compression
+               shade, not a drawn line. */
+            rimShade = -(Math.abs(rgx) + Math.abs(rgy));
+          }
+
           if (pebbleShiftX) {
             sx += pebbleShiftX[i] * petal[i];
             sy += pebbleShiftY[i] * petal[i];
@@ -4680,7 +4821,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             if (mat.hatchPitch) {
               /* The weave draws itself as line work over everything; the
                  plate's own relief keeps drawing the pebble rims underneath. */
-              e = e * embossAmp + hatchTone * mat.hatchEmboss + fluteTone * fluteShade;
+              e = e * embossAmp + hatchTone * mat.hatchEmboss + fluteTone * fluteShade
+                + rimShade * rimDark;
               if (e > 1) e = 1; else if (e < -1) e = -1;
             } else {
               /* The hatch draws itself on the ground and fades on the petal
