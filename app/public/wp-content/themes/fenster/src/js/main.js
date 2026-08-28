@@ -3699,7 +3699,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        crossings survive only in the transition bands between patches -- which
        is where the sample has them. */
     cassini: {
-      kind: 'hatchlens', texSize: 'cover', scale: 1.6,
+      kind: 'hatchlens', texSize: '590px auto', seamless: true,
       heightBlur: 9, strength: 52, emboss: 0.12,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.25,
@@ -3807,7 +3807,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       img.naturalWidth * s, img.naturalHeight * s);
   };
 
-  const layTexture = (ctx, img, w, h, size, scale) => {
+  const layTexture = (ctx, img, w, h, size, scale, seamless) => {
     const pin = /^([0-9.]+)px/.exec(size || '');
     if (!pin) {
       if (scale && scale !== 1) {
@@ -3815,12 +3815,33 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
            third before its count matched the reference; a cover-laid texture
            has no other way to change its motif size. Tiled through the same
            non-periodic path so shrinking cannot introduce a visible repeat. */
-        layTexture(ctx, img, w, h, `${Math.round(w * scale)}px auto`);
+        layTexture(ctx, img, w, h, `${Math.round(w * scale)}px auto`, 1, seamless);
         return;
       }
       drawCover(ctx, img, w, h, 'cover');
       return;
     }
+    if (seamless) {
+      /* A GENUINELY SEAMLESS SOURCE GETS AN HONEST REPEAT. The roaming and
+         mirroring below exist to HIDE a repeat in a source that does not tile;
+         run against a tile that does, they defeat the point twice over --
+         roaming draws a different sub-region per tile, so the edges no longer
+         match, and mirroring an organic pattern goes kaleidoscopic, which is
+         the trap `build-reeded-texture.py` warns about in terms. So this path
+         simply lays the tile edge to edge and the pattern continues across the
+         pane exactly as the real sheet does. */
+      const tw2 = Math.max(1, Math.round(parseFloat(pin[1])));
+      const th2 = /100%$/.test(size)
+        ? h
+        : Math.max(1, Math.round(img.naturalHeight * tw2 / img.naturalWidth));
+      for (let cx = 0; cx < w + tw2; cx += tw2) {
+        for (let cy = 0; cy < h + th2; cy += th2) {
+          ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, cx, cy, tw2, th2);
+        }
+      }
+      return;
+    }
+
     /* NON-PERIODIC TILING. Mirror-bricking kept the sheet seamless but every
        tile still carried IDENTICAL content, so the eye finds the repeat -- the
        giveaway that this is a small texture copied across a window rather than
@@ -3981,7 +4002,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          material's scale now comes from its own geometry (`period`, `cell`,
          `scale`) rather than from the texture's CSS size, so they lay at
          `cover` and tile exactly once. No tiling, no seam, nothing to hide. */
-      layTexture(texCtx, texImg, w, h, mat.texSize || button.dataset.size || 'cover', mat.scale);
+      layTexture(texCtx, texImg, w, h, mat.texSize || button.dataset.size || 'cover',
+        mat.scale, mat.seamless);
       /* HOISTED TO THE TOP OF THE FUNCTION AND IT STAYS THERE. This is the
          FOURTH declaration in `renderGlass` to be left below the code that
          uses it, and each one costs a full parameter sweep to notice, because

@@ -3562,8 +3562,17 @@ function fenster_site_data(): array
 
                `tile` and not `image`, exactly as Reeded does it: only the stage renders
                optics, and a flat-fielded plate looks flat when it is merely SHOWN. The
-               swatch, the hero wall and the glass card keep the photograph. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-flat.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+               swatch, the hero wall and the glass card keep the photograph.
+
+               The tile became SEAMLESS on 2026-08-28 (scripts/build-cassini-seamless.py)
+               so the pattern can continue across a pane larger than the plate. It is a
+               minimum-error boundary cut, NOT a mirror: mirroring is what makes Reeded
+               tile, and that script warns in terms not to generalise it — ribs are
+               near-identical to their own reflection, an organic mat of lenses is not,
+               and mirroring Cassini would put a butterfly axis down the middle. Measured
+               after cutting, both wrapped joins sit at the interior step (4.0 against 3.7
+               across, 4.3 against 3.9 down). */
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-tile.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
