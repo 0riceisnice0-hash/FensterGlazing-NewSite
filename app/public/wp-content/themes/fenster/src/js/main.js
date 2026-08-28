@@ -3672,6 +3672,22 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        draw as bold lines without turning into a chequer. Scaling the pattern
        up lets the hatch sit at 5px where it reads as line work.
 
+       THE HATCH IS FLUTING, NOT LINE WORK, and that is the largest single
+       correction in this whole sequence. At native pixels on the owner's own
+       sample photographs the ribs are bold and ROUNDED, and they visibly SMEAR
+       the scene into streaks across their width -- they are cylindrical
+       lenses, the same optics `rib` uses for Reeded, laid at each patch's own
+       angle. Drawing dark lines and nudging the sample a fraction of a pixel,
+       which is what this did for several rounds, produces a pattern ON the
+       scene; fluting produces a pattern MADE OF the scene, and that is the
+       difference between a texture overlay and glass. `fluteShade` carries a
+       specular CROWN rather than a symmetric sine, because the asymmetry --
+       narrow highlight, broad valley -- is what makes a rib read as round.
+
+       The combination the owner kept asking about is therefore: fluted ribs in
+       angled patches, the pebble lenses, and the stipple. Three mechanisms, not
+       one texture with its strength varied.
+
        THE PATCHES CAME RIGHT AT `wa`/`wb`, exactly where the selector dump
        said they would. The old weights carried a floor of `1 - bias * 0.85` on
        BOTH families, so at the strongest setting the losing family still held
@@ -3686,9 +3702,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       kind: 'hatchlens', texSize: 'cover', scale: 1.6,
       heightBlur: 9, strength: 44, emboss: 0.28,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
-      hatchEmboss: 1.4, shade: 0.55, faceClear: 0.45,
+      hatchEmboss: 0.0, shade: 0.55, faceClear: 0.45,
       stipple: 0.1, stippleFace: 0.3, dome: 0.6,
       hatchPatch: 18, hatchBias: 1.0,
+      flutePeriod: 11, fluteSpread: 3.4, fluteShade: 0.35,
       petalLift: 0.55, petalPale: 0.1, petalSharp: 0.14,
       pebbleWash: true, washMix: 0.2, pebbleShift: 24,
       faceBlur: 5, groundBlur: 9, groundFlat: 0.45, faceFlat: 0.40,
@@ -4180,6 +4197,9 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const shiftAmt = mat.pebbleShift || 0;
       const hatchBias = mat.hatchBias || 0;
       const hatchCross = mat.hatchCross || 0;
+      const fluteSpread = mat.fluteSpread || 0;
+      const flutePeriod = Math.max(3, mat.flutePeriod || 12);
+      const fluteShade = mat.fluteShade || 0;
 
       let pebbleWash = null;
       let pebbleShiftX = null;
@@ -4266,6 +4286,12 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           let sx = x;
           let sy = y;
           let hatchTone = 0;
+          /* Declared HERE, with the others, because the branch below assigns
+             it. Put next to `stip` further down it sat in the temporal dead
+             zone, the render threw, and every screenshot came back identical
+             off the silent CSS fallback -- the second time that exact mistake
+             has been made in this function. */
+          let fluteTone = 0;
 
           if (mat.kind === 'rib') {
             /* Cylindrical lens. Each rib compresses a slice `spread` times its
@@ -4379,6 +4405,41 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
               if (hatchCross) pick = 0.5 + (pick - 0.5) * (1 - hatchCross);
               const wa = pick;
               const wb = 1 - pick;
+
+              if (fluteSpread) {
+                /* THE HATCH IS NOT LINE WORK, IT IS FLUTING, and at native
+                   pixels on the owner's sample that is unmistakable: bold
+                   rounded ribs that SMEAR the scene into streaks across their
+                   width, with a bright crown and a dark valley. They are
+                   cylindrical lenses, the same optics `rib` uses for Reeded,
+                   laid at the local patch angle instead of vertically.
+
+                   Drawing dark lines and nudging the sample a fraction of a
+                   pixel, which is what this did, produces a pattern ON the
+                   scene. Fluting produces a pattern MADE OF the scene, and
+                   that is the difference between a texture overlay and glass. */
+                const nx = pick > 0.5 ? hnAx : hnBx;
+                const ny = pick > 0.5 ? hnAy : hnBy;
+                const q = x * nx + y * ny;
+                const fi = Math.floor(q / flutePeriod);
+                const u = q / flutePeriod - fi;
+                const centre = (fi + 0.5) * flutePeriod;
+                /* Across the rib the scene is compressed towards the crown and
+                   inverted, exactly as a half-cylinder does. */
+                const disp = (centre + (u - 0.5) * flutePeriod * fluteSpread) - q;
+                const damp = 1 - f * faceClear;
+                sx += nx * disp * damp;
+                sy += ny * disp * damp;
+                /* Crown catches the light, valley shades: a signed profile
+                   across each rib, which is what makes them read as round. */
+                /* A SPECULAR CROWN, not a symmetric sine. On the sample each
+                   rib carries a narrow bright highlight where its curve faces
+                   the light and a broader shade in the valley beside it -- the
+                   asymmetry is what makes them read as rounded glass rather
+                   than as corrugation. */
+                const cr = Math.cos((u - 0.5) * Math.PI);
+                fluteTone = (cr * cr * cr * 1.35 - 0.45) * damp;
+              }
               /* THIN DARK LINES ON A PALE GROUND, not a sine. At native
                  pixels the reference runs about 1px of dark line then 1.5px of
                  pale -- an asymmetric duty cycle. A symmetric sine at a 2.6px
@@ -4469,7 +4530,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             if (mat.hatchPitch) {
               /* The weave draws itself as line work over everything; the
                  plate's own relief keeps drawing the pebble rims underneath. */
-              e = e * embossAmp + hatchTone * mat.hatchEmboss;
+              e = e * embossAmp + hatchTone * mat.hatchEmboss + fluteTone * fluteShade;
               if (e > 1) e = 1; else if (e < -1) e = -1;
             } else {
               /* The hatch draws itself on the ground and fades on the petal
