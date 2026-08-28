@@ -3589,8 +3589,16 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* Oak: felt in the shredding, not seen as outlines -- fine anisotropic
        streak, relief contrast cut hard. */
     oak: { kind: 'emboss', heightBlur: 6, strength: 8, emboss: 0.62, veil: 0.03 },
-    /* Autumn: coarser leaf plate than Sycamore, and a real wander. */
-    autumn: { kind: 'emboss', heightBlur: 5, strength: 22, emboss: 0.4, scale: 0.8, veil: 0.08 },
+    /* Autumn is Oak's family, not Minster's -- owner, and the source bears it
+       out: its fine-detail to broad-relief ratio is 2.05 against Oak's 2.94,
+       where Minster sits at 0.84. It is a DRAWN plate. Bold embossed leaves
+       with fine radial striations inside each one, so the relief leads and the
+       scene behind stays largely where it is. It had been given Minster's
+       wobble-led settings -- strength 22 against a relief of 0.4 -- which is
+       exactly the effect the owner recognised. Now inverted to match Oak:
+       relief up, displacement right down. Bolder than Oak because the plate
+       is bolder, and no `scale`, because its motifs really are the larger. */
+    autumn: { kind: 'emboss', heightBlur: 5, strength: 9, emboss: 0.68, veil: 0.04 },
     /* Sycamore: the fine engraved fan. Half Autumn's scale, gentler carry. */
     sycamore: { kind: 'emboss', heightBlur: 4, strength: 8, emboss: 0.6, veil: 0.03 },
     /* Tribal: the lattice is the only sharp thing; everything behind it is
