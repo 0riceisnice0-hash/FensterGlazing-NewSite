@@ -3566,73 +3566,78 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* Cassini: fine directional hatch, angle varying patch to patch, with
        smooth petal lenses over it. Faces average what they magnify to nearly
        one tone; the hatched ground stays sharp and is combed. */
-    /* Cassini, rebuilt against the owner's high-resolution clock photograph.
-       The owner's verdict on the previous attempt was "looks blurry, the real
-       one is multiple textures of slightly stippled and hatching, the ovals are
-       more defined too", and all three faults had one root: THIS WAS OBSCURING
-       BY BLURRING. The reference obscures with dense crisp texture and stays
-       sharp everywhere; a smear at pebble scale is exactly what reads as blur.
+    /* Cassini, built against the owner's high-resolution clock photograph over
+       several rounds. The corrections that mattered, and why, because three of
+       them reversed an earlier decision made here:
 
-       EACH PEBBLE IS A FLAT WASH. A lens does not blur what it shows, it
-       INTEGRATES it -- every pebble in the photograph is one tone with a hard
-       edge to the next, which is how the sheet obscures completely and still
-       looks crisp. So each is flood-filled over the petal mask and given the
-       mean of what is actually behind it, rather than a fixed-radius blur.
-       That single change is what defines the ovals and kills the softness.
+       IT WAS OBSCURING BY BLURRING. The reference obscures with dense CRISP
+       texture and stays sharp everywhere; a smear at pebble scale is what reads
+       as blur. A lens does not blur what it shows, it INTEGRATES it, so each
+       pebble is flood-filled over the petal mask and given the mean of what is
+       behind it rather than a fixed-radius blur.
 
-       THE GROUND AND THE FACES WERE THE WRONG WAY ROUND. Measured on the
-       photograph, the hatched ground varies at broad scale by an rms of only
-       6.7-12.9 while the faces vary by 18.6; ours had 19.3 on both. A dense
-       screen scatters over a wide angle, so it transmits near-uniform light
-       and reads MILKY almost regardless of what is behind it -- hence
-       `groundBlur`, `groundFlat` and `groundVeil`, all stronger than their
-       face counterparts. This renderer had faces flattening hardest.
+       BUT A PEBBLE IS NOT OPAQUE. Averaged all the way to a flat wash they
+       became flat discs; in the photograph the red behind clearly tints them
+       and each carries a soft gradient. `washMix` holds them between the two --
+       enough gradient to read as glass, not enough detail to read as a picture.
 
-       THREE TEXTURES, NOT ONE. A fixed cross-hatch, a stipple on top of it,
-       and the pebbles. The faces are NOT polished -- at native pixels they
-       carry their own granular etch (fine-band rms 22 against the ground's
-       33), so `stippleFace` damps the grain on them rather than removing it.
+       AND A PEBBLE IS A DOME. Every one is dark along one edge and bright along
+       the other, which is most of what makes them read as glass rather than as
+       cut-outs. The plate photograph already carries that shading, so `dome`
+       transfers it directly instead of modelling it. Flattening to a wash had
+       thrown it away.
 
-       THE HATCH GEOMETRY IS MEASURED. Eighteen patches came back at 30-50deg
-       and eighteen at 130-150deg, every one at a 2.6px pitch: a fixed cross of
-       two families, not a field that turns with the pattern. The FFT reports
-       the wave NORMAL, which is 90deg off the line angle -- hence 52 here, not
-       39. Which family wins is read off the plate but BLURRED to a pebble's
-       width first, because per-pixel it flips on noise and draws hard
-       triangular wedges: a geometric herringbone across the whole sheet.
+       THE STIPPLE IS THE TWO HATCH FAMILIES CROSSING, and this reversed a
+       decision made here. Both families were once suppressed to nearly binary
+       on the reading that the fine chequer they made was an artefact. It is
+       not: an FFT of the reference's fine band returns BOTH at comparable power
+       in every patch sampled -- 1.00 and 0.93, 1.00 and 0.80, 1.00 and 0.98 --
+       and the dot mesh where they cross IS the light, almost see-through
+       stipple the sheet is covered in. What was wrong with the chequered build
+       was that it was far too DARK, not that both families were present.
 
-       THE PITCH IS RENDERED AT 3.2px AND THAT IS DELIBERATELY NOT PHYSICAL.
-       At this pane size Cassini's screen works out at about 1.2px, which is
-       below what a pixel grid can show -- render it truthfully and it averages
-       away to flat grey, which is not what the owner is asking to see. 2.6px
-       was tried and lands where a 52deg diagonal rasterises into DOTS rather
-       than lines; 3.2px draws as continuous line work. Supersampling is
-       deliberately narrow (about a seventh of a pixel) for the same reason:
-       widening it to a proper box across the pixel dropped the fine-band rms
-       from 30 to 5, because correct antialiasing destroys a 1px line at this
-       pitch.
+       THE GROUND AND THE FACES WERE THE WRONG WAY ROUND. Measured, the hatched
+       ground varies at broad scale by an rms of 6.7-12.9 and the faces by 18.6;
+       ours had 19.3 on both. A dense screen scatters over a wide angle, so it
+       transmits near-uniform light and reads MILKY almost regardless of what is
+       behind it, while a pebble passes its own wash through -- hence
+       `groundBlur`, `groundFlat` and `groundVeil` all stronger than their face
+       counterparts.
 
-       Do NOT tune the fine-band rms to match the reference's 33.6. That figure
-       includes the photograph's JPEG noise and grain; matching it numerically
-       means adding noise for its own sake. Likewise the pane-wide tonal spread
-       (reference 37, ours 16) is mostly the red clock against our garden --
-       that is the SCENE, not the glass.
+       GEOMETRY, MEASURED: eighteen patches at 30-50deg and eighteen at
+       130-150deg, every one at a 2.6px pitch. A fixed cross of two families,
+       not a field that turns with the pattern. The FFT reports the wave NORMAL,
+       90deg off the line angle, hence 52 and not 39. Which family leads is read
+       off the plate but BLURRED to a pebble's width first: per pixel it flips
+       on noise and draws hard triangular wedges, a herringbone across the sheet.
 
-       `hatchPitch` gates this whole model. Florielle shares this `kind` and
-       declares no pitch, so it renders exactly as before; verified by pixel
-       diff. Note the harness itself is nondeterministic by up to 6/255 -- the
-       same build renders the same glass twice with that much difference -- so
-       re-render before believing a small diff. */
+       Supersampling is deliberately narrow, about a seventh of a pixel.
+       Widening it to a proper box across the pixel dropped the fine-band rms
+       from 30 to 5 -- correct antialiasing destroys a 1px feature at a 2.6px
+       pitch, and the reference keeps its contrast for the same reason a camera
+       does.
+
+       Do NOT tune the fine-band rms to the reference's 33.6: that figure
+       includes the photograph's JPEG noise and grain. Nor the pane-wide tonal
+       spread, reference 37 against our 16 -- that is the red clock against our
+       garden, the SCENE and not the glass.
+
+       `hatchPitch` gates this whole model. Florielle shares this `kind`,
+       declares no pitch, and renders exactly as before; verified by pixel diff
+       every round. The harness is nondeterministic by up to 6/255 -- the same
+       build renders the same glass twice with that much difference -- so
+       re-render before believing a small diff, and suspect the baseline
+       capture first: three times it was the baseline that was bad. */
     cassini: {
       kind: 'hatchlens', texSize: 'cover',
       heightBlur: 9, strength: 20, emboss: 0.3,
-      hatch: 1.3, hatchPitch: 3.2, hatchAngle: 52,
-      hatchEmboss: 2.2, shade: 0.86, faceClear: 0.8,
-      stipple: 0.3, stippleFace: 0.55,
-      petalLift: 0.4, petalPale: 0.26, petalSharp: 0.1,
-      pebbleWash: true,
-      faceBlur: 9, groundBlur: 34, groundFlat: 0.94, faceFlat: 0.9,
-      veil: 0.08, groundVeil: 0.3,
+      hatch: 1.3, hatchPitch: 2.6, hatchAngle: 52,
+      hatchEmboss: 1.9, shade: 0.68, faceClear: 0.35,
+      stipple: 0.12, stippleFace: 0.3, dome: 0.5,
+      petalLift: 0.4, petalPale: 0.18, petalSharp: 0.1,
+      pebbleWash: true, washMix: 0.55,
+      faceBlur: 9, groundBlur: 34, groundFlat: 0.9, faceFlat: 0.82,
+      veil: 0.1, groundVeil: 0.26,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
        harder so window frames dissolve rather than being outlined. */
@@ -3955,6 +3960,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       let hatchPX = null;
       let hatchPY = null;
       let hatchSel = null;
+      let dome = null;
       let petal = null;
       if (mat.kind === 'hatchlens') {
         const jxx = new Float32Array(T.length);
@@ -3992,6 +3998,29 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
            over a whole patch and changes at the pebbles, so the field is
            blurred to roughly a pebble's width before it is used. */
         boxBlurField(hatchSel, w, h, 22);
+
+        /* THE PEBBLES ARE DOMES, AND THE PLATE ALREADY KNOWS IT. Every pebble
+           in the reference is dark along one edge and bright along the other,
+           because it is a lens with a curved face -- that shading is most of
+           what makes them read as glass rather than as flat cut-outs. The
+           source photograph carries it, so it is transferred directly rather
+           than modelled: the plate's own luma with the lighting taken out.
+           Averaging the pebble to a flat wash, which is what fixed the
+           blurriness, had thrown exactly this away. */
+        dome = Float32Array.from(baseLuma);
+        const domeLo = Float32Array.from(baseLuma);
+        boxBlurField(domeLo, w, h, 26);
+        const dSamp = [];
+        for (let k = 0; k < 4096; k += 1) {
+          const j = (2003 * k) % dome.length;
+          dSamp.push(Math.abs(dome[j] - domeLo[j]));
+        }
+        dSamp.sort((a, b) => a - b);
+        const dScale = Math.max(dSamp[Math.floor(dSamp.length * 0.9)] || 1, 1e-3);
+        for (let i = 0; i < dome.length; i += 1) {
+          const v = (dome[i] - domeLo[i]) / dScale;
+          dome[i] = v < -1 ? -1 : v > 1 ? 1 : v;
+        }
         /* The petal mask: smooth bright regions are the lens faces, and
            they carry no hatch. Percentile bounds so exposure cannot move
            the split. */
@@ -4074,6 +4103,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const shadeAmp = mat.shade == null ? 0.35 : mat.shade;
       const petalPale = mat.petalPale || 0;
       const groundVeil = mat.groundVeil || 0;
+      const washMix = mat.washMix == null ? 1 : mat.washMix;
+      const domeAmt = mat.dome || 0;
       const stippleAmt = mat.stipple || 0;
       const stippleFace = mat.stippleFace == null ? 0.4 : mat.stippleFace;
       const groundFlatAmt = mat.groundFlat || 0;
@@ -4180,15 +4211,21 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
               const phB = (x * hnBx + y * hnBy) * hatchK;
               /* Which family wins here is still read off the plate, so the
                  patches fall where the real glass puts them. */
-              /* NEARLY BINARY, because two families at equal weight cross into
-                 a grid and a grid at a 2.6px pitch is a chequerboard. In the
-                 reference each patch runs ONE way; the crossings are confined
-                 to the narrow seams between patches, which is what a steep
-                 selection gives. A soft 0.3-1.0 blend put both families
-                 everywhere and chequered the whole sheet. */
+              /* BOTH FAMILIES RUN EVERYWHERE, AND THEIR CROSSING IS THE
+                 STIPPLE. This was nearly binary for one build, on the reading
+                 that the chequer it produced was an artefact. It is not: an
+                 FFT of the reference's fine band returns BOTH families at
+                 comparable power in every patch sampled -- 1.00 and 0.93,
+                 1.00 and 0.80, 1.00 and 0.98 -- and the fine dot mesh they
+                 make where they cross is exactly the light, almost
+                 see-through stipple the sheet is covered in. Suppressing one
+                 family removed it. What was actually wrong with the chequered
+                 build was that it was far too DARK, not that both were there.
+                 The plate still tilts the balance, so some patches read as
+                 diagonal streaks and others as mesh, as the reference does. */
               const m = hatchSel[i];
-              const wa = 1 / (1 + Math.exp((0.5 - m) * -9));
-              const wb = 1 - wa;
+              const wa = 0.55 + 0.45 * m;
+              const wb = 1.0 - 0.45 * m;
               /* THIN DARK LINES ON A PALE GROUND, not a sine. At native
                  pixels the reference runs about 1px of dark line then 1.5px of
                  pale -- an asymmetric duty cycle. A symmetric sine at a 2.6px
@@ -4321,8 +4358,14 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
               if (flatGround) {
                 const g = flatGround[p00 + ch] * w00 + flatGround[p10 + ch] * w10
                   + flatGround[p01 + ch] * w01 + flatGround[p11 + ch] * w11;
+                /* ALMOST SEE-THROUGH. A flat wash alone made the pebbles
+                   opaque discs; in the reference the red behind clearly tints
+                   them and each carries its own soft gradient. `washMix` is
+                   how much of the pebble is its own flat average and how much
+                   is the softened scene -- enough gradient to read as glass,
+                   not enough detail to read as a picture. */
                 const pw = pebbleWash && pebbleWash[i * 3 + ch] > 0
-                  ? pebbleWash[i * 3 + ch]
+                  ? pebbleWash[i * 3 + ch] * washMix + f * (1 - washMix)
                   : f;
                 v += (g + (pw - g) * petal[i] - v) * faceMix;
               } else {
@@ -4351,6 +4394,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                  crisp everywhere. */
               const st = stip * stippleAmt * (1 - petal[i] * stippleFace);
               v += st > 0 ? (255 - v) * st : v * st;
+            }
+            if (domeAmt && dome) {
+              /* Only on the faces: the ground is a screen, not a lens. */
+              const dv = dome[i] * domeAmt * petal[i];
+              v += dv > 0 ? (255 - v) * dv : v * dv;
             }
             if (petalPale) {
               /* A frosted pebble scatters light forward, so it sits PALER
