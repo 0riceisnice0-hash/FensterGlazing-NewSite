@@ -3700,22 +3700,22 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        is where the sample has them. */
     cassini: {
       kind: 'hatchlens', texSize: 'cover', scale: 1.6,
-      heightBlur: 9, strength: 52, emboss: 0.80,
+      heightBlur: 9, strength: 52, emboss: 0.12,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.45,
-      stipple: 0.05, stippleFace: 0.3, dome: 1.05,
+      stipple: 0.01, stippleFace: 0.3, dome: 1.05,
       hatchPatch: 18, hatchBias: 1.0,
-      perPetal: true, petalBands: 5,
-      flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 1.90,
+      perPetal: true, petalBands: 4,
+      flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 0.70,
       ribBearings: 4, ribVary: 0.6, ribWander: 0.15,
       petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
       pebbleWash: true, washMix: 0.2, pebbleShift: 24,
       faceBlur: 8, groundBlur: 12, groundFlat: 0.58, faceFlat: 0.55,
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
-      dimple: 0.40,
-      overlapBand: 3, bandKind: true, overlapAmt: 0.8, overlapTurn: 55,
-      sectors: 6, glint: 0.45, glintLen: 2.5, rim2: 7, rimDark: 0.30,
+      dimple: 0.12,
+      overlapBand: 2, bandKind: true, overlapAmt: 0.35, overlapTurn: 55,
+      sectors: 6, glint: 0.12, glintLen: 2.5, rim2: 7, rimDark: 0.30,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
        harder so window frames dissolve rather than being outlined. */
@@ -4406,7 +4406,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             ? 3
             : (bandKind && band === bands - 2
               ? 0
-              : (r < 0.66 ? 1 : (r < 0.80 ? 0 : 2)));
+              : (r < 0.45 ? 1 : (r < 0.75 ? 0 : 2)));
           const per = 1 + (hash((start % w) + 7, ((start / w) | 0) + 23) - 0.5) * 0.5;
           for (let k = 0; k < mc; k += 1) {
             const j = members[k];
