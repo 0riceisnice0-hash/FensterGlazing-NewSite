@@ -3705,6 +3705,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.45,
       stipple: 0.1, stippleFace: 0.3, dome: 0.6,
       hatchPatch: 18, hatchBias: 1.0,
+      perPetal: true, petalBands: 4,
       flutePeriod: 11, fluteSpread: 3.4, fluteShade: 0.35,
       petalLift: 0.55, petalPale: 0.1, petalSharp: 0.14,
       pebbleWash: true, washMix: 0.2, pebbleShift: 24,
@@ -4034,10 +4035,18 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       let hatchSel = null;
       let dome = null;
       let petal = null;
+      /* Hoisted: the per-petal segmentation further down needs these, and they
+         were block-scoped to the branch that fills them. Third time a
+         declaration in this function has been left below or inside the scope
+         of its use -- and because a render exception falls back to CSS in
+         silence, that costs a whole sweep to notice. */
+      let jxx = null;
+      let jyy = null;
+      let jxy = null;
       if (mat.kind === 'hatchlens') {
-        const jxx = new Float32Array(T.length);
-        const jyy = new Float32Array(T.length);
-        const jxy = new Float32Array(T.length);
+        jxx = new Float32Array(T.length);
+        jyy = new Float32Array(T.length);
+        jxy = new Float32Array(T.length);
         for (let y = 1; y < h - 1; y += 1) {
           for (let x = 1; x < w - 1; x += 1) {
             const i = y * w + x;
@@ -4245,6 +4254,78 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         }
       }
 
+      /* EVERY PETAL IS ITS OWN REGION WITH ITS OWN TEXTURE, and they overlap.
+         The owner's point, and the thing this renderer had structurally wrong:
+         it laid ONE geometric field across the whole sheet -- two fixed line
+         families, patch-selected -- where the real glass is a mat of
+         overlapping petals, each carrying its own fluting at its own angle,
+         and some smooth or dimpled instead. A global field can only ever be a
+         general pattern; the sheet is more complex than that because the
+         complexity is PER PETAL.
+
+         So the pane is segmented, and each region then gets:
+           - its own rib angle, MEASURED from the plate's own fine texture
+             inside that region rather than invented, so the angles are the
+             real ones and vary the way the real sheet's do;
+           - its own texture kind, since not every petal is fluted -- some are
+             smooth lenses and some are dimpled, which is what the sample
+             shows and what "a combo of textures" meant.
+
+         Regions come from banding the petal field and flood-filling each band,
+         which follows the petals' own boundaries. */
+      let regNX = null;
+      let regNY = null;
+      let regKind = null;
+      let regPeriod = null;
+      if (mat.perPetal && petal && hatchPX) {
+        regNX = new Float32Array(T.length);
+        regNY = new Float32Array(T.length);
+        regKind = new Uint8Array(T.length);
+        regPeriod = new Float32Array(T.length);
+        const bands = Math.max(2, mat.petalBands || 4);
+        const lvl = new Uint8Array(T.length);
+        for (let i = 0; i < T.length; i += 1) {
+          const b = Math.floor(petal[i] * bands);
+          lvl[i] = b >= bands ? bands - 1 : b;
+        }
+        const seen = new Uint8Array(T.length);
+        const stack = new Int32Array(T.length);
+        const members = new Int32Array(T.length);
+        for (let start = 0; start < T.length; start += 1) {
+          if (seen[start]) continue;
+          const band = lvl[start];
+          let sp = 0;
+          let mc = 0;
+          stack[sp] = start; sp += 1; seen[start] = 1;
+          let sxx = 0; let syy = 0; let sxy = 0;
+          while (sp > 0) {
+            sp -= 1;
+            const j = stack[sp];
+            members[mc] = j; mc += 1;
+            sxx += jxx[j]; syy += jyy[j]; sxy += jxy[j];
+            const jx = j % w;
+            if (jx > 0 && !seen[j - 1] && lvl[j - 1] === band) { seen[j - 1] = 1; stack[sp] = j - 1; sp += 1; }
+            if (jx < w - 1 && !seen[j + 1] && lvl[j + 1] === band) { seen[j + 1] = 1; stack[sp] = j + 1; sp += 1; }
+            if (j >= w && !seen[j - w] && lvl[j - w] === band) { seen[j - w] = 1; stack[sp] = j - w; sp += 1; }
+            if (j < T.length - w && !seen[j + w] && lvl[j + w] === band) { seen[j + w] = 1; stack[sp] = j + w; sp += 1; }
+          }
+          /* The region's own dominant orientation, from the plate. */
+          const th = 0.5 * Math.atan2(2 * sxy, sxx - syy + 1e-6);
+          const nx = Math.cos(th);
+          const ny = Math.sin(th);
+          const r = hash(start % w, (start / w) | 0);
+          /* Enough petals stay smooth or dimpled to break the geometry up;
+             the proportions are eyeballed off the sample, where most petals
+             are fluted but a clear minority are glassy or granular. */
+          const kind = r < 0.62 ? 1 : (r < 0.82 ? 0 : 2);
+          const per = 1 + (hash((start % w) + 7, ((start / w) | 0) + 23) - 0.5) * 0.5;
+          for (let k = 0; k < mc; k += 1) {
+            const j = members[k];
+            regNX[j] = nx; regNY[j] = ny; regKind[j] = kind; regPeriod[j] = per;
+          }
+        }
+      }
+
       const out = sceneCtx.createImageData(w, h);
       const dst = out.data;
       const period = Math.max(4, mat.period || 20);
@@ -4418,15 +4499,23 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                    pixel, which is what this did, produces a pattern ON the
                    scene. Fluting produces a pattern MADE OF the scene, and
                    that is the difference between a texture overlay and glass. */
-                const nx = pick > 0.5 ? hnAx : hnBx;
-                const ny = pick > 0.5 ? hnAy : hnBy;
+                /* Per-petal angle where segmentation is on, otherwise the
+                   old global pair. Kind 0 leaves the petal smooth, kind 2
+                   dimples it instead of fluting it. */
+                const kind = regKind ? regKind[i] : 1;
+                if (kind !== 1) {
+                  if (kind === 2) fluteTone = (hash(x * 3.1 + 5, y * 2.7 + 19) - 0.5) * 1.4;
+                } else {
+                const nx = regNX ? regNX[i] : (pick > 0.5 ? hnAx : hnBx);
+                const ny = regNX ? regNY[i] : (pick > 0.5 ? hnAy : hnBy);
+                const fp = flutePeriod * (regPeriod ? regPeriod[i] : 1);
                 const q = x * nx + y * ny;
-                const fi = Math.floor(q / flutePeriod);
-                const u = q / flutePeriod - fi;
-                const centre = (fi + 0.5) * flutePeriod;
+                const fi = Math.floor(q / fp);
+                const u = q / fp - fi;
+                const centre = (fi + 0.5) * fp;
                 /* Across the rib the scene is compressed towards the crown and
                    inverted, exactly as a half-cylinder does. */
-                const disp = (centre + (u - 0.5) * flutePeriod * fluteSpread) - q;
+                const disp = (centre + (u - 0.5) * fp * fluteSpread) - q;
                 const damp = 1 - f * faceClear;
                 sx += nx * disp * damp;
                 sy += ny * disp * damp;
@@ -4439,6 +4528,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                    than as corrugation. */
                 const cr = Math.cos((u - 0.5) * Math.PI);
                 fluteTone = (cr * cr * cr * 1.35 - 0.45) * damp;
+                }
               }
               /* THIN DARK LINES ON A PALE GROUND, not a sine. At native
                  pixels the reference runs about 1px of dark line then 1.5px of
