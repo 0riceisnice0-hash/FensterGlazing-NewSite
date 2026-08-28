@@ -3566,9 +3566,58 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* Cassini: fine directional hatch, angle varying patch to patch, with
        smooth petal lenses over it. Faces average what they magnify to nearly
        one tone; the hatched ground stays sharp and is combed. */
-    cassini: { texSize: 'cover',
-      kind: 'hatchlens', heightBlur: 9, strength: 16, emboss: 0.34,
-      hatch: 3.4, hatchEmboss: 0.55, petalLift: 0.4, faceBlur: 11, veil: 0.05,
+    /* Cassini, rebuilt against the owner's high-resolution clock photograph.
+       Two things in it are MEASURED rather than judged by eye, and both
+       overturned what this material was doing.
+
+       THE HATCH IS A FIXED CROSS, NOT A FIELD THAT FOLLOWS THE PATTERN.
+       Eighteen patches across the reference came back at 30-50deg and eighteen
+       at 130-150deg, every one of them at a 2.6px pitch. So it is two line
+       families at +/-52deg (the FFT reports the wave normal, which is 90deg off
+       the line), and the patchwork look comes from which family dominates
+       locally -- that part is still read off the plate, so the patches fall
+       where the real glass puts them. Steering a single hatch by the plate's
+       orientation, as this did before, produced a continuously turning moire
+       that measured 5-15px against the reference's flat 2.6.
+
+       IT IS SYNTHESISED, AND IT HAS TO BE. Taking the hatch from the source
+       photograph's own fine detail ties it to the petal size, so any change of
+       plate scale coarsens the screen with it.
+
+       Two bugs were behind the rest of it, both invisible until the fields were
+       dumped out of the renderer and looked at:
+
+         The petal mask was reading the HIGH-PASSED field. That pass subtracts a
+         26px-radius blur and these pebbles run to ~100px, so it removed the
+         very brightness difference that defines them, and the threshold caught
+         the residual at the boundaries instead: a connected lattice rather than
+         stones. It reads the pre-high-pass luma now, which is also why the
+         `tile` in site-data is flat-fielded -- the mask now depends on absolute
+         brightness, so plate lighting matters again.
+
+         A rim term drew a dark ring round every pale pebble, and a pale blob
+         inside a dark ring is a contour: the pane looked like a topographic
+         map. Isolating the terms one at a time showed the rings were entirely
+         that and not the lens or the flattening.
+
+       Left at plain `cover`. An earlier pass enlarged the plate 1.5x to match
+       the pebble size in the photograph, but that photograph is a sample held
+       near the camera and this is a window: matching it made four pebbles span
+       the pane against the reference's dozen. site-data already warns that
+       enlarging a photographed pattern twice over reads as coarse blobs, and it
+       was right.
+
+       `hatchPitch` is the switch for this whole model -- synthesised weave,
+       luma-based mask, smoothstepped petals, faceClear. Florielle shares this
+       `kind` and declares no pitch, so it renders exactly as it did before;
+       that is verified by pixel-diffing it against the previous commit. */
+    cassini: {
+      kind: 'hatchlens', texSize: 'cover',
+      heightBlur: 9, strength: 20, emboss: 0.3,
+      hatch: 1.3, hatchPitch: 2.6, hatchAngle: 52,
+      hatchEmboss: 0.5, shade: 0.85, faceClear: 0.85,
+      petalLift: 0.4, petalPale: 0.4, petalSharp: 0.16,
+      faceBlur: 16, groundFlat: 0.6, veil: 0.12,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
        harder so window frames dissolve rather than being outlined. */
@@ -3821,6 +3870,17 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          phantom tilt across the pane. */
       const broad = Float32Array.from(T);
       boxBlurField(broad, w, h, 26);
+      /* Kept BEFORE the high-pass, because the petal mask needs it. This pass
+         subtracts a 26px-radius blur, and Cassini's pebbles run to about
+         100px, so the blur partly tracks the pebbles themselves and takes
+         their brightness out along with the lighting. Thresholding the
+         high-passed field therefore selected the residual left at the
+         BOUNDARIES -- a connected network of ribbons -- rather than the
+         pebbles, which is what put a lattice on the pane instead of stones.
+         Dumping the mask out of the renderer was the only way to see it: on
+         the plate, and in a standalone reimplementation of the same maths,
+         it came out as clean discrete ovals every time. */
+      const baseLuma = Float32Array.from(T);
       for (let i = 0; i < T.length; i += 1) T[i] = T[i] - broad[i] + 128;
 
       /* The relief that steers refraction, smoothed in float so 8-bit
@@ -3892,17 +3952,25 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         /* The petal mask: smooth bright regions are the lens faces, and
            they carry no hatch. Percentile bounds so exposure cannot move
            the split. */
-        const sm = Float32Array.from(T);
+        const sm = Float32Array.from(mat.hatchPitch ? baseLuma : T);
         boxBlurField(sm, w, h, 4);
         const ps = [];
         for (let k = 0; k < 4096; k += 1) ps.push(sm[(2003 * k) % sm.length]);
         ps.sort((a, b) => a - b);
-        const lo = ps[Math.floor(ps.length * 0.5)];
-        const hi = ps[Math.floor(ps.length * 0.78)];
+        /* A WIDE band here makes the mask a gradient, and a gradient used as
+           a paleness mask airbrushes: the petals came out as fog blobs rather
+           than as pebbles with an edge. The reference pebbles are tight-edged
+           with flat interiors, so the band is narrow and then smoothstepped --
+           soft enough not to alias, hard enough to read as a shape. */
+        const band = mat.petalSharp || 0.28;
+        const mid = mat.petalSharp ? 0.5 + band * 0.5 : 0.64;
+        const lo = ps[Math.floor(ps.length * (mid - band * 0.5))];
+        const hi = ps[Math.floor(ps.length * Math.min(0.995, mid + band * 0.5))];
         petal = new Float32Array(T.length);
         for (let i = 0; i < T.length; i += 1) {
           let v = (sm[i] - lo) / Math.max(hi - lo, 1e-3);
-          petal[i] = v < 0 ? 0 : v > 1 ? 1 : v;
+          v = v < 0 ? 0 : v > 1 ? 1 : v;
+          petal[i] = mat.hatchPitch ? v * v * (3 - 2 * v) : v;
         }
       }
 
@@ -3914,8 +3982,19 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const jitter = mat.jitter || 0;
       const embossAmp = mat.emboss || 0;
       const veil = mat.veil || 0;
+      /* Rolled relief scatters light and so may never print darker than the
+         scene behind it -- 0.35. A cut hatch is line work and does. */
+      const shadeAmp = mat.shade == null ? 0.35 : mat.shade;
+      const petalPale = mat.petalPale || 0;
+      const faceClear = mat.faceClear == null ? 0.45 : mat.faceClear;
       const groundAmp = mat.ground || 0;
       const grainAmp = mat.grain || 0;
+      const hatchK = (Math.PI * 2) / (mat.hatchPitch || 2.6);
+      const hatchRad = ((mat.hatchAngle || 39) * Math.PI) / 180;
+      const hnAx = -Math.sin(hatchRad);
+      const hnAy = Math.cos(hatchRad);
+      const hnBx = -Math.sin(-hatchRad);
+      const hnBy = Math.cos(-hatchRad);
 
       const ribWander = mat.wander || 0;
       const ribDrift = (x) => (ribWander
@@ -3932,6 +4011,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           const i = y * w + x;
           let sx = x;
           let sy = y;
+          let hatchTone = 0;
 
           if (mat.kind === 'rib') {
             /* Cylindrical lens. Each rib compresses a slice `spread` times its
@@ -3980,7 +4060,54 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             const lens = mat.strength * (0.45 + f * mat.petalLift);
             sx = x + gx * lens;
             sy = y + gy * lens;
-            const comb = (detail[i] / dNorm) * mat.hatch * (1 - f * 0.85);
+            /* THE HATCH IS SYNTHESISED, NOT READ OFF THE PLATE, and that is
+               the fix. Cassini's screen is a manufactured weave at a fixed
+               ~2.6px pitch -- fine, even, and INDEPENDENT of how big the
+               petals are. Taking it from the source photograph's own fine
+               detail tied the two together, so scaling the plate up to reach
+               the reference's petal size coarsened the hatch along with it and
+               the comb came out as chunky blobs instead of line work.
+
+               Generated at its true pitch instead, but steered by the
+               orientation MEASURED from the plate, so the patchwork of angles
+               is still Cassini's own and not an invented regular grid. It runs
+               across the whole sheet, petal faces included, because in the
+               reference it plainly does. */
+            let comb;
+            if (mat.hatchPitch) {
+              /* MEASURED, NOT GUESSED. Eighteen patches across the reference
+                 photograph came back at 30-50deg and eighteen at 130-150deg,
+                 every one of them at a 2.6px pitch. Cassini's hatch is not a
+                 field that rotates with the pattern -- it is a fixed cross of
+                 two line families at +/-39deg, and the patchwork look comes
+                 from which of the two dominates locally, not from the angle
+                 wandering. Steering one hatch by the plate's orientation, as
+                 this did before, produced a continuously turning moire that
+                 measured 5-15px against the reference's flat 2.6. */
+              const phA = (x * hnAx + y * hnAy) * hatchK;
+              const phB = (x * hnBx + y * hnBy) * hatchK;
+              /* Which family wins here is still read off the plate, so the
+                 patches fall where the real glass puts them. */
+              const m = 0.5 - hatchPX[i] * hatchPY[i];
+              const wa = 0.3 + 0.7 * m;
+              const wb = 1.0 - 0.7 * m;
+              const weave = (Math.sin(phA) * wa + Math.sin(phB) * wb) / (wa + wb) * 1.5;
+              /* A lens face is POLISHED -- the screen is rolled into the
+                 ground between the pebbles, not across them. Damping the
+                 hatch only halfway on the faces left the whole sheet evenly
+                 textured, so the pebbles never separated from the ground and
+                 read as soft lobes. In the reference they are smooth and pale
+                 against a dense screen, and that contrast is what makes them
+                 legible as shapes at all. */
+              comb = weave * mat.hatch * (1 - f * faceClear);
+              hatchTone = weave * (1 - f * faceClear);
+            } else {
+              /* Florielle stays on exactly the plate-derived comb it was
+                 approved with. `hatchPitch` is the switch for the whole new
+                 model -- synthesised weave, luma-based petal mask, faceClear
+                 -- and only Cassini declares it. */
+              comb = (detail[i] / dNorm) * mat.hatch * (1 - f * 0.85);
+            }
             sx += hatchPX[i] * comb;
             sy += hatchPY[i] * comb;
           } else if (mat.strength) {
@@ -4022,9 +4149,16 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           let e = detail[i] / dNorm;
           if (e > 1) e = 1; else if (e < -1) e = -1;
           if (mat.kind === 'hatchlens') {
-            /* The hatch draws itself on the ground and fades on the petal
-               faces, which is exactly how the two read in the photograph. */
-            e *= embossAmp + (mat.hatchEmboss - embossAmp) * (1 - petal[i]);
+            if (mat.hatchPitch) {
+              /* The weave draws itself as line work over everything; the
+                 plate's own relief keeps drawing the pebble rims underneath. */
+              e = e * embossAmp + hatchTone * mat.hatchEmboss;
+              if (e > 1) e = 1; else if (e < -1) e = -1;
+            } else {
+              /* The hatch draws itself on the ground and fades on the petal
+                 faces, which is exactly how the two read in the photograph. */
+              e *= embossAmp + (mat.hatchEmboss - embossAmp) * (1 - petal[i]);
+            }
           } else {
             e *= embossAmp;
           }
@@ -4041,7 +4175,15 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           }
 
           const o = i * 4;
-          const faceMix = mat.kind === 'hatchlens' ? petal[i] : 0;
+          /* `groundFlat` is a floor under the averaging that applies across the
+             WHOLE pane, not just the petal faces. In the reference photograph
+             no scene detail survives anywhere -- the clock is broad red, white
+             and grey masses and nothing finer -- whereas ours was leaving
+             brickwork, window frames and a legible blue sign readable between
+             the petals. The lens faces still flatten hardest. */
+          const faceMix = mat.kind === 'hatchlens'
+            ? Math.max(mat.groundFlat || 0, petal[i])
+            : 0;
           for (let ch = 0; ch < 3; ch += 1) {
             const src = mat.kind === 'frost' ? soft : scene;
             let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
@@ -4065,7 +4207,23 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                object. A symmetric signed emboss printed black strokes over
                foliage and read as a decal; the negative lobe is therefore
                heavily damped rather than mirrored. */
-            v += e > 0 ? (255 - v) * e : v * e * 0.35;
+            v += e > 0 ? (255 - v) * e : v * e * shadeAmp;
+            if (petalPale) {
+              /* A frosted pebble scatters light forward, so it sits PALER
+                 than the hatched ground around it. That difference, not an
+                 outline, is what makes the petals read at a glance.
+
+                 NO RIM DARKENING HERE, and that is deliberate. Subtracting on
+                 the slope of the petal field drew a dark ring round every pale
+                 blob, and a pale blob inside a dark ring is a contour: the
+                 pane came out looking like a topographic map. Isolating the
+                 terms one at a time showed the rings were entirely this and
+                 not the lens displacement or the flattening -- with the lift
+                 switched off they vanished, with the lens cut to a quarter
+                 they did not. The reference has no such ring; its pebbles just
+                 sit paler, with the edge left to the lens. */
+              v += (255 - v) * petal[i] * petalPale;
+            }
             if (rim) v += rim > 0 ? (255 - v) * rim : v * rim;
             if (veil) v += (250 - v) * veil;
             dst[o + ch] = v;

@@ -3548,8 +3548,22 @@ function fenster_site_data(): array
                Sized rather than left to `cover`. The stage paints the texture at 122% on
                top of cover, so a photographed pattern is enlarged twice over and
                reads as coarse blobs instead of glass. Pinning the width fixes the
-               pattern's scale wherever it is painted — swatch, wall or stage. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+               pattern's scale wherever it is painted — swatch, wall or stage.
+
+               A `tile` was added 2026-08-28, built by scripts/build-cassini-texture.py.
+               The renderer finds Cassini's lens faces by taking everything above a
+               percentile of the blurred plate, and a percentile is a GLOBAL cut, so it
+               only finds the real petals if the plate is evenly lit. This one measured a
+               low-frequency spread of 168 against a set median of 70 — the worst texture
+               in the set — so the cut fell below the ground in the bright corner and
+               above the petals in the dark one, and the petals rendered as connected
+               white amoebas: a contour map of the lighting rather than the pattern.
+               Flat-fielding takes it to 55.
+
+               `tile` and not `image`, exactly as Reeded does it: only the stage renders
+               optics, and a flat-fielded plate looks flat when it is merely SHOWN. The
+               swatch, the hero wall and the glass card keep the photograph. */
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-flat.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
