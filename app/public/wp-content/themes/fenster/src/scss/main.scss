@@ -10823,12 +10823,73 @@ html.fg-gallery-lightbox-open body {
   mix-blend-mode: normal;
 }
 
-.fg-obscure-visualiser__grid {
-  grid-template-columns: minmax(150px, 1fr) minmax(0, 900px) minmax(150px, 1fr);
-  grid-template-areas:
-    "left stage right"
-    "bottom bottom bottom";
-  align-items: start;
+/* Desktop only. Left un-scoped, this grid also applied at phone widths,
+   where the options column is hidden and `.fg-obscure-mobile-picker`
+   claims a `mobile-picker` area this template no longer defines -- so the
+   rail landed unplaced and the whole section fell apart. */
+@media (min-width: 861px) {
+  /* ONE VIEWPORT, ONE LIST. The old three-column arrangement put ten patterns
+     down the left of the stage and eleven down the right, so comparing two of
+     them meant looking in two places, and the section stood 979px tall against a
+     720px viewport: the selector heading and the how-to were below the fold, so
+     the instruction telling you to drag the divider was the part you could not
+     see. Heading on top where it is read first, stage and the whole pattern list
+     side by side beneath it. */
+  .fg-obscure-visualiser__grid {
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 372px);
+    grid-template-areas:
+      "head    head"
+      "stage   options";
+    align-items: start;
+  }
+
+  .fg-obscure-visualiser__head {
+    grid-area: head;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 0.4rem clamp(1rem, 2.4vw, 2rem);
+    align-items: end;
+  }
+
+  .fg-obscure-visualiser__head .eyebrow {
+    grid-column: 1;
+  }
+
+  .fg-obscure-visualiser__head h2 {
+    grid-column: 1;
+    margin: 0;
+    max-width: 30ch;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    line-height: 1.15;
+  }
+
+  .fg-obscure-visualiser__hint {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    margin: 0;
+    align-self: end;
+    max-width: 52ch;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .fg-obscure-rail--options {
+    grid-area: options;
+  }
+
+  /* THE PREVIEW IS SIZED BY THE VIEWPORT, NOT BY ITS OWN ASPECT. A fixed
+     `clamp(380px, 44vw, 560px)` made the stage 585px tall on a 1280x720 laptop
+     and pushed the section to 897px: the customer had to scroll to see that the
+     divider was draggable. Height now comes off the window with the heading,
+     readout and padding subtracted, so the whole selector lands inside one
+     screen at laptop sizes and still grows on a tall monitor. Left to the mobile
+     rules below 900px, where a tall stage is correct. */
+  .fg-obscure-stage__viewport {
+    aspect-ratio: auto;
+    min-height: 0;
+    height: clamp(300px, calc(100vh - 300px), 540px);
+  }
 }
 
 .fg-obscure-stage {
@@ -10922,24 +10983,35 @@ html.fg-gallery-lightbox-open body {
   line-height: 1.45;
 }
 
+/* Two columns, so all twenty-one sit beside the stage without scrolling and
+   without running taller than it. */
 .fg-obscure-rail.fg-obscure-picker__buttons {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.42rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.34rem;
   max-height: none;
   overflow: visible;
   padding: 0;
 }
 
 .fg-obscure-rail.fg-obscure-picker__buttons button {
-  grid-template-columns: 40px minmax(0, 1fr);
-  min-height: 56px;
-  padding: 0.4rem;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 0 0.42rem;
+  min-height: 40px;
+  padding: 0.26rem;
+}
+
+.fg-obscure-rail.fg-obscure-picker__buttons strong {
+  font-size: 0.82rem;
+}
+
+.fg-obscure-rail.fg-obscure-picker__buttons small {
+  font-size: 0.7rem;
 }
 
 .fg-obscure-rail.fg-obscure-picker__buttons span {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 
 .fg-obscure-rail.fg-obscure-picker__buttons strong,
@@ -25013,9 +25085,9 @@ a.fg-cs-card__pill:focus-visible {
 
   .fg-obscure-visualiser__grid {
     grid-template-areas:
+      "head"
       "stage"
-      "mobile-picker"
-      "bottom";
+      "mobile-picker";
   }
 
   .fg-obscure-hero__copy h1 {
@@ -25131,6 +25203,22 @@ a.fg-cs-card__pill:focus-visible {
   .fg-obscure-rail.fg-obscure-picker__buttons,
   .fg-obscure-picker > .fg-obscure-picker__buttons {
     display: none;
+  }
+
+  /* The map above already places these; the head just stops being two columns.
+     An earlier attempt here set `grid-template-areas: none`, which clobbered
+     that map from a later rule and left the stage claiming a `stage` area that
+     no longer existed -- the grid then invented three implicit columns and the
+     section fell apart on a phone. */
+  .fg-obscure-visualiser__head {
+    grid-area: head;
+    grid-template-columns: 1fr;
+  }
+
+  .fg-obscure-visualiser__head h2,
+  .fg-obscure-visualiser__hint {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .fg-obscure-compare__grid {

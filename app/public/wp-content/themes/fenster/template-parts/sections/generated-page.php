@@ -3103,8 +3103,12 @@ if ($is_obscure_glass) {
     };
     $active_glass_texture = is_array($obscure_glass_first) ? $obscure_glass_tile_value($obscure_glass_first) : 'none';
     $active_glass_texture_size = is_array($obscure_glass_first) ? $obscure_glass_texture_size($obscure_glass_first) : 'cover';
-    $obscure_glass_left = array_slice($obscure_glass_textures, 0, 10, true);
-    $obscure_glass_right = array_slice($obscure_glass_textures, 10, null, true);
+    /* One list, not two rails. Splitting the patterns either side of the stage
+       meant a customer comparing Cassini with Warwick had to look in two
+       different columns, and the section stood 979px tall against a 720px
+       viewport -- the selector heading and the how-to sat entirely below the
+       fold, so the one instruction telling you to drag the divider was the part
+       you could not see. */
     $obscure_glass_bottom = [];
     $render_obscure_glass_option = static function (array $texture, int $index): void {
         $texture_name = (string) ($texture['name'] ?? '');
@@ -3196,10 +3200,10 @@ if ($is_obscure_glass) {
 
         <section id="fg-obscure-visualiser" class="fg-obscure-visualiser" data-fg-obscure-glass>
             <div class="container fg-obscure-visualiser__grid">
-                <div class="fg-obscure-rail fg-obscure-rail--left fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options, left side', 'fenster'); ?>">
-                    <?php foreach ($obscure_glass_left as $index => $texture) : ?>
-                        <?php $render_obscure_glass_option($texture, (int) $index); ?>
-                    <?php endforeach; ?>
+                <div class="fg-obscure-visualiser__head">
+                    <p class="eyebrow"><?php esc_html_e('Interactive glass selector', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Pick a pattern, then drag the divider across the pane.', 'fenster'); ?></h2>
+                    <p class="fg-obscure-visualiser__hint"><?php esc_html_e('Slide from fully clear to fully obscured to judge how much each glass hides, and switch the scene to compare a close-up with a real house.', 'fenster'); ?></p>
                 </div>
 
                 <div
@@ -3245,41 +3249,10 @@ if ($is_obscure_glass) {
                     <?php endforeach; ?>
                 </div>
 
-                <div class="fg-obscure-rail fg-obscure-rail--right fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options, right side', 'fenster'); ?>">
-                    <?php foreach ($obscure_glass_right as $index => $texture) : ?>
+                <div class="fg-obscure-rail fg-obscure-rail--options fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options', 'fenster'); ?>">
+                    <?php foreach ($obscure_glass_textures as $index => $texture) : ?>
                         <?php $render_obscure_glass_option($texture, (int) $index); ?>
                     <?php endforeach; ?>
-                </div>
-
-                <div class="fg-obscure-picker">
-                    <div class="fg-obscure-picker__intro">
-                        <p class="eyebrow"><?php esc_html_e('Interactive glass selector', 'fenster'); ?></p>
-                        <h2><?php esc_html_e('Pick a pattern, then drag the divider across the pane.', 'fenster'); ?></h2>
-                    </div>
-                    <div class="fg-obscure-picker__tips" aria-label="<?php esc_attr_e('How to compare Obscured glass options', 'fenster'); ?>">
-                        <article>
-                            <span><?php esc_html_e('1', 'fenster'); ?></span>
-                            <strong><?php esc_html_e('Choose a texture', 'fenster'); ?></strong>
-                            <p><?php esc_html_e('Use the pattern buttons either side of the preview to swap glass styles instantly.', 'fenster'); ?></p>
-                        </article>
-                        <article>
-                            <span><?php esc_html_e('2', 'fenster'); ?></span>
-                            <strong><?php esc_html_e('Drag the divider', 'fenster'); ?></strong>
-                            <p><?php esc_html_e('Slide from fully clear to fully obscured to judge how much detail each glass hides.', 'fenster'); ?></p>
-                        </article>
-                        <article>
-                            <span><?php esc_html_e('3', 'fenster'); ?></span>
-                            <strong><?php esc_html_e('Change the scene', 'fenster'); ?></strong>
-                            <p><?php esc_html_e('Switch between Legend and a house view to compare close-up privacy with real-world glazing.', 'fenster'); ?></p>
-                        </article>
-                    </div>
-                    <?php if (! empty($obscure_glass_bottom)) : ?>
-                        <div class="fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('More Obscured glass pattern options', 'fenster'); ?>">
-                            <?php foreach ($obscure_glass_bottom as $index => $texture) : ?>
-                                <?php $render_obscure_glass_option($texture, (int) $index); ?>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
         </section>
