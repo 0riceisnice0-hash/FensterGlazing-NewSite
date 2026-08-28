@@ -3627,7 +3627,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        every round. The harness is nondeterministic by up to 6/255 -- the same
        build renders the same glass twice with that much difference -- so
        re-render before believing a small diff, and suspect the baseline
-       capture first: three times it was the baseline that was bad. */
+       capture first: three times it was the baseline that was bad.
+
        THE PATTERN MUST OUTWEIGH THE SCENE, and getting that wrong is what read
        as "computerised blur". Measured, the surviving scene structure already
        matched the reference closely -- edge p90 6.3-8.1 against 6.0-7.1,
@@ -3643,8 +3644,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        `pebbleShift` gives each pebble its own tilt, so what does survive is
        sharp and in the wrong place rather than smeared. Reducing the blur
        RADIUS instead was tried and is worse: it just makes the photograph
-       recognisable while still obviously blurred.
-
+       recognisable while still obviously blurred. */
     cassini: {
       kind: 'hatchlens', texSize: 'cover',
       heightBlur: 9, strength: 20, emboss: 0.50,
