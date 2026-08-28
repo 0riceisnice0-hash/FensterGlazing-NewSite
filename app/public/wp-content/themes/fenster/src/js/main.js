@@ -3714,7 +3714,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
       dimple: 0.06,
-      ovals: true, ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
+      ovals: true, ovalsFromPlate: true, ovalFitLevel: 0.66, ovalFitGain: 2.2,
+      ovalFitBlur: 3, ovalFitDensity: 30000, ovalFitMin: 8, ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
       overlapBand: 2, bandKind: true, overlapAmt: 0.15, overlapTurn: 55,
       sectors: 12, glint: 0.12, glintLen: 2.5, rim2: 7, rimDark: 0.30,
     },
@@ -4199,6 +4200,78 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
            regular, and the depth count -- how many ovals cover a pixel -- is
            what distinguishes ground from lens from overlap. */
         if (mat.ovals) {
+          /* THE OVALS ARE FITTED TO THE PLATE, WHICH IS THE REAL PATTERN.
+             Scattering them on a jittered grid gave the right STATISTICS --
+             size, aspect and coverage all measured off the owner's sample --
+             but not Cassini's actual arrangement, and the arrangement is the
+             thing being sold. The source photograph already carries the true
+             layout, so each of its lens blobs is segmented and an ellipse
+             fitted to it: centroid, second moments, and from those the two
+             axes and the bearing. The pattern is then the real one, at the
+             real spacing, with the real spread of sizes -- which no random
+             placement reproduces.
+
+             The grid remains as the fallback for a plate that segments into
+             too few blobs to be believable. */
+          let fitN = 0;
+          let fxs = null; let fys = null; let fa = null; let fb = null;
+          let fc = null; let fs = null;
+          if (mat.ovalsFromPlate && baseLuma) {
+            const smO = Float32Array.from(baseLuma);
+            boxBlurField(smO, w, h, Math.max(2, Math.round(mat.ovalFitBlur || 5)));
+            const psO = [];
+            for (let k = 0; k < 4096; k += 1) psO.push(smO[(2003 * k) % smO.length]);
+            psO.sort((a2, b2) => a2 - b2);
+            const thrO = psO[Math.floor(psO.length * (mat.ovalFitLevel || 0.6))];
+            const seenO = new Uint8Array(T.length);
+            const stackO = new Int32Array(T.length);
+            const cap = 400;
+            fxs = new Float32Array(cap); fys = new Float32Array(cap);
+            fa = new Float32Array(cap); fb = new Float32Array(cap);
+            fc = new Float32Array(cap); fs = new Float32Array(cap);
+            /* The blob-size floor decides how densely the sheet packs, and
+               it matters more than it looks. A 28% coverage figure was
+               measured off the sample earlier by thresholding at the 72nd
+               percentile -- which forces 28% by construction and is worth
+               nothing. The plate itself shows lenses packed close, so the
+               floor is low and the fitted ellipses are expanded to meet. */
+            const minPx = Math.max(8, (w * h) / (mat.ovalFitDensity || 4000));
+            for (let st = 0; st < T.length && fitN < cap; st += 1) {
+              if (seenO[st] || smO[st] <= thrO) continue;
+              let sp = 0;
+              stackO[sp] = st; sp += 1; seenO[st] = 1;
+              let n2 = 0; let sX = 0; let sY = 0; let sXX = 0; let sYY = 0; let sXY = 0;
+              while (sp > 0) {
+                sp -= 1;
+                const j = stackO[sp];
+                const jx = j % w;
+                const jy = (j / w) | 0;
+                n2 += 1; sX += jx; sY += jy; sXX += jx * jx; sYY += jy * jy; sXY += jx * jy;
+                if (jx > 0 && !seenO[j - 1] && smO[j - 1] > thrO) { seenO[j - 1] = 1; stackO[sp] = j - 1; sp += 1; }
+                if (jx < w - 1 && !seenO[j + 1] && smO[j + 1] > thrO) { seenO[j + 1] = 1; stackO[sp] = j + 1; sp += 1; }
+                if (j >= w && !seenO[j - w] && smO[j - w] > thrO) { seenO[j - w] = 1; stackO[sp] = j - w; sp += 1; }
+                if (j < T.length - w && !seenO[j + w] && smO[j + w] > thrO) { seenO[j + w] = 1; stackO[sp] = j + w; sp += 1; }
+              }
+              if (n2 < minPx) continue;
+              const mx = sX / n2;
+              const my = sY / n2;
+              const cxx = sXX / n2 - mx * mx;
+              const cyy = sYY / n2 - my * my;
+              const cxy = sXY / n2 - mx * my;
+              const tr = cxx + cyy;
+              const dsc = Math.sqrt(Math.max(0, (tr * tr) / 4 - (cxx * cyy - cxy * cxy)));
+              const l1 = tr / 2 + dsc;
+              const l2 = Math.max(tr / 2 - dsc, 1e-3);
+              const gain = mat.ovalFitGain || 2.0;
+              fxs[fitN] = mx; fys[fitN] = my;
+              fa[fitN] = Math.sqrt(l1) * gain;
+              fb[fitN] = Math.sqrt(l2) * gain;
+              const th2 = 0.5 * Math.atan2(2 * cxy, cxx - cyy);
+              fc[fitN] = Math.cos(th2); fs[fitN] = Math.sin(th2);
+              fitN += 1;
+            }
+          }
+
           const cover = mat.ovalCover || 0.28;
           const maj = Math.max(6, (mat.ovalMajor || 0.122) * w);
           const min0 = maj / Math.max(1.05, mat.ovalAspect || 2.16);
@@ -4240,6 +4313,32 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           }
           ovalDepth = new Uint8Array(T.length);
           ovalDome = new Float32Array(T.length);
+          if (fitN >= (mat.ovalFitMin || 8)) {
+            /* The fitted list is small enough to test every oval per pixel. */
+            for (let y = 0; y < h; y += 1) {
+              for (let x = 0; x < w; x += 1) {
+                let rmin = 1e9;
+                let depth = 0;
+                let bu = 0;
+                for (let k = 0; k < fitN; k += 1) {
+                  const px = x - fxs[k];
+                  const py = y - fys[k];
+                  const u = (px * fc[k] + py * fs[k]) / fa[k];
+                  const v2 = (-px * fs[k] + py * fc[k]) / fb[k];
+                  const r = u * u + v2 * v2;
+                  if (r < rmin) { rmin = r; bu = u; }
+                  if (r < 1) depth += 1;
+                }
+                const i2 = y * w + x;
+                ovalDepth[i2] = depth > 255 ? 255 : depth;
+                const rr = Math.sqrt(rmin);
+                const t2 = (1.06 - rr) / 0.22;
+                const cl = t2 < 0 ? 0 : t2 > 1 ? 1 : t2;
+                petal[i2] = cl * cl * (3 - 2 * cl);
+                ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
+              }
+            }
+          } else {
           for (let y = 0; y < h; y += 1) {
             const gy = Math.min(orows - 1, Math.max(0, Math.floor(y / cellO) + 1));
             for (let x = 0; x < w; x += 1) {
@@ -4281,6 +4380,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                  along the oval's major axis. */
               ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
             }
+          }
           }
         }
 
