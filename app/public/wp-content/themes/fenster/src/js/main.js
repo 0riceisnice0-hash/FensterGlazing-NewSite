@@ -3703,19 +3703,20 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       heightBlur: 9, strength: 52, emboss: 0.12,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.45,
-      stipple: 0.01, stippleFace: 0.3, dome: 1.05,
+      stipple: 0.01, stippleFace: 0.3, dome: 0.15,
       hatchPatch: 18, hatchBias: 1.0,
       perPetal: true, petalBands: 4,
       flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 0.70,
       ribBearings: 4, ribVary: 0.6, ribWander: 0.15,
       petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
-      pebbleWash: true, washMix: 0.2, pebbleShift: 24,
+      pebbleWash: true, washMix: 0.05, pebbleShift: 24,
       faceBlur: 8, groundBlur: 12, groundFlat: 0.58, faceFlat: 0.55,
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
-      dimple: 0.12,
-      overlapBand: 2, bandKind: true, overlapAmt: 0.35, overlapTurn: 55,
-      sectors: 6, glint: 0.12, glintLen: 2.5, rim2: 7, rimDark: 0.30,
+      dimple: 0.06,
+      ovals: true, ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
+      overlapBand: 2, bandKind: true, overlapAmt: 0.15, overlapTurn: 55,
+      sectors: 12, glint: 0.12, glintLen: 2.5, rim2: 7, rimDark: 0.30,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
        harder so window frames dissolve rather than being outlined. */
@@ -3979,6 +3980,17 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          `scale`) rather than from the texture's CSS size, so they lay at
          `cover` and tile exactly once. No tiling, no seam, nothing to hide. */
       layTexture(texCtx, texImg, w, h, mat.texSize || button.dataset.size || 'cover', mat.scale);
+      /* HOISTED TO THE TOP OF THE FUNCTION AND IT STAYS THERE. This is the
+         FOURTH declaration in `renderGlass` to be left below the code that
+         uses it, and each one costs a full parameter sweep to notice, because
+         the resulting exception falls back to the CSS layer in silence and
+         every screenshot comes back identical. Anything used by more than one
+         stage belongs up here, before any of them. */
+      const hash = (a, b) => {
+        const n = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+        return n - Math.floor(n);
+      };
+
       const T = lumaOf(texCtx, w, h);
 
       /* Flat-field: several sources are lit from one side, and any
@@ -4041,6 +4053,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       let dome = null;
       let petal = null;
       let petalGX = null;
+      let ovalDepth = null;
+      let ovalDome = null;
       let petalGY = null;
       /* Hoisted: the per-petal segmentation further down needs these, and they
          were block-scoped to the branch that fills them. Third time a
@@ -4173,6 +4187,103 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           petal[i] = mat.hatchPitch ? v * v * (3 - 2 * v) : v;
         }
 
+        /* THE LENSES ARE INDIVIDUAL OVALS PLACED ON THE PATTERN, not regions
+           carved out of a height field. Banding the plate's relief gives
+           amorphous blobs that merge into one another; the real sheet carries
+           DISCRETE ovals, similar in shape, varying in size and bearing, lying
+           over the fluted ground and over each other.
+
+           Measured off the owner's sample: major axis 12.2% of the pane width,
+           aspect 2.16:1, covering 28% of the sheet, orientations well spread.
+           Placed on a jittered grid so the spacing is even without being
+           regular, and the depth count -- how many ovals cover a pixel -- is
+           what distinguishes ground from lens from overlap. */
+        if (mat.ovals) {
+          const cover = mat.ovalCover || 0.28;
+          const maj = Math.max(6, (mat.ovalMajor || 0.122) * w);
+          const min0 = maj / Math.max(1.05, mat.ovalAspect || 2.16);
+          const areaEach = Math.PI * maj * min0 * 0.25;
+          const want = Math.max(4, Math.round((cover * w * h) / areaEach));
+          const cellO = Math.sqrt((w * h) / want);
+          const ocols = Math.ceil(w / cellO) + 2;
+          const orows = Math.ceil(h / cellO) + 2;
+          const oN = ocols * orows;
+          const oxs = new Float32Array(oN);
+          const oys = new Float32Array(oN);
+          const oa = new Float32Array(oN);
+          const ob = new Float32Array(oN);
+          const oc = new Float32Array(oN);
+          const os = new Float32Array(oN);
+          const odc = new Float32Array(oN);
+          const ods = new Float32Array(oN);
+          for (let cy = 0; cy < orows; cy += 1) {
+            for (let cx = 0; cx < ocols; cx += 1) {
+              const k = cy * ocols + cx;
+              oxs[k] = (cx - 0.5 + hash(cx * 2.7, cy * 6.1) * 1.0) * cellO;
+              oys[k] = (cy - 0.5 + hash(cx * 5.3 + 9, cy * 3.7 + 2) * 1.0) * cellO;
+              /* Size varies widely on the sample -- aspect ran 1.18 to 5.59 --
+                 so a single nominal oval would read as a stamp repeated. */
+              const sv = 0.6 + hash(cx * 1.3 + 21, cy * 8.9 + 5) * 0.9;
+              const av = 0.62 + hash(cx * 4.7 + 13, cy * 1.1 + 27) * 1.1;
+              oa[k] = maj * 0.5 * sv;
+              ob[k] = min0 * 0.5 * sv / av * 1.6;
+              const th = hash(cx * 9.1 + 3, cy * 2.3 + 19) * Math.PI;
+              oc[k] = Math.cos(th);
+              os[k] = Math.sin(th);
+              /* Each lens is lit from its own side. Running every dome the
+                 same way along the major axis made the sheet read as a tray of
+                 identical shiny pebbles rather than as glass. */
+              const dth = hash(cx * 6.7 + 41, cy * 5.9 + 13) * Math.PI * 2;
+              odc[k] = Math.cos(dth);
+              ods[k] = Math.sin(dth);
+            }
+          }
+          ovalDepth = new Uint8Array(T.length);
+          ovalDome = new Float32Array(T.length);
+          for (let y = 0; y < h; y += 1) {
+            const gy = Math.min(orows - 1, Math.max(0, Math.floor(y / cellO) + 1));
+            for (let x = 0; x < w; x += 1) {
+              const gx = Math.min(ocols - 1, Math.max(0, Math.floor(x / cellO) + 1));
+              let rmin = 1e9;
+              let depth = 0;
+              let bu = 0;
+              for (let dy = -2; dy <= 1; dy += 1) {
+                const cy2 = gy + dy;
+                if (cy2 < 0 || cy2 >= orows) continue;
+                for (let dx = -2; dx <= 1; dx += 1) {
+                  const cx2 = gx + dx;
+                  if (cx2 < 0 || cx2 >= ocols) continue;
+                  const k = cy2 * ocols + cx2;
+                  const px = x - oxs[k];
+                  const py = y - oys[k];
+                  const u = (px * oc[k] + py * os[k]) / oa[k];
+                  const v2 = (-px * os[k] + py * oc[k]) / ob[k];
+                  const r = u * u + v2 * v2;
+                  if (r < rmin) { rmin = r; bu = u * odc[k] + v2 * ods[k]; }
+                  if (r < 1) depth += 1;
+                }
+              }
+              const i2 = y * w + x;
+              ovalDepth[i2] = depth > 255 ? 255 : depth;
+              /* A soft shoulder at the rim, not a hard cut: the mask feeds the
+                 lens wash, the dome and the rim displacement. */
+              const rr = Math.sqrt(rmin);
+              const t2 = (1.06 - rr) / 0.22;
+              const cl = t2 < 0 ? 0 : t2 > 1 ? 1 : t2;
+              petal[i2] = cl * cl * (3 - 2 * cl);
+              /* EACH OVAL GETS ITS OWN DOME, ACROSS ITS OWN AXIS. `dome` was
+                 taking its light and shade from the PLATE's relief, which no
+                 longer corresponds to anything once the lenses are placed
+                 explicitly -- plate-shaped shading inside oval-shaped masks
+                 painted incoherent dark blotches that survived turning the
+                 overlap and dimple textures completely off. A lens is bright
+                 along one edge and dark along the other, so it is a gradient
+                 along the oval's major axis. */
+              ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
+            }
+          }
+        }
+
         /* A RIM THAT IS A LENS, NOT A DRAWN OUTLINE. Traced across a petal
            boundary our profile is a plain monotone ramp; the references carry
            a local extremum there in every scene -- a dip then a bump, or a
@@ -4241,10 +4352,6 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          CSS layer, every screenshot came back IDENTICAL whatever the material
          said. Four parameter sweeps were read off that fallback before the
          duplicate image hashes gave it away. */
-      const hash = (a, b) => {
-        const n = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
-        return n - Math.floor(n);
-      };
       const shiftAmt = mat.pebbleShift || 0;
       const hatchBias = mat.hatchBias || 0;
       const hatchCross = mat.hatchCross || 0;
@@ -4395,7 +4502,12 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
              The band level is the stacking height, so the upper bands ARE the
              overlaps. They flute along their own bearing and along a second,
              which is what superimposed relief does. */
-          const overlap = overlapBand && band >= overlapBand;
+          /* With explicit ovals the depth count decides: bare ground is
+             fluted, one oval is a smooth lens, two or more is the crossed
+             overlap. That is the owner's description exactly, and it needs no
+             height banding at all. */
+          const depth = ovalDepth ? ovalDepth[start] : 0;
+          const overlap = ovalDepth ? depth >= 2 : (overlapBand && band >= overlapBand);
           /* KIND FOLLOWS STACKING HEIGHT, not a random draw. The band level is
              how high the impression sits, and on the sample the prominent
              glossy ovals are the TOPMOST faces while the fluting lies on what
@@ -4404,9 +4516,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
              the shapes failed to read as one lying over another. */
           const kind = overlap
             ? 3
-            : (bandKind && band === bands - 2
-              ? 0
-              : (r < 0.45 ? 1 : (r < 0.75 ? 0 : 2)));
+            : (ovalDepth
+              ? (depth === 1 ? (r < 0.22 ? 2 : 0) : 1)
+              : (bandKind && band === bands - 2
+                ? 0
+                : (r < 0.45 ? 1 : (r < 0.75 ? 0 : 2))));
           const per = 1 + (hash((start % w) + 7, ((start / w) | 0) + 23) - 0.5) * 0.5;
           for (let k = 0; k < mc; k += 1) {
             const j = members[k];
@@ -4656,7 +4770,14 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                 /* Per-petal angle where segmentation is on, otherwise the
                    old global pair. Kind 0 leaves the petal smooth, kind 2
                    dimples it instead of fluting it. */
-                const kind = regKind ? regKind[i] : 1;
+                /* PER PIXEL, from how many ovals cover it. Taken per REGION
+                   this was wrong: overlapping ovals flood-fill into a single
+                   connected region, so one kind was being applied across a
+                   whole cluster and the overlaps vanished again. The depth
+                   count is inherently per-pixel, so it is read here. */
+                const kind = ovalDepth
+                  ? (ovalDepth[i] === 0 ? 1 : (ovalDepth[i] === 1 ? 0 : 3))
+                  : (regKind ? regKind[i] : 1);
                 if (kind === 0) {
                   /* smooth petal: no surface structure of its own */
                 } else {
@@ -4952,9 +5073,9 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
               const st = stip * stippleAmt * (1 - petal[i] * stippleFace);
               v += st > 0 ? (255 - v) * st : v * st;
             }
-            if (domeAmt && dome) {
+            if (domeAmt && (ovalDome || dome)) {
               /* Only on the faces: the ground is a screen, not a lens. */
-              const dv = dome[i] * domeAmt * petal[i];
+              const dv = (ovalDome ? ovalDome[i] : dome[i]) * domeAmt * petal[i];
               v += dv > 0 ? (255 - v) * dv : v * dv;
             }
             if (petalPale) {
