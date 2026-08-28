@@ -3702,11 +3702,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       kind: 'hatchlens', texSize: 'cover', scale: 1.6,
       heightBlur: 9, strength: 52, emboss: 0.12,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
-      hatchEmboss: 0.0, shade: 0.55, faceClear: 0.45,
+      hatchEmboss: 0.0, shade: 0.55, faceClear: 0.25,
       stipple: 0.01, stippleFace: 0.3, dome: 0.15,
       hatchPatch: 18, hatchBias: 1.0,
       perPetal: true, petalBands: 4,
-      flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 0.70,
+      flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 1.30,
       ribBearings: 4, ribVary: 0.6, ribWander: 0.15,
       petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
       pebbleWash: true, washMix: 0.05, pebbleShift: 24,
@@ -3714,8 +3714,9 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
       dimple: 0.06,
-      ovals: true, ovalsFromPlate: true, ovalFitLevel: 0.66, ovalFitGain: 2.2,
-      ovalFitBlur: 3, ovalFitDensity: 30000, ovalFitMin: 8, ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
+      ovals: true, ovalsFromPlate: true, ovalSeedLevel: 0.74, ovalEdgeLevel: 0.34,
+      ovalFitBlur: 4, ovalFitDensity: 30000, ovalEdgeSoft: 2, ovalFitMin: 8,
+      ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
       overlapBand: 2, bandKind: true, overlapAmt: 0.15, overlapTurn: 55,
       sectors: 12, glint: 0.12, glintLen: 2.5, rim2: 7, rimDark: 0.30,
     },
@@ -4213,65 +4214,119 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
              The grid remains as the fallback for a plate that segments into
              too few blobs to be believable. */
+          /* THE LENSES ARE THE PLATE'S OWN SHAPES, TRACED, NOT ELLIPSES
+             FITTED TO THEM. An ellipse fit reproduces each lens's position,
+             size and bearing but not its outline, so the sheet was an
+             interpretation of Cassini rather than Cassini. The plate
+             photograph is the real glass, so its regions are used directly.
+
+             Touching lenses have to be separated or a plain threshold merges
+             them into one blob -- which is what banding this field did
+             originally. So: take the bright CORES as seeds, label them, then
+             grow every label outward at the same rate by multi-source
+             breadth-first search, constrained to the lens mask. Where two
+             fronts meet they stop, which is the watershed line between two
+             lenses, and every label keeps the real outline of its own lens. */
           let fitN = 0;
-          let fxs = null; let fys = null; let fa = null; let fb = null;
-          let fc = null; let fs = null;
+          let labels = null;
+          let labAx = null;
+          let labAy = null;
           if (mat.ovalsFromPlate && baseLuma) {
             const smO = Float32Array.from(baseLuma);
-            boxBlurField(smO, w, h, Math.max(2, Math.round(mat.ovalFitBlur || 5)));
+            boxBlurField(smO, w, h, Math.max(2, Math.round(mat.ovalFitBlur || 4)));
             const psO = [];
             for (let k = 0; k < 4096; k += 1) psO.push(smO[(2003 * k) % smO.length]);
             psO.sort((a2, b2) => a2 - b2);
-            const thrO = psO[Math.floor(psO.length * (mat.ovalFitLevel || 0.6))];
-            const seenO = new Uint8Array(T.length);
+            const hiThr = psO[Math.floor(psO.length * (mat.ovalSeedLevel || 0.74))];
+            const loThr = psO[Math.floor(psO.length * (mat.ovalEdgeLevel || 0.34))];
+            labels = new Int32Array(T.length).fill(-1);
             const stackO = new Int32Array(T.length);
-            const cap = 400;
-            fxs = new Float32Array(cap); fys = new Float32Array(cap);
-            fa = new Float32Array(cap); fb = new Float32Array(cap);
-            fc = new Float32Array(cap); fs = new Float32Array(cap);
-            /* The blob-size floor decides how densely the sheet packs, and
-               it matters more than it looks. A 28% coverage figure was
-               measured off the sample earlier by thresholding at the 72nd
-               percentile -- which forces 28% by construction and is worth
-               nothing. The plate itself shows lenses packed close, so the
-               floor is low and the fitted ellipses are expanded to meet. */
-            const minPx = Math.max(8, (w * h) / (mat.ovalFitDensity || 4000));
-            for (let st = 0; st < T.length && fitN < cap; st += 1) {
-              if (seenO[st] || smO[st] <= thrO) continue;
+            const minPx = Math.max(6, (w * h) / (mat.ovalFitDensity || 30000));
+            const members = new Int32Array(T.length);
+            for (let st = 0; st < T.length; st += 1) {
+              if (labels[st] !== -1 || smO[st] <= hiThr) continue;
               let sp = 0;
-              stackO[sp] = st; sp += 1; seenO[st] = 1;
-              let n2 = 0; let sX = 0; let sY = 0; let sXX = 0; let sYY = 0; let sXY = 0;
+              let mc = 0;
+              stackO[sp] = st; sp += 1; labels[st] = -2;
               while (sp > 0) {
                 sp -= 1;
                 const j = stackO[sp];
+                members[mc] = j; mc += 1;
                 const jx = j % w;
-                const jy = (j / w) | 0;
-                n2 += 1; sX += jx; sY += jy; sXX += jx * jx; sYY += jy * jy; sXY += jx * jy;
-                if (jx > 0 && !seenO[j - 1] && smO[j - 1] > thrO) { seenO[j - 1] = 1; stackO[sp] = j - 1; sp += 1; }
-                if (jx < w - 1 && !seenO[j + 1] && smO[j + 1] > thrO) { seenO[j + 1] = 1; stackO[sp] = j + 1; sp += 1; }
-                if (j >= w && !seenO[j - w] && smO[j - w] > thrO) { seenO[j - w] = 1; stackO[sp] = j - w; sp += 1; }
-                if (j < T.length - w && !seenO[j + w] && smO[j + w] > thrO) { seenO[j + w] = 1; stackO[sp] = j + w; sp += 1; }
+                if (jx > 0 && labels[j - 1] === -1 && smO[j - 1] > hiThr) { labels[j - 1] = -2; stackO[sp] = j - 1; sp += 1; }
+                if (jx < w - 1 && labels[j + 1] === -1 && smO[j + 1] > hiThr) { labels[j + 1] = -2; stackO[sp] = j + 1; sp += 1; }
+                if (j >= w && labels[j - w] === -1 && smO[j - w] > hiThr) { labels[j - w] = -2; stackO[sp] = j - w; sp += 1; }
+                if (j < T.length - w && labels[j + w] === -1 && smO[j + w] > hiThr) { labels[j + w] = -2; stackO[sp] = j + w; sp += 1; }
               }
-              if (n2 < minPx) continue;
-              const mx = sX / n2;
-              const my = sY / n2;
-              const cxx = sXX / n2 - mx * mx;
-              const cyy = sYY / n2 - my * my;
-              const cxy = sXY / n2 - mx * my;
-              const tr = cxx + cyy;
-              const dsc = Math.sqrt(Math.max(0, (tr * tr) / 4 - (cxx * cyy - cxy * cxy)));
-              const l1 = tr / 2 + dsc;
-              const l2 = Math.max(tr / 2 - dsc, 1e-3);
-              const gain = mat.ovalFitGain || 2.0;
-              fxs[fitN] = mx; fys[fitN] = my;
-              fa[fitN] = Math.sqrt(l1) * gain;
-              fb[fitN] = Math.sqrt(l2) * gain;
-              const th2 = 0.5 * Math.atan2(2 * cxy, cxx - cyy);
-              fc[fitN] = Math.cos(th2); fs[fitN] = Math.sin(th2);
-              fitN += 1;
+              const id = mc >= minPx ? fitN : -1;
+              for (let k = 0; k < mc; k += 1) labels[members[k]] = id;
+              if (id >= 0) fitN += 1;
+            }
+            /* Grow the seeds at equal rate; the meeting fronts are the joins. */
+            let head = 0;
+            let tail = 0;
+            const queue = new Int32Array(T.length);
+            for (let i2 = 0; i2 < T.length; i2 += 1) if (labels[i2] >= 0) { queue[tail] = i2; tail += 1; }
+            while (head < tail) {
+              const j = queue[head]; head += 1;
+              const lb = labels[j];
+              const jx = j % w;
+              if (jx > 0 && labels[j - 1] === -1 && smO[j - 1] > loThr) { labels[j - 1] = lb; queue[tail] = j - 1; tail += 1; }
+              if (jx < w - 1 && labels[j + 1] === -1 && smO[j + 1] > loThr) { labels[j + 1] = lb; queue[tail] = j + 1; tail += 1; }
+              if (j >= w && labels[j - w] === -1 && smO[j - w] > loThr) { labels[j - w] = lb; queue[tail] = j - w; tail += 1; }
+              if (j < T.length - w && labels[j + w] === -1 && smO[j + w] > loThr) { labels[j + w] = lb; queue[tail] = j + w; tail += 1; }
+            }
+            /* Each lens is lit across its own principal axis, taken from the
+               real pixels of that lens rather than from an idealised shape. */
+            if (fitN > 0) {
+              const cn = new Float32Array(fitN);
+              const cX = new Float32Array(fitN); const cY = new Float32Array(fitN);
+              const cXX = new Float32Array(fitN); const cYY = new Float32Array(fitN);
+              const cXY = new Float32Array(fitN);
+              for (let y = 0; y < h; y += 1) {
+                for (let x = 0; x < w; x += 1) {
+                  const j = y * w + x;
+                  const lb = labels[j];
+                  if (lb < 0) continue;
+                  cn[lb] += 1; cX[lb] += x; cY[lb] += y;
+                  cXX[lb] += x * x; cYY[lb] += y * y; cXY[lb] += x * y;
+                }
+              }
+              labAx = new Float32Array(fitN); labAy = new Float32Array(fitN);
+              const labMX = new Float32Array(fitN); const labMY = new Float32Array(fitN);
+              const labLen = new Float32Array(fitN);
+              for (let k = 0; k < fitN; k += 1) {
+                const n2 = Math.max(cn[k], 1);
+                const mx = cX[k] / n2; const my = cY[k] / n2;
+                const xx = cXX[k] / n2 - mx * mx;
+                const yy = cYY[k] / n2 - my * my;
+                const xy = cXY[k] / n2 - mx * my;
+                const th2 = 0.5 * Math.atan2(2 * xy, xx - yy);
+                const dth = th2 + hash(k * 3.3, k * 7.1) * Math.PI;
+                labAx[k] = Math.cos(dth); labAy[k] = Math.sin(dth);
+                labMX[k] = mx; labMY[k] = my;
+                labLen[k] = Math.max(4, Math.sqrt(Math.max(xx, yy)) * 2);
+              }
+              ovalDepth = new Uint8Array(T.length);
+              ovalDome = new Float32Array(T.length);
+              for (let j = 0; j < T.length; j += 1) {
+                const lb = labels[j];
+                if (lb < 0) { petal[j] = 0; ovalDepth[j] = 0; ovalDome[j] = 0; continue; }
+                petal[j] = 1;
+                ovalDepth[j] = 1;
+                const x = j % w; const y = (j / w) | 0;
+                const d = ((x - labMX[lb]) * labAx[lb] + (y - labMY[lb]) * labAy[lb]) / labLen[lb];
+                ovalDome[j] = d < -1 ? -1 : d > 1 ? 1 : d;
+              }
+              /* A short blur softens the join to a shoulder rather than a
+                 stair, without moving where the join is. */
+              boxBlurField(petal, w, h, Math.max(1, Math.round(mat.ovalEdgeSoft || 2)));
             }
           }
 
+          /* The jittered grid is only the FALLBACK now, for a plate whose
+             segmentation yields too few lenses to be believable. */
+          if (fitN < (mat.ovalFitMin || 8)) {
           const cover = mat.ovalCover || 0.28;
           const maj = Math.max(6, (mat.ovalMajor || 0.122) * w);
           const min0 = maj / Math.max(1.05, mat.ovalAspect || 2.16);
@@ -4313,32 +4368,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           }
           ovalDepth = new Uint8Array(T.length);
           ovalDome = new Float32Array(T.length);
-          if (fitN >= (mat.ovalFitMin || 8)) {
-            /* The fitted list is small enough to test every oval per pixel. */
-            for (let y = 0; y < h; y += 1) {
-              for (let x = 0; x < w; x += 1) {
-                let rmin = 1e9;
-                let depth = 0;
-                let bu = 0;
-                for (let k = 0; k < fitN; k += 1) {
-                  const px = x - fxs[k];
-                  const py = y - fys[k];
-                  const u = (px * fc[k] + py * fs[k]) / fa[k];
-                  const v2 = (-px * fs[k] + py * fc[k]) / fb[k];
-                  const r = u * u + v2 * v2;
-                  if (r < rmin) { rmin = r; bu = u; }
-                  if (r < 1) depth += 1;
-                }
-                const i2 = y * w + x;
-                ovalDepth[i2] = depth > 255 ? 255 : depth;
-                const rr = Math.sqrt(rmin);
-                const t2 = (1.06 - rr) / 0.22;
-                const cl = t2 < 0 ? 0 : t2 > 1 ? 1 : t2;
-                petal[i2] = cl * cl * (3 - 2 * cl);
-                ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
-              }
-            }
-          } else {
+          ovalDepth = new Uint8Array(T.length);
+          ovalDome = new Float32Array(T.length);
+          {
+
           for (let y = 0; y < h; y += 1) {
             const gy = Math.min(orows - 1, Math.max(0, Math.floor(y / cellO) + 1));
             for (let x = 0; x < w; x += 1) {
@@ -4380,6 +4413,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                  along the oval's major axis. */
               ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
             }
+          }
           }
           }
         }
