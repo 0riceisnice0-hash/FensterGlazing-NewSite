@@ -3554,7 +3554,13 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* ---- cell: rigid rectangles, sharp inside, displaced as blocks ------ */
     /* Digital: the reference staircases the clock rim outward, so displacement
        must be of order a whole tile, and every tile is bevelled. */
-    digital: { kind: 'cell', cell: 14, jitter: 30, rim: 0.3, emboss: 0.4, veil: 0.05 },
+    /* ---- OWNER-REVERTED, 2026-08-27. Digital, Chantilly, Oak and Sycamore
+       were refined on an audit's advice -- relief cut, motif shrunk, scatter
+       added -- and the owner judged all four WORSE and reverted them to these
+       values. The audit's reasoning was that the pattern was being printed
+       rather than refracted; on these four it was wrong, and the eye beat the
+       measurement. Do not re-apply that change here without asking. ---- */
+    digital: { kind: 'cell', cell: 13, jitter: 16, emboss: 0.5, veil: 0.05 },
 
     /* ---- hatchlens: two textures at two scales -------------------------- */
     /* Cassini: fine directional hatch, angle varying patch to patch, with
@@ -3579,16 +3585,14 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* Mayflower: ~40 hairline radial ridges per flower, not a dozen fat lobes.
        `scale` shrinks the motif so the flower count matches the reference. */
     mayflower: { kind: 'emboss', heightBlur: 3, strength: 26, emboss: 0.5, scale: 0.42, veil: 0.12 },
-    /* Chantilly: lace over a very fine silvery stipple. It diffuses as well as
-       draws -- occlusion alone left the garden pin-sharp between motifs. */
-    chantilly: { kind: 'emboss', heightBlur: 3, strength: 16, emboss: 0.45, scale: 0.6, softBlur: 3, veil: 0.1 },
+    chantilly: { kind: 'emboss', heightBlur: 4, strength: 7, emboss: 0.72, veil: 0.03 },
     /* Oak: felt in the shredding, not seen as outlines -- fine anisotropic
        streak, relief contrast cut hard. */
-    oak: { kind: 'emboss', heightBlur: 3, strength: 18, emboss: 0.26, scale: 0.55, softBlur: 2, veil: 0.06 },
+    oak: { kind: 'emboss', heightBlur: 6, strength: 8, emboss: 0.62, veil: 0.03 },
     /* Autumn: coarser leaf plate than Sycamore, and a real wander. */
     autumn: { kind: 'emboss', heightBlur: 5, strength: 22, emboss: 0.4, scale: 0.8, veil: 0.08 },
     /* Sycamore: the fine engraved fan. Half Autumn's scale, gentler carry. */
-    sycamore: { kind: 'emboss', heightBlur: 3, strength: 12, emboss: 0.42, scale: 0.45, veil: 0.05 },
+    sycamore: { kind: 'emboss', heightBlur: 4, strength: 8, emboss: 0.6, veil: 0.03 },
     /* Tribal: the lattice is the only sharp thing; everything behind it is
        scattered to colour blobs. */
     tribal: { kind: 'emboss', heightBlur: 5, strength: 20, emboss: 0.55, softBlur: 5, veil: 0.16 },
