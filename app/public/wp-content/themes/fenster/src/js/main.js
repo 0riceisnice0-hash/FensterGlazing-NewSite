@@ -3700,17 +3700,20 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        is where the sample has them. */
     cassini: {
       kind: 'hatchlens', texSize: 'cover', scale: 1.6,
-      heightBlur: 9, strength: 44, emboss: 0.28,
+      heightBlur: 9, strength: 52, emboss: 0.80,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.45,
-      stipple: 0.1, stippleFace: 0.3, dome: 0.6,
+      stipple: 0.05, stippleFace: 0.3, dome: 1.05,
       hatchPatch: 18, hatchBias: 1.0,
-      perPetal: true, petalBands: 4,
-      flutePeriod: 11, fluteSpread: 3.4, fluteShade: 0.35,
-      petalLift: 0.55, petalPale: 0.1, petalSharp: 0.14,
+      perPetal: true, petalBands: 2,
+      flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 1.90,
+      ribBearings: 4, ribVary: 0.6, ribWander: 0.15,
+      petalLift: 0.55, petalPale: 0.06, petalSharp: 0.14,
       pebbleWash: true, washMix: 0.2, pebbleShift: 24,
-      faceBlur: 5, groundBlur: 9, groundFlat: 0.45, faceFlat: 0.40,
-      veil: 0.06, groundVeil: 0.12,
+      faceBlur: 8, groundBlur: 12, groundFlat: 0.58, faceFlat: 0.55,
+      veil: 0.045, groundVeil: 0.12,
+      knee: 190, kneeCeil: 251,
+      dimple: 0.40,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
        harder so window frames dissolve rather than being outlined. */
@@ -4209,6 +4212,12 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const fluteSpread = mat.fluteSpread || 0;
       const flutePeriod = Math.max(3, mat.flutePeriod || 12);
       const fluteShade = mat.fluteShade || 0;
+      const ribBearings = mat.ribBearings || 0;
+      const ribVary = mat.ribVary || 0;
+      const fluteWander = mat.ribWander || 0;
+      const knee = mat.knee || 0;
+      const kCeil = mat.kneeCeil || 251;
+      const dimpleAmt = mat.dimple == null ? 1 : mat.dimple;
 
       let pebbleWash = null;
       let pebbleShiftX = null;
@@ -4310,7 +4319,19 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             if (j < T.length - w && !seen[j + w] && lvl[j + w] === band) { seen[j + w] = 1; stack[sp] = j + w; sp += 1; }
           }
           /* The region's own dominant orientation, from the plate. */
-          const th = 0.5 * Math.atan2(2 * sxy, sxx - syy + 1e-6);
+          let th = 0.5 * Math.atan2(2 * sxy, sxx - syy + 1e-6);
+          if (ribBearings) {
+            /* QUANTISED TO A FEW FAMILIES. Measured against the real sample,
+               that sheet resolves to essentially two rib bearings meeting
+               along straight seams and mirroring into herringbone Vs. Giving
+               every region a free, independently measured angle produced eight
+               or more unrelated bearings with seams that curve and reverse,
+               which reads as a Voronoi field rather than as rolled glass --
+               the loudest remaining tell. Snapping to a small set keeps the
+               angles the plate's own while making neighbours agree. */
+            const step = Math.PI / ribBearings;
+            th = Math.round(th / step) * step;
+          }
           const nx = Math.cos(th);
           const ny = Math.sin(th);
           const r = hash(start % w, (start / w) | 0);
@@ -4503,16 +4524,29 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                    old global pair. Kind 0 leaves the petal smooth, kind 2
                    dimples it instead of fluting it. */
                 const kind = regKind ? regKind[i] : 1;
-                if (kind !== 1) {
-                  if (kind === 2) fluteTone = (hash(x * 3.1 + 5, y * 2.7 + 19) - 0.5) * 1.4;
+                if (kind === 0) {
+                  /* smooth petal: no surface structure of its own */
                 } else {
                 const nx = regNX ? regNX[i] : (pick > 0.5 ? hnAx : hnBx);
                 const ny = regNX ? regNY[i] : (pick > 0.5 ? hnAy : hnBy);
                 const fp = flutePeriod * (regPeriod ? regPeriod[i] : 1);
-                const q = x * nx + y * ny;
+                /* PER-RIB VARIATION. Measured on the sample, neighbouring rib
+                   crests vary in amplitude by up to 5.8x (CV 0.47) and their
+                   spacing wanders; ours were uniform to within 5% (CV 0.02),
+                   and that regularity is what made the fluted bands read as
+                   machined corduroy. The crest position drifts SLOWLY along
+                   the band rather than jumping per rib -- an independent phase
+                   per rib fractures the lens and seams worse than regularity. */
+                const seed = regPeriod ? regPeriod[i] * 97 : 0;
+                const along = x * -ny + y * nx;
+                const q = x * nx + y * ny
+                  + (fluteWander ? Math.sin(along * 0.017 + seed) * fp * fluteWander : 0);
                 const fi = Math.floor(q / fp);
                 const u = q / fp - fi;
                 const centre = (fi + 0.5) * fp;
+                const ribAmp = ribVary
+                  ? 1 + (hash(fi * 1.7 + seed, 11.3) - 0.5) * 2 * ribVary
+                  : 1;
                 /* Across the rib the scene is compressed towards the crown and
                    inverted, exactly as a half-cylinder does. */
                 const disp = (centre + (u - 0.5) * fp * fluteSpread) - q;
@@ -4527,7 +4561,33 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                    asymmetry is what makes them read as rounded glass rather
                    than as corrugation. */
                 const cr = Math.cos((u - 0.5) * Math.PI);
-                fluteTone = (cr * cr * cr * 1.35 - 0.45) * damp;
+                fluteTone = (cr * cr * cr * 1.35 - 0.45) * damp * ribAmp;
+
+                if (kind === 2) {
+                  /* DIMPLED IS A WAFFLE, NOT NOISE. This was per-pixel white
+                     noise, which is why raising the rib definition turned the
+                     dimpled regions into salt-and-pepper: noise scales with
+                     amplitude where structure does not. Measured on the
+                     sample, the dimple pitch equals the local flute pitch --
+                     13.0px against 13.2px -- so a dimpled petal is simply the
+                     SAME fluting run in both directions at the same spacing,
+                     crossing into a lattice of lenslets. It therefore
+                     refracts, with a crown and a rim, instead of speckling. */
+                  const q2 = x * -ny + y * nx;
+                  const fj = Math.floor(q2 / fp);
+                  const u2 = q2 / fp - fj;
+                  const centre2 = (fj + 0.5) * fp;
+                  const disp2 = (centre2 + (u2 - 0.5) * fp * fluteSpread) - q2;
+                  sx += -ny * disp2 * damp * dimpleAmt;
+                  sy += nx * disp2 * damp * dimpleAmt;
+                  const cr2 = Math.cos((u2 - 0.5) * Math.PI);
+                  /* Damped hard. At full strength two crossed rib sets read as
+                     a regular waffle, which is no more photographic than the
+                     white noise it replaced -- the sample's dimpling is much
+                     subtler than its fluting. */
+                  fluteTone = (fluteTone + (cr2 * cr2 * cr2 * 1.35 - 0.45) * damp * ribAmp)
+                    * 0.5 * dimpleAmt;
+                }
                 }
               }
               /* THIN DARK LINES ON A PALE GROUND, not a sine. At native
@@ -4738,6 +4798,19 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                 ? veil + (groundVeil - veil) * (1 - petal[i])
                 : veil;
               v += (250 - v) * vl;
+            }
+            if (knee) {
+              /* SOFT HIGHLIGHT ROLLOFF. Measured against all three references:
+                 they clip pure white on 0.01-0.03% of pixels, ours on 1.7%.
+                 Real glass has no mechanism that returns more light than fell
+                 on it, but this renderer stacks several positive terms --
+                 relief, dome, petal paleness, the rib crown, the veil -- each
+                 of which adds a fraction of the REMAINING headroom, so bright
+                 areas pile up on 255 and every highlight added after that is
+                 invisible. Rolling the top off asymptotically keeps the
+                 crowns separable, and it is a prerequisite for giving the ribs
+                 any more specular definition. */
+              if (v > knee) v = knee + (kCeil - knee) * (1 - Math.exp((knee - v) / (kCeil - knee)));
             }
             dst[o + ch] = v;
           }
