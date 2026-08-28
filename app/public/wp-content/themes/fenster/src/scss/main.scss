@@ -10729,6 +10729,10 @@ html.fg-gallery-lightbox-open body {
 
 .fg-obscure-stage__main-image {
   z-index: 1;
+  /* The view behind moves further than the glass in front of it. Scaled a
+     little so the edges never uncover as it shifts. */
+  transform: scale(1.05) translate3d(calc(var(--mx) * 13px), calc(var(--my) * 9px), 0);
+  will-change: transform;
 }
 
 .fg-obscure-stage__plain,
@@ -10803,6 +10807,18 @@ html.fg-gallery-lightbox-open body {
 
 .fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__optics {
   display: block;
+  /* Less than the clear half, so the glass reads as the nearer surface. The
+     clip that draws the divider is on this canvas's PARENT, so shifting the
+     canvas does not drag the divider off the seam. */
+  transform: scale(1.04) translate3d(calc(var(--mx) * 8px), calc(var(--my) * 6px), 0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-obscure-stage__main-image,
+  .fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__optics {
+    transform: none;
+  }
 }
 
 .fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__glass::before,

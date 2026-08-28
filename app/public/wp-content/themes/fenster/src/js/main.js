@@ -3497,6 +3497,62 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
   if (!stage || !viewport || !buttons.length) return;
 
+  /* PARALLAX, for the sense of looking THROUGH something. The view behind a
+     window is further away than the glass in front of it, so moving your head
+     shifts it. The stage had `--mx`/`--my` wired through a set of transforms
+     already but nothing ever set them, and those rules sat on the CSS-fallback
+     layers which the canvas render hides -- so they were dead twice over.
+     Driven here instead, on the two layers that are actually visible.
+
+     WHAT THIS IS NOT: the pattern is baked into the canvas together with the
+     scene it refracts, so moving the canvas moves both. Physically the scene
+     should shift and the pattern should stay put, which needs the render to
+     re-sample -- and a full render is a 220-250ms task, nowhere near
+     interactive. The canvas therefore moves LESS than the clear half, which
+     reads as the glass sitting nearer than the view; the residual error is the
+     pattern drifting a few pixels, which at this amplitude is not visible.
+     The clip that makes the divider lives on the canvas's PARENT, so moving
+     the canvas does not drag the divider with it. */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let parallaxFrame = 0;
+  let parallaxTarget = null;
+
+  const applyParallax = () => {
+    parallaxFrame = 0;
+    if (!parallaxTarget) return;
+    viewport.style.setProperty('--mx', parallaxTarget.x.toFixed(3));
+    viewport.style.setProperty('--my', parallaxTarget.y.toFixed(3));
+  };
+
+  const queueParallax = (x, y) => {
+    parallaxTarget = { x, y };
+    if (parallaxFrame) return;
+    parallaxFrame = requestAnimationFrame(applyParallax);
+  };
+
+  const clearParallax = () => {
+    parallaxTarget = { x: 0, y: 0 };
+    if (parallaxFrame) return;
+    parallaxFrame = requestAnimationFrame(applyParallax);
+  };
+
+  if (!reduceMotion.matches) {
+    viewport.addEventListener('pointermove', (event) => {
+      /* Touch drags the divider; hijacking them for parallax would fight it. */
+      if (event.pointerType === 'touch') return;
+      const box = viewport.getBoundingClientRect();
+      if (!box.width || !box.height) return;
+      queueParallax(
+        clamp(((event.clientX - box.left) / box.width) * 2 - 1, -1, 1),
+        clamp(((event.clientY - box.top) / box.height) * 2 - 1, -1, 1)
+      );
+    });
+    viewport.addEventListener('pointerleave', clearParallax);
+    reduceMotion.addEventListener('change', (event) => {
+      if (event.matches) clearParallax();
+    });
+  }
+
   const setSplit = (value) => {
     const split = clamp(Number.parseFloat(value), 0, 100);
     viewport.style.setProperty('--split', `${split.toFixed(1)}%`);
