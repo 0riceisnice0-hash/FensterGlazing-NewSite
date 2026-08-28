@@ -3707,7 +3707,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       hatchPatch: 18, hatchBias: 1.0,
       perPetal: true, petalBands: 4,
       flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 1.30,
-      ribBearings: 4, ribVary: 0.6, ribWander: 0.15,
+      ribFamA: 135, ribFamB: 55, ribJitter: 12, ribTail: 0.30, ribCurve: 10, ribVary: 0.6, ribWander: 0.15,
       petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
       pebbleWash: true, washMix: 0.05, pebbleShift: 24,
       faceBlur: 8, groundBlur: 12, groundFlat: 0.58, faceFlat: 0.55,
@@ -4515,6 +4515,13 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const flutePeriod = Math.max(3, mat.flutePeriod || 12);
       const fluteShade = mat.fluteShade || 0;
       const ribBearings = mat.ribBearings || 0;
+      /* Bearings are stored as the wave NORMAL, which is 90deg off the line
+         direction the photographs were measured in. */
+      const ribFamA = mat.ribFamA == null ? 0 : (mat.ribFamA * Math.PI) / 180;
+      const ribFamB = mat.ribFamB == null ? 0 : (mat.ribFamB * Math.PI) / 180;
+      const ribJitter = ((mat.ribJitter || 8) * Math.PI) / 180;
+      const ribTail = mat.ribTail == null ? 0.3 : mat.ribTail;
+      const ribCurve = ((mat.ribCurve || 0) * Math.PI) / 180;
       const ribVary = mat.ribVary || 0;
       const fluteWander = mat.ribWander || 0;
       const knee = mat.knee || 0;
@@ -4630,7 +4637,26 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           }
           /* The region's own dominant orientation, from the plate. */
           let th = 0.5 * Math.atan2(2 * sxy, sxx - syy + 1e-6);
-          if (ribBearings) {
+          if (ribFamA || ribFamB) {
+            /* THE MEASURED DISTRIBUTION, NOT A SNAP TO N VALUES. Six hundred
+               directional patches across the owner's two sample photographs
+               put 32% of rib bearings at 40-50deg and 36% at 140-150deg -- two
+               tight families -- but the remaining 30% are spread right across
+               every other direction. Snapping every region to one of four
+               exact bearings reproduced the families and threw the tail away,
+               and the render measured a direction entropy of 0.821 against
+               0.89-0.94 for the three references: visibly more regimented than
+               the real glass.
+
+               So most regions take a family with a jitter matching the width
+               of the measured peak, and a genuine minority keep whatever
+               bearing the plate itself gave them. */
+            const pick2 = hash(start * 1.9 + 5, 13.7);
+            if (pick2 >= ribTail) {
+              const fam = pick2 < ribTail + (1 - ribTail) * 0.5 ? ribFamA : ribFamB;
+              th = fam + (hash(start * 4.3 + 17, 29.1) - 0.5) * 2 * ribJitter;
+            }
+          } else if (ribBearings) {
             /* QUANTISED TO A FEW FAMILIES. Measured against the real sample,
                that sheet resolves to essentially two rib bearings meeting
                along straight seams and mirroring into herringbone Vs. Giving
@@ -4717,8 +4743,21 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             const k = cy * cols + cx;
             sxs[k] = (cx + 0.15 + hash(cx * 3.1, cy * 5.7) * 0.7) * cell;
             sys[k] = (cy + 0.15 + hash(cx * 7.3 + 11, cy * 2.9 + 4) * 0.7) * cell;
-            const pick = Math.floor(hash(cx * 1.9 + 31, cy * 4.1 + 17) * nb) % nb;
-            const th = (pick / nb) * Math.PI + (mat.sectorTilt || 0);
+            /* The sector lattice draws from the same measured distribution,
+               so the coarse tier and the lens tier agree about which way this
+               glass runs. */
+            const pk = hash(cx * 1.9 + 31, cy * 4.1 + 17);
+            let th;
+            if (ribFamA || ribFamB) {
+              if (pk < ribTail) {
+                th = hash(cx * 5.1 + 7, cy * 8.3 + 11) * Math.PI;
+              } else {
+                const fam = pk < ribTail + (1 - ribTail) * 0.5 ? ribFamA : ribFamB;
+                th = fam + (hash(cx * 2.7 + 3, cy * 6.9 + 23) - 0.5) * 2 * ribJitter;
+              }
+            } else {
+              th = ((Math.floor(pk * nb) % nb) / nb) * Math.PI + (mat.sectorTilt || 0);
+            }
             sbx[k] = Math.cos(th);
             sby[k] = Math.sin(th);
           }
@@ -4939,7 +4978,33 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                 } else {
                 const nx = secNX ? secNX[i] : (regNX ? regNX[i] : (pick > 0.5 ? hnAx : hnBx));
                 const ny = secNX ? secNY[i] : (regNX ? regNY[i] : (pick > 0.5 ? hnAy : hnBy));
+                /* Hoisted above every use. Declaring it lower down put the
+                   rib-curvature code in its temporal dead zone -- the FIFTH
+                   time in this function -- and the render fell back to CSS in
+                   silence, which then measured as near-perfect direction
+                   entropy because a blur has no orientation at all. */
+                const seed = regPeriod ? regPeriod[i] * 97 : 0;
                 const fp = flutePeriod * (regPeriod ? regPeriod[i] : 1);
+                let nx2 = nx;
+                let ny2 = ny;
+                if (ribCurve) {
+                  /* RIBS CURVE; THEY DO NOT RULE. Every rib in a region ran
+                     exactly parallel to every other, and that is most of what
+                     was left of the alignment: matching the measured spread of
+                     bearings BETWEEN regions took the direction entropy from
+                     0.821 to 0.844, still short of the references' 0.89-0.94,
+                     because the deficit is inside each region rather than
+                     across them. A slow bend across the sheet, at a much
+                     longer wavelength than the rib pitch so it reads as gentle
+                     curvature and not as waviness. */
+                  const cw = Math.sin(x * 0.0091 + y * 0.0063 + seed)
+                    * 0.55 + Math.sin(x * 0.0037 - y * 0.0052 + seed * 1.7) * 0.45;
+                  const ca2 = cw * ribCurve;
+                  const cc = Math.cos(ca2);
+                  const ss = Math.sin(ca2);
+                  nx2 = nx * cc - ny * ss;
+                  ny2 = nx * ss + ny * cc;
+                }
                 /* PER-RIB VARIATION. Measured on the sample, neighbouring rib
                    crests vary in amplitude by up to 5.8x (CV 0.47) and their
                    spacing wanders; ours were uniform to within 5% (CV 0.02),
@@ -4947,9 +5012,9 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                    machined corduroy. The crest position drifts SLOWLY along
                    the band rather than jumping per rib -- an independent phase
                    per rib fractures the lens and seams worse than regularity. */
-                const seed = regPeriod ? regPeriod[i] * 97 : 0;
-                const along = x * -ny + y * nx;
-                const q = x * nx + y * ny
+
+                const along = x * -ny2 + y * nx2;
+                const q = x * nx2 + y * ny2
                   + (fluteWander ? Math.sin(along * 0.017 + seed) * fp * fluteWander : 0);
                 const fi = Math.floor(q / fp);
                 const u = q / fp - fi;
@@ -4985,8 +5050,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                    inverted, exactly as a half-cylinder does. */
                 const disp = (centre + (u - 0.5) * fp * fluteSpread) - q;
                 const damp = 1 - f * faceClear;
-                sx += nx * disp * damp;
-                sy += ny * disp * damp;
+                sx += nx2 * disp * damp;
+                sy += ny2 * disp * damp;
                 /* Crown catches the light, valley shades: a signed profile
                    across each rib, which is what makes them read as round. */
                 /* A SPECULAR CROWN, not a symmetric sine. On the sample each
@@ -5004,8 +5069,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                      whatever angle they happen to lie at. */
                   const ca = Math.cos(overlapTurn);
                   const sa = Math.sin(overlapTurn);
-                  const ox2 = nx * ca - ny * sa;
-                  const oy2 = nx * sa + ny * ca;
+                  const ox2 = nx2 * ca - ny2 * sa;
+                  const oy2 = nx2 * sa + ny2 * ca;
                   const q3 = x * ox2 + y * oy2;
                   const fk = Math.floor(q3 / fp);
                   const u3 = q3 / fp - fk;
@@ -5027,13 +5092,13 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                      SAME fluting run in both directions at the same spacing,
                      crossing into a lattice of lenslets. It therefore
                      refracts, with a crown and a rim, instead of speckling. */
-                  const q2 = x * -ny + y * nx;
+                  const q2 = x * -ny2 + y * nx2;
                   const fj = Math.floor(q2 / fp);
                   const u2 = q2 / fp - fj;
                   const centre2 = (fj + 0.5) * fp;
                   const disp2 = (centre2 + (u2 - 0.5) * fp * fluteSpread) - q2;
-                  sx += -ny * disp2 * damp * dimpleAmt;
-                  sy += nx * disp2 * damp * dimpleAmt;
+                  sx += -ny2 * disp2 * damp * dimpleAmt;
+                  sy += nx2 * disp2 * damp * dimpleAmt;
                   const cr2 = Math.cos((u2 - 0.5) * Math.PI);
                   /* Damped hard. At full strength two crossed rib sets read as
                      a regular waffle, which is no more photographic than the
