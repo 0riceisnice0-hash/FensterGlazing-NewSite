@@ -3672,20 +3672,23 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        draw as bold lines without turning into a chequer. Scaling the pattern
        up lets the hatch sit at 5px where it reads as line work.
 
-       WHAT IS STILL NOT RIGHT: the sample's hatch runs in large patches of
-       PARALLEL lines meeting at sharp boundaries, a diamond lattice. Ours
-       reads as a more even allover mesh. `hatchSel` was moved onto the broad
-       relief for this and dumping it confirms it does form large, decisive
-       patches (0..255, std 86) -- so the selector is not the fault, and the
-       remaining problem is in how the two families are weighted into the
-       output. Do not re-derive the selector; start from `wa`/`wb`. */
+       THE PATCHES CAME RIGHT AT `wa`/`wb`, exactly where the selector dump
+       said they would. The old weights carried a floor of `1 - bias * 0.85` on
+       BOTH families, so at the strongest setting the losing family still held
+       about 14% -- and these are DARKENING lines, not a blend of tones, so 14%
+       of a dark line is a perfectly visible dark line. Both families drew
+       everywhere and the sheet came out as an even allover mesh however
+       decisive the selector was. The weights now sum to one, so where the
+       selector commits one family is drawn and the other is GONE, and
+       crossings survive only in the transition bands between patches -- which
+       is where the sample has them. */
     cassini: {
       kind: 'hatchlens', texSize: 'cover', scale: 1.6,
       heightBlur: 9, strength: 44, emboss: 0.28,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
-      hatchEmboss: 1.1, shade: 0.50, faceClear: 0.45,
+      hatchEmboss: 1.4, shade: 0.55, faceClear: 0.45,
       stipple: 0.1, stippleFace: 0.3, dome: 0.6,
-      hatchPatch: 10, hatchBias: 0.9,
+      hatchPatch: 18, hatchBias: 1.0,
       petalLift: 0.55, petalPale: 0.1, petalSharp: 0.14,
       pebbleWash: true, washMix: 0.2, pebbleShift: 24,
       faceBlur: 5, groundBlur: 9, groundFlat: 0.45, faceFlat: 0.40,
@@ -4176,6 +4179,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       };
       const shiftAmt = mat.pebbleShift || 0;
       const hatchBias = mat.hatchBias || 0;
+      const hatchCross = mat.hatchCross || 0;
 
       let pebbleWash = null;
       let pebbleShiftX = null;
@@ -4350,17 +4354,31 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                  build was that it was far too DARK, not that both were there.
                  The plate still tilts the balance, so some patches read as
                  diagonal streaks and others as mesh, as the reference does. */
-              /* `hatchBias` 0 keeps both families everywhere (a mesh); 1
-                 picks one almost purely (parallel lines). The sample wants
-                 mostly the latter, with crossings only where patches meet --
-                 which a LARGE `hatchPatch` provides without the herringbone
-                 that a steep pick on a noisy selector produced. */
+              /* THE MINORITY FAMILY MUST BE ABLE TO REACH ZERO, and the
+                 previous form could not. It carried a floor of
+                 `1 - hatchBias * 0.85` on BOTH families, so at the strongest
+                 setting the losing family still held about 14% -- and because
+                 these are DARKENING lines rather than a blend of tones, 14% of
+                 a dark line is a perfectly visible dark line. Both families
+                 therefore drew everywhere and the sheet came out as an even
+                 allover mesh, however decisive the selector was. Dumping
+                 `hatchSel` proved the patches were there all along; the fault
+                 was here.
+
+                 Now the two weights simply sum to one, so where the selector
+                 commits, one family is drawn and the other is GONE. Crossings
+                 survive only in the transition bands where the selector passes
+                 through the middle -- which is where the sample has them,
+                 between patches rather than across the whole sheet.
+
+                 `hatchCross` lifts a deliberate floor back in for a material
+                 that genuinely wants a woven mesh; Cassini leaves it at 0. */
               const m = hatchSel[i];
-              const pick = hatchBias
-                ? 1 / (1 + Math.exp((0.5 - m) * -6 * hatchBias))
-                : m;
-              const wa = (1 - hatchBias * 0.85) + hatchBias * 0.85 * pick * 2 * 0.5 + pick * 0.45;
-              const wb = (1 - hatchBias * 0.85) + hatchBias * 0.85 * (1 - pick) * 2 * 0.5 + (1 - pick) * 0.45;
+              const steep = 2 + hatchBias * 16;
+              let pick = 1 / (1 + Math.exp(-(m - 0.5) * steep));
+              if (hatchCross) pick = 0.5 + (pick - 0.5) * (1 - hatchCross);
+              const wa = pick;
+              const wb = 1 - pick;
               /* THIN DARK LINES ON A PALE GROUND, not a sine. At native
                  pixels the reference runs about 1px of dark line then 1.5px of
                  pale -- an asymmetric duty cycle. A symmetric sine at a 2.6px
