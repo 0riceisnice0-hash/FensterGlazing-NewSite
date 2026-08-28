@@ -3628,15 +3628,32 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        build renders the same glass twice with that much difference -- so
        re-render before believing a small diff, and suspect the baseline
        capture first: three times it was the baseline that was bad. */
+       THE PATTERN MUST OUTWEIGH THE SCENE, and getting that wrong is what read
+       as "computerised blur". Measured, the surviving scene structure already
+       matched the reference closely -- edge p90 6.3-8.1 against 6.0-7.1,
+       mid-scale rms 10.2-13.3 against 10.4-13.5. The QUANTITY was right and the
+       KIND was wrong: heavy averaging leaves only smooth gradients, and a
+       smooth gradient is what a Gaussian looks like however well its statistics
+       are tuned. The fix was not more obscuring but MORE PATTERN -- `dome`
+       raised from 0.5 to 1.6 and `emboss` to 0.5, so the pebbles carry real
+       light and shade -- and then LESS averaging, because once the pattern
+       dominates the scene can show through as fragments without taking over.
+       `groundFlat` came down 0.90 -> 0.66 and `faceFlat` 0.82 -> 0.48.
+
+       `pebbleShift` gives each pebble its own tilt, so what does survive is
+       sharp and in the wrong place rather than smeared. Reducing the blur
+       RADIUS instead was tried and is worse: it just makes the photograph
+       recognisable while still obviously blurred.
+
     cassini: {
       kind: 'hatchlens', texSize: 'cover',
-      heightBlur: 9, strength: 20, emboss: 0.3,
+      heightBlur: 9, strength: 20, emboss: 0.50,
       hatch: 1.3, hatchPitch: 2.6, hatchAngle: 52,
       hatchEmboss: 1.9, shade: 0.68, faceClear: 0.35,
-      stipple: 0.12, stippleFace: 0.3, dome: 0.5,
-      petalLift: 0.4, petalPale: 0.18, petalSharp: 0.1,
-      pebbleWash: true, washMix: 0.55,
-      faceBlur: 9, groundBlur: 34, groundFlat: 0.9, faceFlat: 0.82,
+      stipple: 0.12, stippleFace: 0.3, dome: 1.6,
+      petalLift: 0.4, petalPale: 0.26, petalSharp: 0.1,
+      pebbleWash: true, washMix: 0.30, pebbleShift: 10,
+      faceBlur: 7, groundBlur: 14, groundFlat: 0.66, faceFlat: 0.48,
       veil: 0.1, groundVeil: 0.26,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
@@ -4058,9 +4075,39 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
          REAL extent of each pebble rather than over a fixed radius. The ground
          keeps the wide wash from `groundBlur`, because a dense screen scatters
          over a wide angle rather than integrating over a shape. */
+      /* EVERY PEBBLE GETS ITS OWN REFRACTION OFFSET, and this is what stops
+         the pane reading as a computerised blur. Averaging and blurring both
+         destroy high frequencies, so whatever survives is a smooth gradient --
+         and a smooth gradient is exactly what a Gaussian looks like, however
+         well the statistics are tuned. Measured, our surviving edge strength
+         already matched the reference (p90 6.3-8.1 against 6.0-7.1, mid-scale
+         rms 10.2-13.3 against 10.4-13.5); the QUANTITY was right and the KIND
+         was wrong.
+
+         Real glass obscures by moving light, not by smearing it: each pebble is
+         a lens with its own tilt, so it shows a sharp piece of the scene from
+         somewhere it did not come from. The picture stays legible in fragments
+         -- which is what the owner sees through the real sheet -- while being
+         impossible to read as a whole. */
+      /* Hoisted above the flood fill, which needs both. They used to be
+         declared below it, so the fill hit them in the temporal dead zone and
+         threw -- and because a failed canvas render silently falls back to the
+         CSS layer, every screenshot came back IDENTICAL whatever the material
+         said. Four parameter sweeps were read off that fallback before the
+         duplicate image hashes gave it away. */
+      const hash = (a, b) => {
+        const n = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+        return n - Math.floor(n);
+      };
+      const shiftAmt = mat.pebbleShift || 0;
+
       let pebbleWash = null;
+      let pebbleShiftX = null;
+      let pebbleShiftY = null;
       if (mat.pebbleWash && petal) {
         pebbleWash = new Float32Array(T.length * 3);
+        pebbleShiftX = new Float32Array(T.length);
+        pebbleShiftY = new Float32Array(T.length);
         const seen = new Uint8Array(T.length);
         const stack = new Int32Array(T.length);
         const members = new Int32Array(T.length);
@@ -4083,9 +4130,17 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             if (j < T.length - w && !seen[j + w] && petal[j + w] > 0.5) { seen[j + w] = 1; stack[sp] = j + w; sp += 1; }
           }
           const ir = sr / mc; const ig = sg / mc; const ib = sb / mc;
+          /* Seeded from the pebble's own first pixel, so the tilt is stable
+             across redraws and differs from its neighbours'. */
+          const ang = hash(start % w, (start / w) | 0) * Math.PI * 2;
+          const rad = (0.35 + hash((start % w) + 41, ((start / w) | 0) + 17) * 0.65) * shiftAmt;
+          const ox = Math.cos(ang) * rad;
+          const oy = Math.sin(ang) * rad;
           for (let k = 0; k < mc; k += 1) {
-            const j3 = members[k] * 3;
+            const j = members[k];
+            const j3 = j * 3;
             pebbleWash[j3] = ir; pebbleWash[j3 + 1] = ig; pebbleWash[j3 + 2] = ib;
+            pebbleShiftX[j] = ox; pebbleShiftY[j] = oy;
           }
         }
       }
@@ -4124,10 +4179,6 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         ? Math.sin(x * 0.0037) * ribWander + Math.sin(x * 0.011 + 1.7) * ribWander * 0.5
         : 0);
 
-      const hash = (a, b) => {
-        const n = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
-        return n - Math.floor(n);
-      };
 
       for (let y = 0; y < h; y += 1) {
         for (let x = 0; x < w; x += 1) {
@@ -4279,6 +4330,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
             gy /= 1 + Math.abs(gy) * 0.4;
             sx = x + gx * mat.strength;
             sy = y + gy * mat.strength;
+          }
+
+          if (pebbleShiftX) {
+            sx += pebbleShiftX[i] * petal[i];
+            sy += pebbleShiftY[i] * petal[i];
           }
 
           if (grainAmp) {
