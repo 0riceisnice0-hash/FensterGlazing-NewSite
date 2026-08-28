@@ -3705,15 +3705,16 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.45,
       stipple: 0.05, stippleFace: 0.3, dome: 1.05,
       hatchPatch: 18, hatchBias: 1.0,
-      perPetal: true, petalBands: 2,
+      perPetal: true, petalBands: 5,
       flutePeriod: 6.5, fluteSpread: 2.8, fluteShade: 1.90,
       ribBearings: 4, ribVary: 0.6, ribWander: 0.15,
-      petalLift: 0.55, petalPale: 0.06, petalSharp: 0.14,
+      petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
       pebbleWash: true, washMix: 0.2, pebbleShift: 24,
       faceBlur: 8, groundBlur: 12, groundFlat: 0.58, faceFlat: 0.55,
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
       dimple: 0.40,
+      overlapBand: 3, bandKind: true, overlapAmt: 0.8, overlapTurn: 55,
       sectors: 6, glint: 0.45, glintLen: 2.5, rim2: 7, rimDark: 0.30,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
@@ -4260,6 +4261,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       const glintLen = Math.max(1.2, mat.glintLen || 2.5);
       const rimAmt = mat.rim2 || 0;
       const rimDark = mat.rimDark || 0;
+      const overlapBand = mat.overlapBand || 0;
+      const bandKind = !!mat.bandKind;
+      const overlapAmt = mat.overlapAmt == null ? 1 : mat.overlapAmt;
+      const overlapTurn = ((mat.overlapTurn || 55) * Math.PI) / 180;
 
       let pebbleWash = null;
       let pebbleShiftX = null;
@@ -4380,7 +4385,28 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           /* Enough petals stay smooth or dimpled to break the geometry up;
              the proportions are eyeballed off the sample, where most petals
              are fluted but a clear minority are glassy or granular. */
-          const kind = r < 0.62 ? 1 : (r < 0.82 ? 0 : 2);
+          /* WHERE TWO PETALS OVERLAP THE SURFACE CARRIES BOTH IMPRESSIONS, so
+             the overlap is a THIRD texture -- not petal A's, not petal B's,
+             but the two crossed. That is what the owner means by the overlaps
+             making a different texture, and this renderer had no
+             representation of it at all: every region got one texture and
+             overlaps were just another region.
+
+             The band level is the stacking height, so the upper bands ARE the
+             overlaps. They flute along their own bearing and along a second,
+             which is what superimposed relief does. */
+          const overlap = overlapBand && band >= overlapBand;
+          /* KIND FOLLOWS STACKING HEIGHT, not a random draw. The band level is
+             how high the impression sits, and on the sample the prominent
+             glossy ovals are the TOPMOST faces while the fluting lies on what
+             is under and between them. Drawing the kind from a hash scattered
+             smooth petals through the stack at random, which is part of why
+             the shapes failed to read as one lying over another. */
+          const kind = overlap
+            ? 3
+            : (bandKind && band === bands - 2
+              ? 0
+              : (r < 0.66 ? 1 : (r < 0.80 ? 0 : 2)));
           const per = 1 + (hash((start % w) + 7, ((start / w) | 0) + 23) - 0.5) * 0.5;
           for (let k = 0; k < mc; k += 1) {
             const j = members[k];
@@ -4694,6 +4720,26 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                 const cr = Math.cos((u - 0.5) * Math.PI);
                 fluteTone = (cr * cr * cr * 1.35 - 0.45) * damp * ribAmp;
 
+                if (kind === 3) {
+                  /* The second impression, at a neighbouring bearing rather
+                     than the perpendicular -- a perpendicular pair is the
+                     dimple waffle, whereas two overlapping petals meet at
+                     whatever angle they happen to lie at. */
+                  const ca = Math.cos(overlapTurn);
+                  const sa = Math.sin(overlapTurn);
+                  const ox2 = nx * ca - ny * sa;
+                  const oy2 = nx * sa + ny * ca;
+                  const q3 = x * ox2 + y * oy2;
+                  const fk = Math.floor(q3 / fp);
+                  const u3 = q3 / fp - fk;
+                  const c3 = (fk + 0.5) * fp;
+                  const d3 = (c3 + (u3 - 0.5) * fp * fluteSpread) - q3;
+                  sx += ox2 * d3 * damp * overlapAmt;
+                  sy += oy2 * d3 * damp * overlapAmt;
+                  const cr3 = Math.cos((u3 - 0.5) * Math.PI);
+                  fluteTone = (fluteTone + (cr3 * cr3 * cr3 * 1.35 - 0.45) * damp * ribAmp)
+                    * 0.55;
+                }
                 if (kind === 2) {
                   /* DIMPLED IS A WAFFLE, NOT NOISE. This was per-pixel white
                      noise, which is why raising the rib definition turned the
