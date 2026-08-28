@@ -10731,7 +10731,7 @@ html.fg-gallery-lightbox-open body {
   z-index: 1;
   /* The view behind moves further than the glass in front of it. Scaled a
      little so the edges never uncover as it shifts. */
-  transform: scale(1.05) translate3d(calc(var(--mx) * 13px), calc(var(--my) * 9px), 0);
+  transform: scale(1.05) translate3d(0, calc(var(--my) * 11px), 0);
   will-change: transform;
 }
 
@@ -10807,11 +10807,10 @@ html.fg-gallery-lightbox-open body {
 
 .fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__optics {
   display: block;
-  /* Less than the clear half, so the glass reads as the nearer surface. The
-     clip that draws the divider is on this canvas's PARENT, so shifting the
-     canvas does not drag the divider off the seam. */
-  transform: scale(1.04) translate3d(calc(var(--mx) * 8px), calc(var(--my) * 6px), 0);
-  will-change: transform;
+  /* NOT TRANSLATED. The canvas re-samples the scene at an offset instead, so
+     the pattern stays on the pixel it belongs to and only the view behind it
+     moves -- which is what the glass actually does. Translating it, as this
+     did first, dragged the pattern along with the scene. */
 }
 
 @media (prefers-reduced-motion: reduce) {

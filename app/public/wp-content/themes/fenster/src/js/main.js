@@ -3513,15 +3513,42 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
      pattern drifting a few pixels, which at this amplitude is not visible.
      The clip that makes the divider lives on the canvas's PARENT, so moving
      the canvas does not drag the divider with it. */
+  /* Matches the clear half's translate in main.scss, so the view behind moves
+     by the same amount on both sides of the divider. */
+  const PARALLAX_SCENE_X = 13;
+  const PARALLAX_SCENE_Y = 9;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let parallaxFrame = 0;
   let parallaxTarget = null;
+  let parallaxLast = 99;
 
   const applyParallax = () => {
     parallaxFrame = 0;
     if (!parallaxTarget) return;
-    viewport.style.setProperty('--mx', parallaxTarget.x.toFixed(3));
-    viewport.style.setProperty('--my', parallaxTarget.y.toFixed(3));
+    const { x, y } = parallaxTarget;
+    viewport.style.setProperty('--mx', x.toFixed(3));
+    viewport.style.setProperty('--my', y.toFixed(3));
+    /* THE GLASS STAYS PUT AND THE SCENE MOVES. The canvas is not translated:
+       it RE-SAMPLES the scene at an offset, so every term describing the sheet
+       -- relief, lens shape, rib bearing, wash -- lands on exactly the pixel it
+       did before, and only the view behind it shifts. Sampling further right
+       shows scene from further right, which reads as the view sliding left,
+       hence the negative sign to match the clear half's translate. The offset
+       is in canvas pixels and the canvas is smaller than its displayed size, so
+       the screen amplitude is scaled by that ratio. */
+    if (!glassRepaint || !glassOut || !glassCanvas) return;
+    /* A repaint is ~33ms, so it is not run for movement too small to see. */
+    if (Math.abs(y - parallaxLast) < 0.012) return;
+    parallaxLast = y;
+    const shown = glassCanvas.getBoundingClientRect().width || glassCanvas.width;
+    const k = glassCanvas.width / Math.max(shown, 1);
+    const split = Number.parseFloat(getComputedStyle(viewport).getPropertyValue('--split')) || 54;
+    glassRepaint(
+      -x * PARALLAX_SCENE_X * k,
+      -y * PARALLAX_SCENE_Y * k,
+      Math.ceil((split / 100) * glassCanvas.width) + 2
+    );
+    glassCanvas.getContext('2d').putImageData(glassOut, 0, 0);
   };
 
   const queueParallax = (x, y) => {
@@ -3536,18 +3563,24 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     parallaxFrame = requestAnimationFrame(applyParallax);
   };
 
+  /* DRIVEN BY SCROLL, NOT THE POINTER. Scroll is a slow continuous signal that
+     everyone produces just by reading the page, where a pointer only moves if
+     somebody happens to hover the pane -- and on the way past it fought the
+     divider drag. It also gives the effect a direction that matches the motion
+     the eye is already tracking. Vertical only, which is the axis scroll has. */
+  const onScroll = () => {
+    const box = viewport.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    if (box.bottom < 0 || box.top > vh) return;
+    /* -1 when the pane sits at the bottom of the window, +1 at the top. */
+    const centre = box.top + box.height / 2;
+    queueParallax(0, clamp(((vh / 2 - centre) / (vh / 2 + box.height / 2)), -1, 1));
+  };
+
   if (!reduceMotion.matches) {
-    viewport.addEventListener('pointermove', (event) => {
-      /* Touch drags the divider; hijacking them for parallax would fight it. */
-      if (event.pointerType === 'touch') return;
-      const box = viewport.getBoundingClientRect();
-      if (!box.width || !box.height) return;
-      queueParallax(
-        clamp(((event.clientX - box.left) / box.width) * 2 - 1, -1, 1),
-        clamp(((event.clientY - box.top) / box.height) * 2 - 1, -1, 1)
-      );
-    });
-    viewport.addEventListener('pointerleave', clearParallax);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
     reduceMotion.addEventListener('change', (event) => {
       if (event.matches) clearParallax();
     });
@@ -3841,6 +3874,10 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
   let renderToken = 0;
   let glassCanvas = null;
+  /* Handles for the parallax repaint: the sampling pass and the buffer it
+     writes into, kept from the last full render. */
+  let glassRepaint = null;
+  let glassOut = null;
 
   const glassImage = (src) => new Promise((resolve, reject) => {
     const img = new Image();
@@ -4849,6 +4886,35 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
       const out = sceneCtx.createImageData(w, h);
       const dst = out.data;
+
+      /* SPLIT SO THE SCENE CAN MOVE WITHOUT THE GLASS MOVING WITH IT.
+         Everything expensive here -- the blurs, the flood fills, the
+         watershed, the sector lattice -- describes the SHEET and does not
+         depend on what is behind it. Only the final sampling touches the
+         scene. So the pass below stops at the point of sampling and records,
+         per pixel, where to sample and what to do with the result; `paint`
+         then does the sampling. Shifting the scene is a call to `paint` with
+         an offset: the sample coordinates move, every term describing the
+         glass does not, and the pattern stays exactly where it is.
+
+         There is only ONE copy of the shading, and the first render goes
+         through it too -- `paint(0, 0)`. If it were duplicated the two would
+         drift apart the first time either was edited. */
+      /* Float64 for the sample coordinates specifically. At Float32 the
+         coordinates quantise at about 2e-5, which shifts the bilinear weights
+         just enough to flip the odd pixel by one -- two rows out of 280 came
+         back different when the split was first verified against the render it
+         replaced. The rest of the cache stays Float32; only these feed an
+         interpolation. */
+      const pxSX = new Float64Array(w * h);
+      const pxSY = new Float64Array(w * h);
+      const pxE = new Float32Array(w * h);
+      const pxRim = new Float32Array(w * h);
+      const pxStip = new Float32Array(w * h);
+      const pxFace = new Float32Array(w * h);
+      const pxLobeR = new Float32Array(w * h);
+      const pxLobeX = new Float32Array(w * h);
+      const pxLobeY = new Float32Array(w * h);
       const period = Math.max(4, mat.period || 20);
       const spread = mat.spread || 1;
       const cell = Math.max(4, mat.cell || 12);
@@ -5266,18 +5332,6 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           if (lobeAmt) {
             lobeR = lobeAmt * (1 - petal[i] * lobeFace);
           }
-          const x0 = sx | 0;
-          const y0 = sy | 0;
-          const fx = sx - x0;
-          const fy = sy - y0;
-          const p00 = (y0 * w + x0) * 4;
-          const p10 = p00 + 4;
-          const p01 = p00 + w * 4;
-          const p11 = p01 + 4;
-          const w00 = (1 - fx) * (1 - fy);
-          const w10 = fx * (1 - fy);
-          const w01 = (1 - fx) * fy;
-          const w11 = fx * fy;
 
           /* Signed emboss: ridges catch light, grooves shade. Clamped, so
              the pattern is bold without ever going to paint. */
@@ -5323,133 +5377,188 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
               ? groundFlatAmt + (faceFlatAmt - groundFlatAmt) * petal[i]
               : Math.max(mat.groundFlat || 0, petal[i]))
             : 0;
-          for (let ch = 0; ch < 3; ch += 1) {
-            const src = mat.kind === 'frost' ? soft : scene;
-            let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
-            if (lobeR > 0.15) {
-              /* Four extra taps along the scattering axis, weighted so the
-                 centre still dominates: enough to turn a point sample into a
-                 short directional integral without four times the cost. */
-              let acc = v * 2;
-              let wsum = 2;
-              for (let t = -2; t <= 2; t += 1) {
-                if (t === 0) continue;
-                const o = t * lobeR * 0.5;
-                let ax = sx + lobeX * o;
-                let ay = sy + lobeY * o;
-                ax = ax < 0 ? 0 : ax > w - 1.001 ? w - 1.001 : ax;
-                ay = ay < 0 ? 0 : ay > h - 1.001 ? h - 1.001 : ay;
-                const bx = ax | 0;
-                const by = ay | 0;
-                const q00 = (by * w + bx) * 4 + ch;
-                const gx2 = ax - bx;
-                const gy2 = ay - by;
-                acc += src[q00] * (1 - gx2) * (1 - gy2) + src[q00 + 4] * gx2 * (1 - gy2)
-                  + src[q00 + w * 4] * (1 - gx2) * gy2 + src[q00 + w * 4 + 4] * gx2 * gy2;
-                wsum += 1;
-              }
-              v = acc / wsum;
-            }
-            if (scatter) {
-              const sc = scatter[p00 + ch] * w00 + scatter[p10 + ch] * w10
-                + scatter[p01 + ch] * w01 + scatter[p11 + ch] * w11;
-              v += (sc - v) * 0.75;
-            }
-            if (faceMix) {
-              const f = flat[p00 + ch] * w00 + flat[p10 + ch] * w10 + flat[p01 + ch] * w01 + flat[p11 + ch] * w11;
-              if (flatGround) {
-                const g = flatGround[p00 + ch] * w00 + flatGround[p10 + ch] * w10
-                  + flatGround[p01 + ch] * w01 + flatGround[p11 + ch] * w11;
-                /* ALMOST SEE-THROUGH. A flat wash alone made the pebbles
-                   opaque discs; in the reference the red behind clearly tints
-                   them and each carries its own soft gradient. `washMix` is
-                   how much of the pebble is its own flat average and how much
-                   is the softened scene -- enough gradient to read as glass,
-                   not enough detail to read as a picture. */
-                const pw = pebbleWash && pebbleWash[i * 3 + ch] > 0
-                  ? pebbleWash[i * 3 + ch] * washMix + f * (1 - washMix)
-                  : f;
-                v += (g + (pw - g) * petal[i] - v) * faceMix;
-              } else {
-                v += (f - v) * faceMix;
-              }
-            }
-            if (groundAmp) {
-              /* The fine screened ground between lens elements: colour
-                 passes, detail does not. */
-              const g = (1 - Math.min(1, Math.abs(detail[i]) / dNorm)) * groundAmp;
-              v += (240 - v) * g * 0.35;
-            }
-            /* Moulded relief SCATTERS ambient light, so it always reads
-               lighter than what is behind it -- bright motifs even over a dark
-               object. A symmetric signed emboss printed black strokes over
-               foliage and read as a decal; the negative lobe is therefore
-               heavily damped rather than mirrored. */
-            v += e > 0 ? (255 - v) * e : v * e * shadeAmp;
-            if (stippleAmt) {
-              /* Cassini's faces are not polished. At native pixels the
-                 reference's pebbles carry a fine granular etch, and on the
-                 ground that grain is the STRONGEST texture present -- finest
-                 band rms 32-34 there against 22 on a face. Rendering the
-                 faces smooth and leaning on blur to obscure is what made this
-                 look soft; the real sheet obscures with texture and stays
-                 crisp everywhere. */
-              const st = stip * stippleAmt * (1 - petal[i] * stippleFace);
-              v += st > 0 ? (255 - v) * st : v * st;
-            }
-            if (domeAmt && (ovalDome || dome)) {
-              /* Only on the faces: the ground is a screen, not a lens. */
-              const dv = (ovalDome ? ovalDome[i] : dome[i]) * domeAmt * petal[i];
-              v += dv > 0 ? (255 - v) * dv : v * dv;
-            }
-            if (petalPale) {
-              /* A frosted pebble scatters light forward, so it sits PALER
-                 than the hatched ground around it. That difference, not an
-                 outline, is what makes the petals read at a glance.
-
-                 NO RIM DARKENING HERE, and that is deliberate. Subtracting on
-                 the slope of the petal field drew a dark ring round every pale
-                 blob, and a pale blob inside a dark ring is a contour: the
-                 pane came out looking like a topographic map. Isolating the
-                 terms one at a time showed the rings were entirely this and
-                 not the lens displacement or the flattening -- with the lift
-                 switched off they vanished, with the lens cut to a quarter
-                 they did not. The reference has no such ring; its pebbles just
-                 sit paler, with the edge left to the lens. */
-              v += (255 - v) * petal[i] * petalPale;
-            }
-            if (rim) v += rim > 0 ? (255 - v) * rim : v * rim;
-            if (veil) {
-              /* A dense screen scatters over a wide angle, so the ground
-                 transmits diffuse light and reads MILKY -- pale almost
-                 regardless of what is behind it -- while a pebble is a lens
-                 and passes its wash through. `groundVeil` is that difference.
-                 Without it the ground took its tone straight from the scene
-                 and went dark green over foliage, where the reference's stays
-                 pale. */
-              const vl = groundVeil
-                ? veil + (groundVeil - veil) * (1 - petal[i])
-                : veil;
-              v += (250 - v) * vl;
-            }
-            if (knee) {
-              /* SOFT HIGHLIGHT ROLLOFF. Measured against all three references:
-                 they clip pure white on 0.01-0.03% of pixels, ours on 1.7%.
-                 Real glass has no mechanism that returns more light than fell
-                 on it, but this renderer stacks several positive terms --
-                 relief, dome, petal paleness, the rib crown, the veil -- each
-                 of which adds a fraction of the REMAINING headroom, so bright
-                 areas pile up on 255 and every highlight added after that is
-                 invisible. Rolling the top off asymptotically keeps the
-                 crowns separable, and it is a prerequisite for giving the ribs
-                 any more specular definition. */
-              if (v > knee) v = knee + (kCeil - knee) * (1 - Math.exp((knee - v) / (kCeil - knee)));
-            }
-            dst[o + ch] = v;
-          }
-          dst[o + 3] = 255;
+          pxSX[i] = sx;
+          pxSY[i] = sy;
+          pxE[i] = e;
+          pxRim[i] = rim;
+          pxStip[i] = stip;
+          pxFace[i] = faceMix;
+          pxLobeR[i] = lobeR;
+          pxLobeX[i] = lobeX;
+          pxLobeY[i] = lobeY;
         }
       }
+
+
+      /* The only place the scene is read. `dx`/`dy` shift what is sampled
+         without touching anything that describes the glass. */
+      const paint = (dx, dy, maxX) => {
+        /* Only the columns left of the divider are ever seen -- the clip on the
+           canvas's parent throws the rest away -- so a parallax repaint stops
+           there. At the default split that is a little over half the work, and
+           it is free. A full render still paints everything, because the
+           divider moves. */
+        const lim = maxX == null ? w : Math.min(w, Math.max(1, maxX));
+        for (let y = 0; y < h; y += 1) {
+          for (let x = 0; x < lim; x += 1) {
+            const i = y * w + x;
+            let sx = pxSX[i] + dx;
+            let sy = pxSY[i] + dy;
+            sx = sx < 0 ? 0 : sx > w - 1.001 ? w - 1.001 : sx;
+            sy = sy < 0 ? 0 : sy > h - 1.001 ? h - 1.001 : sy;
+            const eV = pxE[i];
+            const rimV = pxRim[i];
+            const stipV = pxStip[i];
+            const faceMix = pxFace[i];
+            const lobeR = pxLobeR[i];
+            const lobeX = pxLobeX[i];
+            const lobeY = pxLobeY[i];
+            const o = i * 4;
+            const x0 = sx | 0;
+            const y0 = sy | 0;
+            const fx = sx - x0;
+            const fy = sy - y0;
+            const p00 = (y0 * w + x0) * 4;
+            const p10 = p00 + 4;
+            const p01 = p00 + w * 4;
+            const p11 = p01 + 4;
+            const w00 = (1 - fx) * (1 - fy);
+            const w10 = fx * (1 - fy);
+            const w01 = (1 - fx) * fy;
+            const w11 = fx * fy;
+            for (let ch = 0; ch < 3; ch += 1) {
+              const src = mat.kind === 'frost' ? soft : scene;
+              let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
+              if (lobeR > 0.15) {
+                /* Four extra taps along the scattering axis, weighted so the
+                   centre still dominates: enough to turn a point sample into a
+                   short directional integral without four times the cost. */
+                let acc = v * 2;
+                let wsum = 2;
+                for (let t = -2; t <= 2; t += 1) {
+                  if (t === 0) continue;
+                  const o = t * lobeR * 0.5;
+                  let ax = sx + lobeX * o;
+                  let ay = sy + lobeY * o;
+                  ax = ax < 0 ? 0 : ax > w - 1.001 ? w - 1.001 : ax;
+                  ay = ay < 0 ? 0 : ay > h - 1.001 ? h - 1.001 : ay;
+                  const bx = ax | 0;
+                  const by = ay | 0;
+                  const q00 = (by * w + bx) * 4 + ch;
+                  const gx2 = ax - bx;
+                  const gy2 = ay - by;
+                  acc += src[q00] * (1 - gx2) * (1 - gy2) + src[q00 + 4] * gx2 * (1 - gy2)
+                    + src[q00 + w * 4] * (1 - gx2) * gy2 + src[q00 + w * 4 + 4] * gx2 * gy2;
+                  wsum += 1;
+                }
+                v = acc / wsum;
+              }
+              if (scatter) {
+                const sc = scatter[p00 + ch] * w00 + scatter[p10 + ch] * w10
+                  + scatter[p01 + ch] * w01 + scatter[p11 + ch] * w11;
+                v += (sc - v) * 0.75;
+              }
+              if (faceMix) {
+                const f = flat[p00 + ch] * w00 + flat[p10 + ch] * w10 + flat[p01 + ch] * w01 + flat[p11 + ch] * w11;
+                if (flatGround) {
+                  const g = flatGround[p00 + ch] * w00 + flatGround[p10 + ch] * w10
+                    + flatGround[p01 + ch] * w01 + flatGround[p11 + ch] * w11;
+                  /* ALMOST SEE-THROUGH. A flat wash alone made the pebbles
+                     opaque discs; in the reference the red behind clearly tints
+                     them and each carries its own soft gradient. `washMix` is
+                     how much of the pebble is its own flat average and how much
+                     is the softened scene -- enough gradient to read as glass,
+                     not enough detail to read as a picture. */
+                  const pw = pebbleWash && pebbleWash[i * 3 + ch] > 0
+                    ? pebbleWash[i * 3 + ch] * washMix + f * (1 - washMix)
+                    : f;
+                  v += (g + (pw - g) * petal[i] - v) * faceMix;
+                } else {
+                  v += (f - v) * faceMix;
+                }
+              }
+              if (groundAmp) {
+                /* The fine screened ground between lens elements: colour
+                   passes, detail does not. */
+                const g = (1 - Math.min(1, Math.abs(detail[i]) / dNorm)) * groundAmp;
+                v += (240 - v) * g * 0.35;
+              }
+              /* Moulded relief SCATTERS ambient light, so it always reads
+                 lighter than what is behind it -- bright motifs even over a dark
+                 object. A symmetric signed emboss printed black strokes over
+                 foliage and read as a decal; the negative lobe is therefore
+                 heavily damped rather than mirrored. */
+              v += eV > 0 ? (255 - v) * eV : v * eV * shadeAmp;
+              if (stippleAmt) {
+                /* Cassini's faces are not polished. At native pixels the
+                   reference's pebbles carry a fine granular etch, and on the
+                   ground that grain is the STRONGEST texture present -- finest
+                   band rms 32-34 there against 22 on a face. Rendering the
+                   faces smooth and leaning on blur to obscure is what made this
+                   look soft; the real sheet obscures with texture and stays
+                   crisp everywhere. */
+                const st = stipV * stippleAmt * (1 - petal[i] * stippleFace);
+                v += st > 0 ? (255 - v) * st : v * st;
+              }
+              if (domeAmt && (ovalDome || dome)) {
+                /* Only on the faces: the ground is a screen, not a lens. */
+                const dv = (ovalDome ? ovalDome[i] : dome[i]) * domeAmt * petal[i];
+                v += dv > 0 ? (255 - v) * dv : v * dv;
+              }
+              if (petalPale) {
+                /* A frosted pebble scatters light forward, so it sits PALER
+                   than the hatched ground around it. That difference, not an
+                   outline, is what makes the petals read at a glance.
+
+                   NO RIM DARKENING HERE, and that is deliberate. Subtracting on
+                   the slope of the petal field drew a dark ring round every pale
+                   blob, and a pale blob inside a dark ring is a contour: the
+                   pane came out looking like a topographic map. Isolating the
+                   terms one at a time showed the rings were entirely this and
+                   not the lens displacement or the flattening -- with the lift
+                   switched off they vanished, with the lens cut to a quarter
+                   they did not. The reference has no such ring; its pebbles just
+                   sit paler, with the edge left to the lens. */
+                v += (255 - v) * petal[i] * petalPale;
+              }
+              if (rimV) v += rimV > 0 ? (255 - v) * rimV : v * rimV;
+              if (veil) {
+                /* A dense screen scatters over a wide angle, so the ground
+                   transmits diffuse light and reads MILKY -- pale almost
+                   regardless of what is behind it -- while a pebble is a lens
+                   and passes its wash through. `groundVeil` is that difference.
+                   Without it the ground took its tone straight from the scene
+                   and went dark green over foliage, where the reference's stays
+                   pale. */
+                const vl = groundVeil
+                  ? veil + (groundVeil - veil) * (1 - petal[i])
+                  : veil;
+                v += (250 - v) * vl;
+              }
+              if (knee) {
+                /* SOFT HIGHLIGHT ROLLOFF. Measured against all three references:
+                   they clip pure white on 0.01-0.03% of pixels, ours on 1.7%.
+                   Real glass has no mechanism that returns more light than fell
+                   on it, but this renderer stacks several positive terms --
+                   relief, dome, petal paleness, the rib crown, the veil -- each
+                   of which adds a fraction of the REMAINING headroom, so bright
+                   areas pile up on 255 and every highlight added after that is
+                   invisible. Rolling the top off asymptotically keeps the
+                   crowns separable, and it is a prerequisite for giving the ribs
+                   any more specular definition. */
+                if (v > knee) v = knee + (kCeil - knee) * (1 - Math.exp((knee - v) / (kCeil - knee)));
+              }
+              dst[o + ch] = v;
+            }
+            dst[o + 3] = 255;
+
+          }
+        }
+      };
+
+      paint(0, 0);
+      glassRepaint = paint;
+      glassOut = out;
 
       if (token !== renderToken) return;
       if (!glassCanvas) {
