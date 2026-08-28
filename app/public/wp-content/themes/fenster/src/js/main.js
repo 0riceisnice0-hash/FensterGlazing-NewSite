@@ -3656,13 +3656,36 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        garden and does not look computed.
 
        Reducing the blur RADIUS instead was tried and is worse: it makes the
-       photograph recognisable while still obviously blurred. */
+       photograph recognisable while still obviously blurred.
+
+       MEASURED OFF THE OWNER'S OWN SAMPLE PHOTOGRAPHS, which are a better
+       reference than the Pallot shot and should be preferred: hatch pitch
+       ~24px against a pebble period of ~400px, so the true ratio is about
+       17:1, not the 41:1 the Pallot image implied -- that reading was picking
+       up a finer sub-texture rather than the hatch lines. The two families sit
+       at the same angles, but in MOST patches one runs almost purely (0.05
+       relative power against 1.00) and only some cross (0.82). The patches are
+       large and the hatch is BOLD -- lines you can count.
+
+       `scale` 1.6 follows from that ratio: at plain `cover` the pebbles came
+       out around 50px, which forces the hatch to ~3px, and at 3px it cannot
+       draw as bold lines without turning into a chequer. Scaling the pattern
+       up lets the hatch sit at 5px where it reads as line work.
+
+       WHAT IS STILL NOT RIGHT: the sample's hatch runs in large patches of
+       PARALLEL lines meeting at sharp boundaries, a diamond lattice. Ours
+       reads as a more even allover mesh. `hatchSel` was moved onto the broad
+       relief for this and dumping it confirms it does form large, decisive
+       patches (0..255, std 86) -- so the selector is not the fault, and the
+       remaining problem is in how the two families are weighted into the
+       output. Do not re-derive the selector; start from `wa`/`wb`. */
     cassini: {
-      kind: 'hatchlens', texSize: 'cover',
+      kind: 'hatchlens', texSize: 'cover', scale: 1.6,
       heightBlur: 9, strength: 44, emboss: 0.28,
-      hatch: 1.3, hatchPitch: 2.6, hatchAngle: 52,
-      hatchEmboss: 0.9, shade: 0.45, faceClear: 0.35,
+      hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
+      hatchEmboss: 1.1, shade: 0.50, faceClear: 0.45,
       stipple: 0.1, stippleFace: 0.3, dome: 0.6,
+      hatchPatch: 10, hatchBias: 0.9,
       petalLift: 0.55, petalPale: 0.1, petalSharp: 0.14,
       pebbleWash: true, washMix: 0.2, pebbleShift: 24,
       faceBlur: 5, groundBlur: 9, groundFlat: 0.45, faceFlat: 0.40,
@@ -4012,13 +4035,26 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         hatchPY = new Float32Array(T.length);
         hatchSel = new Float32Array(T.length);
         for (let i = 0; i < T.length; i += 1) {
+          const x = i % w;
+          const y = (i / w) | 0;
           /* Dominant gradient direction; the LINES run perpendicular to it,
              and light combs perpendicular to the lines -- i.e. back along
              the gradient. */
           const theta = 0.5 * Math.atan2(2 * jxy[i], jxx[i] - jyy[i] + 1e-6);
           hatchPX[i] = Math.cos(theta);
           hatchPY[i] = Math.sin(theta);
-          hatchSel[i] = 0.5 - hatchPX[i] * hatchPY[i];
+          /* FROM THE BROAD RELIEF, NOT THE FINE DETAIL. Which hatch family a
+             patch runs was taken from the orientation of the plate's fine
+             texture, which has no large-scale structure at all -- blur it to a
+             patch's width and it collapses to a constant, both families weigh
+             the same everywhere, and the sheet renders as one uniform diamond
+             mesh. Re-normalising that only amplified noise. On the real sheet
+             the direction follows the FACET layout, and that lives in the broad
+             relief, which varies exactly at the scale wanted. */
+          const bx = H[i + (x < w - 2 ? 2 : 0)] - H[i - (x > 1 ? 2 : 0)];
+          const by = H[i + (y < h - 2 ? 2 * w : 0)] - H[i - (y > 1 ? 2 * w : 0)];
+          const bl = Math.hypot(bx, by) + 1e-6;
+          hatchSel[i] = 0.5 - (bx / bl) * (by / bl);
         }
         /* WHICH FAMILY WINS HAS TO VARY SLOWLY. Taken per pixel the selection
            flips on small-scale noise in the orientation field, and with a
@@ -4026,7 +4062,34 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
            as a geometric herringbone. In the reference the direction holds
            over a whole patch and changes at the pebbles, so the field is
            blurred to roughly a pebble's width before it is used. */
-        boxBlurField(hatchSel, w, h, 22);
+        /* THE PATCHES ARE LARGE AND DECISIVE ON THE REAL SHEET. Measured on
+           the owner's own sample photographs, most patches run ONE way almost
+           purely -- the second family sits at 0.05 relative power against the
+           first's 1.00 -- and only some cross (0.82). They are also big: a
+           hatch pitch of ~24px against a pebble period of ~400px, so a patch
+           holds many lines. A small blur radius here made the patches mushy
+           and roughly a pebble across, which is why the sheet read as an even
+           mesh rather than as the diamond lattice the sample shows. */
+        boxBlurField(hatchSel, w, h, mat.hatchPatch || 22);
+        /* RE-NORMALISED, because blurring a 0..1 field collapses it towards
+           its mean: at the large radius the sample's patch size calls for, the
+           selector came out flat at ~0.5, both families weighed equally, and
+           the whole sheet rendered as one uniform diamond mesh instead of
+           patches of parallel lines. Stretching it back across its own
+           percentiles restores the swing without restoring the small-scale
+           noise the blur removed. */
+        {
+          const ss = [];
+          for (let k = 0; k < 4096; k += 1) ss.push(hatchSel[(2003 * k) % hatchSel.length]);
+          ss.sort((a, b) => a - b);
+          const sLo = ss[Math.floor(ss.length * 0.12)];
+          const sHi = ss[Math.floor(ss.length * 0.88)];
+          const sSpan = Math.max(sHi - sLo, 1e-4);
+          for (let i = 0; i < hatchSel.length; i += 1) {
+            const v = (hatchSel[i] - sLo) / sSpan;
+            hatchSel[i] = v < 0 ? 0 : v > 1 ? 1 : v;
+          }
+        }
 
         /* THE PEBBLES ARE DOMES, AND THE PLATE ALREADY KNOWS IT. Every pebble
            in the reference is dark along one edge and bright along the other,
@@ -4112,6 +4175,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
         return n - Math.floor(n);
       };
       const shiftAmt = mat.pebbleShift || 0;
+      const hatchBias = mat.hatchBias || 0;
 
       let pebbleWash = null;
       let pebbleShiftX = null;
@@ -4286,9 +4350,17 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                  build was that it was far too DARK, not that both were there.
                  The plate still tilts the balance, so some patches read as
                  diagonal streaks and others as mesh, as the reference does. */
+              /* `hatchBias` 0 keeps both families everywhere (a mesh); 1
+                 picks one almost purely (parallel lines). The sample wants
+                 mostly the latter, with crossings only where patches meet --
+                 which a LARGE `hatchPatch` provides without the herringbone
+                 that a steep pick on a noisy selector produced. */
               const m = hatchSel[i];
-              const wa = 0.55 + 0.45 * m;
-              const wb = 1.0 - 0.45 * m;
+              const pick = hatchBias
+                ? 1 / (1 + Math.exp((0.5 - m) * -6 * hatchBias))
+                : m;
+              const wa = (1 - hatchBias * 0.85) + hatchBias * 0.85 * pick * 2 * 0.5 + pick * 0.45;
+              const wb = (1 - hatchBias * 0.85) + hatchBias * 0.85 * (1 - pick) * 2 * 0.5 + (1 - pick) * 0.45;
               /* THIN DARK LINES ON A PALE GROUND, not a sine. At native
                  pixels the reference runs about 1px of dark line then 1.5px of
                  pale -- an asymmetric duty cycle. A symmetric sine at a 2.6px
