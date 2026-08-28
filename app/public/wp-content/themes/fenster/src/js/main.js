@@ -3629,32 +3629,44 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        re-render before believing a small diff, and suspect the baseline
        capture first: three times it was the baseline that was bad.
 
-       THE PATTERN MUST OUTWEIGH THE SCENE, and getting that wrong is what read
-       as "computerised blur". Measured, the surviving scene structure already
-       matched the reference closely -- edge p90 6.3-8.1 against 6.0-7.1,
-       mid-scale rms 10.2-13.3 against 10.4-13.5. The QUANTITY was right and the
-       KIND was wrong: heavy averaging leaves only smooth gradients, and a
-       smooth gradient is what a Gaussian looks like however well its statistics
-       are tuned. The fix was not more obscuring but MORE PATTERN -- `dome`
-       raised from 0.5 to 1.6 and `emboss` to 0.5, so the pebbles carry real
-       light and shade -- and then LESS averaging, because once the pattern
-       dominates the scene can show through as fragments without taking over.
-       `groundFlat` came down 0.90 -> 0.66 and `faceFlat` 0.82 -> 0.48.
+       THE PATTERN MUST NOT OVERWHELM THE SCENE EITHER, and one pass here went
+       badly wrong on that. Told it looked like a "computerised blur", the
+       response was to raise `dome` to 1.6 and `emboss` to 0.5, which turned the
+       pebbles into near-black-and-white discs and buried the garden completely.
+       The owner's verdict: "looks too processed, doesn't show the scene enough
+       behind it", and they were right.
 
-       `pebbleShift` gives each pebble its own tilt, so what does survive is
-       sharp and in the wrong place rather than smeared. Reducing the blur
-       RADIUS instead was tried and is worse: it just makes the photograph
-       recognisable while still obviously blurred. */
+       RENDERING THE LIVE VERSION SIDE BY SIDE IS WHAT SETTLED IT. `b2420743`
+       uses plain CSS multiply, and it shows the scene far more clearly than any
+       of this did -- soft, but the tree, the house and the water are all plainly
+       there, and so is the clock in the reference. The pebbles in the reference
+       are mostly PALE with subtle shading; only a few are dark. Measured, the
+       surviving scene structure had matched all along -- edge p90 6.3-8.1
+       against 6.0-7.1, mid-scale rms 10.2-13.3 against 10.4-13.5 -- so the
+       quantity was never the problem, and adding contrast on top of it was
+       solving the wrong thing.
+
+       SO OBSCURE BY SCRAMBLING, NOT BY BLURRING OR BY PAINTING OVER. `strength`
+       and `pebbleShift` are high, so each pebble shows a sharp piece of the
+       scene from somewhere it did not come from; the flattening is low
+       (`groundFlat` 0.45, `faceFlat` 0.40) and the pattern contrast is gentle
+       (`dome` 0.6, `emboss` 0.28). What survives is fragments of real detail in
+       the wrong places rather than a smooth wash -- which is what the sheet
+       actually does, and it is the only version of this that both shows the
+       garden and does not look computed.
+
+       Reducing the blur RADIUS instead was tried and is worse: it makes the
+       photograph recognisable while still obviously blurred. */
     cassini: {
       kind: 'hatchlens', texSize: 'cover',
-      heightBlur: 9, strength: 20, emboss: 0.50,
+      heightBlur: 9, strength: 44, emboss: 0.28,
       hatch: 1.3, hatchPitch: 2.6, hatchAngle: 52,
-      hatchEmboss: 1.9, shade: 0.68, faceClear: 0.35,
-      stipple: 0.12, stippleFace: 0.3, dome: 1.6,
-      petalLift: 0.4, petalPale: 0.26, petalSharp: 0.1,
-      pebbleWash: true, washMix: 0.30, pebbleShift: 10,
-      faceBlur: 7, groundBlur: 14, groundFlat: 0.66, faceFlat: 0.48,
-      veil: 0.1, groundVeil: 0.26,
+      hatchEmboss: 0.9, shade: 0.45, faceClear: 0.35,
+      stipple: 0.1, stippleFace: 0.3, dome: 0.6,
+      petalLift: 0.55, petalPale: 0.1, petalSharp: 0.14,
+      pebbleWash: true, washMix: 0.2, pebbleShift: 24,
+      faceBlur: 5, groundBlur: 9, groundFlat: 0.45, faceFlat: 0.40,
+      veil: 0.06, groundVeil: 0.12,
     },
     /* Florielle: same construction, finer hatch, and the dimples displace
        harder so window frames dissolve rather than being outlined. */
