@@ -2286,6 +2286,21 @@ if (str_starts_with($slug, 'double-glazing-') && $current_location !== '') {
 } else {
     $context = strtolower($slug . ' ' . $title . ' ' . $seo_intro);
 
+    /* OBSCURE GLASS GOES IN BOTH, AND WINDOWS LEAD. This context is built from
+       slug, title and intro, and /obscured-glass/ has `door` in its intro but
+       neither `window` nor `glaz` anywhere -- `glass` is not `glaz` -- so the
+       related band came out as eleven doors and no windows at all. The single
+       most common use of privacy glass is an overlooked bathroom window, so the
+       page was missing its most relevant onward route entirely.
+
+       Placed ahead of the door test because $add_related_route keys by slug, so
+       whichever block runs first sets the order and the later ones dedupe to
+       no-ops. Only /obscured-glass/ and its /obscure-glass/ alias match. */
+    if (str_contains($context, 'obscure')) {
+        $add_related_routes($window_routes);
+        $add_related_routes($door_routes);
+    }
+
     if (str_contains($context, 'door') || str_contains($context, 'lock') || str_contains($context, 'lintel')) {
         $add_related_routes($door_routes);
     }
