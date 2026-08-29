@@ -280,6 +280,8 @@ PHP lint example:
   - relevant residential/commercial route groups,
   - page-topic matches.
 - Self-links, nonexistent routes, files, external promo/legal links and pagination debris must not appear.
+- **The context string is slug + title + intro, and it is matched by SUBSTRING, so a page can silently qualify for one family and not the other.** `/obscured-glass/` matched `door` (its intro says door) and matched neither `window` nor `glaz` — **`glass` does not contain `glaz`** — so the band rendered eleven doors and no windows at all, on a page whose commonest real use is an overlooked bathroom window. Found 2026-08-30 by reading the RENDERED band, not the diff. When a page is relevant to both families, add an explicit trigger rather than hoping a keyword lands.
+- **Whichever block adds a route first fixes its position in the band**, because `$add_related_route` keys `$related_links` by slug and later blocks dedupe to no-ops. That makes ordering a matter of block order, not sort order: put the dominant intent's group first. It also means a generic later block can never displace a wrong early one.
 
 ## Generated SEO Rule
 
@@ -290,6 +292,9 @@ PHP lint example:
 - Imported `schema_json_ld` from the scrape is never rendered. It contains old designer-tool VideoObject markup and unsubstantiated aggregateRating values. Structured data is generated fresh instead: `fenster_render_site_schema()` in `inc\generated-pages.php` outputs a LocalBusiness block site-wide, product journey pages output `FAQPage` JSON-LD built from the same FAQs shown on the page, and generated deep routes output `BreadcrumbList` JSON-LD. Do not add aggregateRating/Review schema unless a verifiable review feed exists.
 - Debris routes are handled centrally in `inc\generated-pages.php`: `fenster_gone_slugs()` (410), `fenster_redirect_target()` (301, including all `*-designer` pages and duplicate town slugs) and `fenster_slug_is_noindex()` (ad landers, thin utility/scrape shells plus `category/`, `tag/`, `author/`, `blog/page/` archives). Add new debris to these lists rather than only excluding it from the sitemap; sitemap exclusion alone does not stop indexing.
 - Core `wp-sitemap.xml` is intentionally disabled; robots.txt advertises the theme sitemap at `/sitemap.xml`. Do not re-enable core sitemaps.
+- **A page's `seo.robots` of exactly `max-image-preview:large` is deliberately NOT emitted** — `fenster_render_generated_head()` treats it as the default and prints a robots meta only for anything else (and `noindex,follow` for `fenster_slug_is_noindex()` slugs). So setting it on a new page is a no-op, and the meta being absent is not a bug. **If the image-preview opt-in is ever actually wanted it is a one-line site-wide change, not a per-page one**, and it should be decided as such.
+- **FAQs go through `template-parts/components/faq-block.php`, which renders the questions and the `FAQPage` JSON-LD from the same array.** Never hand-write FAQ markup beside hand-written schema; the two drift and the schema is what Google reads. There is no answer-count limit in the component.
+- **Verify SEO changes against the RENDERED page, not the diff.** Both faults found on 2026-08-30 — the doors-only related band and a 2.29MB PNG on fourteen routes — were invisible in the source and obvious in the output.
 - Alias pages must render their own canonical URL rather than inherited source-page social URLs.
 - Generated routes should 301 to the lowercase, trailing-slash canonical URL.
 - Do not restore `/wcad-thank-you/` from imported data. It was removed because it only exposed stale social/filler copy.

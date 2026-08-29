@@ -9,7 +9,44 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (obscured glass: Reeded stops inverting, Cassini re-plated twice)
+## START HERE, 2026-08-30 (obscured glass: traced Cassini, then the page itself)
+
+Test is `d18bd518`, theme tree `b39116a7`. Live is unmoved at `b2420743` and
+**178 commits behind** — check the theme tree hash, not a SHA, since `main`
+carries docs commits the theme tree is identical across. **None of it is
+approved.** Eight commits since `e0bd7c56`, in two halves: Cassini's layout
+finally came from the owner's own hand-tracing, and then the page around it was
+rebuilt as an SEO page. Fourteen files, **none deleted**.
+
+### The four things worth carrying forward
+
+- **A Cassini lens is a TONAL FORM, NOT A HARD EDGE, and at 630x533 it is not
+  recoverable by any detector.** Four were built and all four failed — edge
+  chains, junction relink, RANSAC on Canny, RANSAC on a smoothed boundary. The
+  best recovered **2 of 9** on a patch the owner had marked by hand. The layout
+  that shipped is the owner's tracing, 82 ovals, committed as
+  `scripts/cassini-oval-layout.json`. **Stop building detectors for this.**
+- **THE PLATE COULD NOT CARRY THE LAYOUT, BECAUSE THE RENDERER'S SEGMENTATION
+  PARTITIONS SPACE AND CASSINI'S OVALS OVERLAP.** Encoding the traced ovals into
+  the plate and letting the watershed find them again recovered 65 of 82 and
+  still rendered as blobs — a watershed cannot represent two lenses over the same
+  pixel. Passing `mat.ovalList` straight to the renderer and setting `fitN = N`
+  to suppress the jittered-grid fallback is what actually worked. **When a
+  representation cannot express the thing, no amount of tuning gets there.**
+- **PER-OVAL TONE WAS TRIED AND REVERTED, AND THE REASON IS THE POINT: the plate
+  is a HEIGHT FIELD, not a picture.** Darkening individual ovals to match the
+  reference pushed them below the seed percentile and dropped recovery 65 -> 35.
+  A lens is dark in the photograph because of what is behind it, not because it
+  is lower. `LEVEL_AMP=0` is deliberate and the docstring says so.
+- **TWO REAL SEO WINS WERE INVISIBLE IN THE DIFF AND OBVIOUS IN THE RENDERED
+  PAGE.** A 2,379,026-byte PNG was loading on fourteen routes for a 64px swatch
+  (a CSS background, so it can never lazy-load), and the related band held eleven
+  doors and no windows because the context test matches by substring and **`glass`
+  does not contain `glaz`**. Read the output, not the diff. The test site is
+  Basic Auth protected — render it with `wp eval-file`, and **define
+  `WP_USE_THEMES` or you get a silent empty page rather than an error**.
+
+## START HERE, 2026-08-30 (EARLIER THE SAME DAY — obscured glass: Reeded stops inverting, Cassini re-plated twice)
 
 Test is `e0bd7c56`, live is unmoved at `b2420743` and **171 commits behind**
 (`main` runs a docs commit or two further; the theme tree is `3690e8cd` at all
