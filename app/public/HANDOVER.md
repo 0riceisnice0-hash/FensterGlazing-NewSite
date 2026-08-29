@@ -118,8 +118,10 @@ override block on a material.
 
 ## Current state, 2026-08-28 (obscured glass rebuilt — ON TEST, NOT LIVE)
 
-**Live is still `b2420743` and has never carried any of this.** The test SITE
-runs the theme from `db684e2a`; `main` is a little ahead of that on docs-only
+**Superseded by the block above, which covers the same page. Its findings and
+its architecture stand; its SHA and its commit range do not.** Live is still
+`b2420743` and has never carried any of this. The test SITE ran the theme from
+`db684e2a` when this was written; `main` is a little ahead of that on docs-only
 commits, whose theme trees are byte-identical, so either is the same answer to
 "what is on test". **141 commits ahead of live**, none of it approved. Forty-five of those are
 this session (`d92b0c39..db684e2a`); the rest is the composite-doors overhaul
