@@ -43,6 +43,17 @@ GLASS = Path("assets/images/products/obscure-glass")
 # second copy of it. No arguments reproduces the original behaviour exactly.
 SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else GLASS / "Cassini-privacy-5-flat.webp"
 OUT = Path(sys.argv[2]) if len(sys.argv) > 2 else GLASS / "Cassini-privacy-5-tile.webp"
+# Third argument: WebP quality, or 0 for lossless.
+# THE TILE IS DATA, NOT A PICTURE. The renderer builds its height field, its
+# oval segmentation and its hatch steering out of these pixels, so a lossy
+# encode does not merely soften the plate -- it moves the render. Measured on
+# the WindowCAD plate: q95 against lossless shifts 20% of output pixels by more
+# than two levels, with a maximum of 79, and q90 lands CLOSER to lossless than
+# q95 does, which is the tell that the response is not monotonic in quality and
+# cannot be tuned by picking a number. The renderer itself is deterministic --
+# two runs on identical input diff to exactly zero -- so whatever is shipped IS
+# the render. Lossless is therefore the only encoding for which rebuilding the
+# plate reproduces the page.
 BAND = 200
 FEATHER = 3
 
@@ -119,8 +130,9 @@ def main() -> None:
     ok = h0[0] <= h0[1] * 1.35 and h1[0] <= h1[1] * 1.35
     print(f"    seamless: {'YES' if ok else 'NO -- the join still reads above the interior'}")
 
-    Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).save(
-        OUT, "WEBP", quality=94, method=6)
+    q = int(sys.argv[3]) if len(sys.argv) > 3 else 94
+    opts = dict(lossless=True, method=6) if q == 0 else dict(quality=q, method=6)
+    Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).save(OUT, "WEBP", **opts)
     print(f"  wrote {OUT.name}")
 
 

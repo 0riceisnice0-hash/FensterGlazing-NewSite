@@ -87,6 +87,9 @@ TARGET_STD = 21.5
 SHOW_MEAN = 158.0
 SHOW_STD = 46.0
 
+SHOW_WIDTH = 760
+SHOW_QUALITY = 72
+
 LCN_SIGMA = 200.0
 LCN_FLOOR = 10.0
 
@@ -144,9 +147,16 @@ def main() -> None:
     Image.fromarray(flat.astype(np.uint8)).save(FLAT, "WEBP", quality=95, method=6)
     print(f"  wrote {FLAT.name}")
 
+    # The display copy is only ever LOOKED at -- swatches and the CSS layer at
+    # 500px -- so it is sized and compressed for weight, unlike the tile. It is
+    # also the eager one: every pattern's display image loads with the page,
+    # while a tile is fetched only when its pattern is picked.
     show = lcn(a, LCN_SIGMA * 1.6, LCN_FLOOR, SHOW_MEAN, SHOW_STD)
-    Image.fromarray(show.astype(np.uint8)).convert("RGB").save(
-        SHOW, "WEBP", quality=95, method=6)
+    show_im = Image.fromarray(show.astype(np.uint8)).convert("RGB")
+    show_im = show_im.resize(
+        (SHOW_WIDTH, round(SHOW_WIDTH * show_im.size[1] / show_im.size[0])),
+        Image.LANCZOS)
+    show_im.save(SHOW, "WEBP", quality=SHOW_QUALITY, method=6)
     print(f"    show:   mean {show.mean():5.1f} std {show.std():5.1f} "
           f"coarse spread {coarse_spread(show):5.1f}")
     print(f"  wrote {SHOW.name}")
