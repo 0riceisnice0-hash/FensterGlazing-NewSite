@@ -10247,11 +10247,36 @@ html.fg-gallery-lightbox-open body {
 @media (max-width: 900px) {
   /* Band above the copy, veil turned vertical â€” the colour hub's move at this
      width. Three columns so a tile is still big enough to show its pattern. */
+  /* THE BAND IS SIZED BY RATIO, NOT BY A vw HEIGHT, AND THAT IS THE WHOLE FIX.
+     Owner, 2026-08-30: "the hero was messed up". The tiles carry
+     `aspect-ratio: 1`, so at three columns a tile is a third of the band wide
+     AND a third tall. Two rows is therefore exactly 66.667% of the width, and
+     the old `clamp(210px, 66vw, 340px)` asked for 66% — 2.6px short at every
+     size, so the second row was sliced and rows three to twelve were left
+     clipped behind `overflow: hidden`. A twelve-row grid was being shown
+     through a two-row window with the cut landing mid-tile.
+
+     This is the SAME fault the desktop comment above warns about, arriving
+     from the other side: it refuses a fixed row height in vw because it "only
+     matches the column width at the sizes you happened to check", and then the
+     container height was pinned in vw against tiles whose height comes from the
+     column width. A ratio cannot drift — 3 columns by 2 rows IS 3/2 — and it is
+     immune to the scrollbar, which `100vw` is not. */
   .fg-obscure-hero__preview {
     position: relative;
     inset: auto;
-    height: clamp(210px, 66vw, 340px);
+    height: auto;
+    aspect-ratio: 3 / 2;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Four columns once there is room, or a tile on a tablet is 300px of one
+     pattern. Four across by two down is 2/1. */
+  @media (min-width: 561px) {
+    .fg-obscure-hero__preview {
+      aspect-ratio: 2 / 1;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   .fg-obscure-hero__copy {
@@ -10569,6 +10594,20 @@ html.fg-gallery-lightbox-open body {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.9rem;
+}
+
+/* TWO ACROSS ON A PHONE, NOT ONE. Twenty-one cards in a single column made this
+   section 8,210px tall on a 375px screen -- each card is a near-full-height
+   swatch, so comparing two patterns meant scrolling between them and holding one
+   in your head, which is the one thing a comparison grid exists to prevent.
+   Two columns halves the scroll and puts a genuine comparison side by side; a
+   texture swatch is still perfectly legible at ~170px. The copy line stays, so
+   nothing is hidden from a mobile-first crawl. */
+@media (max-width: 700px) {
+  .fg-obscure-compare__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
 }
 
 .fg-obscure-compare__grid article {
@@ -10944,6 +10983,19 @@ html.fg-gallery-lightbox-open body {
   display: none;
 }
 
+/* 44px ON TOUCH, because 36px is below the line this theme sets for itself.
+   The scene switch sitting a few pixels away is 46px and its own comment cites
+   the Forms rules' 44px tap target as the reason; these five chips are the
+   primary control of the whole tool and were 36. Keyed off `hover: none`
+   rather than a width so it follows the input device rather than the window --
+   a touch laptop gets the bigger target and a narrow desktop window does not
+   grow the chips for a mouse. */
+@media (hover: none) {
+  .fg-obscure-privacy-filter__option {
+    min-height: 44px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fg-obscure-privacy-filter__option {
     transition: none;
@@ -11164,15 +11216,20 @@ html.fg-gallery-lightbox-open body {
      for that reason -- it is one tall column, not a cell under a header. */
   .fg-obscure-visualiser__grid {
     grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 372px);
+    /* READOUT SECOND, NOT LAST. Owner, 2026-08-30: "these bits seem in the
+       wrong order ... title probs wants to go at the top? or at least below
+       the explainer?" Bottom-aligning it put the largest type in the rail —
+       the pattern's own name — alone under a tall gap, reading as a stranded
+       caption rather than as the answer to what is on the pane.
+
+       The order now goes orientation, then state, then controls: what this
+       tool is, what you are currently looking at, and the things that change
+       it. The slack moves to the LAST row, so it trails after the pattern
+       list as ordinary breathing room instead of opening a hole mid-rail. */
     grid-template-areas:
       "stage   head"
-      "stage   options"
-      "stage   readout";
-    /* The third row is the `1fr`, so the slack between the pane's height and
-       the right column's content collects THERE and the readout can be pushed
-       to the foot of it. Rows two and three swapping which one flexes is the
-       whole difference between the readout sitting under the list and sitting
-       on the card's bottom edge, level with the pane. */
+      "stage   readout"
+      "stage   options";
     grid-template-rows: auto auto minmax(0, 1fr);
     align-items: start;
     column-gap: clamp(1rem, 2vw, 1.75rem);
@@ -11185,7 +11242,6 @@ html.fg-gallery-lightbox-open body {
      there. */
   .fg-obscure-stage__readout {
     grid-area: readout;
-    align-self: end;
   }
 
   .fg-obscure-visualiser__head {
@@ -11341,41 +11397,52 @@ html.fg-gallery-lightbox-open body {
     padding: 0.9rem;
   }
 
-  /* ONE RULE OWNS THIS BOX, and splitting it across two is what broke it.
-     The base rule at the top of the file gives the readout a full 1px border, a
-     radius, a white fill and 1rem of padding. The 2026-08-29 reset cleared all
-     of that so the text started on the photograph's left edge. Setting the new
-     separator in an EARLIER rule and dropping `border: 0` from this one left
-     the base border showing on three sides with square corners -- a stray
-     outline round the block, visible on the first render after the move.
-
-     So the box is declared here, last, in full: no inherited border except the
-     separator, no radius, no fill, no side padding. If another readout rule is
-     ever added, add it here rather than above.
-
-     SINGLE COLUMN, because the column is 320px. The base lays the text and the
-     scene switch side by side, which is right under a 950px photograph and
-     wrong in a narrow rail -- it squeezed the description into about 220px and
-     wrapped it to three lines beside the icons. The switch drops below instead. */
-  .fg-obscure-stage__readout {
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    gap: 0.5rem;
-    margin: 0;
-    border: 0;
-    border-top: 1px solid var(--color-line);
-    border-radius: 0;
-    padding: 0.9rem 0 0;
-    background: rgba(0, 0, 0, 0);
-  }
-
-  .fg-obscure-stage__readout .fg-obscure-scene-switch {
-    justify-self: start;
-  }
 }
 
 .fg-obscure-stage {
   grid-area: stage;
+}
+
+/* THE PRESSED LEVEL ALREADY SAYS IT — see the note in main.js. Deliberately at
+   top level and not inside the desktop block: the repetition is worse on a
+   phone, where the cards sit directly under the chip row. `visibility` rather
+   than `display` so a card keeps the height it has unfiltered and the list does
+   not jump as you move between levels. */
+.is-level-filtered [data-fg-obscure-option] small {
+  visibility: hidden;
+}
+
+/* ONE RULE OWNS THIS BOX, AND IT IS NOT INSIDE A MEDIA QUERY. The base rule near
+   the top of the file gives the readout a 1px border, a radius, a white fill and
+   1rem of padding. Once the whole tool became a single white card on 2026-08-30
+   that made it a bordered white card INSIDE a white card -- the card-in-a-card
+   the style contract forbids -- and the undo only existed above 861px, so every
+   phone kept it.
+
+   Splitting this box across two rules is separately what broke it once already:
+   the separator went in an earlier rule and `border: 0` was dropped from the
+   reset, which left the base border showing on three sides with square corners.
+   So it is declared once, here, in full. Any further readout styling belongs in
+   THIS rule.
+
+   Single column because the desktop rail is 320px: the base lays the text and
+   the scene switch side by side, which is right under a 950px photograph and
+   wrong in a narrow column, where it wrapped the description to three lines
+   beside the icons. The switch drops below instead, at both widths. */
+.fg-obscure-stage__readout {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 0.5rem;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--color-line);
+  border-radius: 0;
+  padding: 0.9rem 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+.fg-obscure-stage__readout .fg-obscure-scene-switch {
+  justify-self: start;
 }
 
 .fg-obscure-rail--left {
@@ -25555,8 +25622,12 @@ a.fg-cs-card__pill:focus-visible {
     padding: 3rem 0;
   }
 
+  /* No top padding: the tile band is full-bleed and is the first thing under
+     the header at this width, so 3rem of empty page gradient above it read as
+     a gap rather than as spacing. The bottom padding stays. */
   .fg-obscure-hero {
     min-height: 0;
+    padding-top: 0;
   }
 
   .fg-obscure-hero__grid,
@@ -25565,12 +25636,31 @@ a.fg-cs-card__pill:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  /* EVERY AREA IS CLAIMED BY SOMETHING, WHICH IT WAS NOT. The template named a
+     `filter` area that no element carried, so `.fg-obscure-options` — the block
+     holding the privacy chips — fell out of the named grid and auto-placed
+     AFTER the explicitly-placed pattern rail. On a phone you scrolled past all
+     the patterns to reach the control that narrows them. The readout was
+     unplaced for the same reason and only landed correctly by luck of source
+     order.
+
+     Reading order now: what this is, the pane, what is on the pane, narrow it,
+     pick one. Owner, 2026-08-30: "these bits seem in the wrong order". */
   .fg-obscure-visualiser__grid {
     grid-template-areas:
       "head"
       "stage"
+      "readout"
       "filter"
       "mobile-picker";
+  }
+
+  .fg-obscure-visualiser__grid > .fg-obscure-stage__readout {
+    grid-area: readout;
+  }
+
+  .fg-obscure-visualiser__grid > .fg-obscure-options {
+    grid-area: filter;
   }
 
   .fg-obscure-hero__copy h1 {

@@ -3496,7 +3496,13 @@ if ($is_obscure_glass) {
                             <span style="<?php echo esc_attr('--texture:' . $obscure_glass_texture_value($texture) . '; --texture-size:' . $obscure_glass_texture_size($texture) . ';'); ?>" aria-hidden="true"></span>
                             <div>
                                 <h3><?php echo esc_html((string) ($texture['name'] ?? 'Glass pattern')); ?></h3>
-                                <p><?php echo esc_html($privacy === 0 ? 'Decorative texture' : 'Privacy level ' . $privacy); ?></p>
+                                <?php /* `Privacy 5`, matching the visualiser readout and the swatch list.
+                                         This said `Privacy level 5` while the same fact was phrased two
+                                         other ways elsewhere on the page, and it repeats twenty-one times
+                                         down the grid. Owner, 2026-08-30: "it also repeats 'privacy' too
+                                         much". The scale section above defines what the number means, so
+                                         the long form is not carrying anything here. */ ?>
+                                <p><?php echo esc_html($privacy === 0 ? 'Decorative texture' : 'Privacy ' . $privacy); ?></p>
                                 <?php
                                 /* The per-pattern line was already written and
                                    owner-approved -- it is what the visualiser
