@@ -3884,7 +3884,15 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        and is exactly the topographic-map failure recorded further down this
        file. **The outline needs a new mechanism, not a parameter.** */
     cassini: {
-      kind: 'hatchlens', texSize: '590px auto', seamless: true,
+      /* LAID AT COVER, ONCE, NOT TILED. The explicit oval layout below is in
+         the flat plate's own coordinates, and a pinned tiled texture has no
+         single mapping from canvas to plate to place it through. Cover also
+         ends the repeat this file has carried as an accepted cost since the
+         clock plate shipped: the tile held about 5.9 x 4.8 lenses and the pane
+         holds more than that. `texSize` is stated rather than omitted because
+         `button.dataset.size` would otherwise supply the pinned size from
+         `inc/site-data.php` and quietly tile it again. */
+      kind: 'hatchlens', texSize: 'cover',
       heightBlur: 4, strength: 52, emboss: 0.12,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.25,
@@ -3900,16 +3908,22 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       knee: 190, kneeCeil: 251,
       dimple: 0.06,
       lobe: 6, lobeFace: 0.85,
-      /* THESE TWO MOVED WITH THE TRACED PLATE, 2026-08-30, AND THEY ARE NOT A
-         TASTE SETTING. They are percentiles of the plate: seeds are pixels
-         above `ovalSeedLevel`, grown down to `ovalEdgeLevel`. The owner's
-         traced layout covers 82% of the sheet where the previous plate's
-         lenses covered about 66%, so an edge level of 0.34 capped the labels
-         at 66% by construction and no amount of plate work could exceed it.
-         At 0.91/0.18 the renderer reads back 74 lenses covering 82.2% against
-         the layout's 82.1%. `scripts/check-cassini-plate.py` re-runs this exact
-         segmentation offline -- run it if either number is touched. */
-      ovals: true, ovalsFromPlate: true, ovalSeedLevel: 0.91, ovalEdgeLevel: 0.18,
+      /* `ovalsFromPlate` is OFF: the layout is given explicitly below rather
+         than segmented back out of the plate. The seed and edge levels are
+         inert while it is off and are left at their original values so the
+         other `hatchlens` glasses are unaffected. */
+      ovals: true, ovalsFromPlate: false, ovalSeedLevel: 0.74, ovalEdgeLevel: 0.34,
+      /* A HARD LENS EDGE. `petal` interpolates the flattening between ground
+         and face, so its shoulder width IS the softness of the rim; the placed
+         fallback's 0.22 is most of why these read as blobs rather than lenses. */
+      ovalRim: 0.05,
+      /* The owner's own 82 ovals, traced and corrected by hand over the clock
+         photograph, in that plate's pixel coordinates: [cx, cy, a, b, theta,
+         domeAngle]. Source of record is `scripts/cassini-oval-layout.json`,
+         built from his markup at `scripts/reference-cassini-owner-ovals.png`.
+         Do not hand-edit this array -- regenerate it from the JSON. */
+      ovalPlateW: 630, ovalPlateH: 533,
+      ovalList: [[574.6,134.5,51.4,39.3,0.3619,-0.4559],[230.9,378.3,39.6,28.0,1.174,2.1087],[433.9,87.2,68.3,39.0,1.0877,-1.4009],[287.6,162.9,74.7,37.0,1.4204,1.4643],[470.6,269.2,61.6,34.8,1.0984,2.1247],[348.6,105.8,37.5,28.5,2.2623,-2.5745],[76.1,439.0,27.6,12.8,1.6578,1.2283],[108.1,374.4,52.7,35.6,0.7941,-0.0954],[16.2,445.7,74.6,25.8,1.2479,2.9839],[106.3,512.3,51.4,23.3,1.4606,-0.9177],[167.5,436.8,57.8,27.6,1.867,2.812],[157.1,130.6,51.9,36.0,2.2128,-2.3503],[251.7,492.8,66.9,57.9,2.5444,-2.5429],[343.0,264.0,54.0,32.4,1.8263,1.3847],[244.3,33.0,64.5,43.2,2.2408,2.2192],[210.1,206.6,57.2,30.0,1.5814,2.1006],[184.0,316.5,36.4,24.9,2.1083,3.0369],[111.7,267.9,59.8,36.5,1.2182,0.4474],[526.5,445.0,59.9,28.9,1.8254,2.1026],[47.9,222.9,30.5,13.7,1.6234,0.7746],[541.8,322.1,36.9,22.7,2.0062,-0.696],[393.2,298.6,22.1,15.8,3.0898,-0.8266],[602.7,393.4,55.1,26.3,0.9487,-3.0916],[84.5,127.5,36.0,22.9,1.3293,-2.5135],[111.8,51.3,42.0,23.1,1.5168,0.7373],[9.6,144.7,52.0,34.9,0.6782,1.8605],[404.8,225.0,29.6,13.8,1.5249,-1.7463],[534.8,41.0,61.8,41.3,2.6323,1.5914],[461.3,376.5,46.4,34.6,1.0644,0.1103],[174.4,-21.2,61.2,29.6,1.7894,0.848],[436.8,442.7,28.1,13.3,1.7093,-2.4073],[269.9,306.6,54.8,25.5,1.4729,-1.2995],[337.4,394.5,37.5,21.9,2.9743,-1.2042],[466.2,511.2,45.3,24.2,1.4277,0.7245],[4.0,2.7,88.4,44.7,1.2411,0.4179],[618.4,260.4,55.0,36.3,2.328,-2.1514],[588.9,485.2,59.3,27.0,2.1971,0.2425],[630.8,64.3,33.6,17.8,1.8397,-2.7284],[287.5,59.8,46.0,34.8,2.9091,-1.9753],[66.4,71.9,88.9,38.2,1.1444,0.4606],[522.5,384.1,53.1,27.8,1.8451,1.3077],[529.2,493.1,63.3,43.2,2.8063,-2.1991],[214.3,131.5,47.3,39.3,3.1153,-1.2871],[582.1,342.4,25.3,18.2,0.1122,-1.3263],[174.0,32.4,59.6,45.5,2.7216,0.9113],[149.6,197.8,53.1,33.0,1.1522,1.7222],[448.3,258.1,36.3,28.1,2.5763,1.1551],[297.7,165.6,36.5,23.5,0.9839,2.1892],[34.1,182.1,46.6,32.5,0.5004,-1.8863],[172.2,486.9,62.2,48.3,2.8568,-1.523],[83.4,261.9,30.7,24.2,2.9472,3.043],[59.4,514.3,41.5,37.2,0.976,0.3363],[509.3,203.0,54.3,35.7,1.1961,1.8229],[163.2,373.4,52.7,26.6,1.793,1.1494],[406.7,400.3,78.8,55.4,2.2978,0.5122],[45.4,395.1,75.7,53.1,2.2891,-2.0924],[147.7,293.7,34.3,25.1,2.2643,1.1714],[472.8,58.6,43.4,23.8,1.4417,-0.7091],[35.2,293.1,22.2,15.8,0.1942,-1.5532],[397.2,187.6,44.5,30.0,0.7306,-0.334],[281.0,514.8,42.6,36.4,2.8652,-2.7979],[375.9,308.7,44.9,35.4,2.3608,0.6176],[610.5,35.8,69.3,45.7,2.3126,2.3865],[533.5,15.8,29.5,21.3,2.1887,3.0293],[407.6,508.7,33.0,25.8,2.1053,-2.6973],[623.3,309.1,53.1,20.7,1.4615,1.1396],[244.8,257.5,54.4,29.1,1.9179,1.3365],[217.8,334.6,25.4,18.9,3.0938,-0.5635],[285.4,245.9,40.7,17.7,1.6771,3.0591],[518.3,135.0,51.0,35.6,2.2105,-1.9334],[570.1,215.5,60.3,32.2,1.6321,0.5141],[376.4,150.1,46.5,30.6,0.7997,0.584],[442.5,2.8,17.2,11.1,1.7777,-2.2595],[80.8,4.3,12.9,11.5,0.5236,1.6396],[621.7,515.2,28.6,14.3,2.0106,1.3915],[382.0,0.6,42.2,15.0,0.162,2.1234],[437.6,127.8,37.9,23.9,1.1694,1.9676],[18.1,301.6,44.9,34.9,2.3588,3.0205],[508.5,298.5,34.5,28.1,2.4585,-2.4032],[287.5,371.8,51.8,34.2,1.2151,-2.7511],[631.5,364.6,34.9,15.9,1.4262,2.5991],[356.4,461.9,94.8,46.1,1.2219,2.0203]],
       ovalFitBlur: 4, ovalFitDensity: 30000, ovalEdgeSoft: 2, ovalFitMin: 8,
       ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
       overlapBand: 2, bandKind: true, overlapAmt: 0.15, overlapTurn: 55,
@@ -4603,7 +4617,110 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
           let labels = null;
           let labAx = null;
           let labAy = null;
-          if (mat.ovalsFromPlate && baseLuma) {
+          /* AN EXPLICIT OVAL LAYOUT, WHICH IS THE ONLY THING THAT ACTUALLY
+             HELD THE SHAPES. Added 2026-08-30 after the owner's verdict on the
+             traced plate: "that's still amorphous blobs".
+
+             He was right, and the reason is structural rather than a setting.
+             Encoding the layout as BRIGHTNESS in the plate and letting
+             `ovalsFromPlate` segment it back out cannot preserve it: the
+             watershed partitions space, so it merges every overlapping pair
+             (65 of 82 survived), and then the optics smooth what is left. The
+             layout never reached the render at all. Four detectors had already
+             failed to find these lenses in the photograph for the same reason
+             a plate cannot carry them -- a Cassini lens is a tonal form, not a
+             hard edge.
+
+             So the geometry is passed in directly. `mat.ovalList` is the 82
+             ovals the owner traced by hand, in the flat plate's own pixel
+             coordinates, each as [cx, cy, a, b, theta, domeAngle]; the dome
+             angle is fitted from the photograph's real pixels inside that oval,
+             so which edge of a lens is bright agrees with the sheet. The plate
+             still supplies the hatch and the grain. It no longer supplies the
+             arrangement.
+
+             THIS REQUIRES THE PLATE TO LAY AT `cover`, ONCE. A pinned, tiled
+             texture has no single mapping from canvas to plate, and folding the
+             ovals into a 530x433 tile double-counts every one in the seam band
+             -- measured, that took coverage from 82% to 89% and the overlap
+             depth from 3 to 8. Laid at cover the mapping is one scale and one
+             offset, and Cassini stops repeating, which this file has carried as
+             an accepted cost since the clock plate shipped. */
+          if (mat.ovalList && mat.ovalList.length) {
+            const list = mat.ovalList;
+            const pw2 = mat.ovalPlateW || w;
+            const ph2 = mat.ovalPlateH || h;
+            /* the same transform drawCover uses, so the ovals land exactly
+               where the plate's own lenses are drawn */
+            const cs = Math.max(w / pw2, h / ph2);
+            const cox = (w - pw2 * cs) / 2;
+            const coy = (h - ph2 * cs) / 2;
+            const N = list.length;
+            const ox2 = new Float32Array(N); const oy2 = new Float32Array(N);
+            const oa2 = new Float32Array(N); const ob2 = new Float32Array(N);
+            const oc2 = new Float32Array(N); const os2 = new Float32Array(N);
+            const odc2 = new Float32Array(N); const ods2 = new Float32Array(N);
+            let maxR = 1;
+            for (let k = 0; k < N; k += 1) {
+              const o = list[k];
+              ox2[k] = o[0] * cs + cox; oy2[k] = o[1] * cs + coy;
+              oa2[k] = Math.max(1, o[2] * cs); ob2[k] = Math.max(1, o[3] * cs);
+              oc2[k] = Math.cos(o[4]); os2[k] = Math.sin(o[4]);
+              odc2[k] = Math.cos(o[5] || 0); ods2[k] = Math.sin(o[5] || 0);
+              if (oa2[k] > maxR) maxR = oa2[k];
+            }
+            /* A bin grid, or this is 82 ovals against every pixel. */
+            const bs = Math.max(8, Math.ceil(maxR));
+            const bc = Math.ceil(w / bs) + 1; const br = Math.ceil(h / bs) + 1;
+            const bins = new Array(bc * br);
+            for (let k = 0; k < N; k += 1) {
+              const x0 = Math.max(0, Math.floor((ox2[k] - oa2[k]) / bs));
+              const x1 = Math.min(bc - 1, Math.floor((ox2[k] + oa2[k]) / bs));
+              const y0 = Math.max(0, Math.floor((oy2[k] - oa2[k]) / bs));
+              const y1 = Math.min(br - 1, Math.floor((oy2[k] + oa2[k]) / bs));
+              for (let by = y0; by <= y1; by += 1) {
+                for (let bx = x0; bx <= x1; bx += 1) {
+                  const bi = by * bc + bx;
+                  if (!bins[bi]) bins[bi] = [];
+                  bins[bi].push(k);
+                }
+              }
+            }
+            ovalDepth = new Uint8Array(T.length);
+            ovalDome = new Float32Array(T.length);
+            /* A NARROW SHOULDER, NOT THE WIDE ONE THE PLACED-OVAL FALLBACK
+               USES. `petal` is what interpolates the flattening between ground
+               and face, so its width IS the softness of the lens edge, and the
+               0.22 the fallback carries is most of why these read as blobs. */
+            const rim = mat.ovalRim === undefined ? 0.22 : mat.ovalRim;
+            for (let y = 0; y < h; y += 1) {
+              const by = Math.min(br - 1, Math.max(0, Math.floor(y / bs)));
+              for (let x = 0; x < w; x += 1) {
+                const bx = Math.min(bc - 1, Math.max(0, Math.floor(x / bs)));
+                const cand = bins[by * bc + bx];
+                const i2 = y * w + x;
+                let rmin = 1e9; let depth = 0; let bu = 0;
+                if (cand) {
+                  for (let ci = 0; ci < cand.length; ci += 1) {
+                    const k = cand[ci];
+                    const px = x - ox2[k]; const py = y - oy2[k];
+                    const u = (px * oc2[k] + py * os2[k]) / oa2[k];
+                    const v2 = (-px * os2[k] + py * oc2[k]) / ob2[k];
+                    const r = u * u + v2 * v2;
+                    if (r < rmin) { rmin = r; bu = u * odc2[k] + v2 * ods2[k]; }
+                    if (r <= 1) depth += 1;
+                  }
+                }
+                ovalDepth[i2] = depth > 255 ? 255 : depth;
+                const rr = Math.sqrt(rmin);
+                const t2 = (1 + rim * 0.27 - rr) / (rim < 0.001 ? 0.001 : rim);
+                const cl = t2 < 0 ? 0 : t2 > 1 ? 1 : t2;
+                petal[i2] = cl * cl * (3 - 2 * cl);
+                ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
+              }
+            }
+            fitN = N;          /* stops the jittered-grid fallback running */
+          } else if (mat.ovalsFromPlate && baseLuma) {
             const smO = Float32Array.from(baseLuma);
             boxBlurField(smO, w, h, Math.max(2, Math.round(mat.ovalFitBlur || 4)));
             const psO = [];
