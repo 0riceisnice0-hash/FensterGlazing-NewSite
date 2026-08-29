@@ -6038,9 +6038,17 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     if (!activeStillListed && firstVisible) activate(firstVisible);
   };
 
+  /* THE LEVELS TOGGLE, because there is no longer an `All` segment to go back
+     to. Owner instruction, 2026-08-30. Pressing the level that is already
+     pressed clears the filter; without that the list could be narrowed and
+     never widened again, which is the failure this change would otherwise
+     have shipped. `applyPrivacyFilter('all')` then matches no button, so all
+     five come up unpressed, which is the correct reading of "not filtered". */
   privacyOptions.forEach((option) => {
     option.addEventListener('click', () => {
-      applyPrivacyFilter(option.dataset.fgObscurePrivacy || 'all');
+      const level = option.dataset.fgObscurePrivacy || 'all';
+      const already = option.getAttribute('aria-pressed') === 'true';
+      applyPrivacyFilter(already ? 'all' : level);
     });
   });
 

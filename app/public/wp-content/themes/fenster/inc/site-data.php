@@ -3602,14 +3602,24 @@ function fenster_site_data(): array
                version string and replacing one in place serves the old bytes.
                The `-clock` and `-wcad` plates are left on disk as revert
                targets; swapping the two paths on this line is the whole undo. */
-            /* NO `size` AND NO SEAMLESS TILE ANY MORE. The stage lays this
-               plate at cover, once, because the explicit oval layout in the
-               material is in the flat plate's own coordinates and a tiled
-               texture has no single mapping to place it through. A `size` here
-               would be picked up as `button.dataset.size` and quietly tile it
-               again. `tile` therefore points at the FLAT plate rather than the
-               seamless cut; the cut copy stays on disk but nothing uses it. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-traced.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-traced-flat.webp', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+            /* `image` AND `tile` ARE DOING TWO DIFFERENT JOBS HERE, WHICH IS
+               THE WHOLE POINT OF THE SPLIT. `tile` is read by the renderer and
+               is the traced plate -- a height field, high contrast, and not
+               something to look at. `image` is everything that merely DISPLAYS
+               the glass: the swatch, the comparison grid, the hero wall. Owner,
+               2026-08-30: the traced plate as a thumbnail "looks harsh and
+               b&w", which it is, because it was never meant to be seen. `image`
+               is back on `rev2`, the original Pilkington sample photograph,
+               which is what live has always shown.
+
+               NO `size`. The stage lays the plate at cover, once, because the
+               explicit oval layout in the material is in the flat plate's own
+               coordinates and a tiled texture has no single mapping to place it
+               through. A `size` here would be picked up as
+               `button.dataset.size` and quietly tile it again. `tile` therefore
+               points at the FLAT plate rather than the seamless cut; the cut
+               copy stays on disk but nothing uses it. */
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-traced-flat.webp', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],

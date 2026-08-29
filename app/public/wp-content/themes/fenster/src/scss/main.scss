@@ -10540,17 +10540,48 @@ html.fg-gallery-lightbox-open body {
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
-.fg-obscure-stage,
 .fg-obscure-picker {
   background: rgba(255, 255, 255, 0.94);
+}
+
+/* ONE CARD ROUND THE WHOLE TOOL, owner instruction 2026-08-30: the heading, the
+   pane and the pattern list read as one thing rather than a white box with two
+   loose columns beside it on the page canvas.
+ *
+ * The card moves ONTO the grid and OFF the stage. Leaving it on both is the
+ * card-inside-a-card the style contract forbids, and it is why the stage's own
+ * border, radius, shadow and background are all cleared below rather than left
+ * to sit inside the new one. These rules come after the two base
+ * `__grid` blocks deliberately -- same specificity, so the later one wins --
+ * and before the mobile media query further down the file, which still gets to
+ * override the columns. */
+.fg-obscure-visualiser__grid {
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 45, 58, 0.10);
+  padding: clamp(1rem, 2vw, 1.6rem);
 }
 
 .fg-obscure-stage {
   position: relative;
   top: auto;
-  width: min(100%, 900px);
-  margin-inline: auto;
-  padding: 0.9rem;
+  border: 0;
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0);
+  box-shadow: none;
+  padding: 0;
+  width: 100%;
+  margin-inline: 0;
+}
+
+/* The 900px cap and the 0.9rem inset went with the stage's own card: it is a
+   column inside one now, so the card supplies the padding and the grid track
+   supplies the width. Left here as an empty-handed rule would be worse than
+   removing it -- this block is where anyone looks for the stage's box. */
+.fg-obscure-stage {
+  position: relative;
+  top: auto;
 }
 
 .fg-obscure-stage__viewport {
@@ -11010,42 +11041,40 @@ html.fg-gallery-lightbox-open body {
      the instruction telling you to drag the divider was the part you could not
      see. Heading on top where it is read first, stage and the whole pattern list
      side by side beneath it. */
+  /* THE HEADING SITS OVER THE SELECTOR, NOT ACROSS THE WHOLE CARD. Owner
+     instruction, 2026-08-30. It used to span both columns above everything,
+     which left the pane and the list reading as two unrelated panels; over the
+     list it labels the thing it is actually instructing you to use, and the
+     pane gets the full height of the card beside it. The stage spans both rows
+     for that reason -- it is one tall column, not a cell under a header. */
   .fg-obscure-visualiser__grid {
     grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 372px);
     grid-template-areas:
-      "head    head"
+      "stage   head"
       "stage   options";
+    grid-template-rows: auto minmax(0, 1fr);
     align-items: start;
+    column-gap: clamp(1rem, 2vw, 1.75rem);
+    row-gap: 0.85rem;
   }
 
   .fg-obscure-visualiser__head {
     grid-area: head;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    gap: 0.4rem clamp(1rem, 2.4vw, 2rem);
-    align-items: end;
-  }
-
-  .fg-obscure-visualiser__head .eyebrow {
-    grid-column: 1;
+    display: block;
   }
 
   .fg-obscure-visualiser__head h2 {
-    grid-column: 1;
-    margin: 0;
-    max-width: 30ch;
-    font-size: clamp(1.35rem, 2vw, 1.75rem);
-    line-height: 1.15;
+    margin: 0.15rem 0 0;
+    max-width: 24ch;
+    font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+    line-height: 1.2;
   }
 
   .fg-obscure-visualiser__hint {
-    grid-column: 2;
-    grid-row: 1 / 3;
-    margin: 0;
-    align-self: end;
-    max-width: 52ch;
+    margin: 0.5rem 0 0;
+    max-width: 42ch;
     color: var(--color-muted);
-    font-size: 0.92rem;
+    font-size: 0.86rem;
     line-height: 1.45;
   }
 

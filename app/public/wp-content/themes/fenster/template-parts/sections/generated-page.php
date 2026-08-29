@@ -3164,7 +3164,10 @@ if ($is_obscure_glass) {
             /* Mayflower and Tribal are out of the wall on the owner's instruction.
                They stay in the picker below, where somebody choosing glass can
                still find them — this only decides what the hero advertises. */
-            $obscure_wall_skip = ['mayflower', 'tribal'];
+            /* Cassini came out on the owner's instruction, 2026-08-30: it read
+               as repeating in the wall. It is still the page's headline pattern
+               in the picker below; this only decides what the hero advertises. */
+            $obscure_wall_skip = ['mayflower', 'tribal', 'cassini'];
             $obscure_wall_pool = array_values(array_filter(
                 $obscure_glass_textures,
                 static function (array $texture) use ($obscure_wall_skip): bool {
@@ -3174,8 +3177,31 @@ if ($is_obscure_glass) {
             $obscure_wall_tiles = [];
             if ($obscure_wall_pool !== []) {
                 $obscure_wall_count = count($obscure_wall_pool);
+                /* THE STEP HAS TO BE CO-PRIME WITH THE POOL OR THE WALL SILENTLY
+                   HALVES. Stepping by a fixed 8 was a full permutation only
+                   because 8 and 21 share no factor. Taking Cassini out left 18,
+                   and gcd(18, 8) is 2, so the walk would have visited nine
+                   textures twice each and shown the other nine not at all --
+                   with no error and a wall that still looks full. It is derived
+                   now, so the next pattern added or removed cannot reintroduce
+                   it: start near four tenths of the pool, which reproduces the
+                   original 8 at 21, and walk up to the first co-prime value. */
+                $obscure_wall_coprime = static function (int $a, int $b): bool {
+                    while ($b !== 0) {
+                        [$a, $b] = [$b, $a % $b];
+                    }
+                    return $a === 1;
+                };
+                $obscure_wall_step = max(2, (int) round($obscure_wall_count * 0.38));
+                while ($obscure_wall_step < $obscure_wall_count
+                    && ! $obscure_wall_coprime($obscure_wall_step, $obscure_wall_count)) {
+                    $obscure_wall_step++;
+                }
+                if ($obscure_wall_step >= $obscure_wall_count) {
+                    $obscure_wall_step = 1;
+                }
                 for ($i = 0; $i < 36; $i++) {
-                    $obscure_wall_tiles[] = $obscure_wall_pool[($i * 8) % $obscure_wall_count];
+                    $obscure_wall_tiles[] = $obscure_wall_pool[($i * $obscure_wall_step) % $obscure_wall_count];
                 }
             }
             ?>
@@ -3340,15 +3366,15 @@ if ($is_obscure_glass) {
                                     $count
                                 )); ?>"><?php echo esc_html((string) $level); ?></button>
                         <?php endforeach; ?>
-                        <button class="fg-obscure-privacy-filter__option" type="button" data-fg-obscure-privacy="all" aria-pressed="true"><?php esc_html_e('All', 'fenster'); ?></button>
+                        <?php
+                        /* NO `All` SEGMENT AND NO COUNT, on the owner's
+                           instruction, 2026-08-30. The levels TOGGLE instead:
+                           pressing the pressed one clears the filter, which is
+                           the only way back to the full list now and is why the
+                           controller had to change with this markup. A count
+                           beside a list you can already see is furniture. */
+                        ?>
                     </div>
-                    <p class="fg-obscure-privacy-filter__count" aria-live="polite" data-fg-obscure-filter-count><?php
-                        echo esc_html(sprintf(
-                            /* translators: %d: number of glass patterns shown. */
-                            _n('%d pattern', '%d patterns', count($obscure_glass_textures), 'fenster'),
-                            count($obscure_glass_textures)
-                        ));
-                    ?></p>
                     <div class="fg-obscure-rail fg-obscure-rail--options fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options', 'fenster'); ?>">
                         <?php foreach ($obscure_glass_textures as $index => $texture) : ?>
                             <?php $render_obscure_glass_option($texture, (int) $index); ?>
