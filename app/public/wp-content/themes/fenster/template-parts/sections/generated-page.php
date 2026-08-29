@@ -3281,10 +3281,53 @@ if ($is_obscure_glass) {
                     <?php endforeach; ?>
                 </div>
 
-                <div class="fg-obscure-rail fg-obscure-rail--options fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options', 'fenster'); ?>">
-                    <?php foreach ($obscure_glass_textures as $index => $texture) : ?>
-                        <?php $render_obscure_glass_option($texture, (int) $index); ?>
-                    <?php endforeach; ?>
+                <?php
+                /*
+                 * Privacy filter. Same segmented shape as the scene switch above it,
+                 * for the same reason: the levels are named choices, so each carries
+                 * `aria-pressed` rather than the group pretending to be a switch.
+                 *
+                 * The counts are computed from the data rather than written down --
+                 * a hardcoded "7 patterns" is exactly the kind of number that goes
+                 * stale the first time a texture is added.
+                 */
+                $obscure_privacy_levels = [];
+                foreach ($obscure_glass_textures as $texture) {
+                    $level = (int) ($texture['privacy'] ?? 0);
+                    $obscure_privacy_levels[$level] = ($obscure_privacy_levels[$level] ?? 0) + 1;
+                }
+                ksort($obscure_privacy_levels);
+                ?>
+                <div class="fg-obscure-options">
+                    <div class="fg-obscure-privacy-filter" role="group" aria-label="<?php esc_attr_e('Filter patterns by privacy level', 'fenster'); ?>">
+                        <button class="fg-obscure-privacy-filter__option" type="button" data-fg-obscure-privacy="all" aria-pressed="true"><?php esc_html_e('All', 'fenster'); ?></button>
+                        <?php foreach ($obscure_privacy_levels as $level => $count) : ?>
+                            <?php if ($level === 0) { continue; } ?>
+                            <button
+                                class="fg-obscure-privacy-filter__option"
+                                type="button"
+                                data-fg-obscure-privacy="<?php echo esc_attr((string) $level); ?>"
+                                aria-pressed="false"
+                                aria-label="<?php echo esc_attr(sprintf(
+                                    /* translators: 1: privacy level, 2: number of patterns at that level. */
+                                    _n('Privacy %1$d, %2$d pattern', 'Privacy %1$d, %2$d patterns', $count, 'fenster'),
+                                    $level,
+                                    $count
+                                )); ?>"><?php echo esc_html((string) $level); ?></button>
+                        <?php endforeach; ?>
+                    </div>
+                    <p class="fg-obscure-privacy-filter__count" aria-live="polite" data-fg-obscure-filter-count><?php
+                        echo esc_html(sprintf(
+                            /* translators: %d: number of glass patterns shown. */
+                            _n('%d pattern', '%d patterns', count($obscure_glass_textures), 'fenster'),
+                            count($obscure_glass_textures)
+                        ));
+                    ?></p>
+                    <div class="fg-obscure-rail fg-obscure-rail--options fg-obscure-picker__buttons" role="list" aria-label="<?php esc_attr_e('Obscured glass pattern options', 'fenster'); ?>">
+                        <?php foreach ($obscure_glass_textures as $index => $texture) : ?>
+                            <?php $render_obscure_glass_option($texture, (int) $index); ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </section>

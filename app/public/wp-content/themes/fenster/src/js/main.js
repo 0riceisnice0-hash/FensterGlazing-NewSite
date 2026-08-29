@@ -3487,6 +3487,8 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   const copyTarget = visualiser.querySelector('[data-fg-obscure-active-copy]');
   const privacyTarget = visualiser.querySelector('[data-fg-obscure-active-privacy]');
   const backgroundOptions = [...visualiser.querySelectorAll('[data-fg-obscure-background]')];
+  const privacyOptions = [...visualiser.querySelectorAll('[data-fg-obscure-privacy]')];
+  const filterCount = visualiser.querySelector('[data-fg-obscure-filter-count]');
   const splitControl = visualiser.querySelector('[data-fg-obscure-split]');
   /* House first, Legend second. Owner, 2026-08-06: the house is the real-world
      view somebody came to judge glass against, and Legend is the close-up you
@@ -5754,6 +5756,50 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     if (privacyTarget) privacyTarget.textContent = privacy === '0' ? 'Decorative texture' : `Privacy ${privacy}`;
     if (copyTarget) copyTarget.textContent = copy;
   };
+
+  /* FILTER BY PRIVACY LEVEL. `buttons` holds BOTH lists -- the desktop rail and
+     the mobile picker render the same textures -- so the count has to be of
+     distinct patterns, not of buttons, or it reads double.
+
+     Hidden with a class rather than the `hidden` property: these buttons are
+     given a `display` by the stylesheet, and an author `display` beats the UA
+     sheet's `[hidden]` rule, so `el.hidden = true` would leave them on screen.
+     That trap has already cost this codebase the case-study archives, the
+     repairs drawings and the bi-fold rail controls. */
+  const applyPrivacyFilter = (level) => {
+    const shown = new Set();
+    let firstVisible = null;
+    buttons.forEach((option) => {
+      const match = level === 'all' || (option.dataset.privacy || '0') === level;
+      option.classList.toggle('is-filtered-out', !match);
+      if (match) {
+        shown.add(option.dataset.key || option.dataset.name || '');
+        if (!firstVisible) firstVisible = option;
+      }
+    });
+
+    privacyOptions.forEach((option) => {
+      option.setAttribute('aria-pressed', option.dataset.fgObscurePrivacy === level ? 'true' : 'false');
+    });
+
+    if (filterCount) {
+      filterCount.textContent = shown.size === 1 ? '1 pattern' : `${shown.size} patterns`;
+    }
+
+    /* If the filter hides whatever the stage is showing, move the stage rather
+       than leaving the pane on a pattern the list no longer offers. */
+    const activeKey = stage.dataset.activeGlass || '';
+    const activeStillListed = buttons.some((option) => (
+      (option.dataset.key || '') === activeKey && !option.classList.contains('is-filtered-out')
+    ));
+    if (!activeStillListed && firstVisible) activate(firstVisible);
+  };
+
+  privacyOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      applyPrivacyFilter(option.dataset.fgObscurePrivacy || 'all');
+    });
+  });
 
   buttons.forEach((button) => {
     button.addEventListener('click', () => activate(button));

@@ -10740,6 +10740,70 @@ html.fg-gallery-lightbox-open body {
   height: 22px;
 }
 
+/* PRIVACY FILTER. Same segmented shape as the scene switch, so the two controls
+   on this component read as one family. Six segments have to fit a 320px column
+   at its narrowest, so they flex rather than taking a fixed width, and the
+   labels are bare numerals with the full phrase on `aria-label`. */
+.fg-obscure-privacy-filter {
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.22rem;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 999px;
+  background: rgba(0, 45, 58, 0.05);
+}
+
+.fg-obscure-privacy-filter__option {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 36px;
+  padding-inline: 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0);
+  color: var(--color-steel);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fg-text-sm);
+  font-weight: 700;
+  line-height: 1;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.fg-obscure-privacy-filter__option:hover {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fg-obscure-privacy-filter__option:focus-visible {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
+}
+
+.fg-obscure-privacy-filter__option[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.fg-obscure-privacy-filter__count {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+}
+
+/* A CLASS, NOT THE `hidden` PROPERTY. These buttons are given a `display` by the
+   rules above, and an author `display` outranks the UA sheet's `[hidden]`, so
+   `el.hidden = true` leaves them on screen. Already caught here three times. */
+.fg-obscure-rail.fg-obscure-picker__buttons button.is-filtered-out,
+.fg-obscure-mobile-picker button.is-filtered-out {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-obscure-privacy-filter__option {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fg-obscure-scene-switch__option {
     transition: none;
@@ -10932,8 +10996,12 @@ html.fg-gallery-lightbox-open body {
     line-height: 1.45;
   }
 
-  .fg-obscure-rail--options {
+  .fg-obscure-options {
+    display: grid;
     grid-area: options;
+    align-content: start;
+    gap: 0.55rem;
+    min-height: 0;
   }
 
   /* THE PREVIEW IS SIZED BY THE VIEWPORT, NOT BY ITS OWN ASPECT. A fixed
@@ -25216,6 +25284,7 @@ a.fg-cs-card__pill:focus-visible {
     grid-template-areas:
       "head"
       "stage"
+      "filter"
       "mobile-picker";
   }
 
