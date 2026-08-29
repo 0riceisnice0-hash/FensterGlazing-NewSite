@@ -3213,8 +3213,19 @@ if ($is_obscure_glass) {
             <div class="fg-obscure-hero__veil" aria-hidden="true"></div>
             <div class="container fg-obscure-hero__grid">
                 <div class="fg-obscure-hero__copy">
-                    <p class="eyebrow"><?php esc_html_e('Glass privacy choices', 'fenster'); ?></p>
-                    <h1><?php esc_html_e('Obscured glass, previewed properly.', 'fenster'); ?></h1>
+                    <?php
+                    /* THE H1 NAMES THE THING, per the rule the other two
+                       specification hubs follow -- `Colour options for Fenster
+                       windows and doors.` and `Window and door handle options.`
+                       It read `Obscured glass, previewed properly.`, which is a
+                       line ABOUT the page and carried neither `privacy glass`
+                       nor the manufacturer. The eyebrow takes Pilkington so the
+                       collection is named above the fold, and the lead below
+                       does the selling, which is where the persuading moved to
+                       when this rule was set on 2026-07-22. */
+                    ?>
+                    <p class="eyebrow"><?php esc_html_e('Pilkington Texture range', 'fenster'); ?></p>
+                    <h1><?php esc_html_e('Obscure and privacy glass for windows and doors.', 'fenster'); ?></h1>
                     <p><?php echo esc_html($obscure_glass_intro); ?></p>
                     <div class="button-row">
                         <a class="button" href="#fg-obscure-visualiser"><?php esc_html_e('Try the glass preview', 'fenster'); ?></a>
@@ -3384,11 +3395,62 @@ if ($is_obscure_glass) {
             </div>
         </section>
 
+        <?php
+        /* THE PRIVACY SCALE, WRITTEN OUT. Added 2026-08-30. The page carried
+           the numbers on every swatch and never once said what they meant, so
+           the single most searched thing about this product -- how much does it
+           actually hide -- was answered nowhere on the page that exists to
+           answer it. The bands are built from the data rather than typed, so a
+           pattern added or re-rated cannot leave prose behind describing the
+           old set. */
+        $obscure_scale = [];
+        foreach ($obscure_glass_textures as $texture) {
+            $level = (int) ($texture['privacy'] ?? 0);
+            if ($level === 0) {
+                continue;
+            }
+            $obscure_scale[$level][] = (string) ($texture['name'] ?? '');
+        }
+        krsort($obscure_scale);
+        $obscure_scale_copy = [
+            5 => 'Hides the most. You are left with light, colour and movement rather than anything you could identify.',
+            4 => 'Strong screening. A shape close to the glass reads as a shape and no more than that.',
+            3 => 'The middle of the range. It breaks up what is behind it without emptying it out.',
+            2 => 'Softens rather than hides, and the pattern is as much the point as the privacy.',
+            1 => 'The lightest screening in the range. Detail still comes through, so it suits a window nobody can see into.',
+        ];
+        ?>
+        <section class="fg-obscure-scale">
+            <div class="container">
+                <div class="section-heading section-heading--wide">
+                    <p class="eyebrow"><?php esc_html_e('Privacy ratings', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('What the privacy numbers mean.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('Pilkington rate every pattern in the Texture range from one to five. The number describes how much the glass hides, not how much light it lets through: the pattern is rolled into one face of otherwise clear glass, so daylight still comes into the room. If a window is overlooked at close range, a bathroom or an ensuite or the panel beside a front door, you want the top of the scale. If you are softening a view or adding pattern, the bottom of it does that job.', 'fenster'); ?></p>
+                </div>
+                <ol class="fg-obscure-scale__list">
+                    <?php foreach ($obscure_scale as $level => $names) : ?>
+                        <li class="fg-obscure-scale__row">
+                            <span class="fg-obscure-scale__level" aria-hidden="true"><?php echo esc_html((string) $level); ?></span>
+                            <div>
+                                <h3><?php echo esc_html(sprintf(
+                                    /* translators: %d: privacy rating from 1 to 5. */
+                                    __('Privacy %d', 'fenster'),
+                                    $level
+                                )); ?></h3>
+                                <p><?php echo esc_html($obscure_scale_copy[$level] ?? ''); ?></p>
+                                <p class="fg-obscure-scale__names"><?php echo esc_html(implode(', ', $names)); ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ol>
+            </div>
+        </section>
+
         <section class="fg-obscure-compare">
             <div class="container">
                 <div class="section-heading section-heading--wide">
                     <p class="eyebrow"><?php esc_html_e('Pattern comparison', 'fenster'); ?></p>
-                    <h2><?php esc_html_e('All obscured glass options at a glance.', 'fenster'); ?></h2>
+                    <h2><?php esc_html_e('Every Pilkington obscure glass pattern we fit.', 'fenster'); ?></h2>
                 </div>
                 <div class="fg-obscure-compare__grid">
                     <?php foreach ($obscure_glass_textures as $texture) : ?>
@@ -3398,12 +3460,119 @@ if ($is_obscure_glass) {
                             <div>
                                 <h3><?php echo esc_html((string) ($texture['name'] ?? 'Glass pattern')); ?></h3>
                                 <p><?php echo esc_html($privacy === 0 ? 'Decorative texture' : 'Privacy level ' . $privacy); ?></p>
+                                <?php
+                                /* The per-pattern line was already written and
+                                   owner-approved -- it is what the visualiser
+                                   readout shows when you pick one -- and it was
+                                   rendering on exactly one pattern at a time.
+                                   Surfacing it here gives each of these headings
+                                   something to be about, which is what the
+                                   comparison grid was short of. */
+                                $texture_copy = trim((string) ($texture['copy'] ?? ''));
+                                ?>
+                                <?php if ($texture_copy !== '') : ?>
+                                    <p class="fg-obscure-compare__copy"><?php echo esc_html($texture_copy); ?></p>
+                                <?php endif; ?>
                             </div>
                         </article>
                     <?php endforeach; ?>
                 </div>
             </div>
         </section>
+
+        <?php
+        /* WHERE THE GLASS ACTUALLY GOES, AND THE WAY OUT OF THIS PAGE. Owner
+           instruction, 2026-08-30. This route had 22 content in-links coming IN
+           and almost nothing going out: somebody who had chosen a pattern was
+           left on a specification hub with no route to the product that carries
+           it. Every destination here is a live route, checked, per the Related
+           Links Rule -- no hub tile, no matrix page, nothing generated. */
+        $obscure_routes = [
+            [
+                'url' => home_url('/windows-milton-keynes/'),
+                'title' => __('Windows', 'fenster'),
+                'copy' => __('Any pattern in the range goes into a casement, a flush sash, a tilt and turn or a bay. Bathrooms and landings are where most of it ends up.', 'fenster'),
+                'cta' => __('Explore our windows', 'fenster'),
+            ],
+            [
+                'url' => home_url('/doors-milton-keynes/'),
+                'title' => __('Doors', 'fenster'),
+                'copy' => __('The whole range is available in a door, and in the side panels beside it. That covers composite, uPVC and aluminium.', 'fenster'),
+                'cta' => __('Explore our doors', 'fenster'),
+            ],
+            [
+                'url' => home_url('/double-glazing-replacement/'),
+                'title' => __('Replacing the glass only', 'fenster'),
+                'copy' => __('If the frame is sound and it is the glass you want to change, we replace the sealed unit and leave the window where it is.', 'fenster'),
+                'cta' => __('See replacement glazing', 'fenster'),
+            ],
+        ];
+        ?>
+        <section class="fg-obscure-routes">
+            <div class="container">
+                <div class="section-heading section-heading--wide">
+                    <p class="eyebrow"><?php esc_html_e('Where it goes', 'fenster'); ?></p>
+                    <h2><?php esc_html_e('Obscured glass is a sealed unit like any other.', 'fenster'); ?></h2>
+                    <p><?php esc_html_e('It is specified the same way as clear glass, so the pattern is a choice you make on whatever you are already having fitted, or on a window you are keeping.', 'fenster'); ?></p>
+                </div>
+                <div class="fg-obscure-routes__grid">
+                    <?php foreach ($obscure_routes as $route) : ?>
+                        <article class="fg-obscure-routes__card">
+                            <h3><?php echo esc_html($route['title']); ?></h3>
+                            <p><?php echo esc_html($route['copy']); ?></p>
+                            <a class="button" href="<?php echo esc_url($route['url']); ?>"><?php echo esc_html($route['cta']); ?></a>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <?php
+        /* FAQS AND THE FAQPage MARKUP FOR THEM. This page had neither, on the
+           one route where the questions are this predictable and this specific.
+           Through the shared `faq-block` component, which owns the rendered
+           questions and the schema together so the two cannot drift, and which
+           has no answer limit -- the cap on the product template has silently
+           sliced correct answers off three routes.
+
+           Every answer here is checkable against something already settled: the
+           whole range being available in a door is owner-confirmed and recorded
+           in `AI.md`; the sealed-unit swap is the Replacement Glazing Rule's own
+           scope; samples at the showroom rather than at the visit is the
+           consultation model in the confirmed-facts section. No figure is
+           quoted for light transmission, because none is confirmed. */
+        get_template_part('template-parts/components/faq-block', null, [
+            'id' => 'fg-obscure-faq-title',
+            'eyebrow' => __('Common questions', 'fenster'),
+            'heading' => __('Obscure and privacy glass, answered.', 'fenster'),
+            'faqs' => [
+                [
+                    'question' => __('What is the difference between obscure glass and privacy glass?', 'fenster'),
+                    'answer' => __('They are the same thing. Obscure glass is the trade name, privacy glass is what most people call it, and Pilkington call the collection Texture. Frosted is a third word for it, though strictly that describes one look rather than the whole range.', 'fenster'),
+                ],
+                [
+                    'question' => __('Which privacy level do I need for a bathroom?', 'fenster'),
+                    'answer' => __('The top of the scale, four or five, if the window is overlooked at close range. Those hide a shape rather than soften it. Lower numbers break the view up without emptying it, which suits a landing or a window nobody can see into.', 'fenster'),
+                ],
+                [
+                    'question' => __('Can I have obscured glass in a door?', 'fenster'),
+                    'answer' => __('Yes, and in any pattern in the range. It goes into composite, uPVC and aluminium doors, and into the side panels and toplights beside them.', 'fenster'),
+                ],
+                [
+                    'question' => __('Does obscured glass make a room darker?', 'fenster'),
+                    'answer' => __('It still lets daylight through. The pattern is rolled into one face of otherwise clear glass, so it scatters what you can see rather than blocking the light. A higher privacy rating means more scattering, not a darker room.', 'fenster'),
+                ],
+                [
+                    'question' => __('Can you put obscured glass into a window I already have?', 'fenster'),
+                    'answer' => __('Usually yes. If the frame is sound and it is only the glass you want to change, we replace the sealed unit and leave the window where it is. We survey and measure before anything is ordered.', 'fenster'),
+                ],
+                [
+                    'question' => __('Can I see the glass before I decide?', 'fenster'),
+                    'answer' => __('The preview on this page is the closest you will get on a screen, and it uses a real photograph rather than a swatch. For the glass itself, the samples are at the Milton Keynes showroom. Glass never looks quite the same on a screen as it does in a frame.', 'fenster'),
+                ],
+            ],
+        ]);
+        ?>
 
         <section id="fenster-enquiry" class="fg-obscure-enquiry">
             <div class="container fg-obscure-enquiry__grid">

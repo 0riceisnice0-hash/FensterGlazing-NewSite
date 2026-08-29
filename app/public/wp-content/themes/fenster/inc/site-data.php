@@ -3514,11 +3514,22 @@ function fenster_site_data(): array
             ],
         ],
         'obscure_glass' => [
-            'intro' => 'Obscured glass adds privacy while still letting daylight through. Use the preview to compare how the same real image changes behind each texture before choosing door glass, bathroom glass, side panels or replacement units.',
+            'intro' => 'We fit the Pilkington Texture range, and every pattern in it carries a privacy rating from one to five. Use the preview to see what a real scene looks like behind each one, close up and further away, before you settle on glass for a bathroom, a door, a side panel or a replacement unit.',
             'legend_image' => '/wp-content/themes/fenster/assets/team/legend-colour.webp',
             'house_image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/birkacre-house.webp',
             'textures' => [
-                ['name' => 'Cotswold', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cotswold-pilkington.png', 'copy' => 'Heavy distortion for high privacy while retaining a traditional textured feel.'],
+                /* THE WEBP, NOT THE PNG. `Cotswold-pilkington.png` is 2,379,026
+                   bytes for a 64px swatch, and it is a CSS background on an
+                   element in the render tree, so it can never lazy-load: it
+                   downloaded on this page and on THIRTEEN product routes, where
+                   it was 40% of the mobile image payload on the site's
+                   most-viewed page. `Cotswold-privacy-5.webp` is the same
+                   picture at 93,080 bytes -- checked, correlation 0.987, the
+                   difference is the resize alone -- and had been sitting unused
+                   in the same folder since July while this line pointed past
+                   it. Found by `FULL-SITE-AUDIT-2026-08-13.md` [133]; it was a
+                   one-line data edit all along, not an image job. */
+                ['name' => 'Cotswold', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cotswold-privacy-5.webp', 'copy' => 'Heavy distortion for high privacy while retaining a traditional textured feel.'],
                 /* Satin is a sandblasted finish, so it is grain rather than lines. This
                    entry used to be a hand-drawn repeating-linear-gradient, which read as
                    pinstripe and contradicted its own description on a customer-facing
