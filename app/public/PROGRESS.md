@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-26
+Last updated: 2026-08-28
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -8,6 +8,42 @@ kept in place further down, in date order with the entries they summarise.
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
+
+## START HERE, 2026-08-28 (obscured glass: Cassini rebuilt, selector reshuffled, scroll parallax)
+
+Test is `db684e2a`, live is unmoved at `b2420743`. **`HANDOVER.md`'s top section
+is the full picture; this is the short version.**
+
+Cassini's optics were rebuilt from the owner's own sample photographs, the
+selector was reshuffled to fit one screen with the patterns in one list, and the
+view behind the glass now parallaxes on scroll while the glass itself stays put.
+The other twenty glasses are byte-identical throughout.
+
+### The three things worth carrying forward
+
+- **The owner's dark-backdrop sample photographs are the reference, and they
+  corrected two numbers taken through a busy scene.** Committed at
+  `scripts/reference-cassini-darkfield.png`. Shooting glass against something
+  dark and plain separates the pattern from the background almost completely;
+  shot against a garden, the scene contaminates every measurement.
+
+- **Byte-identical screenshots across inputs that differ means the HARNESS, not
+  "no effect".** Three separate faults produce that symptom, and one dead render
+  scored a near-perfect metric because a blur has no orientation at all. Assert
+  the images differ before reading any number off them.
+
+- **Ask what a critique says the model CANNOT express.** Several rounds were
+  spent tuning the strength of a single texture because that was the only thing
+  the model had to tune. Every real step forward came from adding a mechanism —
+  per-petal segmentation, fluting, the coarse sector tier — not from a
+  parameter.
+
+### What is not done
+
+Photorealism is limited by the plate being a photograph rather than a height
+map. **Four torch photographs with the sample and camera FIXED** would fix that;
+the three already supplied cannot, because everything moved. Details and the
+exact recipe are in `HANDOVER.md`.
 
 ## START HERE, 2026-08-27 evening (composite doors, second pass after owner review)
 

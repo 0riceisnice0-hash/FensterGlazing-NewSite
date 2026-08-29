@@ -1237,8 +1237,42 @@ A change is not complete until the relevant checks pass:
 
 ## Obscured glass textures
 
-- **THE STAGE COMPOSITES IN CSS AS LIVE DOES, AND SIX ATTEMPTS TO IMPROVE IT
-  HAVE NOW BEEN REVERTED — five on 2026-08-27 afternoon, and a full canvas
+- **STATE, 2026-08-28: THE CANVAS OPTICAL RENDERER IS BACK AND IT IS THE
+  ACCEPTED DIRECTION — on TEST at `db684e2a`, live still `b2420743` and still
+  CSS.** The rule immediately below says six attempts were reverted and warns
+  against a seventh; that was true when written and is now HISTORY, not the
+  current position. The owner drove a long iteration on the canvas renderer over
+  2026-08-28 and it stands. **Read the rest of this section as the record of how
+  the earlier attempts failed — it is still the best guide to what NOT to do —
+  but do not read it as "the renderer was rejected".**
+- **THE OWNER'S OWN SAMPLE PHOTOGRAPHS ARE NOW THE REFERENCE, and they beat the
+  Pallot images.** `scripts/reference-cassini-darkfield.png` is the sample shot
+  against dark cladding: a DARK-FIELD view, where smooth lenses pass the dark
+  backdrop and read dark and the hatched ground scatters and reads light, so the
+  pattern separates itself with almost no background to subtract. It corrected
+  two numbers that had been measured through a busy scene. **Photograph glass
+  against something dark and plain; a sample held up to a garden contaminates
+  every measurement taken from it.**
+- **BYTE-IDENTICAL SCREENSHOTS ACROSS INPUTS THAT DIFFER MEAN THE HARNESS IS
+  BROKEN, not that the change had no effect.** Three separate faults produce
+  exactly that symptom: a render exception falling back to the CSS layer in
+  silence, a pinned `?ver=` serving a cached bundle, and the local preview server
+  having died. One dead render even scored a near-perfect metric, because a blur
+  has no orientation at all. **Assert the images differ before reading any number
+  off them.**
+- **`renderGlass` HAS COST FIVE DECLARATION-ORDER BUGS. Declare anything used by
+  more than one stage at the TOP of the function.** A `const` left below the code
+  that uses it throws, the render falls back to CSS in silence, and every
+  screenshot in that sweep is the fallback — each one cost a full parameter
+  sweep to notice.
+- **THE RENDER IS SPLIT: `renderGlass` records per pixel where to sample, and
+  `paint(dx, dy)` does the sampling.** That is what lets the scene move on scroll
+  while the glass stays put. There is ONE copy of the shading and the first
+  render goes through it too, `paint(0, 0)`. **Any change to it must be verified
+  the way the split was: `paint(0, 0)` reproducing the previous render EXACTLY,
+  by per-row checksum across two builds.**
+- **Historic, and still worth reading: SIX ATTEMPTS TO IMPROVE THE CSS
+  COMPOSITING WERE REVERTED — five on 2026-08-27 afternoon, and a full canvas
   optical renderer the same night.** Owner, after the canvas build: *"they're
   all mostly terrible tbh. the ones that are currently on live are more
   realistic."* **Read this entire section before proposing a seventh.**

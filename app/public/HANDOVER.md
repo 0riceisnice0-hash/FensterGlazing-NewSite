@@ -1,5 +1,111 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-28 (obscured glass rebuilt — ON TEST, NOT LIVE)
+
+**Live is still `b2420743` and has never carried any of this.** Test is
+`db684e2a`, **141 commits ahead**, none of it approved. Forty-five of those are
+this session (`d92b0c39..db684e2a`); the rest is the composite-doors overhaul
+from the session before. **The range therefore contains two people's unapproved
+work — do not ship it wholesale.** 244 files added, 10 modified, zero deleted.
+
+**Read in this order:** the Current Truth section of `LIVECHANGES.md`, which
+carries every finding below in full; then the `cassini` block in
+`src/js/main.js`, whose comment holds the model and the measurements behind it.
+
+### What changed
+
+**Cassini's optics were rebuilt from the owner's own glass sample.** It is no
+longer a texture composited over a photograph: the pane is segmented into the
+plate's real lens outlines, each lens refracts what is behind it, the ground
+between them is fluted at a measured pitch and bearing, and overlaps carry both
+impressions crossed. The plate tiles seamlessly by a measured minimum-error seam
+cut. **The other twenty glasses are byte-identical throughout** — verified by
+pixel diff on every commit that touched shared code.
+
+**The selector fits one screen.** It was 979px tall at 1280x720, so the heading
+and the how-to sat below the fold; it is 691px now. The twenty-one patterns were
+split ten and eleven either side of the stage and are one two-column panel.
+
+**The view behind the glass parallaxes on scroll**, and the glass does not move
+with it — see the render split below.
+
+### The five things worth carrying forward
+
+- **Photograph a glass sample against something DARK and PLAIN.** The owner's
+  dark-cladding shots are a dark-field view: smooth lenses pass the dark
+  backdrop and read dark, the hatched ground scatters and reads light, so the
+  pattern separates itself. They corrected two numbers taken through a busy
+  scene — bearings are 55/125deg not 45/145, and the hatch was **1.7x too
+  coarse**, the opposite of the direction several rounds had been pushing it.
+  The reference is committed at `scripts/reference-cassini-darkfield.png`.
+  **Re-measure from it rather than re-guessing.**
+
+- **The render is split so the scene can move without the glass moving.**
+  Everything expensive — blurs, flood fills, watershed, sector lattice —
+  describes the SHEET and is scene-independent; only the final sampling touches
+  the scene. `renderGlass` records per pixel where to sample and what to do with
+  the result, and `paint(dx, dy)` does the sampling. **There is only one copy of
+  the shading and the first render goes through it too, `paint(0, 0)`** — if it
+  were duplicated the two would drift the first time either was edited. Verify
+  any change to it the way this was: `paint(0, 0)` must reproduce the previous
+  render EXACTLY, checked by per-row checksum across two builds.
+
+- **A metric can look like a triumph while the renderer is dead.** Three
+  separate harness faults all produce the same symptom — **byte-identical
+  screenshots across inputs that differ**: a render exception falling back to
+  the CSS layer in silence, a pinned `?ver=` serving a cached bundle, and the
+  local server having died (its bundle hashed to `da39a3ee`, the SHA-1 of the
+  empty string). One dead render even measured 0.997 direction entropy, a
+  near-perfect score, because a blur has no orientation at all. **Assert the
+  images differ before reading any number off them**; `/tmp/guard.sh`-style
+  checks belong before every screenshot.
+
+- **Five declaration-order bugs in `renderGlass`, and each cost a full sweep.**
+  A `const` left below the code that uses it throws, the render falls back to
+  CSS in silence, and every screenshot in that sweep is the fallback. Anything
+  used by more than one stage is declared at the top of the function; `hash` is
+  hoisted there permanently with a note saying why.
+
+- **Two measurements of my own were worthless and are recorded as such.** A
+  "28% lens coverage" figure was obtained by thresholding at the 72nd
+  percentile, which forces 28% by construction. And the references' finest
+  contrast band is partly camera noise and JPEG sharpening — a candidate that
+  matched it exactly was visibly speckled. **Match the structural bands and
+  confirm by eye.**
+
+### What needs the owner
+
+- **Nothing here is approved and nothing reached live.** Live is untouched at
+  `b2420743`, so customers still see the old CSS compositing.
+
+- **Four photographs would unlock the last real gap.** The plate is a
+  photograph, not a height map, so every geometric term is inferred from an
+  image whose brightness is a product of that photo's lighting. Photometric
+  stereo fixes it: **sample and camera FIXED, only the torch moving** — four
+  shots, torch left, right, above, below, held a foot or two back, no zoom or
+  refocus between. The three torch-lit frames already supplied cannot do it:
+  everything moved, the label registers only to 10-20px, and the hatch pitch is
+  11px, so the reconstruction returns the torch's own falloff. **Do not retry it
+  on those three.**
+
+- **Cassini is now noticeably more see-through than the old version**, which is
+  a product judgement, not a rendering one. It is sold as privacy 5. If that
+  reads as too transparent it is one parameter.
+
+- **The scroll parallax has not been exercised end to end.** The paint mechanism
+  is proven by direct call — with an offset the pattern's correlation peak sits
+  at (0,0), it does not move — but the harness pane reports
+  `visibilityState: "hidden"`, which throttles `requestAnimationFrame`, so the
+  scroll handler itself wants a real scroll on test.
+
+- **What still separates this from a photograph needs data or a different
+  renderer, not tuning.** The renderer displaces rather than refracts, so a flat
+  backdrop gives no depth-dependent parallax and no true caustics; and there is
+  no environment for the front surface to reflect. Every criterion that can be
+  measured now sits inside or beside the reference bands, so further parameter
+  work has low expected value.
+
+
 ## Current state, 2026-08-27 pm (composite doors overhauled — ON TEST, NOT LIVE)
 
 **Live is still `b2420743`. Test is twenty-seven commits ahead and none of it is
