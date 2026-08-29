@@ -3461,20 +3461,2472 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   const nameTarget = visualiser.querySelector('[data-fg-obscure-active-name]');
   const copyTarget = visualiser.querySelector('[data-fg-obscure-active-copy]');
   const privacyTarget = visualiser.querySelector('[data-fg-obscure-active-privacy]');
-  const backgroundToggle = visualiser.querySelector('[data-fg-obscure-background-toggle]');
+  const backgroundOptions = [...visualiser.querySelectorAll('[data-fg-obscure-background]')];
+  const privacyOptions = [...visualiser.querySelectorAll('[data-fg-obscure-privacy]')];
+  const filterCount = visualiser.querySelector('[data-fg-obscure-filter-count]');
   const splitControl = visualiser.querySelector('[data-fg-obscure-split]');
   /* House first, Legend second. Owner, 2026-08-06: the house is the real-world
      view somebody came to judge glass against, and Legend is the close-up you
      click through to — it was the other way round. The toggle label already names
      the scene you are switching TO, so it reads correctly from either start. */
   const backgroundNames = ['house', 'cat'];
-  let backgroundIndex = 0;
 
   if (!stage || !viewport || !buttons.length) return;
+
+  /* PARALLAX, for the sense of looking THROUGH something. The view behind a
+     window is further away than the glass in front of it, so moving your head
+     shifts it. The stage had `--mx`/`--my` wired through a set of transforms
+     already but nothing ever set them, and those rules sat on the CSS-fallback
+     layers which the canvas render hides -- so they were dead twice over.
+     Driven here instead, on the two layers that are actually visible.
+
+     WHAT THIS IS NOT: the pattern is baked into the canvas together with the
+     scene it refracts, so moving the canvas moves both. Physically the scene
+     should shift and the pattern should stay put, which needs the render to
+     re-sample -- and a full render is a 220-250ms task, nowhere near
+     interactive. The canvas therefore moves LESS than the clear half, which
+     reads as the glass sitting nearer than the view; the residual error is the
+     pattern drifting a few pixels, which at this amplitude is not visible.
+     The clip that makes the divider lives on the canvas's PARENT, so moving
+     the canvas does not drag the divider with it. */
+  /* Matches the clear half's translate in main.scss, so the view behind moves
+     by the same amount on both sides of the divider. */
+  const PARALLAX_SCENE_X = 13;
+  const PARALLAX_SCENE_Y = 9;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let parallaxFrame = 0;
+  let parallaxTarget = null;
+  let parallaxLast = 99;
+
+  const applyParallax = () => {
+    parallaxFrame = 0;
+    if (!parallaxTarget) return;
+    const { x, y } = parallaxTarget;
+    viewport.style.setProperty('--mx', x.toFixed(3));
+    viewport.style.setProperty('--my', y.toFixed(3));
+    /* THE GLASS STAYS PUT AND THE SCENE MOVES. The canvas is not translated:
+       it RE-SAMPLES the scene at an offset, so every term describing the sheet
+       -- relief, lens shape, rib bearing, wash -- lands on exactly the pixel it
+       did before, and only the view behind it shifts. Sampling further right
+       shows scene from further right, which reads as the view sliding left,
+       hence the negative sign to match the clear half's translate. The offset
+       is in canvas pixels and the canvas is smaller than its displayed size, so
+       the screen amplitude is scaled by that ratio. */
+    if (!glassRepaint || !glassOut || !glassCanvas) return;
+    /* A repaint is ~33ms, so it is not run for movement too small to see. */
+    if (Math.abs(y - parallaxLast) < 0.012) return;
+    parallaxLast = y;
+    const shown = glassCanvas.getBoundingClientRect().width || glassCanvas.width;
+    const k = glassCanvas.width / Math.max(shown, 1);
+    const split = Number.parseFloat(getComputedStyle(viewport).getPropertyValue('--split')) || 54;
+    glassRepaint(
+      -x * PARALLAX_SCENE_X * k,
+      -y * PARALLAX_SCENE_Y * k,
+      Math.ceil((split / 100) * glassCanvas.width) + 2
+    );
+    glassCanvas.getContext('2d').putImageData(glassOut, 0, 0);
+  };
+
+  const queueParallax = (x, y) => {
+    parallaxTarget = { x, y };
+    if (parallaxFrame) return;
+    parallaxFrame = requestAnimationFrame(applyParallax);
+  };
+
+  const clearParallax = () => {
+    parallaxTarget = { x: 0, y: 0 };
+    if (parallaxFrame) return;
+    parallaxFrame = requestAnimationFrame(applyParallax);
+  };
+
+  /* DRIVEN BY SCROLL, NOT THE POINTER. Scroll is a slow continuous signal that
+     everyone produces just by reading the page, where a pointer only moves if
+     somebody happens to hover the pane -- and on the way past it fought the
+     divider drag. It also gives the effect a direction that matches the motion
+     the eye is already tracking. Vertical only, which is the axis scroll has. */
+  const onScroll = () => {
+    const box = viewport.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    if (box.bottom < 0 || box.top > vh) return;
+    /* -1 when the pane sits at the bottom of the window, +1 at the top. */
+    const centre = box.top + box.height / 2;
+    queueParallax(0, clamp(((vh / 2 - centre) / (vh / 2 + box.height / 2)), -1, 1));
+  };
+
+  if (!reduceMotion.matches) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+    reduceMotion.addEventListener('change', (event) => {
+      if (event.matches) clearParallax();
+    });
+  }
 
   const setSplit = (value) => {
     const split = clamp(Number.parseFloat(value), 0, 100);
     viewport.style.setProperty('--split', `${split.toFixed(1)}%`);
+  };
+
+  /* ------------------------------------------------------------------ *
+   *  OBSCURED GLASS OPTICS
+   *
+   *  Reference: the red-clock series at pallotglass.com, one photograph
+   *  per pattern of the SAME clock through each glass. Read those before
+   *  changing anything here; five earlier rebuilds failed by working from
+   *  the brochure's product shots alone.
+   *
+   *  WHAT THOSE PHOTOGRAPHS ACTUALLY SHOW, and it is the opposite of the
+   *  obvious guess: NOTHING IS BLURRED. Through Reeded the clock numerals
+   *  stay razor sharp -- and repeat, because each rib is a cylindrical
+   *  lens sampling a wide overlapping slice. Through Digital the face
+   *  breaks into hard rectangles, each sharp. Through Cassini each petal
+   *  is a crisp-edged lens holding a smooth tonal gradient. Obscuration
+   *  comes from DISPLACEMENT AND FRAGMENTATION, not from diffusion, and
+   *  the pattern's own relief sits over it bright and high-contrast.
+   *
+   *  So this samples the scene SHARPLY at remapped coordinates and then
+   *  embosses the texture's own structure on top. An earlier version
+   *  derived soft physics and discarded the texture's structure; every
+   *  glass came out a milky wash and the owner was right that the plain
+   *  CSS multiply beat it. Blur belongs only to `frost`, the one family
+   *  that genuinely diffuses.
+   * ------------------------------------------------------------------ */
+  const glassLayer = stage.querySelector('[data-fg-obscure-glass-layer]');
+
+  /* Per glass, from its own red-clock photograph. `kind` is the optics,
+     not a strength band -- a rib cannot be expressed as a strong dapple. */
+  const GLASS_MATERIALS = {
+    /* ---- rib: periodic cylindrical lenses -------------------------------
+       `spread` > 1 makes each rib image a swath wider than itself, so
+       neighbours overlap and detail repeats.
+
+       `flip` RUNS THAT SWATH BACKWARDS, AND THE REFERENCE SAYS NOT TO.
+       This comment used to claim the flip "is what makes the reference read
+       12 | 21 | 2". It was measured on 2026-08-30 and it is wrong: the
+       reference reads 12 | 12 | 2, the glyphs are not mirrored, and the
+       within-flute traverse runs the SAME way as the feature it is imaging.
+       Method, on `Textured-Reeded_2.jpg`, so it can be re-run: take the top
+       edge of the red rim, split it at the flute boundaries, fit each segment,
+       and compare the sign of the segment slope against the arc's own trend.
+       On the left shoulder (arc rising) and the right shoulder (arc falling)
+       -- two regions whose true slopes have OPPOSITE signs, which is what
+       makes the test worth anything -- 15 of 16 segments lean WITH the arc,
+       at roughly 3-4x its gradient. Upright and amplified, not reversed.
+       `flip` is kept as a key because Charcoal Sticks may yet want it; no
+       glass sets it today. */
+
+    /* Reeded: machined flutes, ~10mm, dead regular, dead vertical. Sharpest
+       glass in the range -- the clock numerals survive intact inside a flute
+       and are destroyed by being cut and compressed, NOT by being reversed.
+       Privacy 2 comes entirely from that shredding, so the veil is near zero. */
+    /* A MIRROR INSIDE EVERY FLUTE IS WHAT THE OWNER SAW AS "it inverts
+       everything too much", 2026-08-30, and the artefact it makes is specific
+       enough to recognise again: reflecting about each flute centre turns one
+       diagonal into a row of BUTTERFLY CHEVRONS, symmetric V and X shapes
+       straddling every seam. Legend's polo shirt carried a chevron the width
+       of the pane. The reference has none -- its clock hands break into a
+       SAWTOOTH whose teeth all lean the same way, because an upright traverse
+       plus a hard seam gives repetition without reflection. If chevrons or a
+       herringbone ever come back on a rib glass, the flip is back on. */
+    /* `spread` COMPRESSES, AND COMPRESSION STRAIGHTENS. Owner, 2026-08-29:
+       "theres obvious white angled lines that look too computerised and not
+       natural." They are not an overlay and not a texture -- they are the
+       scene. A soft diagonal in the sky, squeezed 4.2x horizontally inside each
+       flute, comes out as a hard straight streak, and the flutes then repeat it
+       on an exact pitch so the eye reads a drawn line. Isolating it: the flat
+       sky band still showed them, the CSS shine/scan/glass layers made no
+       difference when hidden, and they weakened as `spread` came down.
+       At 3.0 the cloud edges stay soft. `wander` and `jitter` go up with it so
+       the flutes are not on an exact multiple -- drawn glass is regular, not
+       machined -- and `emboss` comes down because the rib crown was what made
+       the streaks read white rather than merely light. */
+    reeded: {
+      texSize: 'cover', kind: 'rib', period: 30, spread: 3.0,
+      wander: 4.5, jitter: 10, emboss: 0.24, veil: 0.02,
+      /* Half the spread and a third of the jitter for the near scene. A flute
+         gathers less of a close subject than of a distant one, so it repeats it
+         less: at 3.0 Legend's eyes appeared in three flutes at once and he read
+         as texture rather than as a cat. THE SIGN DOES NOT CHANGE WITH
+         DISTANCE, only this magnitude does -- the clock is the near case and it
+         is upright, so the near scene cannot be the one that inverts. */
+      close: { spread: 2.5, jitter: 3 },
+    },
+
+    /* Charcoal Sticks: drawn vertical sticks of UNEVEN width, not flutes. Its
+       reference shreds horizontal edges into vertical runs, so the per-stick
+       vertical carry is the mechanism and the horizontal lensing is secondary. */
+    'charcoal-sticks': { kind: 'rib', period: 17, spread: 2.0, wander: 3.5, jitter: 26, emboss: 0.55, veil: 0.05 },
+
+    /* Cotswold WAS here, on `rib`, and is now in the frost family below, on
+       the owner's instruction of 2026-08-29. Left as a signpost because this
+       is where the two other vertical glasses live and where it would be
+       looked for. `rib` is now Reeded and Charcoal Sticks only, and both of
+       those genuinely are regular machined structures. */
+
+    /* ---- cell: rigid rectangles, sharp inside, displaced as blocks ------ */
+    /* Digital: the reference staircases the clock rim outward, so displacement
+       must be of order a whole tile, and every tile is bevelled. */
+    /* ---- OWNER-REVERTED, 2026-08-27. Digital, Chantilly, Oak and Sycamore
+       were refined on an audit's advice -- relief cut, motif shrunk, scatter
+       added -- and the owner judged all four WORSE and reverted them to these
+       values. The audit's reasoning was that the pattern was being printed
+       rather than refracted; on these four it was wrong, and the eye beat the
+       measurement. Do not re-apply that change here without asking. ---- */
+    digital: { kind: 'cell', cell: 13, jitter: 16, emboss: 0.5, veil: 0.05 },
+
+    /* ---- hatchlens: two textures at two scales -------------------------- */
+    /* Cassini: fine directional hatch, angle varying patch to patch, with
+       smooth petal lenses over it. Faces average what they magnify to nearly
+       one tone; the hatched ground stays sharp and is combed. */
+    /* Cassini, built against the owner's high-resolution clock photograph over
+       several rounds. The corrections that mattered, and why, because three of
+       them reversed an earlier decision made here:
+
+       IT WAS OBSCURING BY BLURRING. The reference obscures with dense CRISP
+       texture and stays sharp everywhere; a smear at pebble scale is what reads
+       as blur. A lens does not blur what it shows, it INTEGRATES it, so each
+       pebble is flood-filled over the petal mask and given the mean of what is
+       behind it rather than a fixed-radius blur.
+
+       BUT A PEBBLE IS NOT OPAQUE. Averaged all the way to a flat wash they
+       became flat discs; in the photograph the red behind clearly tints them
+       and each carries a soft gradient. `washMix` holds them between the two --
+       enough gradient to read as glass, not enough detail to read as a picture.
+
+       AND A PEBBLE IS A DOME. Every one is dark along one edge and bright along
+       the other, which is most of what makes them read as glass rather than as
+       cut-outs. The plate photograph already carries that shading, so `dome`
+       transfers it directly instead of modelling it. Flattening to a wash had
+       thrown it away.
+
+       THE STIPPLE IS THE TWO HATCH FAMILIES CROSSING, and this reversed a
+       decision made here. Both families were once suppressed to nearly binary
+       on the reading that the fine chequer they made was an artefact. It is
+       not: an FFT of the reference's fine band returns BOTH at comparable power
+       in every patch sampled -- 1.00 and 0.93, 1.00 and 0.80, 1.00 and 0.98 --
+       and the dot mesh where they cross IS the light, almost see-through
+       stipple the sheet is covered in. What was wrong with the chequered build
+       was that it was far too DARK, not that both families were present.
+
+       THE GROUND AND THE FACES WERE THE WRONG WAY ROUND. Measured, the hatched
+       ground varies at broad scale by an rms of 6.7-12.9 and the faces by 18.6;
+       ours had 19.3 on both. A dense screen scatters over a wide angle, so it
+       transmits near-uniform light and reads MILKY almost regardless of what is
+       behind it, while a pebble passes its own wash through -- hence
+       `groundBlur`, `groundFlat` and `groundVeil` all stronger than their face
+       counterparts.
+
+       GEOMETRY, MEASURED: eighteen patches at 30-50deg and eighteen at
+       130-150deg, every one at a 2.6px pitch. A fixed cross of two families,
+       not a field that turns with the pattern. The FFT reports the wave NORMAL,
+       90deg off the line angle, hence 52 and not 39. Which family leads is read
+       off the plate but BLURRED to a pebble's width first: per pixel it flips
+       on noise and draws hard triangular wedges, a herringbone across the sheet.
+
+       Supersampling is deliberately narrow, about a seventh of a pixel.
+       Widening it to a proper box across the pixel dropped the fine-band rms
+       from 30 to 5 -- correct antialiasing destroys a 1px feature at a 2.6px
+       pitch, and the reference keeps its contrast for the same reason a camera
+       does.
+
+       Do NOT tune the fine-band rms to the reference's 33.6: that figure
+       includes the photograph's JPEG noise and grain. Nor the pane-wide tonal
+       spread, reference 37 against our 16 -- that is the red clock against our
+       garden, the SCENE and not the glass.
+
+       `hatchPitch` gates this whole model. Florielle shares this `kind`,
+       declares no pitch, and renders exactly as before; verified by pixel diff
+       every round. The harness is nondeterministic by up to 6/255 -- the same
+       build renders the same glass twice with that much difference -- so
+       re-render before believing a small diff, and suspect the baseline
+       capture first: three times it was the baseline that was bad.
+
+       THE PATTERN MUST NOT OVERWHELM THE SCENE EITHER, and one pass here went
+       badly wrong on that. Told it looked like a "computerised blur", the
+       response was to raise `dome` to 1.6 and `emboss` to 0.5, which turned the
+       pebbles into near-black-and-white discs and buried the garden completely.
+       The owner's verdict: "looks too processed, doesn't show the scene enough
+       behind it", and they were right.
+
+       RENDERING THE LIVE VERSION SIDE BY SIDE IS WHAT SETTLED IT. `b2420743`
+       uses plain CSS multiply, and it shows the scene far more clearly than any
+       of this did -- soft, but the tree, the house and the water are all plainly
+       there, and so is the clock in the reference. The pebbles in the reference
+       are mostly PALE with subtle shading; only a few are dark. Measured, the
+       surviving scene structure had matched all along -- edge p90 6.3-8.1
+       against 6.0-7.1, mid-scale rms 10.2-13.3 against 10.4-13.5 -- so the
+       quantity was never the problem, and adding contrast on top of it was
+       solving the wrong thing.
+
+       SO OBSCURE BY SCRAMBLING, NOT BY BLURRING OR BY PAINTING OVER. `strength`
+       and `pebbleShift` are high, so each pebble shows a sharp piece of the
+       scene from somewhere it did not come from; the flattening is low
+       (`groundFlat` 0.45, `faceFlat` 0.40) and the pattern contrast is gentle
+       (`dome` 0.6, `emboss` 0.28). What survives is fragments of real detail in
+       the wrong places rather than a smooth wash -- which is what the sheet
+       actually does, and it is the only version of this that both shows the
+       garden and does not look computed.
+
+       Reducing the blur RADIUS instead was tried and is worse: it makes the
+       photograph recognisable while still obviously blurred.
+
+       MEASURED OFF THE OWNER'S OWN SAMPLE PHOTOGRAPHS, which are a better
+       reference than the Pallot shot and should be preferred: hatch pitch
+       ~24px against a pebble period of ~400px, so the true ratio is about
+       17:1, not the 41:1 the Pallot image implied -- that reading was picking
+       up a finer sub-texture rather than the hatch lines. The two families sit
+       at the same angles, but in MOST patches one runs almost purely (0.05
+       relative power against 1.00) and only some cross (0.82). The patches are
+       large and the hatch is BOLD -- lines you can count.
+
+       `scale` 1.6 follows from that ratio: at plain `cover` the pebbles came
+       out around 50px, which forces the hatch to ~3px, and at 3px it cannot
+       draw as bold lines without turning into a chequer. Scaling the pattern
+       up lets the hatch sit at 5px where it reads as line work.
+
+       THE HATCH IS FLUTING, NOT LINE WORK, and that is the largest single
+       correction in this whole sequence. At native pixels on the owner's own
+       sample photographs the ribs are bold and ROUNDED, and they visibly SMEAR
+       the scene into streaks across their width -- they are cylindrical
+       lenses, the same optics `rib` uses for Reeded, laid at each patch's own
+       angle. Drawing dark lines and nudging the sample a fraction of a pixel,
+       which is what this did for several rounds, produces a pattern ON the
+       scene; fluting produces a pattern MADE OF the scene, and that is the
+       difference between a texture overlay and glass. `fluteShade` carries a
+       specular CROWN rather than a symmetric sine, because the asymmetry --
+       narrow highlight, broad valley -- is what makes a rib read as round.
+
+       The combination the owner kept asking about is therefore: fluted ribs in
+       angled patches, the pebble lenses, and the stipple. Three mechanisms, not
+       one texture with its strength varied.
+
+       THE PATCHES CAME RIGHT AT `wa`/`wb`, exactly where the selector dump
+       said they would. The old weights carried a floor of `1 - bias * 0.85` on
+       BOTH families, so at the strongest setting the losing family still held
+       about 14% -- and these are DARKENING lines, not a blend of tones, so 14%
+       of a dark line is a perfectly visible dark line. Both families drew
+       everywhere and the sheet came out as an even allover mesh however
+       decisive the selector was. The weights now sum to one, so where the
+       selector commits one family is drawn and the other is GONE, and
+       crossings survive only in the transition bands between patches -- which
+       is where the sample has them. */
+    /* THE ZEBRA WAS `fluteShade`, AND IT WAS FOUND BY KNOCKOUT RATHER THAN BY
+       READING THE CODE, 2026-08-30. Owner: "currently its opacity is ok but the
+       pattern is completely wrong." What the page was actually drawing was
+       broad black-and-white diagonal BARS in amorphous patches, nothing like
+       the fine ruled hatch the sheet carries. Setting `hatch: 0` changed almost
+       nothing; setting `fluteShade: 0` removed the bars completely, which named
+       the term in two renders. It was at 1.30. This file already records that
+       `fluteShade` went 1.90 -> 0.70 in one round and back up in another, so it
+       has been overshooting for a while -- which is the accumulation trap
+       `PROGRESS.md` warns about, arriving on the one glass with the worst
+       record for it.
+
+       0.25 is where the hatch reads as the reference's fine sectored texture
+       rather than as bars. THE BARS WERE ALSO DOING A LARGE SHARE OF THE
+       OBSCURING, so `groundFlat`/`faceFlat`/`washMix` come up to put the
+       privacy back. That is the honest mechanism and this file already argues
+       for it: a lens does not blur what it magnifies, it INTEGRATES it. Do not
+       restore privacy by drawing bolder pattern.
+
+       A metric was tried for this and thrown away, which is worth recording:
+       mid-scale RMS over the glass half reported the ZEBRA build as carrying
+       the most structure, because it cannot tell scene detail from pattern
+       drawn on top of it. Same family as the fine-band contrast trap below.
+       Judged against Pallot's own Cassini by eye instead.
+
+       THE PLATE UNDERNEATH ALL OF THIS HAS CHANGED TWICE. It was a photograph
+       of a sample, then WindowCAD's render, and it is now the CLOCK photograph
+       -- see `inc/site-data.php` and `scripts/build-cassini-clock.py`. The oval
+       thresholds are PERCENTILES of the plate (`psO[len * ovalSeedLevel]`), so
+       they carry across a plate with different statistics without retuning;
+       checked rather than assumed each time.
+
+       `faceFlat` AND `groundFlat` MUST NOT BE EQUAL, and for two plates they
+       effectively were -- 0.55/0.58, then 0.80/0.84. A lens is only visible
+       because its face is flatter than the ground around it, so setting the two
+       within a few percent of each other flattens everything equally and the
+       shapes stop reading AT ALL. That is most of why this glass has looked
+       like amorphous blobs through several rebuilds. 0.96 against 0.62 now.
+
+       WHAT STILL DOES NOT WORK, so the next person does not spend the day I
+       spent finding out: the reference's lenses have HARD OUTLINES and this
+       model cannot draw one. It expresses a lens only as a difference in how
+       the scene is displaced and flattened, never as a boundary. Everything
+       available was tried -- `heightBlur` and `ovalEdgeSoft` down, `washMix`
+       up to 0.95 (almost no effect at all), the face/ground split above, and
+       `rim2`/`rimDark` up, which draws a literal dark line round every region
+       and is exactly the topographic-map failure recorded further down this
+       file. **The outline needs a new mechanism, not a parameter.** */
+    cassini: {
+      /* LAID AT COVER, ONCE, NOT TILED. The explicit oval layout below is in
+         the flat plate's own coordinates, and a pinned tiled texture has no
+         single mapping from canvas to plate to place it through. Cover also
+         ends the repeat this file has carried as an accepted cost since the
+         clock plate shipped: the tile held about 5.9 x 4.8 lenses and the pane
+         holds more than that. `texSize` is stated rather than omitted because
+         `button.dataset.size` would otherwise supply the pinned size from
+         `inc/site-data.php` and quietly tile it again. */
+      kind: 'hatchlens', texSize: 'cover',
+      heightBlur: 4, strength: 52, emboss: 0.12,
+      hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
+      hatchEmboss: 0.0, shade: 0.55, faceClear: 0.25,
+      stipple: 0.01, stippleFace: 0.3, dome: 0.15,
+      hatchPatch: 18, hatchBias: 1.0,
+      perPetal: true, petalBands: 4,
+      flutePeriod: 4.0, fluteSpread: 2.8, fluteShade: 0.25,
+      ribFamA: 145, ribFamB: 35, ribJitter: 12, ribTail: 0.12, ribCurve: 10, ribVary: 0.6, ribWander: 0.15,
+      petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
+      pebbleWash: true, washMix: 0.22, pebbleShift: 24,
+      faceBlur: 8, groundBlur: 12, groundFlat: 0.62, faceFlat: 0.96,
+      veil: 0.045, groundVeil: 0.12,
+      knee: 190, kneeCeil: 251,
+      dimple: 0.06,
+      lobe: 6, lobeFace: 0.85,
+      /* `ovalsFromPlate` is OFF: the layout is given explicitly below rather
+         than segmented back out of the plate. The seed and edge levels are
+         inert while it is off and are left at their original values so the
+         other `hatchlens` glasses are unaffected. */
+      ovals: true, ovalsFromPlate: false, ovalSeedLevel: 0.74, ovalEdgeLevel: 0.34,
+      /* A HARD LENS EDGE. `petal` interpolates the flattening between ground
+         and face, so its shoulder width IS the softness of the rim; the placed
+         fallback's 0.22 is most of why these read as blobs rather than lenses. */
+      ovalRim: 0.05,
+      /* The owner's own 82 ovals, traced and corrected by hand over the clock
+         photograph, in that plate's pixel coordinates: [cx, cy, a, b, theta,
+         domeAngle]. Source of record is `scripts/cassini-oval-layout.json`,
+         built from his markup at `scripts/reference-cassini-owner-ovals.png`.
+         Do not hand-edit this array -- regenerate it from the JSON. */
+      ovalPlateW: 630, ovalPlateH: 533,
+      ovalList: [[574.6,134.5,51.4,39.3,0.3619,-0.4559],[230.9,378.3,39.6,28.0,1.174,2.1087],[433.9,87.2,68.3,39.0,1.0877,-1.4009],[287.6,162.9,74.7,37.0,1.4204,1.4643],[470.6,269.2,61.6,34.8,1.0984,2.1247],[348.6,105.8,37.5,28.5,2.2623,-2.5745],[76.1,439.0,27.6,12.8,1.6578,1.2283],[108.1,374.4,52.7,35.6,0.7941,-0.0954],[16.2,445.7,74.6,25.8,1.2479,2.9839],[106.3,512.3,51.4,23.3,1.4606,-0.9177],[167.5,436.8,57.8,27.6,1.867,2.812],[157.1,130.6,51.9,36.0,2.2128,-2.3503],[251.7,492.8,66.9,57.9,2.5444,-2.5429],[343.0,264.0,54.0,32.4,1.8263,1.3847],[244.3,33.0,64.5,43.2,2.2408,2.2192],[210.1,206.6,57.2,30.0,1.5814,2.1006],[184.0,316.5,36.4,24.9,2.1083,3.0369],[111.7,267.9,59.8,36.5,1.2182,0.4474],[526.5,445.0,59.9,28.9,1.8254,2.1026],[47.9,222.9,30.5,13.7,1.6234,0.7746],[541.8,322.1,36.9,22.7,2.0062,-0.696],[393.2,298.6,22.1,15.8,3.0898,-0.8266],[602.7,393.4,55.1,26.3,0.9487,-3.0916],[84.5,127.5,36.0,22.9,1.3293,-2.5135],[111.8,51.3,42.0,23.1,1.5168,0.7373],[9.6,144.7,52.0,34.9,0.6782,1.8605],[404.8,225.0,29.6,13.8,1.5249,-1.7463],[534.8,41.0,61.8,41.3,2.6323,1.5914],[461.3,376.5,46.4,34.6,1.0644,0.1103],[174.4,-21.2,61.2,29.6,1.7894,0.848],[436.8,442.7,28.1,13.3,1.7093,-2.4073],[269.9,306.6,54.8,25.5,1.4729,-1.2995],[337.4,394.5,37.5,21.9,2.9743,-1.2042],[466.2,511.2,45.3,24.2,1.4277,0.7245],[4.0,2.7,88.4,44.7,1.2411,0.4179],[618.4,260.4,55.0,36.3,2.328,-2.1514],[588.9,485.2,59.3,27.0,2.1971,0.2425],[630.8,64.3,33.6,17.8,1.8397,-2.7284],[287.5,59.8,46.0,34.8,2.9091,-1.9753],[66.4,71.9,88.9,38.2,1.1444,0.4606],[522.5,384.1,53.1,27.8,1.8451,1.3077],[529.2,493.1,63.3,43.2,2.8063,-2.1991],[214.3,131.5,47.3,39.3,3.1153,-1.2871],[582.1,342.4,25.3,18.2,0.1122,-1.3263],[174.0,32.4,59.6,45.5,2.7216,0.9113],[149.6,197.8,53.1,33.0,1.1522,1.7222],[448.3,258.1,36.3,28.1,2.5763,1.1551],[297.7,165.6,36.5,23.5,0.9839,2.1892],[34.1,182.1,46.6,32.5,0.5004,-1.8863],[172.2,486.9,62.2,48.3,2.8568,-1.523],[83.4,261.9,30.7,24.2,2.9472,3.043],[59.4,514.3,41.5,37.2,0.976,0.3363],[509.3,203.0,54.3,35.7,1.1961,1.8229],[163.2,373.4,52.7,26.6,1.793,1.1494],[406.7,400.3,78.8,55.4,2.2978,0.5122],[45.4,395.1,75.7,53.1,2.2891,-2.0924],[147.7,293.7,34.3,25.1,2.2643,1.1714],[472.8,58.6,43.4,23.8,1.4417,-0.7091],[35.2,293.1,22.2,15.8,0.1942,-1.5532],[397.2,187.6,44.5,30.0,0.7306,-0.334],[281.0,514.8,42.6,36.4,2.8652,-2.7979],[375.9,308.7,44.9,35.4,2.3608,0.6176],[610.5,35.8,69.3,45.7,2.3126,2.3865],[533.5,15.8,29.5,21.3,2.1887,3.0293],[407.6,508.7,33.0,25.8,2.1053,-2.6973],[623.3,309.1,53.1,20.7,1.4615,1.1396],[244.8,257.5,54.4,29.1,1.9179,1.3365],[217.8,334.6,25.4,18.9,3.0938,-0.5635],[285.4,245.9,40.7,17.7,1.6771,3.0591],[518.3,135.0,51.0,35.6,2.2105,-1.9334],[570.1,215.5,60.3,32.2,1.6321,0.5141],[376.4,150.1,46.5,30.6,0.7997,0.584],[442.5,2.8,17.2,11.1,1.7777,-2.2595],[80.8,4.3,12.9,11.5,0.5236,1.6396],[621.7,515.2,28.6,14.3,2.0106,1.3915],[382.0,0.6,42.2,15.0,0.162,2.1234],[437.6,127.8,37.9,23.9,1.1694,1.9676],[18.1,301.6,44.9,34.9,2.3588,3.0205],[508.5,298.5,34.5,28.1,2.4585,-2.4032],[287.5,371.8,51.8,34.2,1.2151,-2.7511],[631.5,364.6,34.9,15.9,1.4262,2.5991],[356.4,461.9,94.8,46.1,1.2219,2.0203]],
+      ovalFitBlur: 4, ovalFitDensity: 30000, ovalEdgeSoft: 2, ovalFitMin: 8,
+      ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
+      overlapBand: 2, bandKind: true, overlapAmt: 0.15, overlapTurn: 55,
+      sectors: 12, glint: 0.12, glintLen: 2.5, rim2: 7, rimDark: 0.30,
+    },
+    /* Florielle: same construction, finer hatch, and the dimples displace
+       harder so window frames dissolve rather than being outlined. */
+    florielle: {
+      kind: 'hatchlens', heightBlur: 6, strength: 20, emboss: 0.38,
+      hatch: 2.2, hatchEmboss: 0.5, petalLift: 0.5, faceBlur: 7, veil: 0.07,
+    },
+
+    /* ---- emboss: the motif is the subject, scene legible between --------
+       Every one of these had its relief cut and its refraction raised: the
+       audit's repeated finding was that the pattern was being PRINTED over a
+       sharp photograph instead of bending it. */
+
+    /* Mayflower: ~40 hairline radial ridges per flower, not a dozen fat lobes.
+       `scale` shrinks the motif so the flower count matches the reference. */
+    /* `scale` is a fraction of the PLATE's width, so it had to be recomputed
+       when the plate was re-cut to remove its mirrored tail on 2026-08-29:
+       0.42 x 587/900 = 0.274 holds the motif at exactly the size it rendered
+       before. Change this whenever that plate's width changes. */
+    mayflower: { kind: 'emboss', heightBlur: 3, strength: 26, emboss: 0.5, scale: 0.274, veil: 0.12 },
+    chantilly: { kind: 'emboss', heightBlur: 4, strength: 7, emboss: 0.72, veil: 0.03 },
+    /* Oak: felt in the shredding, not seen as outlines -- fine anisotropic
+       streak, relief contrast cut hard. */
+    oak: { kind: 'emboss', heightBlur: 6, strength: 8, emboss: 0.62, veil: 0.03 },
+    /* Autumn is Oak's family, not Minster's -- owner, and the source bears it
+       out: its fine-detail to broad-relief ratio is 2.05 against Oak's 2.94,
+       where Minster sits at 0.84. It is a DRAWN plate. Bold embossed leaves
+       with fine radial striations inside each one, so the relief leads and the
+       scene behind stays largely where it is. It had been given Minster's
+       wobble-led settings -- strength 22 against a relief of 0.4 -- which is
+       exactly the effect the owner recognised. Now inverted to match Oak:
+       relief up, displacement right down. Bolder than Oak because the plate
+       is bolder, and no `scale`, because its motifs really are the larger. */
+    autumn: { kind: 'emboss', heightBlur: 5, strength: 9, emboss: 0.68, veil: 0.04 },
+    /* Sycamore: the fine engraved fan. Half Autumn's scale, gentler carry. */
+    sycamore: { kind: 'emboss', heightBlur: 4, strength: 8, emboss: 0.6, veil: 0.03 },
+    /* Tribal: the lattice is the only sharp thing; everything behind it is
+       scattered to colour blobs. */
+    tribal: { kind: 'emboss', heightBlur: 5, strength: 20, emboss: 0.55, softBlur: 5, veil: 0.16 },
+
+    /* ---- dapple: irregular rolled relief, sharp but wandering ----------- */
+    /* Minster and Arctic collided badly, so they are separated at the
+       mechanism: Minster is a broad soft cathedral roll with low relief;
+       Arctic is small hammered facets with hard bright rims.
+
+       RETUNED 2026-08-29 against a photograph of the real sheet supplied by
+       the owner: "minster is too clean. irl it has a bit of a texture similar
+       to arctic", then "the 'blobs' are a bit more defined irl".
+
+       `heightBlur: 13` WAS THE FAULT. The plate carries a fine granular etch
+       under its broad rolls, and a blur of 13 destroyed all of it BEFORE the
+       relief was derived, leaving a smooth oil-slick with no surface at all.
+       Measured as fine-scale energy against the clear half of the same pane,
+       the old build scored 0.63x -- BELOW one, meaning it was smoothing the
+       scene rather than adding any texture to it. Arctic scores 0.90x.
+
+       DO NOT DEFINE THE BLOBS WITH `emboss`. That was tried at 1.0 and 1.2 and
+       the owner rejected it: "youve made it too defined and added too much
+       white... where it's actually over an object, it doesnt show as white as
+       yours." The reason is structural rather than a matter of degree. The
+       emboss term is ASYMMETRIC -- `v += eV > 0 ? (255 - v) * eV : v * eV *
+       shadeAmp` -- so its positive lobe adds a fraction of the REMAINING
+       HEADROOM TO WHITE and therefore drives toward 255 regardless of what is
+       behind the glass. At emboss 1.2 the pane lifted +25.9 mean against the
+       clear half and clipped 1.92% of pixels to pure white. `knee` stops the
+       clipping but not the whitening.
+
+       THE CREASES IN THE REFERENCE ARE THE SHADOW SIDE, so they come from
+       `shade`, which defaults to 0.35 because a symmetric emboss once printed
+       black strokes over foliage. Raising it to 0.75 and LOWERING emboss to
+       0.44 gives more blob definition than any of the bright-side attempts
+       (14.60 blob-band against the old 13.48) while lifting the pane only
+       +4.8, which is LESS than the old build's +7.4. Checked on the foliage
+       specifically: no decal, the darkening follows the blob shapes.
+
+       IT KEEPS `texSize: 'cover'` AND THE 450px DATA PIN MUST NOT BE RESTORED.
+       That was proposed on the strength of the Stippolyte fix and it is wrong
+       here: with the pin, the non-periodic tiler leaves a hard seam, column
+       step spiking to 3.76-4.40x the mean at x=318 against a 324px tile width.
+       Stippolyte measures 1.28x with its pin, which is why that one was safe.
+       Minster's plate seams and Stippolyte's does not. */
+    minster: { texSize: 'cover', kind: 'dapple', heightBlur: 8, strength: 26, emboss: 0.44, shade: 0.75, veil: 0.04 },
+    arctic: { kind: 'dapple', heightBlur: 2, strength: 16, emboss: 0.6, veil: 0.1 },
+    /* Contora WAS here and is now in the frost family below, on the owner's
+       instruction of 2026-08-29. Left as a signpost because the dapple block
+       is where anyone would look for it. */
+    /* Everglade: deep 70s swirl, the largest drag in the dapple family. */
+    everglade: { kind: 'dapple', heightBlur: 8, strength: 34, emboss: 0.45, veil: 0.14 },
+    /* Taffeta: broad silk folds, glossy, gentle. */
+    taffeta: { kind: 'dapple', heightBlur: 12, strength: 24, emboss: 0.34, veil: 0.06 },
+    /* Warwick: privacy 1. The teapot stays fully legible through the real
+       thing; only faint blown streaks disturb it. */
+    warwick: { kind: 'dapple', heightBlur: 14, strength: 6, emboss: 0.14, veil: 0.01 },
+
+    /* ---- frost: the only family that genuinely diffuses ----------------- */
+    /* Stippolyte: dense fine stipple. Granular, not smooth -- the grain is
+       what separates it from Satin.
+
+       IT KEEPS THE DATA'S 380px PIN AND MUST NOT BE MOVED TO `cover`. The
+       blanket move of the four pinned textures to `cover` (see the `texSize`
+       comment in `renderGlass`) rested on "a material's scale now comes from
+       its own geometry (`period`, `cell`, `scale`)". That is true of Reeded,
+       which has `period`. It is FALSE here: `frost` has no geometry term at
+       all -- `blur` and `grain` are both in output pixels -- so this pattern's
+       only scale is the size its plate is laid at. The plate was 900px wide;
+       the pin lays it at 380 (0.42x) and `cover` on the stage lays it at
+       about 1.14x, so `cover` rendered the stipple roughly 2.7x too coarse.
+       THE PIN IS NOW 271, NOT 380, and the two are the same rendered scale:
+       the plate was re-cut to 643px on 2026-08-29 to remove a mirrored tail
+       baked into the photograph, and 380 x 643/900 = 271. The pin is in image
+       pixels, so it must be rescaled with the plate or this fix silently
+       reverts.
+       Owner, 2026-08-29: "stippolyte is finer irl. the scale of the live one
+       is correct, but the texture of the test is good." The page's own copy
+       says "without a large pattern" and the CSS layer underneath was already
+       pinned at 380, so the canvas was the only thing disagreeing.
+
+       Tiling is safe here. The pin was removed to kill tile seams, but that
+       measurement found Cassini at a 52.9 row-step against 6-8 for every other
+       glass -- Stippolyte among them. The non-seamless path is the
+       non-periodic tiler, whose crop fraction cancels (tw/srcW = pin/naturalW),
+       so it reproduces the CSS pin's scale exactly while varying content per
+       tile. Do not add `seamless: true`: there is no purpose-built tile asset
+       for this plate, only Cassini and Reeded have one. */
+    stippolyte: { kind: 'frost', blur: 8, grain: 26, emboss: 0.42, veil: 0.14 },
+    /* Pelerine: feather filaments over a diffusing ground; ridges resample
+       far enough to take colour from elsewhere. */
+    pelerine: { kind: 'frost', blur: 5, grain: 12, strength: 14, heightBlur: 4, emboss: 0.4, veil: 0.1 },
+    /* Contora: a tight vertical worm field. MOVED HERE FROM `dapple` on the
+       owner's instruction, 2026-08-29: "contora needs work now. it's similar
+       to stippolyte irl. its currently showing a bit of a mister effect but
+       almost there."
+
+       THE FAMILY WAS THE FAULT, NOT THE NUMBERS. `frost` is the only kind
+       that samples a pre-blurred copy of the scene -- `src = mat.kind ===
+       'frost' ? soft : scene` in the sampling loop. Every other kind displaces
+       the SHARP scene, so the pattern MOVES detail without ever destroying it.
+       Measured on the stage against the clear half of the same pane, the old
+       dapple build passed 58.9% of scene detail while Stippolyte passed 34.4%
+       -- and both are sold as privacy 4. That is the "printed over a sharp
+       photograph rather than bending it" fault this file records for the
+       emboss/dapple families, and it is structural.
+
+       BLUR IS NOT THE FIX AND MAKES THE REPORTED FAULT WORSE. Frost variants
+       at blur 4/5/7 with the old numbers reached only 56.6/53.4/45.3% and read
+       mistier, because blur greys the scene without giving the pattern
+       anything to do. What obscures is `grain` -- random per-pixel scatter,
+       which destroys detail rather than moving it -- plus enough `emboss` that
+       the texture carries the pane instead of floating over it, with `veil`
+       taken DOWN to 0.04 so nothing is whitened for free. That lands at 37.7%
+       detail through against Stippolyte's 34.4%, and LESS milky than either
+       the old build or Stippolyte.
+
+       Milkiness is not the fault; milkiness WITHOUT structure is. Stippolyte
+       measures the milkiest thing on the stage (+20.6 against this one's
+       +11.0) and reads as glass, because its texture is strong enough to
+       carry it. Do not chase the veil number on its own.
+
+       No `texSize` and no data pin: this plate has none, so it lays at cover,
+       which puts its worms at about native size and matches the reference. */
+    contora: { kind: 'frost', blur: 5, heightBlur: 2, strength: 24, emboss: 0.60, grain: 28, veil: 0.04 },
+    /* Cotswold: fine IRREGULAR bark striation, vertically biased but broken
+       and wandering. MOVED HERE FROM `rib` on the owner's instruction,
+       2026-08-29: "irl its a bit irregular (live 'pattern' is correct), on
+       test it shows a bit like reeded."
+
+       `rib` IMPOSES A REGULAR LATTICE AND THIS PLATE IS NOT REGULAR. The old
+       entry ran `period: 8`, so a machined comb was synthesised over an
+       irregular photograph and the pane came out sliced into full-height
+       strips -- Reeded's signature, which is the family Cotswold was sharing.
+       Measured on the plates, Cotswold's horizontal/vertical anisotropy is
+       2.74 against Reeded's 4.71: vertically biased, but nothing like a comb.
+       The owner's note that the LIVE pattern is correct is the tell -- live
+       multiplies the plate and therefore keeps the irregularity the renderer
+       was overwriting.
+
+       Measured as spectral peakiness across a row (a machined comb spikes into
+       one frequency, irregular striation spreads), the old build scored 4.1
+       and this one scores 2.1, level with Contora.
+
+       `emboss` and `dapple` were both tried and both fail: they remove the
+       comb but leave the scene MORE legible, 71.8% of detail through, because
+       neither samples a diffused scene. Only `frost` does. Same structural
+       finding as Contora.
+
+       IT IS A PRIVACY 5 AND IT WAS THE MOST TRANSPARENT GLASS OF THE THREE
+       WORKED ON THIS DAY -- 61.7% of scene detail through, against 34.4% for
+       Stippolyte and 37.7% for Contora, both privacy 4. It should obscure more
+       than they do, not 27 points less. This lands at 37.8%. A heavier variant
+       at 34.7% was rendered and the owner chose this one. */
+    cotswold: { kind: 'frost', blur: 8, heightBlur: 2, strength: 26, emboss: 0.55, grain: 32, veil: 0.05 },
+
+    satin: { kind: 'css' },
+  };;
+
+  let renderToken = 0;
+  let glassCanvas = null;
+  /* Handles for the parallax repaint: the sampling pass and the buffer it
+     writes into, kept from the last full render. */
+  let glassRepaint = null;
+  let glassOut = null;
+
+  const glassImage = (src) => new Promise((resolve, reject) => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+
+  const drawCover = (ctx, img, w, h, mode) => {
+    if (mode === 'contain') {
+      ctx.fillStyle = '#cddadb';
+      ctx.fillRect(0, 0, w, h);
+      const s = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+      ctx.drawImage(img, (w - img.naturalWidth * s) / 2, (h - img.naturalHeight * s) / 2,
+        img.naturalWidth * s, img.naturalHeight * s);
+      return;
+    }
+    const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+    ctx.drawImage(img, (w - img.naturalWidth * s) / 2, (h - img.naturalHeight * s) / 2,
+      img.naturalWidth * s, img.naturalHeight * s);
+  };
+
+  const layTexture = (ctx, img, w, h, size, scale, seamless) => {
+    const pin = /^([0-9.]+)px/.exec(size || '');
+    if (!pin) {
+      if (scale && scale !== 1) {
+        /* Motif scale, per glass. Mayflower's flower had to shrink to about a
+           third before its count matched the reference; a cover-laid texture
+           has no other way to change its motif size. Tiled through the same
+           non-periodic path so shrinking cannot introduce a visible repeat. */
+        layTexture(ctx, img, w, h, `${Math.round(w * scale)}px auto`, 1, seamless);
+        return;
+      }
+      drawCover(ctx, img, w, h, 'cover');
+      return;
+    }
+    if (seamless) {
+      /* A GENUINELY SEAMLESS SOURCE GETS AN HONEST REPEAT. The roaming and
+         mirroring below exist to HIDE a repeat in a source that does not tile;
+         run against a tile that does, they defeat the point twice over --
+         roaming draws a different sub-region per tile, so the edges no longer
+         match, and mirroring an organic pattern goes kaleidoscopic, which is
+         the trap `build-reeded-texture.py` warns about in terms. So this path
+         simply lays the tile edge to edge and the pattern continues across the
+         pane exactly as the real sheet does. */
+      const tw2 = Math.max(1, Math.round(parseFloat(pin[1])));
+      const th2 = /100%$/.test(size)
+        ? h
+        : Math.max(1, Math.round(img.naturalHeight * tw2 / img.naturalWidth));
+      for (let cx = 0; cx < w + tw2; cx += tw2) {
+        for (let cy = 0; cy < h + th2; cy += th2) {
+          ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight, cx, cy, tw2, th2);
+        }
+      }
+      return;
+    }
+
+    /* NON-PERIODIC TILING. Mirror-bricking kept the sheet seamless but every
+       tile still carried IDENTICAL content, so the eye finds the repeat -- the
+       giveaway that this is a small texture copied across a window rather than
+       one continuous sheet. Each tile now draws a DIFFERENT sub-region of the
+       source photograph at the SAME scale: the crop window is a fixed fraction
+       of the source, so only its offset varies. Pattern character and period
+       survive; no two tiles are the same. Mirroring stays on alternate columns
+       and rows so the joins do not step. */
+    const frac = 0.72;
+    const srcW = img.naturalWidth * frac;
+    const srcH = img.naturalHeight * frac;
+    const tw = Math.max(1, Math.round(parseFloat(pin[1]) * frac));
+    const th = /100%$/.test(size) ? h : Math.max(1, Math.round(srcH * tw / srcW));
+    const roam = (n) => {
+      const v = Math.sin(n * 91.7) * 43758.5453;
+      return v - Math.floor(v);
+    };
+    for (let cx = 0, rx = 0; cx < w + tw; cx += tw, rx += 1) {
+      const drop = ((rx % 3) - 1) * (th / 3);
+      for (let cy = -th + drop, ry = 0; cy < h + th; cy += th, ry += 1) {
+        const sx0 = roam(rx * 7.3 + ry * 3.1) * (img.naturalWidth - srcW);
+        const sy0 = roam(rx * 2.9 + ry * 11.7 + 5) * (img.naturalHeight - srcH);
+        ctx.save();
+        ctx.translate(rx % 2 ? cx + tw : cx, ry % 2 ? cy + th : cy);
+        ctx.scale(rx % 2 ? -1 : 1, ry % 2 ? -1 : 1);
+        ctx.drawImage(img, sx0, sy0, srcW, srcH, 0, 0, tw, th);
+        ctx.restore();
+      }
+    }
+  };
+
+  const lumaOf = (ctx, w, h) => {
+    const src = ctx.getImageData(0, 0, w, h).data;
+    const out = new Float32Array(w * h);
+    for (let i = 0, j = 0; i < out.length; i += 1, j += 4) {
+      out[i] = src[j] * 0.299 + src[j + 1] * 0.587 + src[j + 2] * 0.114;
+    }
+    return out;
+  };
+
+  const boxBlurField = (field, w, h, r) => {
+    const tmp = new Float32Array(field.length);
+    const span = r * 2 + 1;
+    for (let y = 0; y < h; y += 1) {
+      const row = y * w;
+      let acc = 0;
+      for (let k = -r; k <= r; k += 1) acc += field[row + Math.min(w - 1, Math.max(0, k))];
+      for (let x = 0; x < w; x += 1) {
+        tmp[row + x] = acc / span;
+        acc += field[row + Math.min(w - 1, x + r + 1)] - field[row + Math.max(0, x - r)];
+      }
+    }
+    for (let x = 0; x < w; x += 1) {
+      let acc = 0;
+      for (let k = -r; k <= r; k += 1) acc += tmp[Math.min(h - 1, Math.max(0, k)) * w + x];
+      for (let y = 0; y < h; y += 1) {
+        field[y * w + x] = acc / span;
+        acc += tmp[Math.min(h - 1, y + r + 1) * w + x] - tmp[Math.max(0, y - r) * w + x];
+      }
+    }
+  };
+
+  const renderGlass = async () => {
+    if (!glassLayer) return;
+    const button = buttons.find((o) => o.classList.contains('is-active')) || buttons[0];
+    const key = button?.dataset.key || '';
+    const baseMat = GLASS_MATERIALS[key];
+    const textureUrl = /url\("?([^")]+)"?\)/.exec(button?.dataset.texture || '');
+
+    if (!baseMat || baseMat.kind === 'css' || !textureUrl) {
+      stage.dataset.glassRender = 'css';
+      return;
+    }
+
+    const token = renderToken += 1;
+    const background = stage.dataset.activeBackground === 'cat' ? 'cat' : 'house';
+
+    /* A `close` block on a material overrides it for the near scene, and that is
+       physics rather than a preference: a flute is a cylindrical lens, so how
+       much of the scene it gathers and repeats depends on how far away the scene
+       is. The far view gets the full shredding; something at the glass is imaged
+       with less magnification and stays more legible. Satin does the same thing
+       through CSS because it never reaches this renderer. Owner, 2026-08-29:
+       "the physics for the reeded on house is good but as legend is closer its
+       too diffuse. irl you'd see him a bit clearer, ie not as broken up." */
+    const mat = background === 'cat' && baseMat.close
+      ? { ...baseMat, ...baseMat.close }
+      : baseMat;
+    const sceneUrl = background === 'cat' ? stage.dataset.catImage : stage.dataset.houseImage;
+    if (!sceneUrl) {
+      stage.dataset.glassRender = 'css';
+      return;
+    }
+
+    try {
+      const rect = stage.querySelector('.fg-obscure-stage__viewport')?.getBoundingClientRect();
+      const w = Math.max(320, Math.min(900, Math.round(rect?.width || 900)));
+      const h = Math.max(240, Math.min(675, Math.round(rect?.height || 675)));
+      const [sceneImg, texImg] = await Promise.all([glassImage(sceneUrl), glassImage(textureUrl[1])]);
+      if (token !== renderToken) return;
+
+      const make = () => {
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        return c.getContext('2d', { willReadFrequently: true });
+      };
+
+      const sceneCtx = make();
+      /* COVER, NOT CONTAIN, FOR BOTH SCENES. `contain` was letterboxing the
+         Legend photograph: it is 1400x1050, the pane is 4:3, and the two agree
+         only to within rounding, so whichever way the last pixel fell left a
+         flat bar down one edge -- measured 4px on the right. The photograph
+         does not need extending and nothing is lost by filling, because at a
+         matching ratio `cover` crops those same few pixels instead of leaving
+         a gap. */
+      drawCover(sceneCtx, sceneImg, w, h, 'cover');
+      const scene = sceneCtx.getImageData(0, 0, w, h).data;
+
+      /* Only frost gets a diffused copy. Everything else samples sharp. */
+      /* A locally averaged copy. A lens face averages what it magnifies down
+         to nearly one tone -- in the clock photograph each Cassini petal is a
+         flat wash, not a legible little picture -- and that averaging is what
+         actually obscures. The hatched GROUND between the petals stays sharp
+         and is combed instead. Getting these the wrong way round is what left
+         the scene readable through a privacy 5 glass. */
+      let flat = null;
+      if (mat.kind === 'hatchlens') {
+        const flatCtx = make();
+        flatCtx.filter = `blur(${mat.faceBlur || 9}px)`;
+        flatCtx.drawImage(sceneCtx.canvas, 0, 0);
+        flat = flatCtx.getImageData(0, 0, w, h).data;
+      }
+
+      /* A SECOND, MUCH COARSER WASH, FOR THE GROUND -- and the fact that the
+         ground needs the coarser one is the correction. Measured on the clock
+         photograph, the hatched ground varies at broad scale by an rms of only
+         6.7-12.9 while the pebble faces vary by 18.6; ours had 19.3 on both.
+         A dense screen scatters over a wide angle, so it transmits nearly
+         uniform light and the scene barely survives it; a pebble is a lens and
+         carries a wash of what is actually behind it. This renderer had that
+         the wrong way round -- faces flattened hardest and the ground carried
+         the scene -- which is what read as an overall blur with soft blobs in
+         it rather than as glass. */
+      let flatGround = null;
+      if (mat.groundBlur) {
+        const gCtx = make();
+        gCtx.filter = `blur(${mat.groundBlur}px)`;
+        gCtx.drawImage(sceneCtx.canvas, 0, 0);
+        flatGround = gCtx.getImageData(0, 0, w, h).data;
+      }
+
+      let scatter = null;
+      if (mat.softBlur) {
+        const scCtx = make();
+        scCtx.filter = `blur(${mat.softBlur}px)`;
+        scCtx.drawImage(sceneCtx.canvas, 0, 0);
+        scatter = scCtx.getImageData(0, 0, w, h).data;
+      }
+
+      let soft = null;
+      if (mat.kind === 'frost') {
+        const softCtx = make();
+        softCtx.filter = `blur(${mat.blur}px)`;
+        softCtx.drawImage(sceneCtx.canvas, 0, 0);
+        soft = softCtx.getImageData(0, 0, w, h).data;
+      }
+
+      const texCtx = make();
+      texCtx.fillStyle = '#808080';
+      texCtx.fillRect(0, 0, w, h);
+      /* `texSize` lets a material override the data's CSS pin. Four textures
+         carry a pin for the CSS stage -- and a pin means tiling, which means
+         tile edges. Measured over a flat field, Cassini's tile boundary showed
+         as a 52.9 row-step against 6-8 for every other glass: a visible seam
+         across the sheet. None of the four needs the pin here, because a
+         material's scale now comes from its own geometry (`period`, `cell`,
+         `scale`) rather than from the texture's CSS size, so they lay at
+         `cover` and tile exactly once. No tiling, no seam, nothing to hide. */
+      layTexture(texCtx, texImg, w, h, mat.texSize || button.dataset.size || 'cover',
+        mat.scale, mat.seamless);
+      /* HOISTED TO THE TOP OF THE FUNCTION AND IT STAYS THERE. This is the
+         FOURTH declaration in `renderGlass` to be left below the code that
+         uses it, and each one costs a full parameter sweep to notice, because
+         the resulting exception falls back to the CSS layer in silence and
+         every screenshot comes back identical. Anything used by more than one
+         stage belongs up here, before any of them. */
+      const hash = (a, b) => {
+        const n = Math.sin(a * 127.1 + b * 311.7) * 43758.5453;
+        return n - Math.floor(n);
+      };
+
+      const T = lumaOf(texCtx, w, h);
+
+      /* Flat-field: several sources are lit from one side, and any
+         threshold or gradient on the raw photograph inherits that as a
+         phantom tilt across the pane. */
+      const broad = Float32Array.from(T);
+      boxBlurField(broad, w, h, 26);
+      /* Kept BEFORE the high-pass, because the petal mask needs it. This pass
+         subtracts a 26px-radius blur, and Cassini's pebbles run to about
+         100px, so the blur partly tracks the pebbles themselves and takes
+         their brightness out along with the lighting. Thresholding the
+         high-passed field therefore selected the residual left at the
+         BOUNDARIES -- a connected network of ribbons -- rather than the
+         pebbles, which is what put a lattice on the pane instead of stones.
+         Dumping the mask out of the renderer was the only way to see it: on
+         the plate, and in a standalone reimplementation of the same maths,
+         it came out as clean discrete ovals every time. */
+      const baseLuma = Float32Array.from(T);
+      for (let i = 0; i < T.length; i += 1) T[i] = T[i] - broad[i] + 128;
+
+      /* The relief that steers refraction, smoothed in float so 8-bit
+         steps cannot draw contour rings. */
+      const H = Float32Array.from(T);
+      const hb = Math.max(1, Math.round(mat.heightBlur || 4));
+      boxBlurField(H, w, h, hb);
+      boxBlurField(H, w, h, hb);
+
+      let gNorm = 1;
+      if (mat.strength) {
+        const mags = [];
+        for (let k = 0; k < 4096; k += 1) {
+          const px = (997 * k) % (w * h);
+          const x = px % w;
+          const y = (px - x) / w;
+          if (x < 2 || y < 2 || x >= w - 2 || y >= h - 2) continue;
+          mags.push(Math.hypot(H[px + 2] - H[px - 2], H[px + 2 * w] - H[px - 2 * w]));
+        }
+        mags.sort((a, b) => a - b);
+        gNorm = Math.max(mags[Math.floor(mags.length * 0.99)] || 1, 1e-3);
+      }
+
+      /* The emboss layer: the texture's own high-frequency structure, the
+         thing the CSS multiply got right and the soft renderer lost. */
+      const detail = new Float32Array(T.length);
+      for (let i = 0; i < T.length; i += 1) detail[i] = T[i] - H[i];
+      const dSample = [];
+      for (let k = 0; k < 4096; k += 1) dSample.push(Math.abs(detail[(1499 * k) % detail.length]));
+      dSample.sort((a, b) => a - b);
+      const dNorm = Math.max(dSample[Math.floor(dSample.length * 0.92)] || 1, 1e-3);
+
+      /* Local line orientation of the fine texture, via a structure tensor.
+         Cassini's hatch runs at a different angle in every patch, and the
+         source photograph already carries that -- so the angle is measured
+         from the texture rather than invented, and the patchwork comes out
+         for free. Blurred tensor components, so the angle varies slowly
+         across a patch instead of flickering per pixel. */
+      let hatchPX = null;
+      let hatchPY = null;
+      let hatchSel = null;
+      let dome = null;
+      let petal = null;
+      let petalGX = null;
+      let ovalDepth = null;
+      let ovalDome = null;
+      let petalGY = null;
+      /* Hoisted: the per-petal segmentation further down needs these, and they
+         were block-scoped to the branch that fills them. Third time a
+         declaration in this function has been left below or inside the scope
+         of its use -- and because a render exception falls back to CSS in
+         silence, that costs a whole sweep to notice. */
+      let jxx = null;
+      let jyy = null;
+      let jxy = null;
+      if (mat.kind === 'hatchlens') {
+        jxx = new Float32Array(T.length);
+        jyy = new Float32Array(T.length);
+        jxy = new Float32Array(T.length);
+        for (let y = 1; y < h - 1; y += 1) {
+          for (let x = 1; x < w - 1; x += 1) {
+            const i = y * w + x;
+            const dx = detail[i + 1] - detail[i - 1];
+            const dy = detail[i + w] - detail[i - w];
+            jxx[i] = dx * dx;
+            jyy[i] = dy * dy;
+            jxy[i] = dx * dy;
+          }
+        }
+        boxBlurField(jxx, w, h, 7);
+        boxBlurField(jyy, w, h, 7);
+        boxBlurField(jxy, w, h, 7);
+        hatchPX = new Float32Array(T.length);
+        hatchPY = new Float32Array(T.length);
+        hatchSel = new Float32Array(T.length);
+        for (let i = 0; i < T.length; i += 1) {
+          const x = i % w;
+          const y = (i / w) | 0;
+          /* Dominant gradient direction; the LINES run perpendicular to it,
+             and light combs perpendicular to the lines -- i.e. back along
+             the gradient. */
+          const theta = 0.5 * Math.atan2(2 * jxy[i], jxx[i] - jyy[i] + 1e-6);
+          hatchPX[i] = Math.cos(theta);
+          hatchPY[i] = Math.sin(theta);
+          /* FROM THE BROAD RELIEF, NOT THE FINE DETAIL. Which hatch family a
+             patch runs was taken from the orientation of the plate's fine
+             texture, which has no large-scale structure at all -- blur it to a
+             patch's width and it collapses to a constant, both families weigh
+             the same everywhere, and the sheet renders as one uniform diamond
+             mesh. Re-normalising that only amplified noise. On the real sheet
+             the direction follows the FACET layout, and that lives in the broad
+             relief, which varies exactly at the scale wanted. */
+          const bx = H[i + (x < w - 2 ? 2 : 0)] - H[i - (x > 1 ? 2 : 0)];
+          const by = H[i + (y < h - 2 ? 2 * w : 0)] - H[i - (y > 1 ? 2 * w : 0)];
+          const bl = Math.hypot(bx, by) + 1e-6;
+          hatchSel[i] = 0.5 - (bx / bl) * (by / bl);
+        }
+        /* WHICH FAMILY WINS HAS TO VARY SLOWLY. Taken per pixel the selection
+           flips on small-scale noise in the orientation field, and with a
+           steep pick that draws hard triangular wedges -- the sheet came out
+           as a geometric herringbone. In the reference the direction holds
+           over a whole patch and changes at the pebbles, so the field is
+           blurred to roughly a pebble's width before it is used. */
+        /* THE PATCHES ARE LARGE AND DECISIVE ON THE REAL SHEET. Measured on
+           the owner's own sample photographs, most patches run ONE way almost
+           purely -- the second family sits at 0.05 relative power against the
+           first's 1.00 -- and only some cross (0.82). They are also big: a
+           hatch pitch of ~24px against a pebble period of ~400px, so a patch
+           holds many lines. A small blur radius here made the patches mushy
+           and roughly a pebble across, which is why the sheet read as an even
+           mesh rather than as the diamond lattice the sample shows. */
+        boxBlurField(hatchSel, w, h, mat.hatchPatch || 22);
+        /* RE-NORMALISED, because blurring a 0..1 field collapses it towards
+           its mean: at the large radius the sample's patch size calls for, the
+           selector came out flat at ~0.5, both families weighed equally, and
+           the whole sheet rendered as one uniform diamond mesh instead of
+           patches of parallel lines. Stretching it back across its own
+           percentiles restores the swing without restoring the small-scale
+           noise the blur removed. */
+        {
+          const ss = [];
+          for (let k = 0; k < 4096; k += 1) ss.push(hatchSel[(2003 * k) % hatchSel.length]);
+          ss.sort((a, b) => a - b);
+          const sLo = ss[Math.floor(ss.length * 0.12)];
+          const sHi = ss[Math.floor(ss.length * 0.88)];
+          const sSpan = Math.max(sHi - sLo, 1e-4);
+          for (let i = 0; i < hatchSel.length; i += 1) {
+            const v = (hatchSel[i] - sLo) / sSpan;
+            hatchSel[i] = v < 0 ? 0 : v > 1 ? 1 : v;
+          }
+        }
+
+        /* THE PEBBLES ARE DOMES, AND THE PLATE ALREADY KNOWS IT. Every pebble
+           in the reference is dark along one edge and bright along the other,
+           because it is a lens with a curved face -- that shading is most of
+           what makes them read as glass rather than as flat cut-outs. The
+           source photograph carries it, so it is transferred directly rather
+           than modelled: the plate's own luma with the lighting taken out.
+           Averaging the pebble to a flat wash, which is what fixed the
+           blurriness, had thrown exactly this away. */
+        dome = Float32Array.from(baseLuma);
+        const domeLo = Float32Array.from(baseLuma);
+        boxBlurField(domeLo, w, h, 26);
+        const dSamp = [];
+        for (let k = 0; k < 4096; k += 1) {
+          const j = (2003 * k) % dome.length;
+          dSamp.push(Math.abs(dome[j] - domeLo[j]));
+        }
+        dSamp.sort((a, b) => a - b);
+        const dScale = Math.max(dSamp[Math.floor(dSamp.length * 0.9)] || 1, 1e-3);
+        for (let i = 0; i < dome.length; i += 1) {
+          const v = (dome[i] - domeLo[i]) / dScale;
+          dome[i] = v < -1 ? -1 : v > 1 ? 1 : v;
+        }
+        /* The petal mask: smooth bright regions are the lens faces, and
+           they carry no hatch. Percentile bounds so exposure cannot move
+           the split. */
+        const sm = Float32Array.from(mat.hatchPitch ? baseLuma : T);
+        boxBlurField(sm, w, h, 4);
+        const ps = [];
+        for (let k = 0; k < 4096; k += 1) ps.push(sm[(2003 * k) % sm.length]);
+        ps.sort((a, b) => a - b);
+        /* A WIDE band here makes the mask a gradient, and a gradient used as
+           a paleness mask airbrushes: the petals came out as fog blobs rather
+           than as pebbles with an edge. The reference pebbles are tight-edged
+           with flat interiors, so the band is narrow and then smoothstepped --
+           soft enough not to alias, hard enough to read as a shape. */
+        const band = mat.petalSharp || 0.28;
+        const mid = mat.petalSharp ? 0.5 + band * 0.5 : 0.64;
+        const lo = ps[Math.floor(ps.length * (mid - band * 0.5))];
+        const hi = ps[Math.floor(ps.length * Math.min(0.995, mid + band * 0.5))];
+        petal = new Float32Array(T.length);
+        for (let i = 0; i < T.length; i += 1) {
+          let v = (sm[i] - lo) / Math.max(hi - lo, 1e-3);
+          v = v < 0 ? 0 : v > 1 ? 1 : v;
+          petal[i] = mat.hatchPitch ? v * v * (3 - 2 * v) : v;
+        }
+
+        /* THE LENSES ARE INDIVIDUAL OVALS PLACED ON THE PATTERN, not regions
+           carved out of a height field. Banding the plate's relief gives
+           amorphous blobs that merge into one another; the real sheet carries
+           DISCRETE ovals, similar in shape, varying in size and bearing, lying
+           over the fluted ground and over each other.
+
+           Measured off the owner's sample: major axis 12.2% of the pane width,
+           aspect 2.16:1, covering 28% of the sheet, orientations well spread.
+           Placed on a jittered grid so the spacing is even without being
+           regular, and the depth count -- how many ovals cover a pixel -- is
+           what distinguishes ground from lens from overlap. */
+        if (mat.ovals) {
+          /* THE OVALS ARE FITTED TO THE PLATE, WHICH IS THE REAL PATTERN.
+             Scattering them on a jittered grid gave the right STATISTICS --
+             size, aspect and coverage all measured off the owner's sample --
+             but not Cassini's actual arrangement, and the arrangement is the
+             thing being sold. The source photograph already carries the true
+             layout, so each of its lens blobs is segmented and an ellipse
+             fitted to it: centroid, second moments, and from those the two
+             axes and the bearing. The pattern is then the real one, at the
+             real spacing, with the real spread of sizes -- which no random
+             placement reproduces.
+
+             The grid remains as the fallback for a plate that segments into
+             too few blobs to be believable. */
+          /* THE LENSES ARE THE PLATE'S OWN SHAPES, TRACED, NOT ELLIPSES
+             FITTED TO THEM. An ellipse fit reproduces each lens's position,
+             size and bearing but not its outline, so the sheet was an
+             interpretation of Cassini rather than Cassini. The plate
+             photograph is the real glass, so its regions are used directly.
+
+             Touching lenses have to be separated or a plain threshold merges
+             them into one blob -- which is what banding this field did
+             originally. So: take the bright CORES as seeds, label them, then
+             grow every label outward at the same rate by multi-source
+             breadth-first search, constrained to the lens mask. Where two
+             fronts meet they stop, which is the watershed line between two
+             lenses, and every label keeps the real outline of its own lens. */
+          let fitN = 0;
+          let labels = null;
+          let labAx = null;
+          let labAy = null;
+          /* AN EXPLICIT OVAL LAYOUT, WHICH IS THE ONLY THING THAT ACTUALLY
+             HELD THE SHAPES. Added 2026-08-30 after the owner's verdict on the
+             traced plate: "that's still amorphous blobs".
+
+             He was right, and the reason is structural rather than a setting.
+             Encoding the layout as BRIGHTNESS in the plate and letting
+             `ovalsFromPlate` segment it back out cannot preserve it: the
+             watershed partitions space, so it merges every overlapping pair
+             (65 of 82 survived), and then the optics smooth what is left. The
+             layout never reached the render at all. Four detectors had already
+             failed to find these lenses in the photograph for the same reason
+             a plate cannot carry them -- a Cassini lens is a tonal form, not a
+             hard edge.
+
+             So the geometry is passed in directly. `mat.ovalList` is the 82
+             ovals the owner traced by hand, in the flat plate's own pixel
+             coordinates, each as [cx, cy, a, b, theta, domeAngle]; the dome
+             angle is fitted from the photograph's real pixels inside that oval,
+             so which edge of a lens is bright agrees with the sheet. The plate
+             still supplies the hatch and the grain. It no longer supplies the
+             arrangement.
+
+             THIS REQUIRES THE PLATE TO LAY AT `cover`, ONCE. A pinned, tiled
+             texture has no single mapping from canvas to plate, and folding the
+             ovals into a 530x433 tile double-counts every one in the seam band
+             -- measured, that took coverage from 82% to 89% and the overlap
+             depth from 3 to 8. Laid at cover the mapping is one scale and one
+             offset, and Cassini stops repeating, which this file has carried as
+             an accepted cost since the clock plate shipped. */
+          if (mat.ovalList && mat.ovalList.length) {
+            const list = mat.ovalList;
+            const pw2 = mat.ovalPlateW || w;
+            const ph2 = mat.ovalPlateH || h;
+            /* the same transform drawCover uses, so the ovals land exactly
+               where the plate's own lenses are drawn */
+            const cs = Math.max(w / pw2, h / ph2);
+            const cox = (w - pw2 * cs) / 2;
+            const coy = (h - ph2 * cs) / 2;
+            const N = list.length;
+            const ox2 = new Float32Array(N); const oy2 = new Float32Array(N);
+            const oa2 = new Float32Array(N); const ob2 = new Float32Array(N);
+            const oc2 = new Float32Array(N); const os2 = new Float32Array(N);
+            const odc2 = new Float32Array(N); const ods2 = new Float32Array(N);
+            let maxR = 1;
+            for (let k = 0; k < N; k += 1) {
+              const o = list[k];
+              ox2[k] = o[0] * cs + cox; oy2[k] = o[1] * cs + coy;
+              oa2[k] = Math.max(1, o[2] * cs); ob2[k] = Math.max(1, o[3] * cs);
+              oc2[k] = Math.cos(o[4]); os2[k] = Math.sin(o[4]);
+              odc2[k] = Math.cos(o[5] || 0); ods2[k] = Math.sin(o[5] || 0);
+              if (oa2[k] > maxR) maxR = oa2[k];
+            }
+            /* A bin grid, or this is 82 ovals against every pixel. */
+            const bs = Math.max(8, Math.ceil(maxR));
+            const bc = Math.ceil(w / bs) + 1; const br = Math.ceil(h / bs) + 1;
+            const bins = new Array(bc * br);
+            for (let k = 0; k < N; k += 1) {
+              const x0 = Math.max(0, Math.floor((ox2[k] - oa2[k]) / bs));
+              const x1 = Math.min(bc - 1, Math.floor((ox2[k] + oa2[k]) / bs));
+              const y0 = Math.max(0, Math.floor((oy2[k] - oa2[k]) / bs));
+              const y1 = Math.min(br - 1, Math.floor((oy2[k] + oa2[k]) / bs));
+              for (let by = y0; by <= y1; by += 1) {
+                for (let bx = x0; bx <= x1; bx += 1) {
+                  const bi = by * bc + bx;
+                  if (!bins[bi]) bins[bi] = [];
+                  bins[bi].push(k);
+                }
+              }
+            }
+            ovalDepth = new Uint8Array(T.length);
+            ovalDome = new Float32Array(T.length);
+            /* A NARROW SHOULDER, NOT THE WIDE ONE THE PLACED-OVAL FALLBACK
+               USES. `petal` is what interpolates the flattening between ground
+               and face, so its width IS the softness of the lens edge, and the
+               0.22 the fallback carries is most of why these read as blobs. */
+            const rim = mat.ovalRim === undefined ? 0.22 : mat.ovalRim;
+            for (let y = 0; y < h; y += 1) {
+              const by = Math.min(br - 1, Math.max(0, Math.floor(y / bs)));
+              for (let x = 0; x < w; x += 1) {
+                const bx = Math.min(bc - 1, Math.max(0, Math.floor(x / bs)));
+                const cand = bins[by * bc + bx];
+                const i2 = y * w + x;
+                let rmin = 1e9; let depth = 0; let bu = 0;
+                if (cand) {
+                  for (let ci = 0; ci < cand.length; ci += 1) {
+                    const k = cand[ci];
+                    const px = x - ox2[k]; const py = y - oy2[k];
+                    const u = (px * oc2[k] + py * os2[k]) / oa2[k];
+                    const v2 = (-px * os2[k] + py * oc2[k]) / ob2[k];
+                    const r = u * u + v2 * v2;
+                    if (r < rmin) { rmin = r; bu = u * odc2[k] + v2 * ods2[k]; }
+                    if (r <= 1) depth += 1;
+                  }
+                }
+                ovalDepth[i2] = depth > 255 ? 255 : depth;
+                const rr = Math.sqrt(rmin);
+                const t2 = (1 + rim * 0.27 - rr) / (rim < 0.001 ? 0.001 : rim);
+                const cl = t2 < 0 ? 0 : t2 > 1 ? 1 : t2;
+                petal[i2] = cl * cl * (3 - 2 * cl);
+                ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
+              }
+            }
+            fitN = N;          /* stops the jittered-grid fallback running */
+          } else if (mat.ovalsFromPlate && baseLuma) {
+            const smO = Float32Array.from(baseLuma);
+            boxBlurField(smO, w, h, Math.max(2, Math.round(mat.ovalFitBlur || 4)));
+            const psO = [];
+            for (let k = 0; k < 4096; k += 1) psO.push(smO[(2003 * k) % smO.length]);
+            psO.sort((a2, b2) => a2 - b2);
+            const hiThr = psO[Math.floor(psO.length * (mat.ovalSeedLevel || 0.74))];
+            const loThr = psO[Math.floor(psO.length * (mat.ovalEdgeLevel || 0.34))];
+            labels = new Int32Array(T.length).fill(-1);
+            const stackO = new Int32Array(T.length);
+            const minPx = Math.max(6, (w * h) / (mat.ovalFitDensity || 30000));
+            const members = new Int32Array(T.length);
+            for (let st = 0; st < T.length; st += 1) {
+              if (labels[st] !== -1 || smO[st] <= hiThr) continue;
+              let sp = 0;
+              let mc = 0;
+              stackO[sp] = st; sp += 1; labels[st] = -2;
+              while (sp > 0) {
+                sp -= 1;
+                const j = stackO[sp];
+                members[mc] = j; mc += 1;
+                const jx = j % w;
+                if (jx > 0 && labels[j - 1] === -1 && smO[j - 1] > hiThr) { labels[j - 1] = -2; stackO[sp] = j - 1; sp += 1; }
+                if (jx < w - 1 && labels[j + 1] === -1 && smO[j + 1] > hiThr) { labels[j + 1] = -2; stackO[sp] = j + 1; sp += 1; }
+                if (j >= w && labels[j - w] === -1 && smO[j - w] > hiThr) { labels[j - w] = -2; stackO[sp] = j - w; sp += 1; }
+                if (j < T.length - w && labels[j + w] === -1 && smO[j + w] > hiThr) { labels[j + w] = -2; stackO[sp] = j + w; sp += 1; }
+              }
+              const id = mc >= minPx ? fitN : -1;
+              for (let k = 0; k < mc; k += 1) labels[members[k]] = id;
+              if (id >= 0) fitN += 1;
+            }
+            /* Grow the seeds at equal rate; the meeting fronts are the joins. */
+            let head = 0;
+            let tail = 0;
+            const queue = new Int32Array(T.length);
+            for (let i2 = 0; i2 < T.length; i2 += 1) if (labels[i2] >= 0) { queue[tail] = i2; tail += 1; }
+            while (head < tail) {
+              const j = queue[head]; head += 1;
+              const lb = labels[j];
+              const jx = j % w;
+              if (jx > 0 && labels[j - 1] === -1 && smO[j - 1] > loThr) { labels[j - 1] = lb; queue[tail] = j - 1; tail += 1; }
+              if (jx < w - 1 && labels[j + 1] === -1 && smO[j + 1] > loThr) { labels[j + 1] = lb; queue[tail] = j + 1; tail += 1; }
+              if (j >= w && labels[j - w] === -1 && smO[j - w] > loThr) { labels[j - w] = lb; queue[tail] = j - w; tail += 1; }
+              if (j < T.length - w && labels[j + w] === -1 && smO[j + w] > loThr) { labels[j + w] = lb; queue[tail] = j + w; tail += 1; }
+            }
+            /* Each lens is lit across its own principal axis, taken from the
+               real pixels of that lens rather than from an idealised shape. */
+            if (fitN > 0) {
+              const cn = new Float32Array(fitN);
+              const cX = new Float32Array(fitN); const cY = new Float32Array(fitN);
+              const cXX = new Float32Array(fitN); const cYY = new Float32Array(fitN);
+              const cXY = new Float32Array(fitN);
+              for (let y = 0; y < h; y += 1) {
+                for (let x = 0; x < w; x += 1) {
+                  const j = y * w + x;
+                  const lb = labels[j];
+                  if (lb < 0) continue;
+                  cn[lb] += 1; cX[lb] += x; cY[lb] += y;
+                  cXX[lb] += x * x; cYY[lb] += y * y; cXY[lb] += x * y;
+                }
+              }
+              labAx = new Float32Array(fitN); labAy = new Float32Array(fitN);
+              const labMX = new Float32Array(fitN); const labMY = new Float32Array(fitN);
+              const labLen = new Float32Array(fitN);
+              for (let k = 0; k < fitN; k += 1) {
+                const n2 = Math.max(cn[k], 1);
+                const mx = cX[k] / n2; const my = cY[k] / n2;
+                const xx = cXX[k] / n2 - mx * mx;
+                const yy = cYY[k] / n2 - my * my;
+                const xy = cXY[k] / n2 - mx * my;
+                const th2 = 0.5 * Math.atan2(2 * xy, xx - yy);
+                const dth = th2 + hash(k * 3.3, k * 7.1) * Math.PI;
+                labAx[k] = Math.cos(dth); labAy[k] = Math.sin(dth);
+                labMX[k] = mx; labMY[k] = my;
+                labLen[k] = Math.max(4, Math.sqrt(Math.max(xx, yy)) * 2);
+              }
+              ovalDepth = new Uint8Array(T.length);
+              ovalDome = new Float32Array(T.length);
+              for (let j = 0; j < T.length; j += 1) {
+                const lb = labels[j];
+                if (lb < 0) { petal[j] = 0; ovalDepth[j] = 0; ovalDome[j] = 0; continue; }
+                petal[j] = 1;
+                ovalDepth[j] = 1;
+                const x = j % w; const y = (j / w) | 0;
+                const d = ((x - labMX[lb]) * labAx[lb] + (y - labMY[lb]) * labAy[lb]) / labLen[lb];
+                ovalDome[j] = d < -1 ? -1 : d > 1 ? 1 : d;
+              }
+              /* A short blur softens the join to a shoulder rather than a
+                 stair, without moving where the join is. */
+              boxBlurField(petal, w, h, Math.max(1, Math.round(mat.ovalEdgeSoft || 2)));
+            }
+          }
+
+          /* The jittered grid is only the FALLBACK now, for a plate whose
+             segmentation yields too few lenses to be believable. */
+          if (fitN < (mat.ovalFitMin || 8)) {
+          const cover = mat.ovalCover || 0.28;
+          const maj = Math.max(6, (mat.ovalMajor || 0.122) * w);
+          const min0 = maj / Math.max(1.05, mat.ovalAspect || 2.16);
+          const areaEach = Math.PI * maj * min0 * 0.25;
+          const want = Math.max(4, Math.round((cover * w * h) / areaEach));
+          const cellO = Math.sqrt((w * h) / want);
+          const ocols = Math.ceil(w / cellO) + 2;
+          const orows = Math.ceil(h / cellO) + 2;
+          const oN = ocols * orows;
+          const oxs = new Float32Array(oN);
+          const oys = new Float32Array(oN);
+          const oa = new Float32Array(oN);
+          const ob = new Float32Array(oN);
+          const oc = new Float32Array(oN);
+          const os = new Float32Array(oN);
+          const odc = new Float32Array(oN);
+          const ods = new Float32Array(oN);
+          for (let cy = 0; cy < orows; cy += 1) {
+            for (let cx = 0; cx < ocols; cx += 1) {
+              const k = cy * ocols + cx;
+              oxs[k] = (cx - 0.5 + hash(cx * 2.7, cy * 6.1) * 1.0) * cellO;
+              oys[k] = (cy - 0.5 + hash(cx * 5.3 + 9, cy * 3.7 + 2) * 1.0) * cellO;
+              /* Size varies widely on the sample -- aspect ran 1.18 to 5.59 --
+                 so a single nominal oval would read as a stamp repeated. */
+              const sv = 0.6 + hash(cx * 1.3 + 21, cy * 8.9 + 5) * 0.9;
+              const av = 0.62 + hash(cx * 4.7 + 13, cy * 1.1 + 27) * 1.1;
+              oa[k] = maj * 0.5 * sv;
+              ob[k] = min0 * 0.5 * sv / av * 1.6;
+              const th = hash(cx * 9.1 + 3, cy * 2.3 + 19) * Math.PI;
+              oc[k] = Math.cos(th);
+              os[k] = Math.sin(th);
+              /* Each lens is lit from its own side. Running every dome the
+                 same way along the major axis made the sheet read as a tray of
+                 identical shiny pebbles rather than as glass. */
+              const dth = hash(cx * 6.7 + 41, cy * 5.9 + 13) * Math.PI * 2;
+              odc[k] = Math.cos(dth);
+              ods[k] = Math.sin(dth);
+            }
+          }
+          ovalDepth = new Uint8Array(T.length);
+          ovalDome = new Float32Array(T.length);
+          ovalDepth = new Uint8Array(T.length);
+          ovalDome = new Float32Array(T.length);
+          {
+
+          for (let y = 0; y < h; y += 1) {
+            const gy = Math.min(orows - 1, Math.max(0, Math.floor(y / cellO) + 1));
+            for (let x = 0; x < w; x += 1) {
+              const gx = Math.min(ocols - 1, Math.max(0, Math.floor(x / cellO) + 1));
+              let rmin = 1e9;
+              let depth = 0;
+              let bu = 0;
+              for (let dy = -2; dy <= 1; dy += 1) {
+                const cy2 = gy + dy;
+                if (cy2 < 0 || cy2 >= orows) continue;
+                for (let dx = -2; dx <= 1; dx += 1) {
+                  const cx2 = gx + dx;
+                  if (cx2 < 0 || cx2 >= ocols) continue;
+                  const k = cy2 * ocols + cx2;
+                  const px = x - oxs[k];
+                  const py = y - oys[k];
+                  const u = (px * oc[k] + py * os[k]) / oa[k];
+                  const v2 = (-px * os[k] + py * oc[k]) / ob[k];
+                  const r = u * u + v2 * v2;
+                  if (r < rmin) { rmin = r; bu = u * odc[k] + v2 * ods[k]; }
+                  if (r < 1) depth += 1;
+                }
+              }
+              const i2 = y * w + x;
+              ovalDepth[i2] = depth > 255 ? 255 : depth;
+              /* A soft shoulder at the rim, not a hard cut: the mask feeds the
+                 lens wash, the dome and the rim displacement. */
+              const rr = Math.sqrt(rmin);
+              const t2 = (1.06 - rr) / 0.22;
+              const cl = t2 < 0 ? 0 : t2 > 1 ? 1 : t2;
+              petal[i2] = cl * cl * (3 - 2 * cl);
+              /* EACH OVAL GETS ITS OWN DOME, ACROSS ITS OWN AXIS. `dome` was
+                 taking its light and shade from the PLATE's relief, which no
+                 longer corresponds to anything once the lenses are placed
+                 explicitly -- plate-shaped shading inside oval-shaped masks
+                 painted incoherent dark blotches that survived turning the
+                 overlap and dimple textures completely off. A lens is bright
+                 along one edge and dark along the other, so it is a gradient
+                 along the oval's major axis. */
+              ovalDome[i2] = bu < -1 ? -1 : bu > 1 ? 1 : bu;
+            }
+          }
+          }
+          }
+        }
+
+        /* A RIM THAT IS A LENS, NOT A DRAWN OUTLINE. Traced across a petal
+           boundary our profile is a plain monotone ramp; the references carry
+           a local extremum there in every scene -- a dip then a bump, or a
+           bright maximum between two plateaus. But the POLARITY is not fixed:
+           the same blob in the sample reads dark-then-bright entering from
+           above, bright leaving to the right, and shows no extremum at all on
+           a third traverse. That is a slope refracting whatever happens to lie
+           behind it, so a fixed bright/dark pair would print a cartoon outline
+           on every petal -- which is exactly the topographic-map failure an
+           earlier attempt here produced by subtracting on this same gradient.
+
+           So it is stored as a DISPLACEMENT along the mask normal, scaled by
+           the mask's slope. It peaks in the 2-3px transition band and is zero
+           across the flat interior and the flat ground, and the ramp width is
+           left variable because a boundary crossed obliquely genuinely is
+           wider. */
+        petalGX = new Float32Array(T.length);
+        petalGY = new Float32Array(T.length);
+        let gMax = 1e-4;
+        for (let y = 1; y < h - 1; y += 1) {
+          for (let x = 1; x < w - 1; x += 1) {
+            const i = y * w + x;
+            const gx = (petal[i + 1] - petal[i - 1]) * 0.5;
+            const gy = (petal[i + w] - petal[i - w]) * 0.5;
+            petalGX[i] = gx;
+            petalGY[i] = gy;
+            const m = Math.abs(gx) + Math.abs(gy);
+            if (m > gMax) gMax = m;
+          }
+        }
+        for (let i = 0; i < petalGX.length; i += 1) {
+          petalGX[i] /= gMax;
+          petalGY[i] /= gMax;
+        }
+      }
+
+      /* EACH PEBBLE AVERAGES WHAT IS BEHIND IT INTO ONE FLAT WASH, and this
+         is the piece that was missing. A lens does not blur what it shows, it
+         integrates it: in the clock photograph every Cassini pebble is a single
+         tone with a hard edge to the next, which is why the sheet obscures
+         completely and still looks crisp. Blurring instead -- what this did
+         before -- obscures by smearing, and a smear at pebble scale is exactly
+         what reads as "blurry" rather than as glass.
+
+         Flood-filled over the petal mask, so the average is taken over the
+         REAL extent of each pebble rather than over a fixed radius. The ground
+         keeps the wide wash from `groundBlur`, because a dense screen scatters
+         over a wide angle rather than integrating over a shape. */
+      /* EVERY PEBBLE GETS ITS OWN REFRACTION OFFSET, and this is what stops
+         the pane reading as a computerised blur. Averaging and blurring both
+         destroy high frequencies, so whatever survives is a smooth gradient --
+         and a smooth gradient is exactly what a Gaussian looks like, however
+         well the statistics are tuned. Measured, our surviving edge strength
+         already matched the reference (p90 6.3-8.1 against 6.0-7.1, mid-scale
+         rms 10.2-13.3 against 10.4-13.5); the QUANTITY was right and the KIND
+         was wrong.
+
+         Real glass obscures by moving light, not by smearing it: each pebble is
+         a lens with its own tilt, so it shows a sharp piece of the scene from
+         somewhere it did not come from. The picture stays legible in fragments
+         -- which is what the owner sees through the real sheet -- while being
+         impossible to read as a whole. */
+      /* Hoisted above the flood fill, which needs both. They used to be
+         declared below it, so the fill hit them in the temporal dead zone and
+         threw -- and because a failed canvas render silently falls back to the
+         CSS layer, every screenshot came back IDENTICAL whatever the material
+         said. Four parameter sweeps were read off that fallback before the
+         duplicate image hashes gave it away. */
+      const shiftAmt = mat.pebbleShift || 0;
+      const hatchBias = mat.hatchBias || 0;
+      const hatchCross = mat.hatchCross || 0;
+      const fluteSpread = mat.fluteSpread || 0;
+      const flutePeriod = Math.max(3, mat.flutePeriod || 12);
+      const fluteShade = mat.fluteShade || 0;
+      const ribBearings = mat.ribBearings || 0;
+      /* Bearings are stored as the wave NORMAL, which is 90deg off the line
+         direction the photographs were measured in. */
+      const ribFamA = mat.ribFamA == null ? 0 : (mat.ribFamA * Math.PI) / 180;
+      const ribFamB = mat.ribFamB == null ? 0 : (mat.ribFamB * Math.PI) / 180;
+      const ribJitter = ((mat.ribJitter || 8) * Math.PI) / 180;
+      const ribTail = mat.ribTail == null ? 0.3 : mat.ribTail;
+      const ribCurve = ((mat.ribCurve || 0) * Math.PI) / 180;
+      const lobeAmt = mat.lobe || 0;
+      const lobeFace = mat.lobeFace == null ? 0.85 : mat.lobeFace;
+      const ribVary = mat.ribVary || 0;
+      const fluteWander = mat.ribWander || 0;
+      const knee = mat.knee || 0;
+      const kCeil = mat.kneeCeil || 251;
+      const dimpleAmt = mat.dimple == null ? 1 : mat.dimple;
+      const glintAmt = mat.glint || 0;
+      const glintLen = Math.max(1.2, mat.glintLen || 2.5);
+      const rimAmt = mat.rim2 || 0;
+      const rimDark = mat.rimDark || 0;
+      const overlapBand = mat.overlapBand || 0;
+      const bandKind = !!mat.bandKind;
+      const overlapAmt = mat.overlapAmt == null ? 1 : mat.overlapAmt;
+      const overlapTurn = ((mat.overlapTurn || 55) * Math.PI) / 180;
+
+      let pebbleWash = null;
+      let pebbleShiftX = null;
+      let pebbleShiftY = null;
+      if (mat.pebbleWash && petal) {
+        pebbleWash = new Float32Array(T.length * 3);
+        pebbleShiftX = new Float32Array(T.length);
+        pebbleShiftY = new Float32Array(T.length);
+        const seen = new Uint8Array(T.length);
+        const stack = new Int32Array(T.length);
+        const members = new Int32Array(T.length);
+        for (let start = 0; start < T.length; start += 1) {
+          if (seen[start] || petal[start] <= 0.5) continue;
+          let sp = 0;
+          let mc = 0;
+          stack[sp] = start; sp += 1; seen[start] = 1;
+          let sr = 0; let sg = 0; let sb = 0;
+          while (sp > 0) {
+            sp -= 1;
+            const j = stack[sp];
+            members[mc] = j; mc += 1;
+            const o = j * 4;
+            sr += scene[o]; sg += scene[o + 1]; sb += scene[o + 2];
+            const jx = j % w;
+            if (jx > 0 && !seen[j - 1] && petal[j - 1] > 0.5) { seen[j - 1] = 1; stack[sp] = j - 1; sp += 1; }
+            if (jx < w - 1 && !seen[j + 1] && petal[j + 1] > 0.5) { seen[j + 1] = 1; stack[sp] = j + 1; sp += 1; }
+            if (j >= w && !seen[j - w] && petal[j - w] > 0.5) { seen[j - w] = 1; stack[sp] = j - w; sp += 1; }
+            if (j < T.length - w && !seen[j + w] && petal[j + w] > 0.5) { seen[j + w] = 1; stack[sp] = j + w; sp += 1; }
+          }
+          const ir = sr / mc; const ig = sg / mc; const ib = sb / mc;
+          /* Seeded from the pebble's own first pixel, so the tilt is stable
+             across redraws and differs from its neighbours'. */
+          const ang = hash(start % w, (start / w) | 0) * Math.PI * 2;
+          const rad = (0.35 + hash((start % w) + 41, ((start / w) | 0) + 17) * 0.65) * shiftAmt;
+          const ox = Math.cos(ang) * rad;
+          const oy = Math.sin(ang) * rad;
+          for (let k = 0; k < mc; k += 1) {
+            const j = members[k];
+            const j3 = j * 3;
+            pebbleWash[j3] = ir; pebbleWash[j3 + 1] = ig; pebbleWash[j3 + 2] = ib;
+            pebbleShiftX[j] = ox; pebbleShiftY[j] = oy;
+          }
+        }
+      }
+
+      /* EVERY PETAL IS ITS OWN REGION WITH ITS OWN TEXTURE, and they overlap.
+         The owner's point, and the thing this renderer had structurally wrong:
+         it laid ONE geometric field across the whole sheet -- two fixed line
+         families, patch-selected -- where the real glass is a mat of
+         overlapping petals, each carrying its own fluting at its own angle,
+         and some smooth or dimpled instead. A global field can only ever be a
+         general pattern; the sheet is more complex than that because the
+         complexity is PER PETAL.
+
+         So the pane is segmented, and each region then gets:
+           - its own rib angle, MEASURED from the plate's own fine texture
+             inside that region rather than invented, so the angles are the
+             real ones and vary the way the real sheet's do;
+           - its own texture kind, since not every petal is fluted -- some are
+             smooth lenses and some are dimpled, which is what the sample
+             shows and what "a combo of textures" meant.
+
+         Regions come from banding the petal field and flood-filling each band,
+         which follows the petals' own boundaries. */
+      let regNX = null;
+      let regNY = null;
+      let regKind = null;
+      let regPeriod = null;
+      if (mat.perPetal && petal && hatchPX) {
+        regNX = new Float32Array(T.length);
+        regNY = new Float32Array(T.length);
+        regKind = new Uint8Array(T.length);
+        regPeriod = new Float32Array(T.length);
+        const bands = Math.max(2, mat.petalBands || 4);
+        const lvl = new Uint8Array(T.length);
+        for (let i = 0; i < T.length; i += 1) {
+          const b = Math.floor(petal[i] * bands);
+          lvl[i] = b >= bands ? bands - 1 : b;
+        }
+        const seen = new Uint8Array(T.length);
+        const stack = new Int32Array(T.length);
+        const members = new Int32Array(T.length);
+        for (let start = 0; start < T.length; start += 1) {
+          if (seen[start]) continue;
+          const band = lvl[start];
+          let sp = 0;
+          let mc = 0;
+          stack[sp] = start; sp += 1; seen[start] = 1;
+          let sxx = 0; let syy = 0; let sxy = 0;
+          while (sp > 0) {
+            sp -= 1;
+            const j = stack[sp];
+            members[mc] = j; mc += 1;
+            sxx += jxx[j]; syy += jyy[j]; sxy += jxy[j];
+            const jx = j % w;
+            if (jx > 0 && !seen[j - 1] && lvl[j - 1] === band) { seen[j - 1] = 1; stack[sp] = j - 1; sp += 1; }
+            if (jx < w - 1 && !seen[j + 1] && lvl[j + 1] === band) { seen[j + 1] = 1; stack[sp] = j + 1; sp += 1; }
+            if (j >= w && !seen[j - w] && lvl[j - w] === band) { seen[j - w] = 1; stack[sp] = j - w; sp += 1; }
+            if (j < T.length - w && !seen[j + w] && lvl[j + w] === band) { seen[j + w] = 1; stack[sp] = j + w; sp += 1; }
+          }
+          /* The region's own dominant orientation, from the plate. */
+          let th = 0.5 * Math.atan2(2 * sxy, sxx - syy + 1e-6);
+          if (ribFamA || ribFamB) {
+            /* THE MEASURED DISTRIBUTION, NOT A SNAP TO N VALUES. Six hundred
+               directional patches across the owner's two sample photographs
+               put 32% of rib bearings at 40-50deg and 36% at 140-150deg -- two
+               tight families -- but the remaining 30% are spread right across
+               every other direction. Snapping every region to one of four
+               exact bearings reproduced the families and threw the tail away,
+               and the render measured a direction entropy of 0.821 against
+               0.89-0.94 for the three references: visibly more regimented than
+               the real glass.
+
+               So most regions take a family with a jitter matching the width
+               of the measured peak, and a genuine minority keep whatever
+               bearing the plate itself gave them. */
+            const pick2 = hash(start * 1.9 + 5, 13.7);
+            if (pick2 >= ribTail) {
+              const fam = pick2 < ribTail + (1 - ribTail) * 0.5 ? ribFamA : ribFamB;
+              th = fam + (hash(start * 4.3 + 17, 29.1) - 0.5) * 2 * ribJitter;
+            }
+          } else if (ribBearings) {
+            /* QUANTISED TO A FEW FAMILIES. Measured against the real sample,
+               that sheet resolves to essentially two rib bearings meeting
+               along straight seams and mirroring into herringbone Vs. Giving
+               every region a free, independently measured angle produced eight
+               or more unrelated bearings with seams that curve and reverse,
+               which reads as a Voronoi field rather than as rolled glass --
+               the loudest remaining tell. Snapping to a small set keeps the
+               angles the plate's own while making neighbours agree. */
+            const step = Math.PI / ribBearings;
+            th = Math.round(th / step) * step;
+          }
+          const nx = Math.cos(th);
+          const ny = Math.sin(th);
+          const r = hash(start % w, (start / w) | 0);
+          /* Enough petals stay smooth or dimpled to break the geometry up;
+             the proportions are eyeballed off the sample, where most petals
+             are fluted but a clear minority are glassy or granular. */
+          /* WHERE TWO PETALS OVERLAP THE SURFACE CARRIES BOTH IMPRESSIONS, so
+             the overlap is a THIRD texture -- not petal A's, not petal B's,
+             but the two crossed. That is what the owner means by the overlaps
+             making a different texture, and this renderer had no
+             representation of it at all: every region got one texture and
+             overlaps were just another region.
+
+             The band level is the stacking height, so the upper bands ARE the
+             overlaps. They flute along their own bearing and along a second,
+             which is what superimposed relief does. */
+          /* With explicit ovals the depth count decides: bare ground is
+             fluted, one oval is a smooth lens, two or more is the crossed
+             overlap. That is the owner's description exactly, and it needs no
+             height banding at all. */
+          const depth = ovalDepth ? ovalDepth[start] : 0;
+          const overlap = ovalDepth ? depth >= 2 : (overlapBand && band >= overlapBand);
+          /* KIND FOLLOWS STACKING HEIGHT, not a random draw. The band level is
+             how high the impression sits, and on the sample the prominent
+             glossy ovals are the TOPMOST faces while the fluting lies on what
+             is under and between them. Drawing the kind from a hash scattered
+             smooth petals through the stack at random, which is part of why
+             the shapes failed to read as one lying over another. */
+          const kind = overlap
+            ? 3
+            : (ovalDepth
+              ? (depth === 1 ? (r < 0.22 ? 2 : 0) : 1)
+              : (bandKind && band === bands - 2
+                ? 0
+                : (r < 0.45 ? 1 : (r < 0.75 ? 0 : 2))));
+          const per = 1 + (hash((start % w) + 7, ((start / w) | 0) + 23) - 0.5) * 0.5;
+          for (let k = 0; k < mc; k += 1) {
+            const j = members[k];
+            regNX[j] = nx; regNY[j] = ny; regKind[j] = kind; regPeriod[j] = per;
+          }
+        }
+      }
+
+      /* A SECOND, COARSER TIER THAT CARRIES THE RIB BEARING. The real sheet
+         is TWO populations at two sizes: a lattice of large sectors with
+         dead-straight seams, each carrying thirty or forty ribs, and the
+         smooth ovoid lenses sitting OVER that lattice as a separate, smaller
+         population. This renderer had one population doing both jobs -- the
+         sectors and the petals were the same objects at the same size -- which
+         is why no scale could fix it: enlarging the sectors enlarged the
+         petals with them.
+
+         The lattice is a Voronoi of jittered-grid seeds, because Voronoi cell
+         boundaries are straight and meet at clean vertices, which is exactly
+         what the seams do. Bearings come from the same quantised set, so
+         neighbouring sectors either agree or meet at a herringbone. The petal
+         regions keep their own job: lens wash, texture kind, dome. */
+      let secNX = null;
+      let secNY = null;
+      if (mat.sectors && hatchPX) {
+        secNX = new Float32Array(T.length);
+        secNY = new Float32Array(T.length);
+        const cell = Math.max(24, Math.sqrt((w * h) / Math.max(2, mat.sectors)));
+        const cols = Math.ceil(w / cell) + 1;
+        const rows = Math.ceil(h / cell) + 1;
+        const sxs = new Float32Array(cols * rows);
+        const sys = new Float32Array(cols * rows);
+        const sbx = new Float32Array(cols * rows);
+        const sby = new Float32Array(cols * rows);
+        const nb = Math.max(2, ribBearings || 2);
+        for (let cy = 0; cy < rows; cy += 1) {
+          for (let cx = 0; cx < cols; cx += 1) {
+            const k = cy * cols + cx;
+            sxs[k] = (cx + 0.15 + hash(cx * 3.1, cy * 5.7) * 0.7) * cell;
+            sys[k] = (cy + 0.15 + hash(cx * 7.3 + 11, cy * 2.9 + 4) * 0.7) * cell;
+            /* The sector lattice draws from the same measured distribution,
+               so the coarse tier and the lens tier agree about which way this
+               glass runs. */
+            const pk = hash(cx * 1.9 + 31, cy * 4.1 + 17);
+            let th;
+            if (ribFamA || ribFamB) {
+              if (pk < ribTail) {
+                th = hash(cx * 5.1 + 7, cy * 8.3 + 11) * Math.PI;
+              } else {
+                const fam = pk < ribTail + (1 - ribTail) * 0.5 ? ribFamA : ribFamB;
+                th = fam + (hash(cx * 2.7 + 3, cy * 6.9 + 23) - 0.5) * 2 * ribJitter;
+              }
+            } else {
+              th = ((Math.floor(pk * nb) % nb) / nb) * Math.PI + (mat.sectorTilt || 0);
+            }
+            sbx[k] = Math.cos(th);
+            sby[k] = Math.sin(th);
+          }
+        }
+        for (let y = 0; y < h; y += 1) {
+          const gy = Math.min(rows - 1, Math.floor(y / cell));
+          for (let x = 0; x < w; x += 1) {
+            const gx = Math.min(cols - 1, Math.floor(x / cell));
+            let best = 1e20;
+            let bk = gy * cols + gx;
+            for (let oy = -1; oy <= 1; oy += 1) {
+              const ny2 = gy + oy;
+              if (ny2 < 0 || ny2 >= rows) continue;
+              for (let ox = -1; ox <= 1; ox += 1) {
+                const nx2 = gx + ox;
+                if (nx2 < 0 || nx2 >= cols) continue;
+                const k = ny2 * cols + nx2;
+                const dx = x - sxs[k];
+                const dy = y - sys[k];
+                const dd = dx * dx + dy * dy;
+                if (dd < best) { best = dd; bk = k; }
+              }
+            }
+            const i2 = y * w + x;
+            secNX[i2] = sbx[bk];
+            secNY[i2] = sby[bk];
+          }
+        }
+      }
+
+      const out = sceneCtx.createImageData(w, h);
+      const dst = out.data;
+
+      /* SPLIT SO THE SCENE CAN MOVE WITHOUT THE GLASS MOVING WITH IT.
+         Everything expensive here -- the blurs, the flood fills, the
+         watershed, the sector lattice -- describes the SHEET and does not
+         depend on what is behind it. Only the final sampling touches the
+         scene. So the pass below stops at the point of sampling and records,
+         per pixel, where to sample and what to do with the result; `paint`
+         then does the sampling. Shifting the scene is a call to `paint` with
+         an offset: the sample coordinates move, every term describing the
+         glass does not, and the pattern stays exactly where it is.
+
+         There is only ONE copy of the shading, and the first render goes
+         through it too -- `paint(0, 0)`. If it were duplicated the two would
+         drift apart the first time either was edited. */
+      /* Float64 for the sample coordinates specifically. At Float32 the
+         coordinates quantise at about 2e-5, which shifts the bilinear weights
+         just enough to flip the odd pixel by one -- two rows out of 280 came
+         back different when the split was first verified against the render it
+         replaced. The rest of the cache stays Float32; only these feed an
+         interpolation. */
+      const pxSX = new Float64Array(w * h);
+      const pxSY = new Float64Array(w * h);
+      const pxE = new Float32Array(w * h);
+      const pxRim = new Float32Array(w * h);
+      const pxStip = new Float32Array(w * h);
+      const pxFace = new Float32Array(w * h);
+      const pxLobeR = new Float32Array(w * h);
+      const pxLobeX = new Float32Array(w * h);
+      const pxLobeY = new Float32Array(w * h);
+      const period = Math.max(4, mat.period || 20);
+      const spread = mat.spread || 1;
+      const cell = Math.max(4, mat.cell || 12);
+      const jitter = mat.jitter || 0;
+      const embossAmp = mat.emboss || 0;
+      const veil = mat.veil || 0;
+      /* Rolled relief scatters light and so may never print darker than the
+         scene behind it -- 0.35. A cut hatch is line work and does. */
+      const shadeAmp = mat.shade == null ? 0.35 : mat.shade;
+      const petalPale = mat.petalPale || 0;
+      const groundVeil = mat.groundVeil || 0;
+      const washMix = mat.washMix == null ? 1 : mat.washMix;
+      const domeAmt = mat.dome || 0;
+      const stippleAmt = mat.stipple || 0;
+      const stippleFace = mat.stippleFace == null ? 0.4 : mat.stippleFace;
+      const groundFlatAmt = mat.groundFlat || 0;
+      const faceFlatAmt = mat.faceFlat == null ? groundFlatAmt : mat.faceFlat;
+      const faceClear = mat.faceClear == null ? 0.45 : mat.faceClear;
+      const groundAmp = mat.ground || 0;
+      const grainAmp = mat.grain || 0;
+      const hatchK = (Math.PI * 2) / (mat.hatchPitch || 2.6);
+      const hatchRad = ((mat.hatchAngle || 39) * Math.PI) / 180;
+      const hnAx = -Math.sin(hatchRad);
+      const hnAy = Math.cos(hatchRad);
+      const hnBx = -Math.sin(-hatchRad);
+      const hnBy = Math.cos(-hatchRad);
+
+      const ribWander = mat.wander || 0;
+      const ribDrift = (x) => (ribWander
+        ? Math.sin(x * 0.0037) * ribWander + Math.sin(x * 0.011 + 1.7) * ribWander * 0.5
+        : 0);
+
+
+      for (let y = 0; y < h; y += 1) {
+        for (let x = 0; x < w; x += 1) {
+          const i = y * w + x;
+          let sx = x;
+          let sy = y;
+          let hatchTone = 0;
+          /* Declared HERE, with the others, because the branch below assigns
+             it. Put next to `stip` further down it sat in the temporal dead
+             zone, the render threw, and every screenshot came back identical
+             off the silent CSS fallback -- the second time that exact mistake
+             has been made in this function. */
+          let fluteTone = 0;
+          let rimShade = 0;
+          let lobeX = 1;
+          let lobeY = 0;
+
+          if (mat.kind === 'rib') {
+            /* Cylindrical lens. Each rib compresses a slice `spread` times its
+               own width, so neighbours overlap and detail repeats -- the clock
+               numerals appearing three times across three ribs.
+
+               AND IT DOES NOT INVERT, WHICH IS NOT THE OBVIOUS ANSWER. A
+               convex cylinder past its focus does flip what it images, so this
+               ran with `flip` on for weeks. Reeded glass is a shallow flute in
+               a thin sheet seen from far outside it, which is the weak-prism
+               case, not the imaging case: the deviation displaces and
+               compresses the scene without turning it over. Measured off
+               `Textured-Reeded_2.jpg` -- 15 of 16 flute segments carry the
+               clock rim's slope with the SAME sign as the rim itself and about
+               3-4x its gradient. `flip` stays available and stays off.
+
+               `wander` drifts the rib phase slowly across the pane: drawn glass
+               is regular but not machined, and without it every flute lands on
+               an exact multiple and reads as a generated grating. */
+            const xd = x + ribDrift(x);
+            const idx = Math.floor(xd / period);
+            const u = xd / period - idx;
+            const centre = (idx + 0.5) * period;
+            const t = mat.flip ? (0.5 - u) : (u - 0.5);
+            sx = centre + t * period * spread;
+            if (jitter) {
+              /* A drawn stick is not a machined flute: each carries the scene
+                 down its own length by a different amount, which is what
+                 shreds horizontal edges into vertical runs. */
+              sy = y + (hash(idx, 0) - 0.5) * jitter;
+              sx += (hash(idx, 7) - 0.5) * period * 0.5;
+            }
+          } else if (mat.kind === 'cell') {
+            const cxi = Math.floor(x / cell);
+            const cyi = Math.floor(y / cell);
+            sx = x + (hash(cxi, cyi) - 0.5) * jitter;
+            sy = y + (hash(cxi + 31, cyi + 17) - 0.5) * jitter;
+          } else if (mat.kind === 'hatchlens') {
+            const xm = x > 1 ? i - 2 : i;
+            const xp = x < w - 2 ? i + 2 : i;
+            const ym = y > 1 ? i - 2 * w : i;
+            const yp = y < h - 2 ? i + 2 * w : i;
+            let gx = (H[xp] - H[xm]) / gNorm;
+            let gy = (H[yp] - H[ym]) / gNorm;
+            gx /= 1 + Math.abs(gx) * 0.4;
+            gy /= 1 + Math.abs(gy) * 0.4;
+            /* A petal is a smooth lens: it bends more and combs not at all.
+               The ground is hatched: it barely bends but combs hard, at the
+               hatch's own frequency and along its own local angle. */
+            const f = petal[i];
+            const lens = mat.strength * (0.45 + f * mat.petalLift);
+            sx = x + gx * lens;
+            sy = y + gy * lens;
+            /* THE HATCH IS SYNTHESISED, NOT READ OFF THE PLATE, and that is
+               the fix. Cassini's screen is a manufactured weave at a fixed
+               ~2.6px pitch -- fine, even, and INDEPENDENT of how big the
+               petals are. Taking it from the source photograph's own fine
+               detail tied the two together, so scaling the plate up to reach
+               the reference's petal size coarsened the hatch along with it and
+               the comb came out as chunky blobs instead of line work.
+
+               Generated at its true pitch instead, but steered by the
+               orientation MEASURED from the plate, so the patchwork of angles
+               is still Cassini's own and not an invented regular grid. It runs
+               across the whole sheet, petal faces included, because in the
+               reference it plainly does. */
+            let comb;
+            if (mat.hatchPitch) {
+              /* MEASURED, NOT GUESSED. Eighteen patches across the reference
+                 photograph came back at 30-50deg and eighteen at 130-150deg,
+                 every one of them at a 2.6px pitch. Cassini's hatch is not a
+                 field that rotates with the pattern -- it is a fixed cross of
+                 two line families at +/-52deg, and the patchwork look comes
+                 from which of the two dominates locally, not from the angle
+                 wandering. Steering one hatch by the plate's orientation, as
+                 this did before, produced a continuously turning moire that
+                 measured 5-15px against the reference's flat 2.6. */
+              const phA = (x * hnAx + y * hnAy) * hatchK;
+              const phB = (x * hnBx + y * hnBy) * hatchK;
+              /* Which family wins here is still read off the plate, so the
+                 patches fall where the real glass puts them. */
+              /* BOTH FAMILIES RUN EVERYWHERE, AND THEIR CROSSING IS THE
+                 STIPPLE. This was nearly binary for one build, on the reading
+                 that the chequer it produced was an artefact. It is not: an
+                 FFT of the reference's fine band returns BOTH families at
+                 comparable power in every patch sampled -- 1.00 and 0.93,
+                 1.00 and 0.80, 1.00 and 0.98 -- and the fine dot mesh they
+                 make where they cross is exactly the light, almost
+                 see-through stipple the sheet is covered in. Suppressing one
+                 family removed it. What was actually wrong with the chequered
+                 build was that it was far too DARK, not that both were there.
+                 The plate still tilts the balance, so some patches read as
+                 diagonal streaks and others as mesh, as the reference does. */
+              /* THE MINORITY FAMILY MUST BE ABLE TO REACH ZERO, and the
+                 previous form could not. It carried a floor of
+                 `1 - hatchBias * 0.85` on BOTH families, so at the strongest
+                 setting the losing family still held about 14% -- and because
+                 these are DARKENING lines rather than a blend of tones, 14% of
+                 a dark line is a perfectly visible dark line. Both families
+                 therefore drew everywhere and the sheet came out as an even
+                 allover mesh, however decisive the selector was. Dumping
+                 `hatchSel` proved the patches were there all along; the fault
+                 was here.
+
+                 Now the two weights simply sum to one, so where the selector
+                 commits, one family is drawn and the other is GONE. Crossings
+                 survive only in the transition bands where the selector passes
+                 through the middle -- which is where the sample has them,
+                 between patches rather than across the whole sheet.
+
+                 `hatchCross` lifts a deliberate floor back in for a material
+                 that genuinely wants a woven mesh; Cassini leaves it at 0. */
+              const m = hatchSel[i];
+              const steep = 2 + hatchBias * 16;
+              let pick = 1 / (1 + Math.exp(-(m - 0.5) * steep));
+              if (hatchCross) pick = 0.5 + (pick - 0.5) * (1 - hatchCross);
+              const wa = pick;
+              const wb = 1 - pick;
+
+              if (fluteSpread) {
+                /* THE HATCH IS NOT LINE WORK, IT IS FLUTING, and at native
+                   pixels on the owner's sample that is unmistakable: bold
+                   rounded ribs that SMEAR the scene into streaks across their
+                   width, with a bright crown and a dark valley. They are
+                   cylindrical lenses, the same optics `rib` uses for Reeded,
+                   laid at the local patch angle instead of vertically.
+
+                   Drawing dark lines and nudging the sample a fraction of a
+                   pixel, which is what this did, produces a pattern ON the
+                   scene. Fluting produces a pattern MADE OF the scene, and
+                   that is the difference between a texture overlay and glass. */
+                /* Per-petal angle where segmentation is on, otherwise the
+                   old global pair. Kind 0 leaves the petal smooth, kind 2
+                   dimples it instead of fluting it. */
+                /* PER PIXEL, from how many ovals cover it. Taken per REGION
+                   this was wrong: overlapping ovals flood-fill into a single
+                   connected region, so one kind was being applied across a
+                   whole cluster and the overlaps vanished again. The depth
+                   count is inherently per-pixel, so it is read here. */
+                const kind = ovalDepth
+                  ? (ovalDepth[i] === 0 ? 1 : (ovalDepth[i] === 1 ? 0 : 3))
+                  : (regKind ? regKind[i] : 1);
+                if (kind === 0) {
+                  /* smooth petal: no surface structure of its own */
+                } else {
+                const nx = secNX ? secNX[i] : (regNX ? regNX[i] : (pick > 0.5 ? hnAx : hnBx));
+                const ny = secNX ? secNY[i] : (regNX ? regNY[i] : (pick > 0.5 ? hnAy : hnBy));
+                /* Hoisted above every use. Declaring it lower down put the
+                   rib-curvature code in its temporal dead zone -- the FIFTH
+                   time in this function -- and the render fell back to CSS in
+                   silence, which then measured as near-perfect direction
+                   entropy because a blur has no orientation at all. */
+                const seed = regPeriod ? regPeriod[i] * 97 : 0;
+                const fp = flutePeriod * (regPeriod ? regPeriod[i] : 1);
+                let nx2 = nx;
+                let ny2 = ny;
+                if (ribCurve) {
+                  /* RIBS CURVE; THEY DO NOT RULE. Every rib in a region ran
+                     exactly parallel to every other, and that is most of what
+                     was left of the alignment: matching the measured spread of
+                     bearings BETWEEN regions took the direction entropy from
+                     0.821 to 0.844, still short of the references' 0.89-0.94,
+                     because the deficit is inside each region rather than
+                     across them. A slow bend across the sheet, at a much
+                     longer wavelength than the rib pitch so it reads as gentle
+                     curvature and not as waviness. */
+                  const cw = Math.sin(x * 0.0091 + y * 0.0063 + seed)
+                    * 0.55 + Math.sin(x * 0.0037 - y * 0.0052 + seed * 1.7) * 0.45;
+                  const ca2 = cw * ribCurve;
+                  const cc = Math.cos(ca2);
+                  const ss = Math.sin(ca2);
+                  nx2 = nx * cc - ny * ss;
+                  ny2 = nx * ss + ny * cc;
+                }
+                /* PER-RIB VARIATION. Measured on the sample, neighbouring rib
+                   crests vary in amplitude by up to 5.8x (CV 0.47) and their
+                   spacing wanders; ours were uniform to within 5% (CV 0.02),
+                   and that regularity is what made the fluted bands read as
+                   machined corduroy. The crest position drifts SLOWLY along
+                   the band rather than jumping per rib -- an independent phase
+                   per rib fractures the lens and seams worse than regularity. */
+
+                const along = x * -ny2 + y * nx2;
+                const q = x * nx2 + y * ny2
+                  + (fluteWander ? Math.sin(along * 0.017 + seed) * fp * fluteWander : 0);
+                const fi = Math.floor(q / fp);
+                const u = q / fp - fi;
+                const centre = (fi + 0.5) * fp;
+                let ribAmp = ribVary
+                  ? 1 + (hash(fi * 1.7 + seed, 11.3) - 0.5) * 2 * ribVary
+                  : 1;
+                if (glintAmt) {
+                  /* ALONG-RIB SCATTER. On the sample, a crest crossing a flat
+                     featureless patch of backdrop is STILL broken into dashes
+                     and glints along its length, and the character does not
+                     change with what is behind it -- so it is a property of
+                     the surface, not of the refracted content. Our crests ran
+                     as constant-amplitude extrusions wherever the backdrop was
+                     smooth.
+
+                     Sampled in the rib's own frame and stretched along it, at
+                     a wavelength of a few rib pitches. NOT a sinusoid near the
+                     rib pitch: that cross-hatches against the rib grid into a
+                     woven moire, and at this pitch would sit on the pixel
+                     grid. Interpolated rather than blocky, and phase-offset
+                     per rib so neighbouring crests break independently. */
+                  const ga = along / (fp * glintLen);
+                  const g0 = Math.floor(ga);
+                  const gf = ga - g0;
+                  const gs = gf * gf * (3 - 2 * gf);
+                  const h1 = hash(g0 + seed, fi * 3.7 + 2.1);
+                  const h2 = hash(g0 + 1 + seed, fi * 3.7 + 2.1);
+                  const glint = (h1 + (h2 - h1) * gs) - 0.5;
+                  ribAmp *= 1 + glint * 2 * glintAmt;
+                }
+                /* Across the rib the scene is compressed towards the crown and
+                   inverted, exactly as a half-cylinder does. */
+                const disp = (centre + (u - 0.5) * fp * fluteSpread) - q;
+                const damp = 1 - f * faceClear;
+                sx += nx2 * disp * damp;
+                sy += ny2 * disp * damp;
+                /* Crown catches the light, valley shades: a signed profile
+                   across each rib, which is what makes them read as round. */
+                /* A SPECULAR CROWN, not a symmetric sine. On the sample each
+                   rib carries a narrow bright highlight where its curve faces
+                   the light and a broader shade in the valley beside it -- the
+                   asymmetry is what makes them read as rounded glass rather
+                   than as corrugation. */
+                const cr = Math.cos((u - 0.5) * Math.PI);
+                fluteTone = (cr * cr * cr * 1.35 - 0.45) * damp * ribAmp;
+                lobeX = nx2; lobeY = ny2;
+
+                if (kind === 3) {
+                  /* The second impression, at a neighbouring bearing rather
+                     than the perpendicular -- a perpendicular pair is the
+                     dimple waffle, whereas two overlapping petals meet at
+                     whatever angle they happen to lie at. */
+                  const ca = Math.cos(overlapTurn);
+                  const sa = Math.sin(overlapTurn);
+                  const ox2 = nx2 * ca - ny2 * sa;
+                  const oy2 = nx2 * sa + ny2 * ca;
+                  const q3 = x * ox2 + y * oy2;
+                  const fk = Math.floor(q3 / fp);
+                  const u3 = q3 / fp - fk;
+                  const c3 = (fk + 0.5) * fp;
+                  const d3 = (c3 + (u3 - 0.5) * fp * fluteSpread) - q3;
+                  sx += ox2 * d3 * damp * overlapAmt;
+                  sy += oy2 * d3 * damp * overlapAmt;
+                  const cr3 = Math.cos((u3 - 0.5) * Math.PI);
+                  fluteTone = (fluteTone + (cr3 * cr3 * cr3 * 1.35 - 0.45) * damp * ribAmp)
+                    * 0.55;
+                  lobeX = nx2; lobeY = ny2;
+                }
+                if (kind === 2) {
+                  /* DIMPLED IS A WAFFLE, NOT NOISE. This was per-pixel white
+                     noise, which is why raising the rib definition turned the
+                     dimpled regions into salt-and-pepper: noise scales with
+                     amplitude where structure does not. Measured on the
+                     sample, the dimple pitch equals the local flute pitch --
+                     13.0px against 13.2px -- so a dimpled petal is simply the
+                     SAME fluting run in both directions at the same spacing,
+                     crossing into a lattice of lenslets. It therefore
+                     refracts, with a crown and a rim, instead of speckling. */
+                  const q2 = x * -ny2 + y * nx2;
+                  const fj = Math.floor(q2 / fp);
+                  const u2 = q2 / fp - fj;
+                  const centre2 = (fj + 0.5) * fp;
+                  const disp2 = (centre2 + (u2 - 0.5) * fp * fluteSpread) - q2;
+                  sx += -ny2 * disp2 * damp * dimpleAmt;
+                  sy += nx2 * disp2 * damp * dimpleAmt;
+                  const cr2 = Math.cos((u2 - 0.5) * Math.PI);
+                  /* Damped hard. At full strength two crossed rib sets read as
+                     a regular waffle, which is no more photographic than the
+                     white noise it replaced -- the sample's dimpling is much
+                     subtler than its fluting. */
+                  fluteTone = (fluteTone + (cr2 * cr2 * cr2 * 1.35 - 0.45) * damp * ribAmp)
+                    * 0.5 * dimpleAmt;
+                }
+                }
+              }
+              /* THIN DARK LINES ON A PALE GROUND, not a sine. At native
+                 pixels the reference runs about 1px of dark line then 1.5px of
+                 pale -- an asymmetric duty cycle. A symmetric sine at a 2.6px
+                 pitch samples to alternating dark and light pixels, so it
+                 rendered as a CHEQUERBOARD rather than as line work, and no
+                 amount of amplitude could fix that because the shape was
+                 wrong. Three-tap supersampled along the normal, because a 1px
+                 feature at a 2.6px pitch aliases badly on a single sample. */
+              let lineTone = 0;
+              for (let t = -1; t <= 1; t += 1) {
+                /* A NARROW span, about a seventh of a pixel, and that is
+                   deliberate. Widening it to a proper third-of-a-pixel box
+                   across the pixel dropped the fine-band rms from 30 to 5 --
+                   correct antialiasing destroys a 1px line at a 2.6px pitch,
+                   because there is barely more than one sample per line. The
+                   reference photograph keeps its contrast for the same reason
+                   a camera does: its sampling is sharper than a box filter.
+                   So this only takes the edge off the aliasing rather than
+                   band-limiting, and the near-binary family selection above is
+                   what actually stops the crossings chequering. */
+                const o = t * 0.34;
+                const la = Math.max(0, -Math.sin(phA + o) - 0.2);
+                const lb = Math.max(0, -Math.sin(phB + o) - 0.2);
+                lineTone -= (la * wa + lb * wb) / (wa + wb);
+              }
+              lineTone = lineTone / 3;
+              /* The screen is rolled into the ground between the pebbles, not
+                 across them, so the faces carry far less of it -- that
+                 contrast is what makes the pebbles read as shapes. They are
+                 not polished, though: they keep their own stipple. */
+              const weave = (Math.sin(phA) * wa + Math.sin(phB) * wb) / (wa + wb);
+              comb = weave * mat.hatch * (1 - f * faceClear);
+              hatchTone = lineTone * (1 - f * faceClear);
+            } else {
+              /* Florielle stays on exactly the plate-derived comb it was
+                 approved with. `hatchPitch` is the switch for the whole new
+                 model -- synthesised weave, luma-based petal mask, faceClear
+                 -- and only Cassini declares it. */
+              comb = (detail[i] / dNorm) * mat.hatch * (1 - f * 0.85);
+            }
+            sx += hatchPX[i] * comb;
+            sy += hatchPY[i] * comb;
+          } else if (mat.strength) {
+            const xm = x > 1 ? i - 2 : i;
+            const xp = x < w - 2 ? i + 2 : i;
+            const ym = y > 1 ? i - 2 * w : i;
+            const yp = y < h - 2 ? i + 2 * w : i;
+            let gx = (H[xp] - H[xm]) / gNorm;
+            let gy = (H[yp] - H[ym]) / gNorm;
+            gx /= 1 + Math.abs(gx) * 0.4;
+            gy /= 1 + Math.abs(gy) * 0.4;
+            sx = x + gx * mat.strength;
+            sy = y + gy * mat.strength;
+          }
+
+          if (rimAmt && petalGX) {
+            const rgx = petalGX[i];
+            const rgy = petalGY[i];
+            sx += rgx * rimAmt;
+            sy += rgy * rimAmt;
+            /* Light spread by that slope arrives thinner: a small compression
+               shade, not a drawn line. */
+            rimShade = -(Math.abs(rgx) + Math.abs(rgy));
+          }
+
+          if (pebbleShiftX) {
+            sx += pebbleShiftX[i] * petal[i];
+            sy += pebbleShiftY[i] * petal[i];
+          }
+
+          if (grainAmp) {
+            sx += (hash(x, y) - 0.5) * grainAmp;
+            sy += (hash(x + 9, y + 3) - 0.5) * grainAmp;
+          }
+
+          sx = Math.min(w - 1.001, Math.max(0, sx));
+          sy = Math.min(h - 1.001, Math.max(0, sy));
+
+          /* AN OUTPUT PIXEL IS AN INTEGRAL, NOT A SAMPLE. Real obscured glass
+             gathers light over a cone whose width and SHAPE vary point to
+             point: a rolled rib scatters widely ACROSS its length and hardly at
+             all along it, while a polished lens face barely scatters at all.
+             Taking one sample and then averaging the result with a round blur
+             gives the wrong kind of softness -- isotropic where the sheet is
+             strongly directional -- and it is why this looked either too sharp
+             or too smeared but never like glass.
+
+             So the samples are spread along the rib NORMAL, the direction the
+             rib actually scatters in, and the spread collapses on the lens
+             faces where the surface is smooth. */
+          let lobeR = 0;
+          if (lobeAmt) {
+            lobeR = lobeAmt * (1 - petal[i] * lobeFace);
+          }
+
+          /* Signed emboss: ridges catch light, grooves shade. Clamped, so
+             the pattern is bold without ever going to paint. */
+          const stip = stippleAmt ? hash(x * 1.7 + 11, y * 2.3 + 7) - 0.5 : 0;
+          let e = detail[i] / dNorm;
+          if (e > 1) e = 1; else if (e < -1) e = -1;
+          if (mat.kind === 'hatchlens') {
+            if (mat.hatchPitch) {
+              /* The weave draws itself as line work over everything; the
+                 plate's own relief keeps drawing the pebble rims underneath. */
+              e = e * embossAmp + hatchTone * mat.hatchEmboss + fluteTone * fluteShade
+                + rimShade * rimDark;
+              if (e > 1) e = 1; else if (e < -1) e = -1;
+            } else {
+              /* The hatch draws itself on the ground and fades on the petal
+                 faces, which is exactly how the two read in the photograph. */
+              e *= embossAmp + (mat.hatchEmboss - embossAmp) * (1 - petal[i]);
+            }
+          } else {
+            e *= embossAmp;
+          }
+
+          /* Digital's tiles are bevelled: a bright specular edge on two sides,
+             a shadow on the others. Without it the mosaic reads as a change of
+             infill rather than as relief cut into the glass. */
+          let rim = 0;
+          if (mat.kind === 'cell' && mat.rim) {
+            const ux = x - Math.floor(x / cell) * cell;
+            const uy = y - Math.floor(y / cell) * cell;
+            if (ux < 1 || uy < 1) rim = mat.rim;
+            else if (ux > cell - 2 || uy > cell - 2) rim = -mat.rim * 0.7;
+          }
+
+          const o = i * 4;
+          /* `groundFlat` is a floor under the averaging that applies across the
+             WHOLE pane, not just the petal faces. In the reference photograph
+             no scene detail survives anywhere -- the clock is broad red, white
+             and grey masses and nothing finer -- whereas ours was leaving
+             brickwork, window frames and a legible blue sign readable between
+             the petals. The lens faces still flatten hardest. */
+          const faceMix = mat.kind === 'hatchlens'
+            ? (flatGround
+              ? groundFlatAmt + (faceFlatAmt - groundFlatAmt) * petal[i]
+              : Math.max(mat.groundFlat || 0, petal[i]))
+            : 0;
+          pxSX[i] = sx;
+          pxSY[i] = sy;
+          pxE[i] = e;
+          pxRim[i] = rim;
+          pxStip[i] = stip;
+          pxFace[i] = faceMix;
+          pxLobeR[i] = lobeR;
+          pxLobeX[i] = lobeX;
+          pxLobeY[i] = lobeY;
+        }
+      }
+
+
+      /* The only place the scene is read. `dx`/`dy` shift what is sampled
+         without touching anything that describes the glass. */
+      const paint = (dx, dy, maxX) => {
+        /* Only the columns left of the divider are ever seen -- the clip on the
+           canvas's parent throws the rest away -- so a parallax repaint stops
+           there. At the default split that is a little over half the work, and
+           it is free. A full render still paints everything, because the
+           divider moves. */
+        const lim = maxX == null ? w : Math.min(w, Math.max(1, maxX));
+        for (let y = 0; y < h; y += 1) {
+          for (let x = 0; x < lim; x += 1) {
+            const i = y * w + x;
+            let sx = pxSX[i] + dx;
+            let sy = pxSY[i] + dy;
+            sx = sx < 0 ? 0 : sx > w - 1.001 ? w - 1.001 : sx;
+            sy = sy < 0 ? 0 : sy > h - 1.001 ? h - 1.001 : sy;
+            const eV = pxE[i];
+            const rimV = pxRim[i];
+            const stipV = pxStip[i];
+            const faceMix = pxFace[i];
+            const lobeR = pxLobeR[i];
+            const lobeX = pxLobeX[i];
+            const lobeY = pxLobeY[i];
+            const o = i * 4;
+            const x0 = sx | 0;
+            const y0 = sy | 0;
+            const fx = sx - x0;
+            const fy = sy - y0;
+            const p00 = (y0 * w + x0) * 4;
+            const p10 = p00 + 4;
+            const p01 = p00 + w * 4;
+            const p11 = p01 + 4;
+            const w00 = (1 - fx) * (1 - fy);
+            const w10 = fx * (1 - fy);
+            const w01 = (1 - fx) * fy;
+            const w11 = fx * fy;
+            for (let ch = 0; ch < 3; ch += 1) {
+              const src = mat.kind === 'frost' ? soft : scene;
+              let v = src[p00 + ch] * w00 + src[p10 + ch] * w10 + src[p01 + ch] * w01 + src[p11 + ch] * w11;
+              if (lobeR > 0.15) {
+                /* Four extra taps along the scattering axis, weighted so the
+                   centre still dominates: enough to turn a point sample into a
+                   short directional integral without four times the cost. */
+                let acc = v * 2;
+                let wsum = 2;
+                for (let t = -2; t <= 2; t += 1) {
+                  if (t === 0) continue;
+                  const o = t * lobeR * 0.5;
+                  let ax = sx + lobeX * o;
+                  let ay = sy + lobeY * o;
+                  ax = ax < 0 ? 0 : ax > w - 1.001 ? w - 1.001 : ax;
+                  ay = ay < 0 ? 0 : ay > h - 1.001 ? h - 1.001 : ay;
+                  const bx = ax | 0;
+                  const by = ay | 0;
+                  const q00 = (by * w + bx) * 4 + ch;
+                  const gx2 = ax - bx;
+                  const gy2 = ay - by;
+                  acc += src[q00] * (1 - gx2) * (1 - gy2) + src[q00 + 4] * gx2 * (1 - gy2)
+                    + src[q00 + w * 4] * (1 - gx2) * gy2 + src[q00 + w * 4 + 4] * gx2 * gy2;
+                  wsum += 1;
+                }
+                v = acc / wsum;
+              }
+              if (scatter) {
+                const sc = scatter[p00 + ch] * w00 + scatter[p10 + ch] * w10
+                  + scatter[p01 + ch] * w01 + scatter[p11 + ch] * w11;
+                v += (sc - v) * 0.75;
+              }
+              if (faceMix) {
+                const f = flat[p00 + ch] * w00 + flat[p10 + ch] * w10 + flat[p01 + ch] * w01 + flat[p11 + ch] * w11;
+                if (flatGround) {
+                  const g = flatGround[p00 + ch] * w00 + flatGround[p10 + ch] * w10
+                    + flatGround[p01 + ch] * w01 + flatGround[p11 + ch] * w11;
+                  /* ALMOST SEE-THROUGH. A flat wash alone made the pebbles
+                     opaque discs; in the reference the red behind clearly tints
+                     them and each carries its own soft gradient. `washMix` is
+                     how much of the pebble is its own flat average and how much
+                     is the softened scene -- enough gradient to read as glass,
+                     not enough detail to read as a picture. */
+                  const pw = pebbleWash && pebbleWash[i * 3 + ch] > 0
+                    ? pebbleWash[i * 3 + ch] * washMix + f * (1 - washMix)
+                    : f;
+                  v += (g + (pw - g) * petal[i] - v) * faceMix;
+                } else {
+                  v += (f - v) * faceMix;
+                }
+              }
+              if (groundAmp) {
+                /* The fine screened ground between lens elements: colour
+                   passes, detail does not. */
+                const g = (1 - Math.min(1, Math.abs(detail[i]) / dNorm)) * groundAmp;
+                v += (240 - v) * g * 0.35;
+              }
+              /* Moulded relief SCATTERS ambient light, so it always reads
+                 lighter than what is behind it -- bright motifs even over a dark
+                 object. A symmetric signed emboss printed black strokes over
+                 foliage and read as a decal; the negative lobe is therefore
+                 heavily damped rather than mirrored. */
+              v += eV > 0 ? (255 - v) * eV : v * eV * shadeAmp;
+              if (stippleAmt) {
+                /* Cassini's faces are not polished. At native pixels the
+                   reference's pebbles carry a fine granular etch, and on the
+                   ground that grain is the STRONGEST texture present -- finest
+                   band rms 32-34 there against 22 on a face. Rendering the
+                   faces smooth and leaning on blur to obscure is what made this
+                   look soft; the real sheet obscures with texture and stays
+                   crisp everywhere. */
+                const st = stipV * stippleAmt * (1 - petal[i] * stippleFace);
+                v += st > 0 ? (255 - v) * st : v * st;
+              }
+              if (domeAmt && (ovalDome || dome)) {
+                /* Only on the faces: the ground is a screen, not a lens. */
+                const dv = (ovalDome ? ovalDome[i] : dome[i]) * domeAmt * petal[i];
+                v += dv > 0 ? (255 - v) * dv : v * dv;
+              }
+              if (petalPale) {
+                /* A frosted pebble scatters light forward, so it sits PALER
+                   than the hatched ground around it. That difference, not an
+                   outline, is what makes the petals read at a glance.
+
+                   NO RIM DARKENING HERE, and that is deliberate. Subtracting on
+                   the slope of the petal field drew a dark ring round every pale
+                   blob, and a pale blob inside a dark ring is a contour: the
+                   pane came out looking like a topographic map. Isolating the
+                   terms one at a time showed the rings were entirely this and
+                   not the lens displacement or the flattening -- with the lift
+                   switched off they vanished, with the lens cut to a quarter
+                   they did not. The reference has no such ring; its pebbles just
+                   sit paler, with the edge left to the lens. */
+                v += (255 - v) * petal[i] * petalPale;
+              }
+              if (rimV) v += rimV > 0 ? (255 - v) * rimV : v * rimV;
+              if (veil) {
+                /* A dense screen scatters over a wide angle, so the ground
+                   transmits diffuse light and reads MILKY -- pale almost
+                   regardless of what is behind it -- while a pebble is a lens
+                   and passes its wash through. `groundVeil` is that difference.
+                   Without it the ground took its tone straight from the scene
+                   and went dark green over foliage, where the reference's stays
+                   pale. */
+                const vl = groundVeil
+                  ? veil + (groundVeil - veil) * (1 - petal[i])
+                  : veil;
+                v += (250 - v) * vl;
+              }
+              if (knee) {
+                /* SOFT HIGHLIGHT ROLLOFF. Measured against all three references:
+                   they clip pure white on 0.01-0.03% of pixels, ours on 1.7%.
+                   Real glass has no mechanism that returns more light than fell
+                   on it, but this renderer stacks several positive terms --
+                   relief, dome, petal paleness, the rib crown, the veil -- each
+                   of which adds a fraction of the REMAINING headroom, so bright
+                   areas pile up on 255 and every highlight added after that is
+                   invisible. Rolling the top off asymptotically keeps the
+                   crowns separable, and it is a prerequisite for giving the ribs
+                   any more specular definition. */
+                if (v > knee) v = knee + (kCeil - knee) * (1 - Math.exp((knee - v) / (kCeil - knee)));
+              }
+              dst[o + ch] = v;
+            }
+            dst[o + 3] = 255;
+
+          }
+        }
+      };
+
+      paint(0, 0);
+      glassRepaint = paint;
+      glassOut = out;
+
+      if (token !== renderToken) return;
+      if (!glassCanvas) {
+        glassCanvas = document.createElement('canvas');
+        glassCanvas.className = 'fg-obscure-stage__optics';
+        glassCanvas.setAttribute('aria-hidden', 'true');
+        glassLayer.appendChild(glassCanvas);
+      }
+      glassCanvas.width = w;
+      glassCanvas.height = h;
+      glassCanvas.getContext('2d').putImageData(out, 0, 0);
+      stage.dataset.glassRender = 'canvas';
+    } catch (error) {
+      stage.dataset.glassRender = 'css';
+    }
   };
 
   const activateBackground = (name) => {
@@ -3484,9 +5936,13 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     }
 
     stage.dataset.activeBackground = name;
-    if (backgroundToggle) {
-      backgroundToggle.textContent = name === 'cat' ? 'Show house background' : 'Show Legend background';
-    }
+    /* The pressed state IS the label here -- the buttons are icon-only and
+       carry their own screen-reader text, so nothing needs rewriting, only
+       marking. */
+    backgroundOptions.forEach((option) => {
+      option.setAttribute('aria-pressed', option.dataset.fgObscureBackground === name ? 'true' : 'false');
+    });
+    renderGlass();
   };
 
   const activate = (button) => {
@@ -3513,10 +5969,63 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
     stage.style.setProperty('--privacy', privacy);
     stage.dataset.activeGlass = key;
+    renderGlass();
     if (nameTarget) nameTarget.textContent = name;
     if (privacyTarget) privacyTarget.textContent = privacy === '0' ? 'Decorative texture' : `Privacy ${privacy}`;
     if (copyTarget) copyTarget.textContent = copy;
   };
+
+  /* FILTER BY PRIVACY LEVEL. `buttons` holds BOTH lists -- the desktop rail and
+     the mobile picker render the same textures -- so the count has to be of
+     distinct patterns, not of buttons, or it reads double.
+
+     Hidden with a class rather than the `hidden` property: these buttons are
+     given a `display` by the stylesheet, and an author `display` beats the UA
+     sheet's `[hidden]` rule, so `el.hidden = true` would leave them on screen.
+     That trap has already cost this codebase the case-study archives, the
+     repairs drawings and the bi-fold rail controls. */
+  const applyPrivacyFilter = (level) => {
+    const shown = new Set();
+    let firstVisible = null;
+    buttons.forEach((option) => {
+      const match = level === 'all' || (option.dataset.privacy || '0') === level;
+      option.classList.toggle('is-filtered-out', !match);
+      if (match) {
+        shown.add(option.dataset.key || option.dataset.name || '');
+        if (!firstVisible) firstVisible = option;
+      }
+    });
+
+    privacyOptions.forEach((option) => {
+      option.setAttribute('aria-pressed', option.dataset.fgObscurePrivacy === level ? 'true' : 'false');
+    });
+
+    if (filterCount) {
+      filterCount.textContent = shown.size === 1 ? '1 pattern' : `${shown.size} patterns`;
+    }
+
+    /* If the filter hides whatever the stage is showing, move the stage rather
+       than leaving the pane on a pattern the list no longer offers. */
+    const activeKey = stage.dataset.activeGlass || '';
+    const activeStillListed = buttons.some((option) => (
+      (option.dataset.key || '') === activeKey && !option.classList.contains('is-filtered-out')
+    ));
+    if (!activeStillListed && firstVisible) activate(firstVisible);
+  };
+
+  /* THE LEVELS TOGGLE, because there is no longer an `All` segment to go back
+     to. Owner instruction, 2026-08-30. Pressing the level that is already
+     pressed clears the filter; without that the list could be narrowed and
+     never widened again, which is the failure this change would otherwise
+     have shipped. `applyPrivacyFilter('all')` then matches no button, so all
+     five come up unpressed, which is the correct reading of "not filtered". */
+  privacyOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      const level = option.dataset.fgObscurePrivacy || 'all';
+      const already = option.getAttribute('aria-pressed') === 'true';
+      applyPrivacyFilter(already ? 'all' : level);
+    });
+  });
 
   buttons.forEach((button) => {
     button.addEventListener('click', () => activate(button));
@@ -3526,6 +6035,21 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       activate(button);
     });
   });
+
+  /* OPENS ON PRIVACY 5, owner instruction 2026-08-30. It used to open with no
+     level pressed and all twenty-one patterns listed, which is the `all` state
+     the `All` button was removed for -- the segment was gone but the state it
+     selected was still what you landed on.
+
+     5 is the right default rather than an arbitrary one: it is what someone
+     searching privacy glass is after, and it is the level of `cotswold`, which
+     the markup already sets as `data-active-glass`. So the pane keeps the glass
+     it renders on load and the list simply narrows around it -- no first-paint
+     swap, and `applyPrivacyFilter`'s own "activate the first visible" fallback
+     never fires here. Change one of those two and check the other. */
+  applyPrivacyFilter('5');
+
+  renderGlass();
 
   splitControl?.addEventListener('input', () => {
     setSplit(splitControl.value);
@@ -3603,12 +6127,13 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   viewport.addEventListener('pointerup', endDrag);
   viewport.addEventListener('pointercancel', endDrag);
 
-  backgroundToggle?.addEventListener('click', () => {
-    backgroundIndex = (backgroundIndex + 1) % backgroundNames.length;
-    activateBackground(backgroundNames[backgroundIndex]);
+  backgroundOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      activateBackground(option.dataset.fgObscureBackground);
+    });
   });
 
-  activateBackground(backgroundNames[backgroundIndex]);
+  activateBackground(backgroundNames[0]);
   setSplit(splitControl?.value || 54);
 });
 

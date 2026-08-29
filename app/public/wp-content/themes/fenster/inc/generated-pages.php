@@ -1395,9 +1395,23 @@ function fenster_get_generated_page(?string $slug = null): ?array
             'slug' => 'obscured-glass',
             'title' => 'Obscured Glass',
             'url' => home_url('/obscured-glass/'),
+            /* THE HEAD PHRASE IS THE QUERY, NOT THE INTERNAL LABEL. `Obscured
+               Glass Options` named the page after itself and carried neither of
+               the two things people actually search: `privacy glass`, and the
+               manufacturer. This is Pilkington's Texture collection and naming
+               it is the owner's instruction, 2026-08-30 -- Pilkington do not
+               sell direct, so the Supplier Naming Rule's test (could a customer
+               go straight to them) is the same answer it gives for Sheerline
+               and Liniar.
+
+               `Obscure` and `Privacy` both lead because the page has 22 content
+               in-links whose anchors say obscure glass, and throwing that away
+               to chase a second phrase would cost more than it wins. Everything
+               that matters sits inside the first 45 characters, so the brand is
+               what truncates. */
             'seo' => [
-                'title_tag' => 'Obscured Glass Options | Fenster Glazing',
-                'meta_description' => 'Compare obscured glass patterns and privacy levels for Fenster Glazing windows, doors and replacement glass.',
+                'title_tag' => 'Obscure & Privacy Glass | Pilkington Textures | Fenster Glazing',
+                'meta_description' => 'See every Pilkington obscure glass texture on a live preview, each rated 1 to 5 for privacy. Compare bathroom, door and side panel glass before you choose.',
                 'canonical' => 'https://fensterglazing.com/obscured-glass/',
                 'robots' => 'max-image-preview:large',
             ],

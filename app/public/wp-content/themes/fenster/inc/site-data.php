@@ -3514,11 +3514,22 @@ function fenster_site_data(): array
             ],
         ],
         'obscure_glass' => [
-            'intro' => 'Obscured glass adds privacy while still letting daylight through. Use the preview to compare how the same real image changes behind each texture before choosing door glass, bathroom glass, side panels or replacement units.',
+            'intro' => 'We fit the Pilkington Texture range, and every pattern in it carries a privacy rating from one to five. Use the preview to see what a real scene looks like behind each one, close up and further away, before you settle on glass for a bathroom, a door, a side panel or a replacement unit.',
             'legend_image' => '/wp-content/themes/fenster/assets/team/legend-colour.webp',
             'house_image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/birkacre-house.webp',
             'textures' => [
-                ['name' => 'Cotswold', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cotswold-pilkington.png', 'copy' => 'Heavy distortion for high privacy while retaining a traditional textured feel.'],
+                /* THE WEBP, NOT THE PNG. `Cotswold-pilkington.png` is 2,379,026
+                   bytes for a 64px swatch, and it is a CSS background on an
+                   element in the render tree, so it can never lazy-load: it
+                   downloaded on this page and on THIRTEEN product routes, where
+                   it was 40% of the mobile image payload on the site's
+                   most-viewed page. `Cotswold-privacy-5.webp` is the same
+                   picture at 93,080 bytes -- checked, correlation 0.987, the
+                   difference is the resize alone -- and had been sitting unused
+                   in the same folder since July while this line pointed past
+                   it. Found by `FULL-SITE-AUDIT-2026-08-13.md` [133]; it was a
+                   one-line data edit all along, not an image job. */
+                ['name' => 'Cotswold', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cotswold-privacy-5.webp', 'copy' => 'Heavy distortion for high privacy while retaining a traditional textured feel.'],
                 /* Satin is a sandblasted finish, so it is grain rather than lines. This
                    entry used to be a hand-drawn repeating-linear-gradient, which read as
                    pinstripe and contradicted its own description on a customer-facing
@@ -3529,8 +3540,8 @@ function fenster_site_data(): array
                is an even, flat wash now: a soft diagonal for a little depth and a
                faint sheen off one corner, and no grain at all. */
             ['name' => 'Satin', 'privacy' => 5, 'texture' => 'radial-gradient(circle at 32% 24%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%), linear-gradient(135deg, #f7fbfb 0%, #eef6f7 46%, #e4f0f1 100%)', 'copy' => 'Plain satin frosting for maximum privacy with a clean, minimal finish.'],
-                ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
-                ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
+                ['name' => 'Arctic', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Arctic-privacy-5-unmirrored.webp', 'copy' => 'A strong frosted texture for maximum privacy with a clean, bright look.'],
+                ['name' => 'Autumn', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Autumn-privacy-3-unmirrored.webp', 'copy' => 'Soft organic movement that keeps the view diffused without feeling too heavy.'],
                 /* Brightness matters as much as contrast here, because the stage multiplies the
                texture over the scene. The first correction fixed the invisibility and
                created the opposite fault: lifting contrast dropped the mean to 106 against
@@ -3548,16 +3559,86 @@ function fenster_site_data(): array
                Sized rather than left to `cover`. The stage paints the texture at 122% on
                top of cover, so a photographed pattern is enlarged twice over and
                reads as coarse blobs instead of glass. Pinning the width fixes the
-               pattern's scale wherever it is painted — swatch, wall or stage. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+               pattern's scale wherever it is painted — swatch, wall or stage.
+
+               A `tile` was added 2026-08-28, built by scripts/build-cassini-texture.py.
+               The renderer finds Cassini's lens faces by taking everything above a
+               percentile of the blurred plate, and a percentile is a GLOBAL cut, so it
+               only finds the real petals if the plate is evenly lit. This one measured a
+               low-frequency spread of 168 against a set median of 70 — the worst texture
+               in the set — so the cut fell below the ground in the bright corner and
+               above the petals in the dark one, and the petals rendered as connected
+               white amoebas: a contour map of the lighting rather than the pattern.
+               Flat-fielding takes it to 55.
+
+               `tile` and not `image`, exactly as Reeded does it: only the stage renders
+               optics, and a flat-fielded plate looks flat when it is merely SHOWN. The
+               swatch, the hero wall and the glass card keep the photograph.
+
+               The tile became SEAMLESS on 2026-08-28 (scripts/build-cassini-seamless.py)
+               so the pattern can continue across a pane larger than the plate. It is a
+               minimum-error boundary cut, NOT a mirror: mirroring is what makes Reeded
+               tile, and that script warns in terms not to generalise it — ribs are
+               near-identical to their own reflection, an organic mat of lenses is not,
+               and mirroring Cassini would put a butterfly axis down the middle. Measured
+               after cutting, both wrapped joins sit at the interior step (4.0 against 3.7
+               across, 4.3 against 3.9 down). */
+            /* THE PLATE CAME OFF A PHOTOGRAPH AND THE PATTERN WAS WRONG, corrected
+               2026-08-30. Owner: "currently its opacity is ok but the pattern is
+               completely wrong." Every plate before this one was a photograph of a
+               sample held to the light, and what those gave was a mat of ROUNDED
+               PEBBLES PACKED EDGE TO EDGE. Real Cassini is POINTED, OVERLAPPING
+               LEAVES over a ruled hatch that runs in large angular sectors. Pallot's
+               own `Textured-Cassini_5.jpg` shows the same leaves, so two sources
+               independent of us agree with each other and disagree with what we
+               shipped. Both files now come from the WindowCAD designer's own render
+               via `scripts/build-cassini-windowcad.py`; the reference frame is
+               committed at `scripts/reference-cassini-windowcad.png`. The blue cast
+               in that recording is the quote tool's toughened-glass indicator and is
+               not the glass — the build works on luminance only, so it never reaches
+               the plate. Names carry `-wcad` because theme images have no version
+               string and replacing one in place serves the old bytes. */
+            /* THE LAYOUT IS THE OWNER'S, TRACED BY HAND, AS OF 2026-08-30.
+               The plate's TEXTURE is still the clock photograph's -- hatch,
+               grain, sectored ruling and each lens's own dome direction -- but
+               its ARRANGEMENT is 82 ovals the owner marked and corrected
+               himself, because four separate detectors failed to find them. A
+               Cassini lens shows as a tonal form rather than a hard edge, so
+               edge-driven detection finds the crossings and misses the lenses;
+               the best of the four recovered 2 of 9 on a patch he marked. See
+               `scripts/build-cassini-traced.py`, with the layout at
+               `scripts/cassini-oval-layout.json` and his markup committed at
+               `scripts/reference-cassini-owner-ovals.png` so it can be
+               re-derived. Names carry `-traced` because theme images have no
+               version string and replacing one in place serves the old bytes.
+               The `-clock` and `-wcad` plates are left on disk as revert
+               targets; swapping the two paths on this line is the whole undo. */
+            /* `image` AND `tile` ARE DOING TWO DIFFERENT JOBS HERE, WHICH IS
+               THE WHOLE POINT OF THE SPLIT. `tile` is read by the renderer and
+               is the traced plate -- a height field, high contrast, and not
+               something to look at. `image` is everything that merely DISPLAYS
+               the glass: the swatch, the comparison grid, the hero wall. Owner,
+               2026-08-30: the traced plate as a thumbnail "looks harsh and
+               b&w", which it is, because it was never meant to be seen. `image`
+               is back on `rev2`, the original Pilkington sample photograph,
+               which is what live has always shown.
+
+               NO `size`. The stage lays the plate at cover, once, because the
+               explicit oval layout in the material is in the flat plate's own
+               coordinates and a tiled texture has no single mapping to place it
+               through. A `size` here would be picked up as
+               `button.dataset.size` and quietly tile it again. `tile` therefore
+               points at the FLAT plate rather than the seamless cut; the cut
+               copy stays on disk but nothing uses it. */
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-traced-flat.webp', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],
                 ['name' => 'Digital', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Digital-privacy-3.webp', 'copy' => 'A crisp modern texture with medium privacy and a more architectural look.'],
                 ['name' => 'Everglade', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Everglade-privacy-5.webp', 'copy' => 'Dense texture for stronger privacy in exposed or overlooked glazing.'],
-                ['name' => 'Florielle', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Florielle-privacy-4.webp', 'copy' => 'A floral pattern that balances decoration with a useful level of screening.'],
-                ['name' => 'Mayflower', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Mayflower-privacy-4.webp', 'copy' => 'Traditional patterning for entrance doors, side panels and character properties.'],
-                ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2.webp', 'size' => '450px auto', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
+                ['name' => 'Florielle', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Florielle-privacy-4-unmirrored.webp', 'copy' => 'A floral pattern that balances decoration with a useful level of screening.'],
+                ['name' => 'Mayflower', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Mayflower-privacy-4-unmirrored.webp', 'copy' => 'Traditional patterning for entrance doors, side panels and character properties.'],
+                ['name' => 'Minster', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Minster-privacy-2-unmirrored.webp', 'size' => '296px auto', 'copy' => 'A lighter traditional texture where soft distortion is enough.'],
                 ['name' => 'Oak', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Oak-privacy-4.webp', 'copy' => 'Leaf-like movement with strong privacy and a warmer decorative feel.'],
                 ['name' => 'Pelerine', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Pelerine-privacy-4.webp', 'copy' => 'Flowing vertical texture for privacy with a quieter, more elegant pattern.'],
                 /* The real photograph, scaled rather than redrawn. Two attempts at inventing
@@ -3580,9 +3661,23 @@ function fenster_site_data(): array
                three box sizes before settling on it.
                Height 100% because the reeds run vertically, so stretching that axis
                costs nothing and avoids a horizontal seam where the tile repeats. */
-            ['name' => 'Reeded', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2.webp', 'size' => '180px 100%', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
-                ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4.webp', 'size' => '380px auto', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
-                ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
+            /* THE ONE KEEPER FROM THE 2026-08-27 REWRITE. Everything else on this
+               route went back to the original Pilkington photographs and the
+               original compositing on the owner's instruction; Reeded stayed
+               because its two faults were in the ASSET rather than in any effect.
+
+               `tile` is the mirrored copy and only the stage paints it, because
+               the stage is the only surface that repeats and the photograph is lit
+               from one side -- flat-fielded and mirrored, its seam went 48.8 to
+               0.00. `image` is the plain levelled photograph every other surface
+               shows, lifted to the set's mean because it was the one near-black
+               square in a pale column of swatches. Handing the mirrored tile to a
+               58px swatch puts its mirror axis dead centre and reads as a chevron.
+
+               Both are derived by `scripts/build-reeded-texture.py`. */
+            ['name' => 'Reeded', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2-levelled.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Reeded-privacy-2-seamless.webp', 'size' => '360px 100%', 'copy' => 'Linear ribbing with partial privacy and a contemporary look.'],
+                ['name' => 'Stippolyte', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Stippolyte-privacy-4-unmirrored.webp', 'size' => '271px auto', 'copy' => 'Fine broken texture that gives reliable privacy without a large pattern.'],
+                ['name' => 'Sycamore', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Sycamore-privacy-2-unmirrored.webp', 'copy' => 'A lighter patterned option for softer privacy and decorative daylight.'],
                 ['name' => 'Taffeta', 'privacy' => 3, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Taffeta-privacy-3.webp', 'copy' => 'Medium privacy with a woven texture that feels subtle from a distance.'],
                 ['name' => 'Tribal', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Tribal-privacy-5.webp', 'copy' => 'High privacy with a bolder decorative pattern for statement glass.'],
                 /* Owner correction, 2026-08-06: Warwick is privacy 1, not 0. Zero is a real

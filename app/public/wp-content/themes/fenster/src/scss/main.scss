@@ -10447,6 +10447,119 @@ html.fg-gallery-lightbox-open body {
   font-weight: 800;
 }
 
+/* PRIVACY SCALE AND ONWARD ROUTES, added 2026-08-30 with the SEO pass. Both sit
+   on the shared page canvas rather than carrying their own band, per the
+   continuous-background rule: the card is the contrast, not the section. */
+.fg-obscure-scale__list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.fg-obscure-scale__row {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 0 1rem;
+  align-items: start;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fg-obscure-scale__level {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.fg-obscure-scale__row h3 {
+  margin: 0.2rem 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.fg-obscure-scale__row p {
+  margin: 0;
+}
+
+/* Qualified with the row, not left as a bare class. `.fg-obscure-scale__row p`
+   above is (0,1,1) and would beat a lone `.fg-obscure-scale__names` at (0,1,0),
+   so the margin would silently do nothing -- the namespaced-element-beats-class
+   trap this stylesheet already records. `!important` would also have worked and
+   is the wrong answer. */
+.fg-obscure-scale__row .fg-obscure-scale__names {
+  margin-top: 0.35rem;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+}
+
+.fg-obscure-compare__grid article .fg-obscure-compare__copy {
+  margin-top: 0.3rem;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  line-height: 1.4;
+}
+
+.fg-obscure-routes__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fg-obscure-routes__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 45, 58, 0.08);
+}
+
+.fg-obscure-routes__card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.fg-obscure-routes__card p {
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.fg-obscure-routes__card .button {
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 860px) {
+  .fg-obscure-routes__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fg-obscure-scale__row {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    gap: 0 0.8rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .fg-obscure-scale__level {
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.1rem;
+  }
+}
+
 .fg-obscure-compare__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -10521,9 +10634,11 @@ html.fg-gallery-lightbox-open body {
    comparison opens with its own heading block, so both were paying for space the
    other had already provided. Trimmed from both sides of the join rather than one,
    so neither section ends up looking cramped on its own. */
+/* Trimmed to buy the pane height, and the 20px top is counted into the
+   `--fg-glass-stage-col` subtrahend above. Move one and re-measure the other. */
 .fg-obscure-visualiser {
-  padding-top: 2rem;
-  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: 1.25rem;
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
 .fg-obscure-compare {
@@ -10535,17 +10650,48 @@ html.fg-gallery-lightbox-open body {
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
-.fg-obscure-stage,
 .fg-obscure-picker {
   background: rgba(255, 255, 255, 0.94);
+}
+
+/* ONE CARD ROUND THE WHOLE TOOL, owner instruction 2026-08-30: the heading, the
+   pane and the pattern list read as one thing rather than a white box with two
+   loose columns beside it on the page canvas.
+ *
+ * The card moves ONTO the grid and OFF the stage. Leaving it on both is the
+ * card-inside-a-card the style contract forbids, and it is why the stage's own
+ * border, radius, shadow and background are all cleared below rather than left
+ * to sit inside the new one. These rules come after the two base
+ * `__grid` blocks deliberately -- same specificity, so the later one wins --
+ * and before the mobile media query further down the file, which still gets to
+ * override the columns. */
+.fg-obscure-visualiser__grid {
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 24px 64px rgba(0, 45, 58, 0.10);
+  padding: clamp(1rem, 2vw, 1.6rem);
 }
 
 .fg-obscure-stage {
   position: relative;
   top: auto;
-  width: min(100%, 900px);
-  margin-inline: auto;
-  padding: 0.9rem;
+  border: 0;
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0);
+  box-shadow: none;
+  padding: 0;
+  width: 100%;
+  margin-inline: 0;
+}
+
+/* The 900px cap and the 0.9rem inset went with the stage's own card: it is a
+   column inside one now, so the card supplies the padding and the grid track
+   supplies the width. Left here as an empty-handed rule would be worse than
+   removing it -- this block is where anyone looks for the stage's box. */
+.fg-obscure-stage {
+  position: relative;
+  top: auto;
 }
 
 .fg-obscure-stage__viewport {
@@ -10683,19 +10829,126 @@ html.fg-gallery-lightbox-open body {
   white-space: nowrap;
 }
 
-.fg-obscure-stage__background-button {
-  min-height: 48px;
-  padding-inline: 1rem;
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: #ffffff;
-  box-shadow: 0 12px 26px rgba(46, 172, 102, 0.24);
+/* SCENE SWITCH. Replaced a full-width green button whose label had to be
+   rewritten on every press ("Show Legend background" / "Show house
+   background"), which stated the action rather than the state and gave the
+   readout a wide button to fit. Two icon segments show both choices at once
+   and mark the current one, so nothing has to be read to know where you are.
+
+   The segments are 46px so they clear the 44px tap-target line the Forms rules
+   set, and the focus ring uses `--color-accent-dark` because the accent green
+   is 2.9:1 on white and would not carry a 3:1 non-text indicator. */
+.fg-obscure-scene-switch {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 999px;
+  background: rgba(0, 45, 58, 0.05);
 }
 
-.fg-obscure-stage__background-button:hover,
-.fg-obscure-stage__background-button:focus-visible {
-  border-color: var(--color-accent-dark);
-  background: var(--color-accent-dark);
+.fg-obscure-scene-switch__option {
+  display: inline-grid;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0);
+  color: var(--color-steel);
+  cursor: pointer;
+  place-items: center;
+  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.fg-obscure-scene-switch__option:hover {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fg-obscure-scene-switch__option:focus-visible {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
+}
+
+.fg-obscure-scene-switch__option[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(46, 172, 102, 0.26);
+}
+
+.fg-obscure-scene-switch__icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* PRIVACY FILTER. Same segmented shape as the scene switch, so the two controls
+   on this component read as one family. Six segments have to fit a 320px column
+   at its narrowest, so they flex rather than taking a fixed width, and the
+   labels are bare numerals with the full phrase on `aria-label`. */
+.fg-obscure-privacy-filter {
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.22rem;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 999px;
+  background: rgba(0, 45, 58, 0.05);
+}
+
+.fg-obscure-privacy-filter__option {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 36px;
+  padding-inline: 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0);
+  color: var(--color-steel);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fg-text-sm);
+  font-weight: 700;
+  line-height: 1;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.fg-obscure-privacy-filter__option:hover {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fg-obscure-privacy-filter__option:focus-visible {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
+}
+
+.fg-obscure-privacy-filter__option[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.fg-obscure-privacy-filter__count {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+}
+
+/* A CLASS, NOT THE `hidden` PROPERTY. These buttons are given a `display` by the
+   rules above, and an author `display` outranks the UA sheet's `[hidden]`, so
+   `el.hidden = true` leaves them on screen. Already caught here three times. */
+.fg-obscure-rail.fg-obscure-picker__buttons button.is-filtered-out,
+.fg-obscure-mobile-picker button.is-filtered-out {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-obscure-privacy-filter__option {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-obscure-scene-switch__option {
+    transition: none;
+  }
 }
 
 .fg-obscure-picker__intro h2 {
@@ -10724,91 +10977,16 @@ html.fg-gallery-lightbox-open body {
 
 .fg-obscure-stage__main-image {
   z-index: 1;
+  /* The view behind moves further than the glass in front of it. Scaled a
+     little so the edges never uncover as it shifts. */
+  transform: scale(1.05) translate3d(0, calc(var(--my) * 11px), 0);
+  will-change: transform;
 }
 
 .fg-obscure-stage__plain,
 .fg-obscure-stage__scene,
 .fg-obscure-stage__photo {
   display: none;
-}
-
-.fg-obscure-stage__glass {
-  z-index: 2;
-  overflow: hidden;
-  clip-path: inset(0 calc(100% - var(--split)) 0 0);
-  filter: blur(calc(5px + min(var(--privacy), 5) * 1.35px)) brightness(calc(1.08 + min(var(--privacy), 5) * 0.035));
-  transform: scale(1.035);
-  transform-origin: center;
-  opacity: 1;
-  mix-blend-mode: normal;
-}
-
-.fg-obscure-stage__glass::before {
-  content: "";
-  position: absolute;
-  inset: -3%;
-  z-index: 2;
-  background:
-    linear-gradient(90deg, rgba(205, 230, 232, 0.38), rgba(255, 255, 255, 0.62)),
-    var(--active-texture);
-  background-repeat: no-repeat, repeat;
-  background-size: cover, var(--active-texture-size, 112% 112%);
-  background-position: center;
-  opacity: calc(0.72 + min(var(--privacy), 5) * 0.05);
-  filter: contrast(1.08);
-}
-
-.fg-obscure-stage__glass::after {
-  content: "";
-  position: absolute;
-  inset: -3%;
-  z-index: 3;
-  background:
-    repeating-linear-gradient(90deg, rgba(0, 45, 58, 0.08) 0 1px, transparent 1px 7px),
-    linear-gradient(90deg, rgba(232, 250, 252, 0.26), rgba(255, 255, 255, 0.3));
-  opacity: calc(0.24 + min(var(--privacy), 5) * 0.04);
-}
-
-.fg-obscure-stage__shine {
-  clip-path: inset(0 calc(100% - var(--split)) 0 0);
-}
-
-/* Keyboard and assistive tech only. It used to take the pointer as well, and that
-   is what made the divider tap-to-position rather than draggable: a range input
-   stretched across the stage only drags on iOS when the touch lands on its thumb,
-   and everywhere else on the track it jumps once and stops. The gesture is
-   handled in main.js now and writes back to this input, so the value, the keyboard
-   arrows and the announced position all still work â€” it just no longer swallows
-   the touch that should be a drag. */
-.fg-obscure-stage__range {
-  position: absolute;
-  inset: 0;
-  z-index: 8;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0.01;
-  cursor: ew-resize;
-  pointer-events: none;
-}
-
-/* The stage takes the drag instead. `pan-y` keeps vertical scrolling working, and
-   main.js only claims a gesture once it is clearly horizontal. */
-.fg-obscure-stage__viewport {
-  cursor: ew-resize;
-}
-
-.fg-obscure-stage__main-image,
-.fg-obscure-stage__glass {
-  background-attachment: scroll;
-  background-position: center center;
-  /* Two values, because the glass paints two layers: the scene must not tile, the
-     texture must. This rule sits after the one that stacks those layers and has
-     the same specificity, so a single `no-repeat` here quietly won and painted the
-     pattern once in the middle of the pane. The main image only has one layer and
-     ignores the second value. */
-  background-repeat: no-repeat, repeat;
-  background-size: cover;
 }
 
 .fg-obscure-stage__glass {
@@ -10859,30 +11037,336 @@ html.fg-gallery-lightbox-open body {
   opacity: 0.16;
 }
 
+/* The CSS half matches the canvas half: `cover`, not `contain`. `contain` left
+   a flat bar down one edge of the Legend photograph, because it is 4:3 and the
+   pane is 4:3 only to within rounding. Filling crops the same few pixels
+   instead of leaving them blank. */
 .fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__main-image,
 .fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__glass::before {
-  background-size: contain;
+  background-size: cover;
 }
 
+/* The optical render. The CSS layers above stay as the no-JS and failed-render
+   fallback and are never removed -- a blank pane is worse than a plain one. */
+.fg-obscure-stage__optics {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__optics {
+  display: block;
+  /* NOT TRANSLATED. The canvas re-samples the scene at an offset instead, so
+     the pattern stays on the pixel it belongs to and only the view behind it
+     moves -- which is what the glass actually does. Translating it, as this
+     did first, dragged the pattern along with the scene. */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-obscure-stage__main-image,
+  .fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__optics {
+    transform: none;
+  }
+}
+
+.fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__glass::before,
+.fg-obscure-stage[data-glass-render="canvas"] .fg-obscure-stage__glass::after {
+  display: none;
+}
+
+/* SATIN IS THE ONE GLASS THAT NEVER REACHES THE CANVAS. `kind: 'css'`, so its
+   obscuring is this filter on the scene copy rather than an optical model, and
+   it is tuned here rather than in the material map.
+
+   Owner, 2026-08-29: "irl you cannot make out any detail even close up, its
+   more of a coloured silouette." At 12px the house was still legible down to
+   its windows and roofline, which is wrong for a privacy 5 acid etch. Detail
+   surviving against the clear half falls from 15.3% to 6.9% at 24px.
+
+   AND IT VARIES BY SCENE, which is real rather than a trick: a sandblasted
+   surface scatters over a wide angle, so the further away a thing is the more
+   of it lands in the same scattered cone and the less of it survives. The
+   close subject keeps a silhouette; the distant one goes to colour alone.
+   Owner: "the house one should be even more because of distance."
+
+   The scale goes up with the blur. The copy is only `inset: -12px` at
+   scale 1.055, about 32px of overhang, and a 44px blur fades in from the pane
+   edge inside that -- it shows as a pale halo down the sides. */
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
-  filter: blur(12px) brightness(108%) saturate(0.72) contrast(0.92);
-  transform: scale(1.055);
+  filter: blur(24px) brightness(108%) saturate(0.8) contrast(0.94);
+  transform: scale(1.12);
 }
 
+.fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::before {
+  filter: blur(44px) brightness(108%) saturate(0.8) contrast(0.94);
+  transform: scale(1.2);
+}
+
+/* THE PANE IS LIFTED WITH WHITE, NOT WITH `brightness()`, and that is the whole
+   of it. Owner, 2026-08-29: "its ok but looks kinda dark now." It was not
+   measurably darker -- mean luminance moved 194.3 to 193.6 -- but a heavy blur
+   averages a scene toward its middle, and `contrast(0.88)` then pulled the ends
+   in further, so the bright sky went with it and the pane read flat and green.
+
+   `brightness()` MULTIPLIES, so it cannot lift a dark area much: at 116% the
+   mean moved 193.6 to 196.7 and the darkest 5% barely moved at all. Etched
+   glass does not multiply the scene, it ADDS scattered light, so the fix is
+   more of the white wash. At 0.78 the mean goes to 219.9 and the darkest 5%
+   from 176 to 209 -- and detail through DROPS from 4.45% to 2.98%, because
+   washing toward white flattens contrast as well as lifting it. Brighter and
+   more obscuring at once, which multiplying could not do.
+
+   The close scene takes less of it than the distant one, for the same reason
+   its blur is lower. */
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::after {
   background-image:
     linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(225, 240, 240, 0.36)),
     var(--active-texture);
-  opacity: 0.58;
+  /* THE LIFT IS SET HERE, ON THE RULE THAT ALREADY OWNS THIS PROPERTY. Adding a
+     second `...="satin"] ...::after { opacity }` block above this one looked
+     equivalent and did nothing: equal specificity, and this rule is later, so
+     it won. The house variant appeared to work only because its extra attribute
+     selector outranks both. If a value belongs to a rule that already exists,
+     change it there. */
+  opacity: 0.7;
   mix-blend-mode: normal;
 }
 
-.fg-obscure-visualiser__grid {
-  grid-template-columns: minmax(150px, 1fr) minmax(0, 900px) minmax(150px, 1fr);
-  grid-template-areas:
-    "left stage right"
-    "bottom bottom bottom";
-  align-items: start;
+.fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::after {
+  opacity: 0.78;
+}
+
+/* Desktop only. Left un-scoped, this grid also applied at phone widths,
+   where the options column is hidden and `.fg-obscure-mobile-picker`
+   claims a `mobile-picker` area this template no longer defines -- so the
+   rail landed unplaced and the whole section fell apart. */
+@media (min-width: 861px) {
+  /* ONE VIEWPORT, ONE LIST. The old three-column arrangement put ten patterns
+     down the left of the stage and eleven down the right, so comparing two of
+     them meant looking in two places, and the section stood 979px tall against a
+     720px viewport: the selector heading and the how-to were below the fold, so
+     the instruction telling you to drag the divider was the part you could not
+     see. Heading on top where it is read first, stage and the whole pattern list
+     side by side beneath it. */
+  /* THE HEADING SITS OVER THE SELECTOR, NOT ACROSS THE WHOLE CARD. Owner
+     instruction, 2026-08-30. It used to span both columns above everything,
+     which left the pane and the list reading as two unrelated panels; over the
+     list it labels the thing it is actually instructing you to use, and the
+     pane gets the full height of the card beside it. The stage spans both rows
+     for that reason -- it is one tall column, not a cell under a header. */
+  .fg-obscure-visualiser__grid {
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 372px);
+    grid-template-areas:
+      "stage   head"
+      "stage   options"
+      "stage   readout";
+    /* The third row is the `1fr`, so the slack between the pane's height and
+       the right column's content collects THERE and the readout can be pushed
+       to the foot of it. Rows two and three swapping which one flexes is the
+       whole difference between the readout sitting under the list and sitting
+       on the card's bottom edge, level with the pane. */
+    grid-template-rows: auto auto minmax(0, 1fr);
+    align-items: start;
+    column-gap: clamp(1rem, 2vw, 1.75rem);
+    row-gap: 0.85rem;
+  }
+
+  /* Bottom of its own row, so it lines up with the foot of the photograph
+     rather than floating directly under the last pattern. Everything to do with
+     its BOX is set in the single rule further down instead -- see the note
+     there. */
+  .fg-obscure-stage__readout {
+    grid-area: readout;
+    align-self: end;
+  }
+
+  .fg-obscure-visualiser__head {
+    grid-area: head;
+    display: block;
+  }
+
+  .fg-obscure-visualiser__head h2 {
+    margin: 0.15rem 0 0;
+    max-width: 24ch;
+    font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+    line-height: 1.2;
+  }
+
+  .fg-obscure-visualiser__hint {
+    margin: 0.5rem 0 0;
+    max-width: 42ch;
+    color: var(--color-muted);
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .fg-obscure-options {
+    display: grid;
+    grid-area: options;
+    align-content: start;
+    gap: 0.55rem;
+    min-height: 0;
+  }
+
+  /* THE PREVIEW IS SIZED BY THE VIEWPORT, NOT BY ITS OWN ASPECT. A fixed
+     `clamp(380px, 44vw, 560px)` made the stage 585px tall on a 1280x720 laptop
+     and pushed the section to 897px: the customer had to scroll to see that the
+     divider was draggable. Height now comes off the window with the heading,
+     readout and padding subtracted, so the whole selector lands inside one
+     screen at laptop sizes and still grows on a tall monitor. Left to the mobile
+     rules below 900px, where a tall stage is correct. */
+  /* THE HEIGHT RULE ABOVE IS KEPT AND THE 4:3 IS PUT BACK, 2026-08-29.
+     Setting `aspect-ratio: auto` here made the pane whatever the grid track
+     was wide by whatever the height clamp resolved to -- measured 780x540,
+     an aspect of 1.444. The Legend photograph is 1400x1050, EXACTLY 4:3, and
+     the cat background is drawn with `background-size: contain`, so it fitted
+     by height at 720x540 and left a 30px gutter of flat stage colour down each
+     side with the glass texture drawn over it. Owner, 2026-08-29: "the legend
+     pic aspect doesnt work".
+
+     Width now follows the height through the ratio instead of coming from the
+     track, so the pane is 720x540 and `contain` fills it exactly. The height
+     clamp is untouched, so the one-screen fix this block was written for still
+     holds. Do not reintroduce `aspect-ratio: auto` without giving the Legend
+     photograph somewhere else to go. */
+  /* THE RATIO IS DRIVEN FROM WIDTH, NOT HEIGHT, AND THAT IS THE WHOLE TRICK.
+     Setting a fixed `height` with `width: auto` looks equivalent and is not:
+     as soon as the track is narrower than the pane the width clamps while the
+     height stays put, and the pane comes out TALLER THAN WIDE -- measured
+     519x540 at a 900px window.
+
+     THE CAP LIVES ON THE COLUMN, NOT ON THE PANE, and that is what keeps the
+     three edges aligned. Capping the pane itself left it narrower than the
+     card it sits in, so the image, the readout under it and the card edge were
+     three different widths -- measured 718, 750 and 782 -- and the difference
+     read as a white margin round the photograph. Owner, 2026-08-29: "the white
+     margins around the image dont look good". The column now carries the cap
+     plus the card's own padding, the card fills the column, and the pane fills
+     the card, so all three share an edge and the slack goes to the pattern
+     list instead of being dead space. The 1.8rem is twice `.fg-obscure-stage`'s
+     0.9rem padding -- keep them in step. */
+  /* THE PANE TAKES ITS CAP FIRST AND THE LIST TAKES WHAT IS LEFT, which is why
+     the list is bounded by the GRID's max-width rather than by its own column.
+     Capping the column directly at 430px looked equivalent and was not: it took
+     width the pane still wanted, dropping it from 720 to 695 at 1400px. Bounding
+     the grid instead only bites once the pane has already given up width to the
+     height budget -- at 1280x760 an unbounded `1fr` sprawled the list to 630
+     beside a 495 pane; now the pair narrows and centres together.
+
+     The column is declared once as a custom property because the max-width has
+     to agree with it exactly; two copies of this expression would drift. It
+     carries the card's padding on top of the pane width -- 1.8rem is twice
+     `.fg-obscure-stage`'s 0.9rem. Keep the two in step or the pane stops
+     filling the card and the uneven band comes back. */
+  /* THE PANE GROWS INTO THE SPACE THE HEADING GAVE UP, owner instruction
+     2026-08-30: "the actual visualiser should be in the same ratio but much
+     bigger now the title has moved."
+   *
+   * IT WAS THE 720px CAP DOING THE LIMITING, NOT THE HEIGHT BUDGET. Measured
+   * at 1440x900: `min(748.8, 828.8)` picked the cap, so the pane sat at 720x540
+   * and the height term never bound at all above a 840px window. Raising the
+   * cap to 1000px hands the decision to the viewport on every screen a customer
+   * is likely to be on, which is what the height term was written to do.
+   *
+   * THE 300px SUBTRAHEND WAS MEASURED AGAIN RATHER THAN NUDGED, and it was
+   * describing the old layout. Non-pane cost at 1440x900 is 282px -- section
+   * padding 72, card padding 51, stage padding 29, readout 88, gaps -- plus a
+   * 73px STICKY header that overlays the top of the section once it is scrolled
+   * to. 300 was therefore already too small for the whole-section-on-one-screen
+   * rule it was written for: it only held because the cap kept the pane at 540.
+   *
+   * SO THE RULE IS NARROWED DELIBERATELY, AND THIS IS THE TRADE-OFF TO KNOW
+   * ABOUT. What must land on one screen is the PANE AND ITS DIVIDER -- that was
+   * the actual 2026-08-29 complaint, "the customer had to scroll to see that
+   * the divider was draggable" -- not the pattern list underneath it. 240 is
+   * header 73 + section padding 20 + card padding 26 + stage padding 29 +
+   * readout 88, so the pane bottom lands just above the fold and the list can
+   * run past it. At 1440x900 that is a 887x665 pane against the old 720x540.
+   * If the whole section must fit again, the number is 327, not 300. */
+  .fg-obscure-visualiser__grid {
+    --fg-glass-stage-col: min(calc(1000px + 1.8rem), calc((100vh - 150px) * 4 / 3 + 1.8rem));
+    grid-template-columns: minmax(0, var(--fg-glass-stage-col)) minmax(320px, 1fr);
+    /* WIDTH, NOT MAX-WIDTH, AND THAT IS THE WHOLE REASON THIS NEVER GREW.
+       `.container` sets `width: min(100% - 2rem, var(--container))`, so an
+       explicit width was already resolving to the house 1180px. `max-width` can
+       only clamp that DOWN -- the old 1202.8px cap was above 1180 and therefore
+       inert, and raising it to 1362.8px stayed inert in exactly the same way.
+       Measured: the pane moved 720 -> 750 and stopped, with the list crushed to
+       its 320px minimum, because every extra pixel of stage column was coming
+       out of the list rather than out of the card.
+
+       So the card is deliberately allowed past `--container` here. This is the
+       one element on the page that is a tool rather than prose, the owner asked
+       for it "much bigger", and there is no wide-container precedent in this
+       stylesheet to reuse. Everything above and below it stays at 1180, so the
+       overhang has to read as intentional -- if it ever looks like a mistake,
+       narrow THIS rule rather than reintroducing a max-width that cannot act. */
+    /* The 1380px ceiling is the third term and it is doing real work. Without
+       it the content-derived width (1482.8px at 1440x900) loses to the viewport
+       gutter instead, so the card sat 16px off the window edge and the pattern
+       list was squeezed back to its 320px minimum -- the same crushing this
+       change was made to stop. The ceiling holds the overhang at about 100px
+       either side of the 1180px body on any large screen, and on anything under
+       roughly 1200px it drops out and the card simply matches the house
+       container, so it never ends up NARROWER than the sections around it. */
+    width: min(100% - 2rem, 1380px, calc(var(--fg-glass-stage-col) + 1.5rem + 430px));
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  .fg-obscure-stage__viewport {
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    height: auto;
+    width: 100%;
+  }
+
+  /* A THIN WHITE SURROUND, KEPT, and the readout aligned to the photograph's
+     own edges under it. Owner, 2026-08-29: "i liked the thin white surround to
+     the visual image like currently on live." The first pass at "more curated"
+     bled the photograph to the card edge, which removed the surround along
+     with the uneven band -- the band was the fault, not the surround. The card
+     keeps live's 0.9rem, so the frame is even on all four sides, and the
+     readout drops its own box and padding so its text starts on the
+     photograph's left edge rather than being inset a second time. */
+  .fg-obscure-stage {
+    padding: 0.9rem;
+  }
+
+  /* ONE RULE OWNS THIS BOX, and splitting it across two is what broke it.
+     The base rule at the top of the file gives the readout a full 1px border, a
+     radius, a white fill and 1rem of padding. The 2026-08-29 reset cleared all
+     of that so the text started on the photograph's left edge. Setting the new
+     separator in an EARLIER rule and dropping `border: 0` from this one left
+     the base border showing on three sides with square corners -- a stray
+     outline round the block, visible on the first render after the move.
+
+     So the box is declared here, last, in full: no inherited border except the
+     separator, no radius, no fill, no side padding. If another readout rule is
+     ever added, add it here rather than above.
+
+     SINGLE COLUMN, because the column is 320px. The base lays the text and the
+     scene switch side by side, which is right under a 950px photograph and
+     wrong in a narrow rail -- it squeezed the description into about 220px and
+     wrapped it to three lines beside the icons. The switch drops below instead. */
+  .fg-obscure-stage__readout {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 0.5rem;
+    margin: 0;
+    border: 0;
+    border-top: 1px solid var(--color-line);
+    border-radius: 0;
+    padding: 0.9rem 0 0;
+    background: rgba(0, 0, 0, 0);
+  }
+
+  .fg-obscure-stage__readout .fg-obscure-scene-switch {
+    justify-self: start;
+  }
 }
 
 .fg-obscure-stage {
@@ -10976,24 +11460,35 @@ html.fg-gallery-lightbox-open body {
   line-height: 1.45;
 }
 
+/* Two columns, so all twenty-one sit beside the stage without scrolling and
+   without running taller than it. */
 .fg-obscure-rail.fg-obscure-picker__buttons {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.42rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.34rem;
   max-height: none;
   overflow: visible;
   padding: 0;
 }
 
 .fg-obscure-rail.fg-obscure-picker__buttons button {
-  grid-template-columns: 40px minmax(0, 1fr);
-  min-height: 56px;
-  padding: 0.4rem;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 0 0.42rem;
+  min-height: 40px;
+  padding: 0.26rem;
+}
+
+.fg-obscure-rail.fg-obscure-picker__buttons strong {
+  font-size: 0.82rem;
+}
+
+.fg-obscure-rail.fg-obscure-picker__buttons small {
+  font-size: 0.7rem;
 }
 
 .fg-obscure-rail.fg-obscure-picker__buttons span {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 
 .fg-obscure-rail.fg-obscure-picker__buttons strong,
@@ -25067,9 +25562,10 @@ a.fg-cs-card__pill:focus-visible {
 
   .fg-obscure-visualiser__grid {
     grid-template-areas:
+      "head"
       "stage"
-      "mobile-picker"
-      "bottom";
+      "filter"
+      "mobile-picker";
   }
 
   .fg-obscure-hero__copy h1 {
@@ -25185,6 +25681,22 @@ a.fg-cs-card__pill:focus-visible {
   .fg-obscure-rail.fg-obscure-picker__buttons,
   .fg-obscure-picker > .fg-obscure-picker__buttons {
     display: none;
+  }
+
+  /* The map above already places these; the head just stops being two columns.
+     An earlier attempt here set `grid-template-areas: none`, which clobbered
+     that map from a later rule and left the stage claiming a `stage` area that
+     no longer existed -- the grid then invented three implicit columns and the
+     section fell apart on a phone. */
+  .fg-obscure-visualiser__head {
+    grid-area: head;
+    grid-template-columns: 1fr;
+  }
+
+  .fg-obscure-visualiser__head h2,
+  .fg-obscure-visualiser__hint {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .fg-obscure-compare__grid {
