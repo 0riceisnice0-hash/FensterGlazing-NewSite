@@ -10951,21 +10951,47 @@ html.fg-gallery-lightbox-open body {
    scale 1.055, about 32px of overhang, and a 44px blur fades in from the pane
    edge inside that -- it shows as a pale halo down the sides. */
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
-  filter: blur(24px) brightness(106%) saturate(0.8) contrast(0.9);
+  filter: blur(24px) brightness(108%) saturate(0.8) contrast(0.94);
   transform: scale(1.12);
 }
 
 .fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::before {
-  filter: blur(44px) brightness(105%) saturate(0.8) contrast(0.88);
+  filter: blur(44px) brightness(108%) saturate(0.8) contrast(0.94);
   transform: scale(1.2);
 }
 
+/* THE PANE IS LIFTED WITH WHITE, NOT WITH `brightness()`, and that is the whole
+   of it. Owner, 2026-08-29: "its ok but looks kinda dark now." It was not
+   measurably darker -- mean luminance moved 194.3 to 193.6 -- but a heavy blur
+   averages a scene toward its middle, and `contrast(0.88)` then pulled the ends
+   in further, so the bright sky went with it and the pane read flat and green.
+
+   `brightness()` MULTIPLIES, so it cannot lift a dark area much: at 116% the
+   mean moved 193.6 to 196.7 and the darkest 5% barely moved at all. Etched
+   glass does not multiply the scene, it ADDS scattered light, so the fix is
+   more of the white wash. At 0.78 the mean goes to 219.9 and the darkest 5%
+   from 176 to 209 -- and detail through DROPS from 4.45% to 2.98%, because
+   washing toward white flattens contrast as well as lifting it. Brighter and
+   more obscuring at once, which multiplying could not do.
+
+   The close scene takes less of it than the distant one, for the same reason
+   its blur is lower. */
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::after {
   background-image:
     linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(225, 240, 240, 0.36)),
     var(--active-texture);
-  opacity: 0.58;
+  /* THE LIFT IS SET HERE, ON THE RULE THAT ALREADY OWNS THIS PROPERTY. Adding a
+     second `...="satin"] ...::after { opacity }` block above this one looked
+     equivalent and did nothing: equal specificity, and this rule is later, so
+     it won. The house variant appeared to work only because its extra attribute
+     selector outranks both. If a value belongs to a rule that already exists,
+     change it there. */
+  opacity: 0.7;
   mix-blend-mode: normal;
+}
+
+.fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::after {
+  opacity: 0.78;
 }
 
 /* Desktop only. Left un-scoped, this grid also applied at phone widths,
