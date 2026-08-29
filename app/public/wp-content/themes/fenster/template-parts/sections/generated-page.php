@@ -3211,11 +3211,15 @@ if ($is_obscure_glass) {
                      * privacy filter, which did not exist when it was written.
                      *
                      * The two scenes are a close subject and a distant one -- Legend
-                     * on a blanket, and dwellings across a pond -- and that is the
-                     * useful distinction rather than "a close-up and a real house":
-                     * obscured glass hides something at the window very differently
-                     * from something down the garden, which is the actual question a
-                     * customer is weighing.
+                     * on a blanket, and dwellings across a pond -- and that distance
+                     * is the useful thing to name, because obscured glass hides
+                     * something at the window very differently from something far
+                     * off, which is the question a customer is actually weighing.
+                     *
+                     * Name the DISTANCE, not the two photographs. "compare something
+                     * close to the glass with a house across the garden" set a vague
+                     * thing against a specific one and invented a garden the scene
+                     * does not show -- it is dwellings across a pond.
                      *
                      * It covers only the two controls the HEADING does not. The
                      * heading already says to drag the divider, so a sentence here
@@ -3223,7 +3227,7 @@ if ($is_obscure_glass) {
                      * long enough for the owner to cut it.
                      */
                     ?>
-                    <p class="fg-obscure-visualiser__hint"><?php esc_html_e('Narrow the list by privacy level, and switch scenes to compare something close to the glass with a house across the garden.', 'fenster'); ?></p>
+                    <p class="fg-obscure-visualiser__hint"><?php esc_html_e('Narrow the list by privacy level, and switch scenes to see what each pattern hides up close and further away.', 'fenster'); ?></p>
                 </div>
 
                 <div
