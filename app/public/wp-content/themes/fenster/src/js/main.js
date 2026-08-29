@@ -3851,8 +3851,9 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        Arctic is small hammered facets with hard bright rims. */
     minster: { texSize: 'cover', kind: 'dapple', heightBlur: 13, strength: 30, emboss: 0.22, veil: 0.08 },
     arctic: { kind: 'dapple', heightBlur: 2, strength: 16, emboss: 0.6, veil: 0.1 },
-    /* Contora: tight worm field, displaced by about one worm width. */
-    contora: { kind: 'dapple', heightBlur: 3, strength: 20, emboss: 0.38, softBlur: 2, veil: 0.1 },
+    /* Contora WAS here and is now in the frost family below, on the owner's
+       instruction of 2026-08-29. Left as a signpost because the dapple block
+       is where anyone would look for it. */
     /* Everglade: deep 70s swirl, the largest drag in the dapple family. */
     everglade: { kind: 'dapple', heightBlur: 8, strength: 34, emboss: 0.45, veil: 0.14 },
     /* Taffeta: broad silk folds, glossy, gentle. */
@@ -3890,6 +3891,39 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* Pelerine: feather filaments over a diffusing ground; ridges resample
        far enough to take colour from elsewhere. */
     pelerine: { kind: 'frost', blur: 5, grain: 12, strength: 14, heightBlur: 4, emboss: 0.4, veil: 0.1 },
+    /* Contora: a tight vertical worm field. MOVED HERE FROM `dapple` on the
+       owner's instruction, 2026-08-29: "contora needs work now. it's similar
+       to stippolyte irl. its currently showing a bit of a mister effect but
+       almost there."
+
+       THE FAMILY WAS THE FAULT, NOT THE NUMBERS. `frost` is the only kind
+       that samples a pre-blurred copy of the scene -- `src = mat.kind ===
+       'frost' ? soft : scene` in the sampling loop. Every other kind displaces
+       the SHARP scene, so the pattern MOVES detail without ever destroying it.
+       Measured on the stage against the clear half of the same pane, the old
+       dapple build passed 58.9% of scene detail while Stippolyte passed 34.4%
+       -- and both are sold as privacy 4. That is the "printed over a sharp
+       photograph rather than bending it" fault this file records for the
+       emboss/dapple families, and it is structural.
+
+       BLUR IS NOT THE FIX AND MAKES THE REPORTED FAULT WORSE. Frost variants
+       at blur 4/5/7 with the old numbers reached only 56.6/53.4/45.3% and read
+       mistier, because blur greys the scene without giving the pattern
+       anything to do. What obscures is `grain` -- random per-pixel scatter,
+       which destroys detail rather than moving it -- plus enough `emboss` that
+       the texture carries the pane instead of floating over it, with `veil`
+       taken DOWN to 0.04 so nothing is whitened for free. That lands at 37.7%
+       detail through against Stippolyte's 34.4%, and LESS milky than either
+       the old build or Stippolyte.
+
+       Milkiness is not the fault; milkiness WITHOUT structure is. Stippolyte
+       measures the milkiest thing on the stage (+20.6 against this one's
+       +11.0) and reads as glass, because its texture is strong enough to
+       carry it. Do not chase the veil number on its own.
+
+       No `texSize` and no data pin: this plate has none, so it lays at cover,
+       which puts its worms at about native size and matches the reference. */
+    contora: { kind: 'frost', blur: 5, heightBlur: 2, strength: 24, emboss: 0.60, grain: 28, veil: 0.04 },
 
     satin: { kind: 'css' },
   };;
