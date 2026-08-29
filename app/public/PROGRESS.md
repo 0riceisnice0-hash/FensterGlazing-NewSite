@@ -9,7 +9,33 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (obscured glass: traced Cassini, then the page itself)
+## START HERE, 2026-08-30 (obscured glass: the visualiser opens on 5 and grows)
+
+Test is `98d1b62c`. Live is unmoved at `b2420743` and **181 commits
+behind**, none of it approved. Two commits on the visualiser box itself,
+three files. The block below covers the SEO and Cassini work earlier the
+same day and still stands.
+
+### Three traps, all of which fail silently
+
+- **`max-width` cannot widen a `.container` element.** The class sets
+  `width: min(100% - 2rem, var(--container))`, so an explicit width already
+  resolves to the house 1180px and `max-width` only clamps DOWNWARD. Two
+  successive caps were completely inert. Override `width` instead, keeping a
+  gutter term and adding a ceiling so it does not run to the window edge.
+- **CSS grid places only DIRECT children.** Moving the readout into the other
+  column needed a markup change; a `grid-area` on a grandchild does nothing.
+  `display: contents` on the wrapper places it and destroys the wrapper's own
+  padding, which here was the white surround round the photograph.
+- **Declare a component's box in one rule.** Splitting border, radius, padding
+  and background across two equal-specificity rules left a base border showing
+  on three sides with square corners while everything else looked reset.
+
+Also: the `All` segment was removed earlier in the day but the state it
+selected was still what you landed on. The default is `5` now, which is
+also `cotswold`'s level, so the pane keeps its glass on load.
+
+## START HERE, 2026-08-30 (EARLIER — obscured glass: traced Cassini, then the page itself)
 
 Test is `d18bd518`, theme tree `b39116a7`. Live is unmoved at `b2420743` and
 **178 commits behind** — check the theme tree hash, not a SHA, since `main`
