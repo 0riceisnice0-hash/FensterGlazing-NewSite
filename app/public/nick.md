@@ -143,6 +143,18 @@ git show "${sha}:app/public/wp-content/themes/fenster/assets/css/main.css" | md5
 
 If any verification loop returns the same hash for every input, check for that empty-input hash before believing it. This matters because establishing the live commit by checksum is a safety check, and a quietly wrong answer is worse than an error.
 
+**A PARAMETER SWEEP THAT EDITS SOURCE IN PLACE WILL EVENTUALLY CORRUPT IT, AND
+IT DID — THREE TIMES IN ONE SESSION.** Driving a patch script from a loop over
+pairs written as one string (`for pair in "0.96 0.55"; do set -- $pair; ...`)
+splits on the wrong boundary under these quoting rules, and `src/js/main.js`
+came out with `groundFlat: , faceFlat: 0.96 0.55` in it. Three builds failed
+before the cause was clear, because the failure looks like a bad parameter
+rather than a bad edit. **Keep an untouched copy of the file before any sweep
+that rewrites it** (`cp src/js/main.js /tmp/base.js`), pass each value as its own
+argument, and have the patch script REFUSE to write when the replacement does
+not parse. Restoring from that copy is a two-second fix; reconstructing the file
+from a diff is not.
+
 **`md5` is not `md5sum`.** macOS gives you `md5 -q` for a bare hash. The server gives `md5sum`. Use `gmd5sum` here if you want identical output to compare directly.
 
 **`.DS_Store` cannot be gitignored inside the theme.** Line 18 of `.gitignore` re-includes everything under the theme folder, so Finder's `.DS_Store` files show up as untracked there and a global ignore will not catch them. Check `git status` before staging and never run `git add -A` blind.
@@ -164,6 +176,26 @@ curl -s -u fenster:Fenster -L "https://test.fensterglazing.com/app/themes/fenste
 ```
 
 For measurements rather than a picture, link a small script that writes results into a `<pre>` and read them back with `--dump-dom`. That is how the footer swatch overflow was found: the tiles looked fine and were measurably 87px tall inside a 64px box. Note `document.styleSheets[..].cssRules` throws on a `file://` stylesheet, so read CSS from the file with `grep`, not from the DOM.
+
+**A CANVAS RENDER CANNOT BE CAPTURED THE `--screenshot` WAY, AND THE HARNESS
+THAT WORKS IS CHROME DEVTOOLS PROTOCOL OVER NODE'S BUILT-IN WEBSOCKET** — no new
+dependency, which is why this route was taken. `--screenshot` fires on load and
+the obscured-glass canvas paints after its textures decode, so every capture
+came back blank or CSS-fallback. Start Chrome with `--remote-debugging-port`,
+serve the theme locally, then drive `Page.navigate` / `Runtime.evaluate` /
+`Page.captureScreenshot` and WAIT on the page's own state rather than a timer.
+
+**Three guards, and all three have caught a real fault on this page:** assert the
+SERVED bundle hashes to the local build (a pinned `?ver=` served a stale one),
+assert `data-glass-render === 'canvas'` (a render exception falls back to CSS in
+silence and the screenshot still looks plausible), and assert the canvas is not
+blank. `AI.md` records that byte-identical screenshots across inputs that differ
+mean the harness is broken, not that the change had no effect — these are the
+three checks that turn that into an error instead of a wasted sweep.
+
+**Pass the CDP port and the HTTP port separately.** The first version of the
+harness reused the debugging port in the page URL, so the page never navigated,
+`fetch('/theme/...')` failed, and it captured a blank tab without complaining.
 
 **A Python slice between two searched indices can silently become an empty string, and replacing an empty string prepends to the top of the file.** `main.js` is over 5,000 lines and has more than one `endDrag`. Taking `start = s.index(comment)` and `end = s.index(closing_line)` looks safe, but `index` with no offset returns the *first* match in the whole file, which here sat 4,000 lines above the start. The slice came back empty, `s.replace('', new, 1)` inserted the new block at line 1 outside any function, and `node --check` still passed because it was valid syntax. Always pass the start offset, `s.index(closing_line, start)`, and assert on the slice before using it. This happened on 2026-07-29 and was caught only by grepping for the block afterwards.
 

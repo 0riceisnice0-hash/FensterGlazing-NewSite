@@ -1,6 +1,154 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-30 (obscured glass: Reeded uninverted, Cassini re-plated — ON TEST, NOT LIVE)
+
+**Live is still `b2420743` and has never carried any of this. That SHA was
+re-established by CHECKSUM this session, not copied from a document** — four
+theme files hashed on the live server (`assets/js/main.js`, `assets/css/main.css`,
+`inc/site-data.php`, `template-parts/sections/generated-page.php`) match it 4/4.
+Read that as *consistent*, not *unique*: those four files are unchanged across a
+run of neighbouring commits, so the hash matches all of them. It rules out live
+having drifted; it does not pin the SHA on its own.
+
+The test SITE runs the theme from `e0bd7c56`. `main` is one commit further at
+`fac10b8f`, docs only, and **its theme tree is byte-identical (`3690e8cd`)**, so
+either is the same answer to "what is on test". Test is **171 commits ahead of
+live and none of it is approved** — seven of those are this session
+(`88c1180f..fac10b8f`), and the rest is three earlier sessions of obscured-glass
+and composite-doors work. **The range now contains four sessions' unapproved
+work; do not ship it wholesale.** This session: fourteen files, **ten added,
+four modified, zero deleted**. Working tree clean.
+
+**Read in this order:** the Current Truth section of `LIVECHANGES.md`, which
+carries every finding below in full; then the comment above `cassini:` in
+`src/js/main.js`, and the `rib` family header above `reeded:`; then the
+docstrings of `scripts/build-cassini-clock.py` and
+`scripts/build-cassini-windowcad.py`, which record why the plate was rebuilt
+twice and what each source is actually good for.
+
+### What changed
+
+**Reeded stopped inverting, because the reference does not.** Owner, on the live
+page: *"the physics are weird, like it inverts everything too much."* `flip:
+true` ran the sample backwards inside every flute. Removing it is a one-word
+change; proving the direction was the work, and the test is cheap and
+re-runnable — see below. The near scene's `close.spread` went 1.5 -> 2.5 to put
+back the obscuration the mirror had been doing; the house stays at 3.0, so the
+far scene still scrambles harder than the near one.
+
+**Cassini's plate was replaced twice in one session, and the second time was the
+owner redirecting the SOURCE.** Every earlier plate came from a photograph of a
+sample held to the light, and gave a mat of rounded pebbles packed edge to edge.
+Real Cassini is pointed, overlapping leaves over a ruled hatch in angular
+sectors. The first rebuild took that from a screen recording of the WindowCAD
+quote tool; the owner then said *"texture and opacity are good now. you need to
+exactly copy the shapes and layout from the clock image though"*, and they were
+right — at matched leaf scale WindowCAD draws rounded blobs while the Pallot
+clock photograph shows pointed teardrops with a strong dome shade, in many
+sizes. **WindowCAD renders an approximation; the clock is a photograph of the
+real sheet.** The shipped plate is `-clock`; the `-wcad` pair is left in place
+rather than deleted, so a revert is a one-line change in `inc/site-data.php`.
+
+**Two renderer faults were fixed on the way.** The page was drawing broad
+black-and-white diagonal bars over everything — that was `fluteShade` at 1.30,
+now 0.25. And `faceFlat` had effectively been equal to `groundFlat` across two
+plates, which is most of why this glass has read as amorphous blobs through
+several rebuilds; 0.96 against 0.62 now, with `heightBlur` 9 -> 4 so a 58px
+teardrop keeps its point.
+
+### The six things worth carrying forward
+
+- **`faceFlat` AND `groundFlat` MUST NOT BE EQUAL.** A lens is visible only
+  because its FACE is flatter than the ground around it. Set the two within a
+  few percent of each other — 0.55/0.58, then 0.80/0.84 — and everything
+  flattens equally and the shapes stop reading at all. This sat in the material
+  in plain sight for weeks while rebuild after rebuild went looking at the
+  assets.
+
+- **NEVER BAND-PASS SOMETHING WHOSE EDGES ARE THE POINT.** Removing the clock
+  from behind the glass was first tried as `gaussian(2) - gaussian(30)`.
+  Subtracting a wide blur haloes every hard step, so the teardrops came out as
+  soft grey blobs with their outlines gone — a plate measurably worse than the
+  photograph it came from. Mean gradient magnitude: photograph 32.6, band-pass
+  11, **local contrast normalisation 18.9**. Dividing by the local standard
+  deviation leaves a step a step.
+
+- **BIN-QUANTISED MEASUREMENTS INVENT GRADIENTS.** The WindowCAD frame's hatch
+  pitch reads 6.5px one side and 5.0px the other, which looks exactly like the
+  pane receding, and a whole horizontal rectification was nearly built for it.
+  Measured with 512px windows and a **sub-bin parabolic peak fit** rather than
+  the raw FFT bin, the scale is constant to within 4%; the apparent gradient was
+  the hatch ANGLE changing between sectors.
+
+- **A MIRROR INSIDE A FLUTE HAS A SIGNATURE: BUTTERFLY CHEVRONS.** Reflecting
+  about each flute centre turns a single diagonal into symmetric V and X shapes
+  straddling every seam — Legend's polo shirt carried one the width of the pane.
+  The reference has none; its clock hands break into a **sawtooth whose teeth
+  all lean the same way**. Learn it on sight and this is a five-second diagnosis
+  rather than a session.
+
+- **THE TILE IS DATA, NOT A PICTURE, AND IT SHIPS LOSSLESS.** The renderer
+  derives its height field, oval segmentation and hatch steering from those
+  pixels, so a lossy encode MOVES the render: q95 against lossless shifts 20% of
+  output pixels by more than two levels, and **q90 lands closer to lossless than
+  q95 does**. Non-monotonic, so it cannot be tuned by picking a quality number.
+  The display copy is the opposite case — only ever looked at — and is 700px at
+  q74.
+
+- **KNOCKOUT BEATS READING THE CODE ON A RENDERER THIS ENTANGLED.** The zebra
+  bars were found in two renders by zeroing one term at a time (`hatch: 0`
+  changed almost nothing, `fluteShade: 0` removed them completely) after reading
+  the shading path had not found it.
+
+### What is open
+
+- **THE THING THAT WAS ASKED FOR IS NOT DONE: the reference's lenses have HARD
+  OUTLINES and `hatchlens` cannot draw one.** It expresses a lens only as a
+  difference in how the scene is displaced and flattened, never as a boundary.
+  Everything available was tried — the blur terms down, `washMix` up to 0.95
+  (almost no visible effect at all), the face/ground split above, and
+  `rim2`/`rimDark` up, which draws a literal dark line round every region and is
+  exactly the topographic-map failure this repo already records for that
+  gradient. **This needs a new mechanism, not a parameter, and that is a
+  decision for the owner rather than a tweak.** The current build is closer than
+  the WindowCAD one on layout and softer on edges; **`1a80e85e` is the WindowCAD
+  build if the owner prefers it** — but reverting there also takes back
+  `heightBlur` 4 -> 9 and the `faceFlat`/`groundFlat` split, which are the
+  RENDERER fix rather than the plate. Swapping only the one asset line in
+  `inc/site-data.php` keeps those; that combination has not been rendered.
+- **Cassini's tile REPEATS where the old plate did not**, and this is a
+  deliberate trade rather than an oversight. 800x533 is the largest copy of that
+  clock photograph in existence (every smaller WordPress variant 404s), so after
+  the banner crop and the seam cut there are about 5.9 x 4.8 leaves of real
+  layout, and the pane holds more than that.
+- **Reeded's caustics.** The reference carries pale washed bands either side of
+  every flute seam; ours are hard edges. That is the next real difference
+  between us and the photograph, it is a separate change, and it should not be
+  bundled into a tuning pass.
+- **The `-wcad` assets are superseded but not deleted.** The deletion list is
+  EMPTY on purpose, because they are the revert target.
+- Carried unchanged from 2026-08-29 and still true: **the canvas is sized in CSS
+  pixels** with no `devicePixelRatio`; `.fg-obscure-stage__scene--glass` is dead
+  CSS; `layTexture`'s mirror-brick was measured seam-neutral to remove and the
+  removal was not taken; the default scene is `house` and the owner never
+  answered whether to flip it; **nobody has used this page on a real touch
+  device.**
+
+### What needs the owner
+
+1. **Cassini: clock plate or WindowCAD plate.** Both are on disk and the switch
+   is one line in `inc/site-data.php` — `-clock` against `-wcad`, with image and
+   tile on the same line. A `git revert` to `1a80e85e` is the other route and
+   takes the renderer numbers with it; see above.
+2. **Whether to commission the outline mechanism at all**, knowing it is a new
+   piece of renderer rather than a tuning pass.
+3. **Approval to ship anything.** Nothing in the 171-commit range has been
+   approved for live, and the range spans four sessions.
+
 ## Current state, 2026-08-29 (obscured glass tuned by the owner's eye — ON TEST, NOT LIVE)
+
+**Superseded by the block above, which covers the same page. Its findings and
+its architecture stand; its SHA and its commit range do not.**
 
 **Live is still `b2420743` and has never carried any of this.** The test SITE
 runs the theme from `819b374d`, **162 commits ahead of live and none of it

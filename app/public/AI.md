@@ -1,6 +1,6 @@
 # Fenster Glazing AI Coding Rules
 
-Last updated: 2026-08-26
+Last updated: 2026-08-30
 
 This file is the rulebook for AI agents working on the Fenster Glazing codebase.
 
@@ -1237,17 +1237,85 @@ A change is not complete until the relevant checks pass:
 
 ## Obscured glass textures
 
-- **STATE, 2026-08-29: THE CANVAS OPTICAL RENDERER IS BACK AND IT IS THE
-  ACCEPTED DIRECTION — on TEST at `819b374d`, live still `b2420743` and still
-  CSS.** The owner drove a long iteration on the renderer over 2026-08-28, then
-  a defect-by-defect QA pass over the whole page on 2026-08-29, and all of it
-  stands. **The bullet further down beginning "Historic, and still worth
-  reading" says six attempts were reverted and warns against a seventh; that was
-  true when written and is now HISTORY, not the current position.** Read
-  everything from it onward as the record of how the earlier attempts failed —
-  it is still the best guide to what NOT to do — but do not read it as "the
-  renderer was rejected". The rules between here and it came out of the two
-  accepted sessions.
+- **STATE, 2026-08-30: THE CANVAS OPTICAL RENDERER IS THE ACCEPTED DIRECTION —
+  on TEST at `e0bd7c56`, live still `b2420743` and still CSS.** The owner drove
+  a long iteration on the renderer over 2026-08-28, a defect-by-defect QA pass
+  on 2026-08-29, and two more fixes on 2026-08-30 (Reeded's inversion, Cassini's
+  plate), and all of it stands. **The bullet further down beginning "Historic,
+  and still worth reading" says six attempts were reverted and warns against a
+  seventh; that was true when written and is now HISTORY, not the current
+  position.** Read everything from it onward as the record of how the earlier
+  attempts failed — it is still the best guide to what NOT to do — but do not
+  read it as "the renderer was rejected". The rules between here and it came out
+  of the accepted sessions.
+- **A LENS IS VISIBLE ONLY BECAUSE ITS FACE IS FLATTER THAN THE GROUND AROUND
+  IT, SO `faceFlat` AND `groundFlat` MUST NOT BE EQUAL.** Cassini shipped with
+  them within a few percent — 0.55/0.58, then 0.80/0.84 — which flattens
+  everything equally and makes the shapes stop reading at all. That is most of
+  why that glass looked like amorphous blobs through several rebuilds, and it
+  was in the material the whole time while the ASSETS took the blame. **If a
+  patterned glass reads as a formless wash, check that pair before re-cutting
+  its plate.**
+- **THE `hatchlens` MODEL CANNOT DRAW AN OUTLINE, and the reference's lenses
+  have hard ones.** It expresses a lens only as a difference in how the scene is
+  displaced and flattened, never as a boundary. Everything available has been
+  tried and is recorded: the blur terms down, `washMix` to 0.95 (almost no
+  visible effect), the face/ground split above, and `rim2`/`rimDark` up — which
+  draws a literal dark line round every region and is the topographic-map
+  failure this file already warns about for that gradient. **Do not spend
+  another session on the parameters. Closing this gap is a new mechanism and a
+  decision for the owner.**
+- **A MIRROR INSIDE A FLUTE HAS A SIGNATURE WORTH RECOGNISING ON SIGHT:
+  BUTTERFLY CHEVRONS.** Reflecting the sample about each flute centre — which is
+  what `flip: true` did — turns a single diagonal into symmetric V and X shapes
+  straddling every seam; Legend's polo shirt carried one the width of the pane.
+  **Real reeded glass is UPRIGHT**: the Pilkington reference breaks the clock
+  hands into a sawtooth whose teeth all lean the same way, 15 of 16 segments
+  leaning WITH the arc across two regions of opposite true slope. The sign does
+  not change with subject distance — the clock IS the near case. Removing a
+  mirror removes obscuration with it, so expect to raise `spread` after.
+- **NEVER BAND-PASS SOMETHING WHOSE EDGES ARE THE POINT.** Subtracting a wide
+  blur to remove a scene from behind a glass sample haloes every hard step, so
+  the pattern comes out as soft grey blobs with its outlines gone — measurably
+  worse than the photograph it came from (mean gradient magnitude: photograph
+  32.6, band-pass 11, **local contrast normalisation 18.9**). Divide by the
+  LOCAL standard deviation instead; normalising a step leaves it a step.
+- **A TILE IS DATA, NOT A PICTURE, SO IT SHIPS LOSSLESS — a DISPLAY copy is a
+  picture and should not.** The renderer derives its height field, oval
+  segmentation and hatch steering from the tile's pixels, so a lossy encode
+  MOVES the render rather than softening the plate: q95 against lossless shifts
+  20% of output pixels by more than two levels, and **q90 lands closer to
+  lossless than q95 does**, which is the tell that the response is not monotonic
+  in quality and cannot be tuned by choosing a number. The renderer itself is
+  deterministic, so whatever ships IS the render.
+- **BIN-QUANTISED MEASUREMENTS INVENT GRADIENTS.** A hatch pitch reading 6.5px
+  one side of a frame and 5.0px the other looks exactly like a receding pane,
+  and a whole perspective rectification was nearly built for it. Measured with
+  512px windows and a **sub-bin parabolic peak fit** rather than the raw FFT
+  bin, the scale was constant to within 4%; the apparent gradient was the hatch
+  ANGLE changing between sectors. **Fit sub-bin before believing any trend
+  measured off FFT peaks.**
+- **IF A NORMALISATION REPORTS A STANDARD DEVIATION IT WAS NOT ASKED FOR,
+  SUSPECT THE BLUR BEFORE THE MATHS.** A local-variance step computed through a
+  PIL Gaussian round-trips via uint8, so the squared deviations saturate at 255
+  and the variance is silently wrong — the tell was an output at std 52 when
+  21.5 had been requested. Use float blurs (`scipy.ndimage`).
+- **KNOCKOUT BEATS READING THE CODE ON THIS RENDERER.** Broad black-and-white
+  diagonal bars across Cassini were isolated in two renders by zeroing one term
+  at a time — `hatch: 0` changed almost nothing, `fluteShade: 0` removed them
+  completely — after reading the shading path had failed to find it. `fluteShade`
+  was at 1.30, and this repo already records it going 1.90 -> 0.70 and back up
+  again: **the accumulation trap.** It is 0.25 now. **Do not restore privacy by
+  drawing bolder pattern.**
+- **A SYNTHETIC RENDER AND A PHOTOGRAPH ARE GOOD FOR DIFFERENT THINGS, AND
+  CASSINI COST A REBUILD EACH TO LEARN IT.** The WindowCAD quote tool's own
+  render is evenly lit, in focus everywhere and free of hand shake, which makes
+  it the better source for TEXTURE and scale. But it draws rounded blobs where
+  the real sheet has pointed teardrops, so its SHAPES are an interpretation.
+  Owner: *"texture and opacity are good now. you need to exactly copy the shapes
+  and layout from the clock image though."* **Take texture and scale from the
+  clean render if you must; take shape and layout from a photograph of the real
+  sheet.** Compare the two at MATCHED LEAF SCALE before deciding either.
 - **CHECK THE MATERIAL FAMILY BEFORE TUNING ITS NUMBERS. `kind` decides whether
   a glass can obscure at all.** `const src = mat.kind === 'frost' ? soft :
   scene;` — **only `frost` samples a pre-blurred copy of the scene; every other

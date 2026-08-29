@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-29
+Last updated: 2026-08-30
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -9,7 +9,56 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-30 (obscured glass: Reeded stops inverting, Cassini re-plated twice)
+
+Test is `e0bd7c56`, live is unmoved at `b2420743` and **171 commits behind**
+(`main` runs one docs-only commit further at `fac10b8f`; the theme tree is
+byte-identical). **Live was re-established by checksum this session rather than
+copied from a document.** `HANDOVER.md`'s top section is the full picture; this
+is the short version.
+
+Seven commits. Reeded's flutes stopped inverting, Cassini's plate was rebuilt
+twice — once from the WindowCAD designer, then again from the clock photograph
+when the owner redirected the source — and two renderer faults were fixed on the
+way. Ten files added, four modified, none deleted.
+
+### The three things worth carrying forward
+
+- **A lens is visible only because its FACE is flatter than the GROUND around
+  it.** `faceFlat` had effectively equalled `groundFlat` across two plates
+  (0.55/0.58, then 0.80/0.84), which flattens everything equally and makes the
+  shapes stop reading. That is most of why this glass has looked like amorphous
+  blobs through several rebuilds, and it was sitting in the material the whole
+  time while the assets took the blame.
+
+- **Never band-pass something whose edges are the point.** Subtracting a wide
+  blur haloes every hard step, so Cassini's teardrops came out as soft grey
+  blobs with their outlines gone — measurably worse than the photograph they
+  came from. Local contrast normalisation keeps them, because normalising a step
+  leaves it a step.
+
+- **Bin-quantised measurements invent gradients.** A hatch pitch reading 6.5px
+  one side and 5.0px the other looked exactly like perspective, and a whole
+  rectification was nearly built for it. Sub-bin parabolic fitting showed the
+  scale constant to 4%; the gradient was the hatch ANGLE changing between
+  sectors.
+
+### What is not done
+
+**The thing the owner actually asked for.** The reference's lenses have hard
+outlines and `hatchlens` cannot draw one — it expresses a lens as a difference
+in displacement and flattening, never as a boundary. Every available lever was
+tried, including one (`rim2`/`rimDark`) that draws the cartoon outlines this
+repo already warns about. **That needs a new mechanism, not a parameter.** If
+the owner prefers the WindowCAD build, `1a80e85e` is it — though reverting there
+gives back the `faceFlat`/`groundFlat` fix as well, so swapping the single asset
+line in `inc/site-data.php` is the narrower undo. Cassini's tile also repeats now, which is a deliberate trade for
+using the real photograph at the only resolution it exists in. Details in
+`HANDOVER.md`.
+
 ## START HERE, 2026-08-29 (obscured glass: owner's QA pass, plates re-cut, two switches)
+
+**Superseded by the block above; its findings stand, its SHA does not.**
 
 Test is `819b374d`, live is unmoved at `b2420743` and **162 commits behind**
 (`main` runs a little further on docs-only commits; the theme tree is the same).
