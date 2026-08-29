@@ -2,8 +2,10 @@
 
 ## Current state, 2026-08-28 (obscured glass rebuilt — ON TEST, NOT LIVE)
 
-**Live is still `b2420743` and has never carried any of this.** Test is
-`db684e2a`, **141 commits ahead**, none of it approved. Forty-five of those are
+**Live is still `b2420743` and has never carried any of this.** The test SITE
+runs the theme from `db684e2a`; `main` is a little ahead of that on docs-only
+commits, whose theme trees are byte-identical, so either is the same answer to
+"what is on test". **141 commits ahead of live**, none of it approved. Forty-five of those are
 this session (`d92b0c39..db684e2a`); the rest is the composite-doors overhaul
 from the session before. **The range therefore contains two people's unapproved
 work — do not ship it wholesale.** 244 files added, 10 modified, zero deleted.
