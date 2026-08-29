@@ -3630,7 +3630,27 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        glass in the range -- the clock numerals survive intact inside a flute
        and are destroyed only by being cut, compressed and reversed. Privacy 2
        comes entirely from that shredding, so the veil is near zero. */
-    reeded: { texSize: 'cover', kind: 'rib', period: 34, spread: 4.2, flip: true, wander: 1.2, emboss: 0.34, veil: 0.02 },
+    /* `spread` COMPRESSES, AND COMPRESSION STRAIGHTENS. Owner, 2026-08-29:
+       "theres obvious white angled lines that look too computerised and not
+       natural." They are not an overlay and not a texture -- they are the
+       scene. A soft diagonal in the sky, squeezed 4.2x horizontally inside each
+       flute, comes out as a hard straight streak, and the flutes then repeat it
+       on an exact pitch so the eye reads a drawn line. Isolating it: the flat
+       sky band still showed them, the CSS shine/scan/glass layers made no
+       difference when hidden, and they weakened as `spread` came down.
+       At 3.0 the cloud edges stay soft. `wander` and `jitter` go up with it so
+       the flutes are not on an exact multiple -- drawn glass is regular, not
+       machined -- and `emboss` comes down because the rib crown was what made
+       the streaks read white rather than merely light. */
+    reeded: {
+      texSize: 'cover', kind: 'rib', period: 30, spread: 3.0, flip: true,
+      wander: 4.5, jitter: 10, emboss: 0.24, veil: 0.02,
+      /* Half the spread and a third of the jitter for the near scene. A flute
+         gathers less of a close subject than of a distant one, so it repeats it
+         less: at 3.0 Legend's eyes appeared in three flutes at once and he read
+         as texture rather than as a cat. */
+      close: { spread: 1.5, jitter: 3 },
+    },
 
     /* Charcoal Sticks: drawn vertical sticks of UNEVEN width, not flutes. Its
        reference shreds horizontal edges into vertical runs, so the per-stick
@@ -4137,16 +4157,28 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     if (!glassLayer) return;
     const button = buttons.find((o) => o.classList.contains('is-active')) || buttons[0];
     const key = button?.dataset.key || '';
-    const mat = GLASS_MATERIALS[key];
+    const baseMat = GLASS_MATERIALS[key];
     const textureUrl = /url\("?([^")]+)"?\)/.exec(button?.dataset.texture || '');
 
-    if (!mat || mat.kind === 'css' || !textureUrl) {
+    if (!baseMat || baseMat.kind === 'css' || !textureUrl) {
       stage.dataset.glassRender = 'css';
       return;
     }
 
     const token = renderToken += 1;
     const background = stage.dataset.activeBackground === 'cat' ? 'cat' : 'house';
+
+    /* A `close` block on a material overrides it for the near scene, and that is
+       physics rather than a preference: a flute is a cylindrical lens, so how
+       much of the scene it gathers and repeats depends on how far away the scene
+       is. The far view gets the full shredding; something at the glass is imaged
+       with less magnification and stays more legible. Satin does the same thing
+       through CSS because it never reaches this renderer. Owner, 2026-08-29:
+       "the physics for the reeded on house is good but as legend is closer its
+       too diffuse. irl you'd see him a bit clearer, ie not as broken up." */
+    const mat = background === 'cat' && baseMat.close
+      ? { ...baseMat, ...baseMat.close }
+      : baseMat;
     const sceneUrl = background === 'cat' ? stage.dataset.catImage : stage.dataset.houseImage;
     if (!sceneUrl) {
       stage.dataset.glassRender = 'css';
@@ -4168,7 +4200,14 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       };
 
       const sceneCtx = make();
-      drawCover(sceneCtx, sceneImg, w, h, background === 'cat' ? 'contain' : 'cover');
+      /* COVER, NOT CONTAIN, FOR BOTH SCENES. `contain` was letterboxing the
+         Legend photograph: it is 1400x1050, the pane is 4:3, and the two agree
+         only to within rounding, so whichever way the last pixel fell left a
+         flat bar down one edge -- measured 4px on the right. The photograph
+         does not need extending and nothing is lost by filling, because at a
+         matching ratio `cover` crops those same few pixels instead of leaving
+         a gap. */
+      drawCover(sceneCtx, sceneImg, w, h, 'cover');
       const scene = sceneCtx.getImageData(0, 0, w, h).data;
 
       /* Only frost gets a diffused copy. Everything else samples sharp. */

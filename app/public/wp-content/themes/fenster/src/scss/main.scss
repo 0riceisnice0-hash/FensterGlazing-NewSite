@@ -10896,9 +10896,13 @@ html.fg-gallery-lightbox-open body {
   opacity: 0.16;
 }
 
+/* The CSS half matches the canvas half: `cover`, not `contain`. `contain` left
+   a flat bar down one edge of the Legend photograph, because it is 4:3 and the
+   pane is 4:3 only to within rounding. Filling crops the same few pixels
+   instead of leaving them blank. */
 .fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__main-image,
 .fg-obscure-stage[data-active-background="cat"] .fg-obscure-stage__glass::before {
-  background-size: contain;
+  background-size: cover;
 }
 
 /* The optical render. The CSS layers above stay as the no-JS and failed-render
