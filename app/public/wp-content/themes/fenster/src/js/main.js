@@ -3636,9 +3636,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        vertical carry is the mechanism and the horizontal lensing is secondary. */
     'charcoal-sticks': { kind: 'rib', period: 17, spread: 2.0, wander: 3.5, jitter: 26, emboss: 0.55, veil: 0.05 },
 
-    /* Cotswold: fine bark striation, far denser than Charcoal Sticks and with
-       no vertical carry -- that is what separates the two vertical glasses. */
-    cotswold: { kind: 'rib', period: 8, spread: 2.4, flip: true, wander: 2.2, jitter: 5, emboss: 0.42, veil: 0.1 },
+    /* Cotswold WAS here, on `rib`, and is now in the frost family below, on
+       the owner's instruction of 2026-08-29. Left as a signpost because this
+       is where the two other vertical glasses live and where it would be
+       looked for. `rib` is now Reeded and Charcoal Sticks only, and both of
+       those genuinely are regular machined structures. */
 
     /* ---- cell: rigid rectangles, sharp inside, displaced as blocks ------ */
     /* Digital: the reference staircases the clock rim outward, so displacement
@@ -3924,6 +3926,36 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        No `texSize` and no data pin: this plate has none, so it lays at cover,
        which puts its worms at about native size and matches the reference. */
     contora: { kind: 'frost', blur: 5, heightBlur: 2, strength: 24, emboss: 0.60, grain: 28, veil: 0.04 },
+    /* Cotswold: fine IRREGULAR bark striation, vertically biased but broken
+       and wandering. MOVED HERE FROM `rib` on the owner's instruction,
+       2026-08-29: "irl its a bit irregular (live 'pattern' is correct), on
+       test it shows a bit like reeded."
+
+       `rib` IMPOSES A REGULAR LATTICE AND THIS PLATE IS NOT REGULAR. The old
+       entry ran `period: 8`, so a machined comb was synthesised over an
+       irregular photograph and the pane came out sliced into full-height
+       strips -- Reeded's signature, which is the family Cotswold was sharing.
+       Measured on the plates, Cotswold's horizontal/vertical anisotropy is
+       2.74 against Reeded's 4.71: vertically biased, but nothing like a comb.
+       The owner's note that the LIVE pattern is correct is the tell -- live
+       multiplies the plate and therefore keeps the irregularity the renderer
+       was overwriting.
+
+       Measured as spectral peakiness across a row (a machined comb spikes into
+       one frequency, irregular striation spreads), the old build scored 4.1
+       and this one scores 2.1, level with Contora.
+
+       `emboss` and `dapple` were both tried and both fail: they remove the
+       comb but leave the scene MORE legible, 71.8% of detail through, because
+       neither samples a diffused scene. Only `frost` does. Same structural
+       finding as Contora.
+
+       IT IS A PRIVACY 5 AND IT WAS THE MOST TRANSPARENT GLASS OF THE THREE
+       WORKED ON THIS DAY -- 61.7% of scene detail through, against 34.4% for
+       Stippolyte and 37.7% for Contora, both privacy 4. It should obscure more
+       than they do, not 27 points less. This lands at 37.8%. A heavier variant
+       at 34.7% was rendered and the owner chose this one. */
+    cotswold: { kind: 'frost', blur: 8, heightBlur: 2, strength: 26, emboss: 0.55, grain: 32, veil: 0.05 },
 
     satin: { kind: 'css' },
   };;
