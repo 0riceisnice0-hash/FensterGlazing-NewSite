@@ -3255,11 +3255,11 @@ if ($is_obscure_glass) {
                             </button>
                             <button class="fg-obscure-scene-switch__option" type="button" data-fg-obscure-background="cat" aria-pressed="false">
                                 <svg class="fg-obscure-scene-switch__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                    <path d="M4 10.5 3.2 3 8.8 6.6a10 10 0 0 0 6.4 0L20.8 3 20 10.5a8 8 0 1 1-16 0Z" />
-                                    <ellipse cx="9.2" cy="12.7" rx="1.15" ry="1.6" fill="currentColor" stroke="none" />
-                                    <ellipse cx="14.8" cy="12.7" rx="1.15" ry="1.6" fill="currentColor" stroke="none" />
-                                    <path d="M12 15.7c-.9 0-1.5-.55-1.5-1.05 0-.4.6-.65 1.5-.65s1.5.25 1.5.65c0 .5-.6 1.05-1.5 1.05Z" fill="currentColor" stroke="none" />
-                                    <path d="M9.2 17.1a1.7 1.7 0 0 0 2.8-.75 1.7 1.7 0 0 0 2.8.75" />
+                                    <path d="M2.8 9.4 4.2 2.2 8.4 5.8a10.5 10.5 0 0 1 7.2 0L19.8 2.2 21.2 9.4v5.4a11 11 0 0 1-18.4 0Z" />
+                                    <ellipse cx="8.6" cy="12.3" rx="1.35" ry="1.85" fill="currentColor" stroke="none" />
+                                    <ellipse cx="15.4" cy="12.3" rx="1.35" ry="1.85" fill="currentColor" stroke="none" />
+                                    <path d="M12 16c-.85 0-1.4-.5-1.4-.95 0-.38.56-.6 1.4-.6s1.4.22 1.4.6c0 .45-.55.95-1.4.95Z" fill="currentColor" stroke="none" />
+                                    <path d="M9 17.1a1.8 1.8 0 0 0 3-.8 1.8 1.8 0 0 0 3 .8" />
                                 </svg>
                                 <span class="screen-reader-text"><?php esc_html_e('Legend the cat background', 'fenster'); ?></span>
                             </button>
