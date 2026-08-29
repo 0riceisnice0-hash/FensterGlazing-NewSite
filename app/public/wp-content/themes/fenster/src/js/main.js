@@ -3623,13 +3623,36 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   const GLASS_MATERIALS = {
     /* ---- rib: periodic cylindrical lenses -------------------------------
        `spread` > 1 makes each rib image a swath wider than itself, so
-       neighbours overlap and detail repeats; `flip` inverts inside the rib,
-       which is what makes the reference read "12 | 21 | 2". */
+       neighbours overlap and detail repeats.
+
+       `flip` RUNS THAT SWATH BACKWARDS, AND THE REFERENCE SAYS NOT TO.
+       This comment used to claim the flip "is what makes the reference read
+       12 | 21 | 2". It was measured on 2026-08-30 and it is wrong: the
+       reference reads 12 | 12 | 2, the glyphs are not mirrored, and the
+       within-flute traverse runs the SAME way as the feature it is imaging.
+       Method, on `Textured-Reeded_2.jpg`, so it can be re-run: take the top
+       edge of the red rim, split it at the flute boundaries, fit each segment,
+       and compare the sign of the segment slope against the arc's own trend.
+       On the left shoulder (arc rising) and the right shoulder (arc falling)
+       -- two regions whose true slopes have OPPOSITE signs, which is what
+       makes the test worth anything -- 15 of 16 segments lean WITH the arc,
+       at roughly 3-4x its gradient. Upright and amplified, not reversed.
+       `flip` is kept as a key because Charcoal Sticks may yet want it; no
+       glass sets it today. */
 
     /* Reeded: machined flutes, ~10mm, dead regular, dead vertical. Sharpest
        glass in the range -- the clock numerals survive intact inside a flute
-       and are destroyed only by being cut, compressed and reversed. Privacy 2
-       comes entirely from that shredding, so the veil is near zero. */
+       and are destroyed by being cut and compressed, NOT by being reversed.
+       Privacy 2 comes entirely from that shredding, so the veil is near zero. */
+    /* A MIRROR INSIDE EVERY FLUTE IS WHAT THE OWNER SAW AS "it inverts
+       everything too much", 2026-08-30, and the artefact it makes is specific
+       enough to recognise again: reflecting about each flute centre turns one
+       diagonal into a row of BUTTERFLY CHEVRONS, symmetric V and X shapes
+       straddling every seam. Legend's polo shirt carried a chevron the width
+       of the pane. The reference has none -- its clock hands break into a
+       SAWTOOTH whose teeth all lean the same way, because an upright traverse
+       plus a hard seam gives repetition without reflection. If chevrons or a
+       herringbone ever come back on a rib glass, the flip is back on. */
     /* `spread` COMPRESSES, AND COMPRESSION STRAIGHTENS. Owner, 2026-08-29:
        "theres obvious white angled lines that look too computerised and not
        natural." They are not an overlay and not a texture -- they are the
@@ -3643,13 +3666,15 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        machined -- and `emboss` comes down because the rib crown was what made
        the streaks read white rather than merely light. */
     reeded: {
-      texSize: 'cover', kind: 'rib', period: 30, spread: 3.0, flip: true,
+      texSize: 'cover', kind: 'rib', period: 30, spread: 3.0,
       wander: 4.5, jitter: 10, emboss: 0.24, veil: 0.02,
       /* Half the spread and a third of the jitter for the near scene. A flute
          gathers less of a close subject than of a distant one, so it repeats it
          less: at 3.0 Legend's eyes appeared in three flutes at once and he read
-         as texture rather than as a cat. */
-      close: { spread: 1.5, jitter: 3 },
+         as texture rather than as a cat. THE SIGN DOES NOT CHANGE WITH
+         DISTANCE, only this magnitude does -- the clock is the near case and it
+         is upright, so the near scene cannot be the one that inverts. */
+      close: { spread: 2.5, jitter: 3 },
     },
 
     /* Charcoal Sticks: drawn vertical sticks of UNEVEN width, not flutes. Its
@@ -5143,10 +5168,15 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
                own width, so neighbours overlap and detail repeats -- the clock
                numerals appearing three times across three ribs.
 
-               AND IT INVERTS. A convex cylinder flips what it images, which is
-               why the reference reads "12 | 21 | 2" rather than three identical
-               copies. `flip` runs the sample backwards inside the rib, and it
-               is the single detail separating a real flute from a stripe.
+               AND IT DOES NOT INVERT, WHICH IS NOT THE OBVIOUS ANSWER. A
+               convex cylinder past its focus does flip what it images, so this
+               ran with `flip` on for weeks. Reeded glass is a shallow flute in
+               a thin sheet seen from far outside it, which is the weak-prism
+               case, not the imaging case: the deviation displaces and
+               compresses the scene without turning it over. Measured off
+               `Textured-Reeded_2.jpg` -- 15 of 16 flute segments carry the
+               clock rim's slope with the SAME sign as the rim itself and about
+               3-4x its gradient. `flip` stays available and stays off.
 
                `wander` drifts the rib phase slowly across the pane: drawn glass
                is regular but not machined, and without it every flute lands on
