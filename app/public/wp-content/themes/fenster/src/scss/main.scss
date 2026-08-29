@@ -10688,19 +10688,62 @@ html.fg-gallery-lightbox-open body {
   white-space: nowrap;
 }
 
-.fg-obscure-stage__background-button {
-  min-height: 48px;
-  padding-inline: 1rem;
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: #ffffff;
-  box-shadow: 0 12px 26px rgba(46, 172, 102, 0.24);
+/* SCENE SWITCH. Replaced a full-width green button whose label had to be
+   rewritten on every press ("Show Legend background" / "Show house
+   background"), which stated the action rather than the state and gave the
+   readout a wide button to fit. Two icon segments show both choices at once
+   and mark the current one, so nothing has to be read to know where you are.
+
+   The segments are 46px so they clear the 44px tap-target line the Forms rules
+   set, and the focus ring uses `--color-accent-dark` because the accent green
+   is 2.9:1 on white and would not carry a 3:1 non-text indicator. */
+.fg-obscure-scene-switch {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid rgba(0, 45, 58, 0.12);
+  border-radius: 999px;
+  background: rgba(0, 45, 58, 0.05);
 }
 
-.fg-obscure-stage__background-button:hover,
-.fg-obscure-stage__background-button:focus-visible {
-  border-color: var(--color-accent-dark);
-  background: var(--color-accent-dark);
+.fg-obscure-scene-switch__option {
+  display: inline-grid;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0);
+  color: var(--color-steel);
+  cursor: pointer;
+  place-items: center;
+  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.fg-obscure-scene-switch__option:hover {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.fg-obscure-scene-switch__option:focus-visible {
+  outline: 3px solid var(--color-accent-dark);
+  outline-offset: 2px;
+}
+
+.fg-obscure-scene-switch__option[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(46, 172, 102, 0.26);
+}
+
+.fg-obscure-scene-switch__icon {
+  width: 22px;
+  height: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-obscure-scene-switch__option {
+    transition: none;
+  }
 }
 
 .fg-obscure-picker__intro h2 {

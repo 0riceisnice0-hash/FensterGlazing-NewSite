@@ -3486,14 +3486,13 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   const nameTarget = visualiser.querySelector('[data-fg-obscure-active-name]');
   const copyTarget = visualiser.querySelector('[data-fg-obscure-active-copy]');
   const privacyTarget = visualiser.querySelector('[data-fg-obscure-active-privacy]');
-  const backgroundToggle = visualiser.querySelector('[data-fg-obscure-background-toggle]');
+  const backgroundOptions = [...visualiser.querySelectorAll('[data-fg-obscure-background]')];
   const splitControl = visualiser.querySelector('[data-fg-obscure-split]');
   /* House first, Legend second. Owner, 2026-08-06: the house is the real-world
      view somebody came to judge glass against, and Legend is the close-up you
      click through to — it was the other way round. The toggle label already names
      the scene you are switching TO, so it reads correctly from either start. */
   const backgroundNames = ['house', 'cat'];
-  let backgroundIndex = 0;
 
   if (!stage || !viewport || !buttons.length) return;
 
@@ -5717,9 +5716,12 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     }
 
     stage.dataset.activeBackground = name;
-    if (backgroundToggle) {
-      backgroundToggle.textContent = name === 'cat' ? 'Show house background' : 'Show Legend background';
-    }
+    /* The pressed state IS the label here -- the buttons are icon-only and
+       carry their own screen-reader text, so nothing needs rewriting, only
+       marking. */
+    backgroundOptions.forEach((option) => {
+      option.setAttribute('aria-pressed', option.dataset.fgObscureBackground === name ? 'true' : 'false');
+    });
     renderGlass();
   };
 
@@ -5840,12 +5842,13 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
   viewport.addEventListener('pointerup', endDrag);
   viewport.addEventListener('pointercancel', endDrag);
 
-  backgroundToggle?.addEventListener('click', () => {
-    backgroundIndex = (backgroundIndex + 1) % backgroundNames.length;
-    activateBackground(backgroundNames[backgroundIndex]);
+  backgroundOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      activateBackground(option.dataset.fgObscureBackground);
+    });
   });
 
-  activateBackground(backgroundNames[backgroundIndex]);
+  activateBackground(backgroundNames[0]);
   setSplit(splitControl?.value || 54);
 });
 
