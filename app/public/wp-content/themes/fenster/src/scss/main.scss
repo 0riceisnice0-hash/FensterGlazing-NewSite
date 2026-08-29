@@ -10900,10 +10900,34 @@ html.fg-gallery-lightbox-open body {
      readout and padding subtracted, so the whole selector lands inside one
      screen at laptop sizes and still grows on a tall monitor. Left to the mobile
      rules below 900px, where a tall stage is correct. */
+  /* THE HEIGHT RULE ABOVE IS KEPT AND THE 4:3 IS PUT BACK, 2026-08-29.
+     Setting `aspect-ratio: auto` here made the pane whatever the grid track
+     was wide by whatever the height clamp resolved to -- measured 780x540,
+     an aspect of 1.444. The Legend photograph is 1400x1050, EXACTLY 4:3, and
+     the cat background is drawn with `background-size: contain`, so it fitted
+     by height at 720x540 and left a 30px gutter of flat stage colour down each
+     side with the glass texture drawn over it. Owner, 2026-08-29: "the legend
+     pic aspect doesnt work".
+
+     Width now follows the height through the ratio instead of coming from the
+     track, so the pane is 720x540 and `contain` fills it exactly. The height
+     clamp is untouched, so the one-screen fix this block was written for still
+     holds. Do not reintroduce `aspect-ratio: auto` without giving the Legend
+     photograph somewhere else to go. */
+  /* THE RATIO IS DRIVEN FROM WIDTH, NOT HEIGHT, AND THAT IS THE WHOLE TRICK.
+     Setting a fixed `height` with `width: auto` looks equivalent and is not:
+     as soon as the grid track is narrower than 720px the `max-width` clamps
+     the width while the height stays put, and the pane comes out TALLER THAN
+     WIDE. Measured at a 900px window it was 519x540, an aspect of 0.96.
+     Capping the WIDTH instead keeps 4:3 at every size -- the three caps are
+     the track, the height budget this block exists to protect, and the point
+     beyond which the pane stops growing. */
   .fg-obscure-stage__viewport {
-    aspect-ratio: auto;
+    aspect-ratio: 4 / 3;
     min-height: 0;
-    height: clamp(300px, calc(100vh - 300px), 540px);
+    height: auto;
+    width: min(100%, calc((100vh - 300px) * 4 / 3), 720px);
+    margin-inline: auto;
   }
 }
 
