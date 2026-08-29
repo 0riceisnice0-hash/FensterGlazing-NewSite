@@ -11180,12 +11180,12 @@ html.fg-gallery-lightbox-open body {
   }
 
   /* Bottom of its own row, so it lines up with the foot of the photograph
-     rather than floating directly under the last pattern. */
+     rather than floating directly under the last pattern. Everything to do with
+     its BOX is set in the single rule further down instead -- see the note
+     there. */
   .fg-obscure-stage__readout {
     grid-area: readout;
     align-self: end;
-    border-top: 1px solid var(--color-line);
-    padding-top: 0.9rem;
   }
 
   .fg-obscure-visualiser__head {
@@ -11309,7 +11309,15 @@ html.fg-gallery-lightbox-open body {
        stylesheet to reuse. Everything above and below it stays at 1180, so the
        overhang has to read as intentional -- if it ever looks like a mistake,
        narrow THIS rule rather than reintroducing a max-width that cannot act. */
-    width: min(100% - 2rem, calc(var(--fg-glass-stage-col) + 1.5rem + 430px));
+    /* The 1380px ceiling is the third term and it is doing real work. Without
+       it the content-derived width (1482.8px at 1440x900) loses to the viewport
+       gutter instead, so the card sat 16px off the window edge and the pattern
+       list was squeezed back to its 320px minimum -- the same crushing this
+       change was made to stop. The ceiling holds the overhang at about 100px
+       either side of the 1180px body on any large screen, and on anything under
+       roughly 1200px it drops out and the card simply matches the house
+       container, so it never ends up NARROWER than the sections around it. */
+    width: min(100% - 2rem, 1380px, calc(var(--fg-glass-stage-col) + 1.5rem + 430px));
     max-width: none;
     margin-inline: auto;
   }
@@ -11333,14 +11341,36 @@ html.fg-gallery-lightbox-open body {
     padding: 0.9rem;
   }
 
-  /* The 2026-08-29 reset stripped this box so its text started on the
-     photograph's left edge. It lives in the right-hand column now, so only the
-     box and the radius go -- the rule above supplies the separator and the top
-     padding, and re-zeroing them here would silently win on source order. */
+  /* ONE RULE OWNS THIS BOX, and splitting it across two is what broke it.
+     The base rule at the top of the file gives the readout a full 1px border, a
+     radius, a white fill and 1rem of padding. The 2026-08-29 reset cleared all
+     of that so the text started on the photograph's left edge. Setting the new
+     separator in an EARLIER rule and dropping `border: 0` from this one left
+     the base border showing on three sides with square corners -- a stray
+     outline round the block, visible on the first render after the move.
+
+     So the box is declared here, last, in full: no inherited border except the
+     separator, no radius, no fill, no side padding. If another readout rule is
+     ever added, add it here rather than above.
+
+     SINGLE COLUMN, because the column is 320px. The base lays the text and the
+     scene switch side by side, which is right under a 950px photograph and
+     wrong in a narrow rail -- it squeezed the description into about 220px and
+     wrapped it to three lines beside the icons. The switch drops below instead. */
   .fg-obscure-stage__readout {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 0.5rem;
     margin: 0;
+    border: 0;
+    border-top: 1px solid var(--color-line);
     border-radius: 0;
+    padding: 0.9rem 0 0;
     background: rgba(0, 0, 0, 0);
+  }
+
+  .fg-obscure-stage__readout .fg-obscure-scene-switch {
+    justify-self: start;
   }
 }
 
