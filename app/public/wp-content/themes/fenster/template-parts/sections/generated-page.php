@@ -3216,9 +3216,14 @@ if ($is_obscure_glass) {
                      * obscured glass hides something at the window very differently
                      * from something down the garden, which is the actual question a
                      * customer is weighing.
+                     *
+                     * It covers only the two controls the HEADING does not. The
+                     * heading already says to drag the divider, so a sentence here
+                     * describing the divider says it twice and is why this line ran
+                     * long enough for the owner to cut it.
                      */
                     ?>
-                    <p class="fg-obscure-visualiser__hint"><?php esc_html_e('Fully clear on one side, fully obscured on the other, so you can judge how much each pattern hides. Narrow the list by privacy level, and switch scenes to compare something close to the glass with a house across the garden.', 'fenster'); ?></p>
+                    <p class="fg-obscure-visualiser__hint"><?php esc_html_e('Narrow the list by privacy level, and switch scenes to compare something close to the glass with a house across the garden.', 'fenster'); ?></p>
                 </div>
 
                 <div
