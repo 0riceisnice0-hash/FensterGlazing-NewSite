@@ -10596,20 +10596,6 @@ html.fg-gallery-lightbox-open body {
   gap: 0.9rem;
 }
 
-/* TWO ACROSS ON A PHONE, NOT ONE. Twenty-one cards in a single column made this
-   section 8,210px tall on a 375px screen -- each card is a near-full-height
-   swatch, so comparing two patterns meant scrolling between them and holding one
-   in your head, which is the one thing a comparison grid exists to prevent.
-   Two columns halves the scroll and puts a genuine comparison side by side; a
-   texture swatch is still perfectly legible at ~170px. The copy line stays, so
-   nothing is hidden from a mobile-first crawl. */
-@media (max-width: 700px) {
-  .fg-obscure-compare__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
-  }
-}
-
 .fg-obscure-compare__grid article {
   overflow: hidden;
   border: 1px solid var(--color-line);
@@ -26002,8 +25988,17 @@ a.fg-cs-card__pill:focus-visible {
     height: 36px;
   }
 
+  /* STAYS TWO ACROSS, where it used to drop to one. Twenty-one cards one per
+     row made this section 8,146px tall on a 375px screen, each card a
+     near-full-height swatch -- so comparing two patterns meant scrolling
+     between them and holding one in your head, which is the single thing a
+     comparison grid exists to prevent. Two columns brings it under 3,000px and
+     puts a real side-by-side on the screen. A texture reads fine at ~170px;
+     the hero band's own tiles are 125px. The copy line is kept rather than
+     hidden, so nothing is withheld from a mobile-first crawl. */
   .fg-obscure-compare__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
   }
 
   .site-footer {
