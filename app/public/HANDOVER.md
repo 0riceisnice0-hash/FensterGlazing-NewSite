@@ -2,7 +2,9 @@
 
 ## Current state, 2026-08-30 (obscured glass IS LIVE — and live is not on `main`)
 
-**Live is `c11cece9`. It is NOT an ancestor of `main`.** The obscured glass
+**Live is `c07a7c3c`, tag `live-obscured-glass-2026-08-30b`. It is NOT an ancestor of `main`.** (It supersedes `c11cece9`, the first isolated release; that tag still exists but must not be redeployed.)
+
+**Original note, still the operative arrangement:** The obscured glass
 page shipped on 2026-08-30 as an isolated release cut from the old live
 `b2420743`, because the glass work could not be lifted out of `main` as a
 commit range. The only ref that reaches it is the tag
@@ -15,8 +17,9 @@ commit range. The only ref that reaches it is the tag
 release from `b2420743`. It is no longer live, and a release built on it would
 silently revert the obscured glass page — the exact "release branch became a
 loaded gun" failure `LIVECHANGES.md` already records from 2026-08-05. Either
-build on `c11cece9`, or ship a range from `main` once the rest of `main` is
-approved.
+build on `c07a7c3c` (the current live), or ship a range from `main` once the
+rest of `main` is approved. The same applies to `c11cece9` now: it is a
+superseded release and building on it would revert the 30 August mobile pass.
 
 **Still on `main` and still NOT live, none of it approved:** the composite doors
 V2 overhaul and its 148 images, `/why-distinction/`, decorative glass, the quiz,

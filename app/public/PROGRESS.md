@@ -9,7 +9,27 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (THE OBSCURED GLASS PAGE IS LIVE, isolated off main)
+## START HERE, 2026-08-30 (rail order + mobile pass, LIVE as c07a7c3c)
+
+**Live is `c07a7c3c`, tag `live-obscured-glass-2026-08-30b`, still not an
+ancestor of `main` (`09476ddf`).** Second isolated release, cut from
+`c11cece9`. Read the Current Truth section of `LIVECHANGES.md` first.
+
+Three findings worth carrying:
+
+- **`getComputedStyle().gridTemplateRows` returns the USED tracks, not the
+  declared ones.** A card kept reporting two rows through three separate fixes
+  and named the real culprit each time: a hidden child holding its row, then an
+  explicit `auto auto`, then a swatch at `grid-row: 1 / 3` manufacturing an
+  implicit row by itself.
+- **A named grid area that no element claims silently ejects that element from
+  the grid.** It then auto-places wherever the source order puts it, which is how
+  the mobile privacy chips ended up after the pattern rail they filter.
+- **Sizing a container in `vw` against children sized by their own aspect ratio
+  drifts.** `66vw` against a true `66.667vw` sliced a tile row at every screen
+  size. Use a ratio on the container instead; it also survives the scrollbar.
+
+## START HERE, 2026-08-30 (SUPERSEDED — first isolated release, c11cece9)
 
 **Live is `c11cece9`, tag `live-obscured-glass-2026-08-30`, and it is NOT an
 ancestor of `main` (`443a1b44`).** Read the Current Truth section of
