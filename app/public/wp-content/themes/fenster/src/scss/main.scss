@@ -10270,6 +10270,19 @@ html.fg-gallery-lightbox-open body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  /* THE COPY NEEDS AIR UNDER THE BAND. The hero is a grid with no row gap, so
+     the eyebrow began on the exact pixel the last tile ended — measured at 0.
+     Owner, 2026-08-30: "there's no padding below hero on mobile". It only became
+     obvious once the band stopped being sliced mid-tile; before that the ragged
+     cut was hiding the fact that nothing separated the two.
+
+     A row gap rather than padding on the copy, because the veil is absolutely
+     positioned and the hero has exactly two rows in flow, so the gap can only
+     land in the one place it is wanted. */
+  .fg-obscure-hero {
+    row-gap: clamp(1.25rem, 5vw, 2rem);
+  }
+
   /* Four columns once there is room, or a tile on a tablet is 300px of one
      pattern. Four across by two down is 2/1. */
   @media (min-width: 561px) {
@@ -11391,11 +11404,47 @@ html.fg-gallery-lightbox-open body {
 
 /* THE PRESSED LEVEL ALREADY SAYS IT — see the note in main.js. Deliberately at
    top level and not inside the desktop block: the repetition is worse on a
-   phone, where the cards sit directly under the chip row. `visibility` rather
-   than `display` so a card keeps the height it has unfiltered and the list does
-   not jump as you move between levels. */
+   phone, where the cards sit directly under the chip row.
+
+   OUT OF FLOW, NOT MERELY INVISIBLE. `visibility: hidden` was the first attempt
+   and it was wrong: the card is a two-row grid, so the hidden line kept its row
+   and the pattern name stayed top-aligned against the swatch as though a second
+   line still sat under it. Owner, 2026-08-30: "the text in the selector boxes
+   are still aligned for text underneath". Pulling it out of flow collapses the
+   grid to one row and `align-items: center` then centres the name on its own.
+
+   Hidden the screen-reader way rather than with `display: none` so the level
+   stays in the accessible name — a reader still hears "Cotswold, Privacy 5",
+   which is the one place that fact is conveyed to someone who cannot see which
+   chip is pressed. */
+.is-level-filtered [data-fg-obscure-option] {
+  position: relative;
+  /* The card declares `grid-template-rows: auto auto` for name-over-level, so
+     taking the level out of flow was not enough on its own -- the empty second
+     row stayed and the name kept sitting high in the card. Collapsing to one
+     row is what actually centres it. Attribute selector so it reaches the
+     desktop list and the mobile rail, which are different elements with
+     different class-based rules. */
+  grid-template-rows: auto;
+}
+
+/* AND THE SWATCH HAS TO STOP SPANNING TWO. It is `grid-row: 1 / 3` so it can sit
+   beside both the name and the level, which means it manufactures a second
+   IMPLICIT row on its own — collapsing the template to a single row achieved
+   nothing while this stood, and the name stayed high in the card. Measured, not
+   assumed: `gridTemplateRows` reports the USED tracks, so it kept reading as two
+   rows and named the culprit. */
+.is-level-filtered [data-fg-obscure-option] > span {
+  grid-row: auto;
+}
+
 .is-level-filtered [data-fg-obscure-option] small {
-  visibility: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* ONE RULE OWNS THIS BOX, AND IT IS NOT INSIDE A MEDIA QUERY. The base rule near
