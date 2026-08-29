@@ -3587,7 +3587,22 @@ function fenster_site_data(): array
                not the glass — the build works on luminance only, so it never reaches
                the plate. Names carry `-wcad` because theme images have no version
                string and replacing one in place serves the old bytes. */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-clock.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-clock-tile.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+            /* THE LAYOUT IS THE OWNER'S, TRACED BY HAND, AS OF 2026-08-30.
+               The plate's TEXTURE is still the clock photograph's -- hatch,
+               grain, sectored ruling and each lens's own dome direction -- but
+               its ARRANGEMENT is 82 ovals the owner marked and corrected
+               himself, because four separate detectors failed to find them. A
+               Cassini lens shows as a tonal form rather than a hard edge, so
+               edge-driven detection finds the crossings and misses the lenses;
+               the best of the four recovered 2 of 9 on a patch he marked. See
+               `scripts/build-cassini-traced.py`, with the layout at
+               `scripts/cassini-oval-layout.json` and his markup committed at
+               `scripts/reference-cassini-owner-ovals.png` so it can be
+               re-derived. Names carry `-traced` because theme images have no
+               version string and replacing one in place serves the old bytes.
+               The `-clock` and `-wcad` plates are left on disk as revert
+               targets; swapping the two paths on this line is the whole undo. */
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-traced.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-traced-tile.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],

@@ -3900,7 +3900,16 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       knee: 190, kneeCeil: 251,
       dimple: 0.06,
       lobe: 6, lobeFace: 0.85,
-      ovals: true, ovalsFromPlate: true, ovalSeedLevel: 0.74, ovalEdgeLevel: 0.34,
+      /* THESE TWO MOVED WITH THE TRACED PLATE, 2026-08-30, AND THEY ARE NOT A
+         TASTE SETTING. They are percentiles of the plate: seeds are pixels
+         above `ovalSeedLevel`, grown down to `ovalEdgeLevel`. The owner's
+         traced layout covers 82% of the sheet where the previous plate's
+         lenses covered about 66%, so an edge level of 0.34 capped the labels
+         at 66% by construction and no amount of plate work could exceed it.
+         At 0.91/0.18 the renderer reads back 74 lenses covering 82.2% against
+         the layout's 82.1%. `scripts/check-cassini-plate.py` re-runs this exact
+         segmentation offline -- run it if either number is touched. */
+      ovals: true, ovalsFromPlate: true, ovalSeedLevel: 0.91, ovalEdgeLevel: 0.18,
       ovalFitBlur: 4, ovalFitDensity: 30000, ovalEdgeSoft: 2, ovalFitMin: 8,
       ovalCover: 0.28, ovalMajor: 0.122, ovalAspect: 2.16,
       overlapBand: 2, bandKind: true, overlapAmt: 0.15, overlapTurn: 55,
