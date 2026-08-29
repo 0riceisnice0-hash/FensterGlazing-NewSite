@@ -10916,18 +10916,66 @@ html.fg-gallery-lightbox-open body {
      photograph somewhere else to go. */
   /* THE RATIO IS DRIVEN FROM WIDTH, NOT HEIGHT, AND THAT IS THE WHOLE TRICK.
      Setting a fixed `height` with `width: auto` looks equivalent and is not:
-     as soon as the grid track is narrower than 720px the `max-width` clamps
-     the width while the height stays put, and the pane comes out TALLER THAN
-     WIDE. Measured at a 900px window it was 519x540, an aspect of 0.96.
-     Capping the WIDTH instead keeps 4:3 at every size -- the three caps are
-     the track, the height budget this block exists to protect, and the point
-     beyond which the pane stops growing. */
+     as soon as the track is narrower than the pane the width clamps while the
+     height stays put, and the pane comes out TALLER THAN WIDE -- measured
+     519x540 at a 900px window.
+
+     THE CAP LIVES ON THE COLUMN, NOT ON THE PANE, and that is what keeps the
+     three edges aligned. Capping the pane itself left it narrower than the
+     card it sits in, so the image, the readout under it and the card edge were
+     three different widths -- measured 718, 750 and 782 -- and the difference
+     read as a white margin round the photograph. Owner, 2026-08-29: "the white
+     margins around the image dont look good". The column now carries the cap
+     plus the card's own padding, the card fills the column, and the pane fills
+     the card, so all three share an edge and the slack goes to the pattern
+     list instead of being dead space. The 1.8rem is twice `.fg-obscure-stage`'s
+     0.9rem padding -- keep them in step. */
+  /* THE PANE TAKES ITS CAP FIRST AND THE LIST TAKES WHAT IS LEFT, which is why
+     the list is bounded by the GRID's max-width rather than by its own column.
+     Capping the column directly at 430px looked equivalent and was not: it took
+     width the pane still wanted, dropping it from 720 to 695 at 1400px. Bounding
+     the grid instead only bites once the pane has already given up width to the
+     height budget -- at 1280x760 an unbounded `1fr` sprawled the list to 630
+     beside a 495 pane; now the pair narrows and centres together.
+
+     The column is declared once as a custom property because the max-width has
+     to agree with it exactly; two copies of this expression would drift. It
+     carries NO padding allowance because the card below has none -- the
+     photograph bleeds to the card edge, so the column IS the pane width. If
+     the card ever gets its padding back, add twice it here. */
+  .fg-obscure-visualiser__grid {
+    --fg-glass-stage-col: min(720px, calc((100vh - 300px) * 4 / 3));
+    grid-template-columns: minmax(0, var(--fg-glass-stage-col)) minmax(320px, 1fr);
+    max-width: calc(var(--fg-glass-stage-col) + 1.5rem + 430px);
+    margin-inline: auto;
+  }
+
   .fg-obscure-stage__viewport {
     aspect-ratio: 4 / 3;
     min-height: 0;
     height: auto;
-    width: min(100%, calc((100vh - 300px) * 4 / 3), 720px);
-    margin-inline: auto;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  /* THE PHOTOGRAPH BLEEDS TO THE CARD EDGE AND THE READOUT SITS UNDER IT AS
+     ONE OBJECT. Owner, 2026-08-29: "make that viewport better and more
+     curated." Aligning the three edges removed the uneven band but still left
+     a white frame round the photograph and a second bordered box inside the
+     card for the readout, so the card read as a container holding two things
+     rather than as one card. Dropping the card's padding and the readout's own
+     frame leaves image-then-caption, which is what the component actually is.
+     The card already carries `overflow: hidden`, so its radius clips the
+     photograph and the viewport's own radius has to go or it double-rounds. */
+  .fg-obscure-stage {
+    padding: 0;
+  }
+
+  .fg-obscure-stage__readout {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 1rem 1.15rem 1.1rem;
   }
 }
 
