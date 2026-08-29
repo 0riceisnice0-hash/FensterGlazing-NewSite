@@ -5984,7 +5984,24 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
      sheet's `[hidden]` rule, so `el.hidden = true` would leave them on screen.
      That trap has already cost this codebase the case-study archives, the
      repairs drawings and the bi-fold rail controls. */
+  /* SAY THE LEVEL ONCE. Owner, 2026-08-30: "it also repeats 'privacy' too
+     much". Filtered to 2, the rail read: "Narrow the list by privacy level",
+     a pressed `2` chip, then `Privacy 2` on all four cards, then `PRIVACY 2`
+     in the readout — six statements of one fact, four of which cannot be
+     anything else because the filter is what put those cards on screen.
+
+     The per-card line is dropped whenever a level is pressed and comes back
+     when the filter is cleared, where it is the only thing distinguishing a
+     privacy 5 from a privacy 1 in a list of twenty-one. Hidden in CSS off this
+     class rather than by emptying the element, so the text stays in the
+     accessibility tree for anyone not looking at the chip. */
   const applyPrivacyFilter = (level) => {
+    /* On the ROOT, not on `.fg-obscure-options`. Below 861px the visible list is
+       `.fg-obscure-mobile-picker`, a different element that carries its own copy
+       of all twenty-one patterns, so a class on the options block hid nothing on
+       a phone — which is where the repetition is worst, the cards sitting
+       directly under the chip row. */
+    visualiser.classList.toggle('is-level-filtered', level !== 'all');
     const shown = new Set();
     let firstVisible = null;
     buttons.forEach((option) => {
