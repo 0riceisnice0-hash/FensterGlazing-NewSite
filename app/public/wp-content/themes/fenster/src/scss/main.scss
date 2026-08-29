@@ -10639,9 +10639,11 @@ html.fg-gallery-lightbox-open body {
    comparison opens with its own heading block, so both were paying for space the
    other had already provided. Trimmed from both sides of the join rather than one,
    so neither section ends up looking cramped on its own. */
+/* Trimmed to buy the pane height, and the 20px top is counted into the
+   `--fg-glass-stage-col` subtrahend above. Move one and re-measure the other. */
 .fg-obscure-visualiser {
-  padding-top: 2rem;
-  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: 1.25rem;
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
 .fg-obscure-compare {
@@ -11164,11 +11166,26 @@ html.fg-gallery-lightbox-open body {
     grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 372px);
     grid-template-areas:
       "stage   head"
-      "stage   options";
-    grid-template-rows: auto minmax(0, 1fr);
+      "stage   options"
+      "stage   readout";
+    /* The third row is the `1fr`, so the slack between the pane's height and
+       the right column's content collects THERE and the readout can be pushed
+       to the foot of it. Rows two and three swapping which one flexes is the
+       whole difference between the readout sitting under the list and sitting
+       on the card's bottom edge, level with the pane. */
+    grid-template-rows: auto auto minmax(0, 1fr);
     align-items: start;
     column-gap: clamp(1rem, 2vw, 1.75rem);
     row-gap: 0.85rem;
+  }
+
+  /* Bottom of its own row, so it lines up with the foot of the photograph
+     rather than floating directly under the last pattern. */
+  .fg-obscure-stage__readout {
+    grid-area: readout;
+    align-self: end;
+    border-top: 1px solid var(--color-line);
+    padding-top: 0.9rem;
   }
 
   .fg-obscure-visualiser__head {
@@ -11249,10 +11266,51 @@ html.fg-gallery-lightbox-open body {
      carries the card's padding on top of the pane width -- 1.8rem is twice
      `.fg-obscure-stage`'s 0.9rem. Keep the two in step or the pane stops
      filling the card and the uneven band comes back. */
+  /* THE PANE GROWS INTO THE SPACE THE HEADING GAVE UP, owner instruction
+     2026-08-30: "the actual visualiser should be in the same ratio but much
+     bigger now the title has moved."
+   *
+   * IT WAS THE 720px CAP DOING THE LIMITING, NOT THE HEIGHT BUDGET. Measured
+   * at 1440x900: `min(748.8, 828.8)` picked the cap, so the pane sat at 720x540
+   * and the height term never bound at all above a 840px window. Raising the
+   * cap to 1000px hands the decision to the viewport on every screen a customer
+   * is likely to be on, which is what the height term was written to do.
+   *
+   * THE 300px SUBTRAHEND WAS MEASURED AGAIN RATHER THAN NUDGED, and it was
+   * describing the old layout. Non-pane cost at 1440x900 is 282px -- section
+   * padding 72, card padding 51, stage padding 29, readout 88, gaps -- plus a
+   * 73px STICKY header that overlays the top of the section once it is scrolled
+   * to. 300 was therefore already too small for the whole-section-on-one-screen
+   * rule it was written for: it only held because the cap kept the pane at 540.
+   *
+   * SO THE RULE IS NARROWED DELIBERATELY, AND THIS IS THE TRADE-OFF TO KNOW
+   * ABOUT. What must land on one screen is the PANE AND ITS DIVIDER -- that was
+   * the actual 2026-08-29 complaint, "the customer had to scroll to see that
+   * the divider was draggable" -- not the pattern list underneath it. 240 is
+   * header 73 + section padding 20 + card padding 26 + stage padding 29 +
+   * readout 88, so the pane bottom lands just above the fold and the list can
+   * run past it. At 1440x900 that is a 887x665 pane against the old 720x540.
+   * If the whole section must fit again, the number is 327, not 300. */
   .fg-obscure-visualiser__grid {
-    --fg-glass-stage-col: min(calc(720px + 1.8rem), calc((100vh - 300px) * 4 / 3 + 1.8rem));
+    --fg-glass-stage-col: min(calc(1000px + 1.8rem), calc((100vh - 150px) * 4 / 3 + 1.8rem));
     grid-template-columns: minmax(0, var(--fg-glass-stage-col)) minmax(320px, 1fr);
-    max-width: calc(var(--fg-glass-stage-col) + 1.5rem + 430px);
+    /* WIDTH, NOT MAX-WIDTH, AND THAT IS THE WHOLE REASON THIS NEVER GREW.
+       `.container` sets `width: min(100% - 2rem, var(--container))`, so an
+       explicit width was already resolving to the house 1180px. `max-width` can
+       only clamp that DOWN -- the old 1202.8px cap was above 1180 and therefore
+       inert, and raising it to 1362.8px stayed inert in exactly the same way.
+       Measured: the pane moved 720 -> 750 and stopped, with the list crushed to
+       its 320px minimum, because every extra pixel of stage column was coming
+       out of the list rather than out of the card.
+
+       So the card is deliberately allowed past `--container` here. This is the
+       one element on the page that is a tool rather than prose, the owner asked
+       for it "much bigger", and there is no wide-container precedent in this
+       stylesheet to reuse. Everything above and below it stays at 1180, so the
+       overhang has to read as intentional -- if it ever looks like a mistake,
+       narrow THIS rule rather than reintroducing a max-width that cannot act. */
+    width: min(100% - 2rem, calc(var(--fg-glass-stage-col) + 1.5rem + 430px));
+    max-width: none;
     margin-inline: auto;
   }
 
@@ -11275,11 +11333,13 @@ html.fg-gallery-lightbox-open body {
     padding: 0.9rem;
   }
 
+  /* The 2026-08-29 reset stripped this box so its text started on the
+     photograph's left edge. It lives in the right-hand column now, so only the
+     box and the radius go -- the rule above supplies the separator and the top
+     padding, and re-zeroing them here would silently win on source order. */
   .fg-obscure-stage__readout {
-    margin: 0.85rem 0 0;
-    border: 0;
+    margin: 0;
     border-radius: 0;
-    padding: 0;
     background: rgba(0, 0, 0, 0);
   }
 }

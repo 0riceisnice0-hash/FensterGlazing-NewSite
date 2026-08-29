@@ -6061,6 +6061,19 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     });
   });
 
+  /* OPENS ON PRIVACY 5, owner instruction 2026-08-30. It used to open with no
+     level pressed and all twenty-one patterns listed, which is the `all` state
+     the `All` button was removed for -- the segment was gone but the state it
+     selected was still what you landed on.
+
+     5 is the right default rather than an arbitrary one: it is what someone
+     searching privacy glass is after, and it is the level of `cotswold`, which
+     the markup already sets as `data-active-glass`. So the pane keeps the glass
+     it renders on load and the list simply narrows around it -- no first-paint
+     swap, and `applyPrivacyFilter`'s own "activate the first visible" fallback
+     never fires here. Change one of those two and check the other. */
+  applyPrivacyFilter('5');
+
   renderGlass();
 
   splitControl?.addEventListener('input', () => {
