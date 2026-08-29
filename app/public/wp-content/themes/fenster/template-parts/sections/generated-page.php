@@ -3255,9 +3255,9 @@ if ($is_obscure_glass) {
                             </button>
                             <button class="fg-obscure-scene-switch__option" type="button" data-fg-obscure-background="cat" aria-pressed="false">
                                 <svg class="fg-obscure-scene-switch__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                    <path d="M3.6 3.4 4.5 10.2a7.6 7.6 0 0 0 15 0l.9-6.8-5 3.1a9.4 9.4 0 0 0-5.8 0Z" />
-                                    <path d="M9.6 12.1v1.1M14.4 12.1v1.1" />
-                                    <path d="m12 15.3-1.1 1.1M12 15.3l1.1 1.1" />
+                                    <path d="M5.4 10.6 4.6 3.4 9.6 6.4a7 7 0 0 1 4.8 0L19.4 3.4l-.8 7.2a7 7 0 1 1-13.2 0Z" />
+                                    <path d="M9.9 12.9v.8M14.1 12.9v.8" />
+                                    <path d="M10.5 15.9a2.1 2.1 0 0 0 3 0" />
                                 </svg>
                                 <span class="screen-reader-text"><?php esc_html_e('Legend the cat background', 'fenster'); ?></span>
                             </button>

@@ -10983,11 +10983,11 @@ html.fg-gallery-lightbox-open body {
 
      The column is declared once as a custom property because the max-width has
      to agree with it exactly; two copies of this expression would drift. It
-     carries NO padding allowance because the card below has none -- the
-     photograph bleeds to the card edge, so the column IS the pane width. If
-     the card ever gets its padding back, add twice it here. */
+     carries the card's padding on top of the pane width -- 1.8rem is twice
+     `.fg-obscure-stage`'s 0.9rem. Keep the two in step or the pane stops
+     filling the card and the uneven band comes back. */
   .fg-obscure-visualiser__grid {
-    --fg-glass-stage-col: min(720px, calc((100vh - 300px) * 4 / 3));
+    --fg-glass-stage-col: min(calc(720px + 1.8rem), calc((100vh - 300px) * 4 / 3 + 1.8rem));
     grid-template-columns: minmax(0, var(--fg-glass-stage-col)) minmax(320px, 1fr);
     max-width: calc(var(--fg-glass-stage-col) + 1.5rem + 430px);
     margin-inline: auto;
@@ -10998,27 +10998,26 @@ html.fg-gallery-lightbox-open body {
     min-height: 0;
     height: auto;
     width: 100%;
-    border-radius: 0;
   }
 
-  /* THE PHOTOGRAPH BLEEDS TO THE CARD EDGE AND THE READOUT SITS UNDER IT AS
-     ONE OBJECT. Owner, 2026-08-29: "make that viewport better and more
-     curated." Aligning the three edges removed the uneven band but still left
-     a white frame round the photograph and a second bordered box inside the
-     card for the readout, so the card read as a container holding two things
-     rather than as one card. Dropping the card's padding and the readout's own
-     frame leaves image-then-caption, which is what the component actually is.
-     The card already carries `overflow: hidden`, so its radius clips the
-     photograph and the viewport's own radius has to go or it double-rounds. */
+  /* A THIN WHITE SURROUND, KEPT, and the readout aligned to the photograph's
+     own edges under it. Owner, 2026-08-29: "i liked the thin white surround to
+     the visual image like currently on live." The first pass at "more curated"
+     bled the photograph to the card edge, which removed the surround along
+     with the uneven band -- the band was the fault, not the surround. The card
+     keeps live's 0.9rem, so the frame is even on all four sides, and the
+     readout drops its own box and padding so its text starts on the
+     photograph's left edge rather than being inset a second time. */
   .fg-obscure-stage {
-    padding: 0;
+    padding: 0.9rem;
   }
 
   .fg-obscure-stage__readout {
-    margin: 0;
+    margin: 0.85rem 0 0;
     border: 0;
     border-radius: 0;
-    padding: 1rem 1.15rem 1.1rem;
+    padding: 0;
+    background: rgba(0, 0, 0, 0);
   }
 }
 
