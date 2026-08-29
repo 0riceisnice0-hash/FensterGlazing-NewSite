@@ -3863,8 +3863,30 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
     /* ---- frost: the only family that genuinely diffuses ----------------- */
     /* Stippolyte: dense fine stipple. Granular, not smooth -- the grain is
-       what separates it from Satin. */
-    stippolyte: { texSize: 'cover', kind: 'frost', blur: 8, grain: 26, emboss: 0.42, veil: 0.14 },
+       what separates it from Satin.
+
+       IT KEEPS THE DATA'S 380px PIN AND MUST NOT BE MOVED TO `cover`. The
+       blanket move of the four pinned textures to `cover` (see the `texSize`
+       comment in `renderGlass`) rested on "a material's scale now comes from
+       its own geometry (`period`, `cell`, `scale`)". That is true of Reeded,
+       which has `period`. It is FALSE here: `frost` has no geometry term at
+       all -- `blur` and `grain` are both in output pixels -- so this pattern's
+       only scale is the size its plate is laid at. The plate is 900px wide;
+       the pin lays it at 380 (0.42x) and `cover` on a 4:3 stage lays it at
+       about 1.14x, so `cover` rendered the stipple roughly 2.7x too coarse.
+       Owner, 2026-08-29: "stippolyte is finer irl. the scale of the live one
+       is correct, but the texture of the test is good." The page's own copy
+       says "without a large pattern" and the CSS layer underneath was already
+       pinned at 380, so the canvas was the only thing disagreeing.
+
+       Tiling is safe here. The pin was removed to kill tile seams, but that
+       measurement found Cassini at a 52.9 row-step against 6-8 for every other
+       glass -- Stippolyte among them. The non-seamless path is the
+       non-periodic tiler, whose crop fraction cancels (tw/srcW = pin/naturalW),
+       so it reproduces the CSS pin's scale exactly while varying content per
+       tile. Do not add `seamless: true`: there is no purpose-built tile asset
+       for this plate, only Cassini and Reeded have one. */
+    stippolyte: { kind: 'frost', blur: 8, grain: 26, emboss: 0.42, veil: 0.14 },
     /* Pelerine: feather filaments over a diffusing ground; ridges resample
        far enough to take colour from elsewhere. */
     pelerine: { kind: 'frost', blur: 5, grain: 12, strength: 14, heightBlur: 4, emboss: 0.4, veil: 0.1 },
