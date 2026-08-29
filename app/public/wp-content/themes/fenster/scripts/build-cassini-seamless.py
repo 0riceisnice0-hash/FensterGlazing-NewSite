@@ -32,13 +32,17 @@ If this file changes, rename the output. Theme images are emitted through
 leaves browsers serving the old bytes.
 """
 
+import sys
+
 import numpy as np
 from PIL import Image
 from pathlib import Path
 
 GLASS = Path("assets/images/products/obscure-glass")
-SRC = GLASS / "Cassini-privacy-5-flat.webp"
-OUT = GLASS / "Cassini-privacy-5-tile.webp"
+# Optional argv so the WindowCAD plate can reuse this cut rather than carry a
+# second copy of it. No arguments reproduces the original behaviour exactly.
+SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else GLASS / "Cassini-privacy-5-flat.webp"
+OUT = Path(sys.argv[2]) if len(sys.argv) > 2 else GLASS / "Cassini-privacy-5-tile.webp"
 BAND = 200
 FEATHER = 3
 

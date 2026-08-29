@@ -3572,7 +3572,22 @@ function fenster_site_data(): array
                and mirroring Cassini would put a butterfly axis down the middle. Measured
                after cutting, both wrapped joins sit at the interior step (4.0 against 3.7
                across, 4.3 against 3.9 down). */
-            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-rev2.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-tile.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
+            /* THE PLATE CAME OFF A PHOTOGRAPH AND THE PATTERN WAS WRONG, corrected
+               2026-08-30. Owner: "currently its opacity is ok but the pattern is
+               completely wrong." Every plate before this one was a photograph of a
+               sample held to the light, and what those gave was a mat of ROUNDED
+               PEBBLES PACKED EDGE TO EDGE. Real Cassini is POINTED, OVERLAPPING
+               LEAVES over a ruled hatch that runs in large angular sectors. Pallot's
+               own `Textured-Cassini_5.jpg` shows the same leaves, so two sources
+               independent of us agree with each other and disagree with what we
+               shipped. Both files now come from the WindowCAD designer's own render
+               via `scripts/build-cassini-windowcad.py`; the reference frame is
+               committed at `scripts/reference-cassini-windowcad.png`. The blue cast
+               in that recording is the quote tool's toughened-glass indicator and is
+               not the glass — the build works on luminance only, so it never reaches
+               the plate. Names carry `-wcad` because theme images have no version
+               string and replacing one in place serves the old bytes. */
+            ['name' => 'Cassini', 'privacy' => 5, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-wcad.webp', 'tile' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Cassini-privacy-5-wcad-tile.webp', 'size' => '500px auto', 'copy' => 'High privacy with a subtle directional texture and a modern finish.'],
                 ['name' => 'Chantilly', 'privacy' => 2, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Chantilly-privacy-2.webp', 'copy' => 'Decorative and lighter in privacy, useful where pattern matters as much as screening.'],
                 ['name' => 'Charcoal Sticks', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Charcoal-Sticks-privacy-4.webp', 'copy' => 'A sharper linear pattern that gives strong screening and a distinctive style.'],
                 ['name' => 'Contora', 'privacy' => 4, 'image' => '/wp-content/themes/fenster/assets/images/products/obscure-glass/Contora-privacy-4.webp', 'copy' => 'A classic obscure pattern with confident privacy for everyday glazing.'],

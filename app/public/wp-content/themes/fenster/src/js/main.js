@@ -3835,6 +3835,37 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        selector commits one family is drawn and the other is GONE, and
        crossings survive only in the transition bands between patches -- which
        is where the sample has them. */
+    /* THE ZEBRA WAS `fluteShade`, AND IT WAS FOUND BY KNOCKOUT RATHER THAN BY
+       READING THE CODE, 2026-08-30. Owner: "currently its opacity is ok but the
+       pattern is completely wrong." What the page was actually drawing was
+       broad black-and-white diagonal BARS in amorphous patches, nothing like
+       the fine ruled hatch the sheet carries. Setting `hatch: 0` changed almost
+       nothing; setting `fluteShade: 0` removed the bars completely, which named
+       the term in two renders. It was at 1.30. This file already records that
+       `fluteShade` went 1.90 -> 0.70 in one round and back up in another, so it
+       has been overshooting for a while -- which is the accumulation trap
+       `PROGRESS.md` warns about, arriving on the one glass with the worst
+       record for it.
+
+       0.25 is where the hatch reads as the reference's fine sectored texture
+       rather than as bars. THE BARS WERE ALSO DOING A LARGE SHARE OF THE
+       OBSCURING, so `groundFlat`/`faceFlat`/`washMix` come up to put the
+       privacy back. That is the honest mechanism and this file already argues
+       for it: a lens does not blur what it magnifies, it INTEGRATES it. Do not
+       restore privacy by drawing bolder pattern.
+
+       A metric was tried for this and thrown away, which is worth recording:
+       mid-scale RMS over the glass half reported the ZEBRA build as carrying
+       the most structure, because it cannot tell scene detail from pattern
+       drawn on top of it. Same family as the fine-band contrast trap below.
+       Judged against Pallot's own Cassini by eye instead.
+
+       THE PLATE UNDERNEATH ALL OF THIS CHANGED IN THE SAME COMMIT -- see
+       `inc/site-data.php`. It is the WindowCAD render now, not a photograph,
+       because the photograph's shapes were wrong. The oval thresholds are
+       PERCENTILES of the plate (`psO[len * ovalSeedLevel]`), so they carry
+       across a plate with different statistics without retuning; that was
+       checked rather than assumed before leaving them alone. */
     cassini: {
       kind: 'hatchlens', texSize: '590px auto', seamless: true,
       heightBlur: 9, strength: 52, emboss: 0.12,
@@ -3843,11 +3874,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       stipple: 0.01, stippleFace: 0.3, dome: 0.15,
       hatchPatch: 18, hatchBias: 1.0,
       perPetal: true, petalBands: 4,
-      flutePeriod: 4.0, fluteSpread: 2.8, fluteShade: 1.30,
+      flutePeriod: 4.0, fluteSpread: 2.8, fluteShade: 0.25,
       ribFamA: 145, ribFamB: 35, ribJitter: 12, ribTail: 0.12, ribCurve: 10, ribVary: 0.6, ribWander: 0.15,
       petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
-      pebbleWash: true, washMix: 0.05, pebbleShift: 24,
-      faceBlur: 8, groundBlur: 12, groundFlat: 0.58, faceFlat: 0.55,
+      pebbleWash: true, washMix: 0.22, pebbleShift: 24,
+      faceBlur: 8, groundBlur: 12, groundFlat: 0.84, faceFlat: 0.80,
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
       dimple: 0.06,
