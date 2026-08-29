@@ -3826,7 +3826,11 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
 
     /* Mayflower: ~40 hairline radial ridges per flower, not a dozen fat lobes.
        `scale` shrinks the motif so the flower count matches the reference. */
-    mayflower: { kind: 'emboss', heightBlur: 3, strength: 26, emboss: 0.5, scale: 0.42, veil: 0.12 },
+    /* `scale` is a fraction of the PLATE's width, so it had to be recomputed
+       when the plate was re-cut to remove its mirrored tail on 2026-08-29:
+       0.42 x 587/900 = 0.274 holds the motif at exactly the size it rendered
+       before. Change this whenever that plate's width changes. */
+    mayflower: { kind: 'emboss', heightBlur: 3, strength: 26, emboss: 0.5, scale: 0.274, veil: 0.12 },
     chantilly: { kind: 'emboss', heightBlur: 4, strength: 7, emboss: 0.72, veil: 0.03 },
     /* Oak: felt in the shredding, not seen as outlines -- fine anisotropic
        streak, relief contrast cut hard. */
@@ -3911,9 +3915,14 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        its own geometry (`period`, `cell`, `scale`)". That is true of Reeded,
        which has `period`. It is FALSE here: `frost` has no geometry term at
        all -- `blur` and `grain` are both in output pixels -- so this pattern's
-       only scale is the size its plate is laid at. The plate is 900px wide;
-       the pin lays it at 380 (0.42x) and `cover` on a 4:3 stage lays it at
+       only scale is the size its plate is laid at. The plate was 900px wide;
+       the pin lays it at 380 (0.42x) and `cover` on the stage lays it at
        about 1.14x, so `cover` rendered the stipple roughly 2.7x too coarse.
+       THE PIN IS NOW 271, NOT 380, and the two are the same rendered scale:
+       the plate was re-cut to 643px on 2026-08-29 to remove a mirrored tail
+       baked into the photograph, and 380 x 643/900 = 271. The pin is in image
+       pixels, so it must be rescaled with the plate or this fix silently
+       reverts.
        Owner, 2026-08-29: "stippolyte is finer irl. the scale of the live one
        is correct, but the texture of the test is good." The page's own copy
        says "without a large pattern" and the CSS layer underneath was already
