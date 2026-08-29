@@ -3296,11 +3296,12 @@ if ($is_obscure_glass) {
                     $level = (int) ($texture['privacy'] ?? 0);
                     $obscure_privacy_levels[$level] = ($obscure_privacy_levels[$level] ?? 0) + 1;
                 }
-                ksort($obscure_privacy_levels);
+                /* Highest privacy first, `All` last. Owner order, 2026-08-29: the
+                   list is read as "how much do I want hidden", so it descends. */
+                krsort($obscure_privacy_levels);
                 ?>
                 <div class="fg-obscure-options">
                     <div class="fg-obscure-privacy-filter" role="group" aria-label="<?php esc_attr_e('Filter patterns by privacy level', 'fenster'); ?>">
-                        <button class="fg-obscure-privacy-filter__option" type="button" data-fg-obscure-privacy="all" aria-pressed="true"><?php esc_html_e('All', 'fenster'); ?></button>
                         <?php foreach ($obscure_privacy_levels as $level => $count) : ?>
                             <?php if ($level === 0) { continue; } ?>
                             <button
@@ -3315,6 +3316,7 @@ if ($is_obscure_glass) {
                                     $count
                                 )); ?>"><?php echo esc_html((string) $level); ?></button>
                         <?php endforeach; ?>
+                        <button class="fg-obscure-privacy-filter__option" type="button" data-fg-obscure-privacy="all" aria-pressed="true"><?php esc_html_e('All', 'fenster'); ?></button>
                     </div>
                     <p class="fg-obscure-privacy-filter__count" aria-live="polite" data-fg-obscure-filter-count><?php
                         echo esc_html(sprintf(
