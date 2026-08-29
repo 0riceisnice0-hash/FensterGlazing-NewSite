@@ -3850,8 +3850,45 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
     /* ---- dapple: irregular rolled relief, sharp but wandering ----------- */
     /* Minster and Arctic collided badly, so they are separated at the
        mechanism: Minster is a broad soft cathedral roll with low relief;
-       Arctic is small hammered facets with hard bright rims. */
-    minster: { texSize: 'cover', kind: 'dapple', heightBlur: 13, strength: 30, emboss: 0.22, veil: 0.08 },
+       Arctic is small hammered facets with hard bright rims.
+
+       RETUNED 2026-08-29 against a photograph of the real sheet supplied by
+       the owner: "minster is too clean. irl it has a bit of a texture similar
+       to arctic", then "the 'blobs' are a bit more defined irl".
+
+       `heightBlur: 13` WAS THE FAULT. The plate carries a fine granular etch
+       under its broad rolls, and a blur of 13 destroyed all of it BEFORE the
+       relief was derived, leaving a smooth oil-slick with no surface at all.
+       Measured as fine-scale energy against the clear half of the same pane,
+       the old build scored 0.63x -- BELOW one, meaning it was smoothing the
+       scene rather than adding any texture to it. Arctic scores 0.90x.
+
+       DO NOT DEFINE THE BLOBS WITH `emboss`. That was tried at 1.0 and 1.2 and
+       the owner rejected it: "youve made it too defined and added too much
+       white... where it's actually over an object, it doesnt show as white as
+       yours." The reason is structural rather than a matter of degree. The
+       emboss term is ASYMMETRIC -- `v += eV > 0 ? (255 - v) * eV : v * eV *
+       shadeAmp` -- so its positive lobe adds a fraction of the REMAINING
+       HEADROOM TO WHITE and therefore drives toward 255 regardless of what is
+       behind the glass. At emboss 1.2 the pane lifted +25.9 mean against the
+       clear half and clipped 1.92% of pixels to pure white. `knee` stops the
+       clipping but not the whitening.
+
+       THE CREASES IN THE REFERENCE ARE THE SHADOW SIDE, so they come from
+       `shade`, which defaults to 0.35 because a symmetric emboss once printed
+       black strokes over foliage. Raising it to 0.75 and LOWERING emboss to
+       0.44 gives more blob definition than any of the bright-side attempts
+       (14.60 blob-band against the old 13.48) while lifting the pane only
+       +4.8, which is LESS than the old build's +7.4. Checked on the foliage
+       specifically: no decal, the darkening follows the blob shapes.
+
+       IT KEEPS `texSize: 'cover'` AND THE 450px DATA PIN MUST NOT BE RESTORED.
+       That was proposed on the strength of the Stippolyte fix and it is wrong
+       here: with the pin, the non-periodic tiler leaves a hard seam, column
+       step spiking to 3.76-4.40x the mean at x=318 against a 324px tile width.
+       Stippolyte measures 1.28x with its pin, which is why that one was safe.
+       Minster's plate seams and Stippolyte's does not. */
+    minster: { texSize: 'cover', kind: 'dapple', heightBlur: 8, strength: 26, emboss: 0.44, shade: 0.75, veil: 0.04 },
     arctic: { kind: 'dapple', heightBlur: 2, strength: 16, emboss: 0.6, veil: 0.1 },
     /* Contora WAS here and is now in the frost family below, on the owner's
        instruction of 2026-08-29. Left as a signpost because the dapple block
