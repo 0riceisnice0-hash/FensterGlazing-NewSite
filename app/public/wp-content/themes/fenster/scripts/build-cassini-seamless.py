@@ -54,7 +54,9 @@ OUT = Path(sys.argv[2]) if len(sys.argv) > 2 else GLASS / "Cassini-privacy-5-til
 # two runs on identical input diff to exactly zero -- so whatever is shipped IS
 # the render. Lossless is therefore the only encoding for which rebuilding the
 # plate reproduces the page.
-BAND = 200
+# Fourth argument: the cut band. Wider routes the seam around whole lenses but
+# costs that many pixels of tile; the clock plate is small enough to need less.
+BAND = int(sys.argv[4]) if len(sys.argv) > 4 else 200
 FEATHER = 3
 
 

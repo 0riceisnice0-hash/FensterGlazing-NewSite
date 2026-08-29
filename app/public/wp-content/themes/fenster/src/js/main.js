@@ -3860,15 +3860,32 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
        drawn on top of it. Same family as the fine-band contrast trap below.
        Judged against Pallot's own Cassini by eye instead.
 
-       THE PLATE UNDERNEATH ALL OF THIS CHANGED IN THE SAME COMMIT -- see
-       `inc/site-data.php`. It is the WindowCAD render now, not a photograph,
-       because the photograph's shapes were wrong. The oval thresholds are
-       PERCENTILES of the plate (`psO[len * ovalSeedLevel]`), so they carry
-       across a plate with different statistics without retuning; that was
-       checked rather than assumed before leaving them alone. */
+       THE PLATE UNDERNEATH ALL OF THIS HAS CHANGED TWICE. It was a photograph
+       of a sample, then WindowCAD's render, and it is now the CLOCK photograph
+       -- see `inc/site-data.php` and `scripts/build-cassini-clock.py`. The oval
+       thresholds are PERCENTILES of the plate (`psO[len * ovalSeedLevel]`), so
+       they carry across a plate with different statistics without retuning;
+       checked rather than assumed each time.
+
+       `faceFlat` AND `groundFlat` MUST NOT BE EQUAL, and for two plates they
+       effectively were -- 0.55/0.58, then 0.80/0.84. A lens is only visible
+       because its face is flatter than the ground around it, so setting the two
+       within a few percent of each other flattens everything equally and the
+       shapes stop reading AT ALL. That is most of why this glass has looked
+       like amorphous blobs through several rebuilds. 0.96 against 0.62 now.
+
+       WHAT STILL DOES NOT WORK, so the next person does not spend the day I
+       spent finding out: the reference's lenses have HARD OUTLINES and this
+       model cannot draw one. It expresses a lens only as a difference in how
+       the scene is displaced and flattened, never as a boundary. Everything
+       available was tried -- `heightBlur` and `ovalEdgeSoft` down, `washMix`
+       up to 0.95 (almost no effect at all), the face/ground split above, and
+       `rim2`/`rimDark` up, which draws a literal dark line round every region
+       and is exactly the topographic-map failure recorded further down this
+       file. **The outline needs a new mechanism, not a parameter.** */
     cassini: {
       kind: 'hatchlens', texSize: '590px auto', seamless: true,
-      heightBlur: 9, strength: 52, emboss: 0.12,
+      heightBlur: 4, strength: 52, emboss: 0.12,
       hatch: 1.6, hatchPitch: 5.0, hatchAngle: 52,
       hatchEmboss: 0.0, shade: 0.55, faceClear: 0.25,
       stipple: 0.01, stippleFace: 0.3, dome: 0.15,
@@ -3878,7 +3895,7 @@ document.querySelectorAll('[data-fg-obscure-glass]').forEach((visualiser) => {
       ribFamA: 145, ribFamB: 35, ribJitter: 12, ribTail: 0.12, ribCurve: 10, ribVary: 0.6, ribWander: 0.15,
       petalLift: 0.55, petalPale: 0.06, petalSharp: 0.18,
       pebbleWash: true, washMix: 0.22, pebbleShift: 24,
-      faceBlur: 8, groundBlur: 12, groundFlat: 0.84, faceFlat: 0.80,
+      faceBlur: 8, groundBlur: 12, groundFlat: 0.62, faceFlat: 0.96,
       veil: 0.045, groundVeil: 0.12,
       knee: 190, kneeCeil: 251,
       dimple: 0.06,
