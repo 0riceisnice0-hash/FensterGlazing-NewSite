@@ -9,7 +9,39 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (obscured glass: the visualiser opens on 5 and grows)
+## START HERE, 2026-08-30 (THE OBSCURED GLASS PAGE IS LIVE, isolated off main)
+
+**Live is `c11cece9`, tag `live-obscured-glass-2026-08-30`, and it is NOT an
+ancestor of `main` (`443a1b44`).** Read the Current Truth section of
+`LIVECHANGES.md` and the top of `HANDOVER.md` before touching either
+environment.
+
+Owner asked for "the obscure glass page stuff" live. `b2420743..98d1b62c` is 181
+commits and only about 73 of them are glass, so the range could not be shipped.
+Both automated separations were tried and measured — replaying glass onto live
+gave 2 of 73, reverting the others off test left 145 conflicts — and the release
+was built by classifying and applying the diff **hunk by hunk** across the five
+shared source files.
+
+### What to carry forward
+
+- **A commit-subject classifier is not good enough to split a range.** `Fix:
+  close the Cassini comment` is glass work and matches no glass prefix. Classify
+  by file path where you can and by hunk CONTENT where you cannot, and read by
+  hand anything that matches neither side. Seven hunks here matched neither; three
+  were composite and four were glass.
+- **Apply each kept hunk as its own single-hunk patch.** Dropping hunks from a
+  combined patch corrupts the line offsets of everything after them, which is
+  what turned the first two attempts into conflict cascades.
+- **Prove an isolation at the token level.** Diffing the compiled bundles'
+  selector sets against live's showed the release adds 17 CSS and 6 JS tokens and
+  that every one is glass. That is a much stronger statement than "the diff looks
+  right", and it caught nothing only because there was nothing to catch.
+- **`rsync -a` without `--checksum` wanted to rewrite all 2,050 files** because
+  the staging copy carried local mtimes, which would have re-stamped every
+  asset's cache-buster for a 40-file release.
+
+## START HERE, 2026-08-30 (SUPERSEDED BY THE RELEASE ABOVE — visualiser opens on 5 and grows)
 
 Test is `98d1b62c`. Live is unmoved at `b2420743` and **181 commits
 behind**, none of it approved. Two commits on the visualiser box itself,

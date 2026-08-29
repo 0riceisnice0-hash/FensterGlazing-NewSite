@@ -1,6 +1,37 @@
 # Fenster Glazing Handover
 
-## Current state, 2026-08-30 (obscured glass: Reeded uninverted, Cassini re-plated — ON TEST, NOT LIVE)
+## Current state, 2026-08-30 (obscured glass IS LIVE — and live is not on `main`)
+
+**Live is `c11cece9`. It is NOT an ancestor of `main`.** The obscured glass
+page shipped on 2026-08-30 as an isolated release cut from the old live
+`b2420743`, because the glass work could not be lifted out of `main` as a
+commit range. The only ref that reaches it is the tag
+**`live-obscured-glass-2026-08-30`**. `main` is `443a1b44`.
+
+**If you checksum live you will get `c11cece9` and it will not match anything on
+`main`. That is expected, not drift.**
+
+**THE SINGLE MOST IMPORTANT THING ON THIS PAGE:** never cut the next live
+release from `b2420743`. It is no longer live, and a release built on it would
+silently revert the obscured glass page — the exact "release branch became a
+loaded gun" failure `LIVECHANGES.md` already records from 2026-08-05. Either
+build on `c11cece9`, or ship a range from `main` once the rest of `main` is
+approved.
+
+**Still on `main` and still NOT live, none of it approved:** the composite doors
+V2 overhaul and its 148 images, `/why-distinction/`, decorative glass, the quiz,
+the finishes pass, the site-footer `/why-distinction/` link, and the whole
+showroom and experimental strand. `main` also contains every obscured glass
+commit, so `main` is a content superset of live.
+
+**How the isolation was done, if it has to be done again:** only seven files are
+shared between the two strands and two of those are build artefacts, so the real
+merge surface is five source files. Classify each hunk of their
+`b2420743..<tip>` diff and apply only the wanted ones, **each as its own
+single-hunk patch** so a dropped hunk cannot corrupt the offsets after it. Full
+account in the Current Truth section of `LIVECHANGES.md`.
+
+## Superseded: state before the release, 2026-08-30 (obscured glass: Reeded uninverted, Cassini re-plated — ON TEST, NOT LIVE)
 
 **Live is still `b2420743` and has never carried any of this. That SHA was
 re-established by CHECKSUM this session, not copied from a document** — four
