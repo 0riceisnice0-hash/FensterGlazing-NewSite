@@ -1,6 +1,6 @@
 # Fenster Glazing Progress Log
 
-Last updated: 2026-08-28
+Last updated: 2026-08-29
 
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
@@ -9,9 +9,47 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
+## START HERE, 2026-08-29 (obscured glass: owner's QA pass, plates re-cut, two switches)
+
+Test is `819b374d`, live is unmoved at `b2420743` and **162 commits behind**
+(`main` runs a little further on docs-only commits; the theme tree is the same).
+**`HANDOVER.md`'s top section is the full picture; this is the short version.**
+
+Nineteen commits, every one answering a defect the owner named on the real page.
+Four glasses re-tuned, seven plates re-cut, the stage back to 4:3, the
+background button replaced by a scene switch and a privacy filter. Eight files
+added, six modified, none deleted.
+
+### The three things worth carrying forward
+
+- **A fault you can see on the page may be in the ASSET, not the code.** The
+  "mirror repeat" on seven glasses was baked into the photographs — each had
+  been extended by reflecting about a vertical axis at 68% — and those plates
+  lay once at `cover`, with no tiling and no mirroring anywhere in the renderer.
+  **The sweep that cleared them tested each plate about its centre.** Search for
+  the axis; do not assume the middle.
+
+- **Check the material family before tuning its numbers.** Only `kind: 'frost'`
+  samples a pre-blurred scene; everything else displaces the sharp one. A
+  privacy 4 glass in the wrong family stays readable however it is tuned, which
+  is what the owner meant by "a bit of a mister effect".
+
+- **Compression straightens.** Reeded's "computerised" white lines were the sky,
+  squeezed 4.2x inside each flute and repeated on an exact pitch. Nothing was
+  drawing lines; the optics were making them out of clouds.
+
+### What is not done
+
+The canvas is sized in CSS pixels with no `devicePixelRatio`, which is probably
+why the pane reads softer on the owner's screen than in a capture. One dead CSS
+rule and one measured-removable mirror-brick are flagged and left in place. The
+owner has not yet judged Reeded's new close-scene setting. Details in
+`HANDOVER.md`.
+
 ## START HERE, 2026-08-28 (obscured glass: Cassini rebuilt, selector reshuffled, scroll parallax)
 
-Test is `db684e2a`, live is unmoved at `b2420743`. **`HANDOVER.md`'s top section
+**Superseded by the block above; its findings stand, its SHA does not.** Test
+was `db684e2a` when this was written, live is unmoved at `b2420743`. **`HANDOVER.md`'s top section
 is the full picture; this is the short version.**
 
 Cassini's optics were rebuilt from the owner's own sample photographs, the

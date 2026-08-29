@@ -1237,14 +1237,68 @@ A change is not complete until the relevant checks pass:
 
 ## Obscured glass textures
 
-- **STATE, 2026-08-28: THE CANVAS OPTICAL RENDERER IS BACK AND IT IS THE
-  ACCEPTED DIRECTION — on TEST at `db684e2a`, live still `b2420743` and still
-  CSS.** The rule immediately below says six attempts were reverted and warns
-  against a seventh; that was true when written and is now HISTORY, not the
-  current position. The owner drove a long iteration on the canvas renderer over
-  2026-08-28 and it stands. **Read the rest of this section as the record of how
-  the earlier attempts failed — it is still the best guide to what NOT to do —
-  but do not read it as "the renderer was rejected".**
+- **STATE, 2026-08-29: THE CANVAS OPTICAL RENDERER IS BACK AND IT IS THE
+  ACCEPTED DIRECTION — on TEST at `819b374d`, live still `b2420743` and still
+  CSS.** The owner drove a long iteration on the renderer over 2026-08-28, then
+  a defect-by-defect QA pass over the whole page on 2026-08-29, and all of it
+  stands. **The bullet further down beginning "Historic, and still worth
+  reading" says six attempts were reverted and warns against a seventh; that was
+  true when written and is now HISTORY, not the current position.** Read
+  everything from it onward as the record of how the earlier attempts failed —
+  it is still the best guide to what NOT to do — but do not read it as "the
+  renderer was rejected". The rules between here and it came out of the two
+  accepted sessions.
+- **CHECK THE MATERIAL FAMILY BEFORE TUNING ITS NUMBERS. `kind` decides whether
+  a glass can obscure at all.** `const src = mat.kind === 'frost' ? soft :
+  scene;` — **only `frost` samples a pre-blurred copy of the scene; every other
+  kind displaces the SHARP one**, so it moves detail around instead of
+  destroying it. A privacy 4 or 5 glass built outside `frost` reads as visible
+  distortion over a fully legible view no matter how its parameters are set.
+  That is what the owner means by *"a bit of a mister effect"*; Contora and
+  Cotswold were both fixed by changing family, not by tuning.
+- **`emboss` CAN ONLY PUSH TOWARD WHITE. To make a feature more defined WITHOUT
+  making it whiter, use `shade`.** `v += eV > 0 ? (255 - v) * eV : v * eV *
+  shadeAmp;` — the positive lobe adds a fraction of the REMAINING HEADROOM, so
+  emboss and bleaching are the same control. When the owner says something is
+  *"too defined and too white"*, take emboss down and `shade` up: that is how
+  Minster's blobs were defined (emboss 0.44, shade 0.75).
+- **COMPRESSION STRAIGHTENS — that is where "computerised" straight lines come
+  from, and they are usually the SCENE rather than an overlay.** `spread`
+  squeezes horizontally inside each flute; a soft diagonal cloud edge squeezed
+  4.2x is a hard straight streak, and the flute pitch repeats it on an exact
+  interval, which is what makes the eye read a drawn line. Diagnose it by
+  checking whether the lines survive in a FLAT region of the scene and whether
+  the gradient energy is horizontal, before hunting for a layer that is drawing
+  them. Fix with less spread, a broken pitch (`wander`, `jitter`), and less
+  emboss so what remains does not read white.
+- **HOW MUCH A GLASS OBSCURES DEPENDS ON SUBJECT DISTANCE, so a material may
+  carry a `close: {}` block** that is merged over the base when the near scene
+  is active. Use it rather than compromising one setting across both scenes: at
+  the distant setting Reeded gathered the near subject's eyes into three flutes
+  at once. Satin does the same thing through CSS because it never reaches the
+  canvas.
+- **A REPEAT OR A MIRROR ON THE PANE MAY BE IN THE PHOTOGRAPH, NOT IN THE
+  RENDERER — and the tiling code is the wrong place to look.** Seven plates had
+  been extended by reflecting about a vertical axis at **68%** across. They lay
+  at `cover`, once, with no tiling and no mirroring anywhere in the path, and
+  the reflection still lands on the pane because the axis is inside the visible
+  window at every width. **The sweep that cleared them tested each plate about
+  its CENTRE** — Sycamore scored -0.011 and was called clean while the fault was
+  plain in the owner's screenshot. Search for the axis; do not assume the
+  middle. `scripts/build-unmirrored-plates.py` does this and refuses to write a
+  crop whose residual is still above 0.45.
+- **A RE-CUT PLATE MUST GET A NEW FILENAME.** Texture URLs carry no version
+  string, so replacing a `.webp` in place leaves browsers and proxies serving
+  the old bytes — the corrected Cassini was live and invisible for exactly that
+  reason. The current set is suffixed `-unmirrored`.
+- **RENDER SMALL ARTWORK AT A SIZE YOU CAN ACTUALLY SEE.** Four passes were
+  spent judging a 22px icon inside full-page screenshots, through two rounds of
+  the owner telling us it was still wrong. A 190px standalone preview of the SVG
+  alone found the fault in seconds.
+- **`el.hidden = true` IS INERT ON AN ELEMENT WITH AN AUTHOR `display`.** The UA
+  sheet's `[hidden]` rule is outranked by any author `display`, so the property
+  assignment silently does nothing. The privacy filter hides patterns with an
+  `is-filtered-out` class for this reason.
 - **THE OWNER'S OWN SAMPLE PHOTOGRAPHS ARE NOW THE REFERENCE, and they beat the
   Pallot images.** `scripts/reference-cassini-darkfield.png` is the sample shot
   against dark cladding: a DARK-FIELD view, where smooth lenses pass the dark

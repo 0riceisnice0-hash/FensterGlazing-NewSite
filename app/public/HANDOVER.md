@@ -1,5 +1,121 @@
 # Fenster Glazing Handover
 
+## Current state, 2026-08-29 (obscured glass tuned by the owner's eye — ON TEST, NOT LIVE)
+
+**Live is still `b2420743` and has never carried any of this.** The test SITE
+runs the theme from `819b374d`, **162 commits ahead of live and none of it
+approved**; `main` is a commit or two further on docs only, whose theme trees
+are byte-identical, so either is the same answer to "what is on test". Nineteen of
+those are this session (`8cfb7207..819b374d`); the rest is the obscured-glass
+rebuild from the session before and the composite-doors overhaul before that.
+**The range therefore contains three sessions' unapproved work — do not ship it
+wholesale.** This session: fourteen files, **eight added, six modified, zero
+deleted**.
+
+**Read in this order:** the Current Truth section of `LIVECHANGES.md`, which
+carries every finding below in full; then `GLASS_MATERIALS` in `src/js/main.js`
+(3623-4028), whose per-glass comments hold the reasoning; then
+`scripts/build-unmirrored-plates.py`, whose header explains the plate fault.
+
+### How this session ran, and why that matters to whoever picks it up
+
+Every change answered a specific defect the OWNER saw on the test site, in
+their own words, one at a time — Stippolyte too coarse, Contora "a bit of a mister
+effect", Cotswold "shows a bit like reeded", Minster "too clean", "a shitty
+mirror repeat", the cat "looks like a gremlin lol", Satin "kinda dark now",
+Reeded's "obvious white angled lines that look too computerised". **There is no
+metric in this session that was chased for its own sake.** The measurements
+below exist to explain faults the owner had already found, or to prove a fix
+reached the served page. That is the working mode this page responds to: the
+previous session's most careful optical work was thrown out wholesale, and this
+session's small answers to plain complaints have all stood.
+
+### What changed
+
+**Four glasses were moved or re-tuned, and two of the four needed a different
+FAMILY rather than different numbers.** Contora (`dapple` -> `frost`) and
+Cotswold (`rib` -> `frost`) were showing a fully legible scene with visible
+distortion over it, because **only `kind: 'frost'` samples a pre-blurred copy of
+the scene** — every other kind displaces the sharp one. Stippolyte went back to
+laying at its data pin instead of `cover`. Minster gained granularity with its
+blobs defined by SHADOW rather than highlight.
+
+**Seven plates were re-cut, because the mirror was in the photograph.** Not in
+the renderer, not in the tiler. See below; this is the single most useful thing
+in this session.
+
+**The stage is 4:3 again and driven from the column width**, so the Legend
+photograph fits it, and the pane, its caption and the card edge line up. Both
+scenes lay at `cover` — `contain` was letterboxing on mobile.
+
+**Two segmented switches replaced one relabelling button.** Scene is a
+house/cat icon pair; privacy is a 5-4-3-2-1-All filter with live counts that
+hides patterns by class. Both are `aria-pressed` button groups with
+screen-reader labels.
+
+**Satin varies by scene and Reeded now can too**, through a new `close: {}`
+override block on a material.
+
+### The six things worth carrying forward
+
+- **THE MIRROR WAS IN THE PHOTOGRAPH, AND THE FIRST SWEEP LOOKED IN THE WRONG
+  PLACE.** Seven plates were extended by reflecting about a vertical axis at
+  **68%** across. They lay at `cover` — once, no tiling, no mirroring in the
+  path — and the reflection still lands on the pane, because the axis is inside
+  the visible window at every width. The sweep that cleared them tested each
+  plate about its **centre**; Sycamore scored -0.011 and was called clean while
+  the fault was plain in the owner's screenshot. **Search for the axis; do not
+  assume the middle.** And the corrected files are named `-unmirrored` because
+  texture URLs carry no version string — replacing one in place leaves proxies
+  serving the old bytes.
+
+- **CHECK THE MATERIAL FAMILY BEFORE SPENDING A SWEEP ON THE PARAMETERS.**
+  `const src = mat.kind === 'frost' ? soft : scene;` decides whether a glass can
+  obscure at all. A privacy 4 or 5 built outside `frost` reads as a distorted
+  but readable view no matter how the numbers are set — which is exactly what
+  "a bit of a mister effect" describes.
+
+- **`emboss` CAN ONLY PUSH TOWARD WHITE; `shade` IS THE OTHER HALF.** The
+  positive lobe adds a fraction of the remaining headroom, so sharpening a
+  feature with emboss necessarily bleaches it. When the owner says something is
+  "too defined and too white", the answer is emboss down and `shade` up.
+
+- **COMPRESSION STRAIGHTENS.** Reeded's "computerised" white lines were the
+  SCENE: `spread` squeezes horizontally inside each flute, a soft diagonal cloud
+  edge squeezed 4.2x becomes a hard straight streak, and the flute pitch repeats
+  it exactly. Lower spread, break the pitch with `wander`/`jitter`, and take the
+  rib crown down so what is left does not read white.
+
+- **OBSCURATION IS A FUNCTION OF SUBJECT DISTANCE, so a material can vary by
+  scene.** `close: {}` is merged over the base when the near scene is active.
+  Reeded takes half its spread close up; at the house setting the near subject's
+  eyes were gathered into three flutes at once.
+
+- **RENDER SMALL ARTWORK AT A SIZE YOU CAN SEE.** Four passes were spent judging
+  a 22px icon inside full-page screenshots. A 190px standalone preview found the
+  fault immediately.
+
+### What is open
+
+- **The canvas is sized in CSS pixels.** `getBoundingClientRect()` with no
+  `devicePixelRatio` (`src/js/main.js:4189-4198`, capped 900x675), while three
+  other components in the same file do apply one. This is the likeliest reason
+  the pane reads softer on the owner's retina screen than in a headless capture,
+  and it is a two-line change plus a re-verify of every glass.
+- **`layTexture`'s mirror-brick** (`src/js/main.js:4117-4118`) was measured
+  seam-neutral to remove. Removal was offered and not taken; it is unrelated to
+  the plate fault above, which is why removing it would not have helped.
+- **Dead CSS:** `.fg-obscure-stage__scene--glass` (`src/scss/main.scss:10605`)
+  targets an element that is not in the DOM. Three passes were spent tuning it.
+  Left in place and flagged rather than removed mid-session.
+- **The default scene is `house`** (index 0 of `['house','cat']`, unchanged and
+  not a regression). The owner noticed it and was asked whether to flip the
+  default to the close scene; **they did not answer, so it stands.**
+- **The owner has not yet judged Reeded's `close` override.** A `spread: 1.2`
+  variant was rendered alongside the shipped `1.5` if they want it sharper.
+- **Nobody has used this page on a real touch device.** Same standing limit as
+  every other headless-verified thing here.
+
 ## Current state, 2026-08-28 (obscured glass rebuilt — ON TEST, NOT LIVE)
 
 **Live is still `b2420743` and has never carried any of this.** The test SITE
