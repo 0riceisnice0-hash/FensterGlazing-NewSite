@@ -10932,9 +10932,32 @@ html.fg-gallery-lightbox-open body {
   display: none;
 }
 
+/* SATIN IS THE ONE GLASS THAT NEVER REACHES THE CANVAS. `kind: 'css'`, so its
+   obscuring is this filter on the scene copy rather than an optical model, and
+   it is tuned here rather than in the material map.
+
+   Owner, 2026-08-29: "irl you cannot make out any detail even close up, its
+   more of a coloured silouette." At 12px the house was still legible down to
+   its windows and roofline, which is wrong for a privacy 5 acid etch. Detail
+   surviving against the clear half falls from 15.3% to 6.9% at 24px.
+
+   AND IT VARIES BY SCENE, which is real rather than a trick: a sandblasted
+   surface scatters over a wide angle, so the further away a thing is the more
+   of it lands in the same scattered cone and the less of it survives. The
+   close subject keeps a silhouette; the distant one goes to colour alone.
+   Owner: "the house one should be even more because of distance."
+
+   The scale goes up with the blur. The copy is only `inset: -12px` at
+   scale 1.055, about 32px of overhang, and a 44px blur fades in from the pane
+   edge inside that -- it shows as a pale halo down the sides. */
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
-  filter: blur(12px) brightness(108%) saturate(0.72) contrast(0.92);
-  transform: scale(1.055);
+  filter: blur(24px) brightness(106%) saturate(0.8) contrast(0.9);
+  transform: scale(1.12);
+}
+
+.fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::before {
+  filter: blur(44px) brightness(105%) saturate(0.8) contrast(0.88);
+  transform: scale(1.2);
 }
 
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::after {
