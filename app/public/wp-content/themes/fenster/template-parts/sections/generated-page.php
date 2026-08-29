@@ -3203,7 +3203,22 @@ if ($is_obscure_glass) {
                 <div class="fg-obscure-visualiser__head">
                     <p class="eyebrow"><?php esc_html_e('Interactive glass selector', 'fenster'); ?></p>
                     <h2><?php esc_html_e('Pick a pattern, then drag the divider across the pane.', 'fenster'); ?></h2>
-                    <p class="fg-obscure-visualiser__hint"><?php esc_html_e('Slide from fully clear to fully obscured to judge how much each glass hides, and switch the scene to compare a close-up with a real house.', 'fenster'); ?></p>
+                    <?php
+                    /*
+                     * This line names the three controls, so it has to be rewritten
+                     * whenever one of them changes. It described a "scene" button
+                     * that is now a house/cat switch and said nothing about the
+                     * privacy filter, which did not exist when it was written.
+                     *
+                     * The two scenes are a close subject and a distant one -- Legend
+                     * on a blanket, and dwellings across a pond -- and that is the
+                     * useful distinction rather than "a close-up and a real house":
+                     * obscured glass hides something at the window very differently
+                     * from something down the garden, which is the actual question a
+                     * customer is weighing.
+                     */
+                    ?>
+                    <p class="fg-obscure-visualiser__hint"><?php esc_html_e('Fully clear on one side, fully obscured on the other, so you can judge how much each pattern hides. Narrow the list by privacy level, and switch scenes to compare something close to the glass with a house across the garden.', 'fenster'); ?></p>
                 </div>
 
                 <div
