@@ -12,8 +12,8 @@ what is live; when the two disagree, `LIVECHANGES.md` is right.
 ## START HERE, 2026-08-30 (obscured glass: Reeded stops inverting, Cassini re-plated twice)
 
 Test is `e0bd7c56`, live is unmoved at `b2420743` and **171 commits behind**
-(`main` runs one docs-only commit further at `fac10b8f`; the theme tree is
-byte-identical). **Live was re-established by checksum this session rather than
+(`main` runs a docs commit or two further; the theme tree is `3690e8cd` at all
+of them, which is the hash to check rather than a SHA). **Live was re-established by checksum this session rather than
 copied from a document.** `HANDOVER.md`'s top section is the full picture; this
 is the short version.
 

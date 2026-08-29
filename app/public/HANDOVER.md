@@ -10,11 +10,12 @@ Read that as *consistent*, not *unique*: those four files are unchanged across a
 run of neighbouring commits, so the hash matches all of them. It rules out live
 having drifted; it does not pin the SHA on its own.
 
-The test SITE runs the theme from `e0bd7c56`. `main` is one commit further at
-`fac10b8f`, docs only, and **its theme tree is byte-identical (`3690e8cd`)**, so
-either is the same answer to "what is on test". Test is **171 commits ahead of
-live and none of it is approved** — seven of those are this session
-(`88c1180f..fac10b8f`), and the rest is three earlier sessions of obscured-glass
+The test SITE runs the theme from `e0bd7c56`. `main` runs a docs commit or two
+further on, and **the theme tree is `3690e8cd` at every one of them** — check
+that hash rather than a SHA, because it does not go stale as documentation
+lands. Test is **171 commits ahead of live and none of it is approved** — seven
+of those are this session (`88c1180f..fac10b8f`, docs after that), and the rest
+is three earlier sessions of obscured-glass
 and composite-doors work. **The range now contains four sessions' unapproved
 work; do not ship it wholesale.** This session: fourteen files, **ten added,
 four modified, zero deleted**. Working tree clean.
