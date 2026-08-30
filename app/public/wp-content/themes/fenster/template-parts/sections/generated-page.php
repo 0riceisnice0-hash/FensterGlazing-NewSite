@@ -197,6 +197,21 @@ $is_alu_doors_bespoke = $slug === 'aluminium-doors';
    for this product. The materials section in the bespoke middle carries the
    colour answer instead, so gating the band leaves no heading over nothing. */
 $is_slide_fold_bespoke = $slug === 'slide-fold-doors';
+/* CONFIGURATION ROUTES take a shared bespoke middle instead of the product
+   journey's `fg-product-why` and `fg-product-intel`, both of which frame the
+   route as one material. The gallery band below is deliberately NOT gated:
+   photographs of the arrangement are exactly what a configuration page wants.
+
+   Unlike every other flag here this one is not a slug comparison. The list
+   lives in `fenster_configuration_routes()` so the tech banner and the uPVC
+   colour chart consult the SAME list, and a route cannot end up half converted
+   -- which is how the Liniar banner survived the first pass at
+   /french-casement-windows/. */
+$is_configuration_page = function_exists('fenster_is_configuration_route')
+    && fenster_is_configuration_route($slug);
+$configuration_data = $is_configuration_page && function_exists('fenster_configuration_page_data')
+    ? fenster_configuration_page_data($slug)
+    : [];
 /* Secondary glazing replaces the middle on the same terms, and additionally
    gates off the key-specification strip the way repairs does. Owner, 2026-08-07:
    keep the strip "only if we actually have relevant stats, dont want filler
@@ -387,7 +402,19 @@ $upvc_foil_routes = [
        than a sample, so it must stay in step with `upvc_door_renders`. */
     'patio-doors' => 'patio door',
 ];
-$shows_upvc_colour_grid = isset($upvc_foil_routes[$slug]) || $slug === 'casement-windows';
+/* THE CHART IS OFF ON A CONFIGURATION ROUTE. It is the uPVC foil range headed
+   "Sixteen colours outside", and on a page whose whole point is that the
+   arrangement can be had in uPVC OR aluminium it states half the answer as if it
+   were all of it. The configuration middle carries a line pointing at both
+   colour hubs instead.
+
+   NOTE THIS IS A DIFFERENT LIST FROM `$upvc_colour_routes` ABOVE, which feeds
+   the small swatch row in the design band. Gating that one instead looked
+   equivalent and silently downgraded the swatches to a generic four-colour
+   fallback while leaving the chart exactly where it was. Two lists, two
+   consumers; this is the one that renders the chart. */
+$shows_upvc_colour_grid = (isset($upvc_foil_routes[$slug]) || $slug === 'casement-windows')
+    && ! $is_configuration_page;
 
 /* The powder-coated range, laid out the way the heritage door page lays out
    its colours. Owner instruction, 2026-08-02.
@@ -1015,7 +1042,15 @@ $product_quote_embeds = [
     'double-glazing-replacement' => ['label' => 'Replacement Glazed Units', 'url' => 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing&productCollection=3'],
     'secondary-glazing' => ['label' => 'Secondary Glazing', 'url' => 'https://www.windowsoftware.co.uk/windowcad7/?interface=retail&username=fensterglazing&productCollection=bd73ed10-ee26-4c12-b95e-6220826dc9d3'],
 ];
-$product_quote_embed = $product_quote_embeds[$slug] ?? null;
+/* A CONFIGURATION ROUTE GETS THE WHOLE DESIGNER, NOT ONE COLLECTION. Owner,
+   2026-08-30: "maybe the designer can just be the main page with all products
+   rather than one specific?" Right, and it also settles a wart flagged on the
+   first pass: the embed here was the uPVC collection, so a page saying "uPVC or
+   aluminium" was headed "Design and price your uPVC Windows online". The tool
+   prices one collection at a time, so pointing it at either material picks a
+   side the page deliberately does not pick. With no embed the CTAs fall through
+   to `/online-quote/`, which is the all-products designer. */
+$product_quote_embed = $is_configuration_page ? null : ($product_quote_embeds[$slug] ?? null);
 $product_quote_embed_url = is_array($product_quote_embed) ? (string) ($product_quote_embed['url'] ?? '') : '';
 $product_quote_embed_label = is_array($product_quote_embed) ? (string) ($product_quote_embed['label'] ?? $title) : $title;
 $product_quote_link = $product_quote_embed_url !== '' ? '#fenster-product-quote' : home_url('/online-quote/');
@@ -2293,6 +2328,26 @@ if (str_starts_with($slug, 'double-glazing-') && $current_location !== '') {
         : ($matched_family['group'] === 'doors' ? $door_routes : $other_service_routes);
 
     $add_related_route($matched_family['main']);
+
+    /* THE FIVE WINDOWS THIS CONFIGURATION ACTUALLY GOES ON, FIRST. Owner,
+       2026-08-30: the French casement is an opening style rather than a window
+       of its own, specified on uPVC casement and flush and on all three
+       aluminium. The generic group order put SLIDING SASH and TILT AND TURN
+       ahead of the aluminium routes -- the two windows it explicitly cannot be
+       specified on -- so the band led with the wrong answer on the one page
+       whose whole subject is which windows can have it.
+
+       Added before the group so the slug keying fixes their position; the group
+       call below still runs and still adds the rest, deduped to no-ops. */
+    if ($slug === 'french-casement-windows') {
+        $add_related_routes([
+            'casement-windows',
+            'flush-casement-windows',
+            'aluminium-windows',
+            'aluminium-flush-windows',
+            'heritage-windows',
+        ]);
+    }
 
     if ($current_location !== '') {
         $add_related_route('double-glazing-' . $current_location);
@@ -4328,7 +4383,14 @@ if ($is_commercial_hub) {
              opens with a reassurance strip in the same slot instead, which says
              something true about the service rather than inventing four
              product facts for a service that has none. */ ?>
-    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs) : ?>
+    <?php /* NOT ON A CONFIGURATION ROUTE. The strip is four key specifications and
+             one of them is "Profile system: Liniar", which is the same
+             partial-applicability the tech banner had -- asserted on a page that
+             says the arrangement is available in uPVC OR aluminium. It also
+             heads itself with the bare product name, which duplicates the H1.
+             French casement never showed it because it has no `product_specs`
+             entry; French doors does, so converting that route surfaced it. */ ?>
+    <?php if ($use_product_journey && ! $is_configuration_page && count($product_usps) === 4 && ! $is_composite_doors && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs) : ?>
         <?php get_template_part('template-parts/components/product-pulse', null, [
             'usps'  => $product_usps,
             'slug'  => $slug,
@@ -4851,7 +4913,7 @@ if ($is_commercial_hub) {
     <?php endif; ?>
 
     <?php if ($use_product_journey) : ?>
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && ! $is_configuration_page) : ?>
         <section class="fg-product-why">
             <div class="container fg-product-why__grid">
                 <?php if (is_array($product_why_image) && ! empty($product_why_image['src'])) : ?>
@@ -5015,7 +5077,7 @@ if ($is_commercial_hub) {
             </section>
         <?php endif; ?>
 
-        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
+        <?php if ($slug !== 'sliding-sash-windows' && ! $is_composite_doors && ! $is_flush_bespoke && ! $is_alu_doors_bespoke && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_alu_flush_bespoke && ! $is_heritage_bespoke && ! $is_upvc_doors_bespoke && ! $is_tilt_turn_bespoke && ! $is_slide_fold_bespoke && ! $is_repairs && ! $is_configuration_page && (! empty($product_hub_specs) || ! empty($product_hub_choices))) : ?>
             <section class="fg-product-intel">
                 <div class="container fg-product-intel__shell">
                     <div class="fg-product-intel__lead">
@@ -5429,6 +5491,80 @@ if ($is_commercial_hub) {
             ?>
         <?php endif; ?>
 
+        <?php if ($is_configuration_page && $configuration_data !== []) : ?>
+            <?php
+            /* The shared configuration middle. Everything route-specific is in
+               `fenster_configuration_page_data()`, so `french-doors` and
+               `bow-bay-windows` adopt this by adding a data entry and a slug to
+               `fenster_configuration_routes()` -- no change here.
+
+               Outside the specification-choices wrapper, like every other
+               bespoke dispatch: putting one inside gates the whole middle on a
+               condition about colour swatches and it silently renders nothing,
+               which has caught two people on this project already. */
+            $img_base = '/wp-content/themes/fenster/assets/images/';
+            /* Keyed by slug rather than a ternary, because there are three of
+               these now and a fourth would have grown another branch. Each entry
+               wants a picture of the ARRANGEMENT for the first band and, where we
+               have one, a detail shot for the last. */
+            $configuration_media = [
+                'french-casement-windows' => [
+                    'mechanic' => [
+                        'src' => $img_base . 'imported/French-casement-mullion.jpeg',
+                        'alt' => __('The meeting stile on a French casement, carried on the closing sash rather than fixed to the frame', 'fenster'),
+                    ],
+                    'detail' => [
+                        'src' => $img_base . 'imported/French-casement-shootbolts.jpeg',
+                        'alt' => __('Shootbolt locking on the closing sash of a French casement window', 'fenster'),
+                    ],
+                ],
+                'french-doors' => [
+                    'mechanic' => [
+                        'src' => $img_base . 'products/french-doors/french-doors-white-brick.webp',
+                        'alt' => __('A pair of white French doors closing against each other with no fixed post between them', 'fenster'),
+                    ],
+                    /* Aluminium on purpose. The band it heads is about how the
+                       pair is held shut, and the page says the configuration is
+                       not tied to uPVC, so the picture should not be. */
+                    'detail' => [
+                        'src' => $img_base . 'products/heritage-aluminium/heritage-french-courtyard-1100w.webp',
+                        'alt' => __('Heritage aluminium French doors opening onto a courtyard', 'fenster'),
+                    ],
+                ],
+                'bow-bay-windows' => [
+                    'mechanic' => [
+                        'src' => $img_base . 'products/bow-bay/bay-white-brick-dusk-1600w.webp',
+                        'alt' => __('A white bay window stepping out from a brick elevation at dusk', 'fenster'),
+                    ],
+                    /* Swapped 2026-08-30, owner: the sash dining room shot was bad
+                       here. I had picked it to prove a sash bay exists, which is a
+                       point the product cards already make; what this band needs is
+                       a picture of the things it lists. This one has all of them in
+                       one frame -- the run of lights, the angled return post, the
+                       cill, and the tile hung wall sitting on top of the bay, which
+                       is the load the section above it is about. */
+                    /* From `curated/`, DELIBERATELY OUTSIDE this route's gallery
+                       pool. The flush casement bay was tried here first and is a
+                       fine picture, but it lives in the pool, so featuring it put
+                       the same photograph on the page twice -- and taking it out
+                       of the pool dropped the gallery under its four-image
+                       threshold and removed the band altogether. Featuring
+                       something the pool does not hold avoids both. It shows what
+                       the band lists: the angled return, the run of lights, and
+                       the cill and brickwork carrying it. */
+                    'detail' => [
+                        'src' => $img_base . 'products/curated/liniar-bay-window.jpg',
+                        'alt' => __('A white bay window seen along the elevation, showing the angled return post and the brickwork carrying the run', 'fenster'),
+                    ],
+                ],
+            ];
+            get_template_part('template-parts/sections/configuration-page-v2', null, [
+                'config' => $configuration_data,
+                'media' => $configuration_media[$slug] ?? [],
+            ]);
+            ?>
+        <?php endif; ?>
+
         <?php if ($is_slide_fold_bespoke) : ?>
             <?php
             /* OUTSIDE the specification-choices wrapper, like every other
@@ -5638,8 +5774,20 @@ if ($is_commercial_hub) {
                 $glass_patch = array_slice($glass_patch, 0, 5);
 
                 $number_cards = count($option_cards) > 1;
+                /* EXACTLY TWO CARDS WAS THE ONE COUNT NOBODY HAD HANDLED. The
+                   grid is capped at 980px so a row of three does not stretch
+                   into empty padding, and a single card gets `--single` to take
+                   the full width back. Two fell between: capped at 980 inside an
+                   1180 container and left-aligned, so the pair sat with a dead
+                   200px beside it. Owner, 2026-08-30: "the colour and glass
+                   things are bunched sideways".
+
+                   Only two routes render two cards, and both are configuration
+                   pages -- French casement and French doors -- because every
+                   other route resolves to one. */
+                $paired_cards = count($option_cards) === 2;
                 ?>
-                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? '' : 'fg-product-choice-map--single'); ?>">
+                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? ($paired_cards ? 'fg-product-choice-map--pair' : '') : 'fg-product-choice-map--single'); ?>">
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 3; ?>
@@ -5684,7 +5832,7 @@ if ($is_commercial_hub) {
         <?php endif; ?>
         <?php endif; ?>
 
-        <?php if (isset($upvc_foil_routes[$slug])) : ?>
+        <?php if (isset($upvc_foil_routes[$slug]) && ! $is_configuration_page) : ?>
             <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_foil_routes[$slug]]); ?>
         <?php endif; ?>
 
@@ -5932,7 +6080,30 @@ if ($is_commercial_hub) {
                already said twice. **Check what the route already answers before
                raising this number.** A cap that forces that question is doing
                something useful. */
-            $product_faq_limit = $is_repairs ? 7 : (($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows') ? 6 : 5);
+            /* HOW MANY FAQs THIS ROUTE SHOWS. A chained ternary that had grown
+               to four conditions and was about to take a fifth; a map says the
+               same thing, keeps the two flag-driven routes where they were, and
+               makes the next addition one line. Behaviour is unchanged for every
+               route that was already listed.
+
+               `french-casement-windows` is the new one, 2026-08-30. Its sixth
+               question is the restrictor answer, and the page was silently
+               dropping it -- the data had six and the slice took five, which is
+               exactly the kind of stale-but-invisible entry this codebase keeps
+               getting caught by. */
+            $product_faq_limits = [
+                'sliding-sash-windows' => 6,
+                'flush-casement-windows' => 6,
+                /* The three configuration routes each carry six, because the
+                   rebuild added the two questions the pages exist to answer --
+                   which of your products can have this, and is it only uPVC --
+                   on top of the five they already had. At the default of five
+                   the last one would be sliced off and never render. */
+                'french-casement-windows' => 6,
+                'french-doors' => 6,
+                'bow-bay-windows' => 6,
+            ];
+            $product_faq_limit = $is_repairs ? 7 : ($is_composite_doors ? 6 : ($product_faq_limits[$slug] ?? 5));
             /* The schema is the shared emitter now, passed the same limit the
                render below slices to, so the markup can never describe a
                question the page does not show. Only the JSON-LD moved; the

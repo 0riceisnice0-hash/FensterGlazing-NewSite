@@ -319,9 +319,30 @@ function fenster_gsc_seo_overrides(): array
             'title_tag' => 'Aluminium Doors Milton Keynes | Modern Secure Entrances',
             'meta_description' => 'Aluminium doors in Milton Keynes for secure entrances, garden access and glazed openings, with colour, threshold and hardware details checked before order.',
         ],
+        /* NO OVERRIDE EXISTED HERE UNTIL 2026-08-30, so this route was serving
+           the SCRAPE straight out: `French Doors Milton Keynes | Double Doors
+           Buckinghamshire` and a description that was a list of towns --
+           "Learn about our French doors. We supply double doors throughout
+           Milton Keynes, Northampton, Ampthill, Toddington & Buckinghamshire."
+           Exactly the imported-tag pattern this file says not to render blindly.
+
+           The head term stays first because the route ranks for it. The tail is
+           the two materials, which is the thing the page can now say and most
+           competitors cannot -- and it is what the configuration rebuild made
+           true. */
+        'french-doors' => [
+            'title_tag' => 'French Doors Milton Keynes | uPVC and Aluminium',
+            'meta_description' => 'A French door is a pair of leaves with no fixed post between them, so the whole width opens. Specified on uPVC, aluminium or heritage aluminium.',
+        ],
+        /* Description rewritten 2026-08-30 with the configuration rebuild. The
+           old one sold double glazing, colour and kerb appeal, which describes
+           any window; what is actually distinct about this route is that a bay
+           is an arrangement any of our windows can be built in, and that it
+           carries the wall above it. The title is left alone: it was written
+           rather than scraped and leads on the head term. */
         'bow-bay-windows' => [
             'title_tag' => 'Bow and Bay Windows Milton Keynes | Double Glazed Bays',
-            'meta_description' => 'Bow and bay windows in Milton Keynes with double glazing, colour options and survey-led replacement for brighter rooms and kerb appeal.',
+            'meta_description' => 'A bay is a run of frames joined at an angle, built from any window we fit. We check what the bay carries before it is specified. Milton Keynes and around.',
         ],
         /* Retitled 2026-08-11 with the page rebuild. "Slim Aluminium Style" is
            what /aluminium-windows/ sells and it said nothing about why anybody
@@ -381,10 +402,32 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Sheerline S1 aluminium roof lanterns and roof lights in Milton Keynes, with 13 layouts, frame colours, glass and ventilation specified before installation.',
         ],
         'french-casement-windows' => [
-            /* Title matches the imported one that already ranks; only the
-               scrape-era town-list description is replaced. */
-            'title_tag' => 'French Casement Windows Milton Keynes | Fenster Glazing',
-            'meta_description' => 'French casement windows with no fixed central mullion, so both sashes open into one clear, full-width opening that suits fire escape. Fitted in Milton Keynes.',
+            /* Title matches the imported one that already ranks and is NOT
+               touched: this route carries the head phrase people search.
+
+               The description now says the thing the page is actually about --
+               that it is a configuration you specify on a window rather than a
+               window of its own. Owner, 2026-08-30.
+
+               THE TAIL CHANGED 2026-08-30 and the note above it did say this
+               title was not to be touched. What changed is the page: it is a
+               configuration available in two materials now, and `| Fenster
+               Glazing` spent the tail on a brand the searcher already sees in
+               the URL. `| uPVC and Aluminium` is the differentiator, matches
+               what /french-doors/ now carries, and leaves the head phrase --
+               the first 39 characters -- exactly as it was, which is the part
+               that ranks.
+
+               `that suits fire escape` is DELIBERATELY GONE. This site pulled
+               egress copy off the handle hub once already and declined to
+               inherit Liniar's own "fire escape solution" wording without being
+               asked; that decision is recorded against the tilt and turn entry
+               in `product-hub-data.php` and this description had been quietly
+               contradicting it. A French casement is often specified for exactly
+               that reason, so it can come back the moment the owner says so --
+               but it is a compliance claim and it needs saying deliberately. */
+            'title_tag' => 'French Casement Windows Milton Keynes | uPVC and Aluminium',
+            'meta_description' => 'French casement windows have no fixed central mullion, so both sashes swing clear and the full width opens as one. Specify it on uPVC or aluminium.',
         ],
         'flat-rooflights' => [
             'title_tag' => 'Flat Rooflights Milton Keynes | Fixed & Opening Rooflights',

@@ -8421,6 +8421,14 @@ html.fg-gallery-lightbox-open body {
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* Two cards take the container back as well. The 980px cap above stops a row of
+   three stretching into empty padding; with two it left the pair 980 wide inside
+   an 1180 container, left-aligned, and put a dead 200px down the right of the
+   band. `auto-fit` then gives them half the row each. */
+.fg-product-choice-map--pair {
+  max-width: none;
+}
+
 /* Slimmer, per the owner: the card is now about one pane deep rather than two. */
 .fg-product-choice-map--single .fg-product-option-card {
   min-height: 0;
@@ -39944,6 +39952,181 @@ html.fg-blinds-reveal-locked {
 
 .fg-cw-split--media-first {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+}
+
+/* CONFIGURATION PAGES. Shared by every route in
+   `fenster_configuration_routes()`, so nothing here may name one of them --
+   `french-doors` and `bow-bay-windows` are expected to use the same classes.
+   Built on the `fg-cw-` split the bespoke templates already use, so only the
+   pieces a configuration page needs that a product page does not are new: the
+   product grid, the exclusions, and the two definition lists. */
+.fg-cfg-aside {
+  margin-top: 0.9rem;
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  line-height: 1.5;
+}
+
+.fg-cfg-colour-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+.fg-cfg-colour-links span {
+  color: var(--color-line);
+}
+
+/* THESE BANDS CARRY THEIR OWN VERTICAL RHYTHM, because `.fg-cw-intro` has none.
+   It is a layout class -- it gives the split and nothing else -- and every
+   bespoke template that uses it pairs it with a route class that supplies the
+   padding (`.fg-hw-look` and the rest). Built without one, the first band sat
+   32px under the hero against a ~100px rhythm everywhere else on the page, and
+   the owner read it immediately: "the section after the hero is bunched up".
+   Anything added to the configuration middle needs a padding rule here. */
+.fg-cfg-mechanic,
+.fg-cfg-highlight,
+.fg-cfg-detail {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+}
+
+.fg-cfg-products {
+  padding: 0 0 clamp(2.5rem, 5vw, 4rem);
+}
+
+.fg-cfg-products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-cfg-products__card > a {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 45, 58, 0.08);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.fg-cfg-products__card > a:hover,
+.fg-cfg-products__card > a:focus-visible {
+  border-color: rgba(46, 172, 102, 0.42);
+  box-shadow: 0 18px 36px rgba(0, 45, 58, 0.14);
+  transform: translateY(-2px);
+}
+
+.fg-cfg-products__media {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.fg-cfg-products__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fg-cfg-products__body {
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem 1.1rem;
+}
+
+.fg-cfg-products__material {
+  color: var(--color-accent-dark);
+  font-size: var(--fg-text-xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-cfg-products__card strong {
+  color: var(--color-steel);
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+
+.fg-cfg-products__note {
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  line-height: 1.45;
+}
+
+.fg-cfg-criteria {
+  align-self: start;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 45, 58, 0.08);
+}
+
+.fg-cfg-criteria__title {
+  margin: 0 0 0.6rem;
+  color: var(--color-accent-dark);
+  font-size: var(--fg-text-xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fg-cfg-criteria dl,
+.fg-cfg-specs {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.fg-cfg-specs {
+  margin-top: 1rem;
+}
+
+.fg-cfg-criteria dl > div,
+.fg-cfg-specs > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.fg-cfg-criteria dl > div:last-child,
+.fg-cfg-specs > div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.fg-cfg-criteria dt,
+.fg-cfg-specs dt {
+  color: var(--color-muted);
+  font-size: var(--fg-text-sm);
+  font-weight: 700;
+}
+
+.fg-cfg-criteria dd,
+.fg-cfg-specs dd {
+  margin: 0;
+  color: var(--color-steel);
+}
+
+@media (min-width: 861px) {
+  .fg-cfg-specs > div {
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: 0 1rem;
+  }
 }
 
 .fg-cw-facts {

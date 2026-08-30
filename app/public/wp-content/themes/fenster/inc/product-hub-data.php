@@ -79,8 +79,46 @@ function fenster_product_hub_data(string $slug): array
         'bow-bay-windows' => [
             'systems' => [$systems['liniar']],
         ],
+        /* A CONFIGURATION, NOT A LINIAR PRODUCT. Owner, 2026-08-30: "it's aimed
+           currently as just a liniar window thing but it's actually a
+           configuration where the mullion is floating like french doors. doable
+           on all of our windows except t&t."
+
+           This entry carried `systems => [liniar]` and nothing else, so the page
+           fell through to generic copy under a Liniar badge and read as a uPVC
+           product. It is an OPENING STYLE that can be specified across the
+           casement range in both materials, which is why Sheerline sits beside
+           Liniar here.
+
+           WHICH WINDOWS, confirmed by the owner rather than inferred: uPVC
+           casement and flush, and all three aluminium — casement, flush and
+           heritage. NOT tilt and turn, and NOT sliding sash. The owner's own
+           phrasing was "all of our windows except t&t", but a vertical slider
+           has no side-hung sashes for a floating mullion to sit on, so listing
+           it would have been claiming something the product cannot do. Asked
+           rather than assumed, and the answer excluded sash and bay.
+
+           No performance figures are invented here. The numbers quoted are the
+           system-level ones already asserted on the casement and aluminium
+           pages; the French part changes the opening, not the profile. */
         'french-casement-windows' => [
-            'systems' => [$systems['liniar']],
+            'systems' => [$systems['liniar'], $systems['sheerline']],
+            'badges' => ['No fixed mullion', 'uPVC or aluminium', 'Full-width opening'],
+            'heading' => 'French casement is a configuration, not a separate window.',
+            'copy' => 'A French casement is a pair of side-hung sashes that meet each other rather than a fixed post. The meeting stile is carried on the closing sash, so it swings away with it and the whole width opens as one, the same way a pair of French doors does. It is specified on the window you were already choosing: uPVC casement or flush casement, or aluminium casement, flush or heritage. Tilt and turn is the exception, because the sash has to come inwards on its own hinges.',
+            'specs' => [
+                ['label' => 'Opening', 'value' => 'Two side-hung sashes, no fixed central mullion, both leaves opening to one clear width'],
+                ['label' => 'Meeting stile', 'value' => 'Carried on the closing sash, so nothing is left standing in the opening'],
+                ['label' => 'Available on', 'value' => 'uPVC casement and flush casement, and aluminium casement, flush and heritage'],
+                ['label' => 'Not available on', 'value' => 'Tilt and turn, where the sash swings inward on its own hinges, and sliding sash'],
+                ['label' => 'Security', 'value' => 'Shootbolts from the closing sash into head and cill, with keeps set where the two sashes meet'],
+            ],
+            'choices' => [
+                'uPVC in the 70mm Liniar EnergyPlus profile, or aluminium in Sheerline Prestige',
+                'Flush or standard sash face, in either material',
+                'Which leaf closes first, and which carries the handle',
+                'Georgian or astragal bars across the pair, and obscured glass where it faces a boundary',
+            ],
         ],
         'tilt-turn-windows' => [
             'systems' => [$systems['liniar']],
@@ -554,6 +592,17 @@ function fenster_product_hub_data(string $slug): array
  */
 function fenster_tech_banner_args(string $slug): array
 {
+    /* NO SINGLE-SUPPLIER BANNER ON A CONFIGURATION ROUTE. Owner, 2026-08-30:
+       "it still shows the banner for liniar which is only partially
+       applicable." It is worse than partial on a page that says the arrangement
+       is available in aluminium too -- the first panel under the hero named one
+       uPVC system. Checked against the shared list rather than a slug, so a
+       route converted later cannot keep the banner by being left in the array
+       below. */
+    if (function_exists('fenster_is_configuration_route') && fenster_is_configuration_route($slug)) {
+        return [];
+    }
+
     $energyplus_routes = [
         'casement-windows',
         'flush-casement-windows',
