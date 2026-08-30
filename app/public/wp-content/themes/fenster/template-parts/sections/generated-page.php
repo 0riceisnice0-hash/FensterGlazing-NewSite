@@ -5518,11 +5518,16 @@ if ($is_commercial_hub) {
                         'src' => $img_base . 'products/bow-bay/bay-white-brick-dusk-1600w.webp',
                         'alt' => __('A white bay window stepping out from a brick elevation at dusk', 'fenster'),
                     ],
-                    /* A sash bay, deliberately: the page says any of our windows
-                       can form one, and this is the least obvious of them. */
+                    /* Swapped 2026-08-30, owner: the sash dining room shot was bad
+                       here. I had picked it to prove a sash bay exists, which is a
+                       point the product cards already make; what this band needs is
+                       a picture of the things it lists. This one has all of them in
+                       one frame -- the run of lights, the angled return post, the
+                       cill, and the tile hung wall sitting on top of the bay, which
+                       is the load the section above it is about. */
                     'detail' => [
-                        'src' => $img_base . 'imported/Joined-Vertical-Slider-Bay.jpg',
-                        'alt' => __('A bay built from sliding sash windows in a dining room', 'fenster'),
+                        'src' => $img_base . 'products/flush-casement/flush-white-bay-brick-1400w.webp',
+                        'alt' => __('A white bay window with five lights across the front and an angled return, carrying a tile hung wall above', 'fenster'),
                     ],
                 ],
             ];
