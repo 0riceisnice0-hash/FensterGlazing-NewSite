@@ -419,6 +419,20 @@ function fenster_link_card_image(string $url): string
             'bow-bay-windows' => $curated . 'liniar-bay-window.jpg',
             'aluminium-windows' => $curated . 'sheerline-aluminium-window.jpg',
             'heritage-windows' => $curated . 'sheerline-heritage-windows.jpg',
+            /* Added 2026-08-30. Without an entry here this route fell into
+               `link-cards`' PLAIN group -- the component renders every link that
+               resolves an image as a card and everything else as bare text
+               underneath -- so on `/french-casement-windows/`, which now leads
+               its related band with the five windows the configuration can be
+               specified on, the fifth was demoted below `Areas We Cover`.
+               Nothing was wrong with the ordering; the route simply had no
+               picture.
+
+               This is our own install rather than one of Sheerline's, and it is
+               deliberately NOT `afw-style-flush-1120w.jpg`, which is lighter but
+               is a RENDER -- a CGI tile in a row of photographs is the thing
+               this file already took off the doors hub. */
+            'aluminium-flush-windows' => '/wp-content/themes/fenster/assets/images/products/aluminium-flush/afw-stone-gable-1100w.jpg',
             'composite-doors' => $curated . 'distinction-composite-door-installed.jpg',
             /* Was the golden oak slab that reads composite. The related-link
                card is a third place that image lived, after product_media

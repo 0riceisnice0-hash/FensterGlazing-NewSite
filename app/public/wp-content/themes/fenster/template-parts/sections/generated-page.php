@@ -5936,7 +5936,23 @@ if ($is_commercial_hub) {
                already said twice. **Check what the route already answers before
                raising this number.** A cap that forces that question is doing
                something useful. */
-            $product_faq_limit = $is_repairs ? 7 : (($slug === 'sliding-sash-windows' || $is_composite_doors || $slug === 'flush-casement-windows') ? 6 : 5);
+            /* HOW MANY FAQs THIS ROUTE SHOWS. A chained ternary that had grown
+               to four conditions and was about to take a fifth; a map says the
+               same thing, keeps the two flag-driven routes where they were, and
+               makes the next addition one line. Behaviour is unchanged for every
+               route that was already listed.
+
+               `french-casement-windows` is the new one, 2026-08-30. Its sixth
+               question is the restrictor answer, and the page was silently
+               dropping it -- the data had six and the slice took five, which is
+               exactly the kind of stale-but-invisible entry this codebase keeps
+               getting caught by. */
+            $product_faq_limits = [
+                'sliding-sash-windows' => 6,
+                'flush-casement-windows' => 6,
+                'french-casement-windows' => 6,
+            ];
+            $product_faq_limit = $is_repairs ? 7 : ($is_composite_doors ? 6 : ($product_faq_limits[$slug] ?? 5));
             /* The schema is the shared emitter now, passed the same limit the
                render below slices to, so the markup can never describe a
                question the page does not show. Only the JSON-LD moved; the
