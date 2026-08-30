@@ -136,7 +136,7 @@ function fenster_commercial_product_pages(): array
                    and can check: the same firm measures it and fits it, so there is
                    one number to ring. */
                 'We survey, supply and install the whole opening: aluminium and uPVC windows, glazed doorsets, entrance screens, the glass in them and the ironmongery on them. The people who measure it are the people who fit it, and there is one firm to ring if anything needs putting right.',
-                'We work from your drawings and schedules where you have them, and from a site survey where you do not. On occupied buildings the sequence is agreed before we start: which elevations, in what order, during which hours, and what is handed back at the end of each day.',
+                'We work from your drawings and schedules where you have them, and from a site survey where you do not. On occupied buildings the sequence is agreed before we start: which elevations, in what order, during which hours, and what is handed back at the end of each day. At <a href="' . esc_url(home_url('/commercial-projects/all-hallows-bedford/')) . '">All Hallows in Bedford</a> that package ran to eight AOV window units, a glazed entrance screen, a large fixed screen and ten fire-rated steel doorsets.',
             ],
             'stats' => [
                 ['value' => 'Aluminium', 'label' => 'and uPVC, specified per opening'],
@@ -161,9 +161,17 @@ function fenster_commercial_product_pages(): array
             'specification' => [
                 ['label' => 'Aluminium systems', 'value' => 'Technal, Smart and Senior among others, specified to the job.'],
                 ['label' => 'uPVC systems', 'value' => 'Liniar.'],
-                ['label' => 'Fire rating', 'value' => 'Fire-rated glazing supplied to the rating the specification calls for.'],
+                ['label' => 'Fire rating', 'value' => 'Fire-rated glazing and fire-rated steel doorsets, supplied to the rating the specification calls for.'],
                 ['label' => 'Security', 'value' => 'PAS 24 and Secured by Design available where the specification calls for them.'],
-                ['label' => 'Steel doorsets', 'value' => 'Supplied within this package, security rated up to SR3.'],
+                /* FIRE ADDED TO THIS ROW 2026-08-30, AND IT IS PROVEN RATHER THAN
+                   CLAIMED: All Hallows carried ten steel doorsets, fire rated to
+                   the project specification, photographed and written up. The
+                   hedge is the same one the glazing row carries, "to the
+                   specification", because a rating belongs to a tested doorset
+                   and never to us. DO NOT publish an FD or EI figure; none is
+                   confirmed. The four other routes carrying the shared fire-rating
+                   row are deliberately untouched: none of them supplies doorsets. */
+                ['label' => 'Steel doorsets', 'value' => 'Supplied within this package, fire rated to the specification and security rated up to SR3.'],
                 ['label' => 'Glass', 'value' => 'Toughened, laminated, low-e, solar control, acoustic and obscure, specified per opening.'],
                 ['label' => 'Finish', 'value' => 'Powder coated to any RAL. Dual colour where the inside and outside differ.'],
                 ['label' => 'Coverage', 'value' => 'Nationwide across England and Wales.'],
@@ -215,7 +223,7 @@ function fenster_commercial_product_pages(): array
                 ],
                 [
                     'question' => 'Can you supply fire-rated and security-rated openings?',
-                    'answer' => 'Fire-rated glazing is supplied to the rating the specification calls for. PAS 24 and Secured by Design are available where the specification calls for them, and steel doorsets are supplied within the same package, security rated up to SR3.',
+                    'answer' => 'Fire-rated glazing and fire-rated steel doorsets are supplied to the rating the specification calls for. PAS 24 and Secured by Design are available where the specification calls for them, and steel doorsets are supplied within the same package, security rated up to SR3. At All Hallows in Bedford we fitted ten fire-rated steel doorsets alongside the glazing.',
                 ],
                 [
                     'question' => 'Can you work on a building that stays open?',
@@ -294,6 +302,14 @@ function fenster_commercial_product_pages(): array
                publishing a size would mislead. */
             'specification' => [
                 ['label' => 'System', 'value' => 'Specified to the job rather than tied to one system.'],
+                /* STICK SYSTEM, NAMED POSITIVELY, and it describes what this page
+                   already said rather than adding a capability: the grid is set out
+                   and assembled on site, which is what a stick system is. Same
+                   treatment as the capped row above it, per the owner's 2026-08-13
+                   instruction that where we offer one method we name it and stop.
+                   DO NOT add "not unitised" — that is the standing ruling against
+                   writing what is not offered. */
+                ['label' => 'Assembly', 'value' => 'Stick system, with the mullion and transom grid set out and assembled on site.'],
                 ['label' => 'Wind load', 'value' => 'Wind load calculated for the elevation as part of the design.'],
                 ['label' => 'U-value', 'value' => 'As low as 0.9 W/m²K, depending on the system and the glazing specified.'],
                 ['label' => 'Glazing method', 'value' => 'Capped systems, with the cap profile specified to the elevation.'],
@@ -308,7 +324,7 @@ function fenster_commercial_product_pages(): array
             'spec_note' => 'We specify curtain walling across more than one system, chosen for the job rather than for a supplier relationship, so treat these figures as a guide to what the systems reach. Send us the elevation and we will confirm the numbers in writing against your drawings before they go into a schedule.',
             'capabilities_heading' => 'What we take on within a curtain walling package.',
             'capabilities' => [
-                ['title' => 'Screens and elevations', 'copy' => 'Mullion and transom grids across full elevations, atria, stairwells and entrance bays.'],
+                ['title' => 'Screens and elevations', 'copy' => 'Stick-built mullion and transom grids across full elevations, atria, stairwells and entrance bays.'],
                 ['title' => 'Doors inside the grid', 'copy' => 'Commercial doorsets, side screens and toplights set into the curtain wall rather than butted against it.'],
                 ['title' => 'Panels, vents and louvres', 'copy' => 'Insulated infill panels, opening vents, AOV units and ventilation louvres carried in the same framing.'],
                 ['title' => 'Replacement facades', 'copy' => 'Stripping and replacing a failed or tired facade on a building that stays in use behind it.'],
@@ -346,6 +362,10 @@ function fenster_commercial_product_pages(): array
                 [
                     'question' => 'Which glazing method do you use?',
                     'answer' => 'Capped systems, with the cap profile specified to the elevation.',
+                ],
+                [
+                    'question' => 'How is the curtain walling assembled?',
+                    'answer' => 'As a stick system: the mullion and transom grid is set out and assembled on site, glazed with capped systems and the cap profile specified to the elevation. The grid is set out from your drawings, or from a survey of the opening, and confirmed before manufacture.',
                 ],
                 [
                     'question' => 'What can be built into the curtain walling grid?',
@@ -877,7 +897,7 @@ function fenster_commercial_product_pages(): array
         'office-and-retail-glazing' => [
             'eyebrow' => 'Offices and retail',
             'title' => 'Office and retail glazing',
-            'subtitle' => 'Windows, entrance screens and curtain walling for offices, shops and workplaces, worked around your trading and working hours.',
+            'subtitle' => 'Shopfronts, entrance screens, windows and curtain walling for offices, shops and workplaces, worked around your trading and working hours.',
             'intro_heading' => 'The building has to keep earning while we are on it.',
             'hero_image' => $sector_base . 'sector-offices-water-end-barn-1400w.webp',
             'hero_alt' => 'Converted barn office complex with replacement windows',
@@ -885,26 +905,40 @@ function fenster_commercial_product_pages(): array
             'intro_alt' => 'Office courtyard elevation with new glazing',
             'summary' => [
                 'Offices and shops have the same problem from opposite ends of the day: an office needs its desks usable from nine, a shop needs its frontage clear from opening. Both usually mean working early, late or at a weekend, and that belongs in the price rather than as a surprise later.',
-                'The work ranges from a converted barn office at Water End Barn to commercial buildings such as Franklin House and Orient House. Tell us the hours the building has to work and we will price around them.',
+                'The work ranges from a converted barn office at Water End Barn to commercial buildings such as Franklin House and Orient House, and from a full shopfront replacement down to a single entrance screen. Tell us the hours the building has to work and we will price around them.',
+                /* THIS ROUTE OWNS "SHOPFRONT" AND THE LINK BELOW IS WHAT KEEPS IT
+                   THAT WAY. Both this page and /commercial-replacement-glazing/
+                   carried shopfront language and a near-identical toughened and
+                   laminated claim, so the two were competing for the same query.
+                   The split is by intent: a frontage being replaced is this page,
+                   glass failing in a frame that stays is the other one. Each links
+                   the other on that specific distinction and nowhere else. */
+                'A shopfront replacement is the frontage, the entrance doors and the glass in them, ordered as one. Where the frame is sound and only the glass has failed or been broken, that is <a href="' . esc_url(home_url('/commercial-replacement-glazing/')) . '">commercial replacement glazing</a> instead.',
             ],
             'stats' => [
                 ['value' => 'Out of hours', 'label' => 'where trading demands it'],
                 ['value' => 'Occupied', 'label' => 'floors kept usable'],
-                ['value' => 'Frontages', 'label' => 'entrances and shopfront glazing'],
+                ['value' => 'Shopfronts', 'label' => 'frontages, screens and entrance doors'],
             ],
             'specification' => [
                 ['label' => 'Working hours', 'value' => 'Early starts, evenings and weekends where trading demands it.'],
                 ['label' => 'Possession', 'value' => 'Floor by floor or unit by unit, with the space usable the next morning.'],
                 ['label' => 'Glass', 'value' => 'Solar control, acoustic and safety glass specified against the elevation and the use.'],
                 ['label' => 'Thermal', 'value' => 'Specified to the performance the project requires; the system is chosen to meet it.'],
-                ['label' => 'Shopfront glass', 'value' => 'Toughened and laminated supplied to order, any size.'],
+                ['label' => 'Shopfronts', 'value' => 'Frontages, entrance screens and entrance doors, with toughened and laminated glass supplied to order.'],
+                /* Manifestation is not a new claim: /commercial-automation/ has
+                   published "toughened or laminated throughout, with manifestation
+                   to suit the screen" since 2026-08-12, and this route sells the
+                   same entrance screens. It is here because it is the word a
+                   specifier uses and it appeared nowhere a retail buyer would look. */
+                ['label' => 'Manifestation', 'value' => 'Applied to glazed screens and entrance doors to suit the screen.'],
             ],
             'capabilities_heading' => 'What we take on across an office or retail building.',
             'capabilities' => [
                 ['title' => 'Office windows', 'copy' => 'Replacement windows floor by floor, with desks moved back and the floor usable the next morning.'],
-                ['title' => 'Entrance screens', 'copy' => 'Glazed entrances and reception screens, coordinated with automatic doors and access control.'],
+                ['title' => 'Entrance screens', 'copy' => 'Glazed entrances and reception screens, with manifestation to suit the screen, coordinated with automatic doors and access control.'],
                 ['title' => 'Curtain walling', 'copy' => 'Larger glazed elevations, replacement facade panels and phased facade works.'],
-                ['title' => 'Shopfronts', 'copy' => 'Retail frontages and doors, with the unit trading around the work where it can be.'],
+                ['title' => 'Shopfronts', 'copy' => 'Shopfront replacement and new frontages: the screen, the entrance doors and the glass in them, with the unit trading around the work where it can be.'],
             ],
             'detail_sections' => [
                 [
@@ -923,6 +957,19 @@ function fenster_commercial_product_pages(): array
                     'alt' => 'Converted barn office building with traditional glazing',
                     'points' => ['Individual opening survey', 'Sympathetic replacements', 'Conservation constraints checked'],
                 ],
+                /* THE ONLY RETAIL FRONTAGE PHOTOGRAPH WE OWN. It is the curtain
+                   walling hero as well, and that is deliberate rather than lazy:
+                   the ground floor of that parade is a glazed screen with entrance
+                   doors in it, which is what this section is about. Replace it the
+                   moment a shopfront of ours is photographed on its own. */
+                [
+                    'eyebrow' => 'Shopfronts',
+                    'title' => 'The frontage, the entrance doors and the glass are one order.',
+                    'copy' => 'A shopfront is a screen, a door and the glass in it, and specifying those separately is how the reveal, the threshold and the door swing end up disagreeing on site. We survey the existing frontage, set the screen out from the opening rather than from the drawing, and order the doors and the glass with it. Toughened and laminated glass is supplied to order, and manifestation is applied to suit the screen.',
+                    'image' => $commercial_base . 'comm-curtain-walling-parade-1600w.jpg',
+                    'alt' => 'A glazed aluminium frontage across a commercial parade, with entrance screens at ground floor',
+                    'points' => ['Frontage, doors and glass together', 'Toughened and laminated to order', 'Manifestation to suit the screen'],
+                ],
             ],
             'use_cases_heading' => 'Buildings this work suits.',
             'use_cases' => ['Offices', 'Business parks', 'Converted buildings', 'Retail units', 'Shopfronts', 'Workplaces'],
@@ -939,9 +986,12 @@ function fenster_commercial_product_pages(): array
                     'question' => 'What glass do you specify for an office elevation?',
                     'answer' => 'Solar control, acoustic and safety glass specified against the elevation and the use, with thermal performance specified to what the project requires and the system chosen to meet it.',
                 ],
+                /* FAQ answers are esc_html, so no link is possible here. The
+                   route to /commercial-replacement-glazing/ is in the summary
+                   above instead; do not paste an anchor into an answer. */
                 [
-                    'question' => 'Can you supply shopfront glass?',
-                    'answer' => 'Toughened and laminated supplied to order, any size.',
+                    'question' => 'Do you replace shopfronts as well as the glass in them?',
+                    'answer' => 'Yes. A shopfront replacement is the frontage, the entrance doors and the glass in them specified as one order, with toughened and laminated glass supplied to order and manifestation applied to suit the screen. Where the frame is sound and only the glass has failed or been broken, that is commercial replacement glazing instead.',
                 ],
             ],
         ],
@@ -1104,7 +1154,7 @@ function fenster_commercial_product_pages(): array
             'intro_alt' => 'A replacement unit lifted into an office elevation on a vacuum lifter, seen from the breakout space inside',
             'summary' => [
                 'A commercial unit fails the same way a domestic one does and matters more: a crazed pane in an office elevation, a blown unit in a stairwell, a shopfront that has been put through. The difference is that the building has to keep trading around it, the glass is usually too big and too high to carry in by hand, and the opening it came out of was never designed to be reglazed from a ladder.',
-                'We measure the failed unit, order it to the frame it is going into, and fit it with the floor still in use. There is no maximum size. From order it is normally one to two weeks, depending on the specification.',
+                'We measure the failed unit, order it to the frame it is going into, and fit it with the floor still in use. There is no maximum size. From order it is normally one to two weeks, depending on the specification. Where the frontage itself is being replaced rather than the glass in it, that is <a href="' . esc_url(home_url('/office-and-retail-glazing/')) . '">office and retail glazing</a>.',
             ],
             'stats' => [
                 ['value' => 'No maximum', 'label' => 'unit size we will quote'],
