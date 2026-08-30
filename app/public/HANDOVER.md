@@ -1,39 +1,109 @@
 # Fenster Glazing Handover
 
-## Current state, 2026-08-30 (obscured glass IS LIVE — and live is not on `main`)
+## Current state, 2026-08-30 — read this before touching either environment
 
-**Live is `10a596a7`, tag `live-configuration-2026-08-30e`. It is NOT an ancestor of `main`.** (It supersedes `2d8bfab7`, `0718b840`, `c07a7c3c` and `c11cece9`; those tags still exist but must not be redeployed.) **The isolated line is no longer an obscured-glass thing** — this release is the integral blind visualiser. It is simply what is approved for live, carried forward release by release while the rest of `main` waits.
+**Read in this order if you are picking this up cold:** this section, then the
+Current Truth section of `LIVECHANGES.md` (the only authority on what is live
+and the deploy runbook), then the START HERE block in `PROGRESS.md`. `AI.md`
+carries the standing rules, including the Configuration Page Rule that governs
+three of the routes touched most recently.
 
-**Original note, still the operative arrangement:** The obscured glass
-page shipped on 2026-08-30 as an isolated release cut from the old live
-`b2420743`, because the glass work could not be lifted out of `main` as a
-commit range. The only ref that reaches it is the tag
-**`live-obscured-glass-2026-08-30`**. `main` is `443a1b44`.
 
-**If you checksum live you will get `c11cece9` and it will not match anything on
-`main`. That is expected, not drift.**
+**LIVE IS `10a596a7`**, tag `live-configuration-2026-08-30e`, verified by
+checksum rather than copied from a document. **It is NOT an ancestor of `main`.**
 
-**THE SINGLE MOST IMPORTANT THING ON THIS PAGE:** never cut the next live
-release from `b2420743`. It is no longer live, and a release built on it would
-silently revert the obscured glass page — the exact "release branch became a
-loaded gun" failure `LIVECHANGES.md` already records from 2026-08-05. Either
-build on `10a596a7` (the current live), or ship a range from `main` once the
-rest of `main` is approved. The same applies to every superseded release tag —
-`c11cece9` and `c07a7c3c` — where building on one would revert whatever shipped
-after it.
+| | SHA | theme tree |
+| --- | --- | --- |
+| live | `10a596a7` (tag `live-configuration-2026-08-30e`) | `41c13718` |
+| test | `88033ca4` | `c6409d49` |
+| `main` | `2a712a8b` (docs only above test) | `c6409d49` |
 
-**Still on `main` and still NOT live, none of it approved:** the composite doors
-V2 overhaul and its 148 images, `/why-distinction/`, decorative glass, the quiz,
-the finishes pass, the site-footer `/why-distinction/` link, and the whole
-showroom and experimental strand. `main` also contains every obscured glass
-commit, so `main` is a content superset of live.
+Test and `main` are theme-identical; the difference is a docs commit. Live is a
+**separate line** and 246 theme files differ from `main`.
 
-**How the isolation was done, if it has to be done again:** only seven files are
-shared between the two strands and two of those are build artefacts, so the real
-merge surface is five source files. Classify each hunk of their
-`b2420743..<tip>` diff and apply only the wanted ones, **each as its own
-single-hunk patch** so a dropped hunk cannot corrupt the offsets after it. Full
-account in the Current Truth section of `LIVECHANGES.md`.
+### Why live is not on `main`, and what that means for you
+
+On 2026-08-30 the owner asked for the obscured glass page live. `main` at that
+point was 181 commits ahead of live and only about 73 of them were that work;
+the rest was the composite doors overhaul and the showroom/experimental strand,
+none of it approved. **The wanted work could not be lifted out as a commit
+range** — replaying it onto live applied 2 of 73, reverting the rest off test
+left 145 conflicts — so it was spliced hunk by hunk onto a branch cut from the
+old live, and every release since has been cut from the previous release the
+same way.
+
+So:
+
+- **Checksumming live matches no commit on `main`. That is the arrangement, not
+  drift.** It matches the newest release tag.
+- **NEVER cut a release from a superseded tag.** There are five, and only the
+  newest is live. Building on any older one silently reverts everything that
+  shipped after it — the "release branch became a loaded gun" failure
+  `LIVECHANGES.md` records from 2026-08-05.
+
+  ```
+  live-obscured-glass-2026-08-30   c11cece9   superseded
+  live-obscured-glass-2026-08-30b  c07a7c3c   superseded
+  live-obscured-glass-2026-08-30c  0718b840   superseded
+  live-blinds-2026-08-30d          2d8bfab7   superseded
+  live-configuration-2026-08-30e   10a596a7   LIVE
+  ```
+
+- **Either build on `10a596a7`, or ship a range from `main`** once the rest of
+  `main` is approved and the line can be retired.
+
+### How a release is cut on this line
+
+Branch from the current live tag, apply the wanted diff, rebuild the bundles
+from that tree, and prove the isolation before shipping. The proof that has
+worked every time is a **rule-level diff of the compiled CSS against live's
+own** — assert that every rule added or removed belongs to the strand you meant
+to ship — plus a byte-comparison of the JS. Four of the five releases moved the
+JS not at all, and that was checkable in one line.
+
+The first release needed hunk-by-hunk classification because the work was
+interleaved. Every one since has applied cleanly with `git apply --3way`,
+because everything on `main` since has been a single strand. Full mechanics,
+guard hashes and backup procedure: `LIVECHANGES.md`.
+
+### What shipped on 2026-08-30
+
+Five releases in one day, all owner-driven, all on `/obscured-glass/`,
+`/integral-blinds/` and the three configuration routes:
+
+1. **`c11cece9`** — the obscured glass page: SEO rebuild, privacy-scale section,
+   onward routes, FAQ schema, and a 2.29MB PNG taken off fourteen routes.
+2. **`c07a7c3c`** — the visualiser's reading order and a mobile pass.
+3. **`0718b840`** — satin stopped showing the sharp scene through the blurred
+   copy, and the rail layout settled.
+4. **`2d8bfab7`** — the integral blind's bunched stack halved.
+5. **`10a596a7`** — `/french-casement-windows/`, `/french-doors/` and
+   `/bow-bay-windows/` became CONFIGURATION pages on a shared template.
+
+### Still on `main` and NOT live, none of it approved
+
+The composite doors V2 overhaul and its 148 images, `/why-distinction/`,
+decorative glass, the quiz, the finishes pass, the site-footer
+`/why-distinction/` link, and the whole showroom and experimental strand.
+`main` is a content superset of live.
+
+### What is open
+
+- **The related band on `/bow-bay-windows/` repeats its seven product
+  thumbnails**, because the configuration band and the related band both resolve
+  images from `fenster_link_card_image()`. Raised with the owner and left alone:
+  it is a navigation change, not a bug.
+- **Five spec figures are still blocked on the owner** and no copy may quote a
+  light-transmission number until they land.
+- The obscured glass renderer's lens outlines are still softer than the
+  Pilkington reference. Pre-existing `hatchlens` character, not a regression.
+
+### What needs the owner
+
+- Whether to retire the isolated line by approving the rest of `main`, or keep
+  cutting releases from it. Every release on this line is another splice.
+- The composite doors V2 overhaul has been on test since 2026-08-27 and has
+  never been approved for live.
 
 ## Superseded: state before the release, 2026-08-30 (obscured glass: Reeded uninverted, Cassini re-plated — ON TEST, NOT LIVE)
 

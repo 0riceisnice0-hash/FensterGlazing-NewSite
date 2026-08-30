@@ -5,6 +5,11 @@ Last updated: 2026-08-30
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
+2026-08-30 ran to five live releases in one day and produced eight entries. Only
+the newest carries `START HERE`; the rest of that day are plain dated entries
+below it, labelled with the release they shipped as, so the day reads as one
+sequence rather than eight competing starting points.
+
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
@@ -32,7 +37,7 @@ is a data entry in `fenster_configuration_page_data()` plus a slug in
   doors immediately exposed a hardcoded eyebrow and a key-spec strip that
   French casement had been hiding by having no `product_specs` entry.
 
-## START HERE, 2026-08-30 (SUPERSEDED — integral blind stack, 2d8bfab7)
+## 2026-08-30, release 4 of 5 — integral blind stack (live as `2d8bfab7`, superseded)
 
 **Live is `2d8bfab7`, tag `live-blinds-2026-08-30d`, still not an ancestor of
 `main` (`e67125c0`).** Fourth isolated release, cut from `0718b840`, and the
@@ -50,7 +55,7 @@ approved for live*. Read the Current Truth section of `LIVECHANGES.md` first.
   byte-identical, JS the same length with one four-character difference. When a
   change is one constant, the proof should be that exact.
 
-## START HERE, 2026-08-30 (SUPERSEDED — satin opacity + rail layout, 0718b840)
+## 2026-08-30, release 3 of 5 — satin opacity and rail layout (live as `0718b840`, superseded)
 
 **Live is `0718b840`, tag `live-obscured-glass-2026-08-30c`, still not an
 ancestor of `main` (`2563cc22`).** Third isolated release, cut from
@@ -73,7 +78,7 @@ The one finding worth the whole session:
   bug as "stale" because the pane was hidden and a genuinely stale capture had
   just been hit — cost a full round.
 
-## START HERE, 2026-08-30 (SUPERSEDED — rail order + mobile pass, c07a7c3c)
+## 2026-08-30, release 2 of 5 — rail order and mobile pass (live as `c07a7c3c`, superseded)
 
 **Live is `c07a7c3c`, tag `live-obscured-glass-2026-08-30b`, still not an
 ancestor of `main` (`09476ddf`).** Second isolated release, cut from
@@ -93,7 +98,7 @@ Three findings worth carrying:
   drifts.** `66vw` against a true `66.667vw` sliced a tile row at every screen
   size. Use a ratio on the container instead; it also survives the scrollbar.
 
-## START HERE, 2026-08-30 (SUPERSEDED — first isolated release, c11cece9)
+## 2026-08-30, release 1 of 5 — the obscured glass page (live as `c11cece9`, superseded)
 
 **Live is `c11cece9`, tag `live-obscured-glass-2026-08-30`, and it is NOT an
 ancestor of `main` (`443a1b44`).** Read the Current Truth section of
@@ -125,7 +130,7 @@ shared source files.
   the staging copy carried local mtimes, which would have re-stamped every
   asset's cache-buster for a 40-file release.
 
-## START HERE, 2026-08-30 (SUPERSEDED BY THE RELEASE ABOVE — visualiser opens on 5 and grows)
+## 2026-08-30, on test — visualiser opens on 5 and the pane grows
 
 Test is `98d1b62c`. Live is unmoved at `b2420743` and **181 commits
 behind**, none of it approved. Two commits on the visualiser box itself,
@@ -151,7 +156,7 @@ Also: the `All` segment was removed earlier in the day but the state it
 selected was still what you landed on. The default is `5` now, which is
 also `cotswold`'s level, so the pane keeps its glass on load.
 
-## START HERE, 2026-08-30 (EARLIER — obscured glass: traced Cassini, then the page itself)
+## 2026-08-30, on test — traced Cassini, then the obscured glass page itself
 
 Test is `d18bd518`, theme tree `b39116a7`. Live is unmoved at `b2420743` and
 **178 commits behind** — check the theme tree hash, not a SHA, since `main`
@@ -188,7 +193,7 @@ rebuilt as an SEO page. Fourteen files, **none deleted**.
   Basic Auth protected — render it with `wp eval-file`, and **define
   `WP_USE_THEMES` or you get a silent empty page rather than an error**.
 
-## START HERE, 2026-08-30 (EARLIER THE SAME DAY — obscured glass: Reeded stops inverting, Cassini re-plated twice)
+## 2026-08-30, on test — Reeded stops inverting, Cassini re-plated twice
 
 Test is `e0bd7c56`, live is unmoved at `b2420743` and **171 commits behind**
 (`main` runs a docs commit or two further; the theme tree is `3690e8cd` at all
