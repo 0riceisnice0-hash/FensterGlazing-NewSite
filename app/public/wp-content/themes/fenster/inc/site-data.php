@@ -2221,6 +2221,7 @@ function fenster_site_data(): array
                     ['question' => 'Which of your windows can be made as a French casement?', 'answer' => 'uPVC casement and uPVC flush casement, and all three aluminium windows: casement, flush and heritage. It is a configuration you add to the window you were already choosing, so the profile, colour and hardware stay the same.'],
                     ['question' => 'Are French casements only available in uPVC?', 'answer' => 'No. They are specified in the 70mm Liniar EnergyPlus uPVC profile or in Sheerline Prestige aluminium, including the flush and heritage aluminium sashes. The configuration does not change the system it is built in.'],
                     ['question' => 'Is it secure without a fixed central mullion?', 'answer' => 'The locking does not rely on the post. The closing sash shoots bolts into the head and the cill of the frame, and keeps are set where the two sashes meet, so both leaves are held into the frame itself.'],
+                    ['question' => 'Can a French casement be used as an escape window?', 'answer' => 'It is the configuration most often specified for one. Approved Document B asks for a clear openable area of at least 0.33 square metres, at least 450mm clear in both height and width, and the bottom of the opening between 800mm and 1100mm above the floor. A French pair opens across the full width of the frame with no mullion in the middle, so the clear opening is the frame. Whether a particular window meets the figures depends on the size it is made at, which we work out at the survey.'],
                     ['question' => 'Will you advise on restrictors?', 'answer' => 'Yes. We look at room use, height above ground, ventilation and any escape opening requirement when we specify the openings, restrictors and glass, and confirm it at the technical survey.'],
                 ],
             ],
@@ -2264,6 +2265,7 @@ function fenster_site_data(): array
                     ['title' => 'Coordinated colours and handles', 'copy' => 'Frame finish, handle colour, obscured glass and trickle ventilation can be coordinated with the rest of the home.'],
                 ],
                 'faqs' => [
+                    ['question' => 'Which windows can be built as a bay?', 'answer' => 'Any window we fit. A bay is a run of frames joined at an angle rather than a window of its own, so casement, flush casement, sliding sash, tilt and turn, and the aluminium casement, flush and heritage windows can all form one.'],
                     ['question' => 'What is the difference between bow and bay windows?', 'answer' => 'A bow usually uses several windows to create a curved appearance, while a bay projects more angularly from the property.'],
                     ['question' => 'Can bow and bay windows improve room space?', 'answer' => 'They can add usable depth to the window area and bring in more daylight, making the room feel larger and brighter.'],
                     ['question' => 'Do bow and bay windows need structural checks?', 'answer' => 'Yes. The existing opening, supports, cill, roof or canopy details should be checked before replacement is confirmed.'],
@@ -2440,7 +2442,7 @@ function fenster_site_data(): array
                 ],
             ],
             'french-doors' => [
-                'intro' => 'French doors give a classic double-door opening for gardens, patios and side entrances. We specify Liniar uPVC French doors around security, threshold, glazing, colour and hardware so the doors feel traditional, practical and well sealed.',
+                'intro' => 'A French door is a pair of hinged leaves that close against each other rather than against a fixed post, so the whole width of the opening clears when both are open. It is a configuration rather than a door range of its own, specified on a uPVC, aluminium or heritage aluminium door.',
                 'benefits' => [
                     ['title' => 'Classic double opening', 'copy' => 'French doors open from the centre to create a generous garden or patio access point without the complexity of a multi-panel door.'],
                     ['title' => 'Liniar profile system', 'copy' => 'A coordinated Liniar uPVC door system supports efficient profile design and consistent finishing.'],
@@ -2449,6 +2451,8 @@ function fenster_site_data(): array
                     ['title' => 'Threshold and glass options', 'copy' => 'Choose threshold detail, privacy glass, decorative glass and handle finishes to suit the way you move in and out of the home.'],
                 ],
                 'faqs' => [
+                    ['question' => 'Which of your doors can be made as a French pair?', 'answer' => 'uPVC doors, aluminium doors and heritage aluminium doors. It is a configuration rather than a separate range, so the profile, colour, glass and hardware are whatever that door already offers.'],
+                    ['question' => 'Are French doors only available in uPVC?', 'answer' => 'No. They are specified in uPVC or in Sheerline aluminium, including the steel-look heritage sections. The configuration does not change the system the door is built in.'],
                     ['question' => 'Where do French doors work best?', 'answer' => 'They work well for patios, gardens, side entrances and rooms where a classic double-door opening suits the property.'],
                     ['question' => 'Are French doors secure?', 'answer' => 'Yes. Multi-point locking, final hardware and glazing are confirmed during specification.'],
                     ['question' => 'Can French doors have a low threshold?', 'answer' => 'Often, yes. We will check access needs, floor levels and drainage before confirming the threshold detail.'],

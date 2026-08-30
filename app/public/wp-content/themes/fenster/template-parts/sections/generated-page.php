@@ -6078,7 +6078,14 @@ if ($is_commercial_hub) {
             $product_faq_limits = [
                 'sliding-sash-windows' => 6,
                 'flush-casement-windows' => 6,
+                /* The three configuration routes each carry six, because the
+                   rebuild added the two questions the pages exist to answer --
+                   which of your products can have this, and is it only uPVC --
+                   on top of the five they already had. At the default of five
+                   the last one would be sliced off and never render. */
                 'french-casement-windows' => 6,
+                'french-doors' => 6,
+                'bow-bay-windows' => 6,
             ];
             $product_faq_limit = $is_repairs ? 7 : ($is_composite_doors ? 6 : ($product_faq_limits[$slug] ?? 5));
             /* The schema is the shared emitter now, passed the same limit the
