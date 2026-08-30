@@ -301,15 +301,20 @@ function fenster_commercial_product_pages(): array
                owner's answer was "irrelevant", meaning it varies per job and
                publishing a size would mislead. */
             'specification' => [
-                ['label' => 'System', 'value' => 'Specified to the job rather than tied to one system.'],
-                /* STICK SYSTEM, NAMED POSITIVELY, and it describes what this page
-                   already said rather than adding a capability: the grid is set out
-                   and assembled on site, which is what a stick system is. Same
-                   treatment as the capped row above it, per the owner's 2026-08-13
-                   instruction that where we offer one method we name it and stop.
-                   DO NOT add "not unitised" — that is the standing ruling against
-                   writing what is not offered. */
-                ['label' => 'Assembly', 'value' => 'Stick system, with the mullion and transom grid set out and assembled on site.'],
+                /* STICK SYSTEM, NAMED POSITIVELY AND FOLDED INTO THE SYSTEM ROW.
+                   It describes what this page already said rather than adding a
+                   capability: the grid is set out and assembled on site, which is
+                   what a stick system is. Named the way capped is, per the owner's
+                   2026-08-13 instruction that where we offer one method we state it
+                   and stop. DO NOT add "not unitised" — that is the standing ruling
+                   against writing what is not offered.
+
+                   IT IS ONE ROW RATHER THAN TWO BECAUSE THIS GRID IS ROW-MAJOR AND
+                   TWO COLUMNS WIDE. A seventh row leaves the bottom-right cell
+                   empty, which is the orphan-cell fault FULL-SITE-AUDIT-2026-08-13
+                   records against this whole section. Six rows fill three even rows.
+                   Count the rows before adding one here. */
+                ['label' => 'System', 'value' => 'Stick system, specified to the job rather than tied to one system, with the mullion and transom grid set out and assembled on site.'],
                 ['label' => 'Wind load', 'value' => 'Wind load calculated for the elevation as part of the design.'],
                 ['label' => 'U-value', 'value' => 'As low as 0.9 W/m²K, depending on the system and the glazing specified.'],
                 ['label' => 'Glazing method', 'value' => 'Capped systems, with the cap profile specified to the elevation.'],
