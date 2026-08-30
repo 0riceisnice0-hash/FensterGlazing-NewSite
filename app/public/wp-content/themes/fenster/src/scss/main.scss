@@ -39982,6 +39982,18 @@ html.fg-blinds-reveal-locked {
   line-height: 1.5;
 }
 
+.fg-cfg-colour-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+.fg-cfg-colour-links span {
+  color: var(--color-line);
+}
+
 .fg-cfg-products {
   padding: clamp(2rem, 4vw, 3.25rem) 0;
 }

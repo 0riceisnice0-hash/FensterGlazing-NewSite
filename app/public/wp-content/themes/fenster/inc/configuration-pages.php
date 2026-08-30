@@ -122,6 +122,17 @@ function fenster_configuration_page_data(string $slug): array
                 ['label' => 'Order of opening', 'value' => 'One leaf is the master and carries the handle; which one is a choice made at survey'],
                 ['label' => 'Glazing', 'value' => 'The same options as the window it is built in, including obscured glass and Georgian or astragal bars across the pair'],
             ],
+            /* REPLACES THE uPVC COLOUR CHART, which is gated off on a
+               configuration route. Two links rather than one range, because the
+               honest answer is that the colours are whichever window you picked.
+               Owner's choice, 2026-08-30. */
+            'colours' => [
+                'copy' => 'The colour range is the range of the window you choose rather than anything the configuration decides, so a French pair is available in the full uPVC foil range or in any RAL colour on aluminium.',
+                'links' => [
+                    ['slug' => 'upvc-colours', 'label' => 'uPVC colours'],
+                    ['slug' => 'aluminium-colours', 'label' => 'Aluminium colours'],
+                ],
+            ],
         ],
     ];
 

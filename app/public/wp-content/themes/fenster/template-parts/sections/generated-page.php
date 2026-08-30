@@ -403,7 +403,19 @@ $upvc_foil_routes = [
        than a sample, so it must stay in step with `upvc_door_renders`. */
     'patio-doors' => 'patio door',
 ];
-$shows_upvc_colour_grid = isset($upvc_foil_routes[$slug]) || $slug === 'casement-windows';
+/* THE CHART IS OFF ON A CONFIGURATION ROUTE. It is the uPVC foil range headed
+   "Sixteen colours outside", and on a page whose whole point is that the
+   arrangement can be had in uPVC OR aluminium it states half the answer as if it
+   were all of it. The configuration middle carries a line pointing at both
+   colour hubs instead.
+
+   NOTE THIS IS A DIFFERENT LIST FROM `$upvc_colour_routes` ABOVE, which feeds
+   the small swatch row in the design band. Gating that one instead looked
+   equivalent and silently downgraded the swatches to a generic four-colour
+   fallback while leaving the chart exactly where it was. Two lists, two
+   consumers; this is the one that renders the chart. */
+$shows_upvc_colour_grid = (isset($upvc_foil_routes[$slug]) || $slug === 'casement-windows')
+    && ! $is_configuration_page;
 
 /* The powder-coated range, laid out the way the heritage door page lays out
    its colours. Owner instruction, 2026-08-02.
@@ -1297,13 +1309,7 @@ $upvc_colour_routes = [
     'patio-doors',
     'french-doors',
 ];
-/* NOT ON A CONFIGURATION ROUTE. The chart is the uPVC foil range, and on a page
-   whose whole point is that the arrangement is available in uPVC OR aluminium it
-   states half the answer as though it were all of it. The configuration middle
-   points at both colour hubs instead. `french-doors` and `bow-bay-windows` are
-   still in the list above and still get the chart; they come out of it the day
-   they are added to `fenster_configuration_routes()`, with no edit here. */
-$is_upvc_colour_product = in_array($slug, $upvc_colour_routes, true) && ! $is_configuration_page;
+$is_upvc_colour_product = in_array($slug, $upvc_colour_routes, true);
 $product_colours = $is_upvc_colour_product
     ? [
         ['name' => 'White', 'hex' => '#f7f6ef', 'finish' => 'Standard smooth or grained foil'],
@@ -5735,7 +5741,7 @@ if ($is_commercial_hub) {
         <?php endif; ?>
         <?php endif; ?>
 
-        <?php if (isset($upvc_foil_routes[$slug])) : ?>
+        <?php if (isset($upvc_foil_routes[$slug]) && ! $is_configuration_page) : ?>
             <?php get_template_part('template-parts/components/upvc-colour-grid', null, ['product_noun' => $upvc_foil_routes[$slug]]); ?>
         <?php endif; ?>
 

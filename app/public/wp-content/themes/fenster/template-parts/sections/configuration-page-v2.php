@@ -188,6 +188,17 @@ $media = is_array($args['media'] ?? null) ? $args['media'] : [];
                         </div>
                     <?php endforeach; ?>
                 </dl>
+                <?php if (! empty($config['colours']['copy'])) : ?>
+                    <p class="fg-cfg-aside"><?php echo esc_html((string) $config['colours']['copy']); ?></p>
+                    <?php if (! empty($config['colours']['links'])) : ?>
+                        <p class="fg-cfg-colour-links">
+                            <?php foreach ((array) $config['colours']['links'] as $index => $link) : ?>
+                                <?php if ($index > 0) : ?><span aria-hidden="true">·</span><?php endif; ?>
+                                <a class="text-link" href="<?php echo esc_url(home_url('/' . (string) ($link['slug'] ?? '') . '/')); ?>"><?php echo esc_html((string) ($link['label'] ?? '')); ?></a>
+                            <?php endforeach; ?>
+                        </p>
+                    <?php endif; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
