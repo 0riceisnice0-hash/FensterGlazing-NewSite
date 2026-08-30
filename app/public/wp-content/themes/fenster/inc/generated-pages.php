@@ -409,6 +409,15 @@ function fenster_gsc_seo_overrides(): array
                that it is a configuration you specify on a window rather than a
                window of its own. Owner, 2026-08-30.
 
+               THE TAIL CHANGED 2026-08-30 and the note above it did say this
+               title was not to be touched. What changed is the page: it is a
+               configuration available in two materials now, and `| Fenster
+               Glazing` spent the tail on a brand the searcher already sees in
+               the URL. `| uPVC and Aluminium` is the differentiator, matches
+               what /french-doors/ now carries, and leaves the head phrase --
+               the first 39 characters -- exactly as it was, which is the part
+               that ranks.
+
                `that suits fire escape` is DELIBERATELY GONE. This site pulled
                egress copy off the handle hub once already and declined to
                inherit Liniar's own "fire escape solution" wording without being
@@ -417,7 +426,7 @@ function fenster_gsc_seo_overrides(): array
                contradicting it. A French casement is often specified for exactly
                that reason, so it can come back the moment the owner says so --
                but it is a compliance claim and it needs saying deliberately. */
-            'title_tag' => 'French Casement Windows Milton Keynes | Fenster Glazing',
+            'title_tag' => 'French Casement Windows Milton Keynes | uPVC and Aluminium',
             'meta_description' => 'French casement windows have no fixed central mullion, so both sashes swing clear and the full width opens as one. Specify it on uPVC or aluminium.',
         ],
         'flat-rooflights' => [
