@@ -9,7 +9,30 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (rail order + mobile pass, LIVE as c07a7c3c)
+## START HERE, 2026-08-30 (satin opacity + rail layout, LIVE as 0718b840)
+
+**Live is `0718b840`, tag `live-obscured-glass-2026-08-30c`, still not an
+ancestor of `main` (`2563cc22`).** Third isolated release, cut from
+`c07a7c3c`. Read the Current Truth section of `LIVECHANGES.md` first.
+
+The one finding worth the whole session:
+
+- **A SEMI-TRANSPARENT OVERLAY LETS THE LAYER BENEATH THROUGH, AND NO AMOUNT
+  OF PROCESSING ON THE OVERLAY REMOVES IT.** Satin's blurred scene copy sat at
+  `opacity: .915` over the SHARP scene, so 8.5% of the clear view was on top of
+  the frosting. Against a flat field that is very legible, and it looked exactly
+  like insufficient blur. Three rounds of blur tuning could not fix a bug that
+  was not in the blur.
+- **When a parameter sweep changes nothing, stop sweeping.** 60px, 90px and
+  110px produced equally readable houses; no blur curve does that. That was the
+  signal to probe the layer stack instead of turning the dial again.
+- **When an offline model and the real render disagree, the render is right.**
+  The model never included the bleed-through, so it kept predicting a clean pane
+  while the browser showed houses. I also dismissed a correct screenshot of the
+  bug as "stale" because the pane was hidden and a genuinely stale capture had
+  just been hit — cost a full round.
+
+## START HERE, 2026-08-30 (SUPERSEDED — rail order + mobile pass, c07a7c3c)
 
 **Live is `c07a7c3c`, tag `live-obscured-glass-2026-08-30b`, still not an
 ancestor of `main` (`09476ddf`).** Second isolated release, cut from
