@@ -919,8 +919,16 @@ function fenster_commercial_product_pages(): array
                photograph we own that is big enough for it. A wide commercial
                elevation of our own is commercial gap #1 in PHOTO-CHECKLIST.md and
                it would replace that hero on the day it arrives. */
-            'intro_image' => $cs_base . 'cs-heals-tottenham-court-elevation.webp',
-            'intro_alt' => 'The glazed courtyard elevation at the Heal\'s building, jet black frames set into the existing concrete structure with the offices behind still being fitted out',
+            /* NOT THE ELEVATION FRAME, AND THE REASON IS THE PROOF BAND. A
+               case-study card renders `images[0]`, which for Heal's is
+               cs-heals-tottenham-court-elevation, and Heal's is the one study
+               claiming this route. Putting that frame in the intro printed the
+               same photograph twice on one page, which is the fault this whole
+               pass exists to remove. Caught by reading the rendered page rather
+               than the data. Check the proof band before taking a frame from a
+               study that claims the route. */
+            'intro_image' => $cs_base . 'cs-heals-tottenham-court-run.webp',
+            'intro_alt' => 'Looking along the glazed run at the Heal\'s building, the new frames following the existing structural bays rather than cutting across them',
             'summary' => [
                 'Offices and shops have the same problem from opposite ends of the day: an office needs its desks usable from nine, a shop needs its frontage clear from opening. Both usually mean working early, late or at a weekend, and that belongs in the price rather than as a surprise later.',
                 'The work ranges from a converted barn office at Water End Barn to commercial buildings such as Franklin House and Orient House, and from a full shopfront replacement down to a single entrance screen. Tell us the hours the building has to work and we will price around them.',
