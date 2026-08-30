@@ -9,7 +9,30 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (integral blind stack, LIVE as 2d8bfab7)
+## START HERE, 2026-08-30 (configuration pages, LIVE as 10a596a7)
+
+**Live is `10a596a7`, tag `live-configuration-2026-08-30e`, still not an
+ancestor of `main` (`88033ca4`).** Fifth isolated release. Read the Current
+Truth section of `LIVECHANGES.md` first.
+
+Three routes became CONFIGURATION pages on a shared template:
+`/french-casement-windows/`, `/french-doors/`, `/bow-bay-windows/`. A fourth
+is a data entry in `fenster_configuration_page_data()` plus a slug in
+`fenster_configuration_routes()`.
+
+- **A configuration is not a product, and four bands prove it.** The tech
+  banner, the uPVC colour chart, the key-spec strip and the journey's
+  why/intel all name one material. One list gates all of them, because the
+  first pass removed the slug from one framing and left it in two others.
+- **Ask when the owner's scope is physically impossible.** "All of our windows
+  except t&t" includes sliding sash, which has no side-hung sashes for a
+  floating stile. Asking got the real list and avoided publishing a capability
+  we do not have.
+- **A shared template is only shared once a second route uses it.** French
+  doors immediately exposed a hardcoded eyebrow and a key-spec strip that
+  French casement had been hiding by having no `product_specs` entry.
+
+## START HERE, 2026-08-30 (SUPERSEDED — integral blind stack, 2d8bfab7)
 
 **Live is `2d8bfab7`, tag `live-blinds-2026-08-30d`, still not an ancestor of
 `main` (`e67125c0`).** Fourth isolated release, cut from `0718b840`, and the

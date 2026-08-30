@@ -2,7 +2,7 @@
 
 ## Current state, 2026-08-30 (obscured glass IS LIVE — and live is not on `main`)
 
-**Live is `2d8bfab7`, tag `live-blinds-2026-08-30d`. It is NOT an ancestor of `main`.** (It supersedes `0718b840`, `c07a7c3c` and `c11cece9`; those tags still exist but must not be redeployed.) **The isolated line is no longer an obscured-glass thing** — this release is the integral blind visualiser. It is simply what is approved for live, carried forward release by release while the rest of `main` waits.
+**Live is `10a596a7`, tag `live-configuration-2026-08-30e`. It is NOT an ancestor of `main`.** (It supersedes `2d8bfab7`, `0718b840`, `c07a7c3c` and `c11cece9`; those tags still exist but must not be redeployed.) **The isolated line is no longer an obscured-glass thing** — this release is the integral blind visualiser. It is simply what is approved for live, carried forward release by release while the rest of `main` waits.
 
 **Original note, still the operative arrangement:** The obscured glass
 page shipped on 2026-08-30 as an isolated release cut from the old live
@@ -17,7 +17,7 @@ commit range. The only ref that reaches it is the tag
 release from `b2420743`. It is no longer live, and a release built on it would
 silently revert the obscured glass page — the exact "release branch became a
 loaded gun" failure `LIVECHANGES.md` already records from 2026-08-05. Either
-build on `2d8bfab7` (the current live), or ship a range from `main` once the
+build on `10a596a7` (the current live), or ship a range from `main` once the
 rest of `main` is approved. The same applies to every superseded release tag —
 `c11cece9` and `c07a7c3c` — where building on one would revert whatever shipped
 after it.
