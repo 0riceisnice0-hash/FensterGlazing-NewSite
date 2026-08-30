@@ -9,7 +9,25 @@ kept in place further down, in date order with the entries they summarise.
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (satin opacity + rail layout, LIVE as 0718b840)
+## START HERE, 2026-08-30 (integral blind stack, LIVE as 2d8bfab7)
+
+**Live is `2d8bfab7`, tag `live-blinds-2026-08-30d`, still not an ancestor of
+`main` (`e67125c0`).** Fourth isolated release, cut from `0718b840`, and the
+first on this line that is not obscured glass — the line is just *what is
+approved for live*. Read the Current Truth section of `LIVECHANGES.md` first.
+
+- **`STACK_PITCH` 2.15 -> 1.08.** The raised blind bunched into 112mm over 52
+  slats, twelve times the thickness of a slat; 56mm is six times, and inside the
+  45-60mm manufacturers quote for a 12.5mm slat over a 626mm drop.
+- **rAF IS FROZEN WHILE THE BROWSER PANE IS HIDDEN, so anything animated cannot
+  be checked here.** Zero ticks in 700ms, `document.hidden` true; driving the
+  input and forcing a resize both left the canvas byte-identical. Say so rather
+  than implying a visual check happened.
+- **An isolated release can be proved down to a single span.** CSS
+  byte-identical, JS the same length with one four-character difference. When a
+  change is one constant, the proof should be that exact.
+
+## START HERE, 2026-08-30 (SUPERSEDED — satin opacity + rail layout, 0718b840)
 
 **Live is `0718b840`, tag `live-obscured-glass-2026-08-30c`, still not an
 ancestor of `main` (`2563cc22`).** Third isolated release, cut from
