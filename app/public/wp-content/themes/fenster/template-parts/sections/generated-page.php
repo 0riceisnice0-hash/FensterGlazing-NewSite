@@ -4394,7 +4394,14 @@ if ($is_commercial_hub) {
              opens with a reassurance strip in the same slot instead, which says
              something true about the service rather than inventing four
              product facts for a service that has none. */ ?>
-    <?php if ($use_product_journey && count($product_usps) === 4 && ! $is_composite_doors && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs) : ?>
+    <?php /* NOT ON A CONFIGURATION ROUTE. The strip is four key specifications and
+             one of them is "Profile system: Liniar", which is the same
+             partial-applicability the tech banner had -- asserted on a page that
+             says the arrangement is available in uPVC OR aluminium. It also
+             heads itself with the bare product name, which duplicates the H1.
+             French casement never showed it because it has no `product_specs`
+             entry; French doors does, so converting that route surfaced it. */ ?>
+    <?php if ($use_product_journey && ! $is_configuration_page && count($product_usps) === 4 && ! $is_composite_doors && ! $is_secondary_bespoke && ! $is_replacement_bespoke && ! $is_repairs) : ?>
         <?php get_template_part('template-parts/components/product-pulse', null, [
             'usps'  => $product_usps,
             'slug'  => $slug,
