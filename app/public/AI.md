@@ -404,6 +404,17 @@ PHP lint example:
 - **No card may leave the commercial section.** The fifth product card pointed at `/double-glazing-replacement/`, a homeowner page headed "Misted and Blown Double Glazing", which then said commercial work is handled through commercial glazing and sent the visitor back to the hub. A commercial buyer clicking the most relevant card completed a loop and landed nowhere. The render harness asserts against this by name.
 - **The proof band reads the case-study library.** It used to carry three hardcoded cards, all three linking to the `/commercial-projects/` archive rather than to a study, two with completion dates nobody had confirmed. A study added to `inc/case-studies-data.php` with `'type' => 'Commercial'` now appears here on its own, with its own photograph and its own link.
 
+## Commercial Related-Products Strip Rule
+
+**The related-products strip on the thirteen commercial routes is POSITIONAL, not semantic.** `template-parts/sections/commercial-product.php` takes every commercial route, removes the current one and slices the **first three in declaration order** from `fenster_commercial_product_pages()`. It does not choose by relevance and there is no per-route `related_products` key to edit.
+
+Two consequences, and the second shipped a visible defect to production on 2026-08-30:
+
+- **The same three cards, and the same three photographs, appear on all thirteen commercial pages.** Reordering the data array to fix one page moves the strip on every other one.
+- **Before using any image as a hero, intro or detail figure on a commercial route, check it is not the card image of one of the first three routes.** `/office-and-retail-glazing/` used the curtain walling parade shot as its Shopfronts figure while the strip below printed the identical file as the `/curtain-walling/` card. The fix is always to change the figure, never to reorder the strip.
+
+If the strip is ever made semantic, this rule and the comments in `inc/commercial-product-data.php` that reference it come out together.
+
 ## Commercial Intent Ownership Rule
 
 - **TWO COMMERCIAL ROUTES CAN OWN THE SAME WORD AND COMPETE FOR IT, AND "SHOPFRONT" WAS THE WORKED EXAMPLE.** `/office-and-retail-glazing/` and `/commercial-replacement-glazing/` both carried shopfront language and both published the same claim — toughened and laminated supplied to order, any size — in a specification row and a near-identical FAQ. Nothing was wrong with either page on its own, which is why it survived the 2026-08-12 rebuild and the 2026-08-13 audit.

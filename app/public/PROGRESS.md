@@ -5,16 +5,47 @@ Last updated: 2026-08-30
 Newest first. **The current START HERE block is directly below**; older ones are
 kept in place further down, in date order with the entries they summarise.
 
-2026-08-30 ran to six live releases in one day and produced nine entries. Only
+2026-08-30 ran to seven live releases in one day and produced ten entries. Only
 the newest carries `START HERE`; the rest of that day are plain dated entries
 below it, labelled with the release they shipped as, so the day reads as one
-sequence rather than nine competing starting points.
+sequence rather than ten competing starting points.
 
 **Dated entries are a LOG, not a status board.** Several older ones are still
 titled "(test)" and shipped long since. `LIVECHANGES.md` is the only authority on
 what is live; when the two disagree, `LIVECHANGES.md` is right.
 
-## START HERE, 2026-08-30 (commercial terminology and the shopfront split, LIVE as 30e3a543)
+## START HERE, 2026-08-30 (office and retail imagery, LIVE as 873234ed)
+
+**Live is `873234ed`, tag `live-commercial-2026-08-30g`, still not an ancestor
+of `main` (`c7456298`).** Seventh isolated release, cut from `30e3a543`. Read
+the Current Truth section of `LIVECHANGES.md` first.
+
+`/office-and-retail-glazing/` was printing the same photograph twice. One data
+file changed and nothing else in the theme moved.
+
+- **THE COMMERCIAL RELATED-PRODUCTS STRIP IS POSITIONAL, NOT SEMANTIC, and it
+  constrains every image choice on those thirteen pages.**
+  `commercial-product.php:73` takes all commercial routes, drops the current
+  one and slices the **first three in declaration order**, so the same three
+  cards and the same three photographs appear on all of them. A detail figure
+  that reuses one of those three prints twice on its own page. **Check the
+  first three commercial routes before choosing any commercial image.**
+- **Two frames changed, both chosen by opening them.** Shopfronts took the
+  Heal's entrance door, a glazed screen with the door in it. Working hours took
+  the occupied office lift-in, the inside of a furnished lounge while a unit
+  goes in from outside, which beats the courtyard it replaced and moved Heal's
+  off a third slot. The Green Man frontage was rejected on sight: an 1835 brick
+  village pub, nothing like a shopfront.
+- **ASSERT THE VIEWPORT YOU ASKED FOR.** Headless Chrome clamps
+  `--window-size` at 500px, so the 390 render goes through CDP
+  `Emulation.setDeviceMetricsOverride` — but the extracted fragment had no
+  `<meta name="viewport">` and emulation fell back to the 980px layout
+  viewport. An `innerWidth === 390` assertion failed the run rather than
+  producing a confident, wrong mobile screenshot.
+- **Rendered at 1440 and at a true 390 before shipping.** Layout intact,
+  images filling their containers, chips wrapping, no horizontal scroll.
+
+## 2026-08-30, release 6 of 7 — commercial terminology and the shopfront split (live as `30e3a543`, superseded)
 
 **Live is `30e3a543`, tag `live-commercial-2026-08-30f`, still not an ancestor
 of `main` (`3ff5aa18`).** Sixth isolated release, cut from `10a596a7`. Read the
@@ -51,7 +82,7 @@ file, `inc/commercial-product-data.php`, and nothing else in the theme moved.
   routes in declaration order, on all thirteen pages. Known, logged in
   `LIVECHANGES.md`, fix is to change the figure rather than the strip.
 
-## 2026-08-30, release 5 of 6 — configuration pages (live as `10a596a7`, superseded)
+## 2026-08-30, release 5 of 7 — configuration pages (live as `10a596a7`, superseded)
 
 **Live is `10a596a7`, tag `live-configuration-2026-08-30e`, still not an
 ancestor of `main` (`88033ca4`).** Fifth isolated release. Read the Current
@@ -74,7 +105,7 @@ is a data entry in `fenster_configuration_page_data()` plus a slug in
   doors immediately exposed a hardcoded eyebrow and a key-spec strip that
   French casement had been hiding by having no `product_specs` entry.
 
-## 2026-08-30, release 4 of 6 — integral blind stack (live as `2d8bfab7`, superseded)
+## 2026-08-30, release 4 of 7 — integral blind stack (live as `2d8bfab7`, superseded)
 
 **Live is `2d8bfab7`, tag `live-blinds-2026-08-30d`, still not an ancestor of
 `main` (`e67125c0`).** Fourth isolated release, cut from `0718b840`, and the
@@ -92,7 +123,7 @@ approved for live*. Read the Current Truth section of `LIVECHANGES.md` first.
   byte-identical, JS the same length with one four-character difference. When a
   change is one constant, the proof should be that exact.
 
-## 2026-08-30, release 3 of 6 — satin opacity and rail layout (live as `0718b840`, superseded)
+## 2026-08-30, release 3 of 7 — satin opacity and rail layout (live as `0718b840`, superseded)
 
 **Live is `0718b840`, tag `live-obscured-glass-2026-08-30c`, still not an
 ancestor of `main` (`2563cc22`).** Third isolated release, cut from
@@ -115,7 +146,7 @@ The one finding worth the whole session:
   bug as "stale" because the pane was hidden and a genuinely stale capture had
   just been hit — cost a full round.
 
-## 2026-08-30, release 2 of 6 — rail order and mobile pass (live as `c07a7c3c`, superseded)
+## 2026-08-30, release 2 of 7 — rail order and mobile pass (live as `c07a7c3c`, superseded)
 
 **Live is `c07a7c3c`, tag `live-obscured-glass-2026-08-30b`, still not an
 ancestor of `main` (`09476ddf`).** Second isolated release, cut from
@@ -135,7 +166,7 @@ Three findings worth carrying:
   drifts.** `66vw` against a true `66.667vw` sliced a tile row at every screen
   size. Use a ratio on the container instead; it also survives the scrollbar.
 
-## 2026-08-30, release 1 of 6 — the obscured glass page (live as `c11cece9`, superseded)
+## 2026-08-30, release 1 of 7 — the obscured glass page (live as `c11cece9`, superseded)
 
 **Live is `c11cece9`, tag `live-obscured-glass-2026-08-30`, and it is NOT an
 ancestor of `main` (`443a1b44`).** Read the Current Truth section of
