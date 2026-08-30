@@ -381,10 +381,23 @@ function fenster_gsc_seo_overrides(): array
             'meta_description' => 'Sheerline S1 aluminium roof lanterns and roof lights in Milton Keynes, with 13 layouts, frame colours, glass and ventilation specified before installation.',
         ],
         'french-casement-windows' => [
-            /* Title matches the imported one that already ranks; only the
-               scrape-era town-list description is replaced. */
+            /* Title matches the imported one that already ranks and is NOT
+               touched: this route carries the head phrase people search.
+
+               The description now says the thing the page is actually about --
+               that it is a configuration you specify on a window rather than a
+               window of its own. Owner, 2026-08-30.
+
+               `that suits fire escape` is DELIBERATELY GONE. This site pulled
+               egress copy off the handle hub once already and declined to
+               inherit Liniar's own "fire escape solution" wording without being
+               asked; that decision is recorded against the tilt and turn entry
+               in `product-hub-data.php` and this description had been quietly
+               contradicting it. A French casement is often specified for exactly
+               that reason, so it can come back the moment the owner says so --
+               but it is a compliance claim and it needs saying deliberately. */
             'title_tag' => 'French Casement Windows Milton Keynes | Fenster Glazing',
-            'meta_description' => 'French casement windows with no fixed central mullion, so both sashes open into one clear, full-width opening that suits fire escape. Fitted in Milton Keynes.',
+            'meta_description' => 'French casement windows have no fixed central mullion, so both sashes swing clear and the full width opens as one. Specify it on uPVC or aluminium.',
         ],
         'flat-rooflights' => [
             'title_tag' => 'Flat Rooflights Milton Keynes | Fixed & Opening Rooflights',

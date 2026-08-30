@@ -2264,6 +2264,26 @@ if (str_starts_with($slug, 'double-glazing-') && $current_location !== '') {
 
     $add_related_route($matched_family['main']);
 
+    /* THE FIVE WINDOWS THIS CONFIGURATION ACTUALLY GOES ON, FIRST. Owner,
+       2026-08-30: the French casement is an opening style rather than a window
+       of its own, specified on uPVC casement and flush and on all three
+       aluminium. The generic group order put SLIDING SASH and TILT AND TURN
+       ahead of the aluminium routes -- the two windows it explicitly cannot be
+       specified on -- so the band led with the wrong answer on the one page
+       whose whole subject is which windows can have it.
+
+       Added before the group so the slug keying fixes their position; the group
+       call below still runs and still adds the rest, deduped to no-ops. */
+    if ($slug === 'french-casement-windows') {
+        $add_related_routes([
+            'casement-windows',
+            'flush-casement-windows',
+            'aluminium-windows',
+            'aluminium-flush-windows',
+            'heritage-windows',
+        ]);
+    }
+
     if ($current_location !== '') {
         $add_related_route('double-glazing-' . $current_location);
         foreach ($group_routes as $candidate) {

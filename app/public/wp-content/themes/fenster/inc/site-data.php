@@ -2171,21 +2171,48 @@ function fenster_site_data(): array
                     ['question' => 'Will the windows be measured before manufacture?', 'answer' => 'Yes. We survey sash openings carefully because proportions, frame depth, reveal detail and installation condition all affect the final result.'],
                 ],
             ],
+            /* A CONFIGURATION, NOT A uPVC PRODUCT. Owner, 2026-08-30: "it's
+               aimed currently as just a liniar window thing but it's actually a
+               configuration where the mullion is floating like french doors."
+
+               What was here was scrape-era copy built round the material: a card
+               titled "Modern uPVC performance", an FAQ asking whether it matches
+               other uPVC windows, and an intro selling "the efficiency and finish
+               options of modern uPVC". None of it said the one thing the product
+               IS -- that the centre post travels with the closing sash -- and all
+               of it quietly excluded the aluminium half of the range.
+
+               THE FIVE WINDOWS ARE THE OWNER'S ANSWER, NOT AN INFERENCE. Asked
+               directly, because the owner's phrasing was "all of our windows
+               except t&t" and a vertical slider has no side-hung sashes for a
+               floating mullion to sit on. The answer was uPVC casement and
+               flush, and aluminium casement, flush and heritage -- so sash and
+               bay are out too, and the page now says which cannot have it and
+               why, which is a more useful page than one that only lists wins.
+
+               EGRESS IS DELIBERATELY SOFTENED, not dropped. This site declined
+               to inherit Liniar's "fire escape solution" wording once already
+               (see the tilt and turn entry in `product-hub-data.php`), and the
+               old copy here asserted the opening suits fire escape. It now says
+               we CHECK the size against an escape requirement at survey, which
+               is true and is ours to say. If the owner wants the stronger claim
+               it is one sentence away, but it is a compliance claim. */
             'french-casement-windows' => [
-                'intro' => 'French casement windows open from the centre to create a wide, unobstructed aperture. They suit rooms that need more ventilation, clearer views or an upper-floor escape-style opening while keeping the efficiency and finish options of modern uPVC.',
+                'intro' => 'A French casement is a pair of side-hung sashes that meet each other instead of meeting a fixed post. The centre stile is carried on the closing sash, so it swings away with it and the whole width opens as one, exactly the way a pair of French doors does. It is a configuration rather than a window of its own: you specify it on the window you were already choosing, in uPVC or in aluminium.',
                 'benefits' => [
-                    ['title' => 'Clear central opening', 'copy' => 'With no fixed centre mullion when both sashes are open, French casement windows create a wider view and more usable ventilation.'],
-                    ['title' => 'Useful upper-floor option', 'copy' => 'The wide opening can suit rooms where fire escape, cleaning access or strong purge ventilation needs to be considered.'],
-                    ['title' => 'Modern uPVC performance', 'copy' => 'Liniar uPVC profiles support weather protection, low maintenance and energy efficiency in a familiar casement-style format.'],
-                    ['title' => 'Coordinated appearance', 'copy' => 'French casements can be matched with other casement, flush or tilt and turn windows across a broader project.'],
-                    ['title' => 'Designed around safety', 'copy' => 'We check opening sizes, restrictors, handles, safety glass and room use before confirming the final specification.'],
+                    ['title' => 'Nothing left in the opening', 'copy' => 'There is no fixed mullion down the middle. The meeting stile travels with the closing sash, so with both leaves open the aperture is the full width of the frame rather than two halves of it.'],
+                    ['title' => 'Specified on the window you wanted', 'copy' => 'It is an opening style, not a separate range. Have it on uPVC casement or flush casement, or on aluminium casement, flush or heritage, in the same profile, colour and hardware as the rest of the job.'],
+                    ['title' => 'Two windows cannot have it', 'copy' => 'Tilt and turn is out, because the sash has to swing inward on its own hinges. So is sliding sash, which has no side-hung leaves for a floating stile to sit on. We would rather say so here than at survey.'],
+                    ['title' => 'Locked across the pair', 'copy' => 'The closing sash shoots bolts into the head and the cill, and keeps are set where the two sashes meet, so the pair locks into the frame rather than into each other.'],
+                    ['title' => 'Sized around the room', 'copy' => 'We check the opening size, restrictors, handle height and safety glass against how the room is used, including against an escape opening requirement where one applies.'],
                 ],
                 'faqs' => [
-                    ['question' => 'What is a French casement window?', 'answer' => 'It is a pair of casement sashes that open from the centre, creating a wider clear opening than many standard casement layouts.'],
-                    ['question' => 'Where do French casement windows work best?', 'answer' => 'They work well where you want a wider opening for ventilation, views, cleaning access or an upper-floor escape-style arrangement.'],
-                    ['question' => 'Can they match other uPVC windows?', 'answer' => 'Yes. They can be specified with matching colours, profile styling and handles so they coordinate with other window types.'],
-                    ['question' => 'Are French casement windows secure?', 'answer' => 'Yes. They can include modern locking, suitable hardware and glazing options, with the final details confirmed during specification.'],
-                    ['question' => 'Will you advise on restrictors?', 'answer' => 'Yes. We will consider room use, height, safety requirements and ventilation needs when specifying openings and restrictors.'],
+                    ['question' => 'What is a French casement window?', 'answer' => 'A pair of side-hung sashes that meet each other rather than a fixed central post. The centre stile is carried on the closing sash, so when both are open the whole width of the frame is clear. It is the same arrangement as a pair of French doors, in a window.'],
+                    ['question' => 'Which of your windows can be made as a French casement?', 'answer' => 'uPVC casement and uPVC flush casement, and all three aluminium windows: casement, flush and heritage. It is a configuration you add to the window you were already choosing, so the profile, colour and hardware stay the same.'],
+                    ['question' => 'Are French casements only available in uPVC?', 'answer' => 'No. They are specified in the 70mm Liniar EnergyPlus uPVC profile or in Sheerline Prestige aluminium, including the flush and heritage aluminium sashes. The configuration does not change the system it is built in.'],
+                    ['question' => 'Can a tilt and turn window be a French casement?', 'answer' => 'No, and neither can a sliding sash. A tilt and turn sash comes inward on its own hinges, and a sliding sash moves vertically, so in both cases there is no side-hung pair for a floating centre stile to belong to.'],
+                    ['question' => 'Is it secure without a fixed central mullion?', 'answer' => 'The locking does not rely on the post. The closing sash shoots bolts into the head and the cill of the frame, and keeps are set where the two sashes meet, so both leaves are held into the frame itself.'],
+                    ['question' => 'Will you advise on restrictors?', 'answer' => 'Yes. We look at room use, height above ground, ventilation and any escape opening requirement when we specify the openings, restrictors and glass, and confirm it at the technical survey.'],
                 ],
             ],
             /* REWRITTEN 2026-08-12 with the bespoke middle. The old copy failed
