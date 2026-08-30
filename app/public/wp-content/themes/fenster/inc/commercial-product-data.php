@@ -901,8 +901,26 @@ function fenster_commercial_product_pages(): array
             'intro_heading' => 'The building has to keep earning while we are on it.',
             'hero_image' => $sector_base . 'sector-offices-water-end-barn-1400w.webp',
             'hero_alt' => 'Converted barn office complex with replacement windows',
-            'intro_image' => $sector_base . 'sector-offices-courtyard-1000w.webp',
-            'intro_alt' => 'Office courtyard elevation with new glazing',
+            /* IMAGERY REBALANCED 2026-08-30. This route ran on ONE photograph:
+               the hero and the second detail section were the same file, the intro
+               and the first detail section were the same file, and all four were
+               near-identical drone frames of the same converted barn. A page
+               selling offices AND retail showed one rural office park four times.
+
+               Heal's is the obvious fix and it was sitting unused: the study
+               already claims this route in its `products` array, so it is in the
+               proof band at the foot of the page while none of its photographs
+               were on it. It is also the half the barn cannot carry, a city-centre
+               building with offices going in above a shop.
+
+               THE HEAL'S FRAMES ARE 1024px AND ARE NOT UPSCALED, which is why they
+               are in the intro and detail slots and not the hero: the hero renders
+               full bleed at 1440 and wider, and the 1400px barn is the only office
+               photograph we own that is big enough for it. A wide commercial
+               elevation of our own is commercial gap #1 in PHOTO-CHECKLIST.md and
+               it would replace that hero on the day it arrives. */
+            'intro_image' => $cs_base . 'cs-heals-tottenham-court-elevation.webp',
+            'intro_alt' => 'The glazed courtyard elevation at the Heal\'s building, jet black frames set into the existing concrete structure with the offices behind still being fitted out',
             'summary' => [
                 'Offices and shops have the same problem from opposite ends of the day: an office needs its desks usable from nine, a shop needs its frontage clear from opening. Both usually mean working early, late or at a weekend, and that belongs in the price rather than as a surprise later.',
                 'The work ranges from a converted barn office at Water End Barn to commercial buildings such as Franklin House and Orient House, and from a full shopfront replacement down to a single entrance screen. Tell us the hours the building has to work and we will price around them.',
@@ -945,16 +963,20 @@ function fenster_commercial_product_pages(): array
                     'eyebrow' => 'Working hours',
                     'title' => 'Say when the building has to be usable and we will work to it.',
                     'copy' => 'Most office and retail jobs come down to when we can be noisy and when we cannot. Early starts, evening work and weekend possessions all cost differently, so it is worth agreeing them at quote stage rather than discovering the constraint in week two.',
-                    'image' => $sector_base . 'sector-offices-courtyard-1000w.webp',
-                    'alt' => 'Office building elevation during glazing works',
+                    'image' => $cs_base . 'cs-heals-tottenham-court-courtyard.webp',
+                    'alt' => 'The same courtyard partway through, openings still bare and the deck in use as the working platform, with occupied offices on the floors above and around it',
                     'points' => ['Out of hours where needed', 'Floor by floor possession', 'Agreed noisy hours'],
                 ],
                 [
                     'eyebrow' => 'Older commercial buildings',
                     'title' => 'A converted building rarely matches its own drawings.',
                     'copy' => 'Barn conversions, mills and older commercial premises tend to have openings that have moved over a century and a half. We survey them individually rather than working off the original drawing, because the drawing is usually optimistic.',
-                    'image' => $sector_base . 'sector-offices-water-end-barn-1400w.webp',
-                    'alt' => 'Converted barn office building with traditional glazing',
+                    /* The barn stays here and only here, because this section is
+                       about converted buildings and it is the right subject for it.
+                       The courtyard frame rather than the hero frame, so the page
+                       does not print the same photograph twice. */
+                    'image' => $sector_base . 'sector-offices-courtyard-1000w.webp',
+                    'alt' => 'The converted barn offices at Water End Barn, white replacement windows set into the original brick openings with a glazed entrance screen at the end of the range',
                     'points' => ['Individual opening survey', 'Sympathetic replacements', 'Conservation constraints checked'],
                 ],
                 /* THE ONLY RETAIL FRONTAGE PHOTOGRAPH WE OWN. It is the curtain
@@ -967,7 +989,14 @@ function fenster_commercial_product_pages(): array
                     'title' => 'The frontage, the entrance doors and the glass are one order.',
                     'copy' => 'A shopfront is a screen, a door and the glass in it, and specifying those separately is how the reveal, the threshold and the door swing end up disagreeing on site. We survey the existing frontage, set the screen out from the opening rather than from the drawing, and order the doors and the glass with it. Toughened and laminated glass is supplied to order, and manifestation is applied to suit the screen.',
                     'image' => $commercial_base . 'comm-curtain-walling-parade-1600w.jpg',
-                    'alt' => 'A glazed aluminium frontage across a commercial parade, with entrance screens at ground floor',
+                    /* ALT CORRECTED 2026-08-30. The first version read "a glazed
+                       aluminium frontage with entrance screens at ground floor",
+                       which is not what is in the frame and asserted a material
+                       nobody has confirmed. The owner's own description when he
+                       supplied it (commit 63e44990) is "a white curtain-walled
+                       shopfront and stair screen on a high street parade", and it
+                       is confirmed as our work. Written from that. */
+                    'alt' => 'A white curtain-walled shopfront and stair screen on a high street parade, with the neighbouring units trading either side',
                     'points' => ['Frontage, doors and glass together', 'Toughened and laminated to order', 'Manifestation to suit the screen'],
                 ],
             ],
