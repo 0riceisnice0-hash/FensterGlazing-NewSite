@@ -5477,19 +5477,51 @@ if ($is_commercial_hub) {
                bespoke dispatch: putting one inside gates the whole middle on a
                condition about colour swatches and it silently renders nothing,
                which has caught two people on this project already. */
+            $img_base = '/wp-content/themes/fenster/assets/images/';
+            /* Keyed by slug rather than a ternary, because there are three of
+               these now and a fourth would have grown another branch. Each entry
+               wants a picture of the ARRANGEMENT for the first band and, where we
+               have one, a detail shot for the last. */
             $configuration_media = [
-                'mechanic' => [
-                    'src' => '/wp-content/themes/fenster/assets/images/imported/French-casement-mullion.jpeg',
-                    'alt' => __('The meeting stile on a French casement, carried on the closing sash rather than fixed to the frame', 'fenster'),
+                'french-casement-windows' => [
+                    'mechanic' => [
+                        'src' => $img_base . 'imported/French-casement-mullion.jpeg',
+                        'alt' => __('The meeting stile on a French casement, carried on the closing sash rather than fixed to the frame', 'fenster'),
+                    ],
+                    'detail' => [
+                        'src' => $img_base . 'imported/French-casement-shootbolts.jpeg',
+                        'alt' => __('Shootbolt locking on the closing sash of a French casement window', 'fenster'),
+                    ],
                 ],
-                'detail' => [
-                    'src' => '/wp-content/themes/fenster/assets/images/imported/French-casement-shootbolts.jpeg',
-                    'alt' => __('Shootbolt locking on the closing sash of a French casement window', 'fenster'),
+                'french-doors' => [
+                    'mechanic' => [
+                        'src' => $img_base . 'products/french-doors/french-doors-white-brick.webp',
+                        'alt' => __('A pair of white French doors closing against each other with no fixed post between them', 'fenster'),
+                    ],
+                    /* Aluminium on purpose. The band it heads is about how the
+                       pair is held shut, and the page says the configuration is
+                       not tied to uPVC, so the picture should not be. */
+                    'detail' => [
+                        'src' => $img_base . 'products/heritage-aluminium/heritage-french-courtyard-1100w.webp',
+                        'alt' => __('Heritage aluminium French doors opening onto a courtyard', 'fenster'),
+                    ],
+                ],
+                'bow-bay-windows' => [
+                    'mechanic' => [
+                        'src' => $img_base . 'products/bow-bay/bay-white-brick-dusk-1600w.webp',
+                        'alt' => __('A white bay window stepping out from a brick elevation at dusk', 'fenster'),
+                    ],
+                    /* A sash bay, deliberately: the page says any of our windows
+                       can form one, and this is the least obvious of them. */
+                    'detail' => [
+                        'src' => $img_base . 'imported/Joined-Vertical-Slider-Bay.jpg',
+                        'alt' => __('A bay built from sliding sash windows in a dining room', 'fenster'),
+                    ],
                 ],
             ];
             get_template_part('template-parts/sections/configuration-page-v2', null, [
                 'config' => $configuration_data,
-                'media' => $slug === 'french-casement-windows' ? $configuration_media : [],
+                'media' => $configuration_media[$slug] ?? [],
             ]);
             ?>
         <?php endif; ?>
@@ -5703,8 +5735,20 @@ if ($is_commercial_hub) {
                 $glass_patch = array_slice($glass_patch, 0, 5);
 
                 $number_cards = count($option_cards) > 1;
+                /* EXACTLY TWO CARDS WAS THE ONE COUNT NOBODY HAD HANDLED. The
+                   grid is capped at 980px so a row of three does not stretch
+                   into empty padding, and a single card gets `--single` to take
+                   the full width back. Two fell between: capped at 980 inside an
+                   1180 container and left-aligned, so the pair sat with a dead
+                   200px beside it. Owner, 2026-08-30: "the colour and glass
+                   things are bunched sideways".
+
+                   Only two routes render two cards, and both are configuration
+                   pages -- French casement and French doors -- because every
+                   other route resolves to one. */
+                $paired_cards = count($option_cards) === 2;
                 ?>
-                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? '' : 'fg-product-choice-map--single'); ?>">
+                <div class="fg-product-choice-map <?php echo esc_attr($slug === 'sliding-sash-windows' ? 'fg-product-choice-map--sash' : ''); ?> <?php echo esc_attr($number_cards ? ($paired_cards ? 'fg-product-choice-map--pair' : '') : 'fg-product-choice-map--single'); ?>">
                     <div class="fg-product-options fg-product-options--hub">
                     <?php foreach ($option_cards as $card_index => $option_card) : ?>
                         <?php $is_patched_glass = $option_card['modifier'] === 'glass' && count($glass_patch) >= 3; ?>

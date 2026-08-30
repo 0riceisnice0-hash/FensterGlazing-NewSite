@@ -29,7 +29,7 @@ if ($config === []) {
 $product_names = function_exists('fenster_location_matrix_products') ? fenster_location_matrix_products() : [];
 $mechanic = is_array($config['mechanic'] ?? null) ? $config['mechanic'] : [];
 $products = is_array($config['products'] ?? null) ? $config['products'] : [];
-$egress = is_array($config['egress'] ?? null) ? $config['egress'] : [];
+$highlight = is_array($config['highlight'] ?? null) ? $config['highlight'] : [];
 $detail = is_array($config['detail'] ?? null) ? $config['detail'] : [];
 $media = is_array($args['media'] ?? null) ? $args['media'] : [];
 ?>
@@ -109,22 +109,27 @@ $media = is_array($args['media'] ?? null) ? $args['media'] : [];
     </section>
 <?php endif; ?>
 
-<?php if ($egress !== []) : ?>
-    <section class="fg-cw-intro fg-cfg-egress" aria-labelledby="fg-cfg-egress-title">
+<?php if ($highlight !== []) : ?>
+    <section class="fg-cw-intro fg-cfg-highlight" aria-labelledby="fg-cfg-highlight-title">
         <div class="container fg-cw-split">
             <div class="fg-cw-copy">
-                <p class="eyebrow"><?php esc_html_e('Means of escape', 'fenster'); ?></p>
-                <h2 id="fg-cfg-egress-title"><?php echo esc_html((string) ($egress['heading'] ?? '')); ?></h2>
-                <p><?php echo esc_html((string) ($egress['copy'] ?? '')); ?></p>
-                <?php if (! empty($egress['note'])) : ?>
-                    <p class="fg-cfg-aside"><?php echo esc_html((string) $egress['note']); ?></p>
+                <?php /* Eyebrow comes from the data: this band is the ONE THING worth
+                         knowing about a given configuration, and that differs per route --
+                         means of escape on a French casement, the clear opening on French
+                         doors, what carries the load on a bay. Hardcoding it here was the
+                         first thing that would have broken reuse. */ ?>
+                <p class="eyebrow"><?php echo esc_html((string) ($highlight['eyebrow'] ?? '')); ?></p>
+                <h2 id="fg-cfg-highlight-title"><?php echo esc_html((string) ($highlight['heading'] ?? '')); ?></h2>
+                <p><?php echo esc_html((string) ($highlight['copy'] ?? '')); ?></p>
+                <?php if (! empty($highlight['note'])) : ?>
+                    <p class="fg-cfg-aside"><?php echo esc_html((string) $highlight['note']); ?></p>
                 <?php endif; ?>
             </div>
-            <?php if (! empty($egress['criteria'])) : ?>
+            <?php if (! empty($highlight['criteria'])) : ?>
                 <div class="fg-cfg-criteria">
-                    <p class="fg-cfg-criteria__title"><?php echo esc_html((string) ($egress['criteria_heading'] ?? '')); ?></p>
+                    <p class="fg-cfg-criteria__title"><?php echo esc_html((string) ($highlight['criteria_heading'] ?? '')); ?></p>
                     <dl>
-                        <?php foreach ((array) $egress['criteria'] as $criterion) : ?>
+                        <?php foreach ((array) $highlight['criteria'] as $criterion) : ?>
                             <div>
                                 <dt><?php echo esc_html((string) ($criterion['label'] ?? '')); ?></dt>
                                 <dd><?php echo esc_html((string) ($criterion['value'] ?? '')); ?></dd>

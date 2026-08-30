@@ -8426,6 +8426,14 @@ html.fg-gallery-lightbox-open body {
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* Two cards take the container back as well. The 980px cap above stops a row of
+   three stretching into empty padding; with two it left the pair 980 wide inside
+   an 1180 container, left-aligned, and put a dead 200px down the right of the
+   band. `auto-fit` then gives them half the row each. */
+.fg-product-choice-map--pair {
+  max-width: none;
+}
+
 /* Slimmer, per the owner: the card is now about one pane deep rather than two. */
 .fg-product-choice-map--single .fg-product-option-card {
   min-height: 0;
@@ -40002,7 +40010,7 @@ html.fg-blinds-reveal-locked {
    the owner read it immediately: "the section after the hero is bunched up".
    Anything added to the configuration middle needs a padding rule here. */
 .fg-cfg-mechanic,
-.fg-cfg-egress,
+.fg-cfg-highlight,
 .fg-cfg-detail {
   padding: clamp(2.5rem, 5vw, 4rem) 0;
 }

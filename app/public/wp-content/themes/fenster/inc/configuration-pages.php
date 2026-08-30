@@ -42,11 +42,8 @@ function fenster_configuration_routes(): array
 {
     return [
         'french-casement-windows',
-        /* 'french-doors' and 'bow-bay-windows' are configurations too and are
-           expected here next. They are NOT listed yet: both still render their
-           product content, and adding a slug here strips their tech banner and
-           colour chart the moment it lands. Add the data entry below in the same
-           commit as the slug. */
+        'french-doors',
+        'bow-bay-windows',
     ];
 }
 
@@ -107,7 +104,8 @@ function fenster_configuration_page_data(string $slug): array
                it and confirm it. Quoting the criteria is describing a
                regulation; promising compliance on an unspecified window is not
                ours to make in advance. */
-            'egress' => [
+            'highlight' => [
+                'eyebrow' => 'Means of escape',
                 'heading' => 'It is the configuration you want for an escape window.',
                 'copy' => 'Where a habitable room needs a means of escape window, the thing that decides it is the CLEAR opening once the window is open. A fixed central mullion works against you twice over: it takes width out of the middle, and the width it leaves is split into two halves rather than one aperture. A French pair opens the whole way across, so the clear opening is the frame.',
                 'criteria_heading' => 'What Approved Document B asks for',
@@ -132,6 +130,101 @@ function fenster_configuration_page_data(string $slug): array
                Owner's choice, 2026-08-30. */
             'colours' => [
                 'copy' => 'The colour range is the range of the window you choose rather than anything the configuration decides, so a French pair is available in the full uPVC foil range or in any RAL colour on aluminium.',
+                'links' => [
+                    ['slug' => 'upvc-colours', 'label' => 'uPVC colours'],
+                    ['slug' => 'aluminium-colours', 'label' => 'Aluminium colours'],
+                ],
+            ],
+        ],
+
+        /* FRENCH DOORS. Owner, 2026-08-30: "possible in upvc, ali and heritage."
+           Same arrangement as the French casement and the thing that names it --
+           a pair of leaves closing against each other rather than against a
+           fixed post -- so the page is built on the same template with its own
+           products. No escape-window band here: a door is already a door, and
+           the thing worth knowing is what the second leaf gives you. */
+        'french-doors' => [
+            'eyebrow' => 'Door configuration',
+            'mechanic' => [
+                'heading' => 'Two leaves that meet each other, not a fixed post.',
+                'copy' => 'A French door is a pair of hinged doors that close against one another. There is no mullion between them: the meeting stile is carried on one of the leaves, so it swings away when that leaf does and the opening is the width of the frame rather than the width of one door. It is the arrangement the French casement borrows, at door height.',
+                'aside' => 'It is a configuration rather than a door range of its own. You choose the door, in uPVC or in aluminium, and have it as a pair.',
+            ],
+            'products_heading' => 'Three doors can be built as a pair.',
+            'products_copy' => 'The profile, the colour, the glass and the hardware are whatever that door already offers. The configuration changes how it opens.',
+            'products' => [
+                ['slug' => 'upvc-doors', 'material' => 'uPVC', 'note' => 'The standard uPVC door, hung as a pair rather than a single leaf.'],
+                ['slug' => 'aluminium-doors', 'material' => 'Aluminium', 'note' => 'Sheerline aluminium, for slimmer frames around more glass.'],
+                ['slug' => 'heritage-aluminium-doors', 'material' => 'Aluminium', 'note' => 'Steel-look heritage sections, with or without bars across the pair.'],
+            ],
+            'highlight' => [
+                'eyebrow' => 'The opening you get',
+                'heading' => 'One leaf for every day, both when you need the width.',
+                'copy' => 'Most of the time a French pair is used as a single door: one leaf carries the handle and is the one you walk through. The second is held shut top and bottom until you release it, and then the whole width is open. That is what the configuration is for, and it is the reason it suits a garden room, a patio or anywhere furniture has to come through.',
+                'note' => 'Which leaf carries the handle, which way the pair opens, and the threshold detail underneath are all decided at the technical survey against how the room and the outside space are actually used.',
+            ],
+            'detail_heading' => 'How the pair is held shut.',
+            'detail' => [
+                ['label' => 'Meeting stile', 'value' => 'Carried on one leaf, so it travels with the door rather than staying in the opening'],
+                ['label' => 'Master leaf', 'value' => 'Takes the handle and the multi-point lock, and is the leaf used day to day'],
+                ['label' => 'Second leaf', 'value' => 'Held into the head and the cill by shootbolts, released when the full width is wanted'],
+                ['label' => 'Opening', 'value' => 'Inward or outward, and which leaf leads, both confirmed at survey'],
+                ['label' => 'Glazing', 'value' => 'The same options as the door it is built in, including obscured glass and bars across the pair'],
+            ],
+            'colours' => [
+                'copy' => 'The colour range is the range of the door you choose rather than anything the configuration decides, so a French pair is available in the full uPVC foil range or in any RAL colour on aluminium.',
+                'links' => [
+                    ['slug' => 'upvc-colours', 'label' => 'uPVC colours'],
+                    ['slug' => 'aluminium-colours', 'label' => 'Aluminium colours'],
+                ],
+            ],
+        ],
+
+        /* BOW AND BAY. Owner, 2026-08-30: "available on all of our windows."
+           The widest scope of the three, and the one where the configuration is
+           a SHAPE rather than a pair: frames joined at an angle so the run
+           projects past the wall. Every window we fit can sit in one, tilt and
+           turn and sliding sash included, which is why all seven are listed. */
+        'bow-bay-windows' => [
+            'eyebrow' => 'Window configuration',
+            'mechanic' => [
+                'heading' => 'It is not a window. It is windows, joined at an angle.',
+                'copy' => 'A bay is a run of frames joined by angled posts so the whole thing steps out past the face of the wall. A bow does the same with more facets and shallower angles, so it reads as a curve. Either way what projects is the window you already chose, built as three, four or five lights instead of one, and the room gains the depth the run sticks out by.',
+                'aside' => 'That is why it is a configuration rather than a product. The shape is the arrangement of the frames; the window inside it is yours to pick.',
+            ],
+            'products_heading' => 'Any of our windows can form a bay.',
+            'products_copy' => 'The lights in a bay are ordinary windows joined together, so the choice is the same one you would make for a flat elevation. Fixed panes, openers, or a mixture across the run.',
+            'products' => [
+                ['slug' => 'casement-windows', 'material' => 'uPVC', 'note' => 'The usual choice, and the one most existing bays are replaced with.'],
+                ['slug' => 'flush-casement-windows', 'material' => 'uPVC', 'note' => 'Flush sashes across the run, for a period elevation.'],
+                ['slug' => 'sliding-sash-windows', 'material' => 'uPVC', 'note' => 'Vertical sliders in a bay, which is how most Victorian ones were built.'],
+                ['slug' => 'tilt-turn-windows', 'material' => 'uPVC', 'note' => 'Inward opening lights, which clean from inside the room.'],
+                ['slug' => 'aluminium-windows', 'material' => 'Aluminium', 'note' => 'Slim Prestige sightlines, so the posts take less light out.'],
+                ['slug' => 'aluminium-flush-windows', 'material' => 'Aluminium', 'note' => 'The flush aluminium outer frame across the run.'],
+                ['slug' => 'heritage-windows', 'material' => 'Aluminium', 'note' => 'Steel-look sections for a bay on a period frontage.'],
+            ],
+            'highlight' => [
+                'eyebrow' => 'What holds it up',
+                'heading' => 'A bay carries what is above it, so the head is the survey.',
+                'copy' => 'A bay stands proud of the wall, which means the wall above it is sitting on the bay rather than on the brickwork behind. On most houses that load is already carried by the existing frames, and replacing them is the moment it has to be handled properly rather than assumed.',
+                'criteria_heading' => 'What we check before it is ordered',
+                'criteria' => [
+                    ['label' => 'What is above', 'value' => 'Roof, brickwork or a second bay'],
+                    ['label' => 'How it is carried', 'value' => 'Existing loading, and what replaces it'],
+                    ['label' => 'The angle', 'value' => 'Set angles for a bay, shallower facets for a bow'],
+                ],
+                'note' => 'This is a survey question rather than a catalogue one, and it is the reason a bay is measured and specified before anything is priced as fitted. Where support is needed it is specified as part of the job.',
+            ],
+            'detail_heading' => 'What gets decided on a bay.',
+            'detail' => [
+                ['label' => 'Shape', 'value' => 'Bay in set angles, or bow across more facets for a curve'],
+                ['label' => 'Lights', 'value' => 'Three, four or five across the run, fixed or opening in any mix'],
+                ['label' => 'Posts', 'value' => 'The angled joints between lights, in the same colour as the frames'],
+                ['label' => 'Below the glass', 'value' => 'Cill, and the board or brickwork the run sits on'],
+                ['label' => 'Colour', 'value' => 'Matched across the whole run inside and out, so the bay reads as one thing'],
+            ],
+            'colours' => [
+                'copy' => 'The colour range is the range of the window you choose rather than anything the shape decides, so a bay is available in the full uPVC foil range or in any RAL colour on aluminium.',
                 'links' => [
                     ['slug' => 'upvc-colours', 'label' => 'uPVC colours'],
                     ['slug' => 'aluminium-colours', 'label' => 'Aluminium colours'],
