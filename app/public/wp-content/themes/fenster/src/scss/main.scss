@@ -11214,14 +11214,40 @@ html.fg-gallery-lightbox-open body {
    standard deviations of a 110px blur. Leave it at 1.2 and the blur samples
    empty space inside the visible pane and fades in as a pale halo down both
    sides. 1.12 on the near scene is 2.9σ of its 24px blur and stays as it was. */
+/* `opacity: 1`, AND THIS IS THE WHOLE REASON DETAIL SURVIVED ANY AMOUNT OF BLUR.
+   Owner, 2026-08-30: "colour is better for satin but still shows too much
+   detail, it needs to blur more." It did not need more blur. The base rule for
+   this pseudo-element sets `opacity: calc(0.64 + min(var(--privacy), 5) * .055)`
+   -- 0.915 at privacy 5 -- and satin overrode the filter and the transform but
+   never that. So 8.5% of the SHARP scene underneath was showing straight
+   through the blurred copy, and against an otherwise flat field an 8.5% sharp
+   overlay is very legible: the rooflines, windows and chimneys the owner could
+   still read were the unblurred image, not blur that had failed to bite.
+
+   Proven by knocking the blur down instead of up: at 60px, 90px and 110px the
+   houses stayed equally readable, which no blur curve does. Setting opacity to
+   1 at a LOWER blur than we had removed them completely.
+
+   The partial opacity is right for every other glass, where this element is a
+   semi-transparent texture laid over a canvas render. Satin has no canvas pass
+   -- here the element IS the whole obscured image -- so anything under 1 is
+   just the clear scene bleeding through.
+
+   With the bleed gone the blur comes DOWN, 110 -> 64, and the scale with it,
+   1.52 -> 1.30. Less magnification means less of the scene cropped away, which
+   is more colour: the crop was the other thing costing it. Note the browser
+   applies `filter` BEFORE `transform`, so the on-screen blur is 64 x 1.30 = 83
+   effective -- another reason the raw number does not need to be large. */
 .fg-obscure-stage[data-active-glass="satin"] .fg-obscure-stage__glass::before {
   filter: blur(24px) brightness(108%) contrast(0.94);
   transform: scale(1.12);
+  opacity: 1;
 }
 
 .fg-obscure-stage[data-active-glass="satin"][data-active-background="house"] .fg-obscure-stage__glass::before {
-  filter: blur(110px) brightness(130%) contrast(0.94);
-  transform: scale(1.52);
+  filter: blur(64px) brightness(130%) contrast(0.94);
+  transform: scale(1.3);
+  opacity: 1;
 }
 
 /* THE PANE IS LIFTED WITH WHITE, NOT WITH `brightness()`, and that is the whole
