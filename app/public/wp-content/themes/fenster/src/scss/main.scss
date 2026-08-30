@@ -10928,6 +10928,19 @@ html.fg-gallery-lightbox-open body {
    on this component read as one family. Six segments have to fit a 320px column
    at its narrowest, so they flex rather than taking a fixed width, and the
    labels are bare numerals with the full phrase on `aria-label`. */
+/* A NAME ON THE NUMBERS. Owner, 2026-08-30: "the number selection should have
+   some sort of marker or title to show its for privacy level". Five bare digits
+   in a pill say nothing about what they select. Small and muted rather than a
+   heading -- it labels a control, it does not open a section. */
+.fg-obscure-privacy-filter__title {
+  margin: 0 0 0.35rem;
+  color: var(--color-muted);
+  font-size: var(--fg-text-xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .fg-obscure-privacy-filter {
   display: flex;
   gap: 0.2rem;
@@ -11284,8 +11297,13 @@ html.fg-gallery-lightbox-open body {
     grid-template-areas:
       "stage   head"
       "stage   readout"
-      "stage   options";
-    grid-template-rows: auto auto minmax(0, 1fr);
+      "stage   options"
+      "stage   scenes";
+    /* The THIRD row is the flexible one, so the slack collects between the
+       pattern list and the scene switch and the switch is pushed to the foot of
+       the rail. Owner, 2026-08-30: "the legend/house switch should be at the
+       bottom". */
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
     align-items: start;
     column-gap: clamp(1rem, 2vw, 1.75rem);
     row-gap: 0.85rem;
@@ -11532,7 +11550,10 @@ html.fg-gallery-lightbox-open body {
   background: rgba(0, 0, 0, 0);
 }
 
-.fg-obscure-stage__readout .fg-obscure-scene-switch {
+/* Placed by the grid, and last. It was a child of the readout until 2026-08-30,
+   which put a control inside a block of descriptive text. */
+.fg-obscure-visualiser__grid > .fg-obscure-scene-switch {
+  grid-area: scenes;
   justify-self: start;
 }
 
@@ -25743,7 +25764,8 @@ a.fg-cs-card__pill:focus-visible {
       "stage"
       "readout"
       "filter"
-      "mobile-picker";
+      "mobile-picker"
+      "scenes";
   }
 
   .fg-obscure-visualiser__grid > .fg-obscure-stage__readout {
@@ -25801,20 +25823,33 @@ a.fg-cs-card__pill:focus-visible {
   /* Item-level snap on a flat rail. Full-width snap pages with mandatory
      snapping refused to swipe on iPhones; per-card proximity snapping is the
      same native pattern as the site's other mobile rails. */
+  /* IT WRAPS NOW; IT DOES NOT SWIPE. Owner, 2026-08-30: "i dont like that you
+     have to swipe on mobile for the glass options when theres more than 4". It
+     was a horizontal snap rail two rows deep, so at the default privacy 5 --
+     six patterns -- two of them were off the right edge with nothing but the
+     clipped card to say so. A sideways rail is right for a gallery you browse
+     and wrong for a set of options you are choosing between: you cannot compare
+     what you cannot see at once, and there is no reason to hide any of it when
+     the page already scrolls vertically.
+
+     Two columns down the page instead. Six patterns is three rows; all
+     twenty-one, if the filter is cleared, is eleven rows of ordinary page.
+     Every horizontal-rail property has to be undone explicitly -- the flow, the
+     auto columns, the two-row template, the negative margin that bled it to the
+     viewport edge, and the snap -- because leaving any one of them behind
+     leaves the old behaviour half in place. */
   .fg-obscure-mobile-picker {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(44vw, 15rem);
-    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
     gap: 0.55rem;
     max-height: none;
-    overflow-x: auto;
-    overflow-y: hidden;
-    margin-inline: calc((100vw - 100%) / -2);
-    padding: 0 1rem 0.45rem;
-    scroll-snap-type: x proximity;
-    scroll-padding-left: 1rem;
-    scrollbar-width: none;
+    overflow: visible;
+    margin-inline: 0;
+    padding: 0;
+    scroll-snap-type: none;
   }
 
   .fg-obscure-mobile-picker::-webkit-scrollbar {

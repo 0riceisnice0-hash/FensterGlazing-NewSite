@@ -3330,39 +3330,6 @@ if ($is_obscure_glass) {
                         <span data-fg-obscure-active-privacy><?php echo esc_html($active_glass_privacy === 0 ? 'Decorative texture' : sprintf('Privacy %d', $active_glass_privacy)); ?></span>
                         <p data-fg-obscure-active-copy><?php echo esc_html($active_glass_copy); ?></p>
                     </div>
-                    <?php
-                    /*
-                     * Two named scenes, so this is a SEGMENTED CONTROL rather than a
-                     * `role="switch"`. A switch is on/off and would have to call one of
-                     * the two backgrounds "off", which neither of them is. Two buttons
-                     * carrying `aria-pressed` say "these are the choices and this is the
-                     * current one", which is what the control actually means, and it is
-                     * the same shape the sash carousel dots use.
-                     *
-                     * The icons are decorative and each button carries its own visible-
-                     * to-AT label, because an icon-only control with no accessible name
-                     * is the failure the theme's own accessibility rules call out.
-                     */
-                    ?>
-                    <div class="fg-obscure-scene-switch" role="group" aria-label="<?php esc_attr_e('Preview background', 'fenster'); ?>">
-                        <button class="fg-obscure-scene-switch__option" type="button" data-fg-obscure-background="house" aria-pressed="true">
-                            <svg class="fg-obscure-scene-switch__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                <path d="m3 9.5 9-6.8 9 6.8V20a1.7 1.7 0 0 1-1.7 1.7H4.7A1.7 1.7 0 0 1 3 20Z" />
-                                <path d="M9.5 21.7v-6.4h5v6.4" />
-                            </svg>
-                            <span class="screen-reader-text"><?php esc_html_e('House background', 'fenster'); ?></span>
-                        </button>
-                        <button class="fg-obscure-scene-switch__option" type="button" data-fg-obscure-background="cat" aria-pressed="false">
-                            <svg class="fg-obscure-scene-switch__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                                <path d="M2.8 9.4 4.2 2.2 8.4 5.8a10.5 10.5 0 0 1 7.2 0L19.8 2.2 21.2 9.4v5.4a11 11 0 0 1-18.4 0Z" />
-                                <ellipse cx="8.6" cy="12.3" rx="1.35" ry="1.85" fill="currentColor" stroke="none" />
-                                <ellipse cx="15.4" cy="12.3" rx="1.35" ry="1.85" fill="currentColor" stroke="none" />
-                                <path d="M12 16c-.85 0-1.4-.5-1.4-.95 0-.38.56-.6 1.4-.6s1.4.22 1.4.6c0 .45-.55.95-1.4.95Z" fill="currentColor" stroke="none" />
-                                <path d="M9 17.1a1.8 1.8 0 0 0 3-.8 1.8 1.8 0 0 0 3 .8" />
-                            </svg>
-                            <span class="screen-reader-text"><?php esc_html_e('Legend the cat background', 'fenster'); ?></span>
-                        </button>
-                    </div>
                 </div>
 
                 <?php
@@ -3399,6 +3366,15 @@ if ($is_obscure_glass) {
                 krsort($obscure_privacy_levels);
                 ?>
                 <div class="fg-obscure-options">
+                    <?php /* A VISIBLE LABEL ON THE NUMBERS. Owner, 2026-08-30: "the
+                             number selection should have some sort of marker or title to
+                             show its for privacy level". Five bare digits in a segmented
+                             control say nothing about what they select; the explainer
+                             above mentions privacy level but sits far enough away to be
+                             read once and forgotten. The group keeps its richer
+                             `aria-label` for screen readers, so this is the visual half
+                             of a name they already had. */ ?>
+                    <p class="fg-obscure-privacy-filter__title"><?php esc_html_e('Privacy level', 'fenster'); ?></p>
                     <div class="fg-obscure-privacy-filter" role="group" aria-label="<?php esc_attr_e('Filter patterns by privacy level', 'fenster'); ?>">
                         <?php foreach ($obscure_privacy_levels as $level => $count) : ?>
                             <?php if ($level === 0) { continue; } ?>
@@ -3428,6 +3404,52 @@ if ($is_obscure_glass) {
                             <?php $render_obscure_glass_option($texture, (int) $index); ?>
                         <?php endforeach; ?>
                     </div>
+                </div>
+
+                <?php
+                /* THE SCENE SWITCH IS A GRID CHILD AND SITS LAST. Owner,
+                   2026-08-30: "the legend/house switch should be at the bottom".
+                   It used to live inside the readout, which put a control in the
+                   middle of a block of descriptive text and made it read as part
+                   of the pattern's caption rather than as a thing you press.
+
+                   It has to be a DIRECT child of the grid to be placed at all --
+                   grid does not place grandchildren -- so it moves in the markup
+                   rather than by CSS alone. Source order puts it last, which is
+                   also where the mobile column wants it. */
+                ?>
+                <?php
+                /*
+                 * Two named scenes, so this is a SEGMENTED CONTROL rather than a
+                 * `role="switch"`. A switch is on/off and would have to call one of
+                 * the two backgrounds "off", which neither of them is. Two buttons
+                 * carrying `aria-pressed` say "these are the choices and this is the
+                 * current one", which is what the control actually means, and it is
+                 * the same shape the sash carousel dots use.
+                 *
+                 * The icons are decorative and each button carries its own visible-
+                 * to-AT label, because an icon-only control with no accessible name
+                 * is the failure the theme's own accessibility rules call out.
+                 */
+                ?>
+                <div class="fg-obscure-scene-switch" role="group" aria-label="<?php esc_attr_e('Preview background', 'fenster'); ?>">
+                    <button class="fg-obscure-scene-switch__option" type="button" data-fg-obscure-background="house" aria-pressed="true">
+                        <svg class="fg-obscure-scene-switch__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <path d="m3 9.5 9-6.8 9 6.8V20a1.7 1.7 0 0 1-1.7 1.7H4.7A1.7 1.7 0 0 1 3 20Z" />
+                            <path d="M9.5 21.7v-6.4h5v6.4" />
+                        </svg>
+                        <span class="screen-reader-text"><?php esc_html_e('House background', 'fenster'); ?></span>
+                    </button>
+                    <button class="fg-obscure-scene-switch__option" type="button" data-fg-obscure-background="cat" aria-pressed="false">
+                        <svg class="fg-obscure-scene-switch__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <path d="M2.8 9.4 4.2 2.2 8.4 5.8a10.5 10.5 0 0 1 7.2 0L19.8 2.2 21.2 9.4v5.4a11 11 0 0 1-18.4 0Z" />
+                            <ellipse cx="8.6" cy="12.3" rx="1.35" ry="1.85" fill="currentColor" stroke="none" />
+                            <ellipse cx="15.4" cy="12.3" rx="1.35" ry="1.85" fill="currentColor" stroke="none" />
+                            <path d="M12 16c-.85 0-1.4-.5-1.4-.95 0-.38.56-.6 1.4-.6s1.4.22 1.4.6c0 .45-.55.95-1.4.95Z" fill="currentColor" stroke="none" />
+                            <path d="M9 17.1a1.8 1.8 0 0 0 3-.8 1.8 1.8 0 0 0 3 .8" />
+                        </svg>
+                        <span class="screen-reader-text"><?php esc_html_e('Legend the cat background', 'fenster'); ?></span>
+                    </button>
                 </div>
             </div>
         </section>
