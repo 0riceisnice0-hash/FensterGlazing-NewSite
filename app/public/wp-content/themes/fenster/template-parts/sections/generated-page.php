@@ -5525,9 +5525,18 @@ if ($is_commercial_hub) {
                        one frame -- the run of lights, the angled return post, the
                        cill, and the tile hung wall sitting on top of the bay, which
                        is the load the section above it is about. */
+                    /* From `curated/`, DELIBERATELY OUTSIDE this route's gallery
+                       pool. The flush casement bay was tried here first and is a
+                       fine picture, but it lives in the pool, so featuring it put
+                       the same photograph on the page twice -- and taking it out
+                       of the pool dropped the gallery under its four-image
+                       threshold and removed the band altogether. Featuring
+                       something the pool does not hold avoids both. It shows what
+                       the band lists: the angled return, the run of lights, and
+                       the cill and brickwork carrying it. */
                     'detail' => [
-                        'src' => $img_base . 'products/flush-casement/flush-white-bay-brick-1400w.webp',
-                        'alt' => __('A white bay window with five lights across the front and an angled return, carrying a tile hung wall above', 'fenster'),
+                        'src' => $img_base . 'products/curated/liniar-bay-window.jpg',
+                        'alt' => __('A white bay window seen along the elevation, showing the angled return post and the brickwork carrying the run', 'fenster'),
                     ],
                 ],
             ];

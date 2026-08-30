@@ -1578,14 +1578,17 @@ function fenster_site_data(): array
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_10.jpg', 'alt' => 'Curved white uPVC bow window on a red brick wall'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_02.jpg', 'alt' => 'Golden oak bow window curving out from a light brick elevation'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bow_08.jpg', 'alt' => 'Golden oak bay window with leaded lights'],
-                /* `flush-white-bay-brick-1400w.webp` came OUT of this pool on
-                   2026-08-30. It is the featured picture in the configuration
-                   page's specification band -- it shows the run, the angled
-                   return, the cill and the wall the bay carries, all in one
-                   frame -- and leaving it here rendered the same photograph
-                   twice on the page, once featured and once in the four-up strip
-                   below it. It is still in `product_media` for this route, so
-                   nothing else loses it. */
+                /* PUT BACK 2026-08-30, and the removal is worth recording. It was
+                   taken out to stop the specification band's featured picture
+                   also appearing in the strip below it, and that quietly DELETED
+                   THE WHOLE GALLERY: the band renders only when
+                   `count($product_visual_gallery_remainder) >= 4`, the remainder
+                   is this pool minus the hero and minus the four images indices
+                   0-3 feed, and one fewer item took it from exactly 4 to 3. The
+                   duplicate was solved by featuring an image from outside this
+                   pool instead. Do not thin this pool without counting what is
+                   left. */
+                ['src' => '/wp-content/themes/fenster/assets/images/products/flush-casement/flush-white-bay-brick-1400w.webp', 'alt' => 'Bay window built in a flush casement style on a tile hung house'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Joined-Vertical-Slider-Bay.jpg', 'alt' => 'Sliding sash bay window in a dining room'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Bay_7-e1699893445270.jpg', 'alt' => 'Bay window on the front elevation of a detached home'],
                 ['src' => '/wp-content/themes/fenster/assets/images/imported/Casement-Windows-Flitwick-10.jpg', 'alt' => 'White uPVC bay window with leaded glazing fitted in Flitwick'],
